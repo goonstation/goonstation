@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	icon_state = "espresso_machine"
 	density = 1
 	anchored = ANCHORED
-	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
@@ -197,7 +197,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = ANCHORED
-	flags = FPRINT | NOSPLASH
+	flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null

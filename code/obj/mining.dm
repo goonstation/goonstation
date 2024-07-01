@@ -2213,7 +2213,7 @@ TYPEINFO(/obj/item/cargotele)
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 
 
@@ -2384,6 +2384,7 @@ TYPEINFO(/obj/item/cargotele)
 		else
 			qdel(cargo)
 		src.total_earned += value
+		logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to sell shit for [value] credits.")
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
 		boutput(user, "[bicon(src)] *beep*")
@@ -2509,20 +2510,49 @@ TYPEINFO(/obj/item/cargotele)
 	name = "mineral accumulator"
 	desc = "A powerful device for quick ore and salvage collection and movement."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "gravgen-off"
+	icon_state = "accumulator-off"
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
-	var/active = 0
+	var/active = FALSE
 	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
+	var/image/hatch_image = null //no connected magnet = hatch closed cuz it won't take ore in
+	var/image/powercell_image = null
 
 	New()
 		var/obj/item/cell/P = new/obj/item/cell(src)
 		P.charge = P.maxcharge
 		src.cell = P
+		UpdateIcon()
 		..()
+
+	update_icon()
+		if (!src.powercell_image)
+			src.powercell_image = image(src.icon)
+			src.powercell_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.powercell_image.icon_state = "accumulator_cell_missing"
+		if (!src.hatch_image)
+			src.hatch_image = image(src.icon)
+			src.hatch_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.hatch_image.icon_state = "accumulator_closed"
+
+		if(!src.cell)
+			src.UpdateOverlays(src.powercell_image, "powercell")
+		else
+			src.UpdateOverlays(null, "powercell")
+
+		if(!target)
+			src.UpdateOverlays(src.hatch_image, "hatch")
+		else
+			src.UpdateOverlays(null, "hatch")
+
+		if(active)
+			icon_state = "accumulator-on"
+		else
+			icon_state = "accumulator-off"
+
 
 	attack_hand(var/mob/user)
 		if (!src.cell) boutput(user, SPAN_ALERT("It won't work without a power cell!"))
@@ -2534,23 +2564,21 @@ TYPEINFO(/obj/item/cargotele)
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
 				user.put_in_hand_or_drop(PCEL)
-
 				src.cell = null
 			else if (action == "Change the destination")
 				src.change_dest(user)
 			else if (action == "Flip the power switch")
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
-					src.active = 1
+					src.active = TRUE
 					src.anchored = ANCHORED
-					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
-					src.active = 0
+					src.active = FALSE
 					src.anchored = UNANCHORED
-					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
+			UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/cell/))
@@ -2561,22 +2589,23 @@ TYPEINFO(/obj/item/cargotele)
 				cell = W
 				user.visible_message("[user] inserts [W] into [src].", "You insert [W] into [src].")
 		else ..()
+		UpdateIcon()
 
 	process()
 		var/moved = 0
 		if (src.active)
 			if (!src.cell)
 				src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
-				src.active = 0
+				src.active = FALSE
 				src.anchored = UNANCHORED
-				icon_state = "gravgen-off"
+				UpdateIcon()
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
-				src.active = 0
+				src.active = FALSE
 				src.anchored = UNANCHORED
-				icon_state = "gravgen-off"
+				UpdateIcon()
 				return
 			PCEL.use(5)
 			if (src.target)
@@ -2636,6 +2665,7 @@ TYPEINFO(/obj/item/cargotele)
 				return
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
+		UpdateIcon()
 
 	Exited(Obj, newloc)
 		. = ..()

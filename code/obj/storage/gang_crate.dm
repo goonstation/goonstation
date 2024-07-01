@@ -674,7 +674,7 @@
 /obj/item/device/item_placer
 	name = "Item transformation viewer"
 	icon_state = "multitool"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = TABLEPASS | CONDUCT | ONBELT
 	w_class = W_CLASS_SMALL
 	var/off_x = 0
 	var/off_y = 0

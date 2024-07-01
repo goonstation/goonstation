@@ -65,9 +65,10 @@
 		var/turf/T = src.loc
 		if (istype(T, /turf))
 			T.hotspot_expose(1500,200)
+
 		var count = 0
-		for (var/obj/hotspot/chemfire/cf in range(3, T))
-			if (count > 4) return
+		for (var/obj/hotspot/chemfire/cf in range(4, T))
+			if (count > 7) return
 			if (cf.fire_color != CHEM_FIRE_DARKRED) continue
 			if (prob(50)) continue
 			var/obj/projectile/proj = initialize_projectile_pixel_spread(cf, new/datum/projectile/special/homing/fire_heal, src)
@@ -101,7 +102,7 @@
 	auto_find_targets = 0
 	silentshot = 1
 	pierces = 0
-	max_range = 5
+	max_range = 6
 	shot_sound = null
 
 	on_launch(var/obj/projectile/P)
@@ -117,12 +118,12 @@
 			return
 		var/obj/hotspot/chemfire/cf = locate(/obj/hotspot/chemfire) in T
 		if (cf == null)
-			fireflash(T, 0, 1)
+			fireflash(T, 0, 2500, 0, chemfire = CHEM_FIRE_DARKRED)
 
 	on_hit(atom/hit, direction, var/obj/projectile/P)
 		if(istype(hit, /mob/living/critter/fire_elemental))
 			var/mob/living/critter/fire_elemental/fe = hit
-			fe.HealDamage("All", 2, 2, 2)
+			fe.HealDamage("All", 5, 5, 5)
 			fe.add_stamina(10)
 			// place_fire(hit)
 

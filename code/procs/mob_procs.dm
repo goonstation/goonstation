@@ -594,6 +594,7 @@
 	return bleeding
 
 /mob/proc/equipped_limb()
+	RETURN_TYPE(/datum/limb)
 	return null
 
 /mob/living/critter/equipped_limb()

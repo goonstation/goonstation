@@ -32,7 +32,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	///skips the prompt asking if you want to arm the bomb. For 'pranks'
 	var/no_warning = FALSE
 
-	flags = FPRINT
 	var/image/image_light = null
 	p_class = 1.5
 
