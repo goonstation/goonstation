@@ -1,5 +1,7 @@
 
 (t)sat jun 29 24
+(u)LeahTheTech
+(+)Power transfer lasers can now pass through containment fields.
 (u)glowbold
 (p)19703
 (e)🆕📦|C-Feature, A-Game-Objects
