@@ -74829,6 +74829,11 @@
 /mob/living/critter/small_animal/cockroach/weak,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"uMZ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/fakeobject/synthomatic,
+/turf/unsimulated/floor/white,
+/area/owlery/lab)
 "uNO" = (
 /obj/item/sticker/gold_star{
 	anchored = 1;
@@ -96009,7 +96014,7 @@ cBl
 cCE
 cDP
 cBk
-vLJ
+uMZ
 eUj
 cFF
 cHw
