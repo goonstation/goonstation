@@ -107,7 +107,7 @@ datum
 				if(!affected_mob)
 					affected_mob = holder.my_atom
 				//let's not make the lungrot reaction effectively double the depletion rate of miasma
-				affected_mob.reagents.add_reagent("miasma", mult * depletion_rate)
+				affected_mob.reagents.add_reagent("miasma", src.calculate_depletion_rate(affected_mob, mult))
 				..()
 
 
