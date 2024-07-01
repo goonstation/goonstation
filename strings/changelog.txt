@@ -1,5 +1,9 @@
 
 (t)mon jul 01 24
+(u)Lord_Earthfire
+(p)19412
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The amount of chems a unit of a chemical decays into no longer changes with the speed the person metabolizes it.
 (u)Jan.antilles
 (p)19786
 (e)🎨🍝|C-Sprites, A-Catering
