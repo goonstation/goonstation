@@ -842,6 +842,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 	New(var/obj/thepod,var/obj/thetool,var/passmode)
 		src.pod = thepod
+		if(pod.bound_height == 64)
+			src.bar_x_offset += 16
+			src.bar_y_offset += 16
 		src.buildtool = thetool
 		src.mode = passmode
 		for (var/obj/overlay/construction_field/F in buildtool.active_fields)
@@ -876,15 +879,6 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 	onStart()
 		..()
-		//didn't work right for some reason
-		/*
-		if(pod.bound_height == 64)
-			bar.pixel_x += 16
-			bar.pixel_y += 16
-			border.pixel_x += 16
-			border.pixel_y += 16
-			updateBar()
-		*/
 
 		if (buildtool.steel_sheets.amount < action_build_cost)
 			interrupt(INTERRUPT_ALWAYS)
