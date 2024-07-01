@@ -1,5 +1,9 @@
 
 (t)mon jul 01 24
+(u)Jan.antilles
+(p)19786
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Add Cream or Salmon Fillet Slices to bagels to make extra tasty Cream Cheese or Lox bagels!
 (u)JORJ949
 (p)19512
 (e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
