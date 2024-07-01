@@ -865,7 +865,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	proc/dense_object_refresh()
 		. = FALSE
 		for (var/obj/overlay/construction_field/field in buildtool.active_fields)
-			if (F.to_build != EFIF_MODE_WALLS) //If we're not building walls, interruptions are alright
+			if (field.to_build != EFIF_MODE_WALLS) //If we're not building walls, interruptions are alright
 				continue
 			for (var/obj/O in get_turf(field))
 				if (O.density && !(istype(O, /obj/structure/girder)))
