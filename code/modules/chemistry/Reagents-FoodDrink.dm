@@ -1903,9 +1903,9 @@ datum
 			reagent_state = LIQUID
 			taste = "seaworthy"
 
-		fooddrink/alcoholic/kalimoxto
-			name = "Kalimoxto"
-			id = "kalimoxto"
+		fooddrink/alcoholic/kalimotxo
+			name = "Kalimotxo"
+			id = "kalimotxo"
 			fluid_r = 164
 			fluid_g = 77
 			fluid_b = 65
@@ -3320,7 +3320,6 @@ datum
 			fluid_b = 0
 			transparency = 225
 			overdose = 10
-			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 			hunger_value = 1
 			viscosity = 0.2
 

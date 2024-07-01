@@ -351,14 +351,16 @@
 
 /proc/record_player_playtime()
 	var/count = 1
-	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	var/list/recorded = list()
+	var/list/playtimes = list() //associative list with the format list("[index]" = list("id" = player_id, "seconds_played" = playtime_in_seconds))
 	for_by_tcl(P, /datum/player)
-		if (!P.ckey)
+		if (!P.id || (P.id in recorded))
 			continue
 		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
 		if (!P.current_playtime)
 			continue
 		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
+		recorded += P.id
 		count++
 
 	try

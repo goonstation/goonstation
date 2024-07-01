@@ -171,7 +171,7 @@ TYPEINFO(/obj/machinery/shipalert)
 	icon_state = "tinyhammer"
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	force = 5
 	throwforce = 5

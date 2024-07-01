@@ -916,11 +916,11 @@
 
 	if(my_client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("sing", message, user = my_client.mob, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("radio", message, user = my_client.mob, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("say", message, user = my_client.mob, strip_html = TRUE)
 
 	last_words = message
 
@@ -1758,10 +1758,7 @@
 	if (m_intent == "walk")
 		. += WALK_DELAY_ADD
 
-	if (src.nodamage)
-		return .
-
-	if (src.do_hurt_slowdown)
+	if (src.do_hurt_slowdown && !src.nodamage)
 		var/health_deficiency = 0
 		if (src.max_health > 0)
 			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
@@ -1775,7 +1772,7 @@
 
 	. = min(., maximum_slowdown)
 
-	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
+	if (pushpull_multiplier != 0 && !src.nodamage) // if we're not completely ignoring pushing/pulling
 		if (src.pulling)
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
@@ -1837,6 +1834,9 @@
 		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
+
+	if (src.nodamage)
+		return .
 
 	var/turf/T = get_turf(src)
 	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
@@ -2129,13 +2129,6 @@
 		shock_damage = 5 * prot
 	else
 		shock_damage = 1 * prot
-
-	if (H)
-		for (var/uid in H.pathogens)
-			var/datum/pathogen/P = H.pathogens[uid]
-			shock_damage = P.onshocked(shock_damage, wattage)
-			if (!shock_damage)
-				return 0
 
 	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0

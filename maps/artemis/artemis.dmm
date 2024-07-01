@@ -231,8 +231,8 @@
 /turf/simulated/floor/engine,
 /area/ship/artemis)
 "rC" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/artemis)
 "rH" = (
@@ -542,7 +542,7 @@
 	},
 /area/ship/artemis)
 "LM" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1;
 	icon_state = "propulsion"
 	},
@@ -644,7 +644,7 @@
 /turf/simulated/floor/bluegreen,
 /area/ship/artemis)
 "Uu" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/artemis)
 "UE" = (

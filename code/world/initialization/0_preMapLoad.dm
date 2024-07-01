@@ -52,6 +52,10 @@
 			roundLog << "<br>"
 			logLength += 4
 
+		// Global handlers that should be highly available
+		apiHandler = new()
+		eventRecorder = new()
+
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
 		abandon_allowed = config.respawn

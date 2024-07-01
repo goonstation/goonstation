@@ -78,7 +78,7 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("turbine_light")
-		new /obj/decal/fakeobjects/turbine_destroyed(src.loc)
+		new /obj/fakeobject/turbine_destroyed(src.loc)
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
