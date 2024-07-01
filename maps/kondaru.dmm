@@ -44991,6 +44991,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	name = "autoname - SS13";
+	pixel_x = 2;
+	pixel_y = 11;
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "mVR" = (
@@ -46702,13 +46709,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "oiX" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname - SS13";
-	pixel_x = 2;
-	pixel_y = 11;
-	tag = ""
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
