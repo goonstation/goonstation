@@ -22239,6 +22239,7 @@
 /obj/machinery/light/lamp/green,
 /obj/disposalpipe/trunk/west,
 /obj/machinery/disposal/small/west,
+/obj/item/device/camera_viewer/outpost/science,
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
