@@ -142,9 +142,6 @@
 	var/list/sound_list_laugh = null
 	var/list/sound_list_flap = null
 
-	var/list/pathogens = list()
-	var/list/immunities = list()
-
 	var/datum/simsHolder/sims = null
 
 	/// forces the mob to wear underpants, even if their flags tell them not to
@@ -618,10 +615,6 @@
 
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		P.ondeath()
 
 	src.drop_juggle()
 
@@ -1472,10 +1465,6 @@
 				return
 
 	message = process_accents(src,message)
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		message = P.onsay(message)
 
 	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
@@ -2447,79 +2436,6 @@
 		return src.r_hand
 	else
 		return null
-
-/mob/living/carbon/human/infected(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
-		return 0
-	if (P.pathogen_uid in src.immunities)
-		return 0
-	if (!(P.pathogen_uid in src.pathogens))
-		var/maxTierExisting = 0
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/PA = src.pathogens[uid]
-			maxTierExisting = max(maxTierExisting, PA.getHighestTier())
-		var/maxTierNew = P.getHighestTier()
-
-		// thanks, we already got strong pathogen, go away
-		if(maxTierNew <= maxTierExisting)
-			return 0
-
-		// wow, strong pathogen, let's kick out all the other ones
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/PA = src.pathogens[uid]
-			src.cured(PA)
-
-		// and get the new one instead
-		var/datum/pathogen/Q = new /datum/pathogen
-		Q.setup(0, P, 1)
-		pathogen_controller.mob_infected(Q, src)
-		src.pathogens += Q.pathogen_uid
-		src.pathogens[Q.pathogen_uid] = Q
-		Q.infected = src
-		logTheThing(LOG_PATHOLOGY, src, "is infected by [Q].")
-		return 1
-	else
-		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
-		if (C.generation < P.generation)
-			var/datum/pathogen/Q = new /datum/pathogen
-			Q.setup(0, P, 1)
-			logTheThing(LOG_PATHOLOGY, src, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
-			pathogen_controller.mob_infected(Q, src)
-			Q.stage = min(C.stage, Q.stages)
-			qdel(C)
-			src.pathogens[Q.pathogen_uid] = Q
-			Q.infected = src
-			return 1
-	return 0
-
-/mob/living/carbon/human/cured(var/datum/pathogen/P)
-	if (P.pathogen_uid in src.pathogens)
-		pathogen_controller.mob_cured(src.pathogens[P.pathogen_uid], src)
-		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-		var/pname = Q.name
-		src.pathogens -= P.pathogen_uid
-		var/datum/microbody/M = P.body_type
-		if (M.auto_immunize)
-			immunity(P)
-		qdel(Q)
-		logTheThing(LOG_PATHOLOGY, src, "is cured of [pname].")
-
-/mob/living/carbon/human/remission(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (P.pathogen_uid in src.pathogens)
-		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-		Q.remission()
-		logTheThing(LOG_PATHOLOGY, src, "'s pathogen [Q] enters remission.")
-
-/mob/living/carbon/human/immunity(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (!(P.pathogen_uid in src.immunities))
-		src.immunities += P.pathogen_uid
-		logTheThing(LOG_PATHOLOGY, src, "gains immunity to pathogen [P].")
 
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 

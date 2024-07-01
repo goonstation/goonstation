@@ -250,7 +250,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aaP" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -260,7 +260,7 @@
 	},
 /area/station/medical/cdc)
 "aaQ" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 1
 	},
 /obj/cable{
@@ -542,7 +542,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aby" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "abz" = (
@@ -640,7 +640,7 @@
 /area/russian)
 "abT" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -3670,13 +3670,13 @@
 /turf/space,
 /area/space)
 "alN" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/simulated/floor/greenwhite{
 	dir = 9
 	},
 /area/station/medical/cdc)
 "alO" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -3686,7 +3686,7 @@
 	},
 /area/station/medical/cdc)
 "alP" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -3732,7 +3732,7 @@
 	},
 /area/station/medical/cdc)
 "alV" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/cable{
 	icon_state = "1-2"
 	},

@@ -17,7 +17,6 @@ datum
 		var/id = "reagent"
 		var/description = ""
 		var/datum/reagents/holder = null
-		var/list/pathogen_nutrition = null
 		var/reagent_state = SOLID
 		var/data = null
 		var/volume = 0

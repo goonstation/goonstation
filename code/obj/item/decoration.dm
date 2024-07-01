@@ -17,6 +17,12 @@
 	vase7
 		icon_state = "vase7"
 
+	fleurdaffodil //commissioned sprite for Janantilles's office, please don't use this mappers
+		name = "daffodil vase"
+		desc = "A ribboned vase with a lovely daffodil. The tag says it's from S.F."
+		icon = 'icons/misc/janstuff.dmi'
+		icon_state = "fleur-daffodil"
+
 /obj/item/decoration/ashtray
 	name = "ashtray"
 	desc = "The rarely visited graveyard for cigarettes."
