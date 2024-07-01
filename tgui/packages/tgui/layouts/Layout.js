@@ -17,6 +17,7 @@ export const Layout = props => {
     ...rest
   } = props;
   return (
+    /* |GOONSTATION-CHANGE| */
     <div className={classes(['theme-' + theme, 'mode-' + mode])}>
       <div
         className={classes([
