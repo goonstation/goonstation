@@ -9,7 +9,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Autofocus, Box, Flex, NumberInput, Pointer, Section, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
-import { hexToHsva, HsvaColor, hsvaToHex, hsvaToHslString, hsvaToRgba, rgbaToHsva, validHex } from 'common/color';
+import { hexToHsva, HsvaColor, hsvaToHex, hsvaToHslString, hsvaToRgba, rgbaToHsva, validHex } from 'common/goonstation/colorful';
 import { Interaction, Interactive } from 'tgui/components/Interactive';
 import { classes } from 'common/react';
 import { Component, FocusEvent, FormEvent } from 'inferno';

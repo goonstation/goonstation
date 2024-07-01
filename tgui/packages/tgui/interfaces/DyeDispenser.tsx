@@ -9,7 +9,7 @@ import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { Button, ColorBox, Dimmer, Stack } from '../components';
 import { ColorSelector } from './ColorPickerModal';
-import { hexToHsva, HsvaColor, hsvaToHex } from 'common/color';
+import { hexToHsva, HsvaColor, hsvaToHex } from 'common/goonstation/colorful';
 
 type DyeDispenserParams = {
   bottle: boolean,
