@@ -3,7 +3,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "podfire"
 	density = 1
-	flags = FPRINT | USEDELAY
+	flags = USEDELAY
 	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS

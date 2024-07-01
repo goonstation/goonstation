@@ -12,7 +12,7 @@
 	initial_volume = 30
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	object_flags = NO_GHOSTCRITTER
 	fluid_overlay_states = 6
 

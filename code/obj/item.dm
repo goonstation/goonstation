@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/obj/item)
 	/*_____*/
 	/*Flags*/
 	/*‾‾‾‾‾*/
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	var/tool_flags = 0
 	var/c_flags = null
 	var/tooltip_flags = null
@@ -1178,6 +1178,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		while(checkloc && !istype(checkloc,/turf))
 			if(isliving(checkloc) && checkloc != user) // This heinous block is to make sure you're not swiping things from other people's backpacks
 				if(src in bible_contents) // Bibles share their contents globally, so magically taking stuff from them is fine
+					break
+				else if(src in terminus_storage) // ditto
 					break
 				else
 					return 0

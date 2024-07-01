@@ -33,7 +33,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "Electromagnetic Card"
 	icon_state = "emag"
 	item_state = "card-id"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
 	is_syndicate = 1
 	contraband = 6
@@ -73,7 +73,7 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id"
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
-	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
+	flags = TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
 	var/datum/pronouns/pronouns = null

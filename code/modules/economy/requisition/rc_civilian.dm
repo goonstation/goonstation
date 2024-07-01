@@ -651,12 +651,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/cell
 	feemod = PAY_IMPORTANT
 
-	rc_eval(atom/eval_item)
-		. = ..()
-		if(!.)
-			return
+	extra_eval(atom/eval_item)
+		. = FALSE
 		var/obj/item/cell/cell = eval_item
-		return cell.maxcharge >= 15000
+		if(cell.maxcharge >= 15000)
+			return TRUE
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"

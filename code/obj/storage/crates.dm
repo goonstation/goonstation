@@ -122,6 +122,11 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+	make_my_stuff()
+		. = ..()
+		if (prob(30))
+			new /obj/item/paper/businesscard/hemera_rcd(src)
+
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."

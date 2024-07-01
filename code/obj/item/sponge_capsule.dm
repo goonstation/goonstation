@@ -4,7 +4,7 @@
 	icon_state = "sponge"
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	throw_speed = 4
 	throw_range = 7
 	stamina_damage = 0
@@ -113,7 +113,7 @@
 	icon_state = "spongecaps"
 	w_class = W_CLASS_TINY
 	throwforce = 2
-	flags = TABLEPASS | FPRINT | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
