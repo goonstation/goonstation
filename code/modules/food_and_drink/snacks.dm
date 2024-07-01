@@ -1306,6 +1306,43 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			src.name = "seed bagel"
 			src.desc = "A bagel. But with seeds on it!"
 
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/cream))
+			boutput(user, SPAN_NOTICE("You top the bagel with cream cheese!"))
+			var/obj/item/reagent_containers/food/snacks/bagel/creamcheese/D = new/obj/item/reagent_containers/food/snacks/bagel/creamcheese(W.loc)
+			user.u_equip(W)
+			user.put_in_hand_or_drop(D)
+			qdel(W)
+			qdel(src)
+		if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon))
+			boutput(user, SPAN_NOTICE("You top the bagel with tasty, salty lox!"))
+			var/obj/item/reagent_containers/food/snacks/bagel/lox/D = new/obj/item/reagent_containers/food/snacks/bagel/lox(W.loc)
+			user.u_equip(W)
+			user.put_in_hand_or_drop(D)
+			qdel(W)
+			qdel(src)
+
+	creamcheese
+		name = "cream cheese bagel"
+		desc = "This bagel has cream cheese on it. Yum!"
+		icon_state = "bagel-creamcheese"
+		heal_amt = 2
+		bites_left = 3
+		initial_volume = 10
+		initial_reagents = list("cream"=10)
+		food_effects = list("food_explosion_resist", "food_cold")
+
+	lox
+		name = "lox bagel"
+		desc = "Lovingly topped with salty salmon."
+		icon_state = "bagel-lox"
+		heal_amt = 4
+		bites_left = 3
+		initial_volume = 10
+		initial_reagents = list("salt"=5)
+		food_effects = list("food_explosion_resist", "food_cold")
+
+
 /obj/item/reagent_containers/food/snacks/crumpet
 	name = "crumpet"
 	desc = "Fresh from England! Goes best with tea."
