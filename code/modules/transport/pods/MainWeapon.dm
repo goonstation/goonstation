@@ -861,10 +861,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 					space_adjustment += EFIF_FLOOR_BUILD_TIME
 				return space_adjustment
 
-	///Check whether dense objects are present in build fields; interrupt any fields which have been blocked
+	///Check whether dense objects are present in wall build fields; interrupt any fields which have been blocked
 	proc/dense_object_refresh()
 		. = FALSE
 		for (var/obj/overlay/construction_field/field in buildtool.active_fields)
+			if (F.to_build != EFIF_MODE_WALLS) //If we're not building walls, interruptions are alright
+				continue
 			for (var/obj/O in get_turf(field))
 				if (O.density && !(istype(O, /obj/structure/girder)))
 					src.action_build_cost -= buildtool.get_cost_mod(field)
