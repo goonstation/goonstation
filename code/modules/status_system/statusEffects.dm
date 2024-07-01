@@ -2158,6 +2158,58 @@
 	maxDuration = 30 SECONDS
 	effect_quality = STATUS_QUALITY_NEGATIVE
 
+/datum/statusEffect/numb  // Limb specific stuns and weaknesses
+	id = "numb"
+	name = "Numb"
+	icon_state = "muted"
+	desc = "Parent limb arm stun thingy. You shouldn't see this"
+	maxDuration = 30 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd()
+		. = ..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (id == "numb_r_arm")
+				H.drop_from_slot(H.r_hand)
+				SPAWN(0)
+					H.hud.update_hands()
+			if (id == "numb_l_arm")
+				H.drop_from_slot(H.l_hand)
+				SPAWN(0)
+					H.hud.update_hands()
+
+	onRemove()
+		. = ..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (id == "numb_r_arm" || id == "numb_l_arm")
+				H.hud.update_hands()
+
+	numb_r_arm
+		id = "numb_r_arm"
+		name = "Numb Right Arm"
+		icon_state = "numb_r_arm"
+		desc = "You can't seem to feel or move your right arm!"
+
+	numb_l_arm
+		id = "numb_l_arm"
+		name = "Numb Left Arm"
+		icon_state = "numb_l_arm"
+		desc = "You can't seem to feel or move your left arm!"
+
+	numb_r_leg
+		id = "numb_r_leg"
+		name = "Numb Right Leg"
+		icon_state = "numb_r_leg"
+		desc = "You can't seem to feel or move your right leg!"
+
+	numb_l_leg
+		id = "numb_l_leg"
+		name = "Numb Left Leg"
+		icon_state = "numb_l_leg"
+		desc = "You can't seem to feel or move your left leg!"
+
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES
 	id = "drowsy"

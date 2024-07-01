@@ -286,21 +286,27 @@ datum
 					M.losebreath += (1 * mult)
 					M.emote("gasp")
 				switch(counter += (1 * mult))
-					if (20 to 30)
+					if (10 to 20)
 						if (prob(15))
 							boutput(M, SPAN_ALERT("You feel weak."))
-							M.setStatusMin("stunned", 0.5 SECONDS * mult)
 							M.take_toxin_damage(0.5 * mult)
-					if (30 to 45)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(6 SECONDS * mult)
+					if (20 to 35)
 						if (prob(20))
 							boutput(M, SPAN_ALERT("You feel very weak."))
-							M.setStatusMin("stunned", 1 SECONDS * mult)
 							M.take_toxin_damage(1 * mult)
-					if (45 to INFINITY)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(9 SECONDS * mult)
+					if (35 to INFINITY)
 						if (prob(25))
 							boutput(M, SPAN_ALERT("You feel horribly weak."))
-							M.setStatusMin("stunned", 2 SECONDS * mult)
 							M.take_toxin_damage(1.5 * mult)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(9 SECONDS * mult, 2)
 
 				..()
 				return
@@ -1110,10 +1116,12 @@ datum
 			transparency = 50
 			depletion_rate = 0.2
 			var/counter = 1
+			var/list/limb_list = list("l_arm", "l_leg", "r_arm", "r_leg") // Shuffled when initially inserted
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
+					shuffle_list(limb_list)
 					var/mob/M = holder.my_atom
 					M.add_stam_mod_max("r_pancuronium", -30)
 					..()
@@ -1128,27 +1136,46 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (3 to 9)
+					if (2 to 6)
 						if (probmult(10))
 							M.emote(pick("drool", "tremble"))
-					if (9 to 18)
-						if (prob(4))
-							boutput(M, SPAN_ALERT("<b>You feel [pick("weak", "like you can barely move", "tingly")].</b>"))
-							M.setStatusMin("slowed", 2 SECONDS * mult)
-						else if (prob(4))
-							boutput(M, SPAN_ALERT("<b>You feel [pick("horribly weak", "numb")].</b>"))
-							M.setStatusMin("stunned", 1 SECOND * mult)
+					if (6 to 12)
+						if (probmult(6))
+							boutput(M, pick(SPAN_ALERT("<b>You feel [pick("horribly weak", "numb")].</b>"),\
+							SPAN_ALERT("<b>You feel [pick("weak", "like you can barely move", "tingly")].</b>")))
 						else if (probmult(8))
 							M.emote(pick("drool", "tremble"))
-					if (18 to INFINITY)
-						M.setStatusMin("knockdown", 20 SECONDS * mult)
-						if (prob(10))
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							H.numb_limb(5 SECONDS * mult, 1, FALSE, limb_list)
+					if (12 to 18)
+						if (probmult(6))
+							boutput(M, pick(SPAN_ALERT("<b>You feel [pick("horribly weak", "numb")].</b>"),\
+							SPAN_ALERT("<b>You feel [pick("weak", "like you can barely move", "tingly")].</b>")))
+						else if (probmult(8))
+							M.emote(pick("drool", "tremble"))
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							H.numb_limb(5 SECONDS * mult, 2, FALSE, limb_list)
+					if (18 to 24)
+						if (prob(8))
 							M.emote(pick("drool", "tremble", "gasp"))
 							M.losebreath += (1 * mult)
+						if (prob(7))
+							boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
+							M.losebreath+=(3 * mult)
+						if (ishuman(M))
+							var/mob/living/carbon/human/H = M
+							H.numb_limb(5 SECONDS * mult, 3, FALSE, limb_list)
+					if (24 to INFINITY)
+						M.setStatusMin("paralysis", 20 SECONDS * mult)
+						if (prob(25) && (M.get_oxygen_deprivation() < 40)) // A bit more consistant, it won't stack with actual damaging things, but isn't as random
+							M.losebreath += (3 * mult)
 						if (prob(9))
 							boutput(M, SPAN_ALERT("<b>You can't [pick("move", "feel your legs", "feel your face", "feel anything")]!</b>"))
 						if (prob(7))
 							boutput(M, SPAN_ALERT("<b>You can't breathe!</b>"))
+							M.emote(pick("drool", "tremble", "gasp"))
 							M.losebreath+=(3 * mult)
 				..()
 				return

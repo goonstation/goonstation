@@ -1344,6 +1344,8 @@
 		return 1
 	if (src.limbs && (src.hand ? !src.limbs.l_arm : !src.limbs.r_arm))
 		return 1
+	if (src.hasStatus("numb_l_arm") && src.hasStatus("numb_r_arm"))
+		return 1
 
 	/*if (src.limbs && (src.hand ? !src.limbs.l_arm:can_hold_items : !src.limbs.r_arm:can_hold_items)) // this was fucking stupid and broke item limbs, I mean really, how do you restrain someone whos arm is a goddamn CHAINSAW
 		return 1*/
@@ -1877,7 +1879,7 @@
 
 /mob/living/carbon/human/can_hold_two_handed()
 	. = ..()
-	if (src.r_hand || src.l_hand)
+	if (src.r_hand || src.l_hand || src.hasStatus("numb_l_arm") || src.hasStatus("numb_r_arm"))
 		return FALSE
 	if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
 		return FALSE
@@ -1922,7 +1924,7 @@
 			return 0
 		else
 			if (hand)
-				if (!src.l_hand)
+				if (!src.l_hand && !src.hasStatus("numb_l_arm"))
 					if (I == src.r_hand && I.cant_self_remove)
 						return 0
 					if (src.limbs && (!src.limbs.l_arm || istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)))
@@ -1939,7 +1941,7 @@
 				else
 					return 0
 			else
-				if (!src.r_hand)
+				if (!src.r_hand && !src.hasStatus("numb_r_arm"))
 					if (I == src.l_hand && I.cant_self_remove)
 						return 0
 					if (src.limbs && (!src.limbs.r_arm || istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
@@ -2161,7 +2163,7 @@
 			if (I.w_class <= W_CLASS_POCKET_SIZED && src.w_uniform)
 				return TRUE
 		if (SLOT_L_HAND)
-			if (src.limbs.l_arm)
+			if (src.limbs.l_arm && !src.hasStatus("numb_l_arm"))
 				if (!istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
@@ -2174,7 +2176,7 @@
 						return FALSE
 				return TRUE
 		if (SLOT_R_HAND)
-			if (src.limbs.r_arm)
+			if (src.limbs.r_arm && !src.hasStatus("numb_r_arm"))
 				if (!istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm) && !istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm))
 					return FALSE
 				if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
@@ -3411,10 +3413,10 @@
 	var/missing_legs = 0
 	var/missing_arms = 0
 	if (src.limbs)
-		if (!src.limbs.l_leg) missing_legs++
-		if (!src.limbs.r_leg) missing_legs++
-		if (!src.limbs.l_arm) missing_arms++
-		if (!src.limbs.r_arm) missing_arms++
+		if (!src.limbs.l_leg || src.hasStatus("numb_l_leg")) missing_legs++
+		if (!src.limbs.r_leg || src.hasStatus("numb_r_leg")) missing_legs++
+		if (!src.limbs.l_arm || src.hasStatus("numb_l_arm")) missing_arms++
+		if (!src.limbs.r_arm || src.hasStatus("numb_r_arm")) missing_arms++
 	if (src.lying || GET_COOLDOWN(src, "unlying_speed_cheesy"))
 		missing_legs = 2
 	else if (src.shoes && src.shoes.chained)
@@ -3560,6 +3562,22 @@
 		. += 1
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
+
+///Numb one or more limbs without stacking status effects or targeting limbs that don't exist
+/mob/living/carbon/human/proc/numb_limb(duration, count=1, random=TRUE, list/target_limbs=list("l_arm", "l_leg", "r_arm", "r_leg"),)
+	if(!src.limbs)
+		return // no limb datum
+	var/list/obj/item/parts/limbs_to_numb = list()
+	for(var/target in target_limbs)
+		var/obj/item/parts/limb = src.limbs.vars[target]
+		if(istype(limb))
+			limbs_to_numb += limb
+	if(!length(limbs_to_numb))
+		return // no limbs
+	if(random)
+		shuffle_list(limbs_to_numb)
+	for (var/i in 1 to min(count, length(limbs_to_numb)))
+		src.setStatusMin("numb_[limbs_to_numb[i].slot]", duration)
 
 /mob/living/carbon/human/get_blood_absorption_rate()
 	. = ..()

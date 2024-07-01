@@ -182,10 +182,12 @@
 
 	power *= clamp(1-exploprot, 0, 1)
 	power -= reduction
-	var/b_loss = clamp(power*15, 0, 120)
+	var/b_loss = clamp(power*15, 0, 125)
 	var/f_loss = clamp((power-2.5)*10, 0, 120)
 
-	var/delib_chance = b_loss - 20
+	var/delib_chance = b_loss - 25
+	var/numb_chance = clamp(b_loss * 1.5, 0, 100)
+
 	if(src.bioHolder && src.bioHolder.HasEffect("shoot_limb"))
 		delib_chance += 20
 
@@ -200,6 +202,8 @@
 				src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg")))
 		else
 			src.sever_limb(pick(list("l_arm","r_arm","l_leg","r_leg"))) //max one delimb at once
+	else if (prob(numb_chance) && !shielded) // a middle ground between a fully lost limb and no effect
+		src.numb_limb(30 SECONDS)
 
 	switch (power)
 		if (-INFINITY to 0) //blocked
