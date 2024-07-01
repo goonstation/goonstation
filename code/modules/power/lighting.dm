@@ -227,6 +227,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			A.remove_light(src)
 		if (light)
 			light.dispose()
+
+		qdel(src.light_overlay)
 		..()
 
 	proc/autoposition(setdir = null, instant = FALSE)
