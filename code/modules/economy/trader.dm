@@ -937,7 +937,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
 
-		src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
@@ -947,6 +946,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/podparts/artillery(src)
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
+		src.goods_sell += new /datum/commodity/clothing_restock(src)
 #ifdef UNDERWATER_MAP
 		src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
