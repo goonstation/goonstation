@@ -345,6 +345,15 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 2
 	requiredResearch = list(/datum/geneticsResearchEntry/checker)
 
+/datum/geneticsResearchEntry/critter_scanner
+	name = "Non-humanoid Scanner"
+	desc = "Upgrades analysers in the scanner to allow for scanning of non-humanoids."
+	researchTime = 1200
+	researchCost = 100
+	tier = 2
+	requiredResearch = list(/datum/geneticsResearchEntry/checker)
+
+
 /datum/geneticsResearchEntry/rad_dampers
 	name = "Radiation Dampeners"
 	desc = "Reduces the amount of harmful radiation caused by Radiation Emitters."
@@ -460,30 +469,30 @@ var/datum/geneticsResearchManager/genResearch = new()
 // Things related to DNA samples //
 ///////////////////////////////////
 
-/proc/create_new_dna_sample_file(var/mob/living/carbon/C)
-	if (!istype(C))
+/proc/create_new_dna_sample_file(var/mob/living/L)
+	if (!istype(L) && L.has_genetics())
 		return null
-	if (!istype(C.bioHolder))
+	if (!istype(L.bioHolder))
 		return null
 
 	var/datum/computer/file/genetics_scan/scan = new /datum/computer/file/genetics_scan()
-	scan.subject_name = C.real_name
-	scan.subject_uID = C.bioHolder.Uid
-	scan.subject_stability = C.bioHolder.genetic_stability
+	scan.subject_name = L.real_name
+	scan.subject_uID = L.bioHolder.Uid
+	scan.subject_stability = L.bioHolder.genetic_stability
 	scan.scanned_at = TIME
 
 	scan.dna_active = list()
 	scan.dna_pool = list()
 
-	for (var/bioEffectId in C.bioHolder.effects)
-		var/datum/bioEffect/BE = C.bioHolder.GetEffect(bioEffectId)
+	for (var/bioEffectId in L.bioHolder.effects)
+		var/datum/bioEffect/BE = L.bioHolder.GetEffect(bioEffectId)
 		var/datum/bioEffect/scannedBE = new BE.type(scan)
 		// copy necessary information
 		// currently only name, for chromosome presence
 		scannedBE.name = BE.name
 		scan.dna_active += scannedBE
-	for (var/bioEffectId in C.bioHolder.effectPool)
-		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(bioEffectId)
+	for (var/bioEffectId in L.bioHolder.effectPool)
+		var/datum/bioEffect/BE = L.bioHolder.GetEffectFromPool(bioEffectId)
 		var/datum/bioEffect/scannedBE = new BE.type(scan)
 		scannedBE.dnaBlocks.blockList = BE.dnaBlocks.blockList
 		scannedBE.dnaBlocks.blockListCurr = BE.dnaBlocks.blockListCurr
