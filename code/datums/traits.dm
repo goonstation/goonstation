@@ -979,14 +979,13 @@ TYPEINFO(/datum/trait/partyanimal)
 					if(A.associated_reagent == selected_reagent) return
 			addAddiction(owner)
 
-	proc/addAddiction(var/mob/owner)
-		var/mob/living/M = owner
+	proc/addAddiction(var/mob/living/owner)
 		var/datum/ailment_data/addiction/AD = new
 		AD.associated_reagent = selected_reagent
 		AD.last_reagent_dose = world.timeofday
 		AD.name = "[selected_reagent] addiction"
-		AD.affected_mob = M
-		M.ailments += AD
+		AD.affected_mob = owner
+		owner.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
 
 	onRemove(mob/owner)
 		for(var/datum/ailment_data/addiction/AD in owner.ailments)
