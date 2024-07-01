@@ -413,7 +413,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	appearanceString = "pod_weapon_efif"
 	icon_state = "constructor"
-	firerate = 12
+	firerate = 15
 	var/mode = EFIF_MODE_REPAIR
 	///Current loaded steel sheets (only accepts steel, as the system's metalforming is designed for it)
 	var/obj/item/sheet/steel_sheets = null
@@ -453,7 +453,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	//Stopgap discoverability feature, pending pod UI improvement
 	activate()
 		. = ..()
-		if(ship.pilot)
+		if(ship?.pilot)
 			src.opencomputer(ship.pilot)
 
 	Fire(var/mob/user,var/shot_dir_override = -1)
@@ -811,7 +811,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 
 		else if(href_list["cutter"])
 			mode = EFIF_MODE_DRILL
-			firerate = 12
+			firerate = 15
 
 		else if(href_list["wide_field"])
 			wide_field = !wide_field
