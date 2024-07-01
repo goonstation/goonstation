@@ -1,5 +1,25 @@
 
+(t)mon jul 01 24
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
+(u)nova2053
+(p)19553
+(e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
+(+)Normal and synthetic organs will no longer make you indefinitely full.
 (t)sat jun 29 24
+(u)LeahTheTech
+(+)Power transfer lasers can now pass through containment fields.
+(u)glowbold
+(p)19703
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Kinetic projectiles progressively break computers/consoles to scrap.
+(+)Energy projectiles, including tasers, have a chance to break computer/console screens.
 (u)joeled
 (p)19647
 (e)🗺💅🔬|A-Mapping, C-QoL, A-Science

@@ -5710,7 +5710,7 @@
 /turf/simulated/floor/airless/scorched,
 /area/space)
 "pu" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/simulated/floor/airless/scorched,
 /area/space)
 "pv" = (
@@ -5818,7 +5818,6 @@
 /area/space)
 "pL" = (
 /obj/table/auto,
-/obj/item/synthmodule/assistant,
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "pM" = (
@@ -9146,10 +9145,10 @@
 /turf/unsimulated/floor/white,
 /area/space)
 "xI" = (
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},

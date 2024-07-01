@@ -91,7 +91,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
-		var/i = 0
+		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
 			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative
