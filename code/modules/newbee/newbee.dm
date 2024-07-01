@@ -1,5 +1,5 @@
-#define NEWBEE_ROUNDS 25
-#define NEWBEE_ROUNDS_RP 25
+#define NEWBEE_ROUNDS 30
+#define NEWBEE_ROUNDS_RP 30
 
 /// indicates if this is a player who is new to goonstation
 /datum/player/var/is_newbee = FALSE

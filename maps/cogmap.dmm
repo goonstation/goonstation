@@ -26499,10 +26499,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
-"bRF" = (
-/obj/stool/chair/yellow,
-/turf/simulated/floor/yellow/side,
-/area/station/engine/elect)
 "bRT" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
@@ -27446,14 +27442,6 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purple/side{
 	dir = 9
-	},
-/area/station/science/lobby)
-"bVl" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/turf/simulated/floor/purple/side{
-	dir = 1
 	},
 /area/station/science/lobby)
 "bVm" = (
@@ -28534,13 +28522,6 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/pump,
-/turf/simulated/floor/plating,
-/area/station/science/storage)
-"bYT" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/manufacturer/gas,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYV" = (
@@ -40413,6 +40394,11 @@
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
+"eFF" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
 "eFK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40987,6 +40973,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
+"fdS" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/lobby)
 "feD" = (
 /obj/grille/steel,
 /obj/cable,
@@ -41011,18 +41006,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/medsci)
-"ffc" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "ffe" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -42265,10 +42248,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"fZo" = (
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
 "fZG" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -42903,10 +42882,6 @@
 /obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"gEa" = (
-/obj/stool/chair/yellow,
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "gEu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45206,6 +45181,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/brig)
+"ipJ" = (
+/obj/stool/chair/comfy/blue,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "ipZ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -45214,17 +45194,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"iqh" = (
-/obj/deployable_turret/riot/active,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "iqk" = (
 /obj/machinery/cargo_router/Router13,
 /turf/space,
@@ -50552,6 +50521,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"mMm" = (
+/obj/deployable_turret/riot/active,
+/obj/machinery/turretid{
+	name = "External perimeter turret deactivation control";
+	pixel_y = 28;
+	req_access = null;
+	turretArea = /area/station/turret_protected/armory_outside
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -51165,6 +51145,10 @@
 "nkI" = (
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
+"nkK" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "nlf" = (
 /obj/stool/chair{
 	dir = 1
@@ -52956,6 +52940,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"oDS" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "oEp" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9;
@@ -54489,6 +54480,11 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
+"pJe" = (
+/obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "pJv" = (
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment/mail,
@@ -57719,10 +57715,6 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"sfM" = (
-/obj/stool/chair/comfy/blue,
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "sfR" = (
 /obj/storage/crate,
 /obj/machinery/alarm{
@@ -62587,6 +62579,18 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"vUR" = (
+/obj/machinery/door/airlock/pyro/security{
+	aiControlDisabled = 1;
+	name = "Armory"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "vVq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/grille/catwalk,
@@ -65496,6 +65500,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
+"yiI" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "yiM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -91747,7 +91756,7 @@ bQK
 bPx
 bOd
 bHW
-bYT
+oDS
 huq
 cak
 ite
@@ -95882,7 +95891,7 @@ adE
 adE
 adE
 ajj
-ffc
+vUR
 dPe
 sfv
 xnp
@@ -95972,7 +95981,7 @@ snM
 bQW
 bSA
 mlR
-bVl
+fdS
 bWw
 bXB
 bZf
@@ -96178,7 +96187,7 @@ gsU
 nxc
 act
 acV
-iqh
+mMm
 adE
 adE
 adE
@@ -96788,7 +96797,7 @@ adE
 adE
 adE
 aji
-ffc
+vUR
 iqt
 dSf
 aHB
@@ -97802,7 +97811,7 @@ dxk
 coq
 cAL
 cqt
-fZo
+pJe
 djA
 ctg
 ctZ
@@ -99927,7 +99936,7 @@ wnj
 mwV
 kfp
 mRI
-sfM
+ipJ
 dqC
 ucm
 xuy
@@ -100218,7 +100227,7 @@ dmk
 cox
 cpy
 cqB
-cqB
+nkK
 cqB
 cqB
 jIo
@@ -110767,7 +110776,7 @@ bbg
 bNp
 bOR
 vdE
-bRF
+eFF
 qwc
 bVz
 bKp
@@ -113781,7 +113790,7 @@ qWU
 dcN
 qRH
 nqD
-gEa
+yiI
 uHm
 bMc
 uks
