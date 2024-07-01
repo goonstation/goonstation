@@ -1298,13 +1298,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	food_effects = list("food_explosion_resist")
 	meal_time_flags = MEAL_TIME_BREAKFAST
+	var/random_bagel = TRUE
 
 	New()
 		..()
-		if(rand(1,3) == 1)
-			src.icon_state = "seedbagel"
-			src.name = "seed bagel"
-			src.desc = "A bagel. But with seeds on it!"
+		if (random_bagel)
+			if(prob(33))
+				src.icon_state = "seedbagel"
+				src.name = "seed bagel"
+				src.desc = "A bagel. But with seeds on it!"
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/cream))
@@ -1331,6 +1333,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		initial_volume = 10
 		initial_reagents = list("cream"=10)
 		food_effects = list("food_explosion_resist", "food_cold")
+		random_bagel = FALSE
 
 	lox
 		name = "lox bagel"
@@ -1341,6 +1344,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		initial_volume = 10
 		initial_reagents = list("salt"=5)
 		food_effects = list("food_explosion_resist", "food_cold")
+		random_bagel = FALSE
 
 
 /obj/item/reagent_containers/food/snacks/crumpet
