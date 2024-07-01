@@ -86,15 +86,16 @@ TYPEINFO(/turf/variableTurf/clear)
 		sound_environment = 22
 		ambient_light = TRENCH_LIGHT
 
-/proc/decideSolid(var/turf/current, var/turf/center, var/sizemod = 0)
-	if(!current || !center || (current.loc.type != /area/space && !istype(current.loc , /area/allowGenerate) && !isgenplanet(current)) || !istype(current, /turf/space))
-		return 0
-	if(ISDISTEDGE(current, AST_MAPBORDER))
-		return 0
-	var/probability = 100 - (((abs(center.x - current.x) + abs(center.y - current.y)) - (AST_MINSIZE+sizemod)) * AST_REDUCTION) + rand(-AST_TILERNG,AST_TILERNG)
-	if((abs(center.x - current.x) + abs(center.y - current.y)) <= (AST_MINSIZE+sizemod) || prob(probability))
-		return 1
-	return 0
+// this macro determines if a turf is to be considered for mining asteroid generation
+#define decideSolid(current, center, sizemod)\
+	if (center && (area_space_nopower(current?.loc) || isgenplanet(current)) && istype(current, /turf/space) && !ISDISTEDGE(current, AST_MAPBORDER)) {\
+		var/distance = (abs(center.x - current.x) + abs(center.y - current.y)); \
+		var/probability = 100 - ((distance - (AST_MINSIZE+sizemod)) * AST_REDUCTION) + rand(-AST_TILERNG,AST_TILERNG); \
+		if(distance <= (AST_MINSIZE+sizemod) || prob(probability)) { \
+			solidTiles += current; \
+			edgeTiles += current; \
+		}; \
+	}; \
 
 /datum/mapGenerator
 	var/list/seeds = list()
@@ -263,7 +264,7 @@ TYPEINFO(/turf/variableTurf/clear)
 
 			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate) && !isgenplanet(X)))
 				X = pick(miningZ)
-				LAGCHECK(LAG_REALTIME)
+				LAGCHECK_IF_LIVE(LAG_REALTIME)
 
 			var/list/solidTiles = list()
 			var/list/edgeTiles = list(X)
@@ -273,35 +274,26 @@ TYPEINFO(/turf/variableTurf/clear)
 
 			while(length(edgeTiles))
 				var/turf/curr = edgeTiles[1]
-				edgeTiles.Remove(curr)
+				edgeTiles -= curr
 
 				if(curr in visited) continue
-				else visited.Add(curr)
+				else visited += curr
 
 				var/turf/north = get_step(curr, NORTH)
 				var/turf/east = get_step(curr, EAST)
 				var/turf/south = get_step(curr, SOUTH)
 				var/turf/west = get_step(curr, WEST)
-				if(decideSolid(north, X, sizeMod))
-					solidTiles.Add(north)
-					edgeTiles.Add(north)
-				if(decideSolid(east, X, sizeMod))
-					solidTiles.Add(east)
-					edgeTiles.Add(east)
-				if(decideSolid(south, X, sizeMod))
-					solidTiles.Add(south)
-					edgeTiles.Add(south)
-				if(decideSolid(west, X, sizeMod))
-					solidTiles.Add(west)
-					edgeTiles.Add(west)
+				decideSolid(north, X, sizeMod)
+				decideSolid(east, X, sizeMod)
+				decideSolid(south, X, sizeMod)
+				decideSolid(west, X, sizeMod)
 				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			var/list/placed = list()
-			for(var/turf/T in solidTiles)
-				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate) || isgenplanet(T))
-					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
-					placed.Add(AST)
-					AST.quality = quality
+			for(var/turf/T as anything in solidTiles)
+				var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+				placed += AST
+				AST.quality = quality
 				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			if(prob(15))
@@ -317,15 +309,15 @@ TYPEINFO(/turf/variableTurf/clear)
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()
+					var/maxrand = round(AST_RNGWALKCNT * 1.5)
 					for(var/k in 0 to AST_RNGWALKINST-1)
 						var/turf/T = pick(placed)
-						var/maxrand = round(AST_RNGWALKCNT * 1.5)
 						for(var/j in 0 to rand(AST_RNGWALKCNT, maxrand)-1)
-							holeList.Add(T)
-							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
+							T = get_step_rand_cardinal(T)
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
 							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
+							holeList += T
 		return miningZ
 
 /proc/makeMiningLevel()
@@ -342,9 +334,9 @@ TYPEINFO(/turf/variableTurf/clear)
 	#ifdef UPSCALED_MAP
 	num_to_place *= 3
 	#endif
+	var/list/wanted_tags = get_prefab_tags()
 	for (var/n in 1 to num_to_place)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/list/wanted_tags = get_prefab_tags()
 		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags_any=wanted_tags)
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
