@@ -26,7 +26,7 @@
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "d" = (
-/obj/item/wrestlingbell{
+/obj/machinery/wrestlingbell{
 	pixel_y = -3;
 	pixel_x = 22;
 	name = "Chess-tling bell";
