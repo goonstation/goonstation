@@ -1,5 +1,9 @@
 
 (t)mon jul 01 24
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
 (u)BatElite
 (p)19623
 (e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
