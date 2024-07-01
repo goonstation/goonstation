@@ -1,5 +1,9 @@
 
 (t)mon jul 01 24
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
 (u)nova2053
 (p)19553
 (e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
