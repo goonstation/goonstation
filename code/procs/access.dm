@@ -229,17 +229,11 @@
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
 						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload, access_researchfoyer, access_telesci,
 						access_artlab, access_robotdepot,
-						#ifdef SCIENCE_PATHO_MAP
-						, access_pathology
-						#endif
 						)
 		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload, access_teleporter
-						#ifndef SCIENCE_PATHO_MAP
-						, access_pathology
-						#endif
 						)
 		if("Chief Engineer")
 			return list(access_engineering, access_maint_tunnels,
@@ -286,11 +280,7 @@
 		if("Geneticist")
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
 		if("Pathologist")
-			#ifdef SCIENCE_PATHO_MAP
-			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_pathology, access_researchfoyer)
-			#else
 			return list(access_medical, access_medical_lockers, access_morgue, access_pathology, access_maint_tunnels)
-			#endif
 		if("Roboticist")
 			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Pharmacist")

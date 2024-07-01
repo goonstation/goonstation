@@ -4584,7 +4584,7 @@
 /area/moon/museum/west)
 "kX" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/grey/side{
 	dir = 1
 	},
