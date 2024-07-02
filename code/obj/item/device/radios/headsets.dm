@@ -123,6 +123,12 @@
 /obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
 
+/obj/item/device/radio/headset/command/inspector
+	name = "inspector's headset"
+	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
+	icon_override = "inspector"
+	icon_tooltip = "Inspector"
+
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
 	desc = "So the captain can know exactly what's going on around the station while doing nothing about any of it."
