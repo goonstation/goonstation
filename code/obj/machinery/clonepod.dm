@@ -860,6 +860,30 @@ TYPEINFO(/obj/machinery/clonepod)
 				A:malfunction()
 	*/
 
+/obj/machinery/clonepod/martian // Putting this here because of defines
+	name = "martian pod"
+	icon = 'icons/obj/martian.dmi'
+	icon_state = "cloner"
+	desc = "Ew! God knows what this is for."
+
+	update_icon()
+		src.icon_state = "cloner[src.occupant ? "-on" : ""]"
+
+	get_desc(dist, mob/user)
+		. = ""
+		if ((!isnull(src.occupant)) && (!isdead(src.occupant)))
+			//var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
+			. += "<br>There's something displayed on a panel... IYUQ [src.get_progress()]% JVMQMWKP."
+
+		var/meat_pct = round( 100 * (src.meat_level / MAXIMUM_MEAT_LEVEL) )
+
+		if (src.meat_level <= 1)
+			. += "<br>[SPAN_ALERT("UZJQ: PWDD 0.")]"
+		else if (src.meat_level <= MEAT_LOW_LEVEL)
+			. += "<br>[SPAN_ALERT("UZJQ: PWDD ([meat_pct]%).")]"
+		else
+			. += "<br>PWDD [meat_pct]% JVMQMWKP."
+
 //WHAT DO YOU WANT FROM ME(AT)
 TYPEINFO(/obj/machinery/clonegrinder)
 	mats = 10
