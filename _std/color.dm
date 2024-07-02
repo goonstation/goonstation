@@ -16,6 +16,8 @@
 
 #define hex_to_rgb_list(hex) rgb2num(hex)
 
+#define hex_to_hsv_list(hex) rgb2num(hex,COLORSPACE_HSV)
+
 /proc/random_color()
 	return rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 

@@ -23,7 +23,7 @@
 	var/list/hidden_categories = list(
 		"nopug",
 		"cloner_stuff",
-		"hemophilia",
+		"hemophilia"
 	)
 
 	var/list/traitData = list()
@@ -1206,6 +1206,11 @@ TYPEINFO(/datum/trait/partyanimal)
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 1
 
+/datum/trait/poshfence
+	name= "Dermachromatic"
+	desc = "Your skin is an odd color."
+	id = "poshfence"
+	points = -1
 
 /datum/trait/lizard
 	name = "Reptilian"
