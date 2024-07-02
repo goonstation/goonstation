@@ -1370,6 +1370,7 @@
 	var/pct = display_max ? (reagents.total_volume / display_max) : 1
 	var/datum/color/color = reagents.get_average_color()
 	var/log_reagents = ""
+	var/base_url = "?src=\ref[src.holder];target=\ref[target];origin=reagent_report;action="
 
 	var/report_reagents = ""
 
@@ -1387,22 +1388,21 @@
 		<tr>
 			<td>[current_reagent.name]</td>
 			<td>[current_reagent.id]</td>
-			<td align='right'>[current_reagent.volume]</td>
+			<td align='right'>[current_reagent.volume] <a href="[base_url]removereagent;skip_pick=[current_reagent.id]">\[-\]</a></td>
 		</tr>
 		"}
 
 
-	var/refresh_url = "?src=\ref[src.holder];action=checkreagent_refresh;target=\ref[target];origin=reagent_report"
-	var/add_url = "?src=\ref[src.holder];action=checkreagent_add;target=\ref[target];origin=reagent_report"
 	var/final_report = {"
 	<style type='text/css'>
 		* {
 			box-sizing: border-box;
 		}
+		#cmd { float: right; text-align: right; }
 		.reagents {
 			position: relative;
 			width: 100%;
-			padding: 2px;
+			padding: 1px 0 0 0;
 			border: 1px solid white;
 			background: black;
 			height: 2em;
@@ -1445,11 +1445,17 @@
 			}
 
 	</style>
-	Reagent Report for <b>[target]</b> <div style="display:block;float:right;"><a href="[add_url]">Add Reagent</a> - <a href="[refresh_url]">Refresh</a></div>
+	<div id="cmd">
+		<a href="[base_url]checkreagent_refresh">Refresh</a><br>
+		<a href="[base_url]checkreagent_add">Add Reagent</a><br>
+		<a href="[base_url]removereagent">Remove Reagents</a><br>
+		<a href="[base_url]checkreagent_flush">Flush All</a>
+	</div>Reagent Report for <b>[target]</b>
 	<hr>
 	Temperature: [reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)
 	<br>Volume: [reagents.total_volume] / [reagents.maximum_volume]
-	<br><div class='reagents' id='reagents2'>[bar]</div><div class='reagents' style='height: 0.75em;'><div style='color: [color.to_rgb()]; width: [pct * 100]%;'></div></div>
+	<hr style="clear: both;">
+	<div class='reagents' id='reagents2'>[bar]</div><div class='reagents' style='height: 0.75em;'><div style='color: [color.to_rgb()]; width: [pct * 100]%;'></div></div>
 	<br>Colour: <div style='display: inline-block; width: 1em; border: 1px solid black; background: [color.to_rgb()]; position: relative; height: 1em;'></div> [color.to_rgba()] ([color.r] [color.g] [color.b], [color.a])
 	<table border="0" style="width:100%">
 	<tbody>
@@ -1582,6 +1588,18 @@
 		var/obj/fluid/fluid = A
 		fluid.group?.update_loop()
 
+
+/client/proc/flushreagents(var/atom/A in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Flush Reagents"
+	set popup_menu = 0
+
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/datum/reagents/reagents = A.reagents
+	if (reagents)
+		reagents.remove_any(INFINITY)
 
 /client/proc/cmd_set_material(var/atom/A in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
