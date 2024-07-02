@@ -7,7 +7,7 @@
 
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
-#define MAX_NOTE_INPUT 15360
+#define MAX_NOTE_INPUT 30000
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
