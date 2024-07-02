@@ -633,6 +633,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/chili(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries_alt(src)
+			src.recipes += new /datum/cookingrecipe/oven/poutine(src)
+			src.recipes += new /datum/cookingrecipe/oven/poutine_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/queso(src)
 			src.recipes += new /datum/cookingrecipe/oven/creamofamanita(src)
