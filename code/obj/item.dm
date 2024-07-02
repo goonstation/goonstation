@@ -642,6 +642,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		stacker = other
 		stackee = src
 	else
+		if(istype(src.loc,/obj/item/shipcomponent/mainweapon/constructor))
+			max_stack = 200
 		stacker = src
 		stackee = other
 

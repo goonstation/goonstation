@@ -96,6 +96,13 @@
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
 
+/obj/item/paper/efif_disclaimer
+	name = "'EFIF-1 Operational Disclaimer'"
+	info = {"Congratulations on your new EFIF-1 Construction System!<BR>\n<BR>\n
+	Operational modes and EZ Sheet Loading may be accessed from the "EFIF-1 Construction System" entry in your pod's computer console.<BR>\n<BR>\n
+	Please be aware that non-repair assembly of walls and standard floors may be restricted within your workplace's vicinity for safety reasons.<BR>\n<BR>\n
+	<B>LOAD ONLY STANDARD, NON-REINFORCED NT-SPEC STEEL SHEETS. EFIF-1 IS CALIBRATED FOR NT-SPEC STEEL. EFIF-1 DOES NOT AND SHOULD NOT ACCEPT OTHER METALS.</B>"}
+
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
 	info = {"<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written

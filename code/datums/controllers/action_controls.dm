@@ -206,7 +206,10 @@ var/datum/action_controller/actions
 	var/bar_on_owner = TRUE
 	/// Does bar fill or empty?
 	var/fill_bar = TRUE
-
+	/// How far should the bar be offset horizontally?
+	var/bar_x_offset = 0
+	/// How far should the bar be offset horizontally?
+	var/bar_y_offset = 5
 
 	onStart()
 		..()
@@ -216,9 +219,10 @@ var/datum/action_controller/actions
 			border = new /obj/actions/border
 			border.set_icon_state(src.border_icon_state)
 			bar.set_icon_state(src.bar_icon_state)
-			bar.pixel_y = 5
-			bar.pixel_x = 0
-			border.pixel_y = 5
+			bar.pixel_x = src.bar_x_offset
+			bar.pixel_y = src.bar_y_offset
+			border.pixel_x = src.bar_x_offset
+			border.pixel_y = src.bar_y_offset
 			if (bar_on_owner)
 				A.vis_contents += bar
 				A.vis_contents += border
