@@ -19728,22 +19728,6 @@
 /obj/item/light/tube,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
-"gAl" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
-/obj/machinery/secscanner{
-	pixel_y = -10
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "gAH" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
@@ -35630,6 +35614,18 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"sIR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "sJM" = (
 /obj/machinery/networked/test_apparatus/xraymachine,
 /obj/machinery/power/data_terminal,
@@ -86113,7 +86109,7 @@ bAn
 qzB
 wFe
 apt
-gAl
+sIR
 rtM
 biM
 biM

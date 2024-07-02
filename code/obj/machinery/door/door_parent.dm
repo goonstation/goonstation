@@ -26,6 +26,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/last_used = 0
 	var/cant_emag = FALSE
 	var/hardened = FALSE // Can't be hacked, RCD'd or controlled by silicon mobs.
+	var/cant_hack = FALSE //Like the above but can be RCD'd and controlled by silicons
 	var/locked = FALSE
 	var/icon_base = "door"
 	var/brainloss_stumble = FALSE // Can a mob stumble into this door if they have enough brain damage? Won't work if you override Bumped() or attackby() and don't check for it separately.
