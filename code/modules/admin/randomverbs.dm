@@ -1393,6 +1393,7 @@
 
 
 	var/refresh_url = "?src=\ref[src.holder];action=checkreagent_refresh;target=\ref[target];origin=reagent_report"
+	var/add_url = "?src=\ref[src.holder];action=checkreagent_add;target=\ref[target];origin=reagent_report"
 	var/final_report = {"
 	<style type='text/css'>
 		* {
@@ -1444,9 +1445,9 @@
 			}
 
 	</style>
-	Reagent Report for <b>[target]</b> <a style="display:block;float:right;" href="[refresh_url]">Refresh</a>
+	Reagent Report for <b>[target]</b> <div style="display:block;float:right;"><a href="[add_url]">Add Reagent</a> - <a href="[refresh_url]">Refresh</a></div>
 	<hr>
-	<br>Temperature: [reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)
+	Temperature: [reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)
 	<br>Volume: [reagents.total_volume] / [reagents.maximum_volume]
 	<br><div class='reagents' id='reagents2'>[bar]</div><div class='reagents' style='height: 0.75em;'><div style='color: [color.to_rgb()]; width: [pct * 100]%;'></div></div>
 	<br>Colour: <div style='display: inline-block; width: 1em; border: 1px solid black; background: [color.to_rgb()]; position: relative; height: 1em;'></div> [color.to_rgba()] ([color.r] [color.g] [color.b], [color.a])
@@ -1557,7 +1558,7 @@
 	if(!amount)
 		return
 	var/overflow = amount - (reagents.maximum_volume - reagents.total_volume)
-	if (overflow > 0) // amount exceeds reagent space
+	if (overflow > 0.0001) // amount exceeds reagent space by more than micro-amounts
 		if (tgui_alert(usr, "That amount of reagents exceeds the available space by [overflow] units. Increase the reagent cap of [A] to fit?",
 			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
 			reagents.maximum_volume += overflow

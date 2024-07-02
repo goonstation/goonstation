@@ -1498,6 +1498,13 @@ var/global/noir = 0
 				if (A)
 					usr.client.check_reagents_internal(A, refresh = 1)
 
+		if ("checkreagent_add")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.addreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
 		if ("removereagent")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
