@@ -1820,6 +1820,13 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "wintercoat-security"
 	coat_style = "wintercoat-security"
 
+/obj/item/clothing/suit/wintercoat/syndicate
+	name = "syndicate winter coat"
+	desc = "A padded coat to protect against the cold. This one seems like a cheap knockoff."
+	icon_state = "wintercoat-security"
+	item_state = "wintercoat-security"
+	coat_style = "wintercoat-security"
+
 /obj/item/clothing/suit/wintercoat/command
 	name = "command winter coat"
 	icon_state = "wintercoat-command"

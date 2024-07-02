@@ -45238,7 +45238,7 @@
 	},
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/shoes/swat,
-/obj/item/clothing/head/beret/random_color,
+/obj/item/clothing/head/syndicateberet,
 /turf/unsimulated/floor/redblack{
 	dir = 1
 	},
@@ -45537,7 +45537,7 @@
 	},
 /obj/item/clothing/gloves/black,
 /obj/item/clothing/shoes/swat,
-/obj/item/clothing/head/beret/random_color,
+/obj/item/clothing/head/syndicateberet,
 /turf/unsimulated/floor/redblack,
 /area/syndicate_station/battlecruiser)
 "diu" = (
