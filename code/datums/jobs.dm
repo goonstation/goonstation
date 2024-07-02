@@ -626,29 +626,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 	wiki_link = "https://wiki.ss13.co/Geneticist"
 
-#ifdef CREATE_PATHOGENS
-/datum/job/research/pathologist
-#else
-/datum/job/pathologist // pls no autogenerate list
-#endif
-	name = "Pathologist"
-	#ifdef CREATE_PATHOGENS
-	limit = 1
-	#else
-	limit = 0
-	#endif
-	wages = PAY_DOCTORATE
-	access_string = "Pathologist"
-	slot_belt = list(/obj/item/device/pda2/genetics)
-	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
-	slot_foot = list(/obj/item/clothing/shoes/white)
-	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
-	#ifdef SCIENCE_PATHO_MAP
-	slot_ears = list(/obj/item/device/radio/headset/research)
-	#else
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	#endif
-
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
@@ -2857,7 +2834,16 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		C.assignment = "Staff Assistant"
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 
-
+/datum/job/special/pathologist
+	name = "Pathologist"
+	limit = 0
+	wages = PAY_DOCTORATE
+	access_string = "Pathologist"
+	slot_belt = list(/obj/item/device/pda2/genetics)
+	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
+	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
 
 /*---------------------------------------------------------------*/
 

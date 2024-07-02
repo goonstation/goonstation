@@ -356,8 +356,6 @@
 		if (src.organHolder?.chest?.op_stage > 0 && !src.chest_cavity_clamped && prob(10)) //Going around with a gaping unsutured wound is a bad idea
 			take_bleeding_damage(src, null, rand(5, 10))
 
-	src.handle_pathogens()
-
 	last_human_life_tick = TIME
 
 /mob/living/critter/Life(datum/controller/process/mobs/parent)
@@ -590,18 +588,6 @@
 
 
 /mob/living/carbon/human
-
-	proc/handle_pathogens()
-		if (isdead(src))
-			if (src.pathogens.len)
-				for (var/uid in src.pathogens)
-					var/datum/pathogen/P = src.pathogens[uid]
-					P.disease_act_dead()
-			return
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/P = src.pathogens[uid]
-			P.disease_act()
-
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
 		if (!src)

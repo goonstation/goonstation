@@ -1518,22 +1518,6 @@
 	if(holder)
 		src.holder.playeropt(M)
 
-/obj/proc/addpathogens()
-	USR_ADMIN_ONLY
-	var/obj/A = src
-	if(!A.reagents) A.create_reagents(100)
-	var/amount = input(usr,"Amount:","Amount",50) as num
-	if(!amount) return
-
-	A.reagents.add_reagent("pathogen", amount)
-	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = new /datum/pathogen
-	P.setup(1)
-	R.pathogens += P.pathogen_uid
-	R.pathogens[P.pathogen_uid] = P
-
-	boutput(usr, SPAN_SUCCESS("Added [amount] units of pathogen to [A.name] with pathogen [P.name]."))
-
 /client/proc/addreagents(var/atom/A in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Add Reagent"

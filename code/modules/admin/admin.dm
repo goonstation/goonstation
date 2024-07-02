@@ -3390,17 +3390,6 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
-		if ("view_logs_pathology_strain")
-			if (src.level >= LEVEL_MOD)
-				var/gettxt
-				if (href_list["presearch"])
-					gettxt = href_list["presearch"]
-				else
-					gettxt = input("Which pathogen tree?", "Pathogen tree") in pathogen_controller.pathogen_trees
-
-				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
-				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
-
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -3801,9 +3790,6 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_BOMBING]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log'>Signaler Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log_string'><small>(Search)</small></A><BR>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log'>Pathology Log</A>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log_string'><small>(Search)</small></A>
-				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log'>Chemistry Log</A>
