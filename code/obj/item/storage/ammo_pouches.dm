@@ -178,8 +178,12 @@
 	w_class = W_CLASS_TINY
 	slots = 4
 	opens_if_worn = TRUE
+	can_hold = list(/obj/item/robodefibrillator,
+	/obj/item/extinguisher/large)
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
-	/obj/item/reagent_containers/mender/burn/high_capacity)
+	/obj/item/reagent_containers/mender/burn/high_capacity,
+	/obj/item/robodefibrillator,
+	/obj/item/extinguisher/large)
 	prevent_holding = list(/obj/item/storage)
 
 /obj/item/storage/security_pouch
