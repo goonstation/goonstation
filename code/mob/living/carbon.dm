@@ -157,6 +157,9 @@
 		if (!isdead(src))
 			H.emote(pick("wheeze", "cough", "sputter"))
 
+	if (src.traitHolder && src.traitHolder.hasTrait("deathwish")) //oh yeah it stacks with pug
+		amount *= 2
+
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return
 

@@ -89,27 +89,6 @@
 		return
 */
 
-/datum/trait/deathwish
-	name = "Death wish"
-	desc = "You take double damage from most things and have half your normal health."
-	id = "deathwish"
-	category = "stats"
-	points = 8
-	unselectable = 1
-
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.max_health = 50
-			H.health = 50
-		return
-
-	onLife(var/mob/owner) //Just to be safe.
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			H.max_health = 50
-		return
-
 /datum/trait/glasscannon
 	name = "Glass cannon"
 	desc = "You have 1 stamina max. Attacks no longer cost you stamina and\nyou deal double the normal damage with most melee weapons."

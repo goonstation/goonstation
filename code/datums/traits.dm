@@ -1297,6 +1297,18 @@ TYPEINFO(/datum/trait/partyanimal)
 				else
 					explanation_text += "and [ingredient]<br/>"
 
+/datum/trait/deathwish
+	name = "Death Wish"
+	desc = "You take double damage from all sources. Expect to die very very quickly, you're putting your life at serious risk!"
+	id = "deathwish"
+//	category = "stats"
+	points = 2
+	icon_state = "deathwish"
+
+	disability_type = TRAIT_DISABILITY_MAJOR
+	disability_name = "Extreme Vulnerability"
+	disability_desc = "Skin and immune system similar in consistency to paper mache"
+
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"

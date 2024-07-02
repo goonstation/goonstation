@@ -46,6 +46,9 @@
 		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
 		H.equip_if_possible(new /obj/item/requisition_token/syndicate(H), SLOT_R_STORE)
 
+		if (H.traitHolder?.hasTrait("deathwish"))
+			H.traitHolder.removeTrait("deathwish")
+
 		if("plasmalungs" in src.owner.current.client?.preferences.traitPreferences.traits_selected) //sigh
 			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended/plasma(H), SLOT_L_STORE)
 		else
