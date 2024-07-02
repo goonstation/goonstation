@@ -123,8 +123,21 @@
 		if(ishuman(src.affecting))
 			H = src.affecting
 
+		var/obj/item/clothing/gloves/weaponhand
+		if (ishuman(src.assailant))
+			var/mob/living/carbon/human/M = src.assailant
+			if (M.gloves.activeweapon)
+				weaponhand = M.gloves
+
 		if (src.state >= GRAB_AGGRESSIVE)
-			if(H) H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
+			if(H)
+				if(weaponhand)
+					H.remove_stamina(STAMINA_REGEN * 0.8 * mult)
+					playsound(get_turf(src.assailant), 'sound/impact_sounds/Blade_Small_Bloody.ogg', 30, 1)
+					take_bleeding_damage(H, src.assailant, weaponhand.force * 0.5 * mult, DAMAGE_CUT, TRUE, get_turf(src.assailant))
+					random_brute_damage(H, weaponhand.force * 0.25 * mult)
+				else
+					H.remove_stamina(STAMINA_REGEN * 0.5 * mult)
 			src.affecting.set_density(0)
 
 		if (src.state == GRAB_CHOKE)
@@ -173,6 +186,15 @@
 				if(prob(33)) H.losebreath += (1 * mult)
 			else
 				if(prob(33)) H.losebreath += (0.2 * mult)
+		var/obj/item/clothing/gloves/weaponhand
+		if (ishuman(src.assailant))
+			var/mob/living/carbon/human/M = src.assailant
+			if (M.gloves.activeweapon)
+				weaponhand = M.gloves
+		if (H && weaponhand)
+			playsound(get_turf(src.assailant), 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+			take_bleeding_damage(H, src.assailant, weaponhand.force * mult, DAMAGE_CUT, TRUE, get_turf(src.assailant))
+			random_brute_damage(H, weaponhand.force * mult)
 
 	proc/set_affected_loc()
 		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
@@ -212,6 +234,11 @@
 			return
 		if (check())
 			return
+		var/obj/item/clothing/gloves/weaponhand
+		if (ishuman(src.assailant))
+			var/mob/living/carbon/human/M = src.assailant
+			if (M.gloves.activeweapon)
+				weaponhand = M.gloves
 		switch (src.state)
 			if (GRAB_PASSIVE)
 				if (src.affecting.buckled)
@@ -224,7 +251,10 @@
 				else
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
-						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
+						if (weaponhand)
+							O.show_message(SPAN_ALERT("[src.assailant] stabs the [weaponhand] into [src.affecting]!"), 1)
+						else
+							O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
 					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
 						SPAWN(0.3 SECONDS) //wait for them to move in
 							if (!QDELETED(src))
@@ -278,11 +308,19 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
+		var/obj/item/clothing/gloves/weaponhand
+		if (ishuman(src.assailant))
+			var/mob/living/carbon/human/M = src.assailant
+			if (M.gloves.activeweapon)
+				weaponhand = M.gloves
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message(SPAN_ALERT("[src.assailant] has tightened [I] on [src.affecting]'s neck!"), 1)
+			else if (weaponhand)
+				for (var/mob/O in AIviewers(src.assailant, null))
+					O.show_message(SPAN_ALERT("[src.assailant] tightens the [weaponhand] into [src.affecting]'s throat!"), 1)
 			else
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
