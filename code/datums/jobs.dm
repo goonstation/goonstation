@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
-	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
+	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/gun/energy/egun/captain)
 	rounds_needed_to_play = 30
 
 	derelict
@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_security_disk = TRUE
 	receives_badge = TRUE
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
-	items_in_backpack = list(/obj/item/device/flash)
+	items_in_backpack = list(/obj/item/device/flash, /obj/item/gun/energy/egun/head_of_security,)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
 
 #ifdef SUBMARINE_MAP
