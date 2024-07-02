@@ -550,7 +550,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = FALSE
 	desc = "2 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
 	br_allowed = TRUE
-	job = list("Clown")
+	job = list("Clown", "Mail Courier")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/sinjector
