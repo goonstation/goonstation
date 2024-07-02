@@ -37,12 +37,12 @@
 		abilityHolder.updateButtons()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/short
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
-		bioHolder.mobAppearance.customization_first_color = "#555555"
-		bioHolder.mobAppearance.customization_second_color = "#555555"
-		bioHolder.mobAppearance.customization_third_color = "#555555"
+		bioHolder.mobAppearance.customizations[1].style =  new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customizations[3].style =  new /datum/customization_style/eyebrows/eyebrows
+		bioHolder.mobAppearance.customizations[1].color = "#555555"
+		bioHolder.mobAppearance.customizations[2].color = "#555555"
+		bioHolder.mobAppearance.customizations[3].color = "#555555"
 		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets

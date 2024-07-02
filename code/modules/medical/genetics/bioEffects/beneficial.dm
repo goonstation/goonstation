@@ -568,16 +568,16 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color_original = HAH.customization_first_color
-				HAH.customization_second_color_original = HAH.customization_second_color
-				HAH.customization_third_color_original = HAH.customization_third_color
+				HAH.customizations[1].color_original = HAH.customizations[1].color
+				HAH.customizations[2].color_original = HAH.customizations[2].color
+				HAH.customizations[3].color_original = HAH.customizations[3].color
 				HAH.s_tone_original = HAH.s_tone
 				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
 					hulk_skin = rgb(gray_af, gray_af, gray_af)
-				HAH.customization_first_color = "#4F7942" // a pleasant fern green
-				HAH.customization_second_color = "#3F704D" // a bold hunter green
-				HAH.customization_third_color = "#0B6623" // a vibrant forest green
+				HAH.customizations[1].color = "#4F7942" // a pleasant fern green
+				HAH.customizations[2].color = "#3F704D" // a bold hunter green
+				HAH.customizations[3].color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
@@ -589,14 +589,14 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color = HAH.customization_first_color_original
-				HAH.customization_second_color = HAH.customization_second_color_original
-				HAH.customization_third_color = HAH.customization_third_color_original
+				HAH.customizations[1].color = HAH.customizations[1].color_original
+				HAH.customizations[2].color = HAH.customizations[2].color_original
+				HAH.customizations[3].color = HAH.customizations[3].color_original
 				HAH.s_tone = HAH.s_tone_original
 				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
-					HAH.customization_first_color = fix_colors(HAH.customization_first_color)
-					HAH.customization_second_color = fix_colors(HAH.customization_second_color)
-					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
+					HAH.customizations[1].color = fix_colors(HAH.customizations[1].color)
+					HAH.customizations[2].color = fix_colors(HAH.customizations[2].color)
+					HAH.customizations[3].color = fix_colors(HAH.customizations[3].color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 
@@ -607,9 +607,9 @@ var/list/radio_brains = list()
 		if (ishuman(owner) && src.visible)
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color = "#4F7942" // a pleasant fern green
-				HAH.customization_second_color = "#3F704D" // a bold hunter green
-				HAH.customization_third_color = "#0B6623" // a vibrant forest green
+				HAH.customizations[1].color = "#4F7942" // a pleasant fern green
+				HAH.customizations[2].color = "#3F704D" // a bold hunter green
+				HAH.customizations[3].color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
 
 		if (H.health <= 25 && src.power == 1)

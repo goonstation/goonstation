@@ -36,10 +36,10 @@
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 
 		// Assign wizard hair.
-		H.bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/gimmick/wiz
+		H.bioHolder.mobAppearance.customizations[1].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations[2].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations[3].color = "#FFFFFF"
+		H.bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/hair/gimmick/wiz
 		H.update_colorful_parts()
 
 		// Assign wizard attire.

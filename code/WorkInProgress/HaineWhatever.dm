@@ -1113,8 +1113,8 @@ TYPEINFO(/obj/submachine/blackjack)
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
-	AH.customization_first_color = "#FFD700"
+	AH.customizations[1].style =  new /datum/customization_style/hair/gimmick/sailor_moon
+	AH.customizations[1].color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
 
@@ -1793,7 +1793,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2 //add
-		zero.customization_third_color = "#08BFC2"
+		zero.customizations[3].color = "#08BFC2"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1807,7 +1807,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#FFFFFF"
+		zero.customizations[3].color = "#FFFFFF"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1821,7 +1821,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customization_third_color = "#C20B08"
+		zero.customizations[3].color = "#C20B08"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
