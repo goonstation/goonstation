@@ -187,8 +187,12 @@ TYPEINFO(/obj/machinery/recharge_station)
 		. = ..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (BOUNDS_DIST(AM, src) > 0 || BOUNDS_DIST(src, user) > 0)
-		return
+	if (ismob(AM))
+		if (BOUNDS_DIST(AM, src) > 0 || BOUNDS_DIST(src, user) > 0)
+			return
+	else
+		if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
+			return
 	if (!isturf(AM.loc) && !(AM in user))
 		return
 	if (!isliving(user) || isAI(user))
