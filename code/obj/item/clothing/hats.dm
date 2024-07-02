@@ -585,6 +585,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		..()
 		setProperty("meleeprot_head", 3)
 
+/obj/item/clothing/head/hosberet
+	name = "Syndicate Beret"
+	desc = "Hold on. This looks familiar..."
+	icon_state = "hosberet"
+	item_state = "hosberet"
+
 /obj/item/clothing/head/NTberet
 	name = "Nanotrasen beret"
 	desc = "For the inner space dictator in you."
