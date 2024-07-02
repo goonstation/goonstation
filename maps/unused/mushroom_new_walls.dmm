@@ -12195,8 +12195,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "blT" = (
-/obj/storage/closet/syndicate/personal,
 /obj/decal/stripe_caution,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor,
 /area/listeningpost)
 "blU" = (
