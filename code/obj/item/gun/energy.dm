@@ -1393,12 +1393,12 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/detain.ogg', 50)
 				src.toggle_recoil(FALSE)
-			if ("execute", "exterminate")
+			if ("execute", "exterminate", "cluwneshot") //heh
 				set_current_projectile(projectiles["execute"])
 				current_projectile.cost = 30
 				item_state = "lawg-execute"
 				if (sound)
-					playsound(M, 'sound/vox/exterminate.ogg', 50)
+					playsound(M, "sound/vox/[text == "cluwneshot" ? "cluwne" : "exterminate"].ogg", 50)
 				src.toggle_recoil(TRUE)
 			if ("smokeshot","fog")
 				set_current_projectile(projectiles["smokeshot"])
