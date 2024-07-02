@@ -337,17 +337,10 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/succ = 0
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				/*if (H.head && istype(H.head, /obj/item/clothing/head))
-					var/path = text2path("[H.head.type]/april_fools")
-					if (ispath(path))
-						M.u_equip(H.head)
-						qdel(H.head)
-						var/obj/item/clothing/head/hatt = new path
-						H.force_equip(hatt)
-						succ = 1*/
 
-
-				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
+				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under))
+					if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/misc))
+						src.icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
 					if (ispath(origin))
 						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
