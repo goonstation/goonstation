@@ -1001,7 +1001,7 @@
 			target.TakeDamage(def_zone, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 
 			if ((damage_type & (DAMAGE_CUT | DAMAGE_STAB)) || bleed_always)
-				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type)
+				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type, is_crit=stamina_crit)
 				target.spread_blood_clothes(target)
 				owner.spread_blood_hands(target)
 				if (prob(15))
