@@ -1,4 +1,54 @@
 
+(t)mon jul 01 24
+(u)Lord_Earthfire
+(p)19412
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The amount of chems a unit of a chemical decays into no longer changes with the speed the person metabolizes it.
+(u)Jan.antilles
+(p)19786
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Add Cream or Salmon Fillet Slices to bagels to make extra tasty Cream Cheese or Lox bagels!
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
+(u)nova2053
+(p)19553
+(e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
+(+)Normal and synthetic organs will no longer make you indefinitely full.
+(t)sat jun 29 24
+(u)LeahTheTech
+(+)Power transfer lasers can now pass through containment fields.
+(u)glowbold
+(p)19703
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Kinetic projectiles progressively break computers/consoles to scrap.
+(+)Energy projectiles, including tasers, have a chance to break computer/console screens.
+(u)joeled
+(p)19647
+(e)🗺💅🔬|A-Mapping, C-QoL, A-Science
+(+)Plasma Research has been outfitted with their own gas extractor on nearly all stations.
+(t)fri jun 28 24
+(u)DecodeQwertyPls
+(p)19564
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Most maps now have freezers in toxins.
+(u)Kubius
+(p)19635
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The Prototypist requisition has four new outcomes.
+(u)mintyphresh
+(p)19479
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)NT's payroll stipends now deposit some excess money to the payroll budget.
+(u)TealSeer
+(p)19405
+(e)🔎🔒❗⚙|C-Code-Quality, A-Secret, E-FUCK, A-Internal
+(*)The way fingerprints are left on objects has been changed under the hood, please report any weirdness or things having fingerprints that shouldn't!
 (t)thu jun 27 24
 (u)glowbold
 (p)19720

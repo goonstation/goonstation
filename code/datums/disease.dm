@@ -483,14 +483,17 @@
 		return AD
 
 	else if (istype(A, /datum/ailment/parasite))
-		var/datum/ailment_data/parasite/AD = new /datum/ailment_data/parasite
-		AD.name = A.name
-		AD.stage_prob = A.stage_prob
-		AD.cure_flags = A.cure_flags
-		AD.cure_desc = A.cure_desc
-		AD.reagentcure = A.reagentcure
-		AD.recureprob = A.recureprob
-		AD.master = A
+		var/datum/ailment_data/parasite/AD
+		if (!strain)
+			AD = new /datum/ailment_data/parasite
+			AD.name = A.name
+			AD.stage_prob = A.stage_prob
+			AD.cure_flags = A.cure_flags
+			AD.cure_desc = A.cure_desc
+			AD.reagentcure = A.reagentcure
+			AD.recureprob = A.recureprob
+		else
+			AD = strain
 
 		AD.master = A
 		AD.affected_mob = src

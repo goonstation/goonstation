@@ -102,6 +102,9 @@
 
 	/// Save new cloud data for this player
 	proc/putData(key, value)
+		if(value == src.data[key]) //don't bother sending data if we'd be making no change
+			return TRUE //but treat it as a success I guess
+
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("data", key, value)
@@ -126,6 +129,9 @@
 
 	/// Save a new cloud file for this player
 	proc/putSave(name, data)
+		if(data == src.saves[name]) //don't bother sending save if we'd be making no change
+			return TRUE //but treat it as a success I guess
+
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("saves", name, data)

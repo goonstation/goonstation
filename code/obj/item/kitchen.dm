@@ -44,7 +44,7 @@ TRAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 10
@@ -154,7 +154,7 @@ TRAYS
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -1100,7 +1100,6 @@ TRAYS
 	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "coolingrack"
-	flags = FPRINT | TABLEPASS
 	force = 3
 	throwforce = 5
 	throw_speed = 3

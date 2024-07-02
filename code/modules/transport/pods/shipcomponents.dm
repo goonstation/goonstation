@@ -3,7 +3,7 @@
 	name = "Ship Component"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "default"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	/// How much of the engine's capacity the part takes up
 	var/power_used = 0
 	/// The owner of the part

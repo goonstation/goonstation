@@ -620,7 +620,7 @@
 /turf/unsimulated/floor,
 /area/space)
 "aLh" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "aLH" = (
@@ -13747,7 +13747,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "qtL" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "qwT" = (
@@ -14630,7 +14630,7 @@
 	},
 /area/crater/biodome/research)
 "rwh" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "rwN" = (
@@ -18133,7 +18133,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "vHV" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "vIy" = (
@@ -19220,7 +19220,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
 "wOz" = (
-/obj/machinery/incubator,
+/obj/fakeobject/incubator,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "wOE" = (
@@ -19923,7 +19923,7 @@
 	},
 /area/swampzone/deeps)
 "xSc" = (
-/obj/machinery/computer/pathology,
+/obj/fakeobject/pathogen_computer,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xSs" = (
@@ -20077,7 +20077,7 @@
 /area/syndicate_station)
 "xXU" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xYv" = (

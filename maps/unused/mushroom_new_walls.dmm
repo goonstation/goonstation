@@ -19223,12 +19223,12 @@
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
 /obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "fRo" = (
@@ -20309,6 +20309,9 @@
 /obj/machinery/light_switch{
 	name = "N light switch";
 	pixel_y = 24
+	},
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
@@ -33271,6 +33274,12 @@
 /obj/machinery/door/airlock/pyro/glass/med,
 /turf/simulated/floor/white/side,
 /area/station/medical/robotics)
+"sqi" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "sqD" = (
 /obj/machinery/secscanner{
 	dir = 4;
@@ -35636,12 +35645,12 @@
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
 /obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
@@ -100606,7 +100615,7 @@ rNC
 kbB
 gIe
 tWD
-tKf
+sqi
 tKf
 mkq
 mkq
