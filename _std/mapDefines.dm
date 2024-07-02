@@ -32,6 +32,8 @@
 
 #elif defined(MAP_OVERRIDE_COGMAP2)
 
+#elif defined(MAP_OVERRIDE_DECARABIA)
+
 #elif defined(MAP_OVERRIDE_DONUT2)
 
 #elif defined(MAP_OVERRIDE_DONUT3)

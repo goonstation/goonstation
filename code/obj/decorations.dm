@@ -115,6 +115,16 @@
 			. = ..()
 			src.dir = pick(cardinal)
 
+	birch
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		icon_state = "tree_birch"
+		name = "birch tree"
+
+	birchautumn
+		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
+		icon_state = "tree_birchautumn"
+		name = "autumny birch tree"
+
 // what the hell is all this and why wasn't it just using a big icon? the lighting system gets all fucked up with this stuff
 
 /*
