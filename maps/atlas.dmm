@@ -10476,13 +10476,14 @@
 /turf/space,
 /area/space)
 "aOh" = (
-/obj/table/auto,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/pinpointer/disk,
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
+	},
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
@@ -19042,6 +19043,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
+"rkG" = (
+/obj/table/auto,
+/obj/item/pinpointer/disk,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost)
 "rlI" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/purpleish{
@@ -94821,7 +94827,7 @@ aNG
 aNQ
 aUH
 aOv
-aNG
+rkG
 ohq
 aaa
 aaa

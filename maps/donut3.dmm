@@ -78010,6 +78010,9 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
+	},
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},

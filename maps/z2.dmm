@@ -27682,13 +27682,8 @@
 	},
 /area/afterlife/heaven)
 "cgj" = (
-/obj/table/wood/auto,
-/obj/machinery/computer/announcement{
-	dir = 4;
-	icon_state = "datasec";
-	name = "Commander's Announcement Computer";
-	req_access_txt = "76";
-	theme = "syndicate"
+/obj/machinery/computer/announcement/syndicate/commander{
+	dir = 4
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/battlecruiser)
