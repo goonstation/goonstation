@@ -316,7 +316,7 @@ datum
 
 
 
-		proc/handle_addiction(var/mob/M, var/rate, var/addProb)
+		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb)
 			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
@@ -347,7 +347,7 @@ datum
 				AD.name = "[src.name] addiction"
 				AD.affected_mob = M
 				AD.max_severity = src.max_addiction_severity
-				M.ailments += AD
+				M.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))
