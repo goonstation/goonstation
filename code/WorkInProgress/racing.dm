@@ -28,6 +28,10 @@
 			var/obj/racing_clowncar/R = A
 			R.boost()
 
+			// be absolutely sure it starts going away from us
+			if (R.driving)
+				R.drive(dir,R.speed)
+
 
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
@@ -314,6 +318,104 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		// remove ourselves when we're used
 		holder.removeAbilityInstance(src)
 
+/datum/statusEffect/kart_boost
+	id = "kart_boost"
+	desc = "Owner is currently receiving a speed boost"
+	maxDuration = 10 SECONDS
+
+	onAdd(optional)
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.speed = C.base_speed - C.turbo
+			if (C.driving) C.drive(C.drive_dir, C.speed)
+
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				src.owner.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
+
+	onRemove()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+
+			C.speed = C.base_speed
+			if (C.driving) C.drive(C.drive_dir, C.speed)
+
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				C.ClearSpecificOverlays("boost")
+
+/datum/statusEffect/kart_super
+	id = "kart_super"
+	desc = "Owner is currently invincible"
+	maxDuration = 10 SECONDS
+
+	onAdd(optional)
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.super = TRUE
+			playsound(C, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
+
+			// base clowncars do not use overlays
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				C.AddOverlays(image('icons/misc/racing.dmi', "kart_super"),"super")
+			else
+				C.icon_state = "clowncar_super"
+
+	onRemove()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.super = FALSE
+
+			if (istype(src.owner,/obj/racing_clowncar/kart))
+				C.ClearSpecificOverlays("super")
+			else
+				C.icon_state = "clowncar"
+
+/datum/statusEffect/kart_stun
+	id = "kart_stun"
+	desc = "Owner is currently spinning out of control"
+	maxDuration = 5 SECONDS
+	onAdd()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+
+			// if they somehow got hit while boosting, cancel out their boost
+			C.delStatus("kart_boost")
+
+			playsound(C, 'sound/mksounds/cpuspin.ogg', 33, FALSE)
+
+			// this overlay is actually used on the clown car too
+			C.AddOverlays(image('icons/misc/racing.dmi',"broken"),"spin")
+
+			// allow people to pass by us while we're spinning out
+			C.cant_control = TRUE
+			C.set_density(0)
+
+	onUpdate(timePassed)
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.set_dir(turn(C.dir, 90))
+			C.facing = C.dir
+
+	onRemove()
+		..()
+		if (istype(src.owner,/obj/racing_clowncar))
+			var/obj/racing_clowncar/C = src.owner
+			C.ClearSpecificOverlays("spin")
+
+			// alright we're back on the road
+			C.cant_control = FALSE
+			C.set_density(1)
+
+			// unspin the kart to our last drive direction to be safe
+			if (C.drive_dir)
+				C.set_dir(C.drive_dir)
+				C.facing = C.drive_dir
+
 /obj/racing_clowncar
 	name = "Turbo Clowncar 2000"
 	desc = ""
@@ -323,9 +425,10 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 	density = 1
 	opacity = 0
 
-	var/obj/powerup/powerup = null
-
-	var/dir_original = 1
+	/// what direction SHOULD the kart be facing right now, used to keep us pointing the right way
+	var/facing
+	/// what direction should the kart be driving, similar to pods
+	var/drive_dir
 
 	var/cant_control = 0 //Used during spins, etc
 	var/base_speed = 2 //Base speed.
@@ -344,12 +447,16 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 			return
 		var/datum/targetable/kart_powerup/new_powerup = pick(powerups)
 
-		playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 
 		if (abilities && new_powerup)
 			// only add a new kart powerup when there's not one already there
 			if (!length(abilities.abilities))
 				abilities.addAbility(new_powerup)
+				if (!ON_COOLDOWN(src,"item_noise",1 SECOND))
+					playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
+			else
+				// if we're full, play the destroy item noise
+				playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, FALSE)
 
 		return
 	// copied from clown cars
@@ -360,6 +467,12 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if(can_act(usr))
 			exit()
 		return
+
+	Move()
+		..()
+		// only do this if we're driving and need to face a direction
+		if (driving && facing)
+			src.set_dir(facing)
 
 	// allow people to enter the car by clickdragging
 	MouseDrop_T(mob/living/target, mob/user)
@@ -412,58 +525,36 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		driving = 0
 
 	proc/spin(var/magnitude)
-		if(super) return
-		cant_control = 1
-		set_density(0)
-		dir_original = src.dir
-		var/image/out_of_control = image('icons/misc/racing.dmi',"broken")
-		src.AddOverlays(out_of_control,"spin")
-
-		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, FALSE)
-
-		SPAWN(magnitude+1)
-			cant_control = 0
-			dir_original = 0
-			set_density(1)
-			src.ClearSpecificOverlays("spin")
-
-		SPAWN(0)
-			for(var/i=0, i<magnitude, i++)
-				src.set_dir(turn(src.dir, 90))
-				sleep(0.1 SECONDS)
-		return
+		if(!super)
+			src.setStatus("kart_stun",magnitude)
 
 	proc/boost(var/super_boost = FALSE)
-		speed = base_speed - turbo
-		drive(dir, speed)
 
-		// clown car doesnt have an overlay, so sad
-		if (super_boost)
-			src.super = TRUE
-			src.icon_state = "clowncar_super"
-			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
-			SPAWN(10 SECONDS)
-				src.super = FALSE
-				speed = base_speed
-				src.icon_state = "clowncar"
-		else
-			icon_state = "clowncar_boost"
+		// all boost sounds must shut the hell up
+		if (!ON_COOLDOWN(src,"boost_sound",1 SECOND))
 			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
-			SPAWN(5 SECONDS)
-				speed = base_speed
-				if (driving) drive(dir, speed)
-				icon_state = "clowncar"
+
+		if (super_boost)
+			src.setStatus("kart_boost",10 SECONDS)
+			src.setStatus("kart_super",10 SECONDS)
+		else
+			src.setStatus("kart_boost", 5 SECONDS)
+
 
 
 	proc/drive(var/direction, var/speed)
+		// set facing so we can do spinning out properly
 		set_dir(direction)
+		facing = direction
+		drive_dir = direction
 		driving = 1
 		src.glide_size = (32 / speed) * world.tick_lag
-		walk(src, dir, speed)
+		walk(src, drive_dir, speed)
 
 	proc/stop()
 		driving = 0
-		playsound(src, 'sound/mksounds/skidd.ogg', 25, FALSE)
+		if (!ON_COOLDOWN(src,"skidd_noise",0.1 SECONDS))
+			playsound(src, 'sound/mksounds/skidd.ogg', 25, FALSE)
 		walk(src, 0)
 
 	relaymove(mob/user, direction)
@@ -472,6 +563,8 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 		if(direction == turn(src.dir,180))
 			set_dir(direction)
+			facing = direction
+			drive_dir = direction
 			stop()
 		else
 			drive(direction, speed)
@@ -584,30 +677,6 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 		if(returnloc)
 			set_loc(returnloc)
 			set_dir(returndir)
-
-	boost(var/super_boost = FALSE) // this exists because we dont have a boosted kart sprite????
-		speed = base_speed - turbo
-		drive(dir, speed)
-
-		src.AddOverlays(image('icons/mob/robots.dmi', "up-speed",layer=ABOVE_OBJ_LAYER),"boost")
-
-		if (super_boost)
-			src.super = TRUE
-			src.AddOverlays(image('icons/misc/racing.dmi', "kart_super"),"super")
-			playsound(src, 'sound/mksounds/invin10sec.ogg',33, FALSE,0) // 33
-			SPAWN(10 SECONDS)
-				src.super = FALSE
-				speed = base_speed
-				if (driving) drive(dir, speed)
-				src.ClearSpecificOverlays("super")
-				src.ClearSpecificOverlays("boost")
-		else
-			playsound(src, 'sound/mksounds/boost.ogg', 30, FALSE)
-			SPAWN(5 SECONDS)
-				speed = base_speed
-				if (driving) drive(dir, speed)
-				src.ClearSpecificOverlays("boost")
-
 
 /obj/racing_clowncar/kart/red
 	icon_state = "kart_red_u"
