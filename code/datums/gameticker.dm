@@ -56,9 +56,6 @@ var/global/current_state = GAME_STATE_INVALID
 	pregame_timeleft = 1
 	#endif
 
-
-
-	var/did_mapvote = FALSE
 	var/did_reminder = FALSE
 
 	#ifdef LIVE_SERVER
@@ -70,13 +67,6 @@ var/global/current_state = GAME_STATE_INVALID
 		// Start the countdown as normal, but hold it at 30 seconds until setup is complete
 		if (!game_start_delayed && (pregame_timeleft > 30 || current_state == GAME_STATE_PREGAME))
 			pregame_timeleft--
-
-			if (pregame_timeleft <= 60 && !did_mapvote)
-				// do it here now instead of before the countdown
-				// as part of the early start most people might not even see it at 150
-				// so this makes it show up a minute before the game starts
-				handle_mapvote()
-				did_mapvote = TRUE
 
 			if (pregame_timeleft <= 30 && !did_reminder)
 				// hey boo the rounds starting and you didnt ready up
@@ -328,15 +318,22 @@ var/global/current_state = GAME_STATE_INVALID
 //The voting will happen 30 seconds into the pre-game lobby. This is probably fine to leave. But if someone changes that var then it might start before the lobby timer ends.
 /datum/controller/gameticker/proc/handle_mapvote()
 	var/bustedMapSwitcher = isMapSwitcherBusted()
-	if (!bustedMapSwitcher)
-		SPAWN(mapSwitcher.autoVoteDelay)
-			//Trigger the automatic map vote
-			try
-				mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
-			catch (var/exception/e)
-				logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
-				logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
-				message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
+	if (bustedMapSwitcher)
+		return
+	if (mapSwitcher.next)
+		logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote didn't run because the next map was already set to [mapSwitcher.next].")
+		logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote didn't run because the next map was already set to [mapSwitcher.next].", "admin")
+		message_admins("[key_name(usr ? usr : src)] the automated map switch vote didn't run because the next map was already set to [mapSwitcher.next].")
+		return
+
+	SPAWN(mapSwitcher.autoVoteDelay)
+		//Trigger the automatic map vote
+		try
+			mapSwitcher.startMapVote(duration = mapSwitcher.autoVoteDuration)
+		catch (var/exception/e)
+			logTheThing(LOG_ADMIN, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]")
+			logTheThing(LOG_DIARY, usr ? usr : src, null, "the automated map switch vote couldn't run because: [e.name]", "admin")
+			message_admins("[key_name(usr ? usr : src)] the automated map switch vote couldn't run because: [e.name]")
 
 /datum/controller/gameticker
 	proc/distribute_jobs()
@@ -529,14 +526,15 @@ var/global/current_state = GAME_STATE_INVALID
 			SPAWN(5 SECONDS)
 				//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] game-ending spawn happening")
 
-				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
+				handle_mapvote()
 
+				boutput(world, "<span class='bold notice'>A new round will begin soon.</span>")
 				var/datum/hud/roundend/roundend_countdown = new()
 
 				for (var/client/C in clients)
 					roundend_countdown.add_client(C)
 
-				var/roundend_time = 60
+				var/roundend_time = 120 // x 1 second sleeps
 				while (roundend_time >= 0)
 					roundend_countdown.update_time(roundend_time)
 					sleep(1 SECONDS)
