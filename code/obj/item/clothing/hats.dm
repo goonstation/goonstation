@@ -585,7 +585,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		..()
 		setProperty("meleeprot_head", 3)
 
-/obj/item/clothing/head/hosberet
+/obj/item/clothing/head/syndicateberet
 	name = "Syndicate Beret"
 	desc = "Hold on. This looks familiar..."
 	icon_state = "hosberet"
