@@ -119,6 +119,64 @@ datum
 			description = "This milk is far more milky than should be possible."
 			reagent_state = LIQUID
 
+		fooddrink/legendairy
+			name = "Legendairy"
+			id = "legendairy"
+			description = "Enhanced milk mixed with enhanced cola, instills a compulsion to drink in the drinker. Shouldn't this be called Double Double?"
+			reagent_state = LIQUID
+			fluid_r = 177
+			fluid_g = 100
+			fluid_b = 65
+			transparency = 255
+			taste = "coke milk" //intentional
+			viscosity = 0.4
+			thirst_value = 0.5
+			overdose = 40 //Showing an overdose on the scanners is funny
+			var/regret = FALSE
+
+			on_mob_life(var/mob/target, var/mult = 1)
+				if(!target) target = holder.my_atom
+				var/ld_amt = holder.get_reagent_amount(src.id)
+				var/mob/living/carbon/human/M = target
+				if(ld_amt > 40)
+					regret = TRUE //If you go too far, you'll wish you hadn't
+				if (!istype(M))
+					return
+				var/coke = pick("conk", "croke", "ckoe", "clock", "coge", "choke", "coque", "cob", "legend")
+				var/milk = pick("malk", "milic", "vilk", "mick", "mill", "mink", "mok", "meek", "misk", "music", "dairy")
+				var/thinkpositive = pick("What a great drink.", "Wonder if there's more around?",\
+				"Yum!","You daydream about having more.","Maybe your coworkers want some!","You should get more.")
+				var/thinknegative = pick("The thought sickens you.", "You feel betrayed.",\
+				"You hasten to distract yourself.","You crave vengeance.","Regret washes over you.")
+
+				switch(regret)
+					if(FALSE)
+						if (probmult (6))
+							boutput(M, SPAN_ALERT(pick("Your thoughts turn briefly to [coke] [milk]. [thinkpositive]",\
+							"Your stomach rolls. Must be time for some [coke] [milk]!",\
+							"A delicious taste lingers in your throat!")))
+						else if (probmult(12))
+							if(!M.stat && !M.lying && can_act(M) && !M.equipped() && probmult(20)) //shameless klepto theft
+								for(var/obj/item/reagent_containers/food/drinks/drinkingglass/I in oview(1, M))
+									if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(M, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE) && I.reagents.has_reagent("legendairy"))
+										I.Attackhand(M)
+										break
+
+							var/obj/item/reagent_containers/food/drinks/helddrink = M.equipped()
+							if(helddrink && helddrink.reagents.has_reagent("legendairy"))
+								helddrink.take_a_drink(M, M) // forces you to drink from held glasses
+								if (probmult(70)) M.say("Wow! Great drink!") // The iconic line!!
+
+					if(TRUE)
+						if (probmult (6))
+							M.emote("scowl")
+							boutput(M, SPAN_ALERT(pick("Your thoughts turn briefly to [coke] [milk]. [thinknegative]",\
+							"Your stomach rolls. Must be because of that [coke] [milk].",\
+							"The vile taste of [coke] [milk] lingers in your throat.",\
+							"You feel nauseous. You resolve to never drink [coke] [milk] again.")))
+				..()
+				return
+
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -1914,6 +1972,116 @@ datum
 			description = "A refreshing Spanish mixture of cola and wine."
 			reagent_state = LIQUID
 
+		fooddrink/alcoholic/lostcoke
+			name = "The Lost Treasure of Kalimero"
+			id = "lostcoke"
+			fluid_r = 255
+			fluid_g = 215
+			fluid_b = 0
+			alch_strength = 0.8
+			thirst_value = 15 //It's treasure!
+			depletion_rate = 1 //good things never last forever
+			description = "At long last-- the legacy of Kalimoxto's namesake!"
+			taste = "like ambrosia from the gods"
+			reagent_state = LIQUID
+
+			on_add() //Should make it easier to find. Too easy?
+				var/atom/A = holder.my_atom
+				if (isobj(A))
+					if (!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, A))
+						particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(A))
+
+			on_remove()
+				if (!holder) return
+
+				var/atom/A = holder.my_atom
+				if (isobj(A))
+					if (particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, A))
+						particleMaster.RemoveSystem(/datum/particleSystem/sparkles, A)
+
+		fooddrink/alcoholic/colamara
+			name = "Colamara Chaos"
+			id = "colamara"
+			fluid_r = 174
+			fluid_g = 207
+			fluid_b = 235
+			alch_strength = 0.1
+			thirst_value = 13 // accounting for depletion rate, it's a little worse than triple C... But it's fast
+			depletion_rate = 3
+			description = "Chemical agitation gives the ice in this drink its unique striated pattern."
+			taste = "bittersweet"
+			reagent_state = LIQUID
+
+		fooddrink/redspot
+			name = "Redspot"
+			id = "redspot"
+			fluid_r = 165
+			fluid_g = 85
+			fluid_b = 40
+			transparency = 240
+			thirst_value = 1.2
+			depletion_rate = 0.2
+			description = "An ancient storm brews within."
+			taste = list("sweet", "milky")
+			reagent_state = LIQUID
+
+		fooddrink/alcoholic/rotorua
+			name = "Rotorua Ravager"
+			id = "rotorua"
+			fluid_r = 125
+			fluid_g = 230
+			fluid_b = 90
+			transparency = 160
+			alch_strength = 0.4
+			thirst_value = 0.5
+			description = "An odd cocktail that gets stronger at lower blood oxygen levels."
+			taste = "burny"
+			reagent_state = LIQUID
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				var/stam_percent_left = M.stamina / M.stamina_max
+				alch_strength = clamp((4 * (1 - stam_percent_left)), 0.4, 4)
+				..()
+
+		fooddrink/alcoholic/vampire
+			name = "Vampire"
+			id = "vampire"
+			fluid_r = 97
+			fluid_g = 27
+			fluid_b = 27
+			transparency = 255
+			alch_strength = 0.25
+			thirst_value = 0.5
+			depletion_rate = 1
+			description = "This cocktail takes a unique approach to increasing blood alcohol content by draining blood as it intoxicates you."
+			taste = "metallic"
+			reagent_state = LIQUID
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if (blood_system && isliving(M))
+					var/mob/living/H = M
+					var/blood_percent_left = H.blood_volume / 500 //Doesn't support custom blood maxima but neither do spleens! Fuck it
+					H.nutrition -= 1 * mult
+					H.blood_volume -= 4 * mult
+					alch_strength = clamp((6.66 * (1 - blood_percent_left)), 0.25, 4)
+				..()
+				return
+
+		fooddrink/roaringwaters
+			name = "Roaring Waters"
+			id = "roaringwaters"
+			fluid_r = 233
+			fluid_g = 247
+			fluid_b = 243
+			transparency = 80
+			thirst_value = 0.5 // Water if it hydrated you forever
+			depletion_rate = 0.05 // two sips to completely restore thirst, but it takes forever
+			description = "What a sorry excuse for a mixed drink."
+			taste = list("fresh", "clean")
+			reagent_state = LIQUID
+
 		fooddrink/alcoholic/derby
 			name = "Derby"
 			id = "derby"
@@ -2384,6 +2552,66 @@ datum
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(5 * mult))
 				..()
 				return
+
+		fooddrink/caffeinated/cola_syrup //done
+			name = "cola syrup"
+			id = "cola_syrup"
+			description = "An acrid, cloying goop derived from cola, containing trace amounts of plasma."
+			reagent_state = LIQUID
+			fluid_r = 66
+			fluid_g = 33
+			fluid_b = 33
+			transparency = 10
+			taste = list("cloying", "acrid")
+			thirst_value = -0.2
+			viscosity = 0.8
+			caffeine_content = 0.6
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.reagents.add_reagent("sugar", 2 * mult)
+				..()
+
+		fooddrink/caffeinated/powercola
+			name = "power cola"
+			id = "powercola"
+			description = "Madness. Madness. A union of cola with more cola."
+			fluid_r = 66
+			fluid_g = 33
+			fluid_b = 33
+			transparency = 70
+			taste = list("sugary", "acrid")
+			thirst_value = 0.5
+			viscosity = 0.5
+			caffeine_content = 0.4
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.reagents.add_reagent("sugar", 0.7 * mult)
+				..()
+
+		fooddrink/alcoholic/wipeout
+			name = "Wipeout"
+			id = "wipeout"
+			description = "An emulsion of several strong drinks, this is probably closer to a poison than a cocktail."
+			fluid_r = 184
+			fluid_g = 245
+			fluid_b = 242
+			transparency = 70
+			taste = "a lot"
+			alch_strength = 0
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom // decays into things that decay for maximum slow metabolism punishment. ~8x the resultant chems if you have the trait
+				if(prob(15))
+					M.reagents.add_reagent("bourbon", 1 * mult)
+				if(prob(20))
+					M.reagents.add_reagent("espresso", 1 * mult)
+				if(prob(25))
+					M.reagents.add_reagent("VHFCS", 1 * mult) //consider increasing
+				if(prob(8))
+					M.reagents.add_reagent("pfire", 0.4 * mult)
+				..()
 
 		fooddrink/sarsaparilla // traditionally non-caffeinated
 			name = "sarsaparilla"

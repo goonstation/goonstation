@@ -2029,6 +2029,151 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	cola/cola2
+		required_reagents = list("cola_syrup" = 1, "sodawater" = 5)
+		result_amount = 6
+
+	cola_syrup
+		name = "Cola syrup"
+		id = "cola_syrup"
+		result = "cola_syrup"
+		required_reagents = list("cola" = 4, "VHFCS" = 1, "plasma" = 1)
+		result_amount = 2
+		min_temperature = 360
+		mix_phrase = "The cola simmers into a noxious black syrup."
+		instant = FALSE
+		reaction_speed = 2
+
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			smoke.set_up(1, 0, get_turf(src))
+			smoke.start()
+
+	powercola
+		name = "Power Cola"
+		id = "powercola"
+		result = "powercola"
+		required_reagents = list("cola" = 1, "cola_syrup" = 1)
+		result_amount = 1
+		mix_phrase = "The cola grows more powerful than you could possibly imagine."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		inhibitors = list("plasma")
+		drinkrecipe = TRUE
+
+	colamara_chaos
+		name = "Colamara Chaos"
+		id = "colamara"
+		result = "colamara"
+		required_reagents = list("powercola" = 1, "ice" = 0, "ldmatter" = 1, "bitters" = 1)
+		result_amount = 3
+		mix_phrase = "The bitters and cola roughen the surface of the ice as they war with one another."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	roaring_waters
+		name = "Roaring Waters"
+		id = "roaringwaters"
+		result = "roaringwaters"
+		required_reagents = list("powercola" = 1, "ice" = 0, "tonic" = 5, "sodawater" = 5)
+		result_amount = 10
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "A cool mist forms over the container as the waters crash over the ice."
+		drinkrecipe = TRUE
+
+	lostcoke
+		name = "The Lost Treasure of Kalimero"
+		id = "lostcoke"
+		result = "lostcoke"
+		required_reagents = list("powercola" = 1, "port" = 1)
+		result_amount = 2
+		mix_phrase = null
+		mix_sound = FALSE
+		drinkrecipe = TRUE
+
+		does_react(var/datum/reagents/holder)
+			var/atom/my_atom = holder.my_atom
+
+			if(length(holder.reagent_list) > length(src.required_reagents)) // drink must be pure to mix-- no teleporting chem bombs
+				return FALSE
+			if(istype(my_atom, /obj/item/reagent_containers/food/drinks/cocktailshaker)) // Must be made in your precious cocktail shaker
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			var/atom/my_atom = holder.my_atom
+			var/mob/mixperson = my_atom.loc
+
+			if(istype(my_atom, /obj)) // Teleports away on mixing
+				playsound(get_turf(my_atom), "warp", 20, 1)
+				mixperson.remove_item(my_atom)
+				var/obj/my_obj = my_atom
+				my_obj.set_loc(get_a_random_station_unlocked_container_with_no_others_on_the_turf())
+
+			if(my_atom.loc != mixperson) //checks if the drink actually teleported
+				mix_phrase = "The mixture teleports away! Go find it!"
+			else
+				mix_phrase = "The mixture groans scarily, turning in on itself and disintegrating."
+				holder.remove_reagent("lostcoke", created_volume)
+
+	redspot
+		name = "Redspot"
+		id = "redspot"
+		result = "redspot"
+		required_reagents = list("powercola" = 1, "juice_cherry" = 1, "milk" = 1)
+		result_amount = 3
+		mix_phrase = "An ancient storm brews within." //worded so that people can use it for dramatic flair
+		mix_sound = 'sound/ambience/nature/Rain_ThunderDistant.ogg'
+		drinkrecipe = TRUE
+
+		on_reaction(datum/reagents/holder, created_volume)
+			var/turf/T = get_turf(holder.my_atom)
+			if (istype(T))
+				var/obj/effects/precipitation/rain/dense/tile/rain = new /obj/effects/precipitation/rain/dense/tile/
+				rain.set_loc(T)
+				SPAWN(6 SECONDS)
+					qdel(rain)
+
+	wipeout
+		name = "Wipeout"
+		id = "wipeout"
+		result = "wipeout"
+		required_reagents = list("powercola" = 1, "plasma" = 1, "espresso" = 1, "bourbon" = 1, "simplesyrup" = 1, "pfire" = 1)
+		result_amount = 4
+		mix_phrase = "Globs of the ingredients barely mix with one another."
+		drinkrecipe = TRUE
+
+	rotorua
+		name = "Rotorua Ravager"
+		id = "rotorua"
+		result = "rotorua"
+		required_reagents = list("powercola" = 1, "steam" = 1, "lipolicide" = 1, "ethanol" = 1)
+		result_amount = 4
+		mix_phrase = "The cola bubbles and steams."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	vampire
+		name = "Vampire"
+		id = "vampire"
+		result = "vampire"
+		required_reagents = list("powercola" = 1, "salt" = 1, "vodka" = 1, "blood" = 1)
+		result_amount = 4
+		mix_phrase = "A stillness falls over the drink as it congeals."
+		mix_sound = 'sound/effects/heartbeat.ogg'
+		drinkrecipe = TRUE
+
+	legendairy
+		name = "Legendairy"
+		id = "legendairy"
+		result = "legendairy"
+		required_reagents = list("powercola" = 1, "super_milk" = 1)
+		result_amount = 2
+		mix_phrase = "There's a small blast wave as the Power Cola and Super Milk meet."
+		mix_sound = 'sound/items/mining_blaster.ogg'
+		drinkrecipe = TRUE
+
 	hot_toddy
 		name = "Hot Toddy"
 		id = "hottoddy"
