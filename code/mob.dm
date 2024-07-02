@@ -2394,7 +2394,8 @@
 // jitteriness - copy+paste of dizziness
 
 /mob/proc/make_jittery(var/amount)
-	if (!ishuman(src)) // for the moment, only humans get dizzy
+	// usually, only humans get jittery. watchful eyes also get jittery now.
+	if (!ishuman(src) && !istype(src, /mob/living/critter/small_animal/floateye/watchful))
 		return
 
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
