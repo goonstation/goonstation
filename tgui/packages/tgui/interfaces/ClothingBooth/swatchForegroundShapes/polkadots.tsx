@@ -1,12 +1,13 @@
-import { SwatchForegroundProps } from '../type';
+import { SwatchForegroundProps } from "../type";
 
 export const SwatchPolkaDots = (props: SwatchForegroundProps) => {
   return (
     <svg
+      fill={props.color}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="21.333332"
-      height="16pt"
+      width="100%"
+      height="100%"
       viewBox="0 0 5.6444439 5.6444445">
       <defs>
         <pattern xlinkHref="#a" id="b" x="-16" y="-16" patternTransform="scale(.2)" preserveAspectRatio="xMidYMid" />

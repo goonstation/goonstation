@@ -387,6 +387,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 		name = "Yellow Polka-dot"
 		swatch_background_color = "#d3cb21"
 		swatch_foreground_color = "#0d0c19"
+		swatch_foreground_shape = SWATCH_POLKADOTS
 		item_path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
 /datum/clothingbooth_item/head/maid

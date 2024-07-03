@@ -13,6 +13,11 @@ interface ClothingBoothSlotDetail {
   name: string;
 }
 
+const clothingBoothSlotLookup = Object.entries(ClothingBoothSlotKey).reduce((acc, [name, id]) => {
+  acc[id] = { id, name };
+  return acc;
+}, {} as Record<ClothingBoothSlotKey, ClothingBoothSlotDetail>);
+
 export const GroupingTags = (props: GroupingTagContainerProps, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
   const { tags } = data;
@@ -21,10 +26,6 @@ export const GroupingTags = (props: GroupingTagContainerProps, context) => {
   const sortedGroupingTags = groupingTagsObject.sort(
     buildFieldComparator((groupingTag) => tags[groupingTag].display_order, numberComparator)
   );
-  const clothingBoothSlotLookup = Object.entries(ClothingBoothSlotKey).reduce((acc, [name, id]) => {
-    acc[id] = { id, name };
-    return acc;
-  }, {} as Record<ClothingBoothSlotKey, ClothingBoothSlotDetail>);
 
   return (
     <Stack fluid>
@@ -48,8 +49,8 @@ const GroupingTag = (props: GroupingTagProps) => {
   return (
     <Box
       className="clothingbooth__groupingtag"
-      color={!!color && color}
-      style={{ border: `0.0835rem solid ${color ? color : 'currentColor'}` }}
+      color={color}
+      style={{ border: `1px solid ${color ? color : 'currentColor'}` }}
       px={0.5}>
       {name}
     </Box>

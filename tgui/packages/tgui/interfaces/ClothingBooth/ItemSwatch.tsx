@@ -1,15 +1,15 @@
 import { classes } from 'common/react';
 import { Box, Tooltip } from '../../components';
-import { SwatchBisectLeft, SwatchBisectRight, SwatchClub, SwatchDiamond, SwatchHeart, SwatchPolkaDots, SwatchSpade } from './swatchForegroundShapes';
+import { SwatchBisectLeft, SwatchBisectRight, SwatchClub, SwatchDiamond, SwatchHearts, SwatchPolkaDots, SwatchSpade } from './swatchForegroundShapes';
 import type { ClothingBoothItemData } from './type';
 
 const SwatchLookup = {
   'bisect_left': SwatchBisectLeft,
   'bisect_right': SwatchBisectRight,
   'polkadots': SwatchPolkaDots,
-  'heart': SwatchClub,
+  'club': SwatchClub,
   'diamond': SwatchDiamond,
-  'club': SwatchHeart,
+  'heart': SwatchHearts,
   'spade': SwatchSpade,
 };
 
@@ -30,8 +30,8 @@ export const ItemSwatch = (props: ItemSwatchProps) => {
   } = props;
   const swatchboxClasses = classes([selected && 'outline-color-good', 'clothingbooth__swatch-box']);
   const swatchiconClasses = classes([
-    'clothingbooth__swatch_icon',
-    `clothingbooth__swatch_icon_${swatch_foreground_shape}`,
+    'clothingbooth__swatch-icon',
+    `clothingbooth__swatch-icon--${swatch_foreground_shape}`,
   ]);
   const SwatchForegroundShape = SwatchLookup[swatch_foreground_shape] || null;
 
@@ -42,7 +42,8 @@ export const ItemSwatch = (props: ItemSwatchProps) => {
         backgroundColor={swatch_background_color}
         onClick={onSelect}
         width={2}
-        height={2}>
+        height={2}
+        m="0.2em">
         {swatch_foreground_shape && (
           <Box className={swatchiconClasses} height="100%" width="100%">
             {!!SwatchForegroundShape && (

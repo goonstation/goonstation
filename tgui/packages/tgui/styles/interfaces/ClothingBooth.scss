@@ -31,20 +31,19 @@
   }
 
   &__swatch-box {
-    margin: 0.2em;
     &:hover {
       outline: 0.167rem solid colors.$good;
     }
   }
 
-  &__groupingtag {
-      border-radius: base.$border-radius;
-  }
+  // If any swatch foreground shapes need custom styling, this is where it lives.
+  &__swatch-icon {
+    &--rainbow {
+      background-image: linear-gradient(45deg, red,orange,yellow,green,blue,indigo,violet);
+    }
 }
 
-// If any swatch foreground shapes need custom styling, this is where it lives.
-.clothingbooth__swatch_icon {
-  &_rainbow {
-    background-image: linear-gradient(45deg, red,orange,yellow,green,blue,indigo,violet);
+  &__groupingtag {
+      border-radius: base.$border-radius;
   }
 }
