@@ -25602,16 +25602,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/table/reinforced/chemistry/auto/basicsup{
-	drawer_contents = ssss
-	},
-/obj/table/reinforced/chemistry/auto/basicsup{
-	drawer_contents = null
-	},
-/obj/table/reinforced/chemistry/auto/basicsup{
-	drawer_contents = null;
-	desc = null
-	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /obj/item/device/prox_sensor{
 	pixel_x = -2;
 	pixel_y = -4
@@ -25637,10 +25628,6 @@
 	},
 /area/station/science/lab)
 "cap" = (
-/obj/table/reinforced/chemistry/auto/basicsup{
-	drawer_contents = null;
-	desc = null
-	},
 /obj/table/reinforced/chemistry/auto/basicsup{
 	drawer_contents = null;
 	desc = null
