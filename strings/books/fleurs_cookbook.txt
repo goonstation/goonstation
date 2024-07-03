@@ -75,5 +75,6 @@
 <li>Cook the ingredients in the oven for 6 seconds on high.
 </div>
 
+<hr>
 <h2>Looks like there's plenty more empty pages in here...</h2>
 <h3>She's going to be working on this book for years to come.</h3>
