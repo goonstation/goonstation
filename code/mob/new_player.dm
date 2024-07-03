@@ -68,7 +68,6 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 
 		// byond members get a special join message :]
-		// byond_member_msg16.jpg was made on https://www.textstudio.com/
 		if (src.client?.IsByondMember())
 			var/list/msgs_which_are_gifs = list(8, 9, 10) //not all of these are normal jpgs
 			var/num = rand(1,16)
