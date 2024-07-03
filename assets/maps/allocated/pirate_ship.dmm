@@ -156,7 +156,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 1
 	},
 /turf/space,
@@ -261,7 +261,7 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
 /turf/space,
@@ -1135,7 +1135,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 1
 	},
 /turf/space,
@@ -1633,7 +1633,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/teleport_pad{
+/obj/fakeobject/teleport_pad{
 	name = "prototype receiver pad"
 	},
 /obj/landmark/pirate_tele,
@@ -1675,7 +1675,7 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "Ke" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/space,
@@ -1783,7 +1783,7 @@
 	},
 /area/pirate_ship)
 "MM" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
@@ -2116,7 +2116,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "TY" = (
-/obj/decal/fakeobjects/palmtree{
+/obj/fakeobject/palmtree{
 	layer = 4;
 	pixel_y = 6;
 	pixel_x = 2
@@ -2295,7 +2295,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	anchored = 2
 	},
 /obj/machinery/light/incandescent/warm{

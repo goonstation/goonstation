@@ -142,9 +142,6 @@
 	var/list/sound_list_laugh = null
 	var/list/sound_list_flap = null
 
-	var/list/pathogens = list()
-	var/list/immunities = list()
-
 	var/datum/simsHolder/sims = null
 
 	/// forces the mob to wear underpants, even if their flags tell them not to
@@ -619,10 +616,6 @@
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
 
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		P.ondeath()
-
 	src.drop_juggle()
 
 #ifdef DATALOGGER
@@ -1072,16 +1065,17 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
+		var/yeet_change_mod = yeet_chance
 		var/throw_dir = get_dir(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-				yeet_chance = 1
+				yeet_change_mod *= 1
 			if(src.mind.karma < 0) //you come and go, you come and go.
-				yeet_chance = 0
+				yeet_change_mod *= 0
 			if(src.mind.karma < 50 && src.mind.karma >= 0)
-				yeet_chance = 0.1
+				yeet_change_mod *= 0.1
 
-		if(prob(yeet_chance))
+		if(prob(yeet_change_mod))
 			src.visible_message(SPAN_ALERT("[src] yeets [I]."))
 			src.say("YEET")
 			yeet = 1 // I hate this
@@ -1471,10 +1465,6 @@
 				return
 
 	message = process_accents(src,message)
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		message = P.onsay(message)
 
 	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
@@ -2447,79 +2437,6 @@
 	else
 		return null
 
-/mob/living/carbon/human/infected(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
-		return 0
-	if (P.pathogen_uid in src.immunities)
-		return 0
-	if (!(P.pathogen_uid in src.pathogens))
-		var/maxTierExisting = 0
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/PA = src.pathogens[uid]
-			maxTierExisting = max(maxTierExisting, PA.getHighestTier())
-		var/maxTierNew = P.getHighestTier()
-
-		// thanks, we already got strong pathogen, go away
-		if(maxTierNew <= maxTierExisting)
-			return 0
-
-		// wow, strong pathogen, let's kick out all the other ones
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/PA = src.pathogens[uid]
-			src.cured(PA)
-
-		// and get the new one instead
-		var/datum/pathogen/Q = new /datum/pathogen
-		Q.setup(0, P, 1)
-		pathogen_controller.mob_infected(Q, src)
-		src.pathogens += Q.pathogen_uid
-		src.pathogens[Q.pathogen_uid] = Q
-		Q.infected = src
-		logTheThing(LOG_PATHOLOGY, src, "is infected by [Q].")
-		return 1
-	else
-		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
-		if (C.generation < P.generation)
-			var/datum/pathogen/Q = new /datum/pathogen
-			Q.setup(0, P, 1)
-			logTheThing(LOG_PATHOLOGY, src, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
-			pathogen_controller.mob_infected(Q, src)
-			Q.stage = min(C.stage, Q.stages)
-			qdel(C)
-			src.pathogens[Q.pathogen_uid] = Q
-			Q.infected = src
-			return 1
-	return 0
-
-/mob/living/carbon/human/cured(var/datum/pathogen/P)
-	if (P.pathogen_uid in src.pathogens)
-		pathogen_controller.mob_cured(src.pathogens[P.pathogen_uid], src)
-		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-		var/pname = Q.name
-		src.pathogens -= P.pathogen_uid
-		var/datum/microbody/M = P.body_type
-		if (M.auto_immunize)
-			immunity(P)
-		qdel(Q)
-		logTheThing(LOG_PATHOLOGY, src, "is cured of [pname].")
-
-/mob/living/carbon/human/remission(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (P.pathogen_uid in src.pathogens)
-		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-		Q.remission()
-		logTheThing(LOG_PATHOLOGY, src, "'s pathogen [Q] enters remission.")
-
-/mob/living/carbon/human/immunity(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (!(P.pathogen_uid in src.immunities))
-		src.immunities += P.pathogen_uid
-		logTheThing(LOG_PATHOLOGY, src, "gains immunity to pathogen [P].")
-
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 
 	if (prob(1)) //Magnet healing!
@@ -2856,6 +2773,7 @@
 	else if(limb == "r_arm" && src.limbs.r_arm) src.limbs.r_arm.sever()
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.sever()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.sever()
+	else if(limb == "all") src.limbs.sever("all")
 
 /mob/living/carbon/human/proc/has_limb(var/limb)
 	if (!src.limbs)
@@ -2979,12 +2897,12 @@
 
 	if (!src.juggling())
 		return
-	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
+	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
 		if(istype(A, /obj/item/device/light)) //i hate this
 			var/obj/item/device/light/L = A
-			L.light.attach(L)
+			L.light?.attach(L)
 		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
@@ -3033,7 +2951,7 @@
 				continue
 			items += ", [juggled]"
 		items = copytext(items, 3)
-		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)]'s already juggling!")
+		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
@@ -3558,6 +3476,16 @@
 		. += 1
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
+
+/mob/living/carbon/human/get_chem_depletion_multiplier()
+	. = ..()
+	if (src.traitHolder.hasTrait("slowmetabolism"))
+		. /= 2
+	if (src.organHolder && !ischangeling(src))
+		if (!src.organHolder.liver || src.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+			. /= 2
+		if (src.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+			. /= 2
 
 /mob/living/carbon/human/get_blood_absorption_rate()
 	. = ..()

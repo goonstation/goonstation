@@ -49,7 +49,7 @@ proc/no_more_radio()
 	var/doesMapText = FALSE
 	// probably not too resource intensive but I'd be careful using this just in case
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throw_speed = 2
 	throw_range = 9
@@ -790,7 +790,7 @@ TYPEINFO(/obj/item/radiojammer)
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	item_state = "electropack"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
@@ -853,11 +853,6 @@ TYPEINFO(/obj/item/radiojammer)
 #else
 			M.changeStatus("knockdown", 10 SECONDS)
 #endif
-			if(istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
 
 	if ((src.master && src.wires & WIRE_SIGNAL))
 		src.master.receive_signal()

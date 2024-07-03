@@ -13,7 +13,7 @@ TYPEINFO(/atom)
 	plane = PLANE_DEFAULT
 	/// Are we above or below the floor tile?
 	var/level = OVERFLOOR
-	var/flags = FPRINT
+	var/flags = 0
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -467,16 +467,15 @@ TYPEINFO(/atom)
 
 /atom/movable/overlay/gibs/proc/delaydispose()
 	SPAWN(3 SECONDS)
-		if (src)
-			dispose(src)
+		qdel(src)
 
 /atom/movable/overlay/disposing()
 	master = null
 	..()
 
 TYPEINFO(/atom/movable)
-	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
-	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	/// A key-value list of match property or material IDs and an amount required to construct the item
+	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
 
 /atom/movable

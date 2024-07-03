@@ -194,7 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper/flockstatsnote = 1,
 			/obj/window/feather = 1,
 			/obj/grille/flock = 1,
-			/obj/decal/fakeobjects/flock/antenna/not_dense = 1,
+			/obj/fakeobject/flock/antenna/not_dense = 1,
 			/obj/decal/cleanable/flockdrone_debris = 1,
 			/obj/decal/cleanable/flockdrone_debris/fluid = 1,
 			/obj/item/gun/energy/flock = 0.05,

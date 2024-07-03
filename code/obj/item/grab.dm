@@ -780,7 +780,7 @@
 
 	src.hide_attack = initial(src.hide_attack)
 
-ABSTRACT_TYPE(/obj/item/grab/threat)
+//this should be abstract but abstract type markers propagate to the parent
 /obj/item/grab/threat
 	var/activated = FALSE
 

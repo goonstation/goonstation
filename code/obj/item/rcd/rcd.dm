@@ -18,7 +18,7 @@ TYPEINFO(/obj/item/rcd)
 	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -481,7 +481,7 @@ TYPEINFO(/obj/item/rcd)
 					user_limb_is_missing = TRUE
 
 			if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
-				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
+				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims [himself_or_herself(user)]! </b> "))
 				random_brute_damage(user, 35)
 				Huser.changeStatus("knockdown", 3 SECONDS)
 				take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
@@ -493,7 +493,7 @@ TYPEINFO(/obj/item/rcd)
 					surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 					surgery_target.remove()
 					qdel(surgery_target)
-				user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> "))
+				user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes [his_or_her(user)] own [surgery_target]! </b> "))
 				random_brute_damage(user, 25)
 				take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 			playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)

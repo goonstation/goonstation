@@ -30,7 +30,7 @@
 /turf/space,
 /area/space)
 "aah" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "aai" = (
@@ -59,14 +59,9 @@
 /turf/simulated/floor/airless/damaged1,
 /area/space)
 "aan" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless,
-/area/space)
-"aao" = (
-/obj/table/wood/auto,
-/obj/machinery/microscope,
 /turf/simulated/floor/airless,
 /area/space)
 "aap" = (
@@ -83,14 +78,14 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aar" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -178,7 +173,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aaC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -2569,7 +2564,7 @@
 	name = "Information Office persistent notice board";
 	persistent_id = "information office"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
@@ -5822,7 +5817,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "avC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -9816,7 +9811,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
 "aMs" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aMt" = (
@@ -10022,7 +10017,7 @@
 /turf/space,
 /area/space)
 "aNx" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
@@ -10577,7 +10572,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
 "aQi" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /obj/stool/chair{
@@ -10586,7 +10581,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aQj" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -10924,7 +10919,7 @@
 /area/ghostdrone_factory)
 "aRr" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aRs" = (
@@ -11444,7 +11439,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "aTs" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
@@ -11626,14 +11621,14 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/escape)
 "aUf" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUg" = (
 /obj/machinery/drone_recharger/factory,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -11769,20 +11764,20 @@
 /area/station/crew_quarters/sauna)
 "aUQ" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUR" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aUS" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -12088,7 +12083,7 @@
 /area/ghostdrone_factory)
 "aWd" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "aWe" = (
@@ -12677,7 +12672,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "aYn" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -21447,6 +21442,7 @@
 /area/station/storage/warehouse)
 "bJp" = (
 /obj/disposalpipe/segment/bent/west,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
 "bJq" = (
@@ -25507,6 +25503,18 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"bZP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Power Room"
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/yellow,
+/area/station/engine/monitoring)
 "bZR" = (
 /obj/machinery/computer/barcode/qm{
 	dir = 8
@@ -28565,7 +28573,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/research_outpost/indigo_rye)
 "cli" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -28645,7 +28653,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/east,
 /area/research_outpost/indigo_rye)
 "clu" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -28816,18 +28824,15 @@
 /turf/space,
 /area/research_outpost/indigo_rye)
 "clR" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "clS" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/clothing/under/misc/syndicate,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
-/obj/item/storage/fanny/syndie,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "clT" = (
@@ -29217,7 +29222,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cnh" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -29236,7 +29241,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cni" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -29248,7 +29253,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "cnj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -29355,7 +29360,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "cnC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -29672,10 +29677,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/hos,
 /obj/deployable_turret/riot/active{
 	dir = 1
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -34770,6 +34775,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/monitoring)
+"fyo" = (
+/obj/table/wood/auto,
+/obj/fakeobject/microscope,
+/turf/simulated/floor/airless,
+/area/space)
 "fyt" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/cable{
@@ -35327,16 +35337,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/core)
-"fXg" = (
-/obj/machinery/door/airlock/pyro/engineering,
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_power,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "fXD" = (
 /obj/storage/crate{
 	desc = "Whoa! What will they think of next?";
@@ -35753,9 +35753,7 @@
 	},
 /area/station/crew_quarters/quarters_south)
 "gjV" = (
-/obj/stool/chair/office/red{
-	dir = 4
-	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -36573,7 +36571,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "gOK" = (
@@ -36980,19 +36977,6 @@
 /obj/decal/tile_edge/floorguide/arrow_s,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"hau" = (
-/obj/machinery/door/airlock/pyro/engineering,
-/obj/disposalpipe/segment/mail/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/mapping_helper/access/engineering_power,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "haB" = (
 /obj/machinery/atmospherics/unary/tank{
 	dir = 4
@@ -38824,6 +38808,31 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
+"iCG" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Morgue"
+	},
+/obj/mapping_helper/access/morgue,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
+"iCJ" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "iCW" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -39656,6 +39665,18 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"jdT" = (
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Morgue"
+	},
+/obj/mapping_helper/access/morgue,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/medbay/surgery)
 "jdV" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -39780,18 +39801,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"jjQ" = (
-/obj/cable/blue{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/engine/caution/westeast,
-/area/station/engine/power)
 "jjV" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -39972,7 +39981,7 @@
 /turf/simulated/floor/caution/corner/se,
 /area/station/engine/hotloop)
 "jpl" = (
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_y = 27
 	},
 /turf/simulated/floor/wood,
@@ -48065,7 +48074,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
@@ -48144,6 +48153,18 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"pvo" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Morgue"
+	},
+/obj/mapping_helper/access/morgue,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "pvP" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -48588,19 +48609,6 @@
 	dir = 1
 	},
 /area/station/security/interrogation)
-"pQh" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Power Room"
-	},
-/obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/yellow,
-/area/station/engine/monitoring)
 "pQp" = (
 /obj/storage/closet/wardrobe/mixed,
 /turf/simulated/floor/plating,
@@ -49401,19 +49409,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
-"qsH" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Morgue"
-	},
-/obj/mapping_helper/access/morgue,
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "qsM" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -50990,6 +50985,18 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/maintenance/north)
+"rzO" = (
+/obj/cable/blue{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Power Room";
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/engine/power)
 "rAa" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/emergency_injector/atropine{
@@ -52379,17 +52386,6 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/south)
-"sDU" = (
-/obj/cable/blue{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Transmission Laser"
-	},
-/obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/engine/caution/westeast,
-/area/station/engine/ptl)
 "sEX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -52620,7 +52616,6 @@
 	name = "Armory";
 	req_access = null
 	},
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -52632,6 +52627,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "sNO" = (
@@ -53076,6 +53072,16 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
+"tbo" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "tcg" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -54750,7 +54756,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "uqp" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},
@@ -55630,19 +55636,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
-"uVw" = (
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Morgue"
-	},
-/obj/mapping_helper/access/morgue,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "uWq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55781,19 +55774,6 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"vcn" = (
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Morgue"
-	},
-/obj/mapping_helper/access/morgue,
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/medbay/surgery)
 "vcr" = (
 /obj/machinery/computer/card/department/research,
 /obj/machinery/alarm{
@@ -57014,9 +56994,7 @@
 	},
 /area/station/solar/east)
 "vXP" = (
-/obj/machinery/computer3/generic/communications{
-	dir = 8
-	},
+/obj/machinery/computer3/generic/communications,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -58857,6 +58835,17 @@
 /obj/decal/tile_edge/floorguide/arrow_e,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"xpa" = (
+/obj/cable/blue{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Power Transmission Laser"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/engine/ptl)
 "xpb" = (
 /obj/machinery/light,
 /obj/machinery/light/emergency{
@@ -94561,7 +94550,7 @@ bUg
 cbX
 cbX
 cbX
-vcn
+jdT
 cex
 bis
 ceJ
@@ -95158,7 +95147,7 @@ aUj
 aUW
 aWj
 aUV
-uVw
+iCG
 aZn
 baD
 bbD
@@ -95462,7 +95451,7 @@ aWk
 btW
 caj
 caj
-qsH
+pvo
 rfD
 caj
 caj
@@ -105699,7 +105688,7 @@ asR
 auc
 lot
 lot
-pQh
+bZP
 lot
 lot
 lot
@@ -106585,7 +106574,7 @@ jSo
 mig
 tub
 gEU
-sDU
+xpa
 qau
 dSM
 qau
@@ -106603,7 +106592,7 @@ uCr
 uQg
 gkk
 nNX
-jjQ
+rzO
 nbi
 nbi
 hXf
@@ -115663,7 +115652,7 @@ aqU
 uzL
 azg
 aHV
-hau
+iCJ
 aVx
 axt
 ayu
@@ -116877,7 +116866,7 @@ aFo
 aHb
 aTd
 aAr
-fXg
+tbo
 aMP
 aMP
 aMP
@@ -128831,7 +128820,7 @@ aaa
 aaa
 aaa
 aai
-aao
+fyo
 aav
 aaC
 aaj
