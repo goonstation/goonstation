@@ -362,9 +362,12 @@ or don't if it uses a custom topopen overlay
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio1.toggle_microphone(FALSE)
+		src.radio1.toggle_speaker(FALSE)
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.device_color = "#7F7FE2"
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
+		src.radio2.toggle_microphone(FALSE)
+		src.radio2.toggle_speaker(FALSE)
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio3.toggle_microphone(FALSE)
 		src.internal_pda.name = "AI's Internal PDA Unit"
@@ -399,11 +402,12 @@ or don't if it uses a custom topopen overlay
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/hear(var/datum/say_message/message)
-	if (deployed_to_eyecam && src.eyecam)
+/mob/living/silicon/ai/hear(datum/say_message/message)
+	if (src.deployed_to_eyecam && src.eyecam)
 		src.eyecam.hear(message)
-	else
-		..()
+		return
+
+	. = ..()
 
 
 /mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "")

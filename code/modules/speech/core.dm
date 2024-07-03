@@ -21,7 +21,7 @@
 
 /// Determines what happens to a message after this atom's listen tree has finished processing it. Typically the final destination of say message datums.
 /atom/proc/hear(datum/say_message/message)
-	boutput(src, message.format_for_output())
+	boutput(src, message.format_for_output(src))
 
 
 /// This atom's speech module tree. Lazy loaded on the first `say()` call.
@@ -153,7 +153,6 @@ Cleanup:
 - `RETURN_TYPE` where necessary.
 
 Things To Implement:
-- AI
 - Observers (not ghosts)
 - Zoldorf
 - Radio brain (bioeffect)

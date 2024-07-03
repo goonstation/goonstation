@@ -98,11 +98,6 @@
 	/// Pass to the listener atom.
 	src.listener_parent.hear(message)
 
-	/// Handle hear sounds.
-	if (message.hear_sound && !message.received_module.say_channel.suppress_hear_sound && ismob(src.listener_parent))
-		var/mob/mob_listener = src.listener_parent
-		mob_listener.playsound_local_not_inworld(message.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE)
-
 /// Update this listen module tree's listener origin. This will cause parent to hear messages from the location of the new listener origin.
 /datum/listen_module_tree/proc/update_listener_origin(atom/new_origin)
 	var/atom/old_origin = src.listener_origin

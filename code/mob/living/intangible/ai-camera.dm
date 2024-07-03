@@ -31,7 +31,7 @@
 	speech_verb_exclaim = "declares"
 
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_inputs = list(LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
 	start_speech_modifiers = list(SPEECH_MODIFIER_MONOSPACE_DECORATOR, SPEECH_MODIFIER_BRAIN_DAMAGE)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
@@ -261,10 +261,11 @@
 			return 0.75 + movement_delay_modifier
 
 	say(message, flags, message_params, atom_listeners_override)
-		if (src.mainframe) //NEWSPEECH - this works
-			src.mainframe.say(message)
-		else
-			..(message)
+		if (src.mainframe)
+			src.mainframe.say(message, flags, message_params, atom_listeners_override)
+			return
+
+		. = ..()
 
 	say_radio()
 		src.mainframe.say_radio()

@@ -2,6 +2,10 @@
 	id = LISTEN_INPUT_EARS_AI
 
 /datum/shared_input_format_module/ai_ears/process(datum/say_message/message)
+	// Restrict this behaviour to radio messages.
+	if (!(message.relay_flags & SAY_RELAY_RADIO))
+		return
+
 	// Determine and format the speaker's displayed job title.
 	var/job_title = "Unknown"
 	if (ishuman(message.original_speaker))

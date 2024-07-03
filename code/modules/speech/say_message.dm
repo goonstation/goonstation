@@ -286,7 +286,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	src.message_origin.show_speech_bubble()
 
 /// Returns a formatted message for use with `boutput()`, using either the last input listen module or falling back to the default format of `"[speaker] [say_verb], [content]"`.
-/datum/say_message/proc/format_for_output()
+/datum/say_message/proc/format_for_output(atom/listener)
 	// Format the message using the input module that this message was received from.
 	src.received_module.format(src)
 
@@ -308,15 +308,20 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		src.format_speaker_prefix = "<small>" + src.format_speaker_prefix
 		src.format_message_suffix += "</small>"
 
-	// Display maptext to the listener, if applicable.
-	var/mob/mob_listener = src.received_module.parent_tree.listener_parent
-	if (!(src.flags & SAYFLAG_NO_MAPTEXT) && istype(mob_listener) && mob_listener.client && !mob_listener.client.preferences.flying_chat_hidden)
-		if (!src.maptext_css_values["color"])
-			var/num = hex2num(copytext(md5(src.speaker.name), 1, 7))
-			src.maptext_css_values["color"] = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+	var/mob/mob_listener = listener
+	if (istype(mob_listener) && mob_listener.client)
+		// Display maptext to the listener, if applicable.
+		if (!(src.flags & SAYFLAG_NO_MAPTEXT) && !mob_listener.client.preferences.flying_chat_hidden)
+			if (!src.maptext_css_values["color"])
+				var/num = hex2num(copytext(md5(src.speaker.name), 1, 7))
+				src.maptext_css_values["color"] = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 
-		src.message_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.message_origin)
-		src.message_origin.maptext_manager.add_maptext(mob_listener.client, global.message_maptext(src))
+			src.message_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.message_origin)
+			src.message_origin.maptext_manager.add_maptext(mob_listener.client, global.message_maptext(src))
+
+		/// Handle hear sounds.
+		if (src.hear_sound && !src.received_module.say_channel.suppress_hear_sound)
+			mob_listener.playsound_local_not_inworld(src.hear_sound, 55, 0.01, flags = SOUND_IGNORE_SPACE)
 
 	// If the speaker to display is null, use the real name of the speaker instead.
 	if (isnull(src.speaker_to_display))
