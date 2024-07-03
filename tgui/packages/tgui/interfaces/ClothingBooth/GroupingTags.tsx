@@ -43,13 +43,13 @@ export const GroupingTags = (props: GroupingTagContainerProps, context) => {
 interface GroupingTagProps extends ClothingBoothGroupingTagsData {}
 
 const GroupingTag = (props: GroupingTagProps) => {
-  const { name, colour } = props;
+  const { name, color } = props;
 
   return (
     <Box
       className="clothingbooth__groupingtag"
-      color={!!colour && colour}
-      style={{ border: `0.0835rem solid ${colour ? colour : 'currentColor'}` }}
+      color={!!color && color}
+      style={{ border: `0.0835rem solid ${color ? color : 'currentColor'}` }}
       px={0.5}>
       {name}
     </Box>

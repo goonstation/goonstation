@@ -24,8 +24,8 @@ export const ItemSwatch = (props: ItemSwatchProps) => {
     name,
     onSelect,
     selected,
-    swatch_background_colour,
-    swatch_foreground_colour,
+    swatch_background_color,
+    swatch_foreground_color,
     swatch_foreground_shape,
   } = props;
   const swatchboxClasses = classes([selected && 'outline-color-good', 'clothingbooth__swatch-box']);
@@ -39,14 +39,14 @@ export const ItemSwatch = (props: ItemSwatchProps) => {
     <Tooltip content={`${name} (${cost}⪽)`} position="bottom">
       <Box
         className={swatchboxClasses}
-        backgroundColor={swatch_background_colour}
+        backgroundColor={swatch_background_color}
         onClick={onSelect}
         width={2}
         height={2}>
         {swatch_foreground_shape && (
           <Box className={swatchiconClasses} height="100%" width="100%">
             {!!SwatchForegroundShape && (
-              <SwatchForegroundShape colour={swatch_foreground_colour} className="clothingbooth__swatch_icon" />
+              <SwatchForegroundShape color={swatch_foreground_color} className="clothingbooth__swatch_icon" />
             )}
           </Box>
         )}
