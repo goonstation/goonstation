@@ -1460,6 +1460,14 @@ TYPEINFO(/obj/item/light)
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.2
+	reddish //apparently y'all didn't have reddish bulbs?
+		name = "reddish light bulb"
+		desc = "Fancy."
+		icon_state = "bulb-red"
+		base_state = "bulb-red"
+		color_r = 0.98
+		color_g = 0.75
+		color_b = 0.5
 	yellow
 		name = "yellow light bulb"
 		desc = "Fancy."

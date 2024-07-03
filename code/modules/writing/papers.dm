@@ -987,7 +987,7 @@ proc/spawn_kitchen_note()
 
 /obj/item/paper/businesscard/hemera_rcd
 	name = "info card - Rapid Construction Device"
-	icon_state = "businesscard-alt"
+	icon_state = "businesscard-hemera"
 	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
 
 	New()

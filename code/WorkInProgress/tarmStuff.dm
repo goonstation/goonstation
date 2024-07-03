@@ -25,7 +25,6 @@
 			P.rotateDirection(180 + 8*i)
 			P.launch()
 
-
 /datum/projectile/bullet/homing/glatisant_submuntitions
 	name = "\improper Glatisant submuntition seeker"
 	window_pass = 0
@@ -47,6 +46,10 @@
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
 		explosion_new(null, get_turf(hit), 16)
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
 
 //much of this shamelessly copy-pasted from the pod-seeker
 /obj/item/gun/kinetic/glatisant
