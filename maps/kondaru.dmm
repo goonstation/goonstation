@@ -25593,7 +25593,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 9
 	},
 /area/station/science/lab)
@@ -25623,7 +25623,7 @@
 	pixel_x = 10;
 	pixel_y = 8
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/lab)
@@ -25647,7 +25647,7 @@
 /obj/item/device/audio_log{
 	pixel_y = 7
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/lab)
@@ -25655,7 +25655,7 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 8
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/lab)
@@ -25833,7 +25833,7 @@
 	pixel_y = 9;
 	pixel_x = -8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cbn" = (
 /obj/cable{
@@ -25842,7 +25842,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cbp" = (
 /obj/cable{
@@ -26122,7 +26122,7 @@
 /obj/machinery/networked/storage/bomb_tester{
 	bank_id = "Mixer"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "ccn" = (
 /obj/rack,
@@ -26239,7 +26239,7 @@
 /area/station/science/lab)
 "ccU" = (
 /obj/decal/tile_edge/stripe/big,
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 10
 	},
 /area/station/science/lab)
@@ -26263,7 +26263,7 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "ccX" = (
 /obj/table/auto,
@@ -26304,7 +26304,7 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "ccZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -26573,7 +26573,7 @@
 /turf/simulated/floor/airless/black,
 /area/station/science/lab)
 "cdK" = (
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 8
 	},
 /area/station/science/lab)
@@ -26590,7 +26590,7 @@
 "cdM" = (
 /obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cdP" = (
 /obj/machinery/manufacturer/gas,
@@ -27021,14 +27021,14 @@
 /area/station/science/lab)
 "cfE" = (
 /obj/machinery/light/small/floor/netural,
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cfF" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	level = 2
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cfG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -27228,7 +27228,7 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "cgs" = (
-/turf/simulated/floor/airless/purple/corner{
+/turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
 /area/station/science/lab)
@@ -27236,7 +27236,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cgv" = (
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -27395,7 +27395,7 @@
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cgU" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -27451,7 +27451,7 @@
 /obj/stool/chair/office{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "chj" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -29615,7 +29615,7 @@
 	pixel_x = -2
 	},
 /obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "cok" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -31442,7 +31442,7 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "dkC" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -35371,7 +35371,7 @@
 	dir = 4;
 	layer = 2.9
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/lab)
@@ -35589,7 +35589,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "gcU" = (
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "gda" = (
 /turf/simulated/floor/specialroom/bar,
@@ -40051,7 +40051,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "jmK" = (
 /obj/cable/blue{
@@ -40581,6 +40581,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"jGx" = (
+/turf/simulated/floor/purplewhite/corner{
+	dir = 4
+	},
+/area/space)
 "jHf" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -40826,7 +40831,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "jQd" = (
 /obj/disposalpipe/segment/vertical,
@@ -46494,7 +46499,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "oco" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -49403,7 +49408,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 8
 	},
 /area/station/science/lab)
@@ -49448,7 +49453,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "qmz" = (
 /obj/noticeboard/persistent{
@@ -50653,7 +50658,7 @@
 /area/station/mining/magnet)
 "rew" = (
 /obj/decal/tile_edge/stripe/big,
-/turf/simulated/floor/airless/purple/side,
+/turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "reM" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -50798,7 +50803,7 @@
 /obj/item/device/transfer_valve{
 	pixel_y = 3
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "riw" = (
 /obj/grille/catwalk{
@@ -51060,7 +51065,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 8
 	},
 /area/station/science/lab)
@@ -54950,7 +54955,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 8
 	},
 /area/station/science/lab)
@@ -55705,7 +55710,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 10
 	},
 /area/station/science/lab)
@@ -56635,7 +56640,7 @@
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/airless/purple/side,
+/turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "vtN" = (
 /obj/machinery/vending/snack,
@@ -58284,7 +58289,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor,
+/turf/simulated/floor/white,
 /area/station/science/lab)
 "wLP" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -58711,7 +58716,7 @@
 /obj/item/storage/firstaid/fire{
 	pixel_y = 0
 	},
-/turf/simulated/floor/airless/purple/side,
+/turf/simulated/floor/purplewhite,
 /area/station/science/lab)
 "wXw" = (
 /obj/machinery/atmospherics/unary/vent{
@@ -60250,7 +60255,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/airless/purple/side{
+/turf/simulated/floor/purplewhite{
 	dir = 8
 	},
 /area/station/science/lab)
@@ -88890,7 +88895,7 @@ aaa
 aci
 aaa
 aaa
-aaa
+jGx
 aaa
 aaa
 aaa
