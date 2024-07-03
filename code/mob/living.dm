@@ -2298,6 +2298,12 @@
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
 
+
+/// Returns a multiplier for how much chems to deplete from their reagent holder per Life()
+/// This will be multiplied by that chems corresponding depletion rate
+/mob/living/proc/get_chem_depletion_multiplier()
+	return 1
+
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
 	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate

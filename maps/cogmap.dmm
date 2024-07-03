@@ -48812,9 +48812,6 @@
 	dir = 6
 	},
 /obj/machinery/light{
-	dir = 4
-	},
-/obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},

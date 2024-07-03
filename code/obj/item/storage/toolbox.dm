@@ -314,8 +314,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 	if(istype(newprogenitor,/obj/item/storage/toolbox/memetic/))
 		AD.progenitor = newprogenitor
-		src.ailments += AD
 		AD.affected_mob = src
+		src.contract_disease(/datum/ailment/disability/memetic_madness, null, AD, TRUE)
 		newprogenitor.servantlinks.Add(AD)
 		newprogenitor.force += 4
 		newprogenitor.throwforce += 4

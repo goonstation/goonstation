@@ -1192,7 +1192,7 @@ datum
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						var/amt = min(1 * mult, 20-check_amount)
+						var/amt = min(1 * src.calculate_depletion_rate(M, mult), 20-check_amount)
 						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt, temp_new = holder.total_temperature + 20)
 						holder.add_reagent("enzymatic_leftovers", amt/2, temp_new = holder.total_temperature + 20)
 				..()
@@ -1530,7 +1530,7 @@ datum
 
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(25, 50) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
@@ -1572,7 +1572,7 @@ datum
 					M = holder.my_atom
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(25, 50) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
@@ -2639,7 +2639,7 @@ datum
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				M.reagents.add_reagent("water", severity * mult)
+				M.reagents.add_reagent("water", severity * 2.5 * src.calculate_depletion_rate(M, mult))
 
 		transparium
 			name = "transparium"
@@ -2854,7 +2854,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(1))
-					M.reagents.add_reagent("histamine", 1 * mult)
+					M.reagents.add_reagent("histamine", 10 * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -3561,7 +3561,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.reagents.add_reagent("cholesterol", 1 * mult)
+				M.reagents.add_reagent("cholesterol", 2.5 * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
