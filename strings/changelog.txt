@@ -1,5 +1,9 @@
 
 (t)wed jul 03 24
+(u)Cheekybrdy
+(p)19722
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds chameleon bombs to mail courier's options as a traitor.
 (u)RubberRats
 (p)19754
 (e)🆕📦|C-Feature, A-Game-Objects
