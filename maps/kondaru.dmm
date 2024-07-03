@@ -14028,7 +14028,7 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/space)
+/area/station/science/lab)
 "beK" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
@@ -25443,9 +25443,6 @@
 	name = "Access Buffer Vent";
 	pixel_y = 28
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -25456,20 +25453,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
 /area/station/science/lab)
-"bZz" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/grille/catwalk,
-/turf/space,
-/area/space)
 "bZA" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -25779,18 +25766,9 @@
 	},
 /turf/simulated/floor/airless/black,
 /area/station/science/lab)
-"cbh" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/airless/black,
-/area/station/science/lab)
 "cbi" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -25809,7 +25787,7 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/space)
+/area/station/science/lab)
 "cbm" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -26250,9 +26228,6 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/firealarm/north,
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -26526,11 +26501,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "cdH" = (
-/obj/machinery/door_control{
-	id = "tox_mix";
-	name = "Mixing Vent Control";
-	pixel_x = -24
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -26548,6 +26518,11 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "tox_mix";
+	name = "Mixing Vent Control";
+	pixel_x = -24
 	},
 /turf/simulated/floor/airless/black,
 /area/station/science/lab)
@@ -27017,6 +26992,7 @@
 	dir = 10;
 	can_rupture = 0
 	},
+/obj/machinery/meter,
 /turf/simulated/floor/airless/black,
 /area/station/science/lab)
 "cfE" = (
@@ -27228,6 +27204,9 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "cgs" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
 /turf/simulated/floor/purplewhite/corner{
 	dir = 4
 	},
@@ -29680,7 +29659,6 @@
 	icon_state = "lattice-dir";
 	tag = "icon-lattice-dir (EAST)"
 	},
-/obj/grille/catwalk,
 /turf/space,
 /area/space)
 "cov" = (
@@ -30581,8 +30559,7 @@
 /area/station/hallway/primary/west)
 "cFk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -33524,9 +33501,6 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
-	},
-/obj/cable{
-	icon_state = "1-4"
 	},
 /obj/machinery/activation_button/ignition_switch{
 	id = "tox_ignition";
@@ -37101,7 +37075,8 @@
 /obj/machinery/door_control{
 	id = "tox_vent1";
 	name = "Chamber One Exhaust";
-	pixel_y = -24
+	pixel_x = 9;
+	pixel_y = 9
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
@@ -37735,17 +37710,6 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/main)
-"hyt" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/grille/catwalk,
-/turf/space,
-/area/space)
 "hyJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37887,14 +37851,6 @@
 	},
 /turf/space,
 /area/station/com_dish/comdish)
-"hGD" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/grille/catwalk,
-/turf/space,
-/area/space)
 "hHf" = (
 /obj/stool/bar,
 /obj/machinery/light/small/floor,
@@ -40581,11 +40537,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"jGx" = (
-/turf/simulated/floor/purplewhite/corner{
-	dir = 4
-	},
-/area/space)
 "jHf" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
@@ -42456,7 +42407,6 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/catwalk,
 /turf/space,
 /area/space)
 "kZX" = (
@@ -42473,10 +42423,21 @@
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "lax" = (
-/obj/lattice,
-/obj/grille/catwalk,
-/turf/space,
-/area/space)
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "tox_vent2";
+	name = "Chamber Two Exhaust";
+	pixel_y = 22;
+	pixel_x = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "laJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/security)
@@ -43349,9 +43310,6 @@
 	icon_state = "research_locked";
 	name = "Toxin Chamber";
 	req_access = null
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /obj/mapping_helper/access/tox,
 /obj/mapping_helper/firedoor_spawn,
@@ -48464,9 +48422,6 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/space,
 /area/space)
-"pCz" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "pCI" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -49797,11 +49752,6 @@
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/machinery/door_control{
-	id = "tox_vent2";
-	name = "Chamber Two Exhaust";
-	pixel_y = 24
-	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "qwW" = (
@@ -50216,7 +50166,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "qMC" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
 /turf/simulated/floor/airless/black,
@@ -56658,7 +56608,8 @@
 	dir = 4
 	},
 /obj/machinery/light/small{
-	dir = 8
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/airless/black,
 /area/station/science/lab)
@@ -57043,9 +56994,6 @@
 /turf/simulated/floor/plating,
 /area/station/storage/hydroponics)
 "vJZ" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -57055,7 +57003,7 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
-/area/space)
+/area/station/science/lab)
 "vKH" = (
 /mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor,
@@ -88895,7 +88843,7 @@ aaa
 aci
 aaa
 aaa
-jGx
+aaa
 aaa
 aaa
 aaa
@@ -91619,15 +91567,15 @@ aaa
 iwp
 ceS
 abZ
-bZz
-hyt
-bZz
-bZz
-bZz
-hGD
-bZz
-lax
-bZz
+abZ
+ceS
+abZ
+abZ
+abZ
+aay
+abZ
+aaf
+abZ
 kZW
 abZ
 abZ
@@ -91918,7 +91866,7 @@ xOY
 bvo
 jRG
 aaa
-pCz
+bYG
 beJ
 bYG
 fNe
@@ -92220,7 +92168,7 @@ bUM
 khr
 jRG
 aaa
-pCz
+bYG
 cbl
 bYG
 ccT
@@ -92522,7 +92470,7 @@ bUM
 pht
 jRG
 aaa
-pCz
+bYG
 vJZ
 lFD
 ccT
@@ -93130,7 +93078,7 @@ bYG
 jKV
 bYG
 qwR
-cce
+lax
 ceN
 bYG
 ceN
@@ -93732,7 +93680,7 @@ bWX
 bzR
 bYG
 bZA
-cbh
+ccg
 cgo
 ccg
 cgo
