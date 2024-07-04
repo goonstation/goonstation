@@ -886,7 +886,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 
 /obj/table/reinforced/chemistry/auto/firesafety
 	name = "fire safety lab counter"
-	desc = "These drawers have sooty marks on their handles. Hopefully you won't be adding to them."
+	desc = "These drawers have sooty scorch marks on their handles. Hopefully you won't be adding to them."
 	drawer_contents = list(/obj/item/storage/firstaid/fire,
 				/obj/item/extinguisher = 2,
 				/obj/item/chem_grenade/firefighting = 3,
@@ -894,7 +894,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 
 /obj/table/reinforced/chemistry/auto/toxins
 	name = "plasma research lab counter"
-	desc = "These drawers are full of all the special doodas an aspiring bomb-maker could hope for."
+	desc = "These drawers are full of all the special doodads an aspiring bomb-maker could hope for."
 	drawer_contents = list(/obj/item/device/analyzer/atmospheric = 2,
 				/obj/item/device/timer = 3,
 				/obj/item/device/igniter = 3,
