@@ -25776,7 +25776,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/blue,
 /area/station/science/lab)
 "cbl" = (
 /obj/machinery/light/small{
@@ -38717,6 +38717,18 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"iwr" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/station/science/lab)
 "iwQ" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple{
@@ -93988,7 +94000,7 @@ bYG
 ccV
 cbi
 cch
-cgq
+iwr
 cdJ
 gwG
 bQu
@@ -97313,7 +97325,7 @@ cau
 ccZ
 cdS
 ceY
-cfL
+cdR
 cfL
 cfL
 ccZ
@@ -97615,7 +97627,7 @@ cav
 cav
 cav
 cav
-cfL
+cdR
 cgz
 cfL
 bZD
