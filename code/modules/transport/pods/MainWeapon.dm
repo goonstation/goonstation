@@ -727,9 +727,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	///Helper proc to determine suitability of current tile for construction field application
 	proc/build_mode_eval(var/turf/T)
 		. = FALSE
-		//floors can be built on plating, but not other floors, unless repairing
+		//floors can be freshly constructed on other floors if they're bare (less fussy if repairing)
 		if (mode == EFIF_MODE_FLOORS || mode == EFIF_MODE_R_FLOORS)
-			if(istype(T,/turf/simulated/floor/plating))
+			if(T.intact == FALSE)
 				return TRUE
 		//walls can be built on most floors. avoid some types that are unsuitable
 		if (mode == EFIF_MODE_WALLS || mode == EFIF_MODE_REPAIR)
