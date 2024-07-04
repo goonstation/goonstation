@@ -278,7 +278,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	//#endif
 
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
-/mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
+/mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn, skip_manifest = FALSE)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
 		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
@@ -329,7 +329,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
+	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -429,7 +429,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 			logTheThing(LOG_STATION, src, "has the Party Animal trait and has finished iterating through spots.")
 
-			if(!joined_late) // We got special late-join handling
+			if(!joined_late && length(valid_stools) > 0) // We got special late-join handling
 				var/obj/stool/stool = pick(valid_stools)
 				if (stool)
 					var/list/spawn_range = orange(1, get_turf(stool)) // Skip the actual stool
@@ -847,6 +847,7 @@ var/list/trinket_safelist = list(
 	/obj/item/instrument/vuvuzela,
 	/obj/item/wrench,
 	/obj/item/device/light/zippo,
+	/obj/item/device/speech_pro,
 	/obj/item/reagent_containers/food/drinks/bottle/beer,
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,
 	/obj/item/reagent_containers/food/drinks/bottle/vodka,

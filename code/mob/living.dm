@@ -37,6 +37,7 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
+	var/has_offline_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
@@ -48,7 +49,8 @@
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/skin_process = list() //digesting patches
+	/// all applied patches (ex. medical patches)
+	var/list/applied_patches = list()
 
 	var/sound_burp = 'sound/voice/burp.ogg'
 	var/sound_scream = 'sound/voice/screams/robot_scream.ogg' // for silicon mobs
@@ -102,6 +104,9 @@
 	var/bleeding_internal = 0
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
+
+	/// completely immune to catching and spreading disease/medical-like ailments
+	var/ailment_immune = FALSE
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
@@ -172,9 +177,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in skin_process)
+	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)
-	skin_process = null
+	src.applied_patches = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
@@ -911,11 +916,11 @@
 
 	if(my_client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("sing", message, user = my_client.mob, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("radio", message, user = my_client.mob, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("say", message, user = my_client.mob, strip_html = TRUE)
 
 	last_words = message
 
@@ -1497,6 +1502,10 @@
 	if (!isalive(src)) //can't resist when dead or unconscious
 		return
 
+	if (src.hasStatus("paralysis"))
+		src.show_text("You are completely paralysed and can't resist!", "red")
+		return
+
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
@@ -1749,10 +1758,7 @@
 	if (m_intent == "walk")
 		. += WALK_DELAY_ADD
 
-	if (src.nodamage)
-		return .
-
-	if (src.do_hurt_slowdown)
+	if (src.do_hurt_slowdown && !src.nodamage)
 		var/health_deficiency = 0
 		if (src.max_health > 0)
 			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
@@ -1766,7 +1772,7 @@
 
 	. = min(., maximum_slowdown)
 
-	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
+	if (pushpull_multiplier != 0 && !src.nodamage) // if we're not completely ignoring pushing/pulling
 		if (src.pulling)
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
@@ -1829,6 +1835,9 @@
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
 
+	if (src.nodamage)
+		return .
+
 	var/turf/T = get_turf(src)
 	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
 		. = max(., base_speed)
@@ -1858,31 +1867,35 @@
 	var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_SPRINT)
 	if (stop_here)
 		return
-	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
-		return
 	if (src.client && src.special_sprint?.can_sprint(src))
 		src.special_sprint.do_sprint(src)
+		src.do_sprint_boost()
+		return
 	if (src.special_sprint?.overrides_sprint)
 		return
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
+		return
 	else if (src.use_stamina)
-		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
-				//if (src.hasStatus("blocking"))
-				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
-				//		qdel(G)
+		src.do_sprint_boost()
+		return
 
-				var/last = src.loc
-				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+/mob/living/proc/do_sprint_boost()
+	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && world.time >= src.next_sprint_boost)
+		if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 
-				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-				src.next_move = world.time
-				attempt_move(src)
-				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+			var/last = src.loc
+			var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
 
-				if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
-					sprint_particle(src, last)
-					if (!isFlying)
-						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
+			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+			src.next_move = world.time
+			attempt_move(src)
+
+			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
+				sprint_particle(src, last)
+				if (!isFlying)
+					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -2063,7 +2076,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
+		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
@@ -2116,13 +2129,6 @@
 		shock_damage = 5 * prot
 	else
 		shock_damage = 1 * prot
-
-	if (H)
-		for (var/uid in H.pathogens)
-			var/datum/pathogen/P = H.pathogens[uid]
-			shock_damage = P.onshocked(shock_damage, wattage)
-			if (!shock_damage)
-				return 0
 
 	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0

@@ -58,7 +58,7 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
-	flags = OPENCONTAINER | FPRINT
+	flags = OPENCONTAINER
 
 
 	New()
@@ -449,6 +449,9 @@ proc/generate_space_color()
 	return
 
 /turf/proc/delay_space_conversion()
+	return
+
+/turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
 		air_master.tiles_to_space |= src
 		return TRUE
@@ -1405,21 +1408,6 @@ TYPEINFO(/turf/simulated)
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
-
-/turf/unsimulated/wall/griffening
-	icon = 'icons/misc/griffening/area_wall.dmi'
-	icon_state = null
-	density = 1
-	opacity = 0
-	name = "wall"
-	desc = "A holographic projector wall."
-
-/turf/unsimulated/floor/griffening
-	icon = 'icons/misc/griffening/area_floor.dmi'
-	icon_state = null
-	opacity = 0
-	name = "floor"
-	desc = "A holographic projector floor."
 
 /turf/unsimulated/null_hole
 	name = "expedition chute"

@@ -4,7 +4,7 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -28,6 +28,9 @@
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 
+/obj/pool/perspective/innercorners
+	name = "pool"
+	icon_state = "pool_inner"
 /obj/pool_springboard
 	name = "springboard"
 	density = 0

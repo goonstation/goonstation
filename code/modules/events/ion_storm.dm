@@ -333,3 +333,16 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(obj/machinery/camera/camera)
 		camera.break_camera()
+
+/datum/ion_category/flock_speak //hehehe
+	amount_max = 7
+	amount_min = 3
+
+	fuck_up()
+		SPAWN(0)
+			for (var/i in 1 to rand(src.amount_min, src.amount_max))
+				var/siliconrendered = "<span class='flocksay sentient'>[SPAN_BOLD("\[?????\] ")]<span class='name'>[radioGarbleText(get_default_flock().name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(phrase_log.random_phrase("radio"), FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
+				for (var/client/client in global.clients)
+					if(client.mob.robot_talk_understand || istype(client.mob, /mob/living/intangible/aieye))
+						boutput(client, siliconrendered)
+				sleep(rand(2 SECONDS, 30 SECONDS))

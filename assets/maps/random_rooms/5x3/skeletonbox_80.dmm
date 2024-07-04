@@ -4,7 +4,7 @@
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "s" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "B" = (

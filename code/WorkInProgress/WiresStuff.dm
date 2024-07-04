@@ -5,12 +5,31 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	for (var/mob/M as anything in mobs)
-		if (M.mind)
-			var/playerId = M.mind.get_player().id
-			if (!playerId)
-				boutput(src, "[M.mind.ckey] has no player ID")
+	var/loopTimes = input(src, "How many loops?") as num
 
+	var/counter = 1
+	while (counter <= loopTimes)
+		SPAWN(0)
+			var/response = wireSendTest()
+			var/msg = "\[[counter]\] - "
+			if (response == "This is a test")
+				msg += "Success"
+			else
+				msg += "Failed"
+			boutput(src, msg)
+		counter++
+
+	boutput(src, "Done!")
+
+/proc/wireSendTest()
+	var/datum/apiModel/Message/message
+	try
+		var/datum/apiRoute/test/getTest = new
+		message = apiHandler.queryAPI(getTest)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		return error.message
+	return message.message
 
 /proc/mapWorldNew(client/C)
 	// future proofing against varied world icon sizes
@@ -247,3 +266,9 @@ var/global/deathConfettiActive = 0
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
 	ircbot.export_async("admin", ircmsg)
+
+/proc/goonhub_href(path, in_byond = FALSE)
+	var/url = "[config.goonhub_url][path]"
+	if (in_byond)
+		return "byond://winset?command=.openlink \"[url_encode(url)]\""
+	return url

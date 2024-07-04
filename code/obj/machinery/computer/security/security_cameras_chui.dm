@@ -329,6 +329,10 @@ chui/window/security_cameras
 					C.connect_viewer(user)
 				owner.current = C
 				owner.last_viewer = user
+				if(!(locate(/obj/ability_button/reset_view/console) in user.item_abilities))
+					user.item_abilities += new /obj/ability_button/reset_view/console()
+					user.need_update_item_abilities = 1
+					user.update_item_abilities()
 
 		else if (href_list["save"])
 			var/obj/machinery/camera/C = locate(href_list["save"])
@@ -378,3 +382,7 @@ chui/window/security_cameras
 		owner.current?.disconnect_viewer(who.mob)
 		owner.current = null
 		owner.last_viewer = null
+		for (var/obj/ability_button/reset_view/console/ability in who.mob.item_abilities)
+			who.mob.item_abilities -= ability
+		who.mob.need_update_item_abilities = 1
+		who.mob.update_item_abilities()

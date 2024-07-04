@@ -116,7 +116,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
-	flags = FPRINT // no fluid submerge images and we also don't need tgui interactability
+	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
@@ -242,20 +242,22 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/eat()
 
 	var/turf/sing_center = src.get_center()
-	for (var/atom/A in range(grav_pull, sing_center))
-		if (!A)
-			continue
-		if (A == src)
-			continue
+	for (var/turf/T in range(grav_pull, sing_center))
+		var/max_affected_atoms_per_turf = 30
+		for(var/atom/A in list(T) + T.contents)
+			if (max_affected_atoms_per_turf-- <= 0)
+				break
 
-		if (A.event_handler_flags & IMMUNE_SINGULARITY)
-			continue
-
-		if (!active)
-			if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
+			if (A == src)
 				continue
 
-		if (!isarea(A))
+			if (A.event_handler_flags & IMMUNE_SINGULARITY)
+				continue
+
+			if (!active)
+				if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
+					continue
+
 			if(IN_EUCLIDEAN_RANGE(sing_center, A, radius+0.5))
 				src.Bumped(A)
 			else if (istype(A, /atom/movable))

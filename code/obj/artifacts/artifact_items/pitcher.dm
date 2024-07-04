@@ -15,6 +15,9 @@
 		SPAWN(0)
 			src.ArtifactSetup()
 
+		if (prob(15))
+			src.reagents.inert = TRUE
+
 		gulp_size = rand(2, 10) * 5 //How fast will you drink from this? Who knows!
 		var/capacity = rand(5,20)
 		capacity *= 100
