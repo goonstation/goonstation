@@ -27006,13 +27006,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"cfG" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "cfH" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -93096,7 +93089,7 @@ cce
 haB
 vgR
 bYG
-cfG
+txe
 bYG
 aaa
 aaa
