@@ -1191,6 +1191,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
 
+			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"
