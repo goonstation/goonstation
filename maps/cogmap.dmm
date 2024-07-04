@@ -4235,7 +4235,7 @@
 /obj/item/pen,
 /obj/machinery/light{
 	dir = 1;
-	pixel_y = 21
+	pixel_y = 3
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -48810,9 +48810,6 @@
 "lpQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
-	},
-/obj/machinery/light{
-	dir = 4
 	},
 /obj/machinery/light{
 	dir = 4;

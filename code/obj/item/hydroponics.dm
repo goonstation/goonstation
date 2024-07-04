@@ -38,7 +38,6 @@ TYPEINFO(/obj/item/saw)
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
-	override_attack_hand = 1
 	can_hold_items = 0
 	stamina_damage = 30
 	stamina_cost = 15
