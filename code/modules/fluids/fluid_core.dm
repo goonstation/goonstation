@@ -525,13 +525,6 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 
 		if (!src.group || !src.group.reagents) return
 
-		if (my_depth_level != last_depth_level && icon_state == "15")
-				// apply highlights if we made it this far.
-			var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
-			I.appearance_flags = RESET_COLOR
-			I.blend_mode = BLEND_ADD
-			src.UpdateOverlays(I,"highlight")
-
 		var/color_changed = 0
 		var/datum/color/average = src.group.average_color ? src.group.average_color : src.group.reagents.get_average_color()
 		src.finalalpha = max(25, (average.a / 255) * src.group.max_alpha)
@@ -575,12 +568,14 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (icon_state != "15") return
 
 		// apply highlights if we made it this far.
-		var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
-		I.appearance_flags = RESET_COLOR
-		I.blend_mode = BLEND_ADD
-		src.UpdateOverlays(I,"highlight")
-		I.alpha = 70
-
+		if (last_depth_level)
+			var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
+			I.appearance_flags = RESET_COLOR
+			I.blend_mode = BLEND_ADD
+			I.alpha = 70
+			src.UpdateOverlays(I,"highlight")
+		else
+			src.ClearSpecificOverlays("highlight")
 
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -633,10 +628,10 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		// fluid sprite highlights to make it look pretty
 		var/image/I = image('icons/obj/fluid.dmi', "highlights_[overlay_key]_[last_depth_level]")
 		I.layer = over_obj ? 4 : src.layer
-		I.appearance_flags = RESET_COLOR
+		I.appearance_flags = RESET_COLOR | TILE_BOUND
+		I.blend_mode = BLEND_ADD
 		I.pixel_x = pox
 		I.pixel_y = poy
-		I.blend_mode = BLEND_ADD
 		I.alpha = 70
 
 		src.UpdateOverlays(I,"highlight_[overlay_key]")
