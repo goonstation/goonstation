@@ -1018,6 +1018,10 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	frequency = R_FREQ_LOUDSPEAKERS
 	var/image/active_light = null
 
+/obj/item/device/radio/intercom/loudspeaker/New()
+	. = ..()
+	src.frequency = R_FREQ_LOUDSPEAKERS
+
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
 	if (src.broadcasting)
@@ -1028,18 +1032,24 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	. = ..()
 	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
-/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/proc/toggle_broadcast_mode(mob/user)
 	if (!broadcasting)
 		broadcasting = 1
 		src.icon_state = "transmitter-on"
-		boutput(user, "Now transmitting.")
+		src.visible_message("The [src] clicks on and begins transmitting.")
 	else
 		broadcasting = 0
 		src.icon_state = "transmitter"
-		boutput(user, "No longer transmitting.")
+		src.visible_message("The [src] whirrs down and stops transmitting.")
+
+/obj/item/device/radio/intercom/loudspeaker/attack_hand(mob/user)
+	. = ..()
+	src.toggle_broadcast_mode(user)
+
+/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+	src.toggle_broadcast_mode(user)
 
 /obj/item/device/radio/intercom/loudspeaker/initialize()
-
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -1063,6 +1073,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 
 	New()
 		..()
+		src.frequency = R_FREQ_LOUDSPEAKERS
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)
@@ -1086,8 +1097,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 //You can't talk into it to send a message
 /obj/item/device/radio/intercom/loudspeaker/speaker/hear_talk()
 	return
-
-	//listening seems to refer to the device listening to the signals, not listening to voice
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/send_hear()
 	var/list/hear = ..()
