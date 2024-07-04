@@ -399,24 +399,24 @@
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc
 		return null
 
-	var/datum/ailment/A = null
+	var/datum/ailment/ailment = null
 	if (strain && istype(strain.master,/datum/ailment/))
-		A = strain.master
+		ailment = strain.master
 	else if (ailment_name)
-		A = get_disease_from_name(ailment_name)
+		ailment = get_disease_from_name(ailment_name)
 	else
-		A = get_disease_from_path(ailment_path)
+		ailment = get_disease_from_path(ailment_path)
 
-	if (!istype(A,/datum/ailment/))
+	if (!istype(ailment,/datum/ailment/))
 		// can't find shit, captain!
 		return null
 
 	var/count = 0
 	for (var/datum/ailment_data/D in src.ailments)
-		if (D.master == A)
+		if (D.master == ailment)
 			count++
 
-	if (count >= A.max_stacks)
+	if (count >= ailment.max_stacks)
 		return null
 
 	if (ischangeling(src) || isvampire(src) || isvampiricthrall(src) || iszombie(src) || src.nodamage)
@@ -425,16 +425,16 @@
 		//hard immunity these folks are supposed to have
 		return null
 
-	if (!bypass_resistance && !src.disease_resistance_check(null,A.name))
+	if (!bypass_resistance && !src.disease_resistance_check(null,ailment.name))
 		return null
 
 	logTheThing(LOG_COMBAT, src, " gained the [ailment_name] ([ailment_path]) disease.")
 
 	if (!strain) //no strain, set one up
-		strain = A.setup_strain()
+		strain = ailment.setup_strain()
 
 	src.ailments += strain
-	strain.master = A
+	strain.master = ailment
 	strain.affected_mob = src
 	strain.on_infection()
 
