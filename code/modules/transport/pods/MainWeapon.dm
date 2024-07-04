@@ -731,7 +731,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		. = FALSE
 		//floors can be freshly constructed on other floors if they're bare (less fussy if repairing)
 		if (mode == EFIF_MODE_FLOORS || mode == EFIF_MODE_R_FLOORS)
-			if(T.intact == FALSE)
+			if(!T.intact)
 				return TRUE
 		//walls can be built on most floors. avoid some types that are unsuitable
 		if (mode == EFIF_MODE_WALLS || mode == EFIF_MODE_REPAIR)
