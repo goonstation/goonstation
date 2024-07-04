@@ -2708,20 +2708,23 @@ TYPEINFO(/turf/simulated/floor/auto/glassblock)
 TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock)
 	. = ..()
 	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock)
-	connects_to_exceptions = list()
-	connects_with_overlay = list()
-	connects_with_overlay_exceptions = list()
+	connects_to_exceptions = typecacheof(list(
+		/turf/simulated/floor/auto/glassblock/cyan,
+		/turf/simulated/floor/auto/glassblock/indigo,
+		/turf/simulated/floor/auto/glassblock/red,
+		/turf/simulated/floor/auto/glassblock/purple))
 /turf/simulated/floor/auto/glassblock
 	name = "glass block tiling"
-	icon = 'icons/turf/glass_floor_auto.dmi'
+	icon = 'icons/turf/glass_floors/grey_glass_floor_auto.dmi'
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = FALSE
 	can_burn = FALSE
 	can_break = FALSE
-	icon_state = "grey-0"
-	mod = "grey-"
+	icon_state = "0"
+	mod = "glass-"
 	default_material = "glass"
+	var/static/image/starlight
 
 	New()
 		..()
@@ -2741,18 +2744,41 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock)
 				direction = pick(cardinal)
 		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
 		#else
-		var/turf/space/sample = locate()
-		if(!sample?.starlight)
-			SPAWN(world.tick_lag)
-				sample = locate()
-				src.underlays += sample?.starlight
-		else
-			src.underlays += sample?.starlight
-		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		src.underlays += /turf/space::starlight
+		I = mutable_appearance('icons/turf/space.dmi', "[rand(1, 25)]")
+		I.color = /turf/space::space_color
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
 		..()
+
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/cyan)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/cyan)
+	connects_to_exceptions = null
+/turf/simulated/floor/auto/glassblock/cyan
+	icon = 'icons/turf/glass_floors/cyan_glass_floor_auto.dmi'
+
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/indigo)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/indigo)
+	connects_to_exceptions = null
+/turf/simulated/floor/auto/glassblock/indigo
+	icon = 'icons/turf/glass_floors/indigo_glass_floor_auto.dmi'
+
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/red)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/red)
+	connects_to_exceptions = null
+/turf/simulated/floor/auto/glassblock/red
+	icon = 'icons/turf/glass_floors/red_glass_floor_auto.dmi'
+
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/purple)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/purple)
+	connects_to_exceptions = null
+/turf/simulated/floor/auto/glassblock/purple
+	icon = 'icons/turf/glass_floors/purple_glass_floor_auto.dmi'
 
 
 /turf/unsimulated/floor/pool
