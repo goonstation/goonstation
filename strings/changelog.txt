@@ -1,4 +1,9 @@
 
+(t)thu jul 04 24
+(u)Kubius
+(p)19665
+(e)🆕🎨🔊📦🚗|C-Feature, C-Sprites, C-Sound, A-Game-Objects, A-Vehicles
+(*)The pod-mounted EFIF-1 Construction System is now available. It can rapidly repair damaged station tiles or build new offsite structures.
 (t)wed jul 03 24
 (u)Cheekybrdy
 (p)19722
