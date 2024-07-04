@@ -1134,7 +1134,7 @@ TYPEINFO(/datum/trait/partyanimal)
 		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
 			if(istype(owner, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = owner
-				if (H.hand)
+				if (H.hand == LEFT_HAND)
 					if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
 						return
 				else
