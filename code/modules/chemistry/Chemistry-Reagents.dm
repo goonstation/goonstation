@@ -341,7 +341,7 @@ datum
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
-				AD = new
+				AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday
 				AD.name = "[src.name] addiction"
