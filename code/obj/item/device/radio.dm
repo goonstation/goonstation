@@ -1009,6 +1009,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	anchored = ANCHORED
 	speaker_range = 0
 	chat_class = RADIOCL_INTERCOM
+	locked_frequency = TRUE
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
 	listening = 0		//maybe this doesn't need to be on. It shouldn't be relaying signals.
@@ -1017,10 +1018,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	desc = "A HAM radio transmitter...Basically...It only transmits to loudspeakers on a secure frequency."
 	frequency = R_FREQ_LOUDSPEAKERS
 	var/image/active_light = null
-
-/obj/item/device/radio/intercom/loudspeaker/New()
-	. = ..()
-	src.frequency = R_FREQ_LOUDSPEAKERS
 
 //Must be standing next to it to talk into it
 /obj/item/device/radio/intercom/loudspeaker/hear_talk(mob/M as mob, msgs, real_name, lang_id)
@@ -1067,13 +1064,13 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	listening = 1
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
+	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
 
 	New()
 		..()
-		src.frequency = R_FREQ_LOUDSPEAKERS
 		if(src.pixel_x == 0 && src.pixel_y == 0)
 			switch(src.dir)
 				if(NORTH)
