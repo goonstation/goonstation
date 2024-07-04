@@ -359,11 +359,7 @@ TYPEINFO(/obj/item/card/emag)
 	input = strip_html(input, MAX_MESSAGE_LEN, 1)
 	if (strip_bad_stuff_only)
 		return input
-	var/list/namecheck = splittext(trimtext(input), " ")
-	for(var/i = 1, i <= namecheck.len, i++)
-		namecheck[i] = capitalize(namecheck[i])
-	input = jointext(namecheck, " ")
-	return input
+	return trimtext(input)
 
 /obj/item/card/id/syndicate/get_help_message(dist, mob/user)
 	if (src.name == "agent card") //It's probably unmodified, should be fine to show the help message
