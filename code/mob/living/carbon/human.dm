@@ -2847,7 +2847,7 @@
 	else if(limb == "l_leg" && src.limbs.l_leg) src.limbs.l_leg.remove()
 	else if(limb == "r_leg" && src.limbs.r_leg) src.limbs.r_leg.remove()
 
-/mob/living/carbon/human/proc/sever_limb(var/limb, var/user = src, var/messy)
+/mob/living/carbon/human/proc/sever_limb(var/limb)
 	if (!src.limbs)
 		return
 	if(!(limb in list("l_arm","r_arm","l_leg","r_leg"))) return
