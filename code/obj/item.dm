@@ -126,7 +126,6 @@ ABSTRACT_TYPE(/obj/item)
 	/*‾‾‾‾‾*/
 	var/arm_icon = "" //set to an icon state in human.dmi minus _s/_l and l_arm_/r_arm_ to allow use as an arm
 	var/over_clothes = 0 //draw over clothes when used as a limb
-	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
 	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
 	var/can_hold_items = 0 //when used as an arm, can it hold things?
 	/// Chance for this item to be replaced by a mimic disguised as it - note, setting this high here is a *really* bad idea
