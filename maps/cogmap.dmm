@@ -45851,8 +45851,7 @@
 	dir = 1
 	},
 /obj/machinery/light{
-	tag = "";
-	pixel_w = 10
+	tag = ""
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -52300,8 +52299,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light{
-	tag = "";
-	pixel_w = 10
+	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
