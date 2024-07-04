@@ -513,6 +513,8 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			sizemult = 2
 		if(src.wide_field)
 			sizemult += 2
+		if(!src.steel_sheets)
+			return
 		if(mode_specify == EFIF_MODE_FLOORS && src.steel_sheets.amount >= EFIF_FLOOR_COST * sizemult)
 			return TRUE
 		else if(mode_specify == EFIF_MODE_R_FLOORS && src.steel_sheets.amount >= EFIF_R_FLOOR_COST * sizemult)
@@ -546,7 +548,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		for (var/obj/O in load_from)
 			if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
 				loaded_stuff = TRUE
-		if(also_load_from && src.steel_sheets.amount < src.max_sheets)
+		if(also_load_from && src.steel_sheets?.amount < src.max_sheets)
 			for (var/obj/O in also_load_from)
 				if(src.sheet_load_helper(O) >= LOAD_SUCCESS)
 					loaded_stuff = TRUE
@@ -703,7 +705,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 				M.playsound_local(ship, 'sound/machines/click.ogg', 8, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
 			return
 
-		if(src.steel_sheets.amount < cost_estimate)
+		if(src.steel_sheets?.amount < cost_estimate)
 			for(var/obj/O in src.active_fields)
 				qdel(O)
 			src.active_fields = list()
@@ -727,9 +729,9 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	///Helper proc to determine suitability of current tile for construction field application
 	proc/build_mode_eval(var/turf/T)
 		. = FALSE
-		//floors can be built on plating, but not other floors, unless repairing
+		//floors can be freshly constructed on other floors if they're bare (less fussy if repairing)
 		if (mode == EFIF_MODE_FLOORS || mode == EFIF_MODE_R_FLOORS)
-			if(istype(T,/turf/simulated/floor/plating))
+			if(!T.intact)
 				return TRUE
 		//walls can be built on most floors. avoid some types that are unsuitable
 		if (mode == EFIF_MODE_WALLS || mode == EFIF_MODE_REPAIR)
@@ -781,7 +783,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 					dat+="<B>Drilling</B><BR>"
 			dat+="<BR>"
 			dat+="Wide Field Mode <B>[src.wide_field ? "Active" : "Inactive"]</B> <A href='?src=\ref[src];wide_field=1'>(Toggle)</A><BR>"
-			dat+="[src.steel_sheets.amount] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
+			dat+="[src.steel_sheets?.amount] of [src.max_sheets] Steel Sheets Loaded <A href='?src=\ref[src];load=1'>(Load)</A><BR>"
 
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
@@ -880,7 +882,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	onStart()
 		..()
 
-		if (buildtool.steel_sheets.amount < action_build_cost)
+		if (buildtool.steel_sheets?.amount < action_build_cost)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -905,7 +907,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	onEnd()
 		..()
 		src.dense_object_refresh()
-		if (buildtool.steel_sheets.amount < action_build_cost || !length(buildtool.active_fields))
+		if (buildtool.steel_sheets?.amount < action_build_cost || !length(buildtool.active_fields))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		///Plural management for log formatting
