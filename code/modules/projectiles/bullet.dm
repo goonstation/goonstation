@@ -1784,7 +1784,7 @@ datum/projectile/bullet/autocannon
 			src.targets = list()
 
 	proc/is_valid_target(mob/M, obj/projectile/P)
-		return (M != P.shooter)
+		return (M != P.shooter && M != P.mob_shooter)
 
 	proc/calc_desired_x_y(var/obj/projectile/P)
 		.= 0
