@@ -1,5 +1,7 @@
 
 (t)thu jul 04 24
+(u)LeahTheTech
+(+)Syndicate daggers now only play their equip sound when equipped from an inventory.
 (u)JORJ949
 (p)19766
 (e)🆕🗺|C-Feature, A-Mapping

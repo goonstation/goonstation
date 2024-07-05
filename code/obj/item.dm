@@ -70,7 +70,10 @@ ABSTRACT_TYPE(/obj/item)
 	/*_________*/
 	/*Inventory*/
 	/*‾‾‾‾‾‾‾‾‾*/
-	var/pickup_sfx = 0 //if null, we auto-pick from a list based on w_class
+	///Sound for when you pick this up from anywhere. If null, we auto-pick from a list based on w_class
+	var/pickup_sfx = 0
+	///Sound for when you equip this from an inventory (ie not a turf)
+	var/equip_sfx = null
 	var/w_class = W_CLASS_NORMAL // how big they are, determines if they can fit in backpacks and pockets and the like
 	p_class = 1.5 // how hard they are to pull around, determines how much something slows you down while pulling it
 
@@ -1246,8 +1249,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.ArtifactTouched(user)
 
 	if (hide_attack != ATTACK_FULLY_HIDDEN)
-		if (pickup_sfx)
-			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
+		if (src.equip_sfx && !istype(oldloc, /turf))
+			playsound(oldloc_sfx, src.equip_sfx, 56, vary=0.2)
+		else if (src.pickup_sfx)
+			playsound(oldloc_sfx, src.pickup_sfx, 56, vary=0.2)
 		else
 			playsound(oldloc_sfx, "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg", 56, vary=0.2)
 
