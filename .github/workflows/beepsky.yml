@@ -93,7 +93,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /home/runner/BYOND
-          key: ${{ runner.os }}-byond
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -136,7 +136,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /home/runner/BYOND
-          key: ${{ runner.os }}-byond
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
