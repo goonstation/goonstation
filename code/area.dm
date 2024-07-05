@@ -276,7 +276,7 @@ TYPEINFO(/area)
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
 								src.population -= exitingM.mind
-							if (src.active && length(src.population) == 0) //Only if this area is now empty
+							if (src.active == 1 && length(src.population) == 0) //Only if this area is now empty
 								src.active = 0
 								SEND_SIGNAL(src, COMSIG_AREA_DEACTIVATED)
 
