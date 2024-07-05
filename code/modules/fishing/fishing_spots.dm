@@ -916,3 +916,14 @@ datum/fishing_spot/golden_toilet
 	/obj/item/parts/human_parts/arm/mutant/monkey/right = 5,\
 	/obj/item/parts/human_parts/leg/mutant/monkey/left = 5,\
 	/obj/item/parts/human_parts/leg/mutant/monkey/right =5)
+
+//trench hole
+/datum/fishing_spot/deephole
+	fishing_atom_type = /turf/space/fluid/warp_z5
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 10,
+	/obj/item/seashell = 10,
+	/obj/item/clothing/shoes/flippers = 5, //like fishing up a boot (cartoonstyle)
+	/mob/living/critter/small_animal/pikaia = 5,
+	/mob/living/critter/small_animal/trilobite = 5,
+	/mob/living/critter/small_animal/hallucigenia = 5)

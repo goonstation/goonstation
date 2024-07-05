@@ -135,6 +135,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 		if(!islist(src.phrases))
 			PANIC = TRUE
+			ircbot.export("admin", list("msg" = "<@480972525703266314> Holy fuck phrase_log is panicing come fix it"))
 			src.phrases = list()
 
 		src.original_lengths = list()

@@ -24,7 +24,7 @@ CONTAINS:
 	icon_state = "scalpel1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -93,7 +93,7 @@ CONTAINS:
 	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
@@ -160,7 +160,7 @@ CONTAINS:
 	icon_state = "spoon"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SPOONING
@@ -327,7 +327,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 /obj/item/robodefibrillator
 	name = "defibrillator"
 	desc = "Uses electrical currents to restart the hearts of critical patients."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "defib-off"
@@ -490,10 +490,6 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 			if (ishuman(patient)) //remove later when we give nonhumans pathogen / organ response?
 				var/mob/living/carbon/human/H = patient
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					P.onshocked(35, 500)
-
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
 					; // do nothing
@@ -698,7 +694,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "suture"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "suture"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
@@ -759,7 +755,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "bandage-item-3"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bandage"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	object_flags = NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
@@ -953,7 +949,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bodybag"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
@@ -1098,7 +1094,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "hemostat"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "hemostat"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
@@ -1512,7 +1508,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "surgical_scissors"
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
 	force = 8
