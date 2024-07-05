@@ -1776,7 +1776,7 @@ datum/projectile/bullet/autocannon
 		if (auto_find_targets)
 			P.targets = list()
 			for(var/mob/M in view(P,15))
-				if (is_valid_target(M, P)) continue
+				if (!is_valid_target(M, P)) continue
 				P.targets += M
 
 		if (length(src.targets))
