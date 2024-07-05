@@ -30,8 +30,10 @@ var/datum/preMapLoad/preMapLoad = new
 #if defined(SPACEMAN_DMM) && !defined(DISABLE_SECRETS) // For StrongDMM since it dies on the fexists() check - doesn't die if the file doesn't exist
 #include "+secret\__secret.dme"
 #endif
-#if fexists("./+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS) && !defined(SECRETS_ENABLED)
+#if fexists("./+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
+#if !defined(SECRETS_ENABLED)
 #include "+secret\__secret.dme"
+#endif
 #endif
 #include "code\__secret_public.dme"
 
