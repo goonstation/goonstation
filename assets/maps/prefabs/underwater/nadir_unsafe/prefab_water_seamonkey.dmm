@@ -124,7 +124,7 @@
 /obj/item/reagent_containers/glass/beaker/strange_reagent{
 	name = "beaker"
 	},
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "aC" = (
@@ -261,7 +261,7 @@
 /area/prefab/sea_monkey_hideout)
 "aX" = (
 /obj/item/reagent_containers/food/snacks/plant/banana,
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "aY" = (
@@ -275,7 +275,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/prefab/sea_monkey_hideout)
 "ba" = (
-/obj/decal/fakeobjects/palmtree{
+/obj/fakeobject/palmtree{
 	dir = 1;
 	icon_state = "palm"
 	},
@@ -357,12 +357,12 @@
 "bq" = (
 /obj/item/bananapeel,
 /obj/machinery/light/incandescent/warm/very,
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "br" = (
 /obj/machinery/light/incandescent/warm/very,
-/obj/decal/fakeobjects/palmtree{
+/obj/fakeobject/palmtree{
 	dir = 1;
 	icon_state = "palm"
 	},
@@ -502,12 +502,12 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/sea_monkey_hideout)
 "bO" = (
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "bP" = (
 /obj/item/bananapeel,
-/obj/decal/fakeobjects/palmtree{
+/obj/fakeobject/palmtree{
 	dir = 1;
 	icon_state = "palm"
 	},
@@ -612,7 +612,7 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_monkey_hideout)
 "cg" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "50% of a rotten corpse.";
 	dir = 8;
 	icon = 'icons/misc/hstation.dmi';
@@ -659,7 +659,7 @@
 "co" = (
 /obj/item/inner_tube/random,
 /obj/machinery/light/incandescent/warm,
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "cp" = (
@@ -676,7 +676,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_monkey_hideout)
 "cs" = (
-/obj/decal/fakeobjects/oven,
+/obj/fakeobject/oven,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -961,7 +961,7 @@
 	icon_state = "pool";
 	tag = "icon-pool (WEST)"
 	},
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "di" = (

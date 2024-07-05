@@ -4,6 +4,20 @@
 	return ..()
 
 /proc/Reboot_server(var/retry)
+	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
+	if (mapSwitcher.locked)
+		//we're already holding and in the reboot retry loop, do nothing
+		if (mapSwitcher.holdingReboot && !retry) return
+
+		boutput(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
+		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
+
+		mapSwitcher.holdingReboot = 1
+		SPAWN(mapSwitcher.rebootRetryDelay)
+			mapSwitcher.attemptReboot()
+
+		return
+
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY) || !defined(SERVER_SIDE_PROFILING_PREGAME)
 	// This is a profiler dump of only the in-game part of the round

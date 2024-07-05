@@ -76,7 +76,7 @@
 /turf/simulated/floor/stone,
 /area/dmm_suite/clear_area)
 "B" = (
-/obj/decal/fakeobjects/birdhouse/light,
+/obj/fakeobject/birdhouse/light,
 /turf/simulated/floor/stone,
 /area/dmm_suite/clear_area)
 

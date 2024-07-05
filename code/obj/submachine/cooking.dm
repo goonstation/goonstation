@@ -694,6 +694,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/baguette(src)
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread_ch(src)
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread(src)
+			src.recipes += new /datum/cookingrecipe/oven/cinnamonbun(src)
 			src.recipes += new /datum/cookingrecipe/oven/fairybread(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_apple(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_cherry(src)

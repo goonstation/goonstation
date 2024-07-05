@@ -979,7 +979,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 
 
-		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+		else if (istype(W, /obj/item/sheet/) || istype(W, /obj/item/cable_coil/) || istype(W, /obj/item/raw_material/))
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
@@ -1546,8 +1546,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return P_ref
 
 	/// Check if a blueprint can be manufactured with the current materials.
-	proc/check_enough_materials(datum/manufacture/M)
-		return length(get_materials_needed(M)) == length(M.item_requirements)
+	/// mats_used - a list from get_materials_needed to avoid calling the proc twice
+	proc/check_enough_materials(datum/manufacture/M, var/list/mats_used = null)
+		if (isnull(mats_used))
+			mats_used = get_materials_needed(M)
+		return length(mats_used) == length(M.item_requirements)
 
 	/// Go through the material requirements of a blueprint, removing the respective used materials
 	proc/remove_materials(datum/manufacture/M)
@@ -1655,8 +1658,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (length(M.item_outputs) <= 0)
 			return
-		var/materials_used = check_enough_materials(M)
-		if(materials_used)
+		var/list/materials_used = src.get_materials_needed(M)
+		if(src.check_enough_materials(M, materials_used))
 			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop

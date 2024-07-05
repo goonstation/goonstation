@@ -122,6 +122,11 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+	make_my_stuff()
+		. = ..()
+		if (prob(30))
+			new /obj/item/paper/businesscard/hemera_rcd(src)
+
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
@@ -341,7 +346,7 @@
 					if (istype(T))
 						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
-			var/str_contents = kText.list2text(crate_contents, ", ")
+			var/str_contents = list2text(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
@@ -807,7 +812,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/fakeobject/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,

@@ -354,18 +354,11 @@
 	heal_amt = 1
 	initial_volume = 15
 	initial_reagents = null
-	var/roundstart_pathogens = 1
-
-	New()
-		..()
-		if(roundstart_pathogens)
-			wrap_pathogen(reagents, generate_random_pathogen(), 15)
 
 	fishstick
-		roundstart_pathogens = 0
 		pickup(mob/user)
 			if(isadmin(user) || current_state == GAME_STATE_FINISHED)
-				wrap_pathogen(reagents, generate_random_pathogen(), 15)
+				src.reagents.add_reagent("mycobacterium leprae", 15)
 			else
 				boutput(user, SPAN_NOTICE("You feel that it was too soon for this..."))
 			. = ..()
