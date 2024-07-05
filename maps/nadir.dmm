@@ -8180,10 +8180,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "dHz" = (
-/obj/machinery/computer/announcement{
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -8191,6 +8187,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
 	},
+/obj/machinery/computer/announcement/station/research,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "dHI" = (
@@ -16256,11 +16253,6 @@
 	},
 /area/listeningpost/power)
 "haW" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Command Announcement Computer"
-	},
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
 	icon_state = "line1"
@@ -16272,6 +16264,9 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
@@ -17747,15 +17742,13 @@
 	name = "Cargo Primary Endpoint"
 	})
 "hDb" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -28320,13 +28313,6 @@
 	},
 /area/station/security/brig)
 "lOT" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Executive Announcement Computer";
-	pixel_x = -3;
-	pixel_y = 4;
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -28336,6 +28322,11 @@
 	pixel_x = 7;
 	pixel_y = 32;
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/obj/machinery/computer/announcement/station/captain{
+	dir = 4;
+	pixel_x = -3;
+	pixel_y = 4
 	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
