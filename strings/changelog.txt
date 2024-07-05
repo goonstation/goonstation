@@ -1,5 +1,17 @@
 
 (t)thu jul 04 24
+(u)JORJ949
+(p)19766
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The listening post has been outfitted with an announcement computer. Agents only!
+(u)Flaborized
+(p)19576
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The chameleon outfit traitor item can now disguise as a mail courier.
+(u)Jan.antilles
+(p)19813
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Cinnamon buns can now be made in the oven.
 (u)Kubius
 (p)19665
 (e)🆕🎨🔊📦🚗|C-Feature, C-Sprites, C-Sound, A-Game-Objects, A-Vehicles

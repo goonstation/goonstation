@@ -11928,6 +11928,7 @@
 /obj/machinery/light/incandescent/greenish{
 	dir = 4
 	},
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
