@@ -920,6 +920,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 	default_material = "glass"
 
 	New()
+		..()
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -936,18 +937,12 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 				direction = pick(cardinal)
 		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
 		#else
-		var/turf/space/sample = locate()
-		if(!sample?.starlight)
-			SPAWN(world.tick_lag)
-				sample = locate()
-				src.underlays += sample?.starlight
-		else
-			src.underlays += sample?.starlight
-		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		src.underlays += /turf/space::starlight
+		I = mutable_appearance('icons/turf/space.dmi', "[rand(1, 25)]")
+		I.color = /turf/space::space_color
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
-		..()
 
 /turf/simulated/floor/glassblock/transparent/cyan
 	icon_state = "glasstr_cyan"
@@ -2705,17 +2700,9 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	connect_diagonal = 1
-TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock)
-	. = ..()
-	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock)
-	connects_to_exceptions = typecacheof(list(
-		/turf/simulated/floor/auto/glassblock/cyan,
-		/turf/simulated/floor/auto/glassblock/indigo,
-		/turf/simulated/floor/auto/glassblock/red,
-		/turf/simulated/floor/auto/glassblock/purple))
+ABSTRACT_TYPE(/turf/simulated/floor/auto/glassblock)
 /turf/simulated/floor/auto/glassblock
 	name = "glass block tiling"
-	icon = 'icons/turf/glass_floors/grey_glass_floor_auto.dmi'
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = FALSE
@@ -2750,33 +2737,64 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
+
+	pry_tile(obj/item/C as obj, mob/user as mob, params)
+		boutput(user, SPAN_ALERT("This is glass flooring, you can't pry this up!"))
+
+	to_plating()
+		return
+
+	break_tile_to_plating()
+		return
+
+	break_tile()
+		return
+
+	// unburnable, otherwise floorbots use steel sheets for repair which doesn't make sense
+	burn_tile()
+		return
+
+	attackby(obj/item/C, mob/user, params)
+		if (istype(C, /obj/item/rods))
+			boutput(user, SPAN_ALERT("You can't reinforce this tile."))
+			return
+		if(istype(C, /obj/item/cable_coil))
+			boutput(user, SPAN_ALERT("You can't put cable over this tile, it would be too exposed."))
+			return
 		..()
 
+TYPEINFO(/turf/simulated/floor/auto/glassblock/grey)
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/grey)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/grey)
+/turf/simulated/floor/auto/glassblock/grey
+	icon = 'icons/turf/glass_floors/grey_glass_floor_auto.dmi'
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock/cyan)
 TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/cyan)
 	. = ..()
 	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/cyan)
-	connects_to_exceptions = null
 /turf/simulated/floor/auto/glassblock/cyan
 	icon = 'icons/turf/glass_floors/cyan_glass_floor_auto.dmi'
 
+TYPEINFO(/turf/simulated/floor/auto/glassblock/indigo)
 TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/indigo)
 	. = ..()
 	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/indigo)
-	connects_to_exceptions = null
 /turf/simulated/floor/auto/glassblock/indigo
 	icon = 'icons/turf/glass_floors/indigo_glass_floor_auto.dmi'
 
+TYPEINFO(/turf/simulated/floor/auto/glassblock/red)
 TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/red)
 	. = ..()
 	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/red)
-	connects_to_exceptions = null
 /turf/simulated/floor/auto/glassblock/red
 	icon = 'icons/turf/glass_floors/red_glass_floor_auto.dmi'
 
+TYPEINFO(/turf/simulated/floor/auto/glassblock/purple)
 TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/purple)
 	. = ..()
 	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/purple)
-	connects_to_exceptions = null
 /turf/simulated/floor/auto/glassblock/purple
 	icon = 'icons/turf/glass_floors/purple_glass_floor_auto.dmi'
 
