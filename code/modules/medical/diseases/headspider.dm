@@ -138,8 +138,9 @@
 	if(!QDELETED(D?.source))
 		if(isalive(D.source))
 			D.source.death(FALSE)
+		if (D.source.mind) //if they're still here then they should probably die
+			D.source.ghostize()
 		//the headspider gets fully absorbed
-		D.source?.set_loc(null)
 		qdel(D.source)
 		D.source = null
 	. = ..()

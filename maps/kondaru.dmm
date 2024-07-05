@@ -28857,7 +28857,7 @@
 	},
 /area/listeningpost)
 "clY" = (
-/obj/machinery/vending/standard,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "clZ" = (

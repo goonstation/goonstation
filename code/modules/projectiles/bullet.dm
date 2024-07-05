@@ -1776,7 +1776,7 @@ datum/projectile/bullet/autocannon
 		if (auto_find_targets)
 			P.targets = list()
 			for(var/mob/M in view(P,15))
-				if (is_valid_target(M, P)) continue
+				if (!is_valid_target(M, P)) continue
 				P.targets += M
 
 		if (length(src.targets))
@@ -1784,7 +1784,7 @@ datum/projectile/bullet/autocannon
 			src.targets = list()
 
 	proc/is_valid_target(mob/M, obj/projectile/P)
-		return (M != P.shooter)
+		return (M != P.shooter && M != P.mob_shooter)
 
 	proc/calc_desired_x_y(var/obj/projectile/P)
 		.= 0
