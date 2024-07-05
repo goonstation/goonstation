@@ -1,5 +1,9 @@
 
 (t)thu jul 04 24
+(u)JORJ949
+(p)19766
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The listening post has been outfitted with an announcement computer. Agents only!
 (u)Flaborized
 (p)19576
 (e)🪲📦|C-Bug, A-Game-Objects
