@@ -1077,7 +1077,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1092,7 +1092,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(!S.check_tile_unclaimed(target_turf, owner))
