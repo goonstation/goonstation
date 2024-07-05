@@ -154,12 +154,10 @@ Cleanup:
 
 Things To Implement:
 - Observers (not ghosts)
-- Zoldorf
 - Radio brain (bioeffect)
 
 Old Code To Remove:
 - `say_quote`
-- `say_understands`
 - `try_render_chat_to_admin`
 - `process_accents`
 - `separate_radio_prefix_and_message`
@@ -167,8 +165,7 @@ Old Code To Remove:
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
-- Remove the commented out `/mob/living/say` in `living.dm`.
-- Remove all implementations of `say()` where the `NEWSPEECH` define is used.
+- Remove the commented out `/mob/living/say` in `living.dm` and `/mob/living/carbon/human/say` in `human.dm`.
 - Check span defines in `chat_output.dm`. Some may now be unused.
 
 Parity:

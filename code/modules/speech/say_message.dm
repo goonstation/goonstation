@@ -287,9 +287,6 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 /// Returns a formatted message for use with `boutput()`, using either the last input listen module or falling back to the default format of `"[speaker] [say_verb], [content]"`.
 /datum/say_message/proc/format_for_output(atom/listener)
-	// Format the message using the input module that this message was received from.
-	src.received_module.format(src)
-
 	// Apply any message modifier flags to the message.
 	global.SpeechManager.ApplyMessageModifierPostprocessing(src)
 

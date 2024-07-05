@@ -1756,6 +1756,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\modules\modifiers\speech\brain_damage.dm"
 #include "code\modules\speech\modules\modifiers\speech\breath.dm"
 #include "code\modules\speech\modules\modifiers\speech\door_control.dm"
+#include "code\modules\speech\modules\modifiers\speech\flock_gradient.dm"
 #include "code\modules\speech\modules\modifiers\speech\inverted.dm"
 #include "code\modules\speech\modules\modifiers\speech\megaphone.dm"
 #include "code\modules\speech\modules\modifiers\speech\monospace_decorator.dm"

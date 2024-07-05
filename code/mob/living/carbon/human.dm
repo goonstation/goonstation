@@ -1391,12 +1391,8 @@
 	if (!ai_active && is_npc)
 		ai_set_active(1)
 
-/mob/living/carbon/human/say(message, flags, message_params)
-#ifdef NEWSPEECH
-	if(message) //suppress unreachable code error
-		return ..()
-#endif
 /*
+/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1406,6 +1402,12 @@
 		say_language = mask.new_language
 
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
+
+	if (src.fakedead)
+		var/the_verb = pick("wails","moans","laments")
+		boutput(src, SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]"))
+		src.say_language = original_language
+		return
 
 	if (dd_hasprefix(message, "*") || isdead(src))
 		..(message)
@@ -1431,30 +1433,24 @@
 		src.say_language = original_language
 		return
 
+	if (src.robot_talk_understand && !src.stat)
+		if (length(message) >= 2)
+			if (copytext(lowertext(message), 1, 3) == ":s")
+				message = copytext(message, 3)
+				src.robot_talk(message)
+				src.say_language = original_language
+				return
+
 	message = process_accents(src,message)
 
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		message = P.onsay(message)
 
-	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colours = maptext_animation_colours)
+	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
 */
-
-/*/mob/living/carbon/human/say_understands(var/other)
-	if (src.mutantrace)
-		return src.mutantrace.say_understands(other)
-	if (isAI(other))
-		return 1
-	if (isrobot(other))
-		return 1
-	if (ishivebot(other))
-		return 1
-	if (ismainframe(other))
-		return 1
-	if (ishuman(other) && (!other:mutantrace || !other:mutantrace.exclusive_language))
-		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
 	var/sayverb = src.mutantrace.say_verb()

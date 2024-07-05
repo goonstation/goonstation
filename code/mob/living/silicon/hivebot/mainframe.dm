@@ -56,20 +56,6 @@
 
 	return ..(gibbed)
 
-
-/mob/living/silicon/hive_mainframe/say_understands(var/other)
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace.exclusive_language)
-			return 1
-	if (isrobot(other))
-		return 1
-	if (ishivebot(other))
-		return 1
-	if (isAI(other))
-		return 1
-	return ..()
-
 /mob/living/silicon/hive_mainframe/proc/return_to(var/mob/user)
 	if(user.mind)
 		user.mind.transfer_to(src)

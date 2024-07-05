@@ -11,12 +11,23 @@
 	anchored = ANCHORED
 	alpha = 180
 	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+	default_speech_output_channel = null
+	start_listen_languages = list(LANGUAGE_ALL)
+	can_use_say = FALSE
+
 	var/obj/machinery/playerzoldorf/homebooth
 	var/mob/originalmob
 
 	New(var/mob/M)
 		..()
 		invisibility = INVIS_NONE
+		src.ensure_listen_tree()
+		src.toggle_hearing_all(TRUE)
 
 	is_spacefaring()
 		return 1
@@ -41,22 +52,6 @@
 
 	Cross(atom/movable/mover)
 		return 1
-
-	say_understands(var/other)
-
-		if (isAI(other))
-			return 1
-
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-			else
-				return 0
-
-		if (isrobot(other) || isshell(other))
-			return 1
-		return ..()
 
 	Move(NewLoc, direct) //just a copy paste from ghost move
 		if(!canmove) return
@@ -99,22 +94,6 @@
 
 	equipped()
 		return 0
-
-	say(message, flags, message_params, atom_listeners_override)
-#ifdef NEWSPEECH
-		if(message) //suppress unreachable code error
-			return ..()
-#endif
-		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-		if (dd_hasprefix(message, "*"))
-			return src.emote(copytext(message, 2),1)
-
-		logTheThing(LOG_DIARY, src, "[src.name] - [src.real_name]: [message]", "say")
-		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-
-		if (src.client && src.client.ismuted())
-			boutput(src, "You are currently muted and may not speak.")
-			return
 
 	emote(var/act, var/voluntary)
 		..()

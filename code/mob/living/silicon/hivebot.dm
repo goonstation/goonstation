@@ -794,19 +794,6 @@ Frequency:
 
 	return
 
-/mob/living/silicon/hivebot/say_understands(var/other)
-	if (isAI(other))
-		return TRUE
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if (!H.mutantrace.exclusive_language)
-			return TRUE
-		else
-			return ..()
-	if (isrobot(other) || isshell(other))
-		return TRUE
-	return ..()
-
 /mob/living/silicon/hivebot/find_in_hand(var/obj/item/I, var/this_hand)
 	if (!I)
 		return 0

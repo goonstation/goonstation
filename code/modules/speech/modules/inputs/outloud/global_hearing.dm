@@ -13,8 +13,8 @@
 /datum/listen_module/input/outloud/ears/global_counterpart
 	id = LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART
 
-/datum/listen_module/input/outloud/ears/global_counterpart/format(datum/say_message/message)
-	. = ..()
-
+/datum/listen_module/input/outloud/ears/global_counterpart/process(datum/say_message/message)
 	message.format_speaker_prefix = "<b>" + message.format_speaker_prefix
 	message.format_message_suffix += "</b>"
+
+	. = ..()

@@ -624,6 +624,8 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
+	newbody.ensure_say_tree().AddOutput(SPEECH_OUTPUT_DEADCHAT)
+	newbody.ensure_listen_tree().AddInput(LISTEN_INPUT_DEADCHAT)
 
 	// preserve your original role;
 	// gives "???" if not an observer and not assigned a role,

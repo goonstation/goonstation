@@ -314,29 +314,6 @@
 		for (var/mob/member in hivemind)
 			boutput(member, rendered)
 
-/mob/proc/say_understands(var/mob/other, var/forced_language)
-	if (isdead(src))
-		return 1
-//	else if (istype(other, src.type) || istype(src, other.type))
-//		return 1
-//	var/L = other.say_language
-	// if (forced_language)
-	// 	L = forced_language
-	// if (understands_language(L))
-	// 	return 1
-	return 0
-	/*if (isrobot(other) || isAI(other) || (ismonkey(other) && src.bioHolder.HasEffect("monkey_speak")))
-		return 1
-	else
-		. = 0
-		. += ismonkey(src) ? 1 : 0
-		. += ismonkey(other) ? 1 : 0
-		if (. == 1)
-			return monkeysspeakhuman
-		else
-			return 1
-	return 0*/
-
 /mob/proc/say_quote(var/text, var/special = 0, var/speechverb = null)
 	var/ending = copytext(text, length(text))
 	var/loudness = 0

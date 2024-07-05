@@ -75,8 +75,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/human_compatible = TRUE
 	/// if FALSE, can only wear clothes if listed in [/obj/item/clothing/var/compatible_species]
 	var/uses_human_clothes = TRUE
-	/// if TRUE, only understood by others of this mutantrace
-	var/exclusive_language = FALSE
 	var/voice_name = "human"
 	/// Should robots arrest these by default?
 	var/jerk = FALSE
@@ -804,7 +802,6 @@ TYPEINFO(/datum/mutantrace/virtual)
 	name = "grey"
 	icon_state = "grey"
 	voice_name = "grey"
-	exclusive_language = 1
 	jerk = TRUE
 	blood_color = "#000000"
 
@@ -1607,7 +1604,6 @@ TYPEINFO_NEW(/datum/mutantrace/monkey)
 	human_compatible = TRUE
 	special_head = HEAD_MONKEY
 	special_head_state = "head"
-	exclusive_language = 1
 	voice_name = "monkey"
 	override_language = LANGUAGE_MONKEY
 	override_attack = FALSE

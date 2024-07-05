@@ -38,10 +38,6 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	src.parent_tree.input_modules_by_channel[src.channel] ||= list()
 	src.parent_tree.input_modules_by_channel[src.channel] += src
 
-/// Applies listener-specific formatting to the message. Shared input format modules handle general fomatting.
-/datum/listen_module/input/proc/format(datum/say_message/message)
-	return
-
 
 ABSTRACT_TYPE(/datum/listen_module/input/bundled)
 /**

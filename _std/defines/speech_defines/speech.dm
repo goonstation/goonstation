@@ -1,7 +1,3 @@
-/// Enables the new say() speech system for all applicable atoms. TODO: Remove.
-#define NEWSPEECH 1
-
-
 //------------- COOLDOWNS -------------//
 /// The minimum time between voice sound effects for a single atom. Measured in tenths of a second.
 #define VOICE_SOUND_COOLDOWN 8
