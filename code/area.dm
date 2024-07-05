@@ -216,6 +216,9 @@ TYPEINFO(/area)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
+					if(enteringM.skipped_mobs_list)
+						LAZYLISTADDUNIQUE(src.mobs_not_in_global_mobs_list, enteringM)
+
 					if (isliving(enteringM))
 						wake_critters(enteringM)
 
