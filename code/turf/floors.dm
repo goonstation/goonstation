@@ -2700,7 +2700,8 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	connect_diagonal = 1
-ABSTRACT_TYPE(/turf/simulated/floor/auto/glassblock)
+
+//dont use please
 /turf/simulated/floor/auto/glassblock
 	name = "glass block tiling"
 	step_material = "step_wood"
