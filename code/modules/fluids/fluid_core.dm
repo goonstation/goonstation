@@ -556,26 +556,28 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 				else
 					src.layer = initial(src.layer)
 
+			// apply highlights if we have depth
+			if (last_depth_level != 0 && dir == 15)
+				var/image/I = image('icons/obj/fluid.dmi', "highlights_15-[rand(1,3)]")
+				I.appearance_flags = RESET_COLOR | RESET_ALPHA
+				I.blend_mode = BLEND_ADD
+				I.alpha = 70
+				src.AddOverlays(I,"highlight")
+			else
+				src.ClearSpecificOverlays("highlight")
+
 
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
 			src.update_perspective_overlays()
 			if(last_depth_level == 4) // full
 				src.layer = EFFECTS_LAYER_4
+				src.plane = PLANE_NOSHADOW_ABOVE
 			else
 				src.layer = initial(src.layer)
+				src.plane = initial(src.plane)
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
 		if (icon_state != "15") return
-
-		// apply highlights if we made it this far.
-		if (last_depth_level)
-			var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
-			I.appearance_flags = RESET_COLOR
-			I.blend_mode = BLEND_ADD
-			I.alpha = 70
-			src.UpdateOverlays(I,"highlight")
-		else
-			src.ClearSpecificOverlays("highlight")
 
 		var/blocked = 0
 		for( var/dir in cardinal )
@@ -628,13 +630,13 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		// fluid sprite highlights to make it look pretty
 		var/image/I = image('icons/obj/fluid.dmi', "highlights_[overlay_key]_[last_depth_level]")
 		I.layer = over_obj ? 4 : src.layer
-		I.appearance_flags = RESET_COLOR | TILE_BOUND
+		I.appearance_flags = RESET_COLOR | TILE_BOUND | RESET_ALPHA
 		I.blend_mode = BLEND_ADD
 		I.pixel_x = pox
 		I.pixel_y = poy
 		I.alpha = 70
 
-		src.UpdateOverlays(I,"highlight_[overlay_key]")
+		src.AddOverlays(I,"highlight_[overlay_key]")
 
 	proc/clear_overlay(var/key = 0)
 		if (!key)

@@ -588,12 +588,12 @@
 				if (((color_changed || last_icon != F.icon_state) && F.last_spread_was_blocked) || depth_changed)
 					F.update_perspective_overlays()
 
-					if (F.icon_state == "15")
-						var/image/I = image('icons/obj/fluid.dmi', "highlights_15")
+					if (F.icon_state == "15" && my_depth_level)
+						var/image/I = image('icons/obj/fluid.dmi', "highlights_15-[rand(1,3)]")
 						I.appearance_flags = RESET_COLOR
 						I.blend_mode = BLEND_ADD
 						I.alpha = 70
-						F.UpdateOverlays(I,"highlight")
+						F.AddOverlays(I,"highlight")
 
 			else
 				fluid_ma.icon_state = "airborne" //HACKY! BAD! BAD! WARNING!
