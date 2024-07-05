@@ -2709,7 +2709,7 @@ TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_changename = FALSE
 	can_burn = FALSE
 	can_break = FALSE
-	icon_state = "0"
+	icon_state = "glass-0"
 	mod = "glass-"
 	default_material = "glass"
 	var/static/image/starlight
