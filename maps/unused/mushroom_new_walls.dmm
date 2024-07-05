@@ -12181,11 +12181,11 @@
 "blO" = (
 /obj/table/wood/auto,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "blP" = (
-/obj/table/wood/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "blQ" = (
