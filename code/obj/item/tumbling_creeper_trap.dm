@@ -267,7 +267,7 @@
 	victim.force_laydown_standup()
 	//now we set the correct damage zone and apply the damage
 	var/target = "All"
-	if (victim.organHolder[src.target_zone])
+	if (victim.organHolder.vars[src.target_zone])
 		target = src.target_zone
 	victim.TakeDamageAccountArmor(target, src.crashed_force, 0, 0, DAMAGE_STAB)
 	//after this, we play a corresponding sound and update everything
@@ -286,7 +286,7 @@
 	victim.force_laydown_standup()
 	//now we set the correct damage zone and apply the damage
 	var/target = "All"
-	if (victim.organHolder[src.target_zone])
+	if (victim.organHolder.vars[src.target_zone])
 		target = src.target_zone
 	victim.TakeDamageAccountArmor(target, src.armed_force, 0, 0, DAMAGE_STAB)
 	//after this, we play a corresponding sound, make a material trigger and update everything
