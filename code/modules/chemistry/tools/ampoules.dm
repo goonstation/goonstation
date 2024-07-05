@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "ampoule-0"
 	initial_volume = 5
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/expended = FALSE //Whether or not the ampoule has been used.
 	var/image/fluid_image
@@ -23,24 +23,13 @@
 	if(expended || reagents.total_volume <= 0)
 		boutput(user, SPAN_ALERT("[src] is empty!"))
 		return
-	else if(target == user)
+	if(target == user)
 		boutput(user, SPAN_NOTICE("You crack open and inhale [src]."))
+		user.inhale_ampoule(src, user)
 	else
 		user.visible_message(SPAN_ALERT("[user] attempts to force [target] to inhale [src]!"))
-		logTheThing(LOG_COMBAT, user, "tries to make [constructTarget(target,"combat")] inhale [src] [log_reagents(src)] at [log_loc(user)].")
-		if(!do_mob(user, target))
-			if(user && ismob(user))
-				boutput(user, SPAN_ALERT("You were interrupted!"))
-			return
-		user.visible_message(SPAN_ALERT("[user] forces [target] to inhale [src]!"), \
-								SPAN_ALERT("You force [target] to inhale [src]!"))
-	logTheThing(LOG_COMBAT, user, "[user == target ? "inhales" : "makes [constructTarget(target,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
-	reagents.reaction(target, INGEST, 5, paramslist = list("inhaled"))
-	reagents.trans_to(target, 5)
-	expended = TRUE
-	icon_state = "amp-broken"
-	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
-	return
+		SETUP_GENERIC_ACTIONBAR(user, target, 3 SECONDS, /mob/proc/inhale_ampoule, list(src, user), src.icon, src.icon_state, null, \
+			list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
 /obj/item/reagent_containers/ampoule/on_reagent_change()
 	..()

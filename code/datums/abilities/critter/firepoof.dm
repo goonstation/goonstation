@@ -20,6 +20,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		if (istype(M.special_sprint, /datum/special_sprint/poof/fire))
 			M.special_sprint = null
 		else

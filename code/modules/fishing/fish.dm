@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 /obj/item/reagent_containers/food/fish/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
-		user.changeStatus("weakened", 2 * src.force SECONDS)
+		user.changeStatus("knockdown", 2 * src.force SECONDS)
 		JOB_XP(user, "Clown", 1)
 		..(user, user) // bonk
 	else
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	return src
 
 /obj/item/reagent_containers/food/fish/proc/make_reagents()
-	src.reagents.add_reagent("fishoil",10)
+	src.reagents.add_reagent("fishoil", 20)
 	return
 
 
@@ -210,7 +210,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 /obj/item/reagent_containers/food/fish/pike
 	name = "pike"
-	desc = "Named after the long and pointy weapon of war, the Pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele."
+	desc = "Named after the long and pointy weapon of war, the pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "pike"
 	inhand_color = "#24d10d"
@@ -284,6 +284,66 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	inhand_color = "#87d1db"
 	category = FISH_CATEGORY_OCEAN
 	rarity = ITEM_RARITY_COMMON
+
+/obj/item/reagent_containers/food/fish/pufferfish
+	name = "pufferfish"
+	desc = "Adorable. Quite poisonous."
+	icon_state = "pufferfish"
+	initial_volume = 60 // 20 fish oil and 40 tetrodotoxin
+	inhand_color = "#8d754e"
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/pufferfish
+	category = FISH_CATEGORY_AQUARIUM
+	rarity = ITEM_RARITY_UNCOMMON
+
+	New()
+		global.processing_items += src
+		return ..()
+
+	disposing()
+		global.processing_items -= src
+		. = ..()
+
+	process() // the part where the puffed up fish hurts you
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if (src.spikes_protected(H))
+				return
+			boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
+			random_brute_damage(H, 3)
+			H.setStatusMin("stunned", 2 SECONDS)
+			take_bleeding_damage(H, null, 3, DAMAGE_STAB)
+
+	make_reagents()
+		..() //it still contains fish oil
+		src.reagents.add_reagent("tetrodotoxin",40) // REALLY don't eat raw pufferfish
+
+	onSlice(var/mob/user) // Don't eat pufferfish the staff assistant made
+		if (user.traitHolder?.hasTrait("training_chef"))
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> carefully separates the toxic parts out of the [src]."))
+
+			var/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver/liver =\
+			new /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver(src.loc)
+			if (src.reagents?.total_volume > 0)
+				src.reagents.trans_to(liver, src.reagents.total_volume)
+		else
+			if (prob(25)) // Don't try doing it if you don't know what you're doing
+				boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
+				src.reagents.trans_to(user, 20)
+			else if (prob(30)) // 30% of 75%(slightly more than 22%) chance of still being safe to eat
+				src.reagents.remove_reagent("tetrodotoxin",src.reagents.get_reagent_amount("tetrodotoxin"))
+
+
+	proc/spikes_protected(mob/living/carbon/human/H)
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		if(H.gloves)
+			return TRUE
+		if(H.traitHolder?.hasTrait("training_chef"))
+			return TRUE
 
 /obj/item/reagent_containers/food/fish/flounder
 	name = "flounder"
@@ -608,8 +668,9 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
+
 /obj/item/reagent_containers/food/fish/borgfish
-	name = "Cyborg Fish"
+	name = "cyborg fish"
 	desc = "This must be an experiment from a bored roboticist."
 	icon_state = "borgfish"
 	inhand_color = "#b6b5b5"

@@ -583,11 +583,11 @@
 					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
 				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
-					M.changeStatus("weakened", 3 SECONDS)
+					M.changeStatus("knockdown", 3 SECONDS)
 					boutput(M, SPAN_ALERT("You feel sick."))
 					M.vomit()
 
@@ -719,6 +719,24 @@
 					damage_burn = 5 * prot
 					howMuch = "extremely "
 
+			// doesn't need to happen super often, more like a life process in priority
+			if (!ON_COOLDOWN(owner, "burning_nearby_status_effect", LIFE_PROCESS_TICK_SPACING))
+				if (duration > 20 SECONDS)
+					for (var/atom/A as anything in owner.contents)
+						if (A.event_handler_flags & HANDLE_STICKER)
+							if (A:active)
+								owner.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
+								qdel(A)
+				if (isturf(owner.loc))
+					var/turf/location = owner.loc
+					location.hotspot_expose(T0C + 300, 400)
+				for (var/atom/A as anything in owner.contents)
+					A.material_trigger_on_temp(T0C + 900)
+				if (istype(owner, /mob))
+					var/mob/M = owner
+					for (var/atom/A as anything in M.equipped())
+						A.material_trigger_on_temp(T0C + 900)
+
 			return ..(timePassed)
 
 	simpledot/stimulant_withdrawl
@@ -771,7 +789,7 @@
 		onRemove()
 			..()
 			if(!owner) return
-			if (!owner.hasStatus(list("stunned", "weakened", "paralysis", "pinned")))
+			if (!owner.hasStatus(list("stunned", "knockdown", "unconscious", "pinned")))
 				if (isliving(owner))
 					var/mob/living/L = owner
 					L.force_laydown_standup()
@@ -801,11 +819,11 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
-		weakened
-			id = "weakened"
+		knockdown
+			id = "knockdown"
 			name = "Knocked-down"
 			desc = "You are knocked-down.<br>Unable to take any actions, prone."
-			icon_state = "weakened"
+			icon_state = "knockdown"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -858,11 +876,11 @@
 
 
 
-		paralysis
-			id = "paralysis"
+		unconscious
+			id = "unconscious"
 			name = "Unconscious"
 			desc = "You are unconscious.<br>Unable to take any actions, blinded."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			maxDuration = 30 SECONDS
 
@@ -878,11 +896,33 @@
 					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
 				. = ..()
 
+		paralysis
+			id = "paralysis"
+			name = "Paralyzed" //I'm going to scream
+			desc = "You are completely paralyzed."
+			unique = 1
+			maxDuration = 30 SECONDS
+			icon_state = "paralysis"
+
+			onAdd(optional=null)
+				. = ..()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+
+			onRemove()
+				if (ismob(owner) && !QDELETED(owner))
+					var/mob/mob_owner = owner
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					REMOVE_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTTURN, src.type)
+				. = ..()
+
 		dormant
 			id = "dormant"
 			name = "Dormant"
 			desc = "You are dormant.<br>Unable to take any actions, until you power yourself."
-			icon_state = "paralysis"
+			icon_state = "unconscious"
 			unique = 1
 			duration = INFINITE_STATUS
 
@@ -974,7 +1014,7 @@
 
 		onUpdate(timePassed)
 			counter += timePassed
-			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
+			if (counter >= count && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
 				counter -= count
 				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
@@ -1329,12 +1369,12 @@
 
 			var/list/statusList = H.getStatusList()
 
-			if(statusList["paralysis"])
-				H.changeStatus("paralysis", -1)
+			if(statusList["unconscious"])
+				H.changeStatus("unconscious", -1)
 			if(statusList["stunned"])
 				H.changeStatus("stunned", -1)
-			if(statusList["weakened"])
-				H.changeStatus("weakened", -1)
+			if(statusList["knockdown"])
+				H.changeStatus("knockdown", -1)
 
 		getTooltip()
 			if (GET_DIST(owner,gang.locker) < 4)
@@ -1550,79 +1590,12 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
-	onRemove()
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
-
-	patho_oxy_speed
-		id = "patho_oxy_speed"
-		name = "Oxygen Storage"
-		icon_state = "patho_oxy_speed"
-		unique = 1
-		movement_modifier = /datum/movement_modifier/patho_oxygen
-		effect_quality = STATUS_QUALITY_POSITIVE
-		var/oxygenAmount = 100
-		var/mob/living/carbon/human/H
-		var/endCount = 0
-
-		onAdd(optional)
+		onRemove()
 			. = ..()
-			src.oxygenAmount = optional
-			if(iscarbon(owner))
-				H = owner
-			else
-				owner.delStatus(src.id)
-
-		getTooltip()
-			. = "You are tapping your oxygen storage to breathe and move faster. Oxygen Storage at [oxygenAmount]% capacity!"
-
-		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.get_oxygen_deprivation(), oxygenAmount)
-			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
-				endCount += timePassed
-			else
-				endCount = 0
-			if(endCount > 8 SECONDS)
-				owner.delStatus(src.id)
-			if (H.oxyloss)
-				H.take_oxygen_deprivation(-oxy_damage)
-				oxygenAmount -= oxy_damage
-				H.losebreath = 0
-
-	patho_oxy_speed/bad
-		id = "patho_oxy_speed_bad"
-		name = "Oxygen Conversion"
-		icon_state = "patho_oxy_speed_bad"
-		effect_quality = STATUS_QUALITY_NEGATIVE
-		var/efficiency = 1
-
-		onAdd(optional)
-			. = ..()
-			src.efficiency = optional
-			..()
-			if(H)
-				H.show_message(SPAN_ALERT("You feel your body deteriorating as you breathe on."))
-
-		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.get_oxygen_deprivation())
-			if(oxy_damage <= 0)				// If no oxy damage for 8 seconds, remove the status
-				endCount += timePassed
-			else
-				endCount = 0
-			if(endCount > 8 SECONDS)
-				owner.delStatus(src.id)
-			if (H.oxyloss)
-				H.take_oxygen_deprivation(-oxy_damage)
-				H.TakeDamage("chest", oxy_damage/efficiency, 0)
-				H.losebreath = 0
-
-		getTooltip()
-			. = "Your flesh is being converted into oxygen! But you are moving slightly faster."
-
-
+			if(ismob(owner))
+				var/mob/M = owner
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
@@ -1887,14 +1860,15 @@
 	maxDuration = 3 MINUTES
 	effect_quality = STATUS_QUALITY_NEGATIVE
 	var/charge = null
+	var/ignore_unionized = FALSE
 
 	onAdd(optional)
 		. = ..()
 		if (!ismob(owner)) return
 		var/mob/M = owner
-		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || M.traitHolder.hasTrait("unionized"))
+		if (!M.bioHolder || M.bioHolder.HasEffect("resist_electric") || (!ignore_unionized && M.traitHolder.hasTrait("unionized")))
 			SPAWN(0)
-				M.delStatus("magnetized")
+				M.delStatus(src.id)
 			return
 		if (optional)
 			src.charge = optional
@@ -1907,6 +1881,10 @@
 		if (QDELETED(owner) || !ismob(owner)) return
 		var/mob/M = owner
 		M.bioHolder.RemoveEffect(charge)
+
+/datum/statusEffect/magnetized/arcfiend
+	id = "magnetized_arcfiend"
+	ignore_unionized = TRUE
 
 //I call it regrow limb, but it can regrow any limb/organ that a changer can make a spider from. (apart from headspider obviously)
 /datum/statusEffect/changeling_regrow
@@ -2147,7 +2125,7 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.changeStatus("paralysis", 5 SECONDS)
+			M.changeStatus("unconscious", 5 SECONDS)
 			M.force_laydown_standup()
 			M.delStatus("drowsy")
 
@@ -2246,9 +2224,8 @@
 
 	onUpdate(timePassed)
 		. = ..()
-		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.delStatus("filthy")
-
 
 	onRemove()
 		. = ..()
@@ -2751,3 +2728,107 @@
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/patches_applied
+	id = "patches_applied"
+	desc = "Patch(es) have been applied"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "applied_patches_application", LIFE_PROCESS_TICK_SPACING))
+			return
+		var/mob/living/L = src.owner
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		//patches become wasteful with >2 patches applied
+		//gives patches a way to heal quickly if you slap on a whole bunch, but at the cost of flinging chems into nothingness
+
+		// amount applied via touch
+		var/use_volume = 0.5 * mult
+		//amount that gets removed from the patch. Half of this gets transferred into the body
+		var/waste_volume = use_volume * max(length(L.applied_patches) * 0.75, 1)
+
+		for (var/atom/movable/A as anything in L.applied_patches)
+			if (A.reagents?.total_volume)
+				A.reagents.reaction(L, TOUCH, react_volume = use_volume, paramslist = \
+					(A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
+				A.reagents.trans_to(L, waste_volume / 2)
+				A.reagents.remove_any(waste_volume / 2)
+			else
+				qdel(A)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/active_ailments
+	id = "active_ailments"
+	desc = "Owner is currently afflicted with one or more ailments"
+	visible = FALSE
+	var/passed = 0
+
+	onUpdate(timePassed)
+		src.passed += timePassed
+		if (ON_COOLDOWN(src.owner, "active_ailments_tick", LIFE_PROCESS_TICK_SPACING))
+			return
+		if (istype(src.owner.loc, /obj/cryotron))
+			return
+		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
+		src.passed = 0
+
+		var/mob/living/L = src.owner
+
+		if (!isdead(L))
+			for (var/datum/ailment_data/ailment as anything in L.ailments)
+				ailment.stage_act(mult)
+
+		for (var/mob/living/other_mob in hearers(4, L))
+			if (prob(40) && other_mob != L)
+				L.viral_transmission(other_mob, "Airborne", 0)
+
+	preCheck(atom/A)
+		. = ..()
+		if (!istype(A, /mob/living))
+			return FALSE
+
+/datum/statusEffect/transparium
+	id = "transparium"
+	name = "Faded"
+	icon_state = "cloaked0"
+	unique = TRUE
+	var/alpha = 0
+	/// This is an unintentional interaction turned into a feature
+	/// Patches apply reagents very slowly, meaning that a transparium patch would constantly cause its user to flicker, spamming messages all the while
+	/// This variable is set whenever the duration is less than one second, and prevents message spam as well as not invoking some of the logic
+	var/flickering = FALSE
+
+	onAdd(optional)
+		..()
+		if (isnum(optional))
+			src.alpha = clamp(optional, 0, 255)
+			animate(src.owner, alpha = src.alpha, time = 2 SECONDS, flags = ANIMATION_PARALLEL, easing = BOUNCE_EASING)
+			if (src.duration < 1 SECOND)
+				if (!GET_COOLDOWN(src.owner, "[src.id]_flicker_message"))
+					boutput(src.owner, SPAN_ALERT("You're flickering [pick("crazily", "randomly", "wildly", "wackily", "out of control")]![pick(" Woah!", "")]"))
+				visible = FALSE
+				flickering = TRUE
+				// This should let the message start fresh for new patches/etc, but only show once for any given source
+				OVERRIDE_COOLDOWN(src.owner, "[src.id]_flicker_message", 5 SECONDS)
+			else
+				boutput(src.owner, SPAN_ALERT("You feel yourself fading away."))
+				if (src.alpha == 0)
+					APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_HIDE_ICONS, src.id)
+
+	onRemove()
+		..()
+		animate(src.owner, alpha = 255, time = 2 SECONDS, flags = ANIMATION_PARALLEL, easing = SINE_EASING | EASE_OUT)
+		if (!flickering)
+			boutput(src.owner, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_HIDE_ICONS, src.id)
+
+	getTooltip()
+		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."

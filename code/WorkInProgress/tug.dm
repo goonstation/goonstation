@@ -12,7 +12,7 @@ TYPEINFO(/obj/tug_cart)
 	layer = MOB_LAYER + 1
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
@@ -67,7 +67,7 @@ TYPEINFO(/obj/tug_cart)
 		..()
 		var/turf/T = get_turf(over_location)
 		var/mob/user = usr
-		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!user || !(in_interact_range(user, src) || user.loc == src) || !in_interact_range(src, over_object) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 		if (!load)
 			return
@@ -236,7 +236,7 @@ TYPEINFO(/obj/vehicle/tug)
 					playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				boutput(rider, SPAN_ALERT("<B>You are flung off of [src]!</B>"))
 				rider.changeStatus("stunned", 8 SECONDS)
-				rider.changeStatus("weakened", 5 SECONDS)
+				rider.changeStatus("knockdown", 5 SECONDS)
 				for (var/mob/C in AIviewers(src))
 					if (C == rider)
 						continue
@@ -260,7 +260,7 @@ TYPEINFO(/obj/vehicle/tug)
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
 		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
@@ -337,7 +337,7 @@ TYPEINFO(/obj/vehicle/tug)
 				if (prob(60))
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 					src.visible_message(SPAN_ALERT("<B>[M] has shoved [rider] off of [src]!</B>"))
-					rider.changeStatus("weakened", 2 SECONDS)
+					rider.changeStatus("knockdown", 2 SECONDS)
 					eject_rider()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)

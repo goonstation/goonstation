@@ -4,7 +4,7 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
+	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -28,6 +28,9 @@
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 
+/obj/pool/perspective/innercorners
+	name = "pool"
+	icon_state = "pool_inner"
 /obj/pool_springboard
 	name = "springboard"
 	density = 0
@@ -64,6 +67,8 @@
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
+			if(user.buckled)
+				user.buckled.unbuckle()
 			user.buckled = src
 			sleep(0.3 SECONDS)
 			user.pixel_x = -3
@@ -94,7 +99,7 @@
 			user.buckled = null
 			if (user.targeting_ability == user.chair_flip_ability) //we havent chair flipped, just do normal jump
 				user.throw_at(target, 5, 1)
-				user:changeStatus("weakened", 2 SECONDS)
+				user:changeStatus("knockdown", 2 SECONDS)
 			user.end_chair_flip_targeting()
 			if(suiciding || deadly)
 				src.visible_message(SPAN_ALERT("<b>[user.name] dives headfirst at the [target.name]!</b>"))

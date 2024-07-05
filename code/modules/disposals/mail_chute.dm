@@ -5,6 +5,7 @@
 	icon_state = "mailchute"
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
+	light_style = "mailchute"
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
@@ -25,8 +26,8 @@
 
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "main", frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", pdafrequency)
 		SPAWN(10 SECONDS)
 			src.post_radio_status()
 
@@ -331,7 +332,8 @@
 
 /obj/machinery/disposal/mail/small
 	icon = 'icons/obj/disposal_small.dmi'
-	handle_normal_state = "disposal-handle"
+	handle_normal_state = "mail-handle"
+	light_style = "disposal"
 	density = 0
 
 /obj/machinery/disposal/mail/small/autoname

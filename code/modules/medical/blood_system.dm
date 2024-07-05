@@ -499,10 +499,6 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (!some_idiot || !A || !istype(some_idiot))
 		return 0
 
-	var/mob/living/carbon/human/some_human_idiot = null
-	if (ishuman(some_idiot))
-		some_human_idiot = some_idiot
-
 	if (!A.reagents || (!istype(some_idiot) && !some_idiot.reagents))
 		return 0
 
@@ -527,23 +523,10 @@ this is already used where it needs to be used, you can probably ignore it.
 		bloodHolder.ownerName = some_idiot.real_name
 		bloodHolder.ownerType = some_idiot.type
 
-	var/datum/reagent/R = null
-
 	if (ischangeling(some_idiot))
 		A.reagents.add_reagent("bloodc", blood_to_transfer, bloodHolder)
-		R = A.reagents.get_reagent("bloodc")
 	else
 		A.reagents.add_reagent(some_idiot.blood_id, blood_to_transfer, bloodHolder)
-		R = A.reagents.get_reagent(some_idiot.blood_id)
-
-	if (R && (R.id == "blood" || R.id == "bloodc") && some_human_idiot)
-		var/datum/reagent/blood/B = R
-		var/list/SP = A.reagents.aggregate_pathogens()
-		for (var/uid in some_human_idiot.pathogens)
-			if (!(uid in SP))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.setup(0, some_human_idiot.pathogens[uid], 0)
-				B.pathogens[uid] = P
 
 	// Vampires can't use this trick to inflate their blood count, because they can't get more than ~30% of it back (Convair880).
 	if (blood_system && (isvampire(some_idiot) && (some_idiot.get_vampire_blood() >= blood_to_transfer)))
@@ -675,55 +658,27 @@ this is already used where it needs to be used, you can probably ignore it.
 
 /mob/proc/staunch_bleeding(var/mob/some_idiot) // stolen from ISN's shake_awake() proc
 	if (!src || !some_idiot)
-		return 0
+		return
+	if (!isliving(some_idiot))
+		return
 
-	if (isliving(some_idiot))
-		var/mob/living/H = some_idiot
+	var/mob/living/L = some_idiot
 
-		if (H.being_staunched)
-			src.show_text("[H == src ? "You're" : "Someone's"] already putting pressure on [H == src ? "your" : "[H]'s"] wounds!", "red")
-			return
+	if (L.being_staunched)
+		src.show_text("[L == src ? "You're" : "Someone's"] already putting pressure on [L == src ? "your" : "[L]'s"] wounds!", "red")
+		return
 
-		if (H)
-			H.add_fingerprint(src) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit (Convair880).
+	L.add_fingerprint(src)
+	L.being_staunched = TRUE
 
-//		if (H.w_uniform)
-//			H.w_uniform.add_fingerprint(src)
+	src.tri_message(L, SPAN_NOTICE("<b>[src]</b> puts pressure on [src == L ? "[his_or_her(L)]" : "[L]'s"] wounds, trying to stop the bleeding!"),\
+		SPAN_NOTICE("You put pressure on [src == L ? "your" : "[L]'s"] wounds, trying to stop the bleeding!"),\
+		SPAN_NOTICE("[L == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!"))
 
-		H.being_staunched = 1
+	SETUP_GENERIC_ACTIONBAR(src, L, 10 SECONDS, /mob/living/proc/staunch_wound, list(src), 'icons/mob/mob.dmi', "help", null,
+		list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))
 
-		src.tri_message(H, SPAN_NOTICE("<b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!"),\
-			SPAN_NOTICE("You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!"),\
-			SPAN_NOTICE("[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!"))
-
-		if (do_mob(src, H, 100))
-			var/original_bleed = H.bleeding
-			repair_bleeding_damage(H, 20, rand(1,2))
-
-			if (original_bleed > H.bleeding)
-				switch (H.bleeding)
-					if (-INFINITY to 0)
-						src.show_text("The bleeding stops!", "blue")
-					if (1 to 3)
-						src.show_text("The bleeding slows!", "blue")
-					if (4 to INFINITY)
-						src.show_text("It barely helps!", "red")
-
-			else if (original_bleed == H.bleeding)
-				src.show_text("The bleeding doesn't slow at all!", "red")
-
-			else if (original_bleed < H.bleeding) // what
-				src.show_text("Oh fuck somehow the bleeding got WORSE!", "red")
-
-			H.being_staunched = 0
-			return 1
-
-		else
-			src.show_text("You were interrupted!", "red")
-			H.being_staunched = 0
-			return 0
-	else
-		return 0
+	L.being_staunched = FALSE
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=INTERNAL-BLEEDING=-=-=-=-=-=-=-=-=-=-=-*/
@@ -816,7 +771,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	w_class = W_CLASS_TINY
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	var/damage_type = DAMAGE_CUT
 
 	attack_self(mob/user as mob)
@@ -858,7 +813,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	force = 0
 	throwforce = 0
 	throw_range = 16
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = TABLEPASS | NOSHIELD
 	burn_type = 1
 
 	New()

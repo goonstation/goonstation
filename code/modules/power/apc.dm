@@ -100,7 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname E APC"
 		dir = EAST
 		autoname_on_spawn = 1
-		pixel_x = 24
+		pixel_x = 20
 
 		nopoweralert
 			noalerts = 1
@@ -136,7 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname W APC"
 		dir = WEST
 		autoname_on_spawn = 1
-		pixel_x = -24
+		pixel_x = -20
 
 		nopoweralert
 			noalerts = 1
@@ -176,12 +176,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	..()
 	START_TRACKING
 	// offset 24 pixels in direction of dir
+	//+excluding east and west which is now 20 pixels
 	// this allows the APC to be embedded in a wall, yet still inside an area
 
 	tdir = dir		// to fix Vars bug
 	// dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 20 : -20)
 	pixel_y = (tdir & 3)? (tdir ==1 ? 24 : -24) : 0
 
 	// is starting with a power cell installed, create it and set its charge level
@@ -304,7 +305,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (cell)
 			// if opened, update overlays for cell
 			var/image/I_cell = SafeGetOverlayImage("cell", 'icons/obj/power.dmi', "apc-[cell.icon_state]")
-			UpdateOverlays(I_cell, "cell", 0, 1)
+			AddOverlays(I_cell, "cell")
 
 	else if(emagged)
 		icon_state = "apcemag"
@@ -332,14 +333,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/image/I_equp = SafeGetOverlayImage("equipment", 'icons/obj/power.dmi', "apco0-[equipment]")
 		var/image/I_envi = SafeGetOverlayImage("environment", 'icons/obj/power.dmi', "apco2-[environ]")
 
-		UpdateOverlays(I_lock, "lock", 0, 1)
-		UpdateOverlays(I_chrg, "charge", 0, 1)
-		UpdateOverlays(I_brke, "breaker", 0, 1)
+		AddOverlays(I_lock, "lock")
+		AddOverlays(I_chrg, "charge")
+		AddOverlays(I_brke, "breaker")
 
 		if(operating && !do_not_operate)
-			UpdateOverlays(I_lite, "lighting", 0, 1)
-			UpdateOverlays(I_equp, "equipment", 0, 1)
-			UpdateOverlays(I_envi, "environment", 0, 1)
+			AddOverlays(I_lite, "lighting",)
+			AddOverlays(I_equp, "equipment")
+			AddOverlays(I_envi, "environment")
 
 /obj/machinery/power/apc/emp_act()
 	..()
@@ -892,7 +893,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 
 /obj/machinery/power/apc/proc/interacted(mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
 		return
 	if (!in_interact_range(src, user))
 		return
@@ -1032,12 +1033,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	sleep(0.1 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
-	var/weak = (user.getStatusDuration("weakened") < shock_damage * 20) ? shock_damage * 20 : 0
+	var/knockdown = (user.getStatusDuration("knockdown") < shock_damage * 20) ? shock_damage * 20 : 0
 	var/stun = (user.getStatusDuration("stunned") < shock_damage * 10) ? shock_damage * 10 : 2
-	user.do_disorient(130, weakened = weak, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
+	user.do_disorient(130, knockdown = knockdown, stunned = stun, disorient = 80, remove_stamina_below_zero = 0)
 #else
 	if(user.getStatusDuration("stunned") < shock_damage * 10)	user.changeStatus("stunned", shock_damage SECONDS)
-	if(user.getStatusDuration("weakened") < shock_damage * 20)	user.changeStatus("weakened", shock_damage * 2 SECONDS)
+	if(user.getStatusDuration("knockdown") < shock_damage * 20)	user.changeStatus("knockdown", shock_damage * 2 SECONDS)
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue

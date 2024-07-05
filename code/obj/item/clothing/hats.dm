@@ -7,11 +7,10 @@
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
 	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
 	duration_remove = 1.5 SECONDS
@@ -53,7 +52,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "ogloves"
 
 /obj/item/clothing/head/purple
-	desc = "A knit cap in orange."
+	desc = "A knit cap in purple."
 	icon_state = "purple"
 	item_state = "jgloves"
 
@@ -96,7 +95,6 @@ proc/filter_trait_hats(var/type)
 
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -129,7 +127,6 @@ proc/filter_trait_hats(var/type)
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
-	path_prot = 0
 	acid_survival_time = 3 MINUTES
 
 	setupProperties()
@@ -518,6 +515,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "chef"
 	item_state = "chefhat"
 
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chefhat-alt"
+
 /obj/item/clothing/head/chefhatpuffy
 	name = "Puffy Chef's Hat"
 	desc = "A chef's toque blanche, pleasantly puffy on top."
@@ -552,12 +553,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
     desc = "Your toque blanche, now at least 50% taller!"
     icon_state = "cheftall"
     item_state = "cheftall"
-
-/obj/item/clothing/head/policecap
-	name = "Police hat"
-	desc = "An old surplus-issue police hat."
-	icon_state = "mailcap"
-	item_state = "mailcap"
 
 /obj/item/clothing/head/plunger
 	name = "plunger"
@@ -876,7 +871,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (src.active && ismob(hit_atom))
 			var/mob/M = hit_atom
 			playsound(src, src.hitsound, 60, 1)
-			M.changeStatus("weakened", 2 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
 			M.force_laydown_standup()
 			SPAWN(0) // show these messages after the "hit by" ones
 				if (M)
@@ -1064,9 +1059,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S?["criminal"] = "*Arrest*"
+		S?["criminal"] = ARREST_STATE_ARREST
 		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
 		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/mob/living/carbon/human/H = user
+		if (istype(H))
+			H.update_arrest_icon()
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1167,6 +1165,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+
+	sunhaty
+		icon_state = "sunhaty"
+		item_state = "sunhaty"
 
 	stunhatr
 		stunready = 1
@@ -1433,6 +1435,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
 			H.wear_image = src.wear_image
+			H.wear_layer = MOB_FULL_SUIT_LAYER
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
@@ -1442,7 +1445,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	desc = "Aww, cute and fuzzy."
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-
 	random
 		New()
 			..()
@@ -1862,8 +1864,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
-	mats = list("FAB-1"=5, "honey"=5)
-
+	mats = list("fabric" = 5,
+				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."

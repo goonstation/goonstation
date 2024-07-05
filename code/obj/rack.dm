@@ -4,7 +4,7 @@
 	icon_state = "rack_base"
 	density = 1
 	layer = STORAGE_LAYER
-	flags = FPRINT | NOSPLASH
+	flags = NOSPLASH
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
@@ -12,7 +12,7 @@
 	material_amt = 0.1
 
 	proc/rackbreak()
-		icon_state += "-broken"
+		src.icon_state = initial(src.icon_state) + "-broken"
 		src.set_density(0)
 
 /obj/rack/New()
@@ -58,7 +58,7 @@
 		return 0
 
 /obj/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 		return
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))
@@ -223,6 +223,7 @@
 /// Technical Storage circuit board rack for engineering/supply
 /obj/rack/organized/techstorage_eng
 	items_to_spawn = list(
+		/obj/item/circuitboard/arcade,
 		/obj/item/circuitboard/qmorder,
 		/obj/item/circuitboard/qmsupply,
 		/obj/item/circuitboard/barcode,
@@ -241,11 +242,17 @@
 /// Technical Storage circuit board rack for medical/science/misc
 /obj/rack/organized/techstorage_med
 	items_to_spawn = list(
-		/obj/item/circuitboard/arcade,
 		/obj/item/circuitboard/card,
 		/obj/item/circuitboard/teleporter,
 		/obj/item/circuitboard/operating,
 		/obj/item/circuitboard/cloning,
 		/obj/item/circuitboard/genetics,
 		/obj/item/circuitboard/robot_module_rewriter,
+		/obj/item/circuitboard/chem_request,
+		/obj/item/circuitboard/chem_request_receiver,
 	)
+
+/obj/rack/organized/techstorage_med/sea
+	New()
+		src.items_to_spawn += /obj/item/circuitboard/sea_elevator
+		. = ..()

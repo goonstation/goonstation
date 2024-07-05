@@ -344,8 +344,8 @@ wbr:after {
 .medal {color: #808000;}
 .combat {color: #ff0000;}
 .say {}
-.sing {color: #B87AB8;}
-.robotsing {color: #7EBAB5;}
+.sing {color: #591259;}
+.robotsing {color: #114f4b;}
 .blobsay {color: white; background-color: #226622;}
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
@@ -371,6 +371,7 @@ wbr:after {
 .green, .radio {color: #008000;}
 .alert {color: #ff0000;}
 h1.alert, h2.alert {color: #000000;}
+.arthint {color:  #a97da9;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
@@ -442,6 +443,7 @@ body.theme-dark .notice { color: #7996ff; }
 body.theme-dark .hint { color: #7996ff; }
 body.theme-dark .internal { color: #92b4ff; }
 body.theme-dark .alert { color: #FF6D6D; }
+body.there-dark .arthint {color: #5A1D8A}
 body.theme-dark .system { color: #FF6D6D; }
 body.theme-dark .success { color: #92E592; }
 body.theme-dark .emote { color: #888888; }

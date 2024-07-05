@@ -6,7 +6,7 @@
 	icon_state = "Tumbling_Creeper-Unplanted"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "tumbling_creeper"
-	flags = TABLEPASS | FPRINT | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
 	force = 3
 	throwforce = 0
@@ -263,7 +263,7 @@
 	if (!src || !victim || !src.armed)
 		return
 	logTheThing(LOG_COMBAT, victim, "crashed into [src] at [log_loc(src)].")
-	victim.changeStatus("weakened", crashed_weakened)
+	victim.changeStatus("knockdown", crashed_weakened)
 	victim.force_laydown_standup()
 	//now we set the correct damage zone and apply the damage
 	var/target = "All"
@@ -282,7 +282,7 @@
 	if (!src || !victim || !src.armed)
 		return
 	logTheThing(LOG_COMBAT, victim, "stepped into [src] at [log_loc(src)].")
-	victim.changeStatus("weakened", armed_weakened)
+	victim.changeStatus("knockdown", armed_weakened)
 	victim.force_laydown_standup()
 	//now we set the correct damage zone and apply the damage
 	var/target = "All"

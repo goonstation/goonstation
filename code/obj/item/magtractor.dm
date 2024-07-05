@@ -11,7 +11,7 @@ TYPEINFO(/obj/item/magtractor)
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -140,7 +140,7 @@ TYPEINFO(/obj/item/magtractor)
 		set desc = "Release the item currently held by the magtractor"
 		set category = "Local"
 
-		if (!src || !src.holding || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
+		if (!src || !src.holding || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown") || usr.getStatusDuration("unconscious")) return 0
 		actions.stopId(/datum/action/magPickerHold, usr)
 		return 1
 
@@ -150,7 +150,7 @@ TYPEINFO(/obj/item/magtractor)
 		set desc = "Increases power driven to the magtractor, allowing it to carry items while moving."
 		set category = "Local"
 
-		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
+		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown") || usr.getStatusDuration("unconscious")) return 0
 
 		var/image/magField = GetOverlayImage("magField")
 		var/msg = "<span class='notice'>You toggle the [src]'s HPM "

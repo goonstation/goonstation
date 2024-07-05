@@ -131,7 +131,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", "")
+					C.player.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
@@ -143,7 +143,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", "")
+					C.player.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
@@ -155,7 +155,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", "")
+					C.player.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -243,6 +243,18 @@ var/global/noir = 0
 		if ("toggle_topic_log")
 			if (src.level >= LEVEL_MOD)
 				src.show_topic_log = !show_topic_log
+				src.show_pref_window(usr)
+		if ("toggle_skip_manifest")
+			if (src.level >= LEVEL_MOD)
+				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
+				src.show_pref_window(usr)
+		if ("toggle_slow_stat")
+			if (src.level >= LEVEL_MOD)
+				src.slow_stat = !slow_stat
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
@@ -1486,24 +1498,47 @@ var/global/noir = 0
 				if (A)
 					usr.client.check_reagents_internal(A, refresh = 1)
 
+		if ("checkreagent_add")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.addreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
+		if ("checkreagent_flush")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.flushreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
 		if ("removereagent")
-			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
-				var/mob/M = locate(href_list["target"])
+			// similar to /client/proc/addreagents, but in a different place.
+			// originally limited to mobs, but i made it any atoms
+			if (src.level < LEVEL_SA)
+				tgui_alert(usr, "You need to be at least a Secondary Administrator to remove reagents.")
+				return
 
-				if (!M.reagents) // || !target.reagents.total_volume)
-					boutput(usr, SPAN_NOTICE("<b>[M] contains no reagents.</b>"))
-					return
-				var/datum/reagents/reagents = M.reagents
+			var/atom/A = locate(href_list["target"])
 
+			if (!A.reagents) // || !target.reagents.total_volume)
+				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
+				return
+			var/datum/reagents/reagents = A.reagents
+
+			var/pick_id
+			var/pick
+			if (href_list["skip_pick"])
+				pick_id = href_list["skip_pick"]
+				pick = href_list["skip_pick"]
+			else
 				var/list/target_reagents = list()
-				var/pick
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 					target_reagents += current_reagent.name
 				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
-				var/pick_id
 				if(!isnull(reagents.reagent_list[pick]))
 					pick_id = pick
 				else
@@ -1513,24 +1548,24 @@ var/global/noir = 0
 							pick_id = current_reagent.id
 							break
 
-				if (pick_id)
-					var/string_version
+			if (!pick_id)
+				return
 
-					var/amt = input("How much of [pick]?","Remove Reagent") as null|num
-					if(!amt || amt < 0)
-						return
+			var/amt = input("How much of [pick]?", "Remove Reagent") as null|num
+			if (!amt || amt < 0)
+				return
 
-					if (M.reagents)
-						M.reagents.remove_reagent(pick_id,amt)
+			if (A.reagents)
+				if (!A.reagents.remove_reagent(pick_id,amt))
+					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
+					return
 
-					if (string_version)
-						string_version = "[string_version], [amt] \"[pick]\""
-					else
-						string_version = "[amt] \"[pick]\""
+			boutput(usr, SPAN_SUCCESS("Removed [amt] units of [pick_id] from [A]."))
 
-					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
-			else
-				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
+			// Brought in line with adding reagents via the player panel (Convair880).
+			logTheThing(LOG_ADMIN, src, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
+			if (ismob(A))
+				message_admins("[key_name(src)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -1875,6 +1910,8 @@ var/global/noir = 0
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue]")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue]")
 				if (length(custom_objective))
 					new /datum/objective/regular(custom_objective, M.mind, M.mind.get_antagonist(antag_options[selected_keyvalue]))
 					tgui_alert(M, "Your objective is: [custom_objective]", "Objective")
@@ -1924,6 +1961,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue] antagonist")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue] antagonist")
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
 			else
 				boutput(usr, SPAN_ALERT("Addition failed with return code [success]. The mob may be incompatible. Report this to a coder."))
@@ -1941,6 +1980,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.remove_antagonist(antag)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed [antag.id] antagonist from [key_name(M)]")
+				message_admins("[key_name(usr)] removed [antag.id] antagonist from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]"))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -1957,6 +1998,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed all antagonists from [key_name(M)]")
+				message_admins("[key_name(usr)] removed all antagonists from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -2366,7 +2409,7 @@ var/global/noir = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
 								continue
-							H.changeStatus("paralysis", 7 SECONDS)
+							H.changeStatus("unconscious", 7 SECONDS)
 							if(H.wear_id)
 								for(var/A in H.wear_id:access)
 									if(A == access_security)
@@ -3068,7 +3111,7 @@ var/global/noir = 0
 								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
-									M.changeStatus("weakened", 2 SECONDS)
+									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
 							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
@@ -3309,6 +3352,8 @@ var/global/noir = 0
 						random_events.event_config()
 					if("motives")
 						simsController.showControls(usr)
+					if("regionallocator")
+						usr.client.region_allocator_panel()
 					if("artifacts")
 						artifact_controls.config()
 					if("DNA")
@@ -3367,17 +3412,6 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=[logType]_log_[gettxt];size=750x500")
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
-
-		if ("view_logs_pathology_strain")
-			if (src.level >= LEVEL_MOD)
-				var/gettxt
-				if (href_list["presearch"])
-					gettxt = href_list["presearch"]
-				else
-					gettxt = input("Which pathogen tree?", "Pathogen tree") in pathogen_controller.pathogen_trees
-
-				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
-				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
@@ -3662,11 +3696,11 @@ var/global/noir = 0
 		switch(emergency_shuttle.location)
 			if(0)// centcom
 				if (emergency_shuttle.direction == 1)
-					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft())] sec)"
 				if (emergency_shuttle.direction == -1)
-					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft())] sec)"
 			if(1)// ss13
-				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft()/60)])"
+				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft())] sec)"
 			if(2)// evacuated
 				shuttletext = "Evacuated to Centcom"
 			else
@@ -3707,6 +3741,7 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=regionallocator'>Region Allocator</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
@@ -3778,9 +3813,6 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_BOMBING]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log'>Signaler Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log_string'><small>(Search)</small></A><BR>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log'>Pathology Log</A>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log_string'><small>(Search)</small></A>
-				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log'>Chemistry Log</A>

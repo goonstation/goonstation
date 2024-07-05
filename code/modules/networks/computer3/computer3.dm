@@ -283,7 +283,7 @@
 		screen_image.blend_mode = BLEND_ADD
 		screen_image.layer = LIGHTING_LAYER_BASE
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
-		src.UpdateOverlays(screen_image, "screen_image")
+		src.AddOverlays(screen_image, "screen_image")
 
 	SPAWN(0.4 SECONDS)
 		if(!length(src.peripherals)) // make sure this is the first time we're initializing this computer
@@ -357,7 +357,7 @@
 	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
 		var/obj/item/peripheral/periph = src.peripherals[i]
 		if(periph.setup_has_badge)
-			var/pdata = periph.return_badge() // reduces copy pasting
+			var/list/pdata = periph.return_badge() // reduces copy pasting
 			pdata["index"] = i
 			if(pdata)
 				var/bcolor = pdata["contents"]
@@ -433,6 +433,39 @@
 						I.loc = src
 						dv.disk = I
 					update_static_data(usr)
+				else if (findtext(params["card"], "/obj/item/peripheral/cheget_key"))
+					var/obj/item/peripheral/cheget_key/cheget_key = src.peripherals[params["index"]]
+					if (cheget_key.inserted_key)
+						usr.put_in_hand_or_eject(cheget_key.inserted_key)
+						cheget_key.inserted_key = null
+						boutput(usr, SPAN_NOTICE("You turn the key and pull it out of the lock. The green light turns off."))
+						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+						SPAWN(1 SECOND)
+							if(!cheget_key.inserted_key)
+								src.visible_message(SPAN_ALERT("[src] emits a dour boop and a small red light flickers on."))
+								playsound(src.loc, 'sound/machines/cheget_sadbloop.ogg', 30, 1)
+								var/datum/signal/deauthSignal = get_free_signal()
+								deauthSignal.data = list("authcode"="\ref[src]")
+								cheget_key.send_command("key_deauth", deauthSignal)
+
+					else if(istype(I, /obj/item/device/key/cheget))
+						usr.drop_item()
+						I.loc = src
+						cheget_key.inserted_key = I
+						boutput(usr, SPAN_NOTICE("You insert the key and turn it."))
+						playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
+						SPAWN(1 SECOND)
+							if(cheget_key.inserted_key)
+								src.visible_message(SPAN_ALERT("[src] emits a satisfied boop and a little green light comes on."))
+								playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
+								var/datum/signal/authSignal = get_free_signal()
+								authSignal.data = list("authcode"="\ref[I]")
+								cheget_key.send_command("key_auth", authSignal)
+					else if(istype(I, /obj/item/device/key))
+						boutput(usr, SPAN_ALERT("It doesn't fit.  Must be the wrong key."))
+						src.visible_message(SPAN_ALERT("[src] emits a grumpy boop."))
+						playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
+					update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/computer3/updateUsrDialog()
@@ -466,7 +499,7 @@
 		status &= ~NOPOWER
 		light.enable()
 		if(glow_in_dark_screen)
-			src.UpdateOverlays(screen_image, "screen_image")
+			src.AddOverlays(screen_image, "screen_image")
 	else
 		SPAWN(rand(0, 15))
 			icon_state = src.base_icon_state
@@ -532,13 +565,13 @@
 	A.created_icon_state = src.base_icon_state
 	A.set_dir(src.dir)
 	if (src.status & BROKEN)
-		boutput(user, SPAN_NOTICE("The broken glass falls out."))
+		user?.show_text("The broken glass falls out.", "blue")
 		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc( src.loc )
 		A.state = 3
 		A.icon_state = "3"
 	else
-		boutput(user, SPAN_NOTICE("You disconnect the monitor."))
+		user?.show_text("You disconnect the monitor.", "blue")
 		A.state = 4
 		A.icon_state = "4"
 
@@ -598,6 +631,17 @@
 	if (prob(power * 2.5))
 		set_broken()
 		src.set_density(0)
+
+/obj/machinery/computer3/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				if (status & BROKEN)
+					playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 50, TRUE)
+					src.unscrew_monitor()
+				else
+					src.set_broken()
 
 /obj/machinery/computer3/disposing()
 	if (hd)
@@ -809,7 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4

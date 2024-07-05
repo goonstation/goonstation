@@ -43,6 +43,8 @@ var/global
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
+	list/donator_ckeys = list()
+	list/online_donator_ckeys = list()
 	list/mobs = list()
 	list/ai_mobs = list()
 	list/processing_items = list()
@@ -277,6 +279,8 @@ var/global
 	player_capa = 0
 	player_cap = 55
 	player_cap_grace = list()
+	/// specifies if pcap kick messages show display to admins in chat
+	pcap_kick_messages = TRUE
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
@@ -355,7 +359,6 @@ var/global
 		LOG_VEHICLE		=	list(),
 		LOG_GAMEMODE	=	list(),
 		LOG_SIGNALERS	=	list(),
-		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
 		LOG_CHEMISTRY	=	list(),
 	)

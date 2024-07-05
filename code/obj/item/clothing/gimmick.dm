@@ -101,7 +101,7 @@
 			return 0
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("paralysis")))
+			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("unconscious")))
 				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
@@ -234,7 +234,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "cyborg"
 	item_state = "cyborg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	hides_from_examine = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/under/gimmick/johnny
@@ -251,7 +251,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "johnny"
 	item_state = "johnny"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 
 // UNUSED COLORS
 
@@ -262,7 +262,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "headset" // lol
 
 /obj/item/clothing/under/gimmick/police
-	name = "police uniform"
+	name = "guard uniform"
 	desc = "Move along, nothing to see here."
 	icon_state = "police"
 	item_state = "police"
@@ -648,7 +648,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 	c_flags = ONBELT
 	item_state = "vshield"
 	throwforce = 7
@@ -1968,7 +1968,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 
@@ -2042,3 +2042,17 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "rabbitsuit"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+
+// Goku
+
+/obj/item/clothing/under/gimmick/goku
+	name = "anime martial artist costume"
+	desc = "Sturdy karate gi intended for only the toughest martial artists out there. If only you actually practiced!"
+	icon_state = "goku"
+	item_state = "goku"
+
+/obj/item/clothing/shoes/goku
+	name = "anime martial artist boots"
+	desc = "A pair of blue boots with a yellow stripe and a red string. They'd help you be swift and agile, if not for the cheap flimsy soles!"
+	icon_state = "goku"
+	item_state = "goku"

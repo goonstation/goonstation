@@ -27,6 +27,7 @@
 	var/temperature = T20C
 	var/icon_old = null
 	var/name_old = null
+	var/path_old = null
 	var/tmp/pathweight = 1
 	var/tmp/pathable = TRUE
 	var/can_write_on = FALSE
@@ -58,12 +59,12 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
-	flags = OPENCONTAINER | FPRINT
+	flags = OPENCONTAINER
 
 
 	New()
 		..()
-
+		src.path_old = src.type
 		if(global.dont_init_space)
 			return
 		src.init_lighting()
@@ -153,7 +154,7 @@
 			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
 		damage_overlay.alpha = 200
 		src.broken = TRUE
-		UpdateOverlays(damage_overlay, "damage")
+		AddOverlays(damage_overlay, "damage")
 
 	proc/burn_tile(var/force)
 		if (!src.can_burn && !force)
@@ -167,7 +168,7 @@
 			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
 		burn_overlay.alpha = 200
 		src.burnt = TRUE
-		UpdateOverlays(burn_overlay, "burn")
+		AddOverlays(burn_overlay, "burn")
 
 	proc/restore_tile()
 		if(intact)
@@ -180,8 +181,7 @@
 			icon_state = icon_old
 		else
 			icon_state = "floor"
-		UpdateOverlays(null, "burn")
-		UpdateOverlays(null, "damage")
+		ClearSpecificOverlays("burn", "damage")
 		if (name_old)
 			name = name_old
 		levelupdate()
@@ -450,6 +450,9 @@ proc/generate_space_color()
 	return
 
 /turf/proc/delay_space_conversion()
+	return
+
+/turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
 		air_master.tiles_to_space |= src
 		return TRUE
@@ -470,6 +473,9 @@ proc/generate_space_color()
 		return 0 // nope
 
 	proc/process_cell()
+		return
+
+	meteorhit(obj/meteor)
 		return
 
 /turf/New()
@@ -616,7 +622,7 @@ proc/generate_space_color()
 /turf/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 	if(src.density)
-		if(AM.throwforce >= 80)
+		if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
 		. = 'sound/impact_sounds/Generic_Stab_1.ogg'
 
@@ -707,6 +713,7 @@ var/global/in_replace_with = 0
 	//var/rloverlaystate = RL_OverlayState  //we actually want these cleared
 	var/list/rllights = RL_Lights
 
+	var/old_savedpath = src.path_old
 	var/old_opacity = src.opacity
 	var/old_opaque_atom_count = src.opaque_atom_count
 
@@ -765,6 +772,9 @@ var/global/in_replace_with = 0
 				new_turf = new map_settings.walls (src)
 			else
 				new_turf = new /turf/simulated/wall(src)
+		if ("Initial")
+			var/oldpath = old_savedpath
+			new_turf = new oldpath(src)
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
@@ -788,8 +798,9 @@ var/global/in_replace_with = 0
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
-	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
+	new_turf.icon_old = icon_old
 	new_turf.name_old = name_old
+	new_turf.path_old = old_savedpath
 
 	if (handle_dir)
 		new_turf.set_dir(old_dir)
@@ -991,6 +1002,25 @@ var/global/in_replace_with = 0
 			for (var/obj/window/auto/W in orange(1))
 				W.UpdateIcon()
 	return wall
+
+///Returns a turf to its initial path, if it is a simulated floor or wall. Returns FALSE if requested turf was not one of these initially.
+/turf/proc/ReplaceWithInitial()
+	var/oldpath = src.path_old
+	var/turf/simulated/theturf = ReplaceWith("Initial")
+	if(ispath(oldpath,/turf/simulated/floor) || ispath(oldpath,/turf/simulated/wall))
+		if(ispath(oldpath,/turf/simulated/floor))
+			for (var/obj/lattice/L in src.contents)
+				qdel(L)
+		else if(ispath(oldpath,/turf/simulated/wall))
+			if (map_settings.auto_walls)
+				for (var/turf/simulated/wall/auto/W in orange(1))
+					W.UpdateIcon()
+			if (map_settings.auto_windows)
+				for (var/obj/window/auto/W in orange(1))
+					W.UpdateIcon()
+		return theturf
+	else
+		return FALSE
 
 /turf/proc/is_sanctuary()
   var/area/AR = src.loc
@@ -1403,21 +1433,6 @@ TYPEINFO(/turf/simulated)
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
-
-/turf/unsimulated/wall/griffening
-	icon = 'icons/misc/griffening/area_wall.dmi'
-	icon_state = null
-	density = 1
-	opacity = 0
-	name = "wall"
-	desc = "A holographic projector wall."
-
-/turf/unsimulated/floor/griffening
-	icon = 'icons/misc/griffening/area_floor.dmi'
-	icon_state = null
-	opacity = 0
-	name = "floor"
-	desc = "A holographic projector floor."
 
 /turf/unsimulated/null_hole
 	name = "expedition chute"

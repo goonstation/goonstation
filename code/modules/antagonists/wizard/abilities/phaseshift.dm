@@ -37,7 +37,7 @@
 	if (!isturf(H.loc))
 		H.show_text("You can't seem to turn incorporeal here.", "red")
 		return
-	if (H.stat || H.getStatusDuration("paralysis") > 0)
+	if (H.stat || H.getStatusDuration("unconscious") > 0)
 		H.show_text("You can't turn incorporeal when you are incapacitated.", "red")
 		return
 
@@ -341,7 +341,7 @@
 
 		relaymove()
 			..()
-			fireflash(get_turf(owner), 0, 100)
+			fireflash(get_turf(owner), 0, 100, chemfire = CHEM_FIRE_RED)
 
 
 		dispel()

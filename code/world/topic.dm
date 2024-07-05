@@ -729,6 +729,7 @@
 				var/ircmsg[] = new()
 				ircmsg["major"] = world.byond_version
 				ircmsg["minor"] = world.byond_build
+				ircmsg["goonhub_api"] = apiHandler.enabled ? "Enabled" : "Disabled"
 				return ircbot.response(ircmsg)
 
 			if ("youtube")
@@ -872,7 +873,7 @@
 					response["last_seen"] = player.last_seen
 				player.cloudSaves.fetch()
 				for(var/kkey in player.cloudSaves.data)
-					if(kkey in list("admin_preferences", "buildmode"))
+					if((kkey in list("admin_preferences", "buildmode")) || findtext(kkey, regex(@"^custom_job_\d+$")))
 						continue
 					response[kkey] = player.cloudSaves.data[kkey]
 				response["cloudsaves"] = player.cloudSaves.saves
@@ -926,6 +927,9 @@
 				var/list/response = list()
 				for_by_tcl(canvas, /obj/item/canvas/lazy_restore)
 					response += canvas.id
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if (art_exhibit.data?.art)
+						response += art_exhibit.exhibit_id
 				return json_encode(response)
 
 			if("lazy_canvas_get")
@@ -935,6 +939,11 @@
 						if(!canvas.initialized)
 							canvas.load_from_id(canvas.id)
 						response[canvas.id] = icon2base64(canvas.art)
+				for_by_tcl(art_exhibit, /obj/decal/exhibit)
+					if(art_exhibit.exhibit_id == plist["id"])
+						if (!art_exhibit.data?.art)
+							break
+						response[art_exhibit.exhibit_id] = icon2base64(art_exhibit.data.art)
 				return json_encode(response)
 
 			if("ban_added")
@@ -950,3 +959,31 @@
 					TRUE
 				)
 				return 1
+
+			if("goonhub_auth")
+				var/ckey = plist["ckey"]
+				var/client/C = find_client(ckey)
+				if (C && C.goonhub_auth)
+					C.goonhub_auth.on_auth()
+				return 1
+
+			if ("mapSwitchDone")
+				if (!plist["map"] || !mapSwitcher.locked) return 0
+
+				var/map = plist["map"]
+				var/ircmsg[] = new()
+				var/msg
+
+				var/attemptedMap = mapSwitcher.next ? mapSwitcher.next : mapSwitcher.current
+				if (map == "FAILED")
+					msg = "Compilation of [attemptedMap] failed! Falling back to previous setting of [mapSwitcher.nextPrior ? mapSwitcher.nextPrior : mapSwitcher.current]"
+				else
+					msg = "Compilation of [attemptedMap] succeeded!"
+
+				logTheThing("admin", null, null, msg)
+				logTheThing("diary", null, null, msg, "admin")
+				message_admins(msg)
+				ircmsg["msg"] = msg
+
+				mapSwitcher.unlock(map)
+				return ircbot.response(ircmsg)

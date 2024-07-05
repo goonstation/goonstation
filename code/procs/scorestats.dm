@@ -10,6 +10,7 @@ var/datum/score_tracker/score_tracker
 	// var/score_crew_evacuation_rate = 0 save this for later to keep categories balanced
 	var/score_crew_survival_rate = 0
 	var/score_enemy_failure_rate = 0
+	var/score_stirstir_alive = FALSE
 	var/final_score_sec = 0
 	// ENGINEERING DEPARTMENT
 	var/power_generated = 0
@@ -24,6 +25,8 @@ var/datum/score_tracker/score_tracker
 	// CIVILIAN DEPARTMENT
 	var/score_cleanliness = 0
 	var/score_expenses = 0
+	var/mail_opened = 0
+	var/mail_fraud = 0
 	var/final_score_civ = 0
 	var/most_xp = "OH NO THIS IS BROKEN"
 	var/score_text = null
@@ -85,6 +88,14 @@ var/datum/score_tracker/score_tracker
 		score_enemy_failure_rate = clamp(score_enemy_failure_rate,0,100)
 
 		final_score_sec = (score_crew_survival_rate + score_enemy_failure_rate) * 0.5
+
+		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
+			if(isalive(M))
+				score_stirstir_alive = TRUE
+
+		if(!score_stirstir_alive)
+			// YOU FUCKED UP
+			final_score_sec /= 2
 
 		// ENGINEERING DEPARTMENT SECTION
 		// also civ cleanliness counted here cos fuck calling a world loop more than once
@@ -167,6 +178,10 @@ var/datum/score_tracker/score_tracker
 
 		score_expenses = clamp(score_expenses,0,100)
 		score_cleanliness = clamp(score_cleanliness,0,100)
+
+		mail_opened = game_stats.GetStat("mail_opened")
+		mail_fraud = game_stats.GetStat("mail_fraud")
+
 		final_score_civ = (score_expenses + score_cleanliness) * 0.5
 
 		var/xp_winner = null

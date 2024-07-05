@@ -10,6 +10,7 @@
 /datum/limb/mouth/fermid
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	can_beat_up_robots = TRUE //angry space ants
 
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
@@ -369,6 +370,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/vomit_ore)
+	butcherable = BUTCHER_ALLOWED
 	var/tamed = FALSE
 	var/seek_ore = TRUE
 	var/eaten = 0

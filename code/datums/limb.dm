@@ -19,6 +19,8 @@
 	var/attack_strength_modifier = 1
 	/// if the limb can gun grab with a held gun
 	var/can_gun_grab = TRUE
+	/// if true, bypasses unarmed attack immunity for cyborgs (separate to weird special case handling for them)
+	var/can_beat_up_robots = FALSE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -208,6 +210,7 @@
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
+	can_beat_up_robots = TRUE //so pointblanking works
 
 	attack_range(atom/target, var/mob/user, params)
 		src.shoot(target, user, FALSE, params)
@@ -259,7 +262,11 @@
 		return
 
 	attack_hand(atom/target, mob/user, var/reach, params, location, control)
-		return
+		switch(user.a_intent) //we're a gun, so we don't want to do normal attack_hand stuff
+			if (INTENT_DISARM)
+				src.disarm(target, user)
+			if (INTENT_HARM)
+				src.harm(target, user)
 
 	help(mob/living/target, mob/living/user)
 		return
@@ -641,7 +648,7 @@
 			if (isliving(target) && !issilicon(target))
 				var/mob/living/victim = target
 				//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, unconscious = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
 					//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
 					ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
 				//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
@@ -712,6 +719,7 @@
 				holder.remove_object.AfterAttack(target, user, reach)
 
 /datum/limb/bear
+	can_beat_up_robots = TRUE //it's a bear!
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -964,7 +972,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/brullbar
@@ -1287,7 +1295,7 @@
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
 
 			msgs.damage = rand(1,9)
-			target.changeStatus("weakened", 2 SECONDS)
+			target.changeStatus("knockdown", 2 SECONDS)
 			target.stuttering += 1
 
 
@@ -1494,6 +1502,7 @@
 		return
 
 /datum/limb/claw
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return

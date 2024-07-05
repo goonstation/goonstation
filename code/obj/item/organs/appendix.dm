@@ -63,13 +63,10 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 	breakme()
 		if(..() && emagged)
 			donor.emote("collapse")
-			donor.setStatus("weakened", 3 SECONDS)
+			donor.setStatus("knockdown", 3 SECONDS)
 
 			donor.reagents.add_reagent("salbutamol", 20) //copied mostly from robusttec
 			donor.reagents.add_reagent("epinephrine", 15)
 			donor.reagents.add_reagent("omnizine", 15) //reduced omnizine amount
 			donor.reagents.add_reagent("teporone", 20)
-			#ifdef CREATE_PATHOGENS
-			add_pathogens(donor, 30) //oh no
-			#endif
 			boutput(donor, SPAN_ALERT("Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon."))

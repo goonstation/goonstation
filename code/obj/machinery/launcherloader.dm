@@ -312,7 +312,7 @@
 		..()
 
 /obj/machinery/computer/barcode
-	name = "Barcode Computer"
+	name = "barcode computer"
 	desc = "Used to print barcode stickers for the cargo routing system."
 
 	icon = 'icons/obj/delivery.dmi'
@@ -407,7 +407,7 @@
 					src.scan = id_card
 					src.updateUsrDialog()
 				else
-					boutput(user, SPAN_ALERT("Pin number incorrect."))
+					boutput(user, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -416,7 +416,7 @@
 		return
 
 /obj/machinery/computer/barcode/qm //has trader tags if there is one
-	name = "QM Barcode Computer"
+	name = "\improper QM barcode computer"
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
 	circuit_type = /obj/item/circuitboard/barcode_qm

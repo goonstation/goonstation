@@ -64,19 +64,26 @@
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
 			var/list/row_classes = list()
 			var/noteReason = playerNote.note
-			if (playerNote.game_admin.ckey == "bot")
-				row_classes += "auto"
 
 			var/regex/R = new("Banned from (.+?) by (.+?), reason: (.+), duration: (.+)", "m")
 			if (R.Find(noteReason))
 				row_classes += "ban"
 				noteReason = R.Replace(noteReason, "<b>BANNED</b> from <b>$1</b> by <b>$2</b> &mdash; $4<br><blockquote>$3</blockquote>")
 
+			var/list/legacyData
+			if (length(playerNote.legacy_data))
+				legacyData = json_decode(playerNote.legacy_data)
+
 			var/id = playerNote.server_id
-			if(!id && length(playerNote.legacy_data))
-				var/lData = json_decode(playerNote.legacy_data)
-				if(islist(lData) && lData["oldserver"])
-					id = lData["oldserver"]
+			if (!id && ("oldserver" in legacyData))
+				id = legacyData["oldserver"]
+
+			var/gameAdminCkey = playerNote.game_admin?.ckey
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
+				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			if (gameAdminCkey == "bot")
+				row_classes += "auto"
 
 			var/classes = row_classes.Join(" ")
 			dat += {"
@@ -86,7 +93,7 @@
 				<th style='width: 0; white-space: pre;'>#[playerNote.id] <a href="?src=\ref[src];action=notes2;target=[player];type=del;id=[playerNote.id]" style="background: red; color: white; display: inline-block; text-align: center; padding: 0.1em 0.25em; border-radius: 4px; text-decoration: none;">&times;</a></th>
 			</tr>
 			<tr class="[classes]" style="margin-bottom: 1em;">
-				<th>[playerNote.game_admin.ckey]</th>
+				<th>[gameAdminCkey]</th>
 				<td colspan="2" style="white-space: pre-wrap;">[noteReason]</td>
 			</tr>
 			<tr class='empty'><td colspan='3'></td></tr>

@@ -8,15 +8,15 @@
 #define INLET_MIN 0
 
 TYPEINFO(/obj/machinery/power/combustion_generator)
-	mats = list("MET-2" = 14, "CON-1" = 8)
-
+	mats = list("metal_dense" = 14,
+				"conductive" = 8)
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
 	icon_state = "chemportgen0"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FLUID_SUBMERGE | NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
@@ -50,11 +50,12 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 		"oil" = 10,
 		"fuel" = 8,
 		"pyrosium" = 7,
+		"diesel" = 7,
 		"ethanol" = 6,
 		"hydrogen" = 6,
 		"plasma" = 6,
 		"phosphorus" = 5,
-		"magnesium" = 5
+		"magnesium" = 5,
 	) // kilowattage (returns about half for a default setup)
 
 	// bit wierd but a bunch of type checks feels bad

@@ -261,7 +261,7 @@
 		icon_empty = "patchbox-med-empty"
 		var/icon_color = "patchbox-med-coloring"
 		var/image/box_color
-		flags = FPRINT | TABLEPASS | EXTRADELAY
+		flags = TABLEPASS | EXTRADELAY
 
 		proc/build_overlay(var/datum/color/average = null) //ChemMasters provide average for medical boxes
 			var/obj/item/reagent_containers/patch/temp = src.take_from()
@@ -435,7 +435,7 @@
 						I.set_loc(T)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-		if (user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+		if (user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 		if (!in_interact_range(user, src) || !in_interact_range(user, O))
 			boutput(user, SPAN_ALERT("That's too far away!"))

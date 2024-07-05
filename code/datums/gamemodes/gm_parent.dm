@@ -94,11 +94,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 		var/obj_count = 0
 		var/traitor_name
 
-		// This is a really hacky check to prevent traitors from being outputted twice if their primary antag role has an antagonist datum that could be used for data instead.
-		// Once antagonist datums are completed, this check should be removed entirely.
-		if (traitor.get_antagonist(traitor.special_role))
-			continue
-
 		if (traitor.current)
 			traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
 		else
@@ -296,6 +291,21 @@ ABSTRACT_TYPE(/datum/game_mode)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
+
+/datum/game_mode/proc/roundstart_player_count(loud = TRUE)
+	var/readied_count = 0
+	var/unreadied_count = 0
+	for (var/client/C in global.clients)
+		var/mob/new_player/mob = C.mob
+		if (istype(mob))
+			if (mob.ready)
+				readied_count++
+			else
+				unreadied_count++
+	var/total = readied_count + (unreadied_count/2)
+	if (loud)
+		logTheThing(LOG_GAMEMODE, "Found [readied_count] readied players and [unreadied_count] unreadied ones, total count being fed to gamemode datum: [total]")
+	return total
 
 ////////////////////////////
 // Objective related code //

@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/pinpointer)
 	name = "pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
@@ -110,7 +110,7 @@ TYPEINFO(/obj/item/pinpointer)
 					arrow.icon_state = "pinonmedium"
 				if(16 to INFINITY)
 					arrow.icon_state = "pinonfar"
-			UpdateOverlays(arrow, "arrow")
+			AddOverlays(arrow, "arrow")
 
 			sleep(0.5 SECONDS)
 
@@ -424,7 +424,10 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 	proc/find_by_dna(var/dna)
 		for_by_tcl(H, /mob/living/carbon/human)
 			if (H.bioHolder?.Uid == dna)
-				return H
+				if (is_mob_trackable_by_AI(H))
+					return H
+				else
+					break
 
 //lets you click on something to pick it as a target, good for gimmicks
 /obj/item/pinpointer/picker

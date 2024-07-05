@@ -1,11 +1,11 @@
 //handheld device for manual calibration of siphon systems
 TYPEINFO(/obj/item/device/calibrator)
-	mats = list("CRY-1", "CON-1")
-
+	mats = list("crystal" = 1,
+				"conductive" = 1)
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		..()
 
 	disposing()

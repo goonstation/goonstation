@@ -3,7 +3,7 @@
 	name = "Ship Component"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "default"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	/// How much of the engine's capacity the part takes up
 	var/power_used = 0
 	/// The owner of the part
@@ -16,10 +16,12 @@
 	var/component_class = 0
 	/// What system it is, to avoid a bunch of istype checks
 	var/system = "part"
+	/// The part is disrupted by an attack and is forced to be off
+	var/disrupted = FALSE
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
-	if(src.loc == ship)
+	if(ship && src.loc == ship)
 		ship.components -= src
 	ship = null
 	..()
@@ -45,6 +47,11 @@
 			return FALSE
 	else
 		ship.powercurrent += power_used
+
+	if (src.disrupted)
+		for(var/mob/M in ship)
+			boutput(M, "[ship.ship_message("ALERT: [src] is temporarily disabled!")]")
+			return FALSE
 
 	src.active = 1
 	for(var/mob/M in src.ship)

@@ -534,7 +534,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	stack_type = /obj/item/raw_material/shard
-	flags = TABLEPASS | FPRINT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
@@ -590,7 +589,7 @@
 		default_material = "plasmaglass"
 
 /obj/item/raw_material/shard/proc/walked_over(mob/living/carbon/human/H as mob)
-	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("knockdown")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 		return
 	if(isabomination(H))
 		return
@@ -609,7 +608,7 @@
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
-	H.changeStatus("weakened", 3 SECONDS)
+	H.changeStatus("knockdown", 3 SECONDS)
 	H.force_laydown_standup()
 	var/zone = pick("l_leg", "r_leg")
 	H.TakeDamage(zone, force, 0, 0, DAMAGE_CUT)
@@ -811,7 +810,7 @@
 			if (!MAT)
 				return
 
-		var/output_location = src.get_output_location()
+		var/atom/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = new bar_type
@@ -822,9 +821,15 @@
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
-			M.load_item(BAR)
+			M.change_contents(mat_piece = BAR)
 		else
 			BAR.set_loc(output_location)
+			for (var/obj/item/material_piece/other_bar in output_location.contents)
+				if (other_bar == BAR)
+					continue
+				if (BAR.material.isSameMaterial(other_bar.material))
+					if (other_bar.stack_item(BAR))
+						break
 
 		playsound(src.loc, sound_process, 40, 1)
 

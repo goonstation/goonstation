@@ -78,7 +78,7 @@
 			//unstealth
 			if (stealthed)
 				src.stealthed = 0
-				owner.changeStatus("weakened", 6 SECONDS)
+				owner.changeStatus("knockdown", 6 SECONDS)
 				animate(owner, alpha=255, time=3 SECONDS)
 
 				boutput(owner, "<b class='hint'>You reappear.</b>")
@@ -181,6 +181,7 @@
 	max_range = 2
 
 	cast(atom/tar)
+		. = ..()
 		var/turf/T = get_turf(tar)
 		if (isturf(T))
 			//if there's already a marker here, remove it
@@ -263,6 +264,7 @@
 	pointCost = 1
 
 	cast(atom/T)
+		. = ..()
 		var/datum/abilityHolder/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
@@ -320,7 +322,7 @@
 			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
 				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
-				H.changeStatus("weakened", -3 SECONDS)
+				H.changeStatus("knockdown", -3 SECONDS)
 		return
 
 /datum/targetable/kudzu/kudzusay
@@ -356,6 +358,7 @@
 
 	//This is basically all stolen from the seedplanter item.
 	cast(atom/T)
+		. = ..()
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
 		var/power = 1
 		if (istype(K))
@@ -451,6 +454,7 @@
 	max_range = 1
 
 	cast(atom/target)
+		. = ..()
 		//For giving nutrients to plantpots
 		if (istype(target, /obj/machinery/plantpot) && target.reagents)
 			//replace with kudzu_nutrients when I make it. should be a good thing for plants, maybe kinda good for man.
@@ -508,6 +512,7 @@
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
 
 	cast()
+		. = ..()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
 			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")

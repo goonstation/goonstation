@@ -16,6 +16,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/from_emagged_oven = 0 					//! Was this food created by an emagged oven? To prevent re-rolling of food in emagged ovens.
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
 	var/tmp/made_ants = FALSE 					//! Has this food already spawned ants
+	var/ant_amnt = 5 							//! How many ants are added to food / how much reagents removed?
 	var/sliceable = FALSE 						//! Can this food be sliced with a knife
 	var/slice_product = null 					//! Type to spawn when we slice this food
 	var/slice_amount = 1						//! How many slices to spawn after slicing
@@ -40,12 +41,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			owner.organHolder.stomach.eject(src)
 			qdel(src)
 
-	proc/on_table()
+	proc/ant_safe()
 		if (!isturf(src.loc))
 			return FALSE
+		if (isrestrictedz(src.loc.z))
+			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
+			return TRUE
+		if (locate(/obj/storage/secure/closet/fridge) in src.loc) // includes fridges
 			return TRUE
 		return FALSE
 
@@ -101,14 +106,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 				return
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
-			src.onSlice()
+			src.onSlice(user)
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
@@ -118,7 +123,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			..()
 
-	proc/onSlice() //special slice behaviour
+	proc/onSlice(var/mob/user) //special slice behaviour
 		return
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
@@ -160,6 +165,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/current_mask = 5
 	var/list/food_effects = list()
 	var/create_time = 0
+	var/time_since_moved = 0
 	var/bites_left = 3
 	var/uneaten_bites_left = null
 
@@ -168,13 +174,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	// Used in Special Order events
 	var/meal_time_flags = 0
 
+	set_loc(newloc)
+		. = ..()
+		time_since_moved = TIME
+
 	New()
 		if (!src.uneaten_bites_left)
 			src.uneaten_bites_left = initial(bites_left)
 		..()
 		if (doants)
 			processing_items.Add(src)
-		create_time = world.time
+		create_time = TIME
 		if (src.amount != 1)
 			stack_trace("[identify_object(src)] is spawning with an amount other than 1. That's bad. Go delete the 'amount' line and replace it with `bites_left = \[whatever the amount var had before\].")
 
@@ -184,14 +194,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		..()
 
 	process()
-		if (world.time - create_time >= 3 MINUTES)
-			create_time = world.time
-			if (!src.disposed && isturf(src.loc) && !on_table())
+		if ((TIME - src.create_time >= 3 MINUTES) && (TIME - src.time_since_moved >= 1 MINUTE))
+			src.create_time = TIME
+			if (!src.disposed && isturf(src.loc) && !src.ant_safe())
 				if (prob(50))
-					made_ants = 1
+					src.made_ants = 1
 					processing_items -= src
 					if (!(locate(/obj/reagent_dispensers/cleanable/ants) in src.loc))
 						new/obj/reagent_dispensers/cleanable/ants(src.loc)
+						src.reagents.remove_any(src.ant_amnt)
+						src.reagents.add_reagent("ants", src.ant_amnt)
+						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
 
 	attackby(obj/item/W, mob/user)
@@ -446,7 +459,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(H, pick(SPAN_ALERT("That tasted <b>HORRIBLE</b>! Your mouth feels numb!"), SPAN_ALERT("You feel like you're about to puke!")))
 		else
 			if (prob(30))
-				H.setStatus("paralysis", 2.5 SECONDS)
+				H.setStatus("unconscious", 2.5 SECONDS)
 				boutput(H, pick(SPAN_ALERT("The sudden assault of displeasing flavors on your tongue dazes you!"), SPAN_ALERT("This ignoble meal makes you blank out!")))
 			else if (prob(30))
 				boutput(H, pick(SPAN_ALERT("You can't keep down this <i>food</i>!"), SPAN_ALERT("You fail to swallow this horrific meal!")))
@@ -556,8 +569,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
@@ -635,9 +649,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			C.u_equip(src)
 			var/target = get_steps(C, turn(C.dir, 180), 7) //7 tiles seems appropriate.
 			src.throw_at(target, 7, 1)
-			if (!C.hasStatus("weakened"))
+			if (!C.hasStatus("knockdown"))
 				//Make them fall over, they lost their balance.
-				C.changeStatus("weakened", 2 SECONDS)
+				C.changeStatus("knockdown", 2 SECONDS)
 			return
 
 		actions.start(new /datum/action/bar/icon/chug(C, src), C)
@@ -1224,7 +1238,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 					JOB_XP(user, "Bartender", 1)
 				return
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/plant/orange/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lime/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/lemon/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge) || istype(W, /obj/item/reagent_containers/food/snacks/plant/pineappleslice))
 			if (src.wedge)
 				boutput(user, SPAN_ALERT("You can't add another wedge to [src], that would just look silly!!"))
 				return
@@ -1701,7 +1715,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			var/P = pick(/obj/item/reagent_containers/food/snacks/plant/orange/wedge,\
 			/obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge,\
 			/obj/item/reagent_containers/food/snacks/plant/lime/wedge,\
-			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge)
+			/obj/item/reagent_containers/food/snacks/plant/lemon/wedge,\
+			/obj/item/reagent_containers/food/snacks/plant/pineappleslice)
 			src.wedge = new P(src)
 		if (prob(33))
 			src.umbrella = new /obj/item/cocktail_stuff/drink_umbrella(src)
@@ -1939,7 +1954,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			target.visible_message(SPAN_ALERT("<B>[user] smashes [src] over [target]'s head!</B>"))
 			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
 		target.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		target.changeStatus("weakened", 2 SECONDS)
+		target.changeStatus("knockdown", 2 SECONDS)
 		playsound(target, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(target))

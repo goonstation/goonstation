@@ -263,6 +263,7 @@
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
 				var/obj/spawned_object = new O.objecttype(pos)
+				spawned_object.after_abcu_spawn()
 				if(!is_valid_abcu_object(spawned_object))
 					qdel(spawned_object)
 
@@ -782,7 +783,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	icon_state = "blueprintmarker"
 	item_state = "gun"
 
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5

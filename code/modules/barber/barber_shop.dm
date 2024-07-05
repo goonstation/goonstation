@@ -20,6 +20,7 @@
 	wear_layer = MOB_HAIR_LAYER2 //it IS hair afterall
 	hat_offset_y = -15 // offsets for hattable component
 	hat_offset_x = 0
+	compatible_species = list("human", "cow", "werewolf", "flubber") // No wigs for martians / blobs
 
 	///Takes a list of style ids to colors and generates a wig from it
 	proc/setup_wig(var/style_list)
@@ -91,7 +92,7 @@
 	desc = "Used to cut hair. Make sure you aim at the head, where the hair is."
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "scissors"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SNIPPING
 	force = 8
@@ -136,7 +137,7 @@
 	desc = "Used to cut facial hair"
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -180,7 +181,7 @@
 	desc = "Used to dye hair a different color. Seems to be made of tough, unshatterable plastic."
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dye"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left

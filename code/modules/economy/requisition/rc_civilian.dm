@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
 	payout = PAY_IMPORTANT*10
-	weight = 60
+	weight = 40
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
 	var/list/desc_origin = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
@@ -269,14 +269,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/water
 	name = "water"
 	chem_ids = "water"
-	feemod = PAY_UNTRAINED/10
+	feemod = PAY_UNTRAINED/15
 
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
 	payout = PAY_TRADESMAN*10*2
 	hide_item_payouts = TRUE
-	weight = 70
+	weight = 60
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
 
@@ -308,7 +308,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.payout += rand(0,50) * 10
 
 		if (prob(70)) //pizza party
-			src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(2,3)*6)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(2,3)*12)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(10,20)*10)
 
 		switch (rand(1, 50)) //Special Outcomes Zone
@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/food/pizza
-	name = "slices' worth of pizza"
+	name = "bites' worth of whole pizza"
 	commodity = /datum/commodity/
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
 	food_integrity = FOOD_REQ_BY_BITE
@@ -651,12 +651,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/cell
 	feemod = PAY_IMPORTANT
 
-	rc_eval(atom/eval_item)
-		. = ..()
-		if(!.)
-			return
+	extra_eval(atom/eval_item)
+		. = FALSE
 		var/obj/item/cell/cell = eval_item
-		return cell.maxcharge >= 15000
+		if(cell.maxcharge >= 15000)
+			return TRUE
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"

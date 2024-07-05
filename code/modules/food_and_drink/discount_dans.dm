@@ -96,11 +96,11 @@
 				src.initial_reagents["juice_tomato"] = 4 //I guess the lunar style of pasta is with a tomato wine red sauce
 				src.initial_reagents["wine"] = 2
 				src.initial_reagents["water_holy"] = 2
-				src.initial_reagents["venom"] = 2
+				src.initial_reagents["cytotoxin"] = 2
 /*				R.add_reagent("juice_tomato",4) //I guess the lunar style of pasta is with a tomato wine red sauce
 				R.add_reagent("wine",2)
 				R.add_reagent("water_holy",2)
-				R.add_reagent("venom",2)
+				R.add_reagent("cytotoxin",2)
 */
 			if (10)
 				src.real_name = "Rabatt Dan's Snabb-Nudlar - Inkokt Lax Smörgåsbord Smak"
@@ -355,7 +355,7 @@
 
 		var/i = 3
 		while(i-- > 0)
-			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","vanilla","cleaner","luminol","poo","nicotine","weedkiller","venom","ethanol","ectoplasm","itching","infernite","histamine","foof","pancuronium","cyanide"), 5)
+			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","vanilla","cleaner","luminol","poo","nicotine","weedkiller","cytotoxin","ethanol","ectoplasm","itching","infernite","histamine","foof","pancuronium","cyanide"), 5)
 
 		if (prob(color_prob))
 			src.color = random_saturated_hex_color()
@@ -377,7 +377,6 @@
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
-	flags = TABLEPASS | FPRINT
 	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0

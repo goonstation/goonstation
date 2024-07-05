@@ -63,7 +63,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 ///mob/living/silicon/proc/update_canmove()
 //	..()
-	//canmove = !(src.hasStatus(list("weakened", "paralysis", "stunned")) || buckled)
+	//canmove = !(src.hasStatus(list("knockdown", "unconscious", "stunned")) || buckled)
 
 /mob/living/silicon/proc/use_power()
 	return
@@ -93,7 +93,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 // Moves this down from ai.dm so AI shells and AI-controlled cyborgs can use it too.
 // Also made it a little more functional and less buggy (Convair880).
-#define STUNNED (src.stat || src.getStatusDuration("stunned") || src.getStatusDuration("weakened")) || (src.dependent && (src.mainframe.stat || src.mainframe.getStatusDuration("stunned") || src.mainframe.getStatusDuration("weakened")))
+#define STUNNED (src.stat || src.getStatusDuration("stunned") || src.getStatusDuration("knockdown")) || (src.dependent && (src.mainframe.stat || src.mainframe.getStatusDuration("stunned") || src.mainframe.getStatusDuration("knockdown")))
 /mob/living/silicon/proc/open_nearest_door_silicon()
 	if (!src || !issilicon(src))
 		return
@@ -184,7 +184,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/click(atom/target, params, location, control)
 	if (src.targeting_ability)
 		..()
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
@@ -692,3 +692,6 @@ var/global/list/module_editors = list()
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
 		src.say(html_decode(a_law))
 		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
+
+/mob/living/silicon/get_unequippable()
+	return

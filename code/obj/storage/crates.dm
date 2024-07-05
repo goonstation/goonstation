@@ -122,6 +122,11 @@
 	spawn_contents = list(/obj/item/rcd_ammo = 5,
 	/obj/item/rcd)
 
+	make_my_stuff()
+		. = ..()
+		if (prob(30))
+			new /obj/item/paper/businesscard/hemera_rcd(src)
+
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
 	desc = "A crate for the Chief Engineer's personal RCD."
@@ -341,7 +346,7 @@
 					if (istype(T))
 						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
-			var/str_contents = kText.list2text(crate_contents, ", ")
+			var/str_contents = list2text(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
@@ -542,7 +547,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
 		/obj/item/old_grenade/smoke = 2,
-		/obj/item/dagger/syndicate/specialist,
+		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -807,8 +812,48 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	cargonia
 		spawn_contents = list(/obj/item/radio_tape/advertisement/cargonia,
-		/obj/item/clothing/under/rank/cargo,/obj/decal/fakeobjects/skeleton)
+		/obj/item/clothing/under/rank/cargo,/obj/fakeobject/skeleton)
 
 	escape
 		spawn_contents = list(/obj/item/sea_ladder,
 		/obj/item/pipebomb/bomb/engineering = 2)
+
+// evil nasty biohazard crate
+/obj/storage/crate/stxcrate
+	name = "saxitoxin grenade crate"
+	desc = "A menacing crate to store deadly saxitoxin grenades."
+	icon_state = "stxcrate"
+	icon_opened = "stxcrate_open"
+	icon_closed = "stxcrate"
+
+	filled_6
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,1)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
+
+	filled_12
+		New()
+			var/datum/loot_generator/stx_filler
+			src.vis_controller = new(src)
+			stx_filler =  new /datum/loot_generator(3,2)
+			stx_filler.fill_remaining_with_instance(src, new /obj/loot_spawner/short/two_stx_grenades)
+			..()
+
+/obj/storage/crate/ks23
+	name = "Kuvalda Carbine crate"
+	desc = "A hefty container, presumably containing an equally hefty shotgun."
+	icon_state = "attachecase"
+	icon_opened = "attachecase_open"
+	icon_closed = "attachecase"
+
+	New()
+		var/datum/loot_generator/shotgun_gen
+		src.vis_controller = new(src)
+		shotgun_gen =  new /datum/loot_generator(4,3)
+		shotgun_gen.place_loot_instance(src,1,2, new /obj/loot_spawner/xlong_tall/ks23_empty)
+		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
+		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
+		..()

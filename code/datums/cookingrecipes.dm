@@ -932,61 +932,18 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 
 		return customSandwich
 
-/datum/cookingrecipe/oven/pizza_fresh
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
+/datum/cookingrecipe/oven/pizza_custom
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza_base
 	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/fresh
-	category = "Pizza"
-
-/datum/cookingrecipe/oven/pizza_ball
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzab
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/ball
-	category = "Pizza"
-
-/datum/cookingrecipe/oven/pizza_pepper
-	item1= /obj/item/reagent_containers/food/snacks/ingredient/pizzap
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/pepper
-	category = "Pizza"
-
-/datum/cookingrecipe/oven/pizza_shroom
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizzam
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza/shroom
-	category = "Pizza"
-
-/datum/cookingrecipe/oven/pizza
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
-	cookbonus = 18
-	output = /obj/item/reagent_containers/food/snacks/pizza
+	output = /obj/item/reagent_containers/food/snacks/pizza/bespoke
 	category = "Pizza"
 
 	specialOutput(obj/submachine/ourCooker)
 		if (!ourCooker)
 			return null
 
-		var/obj/item/reagent_containers/food/snacks/pizza/customPizza = new /obj/item/reagent_containers/food/snacks/pizza (ourCooker)
-
-		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza3/P in ourCooker)
-			var/toppingstext = null
-			if(P.toppingstext)
-				toppingstext = P.toppingstext
-				customPizza.name = "[toppingstext] pizza"
-				customPizza.desc = "A pizza with [toppingstext] toppings. Looks pretty [pick("good","dang good","delicious","scrumptious","heavenly","alright")]."
-			else
-				customPizza.name = "pizza"
-				customPizza.desc = "A plain cheese and tomato pizza. Looks pretty alright."
-			customPizza.overlays += P.overlays
-			customPizza.num = P.num
-			customPizza.topping = P.topping
-			customPizza.topping_types = P.topping_types
-			customPizza.topping_colors = P.topping_colors
-			customPizza.heal_amt = P.heal_amt
-			P.reagents.trans_to(customPizza, P.reagents.total_volume)
-			customPizza.food_effects += P.food_effects
-
-		return customPizza
+		for (var/obj/item/reagent_containers/food/snacks/ingredient/pizza_base/P in ourCooker)
+			return P.bake_pizza()
 
 /datum/cookingrecipe/oven/cheesetoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
@@ -1139,6 +1096,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/fairybread
+	category = "Pastries and bread-likes"
+
+/datum/cookingrecipe/oven/cinnamonbun
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/cinnamon
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/cinnamonbun
 	category = "Pastries and bread-likes"
 
 //Cookies
@@ -1778,7 +1743,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 		B.food_color = S ? S.get_food_color() : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
-		B.UpdateOverlays(overlay,"first")
+		B.AddOverlays(overlay,"first")
 		B.cake_bases = list("base_custom")
 		if(S)
 			B.cake_types += S.type

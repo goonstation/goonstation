@@ -6,7 +6,7 @@
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
 #endif
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10.0
 	throwforce = 10.0
@@ -368,11 +368,11 @@
 
 /datum/manufacture/pod/armor_light/salvager
 	name = "Salvager Pod Armor"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(30,20)
+	item_requirements = list("metal_dense" = 30,
+							 "conductive" = 20)
 	item_outputs = list(/obj/item/podarmor/salvager)
-	time = 20 SECONDS
 	create = 1
+	time = 20 SECONDS
 	category = "Component"
 
 /obj/item/podarmor/salvager

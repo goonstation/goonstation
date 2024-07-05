@@ -38,6 +38,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/storage/secure/closet/proc/toggle_bolts, list(user), I.icon, I.icon_state,"", null)
 			return
+		else if (istype(I, /obj/item/cargotele))
+			return // don't change state on cargo teleport
 		else if (src.open || !src.locked)
 			..()
 		else if (!I)
@@ -167,7 +169,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			var/datum/thrown_thing/thr = global.throwing_controller.throws_of_atom(AM)[1]
 			AM.throw_impact(src, thr)
 			AM.throwing = FALSE
-			AM.changeStatus("weakened", 1 SECOND)
+			AM.changeStatus("knockdown", 1 SECOND)
 			AM.set_loc(src.loc)
 			src.close()
 
@@ -218,7 +220,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/stamp/cap,
 	/obj/item/device/radio/headset/command/captain,
 	/obj/item/megaphone,
-	/obj/item/pet_carrier)
+	/obj/item/pet_carrier,
+	/obj/item/device/pda2/captain)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -255,7 +258,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/stamp/hos,
 	/obj/item/device/radio/headset/command/hos,
 	/obj/item/clothing/shoes/swat/heavy,
-	/obj/item/barrier)
+	/obj/item/barrier,
+	/obj/item/device/pda2/hos)
 
 /obj/storage/secure/closet/command/hop
 	name = "\improper Head of Personnel's locker"
@@ -270,7 +274,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/accessgun,
 	/obj/item/clipboard,
 	/obj/item/clothing/suit/hopjacket,
-	/obj/item/pet_carrier)
+	/obj/item/pet_carrier,
+	/obj/item/device/pda2/hop)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -288,7 +293,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/stamp/rd,
 	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd,
-	/obj/item/pet_carrier)
+	/obj/item/pet_carrier,
+	/obj/item/device/pda2/research_director)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -314,7 +320,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/flash,
 	/obj/item/stamp/md,
 	/obj/item/device/radio/headset/command/md,
-	/obj/item/pet_carrier)
+	/obj/item/pet_carrier,
+	/obj/item/device/pda2/medical_director)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -341,6 +348,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
+		/obj/item/device/pda2/chiefengineer,
 	#ifdef MAP_OVERRIDE_OSHAN
 		/obj/item/clothing/shoes/stomp_boots,
 	#endif
@@ -520,7 +528,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			return
 		if (!isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -869,7 +877,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/reagent_containers/glass/wateringcan,\
 	/obj/item/sponge,\
 	/obj/item/kitchen/food_box/egg_box/rancher,
-	/obj/item/storage/box/knitting)
+	/obj/item/storage/box/knitting,
+	/obj/item/storage/box/nametags)
 
 /obj/storage/secure/closet/civilian/kitchen
 	name = "\improper Catering supplies locker"
@@ -884,8 +893,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	req_access = list(access_bar)
 	spawn_contents = list(/obj/item/gun/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 4,\
-	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 2,\
 	/obj/item/storage/box/glassbox)
 
 /obj/storage/secure/closet/civilian/chaplain
@@ -938,7 +945,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		toggle()
 
 /obj/storage/secure/closet/fridge/kitchen
-	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 5,/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,/obj/item/storage/box/cookie_tin,/obj/item/storage/box/stroopwafel_tin)
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 2,/obj/item/reagent_containers/food/snacks/condiment/syrup = 3,/obj/item/storage/box/cookie_tin,/obj/item/storage/box/stroopwafel_tin)
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			var/obj/item/storage/box/donkpocket_kit/dp = new(src)
@@ -997,14 +1004,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/fridge/pathology
 	name = "pathology lab fridge"
+	desc = "Looks like it's been raided before the shift started."
 	req_access = list(access_medical_lockers)
-	//PATHOLOGY REMOVAL
-	#ifdef CREATE_PATHOGENS
-	spawn_contents = list(/obj/item/reagent_containers/glass/vial/prepared = 10,
-	/obj/item/reagent_containers/syringe/antiviral = 3)
-	#else
 	spawn_contents = list(/obj/item/reagent_containers/syringe/antiviral = 3)
-	#endif
 
 /* ================ */
 /* ----- Misc ----- */

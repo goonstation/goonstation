@@ -49,3 +49,8 @@
 #define JOB_ENGINEERING "engineering"
 #define JOB_CIVILIAN "civilian"
 #define JOB_CREATED "created"
+
+// Job categories
+#define STAPLE_JOBS (1<<0)
+#define SPECIAL_JOBS (1<<1)
+#define HIDDEN_JOBS (1<<2)

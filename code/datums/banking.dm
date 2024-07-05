@@ -38,7 +38,7 @@
 		time_between_paydays = 5 MINUTES
 		time_between_lotto = 8 MINUTES
 
-		station_budget = 0
+		station_budget = PAY_IMPORTANT
 		shipping_budget = PAY_EXECUTIVE*5
 		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
@@ -297,7 +297,7 @@
 					else
 						boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 				else
-					boutput(usr, SPAN_ALERT("Incorrect pin number."))
+					boutput(usr, SPAN_ALERT("Incorrect PIN."))
 
 			if("login")
 				if(TryToFindRecord())
@@ -581,8 +581,8 @@
 						boutput(usr, SPAN_ALERT("Cannot find a bank record for this card."))
 						src.show_message("Cannot find a bank record for this card.", "danger", "login")
 				else
-					boutput(usr, SPAN_ALERT("Incorrect or invalid PIN number."))
-					src.show_message("Incorrect or invalid PIN number entered. Please try again.", "danger", "login")
+					boutput(usr, SPAN_ALERT("Incorrect or invalid PIN."))
+					src.show_message("Incorrect or invalid PIN entered. Please try again.", "danger", "login")
 				. = TRUE
 			if("logout")
 				if(!src.scan)

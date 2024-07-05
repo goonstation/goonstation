@@ -21,7 +21,7 @@
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
-	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+	if(src.face_visible() && src.bioHolder?.mobAppearance.flavor_text)
 		var/disguisered = FALSE
 		for (var/obj/item/device/disguiser/D in src)
 			disguisered |= D.active
@@ -326,7 +326,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("knockdown")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br>[SPAN_ALERT("[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.")]"
 	else
@@ -344,7 +344,7 @@
 			else
 				. += "<br>[SPAN_ALERT("<B>[src.name] looks severely burned!</B>")]"
 
-		if (src.stat)
+		if (src.stat || src.hasStatus("paralysis"))
 			. += "<br>[SPAN_ALERT("[src.name] doesn't seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
 			if (src.get_brain_damage() >= 60)
@@ -367,7 +367,14 @@
 					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
 						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
 				else
-					. += "<br>[src.name] seems to be staring blankly into space."
+					. += "<br>[src.name] seems to be staring blankly into space. "
+					if (src.last_ckey && src.logout_at)
+						var/gone_time_s = floor((TIME - src.logout_at) / 10)
+						var/gone_time_m = floor(gone_time_s / 60)
+						if (gone_time_s <= 60)
+							. += SPAN_SUBTLE("<br>They slipped into it [gone_time_s] second\s ago.")
+						else
+							. += SPAN_SUBTLE("<br>They've been like this for [gone_time_m] minute\s.")
 
 	switch (src.decomp_stage)
 		if (DECOMP_STAGE_BLOATED)
@@ -381,10 +388,13 @@
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
-			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]"
+			. += "<br>[SPAN_NOTICE("[src] has the following traits:")]<br>"
+			var/list/trait_names = list()
 			for(var/id in src.traitHolder.traits)
 				var/datum/trait/T = src.traitHolder.traits[id]
-				. += "<br>[SPAN_NOTICE("[T.name]")]"
+				trait_names += T.name
+			. += SPAN_NOTICE(english_list(trait_names))
+
 		else
 			. += "<br>[SPAN_NOTICE("[src] does not appear to possess any special traits.")]"
 

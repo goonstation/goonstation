@@ -14,7 +14,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
+	flags =  FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
@@ -329,7 +329,7 @@
 
 		var/mob/living/carbon/Ctarget = target
 		boutput(Ctarget, SPAN_ALERT("<b>[src] knocks you back!</b>"))
-		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.changeStatus("knockdown", 2 SECONDS)
 		Ctarget.throw_at(targetTurf, 200, 4)
 
 	if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.

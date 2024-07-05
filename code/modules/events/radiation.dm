@@ -21,7 +21,8 @@
 			for (var/pulses = pulse_amt, pulses > 0, pulses--)
 				pulseloc = pick(random_floor_turfs)
 				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(30); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+				SPAWN(0)
+					pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(30); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 				sleep(pulse_delay)
 
 
@@ -46,14 +47,14 @@
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
-		sleep(lifespan)
-		playsound(src,pulse_sound,50,TRUE)
-		irradiate_turf(get_turf(src))
-		for (var/turf/T in circular_range(src,pulse_range))
-			irradiate_turf(T)
-		SPAWN(0)
-			qdel(src)
-		return
+		SPAWN(lifespan)
+			playsound(src,pulse_sound,50,TRUE)
+			irradiate_turf(get_turf(src))
+			for (var/turf/T in circular_range(src,pulse_range))
+				irradiate_turf(T)
+			SPAWN(0)
+				qdel(src)
+			return
 
 	disposing()
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
@@ -71,6 +72,7 @@
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
+			logTheThing(LOG_STATION, M, "is hit by a radiation burst at [log_loc(M)].")
 			M.take_radiation_dose(rad_strength)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
@@ -98,15 +100,15 @@
 		animate(alpha = 100, time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
-		sleep(lifespan)
-		playsound(src,pulse_sound,50,TRUE)
-		irradiate_turf(get_turf(src))
-		shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron{shot_number = 10}(10), get_step_rand(get_turf(src)), spread_angle = 360)
-		for (var/turf/T in circular_range(src,pulse_range))
-			irradiate_turf(T)
-		SPAWN(0)
-			qdel(src)
-		return
+		SPAWN(lifespan)
+			playsound(src,pulse_sound,50,TRUE)
+			irradiate_turf(get_turf(src))
+			shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron{shot_number = 10}(10), get_step_rand(get_turf(src)), spread_angle = 360)
+			for (var/turf/T in circular_range(src,pulse_range))
+				irradiate_turf(T)
+			SPAWN(0)
+				qdel(src)
+			return
 
 	disposing()
 		if(particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
@@ -125,15 +127,16 @@
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
 		if(!istype_exact(T, /turf/space))
 			T.AddComponent(/datum/component/radioactive, 25, TRUE, FALSE, 1)
-		for (var/mob/A in T.contents)
-			A.take_radiation_dose(rad_strength)
-			if(iscarbon(A))
-				var/mob/living/carbon/M = A
+		for (var/mob/M in T.contents)
+			logTheThing(LOG_STATION, M, "is hit by a neutron radiation burst at [log_loc(M)].")
+			M.take_radiation_dose(rad_strength)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
 				if (prob(mutate_prob) && M.bioHolder)
 					if (prob(bad_mut_prob))
-						M.bioHolder.RandomEffect("bad")
+						H.bioHolder.RandomEffect("bad")
 					else
-						M.bioHolder.RandomEffect("good")
+						H.bioHolder.RandomEffect("good")
 
 
 // Oldest version of event - just unavoidably puts radiation on everyone

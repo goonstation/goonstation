@@ -67,7 +67,7 @@
 	dir = 10
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "aT" = (
@@ -209,7 +209,7 @@
 /area/mining/manufacturing)
 "cN" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/item/raw_material/shard/glass,
@@ -272,7 +272,7 @@
 /area/noGenerate)
 "eS" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -294,7 +294,7 @@
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "fA" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
@@ -346,7 +346,7 @@
 /turf/space,
 /area/noGenerate)
 "gM" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -379,7 +379,7 @@
 /area/spyshack)
 "hv" = (
 /obj/lattice,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /turf/simulated/floor/martian,
@@ -442,7 +442,7 @@
 /area/evilreaver/security)
 "jn" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /mob/living/critter/martian/mutant,
@@ -700,7 +700,7 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "of" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8
 	},
 /obj/decal/cleanable/blood/splatter,
@@ -798,7 +798,7 @@
 	},
 /area/mining/hangar)
 "oL" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
@@ -909,7 +909,7 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "pu" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/evilreaver/genetics)
@@ -969,7 +969,7 @@
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "pL" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
@@ -1023,7 +1023,7 @@
 /turf/simulated/floor/plating,
 /area/mining/refinery)
 "pR" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/map/light/dimred,
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/damaged3,
@@ -1117,7 +1117,7 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "qs" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -1331,7 +1331,7 @@
 	},
 /area/tech_outpost)
 "rE" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /obj/landmark/spawner/artifact,
@@ -1376,7 +1376,7 @@
 /obj/crevice{
 	pixel_x = -28
 	},
-/obj/decal/fakeobjects/oldcanister/plasma,
+/obj/fakeobject/oldcanister/plasma,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "rT" = (
@@ -1413,14 +1413,14 @@
 /area/mining/mainasteroid)
 "rZ" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Manufacturing Room";
-	req_access_txt = "51"
+	name = "Manufacturing Room"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "sf" = (
@@ -1455,7 +1455,7 @@
 /area/mining/hangar)
 "su" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -1473,11 +1473,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room";
-	req_access_txt = "51"
+	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/power)
 "sB" = (
@@ -1586,7 +1586,7 @@
 /area/mining/hangar)
 "te" = (
 /obj/item/rods/steel,
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "th" = (
@@ -1645,7 +1645,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "tH" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -1655,7 +1655,7 @@
 /area/spyshack)
 "tJ" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/damaged2,
@@ -1670,7 +1670,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "tP" = (
-/obj/decal/fakeobjects/oldcanister,
+/obj/fakeobject/oldcanister,
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/evilreaver/atmospherics)
@@ -1907,15 +1907,12 @@
 	},
 /area/station/solar/small_backup3)
 "vB" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Power Room";
-	req_access_txt = "51"
+	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "vC" = (
@@ -1965,7 +1962,7 @@
 /turf/simulated/floor/caution/south,
 /area/mining/miningoutpost)
 "vX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2019,7 +2016,7 @@
 	},
 /area/mining/mainasteroid)
 "wf" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2071,9 +2068,9 @@
 "wv" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "ww" = (
@@ -2116,7 +2113,7 @@
 	},
 /area/mining/manufacturing)
 "wJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2147,7 +2144,7 @@
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2157,7 +2154,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/manufacturing)
 "wZ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2172,7 +2169,7 @@
 /turf/simulated/floor/yellow/side,
 /area/mining/dock)
 "xc" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2218,7 +2215,7 @@
 /area/evilreaver/atmospherics)
 "xy" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -2451,7 +2448,7 @@
 /area/tech_outpost)
 "yA" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/decal/cleanable/blood/gibs{
@@ -2476,10 +2473,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "yV" = (
@@ -2522,15 +2519,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Power Room";
-	req_access_txt = "51"
+	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "zm" = (
@@ -2605,7 +2599,7 @@
 /obj/crevice{
 	pixel_y = 30
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -2628,10 +2622,10 @@
 "zP" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "zQ" = (
@@ -2646,7 +2640,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
 "zT" = (
-/obj/decal/fakeobjects/firealarm_broken,
+/obj/fakeobject/firealarm_broken,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/storage/tools)
 "zU" = (
@@ -2742,10 +2736,10 @@
 /area/evilreaver/chapel)
 "Az" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Shuttle Dock";
-	req_access_txt = "51"
+	name = "Shuttle Dock"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "AA" = (
@@ -2820,9 +2814,10 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/security)
 "AV" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/noGenerate)
 "AY" = (
 /obj/cable{
@@ -3049,7 +3044,7 @@
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Ci" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -3120,9 +3115,9 @@
 "Da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Db" = (
@@ -3139,7 +3134,7 @@
 /turf/simulated/floor/grime,
 /area/mining/power)
 "Df" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It doesn't seem to be working yet.";
@@ -3331,7 +3326,7 @@
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
 "EG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -3503,7 +3498,7 @@
 /area/station/solar/small_backup3)
 "FF" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
@@ -3602,7 +3597,7 @@
 /area/evilreaver/bridge)
 "Ga" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
@@ -3739,7 +3734,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "GX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
@@ -3817,7 +3812,7 @@
 	},
 /area/noGenerate)
 "HE" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/bridge)
 "HF" = (
@@ -3892,7 +3887,7 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
 "HX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian experimentation thingamajig.";
@@ -3955,7 +3950,7 @@
 	pixel_x = -4;
 	pixel_y = 30;
 	random_code = 1;
-	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/mushroom,/obj/item/reagent_containers/food/snacks/pizza/pepperoni)
+	spawn_contents = list(/obj/item/ammo/bullets/rifle_3006,/obj/item/reagent_containers/food/snacks/pizza/standard/mushroom,/obj/item/reagent_containers/food/snacks/pizza/standard/pepperoni)
 	},
 /obj/item/paper/martian_manifest{
 	rand_pos = 1
@@ -4242,8 +4237,7 @@
 "Kr" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -4251,6 +4245,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Kt" = (
@@ -4487,7 +4482,7 @@
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "LM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -4893,10 +4888,10 @@
 /area/noGenerate)
 "Or" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "Os" = (
@@ -5051,7 +5046,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "PQ" = (
-/obj/machinery/portable_reclaimer,
+/obj/machinery/sheet_extruder,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
 "PS" = (
@@ -5139,7 +5134,7 @@
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "QE" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
@@ -5210,7 +5205,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "Rc" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 4
 	},
 /obj/decal/cleanable/molten_item,
@@ -5232,14 +5227,15 @@
 /area/mining/comms)
 "Rj" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Emergency Comms Room";
-	req_access_txt = "51|40"
+	name = "Emergency Comms Room"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor,
 /area/mining/comms)
 "Rk" = (
@@ -5320,10 +5316,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Shuttle Dock";
-	req_access_txt = "51"
+	name = "Shuttle Dock"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "RK" = (
@@ -5432,13 +5428,13 @@
 "SC" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mineral Magnet";
-	req_access_txt = "51"
+	name = "Mineral Magnet"
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "SK" = (
@@ -5562,10 +5558,10 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "TH" = (
@@ -5757,7 +5753,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "UC" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /mob/living/critter/martian/mutant,
@@ -5795,7 +5791,7 @@
 /turf/simulated/floor/black,
 /area/mining/hangar)
 "UU" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
 "UX" = (
@@ -5915,7 +5911,7 @@
 	info = "Leslie, what the hell were you thinking, leaving the ammo out like that?  Do you actually want the rifle to shoot rather than blow up in your face? Instead of leaving it under a pile of rusted scrap, I put it away where the humidity won't ruin the cartridges. I'll show you where after the next pizza run.";
 	name = "scribbled note"
 	},
-/obj/decal/fakeobjects/robot,
+/obj/fakeobject/robot,
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/plating/damaged3,
 /area/noGenerate)
@@ -5960,7 +5956,7 @@
 /turf/simulated/floor/plating,
 /area/noGenerate)
 "VX" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "Wc" = (
@@ -6045,10 +6041,10 @@
 "WI" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/refinery)
 "WJ" = (
@@ -6068,7 +6064,7 @@
 /area/noGenerate)
 "WW" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/decal/cleanable/blood/gibs{
@@ -6102,7 +6098,7 @@
 	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6110,7 +6106,7 @@
 /area/evilreaver/storage/tools)
 "Xd" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6160,7 +6156,7 @@
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Xr" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6178,7 +6174,7 @@
 /turf/space,
 /area/noGenerate)
 "Xx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	color = "b4b4b4"
 	},
@@ -6265,13 +6261,13 @@
 /area/mining/dock)
 "Ye" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Mineral Magnet";
-	req_access_txt = "51"
+	name = "Mineral Magnet"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Yf" = (
@@ -6323,7 +6319,7 @@
 /turf/space,
 /area/noGenerate)
 "Yy" = (
-/obj/decal/fakeobjects/oven{
+/obj/fakeobject/oven{
 	name = "broken oven"
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -6370,7 +6366,7 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "YN" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/storage/tools)
 "YO" = (

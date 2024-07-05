@@ -42,6 +42,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
+	var/PANIC = FALSE
 
 	New()
 		..()
@@ -131,6 +132,12 @@ var/global/datum/phrase_log/phrase_log = new
 			src.phrases = json_decode(file2text(src.filename))
 		else
 			src.phrases = list()
+
+		if(!islist(src.phrases))
+			PANIC = TRUE
+			ircbot.export("admin", list("msg" = "<@480972525703266314> Holy fuck phrase_log is panicing come fix it"))
+			src.phrases = list()
+
 		src.original_lengths = list()
 		for(var/category in src.phrases)
 			src.original_lengths[category] = length(src.phrases[category])
@@ -162,7 +169,7 @@ var/global/datum/phrase_log/phrase_log = new
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Sussy word - [key_name(user)] [category]: \"[phrase]\""))
 		#ifdef RP_MODE
-		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
+		if(category != "ooc" && category != "looc" && !(category == "deadsay" || (user && inafterlife(user))) && is_ic_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
 		if(is_uncool(phrase))
@@ -204,7 +211,7 @@ var/global/datum/phrase_log/phrase_log = new
 		rustg_file_write(file2text(new_uncool), src.uncool_words_filename)
 
 	proc/save()
-		if(isnull(src.phrases))
+		if(isnull(src.phrases) || PANIC)
 			return
 		for(var/category in src.phrases)
 			var/list/phrases = src.phrases[category]
@@ -218,6 +225,17 @@ var/global/datum/phrase_log/phrase_log = new
 						phrases.Swap(i, rand(i, length(phrases)))
 				src.phrases[category] = phrases.Copy(1, src.max_length + 1)
 		rustg_file_write(json_encode(src.phrases), src.filename)
+
+	proc/export_file_to_client()
+		if(fexists(src.filename))
+			usr << ftp(file(src.filename))
+
+	proc/import_file_and_stop_panic()
+		var/F = input(usr, "json file") as file|null
+		if(F)
+			src.phrases = json_decode(file2text(F))
+		if(islist(src.phrases))
+			PANIC = FALSE
 
 	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
 	proc/random_api_phrase(category)

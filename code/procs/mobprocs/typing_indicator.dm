@@ -4,6 +4,7 @@
 var/mutable_appearance/living_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.dmi', "typing")
 var/mutable_appearance/living_emote_typing_bubble = mutable_appearance('icons/mob/overhead_icons32x48.dmi', "emote_typing")
+var/mutable_appearance/dead_typing_bubble = mutable_appearance('icons/mob/mob.dmi', "typing_of_the_dead")
 /mob/proc/create_typing_indicator()
 	return
 
@@ -109,7 +110,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()
-	if(!src.has_typing_indicator && isalive(src) && !src.bioHolder?.HasEffect("mute")) //Prevents sticky overlays and typing while in any state besides conscious
+	if(!src.has_typing_indicator && isalive(src) && !src.bioHolder?.HasEffect("mute") && !src.hasStatus("muted")) //Prevents sticky overlays and typing while in any state besides conscious
 		src.has_typing_indicator = TRUE
 		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
 			return
@@ -123,7 +124,7 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 		src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
 
 /mob/living/create_emote_typing_indicator()
-	if(!src.has_typing_indicator && isalive(src))
+	if(!src.has_typing_indicator && isalive(src) && !src.hasStatus("paralysis"))
 		src.has_typing_indicator = TRUE
 		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
 			return
@@ -137,6 +138,8 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 		src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
 
 /mob/living/show_speech_bubble(speech_bubble)
+	if (!isalive(src) || src.hasStatus("paralysis"))
+		return
 	if(SEND_SIGNAL(src, COMSIG_SPEECH_BUBBLE, speech_bubble))
 		return
 	src.UpdateOverlays(speech_bubble, "speech_bubble")
@@ -159,5 +162,41 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 		if (src.linked_human.has_typing_indicator == FALSE)
 			src.UpdateOverlays(null, "speech_bubble")
 	return TRUE
+
+// -- Dead Typing Indicators -- //
+// These are largely copied and pasted from above,
+// but applied only to /mob/dead/observer,
+// rather than trying to refactor the original proc and add type checks
+// or whatever crud
+/mob/dead/observer
+	var/has_typing_indicator = FALSE
+	var/static/mutable_appearance/speech_bubble = living_speech_bubble
+
+/mob/dead/observer/create_typing_indicator()
+	if(!src.has_typing_indicator) //Prevents sticky overlays
+		src.has_typing_indicator = TRUE
+		if(SEND_SIGNAL(src, COMSIG_CREATE_TYPING))
+			return
+		src.UpdateOverlays(dead_typing_bubble, TYPING_OVERLAY_KEY)
+
+/mob/dead/observer/remove_typing_indicator()
+	if(src.has_typing_indicator)
+		src.has_typing_indicator = FALSE
+		if(SEND_SIGNAL(src, COMSIG_REMOVE_TYPING))
+			return
+		src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+
+/mob/dead/observer/show_speech_bubble(speech_bubble)
+	if(SEND_SIGNAL(src, COMSIG_SPEECH_BUBBLE, speech_bubble))
+		return
+	src.UpdateOverlays(speech_bubble, "speech_bubble")
+	SPAWN(1.5 SECONDS)
+		// This check prevents the removal of a typing indicator. Without the check, if you begin to speak again before your speech bubble disappears, your typing indicator gets deleted instead.
+		if (src.has_typing_indicator == FALSE)
+			src.UpdateOverlays(null, "speech_bubble")
+
+/mob/dead/observer/say_dead(var/message, wraith = 0)
+	..()
+	show_speech_bubble(speech_bubble)
 
 #undef TYPING_OVERLAY_KEY

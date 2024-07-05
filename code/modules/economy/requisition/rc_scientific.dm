@@ -399,7 +399,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		switch(rand(1,7))
 			if(1) src.gene_reqs["Maturation"] = rand(10,20)
 			if(2) src.gene_reqs["Production"] = rand(10,20)
-			if(3) src.gene_reqs["Lifespan"] = rand(3,5)
+			if(3)
+				src.gene_reqs["Production"] = rand(5,10)
+				src.gene_reqs["Potency"] = rand(3,5)
 			if(4) src.gene_reqs["Yield"] = rand(3,5)
 			if(5) src.gene_reqs["Potency"] = rand(3,5)
 			if(6) src.gene_reqs["Endurance"] = rand(3,5)
@@ -448,11 +450,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		return F
 
 
-#define NUM_PROTOTYPISTS 3
+#define NUM_PROTOTYPISTS 4
 
 #define PROTOTYPIST_SAFETY 1
 #define PROTOTYPIST_ENERGY 2
 #define PROTOTYPIST_ENGINEER 3
+#define PROTOTYPIST_REV_ENG 4
 
 #define NUM_GOALS 3
 
@@ -463,7 +466,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 //Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
 	payout = PAY_DOCTORATE
-	weight = 120
+	weight = 180
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/desc_bonusflavor = list(
@@ -545,7 +548,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			if(PROTOTYPIST_ENGINEER)
 				prototypist_desc = "Engineering firm"
 				if(prob(60))
-					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(2,4))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(1,2))
 				else
 					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mainboard_noprice,rand(1,3))
 				if(prob(70) || !length(src.rc_entries))
@@ -572,9 +575,42 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
 					if(GOAL_REFINEMENT)
-						goal_desc = "fuel encapsulation lining improvements"
-						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
+						goal_desc = "sanitation hardware enhancement"
+						src.payout += rand(80,130) * 20
+						src.item_rewarders += new /datum/rc_itemreward/sonic_shower
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
+
+			if(PROTOTYPIST_REV_ENG)
+				prototypist_desc = "Artifact reverse-engineer"
+				src.payout += rand(80,120) * 20
+
+				if(prob(60))
+					var/suitsets = rand(1,2)
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/radsuit,suitsets)
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/radhelm,suitsets)
+				else
+					if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/uqill_minprice,1)
+				if(prob(70) || !length(src.rc_entries))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/geiger,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mini_ox,rand(1,3)*2)
+
+				switch(goal_id)
+					if(GOAL_PROTOTYPING)
+						goal_desc = "cutting-edge decentralized storage technology"
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,3)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/force_projection,1)
+						src.item_rewarders += new /datum/rc_itemreward/terminus
+					if(GOAL_MANUFACTURE)
+						goal_desc = "production of a medical biomatter recombinator"
+						//when built and powered, slowly makes weak healing patches out of food you load in
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/martian,1)
+						src.item_rewarders += new /datum/rc_itemreward/medimulcher
+					if(GOAL_REFINEMENT)
+						goal_desc = "development of an enhanced mobile recharging bay"
+						//special backpack capable of accepting a large power cell to recharge contents automatically
+						src.rc_entries += rc_buildentry(/datum/rc_entry/artifact/chamber,1)
+						src.item_rewarders += new /datum/rc_itemreward/recharge_bay
 
 		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
 
@@ -585,12 +621,55 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 #undef PROTOTYPIST_SAFETY
 #undef PROTOTYPIST_ENERGY
 #undef PROTOTYPIST_ENGINEER
+#undef PROTOTYPIST_REV_ENG
 
 #undef NUM_GOALS
 
 #undef GOAL_PROTOTYPING
 #undef GOAL_MANUFACTURE
 #undef GOAL_REFINEMENT
+
+/datum/rc_entry/artifact/martian
+	name = "any martian artifact"
+	required_origin = "Martian"
+
+/datum/rc_entry/artifact/force_projection
+	name = "force projection artifact"
+	acceptable_types = list(
+		"Elemental Wand",
+		"Energy Gun",
+		"Forcefield Wand",
+		"Melee Weapon"
+	)
+
+/datum/rc_entry/artifact/chamber
+	name = "chamber-type artifact"
+	acceptable_types = list(
+		"Bag of Holding",
+		"Beaker",
+		"Instrument",
+		"Large power cell",
+		"Small power cell",
+		"Pitcher"
+	)
+
+/datum/rc_entry/item/radsuit
+	name = "radiation suit"
+	typepath = /obj/item/clothing/suit/hazard/rad
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/radhelm
+	name = "radiation helmet"
+	typepath = /obj/item/clothing/head/rad_hood
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/geiger
+	name = "Geiger counter"
+	typepath = /obj/item/device/geiger
+
+/datum/rc_entry/item/mini_ox
+	name = "personnel-class 'mini' pressure tank"
+	typepath = /obj/item/tank/mini_oxygen
 
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"
@@ -608,8 +687,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/stack/fancy_cloth
 	name = "high-grade cloth (carbon or bee wool)"
-	typepath = /obj/item/material_piece/cloth/carbon
-	typepath_alt = /obj/item/material_piece/cloth/beewool
+	typepath = /obj/item/material_piece/cloth
+
+	extra_eval(obj/item/eval_item)
+		. = FALSE
+		if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
+			return TRUE
 
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"
@@ -835,20 +918,51 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			yielder += new rewardthing
 		return yielder
 
-/datum/rc_itemreward/upgraded_welders
-	name = "high-capacity welding tool"
+/datum/rc_itemreward/sonic_shower
+	name = "sonic shower head"
 
 	New()
 		..()
-		count = rand(3,5)
+		count = rand(2,3)
 
 	build_reward()
 		var/list/yielder = list()
 		for(var/i in 1 to count)
-			yielder += new /obj/item/weldingtool/high_cap
+			var/obj/item/electronics/frame/F = new
+			F.store_type = /obj/machinery/sonic_shower
+			F.name = "sonic shower head frame"
+			F.viewstat = 2
+			F.secured = 2
+			F.icon_state = "dbox_big"
+			F.w_class = W_CLASS_BULKY
+			yielder += F
 		return yielder
 
+//artifact reverse engineer rewards
 
+/datum/rc_itemreward/terminus
+	name = "prototype terminus drive"
+	count = 3
+	build_reward()
+		var/list/yielder = list()
+		for(var/i in 1 to count)
+			yielder += new /obj/item/terminus_drive
+		return yielder
 
+/datum/rc_itemreward/medimulcher
+	name = "APS-4 bio-integrator"
+	build_reward()
+		var/obj/item/electronics/frame/F = new
+		F.store_type = /obj/machinery/medimulcher
+		F.name = "APS-4 bio-integrator frame"
+		F.viewstat = 2
+		F.secured = 2
+		F.icon_state = "dbox_big"
+		F.w_class = W_CLASS_BULKY
+		return F
 
-
+/datum/rc_itemreward/recharge_bay
+	name = "mobile recharging bay"
+	build_reward()
+		var/theitem = new /obj/item/storage/backpack/recharge_bay
+		return theitem

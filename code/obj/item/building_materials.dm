@@ -47,7 +47,6 @@ MATERIAL
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
-	flags = FPRINT | TABLEPASS
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
@@ -557,7 +556,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_NORMAL
 	force = 4
 	throwforce = 8
@@ -602,7 +601,7 @@ MATERIAL
 			icon_state = "rods_4"
 		else
 			icon_state = "rods_5"
-		src.inventory_counter.update_number(amount)
+		src.inventory_counter?.update_number(amount)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
 		user.visible_message(SPAN_NOTICE("[user] begins gathering up [src]!"))
@@ -697,7 +696,7 @@ MATERIAL
 		return
 
 	attack_self(mob/user as mob)
-		if (user.getStatusDuration("weakened") | user.getStatusDuration("stunned"))
+		if (user.getStatusDuration("knockdown") | user.getStatusDuration("stunned"))
 			return
 		if (istype(user.loc, /obj/vehicle/segway))
 			var/obj/vehicle/segway/S = user.loc

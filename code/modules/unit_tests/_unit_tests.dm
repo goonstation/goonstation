@@ -46,6 +46,7 @@
 #include "trait_id_uniqueness.dm"
 #include "material_id_uniqueness.dm"
 #include "action_id_uniqueness.dm"
+#include "job_name_uniqueness.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

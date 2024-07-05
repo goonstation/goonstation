@@ -626,8 +626,9 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 #define INTERLINK_RANGE 100
 
 TYPEINFO(/obj/machinery/transception_pad)
-	mats = list("MET-2"=5,"CON-2"=2,"CON-1"=5)
-
+	mats = list("metal_dense" = 5,
+				"conductive_high" = 2,
+				"conductive" = 5)
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
@@ -646,7 +647,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	New()
 		START_TRACKING
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		src.pad_id = "[pick(vowels_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]-[rand(0,9)][rand(0,9)][rand(0,9)]"
 		src.name = "transception pad [pad_id]"
 		..()
@@ -866,7 +867,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			playsound(M.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 			M.emote("scream")
 			M.changeStatus("stunned", 5 SECONDS)
-			M.changeStatus("weakened", 5 SECONDS)
+			M.changeStatus("knockdown", 5 SECONDS)
 
 	//if anyone gets stuck inside, eject them. (violently. you got stuck in a prototype teleporter)
 	process()
@@ -887,7 +888,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				src.is_transceiving = FALSE
 
 /obj/machinery/computer/transception
-	name = "\improper Transception Interlink"
+	name = "transception interlink"
 	desc = "A console capable of remotely connecting to and operating cargo transception pads."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMpad"
@@ -914,7 +915,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 		if(prob(1))
 			desc = "A console capable of remotely connecting to and operating cargo transception pads. Smells faintly of cilantro."
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 
 	receive_signal(datum/signal/signal)
 		if(status & NOPOWER)
@@ -991,7 +992,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "TransceptionInterlink")
-	ui.open()
+		ui.open()
 
 /obj/machinery/computer/transception/ui_data(mob/user)
 	. = ..()
