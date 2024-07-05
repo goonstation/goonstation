@@ -590,7 +590,7 @@
 
 					if (F.icon_state == "15" && my_depth_level)
 						var/image/I = image('icons/obj/fluid.dmi', "highlights_15-[rand(1,3)]")
-						I.appearance_flags = RESET_COLOR
+						I.appearance_flags = RESET_COLOR | RESET_ALPHA
 						I.blend_mode = BLEND_ADD
 						I.alpha = 70
 						F.AddOverlays(I,"highlight")

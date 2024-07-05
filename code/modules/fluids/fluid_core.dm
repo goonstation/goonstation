@@ -571,10 +571,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 			src.update_perspective_overlays()
 			if(last_depth_level == 4) // full
 				src.layer = EFFECTS_LAYER_4
-				src.plane = PLANE_NOSHADOW_ABOVE
 			else
 				src.layer = initial(src.layer)
-				src.plane = initial(src.plane)
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
 		if (icon_state != "15") return
