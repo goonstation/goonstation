@@ -57716,7 +57716,6 @@
 /area/station/science/lab)
 "eNY" = (
 /obj/machinery/atmospherics/binary/valve{
-	desc = "hot radiator outlet valve";
 	name = "hot radiator outlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -68318,7 +68317,6 @@
 /area/station/engine/hotloop)
 "pSs" = (
 /obj/machinery/atmospherics/binary/valve{
-	desc = "hot radiator inlet valve";
 	name = "hot radiator inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,

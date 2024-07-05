@@ -31309,7 +31309,6 @@
 	})
 "dcI" = (
 /obj/machinery/atmospherics/binary/valve{
-	desc = "hot radiator inlet valve";
 	name = "hot radiator inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -49951,7 +49950,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/binary/valve{
-	desc = "hot radiator outlet valve";
 	name = "hot radiator outlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -54634,7 +54632,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/binary/valve{
-	desc = "cold reserve tank valve";
 	dir = 4;
 	name = "cold reserve tank valve"
 	},
