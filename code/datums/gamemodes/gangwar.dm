@@ -1109,7 +1109,6 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.make_tag(target_turf)
 		S.empty = TRUE
 		S.icon_state = "spraycan_crushed"
-		var/mob/M = owner
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
