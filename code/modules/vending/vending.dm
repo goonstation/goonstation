@@ -169,16 +169,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			src.product_list = new()
 
 	proc/vendinput(var/datum/mechanicsMessage/inp)
-		if( world.time < lastvend ) return//aaaaaaa
-		lastvend = world.time + 2
+		if (!src.vend_ready)
+			return
 		var/datum/data/vending_product/R = throw_item()
 		if(R?.logged_on_vend)
 			logTheThing(LOG_STATION, usr, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	proc/vendname(var/datum/mechanicsMessage/inp)
-		if( world.time < lastvend || !inp) return//aaaaaaa
-		if(!length(inp.signal)) return//aaaaaaa
-		lastvend = world.time + 5 //Make it slower to vend by name?
+		if (!src.vend_ready)
+			return
+		if(!length(inp.signal))
+			return//aaaaaaa
 		var/datum/data/vending_product/R = throw_item(inp.signal)
 		if(R?.logged_on_vend)
 			logTheThing(LOG_STATION, usr, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
@@ -699,7 +700,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
 		if (src.vend_inhand)
-			usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
+			user?.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 		src.postvend_effect()
 	return vended
 
@@ -1058,34 +1059,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			return vending_product
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
-	var/obj/throw_item = null
-	//Big if/else trying to create the object properly
-	if (ispath(R.product_path))
-		var/dump_path = R.product_path
-		throw_item = new dump_path(src.loc)
-	else if (istext(R.product_path))
-		var/dump_path = text2path(R.product_path)
-		if (dump_path)
-			throw_item = new dump_path(src.loc)
-	else if (isicon(R.product_path))
-		var/icon/welp = icon(R.product_path)
-		if (welp.Width() > 32 || welp.Height() > 32)
-			welp.Scale(32, 32)
-			R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
-		var/obj/dummy = new /obj/item(src.get_output_location())
-		dummy.name = R.product_name
-		dummy.desc = "?!"
-		dummy.icon = welp
-		throw_item = dummy
-	else if (isfile(R.product_path))
-		var/sound/S = sound(R.product_path)
-		if (S)
-			if (!R.infinite)
-				R.product_amount--
-			SPAWN(0)
-				playsound(src.loc, S, 50, 0)
-				src.visible_message(SPAN_ALERT("<b>[src] launches [R.product_name] at [target.name]!</b>"))
-			return 1
+	set waitfor = FALSE
+
+	src.vend_ready = FALSE
+	src.currently_vending = R
+	src.prevend_effect()
+	sleep(src.vend_delay)
+
+	var/obj/throw_item = src.vend_product(R)
 
 	if (throw_item)
 		if(!R.infinite)
@@ -1097,9 +1078,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
 		throw_item.throw_at(target, 16, 3)
 		src.visible_message(SPAN_ALERT("<b>[src] launches [throw_item.name] at [target.name]!</b>"))
-		postvend_effect()
-		return 1
-	return 0
+
+	src.vend_ready = TRUE
+	src.currently_vending = null
 
 
 /obj/machinery/vending/proc/isWireColorCut(var/wireColor)

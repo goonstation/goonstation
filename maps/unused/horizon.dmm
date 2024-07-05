@@ -5883,7 +5883,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/treatment1)
 "arP" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/machinery/firealarm{
@@ -7716,7 +7716,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "axx" = (
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/table/reinforced/chemistry/auto,
@@ -7908,7 +7908,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "ayc" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white,
@@ -8069,7 +8069,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "ayD" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -8440,12 +8440,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "azu" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "azv" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -8454,7 +8454,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "azw" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -8641,7 +8641,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aAf" = (
-/obj/machinery/incubator,
+/obj/fakeobject/incubator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment/transport,
@@ -28792,7 +28792,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
-/obj/random_item_spawner,
+/obj/random_item_spawner/junk,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "bER" = (
@@ -48004,11 +48004,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
-"fgn" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/airless/random,
-/area/space)
 "fgx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -97803,7 +97798,7 @@ mml
 mml
 mVf
 onx
-fgn
+ctY
 aaa
 aaa
 aaa

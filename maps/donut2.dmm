@@ -264,13 +264,11 @@
 	dir = 1
 	},
 /obj/item/peripheral/network/radio/locked,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abd" = (
-/obj/table/wood/auto{
-	dir = 6
-	},
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abe" = (
@@ -286,8 +284,8 @@
 	},
 /area/space)
 "abh" = (
-/obj/storage/closet/syndicate/personal,
 /obj/decal/stripe_caution,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor,
 /area/listeningpost)
 "abi" = (
@@ -10704,10 +10702,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bdz" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
 /obj/table/reinforced/chemistry/auto,
+/obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bdB" = (
@@ -22241,6 +22237,7 @@
 /obj/machinery/light/lamp/green,
 /obj/disposalpipe/trunk/west,
 /obj/machinery/disposal/small/west,
+/obj/item/device/camera_viewer/outpost/science,
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
@@ -23657,8 +23654,6 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/clothing/under/misc/syndicate,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,

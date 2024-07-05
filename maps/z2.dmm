@@ -573,11 +573,6 @@
 /obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/white,
 /area/hospital)
-"adX" = (
-/obj/table/auto,
-/obj/machinery/microscope,
-/turf/unsimulated/floor/white,
-/area/hospital)
 "adY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/pill/crank{
@@ -5330,13 +5325,6 @@
 /area/moon/museum/west)
 "aAj" = (
 /obj/trigger/critter,
-/turf/unsimulated/floor/grey/side{
-	dir = 1
-	},
-/area/moon/museum/west)
-"aAk" = (
-/obj/table/auto,
-/obj/machinery/microscope,
 /turf/unsimulated/floor/grey/side{
 	dir = 1
 	},
@@ -20547,6 +20535,13 @@
 	icon_state = "iocrust_edge"
 	},
 /area/iomoon)
+"bFw" = (
+/obj/table/auto,
+/obj/fakeobject/microscope,
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
+/area/moon/museum/west)
 "bFx" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/yellow,
@@ -27687,13 +27682,8 @@
 	},
 /area/afterlife/heaven)
 "cgj" = (
-/obj/table/wood/auto,
-/obj/machinery/computer/announcement{
-	dir = 4;
-	icon_state = "datasec";
-	name = "Commander's Announcement Computer";
-	req_access_txt = "76";
-	theme = "syndicate"
+/obj/machinery/computer/announcement/syndicate/commander{
+	dir = 4
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/battlecruiser)
@@ -34659,11 +34649,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
-"cCJ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
-/turf/unsimulated/floor/black,
-/area/owlery/lab)
 "cCK" = (
 /obj/critter/madnessowl,
 /turf/unsimulated/floor/redblack{
@@ -35246,11 +35231,6 @@
 "cEt" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/black,
-/area/owlery/lab)
-"cEv" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/synthomatic,
-/turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cEw" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -55383,6 +55363,11 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
+"eDg" = (
+/obj/table/auto,
+/obj/fakeobject/microscope,
+/turf/unsimulated/floor/white,
+/area/hospital)
 "eEh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
@@ -56863,6 +56848,26 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
+"gaY" = (
+/obj/table/wood/auto/desk{
+	icon_state = "1"
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_y = 9
+	},
+/obj/item/decoration/flower_vase/vase7{
+	icon_state = "vase3";
+	pixel_x = 8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/pinkmug{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices/janantilles)
 "gbs" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -56898,6 +56903,24 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/observatory)
+"gdy" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/endtable_classic{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/regular{
+	desc = "She doesn't wear glasses. Whose were these?";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/decoration/flower_vase/fleurdaffodil{
+	pixel_x = -3
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices/janantilles)
 "gdS" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -60445,6 +60468,19 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
+"jos" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/obj/stool/bee_bed/double{
+	desc = "Just the right size for a tiny bat.";
+	name = "batsket"
+	},
+/mob/living/critter/small_animal/bat/rina,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/centcom/offices/janantilles)
 "joO" = (
 /turf/unsimulated/floor/black{
 	icon_state = "cairngorm19"
@@ -60838,6 +60874,11 @@
 	dir = 10
 	},
 /area/centcom/gallery)
+"jHy" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/fakeobject/microscope,
+/turf/unsimulated/floor/black,
+/area/owlery/lab)
 "jIa" = (
 /obj/fakeobject/dreambeach/palm_leaf,
 /turf/unsimulated/floor/dream/beach,
@@ -63475,26 +63516,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
-"mgQ" = (
-/obj/table/wood/auto/desk{
-	icon_state = "1"
-	},
-/obj/item/reagent_containers/food/snacks/croissant{
-	pixel_y = 9
-	},
-/obj/item/decoration/flower_vase/vase7{
-	icon_state = "vase3";
-	pixel_x = 10;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/food/drinks/pinkmug{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/turf/unsimulated/floor/carpet/regalcarpet/border{
-	dir = 5
-	},
-/area/centcom/offices/janantilles)
 "mhs" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -65500,14 +65521,6 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
-"nUo" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 4
-	},
-/turf/unsimulated/floor/carpet/regalcarpet/border{
-	dir = 4
-	},
-/area/centcom/offices/janantilles)
 "nUC" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -73008,26 +73021,6 @@
 /obj/machinery/computer3/generic/med_data/console_upper,
 /turf/unsimulated/floor/circuit/white,
 /area/centcom/offices/bilo)
-"uIc" = (
-/obj/machinery/light/incandescent/warm,
-/obj/table/endtable_classic{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/item/decoration/flower_vase/vase7{
-	icon_state = "vase4";
-	pixel_x = -2;
-	pixel_y = 21
-	},
-/obj/item/clothing/glasses/regular{
-	desc = "She doesn't wear glasses. Whose were these?";
-	pixel_x = -2;
-	pixel_y = 3
-	},
-/turf/unsimulated/floor/carpet/regalcarpet/border{
-	dir = 10
-	},
-/area/centcom/offices/janantilles)
 "uId" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -74249,6 +74242,11 @@
 	opacity = 0
 	},
 /area/centcom)
+"vLJ" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/fakeobject/synthomatic,
+/turf/unsimulated/floor/white,
+/area/owlery/lab)
 "vLW" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -91252,7 +91250,7 @@ aBY
 cAq
 cAq
 cAq
-cCJ
+jHy
 cBg
 cBg
 cAB
@@ -93972,7 +93970,7 @@ cBl
 cCE
 cDP
 cBk
-cEv
+vLJ
 eUj
 cFF
 cHw
@@ -106108,7 +106106,7 @@ enf
 uKx
 uKx
 enf
-aAk
+bFw
 aAG
 alb
 alb
@@ -121141,7 +121139,7 @@ aab
 aaa
 abp
 aeX
-adX
+eDg
 aef
 acb
 aeX
@@ -153846,7 +153844,7 @@ wel
 kWN
 uAi
 jNP
-uIc
+gdy
 wel
 lMG
 vij
@@ -154448,8 +154446,8 @@ aES
 xsc
 kPC
 jib
-mgQ
-nUo
+gaY
+jos
 xvJ
 wel
 sJH

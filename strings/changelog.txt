@@ -1,5 +1,56 @@
 
+(t)thu jul 04 24
+(u)LeahTheTech
+(+)Syndicate daggers now only play their equip sound when equipped from an inventory.
+(u)JORJ949
+(p)19766
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The listening post has been outfitted with an announcement computer. Agents only!
+(u)Flaborized
+(p)19576
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The chameleon outfit traitor item can now disguise as a mail courier.
+(u)Jan.antilles
+(p)19813
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Cinnamon buns can now be made in the oven.
+(u)Kubius
+(p)19665
+(e)🆕🎨🔊📦🚗|C-Feature, C-Sprites, C-Sound, A-Game-Objects, A-Vehicles
+(*)The pod-mounted EFIF-1 Construction System is now available. It can rapidly repair damaged station tiles or build new offsite structures.
+(t)wed jul 03 24
+(u)Cheekybrdy
+(p)19722
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds chameleon bombs to mail courier's options as a traitor.
+(u)RubberRats
+(p)19754
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Lawbringer has been given a new (?) mode for use against the cluwne
+(t)mon jul 01 24
+(u)Lord_Earthfire
+(p)19412
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The amount of chems a unit of a chemical decays into no longer changes with the speed the person metabolizes it.
+(u)Jan.antilles
+(p)19786
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Add Cream or Salmon Fillet Slices to bagels to make extra tasty Cream Cheese or Lox bagels!
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
+(u)nova2053
+(p)19553
+(e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
+(+)Normal and synthetic organs will no longer make you indefinitely full.
 (t)sat jun 29 24
+(u)LeahTheTech
+(+)Power transfer lasers can now pass through containment fields.
 (u)glowbold
 (p)19703
 (e)🆕📦|C-Feature, A-Game-Objects
