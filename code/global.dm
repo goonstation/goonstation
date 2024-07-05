@@ -43,6 +43,8 @@ var/global
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
+	list/donator_ckeys = list()
+	list/online_donator_ckeys = list()
 	list/mobs = list()
 	list/ai_mobs = list()
 	list/processing_items = list()
@@ -357,7 +359,6 @@ var/global
 		LOG_VEHICLE		=	list(),
 		LOG_GAMEMODE	=	list(),
 		LOG_SIGNALERS	=	list(),
-		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
 		LOG_CHEMISTRY	=	list(),
 	)

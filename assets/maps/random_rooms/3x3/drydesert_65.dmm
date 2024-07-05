@@ -10,7 +10,7 @@
 /turf/simulated/floor/marslike,
 /area/dmm_suite/clear_area)
 "t" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/suit/poncho/leaf,
 /obj/item/clothing/head/westhat{
 	pixel_x = 11;

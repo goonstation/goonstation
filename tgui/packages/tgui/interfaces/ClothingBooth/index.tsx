@@ -131,7 +131,7 @@ const PurchaseInfo = (_, context) => {
               color="green"
               disabled={data.selectedItemCost > data.money}
               onClick={() => act('purchase')}>
-              {!(data.selectedItemCost > data.money) ? `Purchase` : `Insufficient Cash`}
+              {(data.selectedItemCost <= data.money) ? `Purchase` : `Insufficient Cash`}
             </Button>
           </Stack.Item>
         </>

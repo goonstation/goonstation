@@ -32,7 +32,7 @@
 		src.setup_manufacturing_requirements()
 		if (!length(src.item_names))
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
-				src.item_names += R.name
+				src.item_names += R.getName()
 
 	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
 	proc/setup_manufacturing_requirements()
@@ -41,7 +41,7 @@
 			return
 		var/list/R = list()
 		for (var/R_path in src.item_requirements)
-			R[getRequirement(R_path)] = src.item_requirements[R_path]
+			R[getManufacturingRequirement(R_path)] = src.item_requirements[R_path]
 		src.item_requirements = R
 
 	proc/use_generated_costs(obj/item_type)
@@ -58,7 +58,6 @@
 		// use this if you want the outputted item to be customised in any way by the manufacturer
 		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
-			//A.quality -= rand(25,50)
 		if (src.apply_material && length(materials) > 0)
 			var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
 			var/datum/material/mat = applicable_material?.material
@@ -77,10 +76,10 @@
 	var/generate_costs = FALSE
 
 	New()
-		. = ..()
 		if(src.generate_costs)
 			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
+		. = ..()
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
@@ -638,7 +637,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		var/obj/item/sheet/S = A
 		..()
-		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("metal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/glass
@@ -663,7 +662,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
@@ -700,13 +699,16 @@
 	name = "Chemical Barrel"
 	item_requirements = list("metal_dense" = 6,
 							 "cobryl" = 9)
-	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
 	create = 1
 	time = 30 SECONDS
 	category = "Machinery"
 
 	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+
 	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
 
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
@@ -892,8 +894,8 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/obj/item/material_piece/applicable_insulator = locate(materials[getRequirement("insulated")])
-		var/obj/item/material_piece/applicable_conductor = locate(materials[getRequirement("conductive")])
+		var/obj/item/material_piece/applicable_insulator = locate(materials[getManufacturingRequirement("insulated")])
+		var/obj/item/material_piece/applicable_conductor = locate(materials[getManufacturingRequirement("conductive")])
 		coil.setInsulator(applicable_insulator.material)
 		coil.setConductor(applicable_conductor.material)
 		return 1
@@ -3079,6 +3081,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 20 SECONDS
 	category = "Tool"
 
+/datum/manufacture/pod/weapon/efif1
+	name = "EFIF-1 Construction System"
+	item_requirements = list("metal_superdense" = 50,
+							 "claretine" = 20,
+							 "electrum" = 10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/constructor)
+	create = 1
+	time = 60 SECONDS
+	category = "Tool"
+
 /datum/manufacture/pod/lock
 	name = "Pod Locking Mechanism"
 	item_requirements = list("crystal" = 5,
@@ -3420,7 +3432,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/riot_shotgun	//
 	name = "Riot Shotgun"
 	item_requirements = list("metal" = 20)
-	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	create = 1
 	time = 20 SECONDS
 	category = "Weapon"

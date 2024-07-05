@@ -60,14 +60,14 @@
 /turf/simulated/floor/grey,
 /area/noGenerate)
 "gJ" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "jI" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
@@ -142,7 +142,7 @@
 /turf/simulated/floor/grey,
 /area/noGenerate)
 "xt" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 8
 	},
 /turf/variableTurf/clear,
@@ -161,7 +161,7 @@
 /turf/simulated/floor/grey,
 /area/noGenerate)
 "zQ" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
@@ -172,7 +172,7 @@
 /turf/simulated/floor/grey,
 /area/noGenerate)
 "CF" = (
-/obj/decal/fakeobjects/shuttleengine{
+/obj/fakeobject/shuttleengine{
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},

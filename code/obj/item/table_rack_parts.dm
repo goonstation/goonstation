@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10
@@ -208,6 +208,11 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
 	furniture_type = /obj/table/nanotrasen/auto
 
+/obj/item/furniture_parts/table/sleek
+	name = "sleek table parts"
+	desc = "A collection of parts that can be used to make a sleek table."
+	icon = 'icons/obj/furniture/table_sleek.dmi'
+	furniture_type = /obj/table/sleek/auto
 /* ---------- Glass Table Parts ---------- */
 TYPEINFO(/obj/item/furniture_parts/table/glass)
 	mat_appearances_to_ignore = list("glass")
@@ -419,6 +424,13 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/neon
 	furniture_name = "neon bar stool"
 
+/obj/item/furniture_parts/stool/sleek
+	name = "sleek bar stool parts"
+	desc = "A collection of parts that can be used to make a sleek bar stool."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "sleek_stool_parts"
+	furniture_type = /obj/stool/sleek
+	furniture_name = "sleek bar stool"
 /* ---------- Bench Parts ---------- */
 /obj/item/furniture_parts/bench
 	name = "bench parts"
@@ -588,6 +600,15 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/chair/comfy/throne_gold
 	furniture_name = "golden throne"
 
+/obj/item/furniture_parts/sleekchair
+	name = "comfy sleek chair parts"
+	desc = "A collection of parts that can be used to make a sleek and stylish chair."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "comf_sleek_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/sleek
+	furniture_name = "sleek chair"
 /* ---------- Bed Parts ---------- */
 /obj/item/furniture_parts/bed
 	name = "bed parts"

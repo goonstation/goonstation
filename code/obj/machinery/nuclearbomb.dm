@@ -32,7 +32,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	///skips the prompt asking if you want to arm the bomb. For 'pranks'
 	var/no_warning = FALSE
 
-	flags = FPRINT
 	var/image/image_light = null
 	p_class = 1.5
 
@@ -368,7 +367,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			robogibs(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/gamemode = null
-			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) && src.boom_size == "nuke")
 				gamemode = ticker.mode
 				gamemode.the_bomb = null
 				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")

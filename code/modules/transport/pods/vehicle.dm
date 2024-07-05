@@ -3,7 +3,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "podfire"
 	density = 1
-	flags = FPRINT | USEDELAY
+	flags = USEDELAY
 	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
@@ -173,6 +173,11 @@
 			src.add_fingerprint(user)
 			return
 
+		if (istype(W, /obj/item/sheet))
+			if (src.m_w_system && istype(src.m_w_system,/obj/item/shipcomponent/mainweapon/constructor))
+				src.m_w_system.Attackby(W,user)
+				return
+
 		if (istype(W, /obj/item/tank/plasma))
 			src.open_parts_panel(user)
 			return
@@ -207,6 +212,14 @@
 		// for(var/client/C)
 		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
 		// 		src.open_parts_panel(C.mob)
+
+//each pod part is a var so we have to macro this, yegh
+#define EJECT_PART(part) \
+	part.deactivate(); \
+	src.components -= part; \
+	usr.put_in_hand_or_drop(part); \
+	part = null; \
+	src.updateDialog()
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -321,40 +334,24 @@
 			if (href_list["unengine"])
 				if (src.engine)
 					logTheThing(LOG_STATION, usr, "ejects the engine system ([src.engine]) from [src] at [log_loc(src)]")
-					engine.deactivate()
-					components -= engine
-					engine.set_loc(src.loc)
-					engine = null
-					src.updateDialog()
+					EJECT_PART(src.engine)
 
 			else if (href_list["un_lock"])
 				if (src.lock)
 					if (src.locked)
 						lock.show_lock_panel(usr, 0)
 					else
-						lock.deactivate()
-						components -= lock
-						lock.set_loc(src.loc)
-						lock = null
-						src.updateDialog()
+						EJECT_PART(src.lock)
 
 			else if (href_list["unlife"])
 				if (src.life_support)
 					logTheThing(LOG_VEHICLE, usr, "ejects the life support system ([src.life_support]) from [src] at [log_loc(src)]")
-					life_support.deactivate()
-					components -= life_support
-					life_support.set_loc(src.loc)
-					life_support = null
-					src.updateDialog()
+					EJECT_PART(src.life_support)
 
 			else if (href_list["uncom"])
 				if (src.com_system)
 					logTheThing(LOG_VEHICLE, usr, "ejects the comms system ([src.com_system]) from [src] at [log_loc(src)]")
-					com_system.deactivate()
-					components -= com_system
-					com_system.set_loc(src.loc)
-					com_system = null
-					src.updateDialog()
+					EJECT_PART(src.com_system)
 
 			else if (href_list["unm_w"])
 				if (src.m_w_system)
@@ -362,13 +359,9 @@
 						boutput(usr, SPAN_ALERT("[src.m_w_system] is fused to the hull and cannot be removed."))
 						return
 					logTheThing(LOG_VEHICLE, usr, "ejects the main weapon system ([src.m_w_system]) from [src] at [log_loc(src)]")
-					m_w_system.deactivate()
-					components -= m_w_system
 					if (uses_weapon_overlays && m_w_system.appearanceString)
 						src.overlays -= image('icons/effects/64x64.dmi', "[m_w_system.appearanceString]")
-					m_w_system.set_loc(src.loc)
-					m_w_system = null
-					src.updateDialog()
+					EJECT_PART(src.m_w_system)
 
 			else if (href_list["unloco"])
 				if (istype(src,/obj/machinery/vehicle/tank))
@@ -379,29 +372,17 @@
 			else if (href_list["unsec_system"])
 				if (src.sec_system)
 					logTheThing(LOG_VEHICLE, usr, "ejects the secondary system ([src.sec_system]) from [src] at [log_loc(src)]")
-					sec_system.deactivate()
-					components -= sec_system
-					sec_system.set_loc(src.loc)
-					sec_system = null
-					src.updateDialog()
+					EJECT_PART(src.sec_system)
 
 			else if (href_list["unsensors"])
 				if (src.sensors)
 					logTheThing(LOG_VEHICLE, usr, "ejects the sensors system ([src.sensors]) from [src] at [log_loc(src)]")
-					sensors.deactivate()
-					components -= sensors
-					sensors.set_loc(src.loc)
-					sensors = null
-					src.updateDialog()
+					EJECT_PART(src.sensors)
 
 			else if (href_list["unlights"])
 				if (src.lights)
 					logTheThing(LOG_VEHICLE, usr, "ejects the lights system ([src.lights]) from [src] at [log_loc(src)]")
-					lights.deactivate()
-					components -= lights
-					lights.set_loc(src.loc)
-					lights = null
-					src.updateDialog()
+					EJECT_PART(src.lights)
 
 			// Added logs for atmos tanks and such here, because booby-trapping pods is becoming a trend (Convair880).
 			else if (href_list["atmostank"])
@@ -422,7 +403,7 @@
 			else if (href_list["takeatmostank"])
 				if (src.atmostank)
 					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
-					atmostank.set_loc(src.loc)
+					usr.put_in_hand_or_drop(src.atmostank)
 					atmostank = null
 					src.updateDialog()
 				else
@@ -442,7 +423,7 @@
 					src.fueltank = W
 					src.updateDialog()
 					src.myhud?.update_fuel()
-					src.engine.activate()
+					src.engine?.activate()
 				else
 					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 					return
@@ -450,11 +431,11 @@
 			else if (href_list["takefueltank"])
 				if (src.fueltank)
 					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s engine fuel supply [log_atmos(fueltank)] at [log_loc(src)].")
-					fueltank.set_loc(src.loc)
+					usr.put_in_hand_or_drop(src.fueltank)
 					fueltank = null
 					src.updateDialog()
 					src.myhud?.update_fuel()
-					src.engine.deactivate()
+					src.engine?.deactivate()
 				else
 					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
@@ -464,7 +445,8 @@
 		else
 			usr.Browse(null, "window=ship_main")
 			return
-		return
+
+#undef EJECT_PART
 
 	proc/AmmoPerShot()
 		return 1
