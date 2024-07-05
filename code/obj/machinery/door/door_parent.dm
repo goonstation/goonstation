@@ -1,4 +1,5 @@
 #define KNOCK_DELAY 1 SECOND
+#define LINKED_FORCEFIELD_POWER_USAGE 100
 
 ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
@@ -502,15 +503,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	if (src.linked_forcefield)
-		src.linked_forcefield.setactive(1)
+	if (src.linked_forcefield && (src.powered() || !src.linked_forcefield.powered_locally))
+		src.linked_forcefield.setactive(TRUE)
+		if(src.linked_forcefield.powered_locally)
+			src.power_usage += LINKED_FORCEFIELD_POWER_USAGE
 
 	SPAWN(-1)
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
 			src.set_opacity(0)
-		src.use_power(100)
+		if(!(src.status & NOPOWER))
+			src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
 		src.UpdateIcon(/*/toggling*/ 0)
@@ -519,7 +523,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time / 2)
 		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
 		src.bumper = null
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
+		if(!(src.status & NOPOWER))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
 			src.operating = 0
@@ -547,8 +552,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 				if (--max <= 0) break
 
-	if (src.linked_forcefield)
-		src.linked_forcefield.setactive(0)
+	if (src.linked_forcefield?.isactive)
+		src.linked_forcefield.setactive(FALSE)
+		if(src.linked_forcefield.powered_locally)
+			src.power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 
 	src.operating = 1
 	close_trys = 0
@@ -606,7 +613,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			autoclose()
 
 /obj/machinery/door/proc/closed()
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
+	if(!(src.status & NOPOWER))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
 
 /obj/machinery/door/proc/autoclose()
 	if (!density && !operating && !locked)
@@ -629,6 +637,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 /obj/machinery/door/proc/set_unlocked()
 	src.locked = FALSE
 	src.UpdateIcon()
+
+/obj/machinery/door/power_change()
+	. = ..()
+	if (src.linked_forcefield)
+		if (src.linked_forcefield.isactive && !powered() && src.linked_forcefield.powered_locally)
+			//forcefield active, we don't have local power, field isn't from a generator? deactivate, and door is no longer using field power
+			src.linked_forcefield.setactive(FALSE)
+			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
+			src.update_nearby_tiles()
+		else if(!src.linked_forcefield.isactive && !density && (powered() || !src.linked_forcefield.powered_locally))
+			//forcefield inactive - if we have local power, or field is from a generator, bring it online if our airlock's open
+			src.linked_forcefield.setactive(TRUE)
+			//and only increment our power usage if door is providing field power
+			if(src.linked_forcefield.powered_locally)
+				power_usage += LINKED_FORCEFIELD_POWER_USAGE
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
@@ -888,3 +911,4 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	var/broken = 0
 
 #undef KNOCK_DELAY
+#undef LINKED_FORCEFIELD_POWER_USAGE
