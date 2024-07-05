@@ -59,8 +59,8 @@ TYPEINFO(/datum/component/reagent_overlay)
 	if (reagents.total_volume <= 0)
 		return 0
 
-	// Show the last reagent state only if the container is full.
-	if (reagents.total_volume >= reagents.maximum_volume)
+	// Show the last reagent state if the container is full, or only one reagent overlay state is present and the container is not empty.
+	if ((reagents.total_volume >= reagents.maximum_volume) || (src.reagent_overlay_states == 1))
 		return src.reagent_overlay_states
 
 	var/normalised_reagent_height = 0

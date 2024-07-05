@@ -4,7 +4,7 @@
 	animate_movement = 2
 	soundproofing = 10
 
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
@@ -2509,18 +2509,6 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
-
-/mob/proc/infected(var/datum/pathogen/P)
-	return
-
-/mob/proc/remission(var/datum/pathogen/P)
-	return
-
-/mob/proc/immunity(var/datum/pathogen/P)
-	return
-
-/mob/proc/cured(var/datum/pathogen/P)
-	return
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0

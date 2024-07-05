@@ -295,7 +295,7 @@ proc/load_intraround_jars()
 	return new/obj/item/reagent_containers/food/snacks/pickle_holder/paper(loc, src)
 
 /obj/item/reagent_containers/food/snacks/pickle_holder/paper
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
+	flags = TABLEPASS | SUPPRESSATTACK | TGUI_INTERACTIVE
 	var/sizex
 	var/sizey
 	var/info

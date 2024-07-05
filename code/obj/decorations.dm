@@ -279,19 +279,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
-
-		var/original_x = pixel_x
-		var/original_y = pixel_y
-		var/wiggle = 6
-
-		SPAWN(0) //need spawn, why would we sleep in attack_hand that's disgusting
-			while (wiggle > 0)
-				wiggle--
-				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
-				sleep(0.1 SECONDS)
-
-		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
+		src.wiggle()
 
 		if (max_uses > 0 && ((last_use + time_between_uses) < world.time) && prob(spawn_chance))
 			var/something = null
@@ -391,6 +379,21 @@
 		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
 		qdel(src)
 
+	proc/wiggle()
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
+
+		var/original_x = pixel_x
+		var/original_y = pixel_y
+		var/wiggle = 6
+
+		SPAWN(0)
+			while (wiggle > 0)
+				wiggle--
+				animate(src, pixel_x = rand(-3,3), pixel_y = rand(-3,3), time = 2, easing = EASE_IN)
+				sleep(0.1 SECONDS)
+
+		animate(src, pixel_x = original_x, pixel_y = original_y, time = 2, easing = EASE_OUT)
+
 	random
 		New()
 			. = ..()
@@ -417,9 +420,37 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	is_syndicate = TRUE
 	New()
 		. = ..()
-		var/turf/T = get_turf(src.loc)
-		var/obj/machinery/power/data_terminal/link = locate() in T
-		link?.master = src
+		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
+
+	proc/fuck_up()
+		var/datum/effects/system/spark_spread/S = new
+		S.set_up(4, FALSE, src)
+		S.start()
+		src.visible_message(SPAN_ALERT("<b>[src] starts spraying sparks everywhere! What the fuck?</b>"))
+
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
+		..()
+		if(signal.data["address_1"] == "ping" && signal.data["sender"])
+			var/datum/signal/response = get_free_signal()
+			response.source = src
+			response.transmission_method = TRANSMISSION_RADIO
+			response.data["address_1"] = signal.data["sender"]
+			response.data["command"] = "ping_reply"
+			response.data["device"] = "WNET_SHRUB"
+			response.data["netid"] = src.net_id
+			response.data["sender"] = src.net_id
+			SPAWN(0.5 SECONDS)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, response)
+
+		if(signal.data["address_1"] == src.net_id)
+			switch(signal.data["command"])
+				if("shake")
+					if(prob(5)) // this thing sucks ass
+						src.fuck_up()
+					else
+						src.wiggle()
+
 
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
@@ -1532,7 +1563,6 @@ obj/decoration/gibberBroken
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
