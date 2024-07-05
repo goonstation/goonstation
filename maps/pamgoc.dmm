@@ -11118,7 +11118,7 @@
 "ayD" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	dir = 4;
 	pixel_x = -24
 	},
@@ -11473,17 +11473,17 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "azJ" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "azL" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "azM" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -11499,7 +11499,7 @@
 /turf/space,
 /area/abandonedship)
 "azP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -11510,7 +11510,7 @@
 /turf/simulated/floor/circuit,
 /area/listeningpost)
 "azQ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -11521,7 +11521,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "azR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -11532,7 +11532,7 @@
 /turf/simulated/floor/circuit,
 /area/listeningpost)
 "azS" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -11543,7 +11543,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "azT" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -11554,7 +11554,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "azU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Yikes.";
 	icon = 'icons/obj/machines/nuclear64x32.dmi';
@@ -11572,7 +11572,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "azV" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -11590,7 +11590,7 @@
 	},
 /area/station/science/teleporter)
 "azW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -11637,7 +11637,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -11656,7 +11656,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -14136,7 +14136,7 @@
 /area/station/chapel/sanctuary)
 "aGG" = (
 /obj/disposalpipe/segment/mail,
-/obj/decal/fakeobjects/pole{
+/obj/fakeobject/pole{
 	pixel_x = 14
 	},
 /turf/simulated/floor/neutral/side{
@@ -49264,7 +49264,7 @@
 /area/ghostdrone_factory)
 "cne" = (
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 28
 	},
 /obj/item/spraybottle/cleaner,
@@ -55642,7 +55642,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	dir = 8;
 	icon = 'icons/obj/junk.dmi';
@@ -57936,6 +57936,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"jfJ" = (
+/obj/landmark/start/job/mail_courier,
+/turf/space,
+/area/space)
 "jgJ" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 8;
@@ -59765,7 +59769,7 @@
 /area/space)
 "mBJ" = (
 /obj/decal/cleanable/rust/jen,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body5";
 	name = "unfortunate guy"
 	},
@@ -62308,7 +62312,7 @@
 /area/station/medical/staff)
 "rwy" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 8
 	},
@@ -62384,6 +62388,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/medical/robotics)
+"rDn" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/crew_quarters/supplylobby)
 "rET" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light_switch{
@@ -63126,7 +63136,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 8
 	},
@@ -64115,7 +64125,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 8
 	},
@@ -77660,7 +77670,7 @@ cyX
 cyX
 cyX
 cyX
-cCO
+jfJ
 cCO
 cCO
 cCO
@@ -99332,7 +99342,7 @@ ais
 acY
 bex
 ffZ
-cvm
+rDn
 bNn
 cqq
 cqq

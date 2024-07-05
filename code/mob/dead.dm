@@ -61,7 +61,8 @@
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
-	return P.hits_ghosts
+	// INVIS_ALWAYS ghosts are logged out/REALLY hidden.
+	return (P.hits_ghosts && (src.invisibility != INVIS_ALWAYS))
 
 /mob/dead/say(var/message)
 	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -187,7 +188,8 @@
 				message = "<B>[src]</B> [act]s."
 
 		else
-			src.show_text("Unusable emote '[act]'.", "blue")
+			if (voluntary)
+				src.show_text("Unusable emote '[act]'.", "blue")
 			return
 
 	if (message)

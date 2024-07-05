@@ -614,7 +614,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = TRUE
 		if (!A || !(isobj(A) || ismob(A)))
 			return 0
-		if (istype(A, /obj/decal/fakeobjects/skeleton)) // uuuuuuugh
+		if (istype(A, /obj/fakeobject/skeleton)) // uuuuuuugh
 			return 1
 		if (isobj(A) && ((A.density && !istype(A, /obj/critter)) || A:anchored || A == src || istype(A, /obj/decal) || istype(A, /atom/movable/screen) || istype(A, /obj/storage) || istype(A, /obj/tug_cart)))
 			return 0

@@ -1171,3 +1171,77 @@ proc/spawn_kitchen_note()
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
 	"}
+
+/obj/item/paper/marionette_implant_readme
+	name = "marionette implant readme"
+	icon_state = "paper"
+	info ={"
+	<i>Once you're done reading these instructions, you may activate the provided self-destruct function by using them in your hand.</i>
+
+	<h3>Summary</h3>
+	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
+	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
+
+	<h3>Control Remote</h3>
+	<p>You should have received a control remote for easy convenience of using this implant.
+	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
+	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
+
+	<p>Once implanted into a target, simply use the remote to your heart's content! There is a short cooldown period between activations.</p>
+
+	<p>The remote is programmed to interpret response signals sent by activated implants. If the activation triggered an effect successfully, the
+	remote will bloop; if it failed -- whether due to the implantee being dead or the conditions for the effect not being met -- then the remote will
+	rumble. Only the person holding the remote (hopefully you) and anyone sharing a space with them can hear these bloops and grumbles,
+	although the button presses that come from actually using it are audible to anyone within a few tiles!</p>
+
+	<p>When using a remote, the implant's passkey is not required. You don't need this value unless you plan to use packet control, detailed below.</p>
+
+	<h3>Heat</h3>
+	<p>Be wary that <u>each activation of an implant will cause heat buildup that may destroy it.</u> The components are delicate and are not built for
+	repeated short-term stress. Heat will dissipate slowly over time. Heat will build up upon activation even if the conditions for the provided
+	action are not met.</p>
+
+	<h3>Packets</h3>
+	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
+	<b>fully compatible with wireless packets.</b> The implanter should list the frequency and network address of the contained implant,
+	as well as a unique <b>passkey</b> that must be provided in the signal under the <code>passkey</code> parameter to authorize most signals.</p>
+
+	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
+	<ul>
+	<li><b>ping</b> - Prompts the implant to send a signal containing information about its status. Passkey not required.
+	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field. Max 45 characters.</li>
+	<li><b>emote</b> - As <b>say</b>, but with an emote instead. Many emotes can't be replicated with this function, including but not limited to deathgasps,
+	fainting, and tripping.</li>
+	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
+	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance. Notably,
+	this command will function even if the implantee is dead, as long as they haven't decomposed.</li>
+	<li><b>shock</b> or <b>zap</b> - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
+	<li><b>drop</b> or <b>release</b> - The implantee will release a held item from their hands.
+	<li><b>use</b> or <b>activate</b> - The implantee will activate any item held in their hands.
+	</ul>
+	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
+	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it, because there's
+	no way to retrieve it once the implant is applied.</p>
+
+	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
+	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code, detailed below.</p>
+
+	<h4>Error Codes</h4>
+	<ul>
+	<li><code>TARG_DEAD</code> means that the implantee is deceased.</li>
+	<li><code>TARG_NULL</code> means that the implant isn't inside a creature.</li>
+	<li><code>INVALID</code> means that the command is invalid, or that the conditions for triggering the provided command were not met.</li>
+	<li><code>BADPASS</code> means that the provided passkey is incorrect.</li>
+	</ul></p>
+	"}
+
+	attack_self(mob/user)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Read", "Self-Destruct"))
+		if (choice == "Read")
+			src.examine(user)
+		else
+			var/turf/T = get_turf(src)
+			new /obj/effect/supplyexplosion (T)
+			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
+			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
+			qdel(src)

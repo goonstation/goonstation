@@ -221,6 +221,14 @@
 		desc = "A cushy red velvet rope strewn between two golden poles."
 		can_reinforce = FALSE
 
+	guard // I'm yoinking this from window.dm and there's nothing you can do to stop me
+		name = "guard railing"
+		desc = "Doesn't look very sturdy, but it's better than nothing?"
+		icon = 'icons/obj/structures.dmi'
+		is_reinforced = TRUE
+		icon_state = "safetyrail"
+		can_reinforce = FALSE
+
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
