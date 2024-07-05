@@ -1,4 +1,6 @@
-
+(t)fri jul 05 24
+(u)LeahTheTech
+(*)High power PTL beams can now very slowly melt through walls. Will I regret this? Take your bets!
 (t)thu jul 04 24
 (u)LeahTheTech
 (+)Syndicate daggers now only play their equip sound when equipped from an inventory.
