@@ -4092,25 +4092,76 @@ ABSTRACT_TYPE(/area/mining)
 		return 1
 
 /** When building a zone in space, unconnected to anywhere else, this is the zone that gets created.
- *  If an APC existed in the zone upon creation, will rename the APC as well.
+ *  Turfs within it will cede themselves to built zones (created by APC installation) or other existing zones.
+ *  Only one of these should exist at any given time. If this is not the case,
  */
+/area/unconnected_zone
+	name = "Unconnected Zone"
+	requires_power = 1
+	power_equip = 0
+	power_light = 0
+	power_environ = 0
+	expandable = FALSE
+
+	proc/propagate_zone(var/turf/target_turf)
+		LAGCHECK(LAG_LOW)
+		var/list/propagation_targets = list()
+		var/area/connectable_area
+		//why did you build the APC before the floor. i do not know. but it must be accounted for.
+		var/apc_already_for_some_reason = FALSE
+		if (locate(/obj/machinery/power/apc) in target_turf)
+			apc_already_for_some_reason = TRUE
+
+		for (var/dir in cardinal)
+			var/turf/polled_turf = get_step(target_turf,dir)
+			var/area/polled_area = polled_turf?.loc
+			if(!connectable_area && polled_area.expandable)
+				connectable_area = polled_area
+			if(!apc_already_for_some_reason && istype(polled_area,/area/unconnected_zone))
+				propagation_targets += polled_turf
+		if(connectable_area || apc_already_for_some_reason)
+			if(transfer_ownership(target_turf,connectable_area,apc_already_for_some_reason))
+				for(var/turf/T in propagation_targets)
+					propagate_zone(T)
+
+	proc/transfer_ownership(var/turf/trans_turf,var/area/new_owner,var/make_built_zone = FALSE)
+		if(istype(new_owner,/area/unconnected_zone)) //this should never happen, and now it extra will never happen
+			return
+
+		if(make_built_zone)
+			new_owner = new /area/built_zone()
+
+		for (var/obj/machinery/M in trans_turf)
+			if(M in src.machines)
+				if(istype(M),/obj/machinery/power/apc)
+					var/obj/machinery/power/apc/yoink_apc = M
+					yoink_apc.area = new_owner
+					yoink_apc.name = "[new_owner.name] APC"
+					if (!new_owner.area_apc)
+						new_owner.area_apc = yoink_apc
+
+				src.machines -= M
+				new_owner.machines += M
+				if (istype(M,/obj/machinery/light)) // steal all the lights
+					A.remove_light(M)
+					TargA.add_light(M)
+
+		src.contents -= trans_turf
+		new_owner.contents += trans_turf
+
+		if(new_owner.area_apc)
+			new_owner.area_apc.request_update()
+
+	New()
+		. = ..()
+
+///Created when an APC is installed in an unconnected zone.
 /area/built_zone
 	name = "Built Zone"
 	requires_power = 1
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
-
-	proc/SetName(var/name)
-		src.name = name
-		global.area_list_is_up_to_date = FALSE // our area cache could no longer be accurate!
-		for(var/obj/machinery/power/apc/apc in src)
-			apc.name = "[name] APC"
-			apc.area = src
-
-	New()
-		.=..()
-		SetName(name) //because the jerk built an APC first, because WHY NOT JERKO?!
 
 /// adhara setpiece
 /area/janitor_setpiece

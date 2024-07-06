@@ -132,15 +132,8 @@
 
 	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
-		for(var/dir in (cardinal + 0))
-			var/turf/thing = get_step(src, dir)
-			var/area/fuck_everything = thing?.loc
-			if(fuck_everything?.expandable && (fuck_everything.type != /area/space))
-				fuck_everything.contents += src
-				return
-
-		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
-		zone.contents += src//get in the ZONE
+		unconnected_zone.contents += src
+		unconnected_zone.propagate_zone(src)
 
 	proc/break_tile(var/force)
 		if (!src.can_break && !force)
