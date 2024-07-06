@@ -29,11 +29,7 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 	. = ..()
 
 /datum/speech_module/output/process(datum/say_message/message)
-	if (!length(message.atom_listeners_override))
-		src.say_channel.PassToChannel(message)
-	else
-		src.say_channel.PassToOverriddenAtomListeners(message)
-
+	PASS_MESSAGE_TO_SAY_CHANNEL(src.say_channel, message)
 	return TRUE
 
 
@@ -46,9 +42,5 @@ ABSTRACT_TYPE(/datum/speech_module/output/bundled)
 	var/subchannel = "none"
 
 /datum/speech_module/output/bundled/process(datum/say_message/message)
-	if (!length(message.atom_listeners_override))
-		src.say_channel.PassToChannel(message, src.subchannel)
-	else
-		src.say_channel.PassToOverriddenAtomListeners(message)
-
+	PASS_MESSAGE_TO_SAY_CHANNEL(src.say_channel, message, src.subchannel)
 	return TRUE

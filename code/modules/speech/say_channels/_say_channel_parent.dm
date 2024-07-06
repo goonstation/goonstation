@@ -8,6 +8,10 @@ ABSTRACT_TYPE(/datum/say_channel)
 /datum/say_channel
 	/// This channel datum's channel ID.
 	var/channel_id = null
+	/// If disabled, this channel will not receive nor send any messages.
+	var/enabled = TRUE
+	/// The message to display to a speaker if they attempt to send a message over this channel while it is disabled.
+	var/disabled_message = "This say channel is currently disabled."
 	/// An associative list of listeners registered to this channel, indexed by input module type.
 	var/list/list/datum/listen_module/input/listeners
 	/// Whether messages sent through this channel should be affected by say or listen modifiers.
@@ -156,7 +160,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited)
 	if (!src.global_channel || from_global_channel || (message.flags & SAYFLAG_DELIMITED_CHANNEL_ONLY))
 		return
 
-	src.global_channel.PassToChannel(message, TRUE)
+	RELAY_MESSAGE_TO_SAY_CHANNEL(src.global_channel, message, TRUE)
 
 
 

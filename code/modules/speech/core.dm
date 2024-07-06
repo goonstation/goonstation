@@ -153,7 +153,6 @@ Cleanup:
 - `RETURN_TYPE` where necessary.
 
 Things To Implement:
-- Observers (not ghosts)
 - Radio brain (bioeffect)
 
 Old Code To Remove:
@@ -187,15 +186,23 @@ Refactors:
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?
 - Split deadchat up into multiple outputs, akin to hivechat.
 - Anything that uses `SPAN_NAME` could likely be moved onto the new system.
+- Some form of centralised preference manager for toggling inputs/outputs for types?
+	- `togglepersonaldeadchat`, `toggle_ghost_radio`, `toggle_ooc`, `toggle_looc`, etc.
+	- Most have dedicated procs for themselves, and some implementation on Login or New.
 
 Documentation:
 - Finished! (for now)
 
 Say Implementations To Remove:
-- /code/mob/living/.../
-	seanceghost.dm
-	ai-camera.dm
 - /obj/machinery/bot
+
+Follow-Up PRs:
+- Admin panel for enabling/disabling say channels. OOC/LOOC/Deadchat are currently done through procs:
+	- `toggledeadchat()` / `toggle_deadchat_allowed()`
+	- `toggleooc()` / `toggle_ooc_allowed()`
+	- `togglelooc()` / `toggle_looc_allowed()`
+- Removal of `/obj/item/device/radio/var/broadcasting` from maps.
+- Removal of `/obj/machinery/computer/announcement/var/voice_name` from maps.
 
 */
 

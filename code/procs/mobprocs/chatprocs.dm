@@ -194,9 +194,9 @@
 	var/name = src.real_name
 	var/alt_name = ""
 
-	if (!deadchat_allowed)
-		boutput(usr, "<b>Deadchat is currently disabled.</b>")
-		return
+	// if (!deadchat_allowed)
+	// 	boutput(usr, "<b>Deadchat is currently disabled.</b>")
+	// 	return
 
 	message = trimtext(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
@@ -552,6 +552,12 @@
 		return
 
 	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
+
+	if (usr.client.mute_ghost_radio)
+		src.ensure_listen_tree().RemoveInput(LISTEN_INPUT_RADIO_GLOBAL)
+	else
+		src.ensure_listen_tree().AddInput(LISTEN_INPUT_RADIO_GLOBAL)
+
 	boutput(usr, SPAN_NOTICE("[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost."))
 
 /mob/verb/toggleflyingchat()

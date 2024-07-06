@@ -601,11 +601,17 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	ooc_allowed = !( ooc_allowed )
+
+	var/ooc_allowed = !global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_OOC).enabled
+	global.toggle_ooc_allowed(ooc_allowed)
+
 	boutput(world, "<B>The OOC channel has been globally [ooc_allowed ? "en" : "dis"]abled!</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled OOC.")
 	logTheThing(LOG_DIARY, usr, "toggled OOC.", "admin")
 	message_admins("[key_name(usr)] toggled OOC.")
+
+/proc/toggle_ooc_allowed(ooc_allowed)
+	global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_OOC).enabled = ooc_allowed
 
 /datum/admins/proc/togglelooc()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -614,11 +620,17 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	looc_allowed = !( looc_allowed )
+
+	var/looc_allowed = !global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_LOOC).enabled
+	global.toggle_looc_allowed(looc_allowed)
+
 	boutput(world, "<B>The LOOC channel has been globally [looc_allowed ? "en" : "dis"]abled!</B>")
 	logTheThing(LOG_ADMIN, usr, "toggled LOOC.")
 	logTheThing(LOG_DIARY, usr, "toggled LOOC.", "admin")
 	message_admins("[key_name(usr)] toggled LOOC.")
+
+/proc/toggle_looc_allowed(looc_allowed)
+	global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_LOOC).enabled = looc_allowed
 
 /datum/admins/proc/toggleoocdead()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -782,7 +794,10 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	deadchat_allowed = !( deadchat_allowed )
+
+	var/deadchat_allowed = !global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled
+	global.toggle_deadchat_allowed(deadchat_allowed)
+
 	if (deadchat_allowed)
 		boutput(world, "<B>The Deadsay channel has been enabled.</B>")
 	else
@@ -790,6 +805,9 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "toggled Deadchat [deadchat_allowed ? "on" : "off"].")
 	logTheThing(LOG_DIARY, usr, "toggled Deadchat [deadchat_allowed ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Deadchat [deadchat_allowed ? "on" : "off"]")
+
+/proc/toggle_deadchat_allowed(deadchat_allowed)
+	global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled = deadchat_allowed
 
 /datum/admins/proc/togglefarting()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -864,7 +882,6 @@ client/proc/toggle_ghost_respawns()
 	USR_ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	ooc_allowed = !( ooc_allowed )
 	dooc_allowed = !( dooc_allowed )
 	player_capa = !( player_capa )
 	enter_allowed = !( enter_allowed )
@@ -875,7 +892,6 @@ client/proc/toggle_ghost_respawns()
 	config.allow_admin_sounds = !(config.allow_admin_sounds)
 	config.allow_admin_spawning = !(config.allow_admin_spawning)
 	config.allow_admin_rev = !(config.allow_admin_rev)
-	deadchat_allowed = !( deadchat_allowed )
 	farting_allowed = !( farting_allowed )
 	no_emote_cooldowns = !( no_emote_cooldowns )
 	suicide_allowed = !( suicide_allowed )
@@ -883,7 +899,7 @@ client/proc/toggle_ghost_respawns()
 	no_automatic_ending = !( no_automatic_ending )
 	late_traitors = !( late_traitors )
 	sound_waiting = !( sound_waiting )
-	message_admins("[key_name(usr)] toggled OOC [ooc_allowed ? "on" : "off"], Dead OOC  [dooc_allowed ? "on" : "off"], Global Player Cap  [player_capa ? "on" : "off"], Entering [enter_allowed ? "on" : "off"],Playing as the AI [config.allow_ai ? "on" : "off"], Sound Preference override [soundpref_override ? "on" : "off"], Abandoning [abandon_allowed ? "on" : "off"], Admin Jumping [config.allow_admin_jump ? "on" : "off"], Admin sound playing [config.allow_admin_sounds ? "on" : "off"], Admin Spawning [config.allow_admin_spawning ? "on" : "off"], Admin Reviving [config.allow_admin_rev ? "on" : "off"], Deadchat [deadchat_allowed ? "on" : "off"], Farting [farting_allowed ? "on" : "off"], Blood system [blood_system ? "on" : "off"], Suicide [suicide_allowed ? "on" : "off"], Monkey/Human communication [monkeysspeakhuman ? "on" : "off"], Late Traitors [late_traitors ? "on" : "off"], and Sound Queuing [sound_waiting ? "on" : "off"]   ")
+	message_admins("[key_name(usr)] toggled Dead OOC  [dooc_allowed ? "on" : "off"], Global Player Cap  [player_capa ? "on" : "off"], Entering [enter_allowed ? "on" : "off"],Playing as the AI [config.allow_ai ? "on" : "off"], Sound Preference override [soundpref_override ? "on" : "off"], Abandoning [abandon_allowed ? "on" : "off"], Admin Jumping [config.allow_admin_jump ? "on" : "off"], Admin sound playing [config.allow_admin_sounds ? "on" : "off"], Admin Spawning [config.allow_admin_spawning ? "on" : "off"], Admin Reviving [config.allow_admin_rev ? "on" : "off"], Farting [farting_allowed ? "on" : "off"], Blood system [blood_system ? "on" : "off"], Suicide [suicide_allowed ? "on" : "off"], Monkey/Human communication [monkeysspeakhuman ? "on" : "off"], Late Traitors [late_traitors ? "on" : "off"], and Sound Queuing [sound_waiting ? "on" : "off"]   ")
 
 /client/proc/togglepersonaldeadchat()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -892,11 +908,14 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
-	if(deadchatoff == 0)
-		deadchatoff = 1
+
+	if (!src.deadchatoff)
+		src.deadchatoff = TRUE
+		src.listen_tree.RemoveInput(LISTEN_INPUT_DEADCHAT)
 		boutput(usr, SPAN_NOTICE("No longer viewing deadchat."))
 	else
-		deadchatoff = 0
+		src.deadchatoff = FALSE
+		src.listen_tree.AddInput(LISTEN_INPUT_DEADCHAT)
 		boutput(usr, SPAN_NOTICE("Now viewing deadchat."))
 
 /datum/admins/proc/toggleaprilfools()

@@ -84,6 +84,10 @@
 	var/suppress_say_sound = TRUE
 	var/suppress_speech_bubble = TRUE
 	for (var/datum/speech_module/output/output_module as anything in output_modules)
+		if (!CAN_PASS_MESSAGE_TO_SAY_CHANNEL(output_module.say_channel, message))
+			boutput(src.speaker_parent, output_module.say_channel.disabled_message)
+			continue
+
 		if (!output_module.process(message.Copy()))
 			continue
 

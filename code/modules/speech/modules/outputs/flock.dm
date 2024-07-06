@@ -43,10 +43,7 @@
 		distorted_message.speaker_to_display = radioGarbleText(distorted_message.speaker_to_display, FLOCK_RADIO_GARBLE_CHANCE)
 		distorted_message.content = radioGarbleText(distorted_message.content, FLOCK_RADIO_GARBLE_CHANCE)
 
-		if (!length(distorted_message.atom_listeners_override))
-			src.distorted_flock_channel.PassToChannel(distorted_message)
-		else
-			src.distorted_flock_channel.PassToOverriddenAtomListeners(distorted_message)
+		PASS_MESSAGE_TO_SAY_CHANNEL(src.distorted_flock_channel, distorted_message)
 
 	. = ..()
 

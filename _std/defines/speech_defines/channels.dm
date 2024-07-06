@@ -5,6 +5,26 @@
 /// Accesses a say message datum's outermost listener.
 #define GET_MESSAGE_OUTERMOST_LISTENER(MESSAGE) MESSAGE.message_origin.outermost_listener_tracker.outermost_listener
 
+/// Whether a message is able to be passed to a say channel.
+#define CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE) (CHANNEL.enabled || (ismob(message.speaker) && message.speaker:client?:holder))
+
+/// Passes a say message datum to a say channel.
+#define PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE, ARGS...) \
+	if (CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE)) { \
+		if (!length(MESSAGE.atom_listeners_override)) { \
+			CHANNEL.PassToChannel(MESSAGE, ARGS); \
+		} \
+		else { \
+			CHANNEL.PassToOverriddenAtomListeners(MESSAGE); \
+		} \
+	}
+
+/// Relays a say message datum from one say channel to another.
+#define RELAY_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE, ARGS...) \
+	if (CAN_PASS_MESSAGE_TO_SAY_CHANNEL(CHANNEL, MESSAGE)) { \
+		CHANNEL.PassToChannel(MESSAGE, ARGS); \
+	}
+
 /// Set up an associative list of heard turfs within a range in the form `list[turf] = TRUE`.
 #define SET_UP_HEARD_TURFS(LIST, RANGE, CENTRE) \
 	var/list/atom/LIST = list(); \

@@ -20,9 +20,6 @@
 	if (oocban_isbanned(mob_speaker))
 		boutput(mob_speaker, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
 		return
-	if (!looc_allowed)
-		boutput(mob_speaker, "LOOC is currently disabled. For gameplay questions, try <a href='byond://winset?command=mentorhelp'>mentorhelp</a>.")
-		return
 	if (!dooc_allowed && (mob_speaker.client.deadchat != 0))
 		boutput(mob_speaker, "LOOC for dead mobs has been turned off.")
 		return

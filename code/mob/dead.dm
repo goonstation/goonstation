@@ -5,7 +5,7 @@
 	///Our corpse, if one exists
 	var/mob/living/corpse
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_RADIO_GLOBAL, LISTEN_INPUT_BLOBCHAT)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_BLOBCHAT)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT)
 	default_speech_output_channel = SAY_CHANNEL_DEAD
@@ -30,6 +30,14 @@
 
 /mob/dead/Login()
 	. = ..()
+
+	src.ensure_listen_tree()
+	var/datum/listen_module/global_radio = src.listen_tree.AddInput(LISTEN_INPUT_RADIO_GLOBAL)
+	if (!src.client.mute_ghost_radio && !global_radio)
+		src.listen_tree.AddInput(LISTEN_INPUT_RADIO_GLOBAL)
+	else if (src.client.mute_ghost_radio && global_radio)
+		src.listen_tree.RemoveInput(LISTEN_INPUT_RADIO_GLOBAL)
+
 	if(client?.holder?.ghost_interaction)
 		setalive(src)
 
@@ -67,7 +75,7 @@
 	return P.hits_ghosts
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
-	if (!deadchat_allowed)
+	if (!global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled)
 		src.show_text("<b>Deadchat is currently disabled.</b>")
 		return
 	..()

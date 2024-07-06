@@ -1,5 +1,6 @@
 /datum/say_channel/dead
 	channel_id = SAY_CHANNEL_DEAD
+	disabled_message = "Deadchat is currently disabled."
 	suppress_say_sound = TRUE
 	var/datum/say_channel/delimited/local/ghostly_whisper/ghostly_whisper_channel
 
@@ -12,7 +13,7 @@
 /datum/say_channel/dead/PassToChannel(datum/say_message/message)
 	. = ..()
 
-	src.ghostly_whisper_channel.PassToChannel(message.Copy())
+	RELAY_MESSAGE_TO_SAY_CHANNEL(src.ghostly_whisper_channel, message.Copy())
 
 /datum/say_channel/dead/log_message(datum/say_message/message)
 	var/mob/M = message.speaker

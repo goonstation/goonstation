@@ -3,10 +3,6 @@
 	channel = SAY_CHANNEL_DEAD
 
 /datum/speech_module/output/deadchat/process(datum/say_message/message)
-	if (!deadchat_allowed)
-		boutput(message.speaker, "<b>Deadchat is currently disabled.</b>")
-		return
-
 	var/num = hex2num(copytext(md5(message.speaker.name), 1, 7))
 	var/maptext_colour = hsv2rgb((num % 360) % 40 + 240, (num / 360) % 15 + 5, (num / 3600) % 15 + 55)
 
@@ -26,22 +22,22 @@
 	var/role = ""
 
 	if (ishuman(message.speaker) && (message.face_ident != message.real_ident))
-		if (message.card_ident && message.card_ident != message.real_ident)
-			message.speaker_to_display = "[message.card_ident]"
+		if (message.card_ident && (message.card_ident != message.real_ident))
+			message.speaker_to_display = "[message.real_ident] (as [message.card_ident])"
 		else if (!message.card_ident)
-			message.speaker_to_display = "as Unknown"
+			message.speaker_to_display = "[message.real_ident] (as Unknown)"
 
 	else if (isobserver(message.speaker))
 		role = "Ghost"
-		message.speaker_to_display = message.real_ident
+		message.speaker_to_display = "([message.real_ident])"
 
 	else if (ispoltergeist(message.speaker))
 		role = "Poltergeist"
-		message.speaker_to_display = message.real_ident
+		message.speaker_to_display = "([message.real_ident])"
 
 	else if (iswraith(message.speaker))
 		role = "Wraith"
-		message.speaker_to_display = message.real_ident
+		message.speaker_to_display = "([message.real_ident])"
 
 	else
 		message.speaker_to_display = message.real_ident
@@ -54,11 +50,11 @@
 	message.format_speaker_prefix = {"\
 		<span class='game deadsay'>\
 			<span class='prefix'>DEAD: </span>\
-			<span class='name' data-ctx='[mind_ref]'>[role]<span class='text-normal'> (\
+			<span class='name' data-ctx='[mind_ref]'>[role]<span class='text-normal'> \
 	"}
 
 	message.format_verb_prefix = {"\
-		)</span></span> \
+		</span></span> \
 		<span class='message'>\
 	"}
 
