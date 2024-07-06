@@ -203,7 +203,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 			src.name = "[area.name] APC"
 	if (!QDELETED(src.area))
 		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
-			unconnected_zone.transfer_ownership(get_turf(src), null, TRUE)
+			unconnected_zone.propagate_zone(get_turf(src))
 		else
 			src.area.area_apc = src
 

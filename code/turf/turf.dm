@@ -47,6 +47,9 @@
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
 
+	/// Whether this turf is currently being evaluated for changing hands from the "unconnected zone" area (constructed) to a "real" area
+	var/tmp/transfer_evaluation = FALSE
+
 	// Vars used for breaking and burning turfs, only used for floors at the moment
 	var/can_burn = FALSE
 	var/can_break = FALSE

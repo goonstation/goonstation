@@ -4093,7 +4093,7 @@ ABSTRACT_TYPE(/area/mining)
 
 /** When building a zone in space, unconnected to anywhere else, this is the zone that gets created.
  *  Turfs within it will cede themselves to built zones (created by APC installation) or other existing zones.
- *  Only one of these should exist at any given time. If this is not the case,
+ *  Only one of these should exist at any given time, assigned to the unconnected_zone global variable.
  */
 /area/unconnected_zone
 	name = "Unconnected Zone"
@@ -4102,32 +4102,30 @@ ABSTRACT_TYPE(/area/mining)
 	power_light = 0
 	power_environ = 0
 	expandable = FALSE
-	var/list/turfs_in_progress = list()
 
-	proc/propagate_zone(var/turf/target_turf)
-		turfs_in_progress += target_turf
+	proc/propagate_zone(var/turf/target_turf,var/propagate_from_self = FALSE)
+		if(target_turf.transfer_evaluation)
+			return
+		target_turf.transfer_evaluation = TRUE
 		LAGCHECK(LAG_LOW)
 		var/list/propagation_targets = list()
-		var/area/connectable_area
-		//why did you build the APC before the floor. i do not know. but it must be accounted for.
+		var/area/connectable_area = null
+		///Usually, this will be true because someone built an APC in an unconnected zone
 		var/apc_already_for_some_reason = FALSE
 		if (locate(/obj/machinery/power/apc) in target_turf)
 			apc_already_for_some_reason = TRUE
-
 		for (var/dir in cardinal)
 			var/turf/polled_turf = get_step(target_turf,dir)
 			var/area/polled_area = polled_turf?.loc
-			if(!connectable_area && polled_area.expandable && !istype(polled_area,/area/space))
+			if(!connectable_area && polled_area?.expandable && !istype(polled_area,/area/space))
 				connectable_area = polled_area
-			if(!apc_already_for_some_reason && istype(polled_area,/area/unconnected_zone))
+			if(istype(polled_area,/area/unconnected_zone))
 				propagation_targets += polled_turf
 		if(connectable_area || apc_already_for_some_reason)
 			if(transfer_ownership(target_turf,connectable_area,apc_already_for_some_reason))
 				for(var/turf/T in propagation_targets)
-					if(!(T in turfs_in_progress))
-						propagate_zone(T)
-		else
-			turfs_in_progress -= target_turf
+					propagate_zone(T)
+		target_turf.transfer_evaluation = FALSE
 
 	proc/transfer_ownership(var/turf/trans_turf,var/area/new_owner,var/make_built_zone = FALSE)
 		if(istype(new_owner,/area/unconnected_zone)) //this should never happen, and now it extra will never happen
@@ -4156,9 +4154,7 @@ ABSTRACT_TYPE(/area/mining)
 
 		if(new_owner.area_apc)
 			new_owner.area_apc.request_update()
-
-		if(trans_turf in turfs_in_progress)
-			turfs_in_progress -= trans_turf
+		return TRUE
 
 	New()
 		. = ..()
