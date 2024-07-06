@@ -2394,8 +2394,6 @@
 // jitteriness - copy+paste of dizziness
 
 /mob/proc/make_jittery(var/amount)
-	// usually, only humans get jittery. watchful eyes also get jittery now.
-
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
 													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)

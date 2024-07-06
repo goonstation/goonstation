@@ -2880,6 +2880,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		add_lifeprocess(/datum/lifeprocess/disability) // so that they stop jittering
+		START_TRACKING
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */
