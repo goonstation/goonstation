@@ -1,5 +1,4 @@
 #define KNOCK_DELAY 1 SECOND
-#define LINKED_FORCEFIELD_POWER_USAGE 100
 
 ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
@@ -508,15 +507,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (src.linked_forcefield && (src.powered() || !src.linked_forcefield.powered_locally))
 		src.linked_forcefield.setactive(TRUE)
 		if(src.linked_forcefield.powered_locally)
-			src.power_usage += LINKED_FORCEFIELD_POWER_USAGE
+			SubscribeToProcess()
 
 	SPAWN(-1)
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
 			src.set_opacity(0)
-		if(!(src.status & NOPOWER))
-			src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
 		src.UpdateIcon(/*/toggling*/ 0)
@@ -557,7 +554,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (src.linked_forcefield?.isactive)
 		src.linked_forcefield.setactive(FALSE)
 		if(src.linked_forcefield.powered_locally)
-			src.power_usage -= LINKED_FORCEFIELD_POWER_USAGE
+			UnsubscribeProcess()
 
 	src.operating = 1
 	close_trys = 0
@@ -646,14 +643,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (src.linked_forcefield.isactive && !powered() && src.linked_forcefield.powered_locally)
 			//forcefield active, we don't have local power, field isn't from a generator? deactivate, and door is no longer using field power
 			src.linked_forcefield.setactive(FALSE)
-			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
+			UnsubscribeProcess()
 			src.update_nearby_tiles()
 		else if(!src.linked_forcefield.isactive && !density && (powered() || !src.linked_forcefield.powered_locally))
 			//forcefield inactive - if we have local power, or field is from a generator, bring it online if our airlock's open
 			src.linked_forcefield.setactive(TRUE)
-			//and only increment our power usage if door is providing field power
+			//and only start using power if door is providing field power
 			if(src.linked_forcefield.powered_locally)
-				power_usage += LINKED_FORCEFIELD_POWER_USAGE
+				SubscribeToProcess()
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
@@ -913,4 +910,3 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	var/broken = 0
 
 #undef KNOCK_DELAY
-#undef LINKED_FORCEFIELD_POWER_USAGE

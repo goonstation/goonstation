@@ -658,6 +658,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	Cross(atom/A)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
+#define LINKED_FORCEFIELD_POWER_USAGE 100
+
 /obj/forcefield/energyshield/perma/doorlink
 	name = "Door-linked Atmospheric/Liquid Forcefield"
 	desc = "A door-linked force field that prevents gas and liquids from passing through it."
@@ -668,9 +670,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			var/obj/machinery/door/door = (locate() in src.loc)
 			if(door)
 				door.linked_forcefield = src
-				door.SubscribeToProcess() //necessary for power consumption while open
+				door.power_usage += LINKED_FORCEFIELD_POWER_USAGE
 				src.linked_door = door
 				src.set_dir(door.dir)
+
+#undef LINKED_FORCEFIELD_POWER_USAGE
 
 /obj/machinery/door/disposing()
 	if(linked_forcefield)
