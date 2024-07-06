@@ -855,8 +855,9 @@ var/global/list/cycling_airlocks = list()
 					D.close()
 
 /obj/machinery/door/airlock/close(var/manual_actuation = FALSE)
-	if (src.welded || src.locked || src.operating)
-		return
+	if(!manual_actuation)
+		if (src.welded || src.locked || src.operating || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+			return
 
 	var/already_closed = ..(!src.safety)
 
