@@ -1555,7 +1555,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, SPAN_ALERT("The [W] can't fit into [src]."))
+			boutput(user, SPAN_ALERT("[W] can't fit into [src]."))
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
