@@ -4103,7 +4103,7 @@ ABSTRACT_TYPE(/area/mining)
 	power_environ = 0
 	expandable = FALSE
 
-	proc/propagate_zone(var/turf/target_turf,var/propagate_from_self = FALSE)
+	proc/propagate_zone(var/turf/target_turf)
 		if(target_turf.transfer_evaluation)
 			return
 		target_turf.transfer_evaluation = TRUE
