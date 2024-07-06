@@ -1439,11 +1439,12 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	var/miranda = src.mind.get_miranda()
-	if (isnull(miranda))
-		src.say_verb(DEFAULT_MIRANDA)
-		return
-	src.say_verb(miranda)
+	if(!ON_COOLDOWN(src, "recite_miranda", 10 SECONDS))
+		var/miranda = src.mind.get_miranda()
+		if (isnull(miranda))
+			src.say_verb(DEFAULT_MIRANDA)
+			return
+		src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
