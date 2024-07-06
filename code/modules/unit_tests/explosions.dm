@@ -24,5 +24,5 @@
 
 	SPAWN(0.2 SECONDS)
 		// Assert mob took damage
-		if(H.health >= oldhealth)
+		if(H?.health >= oldhealth)
 			Fail("Mob took no damage from explosion")
