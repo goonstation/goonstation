@@ -4091,7 +4091,7 @@ ABSTRACT_TYPE(/area/mining)
 	CanEnter()
 		return 1
 
-/** When building a zone in space, unconnected to anywhere else, this is the zone that gets created.
+/** When building in space, unconnected to anywhere else, this is the zone the turf will be allocated to.
  *  Turfs within it will cede themselves to built zones (created by APC installation) or other existing zones.
  *  Only one of these should exist at any given time, assigned to the unconnected_zone global variable.
  */
@@ -4110,7 +4110,7 @@ ABSTRACT_TYPE(/area/mining)
 		LAGCHECK(LAG_LOW)
 		var/list/propagation_targets = list()
 		var/area/connectable_area = null
-		///Usually, this will be true because someone built an APC in an unconnected zone
+		///Usually, this will be true because someone built an APC in an unconnected zone.
 		var/apc_already_for_some_reason = FALSE
 		if (locate(/obj/machinery/power/apc) in target_turf)
 			apc_already_for_some_reason = TRUE
