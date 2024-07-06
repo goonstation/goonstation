@@ -1,6 +1,7 @@
 //------------ Speech Outputs ------------//
 #define SPEECH_OUTPUT_BLOBCHAT "blobchat"
 #define SPEECH_OUTPUT_DEADCHAT "deadchat"
+#define SPEECH_OUTPUT_DEADCHAT_ANNOUNCER "deadchat_announcer"
 #define SPEECH_OUTPUT_EQUIPPED "equipped"
 #define SPEECH_OUTPUT_FLOCK "flock"
 #define SPEECH_OUTPUT_FLOCK_GLOBAL "global_flock"

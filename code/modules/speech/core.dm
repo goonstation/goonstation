@@ -157,7 +157,6 @@ Things To Implement:
 
 Old Code To Remove:
 - `say_quote`
-- `try_render_chat_to_admin`
 - `process_accents`
 - `separate_radio_prefix_and_message`
 - `saylist`

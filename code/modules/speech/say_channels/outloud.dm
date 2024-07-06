@@ -7,6 +7,8 @@
 
 		if (!ismob(message.message_origin.loc))
 			var/turf/centre = get_turf(message.message_origin)
+			if (!centre)
+				return
 			SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
 			for (var/type in src.listeners)
@@ -50,6 +52,8 @@
 
 		if (!ismob(message.message_origin.loc))
 			var/turf/centre = get_turf(message.message_origin)
+			if (!centre)
+				return
 			SET_UP_HEARD_TURFS(heard_clearly_turfs, WHISPER_RANGE, centre)
 			SET_UP_HEARD_DISTORTED_TURFS(heard_distorted_turfs, message.heard_range, centre, heard_clearly_turfs)
 

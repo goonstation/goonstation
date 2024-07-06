@@ -11,6 +11,8 @@
 /datum/say_channel/delimited/local/looc/PassToChannel(datum/say_message/message)
 	var/list/list/datum/listen_module/input/listen_modules_by_type = list()
 	var/turf/centre = get_turf(message.message_origin)
+	if (!centre)
+		return
 
 	for (var/type in src.listeners)
 		listen_modules_by_type[type] ||= list()

@@ -67,3 +67,26 @@
 	"}
 
 	. = ..()
+
+
+/datum/speech_module/output/deadchat_announcer
+	id = SPEECH_OUTPUT_DEADCHAT_ANNOUNCER
+	channel = SAY_CHANNEL_DEAD
+
+/datum/speech_module/output/deadchat_announcer/process(datum/say_message/message)
+	message.flags &= ~SAYFLAG_HAS_QUOTATION_MARKS
+	message.speaker_to_display = ""
+	message.say_verb = ""
+
+	message.format_speaker_prefix = {"\
+		<span class='game deadsay'>\
+	"}
+
+	message.format_verb_prefix = ""
+	message.format_content_prefix = ""
+
+	message.format_message_suffix = {"\
+		</span>\
+	"}
+
+	. = ..()

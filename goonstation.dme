@@ -1789,6 +1789,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\say_channels\thrallchat.dm"
 #include "code\modules\speech\say_sources\_abstract_say_source_parent.dm"
 #include "code\modules\speech\say_sources\announcement_computer.dm"
+#include "code\modules\speech\say_sources\deadchat_announcer.dm"
 #include "code\modules\speech\say_sources\flock_system.dm"
 #include "code\modules\speech\say_sources\gang_announcer.dm"
 #include "code\modules\speech\say_sources\ion_flock.dm"

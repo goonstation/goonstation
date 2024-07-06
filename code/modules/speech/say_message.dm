@@ -199,10 +199,11 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (!(src.flags & SAYFLAG_IGNORE_HTML))
 		message = strip_html(message)
 
-	// Check for URLs.
-	if (global.url_regex.Find(message))
-		boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		return
+		// Check for URLs.
+		if (global.url_regex.Find(message))
+			if (ismob(src.speaker))
+				boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+			return
 
 	return message
 

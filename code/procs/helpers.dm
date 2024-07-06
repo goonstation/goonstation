@@ -2562,37 +2562,15 @@ proc/total_cross(turf/T, atom/movable/mover)
 // Used to send a message to all ghosts when something Interesting has happened
 // Any message sent to this should just be a funny comment on something logged elsewhere,
 // so they probably don't need to be logged here again (e.g. death alerts)
-proc/message_ghosts(var/message, show_wraith = FALSE)
-	if (!message)
-		return
 
-	var/rendered = SPAN_DEADSAY("[message]")
-	for (var/client/C)
-		if (C.deadchatoff) continue
-		if (!C.mob) continue
-		var/mob/M = C.mob
-		if (istype(M, /mob/new_player)) continue
+var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 
-		// If an admin, show message
-		if (M.try_render_chat_to_admin(C, rendered))
-			// admin saw message, no need to continue tests
-			continue
+/proc/message_ghosts(message, show_wraith = FALSE)
+	var/list/mob/living/intangible/wraith/wraiths = list()
+	for (var/datum/antagonist/antagonist_datum as anything in global.get_all_antagonists(ROLE_WRAITH))
+		wraiths[antagonist_datum.owner.current] = TRUE
 
-		// Skip forced-observers (hivemind, etc)
-		if (istype(M, /mob/dead/target_observer))
-			var/mob/dead/target_observer/tobserver = M
-			if(!tobserver.is_respawnable)
-				continue
-
-		// Skip the wraith if show_wraith is off or they have deadchat off
-		if (iswraith(M))
-			var/mob/living/intangible/wraith/the_wraith = M
-			if (!show_wraith || !the_wraith.hearghosts)
-				continue
-
-		// Otherwise, output to ghosts
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
-			boutput(M, rendered)
+	global.deadchat_announcer.say(message, flags = SAYFLAG_IGNORE_HTML, message_params = list("atom_listeners_to_be_excluded" = wraiths))
 
 /// Find a client based on ckey
 /proc/find_client(ckey)
