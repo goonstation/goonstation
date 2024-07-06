@@ -21,7 +21,7 @@ TYPEINFO(/obj/machinery/crusher)
 
 	var/last_sfx = 0
 
-/obj/machinery/crusher/walls
+/obj/machinery/crusher/wall
 	power_usage = 0
 
 /obj/machinery/crusher/Bumped(atom/movable/AM)
