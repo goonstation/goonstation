@@ -1429,7 +1429,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (prob(15))
 				user.emote("scream")
 
-/obj/decal/fakeobjects/core
+/obj/fakeobject/core
 	name = "reactor core"
 	desc = "It looks pretty well ruined."
 	icon = 'icons/effects/64x64.dmi'

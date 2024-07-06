@@ -327,6 +327,7 @@
 		UpdateOverlays(image(icon,"stg-foil"),"foil")
 		foiled = TRUE
 		name = "Foil [name]"
+		src.update_stored_info()
 
 /obj/item/playing_card/expensive //(¬‿¬)
 	desc = "Tap this card and sacrifice one of yourselves to win the game."

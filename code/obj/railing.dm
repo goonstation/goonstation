@@ -7,7 +7,7 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER
+	flags = USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
@@ -219,6 +219,14 @@
 		icon = 'icons/obj/velvetrope.dmi'
 		icon_state = "velvetrope"
 		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
+
+	guard // I'm yoinking this from window.dm and there's nothing you can do to stop me
+		name = "guard railing"
+		desc = "Doesn't look very sturdy, but it's better than nothing?"
+		icon = 'icons/obj/structures.dmi'
+		is_reinforced = TRUE
+		icon_state = "safetyrail"
 		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump

@@ -1,4 +1,3 @@
-#define PTLEFFICIENCY 0.1
 #define PTLMINOUTPUT 1 MEGA WATT
 
 /obj/machinery/power/pt_laser
@@ -309,7 +308,7 @@
 	melt_blocking_objects()
 
 /obj/machinery/power/pt_laser/proc/laser_power()
-	return round(abs(output)*PTLEFFICIENCY)
+	return round(abs(output))
 
 /obj/machinery/power/pt_laser/proc/stop_firing()
 	qdel(src.laser)
@@ -318,17 +317,33 @@
 	blocking_objects = list()
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
-	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || \
-				istype(O, /obj/laser_sink) || \
-				istype(O, /obj/machinery/vehicle) || \
-				istype(O, /obj/machinery/bot/mulebot) || \
-				istype(O, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
-				isrestrictedz(O.z))
+	for (var/atom/A as anything in blocking_objects)
+		if (istype(A, /obj/machinery/door/poddoor) || \
+				istype(A, /obj/laser_sink) || \
+				istype(A, /obj/machinery/vehicle) || \
+				istype(A, /obj/machinery/bot/mulebot) || \
+				istype(A, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
+				isrestrictedz(A.z))
 			continue
-		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
-			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
-			qdel(O)
+
+		var/melt_prob = 0 //this var only exists for debug really
+		if (isturf(A))
+			if (abs(output) < 100 MEGA WATTS) //hard threshold for turfs, you need a beeg laser
+				melt_prob = 0
+			else
+				melt_prob = abs(output) / (25 MEGA WATTS)
+			if (prob(melt_prob))
+				A.ex_act(2)
+			if (A.density) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
+				animate_meltspark(A)
+		else
+			melt_prob = (abs(output)) / 0.5 MEGA WATTS
+			if (prob(melt_prob))
+				A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
+				qdel(A)
+
+		if (QDELETED(A))
+			src.blocking_objects -= A //mmm yes for loop list modification
 
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return abs(src.output) <= src.charge
@@ -495,8 +510,8 @@
 		if(5 MEGA WATTS + 1 to 200 MEGA WATTS)
 			L.set_burning(100)
 			L.bodytemperature = max(power/1e4, L.bodytemperature)
-			L.TakeDamage("chest", 0, power/1e7) //ow
-			if(ishuman(L) && prob(min(power/1e7,50)))
+			L.TakeDamage("chest", 0, power/(1 MEGA WATT)) //ow
+			if(ishuman(L) && prob(min(power/(1 MEGA WATT),50)))
 				var/limb = pick("l_arm","r_arm","l_leg","r_leg")
 				L:sever_limb(limb)
 				L.visible_message("<b>The [src.name] slices off one of [L.name]'s limbs!</b>")
@@ -511,7 +526,7 @@
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
 			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
-			L.blowthefuckup(min(1+round(power/1e12),20),0)
+			L.blowthefuckup(min(1+round(power/(1 GIGA WATT)),20),0)
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 
 	return 0
@@ -589,6 +604,8 @@
 /obj/linked_laser/ptl/become_endpoint()
 	..()
 	var/turf/next_turf = get_next_turf()
+	if (next_turf?.density)
+		src.source.blocking_objects |= next_turf
 	for (var/obj/object in next_turf)
 		if (src.is_blocking(object))
 			src.source.blocking_objects |= object
@@ -596,6 +613,7 @@
 /obj/linked_laser/ptl/release_endpoint()
 	..()
 	var/turf/next_turf = get_next_turf()
+	src.source.blocking_objects -= next_turf
 	for (var/obj/object in next_turf)
 		if (src.is_blocking(object))
 			src.source.blocking_objects -= object
@@ -619,6 +637,4 @@
 /obj/laser_sink/ptl_seller/exident(obj/linked_laser/ptl/laser)
 	laser.source.selling_lasers -= laser
 
-
-#undef PTLEFFICIENCY
 #undef PTLMINOUTPUT

@@ -135,6 +135,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 		if(!islist(src.phrases))
 			PANIC = TRUE
+			ircbot.export("admin", list("msg" = "<@480972525703266314> Holy fuck phrase_log is panicing come fix it"))
 			src.phrases = list()
 
 		src.original_lengths = list()
@@ -251,10 +252,10 @@ var/global/datum/phrase_log/phrase_log = new
 			for (var/datum/apiModel/entry in randomEntries.entries)
 				switch(category)
 					if("ai_laws")
-						if(entry["uploader_name"] != "Random Event")
-							new_phrases += entry["law_text"]
+						if(entry:uploader_name != "Random Event")
+							new_phrases += entry:law_text
 					if("tickets", "fines")
-						new_phrases += entry["reason"]
+						new_phrases += entry:reason
 			src.cached_api_phrases[category] = new_phrases
 
 		var/list/L = src.cached_api_phrases[category]

@@ -11,7 +11,7 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	pass_unstable = FALSE // Machines hopefully are stable.
 	var/status = 0

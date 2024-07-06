@@ -1013,8 +1013,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.drive_recipes = MD.drivestored
 			should_update_static = TRUE
 
-		// Grumping for trying to insert sheets/coils/raw mats
-		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+
+		else if (istype(W, /obj/item/sheet/) || istype(W, /obj/item/cable_coil/) || istype(W, /obj/item/raw_material/))
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
