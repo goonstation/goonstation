@@ -4133,7 +4133,7 @@ ABSTRACT_TYPE(/area/mining)
 
 		for (var/obj/machinery/M in trans_turf)
 			if(M in src.machines)
-				if(istype(M),/obj/machinery/power/apc)
+				if(istype(M,/obj/machinery/power/apc))
 					var/obj/machinery/power/apc/yoink_apc = M
 					yoink_apc.area = new_owner
 					yoink_apc.name = "[new_owner.name] APC"
@@ -4143,8 +4143,8 @@ ABSTRACT_TYPE(/area/mining)
 				src.machines -= M
 				new_owner.machines += M
 				if (istype(M,/obj/machinery/light)) // steal all the lights
-					A.remove_light(M)
-					TargA.add_light(M)
+					src.remove_light(M)
+					new_owner.add_light(M)
 
 		src.contents -= trans_turf
 		new_owner.contents += trans_turf
@@ -4162,6 +4162,13 @@ ABSTRACT_TYPE(/area/mining)
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
+
+	proc/SetName(var/name)
+		src.name = name
+		global.area_list_is_up_to_date = FALSE // our area cache could no longer be accurate!
+		for(var/obj/machinery/power/apc/apc in src)
+			apc.name = "[name] APC"
+			apc.area = src
 
 /// adhara setpiece
 /area/janitor_setpiece
