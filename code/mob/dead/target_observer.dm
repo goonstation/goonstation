@@ -3,6 +3,7 @@
 	name = "spooky ghost"
 	icon = null
 	event_handler_flags = 0
+	use_speech_bubble = FALSE
 	var/atom/target
 	var/is_respawnable = TRUE
 	/// Is this observer locked to one particular owner?

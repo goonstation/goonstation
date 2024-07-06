@@ -211,13 +211,19 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "announcement2"
 
-/obj/machinery/computer/announcement/syndie
+/obj/machinery/computer/announcement/syndicate
 	name = "Syndicate Announcement computer"
 	computer_say_source_name = "Syndicate Announcement computer"
 	theme = "syndicate"
-	icon = 'icons/obj/decoration.dmi'
-	icon_state = "syndiepc14"
-	req_access = null
+	req_access = list(access_syndicate_shuttle)
+
+	commander
+		req_access = list(access_syndicate_commander)
+
+	console
+		icon_state = "syndiepc14"
+		icon = 'icons/obj/decoration.dmi'
+		req_access = null
 
 /obj/machinery/computer/announcement/clown
 	req_access = null

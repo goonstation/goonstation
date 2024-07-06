@@ -223,7 +223,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_add_freeform_ai_law,
 		/client/proc/cmd_admin_show_ai_laws,
 		/client/proc/cmd_admin_reset_ai,
-		/client/proc/addpathogens,
 		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/datum/admins/proc/toggletraitorscaling,
@@ -286,7 +285,6 @@ var/list/admin_verbs = list(
 		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
 		/client/proc/idclip,
-		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_list_players,
 		/client/proc/cmd_give_player_pets,
@@ -1634,6 +1632,9 @@ var/list/fun_images = list()
 		if (ignorePlayerVote == "No")
 			return
 
+	if (mapSwitcher.locked)
+		return alert("The server is currently switching to another map. You will need to wait.")
+
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
 	if (mapSwitcher.next)
@@ -2079,7 +2080,8 @@ var/list/fun_images = list()
 
 	var/client/C = src.client
 	if (choice in type_procs)
-		call(A, type_procs[choice])()
+		var/procpath/procpath = type_procs[choice]
+		call(A, procpath.name)()
 		src.update_cursor()
 		return
 

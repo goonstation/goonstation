@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/radio)
 	suffix = "\[3\]"
 	icon_state = "walkietalkie"
 	item_state = "radio"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throw_speed = 2
 	throw_range = 9

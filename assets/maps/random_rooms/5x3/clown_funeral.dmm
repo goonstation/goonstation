@@ -66,7 +66,7 @@
 "Y" = (
 /obj/item/spraybottle/clown_flower,
 /obj/storage/closet/coffin,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/under/misc/clown/fancy,
 /obj/item/clothing/shoes/clown_shoes,
 /obj/item/clothing/mask/clown_hat,

@@ -2,14 +2,18 @@
 	stat = STAT_DEAD
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
-	///Our corpse, if one exists
-	var/mob/living/corpse
+
+	use_speech_bubble = TRUE
+
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_BLOBCHAT)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT)
 	default_speech_output_channel = SAY_CHANNEL_DEAD
 	start_listen_languages = list(LANGUAGE_ALL)
+
+	///Our corpse, if one exists
+	var/mob/living/corpse
 
 // dead
 /mob/dead/New()
@@ -72,7 +76,8 @@
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
-	return P.hits_ghosts
+	// INVIS_ALWAYS ghosts are logged out/REALLY hidden.
+	return (P.hits_ghosts && (src.invisibility != INVIS_ALWAYS))
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DEAD).enabled)
@@ -161,7 +166,8 @@
 				message = "<B>[src]</B> [act]s."
 
 		else
-			src.show_text("Unusable emote '[act]'.", "blue")
+			if (voluntary)
+				src.show_text("Unusable emote '[act]'.", "blue")
 			return
 
 	if (message)

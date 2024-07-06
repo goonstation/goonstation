@@ -1,5 +1,223 @@
-
+(t)fri jul 05 24
+(u)LeahTheTech
+(*)High power PTL beams can now very slowly melt through walls. Will I regret this? Take your bets!
+(t)thu jul 04 24
+(u)LeahTheTech
+(+)Syndicate daggers now only play their equip sound when equipped from an inventory.
+(u)JORJ949
+(p)19766
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The listening post has been outfitted with an announcement computer. Agents only!
+(u)Flaborized
+(p)19576
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The chameleon outfit traitor item can now disguise as a mail courier.
+(u)Jan.antilles
+(p)19813
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Cinnamon buns can now be made in the oven.
+(u)Kubius
+(p)19665
+(e)🆕🎨🔊📦🚗|C-Feature, C-Sprites, C-Sound, A-Game-Objects, A-Vehicles
+(*)The pod-mounted EFIF-1 Construction System is now available. It can rapidly repair damaged station tiles or build new offsite structures.
+(t)wed jul 03 24
+(u)Cheekybrdy
+(p)19722
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds chameleon bombs to mail courier's options as a traitor.
+(u)RubberRats
+(p)19754
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Lawbringer has been given a new (?) mode for use against the cluwne
+(t)mon jul 01 24
+(u)Lord_Earthfire
+(p)19412
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The amount of chems a unit of a chemical decays into no longer changes with the speed the person metabolizes it.
+(u)Jan.antilles
+(p)19786
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Add Cream or Salmon Fillet Slices to bagels to make extra tasty Cream Cheese or Lox bagels!
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
+(u)nova2053
+(p)19553
+(e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
+(+)Normal and synthetic organs will no longer make you indefinitely full.
+(t)sat jun 29 24
+(u)LeahTheTech
+(+)Power transfer lasers can now pass through containment fields.
+(u)glowbold
+(p)19703
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Kinetic projectiles progressively break computers/consoles to scrap.
+(+)Energy projectiles, including tasers, have a chance to break computer/console screens.
+(u)joeled
+(p)19647
+(e)🗺💅🔬|A-Mapping, C-QoL, A-Science
+(+)Plasma Research has been outfitted with their own gas extractor on nearly all stations.
+(t)fri jun 28 24
+(u)DecodeQwertyPls
+(p)19564
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Most maps now have freezers in toxins.
+(u)Kubius
+(p)19635
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The Prototypist requisition has four new outcomes.
+(u)mintyphresh
+(p)19479
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)NT's payroll stipends now deposit some excess money to the payroll budget.
+(u)TealSeer
+(p)19405
+(e)🔎🔒❗⚙|C-Code-Quality, A-Secret, E-FUCK, A-Internal
+(*)The way fingerprints are left on objects has been changed under the hood, please report any weirdness or things having fingerprints that shouldn't!
+(t)thu jun 27 24
+(u)glowbold
+(p)19720
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Projectiles have a chance to pass through girders. The more secure a girder is, the less likely projectiles can travel through them.
+(t)wed jun 26 24
+(u)LeahTheTech
+(*)Did you know Abzu has two suns? Well now it actually does in-game - Oshan nights will be brighter and red tinted as the planet is lit by its second sun. The bright daylight hours have also been extended a bit, so overall it should feel much brighter.
+(u)Kubius
+(p)19648
+(e)🆕⚖|C-Feature, C-Balance
+(+)Small update pass on requisitions, notably less using tools no longer available in general manufacturer.
+(u)Angelx3
+(p)19657
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Resprites the cat ears and all their recolours.
+(+)Makes cat ears overlay over helmets.
+(u)CalliopeSoups
+(p)19496
+(e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
+(+)Skeletons drop their torso on death as a tasty snack for antags.
+(u)Flaborized
+(p)19662
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited the mineral accumulator.
+(u)glowbold
+(p)19613
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(t)mon jun 24 24
+(u)LeahTheTech
+(+)RP security officers no longer have access to APCs.
+(u)NightmarechaMillian
+(p)19681
+(e)|
+(+)Mechscanned sawflies will no longer produce a remote on deployment.
+(+)The sawfly remote is separately mechscannable.
+(u)glowbold
+(p)19653
+(e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
+(*)Market refreshes and mail deliveries will now occur automatically.
+(u)Tyrant
+(p)19579
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Fixed Oshan maintenance airlocks not having appropriate maintenance access requirements.
+(t)sun jun 23 24
+(u)tarmunora
+(+)Quartermasters are now forklift certified
+(u)Ilysen
+(p)19485
+(e)🆕📄📦|C-Feature, A-UI, A-Game-Objects
+(*)Added a new traitor item: the marionette implant. Check your uplink today, especially if you're a packet nerd.
+(t)fri jun 21 24
+(u)mintyphresh
+(p)19460
+(e)🔄🎭|C-Rework, A-RP
+(+)Showering with clothes on now restores the hygiene motive, with higher chemprot limiting the maximum cleanliness you can achieve.
+(u)JORJ949
+(p)19592
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Replacement command PDAs can now be found in their lockers. Helpful for impersonating heads of staff.
+(u)Colossus
+(p)19119
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added pufferfish as a catchable saltwater aquarium fish, filled with tetrodotoxin, can be quite dangerous if prepared incorrectly.
+(+)Tetrodotoxin remains dormant for 10 cycles, causes emotes, messages, slight bouts of misstep and stutters for 17 cycles, causes blurry vision, random oxygen deprivation and slowness, as well as loud heart palpitations for 20 cycles, and finally causes oxygen damage and cardiac arrest.
+(+)Pufferfish come with lots of tetrodotoxin in them, and require someone with proper kitchen training(the chef) to separate the toxic liver from the fillet without either contaminating it or poisoning themselves.
+(u)Garash
+(p)19331
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the Map Vote & Map Vote Results windows, do your civic duty today!
+(t)thu jun 20 24
+(u)LeahTheTech
+(+)Mining charges now correctly break low-hardness geodes.
+(u)Garash2k
+(p)19107
+(e)🆕💅📄📦|C-Feature, C-QoL, A-UI, A-Game-Objects
+(+)New UI for the stationary and portable Chemicompiler.
+(t)wed jun 19 24
+(u)LeahTheTech and Flaborized
+(p)19598
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added geodes that mining can find. Can only be broken open with explosions, check your geological scanner for the power required. Geodes can contain various types of crystalline ore deposits as well as oil and other liquids.
+(t)tue jun 18 24
+(u)TemThrush
+(p)19540
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)A new stylish furniture set is available to purchase from Cargo!
+(t)mon jun 17 24
+(u)JORJ949
+(p)19490
+(e)🗺🔎⚙|A-Mapping, C-Code-Quality, A-Internal
+(+)HoS and Armory access have been separated, presently only affects the NTSO who no longer gets HoS access. Please report any other changes as a bug.
+(u)Sovexe
+(p)19561
+(e)🪲🔒|C-Bug, A-Secret
+(+)Ants will no longer spawn in food located on restricted Z levels
+(u)LeahTheTech
+(+)The PTL is now correctly more dangerous at lower power levels.
+(t)sun jun 16 24
+(u)glowbold
+(p)19529
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The Buttes Motel has installed door locks.
+(u)Glamurio (Ryou)
+(p)19398
+(e)🆕🗺|C-Feature, A-Mapping
+(*)NT put aside some funding for an escape pod bay in Clarion.
+(u)Retrino
+(p)19105
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Anti-bioweapon crates have been moved to their proper homes in the armory.
+(u)JORJ949
+(p)19426
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate now offers a cheaper version of the radio upgrade granting access to the syndicate frequency.
+(u)Glamurio (Ryou)
+(p)19508
+(e)🪲💅|C-Bug, C-QoL
+(+)You can now choose not to have a middle name in character creation by leaving it empty.
+(t)sat jun 15 24
+(u)Skeletonman0
+(p)19513
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The VR Go-Karts have been serviced and are ready for their next race.
+(u)Carton171
+(p)19481
+(e)🆕⚗|C-Feature, A-Chemistry
+(+)Players will once again lose their shit upon being filled with/covered in ants
+(u)Lord_Earthfire
+(p)19521
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The bowling kit's cost was reduced to 6, down from 7.
+(+)Bowling balls from the bowling kit now deal additional damage when thrown or in melee while wearing the bowling suit.
 (t)fri jun 14 24
+(u)LeahTheTech
+(p)19525
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Traitor bowling balls thrown while wearing the bowling suit now throw people flying and can continue through multiple targets.
 (u)Azrun
 (p)19503
 (e)⚖🧛💪|C-Balance, A-Gamemodes, A-Traits

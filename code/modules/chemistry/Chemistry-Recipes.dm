@@ -1022,10 +1022,10 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
-	cocktail_kalimoxto
-		name = "Kalimoxto"
-		id = "kalimoxto"
-		result = "kalimoxto"
+	cocktail_kalimotxo
+		name = "Kalimotxo"
+		id = "kalimotxo"
+		result = "kalimotxo"
 		required_reagents = list("cola" = 1, "wine" = 1)
 		result_amount = 2
 		mix_phrase = "The drink mixes together in an oddly Basque way."

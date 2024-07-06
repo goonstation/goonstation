@@ -1183,51 +1183,36 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(src.mob.loc)
 			var/obj/item/I
-			//this should be done in like, a loop but by god the only way to do that is with vars[]
-			I = src.mob.limbs.l_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.l_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.organHolder.drop_organ("head")
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
+			I = src.mob.organHolder.drop_organ("head", src.mob)
+			I.loc = get_turf(src.mob)
+			var/list/limbs = list()
+			limbs += src.mob.limbs.l_arm?.remove(FALSE)
+			limbs += src.mob.limbs.r_arm?.remove(FALSE)
+			limbs += src.mob.limbs.l_leg?.remove(FALSE)
+			limbs += src.mob.limbs.r_leg?.remove(FALSE)
+
+			for (var/obj/limb in limbs) // You do not know my pain.
+				limb.throw_return = FALSE
+				ThrowRandom(limb, rand(2,3), 1)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
 			if(H)
 				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+				ThrowRandom(H, 1)
 			else
 				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
-				I?.pixel_x += rand(-8, 8)
-				I?.pixel_y += rand(-8, 8)
+				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
-			var/list/organlist = list()
-			for(var/idx in src.mob.organHolder.organ_list)
-				organlist += src.mob.organHolder.organ_list[idx]
-			for(var/obj/item/C in src.mob.list_ejectables())
-				if(!(C in organlist))
-					C.set_loc(src.mob.loc)
-					C.pixel_x += rand(-8, 8)
-					C.pixel_y += rand(-8, 8)
 
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
-			var/mob/dead/observer/newmob = src.mob.ghostize()
-			newmob?.corpse = null
 
-			return MUTRACE_ONDEATH_DEFER_DELETE
+			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"

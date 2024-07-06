@@ -37,7 +37,7 @@
 	},
 /area/shuttle/escape/centcom)
 "dQ" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4
 	},
 /turf/simulated/shuttle/wall{
@@ -340,7 +340,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "LM" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4
 	},
 /turf/simulated/shuttle/wall{
@@ -388,7 +388,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/shuttle/escape/centcom)
 "Pz" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 8
 	},
 /turf/simulated/shuttle/wall{

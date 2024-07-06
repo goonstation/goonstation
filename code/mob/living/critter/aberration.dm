@@ -140,6 +140,7 @@
 		return FALSE
 
 /datum/limb/aberration_field
+	can_beat_up_robots = TRUE
 
 	harm(mob/living/target, mob/living/user)
 		if (GET_COOLDOWN(user, "envelop_attack"))

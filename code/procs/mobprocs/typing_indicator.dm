@@ -4,21 +4,51 @@
 var/mutable_appearance/living_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 var/mutable_appearance/living_typing_bubble = mutable_appearance('icons/mob/mob.dmi', "typing")
 var/mutable_appearance/living_emote_typing_bubble = mutable_appearance('icons/mob/overhead_icons32x48.dmi', "emote_typing")
+var/mutable_appearance/dead_typing_bubble = mutable_appearance('icons/mob/mob.dmi', "typing_of_the_dead")
+
+/mob/var/has_typing_indicator = FALSE
+
 /mob/proc/create_typing_indicator()
-	return
+	if (src.has_typing_indicator)
+		return
+
+	src.has_typing_indicator = TRUE
+
+	src.ensure_say_tree()
+	src.RegisterSignal(src.say_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(update_typing_indicator))
+	src.say_tree.speaker_origin.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
 
 /mob/proc/remove_typing_indicator()
-	return
+	if (!src.has_typing_indicator)
+		return
+
+	src.has_typing_indicator = FALSE
+
+	src.ensure_say_tree()
+	src.UnregisterSignal(src.say_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
+	src.say_tree.speaker_origin.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+
+/mob/proc/update_typing_indicator(tree, atom/old_parent, atom/new_parent)
+	old_parent.ClearSpecificOverlays(TYPING_OVERLAY_KEY)
+	new_parent.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
 
 /mob/proc/create_emote_typing_indicator()
-	return
+	if (src.has_typing_indicator)
+		return
+
+	src.has_typing_indicator = TRUE
+	src.UpdateOverlays(living_emote_typing_bubble, TYPING_OVERLAY_KEY)
 
 /mob/proc/remove_emote_typing_indicator()
-	return
+	if (!src.has_typing_indicator)
+		return
+
+	src.has_typing_indicator = FALSE
+	src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
 
 /mob/Logout()
-	remove_typing_indicator()
-	remove_emote_typing_indicator()
+	src.remove_typing_indicator()
+	src.remove_emote_typing_indicator()
 	. = ..()
 
 // -- Typing verbs -- //
@@ -104,44 +134,33 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	if(message)
 		me_verb(message)
 
+
 // -- Human Typing Indicators -- //
 /mob/living/create_typing_indicator()
-	if (src.has_typing_indicator || !isalive(src) || src.bioHolder?.HasEffect("mute") || src.hasStatus("muted"))
+	if (!isalive(src) || src.bioHolder?.HasEffect("mute") || src.hasStatus("muted"))
 		return
 
-	src.has_typing_indicator = TRUE
-
-	src.ensure_say_tree()
-	src.RegisterSignal(src.say_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(update_typing_indicator))
-	src.say_tree.speaker_origin.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
-
-/mob/living/remove_typing_indicator()
-	if (!src.has_typing_indicator)
-		return
-
-	src.has_typing_indicator = FALSE
-
-	src.ensure_say_tree()
-	src.UnregisterSignal(src.say_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
-	src.say_tree.speaker_origin.UpdateOverlays(null, TYPING_OVERLAY_KEY)
-
-/mob/living/proc/update_typing_indicator(tree, atom/old_parent, atom/new_parent)
-	old_parent.ClearSpecificOverlays(TYPING_OVERLAY_KEY)
-	new_parent.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
+	. = ..()
 
 /mob/living/create_emote_typing_indicator()
-	if (src.has_typing_indicator || !isalive(src) || src.hasStatus("paralysis"))
+	if (!isalive(src) || src.hasStatus("paralysis"))
 		return
 
-	src.has_typing_indicator = TRUE
-	src.UpdateOverlays(living_emote_typing_bubble, TYPING_OVERLAY_KEY)
+	. = ..()
 
-/mob/living/remove_emote_typing_indicator()
-	if (!src.has_typing_indicator)
-		return
 
-	src.has_typing_indicator = FALSE
-	src.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+// -- Override Target Observer Typing Indicators -- //
+/mob/dead/target_observer/create_typing_indicator()
+	return
+
+/mob/dead/target_observer/remove_typing_indicator()
+	return
+
+/mob/dead/target_observer/create_emote_typing_indicator()
+	return
+
+/mob/dead/target_observer/remove_emote_typing_indicator()
+	return
 
 
 #undef TYPING_OVERLAY_KEY

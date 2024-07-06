@@ -3,7 +3,7 @@
 	desc = "Allows the user to remotely operate a drone."
 	icon_state = "matanalyzer"
 	var/signal_tag = "mining"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/list/drone_list = list()
 
 	attack_self(var/mob/user as mob)

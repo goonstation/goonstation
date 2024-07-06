@@ -380,9 +380,18 @@
 			skin_target.original_icon_state = "large_flask"
 			skin_target.fluid_overlay_states = 11
 			skin_target.container_style = "large_flask"
-			skin_target.fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
-			skin_target.UpdateIcon()
+			skin_target.fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 			activator.set_clothing_icon_dirty()
+
+			var/datum/component/C = skin_target.GetComponent(/datum/component/reagent_overlay)
+			C?.RemoveComponent()
+			skin_target.AddComponent( \
+				/datum/component/reagent_overlay, \
+				reagent_overlay_icon = skin_target.container_icon, \
+				reagent_overlay_icon_state = skin_target.container_style, \
+				reagent_overlay_states = skin_target.fluid_overlay_states, \
+				reagent_overlay_scaling = skin_target.fluid_overlay_scaling, \
+			)
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a large beaker in your hands."))
@@ -1508,7 +1517,9 @@
 	proc/sillyscream(mob/M)
 		var/mob/living/living = M
 		if(istype( living ))
-			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsounds["sillyscream"] = pick('sound/voice/screams/sillyscream1.ogg', 'sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsound = "sillyscream"
+			M.bioHolder.mobAppearance.UpdateMob()
 			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else

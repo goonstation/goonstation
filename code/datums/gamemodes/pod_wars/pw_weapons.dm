@@ -124,7 +124,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 
 /obj/item/gun/energy/blaster_pod_wars/shotgun
-	name = "blaster smg"
+	name = "blaster shotgun"
 	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
 	icon_state = "pw_shotgun"
 	item_state = "pw_shotgun"
@@ -201,7 +201,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	burn_type = 1
 	stamina_damage = 25

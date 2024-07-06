@@ -3,7 +3,7 @@
 	desc = "An incredibly advanced power core created by the Syndicate."
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "engine_core"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
@@ -27,7 +27,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
 	is_syndicate = 1
 	contraband = 10

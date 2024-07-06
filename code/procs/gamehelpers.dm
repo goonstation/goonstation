@@ -30,6 +30,38 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 // TODO convert the above to use a file/string picker
 
 
+var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a hose","a new bottle of cologne")
+/proc/stinkStringHygiene(var/mob/stinker)
+	var/someone = "someone"
+	var/they = "it"
+	var/their = "their"
+	var/blank_or_s = "s"
+	if(stinker)
+		someone = stinker.name
+		they = "[he_or_she(stinker)]"
+		their = "[his_or_her(stinker)]"
+		blank_or_s = "[blank_or_s(stinker)]"
+	switch(rand(1,9))
+		if(1)
+			return "Smells like [someone] needs [pick(stink_remedy)]."
+		if(2)
+			return "[pick(stinkExclamations)], has anyone here heard of a shower before?"
+		if(3)
+			return "[capitalize(someone)] smells positively vile."
+		if(4)
+			return "[capitalize(someone)]'s odor hangs the air. You get a whiff. Disgusting."
+		if(5) //You wonder if John Joe even notices how gross he smells anymore.
+			return "You wonder if people around here ever notice how gross they smell sometimes."
+		if(6)
+			return "[pick(stinkExclamations)], what you wouldn't give to be staffed on a station where people bathe..."
+		if(7)
+			return "You reckon [someone] has [their] very own locker room in [their] backpack, because, damn! [they] REEK[capitalize(blank_or_s)]!"
+		if(8)
+			return "[capitalize(someone)] must have skipped laundry day for the past month. At least, [they] smell[blank_or_s] like it."
+		if(9)
+			return "Dirt and grime is practically airborne around you. [capitalize(someone)] must be responsible."
+
+
 /proc/get_local_apc(O)
 	var/turf/T = get_turf(O)
 	if (!T)
@@ -85,8 +117,14 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if ((source in bible_contents) && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return TRUE
+	else if (source in bible_contents)
+		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
+			if(IN_RANGE(user,B,1))
+				return TRUE
+	else if (source in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -167,7 +205,18 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if(user.client?.holder?.ghost_interaction)
 		return TRUE
 	if (target in bible_contents)
-		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
+		target = null
+		for_by_tcl(B, /obj/item/bible)
+			if(IN_RANGE(user,B,1))
+				target = B
+				break
+		if (!target)
+			return 0
+	if (target in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				target = TR
+				break
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)

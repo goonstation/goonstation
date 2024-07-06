@@ -15,7 +15,7 @@
 	density = 0
 	canmove = 1
 	use_stamina = FALSE
-	flags = FPRINT | NO_MOUSEDROP_QOL
+	flags = NO_MOUSEDROP_QOL
 	gender = NEUTER
 
 	blinded = FALSE

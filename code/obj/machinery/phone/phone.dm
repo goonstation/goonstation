@@ -262,7 +262,7 @@ TYPEINFO(/obj/machinery/phone)
 		return FALSE
 
 	if (ishuman(user))
-		user.visible_message(SPAN_ALERT("<b>[user] bashes the [src] into their head repeatedly!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] bashes the [src] into [his_or_her(user)] head repeatedly!</b>"))
 		user.TakeDamage("head", 150, 0)
 		return TRUE
 

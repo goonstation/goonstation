@@ -220,8 +220,8 @@ datum/mind
 		miranda = new_text
 
 	proc/get_miranda()
-		if (isproc(src.miranda)) //imfunctionalprogrammer
-			return call(src.miranda)()
+		if (islist(src.miranda)) //isproc machine broke, so uh just wrap your procs in a list when you pass them here to distinguish them from strings :)
+			return call(src.miranda[1])()
 		return src.miranda
 
 	proc/show_miranda(mob/recipient)

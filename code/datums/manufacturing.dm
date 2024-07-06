@@ -706,7 +706,7 @@
 
 	red
 		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
-		
+
 	yellow
 		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
 
@@ -3079,6 +3079,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser)
 	create = 1
 	time = 20 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/efif1
+	name = "EFIF-1 Construction System"
+	item_requirements = list("metal_superdense" = 50,
+							 "claretine" = 20,
+							 "electrum" = 10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/constructor)
+	create = 1
+	time = 60 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/lock

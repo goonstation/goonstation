@@ -11,7 +11,7 @@
 	var/protective_temperature = 0
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
@@ -382,7 +382,7 @@
 	"c" = R_FREQ_CIVILIAN)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
-		"c" = R_FREQ_CIVILIAN,
+		"c" = RADIOCL_CIVILIAN,
 		)
 	icon_override = "mail"
 	icon_tooltip = "Mail Courier"

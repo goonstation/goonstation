@@ -532,6 +532,10 @@
 /proc/blank_or_es(mob/subject)
 	return subject.get_pronouns().pluralize ? "" : "es"
 
+/// 'they were' vs 'he was'
+/proc/were_or_was(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "were" : "was"
+
 /mob/proc/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
 
@@ -590,6 +594,7 @@
 	return bleeding
 
 /mob/proc/equipped_limb()
+	RETURN_TYPE(/datum/limb)
 	return null
 
 /mob/living/critter/equipped_limb()

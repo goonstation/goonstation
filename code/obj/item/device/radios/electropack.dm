@@ -12,7 +12,7 @@
 	throw_speed = 1
 	throw_range = 3
 	w_class = W_CLASS_HUGE
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	item_state = "electropack"
 	cant_self_remove = TRUE

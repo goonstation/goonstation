@@ -8,10 +8,11 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	anchored = ANCHORED
 	speaker_range = 1
 	chat_class = RADIOCL_INTERCOM
+	locked_frequency = TRUE
 	start_listen_inputs = null
 	microphone_listen_input = LISTEN_INPUT_OUTLOUD_RANGE_1
 	initial_microphone_enabled = FALSE
-	initial_speaker_enabled = FALSE
+	initial_speaker_enabled = TRUE
 	density = 1
 	rand_pos = 0
 	desc = "A HAM radio transmitter...Basically...It only transmits to loudspeakers on a secure frequency."
@@ -27,15 +28,18 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	. = ..()
 	. += "[src] is[src.microphone_enabled ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
-/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user)
+/obj/item/device/radio/intercom/loudspeaker/proc/toggle_microphone_mode(mob/user)
 	if (!src.microphone_enabled)
 		src.toggle_microphone(TRUE)
 		src.icon_state = "transmitter-on"
-		boutput(user, "Now transmitting.")
+		src.visible_message("The [src] clicks on and begins transmitting.")
 	else
 		src.toggle_microphone(FALSE)
 		src.icon_state = "transmitter"
-		boutput(user, "No longer transmitting.")
+		src.visible_message("The [src] whirrs down and stops transmitting.")
+
+/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+	src.toggle_microphone_mode(user)
 
 
 TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
@@ -51,6 +55,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	initial_speaker_enabled = TRUE
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
+	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."

@@ -224,7 +224,7 @@
 		density=1
 		anchored = UNANCHORED
 		icon_state="housing_cabinet"
-		flags = FPRINT | EXTRADELAY | CONDUCT
+		flags = EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
 		default_hat_y = 14
 
@@ -268,7 +268,7 @@
 		anchored=0
 		num_f_icons=1
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+		flags = EXTRADELAY | TABLEPASS | CONDUCT
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
@@ -354,7 +354,7 @@
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
