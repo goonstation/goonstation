@@ -16285,13 +16285,15 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	pixel_y = 20
+	pixel_y = 20;
+	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	dir = 4;
-	pixel_x = -10
+	pixel_x = -10;
+	network = "Eye"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -57125,12 +57127,14 @@
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	dir = 5;
-	pixel_x = -10
+	pixel_x = -10;
+	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1
+	dir = 1;
+	network = "Eye"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -58165,13 +58169,15 @@
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	pixel_y = 20;
-	dir = 6
+	dir = 6;
+	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	dir = 8;
-	pixel_x = 10
+	pixel_x = 10;
+	network = "Eye"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -58311,6 +58317,9 @@
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_locked";
 	name = "broken airlock"
+	},
+/obj/cable/green{
+	icon_state = "6-9"
 	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
@@ -62357,7 +62366,7 @@
 /turf/unsimulated/floor,
 /area/centcom)
 "klZ" = (
-/obj/machinery/light/small/broken{
+/obj/machinery/light/small/sticky/warm/very{
 	dir = 4
 	},
 /obj/table/nanotrasen/auto,
@@ -63281,12 +63290,14 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10
+	dir = 10;
+	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1
+	dir = 1;
+	network = "Eye"
 	},
 /obj/lattice,
 /turf/space,
@@ -66230,12 +66241,14 @@
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 1
+	dir = 1;
+	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10
+	dir = 10;
+	network = "Eye"
 	},
 /obj/lattice,
 /turf/space,
@@ -66517,6 +66530,26 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nOz" = (
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/fakeobject{
+	desc = "It's probably broken.";
+	dir = 6;
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
+/obj/grille/catwalk,
+/obj/cable/green{
+	icon_state = "6-10"
+	},
+/turf/space,
+/area/watchful_eye_sensor)
 "nOC" = (
 /obj/item/scrap,
 /obj/decal/cleanable/blood,
@@ -76017,6 +76050,10 @@
 	icon_state = "solar_panel";
 	name = "solar panel"
 	},
+/obj/grille/catwalk,
+/obj/cable/green{
+	icon_state = "5-9"
+	},
 /turf/space,
 /area/watchful_eye_sensor)
 "vLW" = (
@@ -77604,12 +77641,14 @@
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
 	dir = 9;
-	pixel_x = 10
+	pixel_x = 10;
+	network = "Eye"
 	},
 /obj/machinery/camera{
 	name = "sensor";
 	desc = "A small, high quality camera, monitoring the eyes for traces of activity.";
-	dir = 10
+	dir = 10;
+	network = "Eye"
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -142203,7 +142242,7 @@ iSr
 mzo
 hBx
 mzo
-vLJ
+nOz
 tuc
 tuc
 tuc

@@ -2877,6 +2877,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "It seems to be staring directly at the Purple Giant."
 	ai_type = /datum/aiHolder/empty
 	ai_retaliates = FALSE
+	New()
+		..()
+		add_lifeprocess(/datum/lifeprocess/disability) // so that they stop jittering
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */

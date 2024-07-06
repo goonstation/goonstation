@@ -1239,14 +1239,17 @@ proc/spawn_kitchen_note()
 	icon_state = "paper_singed"
 	info ={"
 	Steps: <br>
-	1. assum ctrl of sat 13. involves killin prolly. implnt maint crew tooo so we
-	can use then snce we don't know jack about how it wrks lol <br>
-	2. hack the sensurs to track non revs?? or sth. figyure it out when we get their <br>
-	3. a wait furthr isntr instrect instuctions <br> <br>
+	1. assume control of eye sat 13. murder optional but probably required. implant <br>
+	the maintainence crew tooo so we can ask them how it works.<br>
+	2. hack the sensors to track non revs. figure it out when we get there with maint crew.<br>
+	3. await further instuctions <br> <br>
 
-	edit: turns out the eyes r actual eyes. wtf!!! no one tld us that!! HOW 2 HACK AN IBALL?? <br>
-	edit 2: it kind of work s now yey<br>
-	please nevr make me com hear a gain
+	PS: turns out the eyes are ACTUAL eyes. Like weird space eyes?? no one told us that!!<br>
+	How do you hack an eye?? <br> <br>
+
+	PSS: we hacked the eye. hell yeah. okay technically we just hacked the satellite and <br>
+	made the eye point at certain things but that's good enough for me. management can <br>
+	do it themselves if they want it done properly. Fight me.<br>
 	"}
 
 /obj/item/paper/marionette_implant_readme

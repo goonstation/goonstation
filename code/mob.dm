@@ -2395,8 +2395,6 @@
 
 /mob/proc/make_jittery(var/amount)
 	// usually, only humans get jittery. watchful eyes also get jittery now.
-	if (!ishuman(src) && !istype(src, /mob/living/critter/small_animal/floateye/watchful))
-		return
 
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
 													// clamped to max 400
