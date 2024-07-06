@@ -632,11 +632,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
 			return
 
-
-
-//sealab arrivalss
-/obj/machinery/door/var/obj/forcefield/energyshield/linked_forcefield = null
-
 /obj/forcefield/energyshield/perma
 	name = "Permanent Atmospheric/Liquid Forcefield"
 	desc = "A permanent force field that prevents gas and liquids from passing through it."

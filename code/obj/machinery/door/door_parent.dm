@@ -45,6 +45,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	var/ignore_light_or_cam_opacity = FALSE
 
+	var/obj/forcefield/energyshield/linked_forcefield = null
+
 	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
 	var/atom/movable/bumper = null
 
