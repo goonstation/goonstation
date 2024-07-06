@@ -4102,8 +4102,10 @@ ABSTRACT_TYPE(/area/mining)
 	power_light = 0
 	power_environ = 0
 	expandable = FALSE
+	var/list/turfs_in_progress = list()
 
 	proc/propagate_zone(var/turf/target_turf)
+		turfs_in_progress += target_turf
 		LAGCHECK(LAG_LOW)
 		var/list/propagation_targets = list()
 		var/area/connectable_area
@@ -4115,14 +4117,17 @@ ABSTRACT_TYPE(/area/mining)
 		for (var/dir in cardinal)
 			var/turf/polled_turf = get_step(target_turf,dir)
 			var/area/polled_area = polled_turf?.loc
-			if(!connectable_area && polled_area.expandable)
+			if(!connectable_area && polled_area.expandable && !istype(polled_area,/area/space))
 				connectable_area = polled_area
 			if(!apc_already_for_some_reason && istype(polled_area,/area/unconnected_zone))
 				propagation_targets += polled_turf
 		if(connectable_area || apc_already_for_some_reason)
 			if(transfer_ownership(target_turf,connectable_area,apc_already_for_some_reason))
 				for(var/turf/T in propagation_targets)
-					propagate_zone(T)
+					if(!(T in turfs_in_progress))
+						propagate_zone(T)
+		else
+			turfs_in_progress -= target_turf
 
 	proc/transfer_ownership(var/turf/trans_turf,var/area/new_owner,var/make_built_zone = FALSE)
 		if(istype(new_owner,/area/unconnected_zone)) //this should never happen, and now it extra will never happen
@@ -4151,6 +4156,9 @@ ABSTRACT_TYPE(/area/mining)
 
 		if(new_owner.area_apc)
 			new_owner.area_apc.request_update()
+
+		if(trans_turf in turfs_in_progress)
+			turfs_in_progress -= trans_turf
 
 	New()
 		. = ..()
