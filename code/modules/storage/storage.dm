@@ -354,10 +354,11 @@
 	if (I in user?.equipped_list())
 		user.u_equip(I)
 	if (src.stack_stackables)
-		var/ret = src.try_stack_contents(I)
-		if (isnull(ret)) // we couldn't stack everything. this shouldn't happen
-			logTheThing(LOG_DEBUG, src, "[I] failed to be added to [src] after trying to stack contents")
-			I.set_loc(get_turf(linked_item))
+		var/obj/item/curr = I
+		I = src.try_stack_contents(I)
+		if (isnull(I)) // we couldn't stack everything. this shouldn't happen
+			logTheThing(LOG_DEBUG, src, "[curr] failed to be added to [src] after trying to stack contents")
+			curr.set_loc(get_turf(linked_item))
 			return
 	else
 		src.stored_items += I
