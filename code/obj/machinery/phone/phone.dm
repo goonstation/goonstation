@@ -390,7 +390,6 @@ TYPEINFO(/obj/machinery/phone)
 
 	name = "phone handset"
 	icon = 'icons/obj/machines/phones.dmi'
-	// inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
 	var/obj/machinery/phone/parent = null
 	flags = TALK_INTO_HAND
