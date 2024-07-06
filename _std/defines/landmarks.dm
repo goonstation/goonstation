@@ -47,6 +47,9 @@
 // Wizard
 #define LANDMARK_WIZARD "Wizard_Spawn"
 
+// Witch
+#define LANDMARK_WITCH "Witch-Spawn"
+
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
 
