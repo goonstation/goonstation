@@ -59794,7 +59794,7 @@
 /obj/cable/green{
 	icon_state = "4-10"
 	},
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old,
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton,
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
@@ -61619,6 +61619,9 @@
 	},
 /obj/lattice/directional_icons{
 	dir = 1
+	},
+/obj/mapping_helper/mob_spawn/corpse/human/engineer{
+	armless = 1
 	},
 /turf/space,
 /area/watchful_eye_sensor)
