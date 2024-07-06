@@ -32745,7 +32745,7 @@
 "dyC" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 4;
-	mail_tag = "fitness room"
+	mail_tag = "detective's office"
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4;
