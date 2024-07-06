@@ -3,7 +3,6 @@
 	sneaky = TRUE
 	move_triggered = FALSE
 	stack_stackables = TRUE
-	slots = INFINITY
 
 	add_contents_extra(obj/item/I, mob/user, visible)
 		visible = FALSE
