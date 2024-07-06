@@ -4131,7 +4131,7 @@ ABSTRACT_TYPE(/area/mining)
 		if(istype(new_owner,/area/unconnected_zone)) //this should never happen, and now it extra will never happen
 			return
 
-		if(make_built_zone)
+		if(!new_owner && make_built_zone)
 			new_owner = new /area/built_zone()
 
 		for (var/obj/machinery/M in trans_turf)
