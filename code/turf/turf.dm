@@ -576,6 +576,11 @@ proc/generate_space_color()
 					if (rank_to_level(mob.client.holder.rank) < LEVEL_SA)
 						M.set_loc(warptarget)
 			else if (isturf(warptarget) && (abs(OldLoc.x - warptarget.x) > 1 || abs(OldLoc.y - warptarget.y) > 1))
+	#ifdef MIDSUMMER
+				var/mob/mob = M
+				if ((warptarget_modifier == LANDMARK_VM_ONLY_WITCHES) && (mob.job != "Witch"))
+					return
+	#endif
 				// double set_loc is a fix for the warptarget gliding bug
 				M.set_loc(get_step(warptarget, get_dir(src, OldLoc)))
 				SPAWN(0.001) // rounds to the nearest tick, about as smooth as it's gonna get
