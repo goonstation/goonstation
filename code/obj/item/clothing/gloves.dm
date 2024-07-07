@@ -253,12 +253,6 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			setProperty("conductivity", 0)
 			setProperty("exploprot", 10)
 
-	inspector
-		name = "inspector's gloves"
-		desc = "These gloves are perfect for picking up things for a closer inspection"
-		icon_state = "inspector"
-		item_state = "inspector"
-
 /obj/item/clothing/gloves/black/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
 		user.visible_message(SPAN_NOTICE("[user] cuts off the fingertips from [src]."))
