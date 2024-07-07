@@ -12,6 +12,7 @@
 	bound_width = 96
 	req_access = list(access_engineering_power)
 	var/output = 0		//power output of the beam
+	var/max_dial_value = 999 // limitation of what can be set on the ui dial.
 	var/capacity = 1e15
 	var/charge = 0
 	var/charging = 0
@@ -62,6 +63,12 @@
 		terminal.master = src
 
 		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Enable Power Input", PROC_REF(_enable_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Disable Power Input", PROC_REF(_disable_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Enable Power Output", PROC_REF(_enable_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Disable Power Ouput", PROC_REF(_disable_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -75,6 +82,58 @@
 				make_cleanable( /obj/decal/cleanable/machine_debris,T)
 
 	..()
+
+/obj/machinery/power/pt_laser/proc/_enable_input_mechchomp()
+	src.charging = TRUE
+
+/obj/machinery/power/pt_laser/proc/_disable_input_mechchomp()
+	src.charging = FALSE
+
+/obj/machinery/power/pt_laser/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newinput = text2num(inp.signal)
+	if (/*isnum_safe(newinput) && */newinput != src.chargelevel && newinput > 0 && newinput < 999 * 1 TERA WATT)
+		src.chargelevel = newinput
+		// Working backwards to update the ui based on the power we've set up.
+		if(chargelevel < 1 KILO WATT)
+			src.input_multi = 1 WATT
+		else if(chargelevel < 1 MEGA WATT)
+			src.input_multi = 1 KILO WATT
+		else if(chargelevel < 1 GIGA WATT)
+			src.input_multi = 1 MEGA WATT
+		else if(chargelevel < 1 TERA WATT)
+			src.input_multi = 1 GIGA WATT
+		else
+			src.input_multi = 1 TERA WATT
+		src.input_number = clamp((src.chargelevel/src.input_multi), 0, src.max_dial_value)
+
+/obj/machinery/power/pt_laser/proc/_enable_output_mechchomp()
+	src.online = TRUE
+	src.process(1)
+
+/obj/machinery/power/pt_laser/proc/_disable_output_mechchomp()
+	src.online = FALSE
+	if (!src.online && src.firing)
+		src.stop_firing()
+	src.process(1)
+
+/obj/machinery/power/pt_laser/proc/_set_output_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newoutput = text2num(inp.signal)
+	// We check against the absolute value of the current charge level, in case the PTL has been emagged.
+	if (newoutput != abs(src.output) && /*isnum_safe(newoutput) && */ newoutput > 0)
+		src.output = src.emagged ? -newoutput : newoutput
+		// Working backwards to update the ui based on the power we've set up.
+		if(newoutput >= 1 TERA WATT)
+			src.output_multi = 1 TERA WATT
+		else if(newoutput >= 1 GIGA WATT)
+			src.output_multi = 1 GIGA WATT
+		else
+			src.output_multi = 1 MEGA WATT
+		src.output_number = clamp((newoutput/src.output_multi), 0, src.max_dial_value)
+		src.update_output()
+		src.update_laser_power()
+
 
 /obj/machinery/power/pt_laser/attackby(obj/item/I, mob/user)
 	var/obj/item/card/id/id_card = get_id_card(I)
@@ -385,6 +444,16 @@
 		"totalGridPower" = src.terminal?.powernet.avail,
 	)
 
+
+/obj/machinery/power/pt_laser/proc/update_output()
+	if(!src.output || !src.can_fire())
+		src.stop_firing()
+		return
+	if (src.firing)
+		src.update_laser_power()
+	else if (src.online)
+		src.start_firing()
+
 /obj/machinery/power/pt_laser/ui_act(action, params)
 	. = ..()
 	if (.)
@@ -432,13 +501,7 @@
 			else
 				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
-			if(!src.output || !src.can_fire())
-				src.stop_firing()
-				return
-			if (src.firing)
-				src.update_laser_power()
-			else if (src.online)
-				src.start_firing()
+			src.update_output()
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
 			src.output = src.output_number * src.output_multi
