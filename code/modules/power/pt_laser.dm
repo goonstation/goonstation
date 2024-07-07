@@ -92,7 +92,7 @@
 /obj/machinery/power/pt_laser/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
 	if(!length(inp.signal)) return
 	var/newinput = text2num(inp.signal)
-	if (/*isnum_safe(newinput) && */newinput != src.chargelevel && newinput > 0 && newinput < 999 * 1 TERA WATT)
+	if (newinput != src.chargelevel && isnum_safe(newinput) &&  newinput > 0)
 		src.chargelevel = newinput
 		// Working backwards to update the ui based on the power we've set up.
 		if(chargelevel < 1 KILO WATT)
@@ -121,7 +121,7 @@
 	if(!length(inp.signal)) return
 	var/newoutput = text2num(inp.signal)
 	// We check against the absolute value of the current charge level, in case the PTL has been emagged.
-	if (newoutput != abs(src.output) && /*isnum_safe(newoutput) && */ newoutput > 0)
+	if (newoutput != abs(src.output) && isnum_safe(newoutput) newoutput > 0)
 		src.output = src.emagged ? -newoutput : newoutput
 		// Working backwards to update the ui based on the power we've set up.
 		if(newoutput >= 1 TERA WATT)
