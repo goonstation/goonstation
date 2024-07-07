@@ -10792,6 +10792,13 @@
 	icon_state = "corner_east"
 	},
 /area/crater/biodome/crew)
+"aWb" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	tag = "icon-fblue2";
+	dir = 10
+	},
+/area/afterlife/bar/sanctuary)
 "aWf" = (
 /obj/item/raw_material/char,
 /turf/unsimulated/floor/cave,
@@ -18802,6 +18809,7 @@
 /turf/unsimulated/floor/grime,
 /area/iomoon/base/underground)
 "bxB" = (
+/obj/decal/tile_edge/flowers,
 /turf/unsimulated/floor/grasslush,
 /area/afterlife/bar/sanctuary)
 "bxE" = (
@@ -29568,6 +29576,15 @@
 	name = "sand"
 	},
 /area/sim/area2)
+"cmj" = (
+/obj/machinery/vending/jobclothing/engineering/afterlife,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "cmm" = (
 /obj/iomoon_puzzle/meat_ganglion{
 	id = "meatland_maze1";
@@ -43009,9 +43026,8 @@
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "daL" = (
-/obj/storage/closet/wardrobe/pride,
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/carpet/grime,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "daM" = (
 /obj/decal/stage_edge,
@@ -43304,10 +43320,17 @@
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "dbX" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
+/obj/stool/bar{
+	name = "stool"
 	},
-/turf/unsimulated/floor/carpet/grime,
+/obj/item/crushed_can{
+	pixel_x = -13;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "red2"
+	},
 /area/afterlife/bar/sanctuary)
 "dbY" = (
 /obj/storage/closet/office,
@@ -43349,7 +43372,12 @@
 	},
 /area/afterlife/bar/sanctuary)
 "dcg" = (
-/turf/unsimulated/floor/carpet/grime,
+/obj/stool/bar{
+	name = "stool"
+	},
+/turf/unsimulated/floor/carpet{
+	icon_state = "red2"
+	},
 /area/afterlife/bar/sanctuary)
 "dch" = (
 /obj/item/cigbutt{
@@ -43394,11 +43422,13 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dcn" = (
-/obj/submachine/ATM/atm_alt{
-	dir = 8
+/obj/stool/bar{
+	name = "stool"
 	},
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/wood/six,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "red2"
+	},
 /area/afterlife/bar/sanctuary)
 "dco" = (
 /obj/disposalpipe/segment/vertical,
@@ -43425,21 +43455,23 @@
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/bar/sanctuary)
 "dcs" = (
-/obj/stove,
-/obj/item/soup_pot,
-/obj/item/ladle,
+/obj/machinery/vending/jobclothing/research/afterlife{
+	pixel_x = 3
+	},
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	tag = "icon-fblue2";
+	dir = 9
+	},
+/area/afterlife/bar/sanctuary)
 "dct" = (
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcu" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south,
-/obj/map/light/brighterwhite,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/obj/item/storage/wall/clothingrack/dresses,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "dcv" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
@@ -43478,19 +43510,21 @@
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "dcB" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 4;
-	pixel_x = -4
+/obj/item/storage/box/glassbox,
+/obj/storage/secure/closet/kitchen{
+	locked = 0
 	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcC" = (
-/obj/storage/secure/closet/fridge/kitchen{
-	locked = 0
+/obj/storage/crate/packing,
+/obj/random_item_spawner/formalclothes/few,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	tag = "icon-fblue2";
+	dir = 5
 	},
-/obj/item/plant/herb/cannabis/spawnable,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/area/afterlife/bar/sanctuary)
 "dcD" = (
 /obj/item/cigbutt{
 	pixel_x = 6;
@@ -43508,6 +43542,10 @@
 /area/crater)
 "dcF" = (
 /obj/map/light/brighterwhite,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcG" = (
@@ -43608,10 +43646,11 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcU" = (
-/obj/submachine/foodprocessor{
-	dir = 8
-	},
 /obj/map/light/brighterwhite,
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/obj/item/plant/herb/cannabis/spawnable,
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dcV" = (
@@ -43797,10 +43836,12 @@
 	},
 /area/afterlife/bar)
 "ddx" = (
-/obj/machinery/deep_fryer{
-	dir = 8
-	},
 /obj/map/light/brighterwhite,
+/obj/submachine/chef_oven{
+	desc = "An appliance back from the dead.";
+	dir = 8;
+	name = "salvaged oven"
+	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "ddy" = (
@@ -43840,12 +43881,16 @@
 	},
 /area/afterlife/bar)
 "ddE" = (
-/obj/storage/secure/closet/kitchen{
-	locked = 0
+/obj/machinery/vending/jobclothing/security/afterlife{
+	pixel_x = -3;
+	pixel_y = 8
 	},
-/obj/item/storage/box/glassbox,
-/turf/unsimulated/floor/grey,
-/area/afterlife/bar)
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/afterlife/bar/sanctuary)
 "ddF" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/unsimulated/floor/grey,
@@ -46607,6 +46652,12 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
+"doO" = (
+/obj/item/storage/wall/clothingrack/clothes3{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "doQ" = (
 /obj/fakeobject/tallsmes,
 /obj/fakeobject{
@@ -47716,7 +47767,6 @@
 /turf/unsimulated/floor/wood/three,
 /area/centcom/offices/shotgunbill)
 "dwo" = (
-/obj/machinery/computer/tetris,
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
@@ -53951,8 +54001,12 @@
 	},
 /area/afterlife/bar/sanctuary)
 "dSi" = (
-/obj/machinery/clothingbooth,
-/turf/unsimulated/floor/carpet/grime,
+/obj/machinery/computer/tetris,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/carpet{
+	icon_state = "red2";
+	dir = 4
+	},
 /area/afterlife/bar/sanctuary)
 "dSj" = (
 /obj/stool/chair/comfy/blue{
@@ -54089,12 +54143,12 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/afterlife/bar)
 "dSI" = (
-/obj/stool/bar{
-	name = "stool"
+/obj/decal/tile_edge/stripe{
+	dir = 1
 	},
-/obj/map/light/brightwhite,
+/obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
+/area/afterlife/bar/sanctuary)
 "dSJ" = (
 /obj/table/wood/round/auto,
 /obj/item/boardgame/chess,
@@ -54352,10 +54406,8 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dTr" = (
-/obj/submachine/chef_oven{
-	desc = "An appliance back from the dead.";
-	dir = 8;
-	name = "salvaged oven"
+/obj/submachine/foodprocessor{
+	dir = 8
 	},
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
@@ -55443,6 +55495,16 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
+"eHV" = (
+/obj/decoration/floralarrangement{
+	pixel_y = 4
+	},
+/obj/map/light/brighterwhite,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar/sanctuary)
 "eHZ" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/yellow,
@@ -55798,15 +55860,18 @@
 /turf/unsimulated/floor/purple/side,
 /area/iomoon/base)
 "eZl" = (
-/obj/storage/closet/wardrobe/black/formalwear,
-/obj/item/clothing/under/misc/lawyer,
-/obj/item/storage/box/lightbox/tubes/red,
-/turf/unsimulated/floor/carpet/grime,
+/obj/decal/cleanable/glitter/harmless,
+/turf/unsimulated/floor/wood/six,
 /area/afterlife/bar/sanctuary)
 "eZW" = (
 /obj/fakeobject/dreambeach/sticks,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"fap" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/shoe/lots,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "faP" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
@@ -55993,6 +56058,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"fiT" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue3"
+	},
+/area/afterlife/bar/sanctuary)
 "fiY" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/paper/book/from_file/monster_manual,
@@ -56329,6 +56399,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"fBq" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "fBC" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
@@ -56740,6 +56816,13 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
+"fVi" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	tag = "icon-fblue2";
+	dir = 9
+	},
+/area/afterlife/bar/sanctuary)
 "fVo" = (
 /turf/unsimulated/wall/auto/lead/white{
 	name = "virtual lead wall"
@@ -56758,6 +56841,13 @@
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
+"fVL" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar/sanctuary)
 "fWh" = (
 /obj/map/light/lava,
 /obj/fakeobject/pipe{
@@ -57482,9 +57572,8 @@
 	},
 /area/centcom)
 "gAK" = (
-/obj/submachine/claw_machine,
-/turf/unsimulated/floor/wood/six,
-/area/afterlife/bar/sanctuary)
+/turf/cordon,
+/area/space)
 "gAY" = (
 /obj/lattice{
 	dir = 1;
@@ -58586,6 +58675,13 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/T_south,
 /area/centcom/offices/rodney)
+"hFf" = (
+/obj/map/light/brighterwhite,
+/obj/machinery/deep_fryer{
+	dir = 4
+	},
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "hFk" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -59011,6 +59107,12 @@
 	dir = 4
 	},
 /area/iomoon/base/underground)
+"icC" = (
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/afterlife/bar/sanctuary)
 "icJ" = (
 /obj/burning_barrel,
 /turf/unsimulated/floor/setpieces/rootfloor,
@@ -59087,6 +59189,14 @@
 	dir = 4
 	},
 /area/crunch/wtc)
+"ihR" = (
+/obj/submachine/slot_machine,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred1"
+	},
+/area/afterlife/bar/sanctuary)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 8;
@@ -59666,6 +59776,11 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"iGw" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/random_item_spawner/dressup/one,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "iGD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59974,6 +60089,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"iVw" = (
+/obj/item/storage/wall/clothingrack/clothes4{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "iVD" = (
 /obj/grille/catwalk,
 /obj/railing/orange/reinforced{
@@ -60040,6 +60161,18 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/sand,
 /area/centcom/offices/azrun)
+"jag" = (
+/obj/machinery/vending/jobclothing/medical/afterlife{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue2";
+	tag = "icon-fblue2";
+	dir = 10
+	},
+/area/afterlife/bar/sanctuary)
 "jav" = (
 /obj/item/extinguisher,
 /obj/decal/cleanable/blood,
@@ -60445,6 +60578,11 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wizard_station)
+"jnb" = (
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/afterlife/bar/sanctuary)
 "jns" = (
 /obj/machinery/light,
 /turf/unsimulated/floor,
@@ -60699,6 +60837,12 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"jxQ" = (
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue3"
+	},
+/area/afterlife/bar/sanctuary)
 "jxX" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "1";
@@ -60725,6 +60869,14 @@
 	},
 /turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
+"jyN" = (
+/obj/random_item_spawner/dressup/one,
+/obj/random_item_spawner/dressup/one{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "jyU" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -60809,6 +60961,13 @@
 /obj/item/device/light/flashlight,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"jEc" = (
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "jEp" = (
 /turf/unsimulated/floor/stairs,
 /area/void_diner)
@@ -61749,6 +61908,14 @@
 "kxa" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/storage)
+"kxB" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "kxS" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 1
@@ -63357,6 +63524,13 @@
 	},
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owleryhall)
+"lYu" = (
+/obj/map/light/brighterwhite,
+/obj/stove,
+/obj/item/soup_pot,
+/obj/item/ladle,
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -63659,11 +63833,6 @@
 	dir = 10
 	},
 /area/hospital/samostrel)
-"moP" = (
-/obj/storage/closet/wardrobe/wizard,
-/obj/map/light/brightwhite,
-/turf/unsimulated/floor/carpet/grime,
-/area/afterlife/bar/sanctuary)
 "mpq" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
@@ -65370,6 +65539,10 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"nQa" = (
+/obj/item/storage/wall/clothingrack/clothes2,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "nQp" = (
 /obj/lattice{
 	dir = 6;
@@ -66013,6 +66186,12 @@
 "oqj" = (
 /turf/unsimulated/floor/carpet/regalcarpet,
 /area/centcom/offices/janantilles)
+"ors" = (
+/turf/unsimulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue3"
+	},
+/area/afterlife/bar/sanctuary)
 "ort" = (
 /obj/spacevine{
 	density = 1;
@@ -66206,6 +66385,13 @@
 	dir = 6
 	},
 /area/centcom/gallery)
+"oEW" = (
+/obj/storage/closet/wardrobe/pride{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "oEX" = (
 /obj/table/auto,
 /obj/item/paper/businesscard/lawyers,
@@ -66844,6 +67030,14 @@
 	},
 /turf/space,
 /area/space)
+"pjm" = (
+/obj/submachine/claw_machine,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/carpet{
+	icon_state = "red2";
+	dir = 8
+	},
+/area/afterlife/bar/sanctuary)
 "pjz" = (
 /obj/tree,
 /turf/unsimulated/grass,
@@ -67548,6 +67742,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"pKi" = (
+/obj/machinery/clothingbooth,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "pKM" = (
 /obj/shrub/dead,
 /turf/unsimulated/floor/purple/side{
@@ -68146,6 +68349,13 @@
 /obj/item/basketball/catball,
 /turf/unsimulated/floor,
 /area/centcom/offices/pali)
+"qjv" = (
+/obj/decal/poster/wallsign/neonretro{
+	pixel_y = 23
+	},
+/obj/map/light/purple,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "qkO" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-6"
@@ -68162,6 +68372,15 @@
 	dir = 1
 	},
 /area/crypt/sigma/morgue)
+"qle" = (
+/obj/machinery/vending/jobclothing/catering/afterlife,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "qlV" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -68859,6 +69078,13 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"qOB" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	icon_state = "blue1";
+	tag = "icon-blue1"
+	},
+/area/afterlife/bar/sanctuary)
 "qOO" = (
 /obj/fakeobject/dreambeach/mars,
 /turf/unsimulated/floor/dream/beach,
@@ -70086,6 +70312,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
+"rNt" = (
+/turf/unsimulated/floor/carpet{
+	icon_state = "fblue3";
+	dir = 1
+	},
+/area/afterlife/bar/sanctuary)
 "rNx" = (
 /turf/unsimulated/wall/generic{
 	desc = "It won't budge.";
@@ -71250,6 +71482,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sSC" = (
+/obj/storage/closet/wardrobe/wizard,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar/sanctuary)
 "sSJ" = (
 /obj/rail/cap{
 	dir = 8
@@ -71597,6 +71833,13 @@
 	icon_state = "shore-30"
 	},
 /area/titlescreen)
+"tox" = (
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "toK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -72088,6 +72331,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"tRD" = (
+/obj/decoration/frontwalldamage,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "tSc" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
@@ -72118,6 +72365,10 @@
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
+"tVj" = (
+/obj/item/storage/wall/clothingrack/dresses2,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "tVB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -72637,6 +72888,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"urS" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "use" = (
 /obj/overlay{
 	density = 1;
@@ -73637,6 +73896,11 @@
 /obj/machinery/light/lamp/green,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"vlH" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/hat/lots,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "vlQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -74023,6 +74287,13 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"vDm" = (
+/obj/machinery/illuminated_sign/open_neon{
+	icon_state = "opensign-glow"
+	},
+/obj/map/light/cyan,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "vDE" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/cobweb{
@@ -74616,6 +74887,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
+"waW" = (
+/obj/item/storage/wall/clothingrack/clothes1,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "wbs" = (
 /obj/death_button/clean_gunsim{
 	pixel_x = 32
@@ -75185,6 +75460,16 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/john/owlery)
+"wyy" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/dressup/lots,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "wyH" = (
 /obj/critter/moonspy,
 /obj/cable{
@@ -76186,6 +76471,12 @@
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
+"xrQ" = (
+/obj/disposalpipe/trunk/south,
+/obj/machinery/disposal,
+/obj/map/light/brighterwhite,
+/turf/unsimulated/floor/grey,
+/area/afterlife/bar)
 "xsc" = (
 /obj/decal/tile_edge/flowers{
 	icon_state = "flowers4"
@@ -76438,6 +76729,10 @@
 	name = "???"
 	},
 /area/precursor/pit)
+"xzs" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "xzM" = (
 /obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
@@ -76961,6 +77256,14 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"xVb" = (
+/obj/storage/closet/wardrobe/pride{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/decal/cleanable/glitter/harmless,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "xVg" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Crew Quarters";
@@ -101153,7 +101456,7 @@ crm
 cnH
 aaa
 dcp
-gAK
+dbY
 daP
 daP
 dcx
@@ -101455,9 +101758,9 @@ crn
 cnH
 aaa
 dcp
-dbY
 daP
-dcn
+daP
+dTj
 dcx
 daP
 dcp
@@ -101757,9 +102060,9 @@ fzq
 cnH
 aaa
 dcp
-dcp
+pjm
 dbX
-dcp
+daP
 hIh
 daP
 dcp
@@ -102059,9 +102362,9 @@ cro
 cnH
 aaa
 dcp
-moP
+ihR
 dcg
-dcp
+daP
 rKC
 dcf
 dcp
@@ -102362,7 +102665,7 @@ cnH
 aaa
 dcp
 dSi
-dcg
+dcn
 daL
 dcp
 dbi
@@ -102663,9 +102966,9 @@ cog
 cog
 aaa
 dcp
-moP
-dcg
-dcg
+daP
+daP
+daP
 dcp
 bxB
 ddn
@@ -102965,9 +103268,9 @@ aaa
 aaa
 aaa
 dcp
+daP
+daP
 eZl
-dcg
-daL
 dcp
 rWd
 ddn
@@ -103259,18 +103562,18 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-aaa
+gAK
 dcp
 dcp
 dcp
 dcp
-daN
+dcp
+tRD
+dcp
+vDm
+qjv
+fBq
+dcp
 daN
 daN
 daN
@@ -103561,23 +103864,23 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-aaa
-aaa
-aaa
-aaa
-aaa
-daN
+gAK
+dcp
 ddE
+daP
+waW
+wyy
+tVj
+eZl
+daP
+iKM
+fVL
+sSC
+daN
 dcB
 dcF
 ddt
-dcF
+hFf
 dfi
 dcN
 daN
@@ -103862,21 +104165,21 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-aaa
+gAK
+gAK
+dcp
+oEW
+iGw
+daP
+kxB
+xzs
+daP
+daP
+jnb
+dSI
+eHV
 daN
-dcs
-dct
+lYu
 dbd
 ddt
 ddF
@@ -104164,21 +104467,21 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-aaa
+gAK
+dcp
+dcp
+doO
+daP
+fVi
+jxQ
+aWb
+fap
+daP
+dcp
+dcp
+dcp
 daN
-dcu
-dcJ
+xrQ
 dcS
 ddu
 dTq
@@ -104466,21 +104769,21 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+dcp
+pKi
+tox
+urS
+rNt
+qOB
+fiT
+urS
+tox
+cmj
+dcp
 aaa
 daN
 daO
-dcC
 dcU
 dTr
 ddx
@@ -104488,7 +104791,7 @@ dSF
 dTv
 daN
 dwo
-dSI
+dwo
 ddz
 dTJ
 ekl
@@ -104768,19 +105071,19 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+dcp
+tRD
+iVw
+daP
+dcC
+ors
+icC
+jyN
+daP
+tRD
+dcp
 aaa
-daN
 daN
 dcw
 daN
@@ -105070,17 +105373,17 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+gAK
+dcp
+xVb
+daP
+daP
+kxB
+daP
+eZl
+vlH
+dcp
 aaa
 aaa
 aaa
@@ -105373,16 +105676,16 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+dcp
+jag
+xzs
+nQa
+jEc
+dcu
+daP
+dcs
+dcp
 aaa
 cil
 cil
@@ -105675,16 +105978,16 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+dcp
+dcp
+dcp
+dcp
+qle
+dcp
+dcp
+dcp
+dcp
 aaa
 bXs
 bXs
@@ -105977,16 +106280,16 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+gAK
+gAK
+gAK
+dcp
+dcp
+dcp
+gAK
+gAK
+gAK
 aaa
 bXs
 bOh
@@ -106282,11 +106585,11 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+gAK
+gAK
+gAK
+gAK
+gAK
 cnw
 cnw
 aaa
