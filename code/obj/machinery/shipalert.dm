@@ -150,7 +150,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			continue
 		if (shutter.z != Z_LEVEL_STATION)
 			continue
-		if (shutter.id != "lockdown" && shutter.id != "ai_core" && shutter.id != "armory")
+		if ((shutter.id != "lockdown") && (shutter.id != "ai_core") && (shutter.id != "armory"))
 			continue
 		shutter.close()
 
