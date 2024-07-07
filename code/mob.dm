@@ -1637,7 +1637,7 @@
 	. = (0 >= usr.stat)
 
 /mob/proc/is_heat_resistant()
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
+	if(src.bioHolder && src.bioHolder.HasEffect("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
 		return TRUE
 	if(src.nodamage)
 		return TRUE
