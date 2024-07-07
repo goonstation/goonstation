@@ -25013,6 +25013,10 @@
 "bVn" = (
 /turf/unsimulated/floor/carpet/red/fancy/edge/ne,
 /area/syndicate_station/battlecruiser)
+"bVp" = (
+/obj/decal/mule/beacon,
+/turf/unsimulated/floor/wood/six,
+/area/afterlife/bar/sanctuary)
 "bVt" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles6"
@@ -43323,10 +43327,7 @@
 /obj/stool/bar{
 	name = "stool"
 	},
-/obj/item/crushed_can{
-	pixel_x = -13;
-	pixel_y = 5
-	},
+/obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "red2"
@@ -77362,6 +77363,10 @@
 	icon_state = "beach-3"
 	},
 /area/titlescreen)
+"xZn" = (
+/obj/submachine/ATM/afterlife,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/afterlife/bar/sanctuary)
 "xZu" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -102966,7 +102971,7 @@ cog
 cog
 aaa
 dcp
-daP
+xzs
 daP
 daP
 dcp
@@ -103267,8 +103272,8 @@ aaa
 aaa
 aaa
 aaa
-dcp
-daP
+xZn
+bVp
 daP
 eZl
 dcp
