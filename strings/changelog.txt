@@ -1,4 +1,9 @@
 
+(t)sun jul 07 24
+(u)TealSeer
+(p)19873
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The "Recite Miranda Rights" verb now has a 10 second cooldown.
 (t)sat jul 06 24
 (u)LeahTheTech
 (+)Bricks have mysteriously increased in size.
