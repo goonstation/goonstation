@@ -104,6 +104,7 @@
 #include "defines\spacebee_extension.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
+#include "defines\status_display.dm"
 #include "defines\status_effects.dm"
 #include "defines\storage.dm"
 #include "defines\surgery.dm"
