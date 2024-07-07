@@ -2,6 +2,7 @@
 (t)sat jul 06 24
 (u)LeahTheTech
 (+)Bricks have mysteriously increased in size.
+(*)Wraith possession will now remove handcuffs, unless they have been dipped in silver.
 (u)Jan.antilles
 (p)19790
 (e)🎨🍝|C-Sprites, A-Catering
