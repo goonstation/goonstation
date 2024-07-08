@@ -34677,7 +34677,6 @@
 "nzs" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/electrical,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "nzA" = (
