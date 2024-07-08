@@ -57098,7 +57098,9 @@
 /obj/cable/green{
 	icon_state = "1-8"
 	},
-/obj/mapping_helper/mob_spawn/corpse/human/scientist,
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	randomise_decomp_stage = 1
+	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
 	},
@@ -58956,7 +58958,10 @@
 	icon_state = "2-8"
 	},
 /obj/grille/catwalk,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old,
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old{
+	randomise_decomp_stage = 1,
+	headless = 1
+	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "hxO" = (
@@ -61621,7 +61626,8 @@
 	dir = 1
 	},
 /obj/mapping_helper/mob_spawn/corpse/human/engineer{
-	armless = 1
+	armless = 1;
+	randomise_decomp_stage = 1
 	},
 /turf/space,
 /area/watchful_eye_sensor)
@@ -65174,7 +65180,8 @@
 	icon_state = "1-8"
 	},
 /obj/mapping_helper/mob_spawn/corpse/human/security_officer{
-	headless = 1
+	headless = 1;
+	randomise_decomp_stage = 1
 	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
@@ -68678,7 +68685,9 @@
 /area/iomoon/base)
 "pzo" = (
 /obj/grille/catwalk,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old,
+/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old{
+	randomise_decomp_stage = 1
+	},
 /turf/space,
 /area/watchful_eye_sensor)
 "pzY" = (
@@ -72235,7 +72244,8 @@
 	name = "rubbish"
 	},
 /obj/mapping_helper/mob_spawn/corpse/human/engineer{
-	armless = 1
+	armless = 1;
+	randomise_decomp_stage = 1
 	},
 /obj/decal/cleanable/blood{
 	icon_state = "handblood_c"
@@ -77968,7 +77978,9 @@
 /area/observatory)
 "xmf" = (
 /obj/item/casing,
-/obj/mapping_helper/mob_spawn/corpse/human/scientist,
+/obj/mapping_helper/mob_spawn/corpse/human/scientist{
+	randomise_decomp_stage = 1
+	},
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
