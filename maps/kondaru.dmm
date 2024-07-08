@@ -26853,9 +26853,6 @@
 	},
 /turf/space,
 /area/space)
-"ceT" = (
-/turf/simulated/floor/plating,
-/area/station/science/lab)
 "ceW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26991,15 +26988,10 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "cfD" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	can_rupture = 0
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	can_rupture = 0
-	},
-/obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "cfE" = (
@@ -29654,13 +29646,13 @@
 	},
 /area/station/security/main)
 "cos" = (
-/obj/lattice{
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	icon_state = "lattice-dir";
-	tag = "icon-lattice-dir (EAST)"
+	level = 2
 	},
-/turf/space,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/science/lab)
 "cov" = (
 /obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/east,
@@ -30560,7 +30552,8 @@
 "cFk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10
+	can_rupture = 0;
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -40094,9 +40087,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
-	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "jpy" = (
@@ -43930,11 +43920,9 @@
 /turf/simulated/floor/plating/damaged1,
 /area/station/security/beepsky)
 "meh" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 8
-	},
-/turf/space,
-/area/space)
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "mep" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -49291,10 +49279,10 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
 	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor/black,
 /area/station/science/lab)
 "qhy" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -50158,10 +50146,10 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "qMC" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/blue,
 /area/station/science/lab)
 "qNo" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -50722,11 +50710,6 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "rhS" = (
-/obj/machinery/door_control{
-	id = "oh_boy_fire";
-	name = "Burn Chamber Heat Shields";
-	pixel_x = 24
-	},
 /obj/table/auto,
 /obj/item/device/transfer_valve{
 	pixel_x = 8
@@ -53479,8 +53462,8 @@
 /area/station/security/interrogation)
 "thF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -53887,6 +53870,12 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/caution/corner/se,
 /area/station/engine/gas)
+"txz" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "purge valve"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "tyi" = (
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /obj/cable{
@@ -56604,13 +56593,15 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "vuC" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10;
+	can_rupture = 0
+	},
+/obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "vuD" = (
@@ -58041,8 +58032,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -91877,9 +91868,9 @@ lya
 lya
 lya
 bYG
-aaa
-cos
-aaa
+ceM
+txe
+bYG
 aaa
 aaa
 aaa
@@ -92179,9 +92170,9 @@ cbf
 fGV
 ccS
 cdG
-aaa
-cos
-aaa
+cdL
+ccg
+bYG
 aaa
 aaa
 aaa
@@ -92783,9 +92774,9 @@ fPU
 cfz
 bZv
 vgR
-cdL
-ccg
-bYG
+oFr
+meh
+ceM
 aaa
 aaa
 aaa
@@ -93085,11 +93076,11 @@ ceN
 cce
 haB
 vgR
-bYG
-txe
-bYG
-aaa
-aaa
+cfD
+txz
+wnV
+chn
+cyc
 aaa
 aaa
 aci
@@ -93387,7 +93378,7 @@ tqS
 cfB
 cgn
 vuC
-oFr
+eMF
 qMC
 thF
 rKr
@@ -93688,13 +93679,13 @@ cdI
 cgo
 ccg
 cgo
-cfD
-eMF
+ccg
+cgo
 tsr
 cFk
-rKr
-hbu
-meh
+aaa
+azZ
+aBi
 aaa
 aci
 aaa
@@ -93993,10 +93984,10 @@ cgq
 fhZ
 wDM
 qhk
-ceM
-aaa
-bhJ
+cos
+rKr
 aBi
+aaa
 aaa
 aci
 aaa
@@ -94282,7 +94273,7 @@ bUO
 nzn
 bQU
 yhe
-ceT
+bAQ
 bYG
 can
 xXa
@@ -94584,7 +94575,7 @@ bUP
 hbg
 bQU
 bzR
-ceT
+bAQ
 bYG
 cao
 jmJ
