@@ -25764,6 +25764,12 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/door_control{
+	id = "tox_vent2";
+	name = "Chamber Two Exhaust";
+	pixel_x = -24;
+	pixel_y = -9
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "cbi" = (
@@ -26522,7 +26528,8 @@
 /obj/machinery/door_control{
 	id = "tox_mix";
 	name = "Mixing Vent Control";
-	pixel_x = -24
+	pixel_y = 0;
+	pixel_x = -23
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -28887,7 +28894,7 @@
 	},
 /area/listeningpost)
 "clY" = (
-/obj/machinery/computer/announcement/syndicate,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "clZ" = (
@@ -33494,12 +33501,6 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
-	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "tox_ignition";
-	name = "Chamber Ignition Switch";
-	pixel_x = -26;
-	pixel_y = 8
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -42429,22 +42430,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/grey,
 /area/station/bridge)
-"lax" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
-/obj/machinery/door_control{
-	id = "tox_vent2";
-	name = "Chamber Two Exhaust";
-	pixel_y = 22;
-	pixel_x = 8
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "laJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/security)
@@ -93093,7 +93078,7 @@ bYG
 jKV
 bYG
 qwR
-lax
+cce
 ceN
 bYG
 ceN
