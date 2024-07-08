@@ -681,7 +681,7 @@ Code:
 
 		. += "<HR>"
 		if(laser)
-			. += "<BR><B>Power Transmition Laser Status</B><BR>"
+			. += "<BR><B>Power Transmission Laser Status</B><BR>"
 			. += "Currently Active: [laser.firing ? "Yes" : "No"]<BR>"
 			. += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
 			. += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"

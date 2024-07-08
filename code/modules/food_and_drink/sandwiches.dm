@@ -573,10 +573,19 @@
 	icon_state = "chilifries"
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 5
-	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	initial_volume = 25
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"=10)
 	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+	poutine
+		name = "poutine"
+		desc = "Lightly salted potato fingers, topped with gravy and cheese curds. Oh Canada!"
+		icon_state = "poutine"
+		bites_left = 6
+		heal_amt = 2
+		initial_volume = 25
+		initial_reagents = list("cholesterol"=1, "cheese"=10, "gravy"=10)
 
 /obj/item/reagent_containers/food/snacks/macguffin
 	name = "sausage macguffin"

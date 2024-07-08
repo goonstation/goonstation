@@ -204,7 +204,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "brick"
 	item_state = "brick"
 	force = 8
-	w_class = W_CLASS_TINY
+	w_class = W_CLASS_SMALL
 	throwforce = 15
 	rand_pos = 1
 	stamina_damage = 40

@@ -1,3 +1,18 @@
+
+(t)sun jul 07 24
+(u)TealSeer
+(p)19873
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The "Recite Miranda Rights" verb now has a 10 second cooldown.
+(t)sat jul 06 24
+(u)LeahTheTech
+(+)Bricks have mysteriously increased in size.
+(*)Wraith possession will now remove handcuffs, unless they have been dipped in silver.
+(u)Jan.antilles
+(p)19790
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Happy Canada Day! You can now make poutine.
+(+)The kitchen vendor contains gravy boats, which are full of gravy.
 (t)fri jul 05 24
 (u)LeahTheTech
 (*)High power PTL beams can now very slowly melt through walls. Will I regret this? Take your bets!

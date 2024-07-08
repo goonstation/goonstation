@@ -1271,6 +1271,20 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chilifries
 
+/datum/cookingrecipe/oven/poutine
+	item1 = /obj/item/reagent_containers/food/snacks/fries
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 3
+	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
+
+/datum/cookingrecipe/oven/poutine_alt
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/chips
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
+
 /datum/cookingrecipe/oven/bakedpotato
 	item1 = /obj/item/reagent_containers/food/snacks/plant/potato
 	cookbonus = 16

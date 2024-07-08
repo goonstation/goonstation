@@ -566,6 +566,11 @@ proc/generate_space_color()
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
+	#ifdef MIDSUMMER
+		var/mob/ms_mob = M
+		if ((warptarget_modifier == LANDMARK_VM_ONLY_WITCHES) && (ms_mob.job != "Witch"))
+			return
+	#endif
 		if (warptarget_modifier == LANDMARK_VM_WARP_NONE) return
 		if(OldLoc)
 			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
