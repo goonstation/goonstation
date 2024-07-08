@@ -223,8 +223,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 /obj/machinery/computer/transit_shuttle/asylum/New()
 	..()
 	destinations = list(/area/shuttle/asylum/observation,
-	/area/shuttle/asylum/medbay,
-	/area/shuttle/asylum/pathology)
+	/area/shuttle/asylum/medbay)
 	currentlocation = locate(/area/shuttle/asylum/medbay)
 
 // research shuttle
