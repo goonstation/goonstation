@@ -58959,7 +58959,7 @@
 	},
 /obj/grille/catwalk,
 /obj/mapping_helper/mob_spawn/corpse/human/syndicate/old{
-	randomise_decomp_stage = 1,
+	randomise_decomp_stage = 1;
 	headless = 1
 	},
 /turf/unsimulated/floor/plating,
