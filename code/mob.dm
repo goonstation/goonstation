@@ -1439,11 +1439,12 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	var/miranda = src.mind.get_miranda()
-	if (isnull(miranda))
-		src.say_verb(DEFAULT_MIRANDA)
-		return
-	src.say_verb(miranda)
+	if(!ON_COOLDOWN(src, "recite_miranda", 10 SECONDS))
+		var/miranda = src.mind.get_miranda()
+		if (isnull(miranda))
+			src.say_verb(DEFAULT_MIRANDA)
+			return
+		src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
@@ -1637,7 +1638,7 @@
 	. = (0 >= usr.stat)
 
 /mob/proc/is_heat_resistant()
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
+	if(src.bioHolder && src.bioHolder.HasEffect("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
 		return TRUE
 	if(src.nodamage)
 		return TRUE

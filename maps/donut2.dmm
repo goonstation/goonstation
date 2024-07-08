@@ -264,13 +264,11 @@
 	dir = 1
 	},
 /obj/item/peripheral/network/radio/locked,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abd" = (
-/obj/table/wood/auto{
-	dir = 6
-	},
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "abe" = (
@@ -10704,10 +10702,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bdz" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
 /obj/table/reinforced/chemistry/auto,
+/obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bdB" = (
@@ -22241,6 +22237,7 @@
 /obj/machinery/light/lamp/green,
 /obj/disposalpipe/trunk/west,
 /obj/machinery/disposal/small/west,
+/obj/item/device/camera_viewer/outpost/science,
 /turf/simulated/floor/purple/side{
 	dir = 5
 	},
