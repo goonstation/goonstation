@@ -787,7 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	if (F.my_depth_level == 1)
 		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
 			do_reagent_reaction = 0
-			if (!src.wear_suit || !(src.wear_suit.body_parts_covered & LEGS)) // suits can go over shoes
+			if (!src.wear_suit || !(src.wear_suit.c_flags & SPACEWEAR)) // suits can go over shoes
 				F.group.reagents.reaction(src.shoes, TOUCH, F.group.amt_per_tile, can_spawn_fluid = FALSE)
 
 	if (entered_group) //if entered_group == 1, it may not have been set yet
