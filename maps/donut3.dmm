@@ -42962,6 +42962,14 @@
 /area/station/crew_quarters/bathroom/extra2{
 	name = "North Restroom #2"
 	})
+"nbh" = (
+/obj/disposalpipe/broken{
+	color = "#ff6666";
+	dir = 4;
+	name = "BYE"
+	},
+/turf/space,
+/area/space)
 "nbm" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/sugar_box{
@@ -110027,7 +110035,7 @@ gjF
 vNB
 vRw
 pFp
-rdj
+nbh
 rdj
 rdj
 rdj
