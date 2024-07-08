@@ -92,7 +92,7 @@
 /obj/machinery/power/pt_laser/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
 	if(!length(inp.signal)) return
 	var/newinput = text2num(inp.signal)
-	if (newinput != src.chargelevel && isnum_safe(newinput) &&  newinput > 0)
+	if (newinput != src.chargelevel && isnum_safe(newinput) && newinput > 0)
 		src.chargelevel = newinput
 		// Working backwards to update the ui based on the power we've set up.
 		if(chargelevel < 1 KILO WATT)
@@ -121,7 +121,7 @@
 	if(!length(inp.signal)) return
 	var/newoutput = text2num(inp.signal)
 	// We check against the absolute value of the current charge level, in case the PTL has been emagged.
-	if (newoutput != abs(src.output) && isnum_safe(newoutput) newoutput > 0)
+	if (newoutput != abs(src.output) && isnum_safe(newoutput) && newoutput > 0)
 		src.output = src.emagged ? -newoutput : newoutput
 		// Working backwards to update the ui based on the power we've set up.
 		if(newoutput >= 1 TERA WATT)
@@ -130,7 +130,8 @@
 			src.output_multi = 1 GIGA WATT
 		else
 			src.output_multi = 1 MEGA WATT
-		src.output_number = clamp((newoutput/src.output_multi), 0, src.max_dial_value)
+		var abs_output_number = clamp((newoutput/src.output_multi), 0, src.max_dial_value)
+		src.output_number = src.emagged ? -abs_output_number : abs_output_number
 		src.update_output()
 		src.update_laser_power()
 
@@ -270,7 +271,8 @@
 				melt_blocking_objects()
 			power_sold(adj_output)
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
+
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "output=[src.output]&firing=[src.firing]&charge=[src.charge]&currentbalance=[src.current_balance]&lifetimeearnings=[src.lifetime_earnings]")
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
