@@ -13233,21 +13233,6 @@
 /area/station/engine/coldloop)
 "aYN" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer,
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/igniter,
 /obj/item/device/analyzer/atmospheric,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -16657,7 +16642,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "koV" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},

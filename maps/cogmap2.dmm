@@ -42693,7 +42693,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/science/lab)
 "cuu" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/caution/south,
 /area/station/science/lab)
 "cuw" = (
@@ -47100,12 +47100,6 @@
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
-/obj/item/device/igniter,
-/obj/item/device/igniter,
-/obj/item/device/igniter,
-/obj/item/device/timer,
-/obj/item/device/timer,
-/obj/item/device/timer,
 /obj/item/wrench,
 /obj/item/wrench,
 /obj/item/storage/firstaid/fire,
@@ -48651,17 +48645,6 @@
 /area/station/science/lab)
 "cNw" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 2;
-	pixel_y = -8
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/assembly/time_ignite,
-/obj/item/assembly/time_ignite,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;

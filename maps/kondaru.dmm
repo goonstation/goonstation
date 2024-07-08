@@ -25590,26 +25590,6 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/chemistry/auto/basicsup,
-/obj/item/device/prox_sensor{
-	pixel_x = -2;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer{
-	pixel_x = -9;
-	pixel_y = 7
-	},
-/obj/item/device/timer{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/item/device/timer{
-	pixel_x = 10;
-	pixel_y = 8
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -25618,18 +25598,6 @@
 /obj/table/reinforced/chemistry/auto/basicsup{
 	drawer_contents = null;
 	desc = null
-	},
-/obj/item/device/igniter{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/device/igniter{
-	pixel_x = -9;
-	pixel_y = -4
-	},
-/obj/item/device/igniter{
-	pixel_y = -5;
-	pixel_x = -1
 	},
 /obj/item/device/audio_log{
 	pixel_y = 7
@@ -31400,18 +31368,6 @@
 	tag = ""
 	},
 /obj/table/auto,
-/obj/item/assembly/time_ignite{
-	pixel_y = 6;
-	pixel_x = 1
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 14;
-	pixel_y = 4
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = -7;
-	pixel_y = -3
-	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "dkC" = (
@@ -39696,9 +39652,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "jbB" = (
-/obj/machinery/vending/standard,
 /obj/machinery/firealarm/north,
 /obj/machinery/light_switch/west,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "jbN" = (
