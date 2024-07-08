@@ -1659,22 +1659,6 @@
 	else
 		boutput(user, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
-/obj/machinery/vehicle/proc/use_external_speaker()
-	if(is_incapacitated(usr))
-		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
-		return
-	if(istype(usr.loc, /obj/machinery/vehicle/))
-		var/obj/machinery/vehicle/ship = usr.loc
-		if(ship.com_system)
-			if(ship.com_system.active)
-				ship.com_system.External()
-			else
-				boutput(usr, "[ship.ship_message("SYSTEM OFFLINE")]")
-		else
-			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
-	else
-		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
-
 /obj/machinery/vehicle/proc/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
 	if(is_incapacitated(usr))
 		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))

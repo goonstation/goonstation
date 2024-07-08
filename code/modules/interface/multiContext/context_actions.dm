@@ -687,16 +687,6 @@
 			var/obj/machinery/vehicle/V = target
 			V.access_main_computer()
 
-	use_external_speaker
-		name = "Use External Speaker"
-		desc = "Talk to people with your ship intercom."
-		icon_state = "speaker"
-
-		execute(atom/target, mob/user)
-			..()
-			var/obj/machinery/vehicle/V = target
-			V.use_external_speaker()
-
 
 /datum/contextAction/cellphone
 	name = "Cellphone action"

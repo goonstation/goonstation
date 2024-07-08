@@ -14,7 +14,6 @@
 		set_code
 		rts
 		wormhole
-		use_comms
 		leave
 		rcs
 		lights
@@ -35,17 +34,16 @@
 		wormhole = create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole", "NORTH+1,WEST+1", tooltipTheme = "pod", desc = "Open a wormhole to a beacon that you can fly through")
 		life_support = create_screen("life_support", "Life Support", 'icons/mob/hud_pod.dmi', "life_support-off", "NORTH+1,WEST+2", tooltipTheme = "pod-alt", desc = "Turn life support on or off")
 		comms = create_screen("comms", "Comms", 'icons/mob/hud_pod.dmi', "comms-off", "NORTH+1,WEST+3", tooltipTheme = "pod-alt", desc = "Turn the pod's communications system on or off")
-		use_comms = create_screen("comms_system", "Use Comms System", 'icons/mob/hud_pod.dmi', "comms_system", "NORTH+1,WEST+4", tooltipTheme = "pod", desc = "Use the communications system to talk or whatever")
-		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+5", tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")
-		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltipTheme = "pod", desc = "Use the pod's sensors to search for vehicles and lifeforms nearby")
-		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
-		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
-		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Activate the secondary system installed in the pod, if there is one")
-		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
-		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
-		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
+		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+4", tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")
+		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+5", tooltipTheme = "pod", desc = "Use the pod's sensors to search for vehicles and lifeforms nearby")
+		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+6", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
+		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+7", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
+		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+8", tooltipTheme = "pod", desc = "Activate the secondary system installed in the pod, if there is one")
+		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+9", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
+		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+10	", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
+		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
 		leave = create_screen("leave", "Leave Pod", 'icons/mob/hud_pod.dmi', "leave", "SOUTH,EAST", tooltipTheme = "pod-alt", desc = "Get out of the pod")
-		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+13", tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")
+		rcs = create_screen("rcs", "Toggle RCS", 'icons/mob/hud_pod.dmi', "rcs-off", "NORTH+1,WEST+12", tooltipTheme = "pod-alt", desc = "Reduce the pod's relative velocity")
 		tracking = create_screen("tracking", "Tracking Indicator", 'icons/mob/hud_pod.dmi', "off", "CENTER, CENTER")
 		tracking.mouse_opacity = 0
 		sensor_lock = create_screen("sensor_lock", "Sensor Lock", 'icons/mob/hud_pod.dmi', "off", "SOUTH+1,EAST")
@@ -121,13 +119,10 @@
 			if (master.com_system.active)
 				comms.icon_state = "comms-on"
 				rts.overlays.len = 0
-				use_comms.overlays.len = 0
 			else
 				comms.icon_state = "comms-off"
 				if (!rts.overlays.len)
 					rts.overlays += missing
-				if (!use_comms.overlays.len)
-					use_comms.overlays += missing
 
 		if (master.m_w_system)
 			if (master.m_w_system.active)
@@ -194,19 +189,14 @@
 			if (!master.com_system.active)
 				if (!rts.overlays.len)
 					rts.overlays += missing
-				if (!use_comms.overlays.len)
-					use_comms.overlays += missing
 			else
 				rts.overlays.len = 0
-				use_comms.overlays.len = 0
 		else
 			comms.name = "Comms"
 			if (!comms.overlays.len)
 				comms.overlays += missing
 			if (!rts.overlays.len)
 				rts.overlays += missing
-			if (!use_comms.overlays.len)
-				use_comms.overlays += missing
 
 		if (master.m_w_system)
 			weapon.name = master.m_w_system.name
@@ -300,14 +290,6 @@
 					master.com_system.toggle()
 					src.switch_sound()
 					update_systems()
-			if ("comms_system")
-				if(master.com_system)
-					if(master.com_system.active)
-						master.com_system.External()
-					else
-						boutput(user, "[master.ship_message("SYSTEM OFFLINE")]")
-				else
-					boutput(user, "[master.ship_message("System not installed in ship!")]")
 			if ("weapon")
 				if (master.m_w_system)
 					master.m_w_system.toggle()
