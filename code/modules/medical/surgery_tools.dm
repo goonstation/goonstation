@@ -697,8 +697,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if(!src.defib)
 			return
 		src.ClearSpecificOverlays("cord_\ref[src]")
-		var/handset_offset_x = -2
-		var/handset_offset_y = -3
+		var/paddle_offset_x = -2
+		var/paddle_offset_y = -3
 		var/atom/movable/target = src.defib
 		if (ismob(src.defib.loc))
 			var/mob/living/M = src.defib.loc
@@ -706,33 +706,34 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 			switch (M.dir)
 				if (NORTH)
-					handset_offset_y = -1
+					paddle_offset_y = -1
 					if (M.hand == LEFT_HAND)
-						handset_offset_x = -6
+						paddle_offset_x = -6
 					else
-						handset_offset_x = 6
+						paddle_offset_x = 6
 				if (SOUTH)
-					handset_offset_y = -1
+					paddle_offset_y = -1
 					if (M.hand == LEFT_HAND)
-						handset_offset_x = 6
+						paddle_offset_x = 6
 					else
-						handset_offset_x = -6
+						paddle_offset_x = -6
 				if (EAST)
 					if(M.hand == LEFT_HAND)
-						handset_offset_y = -4
-						handset_offset_x = 4
+						paddle_offset_x = 4
+						paddle_offset_y = -4
 					else
-						handset_offset_y = -2
-						handset_offset_x = -4
+						paddle_offset_x = -4
+						paddle_offset_y = -2
+
 				if(WEST)
 					if(M.hand == LEFT_HAND)
-						handset_offset_y = -2
-						handset_offset_x = 4
+						paddle_offset_x = 4
+						paddle_offset_y = -2
 					else
-						handset_offset_y = -4
-						handset_offset_x = -4
+						paddle_offset_x = -4
+						paddle_offset_y = -4
 
-		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x, src.pixel_y - 2, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
+		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x, src.pixel_y - 2, target.pixel_x + paddle_offset_x, target.pixel_y + paddle_offset_y, LINEMODE_STRETCH)
 		result.lineImage.layer = src.layer+0.01
 		src.UpdateOverlays(result.lineImage, "cord_\ref[src]")
 

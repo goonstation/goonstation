@@ -168,16 +168,17 @@ TYPEINFO(/obj/machinery/phone)
 						handset_offset_x = -6
 				if (EAST)
 					if(M.hand == LEFT_HAND)
-						handset_offset_y = -4
 						handset_offset_x = 4
+						handset_offset_y = -4
 					else
-						handset_offset_y = -2
 						handset_offset_x = -4
+						handset_offset_y = -2
 				if(WEST)
 					if(M.hand == LEFT_HAND)
-						handset_offset_y = -2
 						handset_offset_x = 4
+						handset_offset_y = -2
 					else
+						handset_offset_x = -4
 						handset_offset_y = -4
 						handset_offset_x = -4
 		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
