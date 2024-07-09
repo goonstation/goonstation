@@ -234,6 +234,7 @@
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, server, length, reason)
 		var/rpban = FALSE
+		var/requires_appeal = FALSE
 		if (!(ckey && server && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
@@ -292,6 +293,7 @@
 		else if (ckey(length) == "untilappeal")
 			length = -1
 			data["text_ban_length"] = "Until Appeal"
+			requires_appeal = TRUE
 		else
 			length = text2num(length)
 		if (!isnum(length))
@@ -307,7 +309,8 @@
 				data["compID"],
 				data["ip"],
 				data["reason"],
-				data["mins"] * 60 * 10
+				data["mins"] * 60 * 10,
+				requires_appeal
 			)
 			bansHandler.add(
 				ckey(user),
@@ -316,7 +319,8 @@
 				data["compID"],
 				data["ip"],
 				data["reason"],
-				data["mins"] * 60 * 10
+				data["mins"] * 60 * 10,
+				requires_appeal
 			)
 		else
 			bansHandler.add(
@@ -326,7 +330,8 @@
 				data["compID"],
 				data["ip"],
 				data["reason"],
-				data["mins"] * 60 * 10
+				data["mins"] * 60 * 10,
+				requires_appeal
 			)
 
 /datum/spacebee_extension_command/boot
