@@ -15155,9 +15155,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -17984,6 +17981,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"odD" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "ofD" = (
 /turf/simulated/floor/white/side{
 	dir = 5
@@ -18055,6 +18056,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"ovj" = (
+/obj/machinery/status_display/market,
+/turf/space,
+/area/shuttle/merchant_shuttle/right_station/cogmap)
 "oCM" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20895,6 +20900,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"wwf" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/office)
 "wwW" = (
 /obj/table/auto,
 /obj/item/device/matanalyzer{
@@ -61148,7 +61157,7 @@ aaE
 aaE
 aaE
 aaE
-aaE
+ovj
 aaE
 aBp
 afV
@@ -63265,7 +63274,7 @@ aAr
 abD
 abN
 abD
-abN
+odD
 bie
 adX
 aeI
@@ -64785,7 +64794,7 @@ akY
 abH
 abH
 uUE
-abH
+wwf
 aca
 alU
 akl
