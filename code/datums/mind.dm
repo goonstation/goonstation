@@ -327,7 +327,7 @@ datum/mind
 		if (!antagonist_role)
 			return FALSE
 		if (antagonist_role.faction)
-			antagonist_role.owner.current.faction -= antagonist_role.faction
+			LAZYLISTREMOVE(antagonist_role.owner.current.faction, antagonist_role.faction)
 		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		var/mob/living/carbon/human/H = src.current
