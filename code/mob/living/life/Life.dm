@@ -278,7 +278,7 @@
 			// overlays
 			src.updateOverlaysClient(src.client)
 
-		if (src.observers.len)
+		if (length(src.observers))
 			for (var/mob/x in src.observers)
 				if (x.client)
 					src.updateOverlaysClient(x.client)
@@ -690,86 +690,3 @@
 				fire_prot += (shoes.protective_temperature/10)
 
 		return fire_prot
-
-////////////////////////////////////////
-//Unused heart thump stuff
-////////////////////////////////////////
-
-/mob/living/carbon/human
-	proc/Thumper_createHeartbeatOverlays()
-		for (var/mob/x in (src.observers + src))
-			if(!heartbeatOverlays[x] && x.client)
-				var/atom/movable/screen/hb = new
-				hb.icon = x.client.widescreen ? 'icons/effects/overlays/crit_thicc.png' : 'icons/effects/overlays/crit_thin.png'
-				hb.screen_loc = "1,1"
-				hb.layer = HUD_LAYER_UNDER_2
-				hb.plane = PLANE_HUD
-				hb.mouse_opacity = 0
-				x.client.screen += hb
-				heartbeatOverlays[x] = hb
-			else if(x.client && !(heartbeatOverlays[x] in x.client.screen))
-				x.client.screen += heartbeatOverlays[x]
-	proc/Thumper_thump(var/animateInitial)
-		Thumper_createHeartbeatOverlays()
-		var/sound/thud = sound('sound/effects/thump.ogg')
-#define HEARTBEAT_THUMP_APERTURE 3.5
-#define HEARTBEAT_THUMP_BASE 5
-#define HEARTBEAT_THUMP_INTENSITY 0.2
-#define HEARTBEAT_THUMP_INTENSITY_BASE 0.1
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				x.client << thud
-				if(animateInitial)
-					animate(overlay, alpha=255, color=list( list(HEARTBEAT_THUMP_INTENSITY,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_APERTURE)), 10, easing=ELASTIC_EASING)
-					animate(color=list( list(HEARTBEAT_THUMP_INTENSITY_BASE,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,HEARTBEAT_THUMP_BASE), list(0,0,0,0) ), 10, easing=ELASTIC_EASING, flags=ANIMATION_END_NOW)
-				else
-					//src << sound('sound/thump.ogg')
-					overlay.color=list( list(0.16,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,2.6), list(0,0,0,0) )//, 5, 0, ELASTIC_EASING)
-					animate(overlay, color=list( list(0.13,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,3.5), list(0,0,0,0) ), 13, easing = ELASTIC_EASING, flags = ANIMATION_END_NOW)
-
-
-#undef HEARTBEAT_THUMP_APERTURE
-#undef HEARTBEAT_THUMP_BASE
-#undef HEARTBEAT_THUMP_INTENSITY
-#undef HEARTBEAT_THUMP_INTENSITY_BASE
-	var/doThumps = 0
-	proc/Thumper_theThumpening()
-		if(doThumps) return
-		doThumps = 1
-		Thumper_thump(1)
-		SPAWN(2 SECONDS)
-			while(src.doThumps)
-				Thumper_thump(0)
-				sleep(2 SECONDS)
-	proc/Thumper_stopThumps()
-		doThumps = 0
-	proc/Thumper_paralyzed()
-		Thumper_createHeartbeatOverlays()
-		if(doThumps)//we're thumping dangit
-			doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay, alpha = 255,
-					color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,4) ),
-					10, flags=ANIMATION_END_NOW)//adjust the 4 to adjust aperture size
-	proc/Thumper_crit()
-		Thumper_createHeartbeatOverlays()
-		if(doThumps)
-			doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay,
-					alpha = 255,
-					color = list( list(0.1,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,0.8), list(0,0,0,0) ),
-				time = 10, easing = SINE_EASING)
-
-	proc/Thumper_restore()
-		Thumper_createHeartbeatOverlays()
-		doThumps = 0
-		for(var/mob/x in src.heartbeatOverlays)
-			var/atom/movable/screen/overlay = src.heartbeatOverlays[x]
-			if(x.client)
-				animate(overlay, color = list( list(0,0,0,0), list( 0,0,0,0 ), list(0,0,0,0), list(0,0,0,-100), list(0,0,0,0) ), alpha = 0, 20, SINE_EASING )
