@@ -23531,6 +23531,7 @@
 /area/station/quartermaster/office)
 "bGX" = (
 /obj/grille/steel,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bGY" = (
@@ -50348,6 +50349,7 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "mDt" = (
@@ -57433,6 +57435,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"rYg" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/cargooffice)
 "rYi" = (
 /obj/decal/stripe_caution,
 /obj/cable{
@@ -123133,7 +123139,7 @@ adC
 iWf
 mSG
 mwn
-smf
+rYg
 fRt
 bGX
 pNt

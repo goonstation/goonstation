@@ -20312,9 +20312,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/status_display{
-	pixel_y = -30
-	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/hallway/primary/south)
 "bFw" = (
@@ -33655,6 +33652,12 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
+"eFQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/cargobay)
 "eGc" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -51492,6 +51495,10 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"rJk" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/south)
 "rJL" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -105758,7 +105765,7 @@ bCm
 bCq
 bDA
 bFv
-bBv
+rJk
 bJr
 oqr
 cnQ
@@ -107885,7 +107892,7 @@ bSW
 bJr
 cnU
 cnV
-dJV
+eFQ
 rPO
 hzL
 jEa
