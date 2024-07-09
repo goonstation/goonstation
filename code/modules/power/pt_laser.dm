@@ -57,11 +57,9 @@
 						break dir_loop
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Enable Power Input", PROC_REF(_enable_input_mechchomp))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Disable Power Input", PROC_REF(_disable_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Enable Power Output", PROC_REF(_enable_output_mechchomp))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Disable Power Ouput", PROC_REF(_disable_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Togle Power Output", PROC_REF(_toggle_output_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
 
 		if(!terminal)
@@ -84,11 +82,8 @@
 
 	..()
 
-/obj/machinery/power/pt_laser/proc/_enable_input_mechchomp()
-	src.charging = TRUE
-
-/obj/machinery/power/pt_laser/proc/_disable_input_mechchomp()
-	src.charging = FALSE
+/obj/machinery/power/pt_laser/proc/_toggle_input_mechchomp()
+	src.charging = !src.charging
 
 /obj/machinery/power/pt_laser/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
 	if(!length(inp.signal)) return
@@ -108,15 +103,11 @@
 			src.input_multi = 1 TERA WATT
 		src.input_number = clamp((src.chargelevel/src.input_multi), 0, src.max_dial_value)
 
-/obj/machinery/power/pt_laser/proc/_enable_output_mechchomp()
-	src.online = TRUE
-	src.process(1)
-
-/obj/machinery/power/pt_laser/proc/_disable_output_mechchomp()
-	src.online = FALSE
+/obj/machinery/power/pt_laser/proc/_toggle_output_mechchomp()
+	src.online = !src.online
 	if (!src.online && src.firing)
 		src.stop_firing()
-	src.process(1)
+
 
 /obj/machinery/power/pt_laser/proc/_set_output_mechchomp(var/datum/mechanicsMessage/inp)
 	if(!length(inp.signal)) return
