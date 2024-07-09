@@ -4,7 +4,7 @@
 	icon_state = "sponge"
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	throw_speed = 4
 	throw_range = 7
 	stamina_damage = 0
@@ -83,7 +83,7 @@
 	var/atom/C = new animal_to_spawn(T)
 	if (ismobcritter(C))
 		var/mob/living/critter/M = C
-		M.faction |= FACTION_SPONGE
+		LAZYLISTADDUNIQUE(M.faction, FACTION_SPONGE)
 	T.visible_message(SPAN_NOTICE("What was once [src] has become [C.name]!"))
 	qdel(src)
 
@@ -113,7 +113,7 @@
 	icon_state = "spongecaps"
 	w_class = W_CLASS_TINY
 	throwforce = 2
-	flags = TABLEPASS | FPRINT | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1

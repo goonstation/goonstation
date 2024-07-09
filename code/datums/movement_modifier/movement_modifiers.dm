@@ -299,12 +299,6 @@
 		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
 		return list(0-(applied_modifier),1)
 
-
-// pathogen stuff
-
-/datum/movement_modifier/patho_oxygen
-	multiplicative_slowdown = 0.75
-
 // shivering
 
 /datum/movement_modifier/shiver

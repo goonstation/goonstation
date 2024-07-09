@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	throw_speed = 3
 	throw_range = 6
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = TABLEPASS | NOSHIELD
 
 	New()
 		..()

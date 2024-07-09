@@ -1,4 +1,161 @@
 
+(t)mon jul 08 24
+(u)Studenterhue
+(p)19883
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added the winning movie posters from the June 2024 contest. Congratulations to JOELED, Showerless, Torchwick, Zhail, TemThrush, TheAmazingToast, Cindertroy, Nahuelwig, ATDoop, Rubicubie, and Garash!
+(+)Crunchwrap, Lefinch, meaow589, L0llerbate, Lopdopgop, and kirdy2 didn't win the contest, but the admin team liked their entries so much that they were added anyway, though they appear at lower rates.
+(u)KakoLookiyam
+(p)19889
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Outer suits with coverage will now prevent shoe exposure to puddles.
+(t)sun jul 07 24
+(u)TealSeer
+(p)19873
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The "Recite Miranda Rights" verb now has a 10 second cooldown.
+(t)sat jul 06 24
+(u)LeahTheTech
+(+)Bricks have mysteriously increased in size.
+(*)Wraith possession will now remove handcuffs, unless they have been dipped in silver.
+(u)Jan.antilles
+(p)19790
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Happy Canada Day! You can now make poutine.
+(+)The kitchen vendor contains gravy boats, which are full of gravy.
+(t)fri jul 05 24
+(u)LeahTheTech
+(*)High power PTL beams can now very slowly melt through walls. Will I regret this? Take your bets!
+(t)thu jul 04 24
+(u)LeahTheTech
+(+)Syndicate daggers now only play their equip sound when equipped from an inventory.
+(u)JORJ949
+(p)19766
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The listening post has been outfitted with an announcement computer. Agents only!
+(u)Flaborized
+(p)19576
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The chameleon outfit traitor item can now disguise as a mail courier.
+(u)Jan.antilles
+(p)19813
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Cinnamon buns can now be made in the oven.
+(u)Kubius
+(p)19665
+(e)🆕🎨🔊📦🚗|C-Feature, C-Sprites, C-Sound, A-Game-Objects, A-Vehicles
+(*)The pod-mounted EFIF-1 Construction System is now available. It can rapidly repair damaged station tiles or build new offsite structures.
+(t)wed jul 03 24
+(u)Cheekybrdy
+(p)19722
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds chameleon bombs to mail courier's options as a traitor.
+(u)RubberRats
+(p)19754
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Lawbringer has been given a new (?) mode for use against the cluwne
+(t)mon jul 01 24
+(u)Lord_Earthfire
+(p)19412
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The amount of chems a unit of a chemical decays into no longer changes with the speed the person metabolizes it.
+(u)Jan.antilles
+(p)19786
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Add Cream or Salmon Fillet Slices to bagels to make extra tasty Cream Cheese or Lox bagels!
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
+(u)nova2053
+(p)19553
+(e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
+(+)Normal and synthetic organs will no longer make you indefinitely full.
+(t)sat jun 29 24
+(u)LeahTheTech
+(+)Power transfer lasers can now pass through containment fields.
+(u)glowbold
+(p)19703
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Kinetic projectiles progressively break computers/consoles to scrap.
+(+)Energy projectiles, including tasers, have a chance to break computer/console screens.
+(u)joeled
+(p)19647
+(e)🗺💅🔬|A-Mapping, C-QoL, A-Science
+(+)Plasma Research has been outfitted with their own gas extractor on nearly all stations.
+(t)fri jun 28 24
+(u)DecodeQwertyPls
+(p)19564
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(+)Most maps now have freezers in toxins.
+(u)Kubius
+(p)19635
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The Prototypist requisition has four new outcomes.
+(u)mintyphresh
+(p)19479
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)NT's payroll stipends now deposit some excess money to the payroll budget.
+(u)TealSeer
+(p)19405
+(e)🔎🔒❗⚙|C-Code-Quality, A-Secret, E-FUCK, A-Internal
+(*)The way fingerprints are left on objects has been changed under the hood, please report any weirdness or things having fingerprints that shouldn't!
+(t)thu jun 27 24
+(u)glowbold
+(p)19720
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Projectiles have a chance to pass through girders. The more secure a girder is, the less likely projectiles can travel through them.
+(t)wed jun 26 24
+(u)LeahTheTech
+(*)Did you know Abzu has two suns? Well now it actually does in-game - Oshan nights will be brighter and red tinted as the planet is lit by its second sun. The bright daylight hours have also been extended a bit, so overall it should feel much brighter.
+(u)Kubius
+(p)19648
+(e)🆕⚖|C-Feature, C-Balance
+(+)Small update pass on requisitions, notably less using tools no longer available in general manufacturer.
+(u)Angelx3
+(p)19657
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Resprites the cat ears and all their recolours.
+(+)Makes cat ears overlay over helmets.
+(u)CalliopeSoups
+(p)19496
+(e)🆕👽🐣|C-Feature, A-Mutantraces, A-Respawning
+(+)Skeletons drop their torso on death as a tasty snack for antags.
+(u)Flaborized
+(p)19662
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited the mineral accumulator.
+(u)glowbold
+(p)19613
+(e)🗺💅📦💡|A-Mapping, C-QoL, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(t)mon jun 24 24
+(u)LeahTheTech
+(+)RP security officers no longer have access to APCs.
+(u)NightmarechaMillian
+(p)19681
+(e)|
+(+)Mechscanned sawflies will no longer produce a remote on deployment.
+(+)The sawfly remote is separately mechscannable.
+(u)glowbold
+(p)19653
+(e)🪲💅💡|C-Bug, C-QoL, A-Station-Systems
+(*)Market refreshes and mail deliveries will now occur automatically.
+(u)Tyrant
+(p)19579
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Fixed Oshan maintenance airlocks not having appropriate maintenance access requirements.
+(t)sun jun 23 24
+(u)tarmunora
+(+)Quartermasters are now forklift certified
+(u)Ilysen
+(p)19485
+(e)🆕📄📦|C-Feature, A-UI, A-Game-Objects
+(*)Added a new traitor item: the marionette implant. Check your uplink today, especially if you're a packet nerd.
 (t)fri jun 21 24
 (u)mintyphresh
 (p)19460

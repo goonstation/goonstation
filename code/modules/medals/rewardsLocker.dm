@@ -1517,7 +1517,9 @@
 	proc/sillyscream(mob/M)
 		var/mob/living/living = M
 		if(istype( living ))
-			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsounds["sillyscream"] = pick('sound/voice/screams/sillyscream1.ogg', 'sound/voice/screams/sillyscream2.ogg')
+			M.bioHolder.mobAppearance.screamsound = "sillyscream"
+			M.bioHolder.mobAppearance.UpdateMob()
 			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else

@@ -67,7 +67,7 @@
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = FALSE
-	var/special_spawn_location = null
+	var/tmp/special_spawn_location = null
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
@@ -131,7 +131,7 @@
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
 				M.mind.miranda = DEFAULT_MIRANDA
-		M.faction |= src.faction
+		LAZYLISTADDUNIQUE(M.faction, src.faction)
 		for (var/T in src.trait_list)
 			M.traitHolder.addTrait(T)
 		SPAWN(0)
@@ -209,7 +209,7 @@
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > src.rounds_needed_to_play)
+		if (round_num >= src.rounds_needed_to_play)
 			return TRUE
 		return FALSE
 
@@ -626,29 +626,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_poc1 = list(/obj/item/device/analyzer/genetic)
 	wiki_link = "https://wiki.ss13.co/Geneticist"
 
-#ifdef CREATE_PATHOGENS
-/datum/job/research/pathologist
-#else
-/datum/job/pathologist // pls no autogenerate list
-#endif
-	name = "Pathologist"
-	#ifdef CREATE_PATHOGENS
-	limit = 1
-	#else
-	limit = 0
-	#endif
-	wages = PAY_DOCTORATE
-	access_string = "Pathologist"
-	slot_belt = list(/obj/item/device/pda2/genetics)
-	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
-	slot_foot = list(/obj/item/clothing/shoes/white)
-	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
-	#ifdef SCIENCE_PATHO_MAP
-	slot_ears = list(/obj/item/device/radio/headset/research)
-	#else
-	slot_ears = list(/obj/item/device/radio/headset/medical)
-	#endif
-
 /datum/job/research/roboticist
 	name = "Roboticist"
 	limit = 3
@@ -933,6 +910,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	wiki_link = "https://wiki.ss13.co/Staff_Assistant"
+
+	special_setup(mob/living/carbon/human/M, no_special_spawn)
+		..()
+		if (prob(20))
+			M.stow_in_available(new /obj/item/paper/businesscard/seneca)
+
 
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
@@ -2851,7 +2834,16 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		C.assignment = "Staff Assistant"
 		C.name = "[C.registered]'s ID Card ([C.assignment])"
 
-
+/datum/job/special/pathologist
+	name = "Pathologist"
+	limit = 0
+	wages = PAY_DOCTORATE
+	access_string = "Pathologist"
+	slot_belt = list(/obj/item/device/pda2/genetics)
+	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
+	slot_foot = list(/obj/item/clothing/shoes/white)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
+	slot_ears = list(/obj/item/device/radio/headset/medical)
 
 /*---------------------------------------------------------------*/
 
@@ -2859,3 +2851,25 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Special Job"
 	job_category = JOB_CREATED
 
+	//handle special spawn location
+	Write(F)
+		. = ..()
+		if(istext(src.special_spawn_location))
+			F["special_spawn_location"] << src.special_spawn_location
+		else if(ismovable(src.special_spawn_location) || isturf(src.special_spawn_location))
+			var/atom/A = src.special_spawn_location
+			var/turf/T = get_turf(A)
+			F["special_spawn_location_coords"] << list(T.x, T.y, T.z)
+
+	Read(F)
+		. = ..()
+		src.special_spawn_location = null
+		var/maybe_spawn_loc = null
+		F["special_spawn_location"] >> maybe_spawn_loc
+		if(istext(maybe_spawn_loc))
+			src.special_spawn_location = maybe_spawn_loc
+		else
+			var/list/maybe_coords = null
+			F["special_spawn_location_coords"] >> maybe_coords
+			if(islist(maybe_coords))
+				src.special_spawn_location = locate(maybe_coords[1], maybe_coords[2], maybe_coords[3])

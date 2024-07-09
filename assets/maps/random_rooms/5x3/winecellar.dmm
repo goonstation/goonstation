@@ -40,7 +40,7 @@
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "u" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "D" = (

@@ -277,7 +277,7 @@
 	},
 /area/ship/manta)
 "tK" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/manta)
 "vl" = (
@@ -288,8 +288,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/ship/manta)
 "vw" = (
-/obj/decal/fakeobjects/shuttlethruster,
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/ship/manta)
 "xq" = (
@@ -617,7 +617,7 @@
 	},
 /area/ship/manta)
 "Zu" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 1;
 	icon_state = "propulsion"
 	},

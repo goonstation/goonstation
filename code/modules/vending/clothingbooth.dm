@@ -48,7 +48,6 @@ var/list/clothingbooth_paths = list()
 	desc = "Contains a sophisticated autoloom system capable of manufacturing a variety of clothing items on demand."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "clothingbooth-open"
-	flags = FPRINT | TGUI_INTERACTIVE
 	anchored = ANCHORED
 	density = 1
 	var/datum/movable_preview/character/multiclient/preview

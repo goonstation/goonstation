@@ -50,6 +50,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Made with real artificial maple syrup!"
 	icon_state = "syrup"
 
+/obj/item/reagent_containers/food/snacks/condiment/gravyboat
+	name = "gravy boat"
+	desc = "Not actually a boat, but that sure is gravy."
+	icon = 'icons/obj/foodNdrink/food.dmi'
+	icon_state = "gravyboat"
+	initial_volume = 10
+	initial_reagents = list("gravy"=10)
+
 /obj/item/reagent_containers/food/snacks/condiment/soysauce
 	name = "soy sauce"
 	desc = "A dark brown sauce brewed from soybeans and wheat. Salty!"
@@ -163,7 +171,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "A little bottle for shaking things onto other things."
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	g_amt = 10

@@ -534,7 +534,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	stack_type = /obj/item/raw_material/shard
-	flags = TABLEPASS | FPRINT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
@@ -822,7 +821,7 @@
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
-			M.change_contents(mat_piece = BAR)
+			M.add_contents(BAR)
 		else
 			BAR.set_loc(output_location)
 			for (var/obj/item/material_piece/other_bar in output_location.contents)

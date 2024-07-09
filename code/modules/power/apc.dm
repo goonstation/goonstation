@@ -100,7 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname E APC"
 		dir = EAST
 		autoname_on_spawn = 1
-		pixel_x = 24
+		pixel_x = 20
 
 		nopoweralert
 			noalerts = 1
@@ -136,7 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname W APC"
 		dir = WEST
 		autoname_on_spawn = 1
-		pixel_x = -24
+		pixel_x = -20
 
 		nopoweralert
 			noalerts = 1
@@ -176,12 +176,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	..()
 	START_TRACKING
 	// offset 24 pixels in direction of dir
+	//+excluding east and west which is now 20 pixels
 	// this allows the APC to be embedded in a wall, yet still inside an area
 
 	tdir = dir		// to fix Vars bug
 	// dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 20 : -20)
 	pixel_y = (tdir & 3)? (tdir ==1 ? 24 : -24) : 0
 
 	// is starting with a power cell installed, create it and set its charge level

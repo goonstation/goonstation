@@ -10,6 +10,7 @@
 /datum/limb/mouth/fermid
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	can_beat_up_robots = TRUE //angry space ants
 
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
@@ -56,7 +57,7 @@
 
 	New()
 		..()
-		src.faction |= FACTION_FERMID
+		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))

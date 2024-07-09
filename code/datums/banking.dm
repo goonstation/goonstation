@@ -38,7 +38,7 @@
 		time_between_paydays = 5 MINUTES
 		time_between_lotto = 8 MINUTES
 
-		station_budget = 0
+		station_budget = PAY_IMPORTANT
 		shipping_budget = PAY_EXECUTIVE*5
 		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget

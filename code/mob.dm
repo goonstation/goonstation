@@ -4,7 +4,7 @@
 	animate_movement = 2
 	soundproofing = 10
 
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
@@ -27,8 +27,8 @@
 	var/robot_talk_understand = 0
 
 	var/respect_view_tint_settings = FALSE
-	var/list/active_color_matrix = list()
-	var/list/color_matrices = list()
+	var/list/active_color_matrix = null
+	var/list/color_matrices = null
 
 	var/last_resist = 0
 
@@ -40,7 +40,7 @@
 	var/custom_gib_handler = null
 	var/obj/decal/cleanable/custom_vomit_type = /obj/decal/cleanable/vomit
 
-	var/list/mob/dead/target_observer/observers = list()
+	var/list/mob/dead/target_observer/observers = null
 
 	var/emote_allowed = 1
 	var/last_emote_time = 0
@@ -342,7 +342,7 @@
 		src.ghost.corpse = null
 
 	for(var/mob/dead/target_observer/TO in observers)
-		observers -= TO
+		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 
 	for(var/mob/m in src) //zoldorfs, aieyes, other terrible code
@@ -1439,11 +1439,12 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	var/miranda = src.mind.get_miranda()
-	if (isnull(miranda))
-		src.say_verb(DEFAULT_MIRANDA)
-		return
-	src.say_verb(miranda)
+	if(!ON_COOLDOWN(src, "recite_miranda", 10 SECONDS))
+		var/miranda = src.mind.get_miranda()
+		if (isnull(miranda))
+			src.say_verb(DEFAULT_MIRANDA)
+			return
+		src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
@@ -1637,7 +1638,7 @@
 	. = (0 >= usr.stat)
 
 /mob/proc/is_heat_resistant()
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
+	if(src.bioHolder && src.bioHolder.HasEffect("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
 		return TRUE
 	if(src.nodamage)
 		return TRUE
@@ -1658,35 +1659,35 @@
 
 /// Adds a 20-length color matrix to the mob's list of color matrices
 /// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
-/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
+/mob/proc/apply_color_matrix(list/cmatrix, label)
 	if (!cmatrix || !label)
 		return
 
 	if(label in src.color_matrices) // Do we already have this matrix?
 		return
 
-	src.color_matrices[label] = cmatrix
+	LAZYLISTADDASSOC(src.color_matrices, label, cmatrix)
 
 	src.update_active_matrix()
 
 /// Removes whichever matrix is associated with the label. Must be a string!
-/mob/proc/remove_color_matrix(var/label)
+/mob/proc/remove_color_matrix(label)
 	if (!label || !length(src.color_matrices))
 		return
 
 	if(label == "all")
-		src.color_matrices.len = 0
+		LAZYLISTSETLEN(src.color_matrices, 0)
 	else if(!(label in src.color_matrices)) // Do we have this matrix?
 		return
 	else
-		src.color_matrices -= label
+		LAZYLISTREMOVE(src.color_matrices, label)
 
 	src.update_active_matrix()
 
 /// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
 /// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
 /mob/proc/update_active_matrix()
-	if (!src.color_matrices.len)
+	if (!length(src.color_matrices))
 		src.active_color_matrix = null
 	else
 		var/first_entry = src.color_matrices[1]
@@ -2509,18 +2510,6 @@
 	src.bodytemperature = src.base_body_temp
 	if (isdead(src))
 		setalive(src)
-
-/mob/proc/infected(var/datum/pathogen/P)
-	return
-
-/mob/proc/remission(var/datum/pathogen/P)
-	return
-
-/mob/proc/immunity(var/datum/pathogen/P)
-	return
-
-/mob/proc/cured(var/datum/pathogen/P)
-	return
 
 /mob/proc/shock(var/atom/origin, var/wattage, var/zone, var/stun_multiplier = 1, var/ignore_gloves = 0)
 	return 0

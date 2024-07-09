@@ -11,7 +11,7 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	pass_unstable = FALSE // Machines hopefully are stable.
 	var/status = 0
@@ -340,6 +340,10 @@
 
 /obj/machinery/proc/is_disabled()
 	return src.is_broken() || src.has_no_power()
+
+/// Called when contents are added to the machine so it can do any special things it needs to
+/obj/machinery/proc/on_add_contents(obj/item/I)
+	return
 
 /obj/machinery/sec_lock
 	name = "Security Pad"

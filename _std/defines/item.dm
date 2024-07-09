@@ -16,8 +16,8 @@
 #define CONDUCT						(1<<6)
 /// can mousedrop reagents into from a reagent_container
 #define ACCEPTS_MOUSEDROP_REAGENTS	(1<<7)
-/// takes a fingerprint
-#define FPRINT						(1<<8)
+/// doesn't record fingerprints
+#define NOFPRINT					(1<<8)
 /// item has priority to check when entering or leaving
 #define ON_BORDER					(1<<9)
 /// can pass through a closed door
@@ -225,3 +225,6 @@
 #define MATCH_UNLIT 0
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
+
+///macro for rendering an image fullsize on paper
+#define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"
