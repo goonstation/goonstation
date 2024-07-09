@@ -2215,19 +2215,19 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			..() //shoot an additional ith time (just goes once if it's in single shot)
 			guaranteed_uses-- //damage the gun an additional ith time
 
-		//you're shooting multiple shotgun shells out of a garbage gun at the same time. don't think there won't be consequences
-		if((firemode != ONE_BARREL) && (priorammo == 2)) // two shells are shot, can be in 2 or 4 mode
-			boutput(user, SPAN_ALERT("The [src] jumps in your hands!"))
-			user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 5, remove_stamina_below_zero = 0)
-		else if((firemode == ALL_BARRELS) && (priorammo <= 3)) //3 or more shells, can only be in all barrel mode
-			sleep(0.3) //give it a micro-delay
-			if (src.canshoot(user))
-				boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
-				//this might seem punishing but keep in mind it's FOUR whole shotgun shells at once.
-				user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
-
 		//check the gun's condition, break as needed
 		if((priorammo > 0) && !(src.broke_open)) //make sure the gun isn't empty and also closed (shooting conditions) before we roll to break
+			//you're shooting multiple shotgun shells out of a garbage gun at the same time. don't think there won't be consequences
+			if((firemode != ONE_BARREL) && (priorammo == 2)) // two shells are shot, can be in 2 or 4 mode
+				boutput(user, SPAN_ALERT("The [src] jumps in your hands!"))
+				user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 5, remove_stamina_below_zero = 0)
+			else if((firemode == ALL_BARRELS) && (priorammo >= 3)) //3 or more shells, can only be in all barrel mode
+				SPAWN(0.3 DECI SECONDS) //give it a micro-delay
+				if (src.canshoot(user))
+					boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
+					//this might seem punishing but keep in mind it's FOUR whole shotgun shells at once.
+					user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+
 			if(guaranteed_uses < 0)
 				//warn the user that they're in the danger zone
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
