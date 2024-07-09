@@ -38,6 +38,7 @@
 
 # Walpvrgis
 /icons/misc/critter.dmi @WALPVRGIS
+/maps/decarabia.dmm @WALPVRGIS
 
 # ZeWaka
 *.md @ZeWaka

@@ -1550,6 +1550,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 		..()
 		src.set_dir(pick(cardinal))
 
+	walp
+		icon_state = "grass_walp"
+
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 

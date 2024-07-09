@@ -2372,6 +2372,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_COMMAND
 
+	private
+		name = "Head of Security's Private Quarters"
+
 /area/station/crew_quarters/md
 	name = "Medical Director's Quarters"
 	icon_state = "MD"
@@ -2498,6 +2501,8 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar
 		name = "The Rising Tide"
 
+/area/station/crew_quarters/cafeteria/the_eye_bar
+		name = "The Eye"
 
 /area/station/crew_quarters/kitchen
 	name = "Kitchen"
@@ -2519,6 +2524,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
+
+/area/station/crew_quarters/mime
+	name = "Mime Hovel"
+	icon_state = "mime"
 
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
@@ -2669,10 +2678,26 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Fuq 3 clothing store"
 	icon_state = "fuq3"
 
+/area/station/crewquarters/clothingstore // Decarabia's clothing store, but also it's generic yippee
+	name = "Nanotrasen Clothing Supplies"
+	icon_state = "clothingstore"
+
 /area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
 	do_not_irradiate = TRUE
+
+/area/station/crewquarters/escapelounge
+	name ="Escape Lounge"
+	icon_state = "yellow"
+
+/area/station/crewquarters/reccenter
+	name ="Recreation Center"
+	icon_state = "reccenter"
+
+/area/station/crewquarters/laundry
+	name ="Laundry Room"
+	icon_state = "laundry"
 
 ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
@@ -2922,7 +2947,7 @@ ABSTRACT_TYPE(/area/station/medical)
 	station_map_colour = MAPC_COMMAND
 
 	private
-		name = "Medical Director's  Private Quarters"
+		name = "Medical Director's Private Quarters"
 
 /area/station/medical/cdc
 	name = "Pathology Research"
@@ -3489,6 +3514,8 @@ ABSTRACT_TYPE(/area/station/hangar)
 		requires_power = 1
 /area/station/hangar/starboard
 		name = "Submarine Bay (Starboard)"
+/area/station/hangar/north
+		name = "North Dock"
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
 		station_map_colour = MAPC_MINING
@@ -3507,6 +3534,10 @@ ABSTRACT_TYPE(/area/station/hangar)
 
 /area/station/hydroponics/lobby
 	name = "Hydroponics Lobby"
+	icon_state = "green"
+
+/area/station/hydroponics/staff
+	name = "Hydroponics Quarters"
 	icon_state = "green"
 
 /area/station/ranch
@@ -3589,6 +3620,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/station/routing/sortingRoom
 		name = "Mail Sorting Room"
+
+/area/station/summoningchamber
+		name = "Unsettling Storage Room"
+		icon_state = "cursedroom"
+
+/area/station/conveniencestore
+		name = "Convenience Store"
+		icon_state = "yellow"
 
 /// Off-station research outpost. Used for Cog2.
 /area/research_outpost
