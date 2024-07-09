@@ -2156,7 +2156,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "quadb"
 	item_state = "quadbarrel" //custom inhands, though.
-	default_magazine = /obj/item/ammo/bullets/a12/bird/seven
+	default_magazine = /obj/item/ammo/bullets/a12/bird/four
 
 	camera_recoil_sway_min = 10 //VIOLENCE!
 	recoil_strength = 15
