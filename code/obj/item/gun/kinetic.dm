@@ -2156,6 +2156,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "quadb"
 	item_state = "quadbarrel" //custom inhands, though.
+	default_magazine = /obj/item/ammo/bullets/a12/bird/seven
 
 	camera_recoil_sway_min = 10 //VIOLENCE!
 	recoil_strength = 15
@@ -2171,8 +2172,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		..()
-		ammo = new/obj/item/ammo/bullets/pipeshot/glass
-		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/glass)
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/bird12)
 		name = initial(name) //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
 		UpdateIcon()
 
