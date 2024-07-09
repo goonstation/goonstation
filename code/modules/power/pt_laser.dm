@@ -13,7 +13,7 @@
 	req_access = list(access_engineering_power)
 	var/output = 0		//power output of the beam
 	var/max_dial_value = 999 // limitation of what can be set on the ui dial.
-	var/capacity = 1e15
+	var/capacity = 200 MEGA // Under the gib amount to prevent players from pulsing a death laser.
 	var/charge = 0
 	var/charging = 0
 	var/load_last_tick = 0	//how much load did we put on the network last tick?
