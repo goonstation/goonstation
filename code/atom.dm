@@ -81,8 +81,8 @@ TYPEINFO(/atom)
 	*/
 
 
-	var/list/name_prefixes = null// = list()
-	var/list/name_suffixes = null// = list()
+	var/list/name_prefixes = null
+	var/list/name_suffixes = null
 	var/num_allowed_prefixes = 10
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null
