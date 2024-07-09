@@ -30,6 +30,7 @@
   - bats
    - angry bats
    - Dr. Acula
+   - Tiny Bat Rina (admin office pet)
   - wasps
   - raccoons
   - slugs
@@ -309,6 +310,10 @@ proc/filter_carrier_pets(var/type)
 	use_custom_color = FALSE
 	player_can_spawn_with_pet = FALSE
 
+	New()
+		. = ..()
+		new /obj/item/implant/access/infinite/chef(src)
+
 	setup_overlays()
 		return
 
@@ -542,8 +547,8 @@ proc/filter_carrier_pets(var/type)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
+		if (pounce && !pounce.disabled && pounce.cooldowncheck() && prob(50))
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips [him_or_her(target)]!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -605,8 +610,7 @@ proc/filter_carrier_pets(var/type)
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
-	mats = list("viscerite"=25)
-
+	mats = list("viscerite" = 25)
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
 	desc = "The captain's loyal-ish companion! The texture of their fur feels a bit off."
@@ -767,7 +771,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips them!"), SPAN_COMBAT("You run into [target]!"))
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips [him_or_her(target)]!"), SPAN_COMBAT("You run into [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -1862,7 +1866,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					src.death()
 					return
 				else
-					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
+					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws [him_or_her(M)] off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
 					M.setStatus("knockdown", 5 SECONDS)
 					return
 		. = ..()
@@ -2958,6 +2962,43 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_pet = 2
 	player_can_spawn_with_pet = FALSE
 
+/* ------------------ Tiny Bat Rina ------------------ */
+
+/mob/living/critter/small_animal/bat/rina //for Jan's office
+	name = "Tiny Bat Rina"
+	real_name = "Tiny Bat Rina"
+	desc = "Why does this little bat have a purple ponytail?"
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "batrina"
+	icon_state_dead = "batrina-dead"
+	health_brute = 30
+	health_burn = 30
+	player_can_spawn_with_pet = FALSE
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					flick("batrina-dance", src)
+					return SPAN_EMOTE("<b>[src]</b> dances!")
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_EMOTE("<b>[src]</b> makes a tiny bat squeak!")
+		return ..()
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","dance")
+				return 2
+		return ..()
+
+	animate_lying(lying)
+		if (lying)
+			src.icon_state = "batrina-sleeping"
+		else
+			src.icon_state = initial(src.icon_state)
+
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
 /* ============================================== */
@@ -3763,8 +3804,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
 				src.setMaterial(getMaterial(pick(material_varieties)))
-		// true when making the mob to not make the respawn timer reset...false here to allow for crime
-		ghost_spawned = FALSE
 
 	death(var/gibbed)
 		. = ..()
@@ -4017,6 +4056,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		. = ..()
 		src.fur_color = "#be5a53"
+		// true when making the mob to not make the respawn timer reset...false here to allow for crime
+		ghost_spawned = FALSE
 
 	setup_hands()
 		..()

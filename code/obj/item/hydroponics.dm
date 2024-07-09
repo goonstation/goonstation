@@ -31,14 +31,13 @@ TYPEINFO(/obj/item/saw)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
 	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
 	over_clothes = 1
-	override_attack_hand = 1
 	can_hold_items = 0
 	stamina_damage = 30
 	stamina_cost = 15
@@ -136,8 +135,9 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
-
+	mats = list("metal_dense" = 25,
+				"conductive" = 5,
+				"energy_high" = 5)
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -305,7 +305,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.l_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/left/item(H)
 			H.limbs.l_arm = new_arm
 		else if (target == "r_arm")
@@ -313,7 +313,7 @@ TYPEINFO(/obj/item/saw/syndie)
 				playsound(H.loc, 'sound/machines/chainsaw.ogg', 50, 1)
 				playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				H.limbs.r_arm.sever()
-				H.visible_message("[H] chainsaws their own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
+				H.visible_message("[H] chainsaws [his_or_her(H)] own arm off, holy shit!", "You grit your teeth and saw your own arm off!", "You hear a chainsaw on flesh!")
 			new_arm = new /obj/item/parts/human_parts/arm/right/item(H)
 			H.limbs.r_arm = new_arm
 		if (!new_arm) return //who knows
@@ -459,7 +459,6 @@ TYPEINFO(/obj/item/plantanalyzer)
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
@@ -658,7 +657,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 	icon_state = "bong"
 	fluid_overlay_states = 8
 	container_style = "bong"
-	fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_SPHERICAL
+	fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_SPHERICAL
 
 	filled
 

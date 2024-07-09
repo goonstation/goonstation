@@ -1,13 +1,13 @@
 TYPEINFO(/obj/item/device/multitool)
-	mats = list("CRY-1", "CON-2")
-
+	mats = list("crystal" = 1,
+				"conductive_high" = 1)
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
 	icon = 'icons/obj/items/tools/multitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/multitool.dmi'
 	icon_state = "multitool"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_PULSING
 	w_class = W_CLASS_SMALL

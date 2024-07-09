@@ -4,6 +4,20 @@
 	return ..()
 
 /proc/Reboot_server(var/retry)
+	//ohno the map switcher is in the midst of compiling a new map, we gotta wait for that to finish
+	if (mapSwitcher.locked)
+		//we're already holding and in the reboot retry loop, do nothing
+		if (mapSwitcher.holdingReboot && !retry) return
+
+		boutput(world, "<span class='bold notice'>Attempted to reboot but the server is currently switching maps. Please wait. (Attempt [mapSwitcher.currentRebootAttempt + 1]/[mapSwitcher.rebootLimit])</span>")
+		message_admins("Reboot interrupted by a map-switch compile to [mapSwitcher.next]. Retrying in [mapSwitcher.rebootRetryDelay / 10] seconds.")
+
+		mapSwitcher.holdingReboot = 1
+		SPAWN(mapSwitcher.rebootRetryDelay)
+			mapSwitcher.attemptReboot()
+
+		return
+
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_INGAME_ONLY))
 #if defined(SERVER_SIDE_PROFILING_INGAME_ONLY) || !defined(SERVER_SIDE_PROFILING_PREGAME)
 	// This is a profiler dump of only the in-game part of the round
@@ -25,6 +39,7 @@
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	logTheThing(LOG_ADMIN, null, "Gamelogger stats BANDAID. [json_encode(game_stats.stats)]")
 	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
 	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]", spacemas_ornaments)
 	global.save_noticeboards()

@@ -120,8 +120,8 @@
 
 		src.rounds_participated_rp = text2num(playerStats.played_rp)
 		src.rounds_participated = text2num(playerStats.played) + src.rounds_participated_rp //the API counts these separately, but we want a combined number
-		src.rounds_seen = text2num(playerStats.connected)
 		src.rounds_seen_rp = text2num(playerStats.connected_rp)
+		src.rounds_seen = text2num(playerStats.connected) + src.rounds_seen_rp //the API counts these separately, but we want a combined number
 		src.last_seen = playerStats.latest_connection.created_at
 		return TRUE
 
@@ -185,6 +185,7 @@
 
 	proc/set_antag_tokens(amt as num)
 		src.antag_tokens = amt
+		src.client?.antag_tokens = amt //blegh, this var should be killed but I am sleepy so it lives for now
 		src.cloudSaves.putData( "antag_tokens", amt )
 		. = TRUE
 
@@ -243,26 +244,20 @@
 
 	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/unlock_medal_sync(medal_name, announce=FALSE)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return FALSE
-
-		var/key = src.key
 		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
-		var/result = world.SetMedal(medal_name, key, config.medal_hub, config.medal_password)
-		if(!result)
-			return FALSE
-		. = TRUE
 
-		// Record this medal to the Goonhub API for further tracking
-		// This will (eventually) replace the byond medals entirely
 		try
 			var/datum/apiRoute/players/medals/add/addMedal = new
 			addMedal.buildBody(src.id || null, src.ckey, medal_name, roundId)
 			apiHandler.queryAPI(addMedal)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
+			if (error.status_code == 409)
+				// player already has that medal
+				return FALSE
 			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>unlock_medal</b> for <b>[medal_name]</b>: [error.message]")
 			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in unlock_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
 
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
@@ -279,39 +274,66 @@
 			for(var/datum/achievementReward/B in unlocks)
 				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
 
+		return TRUE
+
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return null
-		var/success = world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		var/datum/apiRoute/players/medals/delete/deleteMedal = new
+		deleteMedal.buildBody(src.id ? src.id : null, src.ckey, medal_name)
 
-		if (success)
-			try
-				var/datum/apiRoute/players/medals/delete/deleteMedal = new
-				deleteMedal.buildBody(src.id || null, src.ckey, medal_name)
-				apiHandler.queryAPI(deleteMedal)
-			catch (var/exception/e)
-				var/datum/apiModel/Error/error = e.name
-				logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
-				logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
+		try
+			apiHandler.queryAPI(deleteMedal)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
 
-		return success
+		return TRUE
 
 	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/has_medal(medal_name)
-		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
-			return
-		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		if (!medal_name) return FALSE
+		var/datum/apiRoute/players/medals/has/hasMedals = new
+		hasMedals.routeParams = list(src.id ? src.id : src.ckey)
+		hasMedals.queryParams = list("medal" = medal_name)
+		var/datum/apiModel/HasMedalResource/hasMedal
+
+		try
+			hasMedal = apiHandler.queryAPI(hasMedals)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>has_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in has_medal for [medal_name]: [error.message]", "debug")
+			return FALSE
+
+		return hasMedal.has_medal
 
 	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/get_all_medals()
 		RETURN_TYPE(/list)
-		if (!config || !config.medal_hub || !config.medal_password)
-			return
-		. = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
-		if(isnull(.))
-			return
-		. = params2list(.)
+
+		var/datum/apiRoute/players/medals/get/getMedals = new
+		var/list/filters = list()
+		if (src.id) filters["player_id"] = src.id
+		else filters["ckey"] = src.ckey
+		getMedals.queryParams = list(
+			"filters" = filters,
+			"sort_by" = "medal_title",
+			"descending" = FALSE,
+			"per_page" = 9999
+		)
+		var/datum/apiModel/Paginated/PlayerMedalResourceList/medals
+
+		try
+			medals = apiHandler.queryAPI(getMedals)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>get_all_medals</b> for <b>[src.ckey] ([src.id])</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.ckey] ([src.id]): [error.message]", "debug")
+			return null
+
+		return medals.ToList()
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
@@ -329,14 +351,16 @@
 
 /proc/record_player_playtime()
 	var/count = 1
-	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
+	var/list/recorded = list()
+	var/list/playtimes = list() //associative list with the format list("[index]" = list("id" = player_id, "seconds_played" = playtime_in_seconds))
 	for_by_tcl(P, /datum/player)
-		if (!P.ckey)
+		if (!P.id || (P.id in recorded))
 			continue
 		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
 		if (!P.current_playtime)
 			continue
 		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
+		recorded += P.id
 		count++
 
 	try

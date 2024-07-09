@@ -224,8 +224,9 @@ TYPEINFO(/obj/item/remote/porter)
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
-	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
-
+	mats = list("metal" = 5,
+				"conductive" = 5,
+				"telecrystal" = 10)
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -703,6 +704,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	density = 1
 	anchored = UNANCHORED
 	p_class = 6
+	can_leghole = FALSE
 	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
 	var/homeloc = null
 

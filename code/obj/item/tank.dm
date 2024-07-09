@@ -15,7 +15,7 @@ Contains:
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE
+	flags = TABLEPASS | CONDUCT | TGUI_INTERACTIVE
 	c_flags = ONBACK
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
@@ -474,7 +474,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/emergency_oxygen
 	name = "pocket oxygen tank"
 	icon_state = "pocket_oxtank"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
@@ -487,18 +487,19 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 3
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 /obj/item/tank/emergency_oxygen/extended
 	name = "extended capacity pocket oxygen tank"
 	desc = "An extended capacity version of the pocket emergency oxygen tank."
 	icon_state = "ex_pocket_oxtank"
+	var/default_fill_mols = ONE_ATMOSPHERE * 60 / (R_IDEAL_GAS_EQUATION * T20C) //I think this is mols???
 
 	New()
 		..()
 		src.air_contents.volume = 6
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = src.default_fill_mols
 		return
 
 	empty
@@ -507,12 +508,22 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			..()
 			src.air_contents.oxygen = null
 			return
+	plasma
+		name = "extended capacity plasma tank"
+		desc = "A standard extended capacity oxygen tank that someone has filled with plasma. Wow!"
+		icon_state = "ex_pocket_plastank"
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			src.air_contents.toxins = src.default_fill_mols
+
 
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
 	item_state = "mini_oxtank"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
@@ -527,13 +538,13 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 15
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	empty
 		New()
 			..()
-			src.air_contents.toxins = null
+			src.air_contents.oxygen = null
 			return
 
 
@@ -698,7 +709,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	name = "mini plasma tank"
 	icon_state = "mini_plastank"
 	item_state = "mini_plastank"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
@@ -713,7 +724,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 10
-		src.air_contents.toxins = (ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.toxins = (ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	empty

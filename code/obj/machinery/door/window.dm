@@ -12,7 +12,7 @@
 	icon_state = "left"
 	var/base_state = "left"
 	visible = 0
-	flags = FPRINT | ON_BORDER
+	flags = ON_BORDER
 	health = 500
 	health_max = 500
 	opacity = 0

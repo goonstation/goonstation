@@ -43,6 +43,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/purchase_flags
 	var/owner_ckey = null
 
+	/// Associative list, where keys are /datum/syndicate_buylist instances and values are the number of purchases.
+	var/list/purchase_log = list()
+
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
@@ -445,6 +448,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
+					if (!src.purchase_log[I.type])
+						src.purchase_log[I.type] = 0
+					src.purchase_log[I.type]++
 			if (I.item2)
 				new I.item2(get_turf(src))
 			if (I.item3)
@@ -490,7 +496,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "walkietalkie"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "radio"
@@ -721,10 +727,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
-				I.run_on_spawn(item, usr)
+				I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
+					if (!src.purchase_log[I.type])
+						src.purchase_log[I.type] = 0
+					src.purchase_log[I.type]++
 			if (I.item2)
 				new I.item2(get_turf(src.hostpda))
 			if (I.item3)
@@ -1174,7 +1183,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "A nifty device used by the commander to order powerful equipment for their team."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "uplink_commander"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "uplink_commander"
@@ -1310,7 +1319,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
-	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
+	flags = TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
 	health = 5
@@ -1319,6 +1328,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	throw_range = 20
 	m_amt = 100
 	var/vr = FALSE
+	/// The name of the spellbook's wizard for display purposes
+	var/wizard_name = null
 #ifdef BONUS_POINTS
 	uses = 9999
 #endif
@@ -1340,14 +1351,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			ui.open()
 
 	ui_data(mob/user)
-		. = list()
-		.["spell_slots"] = src.uses
+		. = list(
+			"spell_slots" = src.uses
+		)
 
 	ui_static_data(mob/user)
-		. = list()
-		.["owner_name"] = user.real_name
-		.["vr"] = src.vr
-
 		var/list/spellbook_contents = list()
 		for(var/datum/SWFuplinkspell/spell as anything in src.spells)
 			var/cooldown_contents = null
@@ -1360,6 +1368,8 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				// convert deciseconds to seconds
 				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
 				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+			else if (spell.icon && spell.icon_state)
+				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
 			spellbook_contents[spell.eqtype] += list(list(
 				cooldown = cooldown_contents,
 				cost = spell.cost,
@@ -1368,12 +1378,18 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				spell_img = spell_icon,
 				vr_allowed = spell.vr_allowed,
 			))
-		.["spellbook_contents"] = spellbook_contents
+		. = list(
+			"owner_name" = src.wizard_name,
+			"spellbook_contents" = spellbook_contents,
+			"vr" = src.vr
+		)
 
 	attack_self(mob/user)
 		if(!user.mind || (user.mind && user.mind.key != src.wizard_key))
 			boutput(user, SPAN_ALERT("<b>The spellbook is magically attuned to someone else!</b>"))
 			return
+		// update regardless, in case the wizard read their spellbook before setting their name
+		src.wizard_name = user.real_name
 		ui_interact(user)
 
 	ui_act(action, list/params)
@@ -1401,6 +1417,9 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	var/assoc_spell = null
 	var/vr_allowed = 1
 	var/obj/item/assoc_item = null
+	/// backup icon in case spell has no associated spell ability
+	var/icon = 'icons/mob/spell_buttons.dmi'
+	var/icon_state = "fixme"
 
 	proc/SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		if (!user || !book)
@@ -1426,6 +1445,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 				var/obj/item/staff/S = I
 				S.wizard_key = user.mind.key
 		book.uses -= src.cost
+		book.antag_datum.purchased_spells.Add(src) // Remember spell for crew credits
 
 //------------ ENCHANTMENT SPELLS ------------//
 /datum/SWFuplinkspell/soulguard
@@ -1433,6 +1453,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	eqtype = "Enchantment"
 	vr_allowed = 0
 	desc = "Soulguard is basically a one-time do-over that teleports you back to the wizard shuttle and restores your life in the event that you die. However, the enchantment doesn't trigger if your body has been gibbed or otherwise destroyed. Also note that you will respawn completely naked."
+	icon_state = "soulguard"
 
 	SWFspell_CheckRequirements(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		. = ..()

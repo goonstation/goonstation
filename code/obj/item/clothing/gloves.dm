@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			. += "It seems to have some wires attached to it.[src.max_uses > 0 ? " There are [src.uses]/[src.max_uses] charges left!" : ""]"
 
 	// reworked this proc a bit so it can't run more than 5 times, just in case
-	proc/CreateID()
+	CreateID()
 		var/newID = null
 		for (var/i=5, i>0, i--)
 			newID = GenID()
@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	throw_speed = 3
 	throw_range = 6
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = TABLEPASS | NOSHIELD
 
 	New()
 		..()

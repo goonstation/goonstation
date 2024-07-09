@@ -66,7 +66,6 @@
 	var/brain_data = null
 	// var/heart_data = null		//Moving this to organ_data for now. -kyle
 	var/reagent_data = null
-	var/pathogen_data = null
 	var/disease_data = null
 	var/implant_data = null
 	var/organ_data = null
@@ -148,13 +147,6 @@
 
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
-			if (H.pathogens.len)
-				pathogen_data = SPAN_ALERT("Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.")
-				for (var/uid in H.pathogens)
-					var/datum/pathogen/P = H.pathogens[uid]
-					pathogen_data += "<br>&emsp;[SPAN_ALERT("Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].")]."
-					if (P.in_remission)
-						pathogen_data += "<br>&emsp;&emsp;[SPAN_ALERT("It appears to be in remission.")]."
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)
@@ -248,7 +240,6 @@
 	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
-	[pathogen_data ? "<br>[pathogen_data]" : null]\
 	[disease_data ? "[disease_data]" : null]\
 	[interesting_data ? "<br><i>Historical analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
 	"
@@ -679,20 +670,10 @@
 			if (G.glove_ID)
 				glove_data += "[G.glove_ID] [G.material_prints ? "([G.material_prints])" : null]"
 
-		if (istype(A, /obj/item/casing/))
-			var/obj/item/casing/C = A
-			if(C.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [C]:")] [C.forensic_ID]"
-
-		if (istype(A, /obj/item/implant/projectile))
-			var/obj/item/implant/projectile/P = A
-			if(P.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [P]:")] [P.forensic_ID]"
-
-		if (istype(A, /obj/item/gun))
-			var/obj/item/gun/G = A
-			if(G.forensic_ID)
-				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [G]:")] [G.forensic_ID]"
+		if (istype(A, /obj))
+			var/obj/O = A
+			if(O.forensic_ID)
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [O]:")] [O.forensic_ID]"
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A

@@ -15,7 +15,7 @@ TRASH BAG
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS|OPENCONTAINER|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -289,7 +289,6 @@ TRASH BAG
 	throw_speed = 5
 	throw_range = 10
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
@@ -362,6 +361,10 @@ TRASH BAG
 		src.reagents.reaction(T, 1, 5)
 		src.reagents.remove_any(5)
 		mopcount++
+		if (istype(T, /turf/simulated))
+			var/turf/simulated/S = T
+			if (S.wet < 1)
+				S.wetify(1, rand(20, 35) SECONDS)
 
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
@@ -435,13 +438,7 @@ TRASH BAG
 
 			if(istype(U,/turf/simulated))
 				var/turf/simulated/T = U
-				var/wetoverlay = image('icons/effects/water.dmi',"wet_floor")
-				T.overlays += wetoverlay
-				T.wet = 1
-				SPAWN(30 SECONDS)
-					if (istype(T))
-						T.wet = 0
-						T.overlays -= wetoverlay
+				T.wetify(1, 75 SECONDS)
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
 			SPAWN(0.5 SECONDS)
@@ -711,7 +708,6 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 4
 	stamina_crit_chance = 10
@@ -782,7 +778,6 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS
 	throw_pixel = 0
 	throw_spin = 0
 	var/currentSelection = "wet"
@@ -895,8 +890,8 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list("bamboo"=3, "MET-1"=10)
-
+	mats = list("bamboo" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
@@ -904,7 +899,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	icon_state = "handvac"
 	health = 7
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
 	var/obj/item/trash_bag/trashbag
@@ -1108,8 +1103,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list("neutronium"=3, "MET-1"=10)
-
+	mats = list("neutronium" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
 	color = list(0,0,1, 0,1,0, 1,0,0)
@@ -1228,7 +1223,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet

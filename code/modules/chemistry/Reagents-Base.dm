@@ -134,7 +134,7 @@
 	fluid_g = 255
 	transparency = 5
 	addiction_prob = 1
-	addiction_min = 10
+	addiction_min = 50
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
@@ -251,6 +251,14 @@
 				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 			..()
 
+	handle_addiction(var/mob/M, var/rate, var/addProb)
+		if (isliving(M))
+			var/mob/living/H = M
+			if (isalcoholresistant(H))
+				addProb /= 4
+				rate /= 4
+		..(M, rate, addProb)
+
 /datum/reagent/hydrogen
 	name = "hydrogen"
 	id = "hydrogen"
@@ -281,7 +289,6 @@
 	fluid_b = 135
 	transparency = 255
 	overdose = 20
-	pathogen_nutrition = list("iron")
 
 	on_mob_life(var/mob/living/H, var/mult = 1)
 		..()
@@ -380,7 +387,6 @@
 	fluid_g = 254
 	fluid_b = 252
 	transparency = 20
-	pathogen_nutrition = list("nitrogen")
 
 /datum/reagent/oxygen
 	name = "oxygen"
@@ -542,7 +548,6 @@
 	overdose = 200
 	hunger_value = 0.098
 	thirst_value = -0.098
-	pathogen_nutrition = list("sugar")
 	taste = "sweet"
 	stun_resist = 6
 	threshold = THRESHOLD_INIT
@@ -564,7 +569,7 @@
 		M.make_jittery(2 )
 		M.changeStatus("drowsy", -10 SECONDS)
 		if(prob(4))
-			M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
+			M.reagents.add_reagent("epinephrine", 3 * src.calculate_depletion_rate(M, mult)) // let's not metabolize into meth anymore
 		//if(prob(2))
 			//M.reagents.add_reagent("cholesterol", rand(1,3))
 		..()
@@ -694,7 +699,6 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
-	pathogen_nutrition = list("sodium")
 	fluid_flags = FLUID_STACKING_BANNED
 
 /datum/reagent/uranium
@@ -725,7 +729,6 @@
 	fluid_g = 165
 	fluid_b = 254
 	transparency = 80
-	pathogen_nutrition = list("water")
 	thirst_value = 0.8909
 	hygiene_value = 1.33
 	bladder_value = -0.2
@@ -747,6 +750,11 @@
 			var/mob/living/carbon/human/H = L
 			if (H.organHolder)
 				H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
+				var/obj/item/toy/sponge_capsule/capsule = locate() in H.organHolder?.stomach?.stomach_contents
+				if (capsule)
+					capsule.add_water()
+					L.visible_message(SPAN_ALERT("[L] vomits up a rapidly expanding sponge capsule!"))
+					H.reagents?.remove_reagent("water", 10)
 		L.nutrition += 1  * mult
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.

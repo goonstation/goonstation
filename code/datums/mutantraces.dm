@@ -202,6 +202,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/detail_1_color = CUST_1
 	var/detail_1_color_f
 
+	/// dead mob icon state this mutantrace uses
+	var/ghost_icon_state = "ghost"
+
 	/// These details will show up layered between the backpack and the outer suit
 	/// The image to be inserted into the mob's appearanceholder's mob_oversuit_1
 	/// Will only show up if the mob's appearance flag includes HAS_O
@@ -228,6 +231,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/blood_color_changed = FALSE
 
 	var/self_click_fluff //used when clicking self on help intent
+
+	/// Abilityholder associated with this mutantrace, will be automatically given to mobs on spawn
+	var/mutant_abilityholder = null
+	/// List of abilities associated with this mutantrace, requires mutant_abilityholder to be set
+	var/list/mutant_abilities = list()
 
 	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
 	/// Each sub-proc passes its obj to this proc, which you can then operate on.
@@ -313,6 +321,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		M.set_face_icon_dirty()
 		M.set_body_icon_dirty()
 
+		if(src.mutant_abilityholder)
+			var/datum/abilityHolder/mutantHolder = M.get_ability_holder(src.mutant_abilityholder)
+			if(!mutantHolder)
+				mutantHolder = M.add_ability_holder(src.mutant_abilityholder)
+			for(var/ability in src.mutant_abilities)
+				mutantHolder.addAbility(ability)
+
+
 		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M?.organHolder?.skull)
 				M.assign_gimmick_skull() // For hunters (Convair880).
@@ -361,6 +377,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				var/mob/living/carbon/human/H = src.mob
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
+
+				if(src.mutant_abilityholder)
+					var/datum/abilityHolder/mutantHolder = src.mob.get_ability_holder(src.mutant_abilityholder)
+					if(mutantHolder)
+						for(var/ability in src.mutant_abilities)
+							mutantHolder.removeAbility(ability)
+						src.mob.remove_ability_holder(src.mutant_abilityholder)
 
 				H.set_face_icon_dirty()
 				H.set_body_icon_dirty()
@@ -749,18 +772,15 @@ TYPEINFO(/datum/mutantrace/virtual)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/virtual/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | BUILT_FROM_PIECES)
 
+	mutant_abilityholder = /datum/abilityHolder/virtual
+	mutant_abilities = list(/datum/targetable/virtual/logout)
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(src.mob))
 			var/color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
 			src.mob.blood_color = color
 			src.mob.bioHolder.bloodColor = color
-			var/datum/abilityHolder/virtual/A = H.get_ability_holder(/datum/abilityHolder/virtual)
-			if (A && istype(A))
-				return
-			var/datum/abilityHolder/virtual/W = H.add_ability_holder(/datum/abilityHolder/virtual)
-			W.addAbility(/datum/targetable/virtual/logout)
-//for sure didnt steal code from ww. no siree
 
 /datum/mutantrace/blank
 	name = "blank"
@@ -833,10 +853,18 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
 
+	ghost_icon_state = "ghost-lizard"
+
+	mutant_abilityholder = /datum/abilityHolder/lizard
+	mutant_abilities = list(
+		/datum/targetable/lizardAbility/colorshift,
+		/datum/targetable/lizardAbility/colorchange,
+		/datum/targetable/lizardAbility/regrow_tail
+	)
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(H))
-			H.give_lizard_powers()
 			H.AddComponent(/datum/component/consume/organpoints, /datum/abilityHolder/lizard)
 			H.AddComponent(/datum/component/consume/can_eat_inedible_organs)
 			H.mob_flags |= SHOULD_HAVE_A_TAIL
@@ -870,7 +898,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			C?.RemoveComponent(/datum/component/consume/organpoints)
 			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
-			L.remove_lizard_powers()
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			src.mob.thermoregulation_mult = initial(src.mob.thermoregulation_mult)
 			src.mob.base_body_temp = initial(src.mob.base_body_temp)
@@ -1097,6 +1124,8 @@ TYPEINFO(/datum/mutantrace/skeleton)
 	self_click_fluff = list("ribcage", "funny bone", "femur", "scapula")
 	blood_id = "calcium"
 
+	ghost_icon_state = "ghost-skeleton"
+
 	on_attach(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(M))
@@ -1133,51 +1162,36 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(src.mob.loc)
 			var/obj/item/I
-			//this should be done in like, a loop but by god the only way to do that is with vars[]
-			I = src.mob.limbs.l_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.l_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.organHolder.drop_organ("head")
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
+			I = src.mob.organHolder.drop_organ("head", src.mob)
+			I.loc = get_turf(src.mob)
+			var/list/limbs = list()
+			limbs += src.mob.limbs.l_arm?.remove(FALSE)
+			limbs += src.mob.limbs.r_arm?.remove(FALSE)
+			limbs += src.mob.limbs.l_leg?.remove(FALSE)
+			limbs += src.mob.limbs.r_leg?.remove(FALSE)
+
+			for (var/obj/limb in limbs) // You do not know my pain.
+				limb.throw_return = FALSE
+				ThrowRandom(limb, rand(2,3), 1)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
 			if(H)
 				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+				ThrowRandom(H, 1)
 			else
 				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
-				I?.pixel_x += rand(-8, 8)
-				I?.pixel_y += rand(-8, 8)
+				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
-			var/list/organlist = list()
-			for(var/idx in src.mob.organHolder.organ_list)
-				organlist += src.mob.organHolder.organ_list[idx]
-			for(var/obj/item/C in src.mob.list_ejectables())
-				if(!(C in organlist))
-					C.set_loc(src.mob.loc)
-					C.pixel_x += rand(-8, 8)
-					C.pixel_y += rand(-8, 8)
 
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
-			var/mob/dead/observer/newmob = src.mob.ghostize()
-			newmob?.corpse = null
 
-			return MUTRACE_ONDEATH_DEFER_DELETE
+			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1807,6 +1821,8 @@ TYPEINFO(/datum/mutantrace/roach)
 	self_click_fluff = list("thorax", "exoskeleton", "antenna")
 	blood_id = "hemolymph"
 
+	ghost_icon_state = "ghost-roach"
+
 	on_attach(mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
@@ -2009,6 +2025,17 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_SKINTONE | TORSO_HAS_SKINTONE | HAS_HUMAN_HAIR | HAS_HUMAN_EYES | HAS_SPECIAL_HAIR | HAS_EXTRA_DETAILS | BUILT_FROM_PIECES)
 	override_attack = 1
 
+	mutant_abilityholder = /datum/abilityHolder/kudzu
+	mutant_abilities = list(
+		/datum/targetable/kudzu/guide,
+		/datum/targetable/kudzu/growth,
+		/datum/targetable/kudzu/seed,
+		/datum/targetable/kudzu/heal_other,
+		/datum/targetable/kudzu/stealth,
+		/datum/targetable/kudzu/kudzusay,
+		/datum/targetable/kudzu/vine_appendage
+	)
+
 	custom_attack(atom/target)
 		if(ishuman(target))
 			src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> waves its limbs at [target] threateningly!"))
@@ -2026,28 +2053,11 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-				H.abilityHolder = new /datum/abilityHolder/kudzu(H)
-				H.abilityHolder.owner = H
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/guide)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/growth)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/seed)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/heal_other)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/stealth)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/kudzusay)
-				H.abilityHolder.addAbility(/datum/targetable/kudzu/vine_appendage)
 
 
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
-			if(H.abilityHolder)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/seed)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/heal_other)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/stealth)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/kudzusay)
-				H.abilityHolder.removeAbility(/datum/targetable/kudzu/vine_appendage)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 		return ..()
@@ -2146,6 +2156,8 @@ TYPEINFO(/datum/mutantrace/cow)
 	can_walk_on_shards = TRUE
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
+
+	ghost_icon_state = "ghost-cow"
 
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
 	var/obj/effect/rt/cow_distorts/under/distort_under = new
@@ -2301,6 +2313,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
 	self_click_fluff = "fur"
+
+	ghost_icon_state = "ghost-pug"
 
 	on_attach(var/mob/living/carbon/human/H)
 		if (prob(1)) // need to modify flags before calling parent

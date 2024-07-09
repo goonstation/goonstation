@@ -18,9 +18,15 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	var/associated_turret = null //what kind of turret should this spawn?
 	var/turret_health = 100
 
-	New()
+	New(newLoc, forensics_id)
 		..()
 		icon_state = "[src.icon_tag]_deployer"
+		if (!src.forensic_ID)
+			if (forensics_id)
+				src.forensic_ID = forensics_id
+			else
+				src.forensic_ID = src.CreateID()
+				forensic_IDs.Add(src.forensic_ID)
 
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It looks [damage_words]")]"
@@ -75,8 +81,10 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		..()
 
 TYPEINFO(/obj/item/turret_deployer/riot)
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
-
+	mats = list("insulated" = 10,
+				"conductive" = 10,
+				"crystal" = 3,
+				"metal_dense" = 2)
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
@@ -133,10 +141,17 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	var/deconstructable = TRUE
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
-	New(loc, direction)
+	New(loc, direction, forensics_id)
 		..()
 		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
+
+		if (!src.forensic_ID)
+			if (forensics_id)
+				src.forensic_ID = forensics_id
+			else
+				src.forensic_ID = src.CreateID()
+				forensic_IDs.Add(src.forensic_ID)
 
 		src.icon_state = "[src.icon_tag]_base"
 		src.appearance_flags |= RESET_TRANSFORM
@@ -191,9 +206,25 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 
 	proc/shoot(target)
 		SPAWN(0)
+			var/list/casing_turfs
+			var/turf/picked_turf
+			if (src.current_projectile.casing)
+				casing_turfs = list()
+				for (var/direction in alldirs)
+					var/turf/T = get_step(src, direction)
+					if (T && !T.density)
+						casing_turfs += T
 			for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 				flick("[src.icon_tag]_fire",src)
 				muzzle_flash_any(src, 0, "muzzle_flash")
+				if (src.current_projectile.casing)
+					picked_turf = pick(casing_turfs)
+					var/obj/item/casing/turret_casing = new src.current_projectile.casing(picked_turf, src.forensic_ID)
+					// prevent infinite casing stacks
+					if (length(picked_turf.contents) > 10)
+						SPAWN(30 SECONDS)
+							if (!QDELETED(turret_casing) && get_turf(turret_casing) == picked_turf)
+								qdel(turret_casing)
 				sleep(src.current_projectile.shot_delay)
 		shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
@@ -353,7 +384,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		qdel(src)
 
 	proc/spawn_deployer()
-		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc)
+		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc, src.forensic_ID)
 		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
@@ -506,7 +537,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && (FACTION_SYNDICATE in C.faction)) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (FACTION_SYNDICATE in C.faction) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED

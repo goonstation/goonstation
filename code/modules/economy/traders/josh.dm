@@ -9,6 +9,8 @@
 	chance_leave = 8
 	chance_arrive = 35
 
+	business_card = /obj/item/paper/businesscard/josh
+
 	max_goods_buy = 3
 	max_goods_sell = 5
 

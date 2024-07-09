@@ -410,6 +410,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 			var/player_count = 0
 			for (var/client/client in clients)
+				if (!client?.mob) //?????? Byond??? Lummox??? Help??????
+					continue
 				if (!istype(client.mob.loc, /obj/cryotron) && !istype(client.mob, /mob/new_player)) //don't count cryoed or lobby players
 					player_count++
 			for(var/datum/job/staple_job in job_controls.staple_jobs) //we'll just assume only staple jobs have variable limits for now
@@ -467,20 +469,21 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 		return
 
+	/// create a set of latejoin cards for a job
 	proc/LateJoinLink(var/datum/job/J)
-		// This is pretty ugly but: whatever! I don't care.
-		// It likely needs some tweaking but everything does.
 		if (J.no_late_join)
 			return
-		var/limit = J.limit
-		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
-			// Show unavailable jobs, but no joining them
-			limit = 0
 
+		var/limit = J.limit
 		var/c = J.assigned
+		var/allowed = TRUE
 		if (limit == 0 && c == 0)
 			// 0 slots, nobody in it, don't show it
 			return
+
+		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
+			// Show unavailable jobs, but no joining them
+			allowed = FALSE
 
 		//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 		if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
@@ -505,6 +508,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			// can you believe all these slot appendages were in one line before using nested ternaries? awful.
 			if (i <= c)
 				if (i == 1 && c > shown)
+					// display +X card
 					slots += {"
 					<div
 					class='latejoin-card latejoin-full'
@@ -514,6 +518,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					</div>
 					"}
 				else
+					// display crossed out card
 					slots += {"
 					<div
 					class='latejoin-card latejoin-full'
@@ -523,18 +528,30 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					</div>
 					"}
 			else
-				slots += {"
-				<a
-				href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
-				class='latejoin-card' style='border-color: [J.linkcolor];'
-				title='[hover_text]'
-				>&#x2713;&#xFE0E;
-				</a>
-				"}
+				if(allowed)
+					// display joinable slot
+					slots += {"
+					<a
+					href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
+					class='latejoin-card' style='border-color: [J.linkcolor];'
+					title='[hover_text]'
+					>&#x2713;&#xFE0E;
+					</a>
+					"}
+				else
+					// display faded empty slot
+					slots += {"
+					<div
+					class ='latejoin-card latejoin-full'
+					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+					title='Job unavailable.'
+					>&#xA0;
+					</div>
+					"}
 		return {"
 			<tr>
 				<td class='latejoin-link[J.is_highlighted() ? " highlighted" : ""]'>
-					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[((limit == -1 || c < limit) && allowed) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is unavailable.'>[J.name]</span>"]
 				</td>
 				<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 			</tr>
@@ -671,12 +688,12 @@ a.latejoin-card:hover {
 				dat += {"<tr><td colspan='2'>&nbsp;</td></tr><tr><th colspan='2'>Special Jobs</th></tr>"}
 
 				for(var/datum/job/special/J in job_controls.special_jobs)
-					if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
-						dat += LateJoinLink(J)
+					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
+					dat += LateJoinLink(J)
 
 				for(var/datum/job/created/J in job_controls.special_jobs)
-					if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
-						dat += LateJoinLink(J)
+					// if (job_controls.check_job_eligibility(src, J, SPECIAL_JOBS) && !J.no_late_join)
+					dat += LateJoinLink(J)
 
 			dat += "</table></div>"
 

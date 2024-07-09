@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
-	access = access_maxsec
+	access = access_armory
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
@@ -636,10 +636,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/robot
 	name = "Robotics Crate"
-	desc = "x1 Securitron, x1 Floorbot, x1 Cleanbot, x1 Medibot, x1 Firebot"
+	desc = "x1 Floorbot, x1 Cleanbot, x1 Medibot, x1 Firebot"
 	category = "Medical Department"
-	contains = list(/obj/machinery/bot/secbot,
-					/obj/machinery/bot/floorbot,
+	contains = list(/obj/machinery/bot/floorbot,
 					/obj/machinery/bot/cleanbot,
 					/obj/machinery/bot/medbot,
 					/obj/machinery/bot/firebot)
@@ -1011,7 +1010,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Blood Bank"
 	desc = "An emergency supply of blood."
 	category = "Medical Department"
-	contains = list (/obj/item/reagent_containers/iv_drip/blood = 4)
+	contains = list (/obj/item/reagent_containers/iv_drip/blood = 2,
+					/obj/item/reagent_containers/iv_drip/saline = 2)
 	cost = PAY_DOCTORATE*2
 	containertype = /obj/storage/crate/medical
 	containername = "Blood Bank"
@@ -1102,6 +1102,17 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "ABCU Unit Crate (Cardlocked \[Engineering])"
 	access = access_engineering
 
+/datum/supply_packs/efif1
+	name = "EFIF-1 Construction System"
+	desc = "A top-of-the-line pod-mounted mass construction tool, suitable for large-scale repairs and offsite building projects."
+	category = "Engineering Department"
+	contains = list(/obj/item/shipcomponent/mainweapon/constructor/stocked,
+					/obj/item/paper/efif_disclaimer)
+	cost = PAY_DOCTORATE*15
+	containertype = /obj/storage/secure/crate
+	containername = "EFIF-1 Crate (Cardlocked \[Engineering])"
+	access = access_engineering
+
 /datum/supply_packs/janitor_supplies
 	name = "Janitorial Supplies Refill"
 	desc = "Supplies to restock your hard-working Janitor."
@@ -1180,6 +1191,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
+
+/datum/supply_packs/furniture_sleek
+	name = "Sleek Furnishings Crate"
+	desc = "A flat-packed set of tables, stools and chairs in a glossy black."
+	contains = list(/obj/item/furniture_parts/table/sleek = 4,
+					/obj/item/furniture_parts/stool/sleek = 2,
+					/obj/item/furniture_parts/sleekchair =2)
+	cost = PAY_EXECUTIVE*2
+	containertype = /obj/storage/crate/wooden
+	containername = "Sleek Furnishings Crate"
 
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"

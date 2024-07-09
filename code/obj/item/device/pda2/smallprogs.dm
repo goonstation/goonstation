@@ -82,17 +82,16 @@
 
 		dat += "<h4>Station Status Display Interlink</h4>"
 
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=blank'>Clear</A> \]<BR>"
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=shuttle'>Shuttle ETA</A> \]<BR>"
-		dat += "\[ <A HREF='?src=\ref[src];statdisp=message'>Message</A> \]"
+		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT]'>Default</A> \]<BR>"
+		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_SHUTTLE]'>Shuttle ETA</A> \]<BR>"
+		dat += "\[ <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_MESSAGE]'>Message</A> \]"
 
-		dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=setmsg1'>[ message1 ? message1 : "(none)"]</A>"
-		dat += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=setmsg2'>[ message2 ? message2 : "(none)"]</A></ul><br>"
-		dat += "\[ Alert: <A HREF='?src=\ref[src];statdisp=alert;alert=default'>None</A> |"
-
-		dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=redalert'>Red Alert</A> |"
-		dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=lockdown'>Lockdown</A> |"
-		dat += " <A HREF='?src=\ref[src];statdisp=alert;alert=biohazard'>Biohazard</A> \]<BR>"
+		dat += "<ul><li> Line 1: <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1]'>[ message1 ? message1 : "(none)"]</A>"
+		dat += "<li> Line 2: <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2]'>[ message2 ? message2 : "(none)"]</A></ul><br>"
+		dat += "\[ Alert: "
+		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_REDALERT]'>Red Alert</A> |"
+		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_LOCKDOWN]'>Lockdown</A> |"
+		dat += " <A HREF='?src=\ref[src];statdisp=[STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT];alert=[STATUS_DISPLAY_PACKET_ALERT_BIOHAZ]'>Biohazard</A> \]<BR>"
 
 		return dat
 
@@ -103,12 +102,15 @@
 
 		if(href_list["statdisp"])
 			switch(href_list["statdisp"])
-				if("message")
-					post_status("message", message1, message2)
-				if("alert")
-					post_status("alert", href_list["alert"])
+				if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT)
+					post_status(STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT)
+				if(STATUS_DISPLAY_PACKET_MODE_MESSAGE)
+					post_status(STATUS_DISPLAY_PACKET_MODE_MESSAGE, message1, message2)
 
-				if("setmsg1")
+				if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT)
+					post_status(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT, href_list["alert"])
+
+				if(STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1)
 					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
@@ -119,7 +121,7 @@
 					message1 = copytext(adminscrub(message1), 1, MAX_MESSAGE_LEN)
 					src.master.updateSelfDialog()
 
-				if("setmsg2")
+				if(STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2)
 					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
@@ -681,7 +683,7 @@ Code:
 
 		. += "<HR>"
 		if(laser)
-			. += "<BR><B>Power Transmition Laser Status</B><BR>"
+			. += "<BR><B>Power Transmission Laser Status</B><BR>"
 			. += "Currently Active: [laser.firing ? "Yes" : "No"]<BR>"
 			. += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
 			. += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
@@ -871,7 +873,8 @@ Code:
 			if (length(eye_loc.camera_coverage_emitters))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = SPAN_ALERT("<b>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</b>")
+		signal.data["message"] = "***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!"
+		signal.data["is_alert"] = TRUE
 
 		src.post_signal(signal)
 
@@ -1085,10 +1088,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
-			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
+			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text | null
 			if(!ticket_target) return
 			ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
-			var/ticket_reason = input(usr, "Ticket reason:",src.name) as text
+			var/ticket_reason = input(usr, "Ticket reason:",src.name) as text | null
 			if(!ticket_reason) return
 			ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 
@@ -1125,7 +1128,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
-			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
+			var/ticket_target = input(usr, "Fine recipient:",src.name) as text | null
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
 			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
@@ -1133,10 +1136,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
 				return
-			var/ticket_reason = input(usr, "Fine reason:",src.name) as text
+			var/ticket_reason = input(usr, "Fine reason:",src.name) as text | null
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
-			var/fine_amount = input(usr, "Fine amount (1-10000):",src.name, 0) as num
+			var/fine_amount = input(usr, "Fine amount (1-10000):",src.name, 0) as num | null
 			if(!isnum_safe(fine_amount)) return
 			fine_amount = min(fine_amount,10000)
 			fine_amount = max(fine_amount,1)

@@ -358,7 +358,7 @@
 	desc = "A remote used to control a station map display, permitting the user to change zoom levels, pan the map, and manage map markers."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minimap_controller"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = TABLEPASS | CONDUCT | ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "minimap_controller"
 	throw_speed = 4

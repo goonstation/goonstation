@@ -5545,7 +5545,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "sp" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Wow! It's so fancy your brain can't even comprehend how it works!";
 	icon = 'icons/obj/fluid.dmi';
 	icon_state = "battery-0";
@@ -10605,7 +10605,7 @@
 /area/pod_wars/team1/teleporter)
 "Jm" = (
 /obj/machinery/light/incandescent/netural,
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Jn" = (
@@ -11709,7 +11709,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Ne" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/circuit/red,
 /area/pod_wars/spacejunk/fstation/computercore)
@@ -14603,7 +14603,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "Xs" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It seems to be locked";
@@ -15344,7 +15344,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "ZW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It seems to be locked";

@@ -1900,11 +1900,11 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 		easing = SINE_EASING | EASE_IN,
 		pixel_y = center_y)
 
-/proc/animate_juggle(atom/thing, time = 0.5 SECONDS)
+/proc/animate_juggle(atom/thing, time = 0.7 SECONDS)
 	animate(thing, time/3, pixel_x = -15, loop = -1)
 	animate(time = time, pixel_x = 15, loop = -1)
 	animate(thing, time = time/3, flags = ANIMATION_PARALLEL, loop = -1)
-	animate(time = time/2, pixel_y = 30, easing = CUBIC_EASING | EASE_OUT, loop = -1)
+	animate(time = time/2, pixel_y = 45, easing = CUBIC_EASING | EASE_OUT, loop = -1)
 	animate(time = time/2, pixel_y = 0, easing = CUBIC_EASING | EASE_IN, loop = -1)
 	animate_spin(thing, parallel = TRUE)
 
@@ -1963,3 +1963,14 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 	SPAWN(spaget_time + 1 SECOND)
 		qdel(spaget_overlay)
 		qdel(spaget_turner)
+
+/proc/animate_meltspark(atom/A)
+	var/obj/effects/welding/spark = new(get_turf(A)) //I steal welding sparks hehehe
+	spark.pixel_x = rand(-10, 10)
+	spark.pixel_y = rand(-6, 0)
+	spark.alpha = 0
+	animate(spark, alpha = 255, time = 2 DECI SECONDS)
+	animate(pixel_y = -16, time = 0.4 SECONDS, easing = QUAD_EASING)
+	animate(spark, alpha = 0, time = 0.3 SECONDS, delay = 0.3 SECONDS)
+	SPAWN(0.6 SECONDS)
+		qdel(spark)

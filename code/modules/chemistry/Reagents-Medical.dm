@@ -71,7 +71,7 @@ datum
 			fluid_g = 251
 			fluid_b = 251
 			transparency = 30
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 15
 			overdose = 15
 			var/counter = 1 //Data is conserved...so some jerkbag could inject a monkey with this, wait for data to build up, then extract some instant KO juice.  Dumb.
@@ -127,7 +127,7 @@ datum
 			fluid_g = 251
 			fluid_b = 251
 			transparency = 30
-			addiction_prob = 10//50
+			addiction_prob = 10
 			addiction_min = 15
 			depletion_rate = 0.2
 			overdose = 40   //Ether is known for having a big difference in effective to toxic dosage
@@ -270,8 +270,7 @@ datum
 			fluid_g = 100
 			fluid_b = 225
 			transparency = 200
-			addiction_prob = 1//20
-			addiction_prob2 = 10
+			addiction_prob = 0.1
 			addiction_min = 10
 			overdose = 50
 			value = 7 // 5c + 1c + 1c
@@ -404,8 +403,7 @@ datum
 			fluid_g = 0
 			fluid_b = 0
 			transparency = 255
-			addiction_prob = 1//20
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 5
 			value = 13
 
@@ -545,7 +543,7 @@ datum
 					else if (effect <= 5)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> staggers and drools, their eyes crazed and bloodshot!"))
 						M.dizziness += 8
-						M.reagents.add_reagent("madness_toxin", rand(1,2) * mult)
+						M.reagents.add_reagent("madness_toxin", randfloat(2.5 , 5) * src.calculate_depletion_rate(M, mult))
 					if (effect <= 15)
 						M.take_toxin_damage(1 * mult)
 
@@ -558,8 +556,7 @@ datum
 			fluid_g = 220
 			fluid_b = 220
 			transparency = 40
-			addiction_prob = 1//5
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 5
 			depletion_rate = 0.2
 			overdose = 30
@@ -1181,8 +1178,7 @@ datum
 			fluid_b = 250
 			depletion_rate = 0.3
 			overdose = 35
-			addiction_prob = 1//25
-			addiction_prob2 = 10
+			addiction_prob = 0.1
 			addiction_min = 10
 			value = 9 // 4c + 3c + 1c + 1c
 			var/remove_buff = 0
@@ -1275,7 +1271,7 @@ datum
 			fluid_b = 255
 			fluid_g = 230
 			transparency = 220
-			addiction_prob = 1//10
+			addiction_prob = 1
 			addiction_min = 10
 			value = 10 // 4 3 1 1 1
 			threshold = THRESHOLD_INIT
@@ -1509,8 +1505,7 @@ datum
 			fluid_g = 100
 			fluid_b = 100
 			transparency = 40
-			addiction_prob = 1//20
-			addiction_prob2 = 20
+			addiction_prob = 0.2
 			addiction_min = 10
 			value = 6 // 3 1 1 heat
 			target_organs = list("left_lung", "right_lung", "spleen")
