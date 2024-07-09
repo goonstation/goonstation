@@ -56,12 +56,6 @@
 						terminal = term
 						break dir_loop
 
-		if(!terminal)
-			status |= BROKEN
-			return
-
-		terminal.master = src
-
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Enable Power Input", PROC_REF(_enable_input_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Disable Power Input", PROC_REF(_disable_input_mechchomp))
@@ -69,6 +63,13 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Enable Power Output", PROC_REF(_enable_output_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Disable Power Ouput", PROC_REF(_disable_output_mechchomp))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
+
+		if(!terminal)
+			status |= BROKEN
+			return
+
+		terminal.master = src
+
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
