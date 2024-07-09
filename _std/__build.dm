@@ -42,7 +42,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
-#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
@@ -133,7 +133,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
-#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
