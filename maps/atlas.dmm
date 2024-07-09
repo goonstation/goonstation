@@ -18056,10 +18056,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"ovj" = (
-/obj/machinery/status_display/market,
-/turf/space,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
 "oCM" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -18165,6 +18161,10 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"oSa" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/tools)
 "oSG" = (
 /obj/machinery/microwave{
 	pixel_y = 6;
@@ -20900,10 +20900,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"wwf" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
 "wwW" = (
 /obj/table/auto,
 /obj/item/device/matanalyzer{
@@ -61157,7 +61153,7 @@ aaE
 aaE
 aaE
 aaE
-ovj
+aaE
 aaE
 aBp
 afV
@@ -64794,7 +64790,7 @@ akY
 abH
 abH
 uUE
-wwf
+abH
 aca
 alU
 akl
@@ -66001,7 +65997,7 @@ aco
 ahA
 ahA
 ahA
-ahA
+oSa
 ahA
 aca
 alU

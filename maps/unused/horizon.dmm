@@ -44808,7 +44808,9 @@
 	})
 "czu" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/supply/delivery_point)
+/area/station/science/artifact{
+	name = "Artifact Lounge"
+	})
 "czv" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/storage/scanner{
@@ -44988,7 +44990,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/status_display,
 /turf/simulated/floor/black,
 /area/station/science/artifact{
 	name = "Artifact Lounge"

@@ -19489,7 +19489,6 @@
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
 	},
-/obj/machinery/status_display/market,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "dEi" = (
