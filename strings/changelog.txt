@@ -1,5 +1,9 @@
 
 (t)tue jul 09 24
+(u)Sovexe
+(p)19921
+(e)🪲📄|C-Bug, A-UI
+(+)The PIN input window now autofocuses for a better user experience
 (u)TheBee03
 (p)19887
 (e)🗺|A-Mapping
