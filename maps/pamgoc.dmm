@@ -57906,14 +57906,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hangar/main)
-"jtp" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	tag = "icon-xtra_bigstripe-edge (EAST)"
-	},
-/obj/machinery/vending/standard/toxins,
-/turf/simulated/floor,
-/area/station/crew_quarters/fitness)
 "jvo" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -112865,7 +112857,7 @@ asw
 xeM
 cyh
 csT
-jtp
+ctL
 ctL
 bCC
 cyh
