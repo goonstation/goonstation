@@ -1,5 +1,9 @@
 
 (t)tue jul 09 24
+(u)Mordent
+(p)19922
+(e)💅📄|C-QoL, A-UI
+(+)Tab moves focus on multiline dialog popups instead of inserting tab.
 (u)Sovexe
 (p)19921
 (e)🪲📄|C-Bug, A-UI
