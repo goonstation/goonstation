@@ -821,7 +821,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	speech_verb_stammer = "sremmats"
 	speech_verb_gasp = "spsag"
 
-	start_speech_modifiers = list(SPEECH_MODIFIER_INVERTED_SPEECH, SPEECH_MODIFIER_BRAIN_DAMAGE, SPEECH_MODIFIER_BREATH)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_INVERTED_SPEECH)
 
 	visible_message(var/message, var/self_message, var/blind_message, var/group)
 		message = "<span style='-ms-transform: rotate(180deg)'>[message]</span>"

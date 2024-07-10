@@ -209,7 +209,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 /// Checks whether the mob or client is muted, and applies preference data to the message's content.
 /datum/say_message/proc/run_mob_and_client_checks()
-	var/mob/M = src.speaker
+	var/mob/M = src.original_speaker
 	if (M.client)
 		if (M.client.ismuted())
 			boutput(M, "You are currently muted and may not speak.")
@@ -223,9 +223,6 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		if (src.flags & SAYFLAG_SPOKEN_BY_PLAYER)
 			global.game_stats.ScanText(src.content)
 #endif
-
-	if (M.stuttering)
-		src.say_verb = M.speech_verb_stammer
 
 /// Determines the say sound that this message should use, and plays it.
 /datum/say_message/proc/process_say_sound()

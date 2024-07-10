@@ -5,7 +5,7 @@
 	health_brute = 40
 	health_burn = 40
 
-	start_speech_modifiers = list(SPEECH_MODIFIER_CRYPTID_PLUSHIE, SPEECH_MODIFIER_BRAIN_DAMAGE, SPEECH_MODIFIER_BREATH)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_CRYPTID_PLUSHIE)
 	can_use_say = FALSE
 
 	var/being_seen = FALSE

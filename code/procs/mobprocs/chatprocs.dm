@@ -91,9 +91,6 @@
 			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
 		var/text = input("", "Speaking over [choice] ([token])") as null|text
 		if (text)
-			if (src.capitalize_speech())
-				text = capitalize(text)
-
 			src.say_verb(token + " " + text)
 
 	else
@@ -140,11 +137,6 @@
 			var/text = input("", "Speaking to [choice] frequency") as null|text
 			if (!text)
 				return
-			if (src.capitalize_speech())
-				var/i = 1
-				while (copytext(text, i, i+1) == " ")
-					i++
-				text = capitalize(copytext(text, i))
 			src.say_verb(token + " " + text)
 		else
 			boutput(src, SPAN_NOTICE("You must put a headset on your ear slot to speak on the radio."))
@@ -175,127 +167,6 @@
 		return
 
 	src.emote(message,2)
-
-/mob/proc/say_quote(var/text, var/special = 0, var/speechverb = null)
-	var/ending = copytext(text, length(text))
-	var/loudness = 0
-	var/font_accent = null
-	var/class = ""
-	var/first_quote = " \""
-	var/second_quote = "\""
-
-	if(!speechverb)
-		speechverb = speech_verb_say
-		if (ending == "?")
-			speechverb = speech_verb_ask
-		else if (ending == "!")
-			speechverb = speech_verb_exclaim
-	if (src.stuttering)
-		speechverb = speech_verb_stammer
-	for (var/datum/ailment_data/A in src.ailments)
-		if (istype(A.master, /datum/ailment/disease/berserker))
-			if (A.stage > 1)
-				speechverb = "roars"
-	if ((src.reagents && src.reagents.get_reagent_amount("ethanol") > 30))
-		speechverb = "slurs"
-	if (src.bioHolder)
-		if (src.bioHolder.HasEffect("loud_voice"))
-			speechverb = "bellows"
-			loudness += 1
-		if (src.bioHolder.HasEffect("quiet_voice"))
-			speechverb = "murmurs"
-			loudness -= 1
-		if (src.bioHolder.HasEffect("unintelligable"))
-			speechverb = "splutters"
-		if (src.bioHolder.HasEffect("accent_comic"))
-			font_accent = "Comic Sans MS"
-
-		if (src.bioHolder.genetic_stability < 50 || src.bioHolder.HasEffect("accent_thrall"))
-			speechverb = "gurgles"
-
-	if (src.get_brain_damage() >= 60)
-		speechverb = pick("says","stutters","mumbles","slurs")
-
-	if(src.find_type_in_hand(/obj/item/megaphone))
-		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
-		loudness += megaphone.loudness_mod
-
-	// if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
-	// 	// use note icons instead of normal quotes
-	// 	var/note_type = src.singing & SAYFLAG_BAD_SINGING ? "notebad" : "note"
-	// 	var/note_img = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[note_type].png")]'>"
-	// 	if (src.singing & SAYFLAG_LOUD_SINGING)
-	// 		first_quote = "[note_img][note_img]"
-	// 		second_quote = first_quote
-	// 	else
-	// 		first_quote = note_img
-	// 		second_quote = note_img
-	// 	// select singing adverb
-	// 	var/adverb = ""
-	// 	if (src.singing & SAYFLAG_BAD_SINGING)
-	// 		adverb = pick("dissonantly", "flatly", "unmelodically", "tunelessly")
-	// 	else if (src.traitHolder?.hasTrait("nervous"))
-	// 		adverb = pick("nervously", "tremblingly", "falteringly")
-	// 	else if (src.singing & SAYFLAG_LOUD_SINGING && !src.traitHolder?.hasTrait("smoker"))
-	// 		adverb = pick("loudly", "deafeningly", "noisily")
-	// 	else if (src.singing & SAYFLAG_SOFT_SINGING)
-	// 		adverb = pick("softly", "gently")
-	// 	else if (src.mind?.assigned_role == "Musician")
-	// 		adverb = pick("beautifully", "tunefully", "sweetly")
-	// 	else if (src.bioHolder?.HasEffect("accent_scots"))
-	// 		adverb = pick("sorrowfully", "sadly", "tearfully")
-	// 	// select singing verb
-	// 	if (src.traitHolder?.hasTrait("smoker"))
-	// 		speechverb = "rasps"
-	// 		if ((singing & SAYFLAG_LOUD_SINGING))
-	// 			speechverb = "sings Tom Waits style"
-	// 	else if (src.traitHolder?.hasTrait("french") && rand(2) < 1)
-	// 		speechverb = "sings [pick("Charles Trenet", "Serge Gainsborough", "Edith Piaf")] style"
-	// 	else if (src.bioHolder?.HasEffect("accent_swedish"))
-	// 		speechverb = "sings disco style"
-	// 	else if (src.bioHolder?.HasEffect("accent_scots"))
-	// 		speechverb = pick("laments", "sings", "croons", "intones", "sobs", "bemoans")
-	// 	else if (src.bioHolder?.HasEffect("accent_chav"))
-	// 		speechverb = "raps"
-	// 	else if (src.singing & SAYFLAG_SOFT_SINGING)
-	// 		speechverb = pick("hums", "lullabies")
-	// 	else
-	// 		speechverb = pick("sings", pick("croons", "intones", "warbles"))
-	// 	if (adverb != "")
-	// 	// combine adverb and verb
-	// 		speechverb = "[adverb] [speechverb]"
-	// 	// add style for singing
-	// 	text = "<i>[text]</i>"
-	// 	class = "sing"
-
-	if (special)
-		if (special == "gasp_whisper")
-			speechverb = speech_verb_gasp
-			loudness -= 1
-
-	// hi cirr here i feel this should be relative for weak mobs
-	var/health_percentage = (src.health/(max(1, src.max_health))) * 100 // prevent div/0 errors from stopping people talking
-	// better to inaccurately not gasp than be silenced by runtimes
-	if (health_percentage <= 20)
-		speechverb = speech_verb_gasp
-	if (isdead(src) || isobserver(src))
-		speechverb = pick("moans","wails","laments")
-		if (prob(5))
-			speechverb = "grumps"
-
-	if (text == "" || !text)
-		return speechverb
-
-	if(class)
-		class = " class='[class]'"
-	if (loudness > 1)
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
-	else if (loudness > 0)
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [class? class : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
-	else if (loudness < 0)
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [class? class : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
-	else
-		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 //no, voluntary is not a boolean. screm
 /mob/emote(act, voluntary = 0, atom/target)

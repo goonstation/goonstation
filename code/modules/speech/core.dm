@@ -156,23 +156,20 @@ Things To Implement:
 - Radio brain (bioeffect)
 
 Old Code To Remove:
-- `say_quote`
 - `process_accents`
 - `separate_radio_prefix_and_message`
-- `saylist`
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
-- Remove the commented out `/mob/living/say` in `living.dm` and `/mob/living/carbon/human/say` in `human.dm`.
 - Check span defines in `chat_output.dm`. Some may now be unused.
 
 Parity:
-- Review `/mob/proc/say_quote`.
 - `radio_brain`
 - Potentially deprecate `protected_radio`.
 - Uncool filter before/after message modifiers.
 
 Fixes:
+- Living mobs that are dead should send and receive messages to and from deadchat.
 - Never add tags to `message.content` See message modifiers.
 
 Accents:
@@ -182,6 +179,7 @@ Accents:
 - Remove `/datum/bioEffect/speech/proc/OnSpeak()`.
 
 Refactors:
+- AI `say()` and `hear()`. Currently doesn't take into account client modules.
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?
 - Split deadchat up into multiple outputs, akin to hivechat.
 - Anything that uses `SPAN_NAME` could likely be moved onto the new system.

@@ -129,8 +129,10 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	id = "accent_thrall"
 
 /datum/speech_module/modifier/accent/thrall/process(datum/say_message/message)
-	message.content = thrall_parse(message.content)
 	. = message
+
+	message.content = thrall_parse(message.content)
+	message.say_verb = "gurgles"
 
 
 /datum/speech_module/modifier/accent/tommy
