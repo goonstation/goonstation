@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 /datum/artifact_trigger
 	var/type_name = "bad artifact code"
 	var/stimulus_required = null
-	var/do_amount_check = 1
+	var/do_amount_check = TRUE
 	var/stimulus_amount = null
 	var/stimulus_type = ">="
 	var/hint_range = 0
@@ -15,13 +15,13 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	// touched by a carbon lifeform
 	type_name = "Carbon Touch"
 	stimulus_required = "carbtouch"
-	do_amount_check = 0
+	do_amount_check = FALSE
 
 /datum/artifact_trigger/silicon_touch
 	// touched by a silicon lifeform
 	type_name = "Silicon Touch"
 	stimulus_required = "silitouch"
-	do_amount_check = 0
+	do_amount_check = FALSE
 
 /datum/artifact_trigger/force
 	type_name = "Physical Force"
@@ -96,4 +96,26 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	// touched by something that contains data (circuit board, disks) etc.
 	type_name = "Data"
 	stimulus_required = "data"
-	do_amount_check = 0
+	do_amount_check = FALSE
+
+/datum/artifact_trigger/lighting
+	// activated by lighting
+	type_name = "Light"
+	stimulus_required = "light"
+	stimulus_type = ">="
+	hint_range = 2
+
+	New()
+		..()
+		stimulus_amount = rand(1, 10)
+
+/datum/artifact_trigger/darkness
+	// activated by lack of lighting
+	type_name = "Dark"
+	stimulus_required = "dark"
+	stimulus_type = "<="
+	hint_range = 1
+
+	New()
+		..()
+		stimulus_amount = rand(0, 3) / 10

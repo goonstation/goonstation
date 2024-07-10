@@ -106,6 +106,13 @@
 		src.ArtifactTakeDamage(rand(5,20))
 		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
 
+/obj/artifact/proc/process()
+	var/datum/artifact/A = src.artifact
+	src.ArtifactProcess()
+
+	if (A.activated)
+		processing_items -= src
+
 /obj/machinery/artifact
 	name = "artifact large art piece"
 	icon = 'icons/obj/artifacts/artifacts.dmi'
@@ -129,6 +136,7 @@
 			src.ArtifactSetup()
 
 	disposing()
+		processing_items -= src
 		artifact_controls.artifacts -= src
 		..()
 
@@ -149,7 +157,10 @@
 			return
 		var/datum/artifact/A = src.artifact
 
+		src.ArtifactProcess()
+
 		if (A.activated)
+			processing_items -= src
 			A.effect_process(src)
 
 	attack_hand(mob/user)

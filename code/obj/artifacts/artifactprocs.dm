@@ -54,6 +54,10 @@
 	var/datum/artifact/A = src.artifact
 	A.holder = src
 
+	// Separate process for lighting checks
+	if(A.get_trigger_by_string("light") || A.get_trigger_by_string("dark"))
+		processing_items |= src
+
 	if (!artifact_controls) //Hasn't been init'd yet
 		sleep(2 SECONDS)
 
@@ -138,6 +142,25 @@
 
 	artifact_controls.artifacts += src
 	A.post_setup()
+
+/obj/proc/ArtifactProcess()
+	// This proc gets called in both /obj/artifact/process() as well as /obj/machinery/artifact/process()
+	// Primarily used to hook in lighting checks but could be used for anything
+
+	var/datum/artifact/A = src.artifact
+	A.holder = src
+
+	// Lighting trigger
+	var/datum/artifact_trigger/AT_L = A.get_trigger_by_string("light")
+	var/datum/artifact_trigger/AT_D = A.get_trigger_by_string("dark")
+	var/rl_threshold = 0.3
+	if (istype(AT_L) || istype(AT_D))
+		var/turf/T = get_turf(src)
+		if (istype(T))
+			if (istype(AT_L))
+				src.ArtifactStimulus("light", T.RL_GetBrightness())
+			else if (istype(AT_D) && !T.is_lit(rl_threshold))
+				src.ArtifactStimulus("dark", T.RL_GetBrightness())
 
 /obj/proc/ArtifactActivated()
 	if (!src)
@@ -361,6 +384,13 @@
 		src.visible_message("<b>[user.name]</b> offers the [DISK] to the artifact.</span>")
 		src.ArtifactStimulus("data", 1)
 		return 0
+
+	if (istype(W,/obj/item/device/light/flashlight))
+		var/obj/item/device/light/flashlight/FL = W
+		if (FL.on)
+			src.ArtifactStimulus("light", 9)
+			src.visible_message(SPAN_ALERT("[user.name] shines [FL] on the artifact!"))
+			return 0
 
 	if (W.force)
 		src.ArtifactStimulus("force", W.force)
