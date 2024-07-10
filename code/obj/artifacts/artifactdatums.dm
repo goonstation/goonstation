@@ -63,8 +63,10 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	/// Which stimuli will activate this artifact?
 	var/list/triggers = list()
-	/// List from which to pick the triggers, gets set in post_setup() via filtered_concrete_typesof because it's too many dang types
-	var/validtriggers = list()
+	/// List from which to pick the triggers
+	var/validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/data,
+	/datum/artifact_trigger/lighting,/datum/artifact_trigger/darkness)
 	/// minimum amount of triggers the artifact will have
 	var/min_triggers = 1
 	/// maximum amount of triggers the artifact will have
