@@ -8,6 +8,9 @@
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","martian","eldritch","precursor")
+	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/lighting, /datum/artifact_trigger/darkness)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange needles!"
 	deact_text = "closes itself up."
