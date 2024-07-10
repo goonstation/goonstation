@@ -315,19 +315,21 @@
 		mailgroups = list(MGD_BOTANY,MGD_PARTY)
 
 	syndicate
-		icon_state = "pda-syn"
 		name = "Military PDA"
-		owner = "John Doe"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
-		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/mess_off
+		icon_state = "pda-syn"
 
-		New()
-			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-			..()
+		nuclear
+			owner = "John Doe"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
+			setup_system_os_path = /datum/computer/file/pda_program/os/main_os/mess_off
 
-		disposing()
-			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-			..()
+			New()
+				START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+				..()
+
+			disposing()
+				STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+				..()
 
 /obj/item/device/pda2/pickup(mob/user)
 	..()
