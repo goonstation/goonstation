@@ -1054,7 +1054,7 @@
 
 	.["equipmentCooldown"] += list(list(
 		"label" = "Emitter",
-		"cooldown" = src.equipment[GENETICS_EMITTERS] - world.time
+		"cooldown" = src.equipment[GENETICS_EMITTERS] - world.time,
 	))
 
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/checker))
