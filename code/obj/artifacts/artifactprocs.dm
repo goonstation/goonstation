@@ -154,7 +154,7 @@
 	// Lighting trigger
 	var/datum/artifact_trigger/AT_L = A.get_trigger_by_string("light")
 	var/datum/artifact_trigger/AT_D = A.get_trigger_by_string("dark")
-	var/rl_threshold = 0.3
+	var/rl_threshold = 1
 	if (istype(AT_L) || istype(AT_D))
 		var/turf/T = get_turf(src)
 		if (istype(T))
