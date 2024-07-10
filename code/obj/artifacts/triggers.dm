@@ -123,4 +123,4 @@ proc/filter_artifact_trigger(var/type)
 
 	New()
 		..()
-		stimulus_amount = rand(0, 3) / 10
+		stimulus_amount = rand(0, 10) / 10
