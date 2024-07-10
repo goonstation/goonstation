@@ -784,7 +784,7 @@
 
 /obj/item/device/pda2/verb/ejectCash()
 	set name = "Withdraw Cash"
-	set desc = "withdraw Cash from this PDA."
+	set desc = "Withdraw Cash from this PDA."
 	set category = "Local"
 	set src in usr
 
