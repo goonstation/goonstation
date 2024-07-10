@@ -237,6 +237,7 @@ var/datum/artifact_controller/artifact_controls
 
 	proc/post_setup(obj/artifact)
 		var/datum/artifact/AD = artifact.artifact
+		AD.validtriggers = filtered_concrete_typesof(/datum/artifact_trigger/, GLOBAL_PROC_REF(filter_artifact_trigger))
 		var/rarityMod = AD.get_rarity_modifier()
 		if(prob(100*rarityMod))
 			artifact.transform = matrix(artifact.transform, -1, 1, MATRIX_SCALE)
