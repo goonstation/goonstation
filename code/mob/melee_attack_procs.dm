@@ -155,8 +155,8 @@
 							X.show_text("The stunhat has [hat.uses] charges left!", "red")
 
 
-						src.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
-						src.stuttering = max(target.stuttering,5)
+						src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
+						src.stuttering = max(target.stuttering,30)
 					else
 						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
