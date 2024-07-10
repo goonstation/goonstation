@@ -936,6 +936,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			M.is_zombie = 1
 			M.max_health += 100
 			M.health = max(M.max_health, M.health)
+			M.can_bleed = FALSE
 
 			if (strain == 1)
 				make_bubs(M)
@@ -991,6 +992,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	disposing()
 		if (ishuman(src.mob))
+			src.mob.can_bleed = TRUE
 			src.mob.remove_stam_mod_max("zombie")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
 		..()

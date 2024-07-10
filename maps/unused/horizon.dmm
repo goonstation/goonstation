@@ -13240,6 +13240,10 @@
 /obj/item/storage/wall/fire,
 /turf/simulated/shuttle/wall/escape,
 /area/station/hallway/secondary/exit)
+"aNn" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "aNo" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -28977,9 +28981,6 @@
 "bFs" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
-/obj/machinery/status_display{
-	pixel_y = -30
-	},
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
@@ -44807,7 +44808,9 @@
 	})
 "czu" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/supply/delivery_point)
+/area/station/science/artifact{
+	name = "Artifact Lounge"
+	})
 "czv" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/storage/scanner{
@@ -49892,6 +49895,10 @@
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
+"irf" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/engineering)
 "irt" = (
 /obj/table/wood/auto,
 /obj/disposalpipe/segment/morgue{
@@ -53106,6 +53113,11 @@
 	},
 /turf/space,
 /area/space)
+"nCz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/east)
 "nCW" = (
 /obj/item/currency/spacecash/ten,
 /turf/simulated/floor/plating/random,
@@ -128810,7 +128822,7 @@ mha
 bzG
 bCt
 bFs
-bzU
+irf
 bLe
 bOq
 bRa
@@ -129107,7 +129119,7 @@ cBx
 bmE
 mhW
 xFm
-bmE
+nCz
 oqk
 bdT
 fRr
@@ -132425,7 +132437,7 @@ wWH
 aAk
 aAk
 bkk
-bkk
+aNn
 bmP
 bpV
 clg

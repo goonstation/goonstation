@@ -1,4 +1,32 @@
 
+(t)tue jul 09 24
+(u)TheBee03
+(p)19887
+(e)🗺|A-Mapping
+(+)A new and improved toxins on Kondaru, complete with a full 2 burn chamber setup!
+(u)NightmarechaMillian
+(p)19439
+(e)🆕🎨🔒🧛|C-Feature, C-Sprites, A-Secret, A-Gamemodes
+(*)An alternative shotgun has appeared in the M4GP13's barter list! Get 4 barrels of break-action fun for just 1200 points today!
+(u)Flaborized
+(p)19827
+(e)🎨|C-Sprites
+(+)Resprited floor guides.
+(t)mon jul 08 24
+(u)Studenterhue
+(p)19883
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added the winning movie posters from the June 2024 contest. Congratulations to JOELED, Showerless, Torchwick, Zhail, TemThrush, TheAmazingToast, Cindertroy, Nahuelwig, ATDoop, Rubicubie, and Garash!
+(+)Crunchwrap, Lefinch, meaow589, L0llerbate, Lopdopgop, and kirdy2 didn't win the contest, but the admin team liked their entries so much that they were added anyway, though they appear at lower rates.
+(u)KakoLookiyam
+(p)19889
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Outer suits with coverage will now prevent shoe exposure to puddles.
+(t)sun jul 07 24
+(u)TealSeer
+(p)19873
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The "Recite Miranda Rights" verb now has a 10 second cooldown.
 (t)sat jul 06 24
 (u)LeahTheTech
 (+)Bricks have mysteriously increased in size.

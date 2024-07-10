@@ -4814,6 +4814,10 @@
 	dir = 8
 	},
 /area/station/security/equipment)
+"bpt" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hangar/qm)
 "bpF" = (
 /obj/decal/poster/wallsign/hazard_electrical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41889,6 +41893,11 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"lay" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/cargooffice)
 "laJ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -44739,9 +44748,6 @@
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 12
@@ -78260,6 +78266,10 @@
 /area/station/crew_quarters/juryroom{
 	name = "Jury Sequestration"
 	})
+"ulD" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/office)
 "ulQ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -152205,7 +152215,7 @@ yiE
 slB
 cHy
 btR
-tyo
+lay
 aSp
 hMN
 bre
@@ -155228,7 +155238,7 @@ qsO
 paa
 xNq
 iVE
-qMZ
+ulD
 lKS
 jAu
 vZF
@@ -155546,7 +155556,7 @@ xXN
 xXN
 huA
 gIn
-ycV
+bpt
 cwn
 cwn
 cwn

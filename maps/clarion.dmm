@@ -16527,6 +16527,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"ega" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "ege" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -26074,9 +26078,6 @@
 /area/station/quartermaster/office)
 "lsP" = (
 /obj/machinery/vending/paint/broken,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "lsX" = (
@@ -40659,6 +40660,10 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
+"wvO" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/garden/aviary)
 "wwE" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -82399,7 +82404,7 @@ abe
 aaw
 aap
 aap
-acl
+wvO
 lsP
 ovf
 bxj
@@ -86325,7 +86330,7 @@ aaa
 sqY
 plf
 bzy
-bzy
+ega
 aar
 lqn
 bsu

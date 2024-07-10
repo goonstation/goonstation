@@ -161,7 +161,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.add_to_image_groups()
 
 		if (src.faction)
-			src.owner.current?.faction |= src.faction
+			LAZYLISTADDUNIQUE(src.owner.current?.faction, src.faction)
 
 		if (!src.silent)
 			src.announce()
