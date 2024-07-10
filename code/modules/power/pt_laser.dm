@@ -223,7 +223,6 @@
 	var/last_onln = online
 	var/last_llt = load_last_tick
 	var/last_firing = firing
-	// var/last_output = output_last_tick
 	var/dont_update = 0
 	var/adj_output = abs(output)
 	var/input_power = src.chargelevel * charging // We can fire a laser with more power than our battery capacity, but only if input is enabled.
