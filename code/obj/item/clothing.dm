@@ -36,7 +36,6 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
-	flags = FPRINT | TABLEPASS
 	var/can_stain = 1
 	var/list/stains = null
 

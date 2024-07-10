@@ -591,6 +591,7 @@ export const PaperSheet = (props, context) => {
     sizeX,
     sizeY,
     name,
+    scrollbar,
   } = data;
   const stampList = !stamps
     ? []
@@ -632,7 +633,7 @@ export const PaperSheet = (props, context) => {
       height={sizeY || 500}>
       <Window.Content
         backgroundColor={paperColor}
-        scrollable>
+        scrollable={scrollbar}>
         <Box
           id="page"
           fitted

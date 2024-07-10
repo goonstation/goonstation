@@ -149,9 +149,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
 //#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
 //#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
-//#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
-//#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
-
 
 //------------ Unit Test Framework ------------//
 

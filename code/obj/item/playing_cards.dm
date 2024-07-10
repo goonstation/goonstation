@@ -1188,12 +1188,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 
 	New()
 		..()
-		stored_deck = new /obj/item/card_group(src)
-		stored_deck.desc = "A bunch of Spacemen the Griffening cards."
-		stored_deck.total_cards = 40
-		stored_deck.card_style = "stg"
-		stored_deck.card_name = "Spacemen the Griffening"
-		stored_deck.build_stg()
+		stored_deck = new /obj/item/card_group/stg(src)
 
 	attack_self(mob/user as mob)
 		if(icon_state == "stg-booster")
