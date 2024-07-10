@@ -292,7 +292,8 @@
 			if (!proj_data) return //ZeWaka: Fix for null.override_color
 			if (!proj_data.override_color)
 				src.color = "#ffffff"
-
+	proc/get_len()
+		return sqrt(src.xo**2 + src.yo**2)
 	// Awful var names. TODO rename pretty much everything here, or at least document the functions
 	proc/setup()
 		if(QDELETED(src))
@@ -307,14 +308,12 @@
 		goes_through_mobs = src.proj_data.goes_through_mobs
 		set_icon()
 
-		var/len = sqrt(src.xo**2 + src.yo**2)
-
+		var/len = src.get_len()
 		if (len == 0 || proj_data.projectile_speed == 0)
 			return //will die on next step before moving
 
 		src.xo = src.xo / len
 		src.yo = src.yo / len
-
 		if (src.yo == 0)
 			if (src.xo < 0)
 				src.angle = -90
@@ -352,8 +351,8 @@
 				ys = -1
 				y32 = -y32
 		var/max_t = src.max_range * (32/speed)
-		var/next_x = x32 / 2
-		var/next_y = y32 / 2
+		var/next_x = x32 * (16-wx*xs)/32
+		var/next_y = y32 * (16-wy*ys)/32
 		var/ct = 0
 		var/turf/T = get_turf(src)
 		var/cx = T.x
