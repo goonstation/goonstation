@@ -1,9 +1,9 @@
-/obj/artifact/healer_bio
+/obj/machinery/artifact/healer_bio
 	name = "artifact carbon healer"
 	associated_datum = /datum/artifact/healer_bio
 
 /datum/artifact/healer_bio
-	associated_object = /obj/artifact/healer_bio
+	associated_object = /obj/machinery/artifact/healer_bio
 	type_name = "Single Target Healer"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350

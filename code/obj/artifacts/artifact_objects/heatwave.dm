@@ -1,15 +1,14 @@
 
-/obj/artifact/heatwave
+/obj/machinery/artifact/heatwave
 	name = "artifact heatwave"
 	associated_datum = /datum/artifact/heatwave
 
 /datum/artifact/heatwave
-	associated_object = /obj/artifact/heatwave
+	associated_object = /obj/machinery/artifact/heatwave
 	type_name = "Heat Surge"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 365
 	validtypes = list("ancient","eldritch","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/heat)
 	fault_blacklist = list(ITEM_ONLY_FAULTS,TOUCH_ONLY_FAULTS)
 	activ_text = "starts emitting HUGE flames!"
 	deact_text = "stops emitting flames."

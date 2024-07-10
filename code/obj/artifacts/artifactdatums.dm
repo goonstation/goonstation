@@ -63,9 +63,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	/// Which stimuli will activate this artifact?
 	var/list/triggers = list()
-	/// List from which to pick the triggers
-	var/validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,/datum/artifact_trigger/data)
+	/// List from which to pick the triggers, gets set in New() via filtered_concrete_typesof because it's too many dang types
+	var/validtriggers = list()
 	/// minimum amount of triggers the artifact will have
 	var/min_triggers = 1
 	/// maximum amount of triggers the artifact will have
@@ -109,6 +108,10 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// It is based mainly on origin, but some artifact types add more descriptors.
 	/// It is based on the fake origin though, so it is no use for recognizing fake origins.
 	var/list/touch_descriptors = list()
+
+	New()
+		..()
+		src.validtriggers = filtered_concrete_typesof(/datum/artifact_trigger/, GLOBAL_PROC_REF(filter_artifact_trigger))
 
 	/// gets called after the artifact basics (origin, appearance, object, etc) are all set up, so the type can modify it further
 	proc/post_setup()

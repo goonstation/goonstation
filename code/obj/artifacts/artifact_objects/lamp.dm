@@ -1,4 +1,4 @@
-/obj/artifact/lamp
+/obj/machinery/artifact/lamp
 	name = "artifact lamp"
 	associated_datum = /datum/artifact/lamp
 	var/light_brightness = 1
@@ -19,14 +19,11 @@
 		light.attach(src)
 
 /datum/artifact/lamp
-	associated_object = /obj/artifact/lamp
+	associated_object = /obj/machinery/artifact/lamp
 	type_name = "Lamp"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("martian","wizard","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
 	activ_text = "begins to emit a steady light!"
 	deact_text = "goes dark and quiet."
 	react_xray = list(10,90,90,11,"NONE")
@@ -34,13 +31,13 @@
 	effect_activate(var/obj/O)
 		if (..())
 			return
-		var/obj/artifact/lamp/L = O
+		var/obj/machinery/artifact/lamp/L = O
 		if (L.light)
 			L.light.enable()
 
 	effect_deactivate(var/obj/O)
 		if (..())
 			return
-		var/obj/artifact/lamp/L = O
+		var/obj/machinery/artifact/lamp/L = O
 		if (L.light)
 			L.light.disable()

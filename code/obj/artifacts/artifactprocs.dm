@@ -54,10 +54,6 @@
 	var/datum/artifact/A = src.artifact
 	A.holder = src
 
-	// Separate process for lighting checks
-	if(A.get_trigger_by_string("light") || A.get_trigger_by_string("dark"))
-		processing_items |= src
-
 	if (!artifact_controls) //Hasn't been init'd yet
 		sleep(2 SECONDS)
 
@@ -140,14 +136,19 @@
 			A.triggers += AT
 			valid_triggers -= selection
 
+	// Separate process for lighting checks
+	if(A.get_trigger_by_path(/datum/artifact_trigger/lighting) || A.get_trigger_by_path(/datum/artifact_trigger/darkness))
+		processing_items |= src
+
 	artifact_controls.artifacts += src
 	A.post_setup()
 
 /obj/proc/ArtifactProcess()
-	// This proc gets called in both /obj/artifact/process() as well as /obj/machinery/artifact/process()
+	// This proc gets called in both /obj/machinery/artifact/process() as well as /obj/item/artifact/process()
 	// Primarily used to hook in lighting checks but could be used for anything
-
 	var/datum/artifact/A = src.artifact
+	if (A.activated)
+		return
 	A.holder = src
 
 	// Lighting trigger

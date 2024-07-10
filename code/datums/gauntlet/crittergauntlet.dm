@@ -299,7 +299,7 @@
 				qdel(I)
 			for (var/obj/item/I in gauntlet)
 				qdel(I)
-			for (var/obj/artifact/A in gauntlet)
+			for (var/obj/machinery/artifact/A in gauntlet)
 				qdel(A)
 			for (var/obj/critter/C in gauntlet)
 				qdel(C)
@@ -626,7 +626,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	inactive_artifact
 		name = "An Artifact"
 		minimum_level = 20
-		supplies = list(/obj/machinery/artifact/bomb, /obj/artifact/darkness_field, /obj/artifact/healer_bio, /obj/artifact/forcefield_generator, /obj/artifact/power_giver)
+		supplies = list(/obj/machinery/artifact/bomb, /obj/machinery/artifact/darkness_field, /obj/machinery/artifact/healer_bio, /obj/machinery/artifact/forcefield_generator, /obj/machinery/artifact/power_giver)
 		max_amount = 1
 
 	hamburgers

@@ -984,7 +984,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			T.fluid_react_single(reagent_id, amount)
 		else switch(spawn_type)
 			if("artifact")
-				var/obj/artifact = Artifact_Spawn(src.loc)
+				var/obj/machinery/artifact = Artifact_Spawn(src.loc)
 				. = artifact
 				if(prob(25))
 					SPAWN(randfloat(0.1 SECONDS, 15 SECONDS))

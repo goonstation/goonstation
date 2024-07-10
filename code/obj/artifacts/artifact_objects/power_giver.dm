@@ -1,9 +1,9 @@
-/obj/artifact/power_giver
+/obj/machinery/artifact/power_giver
 	name = "artifact power giver"
 	associated_datum = /datum/artifact/power_giver
 
 /datum/artifact/power_giver
-	associated_object = /obj/artifact/power_giver
+	associated_object = /obj/machinery/artifact/power_giver
 	type_name = "Mutator"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200

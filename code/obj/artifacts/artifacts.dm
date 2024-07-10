@@ -1,118 +1,4 @@
-/obj/artifact
-	// a totally inert piece of shit that does nothing (alien art)
-	// might as well use it as the category header for non-machinery artifacts just to be efficient
-	name = "artifact large art piece"
-	icon = 'icons/obj/artifacts/artifacts.dmi'
-	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
-	opacity = 0
-	density = 1
-	anchored = UNANCHORED
-	artifact = 1
-	mat_changename = 0
-	mat_changedesc = 0
-	var/associated_datum = /datum/artifact/art
-
-	New(var/loc, var/forceartiorigin)
-		..()
-		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
-		src.artifact = AS
-
-		SPAWN(0)
-			src.ArtifactSetup()
-
-	disposing()
-		artifact_controls.artifacts -= src
-		..()
-
-	UpdateName()
-		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
-
-	attack_hand(mob/user)
-		user.lastattacked = src
-		src.ArtifactTouched(user)
-		return
-
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
-
-	attackby(obj/item/W, mob/user)
-		user.lastattacked = src
-		if (src.Artifact_attackby(W,user))
-			..()
-
-	meteorhit(obj/O as obj)
-		src.ArtifactStimulus("force", 60)
-		..()
-
-	examine()
-		. = list("You have no idea what this thing is!")
-		if (!src.ArtifactSanityCheck())
-			return
-		var/datum/artifact/A = src.artifact
-		if (istext(A.examine_hint) && (usr && (usr.traitHolder?.hasTrait("training_scientist"))))
-			. += SPAN_ARTHINT(A.examine_hint)
-
-	ex_act(severity)
-		switch(severity)
-			if(1)
-				src.ArtifactStimulus("force", 200)
-				src.ArtifactStimulus("heat", 500)
-			if(2)
-				src.ArtifactStimulus("force", 75)
-				src.ArtifactStimulus("heat", 450)
-			if(3)
-				src.ArtifactStimulus("force", 25)
-				src.ArtifactStimulus("heat", 380)
-		return
-
-	reagent_act(reagent_id,volume)
-		if (..())
-			return
-		src.Artifact_reagent_act(reagent_id, volume)
-		return
-
-	emp_act()
-		src.Artifact_emp_act()
-
-	blob_act(var/power)
-		src.Artifact_blob_act(power)
-
-	bullet_act(var/obj/projectile/P)
-		src.material_trigger_on_bullet(src, P)
-
-		switch (P.proj_data.damage_type)
-			if(D_KINETIC,D_PIERCING,D_SLASHING)
-				for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
-					I.impactpad_senseforce_shot(src, P)
-				src.ArtifactStimulus("force", P.power)
-			if(D_ENERGY)
-				src.ArtifactStimulus("elec", P.power * 10)
-			if(D_BURNING)
-				src.ArtifactStimulus("heat", 310 + (P.power * 5))
-			if(D_RADIOACTIVE)
-				src.ArtifactStimulus("radiate", P.power)
-		..()
-
-	hitby(atom/movable/M, datum/thrown_thing/thr)
-		if (isitem(M))
-			var/obj/item/ITM = M
-			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
-				I.impactpad_senseforce(src, ITM)
-		..()
-
-	mob_flip_inside(mob/user)
-		. = ..()
-		src.ArtifactTakeDamage(rand(5,20))
-		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
-
-/obj/artifact/proc/process()
-	var/datum/artifact/A = src.artifact
-	src.ArtifactProcess()
-
-	if (A.activated)
-		processing_items -= src
-
+ABSTRACT_TYPE(/obj/machinery/artifact)
 /obj/machinery/artifact
 	name = "artifact large art piece"
 	icon = 'icons/obj/artifacts/artifacts.dmi'
@@ -120,7 +6,6 @@
 	opacity = 0
 	density = 1
 	anchored = UNANCHORED
-	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
@@ -136,7 +21,6 @@
 			src.ArtifactSetup()
 
 	disposing()
-		processing_items -= src
 		artifact_controls.artifacts -= src
 		..()
 
@@ -160,7 +44,6 @@
 		src.ArtifactProcess()
 
 		if (A.activated)
-			processing_items -= src
 			A.effect_process(src)
 
 	attack_hand(mob/user)
@@ -225,11 +108,16 @@
 				I.impactpad_senseforce(src, ITM)
 		..()
 
+	mob_flip_inside(mob/user)
+		. = ..()
+		src.ArtifactTakeDamage(rand(5,20))
+		boutput(user, SPAN_ALERT("It seems to be a bit more damaged!"))
+
+ABSTRACT_TYPE(/obj/machinery/artifact)
 /obj/item/artifact
 	name = "artifact small art piece"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "wizard-1"
-	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
@@ -262,6 +150,13 @@
 	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
+
+	process()
+		..()
+		if (!src.ArtifactSanityCheck())
+			return
+
+		src.ArtifactProcess()
 
 //ex_act is handled by the item parent
 

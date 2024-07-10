@@ -353,7 +353,7 @@
 			var/obj/item/I = target
 			if (!I.anchored)
 				return 0
-		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
+		if (istype(target, /obj/machinery/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
 			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
 			return
 
@@ -528,7 +528,7 @@
 		if (isliving(target) && !isghostdrone(target))
 			boutput(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
 			return
-		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
+		if (istype(target, /obj/machinery/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
 			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
 			return
 		else

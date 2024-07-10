@@ -1,16 +1,13 @@
-/obj/artifact/augmentor
+/obj/machinery/artifact/augmentor
 	name = "artifact augmentor"
 	associated_datum = /datum/artifact/augmentor
 
 /datum/artifact/augmentor
-	associated_object = /obj/artifact/augmentor
+	associated_object = /obj/machinery/artifact/augmentor
 	type_name = "Surgery machine (cyborg/synth)"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange tools!"
 	deact_text = "closes itself up."
@@ -342,12 +339,12 @@
 	right_kidney = list(/obj/item/organ/kidney/synth/right)
 	appendix = list(/obj/item/organ/appendix/synth)
 
-/obj/artifact/augmentor/limb_augmentor
+/obj/machinery/artifact/augmentor/limb_augmentor
 	name = "artifact limb augmentor"
 	associated_datum = /datum/artifact/augmentor/limb_augmentor
 
 /datum/artifact/augmentor/limb_augmentor
-	associated_object = /obj/artifact/augmentor/limb_augmentor
+	associated_object = /obj/machinery/artifact/augmentor/limb_augmentor
 	type_name = "Surgery machine (artifact limbs)"
 	rarity_weight = 200
 	validtypes = list("eldritch", "martian", "precursor")

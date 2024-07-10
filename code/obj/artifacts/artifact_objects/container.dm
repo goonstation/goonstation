@@ -1,15 +1,13 @@
-/obj/artifact/container
+/obj/machinery/artifact/container
 	name = "artifact sealed container"
 	associated_datum = /datum/artifact/container
 
 /datum/artifact/container
-	associated_object = /obj/artifact/container
+	associated_object = /obj/machinery/artifact/container
 	type_name = "Container"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "seems like it has something inside of it..."
 	deact_text = "locks back up."

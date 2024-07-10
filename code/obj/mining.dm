@@ -210,13 +210,13 @@
 				unacceptable = TRUE
 				break
 
-			for (var/obj/artifact/A in T) // check if an artifact has someone inside
-				if (istype(A, /obj/artifact/prison))
+			for (var/obj/machinery/artifact/A in T) // check if an artifact has someone inside
+				if (istype(A, /obj/machinery/artifact/prison))
 					var/datum/artifact/prison/P = A.artifact
 					if(istype(P.prisoner))
 						unacceptable = TRUE
 						break
-				else if (istype(A, /obj/artifact/cloner))
+				else if (istype(A, /obj/machinery/artifact/cloner))
 					var/datum/artifact/cloner/C = A.artifact
 					if(istype(C.clone))
 						unacceptable = TRUE

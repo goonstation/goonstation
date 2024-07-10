@@ -1,9 +1,9 @@
-/obj/artifact/prison
+/obj/machinery/artifact/prison
 	name = "artifact imprisoner"
 	associated_datum = /datum/artifact/prison
 
 /datum/artifact/prison
-	associated_object = /obj/artifact/prison
+	associated_object = /obj/machinery/artifact/prison
 	type_name = "Prison"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350

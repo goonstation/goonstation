@@ -1,9 +1,9 @@
-/obj/artifact/teleport_recaller
+/obj/machinery/artifact/teleport_recaller
 	name = "artifact recaller"
 	associated_datum = /datum/artifact/recaller
 
 /datum/artifact/recaller
-	associated_object = /obj/artifact/teleport_recaller
+	associated_object = /obj/machinery/artifact/teleport_recaller
 	type_name = "Recaller"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450

@@ -1,9 +1,9 @@
-/obj/artifact/forcefield_generator
+/obj/machinery/artifact/forcefield_generator
 	name = "artifact forcefield generator"
 	associated_datum = /datum/artifact/forcefield_gen
 
 /datum/artifact/forcefield_gen
-	associated_object = /obj/artifact/forcefield_generator
+	associated_object = /obj/machinery/artifact/forcefield_generator
 	type_name = "Forcefield Generator"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450

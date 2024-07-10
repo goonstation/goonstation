@@ -1,9 +1,9 @@
-/obj/artifact/borgifier
+/obj/machinery/artifact/borgifier
 	name = "artifact human2cyborg converter"
 	associated_datum = /datum/artifact/borgifier
 
 /datum/artifact/borgifier
-	associated_object = /obj/artifact/borgifier
+	associated_object = /obj/machinery/artifact/borgifier
 	type_name = "Cyborg converter"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200

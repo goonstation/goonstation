@@ -1,9 +1,9 @@
-/obj/artifact/wish_granter
+/obj/machinery/artifact/wish_granter
 	name = "artifact wish granter"
 	associated_datum = /datum/artifact/wish_granter
 
 /datum/artifact/wish_granter
-	associated_object = /obj/artifact/wish_granter
+	associated_object = /obj/machinery/artifact/wish_granter
 	type_name = "Wishgranter"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90
