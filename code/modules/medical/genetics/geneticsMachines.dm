@@ -1049,7 +1049,7 @@
 
 	.["equipmentCooldown"] += list(list(
 		"label" = "Injectors",
-		"cooldown" = src.equipment[GENETICS_INJECTORS] - world.time
+		"cooldown" = src.equipment[GENETICS_INJECTORS] - world.time,
 	))
 
 	.["equipmentCooldown"] += list(list(
