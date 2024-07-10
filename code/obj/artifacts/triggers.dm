@@ -11,11 +11,6 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	var/hint_prob = 33
 	var/used = 1
 
-// Filters unused artifact triggers
-proc/filter_artifact_trigger(var/type)
-	var/datum/artifact_trigger/AT = type
-	return initial(AT.used)
-
 /datum/artifact_trigger/carbon_touch
 	// touched by a carbon lifeform
 	type_name = "Carbon Touch"
