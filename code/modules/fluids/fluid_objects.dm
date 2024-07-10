@@ -282,7 +282,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	process()
 		if(contained) return
 		if (slurping)
-			if (src.reagents.total_volume < bladder)
+			if (src.reagents.total_volume < src.reagents.maximum_volume)
 				var/turf/T = get_turf(src)
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
@@ -305,7 +305,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 				UpdateIcon()
 
 	update_icon()
-		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
+		var/amt = round((src.reagents.total_volume / src.reagents.maximum_volume) * 12,1)
 		icon_state = "[base_icon][amt]"
 
 		var/overlay_istate = "w_off"
