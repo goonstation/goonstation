@@ -526,20 +526,22 @@
 
 /datum/trait/mildly_mutated
 	name = "Mildly Mutated"
-	desc = "A random mutation in your gene pool starts activated."
+	desc = "A random mutation in your gene pool starts activated and immune to mutadone."
 	id = "mildly_mutated"
 	icon_state = "mildly_mutatedB"
-	points = 0
+	points = 1
 	category = list("genetics")
 	afterlife_blacklisted = TRUE
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Genetic Deviation"
-	disability_desc = "Minor alteration from baseline genetic sequence"
+	disability_desc = "Minor reinforced alteration from baseline genetic sequence"
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
 		var/datum/bioEffect/E = pick(B.effectPool)
 		B.ActivatePoolEffect(B.effectPool[E], 1, 0)
+		E.curable_by_mutadone = FALSE
+		E.name = "Reinforced " + E.name
 		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
 			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
