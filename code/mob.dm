@@ -1090,6 +1090,9 @@
 	health += max(0, tox)
 	health = min(max_health, health)
 
+/// Which mob is pulling this movable currently
+/atom/movable/var/mob/pulled_by = null
+
 /mob/proc/set_pulling(atom/movable/A)
 	if(A == src)
 		return
