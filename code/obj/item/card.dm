@@ -296,6 +296,8 @@ TYPEINFO(/obj/item/card/emag)
 	boutput(usr, "[bicon(src)] [src.name]: The current assignment on the card is [src.assignment].")
 	return
 */
+/obj/item/card/id/blank_syndicate
+		icon_state = "id_syndie"
 
 /obj/item/card/id/syndicate
 	name = "agent card"
