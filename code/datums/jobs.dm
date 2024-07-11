@@ -1229,7 +1229,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 2
 	wages = 0
 	trait_list = list("stowaway")
+	add_to_manifest = FALSE
 	low_priority_job = TRUE
+	slot_card = null
 	slot_head = list(\
 	/obj/item/clothing/head/green = 1,
 	/obj/item/clothing/head/red = 1,
