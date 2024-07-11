@@ -75,7 +75,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
 	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
-	var/update_requested = FALSE
+	var/update_requested = FALSE // Whether the next APC process should include an update (set after turfs are reallocated to this APC's area)
 
 //	luminosity = 1
 	var/debug = 0
