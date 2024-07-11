@@ -14,7 +14,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "bellhammer"
 	item_state = "bellhammer"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	force = 5
 	throwforce = 5
