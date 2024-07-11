@@ -472,8 +472,6 @@ var/list/admin_verbs = list(
 		/client/proc/clear_string_cache,
 		/client/proc/test_flock_panel,
 		/client/proc/temporary_deadmin_self,
-		/client/proc/rebuild_flow_networks,
-		/client/proc/print_flow_networks,
 		/client/proc/toggle_hard_reboot,
 		/client/proc/cmd_modify_respawn_variables,
 		/client/proc/set_nukie_score,

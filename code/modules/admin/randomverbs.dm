@@ -5,26 +5,6 @@
 		world.installUpdate()
 	world.Reboot()
 
-/client/proc/rebuild_flow_networks()
-	set name = "Rebuild Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	make_fluid_networks()
-
-/client/proc/print_flow_networks()
-	set name = "Print Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	DEBUG_MESSAGE("Dumping flow network refs")
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
-		// Clear DFS flags
-		network.clear_DFS_flags()
-		DFS_LOUD(network.nodes[1])
 
 /client/proc/cmd_admin_drop_everything(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
