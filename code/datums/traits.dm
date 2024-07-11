@@ -980,7 +980,7 @@ TYPEINFO(/datum/trait/partyanimal)
 			addAddiction(owner)
 
 	proc/addAddiction(var/mob/living/owner)
-		var/datum/ailment_data/addiction/AD = new
+		var/datum/ailment_data/addiction/AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
 		AD.associated_reagent = selected_reagent
 		AD.last_reagent_dose = world.timeofday
 		AD.name = "[selected_reagent] addiction"
@@ -1132,6 +1132,14 @@ TYPEINFO(/datum/trait/partyanimal)
 
 	onLife(var/mob/owner, var/mult)
 		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
+			if(istype(owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner
+				if (H.hand == LEFT_HAND)
+					if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+						return
+				else
+					if (H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+						return
 			for(var/obj/item/I in oview(1, owner))
 				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
 					I.Attackhand(owner)

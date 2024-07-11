@@ -1590,12 +1590,12 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
-	onRemove()
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
+		onRemove()
+			. = ..()
+			if(ismob(owner))
+				var/mob/M = owner
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"

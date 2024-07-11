@@ -11928,6 +11928,7 @@
 /obj/machinery/light/incandescent/greenish{
 	dir = 4
 	},
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -32744,7 +32745,7 @@
 "dyC" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 4;
-	mail_tag = "fitness room"
+	mail_tag = "detective's office"
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4;
@@ -35370,6 +35371,12 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gNY" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/market{
+	name = "Supply Lobby"
+	})
 "gOv" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -37977,7 +37984,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
-/obj/rack/organized/techstorage_med/sea,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "kXn" = (
@@ -40985,6 +40992,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"oVt" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "oWf" = (
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
@@ -44474,9 +44485,6 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
-	},
-/obj/machinery/status_display{
-	pixel_y = -32
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6
@@ -77140,7 +77148,7 @@ bJw
 bJw
 bJw
 bJw
-bJw
+oVt
 bJw
 pPq
 bNZ
@@ -81061,7 +81069,7 @@ vhK
 bDa
 bEp
 bDa
-bDa
+gNY
 bGV
 bHU
 bII

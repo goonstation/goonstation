@@ -21651,7 +21651,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/obj/rack/organized/techstorage_med/sea,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
@@ -43204,6 +43204,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
+"stG" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/cargooffice)
 "stQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44810,12 +44814,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "tdf" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = -7
-	},
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "tdj" = (
@@ -47987,6 +47986,13 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
+"usV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage{
+	name = "Cargo Auxiliary Endpoint"
+	})
 "uti" = (
 /obj/surgery_tray,
 /obj/machinery/light/small/floor/netural,
@@ -103145,7 +103151,7 @@ kqZ
 wbj
 wmh
 cqc
-oxJ
+stG
 mIV
 mIV
 qTA
@@ -104360,7 +104366,7 @@ ktm
 bHE
 wxe
 cLn
-oUb
+usV
 jkd
 pAd
 qcD

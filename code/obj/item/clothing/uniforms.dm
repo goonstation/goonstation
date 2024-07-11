@@ -703,7 +703,14 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	icon_state = "mail"
 	item_state = "mail"
 
+	april_fools
+		icon_state = "mail-alt"
+		item_state = "mail-alt"
+
 	syndicate
+		april_fools  // This pathing is weird and I hate it
+			icon_state = "mail-alt"
+			item_state = "mail-alt"
 
 /obj/item/clothing/under/misc/barber
 	name = "barber's uniform"

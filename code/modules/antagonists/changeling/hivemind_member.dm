@@ -41,7 +41,7 @@
 			ghost_mob.corpse = hivemind_observer.corpse
 
 		hivemind_observer.hivemind_owner.hivemind -= hivemind_observer
-		hivemind_observer.observers -= hivemind_observer
+		LAZYLISTREMOVE(hivemind_observer.observers, hivemind_observer)
 		qdel(hivemind_observer)
 
 	announce_objectives()

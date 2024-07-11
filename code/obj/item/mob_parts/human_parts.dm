@@ -306,7 +306,6 @@
 /obj/item/parts/human_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A human arm."
-	override_attack_hand = 0 //to hit with an item instead of hand when used empty handed
 	can_hold_items = 1
 	var/rebelliousness = 0
 	var/strangling = FALSE
@@ -452,7 +451,6 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
@@ -515,7 +513,6 @@
 			//if(I.over_clothes) handlistPart += "l_arm_[I.arm_icon]"
 			//else partlistPart += "l_arm_[I.arm_icon]"
 			handlistPart += "l_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -600,7 +597,6 @@
 	limb_type = /datum/limb/item
 	streak_decal = /obj/decal/cleanable/oil // what streaks everywhere when it's cut off?
 	streak_descriptor = "oily" //bloody, oily, etc
-	override_attack_hand = 1
 	can_hold_items = 0
 	remove_object = null
 	handlistPart = null
@@ -646,7 +642,6 @@
 			//if(I.over_clothes) handlistPart += "r_arm_[I.arm_icon]"
 			//else partlistPart += "r_arm_[I.arm_icon]"
 			handlistPart += "r_arm_[I.arm_icon]"
-			override_attack_hand = I.override_attack_hand
 			can_hold_items = I.can_hold_items
 
 			if (I.cant_drop)
@@ -729,7 +724,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -756,7 +750,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -783,7 +776,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -803,7 +795,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bloody"
-	override_attack_hand = 1
 	limb_type = /datum/limb/hot
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -825,7 +816,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
 	partIconModifier = "bear"
@@ -848,7 +838,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "bearly"
-	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
 	partIconModifier = "bear"
@@ -976,7 +965,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
 	partIconModifier = "abomination"
@@ -1016,7 +1004,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
 	partIconModifier = "abomination"
@@ -1055,12 +1042,10 @@
 	slot = "l_arm"
 	side = "left"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
@@ -1078,12 +1063,10 @@
 	slot = "r_arm"
 	side = "right"
 	decomp_affected = FALSE
-	override_attack_hand = 1
 	can_hold_items = 0
 	limb_type = /datum/limb/zombie //Basically zombie arms am I right?
 	skintoned = TRUE
 	streak_descriptor = "undeadly"
-	override_attack_hand = 1
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
 
@@ -1101,7 +1084,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "l_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1123,7 +1105,6 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	streak_descriptor = "eerie"
-	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "r_hand_brullbar"
 	partIconModifier = "brullbar"
@@ -1685,7 +1666,6 @@
 	handlistPart = "hand_left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	show_on_examine = TRUE
 
@@ -1703,7 +1683,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/abomination/werewolf
 	handlistPart = "hand_right"
 	show_on_examine = TRUE
@@ -2049,7 +2028,6 @@
 	side = "left"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_left"
 	show_on_examine = TRUE
@@ -2068,7 +2046,6 @@
 	side = "right"
 	decomp_affected = FALSE
 	skintoned = FALSE
-	override_attack_hand = 1
 	limb_type = /datum/limb/hunter
 	handlistPart = "hand_right"
 	show_on_examine = TRUE

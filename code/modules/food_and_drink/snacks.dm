@@ -2774,6 +2774,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
 
+/obj/item/reagent_containers/food/snacks/cinnamonbun
+	name = "cinnamon bun"
+	desc = "A delicious little pastry roll with a swirl of cinnamon."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cinnamonbun"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#C58C66"
+	initial_volume = 20
+	initial_reagents = list("sugar"=10, "cinnamon"=10)
+	food_effects = list("food_burn","food_warm")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
 /obj/item/reagent_containers/food/snacks/tandoorichicken
 	name = "tandoori chicken"
 	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."

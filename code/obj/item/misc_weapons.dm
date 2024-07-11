@@ -535,7 +535,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_damage = 15
 	stamina_cost = 5
 	stamina_crit_chance = 50
-	pickup_sfx = 'sound/items/blade_pull.ogg'
+	equip_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
@@ -1555,7 +1555,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, SPAN_ALERT("The [W] can't fit into [src]."))
+			boutput(user, SPAN_ALERT("[W] can't fit into [src]."))
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
