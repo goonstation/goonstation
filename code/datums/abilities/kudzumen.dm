@@ -41,10 +41,10 @@
 
 /datum/abilityHolder/kudzu
 	usesPoints = 1
-	regenRate = 0
+	regenRate = 1
 	tabName = "kudzu"
 	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
-	points = 0
+	points = 50
 	pointName = "nutrients"
 	var/stealthed = 0
 	var/atom/movable/screen/kudzu/meter/nutrients_meter = null
@@ -581,6 +581,7 @@
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
+
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
