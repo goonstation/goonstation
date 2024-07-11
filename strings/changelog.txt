@@ -1,5 +1,9 @@
 
 (t)thu jul 11 24
+(u)Kyle
+(p)19941
+(e)|
+(*)Fix Kudzumen point generation and some other misc changes
 (u)JORJ949
 (p)19510
 (e)🆕🎩|C-Feature, A-Clothing
