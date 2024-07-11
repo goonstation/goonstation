@@ -1627,8 +1627,6 @@
 				M = owner
 
 			if (play_KO_fx)
-				SPAWN(0)
-					playsound(M.loc, 'sound/misc/knockout.ogg', 50, FALSE)
 				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 				M.make_dizzy(140)
 				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
