@@ -1,5 +1,9 @@
 
 (t)thu jul 11 24
+(u)JORJ949
+(p)19670
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Objects can now be click-dragged into cyborg docks from further away. Mobs still require the shorter distance.
 (u)Kyle
 (p)19941
 (e)|
