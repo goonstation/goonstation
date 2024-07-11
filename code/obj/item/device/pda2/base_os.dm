@@ -1032,7 +1032,10 @@
 				if (!isnull(src.master.ID_card))
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 					if (src.master.accessed_record)
-						. += "Account balance: [src.master.accessed_record["current_money"]] credits - <a href='byond://?src=\ref[src.master];eject_cash=1'>Withdraw</a><br>"
+						if (src.master.bank_account_locked)
+							. += "Account balance: [src.master.accessed_record["current_money"]] credits - <a href='byond://?src=\ref[src.master];unlock=1'>Unlock</a><br>"
+						else
+							. += "Account balance: [src.master.accessed_record["current_money"]] credits - <a href='byond://?src=\ref[src.master];eject_cash=1'>Withdraw</a> &bull; <a href='byond://?src=\ref[src.master];lock=1'>Lock</a><br>"
 
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)

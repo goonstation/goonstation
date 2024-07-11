@@ -13,6 +13,8 @@
 	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/datum/db_record/accessed_record = null // the bank account on the id card
+	/// whether bank account functions are currently locked by bank pin or not
+	var/bank_account_locked = TRUE
 	var/obj/item/pen = null // slap a pen into that thang
 	var/registered = null // so we don't need to replace all the dang checks for ID cards
 	var/assignment = null
@@ -579,6 +581,16 @@
 		else if (href_list["eject_cash"])
 			src.eject_cash(usr ? usr : null)
 
+		else if (href_list["lock"])
+			src.bank_account_locked = TRUE
+
+		else if (href_list["unlock"])
+			var/enterpin = usr.enter_pin("PDA")
+			if (enterpin == ID_card.pin)
+				src.bank_account_locked = FALSE
+			else
+				boutput(usr, SPAN_ALERT("Incorrect PIN."))
+
 		else if (href_list["refresh"])
 			var/obj/item/uplink/integrated/pda/uplink = src.uplink
 			if(istype(uplink))
@@ -856,8 +868,11 @@
 	proc/eject_cash(var/mob/user as mob)
 		if (src.loc == user && src.ID_card && src.accessed_record)
 			var/amount = tgui_input_number(usr, "How much would you like to withdraw?", "Withdrawal", 0, src.accessed_record["current_money"], 0)
-			if (src.loc != user || !src.ID_card || !src.accessed_record)
+			if (src.loc != user || !src.ID_card || !src.accessed_record || src.bank_account_locked)
 				// no withdrawing after you're gone
+				return
+			if (ON_COOLDOWN(src, "eject_cash", 0.5 SECONDS))
+				boutput(usr, SPAN_ALERT("The cash dispenser is not ready yet..."))
 				return
 			if (amount < 1)
 				boutput(usr, SPAN_ALERT("Invalid amount!"))
@@ -894,6 +909,7 @@
 			src.assignment = null
 			src.access = null
 			src.accessed_record = null
+			src.bank_account_locked = TRUE
 			src.underlays -= src.ID_image
 			if (istype(user))
 				user.put_in_hand_or_drop(src.ID_card)
@@ -916,6 +932,7 @@
 		src.assignment = ID.assignment
 		src.access = ID.access
 		src.accessed_record = data_core.bank.find_record("name", ID.registered)
+		src.bank_account_locked = TRUE
 		if (!src.ID_image)
 			src.ID_image = image(src.icon, "blank")
 		src.ID_image = src.ID_card.icon_state
