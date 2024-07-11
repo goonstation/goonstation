@@ -4156,8 +4156,6 @@ ABSTRACT_TYPE(/area/mining)
 			new_owner.area_apc.request_update()
 		return TRUE
 
-	New()
-		. = ..()
 
 ///Created when an APC is installed in an unconnected zone.
 /area/built_zone
