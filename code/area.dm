@@ -1390,6 +1390,12 @@ TYPEINFO(/area/diner)
 	requires_power = FALSE
 #endif
 
+/area/watchful_eye_sensor
+	name = "Watchful Eye Sensor Satellite"
+	icon_state = "red"
+	requires_power = FALSE
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/watchful_eye_sensor
+
 /area/pasiphae
 	name = "Pasiphae Primary Zone"
 	icon_state = "hallC"

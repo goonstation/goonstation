@@ -2398,9 +2398,6 @@
 // jitteriness - copy+paste of dizziness
 
 /mob/proc/make_jittery(var/amount)
-	if (!ishuman(src)) // for the moment, only humans get dizzy
-		return
-
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
 													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
