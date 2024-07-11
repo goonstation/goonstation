@@ -27,8 +27,11 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#if fexists("+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
+#if defined(SPACEMAN_DMM) && !defined(DISABLE_SECRETS) // For StrongDMM since it dies on the fexists() check - doesn't die if the file doesn't exist
 #include "+secret\__secret.dme"
+#endif
+#if fexists("./+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS) && !defined(SECRETS_ENABLED)
+#include ".\+secret\__secret.dme" // This needs to be a ""different path""
 #endif
 #include "code\__secret_public.dme"
 
@@ -388,7 +391,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gamemodes\pod_wars.dm"
 #include "code\datums\gamemodes\revolution.dm"
 #include "code\datums\gamemodes\salvager.dm"
-#include "code\datums\gamemodes\spy.dm"
 #include "code\datums\gamemodes\spy_theft.dm"
 #include "code\datums\gamemodes\traitor.dm"
 #include "code\datums\gamemodes\vampire.dm"
@@ -1672,6 +1674,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\status_system\statusFoodBad.dm"
 #include "code\modules\status_system\statusFoodBuffs.dm"
 #include "code\modules\status_system\statusSystem.dm"
+#include "code\modules\storage\machine.dm"
 #include "code\modules\storage\no_hud.dm"
 #include "code\modules\storage\storage.dm"
 #include "code\modules\storage\unholdable.dm"

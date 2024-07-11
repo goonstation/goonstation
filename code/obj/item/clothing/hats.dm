@@ -548,6 +548,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "mailcap"
 	item_state = "mailcap"
 
+	april_fools
+		icon_state = "mailcap-alt"
+		item_state = "mailcap-alt"
+
 /obj/item/clothing/head/chefhattall
     name = "Tall Chef's Hat"
     desc = "Your toque blanche, now at least 50% taller!"

@@ -10476,13 +10476,14 @@
 /turf/space,
 /area/space)
 "aOh" = (
-/obj/table/auto,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/pinpointer/disk,
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
+	},
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
@@ -15154,9 +15155,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -17983,6 +17981,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"odD" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "ofD" = (
 /turf/simulated/floor/white/side{
 	dir = 5
@@ -18159,6 +18161,10 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"oSa" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/tools)
 "oSG" = (
 /obj/machinery/microwave{
 	pixel_y = 6;
@@ -19042,6 +19048,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
+"rkG" = (
+/obj/table/auto,
+/obj/item/pinpointer/disk,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost)
 "rlI" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/purpleish{
@@ -63259,7 +63270,7 @@ aAr
 abD
 abN
 abD
-abN
+odD
 bie
 adX
 aeI
@@ -65986,7 +65997,7 @@ aco
 ahA
 ahA
 ahA
-ahA
+oSa
 ahA
 aca
 alU
@@ -94821,7 +94832,7 @@ aNG
 aNQ
 aUH
 aOv
-aNG
+rkG
 ohq
 aaa
 aaa
