@@ -8,6 +8,7 @@
 	density = 1
 	anchored = ANCHORED_ALWAYS
 	dir = EAST
+	layer = ABOVE_OBJ_LAYER + 0.1 //over lasers which are over mirrors :screm:
 	bound_height = 96
 	bound_width = 96
 	req_access = list(access_engineering_power)
