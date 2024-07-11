@@ -21651,7 +21651,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/obj/rack/organized/techstorage_med/sea,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
