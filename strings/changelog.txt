@@ -1,5 +1,9 @@
 
 (t)thu jul 11 24
+(u)JORJ949
+(p)19510
+(e)🆕🎩|C-Feature, A-Clothing
+(+)As an NT official the Inspector now gets an NT ID and their own headset.
 (u)Tyrant
 (p)19675
 (e)🆕🗺🔬🌠|C-Feature, A-Mapping, A-Science, A-Events
