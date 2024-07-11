@@ -41,7 +41,7 @@
 
 /datum/abilityHolder/kudzu
 	usesPoints = 1
-	regenRate = 1
+	regenRate = 0
 	tabName = "kudzu"
 	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 50
@@ -176,7 +176,7 @@
 	icon_state = "guide"
 	targeted = 1
 	target_anything = 1
-	cooldown = 1 SECOND
+	cooldown = 0
 	pointCost = 2
 	max_range = 2
 
