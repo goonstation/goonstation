@@ -221,7 +221,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_add_freeform_ai_law,
 		/client/proc/cmd_admin_show_ai_laws,
 		/client/proc/cmd_admin_reset_ai,
-		/client/proc/addpathogens,
 		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/datum/admins/proc/toggletraitorscaling,
@@ -284,7 +283,6 @@ var/list/admin_verbs = list(
 		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
 		/client/proc/idclip,
-		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_list_players,
 		/client/proc/cmd_give_player_pets,
@@ -1094,7 +1092,7 @@ var/list/fun_images = list()
 	SHOW_VERB_DESC
 	if(istext(J))
 		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
-		if(job_controls.savefile_load(src, idx))
+		if(job_controls.cloudsave_load(src, idx))
 			J = job_controls.create_job(TRUE)
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
@@ -1806,6 +1804,9 @@ var/list/fun_images = list()
 		var/ignorePlayerVote = tgui_alert(src.mob, "The next map was voted for by the players, are you sure you want to override it? This could be very rude!", "Ignore Players?", list("Yes", "No"))
 		if (ignorePlayerVote == "No")
 			return
+
+	if (mapSwitcher.locked)
+		return alert("The server is currently switching to another map. You will need to wait.")
 
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"

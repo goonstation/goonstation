@@ -43,6 +43,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/purchase_flags
 	var/owner_ckey = null
 
+	/// Associative list, where keys are /datum/syndicate_buylist instances and values are the number of purchases.
+	var/list/purchase_log = list()
+
 	// Spawned uplinks for which setup() wasn't called manually only get the standard (generic) items.
 	New()
 		..()
@@ -445,6 +448,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
+					if (!src.purchase_log[I.type])
+						src.purchase_log[I.type] = 0
+					src.purchase_log[I.type]++
 			if (I.item2)
 				new I.item2(get_turf(src))
 			if (I.item3)
@@ -490,7 +496,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	name = "station bounced radio"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "walkietalkie"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "radio"
@@ -721,10 +727,13 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
-				I.run_on_spawn(item, usr)
+				I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
+					if (!src.purchase_log[I.type])
+						src.purchase_log[I.type] = 0
+					src.purchase_log[I.type]++
 			if (I.item2)
 				new I.item2(get_turf(src.hostpda))
 			if (I.item3)
@@ -1174,7 +1183,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	desc = "A nifty device used by the commander to order powerful equipment for their team."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "uplink_commander"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "uplink_commander"
@@ -1310,7 +1319,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
-	flags = FPRINT | TABLEPASS | TGUI_INTERACTIVE
+	flags = TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
 	health = 5

@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	relaymove(mob/user as mob, dir)
 		// we reset the overlays to null in case the relaymove() call was initiated by a
 		// passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
-		src.overlays = null
+		src.ClearSpecificOverlays("rider")
 
 		if(!src.rider || user != src.rider)
 			return
@@ -194,12 +194,13 @@ ABSTRACT_TYPE(/obj/vehicle)
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 
 		if(src.rider_visible)
-			src.overlays += src.rider
+			src.UpdateOverlays(src.rider, "rider")
 
 		// You can't move in space without the booster upgrade
 		if (src.booster_upgrade)
-			src.overlays += booster_image
+			src.UpdateOverlays(booster_image, "booster_image")
 		else
+			src.ClearSpecificOverlays("booster_image")
 			var/turf/T = get_turf(src)
 
 			if(T.throw_unlimited && istype(T, /turf/space))
@@ -2382,7 +2383,7 @@ TYPEINFO(/obj/vehicle/forklift)
 		return
 
 	//pick up crates with forklift
-	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len != helditems_maximum && !broken)
+	if((istype(A, /obj/storage/crate) || istype(A, /obj/storage/cart) || istype(A, /obj/storage/secure/crate)) && BOUNDS_DIST(A, src) == 0 && src.rider == user && helditems.len < (user.traitHolder?.hasTrait("training_quartermaster") ? 2 : 1) * helditems_maximum && !broken)
 		A.set_loc(src)
 		helditems.Add(A)
 		update_overlays()

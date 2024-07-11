@@ -1591,6 +1591,7 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
 		onRemove()
+
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
@@ -1706,6 +1707,7 @@
 					if (human.hasStatus("wrestler"))
 						human.delStatus("wrestler")
 			remove_all = FALSE
+
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
@@ -2334,9 +2336,8 @@
 
 	onUpdate(timePassed)
 		. = ..()
-		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.delStatus("filthy")
-
 
 	onRemove()
 		. = ..()

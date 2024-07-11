@@ -14,7 +14,6 @@
 	var/use_bloodoverlay = 1
 	var/stapled = 0
 	var/allow_staple = 1
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 	New()
 		..()
@@ -109,7 +108,6 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -493,7 +491,6 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -640,7 +637,6 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	color_r = 0.95 // darken just a little
 	color_g = 0.95
 	color_b = 0.95
-	path_prot = 0
 
 /obj/item/clothing/mask/chicken
 	name = "chicken mask"

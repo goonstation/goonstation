@@ -47,7 +47,6 @@ MATERIAL
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
-	flags = FPRINT | TABLEPASS
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
@@ -557,7 +556,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_NORMAL
 	force = 4
 	throwforce = 8
