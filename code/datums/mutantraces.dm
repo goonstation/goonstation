@@ -2059,11 +2059,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 					var/datum/abilityHolder/composite/ch = H.abilityHolder
 					ch.addHolder(/datum/abilityHolder/kudzu)
 
-				// var/atom/plane = src.mob.client?.get_plane(PLANE_LIGHTING)
-				// if (plane)
-				// 	plane.alpha = 255
-				// 	src.mob.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
