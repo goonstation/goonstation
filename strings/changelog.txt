@@ -1,5 +1,9 @@
 
 (t)fri jul 12 24
+(u)Wrench
+(p)19952
+(e)🗺💅|A-Mapping, C-QoL
+(+)Adds Tanning Sunglasses to the Kondaru and Nadir Pools.
 (u)LeahTheTech
 (p)19949
 (e)🎨📦|C-Sprites, A-Game-Objects
