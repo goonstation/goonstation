@@ -16786,6 +16786,11 @@
 	cycle_id = "toxins";
 	name = "Toxin Storage"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/black,
 /area/station/science/storage)
 "eWZ" = (
@@ -34302,6 +34307,11 @@
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "bombtest";
 	name = "Bomb Testing Chamber"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
