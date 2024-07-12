@@ -102,6 +102,8 @@
 /obj/fakeobject/airlock_broken/glass
 	name = "glass airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
+	opacity = 0
+	visible = 0
 	icon_state = "door_closed"
 
 	bolted
@@ -135,6 +137,233 @@
 // gannets doors
 // =============
 
+/obj/fakeobject/airlock_broken/gannets
+	icon = 'icons/obj/doors/destiny.dmi'
+	icon_state = "gen_closed"
+	icon_base = "gen"
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "gen_locked"
+
+	alt
+		icon_state = "fgen_closed"
+
+		bolted
+			icon_state = "fgen_locked"
+
+	command
+		name = "command airlock"
+		icon_state = "com_closed"
+
+		bolted
+			icon_state = "com_locked"
+
+	command/alt
+		icon_state = "fcom_closed"
+
+		bolted
+			icon_state = "fcom_locked"
+
+	security
+		name = "security airlock"
+		icon_state = "sec_closed"
+
+		bolted
+			icon_state = "sec_locked"
+
+	security/alt
+		icon_state = "fsec_closed"
+
+		bolted
+			icon_state = "fsec_locked"
+
+	engineering
+		name = "engineering airlock"
+		icon_state = "eng_closed"
+
+		bolted
+			icon_state = "eng_locked"
+
+	engineering/alt
+		icon_state = "feng_closed"
+
+		bolted
+			icon_state = "feng_locked"
+
+	medical
+		name = "medical airlock"
+		icon_state = "med_closed"
+
+		bolted
+			icon_state = "med_locked"
+
+	medical/alt
+		icon_state = "fmed_closed"
+
+		bolted
+			icon_state = "fmed_locked"
+
+	morgue
+		name = "morgue airlock"
+		icon_state = "morg_closed"
+
+		bolted
+			icon_state = "morg_locked"
+
+	morgue/alt
+		icon_state = "fmorg_closed"
+
+		bolted
+			icon_state = "fmorg_locked"
+
+	chemistry
+		name = "chemistry airlock"
+		icon_state = "chem_closed"
+
+		bolted
+			icon_state = "chem_locked"
+
+	chemistry/alt
+		icon_state = "fchem_closed"
+
+		bolted
+			icon_state = "fchem_locked"
+
+	toxins
+		name = "toxins airlock"
+		icon_state = "tox_closed"
+
+		bolted
+			icon_state = "tox_locked"
+
+	toxins/alt
+		icon_state = "ftox_closed"
+
+		bolted
+			icon_state = "ftox_locked"
+
+	maintenance
+		name = "maintenance airlock"
+		icon_state = "maint_closed"
+
+		bolted
+			icon_state = "maint_locked"
+
+
+/obj/fakeobject/airlock_broken/gannets/glass
+	name = "rusted glass airlock"
+	icon = 'icons/obj/doors/destiny.dmi'
+	icon_state = "tgen_closed"
+	opacity = 0
+	visible = 0
+
+	bolted
+		icon_state = "tgen_locked"
+
+	alt
+		icon_state = "tfgen_closed"
+
+		bolted
+			icon_state = "tfgen_locked"
+
+	command
+		name = "glass command airlock"
+		icon_state = "tcom_closed"
+
+		bolted
+			icon_state = "tcom_locked"
+
+	command/alt
+		icon_state = "tfcom_closed"
+
+		bolted
+			icon_state = "tfcom_locked"
+
+	security
+		name = "glass security airlock"
+		icon_state = "tsec_closed"
+
+		bolted
+			icon_state = "tsec_locked"
+
+	security/alt
+		icon_state = "tfsec_closed"
+
+		bolted
+			icon_state = "tfsec_locked"
+
+	engineering
+		name = "glass engineering airlock"
+		icon_state = "teng_closed"
+
+		bolted
+			icon_state = "teng_locked"
+
+	engineering/alt
+		icon_state = "tfeng_closed"
+
+		bolted
+			icon_state = "tfeng_locked"
+
+	medical
+		name = "glass medical airlock"
+		icon_state = "tmed_closed"
+
+		bolted
+			icon_state = "tmed_locked"
+
+	medical/alt
+		icon_state = "tfmed_closed"
+
+		bolted
+			icon_state = "tfmed_locked"
+
+	morgue
+		name = "glass morgue airlock"
+		icon_state = "tmorg_closed"
+
+		bolted
+			icon_state = "tmorg_locked"
+
+	morgue/alt
+		icon_state = "tfmorg_closed"
+
+		bolted
+			icon_state = "tfmorg_locked"
+
+	chemistry
+		name = "glass chemistry airlock"
+		icon_state = "tchem_closed"
+
+		bolted
+			icon_state = "tchem_locked"
+
+	chemistry/alt
+		icon_state = "tfchem_closed"
+
+		bolted
+			icon_state = "tfchem_locked"
+
+	toxins
+		name = "glass toxins airlock"
+		icon_state = "ttox_closed"
+
+		bolted
+			icon_state = "ttox_locked"
+
+	toxins/alt
+		icon_state = "tftox_closed"
+
+		bolted
+			icon_state = "tftox_locked"
+
+	maintenance
+		name = "glass maintenance airlock"
+		icon_state = "tmaint_closed"
+
+		bolted
+			icon_state = "tmaint_locked"
 
 
 // ==========
