@@ -23153,17 +23153,6 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"giu" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "giG" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
@@ -25822,6 +25811,11 @@
 	dir = 1
 	},
 /area/station/security/processing)
+"hVG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "hWa" = (
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/escape{
@@ -30809,6 +30803,10 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"lhI" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/office)
 "lif" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32793,6 +32791,9 @@
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/engineering_power,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "mqD" = (
@@ -34677,7 +34678,6 @@
 "nzs" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/electrical,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "nzA" = (
@@ -84493,8 +84493,8 @@ hjc
 qEL
 ugn
 avd
-auD
-giu
+lhI
+bvD
 axc
 eFT
 ayW
@@ -84784,7 +84784,7 @@ aoN
 aoN
 aoN
 aoO
-aoO
+hVG
 aqo
 aqR
 arx

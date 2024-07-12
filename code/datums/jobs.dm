@@ -131,7 +131,7 @@
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
 				M.mind.miranda = DEFAULT_MIRANDA
-		M.faction |= src.faction
+		LAZYLISTADDUNIQUE(M.faction, src.faction)
 		for (var/T in src.trait_list)
 			M.traitHolder.addTrait(T)
 		SPAWN(0)
@@ -584,6 +584,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	cant_spawn_as_rev = TRUE
 	can_join_gangs = FALSE
 	allow_antag_fallthrough = FALSE
+	unique = TRUE
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
 	slot_poc1 = list(/obj/item/device/pda2/forensic)
@@ -1414,11 +1415,12 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	receives_miranda = TRUE
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/heads)
+	slot_belt = list(/obj/item/device/pda2/ntofficial)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/command)
+	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)

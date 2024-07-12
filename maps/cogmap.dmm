@@ -23531,6 +23531,7 @@
 /area/station/quartermaster/office)
 "bGX" = (
 /obj/grille/steel,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bGY" = (
@@ -43939,8 +43940,9 @@
 	},
 /area/station/hallway/primary/south)
 "huq" = (
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
@@ -45600,6 +45602,12 @@
 	dir = 10
 	},
 /area/station/quartermaster/office)
+"iIF" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "iIP" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -50348,6 +50356,7 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "mDt" = (
@@ -57433,6 +57442,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"rYg" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/cargooffice)
 "rYi" = (
 /obj/decal/stripe_caution,
 /obj/cable{
@@ -91744,7 +91757,7 @@ bOd
 bHW
 bYT
 huq
-cak
+iIF
 ite
 ced
 cfl
@@ -123133,7 +123146,7 @@ adC
 iWf
 mSG
 mwn
-smf
+rYg
 fRt
 bGX
 pNt

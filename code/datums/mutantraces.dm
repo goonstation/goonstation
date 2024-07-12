@@ -936,6 +936,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			M.is_zombie = 1
 			M.max_health += 100
 			M.health = max(M.max_health, M.health)
+			M.can_bleed = FALSE
 
 			if (strain == 1)
 				make_bubs(M)
@@ -991,6 +992,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	disposing()
 		if (ishuman(src.mob))
+			src.mob.can_bleed = TRUE
 			src.mob.remove_stam_mod_max("zombie")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
 		..()
@@ -2053,7 +2055,9 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-
+				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/ch = H.abilityHolder
+					ch.addHolder(/datum/abilityHolder/kudzu)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2069,30 +2073,38 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		src.mob.sight |= SEE_OBJS
 		src.mob.see_in_dark = SEE_DARK_FULL
 */
+	sight_modifier()
+		if (src.mob.client)
+			src.mob.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+			// src.mob
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
-		if (!src.mob.abilityHolder)
-			src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		// if (!src.mob.abilityHolder)
+		// 	src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		var/datum/abilityHolder/kudzu/KAH = src.mob.get_ability_holder(/datum/abilityHolder/kudzu)
+		if (!istype(KAH))
+			KAH = src.mob.abilityHolder
 
-		var/datum/abilityHolder/kudzu/KAH = src.mob.abilityHolder
-		var/round_mult = max(1, round((mult)))
+		var/round_mult = max(2, round((mult)))
 		var/turf/T = get_turf(src.mob)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
 		if (T && T.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
-				KAH.points += round_mult
-			else
-				//at max points, so heal
-				src.mob.take_toxin_damage(-round_mult)
-				src.mob.HealDamage("All", round_mult, round_mult)
-				if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
-					src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
-					src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+				// KAH.points += round_mult
+				KAH.addPoints(round_mult, /datum/abilityHolder/kudzu)
+
+			//ALWAYS HEAL ON KUDZU TILES
+			src.mob.take_toxin_damage(-round_mult)
+			src.mob.HealDamage("All", round_mult, round_mult)
+			if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+				src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+				src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
 
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
-				KAH.points -= 10
+				// KAH.points -= 10
+				KAH.addPoints(-10, /datum/abilityHolder/kudzu)
 			else
 				//do effects from not being on kudzu here.
 				src.mob.take_toxin_damage(2 * round_mult)
@@ -2100,7 +2112,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				// random_brute_damage(src.mob, 2 * mult)
 				if (prob(30))
 					src.mob.changeStatus("knockdown", 3 SECONDS)
-
 		return
 
 /obj/effect/rt/cow_distorts

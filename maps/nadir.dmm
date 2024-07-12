@@ -21651,7 +21651,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/obj/rack/organized/techstorage_med/sea,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
@@ -22785,6 +22785,7 @@
 /obj/landmark/start/job/assistant,
 /obj/item/device/radio/intercom,
 /obj/stool/chair/pool,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -33999,6 +34000,7 @@
 "omm" = (
 /obj/landmark/start/job/assistant,
 /obj/stool/chair/pool,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -43204,6 +43206,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
+"stG" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/cargooffice)
 "stQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -47982,6 +47988,13 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
+"usV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage{
+	name = "Cargo Auxiliary Endpoint"
+	})
 "uti" = (
 /obj/surgery_tray,
 /obj/machinery/light/small/floor/netural,
@@ -103140,7 +103153,7 @@ kqZ
 wbj
 wmh
 cqc
-oxJ
+stG
 mIV
 mIV
 qTA
@@ -104355,7 +104368,7 @@ ktm
 bHE
 wxe
 cLn
-oUb
+usV
 jkd
 pAd
 qcD

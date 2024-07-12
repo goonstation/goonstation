@@ -19374,7 +19374,6 @@
 	rand_pos = 0
 	},
 /obj/disposalpipe/segment/mail,
-/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
 	pixel_y = 6;
@@ -31301,7 +31300,6 @@
 	name = "Corpse Tunnel"
 	})
 "nNJ" = (
-/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
 	pixel_x = 14;
@@ -44508,6 +44506,10 @@
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
 /area/station/engine/monitoring)
+"tCN" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/south)
 "tCO" = (
 /obj/table/reinforced/auto,
 /obj/item/weldingtool{
@@ -51294,6 +51296,10 @@
 /area/station/security/brig{
 	name = "Brig Bathroom"
 	})
+"wBj" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "wBp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -102103,7 +102109,7 @@ tvO
 tvO
 tvO
 oEt
-ldM
+tCN
 wXJ
 bna
 bna
@@ -106036,7 +106042,7 @@ uKe
 hwm
 lIC
 vSC
-tnb
+wBj
 uDO
 uDO
 uDO
