@@ -338,6 +338,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		for(var/obj/forcefield/S in src.deployed_shields)
 			src.deployed_shields -= S
 			S:deployer = null	//There is no parent forcefield object and I'm not gonna be the one to make it so ":"
+			if(istype(S,/obj/forcefield/energyshield))
+				var/obj/forcefield/energyshield/checkedshield = S
+				if(checkedshield.linked_door)
+					checkedshield.linked_door.UnsubscribeProcess()
+					checkedshield.linked_door.linked_forcefield = null
 			qdel(S)
 
 		if(!connected)
@@ -457,6 +462,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/obj/machinery/door/linked_door = null
+
+	///Special variable, set to FALSE for shields created by door-shield generators so doors won't inherently power them off when the area loses power
+	var/powered_locally = TRUE
 
 	flags = 0
 
@@ -624,11 +632,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
 			return
 
-
-
-//sealab arrivalss
-/obj/machinery/door/var/obj/forcefield/energyshield/linked_forcefield = 0
-
 /obj/forcefield/energyshield/perma
 	name = "Permanent Atmospheric/Liquid Forcefield"
 	desc = "A permanent force field that prevents gas and liquids from passing through it."
@@ -655,6 +658,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	Cross(atom/A)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
+#define LINKED_FORCEFIELD_POWER_USAGE 100
+
 /obj/forcefield/energyshield/perma/doorlink
 	name = "Door-linked Atmospheric/Liquid Forcefield"
 	desc = "A door-linked force field that prevents gas and liquids from passing through it."
@@ -665,8 +670,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			var/obj/machinery/door/door = (locate() in src.loc)
 			if(door)
 				door.linked_forcefield = src
+				door.power_usage += LINKED_FORCEFIELD_POWER_USAGE
 				src.linked_door = door
 				src.set_dir(door.dir)
+
+#undef LINKED_FORCEFIELD_POWER_USAGE
 
 /obj/machinery/door/disposing()
 	if(linked_forcefield)

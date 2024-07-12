@@ -213,6 +213,9 @@
 					break
 
 			src.botcard.access = get_all_accesses()
+			if (src.syndicate)
+				src.botcard.access += access_syndicate_shuttle
+
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio/headset(src)

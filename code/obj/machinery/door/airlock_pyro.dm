@@ -213,7 +213,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 
 /obj/machinery/door/airlock/pyro/reinforced/syndicate
 	req_access_txt = "52"
-	cyborgBumpAccess = FALSE
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 

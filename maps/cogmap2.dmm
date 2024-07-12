@@ -46906,9 +46906,6 @@
 /obj/machinery/computer/ordercomp{
 	dir = 4
 	},
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/market)
 "cHi" = (
@@ -55933,13 +55930,13 @@
 	dir = 1;
 	pixel_x = -1
 	},
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/listeningpost)
 "dnI" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -56009,8 +56006,8 @@
 	},
 /area/listeningpost)
 "dnT" = (
-/obj/storage/closet/syndicate/personal,
 /obj/window/east,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "green2"
@@ -56063,9 +56060,7 @@
 	dir = 8
 	},
 /obj/table/wood/round/auto,
-/obj/item/clothing/under/misc/syndicate,
 /obj/item/clothing/shoes/swat,
-/obj/item/clothing/head/helmet/space/syndicate,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "green2"
@@ -67555,10 +67550,10 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
-/obj/decal/poster/wallsign/stencil/right/one{
-	layer = 2;
-	pixel_x = 15;
-	pixel_y = 12
+/obj/decal/poster/wallsign/stencil/right/two{
+	pixel_x = 17;
+	pixel_y = 12;
+	layer = 2
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/hotloop)
@@ -68359,10 +68354,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/poster/wallsign/stencil/right/two{
-	layer = 2;
-	pixel_x = 17;
-	pixel_y = 12
+/obj/decal/poster/wallsign/stencil/right/one{
+	pixel_y = 12;
+	pixel_x = 15;
+	layer = 2
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/hotloop)
@@ -72632,6 +72627,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/east)
+"ueL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "uiJ" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -73383,6 +73383,10 @@
 "uZB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/southwest)
+"vas" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/market)
 "vbz" = (
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -121205,7 +121209,7 @@ cwH
 cCv
 cDZ
 cFP
-cHc
+vas
 cIs
 cIs
 cIs
@@ -123626,7 +123630,7 @@ sEJ
 cJS
 cLw
 mtx
-cIu
+ueL
 cPO
 cRp
 cSS

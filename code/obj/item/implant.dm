@@ -781,15 +781,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
 
-	implanted(var/mob/M, mob/I)
+	implanted(mob/M, mob/I)
 		..()
 		if (istype(M))
-			M.faction |= FACTION_BOTANY
+			LAZYLISTADDUNIQUE(M.faction, FACTION_BOTANY)
 
-	on_remove(var/mob/M)
+	on_remove(mob/M)
 		..()
 		if (istype(M))
-			M.faction -= FACTION_BOTANY
+			LAZYLISTREMOVE(M.faction, FACTION_BOTANY)
 
 	do_effect(power)
 		// enjoy your wasps

@@ -48,7 +48,6 @@ TYPEINFO(/obj/machinery/door/airlock/syndicate)
 	icon = 'icons/obj/doors/Doorext.dmi'
 	req_access_txt = "52"
 	cant_emag = TRUE
-	cyborgBumpAccess = FALSE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
