@@ -1,5 +1,9 @@
 
 (t)thu jul 11 24
+(u)Kubius
+(p)19860
+(e)🔄⚙|C-Rework, A-Internal
+(+)Tiles constructed outside of an area will now use a single "unconnected zone" area by default, making it much easier to connect these areas to station areas or turn them into a single built zone using an APC.
 (u)JORJ949
 (p)19670
 (e)💅📦|C-QoL, A-Game-Objects
