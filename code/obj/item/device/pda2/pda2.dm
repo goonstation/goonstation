@@ -1269,7 +1269,7 @@ ThinkOS 7 supports a wide variety of software solutions, ranging from robot inte
 	name = "User Guide!"
 
 	data = {"
-ElecTek 5 Personnel Digital Actuator Manual<br>
+ElecTek 5 Personnel Data Actuator Manual<br>
 Operating System: ThoughtOS 1.2<hr>
 ThoughtOS 1.2 appears with several useful application!<br>
 <i><ul>
