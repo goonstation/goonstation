@@ -30036,7 +30036,7 @@
 /area/owlery/staffhall)
 "cnr" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/fakeobject/sealed_door/owlery,
+/obj/fakeobject/airlock_broken/sealed/owlery,
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
 "cns" = (
@@ -31113,7 +31113,7 @@
 /turf/unsimulated/floor/black,
 /area/dojo)
 "crq" = (
-/obj/fakeobject/sealed_door,
+/obj/fakeobject/airlock_broken/sealed,
 /turf/unsimulated/floor/black,
 /area/dojo)
 "crr" = (
@@ -42062,7 +42062,7 @@
 	},
 /area/owlery/owleryhall)
 "cXn" = (
-/obj/fakeobject/sealed_door{
+/obj/fakeobject/airlock_broken/sealed{
 	name = "office door"
 	},
 /turf/unsimulated/wall/auto/reinforced/gannets,

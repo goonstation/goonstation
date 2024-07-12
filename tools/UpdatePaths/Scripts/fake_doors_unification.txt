@@ -1,0 +1,2 @@
+/obj/fakeobject/sealed_door : /obj/fakeobject/airlock_broken/sealed
+/obj/fakeobject/sealed_door/owlery : /obj/fakeobject/airlock_broken/sealed/owlery
