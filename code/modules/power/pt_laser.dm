@@ -1,4 +1,5 @@
 #define PTLMINOUTPUT 1 MEGA WATT
+#define LASER_COOLDOWN_ID "PTL laser change cooldown"
 
 /obj/machinery/power/pt_laser
 	name = "power transmission laser"
@@ -12,10 +13,14 @@
 	bound_width = 96
 	req_access = list(access_engineering_power)
 	var/output = 0		//power output of the beam
-	var/capacity = 1e15
+	var/max_dial_value = 999 // limitation of what can be set on the ui dial.
+	var/capacity = 200 MEGA WATTS // Under the gib amount to prevent players from pulsing a death laser.
 	var/charge = 0
 	var/charging = 0
 	var/load_last_tick = 0	//how much load did we put on the network last tick?
+	// How often you can change the output/firing status of the PTL
+	var/laser_cooldown = 1 SECOND
+	var/laser_output_needs_update = FALSE	// Does the PTL need to be updated this loop?
 	var/chargelevel = 0		//Power input
 	var/online = FALSE
 	var/obj/machinery/power/terminal/terminal = null
@@ -55,13 +60,18 @@
 						terminal = term
 						break dir_loop
 
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Power Input", PROC_REF(_toggle_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Input", PROC_REF(_set_input_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Togle Power Output", PROC_REF(_toggle_output_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Power Output", PROC_REF(_set_output_mechchomp))
+
 		if(!terminal)
 			status |= BROKEN
 			return
 
 		terminal.master = src
 
-		AddComponent(/datum/component/mechanics_holder)
 		UpdateIcon()
 
 /obj/machinery/power/pt_laser/disposing()
@@ -75,6 +85,49 @@
 				make_cleanable( /obj/decal/cleanable/machine_debris,T)
 
 	..()
+
+/obj/machinery/power/pt_laser/proc/_toggle_input_mechchomp()
+	src.charging = !src.charging
+
+/obj/machinery/power/pt_laser/proc/_set_input_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newinput = text2num(inp.signal)
+	if (newinput != src.chargelevel && isnum_safe(newinput) && newinput > 0)
+		src.chargelevel = newinput
+		// Working backwards to update the ui based on the power we've set up.
+		if(chargelevel < 1 KILO WATT)
+			src.input_multi = 1 WATT
+		else if(chargelevel < 1 MEGA WATT)
+			src.input_multi = 1 KILO WATT
+		else if(chargelevel < 1 GIGA WATT)
+			src.input_multi = 1 MEGA WATT
+		else if(chargelevel < 1 TERA WATT)
+			src.input_multi = 1 GIGA WATT
+		else
+			src.input_multi = 1 TERA WATT
+		src.input_number = clamp((src.chargelevel/src.input_multi), 0, src.max_dial_value)
+
+/obj/machinery/power/pt_laser/proc/_toggle_output_mechchomp()
+	src.online = !src.online
+	src.update_output()
+
+/obj/machinery/power/pt_laser/proc/_set_output_mechchomp(var/datum/mechanicsMessage/inp)
+	if(!length(inp.signal)) return
+	var/newoutput = text2num(inp.signal)
+	// We check against the absolute value of the current charge level, in case the PTL has been emagged.
+	if (newoutput != abs(src.output) && isnum_safe(newoutput) && newoutput > 0)
+		src.output = src.emagged ? -newoutput : newoutput
+		// Working backwards to update the ui based on the power we've set up.
+		if(newoutput >= 1 TERA WATT)
+			src.output_multi = 1 TERA WATT
+		else if(newoutput >= 1 GIGA WATT)
+			src.output_multi = 1 GIGA WATT
+		else
+			src.output_multi = 1 MEGA WATT
+		var/abs_output_number = clamp((newoutput / src.output_multi), 0, src.max_dial_value)
+		src.output_number = src.emagged ? -abs_output_number : abs_output_number
+		src.update_output()
+
 
 /obj/machinery/power/pt_laser/attackby(obj/item/I, mob/user)
 	var/obj/item/card/id/id_card = get_id_card(I)
@@ -172,32 +225,31 @@
 	var/last_firing = firing
 	var/dont_update = 0
 	var/adj_output = abs(output)
+	var/unconsumed_surplus = src.get_available_input_power(mult) // Incoming power beyond battery charge we can use to fuel the laser, capped by chargelevel.
+	var/connected = terminal && !(src.status & BROKEN)
 
-	if(terminal && !(src.status & BROKEN))
-		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
-		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
-			var/load = min(capacity-charge, chargelevel)	// charge at set rate, limited to spare capacity
-			if(terminal.add_load(load))						// attempt to add the load to the terminal side network
-				charge += load * mult						// increase the charge if we did
-				load_last_tick = load
-				if (!src.is_charging) src.is_charging = TRUE
-		else
+	if(connected)
+		src.excess = src.get_available_terminal_power()
+		if(!src.charging || src.excess < src.chargelevel * mult)
 			load_last_tick = 0
+			unconsumed_surplus = (src.charging * src.excess) // Have less than the desired input power - but we still want to make use of that power
 			if (src.is_charging) src.is_charging = FALSE
 
-	if( charge > adj_output*mult)
-		adj_output *= mult
+	adj_output *= mult
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
 
-			if(charge >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
+			if(src.can_fire(mult)) //have power to fire
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
-				charge -= adj_output
-		else if(charge < adj_output && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
+				unconsumed_surplus -= adj_output
+		else if(!src.can_fire(mult)) //firing but not enough charge to sustain
+			unconsumed_surplus = -src.charge // We eat the last of the charge
 			stop_firing()
 		else //firing and have enough power to carry on
+			if (src.laser_output_needs_update)
+				src.update_laser_power()
 			for(var/mob/living/L in affecting_mobs) //has to happen every tick
 				if (!locate(/obj/linked_laser/ptl) in get_turf(L)) //safety because Uncross is somehow unreliable
 					affecting_mobs -= L
@@ -210,8 +262,19 @@
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
+	else if (firing && !online)
+		stop_firing()
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[output * firing]") //sends 0 if not firing else give theoretical output
+	if(connected && charging && src.excess >= src.chargelevel)// if there's power available, try to charge
+		var/adj_charge = clamp(-src.charge, unconsumed_surplus, src.capacity - src.charge)
+		var/load = max(0, src.excess + adj_charge - unconsumed_surplus)
+		if(terminal.add_load(load))						// attempt to add the load to the terminal side network
+			src.charge += adj_charge				// adjust the charge if we did
+			load_last_tick = load
+			if (!src.is_charging) src.is_charging = TRUE
+
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "output=[src.output]&firing=[src.firing]&charge=[src.charge]&currentbalance=[src.current_balance]&lifetimeearnings=[src.lifetime_earnings]")
+	src.laser_output_needs_update = FALSE
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
@@ -345,8 +408,15 @@
 		if (QDELETED(A))
 			src.blocking_objects -= A //mmm yes for loop list modification
 
-/obj/machinery/power/pt_laser/proc/can_fire()
-	return abs(src.output) <= src.charge
+
+/obj/machinery/power/pt_laser/proc/get_available_terminal_power()
+	return src.terminal?.surplus() + src.load_last_tick //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
+
+/obj/machinery/power/pt_laser/proc/get_available_input_power(mult)
+		return src.charging * min(src.chargelevel * mult, src.get_available_terminal_power())
+
+/obj/machinery/power/pt_laser/proc/can_fire(mult = 1)
+	return (abs(src.output) * mult <= src.charge + src.get_available_input_power(mult)) & (abs(src.output) >= PTLMINOUTPUT)
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
 	src.laser?.traverse(/obj/linked_laser/ptl/proc/update_source_power)
@@ -385,6 +455,20 @@
 		"totalGridPower" = src.terminal?.powernet.avail,
 	)
 
+
+/obj/machinery/power/pt_laser/proc/update_output()
+	if(ON_COOLDOWN(src, LASER_COOLDOWN_ID, src.laser_cooldown))
+		src.laser_output_needs_update = TRUE
+		return;
+
+	if(!src.output || !src.can_fire() || !src.online)
+		src.stop_firing()
+		return
+	if (src.firing)
+		src.update_laser_power()
+	else if (src.online)
+		src.start_firing()
+
 /obj/machinery/power/pt_laser/ui_act(action, params)
 	. = ..()
 	if (.)
@@ -421,9 +505,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if (!src.online && src.firing)
-				src.stop_firing()
-			src.process(1)
+			src.update_output()
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -432,27 +514,21 @@
 			else
 				src.output_number = clamp(params["setOutput"], 0, 999)
 			src.output = src.output_number * src.output_multi
-			if(!src.output || !src.can_fire())
-				src.stop_firing()
-				return
-			if (src.firing)
-				src.update_laser_power()
-			else if (src.online)
-				src.start_firing()
+			src.update_output()
 		if("outputMW")
 			src.output_multi = 1 MEGA WATT
 			src.output = src.output_number * src.output_multi
-			src.update_laser_power()
+			src.update_output()
 			. = TRUE
 		if("outputGW")
 			src.output_multi = 1 GIGA WATT
 			src.output = src.output_number * src.output_multi
-			src.update_laser_power()
+			src.update_output()
 			. = TRUE
 		if("outputTW")
 			src.output_multi = 1 TERA WATT
 			src.output = src.output_number * src.output_multi
-			src.update_laser_power()
+			src.update_output()
 			. = TRUE
 
 /obj/machinery/power/pt_laser/ex_act(severity)
