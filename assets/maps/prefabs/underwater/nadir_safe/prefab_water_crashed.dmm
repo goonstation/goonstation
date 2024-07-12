@@ -356,7 +356,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "bs" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 10;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -426,7 +426,7 @@
 "bM" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -449,7 +449,7 @@
 "bQ" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -1289,7 +1289,7 @@
 "sR" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	
+
 	},
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,

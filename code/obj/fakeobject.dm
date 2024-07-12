@@ -187,13 +187,6 @@
 	icon_state = "firex"
 	anchored = ANCHORED
 
-/obj/fakeobject/firelock_broken
-	name = "rusted firelock"
-	desc = "Rust has rendered this firelock useless."
-	icon = 'icons/obj/doors/door_fire2.dmi'
-	icon_state = "door0"
-	anchored = ANCHORED_ALWAYS
-
 /obj/fakeobject/airlock_broken
 	name = "rusted airlock"
 	desc = "Rust has rendered this airlock useless."
@@ -215,6 +208,12 @@
 			desc = "This airlock is all shot up. The control panel seems to have taken several hits and is beyond repair."
 			icon = 'icons/misc/Owlzone.dmi'
 			icon_state = "airlock_broken"
+
+	firelock // what used to be /obj/fakeobject/airlock_broken/firelock
+		name = "rusted firelock"
+		desc = "Rust has rendered this firelock useless."
+		icon = 'icons/obj/doors/door_fire2.dmi'
+		icon_state = "door0"
 
 /obj/fakeobject/lighttube_broken
 	name = "shattered light tube"
