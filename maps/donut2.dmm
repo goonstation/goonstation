@@ -17828,7 +17828,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cKW" = (
-/obj/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
 	dir = 1;
@@ -33781,7 +33781,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
 "mWp" = (
-/obj/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
 	icon = 'icons/obj/networked.dmi';

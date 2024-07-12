@@ -56473,7 +56473,7 @@
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "fvA" = (
-/obj/fakeobjects{
+/obj/fakeobject{
 	icon = 'icons/misc/critter.dmi';
 	icon_state = "roach-dead";
 	name = "squashed bug"
