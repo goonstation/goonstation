@@ -20312,9 +20312,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/status_display{
-	pixel_y = -30
-	},
 /turf/simulated/floor/orangeblack/side,
 /area/station/hallway/primary/south)
 "bFw" = (
@@ -25580,6 +25577,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -25763,6 +25761,12 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "tox_vent2";
+	name = "Chamber Two Exhaust";
+	pixel_x = -24;
+	pixel_y = -8
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -26522,7 +26526,8 @@
 /obj/machinery/door_control{
 	id = "tox_mix";
 	name = "Mixing Vent Control";
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = 0
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -26846,9 +26851,6 @@
 	},
 /turf/space,
 /area/space)
-"ceT" = (
-/turf/simulated/floor/plating,
-/area/station/science/lab)
 "ceW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26984,15 +26986,10 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "cfD" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	can_rupture = 0
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	can_rupture = 0
-	},
-/obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "cfE" = (
@@ -29647,13 +29644,13 @@
 	},
 /area/station/security/main)
 "cos" = (
-/obj/lattice{
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	icon_state = "lattice-dir";
-	tag = "icon-lattice-dir (EAST)"
+	level = 2
 	},
-/turf/space,
-/area/space)
+/turf/simulated/floor/plating,
+/area/station/science/lab)
 "cov" = (
 /obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/east,
@@ -30553,7 +30550,8 @@
 "cFk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10
+	can_rupture = 0;
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -33495,12 +33493,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "tox_ignition";
-	name = "Chamber Ignition Switch";
-	pixel_x = -26;
-	pixel_y = 8
-	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "ezW" = (
@@ -33655,6 +33647,12 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/east)
+"eFQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/cargobay)
 "eGc" = (
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
@@ -40093,9 +40091,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
-	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "jpy" = (
@@ -42429,22 +42424,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/grey,
 /area/station/bridge)
-"lax" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
-/obj/machinery/door_control{
-	id = "tox_vent2";
-	name = "Chamber Two Exhaust";
-	pixel_y = 22;
-	pixel_x = 8
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "laJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/security)
@@ -43945,11 +43924,9 @@
 /turf/simulated/floor/plating/damaged1,
 /area/station/security/beepsky)
 "meh" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 8
-	},
-/turf/space,
-/area/space)
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "mep" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -49306,10 +49283,10 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
 	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor/black,
 /area/station/science/lab)
 "qhy" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -50173,10 +50150,10 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "qMC" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/blue,
 /area/station/science/lab)
 "qNo" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -50737,11 +50714,6 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "rhS" = (
-/obj/machinery/door_control{
-	id = "oh_boy_fire";
-	name = "Burn Chamber Heat Shields";
-	pixel_x = 24
-	},
 /obj/table/auto,
 /obj/item/device/transfer_valve{
 	pixel_x = 8
@@ -51492,6 +51464,10 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
+"rJk" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/south)
 "rJL" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -53494,8 +53470,8 @@
 /area/station/security/interrogation)
 "thF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -53902,6 +53878,12 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/caution/corner/se,
 /area/station/engine/gas)
+"txz" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "purge valve"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "tyi" = (
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /obj/cable{
@@ -56619,13 +56601,15 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "vuC" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 4
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10;
+	can_rupture = 0
+	},
+/obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "vuD" = (
@@ -58056,8 +58040,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -91892,9 +91876,9 @@ lya
 lya
 lya
 bYG
-aaa
-cos
-aaa
+ceM
+txe
+bYG
 aaa
 aaa
 aaa
@@ -92194,9 +92178,9 @@ cbf
 fGV
 ccS
 cdG
-aaa
-cos
-aaa
+cdL
+ccg
+bYG
 aaa
 aaa
 aaa
@@ -92798,9 +92782,9 @@ fPU
 cfz
 bZv
 vgR
-cdL
-ccg
-bYG
+oFr
+meh
+ceM
 aaa
 aaa
 aaa
@@ -93093,18 +93077,18 @@ bYG
 jKV
 bYG
 qwR
-lax
+cce
 ceN
 bYG
 ceN
 cce
 haB
 vgR
-bYG
-txe
-bYG
-aaa
-aaa
+cfD
+txz
+wnV
+chn
+cyc
 aaa
 aaa
 aci
@@ -93402,7 +93386,7 @@ tqS
 cfB
 cgn
 vuC
-oFr
+eMF
 qMC
 thF
 rKr
@@ -93703,13 +93687,13 @@ cdI
 cgo
 ccg
 cgo
-cfD
-eMF
+ccg
+cgo
 tsr
 cFk
-rKr
-hbu
-meh
+aaa
+azZ
+aBi
 aaa
 aci
 aaa
@@ -94008,10 +93992,10 @@ cgq
 fhZ
 wDM
 qhk
-ceM
-aaa
-bhJ
+cos
+rKr
 aBi
+aaa
 aaa
 aci
 aaa
@@ -94297,7 +94281,7 @@ bUO
 nzn
 bQU
 yhe
-ceT
+bAQ
 bYG
 can
 xXa
@@ -94599,7 +94583,7 @@ bUP
 hbg
 bQU
 bzR
-ceT
+bAQ
 bYG
 cao
 jmJ
@@ -105758,7 +105742,7 @@ bCm
 bCq
 bDA
 bFv
-bBv
+rJk
 bJr
 oqr
 cnQ
@@ -107885,7 +107869,7 @@ bSW
 bJr
 cnU
 cnV
-dJV
+eFQ
 rPO
 hzL
 jEa

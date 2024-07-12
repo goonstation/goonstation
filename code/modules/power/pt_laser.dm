@@ -334,10 +334,10 @@
 				melt_prob = abs(output) / (25 MEGA WATTS)
 			if (prob(melt_prob))
 				A.ex_act(2)
-			if (A.density) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
+			if (A.density && melt_prob) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
 				animate_meltspark(A)
 		else
-			melt_prob = (abs(output)) / 0.5 MEGA WATTS
+			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
 			if (prob(melt_prob))
 				A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
 				qdel(A)

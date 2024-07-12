@@ -137,7 +137,7 @@
 		src.name = "[capitalize(target)]'s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
-		src.faction |= FACTION_WIZARD
+		LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'

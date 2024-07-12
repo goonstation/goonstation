@@ -31367,6 +31367,11 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen,
 /area/station/library)
+"juA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/east)
 "juB" = (
 /obj/cable,
 /obj/cable{
@@ -35059,6 +35064,14 @@
 	},
 /turf/space,
 /area/space)
+"kBA" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/station/quartermaster/office)
 "kBH" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -132215,7 +132228,7 @@ mhe
 mhe
 mXS
 fiL
-jnN
+kBA
 uEF
 gNg
 wyb
@@ -136439,7 +136452,7 @@ dOa
 xPd
 jPR
 ffz
-heB
+juA
 pkd
 xnW
 buq

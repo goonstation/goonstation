@@ -137,6 +137,14 @@
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
+
+	ntofficial
+		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		setup_drive_size = 32
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
 	ai
 		icon_state = "pda-h"
 		setup_default_pen = null // ai don't need no pens

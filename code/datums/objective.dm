@@ -688,26 +688,6 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 				return 1
 		return 0
 
-/datum/objective/specialist/conspiracy
-	explanation_text = "Identify and eliminate any competing syndicate operatives on the station. Be careful not to be too obvious yourself, or they'll come after you!"
-
-	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return 0
-
-		if (!istype(ticker.mode, /datum/game_mode/spy))
-			return 0
-
-		var/datum/game_mode/spy/spymode = ticker.mode
-		for (var/datum/mind/mindCheck in spymode.leaders)
-			if (mindCheck == owner)
-				continue
-
-			if (mindCheck?.current && !isdead(mindCheck.current))
-				return 0
-
-		return 1
-
 /datum/objective/specialist/absorb
 	medal_name = "Many names, many faces"
 	var/absorb_count
