@@ -477,7 +477,7 @@
 
 			. = src.say_dead(message, 1)
 
-	emote(var/act, var/voluntary = 0)
+	emote(var/act)
 		if (!density)
 			return
 		..()
@@ -495,10 +495,6 @@
 				acts = "grustles"
 			if ("rattle")
 				acts = "rattles"
-			if ("flip")
-				if (src.emote_check(voluntary, 50))
-					acts = "<b>[src]</B> does a flip!"
-					animate_spin(src, pick("L", "R"), 1, 0)
 
 		if (acts)
 			for (var/mob/M in hearers(src, null))
