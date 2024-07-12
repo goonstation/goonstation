@@ -329,6 +329,7 @@
 		mailgroups = list(MGD_BOTANY,MGD_PARTY)
 
 	syndicate
+		icon_state = "pda-syn"
 		name = "Military PDA"
 		desc = "A cheap knockoff looking portable microcomputer claiming to be made by ElecTek LTD. It has a slot for an ID card, and a hole to put a pen into."
 		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/knockoff
