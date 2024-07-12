@@ -419,25 +419,6 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	if(start)
 		. = findtext(text, suffix, start, null) //was findtextEx
 
-/**
- * Given a message, returns a list containing the radio prefix and the message,
- * so that the message can be manipulated seperately in various functions.
- */
-/proc/separate_radio_prefix_and_message(var/message)
-	var/prefix = null
-
-	if (dd_hasprefix(message, ":lh") || dd_hasprefix(message, ":rh") || dd_hasprefix(message, ":in"))
-		prefix = copytext(message, 1, 4)
-		message = copytext(message, 4)
-	else if (dd_hasprefix(message, ":"))
-		prefix = copytext(message, 1, 3)
-		message = copytext(message, 3)
-	else if (dd_hasprefix(message, ";"))
-		prefix = ";"
-		message = copytext(message, 2)
-
-	return list(prefix, message)
-
 /proc/dd_centertext(message, length)
 	. = length(message)
 	if(. == length)

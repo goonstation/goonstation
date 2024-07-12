@@ -114,30 +114,23 @@
 			announce_status = ""
 
 	proc/send_message(var/mob/user, message)
-		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0) return
-		var/area/A = get_area(src)
+		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0)
+			return
 
-		if(user.bioHolder.HasEffect("mute"))
-			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
+		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
+		if (!message)
 			return
-		if(url_regex?.Find(message))
-			boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
-			boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
-			return
-		message = sanitize(adminscrub(message, src.max_length))
 
 		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		var/msg_sound = src.sound_to_play
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			message = process_accents(H, message) //Slurred announcements? YES!
+
 		if (isflockmob(user))
 			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
-
+		var/area/A = get_area(src)
 		var/header = "[A.name] Announcement by [ID.registered] ([ID.assignment])"
 		if (override_font )
 			message = "<font face = '[override_font]'> [message] </font>"

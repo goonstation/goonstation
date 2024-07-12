@@ -1736,6 +1736,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\modules\modifiers\speech\megaphone.dm"
 #include "code\modules\speech\modules\modifiers\speech\mob_modifiers.dm"
 #include "code\modules\speech\modules\modifiers\speech\monospace_decorator.dm"
+#include "code\modules\speech\modules\modifiers\speech\mute.dm"
 #include "code\modules\speech\modules\modifiers\speech\muzzle.dm"
 #include "code\modules\speech\modules\modifiers\speech\plushie.dm"
 #include "code\modules\speech\modules\modifiers\speech\radio.dm"

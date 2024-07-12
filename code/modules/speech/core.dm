@@ -57,9 +57,12 @@
  *	- `atom_listeners_override`: In lieu of being sent over a say channel, messages will instead attempt to be passed to the listen trees of these atoms directly.
  */
 /atom/proc/say(message as text, flags = 0, list/message_params = null, list/atom/atom_listeners_override = null)
+	RETURN_TYPE(/datum/say_message)
 	SHOULD_CALL_PARENT(TRUE)
+
 	if (dd_hasprefix(message, "*"))
-		return src.emote(copytext(message, 2), 1)
+		src.emote(copytext(message, 2), 1)
+		return
 
 	src.ensure_say_tree()
 	var/datum/say_message/said = new(message, src, flags, message_params, atom_listeners_override)
@@ -69,7 +72,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
 	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
 
-	src.say_tree.process(said)
+	return src.say_tree.process(said)
 
 /// The world time that this atom last played a voice sound effect.
 /atom/var/last_voice_sound = 0
@@ -154,10 +157,10 @@ Cleanup:
 
 Things To Implement:
 - Radio brain (bioeffect)
+- Mutantrace `say_filter()` modules.
 
 Old Code To Remove:
-- `process_accents`
-- `separate_radio_prefix_and_message`
+- `OnSpeak`
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
@@ -166,19 +169,15 @@ Old Code To Remove:
 Parity:
 - `radio_brain`
 - Potentially deprecate `protected_radio`.
-- Uncool filter before/after message modifiers.
+- Uncool filter before/after message modifiers. (process_accents)
 
 Fixes:
 - Living mobs that are dead should send and receive messages to and from deadchat.
 - Never add tags to `message.content` See message modifiers.
 
-Accents:
-- muffle?
-- furious
-- gurgle
-- Remove `/datum/bioEffect/speech/proc/OnSpeak()`.
-
 Refactors:
+- Potentially give accents their own files and defines.
+- Make checks in `SPEECH_MODIFIER_MOB_MODIFIERS` more generic if possible.
 - AI `say()` and `hear()`. Currently doesn't take into account client modules.
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?
 - Split deadchat up into multiple outputs, akin to hivechat.
@@ -186,12 +185,6 @@ Refactors:
 - Some form of centralised preference manager for toggling inputs/outputs for types?
 	- `togglepersonaldeadchat`, `toggle_ghost_radio`, `toggle_ooc`, `toggle_looc`, etc.
 	- Most have dedicated procs for themselves, and some implementation on Login or New.
-
-Documentation:
-- Finished! (for now)
-
-Say Implementations To Remove:
-- /obj/machinery/bot
 
 Follow-Up PRs:
 - Admin panel for enabling/disabling say channels. OOC/LOOC/Deadchat are currently done through procs:

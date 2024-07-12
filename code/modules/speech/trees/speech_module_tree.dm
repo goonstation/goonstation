@@ -80,6 +80,11 @@
 	global.SpeechManager.ApplyMessageModifierPreprocessing(message)
 	message.output_module_channel = null
 
+	// If flagged with `SAYFLAG_DO_NOT_OUTPUT`, return the message to the caller without passing it to an output module.
+	. = message
+	if (message.flags & SAYFLAG_DO_NOT_OUTPUT)
+		return
+
 	// Disseminate to output modules.
 	var/suppress_say_sound = TRUE
 	var/suppress_speech_bubble = TRUE

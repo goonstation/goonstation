@@ -70,3 +70,22 @@
 	// Handle low health modifiers.
 	if ((speaker.health / max(speaker.max_health, 1)) <= 0.2)
 		message.say_verb = speaker.speech_verb_gasp
+
+	// Handle rag muffling.
+	if (length(speaker.grabbed_by))
+		for (var/obj/item/grab/rag_muffle/RM in speaker.grabbed_by)
+			if (!RM.state)
+				continue
+
+			message.content = mufflespeech(message.content)
+			break
+
+	// Handle Hastur censoring.
+	if (global.HasturPresent)
+		message.content = replacetext(message.content, regex(@"h[^a-z\d]*a[^a-z\d]*s[^a-z\d]*t[^a-z\d]*u[^a-z\d]*r(?![a-z])", "gi"), "????")
+
+	// Canada day.
+#ifdef CANADADAY
+	if (prob(30))
+		message.content = replacetext(message.content, "?", " Eh?")
+#endif

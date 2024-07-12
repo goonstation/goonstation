@@ -32,3 +32,5 @@
 #define SAYFLAG_DELIMITED_CHANNEL_ONLY (1 << 13)
 /// This message has had its prefix processed by the speech manager.
 #define SAYFLAG_PREFIX_PROCESSED (1 << 14)
+/// This message should not be passed to an output module.
+#define SAYFLAG_DO_NOT_OUTPUT (1 << 15)

@@ -336,7 +336,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	id = "accent_comic"
 
 /datum/speech_module/modifier/accent/comic/process(datum/say_message/message)
-	message.maptext_css_values["font-family"] = "'Comic Sans MS'"
+	message.content = "<font face='Comic Sans MS'>[message.content]</font>"
 	message.maptext_css_values["font-size"] = "8px"
 	. = message
 

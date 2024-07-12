@@ -57,6 +57,7 @@
 #define SPEECH_MODIFIER_INVERTED_SPEECH "inverted_speech"
 #define SPEECH_MODIFIER_MEGAPHONE "megaphone"
 #define SPEECH_MODIFIER_MOB_MODIFIERS "mob_modifiers"
+#define SPEECH_MODIFIER_MUTE "mute"
 #define SPEECH_MODIFIER_MUZZLE "muzzle"
 #define SPEECH_MODIFIER_MONOSPACE_DECORATOR "monospace_decorator"
 #define SPEECH_MODIFIER_RADIO "radio"
