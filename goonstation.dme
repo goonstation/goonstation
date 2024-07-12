@@ -1969,6 +1969,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\grenades.dm"
 #include "code\obj\item\handcuffs.dm"
 #include "code\obj\item\hydroponics.dm"
+#include "code\obj\item\id_plating_kit.dm"
 #include "code\obj\item\implant.dm"
 #include "code\obj\item\kendo.dm"
 #include "code\obj\item\keys.dm"

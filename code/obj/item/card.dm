@@ -105,6 +105,22 @@ TYPEINFO(/obj/item/card/emag)
 	registered_owner()
 		.= registered
 
+/obj/item/card/id/attackby(obj/item/W, mob/user)
+	if (istype(W,/obj/item/id_plating_kit))
+		var/obj/item/id_plating_kit/platingKit = W
+		if (!src.keep_icon)
+			if(src.icon_state == platingKit.skin)
+				boutput(user, "[src] already has that plating!")
+			else
+				boutput(user, "You plate [src] with the [platingKit].")
+				src.icon_state = platingKit.skin
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+				qdel(W)
+		else
+			boutput(user, "You cannot plate this card.")
+	else
+		return ..()
+
 /obj/item/card/id/New()
 	..()
 	src.pin = rand(PIN_MIN, PIN_MAX)
