@@ -31,7 +31,7 @@
 // ===============
 
 /obj/fakeobject/airlock_broken/command
-	name = "command airlock"
+	name = "rusted command airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	icon_state = "door_closed"
 
@@ -39,7 +39,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/security
-	name = "security airlock"
+	name = "rusted security airlock"
 	icon = 'icons/obj/doors/Doorsec.dmi'
 	icon_state = "door_closed"
 
@@ -47,7 +47,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/engineering
-	name = "engineering airlock"
+	name = "rusted engineering airlock"
 	icon = 'icons/obj/doors/Dooreng.dmi'
 	icon_state = "door_closed"
 
@@ -55,7 +55,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/medical
-	name = "medical airlock"
+	name = "rusted medical airlock"
 	icon = 'icons/obj/doors/doormed.dmi'
 	icon_state = "door_closed"
 
@@ -63,7 +63,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/maintenance
-	name = "maintenance airlock"
+	name = "rusted maintenance airlock"
 	icon = 'icons/obj/doors/Doormaint.dmi'
 	icon_state = "door_closed"
 
@@ -71,7 +71,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/external
-	name = "external airlock"
+	name = "rusted external airlock"
 	icon = 'icons/obj/doors/Doorext.dmi'
 	icon_state = "door_closed"
 
@@ -79,7 +79,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/classic
-	name = "large airlock"
+	name = "large rusted airlock"
 	icon = 'icons/obj/doors/Doorclassic.dmi'
 	icon_state = "door_closed"
 
@@ -87,7 +87,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/syndicate
-	name = "reinforced external airlock"
+	name = "rusted reinforced airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon = 'icons/obj/doors/Doorext.dmi'
 	icon_state = "door_closed"
@@ -100,7 +100,7 @@
 // ===========
 
 /obj/fakeobject/airlock_broken/glass
-	name = "glass airlock"
+	name = "rusted glass airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
 	visible = 0
@@ -110,15 +110,15 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/glass/command
-		name = "command airlock"
-		icon = 'icons/obj/doors/Doorcom-glass.dmi'
+	name = "rusted command airlock"
+	icon = 'icons/obj/doors/Doorcom-glass.dmi'
 	icon_state = "door_closed"
 
 	bolted
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/glass/engineering
-	name = "engineering airlock"
+	name = "rusted engineering airlock"
 	icon = 'icons/obj/doors/Dooreng-glass.dmi'
 	icon_state = "door_closed"
 
@@ -126,7 +126,7 @@
 		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/glass/medical
-	name = "medical airlock"
+	name = "rusted medical airlock"
 	icon = 'icons/obj/doors/Doormed-glass.dmi'
 	icon_state = "door_closed"
 
@@ -138,6 +138,7 @@
 // =============
 
 /obj/fakeobject/airlock_broken/gannets
+	name = "rusted airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
 	icon_state = "gen_closed"
 	icon_base = "gen"
@@ -153,7 +154,7 @@
 			icon_state = "fgen_locked"
 
 	command
-		name = "command airlock"
+		name = "rusted command airlock"
 		icon_state = "com_closed"
 
 		bolted
@@ -166,7 +167,7 @@
 			icon_state = "fcom_locked"
 
 	security
-		name = "security airlock"
+		name = "rusted security airlock"
 		icon_state = "sec_closed"
 
 		bolted
@@ -179,7 +180,7 @@
 			icon_state = "fsec_locked"
 
 	engineering
-		name = "engineering airlock"
+		name = "rusted engineering airlock"
 		icon_state = "eng_closed"
 
 		bolted
@@ -192,7 +193,7 @@
 			icon_state = "feng_locked"
 
 	medical
-		name = "medical airlock"
+		name = "rusted medical airlock"
 		icon_state = "med_closed"
 
 		bolted
@@ -205,7 +206,7 @@
 			icon_state = "fmed_locked"
 
 	morgue
-		name = "morgue airlock"
+		name = "rusted morgue airlock"
 		icon_state = "morg_closed"
 
 		bolted
@@ -218,7 +219,7 @@
 			icon_state = "fmorg_locked"
 
 	chemistry
-		name = "chemistry airlock"
+		name = "rusted chemistry airlock"
 		icon_state = "chem_closed"
 
 		bolted
@@ -231,7 +232,7 @@
 			icon_state = "fchem_locked"
 
 	toxins
-		name = "toxins airlock"
+		name = "rusted toxins airlock"
 		icon_state = "tox_closed"
 
 		bolted
@@ -244,7 +245,7 @@
 			icon_state = "ftox_locked"
 
 	maintenance
-		name = "maintenance airlock"
+		name = "rusted maintenance airlock"
 		icon_state = "maint_closed"
 
 		bolted
@@ -268,7 +269,7 @@
 			icon_state = "tfgen_locked"
 
 	command
-		name = "glass command airlock"
+		name = "rusted command airlock"
 		icon_state = "tcom_closed"
 
 		bolted
@@ -281,7 +282,7 @@
 			icon_state = "tfcom_locked"
 
 	security
-		name = "glass security airlock"
+		name = "rusted security airlock"
 		icon_state = "tsec_closed"
 
 		bolted
@@ -294,7 +295,7 @@
 			icon_state = "tfsec_locked"
 
 	engineering
-		name = "glass engineering airlock"
+		name = "rusted engineering airlock"
 		icon_state = "teng_closed"
 
 		bolted
@@ -307,7 +308,7 @@
 			icon_state = "tfeng_locked"
 
 	medical
-		name = "glass medical airlock"
+		name = "rusted medical airlock"
 		icon_state = "tmed_closed"
 
 		bolted
@@ -320,7 +321,7 @@
 			icon_state = "tfmed_locked"
 
 	morgue
-		name = "glass morgue airlock"
+		name = "rusted morgue airlock"
 		icon_state = "tmorg_closed"
 
 		bolted
@@ -333,7 +334,7 @@
 			icon_state = "tfmorg_locked"
 
 	chemistry
-		name = "glass chemistry airlock"
+		name = "rusted chemistry airlock"
 		icon_state = "tchem_closed"
 
 		bolted
@@ -346,7 +347,7 @@
 			icon_state = "tfchem_locked"
 
 	toxins
-		name = "glass toxins airlock"
+		name = "rusted toxins airlock"
 		icon_state = "ttox_closed"
 
 		bolted
@@ -359,12 +360,11 @@
 			icon_state = "tftox_locked"
 
 	maintenance
-		name = "glass maintenance airlock"
+		name = "rusted maintenance airlock"
 		icon_state = "tmaint_closed"
 
 		bolted
 			icon_state = "tmaint_locked"
-
 
 // ==========
 // pyro doors
