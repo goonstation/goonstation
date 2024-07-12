@@ -1,5 +1,9 @@
 
 (t)fri jul 12 24
+(u)Flaborized and LeahTheTech
+(p)19957
+(e)🎨|C-Sprites
+(+)Resprited laser mirrors.
 (u)tarmunora
 (+)non-nukeop fannypacks are standard size.
 (+)Physically Fit mutation stability cost change: -5 -> 5.
