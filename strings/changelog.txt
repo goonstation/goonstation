@@ -1,5 +1,9 @@
 
 (t)fri jul 12 24
+(u)KakoLookiyam
+(p)19880
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Added new mechcomp inputs to the Power Transmission Laser.
 (u)Wrench
 (p)19952
 (e)🗺💅|A-Mapping, C-QoL
