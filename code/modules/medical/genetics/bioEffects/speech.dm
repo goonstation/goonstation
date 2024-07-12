@@ -22,10 +22,6 @@
 	OnRemove()
 		src.owner.ensure_say_tree().RemoveModifier(src.id)
 
-	// TODO: Remove.
-	proc/OnSpeak(var/message)
-		return
-
 
 /datum/bioEffect/speech/smile
 	name = "Frontal Gyrus Alteration Type-S"

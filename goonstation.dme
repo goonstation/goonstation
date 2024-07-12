@@ -1795,6 +1795,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\say_sources\gang_announcer.dm"
 #include "code\modules\speech\say_sources\ion_flock.dm"
 #include "code\modules\speech\say_sources\mixing_desk.dm"
+#include "code\modules\speech\say_sources\random_accent.dm"
 #include "code\modules\speech\trees\auxiliary_listen_module_tree.dm"
 #include "code\modules\speech\trees\auxiliary_speech_module_tree.dm"
 #include "code\modules\speech\trees\listen_module_tree.dm"

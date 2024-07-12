@@ -159,7 +159,6 @@ Things To Implement:
 - Radio brain (bioeffect)
 
 Old Code To Remove:
-- `OnSpeak`
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
