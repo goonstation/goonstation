@@ -63,6 +63,7 @@
 		return
 
 	// If the say channel permits, apply the effects of all modifiers, otherwise only those that override say channel preferences.
+	var/was_uncool = global.phrase_log.is_uncool(message.content)
 	if (global.SpeechManager.GetSayChannelInstance(message.output_module_channel).affected_by_modifiers)
 		for (var/modifier_id in src.speech_modifiers_by_id)
 			message = src.speech_modifiers_by_id[modifier_id].process(message)
@@ -75,6 +76,16 @@
 			// If the module consumed the message, no need to process any further.
 			if (QDELETED(message))
 				return
+
+	if (!was_uncool && global.phrase_log.is_uncool(message.content))
+		var/list/modifier_ids
+		if (global.SpeechManager.GetSayChannelInstance(message.output_module_channel).affected_by_modifiers)
+			modifier_ids = src.speech_modifiers_by_id.Copy()
+		else
+			modifier_ids = src.persistent_speech_modifiers_by_id.Copy()
+
+		logTheThing(LOG_ADMIN, message.speaker, "[message.speaker] tried to say \"[message.original_content]\" but it was garbled into \"[message.content]\", which is uncool by the following effects: [jointext(modifier_ids, ", ")]. The uncool words were garbled.")
+		message.content = replacetext(message.content, global.phrase_log.uncool_words, pick("urr", "blargh", "der", "hurr", "pllt"))
 
 	// Apply sayflag message manipulation.
 	global.SpeechManager.ApplyMessageModifierPreprocessing(message)

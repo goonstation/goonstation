@@ -43,7 +43,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 	// Message Information Variables:
 	/// The original contents of this message, uneditied, unsanitised.
-	var/orig_message = ""
+	var/original_content = ""
 	/// Message flags. See `_std/defines/speech_defines/sayflags.dm`.
 	var/flags = SAYFLAG_HAS_QUOTATION_MARKS
 	/// The sound that should play when this message is spoken.
@@ -100,7 +100,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (is_copy)
 		return
 
-	src.orig_message = message
+	src.original_content = message
 	src.content = message
 	src.speaker = speaker.say_tree.speaker_parent
 	src.original_speaker = speaker.say_tree.speaker_parent

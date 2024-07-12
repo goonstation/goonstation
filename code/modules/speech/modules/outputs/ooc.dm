@@ -25,7 +25,7 @@
 	if (!dooc_allowed && (mob_speaker.client.deadchat != 0))
 		boutput(mob_speaker, "OOC for dead mobs has been turned off.")
 		return
-	if (findtext(message.orig_message, "byond://"))
+	if (findtext(message.original_content, "byond://"))
 		boutput(mob_speaker, "<B>Advertising other servers is not allowed.</B>")
 		logTheThing(LOG_ADMIN, mob_speaker, "has attempted to advertise in OOC.")
 		logTheThing(LOG_DIARY, mob_speaker, "has attempted to advertise in OOC.", "admin")

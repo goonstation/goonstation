@@ -167,7 +167,6 @@ Old Code To Remove:
 Parity:
 - `radio_brain`
 - Potentially deprecate `protected_radio`.
-- Uncool filter before/after message modifiers. (process_accents)
 
 Fixes:
 - Living mobs that are dead should send and receive messages to and from deadchat.
