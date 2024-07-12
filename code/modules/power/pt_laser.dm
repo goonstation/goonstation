@@ -124,7 +124,7 @@
 			src.output_multi = 1 GIGA WATT
 		else
 			src.output_multi = 1 MEGA WATT
-		var abs_output_number = clamp((newoutput/src.output_multi), 0, src.max_dial_value)
+		var/abs_output_number = clamp((newoutput / src.output_multi), 0, src.max_dial_value)
 		src.output_number = src.emagged ? -abs_output_number : abs_output_number
 		src.update_output()
 
@@ -225,29 +225,27 @@
 	var/last_firing = firing
 	var/dont_update = 0
 	var/adj_output = abs(output)
-	var/input_power = src.chargelevel * charging // We can fire a laser with more power than our battery capacity, but only if input is enabled.
+	var/unconsumed_surplus = src.get_available_input_power(mult) // Incoming power beyond battery charge we can use to fuel the laser, capped by chargelevel.
 	var/connected = terminal && !(src.status & BROKEN)
 
 	if(connected)
-		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
-		if(!charging || src.excess < src.chargelevel)
+		src.excess = src.get_available_terminal_power()
+		if(!src.charging || src.excess < src.chargelevel * mult)
 			load_last_tick = 0
-			input_power = (charging * src.excess) // Have less than the desired input power - but we still want to make use of that power
+			unconsumed_surplus = (src.charging * src.excess) // Have less than the desired input power - but we still want to make use of that power
 			if (src.is_charging) src.is_charging = FALSE
 
-	if( charge > adj_output*mult)
-		adj_output *= mult
+	adj_output *= mult
 
 	if(online) // if it's switched on
 		if(!firing) //not firing
 
-			if((charge + input_power) >= adj_output && (adj_output >= PTLMINOUTPUT)) //have power to fire
+			if(src.can_fire(mult)) //have power to fire
 				start_firing() //creates all the laser objects then activates the right ones
 				dont_update = 1 //so the firing animation runs
-				input_power -= adj_output
-				if (input_power < 0)
-					charge += input_power
-		else if(((charge + (src.charging * input_power)) < adj_output) && (adj_output >= PTLMINOUTPUT)) //firing but not enough charge to sustain
+				unconsumed_surplus -= adj_output
+		else if(!src.can_fire(mult)) //firing but not enough charge to sustain
+			unconsumed_surplus = -src.charge // We eat the last of the charge
 			stop_firing()
 		else //firing and have enough power to carry on
 			if (src.laser_output_needs_update)
@@ -268,11 +266,10 @@
 		stop_firing()
 
 	if(connected && charging && src.excess >= src.chargelevel)// if there's power available, try to charge
-		var adj_chargelevel = clamp(0, input_power, chargelevel)
-		var/adj_charge = min(capacity-charge, adj_chargelevel)	// charge at set rate, limited to whatever spare power is left
-		var/load = (src.excess - input_power + adj_charge)
+		var/adj_charge = clamp(-src.charge, unconsumed_surplus, src.capacity - src.charge)
+		var/load = max(0, src.excess + adj_charge - unconsumed_surplus)
 		if(terminal.add_load(load))						// attempt to add the load to the terminal side network
-			charge += adj_charge * mult						// increase the charge if we did
+			src.charge += adj_charge				// adjust the charge if we did
 			load_last_tick = load
 			if (!src.is_charging) src.is_charging = TRUE
 
@@ -411,8 +408,15 @@
 		if (QDELETED(A))
 			src.blocking_objects -= A //mmm yes for loop list modification
 
-/obj/machinery/power/pt_laser/proc/can_fire()
-	return abs(src.output) <= (src.charging * src.chargelevel + src.charge)
+
+/obj/machinery/power/pt_laser/proc/get_available_terminal_power()
+	return src.terminal?.surplus() + src.load_last_tick //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
+
+/obj/machinery/power/pt_laser/proc/get_available_input_power(mult)
+		return src.charging * min(src.chargelevel * mult, src.get_available_terminal_power())
+
+/obj/machinery/power/pt_laser/proc/can_fire(mult = 1)
+	return (abs(src.output) * mult <= src.charge + src.get_available_input_power(mult)) & (abs(src.output) >= PTLMINOUTPUT)
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
 	src.laser?.traverse(/obj/linked_laser/ptl/proc/update_source_power)
@@ -457,7 +461,7 @@
 		src.laser_output_needs_update = TRUE
 		return;
 
-	if(!src.output || !src.can_fire())
+	if(!src.output || !src.can_fire() || !src.online)
 		src.stop_firing()
 		return
 	if (src.firing)
