@@ -8,6 +8,9 @@
 	opacity = 1
 	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
 
+	bolted
+		icon_state = "door_locked"
+
 	sealed // used in dojozone
 		name = "laboratory door"
 		desc = "It appears to be sealed."
@@ -104,7 +107,6 @@
 	name = "rusted glass airlock"
 	icon = 'icons/obj/doors/Doorglass.dmi'
 	opacity = 0
-	visible = 0
 	icon_state = "door_closed"
 
 	bolted
@@ -142,8 +144,6 @@
 	name = "rusted airlock"
 	icon = 'icons/obj/doors/destiny.dmi'
 	icon_state = "gen_closed"
-	icon_base = "gen"
-	icon_state = "door_closed"
 
 	bolted
 		icon_state = "gen_locked"
@@ -258,7 +258,6 @@
 	icon = 'icons/obj/doors/destiny.dmi'
 	icon_state = "tgen_closed"
 	opacity = 0
-	visible = 0
 
 	bolted
 		icon_state = "tgen_locked"
@@ -373,130 +372,230 @@
 
 /obj/fakeobject/airlock_broken/pyro
 	icon = 'icons/obj/doors/SL_doors.dmi'
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "door_locked"
 
 /obj/fakeobject/airlock_broken/pyro/alt
 	icon_state = "generic2_closed"
+
+	bolted
+		icon_state = "generic2_locked"
 
 /obj/fakeobject/airlock_broken/pyro/classic
 	name = "rusted old airlock"
 	icon_state = "old_closed"
 
+	bolted
+		icon_state = "old_locked"
+
 /obj/fakeobject/airlock_broken/pyro/command
 	name = "rusted command airlock"
 	icon_state = "com_closed"
 
+	bolted
+		icon_state = "com_locked"
+
 /obj/fakeobject/airlock_broken/pyro/command/alt
 	icon_state = "com2_closed"
 
+	bolted
+		icon_state = "com2_locked"
+
 /obj/fakeobject/airlock_broken/pyro/weapons
 	icon_state = "manta_closed"
+
+	bolted
+		icon_state = "manta_locked"
 
 /obj/fakeobject/airlock_broken/pyro/security
 	name = "rusted security airlock"
 	icon_state = "sec_closed"
 
+	bolted
+		icon_state = "sec_locked"
+
 /obj/fakeobject/airlock_broken/pyro/security/alt
 	icon_state = "sec2_closed"
+
+	bolted
+		icon_state = "sec_locked"
 
 /obj/fakeobject/airlock_broken/pyro/engineering
 	name = "rusted engineering airlock"
 	icon_state = "eng_closed"
 
+	bolted
+		icon_state = "eng_locked"
+
 /obj/fakeobject/airlock_broken/pyro/engineering/alt
 	icon_state = "eng2_closed"
+
+	bolted
+		icon_state = "eng_locked"
 
 /obj/fakeobject/airlock_broken/pyro/mining
 	name = "rusted mining airlock"
 	icon_state = "mining_closed"
 
+	bolted
+		icon_state = "eng_locked"
+
 /obj/fakeobject/airlock_broken/pyro/medical
 	name = "rusted medical airlock"
 	icon_state = "research_closed"
 
+	bolted
+		icon_state = "research_locked"
+
 /obj/fakeobject/airlock_broken/pyro/medical/alt
 	icon_state = "research2_closed"
+
+	bolted
+		icon_state = "research2_locked"
 
 /obj/fakeobject/airlock_broken/pyro/medical/alt2
 	icon_state = "med_closed"
 
+	bolted
+		icon_state = "med_locked"
+
 /obj/fakeobject/airlock_broken/pyro/medical/morgue
 	icon_state = "morgue_closed"
+
+	bolted
+		icon_state = "morgue_locked"
 
 /obj/fakeobject/airlock_broken/pyro/sci_alt
 	name = "rusted research airlock"
 	icon_state = "sci_closed"
 
+	bolted
+		icon_state = "sci_locked"
+
 /obj/fakeobject/airlock_broken/pyro/toxins_alt
 	name = "rusted toxins airlock"
 	icon_state = "toxins2_closed"
+
+	bolted
+		icon_state = "toxins2_locked"
 
 /obj/fakeobject/airlock_broken/pyro/maintenance
 	name = "rusted maintenance airlock"
 	icon_state = "maint_closed"
 
+	bolted
+		icon_state = "maint_locked"
+
 /obj/fakeobject/airlock_broken/pyro/maintenance/alt
 	icon_state = "maint2_closed"
+
+	bolted
+		icon_state = "maint2_locked"
 
 /obj/fakeobject/airlock_broken/pyro/external
 	name = "rusted external airlock"
 	icon_state = "airlock_closed"
+
+	bolted
+		icon_state = "airlock_locked"
 
 /obj/fakeobject/airlock_broken/pyro/reinforced
 	name = "rusted reinforced airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon_state = "airlock_closed"
 
+	bolted
+		icon_state = "airlock_locked"
+
 /obj/fakeobject/airlock_broken/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
-	icon_base = "arrivals"
 	opacity = 0
-	visible = 0
+
+	bolted
+		icon_state = "arrivals_locked"
 
 /obj/fakeobject/airlock_broken/pyro/glass
 	name = "rusted glass airlock"
 	icon_state = "glass_closed"
 	opacity = 0
-	visible = 0
+
+	bolted
+		icon_state = "glass_locked"
 
 /obj/fakeobject/airlock_broken/pyro/glass/command
 	name = "rusted command airlock"
 	icon_state = "com_glass_closed"
 
+	bolted
+		icon_state = "com_glass_locked"
+
 /obj/fakeobject/airlock_broken/pyro/glass/engineering
 	name = "rusted engineering airlock"
 	icon_state = "eng_glass_closed"
+
+	bolted
+		icon_state = "eng_glass_locked"
 
 /obj/fakeobject/airlock_broken/pyro/glass/security
 	name = "rusted security airlock"
 	icon_state = "sec_glass_closed"
 
+	bolted
+		icon_state = "sec_glass_locked"
+
 /obj/fakeobject/airlock_broken/pyro/glass/security/alt
 	name = "rusted security airlock"
 	icon_state = "sec_glassalt_closed"
+
+	bolted
+		icon_state = "sec_glassalt_locked"
 
 /obj/fakeobject/airlock_broken/pyro/glass/med
 	name = "rusted medical airlock"
 	icon_state = "med_glass_closed"
 
+	bolted
+		icon_state = "med_glass_locked"
+
 /obj/fakeobject/airlock_broken/pyro/glass/sci
 	name = "rusted research airlock"
 	icon_state = "sci_glass_closed"
+
+	bolted
+		icon_state = "sci_glass_locked"
 
 /obj/fakeobject/airlock_broken/pyro/glass/toxins
 	name = "rusted toxins airlock"
 	icon_state = "toxins_glass_closed"
 
+	bolted
+		icon_state = "toxins_glass_locked"
+
 /obj/fakeobject/airlock_broken/pyro/glass/mining
 	name = "rusted mining airlock"
 	icon_state = "mining_glass_closed"
+
+	bolted
+		icon_state = "mining_glass_locked"
 
 /obj/fakeobject/airlock_broken/pyro/glass/botany
 	name = "rusted botany airlock"
 	icon_state = "botany_glass_closed"
 
+	bolted
+		icon_state = "botany_glass_locked"
+
 /obj/fakeobject/airlock_broken/pyro/glass/windoor
 	name = "rusted thin glass airlock"
 	icon_state = "windoor_closed"
 
+	bolted
+		icon_state = "windoor_locked"
+
 /obj/fakeobject/airlock_broken/pyro/glass/windoor/alt
 	icon_state = "windoor2_closed"
+
+	bolted
+		icon_state = "windoor2_locked"
