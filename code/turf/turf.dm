@@ -292,7 +292,7 @@
 	var/static/list/space_color = generate_space_color()
 	var/static/image/starlight
 
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
 	dense
@@ -1140,7 +1140,7 @@ TYPEINFO(/turf/simulated)
 	density = 1
 	pathable = 0
 	explosion_resistance = 999999
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
