@@ -26,6 +26,10 @@
 		icon = 'icons/obj/doors/door_fire2.dmi'
 		icon_state = "door0"
 
+// ===============
+// normal airlocks
+// ===============
+
 /obj/fakeobject/airlock_broken/command
 	name = "command airlock"
 	icon = 'icons/obj/doors/Doorcom.dmi'
@@ -82,3 +86,57 @@
 	bolted
 		icon_state = "door_locked"
 
+/obj/fakeobject/airlock_broken/syndicate
+	name = "reinforced external airlock"
+	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
+	icon = 'icons/obj/doors/Doorext.dmi'
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "door_locked"
+
+// ===========
+// glass doors
+// ===========
+
+/obj/fakeobject/airlock_broken/glass
+	name = "glass airlock"
+	icon = 'icons/obj/doors/Doorglass.dmi'
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "door_locked"
+
+/obj/fakeobject/airlock_broken/glass/command
+		name = "command airlock"
+		icon = 'icons/obj/doors/Doorcom-glass.dmi'
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "door_locked"
+
+/obj/fakeobject/airlock_broken/glass/engineering
+	name = "engineering airlock"
+	icon = 'icons/obj/doors/Dooreng-glass.dmi'
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "door_locked"
+
+/obj/fakeobject/airlock_broken/glass/medical
+	name = "medical airlock"
+	icon = 'icons/obj/doors/Doormed-glass.dmi'
+	icon_state = "door_closed"
+
+	bolted
+		icon_state = "door_locked"
+
+// =============
+// gannets doors
+// =============
+
+
+
+// ==========
+// pyro doors
+// ==========
