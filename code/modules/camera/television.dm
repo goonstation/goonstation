@@ -75,3 +75,8 @@
 	name = "mobile television - science"
 	c_tag = "science mobile"
 	network = "telesci"
+
+/obj/machinery/camera/television/bombtest
+	name = "television camera - bomb testing range"
+	desc = "A bulky stationary camera for wireless broadcasting of live bomb tests."
+	invuln = TRUE

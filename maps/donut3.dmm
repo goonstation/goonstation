@@ -26933,7 +26933,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/light/incandescent/cool/very,
-/obj/machinery/camera/television/auto{
+/obj/machinery/camera/television/bombtest{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -43426,7 +43426,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "ndT" = (
-/obj/machinery/camera/television/auto,
+/obj/machinery/camera/television/bombtest,
 /turf/simulated/floor/carpet/grime,
 /area/station/science/testchamber/bombchamber)
 "ndX" = (

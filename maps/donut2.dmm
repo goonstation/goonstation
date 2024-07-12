@@ -17199,10 +17199,8 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
 "cpz" = (
-/obj/machinery/camera/television{
-	c_tag = "test chamber 2";
-	dir = 8;
-	name = "camera - test chamber 2"
+/obj/machinery/camera/television/bombtest{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
@@ -21697,10 +21695,8 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "ffp" = (
-/obj/machinery/camera/television{
-	c_tag = "test chamber";
-	dir = 4;
-	name = "camera - test chamber"
+/obj/machinery/camera/television/bombtest{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
