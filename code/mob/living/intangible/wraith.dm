@@ -405,11 +405,24 @@
 	equipped()
 		return 0
 
-	click(atom/target)
+	click(atom/target, params)
 		if (src.targeting_ability)
 			return ..()
-		if (!density)
+		if (src.client && src.client.check_key(KEY_POINT))
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
+
+		else if (!density)
 			src.examine_verb(target)
+
+		//Stolen from /mob/click because
+		if (GET_DIST(src, target) > 0)
+			if(src.can_turn())
+				set_dir(get_dir(src, target))
+				if(dir & (dir-1))
+					if (dir & EAST)
+						set_dir(EAST)
+					else if (dir & WEST)
+						set_dir(WEST)
 
 	examine_verb(atom/A as mob|obj|turf in view())
 		..()
@@ -464,7 +477,7 @@
 
 			. = src.say_dead(message, 1)
 
-	emote(var/act)
+	emote(var/act, var/voluntary = 0)
 		if (!density)
 			return
 		..()
@@ -482,6 +495,10 @@
 				acts = "grustles"
 			if ("rattle")
 				acts = "rattles"
+			if ("flip")
+				if (src.emote_check(voluntary, 50))
+					acts = "<b>[src]</B> does a flip!"
+					animate_spin(src, pick("L", "R"), 1, 0)
 
 		if (acts)
 			for (var/mob/M in hearers(src, null))
@@ -494,6 +511,28 @@
 		else
 			visible_message("[user] punches [src]!")
 			TakeDamage("chest", 1, 0)
+
+	point_at(atom/target, var/pixel_x, var/pixel_y)
+		if (!isturf(src.loc))
+			return
+
+		if (istype(target, /obj/decal/point))
+			return
+
+		var/point_invisibility = src.invisibility
+
+		if (src.hasStatus("corporeal"))
+			src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
+
+
+		if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+			..()
+			var/colorVal = "#32017c5b"
+			if (src.hasStatus("corporeal"))
+				colorVal = "#2d007063"
+
+
+			make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=colorVal, invisibility=point_invisibility, pointer=src)
 
 
 
