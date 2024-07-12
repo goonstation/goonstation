@@ -57,7 +57,7 @@
 
 		if (istype(mob_speaker, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/F = mob_speaker
-			if(F.is_npc)
+			if (F.is_npc)
 				message.speaker_to_display = "Drone [F.real_name]"
 				classes += " flocknpc"
 
@@ -66,7 +66,7 @@
 				if (istype(F.controller, /mob/living/intangible/flock))
 					mob_speaker = F.controller
 
-		else if(istype(mob_speaker, /mob/living/intangible/flock) && (message.flags & SAYFLAG_SPOKEN_BY_PLAYER))
+		else if (istype(mob_speaker, /mob/living/intangible/flock) && (message.flags & SAYFLAG_SPOKEN_BY_PLAYER))
 			classes += " sentient"
 			if (istype(mob_speaker, /mob/living/intangible/flock/flockmind))
 				classes += " flockmind"

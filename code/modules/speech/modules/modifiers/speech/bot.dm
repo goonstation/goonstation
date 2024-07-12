@@ -77,7 +77,7 @@
 			message.content = "<font face='System'>[message.content]!!</font>"
 
 		else
-			if(!ON_COOLDOWN(message.speaker, "bootleg_sound", 15 SECONDS))
+			if (!ON_COOLDOWN(message.speaker, "bootleg_sound", 15 SECONDS))
 				playsound(message.speaker.loc, 'sound/misc/amusingduck.ogg', 50, 0)
 
 			message.content = "<font face='Comic Sans MS'>[pick("WACKA", "QUACK","QUACKY","GAGGLE")]!!</font>"

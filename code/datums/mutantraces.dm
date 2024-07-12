@@ -36,6 +36,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/override_skintone = 1
 	var/override_attack = FALSE		 // set to 1 to override the limb attack actions. Mutantraces may use the limb action within custom_attack(),
 								// but they must explicitly specify if they're overriding via this var
+	var/mutantrace_speech_modifier
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
 	/** Mutant Appearance Flags - used to modify how the mob is drawn
@@ -239,9 +240,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/apply_clothing_filters(var/obj/item/worn)
 		. = null
 
-	proc/say_filter(var/message)
-		return message
-
 	proc/say_verb()
 		return null
 
@@ -276,6 +274,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		if (src.override_language)
 			M.say_language = src.override_language
+
+		if (src.mutantrace_speech_modifier)
+			M.ensure_say_tree().AddModifier(src.mutantrace_speech_modifier)
 
 		M.ensure_listen_tree()
 		for (var/language_id in src.understood_languages)
@@ -356,6 +357,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			if (src.override_language)
 				src.mob.say_language = initial(src.mob.say_language)
+
+			if (src.mutantrace_speech_modifier)
+				src.mob.ensure_say_tree().RemoveModifier(src.mutantrace_speech_modifier)
 
 			src.mob.ensure_listen_tree()
 			for (var/language_id in src.understood_languages)
@@ -711,6 +715,7 @@ TYPEINFO(/datum/mutantrace/flubber)
 	name = "flubber"
 	mutant_folder = 'icons/mob/flubber.dmi'
 	icon_state = "flubber"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_FLUBBER
 	uses_human_clothes = 0
 	head_offset = -7
 	voice_override = "bloop"
@@ -733,9 +738,6 @@ TYPEINFO(/datum/mutantrace/flubber)
 		playsound(src.mob, "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
 		animate(src.mob, time = 1, pixel_y = 16, easing = ELASTIC_EASING)
 		animate(time = 1, pixel_y = 0, easing = ELASTIC_EASING)
-
-	say_filter(var/message)
-		return pick("Wooo!!", "Whopeee!!", "Boing!!", "Čapaš!!")
 
 	onLife(var/mult = 1)
 		if (!isdead(src.mob))
@@ -837,6 +839,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	override_attack = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS | HAS_LONG_NOSE)
 	voice_override = "lizard"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_LIZARD
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
 	eye_state = "eyes_lizard"
@@ -887,18 +890,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
 		src.mob.see_invisible = INVIS_INFRA
 
-	proc/letter_s_replacement(match, s, letter_after)
-		if(is_lowercase_letter(s))
-			return stutter("ss") + letter_after
-		else if(is_lowercase_letter(letter_after))
-			return capitalize(stutter("ss")) + letter_after
-		else
-			return stutter("SS") + letter_after
-
-	say_filter(var/message)
-		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
-		. = s_regex.Replace(message, /datum/mutantrace/lizard/proc/letter_s_replacement)
-
 	disposing()
 		if(ishuman(src.mob))
 			var/mob/living/carbon/human/L = src.mob
@@ -920,6 +911,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
 	jerk = TRUE
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_ZOMBIE
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
@@ -1010,9 +1002,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 		src.mob.sight |= SEE_MOBS
 		src.mob.see_in_dark = SEE_DARK_FULL
 		src.mob.see_invisible = INVIS_NONE
-
-	say_filter(var/message)
-		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
 
 	emote(var/act)
 		var/message = null
@@ -1264,6 +1253,7 @@ TYPEINFO(/datum/mutantrace/abomination)
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = TRUE
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_ABOMINATION
 	brutevuln = 0.2
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/abomination
@@ -1334,9 +1324,6 @@ TYPEINFO(/datum/mutantrace/abomination)
 						src.mob.show_text("<I><B>We cannot maintain this form much longer!</B></I>", "red")
 		return
 
-	say_filter(var/message)
-		return pick("We are one...", "Join with us...", "Sssssss...")
-
 	say_verb()
 		return "screeches"
 
@@ -1353,10 +1340,8 @@ TYPEINFO(/datum/mutantrace/abomination)
 		return message
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
+	mutantrace_speech_modifier = null
 	drains_dna_on_life = 0
-
-	say_filter(var/message)
-		return message // let admin shamblers talk, for fun
 
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
@@ -1462,9 +1447,6 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 
 	say_verb()
 		return "snarls"
-
-	say_filter(var/message)
-		return message
 
 	emote(var/act)
 		var/message = null
@@ -1925,6 +1907,7 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	aquatic = 1
 	voice_name = "amphibian"
 	jerk = FALSE
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
@@ -1941,9 +1924,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 
 	say_verb()
 		return "croaks"
-
-	say_filter(var/message)
-		return replacetext(message, "r", stutter("rrr"))
 
 	on_attach(var/mob/living/carbon/human/M)
 		..()
@@ -2157,6 +2137,7 @@ TYPEINFO(/datum/mutantrace/cow)
 	uses_human_clothes = FALSE
 	override_attack = 0
 	voice_override = "cow"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_COW
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/cow
 	mutant_organs = list("tail" = /obj/item/organ/tail/cow,
@@ -2252,12 +2233,6 @@ TYPEINFO(/datum/mutantrace/cow)
 
 		return output
 
-	say_filter(var/message)
-		.= replacetext(message, "cow", "human")
-		var/replace_lowercase = replacetextEx(., "m", stutter("mm"))
-		var/replace_uppercase = replacetextEx(replace_lowercase, "M", stutter("MM"))
-		return replace_uppercase
-
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
@@ -2323,6 +2298,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	human_compatible = TRUE
 	override_attack = 0
 	voice_override = "pug"
+	mutantrace_speech_modifier = SPEECH_MODIFIER_MUTANTRACE_PUG
 	step_override = "footstep"
 	race_mutation = /datum/bioEffect/mutantrace/pug
 	mutant_organs = list("tail" = /obj/item/organ/tail/pug,
@@ -2366,10 +2342,6 @@ TYPEINFO(/datum/mutantrace/pug)
 
 	say_verb()
 		return "barks"
-
-	say_filter(var/message)
-		. = replacetext(message, "rough", "ruff")
-		. = replacetext(., "pog", "pug")
 
 	emote(var/act, var/voluntary)
 		switch(act)

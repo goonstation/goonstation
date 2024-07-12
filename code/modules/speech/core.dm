@@ -157,7 +157,6 @@ Cleanup:
 
 Things To Implement:
 - Radio brain (bioeffect)
-- Mutantrace `say_filter()` modules.
 
 Old Code To Remove:
 - `OnSpeak`
