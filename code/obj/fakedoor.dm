@@ -6,6 +6,7 @@
 	anchored = ANCHORED_ALWAYS
 	density = 1
 	opacity = 1
+	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
 
 	sealed // used in dojozone
 		name = "laboratory door"
@@ -369,3 +370,133 @@
 // ==========
 // pyro doors
 // ==========
+
+/obj/fakeobject/airlock_broken/pyro
+	icon = 'icons/obj/doors/SL_doors.dmi'
+
+/obj/fakeobject/airlock_broken/pyro/alt
+	icon_state = "generic2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/classic
+	name = "rusted old airlock"
+	icon_state = "old_closed"
+
+/obj/fakeobject/airlock_broken/pyro/command
+	name = "rusted command airlock"
+	icon_state = "com_closed"
+
+/obj/fakeobject/airlock_broken/pyro/command/alt
+	icon_state = "com2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/weapons
+	icon_state = "manta_closed"
+
+/obj/fakeobject/airlock_broken/pyro/security
+	name = "rusted security airlock"
+	icon_state = "sec_closed"
+
+/obj/fakeobject/airlock_broken/pyro/security/alt
+	icon_state = "sec2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/engineering
+	name = "rusted engineering airlock"
+	icon_state = "eng_closed"
+
+/obj/fakeobject/airlock_broken/pyro/engineering/alt
+	icon_state = "eng2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/mining
+	name = "rusted mining airlock"
+	icon_state = "mining_closed"
+
+/obj/fakeobject/airlock_broken/pyro/medical
+	name = "rusted medical airlock"
+	icon_state = "research_closed"
+
+/obj/fakeobject/airlock_broken/pyro/medical/alt
+	icon_state = "research2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/medical/alt2
+	icon_state = "med_closed"
+
+/obj/fakeobject/airlock_broken/pyro/medical/morgue
+	icon_state = "morgue_closed"
+
+/obj/fakeobject/airlock_broken/pyro/sci_alt
+	name = "rusted research airlock"
+	icon_state = "sci_closed"
+
+/obj/fakeobject/airlock_broken/pyro/toxins_alt
+	name = "rusted toxins airlock"
+	icon_state = "toxins2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/maintenance
+	name = "rusted maintenance airlock"
+	icon_state = "maint_closed"
+
+/obj/fakeobject/airlock_broken/pyro/maintenance/alt
+	icon_state = "maint2_closed"
+
+/obj/fakeobject/airlock_broken/pyro/external
+	name = "rusted external airlock"
+	icon_state = "airlock_closed"
+
+/obj/fakeobject/airlock_broken/pyro/reinforced
+	name = "rusted reinforced airlock"
+	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
+	icon_state = "airlock_closed"
+
+/obj/fakeobject/airlock_broken/pyro/reinforced/arrivals
+	icon_state = "arrivals_closed"
+	icon_base = "arrivals"
+	opacity = 0
+	visible = 0
+
+/obj/fakeobject/airlock_broken/pyro/glass
+	name = "rusted glass airlock"
+	icon_state = "glass_closed"
+	opacity = 0
+	visible = 0
+
+/obj/fakeobject/airlock_broken/pyro/glass/command
+	name = "rusted command airlock"
+	icon_state = "com_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/engineering
+	name = "rusted engineering airlock"
+	icon_state = "eng_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/security
+	name = "rusted security airlock"
+	icon_state = "sec_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/security/alt
+	name = "rusted security airlock"
+	icon_state = "sec_glassalt_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/med
+	name = "rusted medical airlock"
+	icon_state = "med_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/sci
+	name = "rusted research airlock"
+	icon_state = "sci_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/toxins
+	name = "rusted toxins airlock"
+	icon_state = "toxins_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/mining
+	name = "rusted mining airlock"
+	icon_state = "mining_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/botany
+	name = "rusted botany airlock"
+	icon_state = "botany_glass_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/windoor
+	name = "rusted thin glass airlock"
+	icon_state = "windoor_closed"
+
+/obj/fakeobject/airlock_broken/pyro/glass/windoor/alt
+	icon_state = "windoor2_closed"
