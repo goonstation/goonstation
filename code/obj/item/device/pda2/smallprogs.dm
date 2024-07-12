@@ -1417,6 +1417,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	return_text()
 		if(..())
 			return
+		for_by_tcl(random_eye, /mob/living/critter/small_animal/floateye/watchful)
+			if (prob(5)) // The satellite has 21 eyes in it. it's fine if more than one jitters but it shouldn't be all of them and it should be around 1.
+				random_eye.make_jittery(100)
 
 		var/dat = src.return_text_header()
 

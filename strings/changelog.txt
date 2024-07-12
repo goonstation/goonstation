@@ -1,4 +1,25 @@
 
+(t)thu jul 11 24
+(u)Kubius
+(p)19860
+(e)🔄⚙|C-Rework, A-Internal
+(+)Tiles constructed outside of an area will now use a single "unconnected zone" area by default, making it much easier to connect these areas to station areas or turn them into a single built zone using an APC.
+(u)JORJ949
+(p)19670
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Objects can now be click-dragged into cyborg docks from further away. Mobs still require the shorter distance.
+(u)Kyle
+(p)19941
+(e)|
+(*)Fix Kudzumen point generation and some other misc changes
+(u)JORJ949
+(p)19510
+(e)🆕🎩|C-Feature, A-Clothing
+(+)As an NT official the Inspector now gets an NT ID and their own headset.
+(u)Tyrant
+(p)19675
+(e)🆕🗺🔬🌠|C-Feature, A-Mapping, A-Science, A-Events
+(+)There's a new destination on the long range teleporter.
 (t)wed jul 10 24
 (u)JORJ949
 (p)19927
@@ -29,7 +50,7 @@
 (u)Studenterhue
 (p)19883
 (e)🎨📦|C-Sprites, A-Game-Objects
-(+)Added the winning movie posters from the June 2024 contest. Congratulations to JOELED, Showerless, Torchwick, Zhail, TemThrush, TheAmazingToast, Cindertroy, Nahuelwig, ATDoop, Rubicubie, and Garash!
+(+)Added the winning movie posters from the June 2024 contest. Congratulations to JOELED, Showerless, Torchwick, Zhail, TemThrush, TheAmazingToast, Cindertroy, Nahuelwg, ATDoop, Rubicubie, and Garash!
 (+)Crunchwrap, Lefinch, meaow589, L0llerbate, Lopdopgop, and kirdy2 didn't win the contest, but the admin team liked their entries so much that they were added anyway, though they appear at lower rates.
 (u)KakoLookiyam
 (p)19889
