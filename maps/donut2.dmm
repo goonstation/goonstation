@@ -32791,6 +32791,9 @@
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/engineering_power,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "mqD" = (
