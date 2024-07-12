@@ -2081,11 +2081,8 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	onLife(var/mult = 1)
 		// if (!src.mob.abilityHolder)
 		// 	src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
-		var/datum/abilityHolder/kudzu/KAH
-		if (istype(src.mob.abilityHolder, /datum/abilityHolder/composite))
-			var/datum/abilityHolder/composite/c = src.mob.abilityHolder
-			KAH = c.getHolder(/datum/abilityHolder/kudzu)
-		else
+		var/datum/abilityHolder/kudzu/KAH = src.mob.get_ability_holder(/datum/abilityHolder/kudzu)
+		if (!istype(KAH))
 			KAH = src.mob.abilityHolder
 
 		var/round_mult = max(2, round((mult)))
