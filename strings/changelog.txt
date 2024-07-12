@@ -1,5 +1,9 @@
 
 (t)fri jul 12 24
+(u)tarmunora
+(+)non-nukeop fannypacks are standard size.
+(+)Physically Fit mutation stability cost change: -5 -> 5.
+(+)Synchronized Vestigial Ballistics stability cost change: -15 -> 0.
 (u)KakoLookiyam
 (p)19880
 (e)🆕💡|C-Feature, A-Station-Systems
