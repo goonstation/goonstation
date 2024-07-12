@@ -1051,6 +1051,17 @@ proc/spawn_kitchen_note()
 		..()
 		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
 
+/obj/item/paper/businesscard/mabinogi
+	name = "business card - Mabinogi"
+	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
+	icon_state = "businesscard-mabinogi"
+	sizey = 343 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
+
+
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
 	icon_state = "paper"
