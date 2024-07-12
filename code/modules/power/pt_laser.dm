@@ -257,7 +257,7 @@
 				if(burn_living(L,adj_output)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
-			charge -= adj_output
+			src.charge = max(0, src.charge - adj_output)
 
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
