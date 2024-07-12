@@ -1,7 +1,4 @@
 //fluid pipes
-#define FLUIDPIPE_NORMAL 1
-#define FLUIDPIPE_SOURCE 2
-#define FLUIDPIPE_SINK 3
 #define DEFAULT_FLUID_CAPACITY 100
 
 // Fluid clicking
