@@ -1,5 +1,9 @@
 
 (t)fri jul 12 24
+(u)Mr. Moriarty
+(p)19549
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)Resprited drinking, wine, cocktail, old fashioned, shot, and round glasses, and champagne flutes, pitchers and milk bottles, and all of their respective reagent overlays.
 (u)LeahTheTech
 (*)Energy shield generators now trickle charge when connected to a cable and will correctly switch to using battery power if the cable becomes unpowered. Basically they shouldn't randomly turn off anymore.
 (+)Showers will no longer bypass energy shield generators.
