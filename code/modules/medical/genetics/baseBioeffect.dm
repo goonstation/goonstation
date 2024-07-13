@@ -282,7 +282,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	targeted = 1
 	target_anything = 1
 	var/has_misfire = 1
-	var/success_prob_min_cap = 30
+	var/success_prob_min_cap = 30 //! what is the chance for this ability to misfire at 0 stability?
+	var/success_prob_stability_breakoff = 80 //! under which stability does this ability have a chance to misfire?
 	var/can_act_check = 1
 	var/needs_hands = 1
 	var/datum/bioEffect/power/linked_power = null
@@ -320,7 +321,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (!has_misfire)
 			return ..(target)
 		var/success_prob = 100
-		success_prob = src.linked_power.holder.genetic_stability
+		success_prob =  src.linked_power.holder.genetic_stability * (100 / src.success_prob_stability_breakoff)
 		success_prob = lerp(clamp(success_prob, 0, 100), 100, success_prob_min_cap/100)
 		if (prob(success_prob))
 			return ..(target)
