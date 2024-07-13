@@ -32,6 +32,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	var/obj/cable/connected_wire = null	//wire the gen is wrenched over. used to validate pnet connection
 	var/backup = 0		//if equip power went out while connected to wire, this should be true. Used to automatically turn gen back on if power is restored
 	var/first = 0		//tic when the power goes out.
+	///How fast the cell recharges when attached to a wire
+	var/recharge_rate = 200
 
 	New()
 		if(starts_with_cell)
@@ -60,11 +62,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	process()
 		if(src.active)
 			src.power_usage = get_draw()
-			if(PCEL && !connected)
+			if (src.line_powered())
+				process_wired()
+			else if(PCEL)
 				process_battery()
 			else
-				process_wired()
-
+				src.shield_off()
+		var/datum/powernet/net = src.connected_wire?.get_powernet()
+		if (net && PCEL && PCEL.charge < PCEL.maxcharge && (net.newload + 200 <= net.avail)) //do we now have enough to charge?
+			net.newload += 200
+			PCEL.give(200)
 		if(backup)
 			src.active = !src.active
 

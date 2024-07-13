@@ -1,5 +1,8 @@
 
 (t)fri jul 12 24
+(u)LeahTheTech
+(*)Energy shield generators now trickle charge when connected to a cable and will correctly switch to using battery power if the cable becomes unpowered. Basically they shouldn't randomly turn off anymore.
+(+)Showers will no longer bypass energy shield generators.
 (u)Flaborized and LeahTheTech
 (p)19957
 (e)🎨|C-Sprites
