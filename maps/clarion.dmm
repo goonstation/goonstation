@@ -11752,6 +11752,9 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "byu" = (
