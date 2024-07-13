@@ -1020,7 +1020,7 @@
 	health_max = 75
 	can_absorb = 0
 	gas_impermeable = TRUE
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 
 	New()
 		..()
@@ -1050,7 +1050,7 @@
 	gas_impermeable = TRUE
 	health = 40
 	health_max = 40
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 
 	New()
 		..()
