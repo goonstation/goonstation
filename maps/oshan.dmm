@@ -14819,16 +14819,6 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/prox_sensor{
-	pixel_x = 2;
-	pixel_y = -8
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/assembly/time_ignite,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
@@ -32205,7 +32195,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "cKm" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "cLa" = (
