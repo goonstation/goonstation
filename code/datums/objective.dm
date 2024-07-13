@@ -728,10 +728,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
-		if (owner.current && owner.current.get_vampire_blood(1) >= bloodcount)
-			return 1
-		else
-			return 0
+		var/datum/antagonist/vampire/antag_datum = owner.get_antagonist(ROLE_VAMPIRE)
+		return (antag_datum?.ability_holder?.get_vampire_blood(TRUE) >= bloodcount)
 
 /datum/objective/specialist/hunter/trophy
 	medal_name = "Dangerous Game"
@@ -1459,8 +1457,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()
-		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
-		return (AH?.lifetime_energy >= powergoal)
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
