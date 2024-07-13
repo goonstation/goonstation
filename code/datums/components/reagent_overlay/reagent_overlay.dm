@@ -22,15 +22,25 @@ TYPEINFO(/datum/component/reagent_overlay)
 	src.reagent_overlay_states = reagent_overlay_states
 	src.reagent_overlay_scaling = reagent_overlay_scaling
 
-	src.RegisterSignal(src.parent, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(update_reagent_overlay))
+	src.register_signals()
 	src.update_reagent_overlay()
 
 /datum/component/reagent_overlay/UnregisterFromParent()
-	src.UnregisterSignal(src.parent, COMSIG_ATOM_REAGENT_CHANGE)
+	src.unregister_signals()
 	var/atom/container = src.parent
 	container.ClearSpecificOverlays("reagent_overlay")
 
 	. = ..()
+
+/datum/component/reagent_overlay/proc/register_signals()
+	src.RegisterSignal(src.parent, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(update_reagent_overlay))
+
+/datum/component/reagent_overlay/proc/unregister_signals()
+	src.UnregisterSignal(src.parent, COMSIG_ATOM_REAGENT_CHANGE)
+
+/datum/component/reagent_overlay/proc/get_reagents()
+	var/atom/container = src.parent
+	return container.reagents
 
 /// Updates the reagent overlay of the parent container.
 /datum/component/reagent_overlay/proc/update_reagent_overlay()
@@ -38,11 +48,12 @@ TYPEINFO(/datum/component/reagent_overlay)
 		return
 
 	var/atom/container = src.parent
+	var/datum/reagents/reagents = get_reagents()
 	var/reagent_state = src.get_reagent_state()
 
 	if (reagent_state)
-		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]")
-		var/datum/color/average = container.reagents.get_average_color()
+		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]", dir=container.dir)
+		var/datum/color/average = reagents.get_average_color()
 		average.a = max(average.a, RC_MINIMUM_REAGENT_ALPHA)
 		reagent_image.color = average.to_rgba()
 		container.AddOverlays(reagent_image, "reagent_overlay")
@@ -52,8 +63,7 @@ TYPEINFO(/datum/component/reagent_overlay)
 
 /// Returns the numerical reagent state of the parent container.
 /datum/component/reagent_overlay/proc/get_reagent_state()
-	var/atom/container = src.parent
-	var/datum/reagents/reagents = container.reagents
+	var/datum/reagents/reagents = get_reagents()
 
 	// Show no reagent state only if the container is completely empty.
 	if (reagents.total_volume <= 0)
