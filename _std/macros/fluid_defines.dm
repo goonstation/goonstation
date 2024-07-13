@@ -1,6 +1,6 @@
 #define IS_VALID_FLUID_TURF(T) (!( !T  || T.flags & FLUID_DENSE || (T.loc && T.loc.flags & FLUID_DENSE))) //handles area as well!!
 //same as above but including channel + pool check
-#define IS_VALID_FLUIDREACT_TURF(T) (IS_VALID_FLUID_TURF(T) && !((locate(/obj/channel) in src) || (locate(/obj/pool) in src)))
+#define IS_VALID_FLUIDREACT_TURF(T) (IS_VALID_FLUID_TURF(T) && !((locate(/obj/channel) in T) || (locate(/obj/pool) in T) || locate(/obj/forcefield) in T))
 #define SPREAD_CHECK(FG) (FG.members && FG.members.len && ((FG.members.len * FG.required_to_spread) <= FG.contained_amt))
 #define VALID_FLUID_CONNECTION(F, t) ( t?.active_liquid && (!t.active_liquid.group || F.group == t.active_liquid.group) && !t.active_liquid.disposed)
 
