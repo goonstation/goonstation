@@ -408,7 +408,7 @@
 	click(atom/target, params)
 		if (src.targeting_ability)
 			return ..()
-		if (src.client && src.client.check_key(KEY_POINT))
+		if (src.client?.check_key(KEY_POINT))
 			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 
 		else if (!density)
