@@ -64,7 +64,7 @@
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "pdoor1"
 	icon_base = "pdoor"
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)

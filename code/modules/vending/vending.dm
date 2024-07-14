@@ -2552,6 +2552,21 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		//product_list += new/datum/data/vending_product(/obj/item/device/timer, rand(1, 6), hidden=1)
 
 
+/obj/machinery/vending/standard/toxins
+	desc = "A vending machine machine full of various useful tools and devices that plasma researchers can use to make bombs."
+	icon_state = "toxins"
+
+	create_products(restocked)
+		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 10)
+		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 10)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 10)
+		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
+		product_list += new/datum/data/vending_product(/obj/item/device/timer, 10)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmospheric, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)
+		product_list += new/datum/data/vending_product(/obj/item/pressure_crystal, 8)
+		product_list += new/datum/data/vending_product(/obj/item/device/pressure_sensor, 2)
+
 
 /obj/machinery/vending/hydroponics
 	name = "GardenGear"

@@ -1,5 +1,37 @@
 
+(t)sat jul 13 24
+(u)JORJ949
+(p)19928
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Syndicate PDAs now available at the Syndicate clothing vendor (cartridge not included).
+(u)joeled
+(p)19897
+(e)🆕🗺🎨|C-Feature, A-Mapping, C-Sprites
+(+)Loose vendomat items in toxin labs have been moved to the vendomat.
+(u)Wrench
+(p)19953
+(e)🗺💅|A-Mapping, C-QoL
+(+)Adds Cargo Hand Teleporters to Atlas & Clarion's Artlabs
 (t)fri jul 12 24
+(u)Mr. Moriarty
+(p)19549
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)Resprited drinking, wine, cocktail, old fashioned, shot, and round glasses, and champagne flutes, pitchers and milk bottles, and all of their respective reagent overlays.
+(u)LeahTheTech
+(*)Energy shield generators now trickle charge when connected to a cable and will correctly switch to using battery power if the cable becomes unpowered. Basically they shouldn't randomly turn off anymore.
+(+)Showers will no longer bypass energy shield generators.
+(u)Flaborized and LeahTheTech
+(p)19957
+(e)🎨|C-Sprites
+(+)Resprited laser mirrors.
+(u)tarmunora
+(+)non-nukeop fannypacks are standard size.
+(+)Physically Fit mutation stability cost change: -5 -> 5.
+(+)Synchronized Vestigial Ballistics stability cost change: -15 -> 0.
+(u)KakoLookiyam
+(p)19880
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Added new mechcomp inputs to the Power Transmission Laser.
 (u)Wrench
 (p)19952
 (e)🗺💅|A-Mapping, C-QoL
