@@ -37,7 +37,6 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
-	var/has_offline_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
