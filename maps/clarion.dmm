@@ -8997,10 +8997,6 @@
 /obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve,
 /obj/item/hand_labeler,
-/obj/item/device/prox_sensor,
-/obj/item/device/prox_sensor,
-/obj/item/assembly/time_ignite,
-/obj/item/assembly/time_ignite,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bfU" = (
@@ -9389,10 +9385,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
-/obj/item/device/igniter,
-/obj/item/device/igniter,
-/obj/item/device/timer,
-/obj/item/device/timer,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bjv" = (
@@ -10284,7 +10276,7 @@
 /area/station/science/lab)
 "bpA" = (
 /obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
+	dir = 1;
 	external_pressure_bound = 0;
 	icon_state = "in";
 	initialize_directions = 1;
@@ -11752,6 +11744,9 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "byu" = (
@@ -26246,7 +26241,7 @@
 	dir = 4;
 	pixel_x = -15
 	},
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor,
 /area/station/science/lab)
 "lzy" = (

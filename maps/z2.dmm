@@ -56283,6 +56283,11 @@
 /obj/item/bananapeel,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"fks" = (
+/obj/table/auto,
+/obj/item/paper/businesscard/mabinogi,
+/turf/unsimulated/floor/darkblue,
+/area/syndicate_station/firing_range)
 "fkC" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -111768,7 +111773,7 @@ cIe
 cIe
 cIe
 dep
-dex
+fks
 deG
 btf
 btf

@@ -11189,11 +11189,11 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "eVd" = (
-/obj/machinery/vending/standard,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},

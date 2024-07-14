@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	name = "orange wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	initial_volume = 6
 	throwforce = 0
 	w_class = W_CLASS_TINY
@@ -478,7 +478,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	name = "grapefruit wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -1143,7 +1143,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	name = "lime wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -1177,7 +1177,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	name = "lemon wedge"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -1479,7 +1479,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	name = "pineapple slice"
 	desc = "Juicy!"
-	icon_state = "pineapple-slice"
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	icon_state = "pineapple"
 	planttype = /datum/plant/fruit/pineapple
 	bites_left = 1
 	heal_amt = 2

@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/area/shuttle)
 
 /area/shuttle/arrival/station
 	icon_state = "shuttle"
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 
 /area/shuttle/escape
 	allowed_restricted_z = TRUE
