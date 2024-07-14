@@ -6,7 +6,7 @@
 	anchored = ANCHORED_ALWAYS
 	density = 1
 	opacity = 1
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	bolted
 		icon_state = "door_locked"
