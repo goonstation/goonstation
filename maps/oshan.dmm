@@ -42968,7 +42968,8 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
 	req_access = null;
-	id = "quarters_hos"
+	id = "quarters_hos";
+	aiControlDisabled = 1
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
