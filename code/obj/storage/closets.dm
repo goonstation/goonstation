@@ -242,7 +242,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(/obj/item/storage/box/handcuff_kit,
 	/obj/item/storage/box/flashbang_kit,
 	/obj/item/pinpointer/nuke = 5,
-	/obj/item/device/pda2/syndicate)
+	/obj/item/device/pda2/syndicate/nuclear)
 
 /obj/storage/closet/syndicate/malf
 	desc = "Gear preperations closet."

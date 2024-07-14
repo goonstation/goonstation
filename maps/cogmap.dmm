@@ -25840,38 +25840,16 @@
 	dir = 4
 	},
 /obj/item/device/analyzer/atmospheric{
-	pixel_x = -9;
-	pixel_y = 12
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -9;
-	pixel_y = 6
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -9
-	},
-/obj/item/device/timer{
 	pixel_x = -2;
 	pixel_y = 12
 	},
-/obj/item/device/timer{
+/obj/item/device/analyzer/atmospheric{
 	pixel_x = -2;
 	pixel_y = 7
 	},
-/obj/item/device/timer{
+/obj/item/device/analyzer/atmospheric{
 	pixel_x = -2;
 	pixel_y = 2
-	},
-/obj/item/device/igniter{
-	pixel_x = 9;
-	pixel_y = 14
-	},
-/obj/item/device/igniter{
-	pixel_x = 9;
-	pixel_y = 7
-	},
-/obj/item/device/igniter{
-	pixel_x = 9
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -27801,7 +27779,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bWt" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bWw" = (
@@ -51932,28 +51910,6 @@
 /area/station/engine/coldloop)
 "nPn" = (
 /obj/table/auto,
-/obj/item/assembly/time_ignite{
-	pixel_x = 13;
-	pixel_y = 13
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 1;
-	pixel_y = 14
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = -11;
-	pixel_y = 15
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = -12
-	},
-/obj/item/device/prox_sensor{
-	pixel_y = -1
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 12;
-	pixel_y = -2
-	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "nPp" = (
