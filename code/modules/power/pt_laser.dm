@@ -225,9 +225,8 @@
 /**
 	1. Calculate available power.
 	2. Figure out next state and power available.
-	3. Adjust battery charge and call `terminal.add_load`
-	4. Adjust battery power and set last_load.
-	5. Execute the new laser state.
+	3. Adjust battery charge and, `terminal.add_load` and set last_load.
+	4. Execute the new laser state.
 */
 /obj/machinery/power/pt_laser/process(mult)
 	//store machine state to see if we need to update the icon overlays
