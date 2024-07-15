@@ -29671,23 +29671,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"coH" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/deployable_turret/riot/active{
-	dir = 1
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/engine{
-	allows_vehicles = 0
-	},
-/area/station/ai_monitored/armory)
 "coJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -30392,6 +30375,9 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"czJ" = (
+/turf/simulated/floor/airless/engine,
+/area/listeningpost)
 "czV" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
@@ -33761,6 +33747,23 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/quarters_south)
+"eKv" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/deployable_turret/riot/active{
+	dir = 1
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0
+	},
+/area/station/ai_monitored/armory)
 "eLr" = (
 /obj/machinery/light/small,
 /obj/machinery/computer/riotgear{
@@ -34287,6 +34290,10 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
+"fgN" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/listeningpost)
 "fhk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/caution/south,
@@ -40290,6 +40297,14 @@
 /area/station/science/bot_storage)
 "jxG" = (
 /obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
+"jyl" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
 "jyD" = (
@@ -52791,26 +52806,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"sNE" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "sNO" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -55140,6 +55135,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"uwi" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine,
+/area/listeningpost)
 "uwp" = (
 /obj/machinery/conveyor/WE{
 	id = "cannedfartbelt";
@@ -56474,6 +56473,14 @@
 	dir = 9
 	},
 /area/station/hangar/main)
+"vrl" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
 "vrp" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -59858,6 +59865,22 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/airless/grey,
 /area/station/maintenance/southwest)
+"xPm" = (
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "xPt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
@@ -120818,12 +120841,12 @@ wNf
 iyk
 ojj
 ecx
-sNE
+xPm
 mCq
 rHm
 gYY
 tDF
-coH
+eKv
 qUf
 gvi
 nHM
@@ -139301,11 +139324,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+jyl
+fgN
+fgN
+fgN
+vrl
 aaa
 aaa
 aaa
@@ -139603,11 +139626,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fgN
+czJ
+czJ
+czJ
+fgN
 aaa
 aaa
 aab
@@ -139905,11 +139928,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fgN
+czJ
+uwi
+czJ
+fgN
 aaa
 aaa
 aaa
@@ -140207,11 +140230,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+fgN
+czJ
+czJ
+czJ
+fgN
 aaa
 aaa
 aaa
