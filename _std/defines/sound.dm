@@ -51,4 +51,4 @@ var/global/list/audio_channel_name_to_id = list(
 #define SOUND_LIMITER_GRID_SIZE 3
 
 ///how loud are dectalk bots
-#define BOTTALK_VOLUME 40
+#define BOTTALK_VOLUME 33
