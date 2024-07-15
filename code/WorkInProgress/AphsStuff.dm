@@ -140,11 +140,11 @@
 		if (!src.on || !message)
 			return
 		if(dectalk)
-			var/list/audio = dectalk("\[_<500,1>\][message]")
+			var/list/audio = dectalk("\[_<500,1>\][message]", 2)
 			for (var/mob/O in hearers(src, null))
 				if (!O.client)
 					continue
-				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"], "volume" = O.client.getVolume(VOLUME_CHANNEL_GAME)))
+				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
 		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 		return
 

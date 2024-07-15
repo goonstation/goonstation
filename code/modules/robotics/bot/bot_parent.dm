@@ -195,14 +195,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
-				var/audio = dectalk("\[:nk\][message]")
+				var/audio = dectalk("\[:nk\][message]", 2)
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
 						if (!O.client)
 							continue
 						if (O.client.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 							continue
-						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"], "volume" = O.client.getVolume(VOLUME_CHANNEL_GAME)))
+						ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
 
 /obj/machinery/bot/examine()
 	. = ..()

@@ -109,12 +109,12 @@
 			return
 		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\""))
 		if (src.text2speech)
-			var/audio = dectalk("\[:nk\][message]")
+			var/audio = dectalk("\[:nk\][message]", 2)
 			if (audio["audio"])
 				for (var/mob/O in hearers(src, null))
 					if (!O.client)
 						continue
-					ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"], "volume" = O.client.getVolume(VOLUME_CHANNEL_GAME)))
+					ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
 				return 1
 			else
 				return 0
