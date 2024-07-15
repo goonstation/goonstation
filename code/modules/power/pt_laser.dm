@@ -9,6 +9,7 @@
 	density = 1
 	anchored = ANCHORED_ALWAYS
 	dir = EAST
+	layer = ABOVE_OBJ_LAYER + 0.1 //over lasers which are over mirrors :screm:
 	bound_height = 96
 	bound_width = 96
 	req_access = list(access_engineering_power)
@@ -257,7 +258,7 @@
 				if(burn_living(L,adj_output)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
-			charge -= adj_output
+			src.charge = max(0, src.charge - adj_output)
 
 			if(length(blocking_objects) > 0)
 				melt_blocking_objects()

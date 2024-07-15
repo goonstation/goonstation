@@ -329,7 +329,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 						push_thing = thing
 
 					if (found)
-						if( thing.density || (thing.flags & FLUID_DENSE) )
+						if( thing.density || (thing.flags & FLUID_DENSE_ALWAYS) )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))
