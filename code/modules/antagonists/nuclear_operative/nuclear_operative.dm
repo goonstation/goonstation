@@ -51,9 +51,6 @@
 		else
 			H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
 
-		if(H.traitHolder?.hasTrait("mildly_mutated"))
-			H.traitHolder.removeTrait("mildly_mutated")
-
 		if(src.id == ROLE_NUKEOP_COMMANDER)
 			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), SLOT_HEAD)
 			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), SLOT_WEAR_SUIT)
