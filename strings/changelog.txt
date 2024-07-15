@@ -1,5 +1,9 @@
 
 (t)mon jul 15 24
+(u)LeahTheTech
+(p)19988
+(e)|
+(+)Head surgeon and other robotic voices should now speak at a more reasonable volume.
 (u)glowbold
 (p)19978
 (e)🪲🔨📡|C-Bug, A-Player-Actions, A-AI
