@@ -144,6 +144,8 @@
 	var/list/traits = list()
 	var/list/moveTraits = list() // differentiate movement traits for Move()
 	var/mob/owner = null
+	/// Role used to prevent addition of specific traits, in case of owner not (yet?) having a mind
+	var/mind_role_fallback = null
 
 	New(var/mob/ownerMob)
 		owner = ownerMob
@@ -170,6 +172,10 @@
 			else
 				T = trait_instance
 			if(T.afterlife_blacklisted && inafterlifebar(owner))
+				return
+			// TODO: probably fix syntax
+			var/resolved_role = owner?.mind?.assigned_role || src.mind_role_fallback
+			if (T.preventAddTrait(owner, resolved_role))
 				return
 			traits[id] = T
 			if(!isnull(owner))
@@ -231,6 +237,9 @@
 	New()
 		ASSERT(src.name)
 		..()
+
+	proc/preventAddTrait(mob/owner, var/resolved_role)
+		. = FALSE
 
 	proc/onAdd(var/mob/owner)
 		if(mutantRace && ishuman(owner))
@@ -536,13 +545,23 @@
 	disability_name = "Genetic Deviation"
 	disability_desc = "Minor reinforced alteration from baseline genetic sequence"
 
+	preventAddTrait(mob/owner, resolved_role)
+		. = ..()
+		if (.)
+			return
+		if (resolved_role == "MODE")
+			logTheThing(LOG_COMBAT, owner, "prevented from being mildly mutated from the trait [name]: not for game mode roles.")
+			return TRUE
+
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
-		var/datum/bioEffect/E = pick(B.effectPool)
-		B.ActivatePoolEffect(B.effectPool[E], 1, 0)
-		E.curable_by_mutadone = FALSE
-		E.name = "Reinforced " + E.name
+		var/bioEffectId = pick(B.effectPool)
+		var/datum/bioEffect/E = B.effectPool[bioEffectId]
+		B.ActivatePoolEffect(E, 1, 0)
 		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
+			if (E)
+				E.curable_by_mutadone = FALSE
+				E.name = "Reinforced " + E.name
 			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
 /datum/trait/stablegenes

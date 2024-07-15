@@ -169,7 +169,7 @@
 
 	var/default_mutantrace = /datum/mutantrace/human
 
-/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	. = ..()
 
 	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -244,7 +244,7 @@
 	src.set_mutantrace(src.default_mutantrace)
 	src.update_colorful_parts()
 
-	init_preferences?.apply_post_new_stuff(src)
+	init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 	inventory = new(src)
 
