@@ -2786,7 +2786,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					if (W.z != 1) continue
 					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
-					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
+					new /obj/machinery/crusher/wall(locate(W.x, W.y, W.z))
 					W.set_density(0)
 
 				logTheThing(LOG_ADMIN, src, "has turned every wall into a crusher! God damn.")

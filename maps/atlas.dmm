@@ -6795,6 +6795,10 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -13233,21 +13237,6 @@
 /area/station/engine/coldloop)
 "aYN" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer,
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/igniter,
 /obj/item/device/analyzer/atmospheric,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -15155,9 +15144,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -16657,7 +16643,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "koV" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -17984,6 +17970,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"odD" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "ofD" = (
 /turf/simulated/floor/white/side{
 	dir = 5
@@ -18160,6 +18150,10 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"oSa" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/tools)
 "oSG" = (
 /obj/machinery/microwave{
 	pixel_y = 6;
@@ -19124,6 +19118,10 @@
 /obj/submachine/cargopad/artlab,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
@@ -63265,7 +63263,7 @@ aAr
 abD
 abN
 abD
-abN
+odD
 bie
 adX
 aeI
@@ -65992,7 +65990,7 @@ aco
 ahA
 ahA
 ahA
-ahA
+oSa
 ahA
 aca
 alU

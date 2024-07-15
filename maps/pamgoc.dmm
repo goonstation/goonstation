@@ -20234,6 +20234,7 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "aVl" = (
@@ -21942,6 +21943,7 @@
 /area/station/hallway/primary/central)
 "ban" = (
 /obj/grille/steel,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bao" = (
@@ -39413,7 +39415,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "bUm" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bUn" = (
@@ -53930,6 +53932,10 @@
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"dwm" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/cargooffice)
 "dwR" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/toggleable/meson{
@@ -99337,7 +99343,7 @@ cCO
 tXA
 flf
 oBU
-cLr
+dwm
 buF
 ban
 buA

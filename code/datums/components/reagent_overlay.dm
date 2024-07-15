@@ -41,7 +41,7 @@ TYPEINFO(/datum/component/reagent_overlay)
 	var/reagent_state = src.get_reagent_state()
 
 	if (reagent_state)
-		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]")
+		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1)
 		var/datum/color/average = container.reagents.get_average_color()
 		average.a = max(average.a, RC_MINIMUM_REAGENT_ALPHA)
 		reagent_image.color = average.to_rgba()
@@ -71,7 +71,7 @@ TYPEINFO(/datum/component/reagent_overlay)
 			normalised_reagent_height = normalised_volume
 
 		// Vₛ = volume of sphere, r = radius of sphere, Vₗ = volume of liquid inside of sphere, h = height of liquid.
-		// `Vₗ = ∫ π(r² - (z - r)²) dx` with lower and upper limits of 0 and h respectively gives the equation `Vₗ = πh²(r - h/3)`.
+		// `Vₗ = ∫ π(r² - (z - r)²) dz` with lower and upper limits of 0 and h respectively gives the equation `Vₗ = πh²(r - h/3)`.
 		// `Vₗ = πh²(r - h/3)` is very closely approximated by `Vₗ = -0.5Vₛ(cos(h(π / 2r)) - 1)` for 0 <= h <= 2r.
 		// This permits us to efficiently solve for h without the need for the cubic formula: `h = (2r / π) * arccos(1 - 2(Vₗ / Vₛ))`
 		// Setting Vₛ = 1 and normalising h to a range of 0-1 gives: `h = arccos(1 - 2Vₗ) / π`

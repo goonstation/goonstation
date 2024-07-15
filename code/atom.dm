@@ -64,9 +64,6 @@ TYPEINFO(/atom)
 	/// Storage for items
 	var/datum/storage/storage = null
 
-	/// Which mob is pulling this atom currently
-	var/mob/pulled_by = null
-
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -81,8 +78,8 @@ TYPEINFO(/atom)
 	*/
 
 
-	var/list/name_prefixes = null// = list()
-	var/list/name_suffixes = null// = list()
+	var/list/name_prefixes = null
+	var/list/name_suffixes = null
 	var/num_allowed_prefixes = 10
 	var/num_allowed_suffixes = 5
 	var/image/worn_material_texture_image = null

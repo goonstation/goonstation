@@ -1051,6 +1051,17 @@ proc/spawn_kitchen_note()
 		..()
 		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
 
+/obj/item/paper/businesscard/mabinogi
+	name = "business card - Mabinogi"
+	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
+	icon_state = "businesscard-mabinogi"
+	sizey = 343 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
+
+
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
 	icon_state = "paper"
@@ -1207,6 +1218,49 @@ proc/spawn_kitchen_note()
 	melting holes in the floor because you tried to grab a
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
+	"}
+
+/obj/item/paper/watchful_eye
+	name = "MEMO: Deployment Notice"
+	icon_state = "paper_caution_bloody"
+	info ={"
+	TO: WATCHFUL-EYE SENSOR ARRAY MAINTENANCE <br>
+	FROM: OUTPOST OMICRON, NANOTRASEN-THINKTRONIC JOINT PROJECT <br>
+	SUBJECT: SCHEDULED MAINTAINENCE <br>
+	MESSAGE: <br>
+	Reports show that one of the satellites in the array is acting up.
+	The eye clusters there are allegedly behaving oddly, reporting
+	false events, and there are rumours that someone has recalibrated
+	them to track individuals instead of Typhon. Please investigate the
+	source of the anomalous readings and let us know whether to decommission
+	that satellite. The previous team didn't return, so proceed with caution.
+	<br>
+
+	We can still operate the array with only 15 out of the 30 satellites,
+	due to safety (redundancy) policy. Still, we'd rather keep as many
+	satellites in operation as we can. If the problem can be repaired, do so.
+
+	<br> <br>
+	Signed, <br>
+	The office of Commodore Roland Yee
+	"}
+
+/obj/item/paper/watchful_eye/rev
+	name = "Plan of attack."
+	icon_state = "paper_singed"
+	info ={"
+	Steps: <br>
+	1. assume control of eye sat 13. murder optional but probably required. implant <br>
+	the maintainence crew tooo so we can ask them how it works.<br>
+	2. hack the sensors to track non revs. figure it out when we get there with maint crew.<br>
+	3. await further instuctions <br> <br>
+
+	PS: turns out the eyes are ACTUAL eyes. Like weird space eyes?? no one told us that!!<br>
+	How do you hack an eye?? <br> <br>
+
+	PSS: we hacked the eye. hell yeah. okay technically we just hacked the satellite and <br>
+	made the eye point at certain things but that's good enough for me. management can <br>
+	do it themselves if they want it done properly. Fight me.<br>
 	"}
 
 /obj/item/paper/marionette_implant_readme

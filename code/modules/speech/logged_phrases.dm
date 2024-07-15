@@ -176,7 +176,10 @@ var/global/datum/phrase_log/phrase_log = new
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
-			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
+			if (user.being_controlled)
+				ircmsg["msg"] = "WAS FORCED TO trigger the uncool word detection USING WITCHCRAFT OR SOMETHING: [category]: \"[phrase]\""
+			else
+				ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
 			SPAWN(0)
 				ircbot.export("admin", ircmsg)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, SPAN_ADMIN("Uncool word - [key_name(user)] [category]: \"[phrase]\""))
@@ -252,10 +255,10 @@ var/global/datum/phrase_log/phrase_log = new
 			for (var/datum/apiModel/entry in randomEntries.entries)
 				switch(category)
 					if("ai_laws")
-						if(entry["uploader_name"] != "Random Event")
-							new_phrases += entry["law_text"]
+						if(entry:uploader_name != "Random Event")
+							new_phrases += entry:law_text
 					if("tickets", "fines")
-						new_phrases += entry["reason"]
+						new_phrases += entry:reason
 			src.cached_api_phrases[category] = new_phrases
 
 		var/list/L = src.cached_api_phrases[category]
