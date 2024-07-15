@@ -13136,9 +13136,9 @@
 	},
 /area/listeningpost)
 "bLL" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	name = "Weather Satellite"
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -20180,8 +20180,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "gYz" = (
