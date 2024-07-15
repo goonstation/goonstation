@@ -1,4 +1,9 @@
 
+(t)mon jul 15 24
+(u)glowbold
+(p)19978
+(e)🪲🔨📡|C-Bug, A-Player-Actions, A-AI
+(*)Dive-kicking items or directly into monkies (and other NPCs) will aggro them.
 (t)sat jul 13 24
 (u)JORJ949
 (p)19928
