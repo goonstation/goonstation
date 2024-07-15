@@ -2021,7 +2021,7 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 ///dectalk SAYS its default volume is 5 but it seems to actually be more like 100
-/proc/dectalk(msg, volume = 100)
+/proc/dectalk(msg, volume = 80)
 	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
