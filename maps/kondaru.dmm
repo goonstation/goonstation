@@ -37919,6 +37919,14 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"hMe" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
 "hMD" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -39796,6 +39804,10 @@
 /obj/storage/closet/law,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"jhj" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine,
+/area/space)
 "jhE" = (
 /obj/machinery/chem_master,
 /obj/item/storage/wall{
@@ -55756,6 +55768,9 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
+"uSs" = (
+/turf/simulated/floor/airless/engine,
+/area/space)
 "uSI" = (
 /obj/table/reinforced/auto,
 /obj/mapping_helper/access/chemistry,
@@ -57217,6 +57232,14 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/south)
+"vWU" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
 "vXe" = (
 /obj/table/auto,
 /obj/machinery/microwave,
@@ -139301,11 +139324,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+hMe
+aaS
+aaS
+aaS
+vWU
 aaa
 aaa
 aaa
@@ -139603,11 +139626,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaS
+uSs
+uSs
+uSs
+aaS
 aaa
 aaa
 aab
@@ -139905,11 +139928,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaS
+uSs
+jhj
+uSs
+aaS
 aaa
 aaa
 aaa
@@ -140207,11 +140230,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaS
+uSs
+uSs
+uSs
+aaS
 aaa
 aaa
 aaa
