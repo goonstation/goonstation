@@ -27048,6 +27048,10 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -28611,6 +28615,10 @@
 	switchon = 1
 	},
 /obj/machinery/firealarm/north,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -33005,6 +33013,10 @@
 	pixel_y = 21
 	},
 /obj/storage/closet/office,
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},

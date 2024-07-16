@@ -907,6 +907,7 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/stamp/md,
+/obj/item/mdlicense,
 /turf/simulated/floor/white,
 /area/station/bridge/united_command)
 "adp" = (
@@ -5219,6 +5220,7 @@
 /obj/machinery/light{
 	layer = 3
 	},
+/obj/item/rddiploma,
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
 "auY" = (
@@ -18286,6 +18288,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"pdS" = (
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 27
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "peD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -81105,7 +81113,7 @@ aug
 auK
 avi
 aBK
-aYD
+pdS
 aYD
 ylz
 aCU
