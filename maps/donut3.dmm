@@ -5055,47 +5055,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/kitchen)
 "bua" = (
-/obj/storage/cart/medcart,
-/obj/item/body_bag{
-	pixel_x = -9;
-	pixel_y = -10
-	},
-/obj/item/body_bag{
-	pixel_x = -1;
-	pixel_y = -10
-	},
-/obj/item/body_bag{
-	pixel_x = 8;
-	pixel_y = -10
-	},
-/obj/item/storage/firstaid/brute{
-	pixel_x = -11;
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -3;
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = 10;
-	pixel_y = 11
-	},
-/obj/item/bandage{
-	pixel_x = 11;
-	pixel_y = -4
-	},
-/obj/item/bandage{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/bandage{
-	pixel_x = -1;
-	pixel_y = -4
-	},
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -12174,14 +12134,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "dAJ" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
 /obj/decal/stripe_caution,
 /obj/disposalpipe/segment/brig,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "dBe" = (
@@ -37416,13 +37371,8 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "lpF" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
 /obj/decal/stripe_caution,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "lpJ" = (
@@ -55553,19 +55503,10 @@
 /area/station/medical/medbay/lobby)
 "qKa" = (
 /obj/machinery/firealarm/east,
-/obj/storage/cart/forensic,
-/obj/item/storage/box/body_bag,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/device/audio_log,
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "qKk" = (

@@ -2556,13 +2556,13 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avt" = (
-/obj/storage/cart/forensic,
 /obj/machinery/disposal/small{
 	dir = 8
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avv" = (
@@ -34766,23 +34766,8 @@
 	},
 /area/station/medical/medbay)
 "saG" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
 /obj/machinery/firealarm/south,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "sbG" = (
@@ -40120,22 +40105,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "vWi" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},

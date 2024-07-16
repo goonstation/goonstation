@@ -484,20 +484,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "acb" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "acc" = (
@@ -2693,9 +2680,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "akC" = (
-/obj/storage/cart/forensic,
 /obj/decal/stripe_caution,
 /obj/machinery/recharger/wall/sticky,
+/obj/storage/cart/forensic,
 /turf/simulated/floor,
 /area/station/security/main)
 "akD" = (
