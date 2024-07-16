@@ -25,6 +25,7 @@
 	if (!istype(radio))
 		return
 
+	message.say_sound = 'sound/misc/talk/radio.ogg'
 	message.atom_listeners_to_be_excluded ||= list()
 	message.atom_listeners_to_be_excluded[radio] = TRUE
 

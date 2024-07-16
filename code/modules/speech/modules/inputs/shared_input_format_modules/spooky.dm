@@ -13,6 +13,6 @@
 		<span class='game deadsay'><i>\
 	"}
 
-	message.format_message_suffix = {"\
+	message.format_content_suffix = {"\
 		</i></span>\
 	"}

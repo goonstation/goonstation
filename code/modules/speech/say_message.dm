@@ -20,10 +20,14 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	var/format_speaker_prefix = ""
 	/// The formatting that should immediately follow `speaker_to_display` and precede `say_verb`.
 	var/format_verb_prefix = ""
-	/// The formatting that should immediately follow `say_verb` and precede `content`.
+	/// The formatting that should immediately follow `say_verb` and precede `format_content_style_prefix`.
 	var/format_content_prefix = ""
-	/// The formatting that should immediately follow `content`.
-	var/format_message_suffix = ""
+	/// The formatting that should immediately follow `format_content_prefix` and precede `content`. Will be grouped with `content` in maptext.
+	var/format_content_style_prefix = ""
+	/// The formatting that should immediately follow `content` and precede `format_content_suffix`. Will be grouped with `content` in maptext.
+	var/format_content_style_suffix = ""
+	/// The formatting that should immediately follow `format_content_style_suffix`.
+	var/format_content_suffix = ""
 
 	// Speaker Identification Variables:
 	/// The atom that sent this message.
@@ -291,17 +295,17 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	// Apply loudness effects.
 	if (!isnull(src.message_size_override))
 		src.format_speaker_prefix = "<font size=[src.message_size_override]>" + src.format_speaker_prefix
-		src.format_message_suffix += "</font>"
+		src.format_content_suffix += "</font>"
 		src.maptext_css_values["font-size"] ||= message_size_override
 	else if (src.loudness > 1) // Very loud.
 		src.format_speaker_prefix = "<strong style='font-size:36px'><b>" + src.format_speaker_prefix
-		src.format_message_suffix += "</b></strong>"
+		src.format_content_suffix += "</b></strong>"
 	else if (src.loudness == 1) // Loud.
 		src.format_speaker_prefix = "<big><strong><b>" + src.format_speaker_prefix
-		src.format_message_suffix += "</b></strong></big>"
+		src.format_content_suffix += "</b></strong></big>"
 	else if (src.loudness < 0) // Quiet.
 		src.format_speaker_prefix = "<small>" + src.format_speaker_prefix
-		src.format_message_suffix += "</small>"
+		src.format_content_suffix += "</small>"
 
 	var/mob/mob_listener = listener
 	if (istype(mob_listener) && mob_listener.client)
@@ -336,8 +340,10 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		[src.format_verb_prefix]\
 		[src.say_verb]\
 		[src.format_content_prefix]\
+		[src.format_content_style_prefix]\
 		[src.content]\
-		[src.format_message_suffix]\
+		[src.format_content_style_suffix]\
+		[src.format_content_suffix]\
 	"}
 /// Returns the heard name of the speaker, taking into account masks, voice changers, and IDs.
 /datum/say_message/proc/get_speaker_name(heard_name_only = FALSE)

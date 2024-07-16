@@ -66,21 +66,24 @@
 	message.content = uppertext(message.content)
 	message.message_size_override = 3
 
+	var/font = ""
 	switch (rand(1, 4))
 		if (1)
-			message.content = "<font face='Comic Sans MS'>[message.content]!!</font>"
-
+			font = "Comic Sans MS"
 		if (2)
-			message.content = "<font face='Curlz MT'>[message.content]!!</font>"
-
+			font = "Curlz MT"
 		if (3)
-			message.content = "<font face='System'>[message.content]!!</font>"
-
+			font = "System"
 		else
 			if (!ON_COOLDOWN(message.speaker, "bootleg_sound", 15 SECONDS))
 				playsound(message.speaker.loc, 'sound/misc/amusingduck.ogg', 50, 0)
 
-			message.content = "<font face='Comic Sans MS'>[pick("WACKA", "QUACK","QUACKY","GAGGLE")]!!</font>"
+			font = "Comic Sans MS"
+			message.content = pick("WACKA", "QUACK","QUACKY","GAGGLE")
+
+	message.format_content_style_prefix = "<font face='[font]'>"
+	message.format_content_style_suffix = "</font>"
+	message.content = "[message.content]!!"
 
 	. = ..()
 
@@ -98,7 +101,9 @@
 	id = SPEECH_MODIFIER_BOT_OLD
 
 /datum/speech_module/modifier/bot/old/process(datum/say_message/message)
-	message.content = "<span style=\"font-family: 'Consolas', monospace;\">[uppertext(message.content)]</span>"
+	message.content = uppertext(message.content)
+	message.format_content_style_prefix = "<span style=\"font-family: 'Consolas', monospace;\">"
+	message.format_content_style_suffix = "</span>"
 
 	. = ..()
 
@@ -118,7 +123,9 @@
 	id = SPEECH_MODIFIER_BOT_SOVIET
 
 /datum/speech_module/modifier/bot/soviet/process(datum/say_message/message)
-	message.content = "<font face='Curlz MT'>[uppertext(message.content)]</font>"
+	message.content = uppertext(message.content)
+	message.format_content_style_prefix = "<font face='Curlz MT'>"
+	message.format_content_style_suffix = "</font>"
 
 	. = ..()
 
@@ -127,6 +134,8 @@
 	id = SPEECH_MODIFIER_BOT_XMAS
 
 /datum/speech_module/modifier/bot/xmas/process(datum/say_message/message)
-	message.content = "<font face='Segoe Script'><i><b>[message.content]</b></i></font>"
+	message.content = uppertext(message.content)
+	message.format_content_style_prefix = "<font face='Segoe Script'><i><b>"
+	message.format_content_style_suffix = "</b></i></font>"
 
 	. = ..()

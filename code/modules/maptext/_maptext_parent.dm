@@ -25,7 +25,7 @@
 		maptext_css += "[key]: [message.maptext_css_values[key]]; "
 
 	var/image/maptext/text = new /image/maptext
-	text.maptext = "<span class='pixel c ol' style=\"[maptext_css]\">[message.maptext_prefix][message.content][message.maptext_suffix]</span>"
+	text.maptext = "<span class='pixel c ol' style=\"[maptext_css]\">[message.maptext_prefix][message.format_content_style_prefix][message.content][message.format_content_style_suffix][message.maptext_suffix]</span>"
 
 	for (var/variable_name in message.maptext_variables)
 		if (!issaved(text.vars[variable_name]))

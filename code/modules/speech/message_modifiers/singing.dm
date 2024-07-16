@@ -104,9 +104,9 @@
 
 	message.flags &= ~SAYFLAG_HAS_QUOTATION_MARKS
 
-	message.content = "<span class='sing'><i>[message.content]</i></span>"
-	message.maptext_css_values["font-style"] = "italic"
+	message.format_content_style_prefix = "<span class='sing'><i>"
+	message.format_content_style_suffix = "</i></span>"
 	message.maptext_css_values["color"] = (isAI(message.speaker) || isrobot(message.speaker)) ? "#84d6d6" : "#D8BFD8"
 
 	message.format_content_prefix += note_image
-	message.format_message_suffix = note_image + message.format_message_suffix
+	message.format_content_suffix = note_image + message.format_content_suffix

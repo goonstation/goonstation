@@ -15,4 +15,4 @@
 		return
 
 	message.format_speaker_prefix = "<span class='adminHearing' data-ctx='[mob_listener.client.chatOutput.getContextFlags()]'>" + message.format_speaker_prefix
-	message.format_message_suffix += "</span>"
+	message.format_content_suffix += "</span>"

@@ -16,6 +16,8 @@
 	if (!length(intercoms))
 		return
 
+	message.say_sound = 'sound/misc/talk/radio.ogg'
+
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = intercoms
 	say_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)

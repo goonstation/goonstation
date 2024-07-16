@@ -1,6 +1,7 @@
 /datum/speech_module/output/deadchat
 	id = SPEECH_OUTPUT_DEADCHAT
 	channel = SAY_CHANNEL_DEAD
+	var/role
 
 /datum/speech_module/output/deadchat/process(datum/say_message/message)
 	var/num = hex2num(copytext(md5(message.speaker.name), 1, 7))
@@ -19,25 +20,14 @@
 		4; "grumps",
 	)
 
-	var/role = ""
+	if (src.role)
+		message.speaker_to_display = "([message.real_ident])"
 
-	if (ishuman(message.speaker) && (message.face_ident != message.real_ident))
+	else if (ishuman(message.speaker) && (message.face_ident != message.real_ident))
 		if (message.card_ident && (message.card_ident != message.real_ident))
 			message.speaker_to_display = "[message.real_ident] (as [message.card_ident])"
 		else if (!message.card_ident)
 			message.speaker_to_display = "[message.real_ident] (as Unknown)"
-
-	else if (isobserver(message.speaker))
-		role = "Ghost"
-		message.speaker_to_display = "([message.real_ident])"
-
-	else if (ispoltergeist(message.speaker))
-		role = "Poltergeist"
-		message.speaker_to_display = "([message.real_ident])"
-
-	else if (iswraith(message.speaker))
-		role = "Wraith"
-		message.speaker_to_display = "([message.real_ident])"
 
 	else
 		message.speaker_to_display = message.real_ident
@@ -50,7 +40,7 @@
 	message.format_speaker_prefix = {"\
 		<span class='game deadsay'>\
 			<span class='prefix'>DEAD: </span>\
-			<span class='name' data-ctx='[mind_ref]'>[role]<span class='text-normal'> \
+			<span class='name' data-ctx='[mind_ref]'>[src.role]<span class='text-normal'> \
 	"}
 
 	message.format_verb_prefix = {"\
@@ -62,11 +52,26 @@
 		, \
 	"}
 
-	message.format_message_suffix = {"\
+	message.format_content_suffix = {"\
 		</span></span>\
 	"}
 
 	. = ..()
+
+
+/datum/speech_module/output/deadchat/ghost
+	id = SPEECH_OUTPUT_DEADCHAT_GHOST
+	role = "Ghost"
+
+
+/datum/speech_module/output/deadchat/poltergeist
+	id = SPEECH_OUTPUT_DEADCHAT_POLTERGEIST
+	role = "Poltergeist"
+
+
+/datum/speech_module/output/deadchat/wraith
+	id = SPEECH_OUTPUT_DEADCHAT_WRAITH
+	role = "Wraith"
 
 
 /datum/speech_module/output/deadchat_announcer
@@ -85,7 +90,7 @@
 	message.format_verb_prefix = ""
 	message.format_content_prefix = ""
 
-	message.format_message_suffix = {"\
+	message.format_content_suffix = {"\
 		</span>\
 	"}
 

@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/say_prefix/ai_radio)
 		return
 
 	message.prefix = replacetext(message.prefix, src.id, ":")
+	message.say_sound = 'sound/misc/talk/radio.ogg'
 	message.atom_listeners_to_be_excluded ||= list()
 	message.atom_listeners_to_be_excluded[radio] = TRUE
 

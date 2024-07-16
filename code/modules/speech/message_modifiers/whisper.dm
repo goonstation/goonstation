@@ -6,4 +6,5 @@
 
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.say_verb = message.whisper_verb
-	message.content = "<i>[message.content]</i>"
+	message.format_content_style_prefix = "<i>"
+	message.format_content_style_suffix = "</i>"

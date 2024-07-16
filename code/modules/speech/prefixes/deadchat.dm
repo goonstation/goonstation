@@ -5,5 +5,9 @@
 	return ismob(message.speaker) && inafterlife(message.speaker)
 
 /datum/say_prefix/deadchat/process(datum/say_message/message, datum/speech_module_tree/say_tree)
-	say_tree.GetOutputByID(SPEECH_OUTPUT_DEADCHAT)?.process(message.Copy())
+	var/list/datum/speech_module/output/output_modules = say_tree.GetOutputByChannel(SAY_CHANNEL_DEAD)
+	if (!length(output_modules))
+		return
+
+	output_modules[1].process(message.Copy())
 	qdel(message)

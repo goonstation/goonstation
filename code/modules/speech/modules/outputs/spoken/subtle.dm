@@ -30,6 +30,6 @@
 		, \
 	"}
 
-	message.format_message_suffix = {"\
+	message.format_content_suffix = {"\
 		</span></span>\
 	"}

@@ -6,4 +6,4 @@
 	. = message
 
 	message.format_content_prefix += "\""
-	message.format_message_suffix = "\"" + message.format_message_suffix
+	message.format_content_suffix = "\"" + message.format_content_suffix

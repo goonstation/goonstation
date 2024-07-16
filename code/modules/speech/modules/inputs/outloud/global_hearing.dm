@@ -15,6 +15,6 @@
 
 /datum/listen_module/input/outloud/ears/global_counterpart/process(datum/say_message/message)
 	message.format_speaker_prefix = "<b>" + message.format_speaker_prefix
-	message.format_message_suffix += "</b>"
+	message.format_content_suffix += "</b>"
 
 	. = ..()

@@ -168,20 +168,16 @@ Parity:
 - `radio_brain`
 - Potentially deprecate `protected_radio`.
 
-Fixes:
-- Living mobs that are dead should send and receive messages to and from deadchat.
-- Never add tags to `message.content` See message modifiers.
-
 Refactors:
-- Potentially give accents their own files and defines.
-- Make checks in `SPEECH_MODIFIER_MOB_MODIFIERS` more generic if possible.
 - AI `say()` and `hear()`. Currently doesn't take into account client modules.
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?
-- Split deadchat up into multiple outputs, akin to hivechat.
 - Anything that uses `SPAN_NAME` could likely be moved onto the new system.
 - Some form of centralised preference manager for toggling inputs/outputs for types?
 	- `togglepersonaldeadchat`, `toggle_ghost_radio`, `toggle_ooc`, `toggle_looc`, etc.
 	- Most have dedicated procs for themselves, and some implementation on Login or New.
+
+Unfixable:
+- Living mobs that are dead can no longer send and receive messages to and from deadchat. This is a limitation of death/revive code.
 
 Follow-Up PRs:
 - Admin panel for enabling/disabling say channels. OOC/LOOC/Deadchat are currently done through procs:
