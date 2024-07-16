@@ -355,11 +355,11 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			intaking = 0
 			expelling = 0
 			UpdateIcon()
-		if (FLUID_CANISTER_MODE_intake_rate)
+		if (FLUID_CANISTER_MODE_SLURP)
 			intaking = 1
 			expelling = 0
 			UpdateIcon()
-		if (FLUID_CANISTER_MODE_outflow_rate)
+		if (FLUID_CANISTER_MODE_PISS)
 			intaking = 0
 			expelling = 1
 			UpdateIcon()
