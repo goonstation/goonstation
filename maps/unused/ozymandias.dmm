@@ -820,14 +820,6 @@
 /area/station/crew_quarters/lounge/luxury_seating{
 	name = "Last Call Lounge"
 	})
-"alq" = (
-/obj/fakeobject/vacuumtape,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/white/grime,
-/area/ghostdrone_factory)
 "alt" = (
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -2701,6 +2693,18 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"aLt" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head/standard,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "aLz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -2817,6 +2821,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"aMH" = (
+/obj/fakeobject/pathology_vendor,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "aMR" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/wood,
@@ -3861,6 +3874,16 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/crew_quarters/hor/horprivate)
+"bac" = (
+/obj/fakeobject/pathogen_computer{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "baS" = (
 /obj/stove,
 /obj/item/soup_pot{
@@ -4672,6 +4695,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"bmE" = (
+/obj/fakeobject/autoclave,
+/obj/machinery/atmospherics/pipe/simple,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "bmJ" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
@@ -4822,6 +4850,10 @@
 	dir = 8
 	},
 /area/station/security/equipment)
+"bpt" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hangar/qm)
 "bpF" = (
 /obj/decal/poster/wallsign/hazard_electrical,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -5014,15 +5046,6 @@
 /obj/machinery/door_control/podbay/qm/new_walls/west,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/qm)
-"bsh" = (
-/obj/fakeobject/skeleton{
-	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
-	name = "sticky skeleton"
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "bsk" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/shuttlebay,
@@ -5700,6 +5723,16 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
+"bCb" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "bCe" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
@@ -8037,6 +8070,15 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets{
 	name = "Dockside Restroom"
+	})
+"ciU" = (
+/obj/fakeobject/skeleton{
+	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
+	name = "sticky skeleton"
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
 	})
 "ciY" = (
 /obj/disposalpipe/segment/brig{
@@ -14233,16 +14275,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"dRs" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/science/teleporter)
 "dRz" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler{
@@ -15979,6 +16011,16 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"enR" = (
+/obj/fakeobject/centrifuge,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "enT" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -18338,12 +18380,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"eQP" = (
-/obj/fakeobject/cargopad,
-/obj/item/a_gift,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/airless,
-/area/space)
 "eQS" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -18612,12 +18648,6 @@
 	},
 /turf/space,
 /area/space)
-"eUv" = (
-/obj/table/auto,
-/obj/machinery/microscope,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "eUJ" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor,
@@ -18723,16 +18753,6 @@
 	dir = 8
 	},
 /area/station/maintenance/inner/hydroponics)
-"eWd" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "A strange solar tracker. You can't tell if it's operating.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "tracker";
-	name = "solar tracker"
-	},
-/turf/simulated/floor/airless/solar,
-/area/ghostdrone_factory)
 "eWl" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
@@ -19145,6 +19165,16 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/market)
+"fch" = (
+/obj/fakeobject{
+	density = 1;
+	desc = "A solar electrical generator.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "solar_panel";
+	name = "solar panel"
+	},
+/turf/simulated/floor/airless/solar,
+/area/ghostdrone_factory)
 "fcl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21463,6 +21493,17 @@
 	dir = 1
 	},
 /area/station/engine/elect)
+"fIe" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c";
+	name = "factory pipe"
+	},
+/obj/fakeobject/airmonitor_broken{
+	pixel_y = 20
+	},
+/turf/simulated/floor/white/grime,
+/area/ghostdrone_factory)
 "fIz" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
@@ -21615,20 +21656,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"fKR" = (
-/obj/disposalpipe/segment{
-	name = "factory pipe"
-	},
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "This looks inordinately fancy for an abandoned ship.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/turf/simulated/floor/plating/jen,
-/area/ghostdrone_factory)
 "fKU" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -22786,6 +22813,13 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"gav" = (
+/obj/fakeobject/pathogen_manipulator,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "gaw" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24857,6 +24891,17 @@
 "gBo" = (
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/north)
+"gBu" = (
+/obj/fakeobject{
+	density = 1;
+	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Simulatron"
+	},
+/obj/cable,
+/turf/simulated/floor/grey,
+/area/listeningpost)
 "gBB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -31490,12 +31535,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/hop)
-"inz" = (
-/obj/fakeobject/airmonitor_broken,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/space)
 "inP" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/access/maint,
@@ -31650,10 +31689,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crewquarters/garbagegarbs)
-"iqk" = (
-/obj/fakeobject/vacuumtape,
-/turf/simulated/floor/white/grime,
-/area/ghostdrone_factory)
 "iqm" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
@@ -33114,6 +33149,16 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment2)
+"iJi" = (
+/obj/fakeobject{
+	density = 1;
+	desc = "A strange solar tracker. You can't tell if it's operating.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "tracker";
+	name = "solar tracker"
+	},
+/turf/simulated/floor/airless/solar,
+/area/ghostdrone_factory)
 "iJo" = (
 /obj/machinery/clone_scanner,
 /obj/machinery/light,
@@ -34090,6 +34135,19 @@
 /area/station/security/brig/cell1{
 	name = "Witness Protection"
 	})
+"iXO" = (
+/obj/item/cable_coil/cut,
+/obj/storage/crate,
+/obj/item/parts/robot_parts/robot_frame,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
+/obj/item/parts/robot_parts/chest/light,
+/obj/item/parts/robot_parts/head/standard,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "iXX" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -34940,11 +34998,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/secondary/east)
-"jiV" = (
-/obj/machinery/autoclave,
-/obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "jiW" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
@@ -39463,6 +39516,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"krs" = (
+/obj/fakeobject/cargopad,
+/obj/item/a_gift,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
+/area/space)
 "kry" = (
 /obj/storage/crate{
 	desc = "Whoa! What will they think of next?";
@@ -41188,10 +41247,6 @@
 /area/station/crew_quarters/quartersB{
 	name = "Tanhony Creek Station"
 	})
-"kQC" = (
-/obj/fakeobject/cpucontroller,
-/turf/simulated/floor/white/grime,
-/area/ghostdrone_factory)
 "kQJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -41519,17 +41574,6 @@
 	icon_state = "green1"
 	},
 /area/station/crew_quarters/jazz)
-"kUW" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "Whatever this thing was supposed to do, it's probably not doing it that well anymore.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Simulatron"
-	},
-/obj/cable,
-/turf/simulated/floor/grey,
-/area/listeningpost)
 "kVq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41923,6 +41967,11 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"lay" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/cargooffice)
 "laJ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -43315,16 +43364,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/courtroom)
-"ltd" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/science/teleporter)
 "ltj" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour8;desc=Solar substation through this door. There are two on station, but this one's nicer by a LOT.";
@@ -43334,10 +43373,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"ltm" = (
-/obj/machinery/pathogen_manipulator,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "ltr" = (
 /obj/stool/chair,
 /obj/cable{
@@ -43486,16 +43521,6 @@
 	dir = 4
 	},
 /area/station/security/equipment)
-"lvi" = (
-/obj/machinery/centrifuge,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "lvv" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/black,
@@ -43526,14 +43551,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
-"lwf" = (
-/obj/machinery/synthomatic,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "lwr" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
@@ -43703,15 +43720,6 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
-"lzS" = (
-/obj/machinery/vending/pathology,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "lzY" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/engine/caution/north,
@@ -44779,19 +44787,6 @@
 	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/engine/coldloop)
-"lKS" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "lKU" = (
 /obj/item/storage/toilet{
 	desc = "You think you see something in there... you should take another look.";
@@ -47408,18 +47403,6 @@
 	dir = 4
 	},
 /area/station/security/hos)
-"mto" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "mtq" = (
 /obj/mic_stand,
 /turf/simulated/floor/neutral/side{
@@ -48522,6 +48505,14 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"mHo" = (
+/obj/fakeobject/synthomatic,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "mHA" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -48942,6 +48933,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
+"mOE" = (
+/obj/fakeobject{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/teleporter)
 "mOF" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -50138,11 +50139,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
-"ngh" = (
-/obj/table/auto,
-/obj/machinery/microscope,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "ngj" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
@@ -51566,6 +51562,15 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"nDg" = (
+/obj/fakeobject{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/turf/simulated/floor/airless/damaged3,
+/area/space)
 "nDo" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/mask/muzzle,
@@ -52333,6 +52338,11 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/engine/elect)
+"nMc" = (
+/obj/table/wood/auto,
+/obj/fakeobject/microscope,
+/turf/simulated/floor/airless,
+/area/space)
 "nMq" = (
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/quartersB{
@@ -52391,6 +52401,20 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/main)
+"nNp" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/grey,
+/area/listeningpost)
 "nNr" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -54161,6 +54185,16 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/research)
+"ojv" = (
+/obj/fakeobject{
+	density = 1;
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/teleporter)
 "ojz" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor,
@@ -54346,6 +54380,20 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"oml" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "This looks inordinately fancy for an abandoned ship.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "omu" = (
 /turf/simulated/floor/stairs/medical,
 /area/station/crewquarters/cryotron)
@@ -55300,6 +55348,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/sandytile,
 /area/station/ranch)
+"oyw" = (
+/obj/fakeobject/apc_broken{
+	pixel_y = 28
+	},
+/turf/simulated/floor/white/grime,
+/area/ghostdrone_factory)
 "oyz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -59006,6 +59060,20 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"pwU" = (
+/obj/disposalpipe/segment{
+	name = "factory pipe"
+	},
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "This looks inordinately fancy for an abandoned ship.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "Active Particle Phase Matrix"
+	},
+/turf/simulated/floor/plating/jen,
+/area/ghostdrone_factory)
 "pwZ" = (
 /obj/machinery/computer/arcade,
 /turf/simulated/floor/carpet/arcade,
@@ -59125,21 +59193,6 @@
 /area/station/crew_quarters/heads{
 	name = "Officers' Lounge"
 	})
-"pyO" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent"
-	},
-/obj/fakeobject/skeleton{
-	desc = "The remains of a human. There seem to be a few bits missing."
-	},
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/turf/simulated/floor/airless/damaged4,
-/area/space)
 "pyP" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -59901,13 +59954,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
-"pIY" = (
-/obj/machinery/pathogen_manipulator,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "pJf" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
@@ -61634,6 +61680,11 @@
 /obj/machinery/light,
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/north)
+"qeF" = (
+/obj/table/auto,
+/obj/fakeobject/microscope,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "qeO" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -62061,20 +62112,6 @@
 	dir = 4
 	},
 /area/station/crewquarters/garbagegarbs)
-"qkX" = (
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "downed server"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/grey,
-/area/listeningpost)
 "qkZ" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -62802,28 +62839,6 @@
 	},
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"qwn" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "How old is this?";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "dwaine";
-	name = "old mainframe"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/grey,
-/area/listeningpost)
 "qwr" = (
 /obj/machinery/light{
 	dir = 1;
@@ -63206,16 +63221,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/north)
-"qBn" = (
-/obj/machinery/computer/pathology{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/white,
-/area/station/medical/cdc)
 "qBt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -66391,6 +66396,10 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/security/secoffquarters)
+"rrq" = (
+/obj/fakeobject/pathogen_manipulator,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "rrs" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -70185,6 +70194,21 @@
 	icon_state = "c2"
 	},
 /area/station/crew_quarters/fitness)
+"sok" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/obj/fakeobject/skeleton{
+	desc = "The remains of a human. There seem to be a few bits missing."
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/turf/simulated/floor/airless/damaged4,
+/area/space)
 "sow" = (
 /obj/pool/perspective,
 /obj/machinery/light,
@@ -70537,17 +70561,6 @@
 	},
 /turf/simulated/floor/stairs/dark,
 /area/station/bridge/captain)
-"ssx" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c";
-	name = "factory pipe"
-	},
-/obj/fakeobject/airmonitor_broken{
-	pixel_y = 20
-	},
-/turf/simulated/floor/white/grime,
-/area/ghostdrone_factory)
 "ssG" = (
 /turf/simulated/floor/circuit,
 /area/space)
@@ -73388,6 +73401,10 @@
 "sZI" = (
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
+"sZL" = (
+/obj/fakeobject/cpucontroller,
+/turf/simulated/floor/white/grime,
+/area/ghostdrone_factory)
 "sZO" = (
 /obj/storage/crate,
 /obj/item/instrument/saxophone,
@@ -74044,12 +74061,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"thS" = (
-/obj/fakeobject/apc_broken{
-	pixel_y = 28
-	},
-/turf/simulated/floor/white/grime,
-/area/ghostdrone_factory)
 "thT" = (
 /obj/machinery/light{
 	dir = 4;
@@ -74353,30 +74364,6 @@
 	dir = 6
 	},
 /area/station/hallway/primary/west)
-"tmr" = (
-/obj/item/guardbot_frame,
-/obj/item/device/guardbot_tool/taser{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/obj/item/device/guardbot_tool/smoker{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/guardbot_core,
-/obj/item/device/guardbot_tool/medicator,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
-/obj/storage/crate,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/station/science/bot_storage)
 "tmK" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/redblack{
@@ -75125,6 +75112,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"twc" = (
+/obj/fakeobject/vacuumtape,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/white/grime,
+/area/ghostdrone_factory)
 "twd" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -75180,16 +75175,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/treatment)
-"twK" = (
-/obj/fakeobject{
-	density = 1;
-	desc = "A solar electrical generator.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "solar_panel";
-	name = "solar panel"
-	},
-/turf/simulated/floor/airless/solar,
-/area/ghostdrone_factory)
 "twS" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
@@ -75701,6 +75686,10 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"tDD" = (
+/obj/fakeobject/vacuumtape,
+/turf/simulated/floor/white/grime,
+/area/ghostdrone_factory)
 "tDE" = (
 /turf/simulated/floor/caution/corner/se,
 /area/station/mining/staff_room)
@@ -78284,6 +78273,10 @@
 /area/station/crew_quarters/juryroom{
 	name = "Jury Sequestration"
 	})
+"ulD" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/office)
 "ulQ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -81252,20 +81245,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
-"uUR" = (
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "This looks inordinately fancy for an abandoned ship.";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "Active Particle Phase Matrix"
-	},
-/obj/disposalpipe/segment{
-	name = "factory pipe"
-	},
-/turf/simulated/floor/plating/jen,
-/area/ghostdrone_factory)
 "uVg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/eva{
@@ -83944,11 +83923,6 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"vBJ" = (
-/obj/table/wood/auto,
-/obj/machinery/microscope,
-/turf/simulated/floor/airless,
-/area/space)
 "vBO" = (
 /turf/simulated/floor/black/corner,
 /area/station/hallway/primary/west)
@@ -86419,15 +86393,6 @@
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Staff Section"
 	})
-"wgC" = (
-/obj/fakeobject{
-	desc = "What was this thing even supposed to do?";
-	icon = 'icons/obj/machines/nuclear.dmi';
-	icon_state = "engineoff";
-	name = "broken machine"
-	},
-/turf/simulated/floor/airless/damaged3,
-/area/space)
 "wgR" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
@@ -87632,6 +87597,30 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
+"wve" = (
+/obj/item/guardbot_frame,
+/obj/item/device/guardbot_tool/taser{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/device/guardbot_tool/smoker{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/guardbot_core,
+/obj/item/device/guardbot_tool/medicator,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/storage/crate,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/station/science/bot_storage)
 "wvn" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -87882,19 +87871,6 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/storage/warehouse)
-"wyd" = (
-/obj/item/cable_coil/cut,
-/obj/storage/crate,
-/obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
-/obj/item/parts/robot_parts/chest/light,
-/obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "wyj" = (
 /obj/stool/chair/office/purple{
 	dir = 8
@@ -88234,6 +88210,28 @@
 "wBW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
+"wCk" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "How old is this?";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "dwaine";
+	name = "old mainframe"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grey,
+/area/listeningpost)
 "wCm" = (
 /obj/machinery/light,
 /turf/simulated/floor/grass,
@@ -91381,6 +91379,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
+"xov" = (
+/obj/fakeobject/airmonitor_broken,
+/turf/simulated/shuttle/wall{
+	icon_state = "wall3"
+	},
+/area/space)
 "xoI" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
@@ -91881,6 +91885,12 @@
 "xvB" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
+"xvF" = (
+/obj/table/auto,
+/obj/fakeobject/microscope,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/white,
+/area/station/medical/cdc)
 "xvL" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -98974,13 +98984,13 @@ aJu
 aJu
 aJu
 aJu
-twK
+fch
 tQq
 tQq
-eWd
+iJi
 tQq
 tQq
-twK
+fch
 aJu
 aJu
 aJu
@@ -99275,7 +99285,7 @@ aJu
 aJu
 aJu
 aJu
-twK
+fch
 tQq
 uhF
 jhN
@@ -99283,7 +99293,7 @@ jhN
 jhN
 guK
 tQq
-twK
+fch
 aJu
 aJu
 aJu
@@ -100175,7 +100185,7 @@ aJu
 aJu
 aJu
 aJu
-twK
+fch
 tQq
 tQq
 jWJ
@@ -100195,7 +100205,7 @@ jWJ
 jWJ
 tQq
 tQq
-twK
+fch
 aJu
 aJu
 aJu
@@ -100476,12 +100486,12 @@ aJu
 aJu
 aJu
 aJu
-twK
+fch
 tQq
 hLk
 jhN
 jWJ
-kQC
+sZL
 xJw
 tNJ
 gSd
@@ -100498,7 +100508,7 @@ jWJ
 jhN
 mBd
 tQq
-twK
+fch
 aJu
 aJu
 aJu
@@ -101388,14 +101398,14 @@ tNw
 jWJ
 qWR
 jWJ
-ssx
+fIe
 jKp
 lCp
 asc
 oRD
-uUR
+oml
 oRD
-fKR
+pwU
 oRD
 qMf
 gWj
@@ -101992,14 +102002,14 @@ tNw
 jWJ
 swZ
 jWJ
-thS
+oyw
 kYb
 iwn
 asc
 otu
-fKR
+pwU
 otu
-fKR
+pwU
 otu
 pAQ
 gWj
@@ -102595,7 +102605,7 @@ nhP
 oWA
 fxv
 jWJ
-alq
+twc
 tNJ
 tNJ
 gSd
@@ -102892,12 +102902,12 @@ aJu
 aJu
 aJu
 aJu
-twK
+fch
 tQq
 nhP
 qSG
 jWJ
-iqk
+tDD
 tNJ
 tNJ
 vma
@@ -102914,7 +102924,7 @@ jWJ
 qSG
 jLL
 tQq
-twK
+fch
 aJu
 aJu
 aJu
@@ -103195,7 +103205,7 @@ aJu
 aJu
 aJu
 aJu
-twK
+fch
 tQq
 tQq
 jWJ
@@ -103215,7 +103225,7 @@ jWJ
 jWJ
 tQq
 tQq
-twK
+fch
 aJu
 aJu
 aJu
@@ -104023,9 +104033,9 @@ xVE
 xVE
 xwm
 qEJ
-qkX
-qwn
-kUW
+nNp
+wCk
+gBu
 uqT
 bFM
 aJu
@@ -104327,7 +104337,7 @@ qEJ
 qEJ
 jrg
 usr
-kUW
+gBu
 oVS
 bFM
 aJu
@@ -104629,7 +104639,7 @@ fyU
 yjM
 iXB
 tPZ
-kUW
+gBu
 qOn
 bFM
 aJu
@@ -129345,7 +129355,7 @@ dUF
 dUF
 jfJ
 olp
-bsh
+ciU
 nVB
 aJu
 aJu
@@ -129826,7 +129836,7 @@ mih
 pDo
 xhT
 qcP
-tmr
+wve
 xeM
 xeM
 pGL
@@ -134643,7 +134653,7 @@ vCY
 rSe
 xly
 xre
-dRs
+mOE
 tTw
 rlZ
 vej
@@ -135851,7 +135861,7 @@ mzj
 uyX
 xly
 lFc
-ltd
+ojv
 qUN
 rlZ
 eOt
@@ -141268,7 +141278,7 @@ rUG
 rUG
 hAh
 wYC
-wyd
+iXO
 xeW
 rMb
 xeW
@@ -150333,10 +150343,10 @@ nHc
 tLg
 uYu
 wJZ
-pIY
-qBn
-qBn
-ltm
+gav
+bac
+bac
+rrq
 qHZ
 tbr
 gqQ
@@ -150635,10 +150645,10 @@ ttk
 jZg
 cod
 oTU
-eUv
+xvF
 lWq
 sng
-ngh
+qeF
 qHZ
 olN
 oSI
@@ -150937,7 +150947,7 @@ php
 ukb
 wcz
 wJZ
-lvi
+enR
 wxw
 mwT
 fwW
@@ -151239,7 +151249,7 @@ wgw
 jZv
 krG
 wJZ
-lwf
+mHo
 avK
 mxC
 ngx
@@ -151843,7 +151853,7 @@ ihZ
 ayP
 kuv
 kWG
-jiV
+bmE
 lWV
 myw
 lWV
@@ -152145,7 +152155,7 @@ kWT
 jZv
 kuD
 wJZ
-lzS
+aMH
 wxw
 myS
 nPU
@@ -152233,7 +152243,7 @@ yiE
 slB
 cHy
 btR
-tyo
+lay
 aSp
 hMN
 bre
@@ -152262,7 +152272,7 @@ ePj
 nWY
 eVG
 mhw
-mto
+aLt
 wEI
 fBz
 aRl
@@ -155256,8 +155266,8 @@ qsO
 paa
 xNq
 iVE
-qMZ
-lKS
+ulD
+bCb
 jAu
 vZF
 pyR
@@ -155574,7 +155584,7 @@ xXN
 xXN
 huA
 gIn
-ycV
+bpt
 cwn
 cwn
 cwn
@@ -175287,7 +175297,7 @@ aJu
 aJu
 eGp
 lzz
-pyO
+sok
 teN
 oAA
 aJu
@@ -175587,7 +175597,7 @@ aJu
 aJu
 aJu
 aJu
-inz
+xov
 kHS
 sJl
 gvm
@@ -175890,7 +175900,7 @@ aJu
 aJu
 aJu
 vSO
-eQP
+krs
 uBF
 nIH
 vSO
@@ -176494,9 +176504,9 @@ aJu
 aJu
 aJu
 vSO
-vBJ
+nMc
 fiz
-wgC
+nDg
 iXg
 epP
 aJu

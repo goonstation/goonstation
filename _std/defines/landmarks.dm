@@ -47,6 +47,9 @@
 // Wizard
 #define LANDMARK_WIZARD "Wizard_Spawn"
 
+// Witch
+#define LANDMARK_WITCH "Witch-Spawn"
+
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
 
@@ -109,3 +112,4 @@
 #define LANDMARK_VM_WARP_NONE 0
 #define LANDMARK_VM_WARP_ALL 1
 #define LANDMARK_VM_WARP_NON_ADMINS 2
+#define LANDMARK_VM_ONLY_WITCHES 3

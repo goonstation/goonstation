@@ -642,9 +642,6 @@
 					src.unscrew_monitor()
 				else
 					src.set_broken()
-		if (D_ENERGY)
-			if (!(status & BROKEN) && prob(P.power))
-				src.set_broken()
 
 /obj/machinery/computer3/disposing()
 	if (hd)

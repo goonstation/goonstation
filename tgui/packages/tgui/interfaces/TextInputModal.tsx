@@ -109,6 +109,7 @@ const InputArea = (props, context) => {
           }}
           placeholder="Type something..."
           value={input}
+          dontUseTabForIndent
         />
       </Stack.Item>
     );

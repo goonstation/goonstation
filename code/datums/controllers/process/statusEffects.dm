@@ -28,6 +28,8 @@
 				stack_trace("statusEffect [S] with owner [identify_object(S.owner)] updating with negative duration [S.duration]. actual = [actual]")
 				globalStatusInstances -= S
 			if(S.owner)
+				if (istype(S.owner.loc, /obj/cryotron))
+					continue
 				S.onUpdate(actual)
 				if(!isnull(S.duration))
 					S.duration -= actual

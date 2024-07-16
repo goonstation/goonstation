@@ -11908,14 +11908,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
-"aOx" = (
-/obj/machinery/light/incandescent/greenish{
-	dir = 4
-	},
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "aOy" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/camera{
@@ -12168,10 +12160,6 @@
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/carpet/red/standard/edge/nw,
-/area/listeningpost)
-"aPv" = (
-/obj/storage/closet/syndicate/personal,
-/turf/simulated/floor/carpet/red/standard/edge/north,
 /area/listeningpost)
 "aPx" = (
 /obj/storage/crate,
@@ -14786,34 +14774,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor,
-/area/research_outpost/toxins)
-"bbt" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/table/reinforced/auto,
-/obj/item/extinguisher,
-/obj/item/wrench,
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/prox_sensor{
-	pixel_x = 2;
-	pixel_y = -8
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbu" = (
@@ -32172,10 +32132,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"cKm" = (
-/obj/machinery/vending/standard,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "cLa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32710,25 +32666,6 @@
 /obj/mapping_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen/freezer)
-"dyC" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "fitness room"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 4;
-	mail_tag = "detective's office"
-	},
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/hand_labeler,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "dyQ" = (
 /obj/table/reinforced/auto,
 /obj/item/sponge,
@@ -35337,6 +35274,12 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gNY" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/market{
+	name = "Supply Lobby"
+	})
 "gOv" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -37196,6 +37139,25 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
+"jJv" = (
+/obj/machinery/disposal/mail/small/autoname{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/obj/storage/cart/forensic,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/hand_labeler,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "jJY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/fueltank{
@@ -37943,10 +37905,6 @@
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
-"kWm" = (
-/obj/rack/organized/techstorage_med/sea,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tech)
 "kXn" = (
 /obj/critter/gunbot/drone,
 /turf/simulated/floor/red,
@@ -38830,6 +38788,24 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"mjT" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/table/reinforced/auto,
+/obj/item/extinguisher,
+/obj/item/wrench,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/analyzer/atmospheric,
+/turf/simulated/floor,
+/area/research_outpost/toxins)
 "mka" = (
 /turf/space/fluid,
 /area/space{
@@ -40621,6 +40597,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
+"ozk" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/carpet/red/standard/edge/north,
+/area/listeningpost)
 "oAu" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 1;
@@ -40967,6 +40947,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"oVt" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "oWf" = (
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
@@ -42635,6 +42619,10 @@
 /obj/item/trench_map,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"rta" = (
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tech)
 "ruq" = (
 /obj/ai_core_frame{
 	build_step = 2;
@@ -43842,6 +43830,15 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
+"tsc" = (
+/obj/machinery/light/incandescent/greenish{
+	dir = 4
+	},
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "tsI" = (
 /obj/lattice,
 /mob/living/critter/martian/soldier,
@@ -44465,28 +44462,6 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
-"uBh" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south{
-	pixel_z = 1
-	},
-/obj/machinery/firealarm/east,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/status_display{
-	pixel_y = -32
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 6
-	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
 "uCY" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibtorso"
@@ -44887,6 +44862,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"vsB" = (
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "vsU" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -45455,6 +45434,25 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/caution/corner/ne,
 /area/station/engine/power)
+"wfT" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south{
+	pixel_z = 1
+	},
+/obj/machinery/firealarm/east,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/crew_quarters/market{
+	name = "Supply Lobby"
+	})
 "wgo" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone{
@@ -52222,7 +52220,7 @@ aRR
 aRR
 aPc
 aPm
-aPv
+ozk
 aPJ
 aQw
 aPm
@@ -53728,7 +53726,7 @@ aNk
 aNz
 aNj
 aPm
-aOx
+tsc
 aOT
 aPg
 aOT
@@ -77150,7 +77148,7 @@ bJw
 bJw
 bJw
 bJw
-bJw
+oVt
 bJw
 pPq
 bNZ
@@ -80768,7 +80766,7 @@ bAA
 bBP
 tXX
 bEo
-uBh
+wfT
 bGa
 bGY
 bHW
@@ -81071,7 +81069,7 @@ vhK
 bDa
 bEp
 bDa
-bDa
+gNY
 bGV
 bHU
 bII
@@ -82841,7 +82839,7 @@ aSd
 chc
 smn
 quk
-dyC
+jJv
 mHf
 smn
 nar
@@ -102166,7 +102164,7 @@ aIL
 aJb
 aJD
 xcK
-kWm
+rta
 chB
 aLt
 aDr
@@ -129300,7 +129298,7 @@ elX
 gPd
 aTp
 bbb
-bbt
+mjT
 bbG
 bcb
 bcC
@@ -132633,7 +132631,7 @@ wdA
 wdA
 bcV
 bZn
-cKm
+vsB
 asN
 bZn
 bca

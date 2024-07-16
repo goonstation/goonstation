@@ -10,7 +10,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	opacity = 1
 	#endif
 	density = 1
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
 	pass_unstable = TRUE
@@ -43,6 +43,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/next_timeofday_opened = 0 //high tier jank
 
 	var/ignore_light_or_cam_opacity = FALSE
+
+	var/obj/forcefield/energyshield/linked_forcefield = null
 
 	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
 	var/atom/movable/bumper = null
@@ -502,15 +504,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	if (src.linked_forcefield)
-		src.linked_forcefield.setactive(1)
+	if (src.linked_forcefield && (src.powered() || !src.linked_forcefield.powered_locally))
+		src.linked_forcefield.setactive(TRUE)
+		if(src.linked_forcefield.powered_locally)
+			SubscribeToProcess()
 
 	SPAWN(-1)
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
 			src.set_opacity(0)
-		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
 		src.UpdateIcon(/*/toggling*/ 0)
@@ -519,7 +522,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time / 2)
 		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
 		src.bumper = null
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
+		if(!(src.status & NOPOWER))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
 			src.operating = 0
@@ -547,8 +551,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 				if (--max <= 0) break
 
-	if (src.linked_forcefield)
-		src.linked_forcefield.setactive(0)
+	if (src.linked_forcefield?.isactive)
+		src.linked_forcefield.setactive(FALSE)
+		if(src.linked_forcefield.powered_locally)
+			UnsubscribeProcess()
 
 	src.operating = 1
 	close_trys = 0
@@ -606,7 +612,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			autoclose()
 
 /obj/machinery/door/proc/closed()
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
+	if(!(src.status & NOPOWER))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
 
 /obj/machinery/door/proc/autoclose()
 	if (!density && !operating && !locked)
@@ -629,6 +636,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 /obj/machinery/door/proc/set_unlocked()
 	src.locked = FALSE
 	src.UpdateIcon()
+
+/obj/machinery/door/power_change()
+	. = ..()
+	if (src.linked_forcefield)
+		if (src.linked_forcefield.isactive && !powered() && src.linked_forcefield.powered_locally)
+			//forcefield active, we don't have local power, field isn't from a generator? deactivate, and door is no longer using field power
+			src.linked_forcefield.setactive(FALSE)
+			UnsubscribeProcess()
+			src.update_nearby_tiles()
+		else if(!src.linked_forcefield.isactive && !density && (powered() || !src.linked_forcefield.powered_locally))
+			//forcefield inactive - if we have local power, or field is from a generator, bring it online if our airlock's open
+			src.linked_forcefield.setactive(TRUE)
+			//and only start using power if door is providing field power
+			if(src.linked_forcefield.powered_locally)
+				SubscribeToProcess()
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy

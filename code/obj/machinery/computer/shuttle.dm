@@ -423,7 +423,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	areaLower = /area/shuttle/sea_elevator/lower
 	areaUpper = /area/shuttle/sea_elevator/upper
 	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
-	circuit_type = /obj/item/circuitboard/sea_elevator
 
 /obj/machinery/computer/elevator/centcomm
 	machine_registry_idx = MACHINES_ELEVATORCENTCOM
