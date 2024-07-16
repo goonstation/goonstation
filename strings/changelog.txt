@@ -1,4 +1,7 @@
 
+(t)mon jul 16 24
+(u)tarmunora
+(+)Detective spy sticker pinpointer cannot track stickers that are nested too deeply inside of things - inside a backpack works, but hidden inside a box in a backpack will not.
 (t)mon jul 15 24
 (u)LeahTheTech
 (p)19988
