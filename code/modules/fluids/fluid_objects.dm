@@ -237,12 +237,12 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	name = "fluid canister"
 	desc = "A canister that can drink large amounts of fluid and spit it out somewhere else. Gross."
 	var/bladder = 20000 //how much I can hold
-	var/slurp = 10 //tiles of fluid to drain per tick
-	var/piss = 500 //amt of reagents to piss out per tick
+	var/intake_rate = 10 //tiles of fluid to drain per tick
+	var/outflow_rate = 500 //amt of reagents to expel out per tick
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER
 
-	var/slurping = 0
-	var/pissing = 0
+	var/intaking = 0
+	var/expelling = 0
 
 	var/contained = 0
 
@@ -281,26 +281,26 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 	process()
 		if(contained) return
-		if (slurping)
+		if (intaking)
 			if (src.reagents.total_volume < bladder)
 				var/turf/T = get_turf(src)
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
-					T.active_liquid.group.drain(T.active_liquid,slurp,src)
+					T.active_liquid.group.drain(T.active_liquid,intake_rate,src)
 					if (prob(80))
 						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0.1, 0.7)
 				UpdateIcon()
 
-		else if (pissing)
+		else if (expelling)
 			if (src.reagents.total_volume > 0)
 				var/turf/T = get_turf(src)
 				if (T.active_liquid)
 					var/obj/fluid/F = T.active_liquid
 					if (F.group)
-						src.reagents.trans_to_direct(F.group.reagents,min(piss,src.reagents.total_volume))
+						src.reagents.trans_to_direct(F.group.reagents,min(outflow_rate,src.reagents.total_volume))
 				else
 					if (istype(T, /turf/space/fluid))
 						src.reagents.clear_reagents()
-					else T.fluid_react(src.reagents,min(piss,src.reagents.total_volume))
+					else T.fluid_react(src.reagents,min(outflow_rate,src.reagents.total_volume))
 
 				UpdateIcon()
 
@@ -309,9 +309,9 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		icon_state = "[base_icon][amt]"
 
 		var/overlay_istate = "w_off"
-		if (slurping)
+		if (intaking)
 			overlay_istate = "w_2"
-		else if (pissing)
+		else if (expelling)
 			overlay_istate = "w_1"
 		else
 			overlay_istate = "w_off"
@@ -319,8 +319,8 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		AddOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 		var/activetext = "OFF"
-		if (slurping) activetext = "IN"
-		if (pissing) activetext = "OUT"
+		if (intaking) activetext = "IN"
+		if (expelling) activetext = "OUT"
 		desc = initial(desc) + \
 			" The pump is set to <em>[activetext]</em>." + \
 			" It's currently holding <em>[src.reagents.total_volume] units</em>."
@@ -329,9 +329,9 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			switch (button.type)
 				if (/datum/contextAction/fluid_canister/off)
 					button.icon_state = activetext == "OFF" ? "off" : "off_active"
-				if (/datum/contextAction/fluid_canister/slurp)
+				if (/datum/contextAction/fluid_canister/intake_rate)
 					button.icon_state = activetext == "IN" ? "in_active" : "in"
-				if (/datum/contextAction/fluid_canister/piss)
+				if (/datum/contextAction/fluid_canister/outflow_rate)
 					button.icon_state = activetext == "OUT" ? "out_active" : "out"
 
 	attack_hand(var/mob/user)
@@ -352,16 +352,16 @@ TYPEINFO(/obj/machinery/fluid_canister)
 /obj/machinery/fluid_canister/proc/change_mode(var/mode)
 	switch (mode)
 		if (FLUID_CANISTER_MODE_OFF)
-			slurping = 0
-			pissing = 0
+			intaking = 0
+			expelling = 0
 			UpdateIcon()
-		if (FLUID_CANISTER_MODE_SLURP)
-			slurping = 1
-			pissing = 0
+		if (FLUID_CANISTER_MODE_intake_rate)
+			intaking = 1
+			expelling = 0
 			UpdateIcon()
-		if (FLUID_CANISTER_MODE_PISS)
-			slurping = 0
-			pissing = 1
+		if (FLUID_CANISTER_MODE_outflow_rate)
+			intaking = 0
+			expelling = 1
 			UpdateIcon()
 
 /datum/contextAction/fluid_canister
@@ -383,14 +383,14 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		name = "OFF"
 		icon_state = "off"
 		mode = FLUID_CANISTER_MODE_OFF
-	slurp
+	intake_rate
 		name = "IN"
 		icon_state = "in"
-		mode = FLUID_CANISTER_MODE_SLURP
-	piss
+		mode = FLUID_CANISTER_MODE_intake_rate
+	outflow_rate
 		name = "OUT"
 		icon_state = "out"
-		mode = FLUID_CANISTER_MODE_PISS
+		mode = FLUID_CANISTER_MODE_outflow_rate
 
 ///////////////////
 //////canister/////
