@@ -386,11 +386,11 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	intake_rate
 		name = "IN"
 		icon_state = "in"
-		mode = FLUID_CANISTER_MODE_intake_rate
+		mode = FLUID_CANISTER_MODE_IN
 	outflow_rate
 		name = "OUT"
 		icon_state = "out"
-		mode = FLUID_CANISTER_MODE_outflow_rate
+		mode = FLUID_CANISTER_MODE_OUT
 
 ///////////////////
 //////canister/////
