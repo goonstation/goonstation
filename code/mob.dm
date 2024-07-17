@@ -229,6 +229,8 @@
 	var/list/trigger_emotes = null
 	/// If TRUE then this mob won't be fully stunned by stamina stuns
 	var/no_stamina_stuns = FALSE
+	///A flag set temporarily when a mob is being forced to say something, used to avoid HORRIBLE SPAGHETTI in say logging. I'm sorry okay.
+	var/being_controlled = FALSE
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -2398,9 +2400,6 @@
 // jitteriness - copy+paste of dizziness
 
 /mob/proc/make_jittery(var/amount)
-	if (!ishuman(src)) // for the moment, only humans get dizzy
-		return
-
 	jitteriness = min(400, jitteriness + amount)	// store what will be new value
 													// clamped to max 400
 	if (jitteriness > 100 && !is_jittery)
@@ -2837,34 +2836,33 @@
 				continue
 			else
 				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-					if(!src.traitHolder.hasTrait("stowaway"))// stowaway entertainers shouldn't be on the manifest
-						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
-							if (R)
-								R["name"] = newname
-								if (R["full_name"])
-									R["full_name"] = newname
-						for (var/obj/item/I in src.contents)
-							var/obj/item/card/id/ID = get_id_card(I)
-							if (!ID)
-								if(length(I.contents)>0)
-									for(var/obj/item/J in I.contents)
-										var/obj/item/card/id/ID_maybe = get_id_card(J)
-										if(!ID_maybe)
-											continue
-										if(ID_maybe && ID_maybe.registered == src.real_name)
-											ID = ID_maybe
-							if(ID)
-								ID.registered = newname
-								ID.update_name()
-						for (var/obj/item/device/pda2/PDA in src.contents)
-							PDA.registered = newname
-							PDA.owner = newname
-							PDA.name = "PDA-[newname]"
-							if(PDA.ID_card)
-								var/obj/item/card/id/ID = PDA.ID_card
-								ID.registered = newname
-								ID.update_name()
+					for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+						var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+						if (R)
+							R["name"] = newname
+							if (R["full_name"])
+								R["full_name"] = newname
+					for (var/obj/item/I in src.contents)
+						var/obj/item/card/id/ID = get_id_card(I)
+						if (!ID)
+							if(length(I.contents)>0)
+								for(var/obj/item/J in I.contents)
+									var/obj/item/card/id/ID_maybe = get_id_card(J)
+									if(!ID_maybe)
+										continue
+									if(ID_maybe && ID_maybe.registered == src.real_name)
+										ID = ID_maybe
+						if(ID)
+							ID.registered = newname
+							ID.update_name()
+					for (var/obj/item/device/pda2/PDA in src.contents)
+						PDA.registered = newname
+						PDA.owner = newname
+						PDA.name = "PDA-[newname]"
+						if(PDA.ID_card)
+							var/obj/item/card/id/ID = PDA.ID_card
+							ID.registered = newname
+							ID.update_name()
 					src.real_name = newname
 					src.UpdateName()
 					return 1

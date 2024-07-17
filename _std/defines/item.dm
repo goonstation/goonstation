@@ -34,16 +34,16 @@
 #define FLUID_SUBMERGE				(1<<15)
 /// gets a perspective overlay from adjacent fluids
 #define IS_PERSPECTIVE_FLUID		(1<<16)
-/// specifically note this object as solid
-#define ALWAYS_SOLID_FLUID			(1<<17)
+/// this object is solid to fluids as long as it is also dense (think doors)
+#define FLUID_DENSE					(1<<17)
 /// Calls equipment_click from hand_range_attack on items worn with this flag set.
 #define HAS_EQUIP_CLICK				(1<<18)
 /// Has the possibility for a TGUI interface
 #define TGUI_INTERACTIVE			(1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY			(1<<20)
-/// Counts as dense for purposes of fluids. *scream.
-#define FLUID_DENSE					(1<<21)
+/// This object is solid to fluids regardless of density (think fluid forcefields)
+#define FLUID_DENSE_ALWAYS			(1<<21)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
 #define CLICK_DELAY_IN_CONTENTS		(1<<22)
 /// If an item cannot be crushed by the crusher

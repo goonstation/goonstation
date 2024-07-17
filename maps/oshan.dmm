@@ -14819,16 +14819,6 @@
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/prox_sensor{
-	pixel_x = 2;
-	pixel_y = -8
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/assembly/time_ignite,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
@@ -32205,7 +32195,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "cKm" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "cLa" = (
@@ -32751,14 +32741,11 @@
 	dir = 4;
 	mail_tag = "detective's office"
 	},
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/hand_labeler,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dyQ" = (
@@ -33686,7 +33673,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "eKD" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
@@ -37984,7 +37971,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
-/obj/rack/organized/techstorage_med/sea,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "kXn" = (

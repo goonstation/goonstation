@@ -14559,7 +14559,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aXB" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c";
@@ -14568,6 +14567,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aXC" = (
@@ -14866,17 +14866,11 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
-/obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYF" = (
 /obj/table/wood/auto,
-/obj/item/device/detective_scanner,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
 /obj/item/storage/secure/ssafe{
 	pixel_y = -30
 	},
@@ -23934,7 +23928,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -25840,38 +25834,16 @@
 	dir = 4
 	},
 /obj/item/device/analyzer/atmospheric{
-	pixel_x = -9;
-	pixel_y = 12
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -9;
-	pixel_y = 6
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -9
-	},
-/obj/item/device/timer{
 	pixel_x = -2;
 	pixel_y = 12
 	},
-/obj/item/device/timer{
+/obj/item/device/analyzer/atmospheric{
 	pixel_x = -2;
 	pixel_y = 7
 	},
-/obj/item/device/timer{
+/obj/item/device/analyzer/atmospheric{
 	pixel_x = -2;
 	pixel_y = 2
-	},
-/obj/item/device/igniter{
-	pixel_x = 9;
-	pixel_y = 14
-	},
-/obj/item/device/igniter{
-	pixel_x = 9;
-	pixel_y = 7
-	},
-/obj/item/device/igniter{
-	pixel_x = 9
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -27801,7 +27773,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bWt" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bWw" = (
@@ -36997,7 +36969,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -37025,7 +36997,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "cBL" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -43940,8 +43912,9 @@
 	},
 /area/station/hallway/primary/south)
 "huq" = (
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
@@ -45601,6 +45574,12 @@
 	dir = 10
 	},
 /area/station/quartermaster/office)
+"iIF" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "iIP" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -47053,20 +47032,11 @@
 	},
 /area/station/solar/south)
 "jSU" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering{
-	pixel_x = -4;
-	pixel_y = -2
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "jTk" = (
@@ -51925,28 +51895,6 @@
 /area/station/engine/coldloop)
 "nPn" = (
 /obj/table/auto,
-/obj/item/assembly/time_ignite{
-	pixel_x = 13;
-	pixel_y = 13
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 1;
-	pixel_y = 14
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = -11;
-	pixel_y = 15
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = -12
-	},
-/obj/item/device/prox_sensor{
-	pixel_y = -1
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 12;
-	pixel_y = -2
-	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "nPp" = (
@@ -57213,7 +57161,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/junk.dmi';
@@ -91750,7 +91698,7 @@ bOd
 bHW
 bYT
 huq
-cak
+iIF
 ite
 ced
 cfl

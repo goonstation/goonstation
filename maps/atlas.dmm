@@ -484,20 +484,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "acb" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "acc" = (
@@ -2693,9 +2680,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "akC" = (
-/obj/storage/cart/forensic,
 /obj/decal/stripe_caution,
 /obj/machinery/recharger/wall/sticky,
+/obj/storage/cart/forensic,
 /turf/simulated/floor,
 /area/station/security/main)
 "akD" = (
@@ -6794,6 +6781,10 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -13233,21 +13224,6 @@
 /area/station/engine/coldloop)
 "aYN" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer,
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/igniter,
 /obj/item/device/analyzer/atmospheric,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -16654,7 +16630,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "koV" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -19129,6 +19105,10 @@
 /obj/submachine/cargopad/artlab,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)

@@ -171,6 +171,7 @@
 		if (!(ckey && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
+		var/requires_appeal = FALSE
 		var/data[] = new()
 		data["ckey"] = ckey
 		var/mob/M = ckey_to_mob(ckey)
@@ -208,6 +209,7 @@
 			data["text_ban_length"] = "Permanent"
 		else if (ckey(length) == "untilappeal")
 			length = -1
+			requires_appeal = TRUE
 			data["text_ban_length"] = "Until Appeal"
 		else
 			length = text2num(length)
@@ -223,7 +225,8 @@
 			data["compID"],
 			data["ip"],
 			data["reason"],
-			data["mins"] * 60 * 10
+			data["mins"] * 60 * 10,
+			requires_appeal
 		)
 
 /datum/spacebee_extension_command/serverban

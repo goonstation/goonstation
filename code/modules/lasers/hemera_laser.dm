@@ -78,28 +78,25 @@
 	var/mob/living/hitMob = AM
 	switch (src.power)
 		if (1 to 3)
-			//telehop + radiation
-			if (iscarbon(hitMob))
-				hitMob.take_radiation_dose(3 SIEVERTS)
-				hitMob.changeStatus("knockdown", 2 SECONDS)
-				telehop(hitMob, src.power, src.power > 2)
+			hitMob.take_radiation_dose(3 SIEVERTS)
+			hitMob.changeStatus("knockdown", 2 SECONDS)
+			telehop(hitMob, src.power, src.power > 2)
 			return
 
 		if (4)
 			//big telehop + might leave parts behind.
-			if (iscarbon(hitMob))
-				hitMob.take_radiation_dose(3 SIEVERTS)
+			hitMob.take_radiation_dose(3 SIEVERTS)
 
-				random_brute_damage(hitMob, 25)
-				hitMob.changeStatus("knockdown", 2 SECONDS)
-				if (ishuman(hitMob) && prob(25))
-					var/mob/living/carbon/human/hitHuman = hitMob
-					if (hitHuman.organHolder && hitHuman.organHolder.brain)
-						var/obj/item/organ/brain/B = hitHuman.organHolder.drop_organ("Brain", hitHuman.loc)
-						telehop(B, 2, 0)
-						boutput(hitHuman, SPAN_ALERT("<b>You seem to have left something...behind.</b>"))
+			random_brute_damage(hitMob, 25)
+			hitMob.changeStatus("knockdown", 2 SECONDS)
+			if (ishuman(hitMob) && prob(25))
+				var/mob/living/carbon/human/hitHuman = hitMob
+				if (hitHuman.organHolder && hitHuman.organHolder.brain)
+					var/obj/item/organ/brain/B = hitHuman.organHolder.drop_organ("Brain", hitHuman.loc)
+					telehop(B, 2, 0)
+					boutput(hitHuman, SPAN_ALERT("<b>You seem to have left something...behind.</b>"))
 
-				telehop(hitMob, src.power, 1)
+			telehop(hitMob, src.power, 1)
 			return
 
 		else

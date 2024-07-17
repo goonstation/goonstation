@@ -1018,7 +1018,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (!isdead(src.owner))
 					logTheThing(LOG_COMBAT, src.owner, "was forced by \a [src] to say \"[data]\" at [log_loc(src.owner)] (caused by [constructTarget(signal.author, "combat")] at [log_loc(signal.author)]).")
 					data = copytext(strip_prefix(data, "*"), 1, 46) // Trim starting asterisks to prevent force-emoting
-					src.owner.say(data)
+					src.owner.being_controlled = TRUE
+					try
+						src.owner.say(data)
+					catch (var/exception/e)
+						logTheThing(LOG_DEBUG, src, "Exception [e] occurred while processing marionette implant say stack for mob [src.owner]")
+					src.owner.being_controlled = FALSE
 				else
 					fail_reason = MARIONETTE_IMPLANT_ERROR_DEAD_TARGET
 				src.adjust_heat(15)

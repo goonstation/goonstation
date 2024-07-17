@@ -2305,7 +2305,7 @@
 /turf/simulated/wall/auto/asteroid/lighted,
 /area/station/engine/substation/pylon)
 "agp" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -30059,28 +30059,13 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bIQ" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "4"
-	},
 /obj/item/clothing/head/det_hat{
 	desc = "Ugh, gross.";
 	name = "fedora"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /obj/item/wrench,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor{
 	icon_state = "grimy"
 	},
