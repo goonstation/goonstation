@@ -38471,7 +38471,6 @@
 	})
 "qih" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
 	dir = 4
 	},
 /obj/cable{
@@ -38481,6 +38480,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)
 "qip" = (

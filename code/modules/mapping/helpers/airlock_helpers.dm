@@ -52,3 +52,12 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			D.cycle_id = src.cycle_id
 			D.cycle_enter_id = src.enter_id
 			D.attempt_cycle_link()
+
+/obj/mapping_helper/airlock/aiDisabler
+	name = "airlock aiDisabler"
+	icon_state = "aiDisable"
+
+	setup()
+		. = ..()
+		for (var/obj/machinery/door/airlock/secure_airlock in src.loc)
+			secure_airlock.aiControlDisabled = TRUE
