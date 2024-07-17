@@ -339,7 +339,7 @@
 	},
 /area/hospital)
 "adk" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This window is broken.  Impressively broken, as the surrounding bulkhead is all torn up too.  Maybe there was a....space....quake.";
 	icon = 'icons/misc/hospital.dmi';
 	icon_state = "brokenup";
@@ -540,7 +540,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "adR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate compartments.";
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoorright0";
@@ -609,7 +609,7 @@
 	},
 /area/hospital/samostrel)
 "aec" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate compartments.";
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoorleft0";
@@ -625,7 +625,7 @@
 /area/hospital)
 "aee" = (
 /obj/chaser/hospital_trigger,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -678,7 +678,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "aep" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -822,7 +822,7 @@
 	},
 /area/hospital/samostrel)
 "aeV" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -832,7 +832,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "aeW" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -1074,7 +1074,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/mainhall)
 "afX" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -2675,7 +2675,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ans" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -2953,7 +2953,7 @@
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
 "aoE" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A pod door.  One that might be stuck, who knows.";
 	dir = 4;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
@@ -3398,7 +3398,7 @@
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aqy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A pod door.  One that is definitely stuck.";
 	dir = 8;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
@@ -4136,7 +4136,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "atI" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate compartments.";
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoorright0";
@@ -4150,7 +4150,7 @@
 	},
 /area/hospital)
 "atK" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0";
@@ -4240,7 +4240,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "auo" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate compartments.";
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoorleft0";
@@ -4833,7 +4833,7 @@
 /turf/unsimulated/floor/black,
 /area/hospital/samostrel)
 "axL" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4845,7 +4845,7 @@
 	},
 /area/moon/museum/west)
 "axM" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4855,7 +4855,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "axN" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4886,7 +4886,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "axR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4896,7 +4896,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "axS" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5770,7 +5770,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "aCo" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -5896,7 +5896,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "aCR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5907,7 +5907,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "aCS" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -6471,7 +6471,7 @@
 	},
 /area/hospital/underground)
 "aFU" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -6672,7 +6672,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -7996,7 +7996,7 @@
 	},
 /area/marsoutpost)
 "aMS" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -8004,7 +8004,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor1";
@@ -8447,7 +8447,7 @@
 	},
 /area/marsoutpost)
 "aOp" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -9007,7 +9007,7 @@
 	},
 /area/marsoutpost)
 "aPV" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_open";
@@ -9213,7 +9213,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aQJ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -9222,7 +9222,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -9543,7 +9543,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aRM" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_open";
@@ -9713,7 +9713,7 @@
 	},
 /area/marsoutpost)
 "aSy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -11367,7 +11367,7 @@
 	},
 /area/marsoutpost/duststorm)
 "aXT" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -11377,7 +11377,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "aXU" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 6;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -13697,7 +13697,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -13706,7 +13706,7 @@
 	},
 /area/marsoutpost)
 "bfw" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -13723,7 +13723,7 @@
 	name = "mysterious computer";
 	pixel_x = 32
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -13877,7 +13877,7 @@
 	},
 /area/marsoutpost)
 "bga" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -14005,7 +14005,7 @@
 	},
 /area/marsoutpost)
 "bgy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_open";
@@ -14014,7 +14014,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bgz" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -14391,7 +14391,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bia" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -15546,7 +15546,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bkZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -15556,7 +15556,7 @@
 	},
 /area/marsoutpost)
 "bla" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -15775,7 +15775,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "blE" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -16012,7 +16012,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bmm" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -16149,7 +16149,7 @@
 /turf/unsimulated/wall/solidcolor/white,
 /area/afterlife/heaven)
 "bmM" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -18591,7 +18591,7 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon)
 "bvR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -19158,8 +19158,8 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon)
 "bzm" = (
-/obj/fakeobject/firelock_broken,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock,
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -19575,7 +19575,7 @@
 /turf/space,
 /area/space)
 "bBp" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -19585,11 +19585,11 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "bBs" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -22375,7 +22375,7 @@
 /turf/unsimulated/floor/specialroom/cafeteria,
 /area/crunch)
 "bLD" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -22489,7 +22489,7 @@
 	},
 /area/crunch)
 "bLV" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -24426,7 +24426,7 @@
 /area/gauntlet)
 "bSz" = (
 /obj/creepy_sound_trigger,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -26991,7 +26991,7 @@
 	},
 /area/meat_derelict/main)
 "ccJ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "com2_open";
@@ -27000,7 +27000,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccK" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -27473,7 +27473,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/crunch)
 "ceP" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -27512,7 +27512,7 @@
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/afterlife/heaven)
 "ceZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -28433,7 +28433,7 @@
 /turf/unsimulated/floor/grime,
 /area/meat_derelict/entry)
 "ciq" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -30036,7 +30036,7 @@
 /area/owlery/staffhall)
 "cnr" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/fakeobject/sealed_door/owlery,
+/obj/fakeobject/airlock_broken/sealed/owlery,
 /turf/unsimulated/floor/orangeblack,
 /area/owlery/staffhall)
 "cns" = (
@@ -31113,7 +31113,7 @@
 /turf/unsimulated/floor/black,
 /area/dojo)
 "crq" = (
-/obj/fakeobject/sealed_door,
+/obj/fakeobject/airlock_broken/sealed,
 /turf/unsimulated/floor/black,
 /area/dojo)
 "crr" = (
@@ -42062,7 +42062,7 @@
 	},
 /area/owlery/owleryhall)
 "cXn" = (
-/obj/fakeobject/sealed_door{
+/obj/fakeobject/airlock_broken/sealed{
 	name = "office door"
 	},
 /turf/unsimulated/wall/auto/reinforced/gannets,
@@ -46616,8 +46616,8 @@
 	},
 /area/centcom)
 "dnj" = (
-/obj/fakeobject/firelock_broken,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock,
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -46729,7 +46729,7 @@
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
 "doL" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 6;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -47196,7 +47196,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "dtA" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -47541,7 +47541,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "dvf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -47559,7 +47559,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dvj" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -55374,7 +55374,7 @@
 	},
 /area/crunch/wtc)
 "esa" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -56261,7 +56261,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "fjj" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0";
@@ -56467,7 +56467,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "fuR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	dir = 4;
@@ -56478,7 +56478,7 @@
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "fvA" = (
-/obj/fakeobjects{
+/obj/fakeobject{
 	icon = 'icons/misc/critter.dmi';
 	icon_state = "roach-dead";
 	name = "squashed bug"
@@ -56684,7 +56684,7 @@
 	},
 /area/owlery/staffhall)
 "fDB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -56827,7 +56827,7 @@
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/hall)
 "fLm" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	dir = 4;
@@ -58318,7 +58318,7 @@
 	icon_state = "1-2"
 	},
 /obj/grille/catwalk,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -58880,7 +58880,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod2)
 "huI" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -58935,7 +58935,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
 "hxi" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -59175,7 +59175,7 @@
 	},
 /area/centcom)
 "hIZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -59595,7 +59595,7 @@
 /obj/cable/green{
 	icon_state = "5-10"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -60831,7 +60831,7 @@
 /turf/unsimulated/floor/blackwhite/whitegrime/other,
 /area/observatory)
 "jaS" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -61064,7 +61064,7 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
 "jir" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -61154,7 +61154,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "jle" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -61488,7 +61488,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/iomoon/base/underground)
 "jxy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "maint_open";
@@ -61807,7 +61807,7 @@
 	},
 /area/owlery/gangzone)
 "jNF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -61816,7 +61816,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -61960,7 +61960,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "jUW" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 1;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -62627,7 +62627,7 @@
 	},
 /area/titlescreen)
 "kvy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -63719,7 +63719,7 @@
 	layer = 6;
 	name = "broken door"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -64586,7 +64586,7 @@
 	},
 /area/meat_derelict/guts)
 "mgq" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -64819,7 +64819,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
 "msq" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -64949,7 +64949,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/offices/kyle)
 "mwF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -68178,7 +68178,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "phv" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -68419,7 +68419,7 @@
 /turf/unsimulated/floor/pool/no_animate,
 /area/centcom/garden)
 "por" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -68593,7 +68593,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "pxZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -68792,7 +68792,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
 "pDK" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	dir = 8;
 	icon = 'icons/obj/doors/shuttle.dmi';
@@ -68912,7 +68912,7 @@
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -69609,7 +69609,7 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	dir = 4;
@@ -69838,7 +69838,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "qvf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -70964,7 +70964,7 @@
 /area/centcom/offices/pali)
 "rrt" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -71886,7 +71886,7 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon/caves)
 "sad" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 8;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -72321,7 +72321,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0";
@@ -72729,7 +72729,7 @@
 	name = "broken door";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -72911,7 +72911,7 @@
 	},
 /area/iomoon/base)
 "sQU" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
 	dir = 8;
 	icon = 'icons/obj/doors/shuttle.dmi';
@@ -73089,7 +73089,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
 "tfF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -73327,7 +73327,7 @@
 /turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
 "trc" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -74130,7 +74130,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "ueV" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -74139,7 +74139,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -74164,7 +74164,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "ugt" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -74923,7 +74923,7 @@
 	},
 /area/titlescreen)
 "uOZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -75905,7 +75905,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
 "vGz" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -75914,7 +75914,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -76612,7 +76612,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "wfP" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -77093,7 +77093,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "wya" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -77204,7 +77204,7 @@
 /turf/simulated/floor/sanitary,
 /area/shuttle/centcom_elevator/lower)
 "wDz" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
@@ -77212,16 +77212,16 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
 "wDM" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/map/light/graveyard,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	dir = 4;
@@ -77580,7 +77580,7 @@
 	dir = 4;
 	name = "Surface Airlock"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
@@ -77930,7 +77930,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/pod1)
 "xkk" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -78586,7 +78586,7 @@
 /turf/unsimulated/floor/white,
 /area/centcom/garden)
 "xDP" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -78594,7 +78594,7 @@
 	name = "rusted airlock";
 	opacity = 1
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor1";
@@ -79104,7 +79104,7 @@
 /turf/space,
 /area/watchful_eye_sensor)
 "xYe" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	dir = 4;
