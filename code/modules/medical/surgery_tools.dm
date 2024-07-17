@@ -598,6 +598,14 @@ TYPEINFO(/obj/item/robodefibrillator)
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
 
+	attack_hand(mob/user)
+		. = ..()
+		src.parent.draw_cord()
+
+	dropped(mob/user)
+		. = ..()
+		src.parent.draw_cord()
+
 	disposing()
 		parent?.defib = null
 		parent = null
@@ -621,7 +629,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
-		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
+		RegisterSignal(src.defib, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(handle_move), TRUE)
 
 	emag_act()
 		..()
@@ -658,7 +666,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move), TRUE)
+		src.draw_cord()
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
@@ -671,6 +679,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (src.defib && src.defib.loc != src)
 			if (BOUNDS_DIST(src.defib, src) > 0)
 				src.put_back_defib()
+				return
+			src.draw_cord()
 
 	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_defib()
@@ -678,10 +688,54 @@ TYPEINFO(/obj/machinery/defib_mount)
 			src.defib.force_drop(sever=TRUE)
 			src.defib.set_loc(src)
 			src.defib.parent = null
+			src.ClearSpecificOverlays("cord_\ref[src]")
 
 			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 			UpdateIcon()
 
+	proc/draw_cord()
+		if(!src.defib)
+			return
+		src.ClearSpecificOverlays("cord_\ref[src]")
+		var/paddle_offset_x = -2
+		var/paddle_offset_y = -3
+		var/atom/movable/target = src.defib
+		if (ismob(src.defib.loc))
+			var/mob/living/M = src.defib.loc
+			target = M
+
+			switch (M.dir)
+				if (NORTH)
+					paddle_offset_y = -1
+					if (M.hand == LEFT_HAND)
+						paddle_offset_x = -6
+					else
+						paddle_offset_x = 6
+				if (SOUTH)
+					paddle_offset_y = -1
+					if (M.hand == LEFT_HAND)
+						paddle_offset_x = 6
+					else
+						paddle_offset_x = -6
+				if (EAST)
+					if(M.hand == LEFT_HAND)
+						paddle_offset_x = 4
+						paddle_offset_y = -4
+					else
+						paddle_offset_x = -4
+						paddle_offset_y = -2
+
+				if(WEST)
+					if(M.hand == LEFT_HAND)
+						paddle_offset_x = 4
+						paddle_offset_y = -2
+					else
+						paddle_offset_x = -4
+						paddle_offset_y = -4
+
+		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x, src.pixel_y - 2, target.pixel_x + paddle_offset_x, target.pixel_y + paddle_offset_y, LINEMODE_STRETCH)
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "cord_\ref[src]")
 
 /* ================================================ */
 /* -------------------- Suture -------------------- */

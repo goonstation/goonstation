@@ -851,15 +851,30 @@ Contains:
 	..()
 	return
 
-obj/item/assembly/radio_horn/attack_self(mob/user as mob)
+/obj/item/assembly/radio_horn/attack_self(mob/user as mob)
 	src.part1.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 
-obj/item/assembly/radio_horn/receive_signal()
+/obj/item/assembly/radio_horn/receive_signal()
 	var/num_notes = part2.sounds_instrument.len
 	part2.play_note(rand(1, num_notes), user = null)
 	return
+
+/obj/item/assembly/radio_horn/attackby(obj/item/W, mob/user)
+	if (iswrenchingtool(W))
+		var/turf/T = get_turf(src)
+		src.part1.set_loc(T)
+		src.part2.set_loc(T)
+		src.part1.master = null
+		src.part2.master = null
+		src.part1 = null
+		src.part2 = null
+
+		user.u_equip(src)
+		qdel(src)
+		return
+	. = ..()
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
 

@@ -23,6 +23,7 @@
 #pragma MissingInterpolatedExpression error
 #pragma AmbiguousResourcePath error
 #pragma SuspiciousSwitchCase error
+#pragma InvalidIndexOperation error
 
 //3000-3999
 #pragma EmptyBlock notice // Set to error when it supports {} blocks

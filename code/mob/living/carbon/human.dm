@@ -2588,7 +2588,7 @@
 	SPAWN(1.5 SECONDS)
 		qdel(src)
 
-/mob/living/carbon/human/get_equipped_items()
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	. = ..()
 	if (src.belt) . += src.belt
 	if (src.glasses) . += src.glasses
@@ -2598,6 +2598,10 @@
 	if (src.wear_id) . += src.wear_id
 	if (src.wear_suit) . += src.wear_suit
 	if (src.w_uniform) . += src.w_uniform
+	if(include_pockets)
+		if (src.l_store) . += src.l_store
+		if (src.r_store) . += src.r_store
+
 
 /mob/living/carbon/human/protected_from_space()
 	var/space_suit = 0
