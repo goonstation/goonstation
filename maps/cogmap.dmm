@@ -16555,12 +16555,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"bdq" = (
-/obj/disposalpipe/segment{
-	dir = 8
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "bdr" = (
 /obj/grille/steel,
 /turf/simulated/floor/plating,
@@ -27617,12 +27611,14 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "bVw" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/testchamber)
 "bVx" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -33358,14 +33354,16 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "coi" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/disposalpipe/segment{
+	dir = 4
 	},
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "coj" = (
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "col" = (
@@ -33717,9 +33715,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
@@ -33735,8 +33733,9 @@
 /area/station/science/testchamber)
 "cpm" = (
 /obj/storage/closet/fire,
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-c"
+/obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
@@ -33744,6 +33743,9 @@
 /obj/machinery/bot/firebot,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
@@ -33753,16 +33755,25 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/chemistry)
 "cpr" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
 /area/station/science/chemistry)
 "cps" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite/corner{
 	dir = 1
 	},
@@ -33780,20 +33791,21 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cpv" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
 /area/station/science/chemistry)
 "cpy" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -33813,7 +33825,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/junction{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -34153,20 +34165,24 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cqv" = (
 /obj/machinery/drainage,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cqx" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cqy" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -34634,6 +34650,10 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 6
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
@@ -36896,9 +36916,8 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
@@ -38327,9 +38346,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "djA" = (
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
@@ -38754,8 +38772,20 @@
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -42444,7 +42474,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "fZo" = (
-/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "fZG" = (
@@ -46149,6 +46178,9 @@
 /obj/stool/chair/office{
 	dir = 1
 	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -49414,6 +49446,10 @@
 /area/station/maintenance/east)
 "lJH" = (
 /mob/living/carbon/human/npc/monkey,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/purplewhite/corner,
 /area/station/science/chemistry)
 "lJN" = (
@@ -50130,10 +50166,10 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "mov" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
-/obj/disposalpipe/segment,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -53525,6 +53561,9 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "oSX" = (
@@ -56173,9 +56212,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment{
+/obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -57065,6 +57105,9 @@
 "rDD" = (
 /obj/landmark/start/job/scientist,
 /obj/stool/chair/office,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "rDG" = (
@@ -61948,7 +61991,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "vhk" = (
-/obj/table/reinforced/auto,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
@@ -61957,20 +62000,8 @@
 	name = "Chemistry Privacy Shutters";
 	opacity = 0
 	},
-/obj/item/reagent_containers/glass/beaker/large{
-	pixel_x = -6;
-	pixel_y = 8
-	},
-/obj/item/storage/box/beakerbox{
-	pixel_x = 6;
-	pixel_y = 3
-	},
-/obj/machinery/door/firedoor/pyro{
+/obj/disposalpipe/segment/mail{
 	dir = 4
-	},
-/obj/decal/stripe_delivery,
-/obj/disposalpipe/segment{
-	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/science/chemistry)
@@ -62497,14 +62528,10 @@
 /area/station/turret_protected/ai_upload_foyer)
 "vHP" = (
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/vending/player/chemicals,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -95259,7 +95286,7 @@ ccX
 ccX
 ccX
 coh
-cpk
+coi
 cet
 cro
 crj
@@ -95560,8 +95587,8 @@ cmi
 ckx
 cmi
 gIi
-coi
 ciN
+bVw
 boS
 crp
 oel
@@ -97980,7 +98007,7 @@ coq
 cAL
 cqt
 fZo
-djA
+cpu
 ctg
 ctZ
 xal
@@ -98279,7 +98306,7 @@ bWB
 bWB
 cjC
 cor
-cpu
+djA
 lJH
 cpv
 csq
@@ -98581,7 +98608,7 @@ vbI
 bVj
 cne
 gNR
-cpu
+djA
 cqv
 wDL
 cne
@@ -98883,7 +98910,7 @@ aaq
 aap
 cne
 csU
-cpu
+djA
 rDD
 crw
 cne
@@ -99185,7 +99212,7 @@ adC
 aag
 cne
 csV
-cpu
+djA
 cqx
 crx
 wXJ
@@ -100394,7 +100421,7 @@ cmd
 dmk
 cox
 cpy
-bdq
+cqB
 cqB
 cqB
 cqB
@@ -100696,7 +100723,7 @@ cme
 cnk
 coy
 cpz
-bdq
+cqB
 cqB
 cqB
 dNX
@@ -100998,7 +101025,7 @@ bVR
 cnl
 coz
 cpA
-bVw
+cqB
 cqB
 cqB
 cqB
