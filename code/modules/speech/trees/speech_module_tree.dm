@@ -13,6 +13,8 @@
 	var/list/output_module_ids_with_subcount
 	/// An associative list of output speech modules, indexed by the module ID.
 	var/list/datum/speech_module/output/output_modules_by_id
+	/// An associative list of output speech modules, indexed by the module channel. Additionally, each sublist of modules is sorted by priority.
+	var/list/datum/speech_module/output/output_modules_by_channel
 
 	/// An associative list of modifier speech module subscription counts, indexed by the module ID.
 	var/list/speech_modifier_ids_with_subcount
@@ -29,6 +31,7 @@
 
 	src.output_module_ids_with_subcount = list()
 	src.output_modules_by_id = list()
+	src.output_modules_by_channel = list()
 	for (var/output_id in outputs)
 		src.AddOutput(output_id)
 
@@ -48,6 +51,7 @@
 
 	src.output_modules_by_id = null
 	src.speech_modifiers_by_id = null
+	src.output_modules_by_channel = null
 	src.speaker_origin = null
 	src.speaker_parent = null
 
@@ -58,7 +62,14 @@
 	if (!istype(message))
 		CRASH("A non say_message thing was passed to a speech_module_tree. This should never happen.")
 
-	var/list/datum/speech_module/output/output_modules = src.GetOutputByChannel(message.output_module_channel)
+	var/list/datum/speech_module/output/output_modules
+	if (message.output_module_override)
+		var/datum/speech_module/output/output_override = src.GetOutputByID(message.output_module_override)
+		if (output_override)
+			output_modules = list(output_override)
+	else
+		output_modules = src.GetOutputByChannel(message.output_module_channel)
+
 	if (!length(output_modules))
 		return
 
@@ -77,6 +88,7 @@
 			if (QDELETED(message))
 				return
 
+	// If a combination of message modifiers caused the message's content to become uncool, log the modifier combination and garble the uncool words.
 	if (!was_uncool && global.phrase_log.is_uncool(message.content))
 		var/list/modifier_ids
 		if (global.SpeechManager.GetSayChannelInstance(message.output_module_channel).affected_by_modifiers)
@@ -96,25 +108,23 @@
 	if (message.flags & SAYFLAG_DO_NOT_OUTPUT)
 		return
 
-	// Disseminate to output modules.
-	var/suppress_say_sound = TRUE
-	var/suppress_speech_bubble = TRUE
+	// Attempt to use the highest priority module as an output, defaulting to the next highest priority on failure.
 	for (var/datum/speech_module/output/output_module as anything in output_modules)
 		if (!CAN_PASS_MESSAGE_TO_SAY_CHANNEL(output_module.say_channel, message))
 			boutput(src.speaker_parent, output_module.say_channel.disabled_message)
 			continue
 
-		if (!output_module.process(message.Copy()))
+		var/datum/say_message/module_message = message.Copy()
+		if (!output_module.process(module_message))
 			continue
 
-		suppress_say_sound &&= output_module.say_channel.suppress_say_sound
-		suppress_speech_bubble &&= output_module.say_channel.suppress_speech_bubble
+		// Handle say sounds and speech bubbles.
+		if (!output_module.say_channel.suppress_say_sound)
+			module_message.process_say_sound()
+		if (!output_module.say_channel.suppress_speech_bubble)
+			module_message.process_speech_bubble()
 
-	// Handle say sounds and speech bubbles.
-	if (!suppress_say_sound)
-		message.process_say_sound()
-	if (!suppress_speech_bubble)
-		message.process_speech_bubble()
+		break
 
 /// Update this speech module tree's speaker origin. This will cause spoken messages to appear to originate fom the new speaker origin.
 /datum/speech_module_tree/proc/update_speaker_origin(atom/new_origin)
@@ -136,6 +146,9 @@
 		return
 
 	src.output_modules_by_id[output_id] = new_output
+	src.output_modules_by_channel[new_output.channel] ||= list()
+	src.output_modules_by_channel[new_output.channel] += new_output
+	sortList(src.output_modules_by_channel[new_output.channel], GLOBAL_PROC_REF(cmp_say_modules))
 	return new_output
 
 /// Removes an output module from the tree. Returns TRUE on success, FALSE on failure.
@@ -145,6 +158,7 @@
 
 	src.output_module_ids_with_subcount[output_id] -= count
 	if (!src.output_module_ids_with_subcount[output_id])
+		src.output_modules_by_channel[src.output_modules_by_id[output_id].channel] -= src.output_modules_by_id[output_id]
 		qdel(src.output_modules_by_id[output_id])
 		src.output_modules_by_id -= output_id
 
@@ -158,11 +172,7 @@
 /// Returns a list of output modules that output to the specified channel.
 /datum/speech_module_tree/proc/GetOutputByChannel(channel_id)
 	RETURN_TYPE(/list/datum/speech_module/output)
-	. = list()
-
-	for (var/output_id as anything in src.output_modules_by_id)
-		if (src.output_modules_by_id[output_id].channel == channel_id)
-			. += src.output_modules_by_id[output_id]
+	return src.output_modules_by_channel[channel_id]
 
 /// Adds a new modifier module to the tree. Returns a reference to the new modifier module on success.
 /datum/speech_module_tree/proc/AddModifier(modifier_id, count = 1)

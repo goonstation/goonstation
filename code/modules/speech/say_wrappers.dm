@@ -40,7 +40,7 @@
 	if (!src.mob || src.player_mode)
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_DEAD))
+	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_DEAD, "output_module_override" = SPEECH_OUTPUT_DEADCHAT))
 
 	logTheThing(LOG_ADMIN, src, "DSAY: [msg]")
 	logTheThing(LOG_DIARY, src, "DSAY: [msg]", "admin")

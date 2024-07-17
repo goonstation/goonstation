@@ -1,5 +1,6 @@
 /datum/speech_module/output/deadchat
 	id = SPEECH_OUTPUT_DEADCHAT
+	priority = 0
 	channel = SAY_CHANNEL_DEAD
 	var/role
 
@@ -61,16 +62,19 @@
 
 /datum/speech_module/output/deadchat/ghost
 	id = SPEECH_OUTPUT_DEADCHAT_GHOST
+	priority = 10
 	role = "Ghost"
 
 
 /datum/speech_module/output/deadchat/poltergeist
 	id = SPEECH_OUTPUT_DEADCHAT_POLTERGEIST
+	priority = 10
 	role = "Poltergeist"
 
 
 /datum/speech_module/output/deadchat/wraith
 	id = SPEECH_OUTPUT_DEADCHAT_WRAITH
+	priority = 10
 	role = "Wraith"
 
 

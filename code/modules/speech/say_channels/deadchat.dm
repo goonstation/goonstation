@@ -13,7 +13,8 @@
 /datum/say_channel/dead/PassToChannel(datum/say_message/message)
 	. = ..()
 
-	RELAY_MESSAGE_TO_SAY_CHANNEL(src.ghostly_whisper_channel, message.Copy())
+	if (!(message.flags & SAYFLAG_ADMIN_MESSAGE))
+		RELAY_MESSAGE_TO_SAY_CHANNEL(src.ghostly_whisper_channel, message.Copy())
 
 /datum/say_channel/dead/log_message(datum/say_message/message)
 	var/mob/M = message.speaker

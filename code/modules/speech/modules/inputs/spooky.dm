@@ -14,7 +14,8 @@
 
 	if (prob(hear_nothing_chance))
 		return
-	else if (prob(hear_message_chance))
+
+	if (prob(hear_message_chance))
 		message.content = stutter(message.content)
 	else
 		message.content = "You hear muffled speech... but nothing is there..."

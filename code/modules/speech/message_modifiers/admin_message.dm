@@ -14,12 +14,12 @@
 	var/mob/mob_listener = message.received_module.parent_tree.listener_parent
 	if (istype(mob_listener) && mob_listener.client?.holder && !mob_listener.client.player_mode)
 		if (show_other_key)
-			message.speaker_to_display = "ADMIN([speaker_client.key] (as [speaker_client.fakekey]))"
+			message.speaker_to_display = "<b>ADMIN(</b>[speaker_client.key] (as [speaker_client.fakekey])<b>)</b>"
 		else
-			message.speaker_to_display = "ADMIN([speaker_client.key])"
+			message.speaker_to_display = "<b>ADMIN(</b>[speaker_client.key]<b>)</b>"
 
 	else
 		if (show_other_key)
-			message.speaker_to_display = "ADMIN([speaker_client.fakekey])"
+			message.speaker_to_display = "<b>ADMIN(</b>[speaker_client.fakekey]<b>)</b>"
 		else
-			message.speaker_to_display = "ADMIN([speaker_client.key])"
+			message.speaker_to_display = "<b>ADMIN(</b>[speaker_client.key]<b>)</b>"

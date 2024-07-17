@@ -63,6 +63,7 @@
 
 	src.input_modules_by_id = null
 	src.listen_modifiers_by_id = null
+	src.input_modules_by_channel = null
 	src.listener_origin = null
 	src.listener_parent = null
 
@@ -143,11 +144,7 @@
 /// Returns a list of output modules that output to the specified channel.
 /datum/listen_module_tree/proc/GetInputByChannel(channel_id)
 	RETURN_TYPE(/list/datum/listen_module/input)
-	. = list()
-
-	for (var/input_id as anything in src.input_modules_by_id)
-		if (src.input_modules_by_id[input_id].channel == channel_id)
-			. += src.input_modules_by_id[input_id]
+	return src.input_modules_by_channel[channel_id]
 
 /// Adds a new modifier module to the tree. Returns a reference to the new modifier module on success.
 /datum/listen_module_tree/proc/AddModifier(modifier_id, count = 1)

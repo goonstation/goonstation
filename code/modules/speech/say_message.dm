@@ -68,6 +68,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	var/last_character = ""
 	/// The channel that this radio message should attempt to be sent on. If `null`, will be sent to all available outputs.
 	var/output_module_channel = null
+	/// If set, the output module that this message should attempt to be passed to.
+	var/output_module_override = null
 	/// The input module that received this message last.
 	var/datum/listen_module/input/received_module = null
 	/// If set, this say message datum will be sent to these atoms as opposed to being broadcast over a say channel.
