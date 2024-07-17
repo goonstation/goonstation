@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
-		if (locate(/obj/chair) in src.loc)
+		if (locate(/obj/item/chair) in src.loc)
 			return TRUE
 		if (locate(/obj/rack) in src.loc)
 			return TRUE
