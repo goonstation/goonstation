@@ -2556,13 +2556,13 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avt" = (
-/obj/storage/cart/forensic,
 /obj/machinery/disposal/small{
 	dir = 8
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avv" = (
@@ -13136,9 +13136,9 @@
 	},
 /area/listeningpost)
 "bLL" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	name = "Weather Satellite"
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -20164,8 +20164,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "gYz" = (
@@ -34748,23 +34750,8 @@
 	},
 /area/station/medical/medbay)
 "saG" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
 /obj/machinery/firealarm/south,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "sbG" = (
@@ -40114,22 +40101,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "vWi" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},

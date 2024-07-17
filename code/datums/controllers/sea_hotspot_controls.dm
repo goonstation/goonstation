@@ -828,7 +828,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(last_gen), 50)]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
