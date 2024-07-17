@@ -44323,7 +44323,8 @@
 	name = "Chapel persistent notice board";
 	persistent_id = "chapel";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
@@ -49258,7 +49259,8 @@
 	name = "Brig persistent notice board";
 	persistent_id = "brig";
 	pixel_x = 32;
-	pixel_y = 0
+	dir = 4;
+	pixel_y = 4
 	},
 /obj/machinery/vending/snack{
 	credit = 50
