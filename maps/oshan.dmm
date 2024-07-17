@@ -32741,14 +32741,11 @@
 	dir = 4;
 	mail_tag = "detective's office"
 	},
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/hand_labeler,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dyQ" = (
