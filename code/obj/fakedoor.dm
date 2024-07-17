@@ -16,7 +16,6 @@
 		desc = "It appears to be sealed."
 		icon = 'icons/obj/dojo.dmi'
 		icon_state = "sealed_door"
-		anchored = ANCHORED_ALWAYS
 
 		owlery // used in owlery
 			name = "Busted Airlock"
@@ -29,4 +28,3 @@
 		desc = "Rust has rendered this firelock useless."
 		icon = 'icons/obj/doors/door_fire2.dmi'
 		icon_state = "door0"
-
