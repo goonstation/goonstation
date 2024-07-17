@@ -256,6 +256,21 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"abc" = (
+/obj/table/wood/auto{
+	dir = 10
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/peripheral/network/radio/locked,
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/black,
+/area/listeningpost)
+"abd" = (
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "abe" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -268,6 +283,11 @@
 	icon_state = "ast1"
 	},
 /area/space)
+"abh" = (
+/obj/decal/stripe_caution,
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor,
+/area/listeningpost)
 "abi" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -8241,17 +8261,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"aQR" = (
-/obj/table/wood/auto{
-	dir = 5
-	},
-/obj/item/storage/secure/sbriefcase,
-/obj/item/spraybottle/detective,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aQT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/morgue)
@@ -10672,6 +10681,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"bdz" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/device/camera_viewer/public,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "bdB" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14707,20 +14721,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"bCl" = (
-/obj/machinery/camera{
-	c_tag = "Electronics";
-	dir = 1
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/storage/cart/mechcart,
-/obj/item/deconstructor,
-/obj/item/electronics/scanner,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "bCo" = (
 /obj/table/auto,
 /obj/item/electronics/resistor,
@@ -17785,22 +17785,6 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"cKW" = (
-/obj/fakeobjects{
-	anchored = 1;
-	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
-	dir = 1;
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "secdetector0";
-	name = "Experimental Wireless Power Transceiver";
-	pixel_y = 16
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "cLe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18987,6 +18971,16 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/wood,
 /area/station/maintenance/west)
+"dxo" = (
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "dxB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -22190,6 +22184,16 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"fyy" = (
+/obj/table/auto,
+/obj/machinery/light/lamp/green,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/small/west,
+/obj/item/device/camera_viewer/outpost/science,
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/station/crew_quarters/hor)
 "fzI" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/light/emergency{
@@ -23494,14 +23498,6 @@
 /mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"guJ" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost)
 "gvg" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -23605,6 +23601,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
+"gya" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost)
 "gyc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -23682,27 +23686,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"gzM" = (
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/storage/cart/forensic{
-	desc = "A big rolling supply cart for crisis management.";
-	name = "crisis cart";
-	req_access_txt = "1"
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/screwdriver,
-/obj/item/screwdriver,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
-/area/station/security/equipment)
 "gBm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -24454,25 +24437,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"hbS" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "1"
-	},
-/turf/simulated/floor/grime,
-/area/station/security/equipment)
 "hbZ" = (
 /obj/machinery/r_door_control/podbay/security{
 	name = "Security Hangar Door Control"
@@ -24679,15 +24643,6 @@
 	dir = 5
 	},
 /area/station/quartermaster/office)
-"hje" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "hjn" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/item/pinpointer/teg_semi,
@@ -25029,6 +24984,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"hxT" = (
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "hyy" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -25233,11 +25192,6 @@
 	dir = 4
 	},
 /area/station/solar/zeta)
-"hEc" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/toolbox/electrical,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "hEw" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -25539,10 +25493,6 @@
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"hOD" = (
-/obj/machinery/computer/announcement/syndicate,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "hOU" = (
 /obj/machinery/networked/storage/scanner{
 	bank_id = "research"
@@ -25946,6 +25896,10 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
+"icm" = (
+/obj/storage/cart/forensic/security,
+/turf/simulated/floor/grime,
+/area/station/security/equipment)
 "idF" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -26225,17 +26179,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/ce)
-"imq" = (
-/obj/table/wood/auto{
-	dir = 10
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/item/peripheral/network/radio/locked,
-/obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "imx" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
@@ -26729,10 +26672,6 @@
 /obj/item/clothing/under/towel,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
-"iDf" = (
-/obj/table/reinforced/chemistry/auto,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "iDo" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -28598,6 +28537,12 @@
 /obj/stool/bench/yellow,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
+"jMf" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "jMr" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/horizontal,
@@ -29804,6 +29749,13 @@
 	dir = 10
 	},
 /area/station/hangar/arrivals)
+"kGh" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/storage/cart/forensic/bomb_disposal,
+/turf/simulated/floor/grime,
+/area/station/security/equipment)
 "kGy" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -32408,16 +32360,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor,
 /area/station/hangar/arrivals)
-"mhr" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/storage/cart/mechcart,
-/obj/item/deconstructor,
-/obj/item/electronics/scanner,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "mhH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -32737,6 +32679,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
+"mqk" = (
+/obj/machinery/door/airlock/pyro/sci_alt,
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/engineering_power,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/gen_storage)
 "mqD" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
@@ -33721,20 +33672,6 @@
 /obj/stool/chair/purple,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
-"mWp" = (
-/obj/fakeobjects{
-	anchored = 1;
-	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "secdetector0";
-	name = "Experimental Wireless Power Transceiver";
-	pixel_y = 16
-	},
-/obj/decal/cleanable/writing{
-	words = "why does my skin burn when I stand next to this?"
-	},
-/turf/simulated/floor,
-/area/station/science/testchamber/bombchamber)
 "mWO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34616,6 +34553,11 @@
 "nzf" = (
 /turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
+"nzs" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/toolbox/electrical,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "nzA" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -34658,6 +34600,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"nBt" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
+	dir = 1;
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "secdetector0";
+	name = "Experimental Wireless Power Transceiver";
+	pixel_y = 16
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "nBH" = (
 /obj/landmark/start/job/assistant,
 /obj/item/device/radio/intercom{
@@ -35086,16 +35044,6 @@
 	layer = 2
 	},
 /area/station/solar/south)
-"nQq" = (
-/obj/table/auto,
-/obj/machinery/light/lamp/green,
-/obj/disposalpipe/trunk/west,
-/obj/machinery/disposal/small/west,
-/obj/item/device/camera_viewer/outpost/science,
-/turf/simulated/floor/purple/side{
-	dir = 5
-	},
-/area/station/crew_quarters/hor)
 "nQN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37577,6 +37525,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"pic" = (
+/obj/machinery/camera{
+	c_tag = "Electronics";
+	dir = 1
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "piD" = (
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
@@ -39581,6 +39539,20 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/science/lobby)
+"qtb" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "secdetector0";
+	name = "Experimental Wireless Power Transceiver";
+	pixel_y = 16
+	},
+/obj/decal/cleanable/writing{
+	words = "why does my skin burn when I stand next to this?"
+	},
+/turf/simulated/floor,
+/area/station/science/testchamber/bombchamber)
 "qth" = (
 /obj/storage/crate,
 /obj/item/clothing/head/wig,
@@ -41394,11 +41366,6 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
-"rCL" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/device/camera_viewer/public,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "rDc" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -42423,11 +42390,6 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
-"slF" = (
-/obj/decal/stripe_caution,
-/obj/machinery/vending/jobclothing/syndicate,
-/turf/simulated/floor,
-/area/listeningpost)
 "slR" = (
 /obj/disposalpipe/junction{
 	icon_state = "pipe-j2"
@@ -44725,6 +44687,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
+"tDT" = (
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "tEL" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -46244,10 +46210,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters)
-"uKP" = (
-/obj/machinery/vending/standard/toxins,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "uKX" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -46830,15 +46792,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
-"vdQ" = (
-/obj/machinery/door/airlock/pyro/sci_alt,
-/obj/mapping_helper/access/research,
-/obj/mapping_helper/access/engineering_power,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/gen_storage)
 "vef" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -50375,6 +50328,16 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"xrn" = (
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/item/storage/secure/sbriefcase,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "xse" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -69891,7 +69854,7 @@ rmH
 uCU
 vrb
 vrb
-guJ
+gya
 abB
 vrb
 aac
@@ -70191,7 +70154,7 @@ vrb
 vrb
 xHh
 vrb
-slF
+abh
 vrb
 vrb
 iXI
@@ -72002,7 +71965,7 @@ aaz
 aYK
 tXc
 vrb
-imq
+abc
 abk
 abk
 abx
@@ -72304,7 +72267,7 @@ vrb
 vrb
 vrb
 vrb
-hOD
+abd
 abk
 abk
 aby
@@ -75806,7 +75769,7 @@ sKK
 btx
 bAH
 uyM
-mhr
+jMf
 bzg
 bis
 lNM
@@ -76108,7 +76071,7 @@ ydY
 btx
 eFB
 uyM
-bCl
+pic
 bzg
 bis
 lNM
@@ -93009,7 +92972,7 @@ moJ
 wqz
 bqq
 piD
-hbS
+icm
 moJ
 rjn
 ffV
@@ -94174,8 +94137,8 @@ wkZ
 aOi
 lbT
 inl
-hje
-aQR
+dxo
+xrn
 aRG
 aRK
 aRK
@@ -94214,7 +94177,7 @@ bnv
 bop
 uWC
 moJ
-gzM
+kGh
 piD
 rLp
 ldr
@@ -126416,7 +126379,7 @@ aaa
 aaa
 aaa
 aei
-nQq
+fyy
 aeZ
 uUP
 afQ
@@ -127030,7 +126993,7 @@ aiU
 vZL
 bJr
 qTb
-vdQ
+mqk
 upv
 rmP
 nqR
@@ -129748,7 +129711,7 @@ nxa
 xla
 aiv
 lVX
-iDf
+hxT
 ajS
 tyH
 ebB
@@ -130645,9 +130608,9 @@ svM
 qDN
 ajz
 alf
-uKP
+tDT
 eDg
-hEc
+nzs
 alf
 xwa
 ahz
@@ -130949,7 +130912,7 @@ alf
 alf
 wuK
 crm
-rCL
+bdz
 alf
 lms
 ahA
@@ -131812,7 +131775,7 @@ bxD
 mpL
 bxD
 bxD
-mWp
+qtb
 bgw
 mpL
 aaa
@@ -131852,7 +131815,7 @@ aaa
 adQ
 aaa
 bsn
-cKW
+nBt
 rDc
 tsa
 tMJ

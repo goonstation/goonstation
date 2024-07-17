@@ -11908,6 +11908,15 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
+"aOx" = (
+/obj/machinery/light/incandescent/greenish{
+	dir = 4
+	},
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/listeningpost)
 "aOy" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/camera{
@@ -12160,6 +12169,10 @@
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/carpet/red/standard/edge/nw,
+/area/listeningpost)
+"aPv" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/carpet/red/standard/edge/north,
 /area/listeningpost)
 "aPx" = (
 /obj/storage/crate,
@@ -14774,6 +14787,24 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/turf/simulated/floor,
+/area/research_outpost/toxins)
+"bbt" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/table/reinforced/auto,
+/obj/item/extinguisher,
+/obj/item/wrench,
+/obj/item/screwdriver{
+	pixel_y = 10
+	},
+/obj/item/device/analyzer/atmospheric,
+/obj/item/device/analyzer/atmospheric,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbu" = (
@@ -32132,6 +32163,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"cKm" = (
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/engine,
+/area/research_outpost/chamber)
 "cLa" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33590,15 +33625,6 @@
 /obj/cable/orange,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
-"eKD" = (
-/obj/fakeobject/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "rusted hatch"
-	},
-/turf/simulated/floor/damaged2,
-/area/derelict_diner)
 "eKI" = (
 /obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/purple/side{
@@ -36706,6 +36732,22 @@
 "jao" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"jaG" = (
+/obj/machinery/disposal/mail/small/autoname{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "jbb" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -37139,25 +37181,6 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
-"jJv" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "detective's office"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 4;
-	mail_tag = "detective's office"
-	},
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/hand_labeler,
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "jJY" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/fueltank{
@@ -37905,6 +37928,10 @@
 /obj/item/raw_material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
+"kWm" = (
+/obj/rack/organized/techstorage_med,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tech)
 "kXn" = (
 /obj/critter/gunbot/drone,
 /turf/simulated/floor/red,
@@ -38788,24 +38815,6 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
-"mjT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/table/reinforced/auto,
-/obj/item/extinguisher,
-/obj/item/wrench,
-/obj/item/screwdriver{
-	pixel_y = 10
-	},
-/obj/item/device/analyzer/atmospheric,
-/obj/item/device/analyzer/atmospheric,
-/turf/simulated/floor,
-/area/research_outpost/toxins)
 "mka" = (
 /turf/space/fluid,
 /area/space{
@@ -40597,10 +40606,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
-"ozk" = (
-/obj/machinery/vending/jobclothing/syndicate,
-/turf/simulated/floor/carpet/red/standard/edge/north,
-/area/listeningpost)
 "oAu" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 1;
@@ -42619,10 +42624,6 @@
 /obj/item/trench_map,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
-"rta" = (
-/obj/rack/organized/techstorage_med,
-/turf/simulated/floor/plating/random,
-/area/station/storage/tech)
 "ruq" = (
 /obj/ai_core_frame{
 	build_step = 2;
@@ -43830,15 +43831,6 @@
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
-"tsc" = (
-/obj/machinery/light/incandescent/greenish{
-	dir = 4
-	},
-/obj/machinery/computer/announcement/syndicate,
-/turf/simulated/floor/grey/side{
-	dir = 8
-	},
-/area/listeningpost)
 "tsI" = (
 /obj/lattice,
 /mob/living/critter/martian/soldier,
@@ -44462,6 +44454,25 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
+"uBh" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south{
+	pixel_z = 1
+	},
+/obj/machinery/firealarm/east,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/crew_quarters/market{
+	name = "Supply Lobby"
+	})
 "uCY" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibtorso"
@@ -44655,6 +44666,15 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"uUz" = (
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "rusted hatch"
+	},
+/turf/simulated/floor/damaged2,
+/area/derelict_diner)
 "uWa" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
@@ -44862,10 +44882,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"vsB" = (
-/obj/machinery/vending/standard/toxins,
-/turf/simulated/floor/engine,
-/area/research_outpost/chamber)
 "vsU" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -45434,25 +45450,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/caution/corner/ne,
 /area/station/engine/power)
-"wfT" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south{
-	pixel_z = 1
-	},
-/obj/machinery/firealarm/east,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 6
-	},
-/area/station/crew_quarters/market{
-	name = "Supply Lobby"
-	})
 "wgo" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone{
@@ -52220,7 +52217,7 @@ aRR
 aRR
 aPc
 aPm
-ozk
+aPv
 aPJ
 aQw
 aPm
@@ -53726,7 +53723,7 @@ aNk
 aNz
 aNj
 aPm
-tsc
+aOx
 aOT
 aPg
 aOT
@@ -80766,7 +80763,7 @@ bAA
 bBP
 tXX
 bEo
-wfT
+uBh
 bGa
 bGY
 bHW
@@ -82839,7 +82836,7 @@ aSd
 chc
 smn
 quk
-jJv
+jaG
 mHf
 smn
 nar
@@ -102164,7 +102161,7 @@ aIL
 aJb
 aJD
 xcK
-rta
+kWm
 chB
 aLt
 aDr
@@ -109331,7 +109328,7 @@ kSP
 gUu
 kpv
 fHN
-eKD
+uUz
 xRw
 eTo
 teg
@@ -129298,7 +129295,7 @@ elX
 gPd
 aTp
 bbb
-mjT
+bbt
 bbG
 bcb
 bcC
@@ -132631,7 +132628,7 @@ wdA
 wdA
 bcV
 bZn
-vsB
+cKm
 asN
 bZn
 bca

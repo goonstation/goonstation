@@ -1140,13 +1140,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"afe" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 10
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "afg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4232,6 +4225,17 @@
 	dir = 4;
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
+"aqJ" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 3
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -14554,18 +14558,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"aXB" = (
-/obj/storage/cart/forensic,
-/obj/disposalpipe/segment/morgue{
-	dir = 2;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aXC" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/wall/auto/supernorn,
@@ -14851,33 +14843,6 @@
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
-"aYE" = (
-/obj/table/wood/auto,
-/obj/item/audio_tape{
-	pixel_y = 8
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
-"aYF" = (
-/obj/table/wood/auto,
-/obj/item/device/detective_scanner,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/secure/ssafe{
-	pixel_y = -30
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -23525,6 +23490,11 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"bGX" = (
+/obj/grille/steel,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "bGY" = (
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
@@ -23921,19 +23891,6 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
-"bJm" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles2"
-	},
-/obj/fakeobject/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
-/obj/item/mine/radiation/armed,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "bJn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25823,6 +25780,25 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bPz" = (
+/turf/simulated/floor/grime,
+/area/station/science/lab)
+"bPC" = (
+/obj/table/auto,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -2;
+	pixel_y = 2
+	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bPD" = (
@@ -27738,6 +27714,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
+"bWt" = (
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "bWw" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -29610,25 +29590,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"ccM" = (
-/obj/table/auto,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -2;
-	pixel_y = 12
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -2;
-	pixel_y = 7
-	},
-/obj/item/device/analyzer/atmospheric{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/turf/simulated/floor/grime,
-/area/station/science/lab)
 "ccP" = (
 /obj/machinery/dispenser{
 	o2tanks = 5;
@@ -36384,6 +36345,10 @@
 /obj/machinery/computer/security/wooden_tv,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"czS" = (
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "czT" = (
 /obj/machinery/vending/floppy{
 	profit = 0
@@ -36396,6 +36361,11 @@
 "czV" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
+"czW" = (
+/obj/decal/stripe_caution,
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor,
+/area/listeningpost)
 "czX" = (
 /obj/machinery/bot/guardbot/bad{
 	on = 0
@@ -36497,6 +36467,14 @@
 "cAj" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost)
+"cAk" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/storage/crate,
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cAl" = (
@@ -36929,18 +36907,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
-"cBG" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles3"
-	},
-/obj/fakeobject/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
-/turf/simulated/floor/airless/plating/damaged3,
-/area/abandonedship)
 "cBI" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -36958,15 +36924,6 @@
 	dir = 4
 	},
 /obj/structure/girder,
-/turf/simulated/floor/airless/plating/scorched,
-/area/abandonedship)
-"cBL" = (
-/obj/fakeobject/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "cBM" = (
@@ -37964,6 +37921,19 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"ddX" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/obj/item/mine/radiation/armed,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "deH" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -38229,10 +38199,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"dpq" = (
-/obj/machinery/computer/announcement/syndicate,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "dpD" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -38310,11 +38276,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
-"drQ" = (
-/obj/grille/steel,
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/plating,
-/area/station/hangar/qm)
 "dsc" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -38455,18 +38416,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"dvf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Power Room"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_control,
-/turf/simulated/floor/grime,
-/area/station/engine/power)
 "dvn" = (
 /obj/item/device/radio/intercom/medical{
 	dir = 4
@@ -40676,6 +40625,16 @@
 "eSb" = (
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
+"eSg" = (
+/obj/table/wood/auto,
+/obj/item/storage/secure/ssafe{
+	pixel_y = -30
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "eSu" = (
 /obj/machinery/launcher_loader/north{
 	door_delay = 4
@@ -43902,6 +43861,13 @@
 	dir = 9
 	},
 /area/station/hallway/primary/south)
+"huq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/science/storage)
 "hur" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -44599,10 +44565,6 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"hTh" = (
-/obj/machinery/vending/standard/toxins,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "hTs" = (
 /obj/window_blinds/cog2/right,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -45611,6 +45573,15 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"iLz" = (
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
 "iLY" = (
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/carpet{
@@ -45990,6 +45961,18 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"jca" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 2;
+	icon_state = "pipe-c";
+	name = "crematorium pipe"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "jcv" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -46425,14 +46408,6 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"jvK" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost)
 "jvO" = (
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -46610,19 +46585,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"jEp" = (
-/obj/table/wood/auto,
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/item/peripheral/network/radio/locked,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_x = -2;
-	pixel_y = 10
-	},
-/obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "jFB" = (
 /obj/machinery/status_display,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -47045,23 +47007,6 @@
 	dir = 4
 	},
 /area/station/solar/south)
-"jSU" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating/jen,
-/area/station/engine/elect)
 "jTk" = (
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
@@ -48800,6 +48745,16 @@
 	dir = 1
 	},
 /area/station/engine/hotloop)
+"lpQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "lqf" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -48832,6 +48787,18 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/ranch)
+"lsz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Power Room"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
+/turf/simulated/floor/grime,
+/area/station/engine/power)
 "lsA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -50312,6 +50279,17 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
+"mDo" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/supplylobby)
 "mDt" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -51887,6 +51865,10 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
+"nPn" = (
+/obj/table/auto,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "nPp" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -54042,6 +54024,29 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"prR" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	icon_state = "eng_locked";
+	locked = 1;
+	name = "Substation Access"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/hotloop)
 "prW" = (
 /obj/stool/chair{
 	dir = 8
@@ -54055,17 +54060,6 @@
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"pts" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/status_display/market,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/supplylobby)
 "puR" = (
 /obj/item/cigbutt,
 /obj/decal/cleanable/dirt,
@@ -54256,32 +54250,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
-"pAQ" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Electrical Substation"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "aipower";
-	enter_id = "outer";
-	name = "AI Power"
-	},
-/obj/mapping_helper/access/engineering_control,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload_foyer)
 "pCg" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/firedoor_spawn,
@@ -54383,6 +54351,18 @@
 	dir = 4
 	},
 /area/station/security/main)
+"pHe" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
 "pHX" = (
 /obj/storage/closet/biohazard,
 /obj/decal/stripe_caution,
@@ -54820,6 +54800,17 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/routing/medsci)
+"pZN" = (
+/obj/table/wood/auto,
+/obj/item/audio_tape{
+	pixel_y = 8
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/device/detective_scanner,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "pZP" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -56012,17 +56003,6 @@
 	dir = 9
 	},
 /area/space)
-"qNy" = (
-/obj/table/reinforced/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 3
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/fitness)
 "qNS" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -56989,6 +56969,23 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
+"rIv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "bdoor_pyro";
+	name = "rusted airlock"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
 "rIQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -57177,23 +57174,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
-"rOP" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/fakeobject/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	dir = 4;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "bdoor_pyro";
-	name = "rusted airlock"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/grime,
-/area/station/hallway/primary/east)
 "rPq" = (
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellow/side,
@@ -58581,6 +58561,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"sPF" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/elect)
 "sQn" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -62253,6 +62241,32 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
+"vHz" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Electrical Substation"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aipower";
+	enter_id = "outer";
+	name = "AI Power"
+	},
+/obj/mapping_helper/access/engineering_control,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload_foyer)
 "vHP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62316,10 +62330,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/routing/catering)
-"vKQ" = (
-/obj/table/auto,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "vKV" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler/bar,
@@ -63222,11 +63232,6 @@
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/sortingRoom)
-"wvm" = (
-/obj/decal/stripe_caution,
-/obj/machinery/vending/jobclothing/syndicate,
-/turf/simulated/floor,
-/area/listeningpost)
 "wwh" = (
 /obj/lattice{
 	dir = 8;
@@ -63403,29 +63408,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
-"wBg" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	icon_state = "eng_locked";
-	locked = 1;
-	name = "Substation Access"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_engine,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/hotloop)
 "wCc" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -63698,16 +63680,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"wLV" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "wNc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65177,6 +65149,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
+"xZz" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/item/peripheral/network/radio/locked,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/black,
+/area/listeningpost)
 "xZQ" = (
 /obj/lattice{
 	dir = 10;
@@ -73992,7 +73977,7 @@ oct
 cAF
 cAY
 cBi
-bJm
+ddX
 cBA
 cBI
 oct
@@ -74900,7 +74885,7 @@ cBb
 cBl
 oct
 oct
-cBL
+iLz
 oct
 adC
 adC
@@ -76107,7 +76092,7 @@ oct
 oct
 oct
 oct
-cBG
+pHe
 oct
 oct
 adC
@@ -91721,7 +91706,7 @@ bPx
 bOd
 bHW
 bYT
-afe
+huq
 iIF
 ite
 ced
@@ -94129,12 +94114,12 @@ bHW
 bHW
 bHW
 bHW
-ccM
+bPC
 bQS
 bSv
-vKQ
+nPn
 qzy
-hTh
+bWt
 bXx
 vqd
 dkG
@@ -108307,7 +108292,7 @@ bvO
 bwF
 bxx
 bxx
-pAQ
+vHz
 bxx
 bxx
 bCh
@@ -109213,7 +109198,7 @@ bqk
 emN
 lLd
 izk
-wBg
+prR
 bqk
 bqk
 bqk
@@ -110360,7 +110345,7 @@ alV
 amN
 aoi
 apt
-qNy
+aqJ
 akT
 akT
 auH
@@ -111639,7 +111624,7 @@ ogp
 bsN
 bGw
 piQ
-dvf
+lsz
 bHo
 hRQ
 bLU
@@ -111944,7 +111929,7 @@ xgT
 cff
 cfj
 qMI
-jSU
+sPF
 clf
 vdE
 gZR
@@ -112246,7 +112231,7 @@ xSS
 bIn
 txE
 qMI
-jSU
+sPF
 bNu
 eyq
 clh
@@ -116427,7 +116412,7 @@ aSt
 aUM
 aWf
 aXy
-aYE
+pZN
 aRD
 aYQ
 aYQ
@@ -116508,7 +116493,7 @@ mPB
 cIO
 yht
 yht
-wLV
+lpQ
 rWQ
 adC
 adC
@@ -116728,8 +116713,8 @@ aSx
 aTA
 aUN
 ben
-aXB
-aYF
+jca
+eSg
 aZA
 aWB
 dAz
@@ -117941,7 +117926,7 @@ bLI
 bLI
 bau
 bLI
-rOP
+rIv
 bdq
 bdq
 bfs
@@ -122215,7 +122200,7 @@ bPq
 hCK
 bFo
 bPn
-pts
+mDo
 bSd
 bTz
 bUU
@@ -123113,7 +123098,7 @@ mSG
 mwn
 rYg
 fRt
-drQ
+bGX
 pNt
 ceH
 bJN
@@ -144956,7 +144941,7 @@ ojy
 rFM
 sAI
 sAI
-jvK
+cAk
 cAs
 sAI
 cBQ
@@ -145256,7 +145241,7 @@ sAI
 sAI
 ivB
 sAI
-wvm
+czW
 sAI
 sAI
 cAt
@@ -147067,7 +147052,7 @@ czp
 jAF
 yfV
 sAI
-jEp
+xZz
 czZ
 cAg
 cDx
@@ -147369,7 +147354,7 @@ sAI
 sAI
 sAI
 sAI
-dpq
+czS
 czZ
 cAg
 cAp

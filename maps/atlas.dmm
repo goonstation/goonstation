@@ -483,23 +483,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"acb" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "acc" = (
 /obj/blind_switch/area/south,
 /turf/simulated/floor/carpet/grime,
@@ -2686,12 +2669,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"akC" = (
-/obj/storage/cart/forensic,
-/obj/decal/stripe_caution,
-/obj/machinery/recharger/wall/sticky,
-/turf/simulated/floor,
-/area/station/security/main)
 "akD" = (
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor,
@@ -6780,6 +6757,23 @@
 /obj/item/pen,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
+"aAm" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/science/artifact)
 "aAn" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -10214,6 +10208,17 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/red,
 /area/listeningpost)
+"aNo" = (
+/obj/rack,
+/obj/item/tank/oxygen,
+/turf/simulated/floor/red,
+/area/listeningpost)
+"aNr" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/listeningpost)
 "aNs" = (
 /obj/securearea{
 	desc = "";
@@ -10437,6 +10442,17 @@
 /obj/machinery/power/data_terminal,
 /turf/space,
 /area/space)
+"aOh" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
+	},
+/turf/simulated/floor/airless/circuit/red,
+/area/listeningpost)
 "aOi" = (
 /obj/marker/supplymarker,
 /obj/cable{
@@ -10605,6 +10621,12 @@
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 4
+	},
+/area/listeningpost)
+"aOR" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/redblack{
+	dir = 6
 	},
 /area/listeningpost)
 "aOS" = (
@@ -13176,6 +13198,14 @@
 	icon_state = "corner_east"
 	},
 /area/station/engine/coldloop)
+"aYN" = (
+/obj/table/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lab)
 "aYO" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/grime,
@@ -14379,12 +14409,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"dzK" = (
-/obj/machinery/vending/jobclothing/syndicate,
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
-/area/listeningpost)
 "dzV" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/se_triple{
@@ -14601,12 +14625,6 @@
 	dir = 8
 	},
 /area/station/engine/coldloop)
-"elv" = (
-/obj/machinery/vending/jobclothing/syndicate,
-/turf/simulated/floor/redblack{
-	dir = 6
-	},
-/area/listeningpost)
 "emg" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -14996,23 +15014,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"fkW" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = 23
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 1
-	},
-/area/station/science/artifact)
 "fmi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15084,17 +15085,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
-"fvG" = (
-/obj/machinery/computer/ordercomp{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 5
-	},
-/area/station/hallway/primary/west)
 "fxA" = (
 /obj/landmark/gps_waypoint,
 /obj/decal/tile_edge/line/black{
@@ -15110,6 +15100,17 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
+"fyL" = (
+/obj/machinery/computer/ordercomp{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/hallway/primary/west)
 "fzr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15258,6 +15259,12 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
+"fSq" = (
+/obj/decal/stripe_caution,
+/obj/machinery/recharger/wall/sticky,
+/obj/storage/cart/forensic,
+/turf/simulated/floor,
+/area/station/security/main)
 "fUd" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -16611,6 +16618,12 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
+"koV" = (
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/lab)
 "koZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16924,12 +16937,6 @@
 /obj/landmark/start/job/miner,
 /turf/simulated/floor/engine,
 /area/station/mining/staff_room)
-"lgi" = (
-/obj/machinery/vending/standard/toxins,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
-/area/station/science/lab)
 "liZ" = (
 /obj/rack,
 /obj/item/reagent_containers/glass/oilcan,
@@ -18199,10 +18206,16 @@
 	dir = 6
 	},
 /area/station/medical/medbay)
-"oXI" = (
-/obj/rack,
-/obj/item/tank/oxygen,
-/turf/simulated/floor/red,
+"oYk" = (
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/simulated/floor/redblack,
 /area/listeningpost)
 "paq" = (
 /obj/railing/orange/reinforced{
@@ -18352,6 +18365,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
+"ppo" = (
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "ppI" = (
 /obj/table/auto,
 /obj/item/scalpel,
@@ -19073,17 +19090,20 @@
 /obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
-"rvo" = (
-/obj/machinery/light{
-	layer = 3
+"rty" = (
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/machinery/door_control/antagscanner{
-	id = "Sleeper_Access";
-	name = "Dubious Hand Scanner";
-	pixel_y = -33
+/obj/submachine/cargopad/artlab,
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
-/turf/simulated/floor/redblack,
-/area/listeningpost)
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/turf/simulated/floor/circuit/purple,
+/area/station/science/artifact)
 "rvp" = (
 /obj/table/wood/auto/desk,
 /obj/noticeboard/persistent{
@@ -19483,21 +19503,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"sUh" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/door_control/antagscanner{
-	id = "Sleeper_Access";
-	name = "Dubious Hand Scanner";
-	pixel_y = 25
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "sUL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19538,17 +19543,6 @@
 	dir = 8
 	},
 /area/station/ranch)
-"sZd" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
-/turf/simulated/floor/airless/circuit/red,
-/area/listeningpost)
 "sZT" = (
 /obj/machinery/conveyor/SN{
 	id = "outbound";
@@ -19797,14 +19791,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"tHx" = (
-/obj/table/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/lab)
 "tLD" = (
 /obj/item/sheet/glass/fullstack,
 /obj/rack,
@@ -20705,20 +20691,6 @@
 /obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"vWE" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/submachine/cargopad/artlab,
-/obj/disposalpipe/segment/ejection{
-	dir = 8
-	},
-/obj/item/cargotele{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/turf/simulated/floor/circuit/purple,
-/area/station/science/artifact)
 "vXs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -21081,6 +21053,21 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
+"xce" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "xcB" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -63914,7 +63901,7 @@ aIT
 nUY
 exF
 mmr
-tHx
+aYN
 aKH
 aaa
 aaa
@@ -64215,7 +64202,7 @@ aIv
 aIR
 vqf
 aJI
-lgi
+koV
 aKy
 aKH
 aaa
@@ -65691,7 +65678,7 @@ iui
 sTu
 iFd
 luG
-fvG
+fyL
 qOn
 mlP
 akq
@@ -65719,7 +65706,7 @@ aUx
 aSD
 aKv
 aSL
-vWE
+rty
 aDU
 aCs
 aIR
@@ -66017,7 +66004,7 @@ axg
 avQ
 aDV
 aDT
-fkW
+aAm
 aFn
 aFn
 aVC
@@ -69606,7 +69593,7 @@ aaa
 aaL
 abo
 abI
-acb
+ppo
 acA
 adc
 uFr
@@ -75356,7 +75343,7 @@ agW
 ogd
 ahO
 ajK
-akC
+fSq
 pHn
 amW
 aod
@@ -94222,7 +94209,7 @@ aaa
 agK
 aNe
 aNO
-sZd
+aOh
 aNO
 aNe
 aYB
@@ -97238,7 +97225,7 @@ urI
 agK
 aMX
 aNf
-oXI
+aNo
 aUH
 aNe
 aNW
@@ -97246,7 +97233,7 @@ aZF
 aOA
 aNe
 aUH
-oXI
+aNo
 aNf
 aMX
 aYB
@@ -97842,7 +97829,7 @@ aaa
 aRI
 aMX
 aNe
-sUh
+xce
 aUH
 aNe
 aNY
@@ -97850,7 +97837,7 @@ aJf
 aOB
 aNe
 aUH
-rvo
+oYk
 aNe
 aMX
 aXU
@@ -99050,7 +99037,7 @@ aaa
 aaa
 aaa
 aNe
-dzK
+aNr
 aHr
 aNL
 aOb
@@ -99058,7 +99045,7 @@ aWX
 aOC
 aNL
 aHr
-elv
+aOR
 aNe
 aaa
 aaa

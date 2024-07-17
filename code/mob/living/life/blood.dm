@@ -7,7 +7,7 @@
 		if (!blood_system) // I dunno if this'll do what I want but hopefully it will
 			return ..()
 
-		if (owner.nodamage || !owner.can_bleed || isvampire(owner))
+		if (isdead(owner) || owner.nodamage || !owner.can_bleed || isvampire(owner))
 			if (owner.bleeding)
 				owner.bleeding = 0
 			return ..()

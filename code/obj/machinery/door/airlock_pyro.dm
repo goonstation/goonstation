@@ -74,9 +74,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	cant_emag = TRUE
 	cyborgBumpAccess = FALSE
 
-
-
-
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"
 	icon_state = "sec_closed"
