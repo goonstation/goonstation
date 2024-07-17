@@ -5909,10 +5909,6 @@
 "awM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
-"awN" = (
-/obj/disposalpipe/segment/transport,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/main)
 "awQ" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -7223,7 +7219,6 @@
 /area/station/security/main)
 "aBs" = (
 /obj/grille/steel,
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "aBu" = (
@@ -8085,13 +8080,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
-"aDV" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/security/main)
 "aEa" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
@@ -8833,7 +8821,6 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -9083,7 +9070,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/segment/transport,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -9565,16 +9551,10 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"aJe" = (
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/security/main)
 "aJf" = (
 /obj/disposalpipe/segment/transport{
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -9596,12 +9576,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"aJi" = (
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/security/main)
 "aJj" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 1;
@@ -10473,16 +10447,16 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aLE" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/storage/scanner{
-	bank_id = "security"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
+	},
+/obj/decal/stripe_delivery,
+/obj/disposalpipe/trunk/transport{
+	dir = 1
+	},
+/obj/machinery/disposal{
+	name = "Test Chamber Chute"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
@@ -10798,12 +10772,6 @@
 	dir = 1;
 	icon_state = "fred1"
 	},
-/area/station/security/main)
-"aMM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/supernorn,
 /area/station/security/main)
 "aMO" = (
 /obj/decal/poster/wallsign/security,
@@ -40589,13 +40557,13 @@
 /turf/space,
 /area/space)
 "eEI" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/scanner{
+	bank_id = "security"
 	},
-/obj/disposalpipe/trunk/transport{
-	dir = 1
+/obj/cable{
+	icon_state = "0-8"
 	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
 "eEN" = (
@@ -45184,11 +45152,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"igs" = (
-/obj/disposalpipe/segment/transport,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "ihy" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -45875,9 +45838,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "iMW" = (
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "iNm" = (
@@ -46270,10 +46230,6 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/bar)
 "jeh" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /turf/simulated/floor/red/corner,
 /area/station/security/main)
 "jeE" = (
@@ -57333,6 +57289,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "rLp" = (
@@ -62821,6 +62778,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "vVq" = (
@@ -63550,7 +63510,6 @@
 	dir = 4;
 	name = "Interrogation Room"
 	},
-/obj/disposalpipe/segment/transport,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
@@ -95796,18 +95755,18 @@ lww
 iik
 eAM
 iMW
-igs
-igs
-awN
+lww
+lww
+awK
 wxx
-awN
+awK
 aBs
-awN
-awN
-awN
+awK
+awK
+awK
 aGC
 aHG
-aJe
+aHB
 aKi
 aLu
 uzM
@@ -96109,7 +96068,7 @@ vOp
 dJo
 aGD
 avd
-aJf
+aHB
 usN
 aLv
 aGp
@@ -96411,7 +96370,7 @@ mCv
 dXC
 aGE
 aGe
-aJf
+aHB
 aKl
 aLw
 aMJ
@@ -96713,7 +96672,7 @@ sGG
 vNW
 aGF
 aHI
-aDV
+aHH
 aKk
 aLx
 lYi
@@ -97015,7 +96974,7 @@ ohW
 dJo
 aGG
 bhZ
-aJf
+aHB
 aKm
 fkj
 fkj
@@ -97317,7 +97276,7 @@ ail
 aho
 aho
 aHK
-aJf
+aHB
 aKn
 aLz
 pHc
@@ -97619,8 +97578,8 @@ aEa
 aFj
 aho
 kwp
-aJi
-aJe
+aHB
+aHB
 aLA
 awM
 rwX
@@ -97922,7 +97881,7 @@ aFk
 ubA
 omr
 aJj
-aJf
+aHB
 aLB
 awM
 aOa
@@ -98224,7 +98183,7 @@ aoV
 uLz
 aHN
 aJk
-aJf
+aHB
 hfb
 awM
 aOa
@@ -98526,7 +98485,7 @@ anK
 aGJ
 iSt
 aJk
-aJf
+aHB
 aLD
 awM
 aOa
@@ -98830,7 +98789,7 @@ aHP
 aJk
 aJf
 aLE
-aMM
+awM
 aOb
 aOh
 aQg
