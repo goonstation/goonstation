@@ -19732,9 +19732,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
 	name = "Armory";
-	req_access = null
+	
 	},
 /obj/machinery/secscanner{
 	pixel_y = -10

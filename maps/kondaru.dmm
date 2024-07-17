@@ -52694,9 +52694,8 @@
 /area/station/engine/core)
 "sNE" = (
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
 	name = "Armory";
-	req_access = null
+	
 	},
 /obj/cable{
 	icon_state = "1-2"

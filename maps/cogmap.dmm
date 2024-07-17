@@ -40971,7 +40971,6 @@
 /area/station/routing/medsci)
 "ffc" = (
 /obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
 	name = "Armory"
 	},
 /obj/mapping_helper/firedoor_spawn,

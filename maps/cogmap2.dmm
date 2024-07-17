@@ -66861,7 +66861,6 @@
 /area/station/com_dish/auxdish)
 "owh" = (
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
 	dir = 4;
 	name = "Armory"
 	},

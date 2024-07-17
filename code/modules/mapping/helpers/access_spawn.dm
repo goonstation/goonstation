@@ -274,6 +274,11 @@
 	req_access = list(access_armory)
 	color = SECURITY
 
+	setup()
+		. = ..()
+		for (var/obj/machinery/door/airlock/secure_airlock in src.loc)
+			secure_airlock.aiControlDisabled = TRUE
+
 /obj/mapping_helper/access/engineering_chief
 	name = "CE access spawn"
 	req_access = list(access_engineering_chief)

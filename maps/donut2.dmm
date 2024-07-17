@@ -22720,9 +22720,7 @@
 /area/station/quartermaster/magnet)
 "fSk" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiHacking = 1
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)

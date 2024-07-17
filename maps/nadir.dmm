@@ -38367,7 +38367,6 @@
 	})
 "qih" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
 	dir = 4
 	},
 /obj/cable{
