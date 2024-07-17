@@ -14559,7 +14559,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aXB" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c";
@@ -14568,6 +14567,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aXC" = (
@@ -14866,17 +14866,11 @@
 /obj/item/audio_tape{
 	pixel_y = 5
 	},
-/obj/item/device/audio_log,
 /obj/item/device/detective_scanner,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYF" = (
 /obj/table/wood/auto,
-/obj/item/device/detective_scanner,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
 /obj/item/storage/secure/ssafe{
 	pixel_y = -30
 	},
@@ -23934,7 +23928,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -36975,7 +36969,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -37003,7 +36997,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "cBL" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -47038,20 +47032,11 @@
 	},
 /area/station/solar/south)
 "jSU" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering{
-	pixel_x = -4;
-	pixel_y = -2
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "jTk" = (
@@ -57176,7 +57161,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
 	icon = 'icons/obj/junk.dmi';
