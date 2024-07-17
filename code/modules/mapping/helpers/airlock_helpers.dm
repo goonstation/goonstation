@@ -60,17 +60,17 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 
 	setup()
 		// use the bolt and weld vars to determine how the fake door should look.
-		if (/obj/mapping_helper/airlock/bolter in src.loc)
+		if (/obj/mapping_helper/airlock/bolter in range(0,src))
 			src.bolt = TRUE
-		if (/obj/mapping_helper/airlock/weld in src.loc)
+		if (/obj/mapping_helper/airlock/welder in range(0,src))
 			src.weld = TRUE
-		for (var/obj/machinery/door/airlock/D in src.loc)
-			if (D.bolted)
+		for (var/obj/machinery/door/airlock/D in range(0,src))
+			if (D.locked)
 				src.bolt = TRUE
 			if (D.welded)
 				src.weld = TRUE
 			// now we know it is bolted/welded; create the door
-			/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken
+			var/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken
 			// make sure it's using the right icon state
 			if (src.bolt)
 				D.locked = TRUE
