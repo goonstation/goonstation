@@ -33673,7 +33673,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "eKD" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
