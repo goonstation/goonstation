@@ -1,5 +1,10 @@
 
 (t)wed jul 17 24
+(u)LeahTheTech
+(p)20006
+(e)|
+(+)Removed Nadir nuke plant sites: nerd dungeon, east crew quarters, radio lab.
+(+)Added Nadir nuke plant sites: hydroponics, cafeteria, extraction nexus.
 (u)KakoLookiyam
 (p)20008
 (e)⚖🐁|C-Balance, A-Critters
