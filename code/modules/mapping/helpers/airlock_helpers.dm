@@ -82,5 +82,7 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			F.icon = D.icon
 			F.icon_state = F.icon_state
 			// final touches
-			F.name = "Rusted " + D.name
+			F.name = D.name
+			F.desc = D.desc
+			F.density = D.density
 			qdel(D)
