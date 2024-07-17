@@ -873,7 +873,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	if (target.client)
 		handle_button_addition()
 	rider.pixel_x = 0
-	rider.pixel_y = 10
+	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
 
 	for (var/mob/C in AIviewers(src))
