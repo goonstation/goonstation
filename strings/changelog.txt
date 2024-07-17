@@ -1,4 +1,9 @@
 
+(t)wed jul 17 24
+(u)KakoLookiyam
+(p)20008
+(e)⚖🐁|C-Balance, A-Critters
+(+)Skeleton halberds are once again effective against borgs.
 (t)tue jul 16 24
 (u)tarmunora
 (+)Detective spy sticker pinpointer cannot track stickers that are nested too deeply inside of things - inside a backpack works, but hidden inside a box in a backpack will not.
