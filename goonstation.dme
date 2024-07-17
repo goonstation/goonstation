@@ -27,11 +27,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#if defined(SPACEMAN_DMM) && !defined(DISABLE_SECRETS) // For StrongDMM since it dies on the fexists() check - doesn't die if the file doesn't exist
+#if fexists("+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
 #include "+secret\__secret.dme"
-#endif
-#if fexists("./+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS) && !defined(SECRETS_ENABLED)
-#include ".\+secret\__secret.dme" // This needs to be a ""different path""
 #endif
 #include "code\__secret_public.dme"
 
