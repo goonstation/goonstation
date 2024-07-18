@@ -1396,6 +1396,12 @@ TYPEINFO(/area/diner)
 	requires_power = FALSE
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/watchful_eye_sensor
 
+/area/syndicate_fenrir
+	name = "Syndicate Research Facility Fenrir"
+	icon_state = "red"
+	requires_power = FALSE
+
+
 /area/pasiphae
 	name = "Pasiphae Primary Zone"
 	icon_state = "hallC"

@@ -261,6 +261,17 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	get_ranged_protection()
 		return 2.5
 
+/mob/living/critter/robotic/gunbot/syndicate/fenrir
+	health_brute = 20
+	health_burn = 20
+	is_npc = TRUE
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
 /mob/living/critter/robotic/gunbot/syndicate/polaris
 	name = "\improper unmarked robot"
 	real_name = "\improper unmarked robot"
