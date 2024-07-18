@@ -283,7 +283,8 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office";
 	pixel_x = 32;
-	pixel_y = 2
+	pixel_y = 2;
+	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -3523,7 +3524,8 @@
 	name = "Brig persistent notice board";
 	persistent_id = "brig";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -5831,7 +5833,8 @@
 	name = "Mechanics Workshop persistent notice board";
 	persistent_id = "mechanics";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -10834,7 +10837,8 @@
 	name = "Crew Quarters persistent notice board";
 	persistent_id = "crew quarters";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -11268,7 +11272,8 @@
 	name = "Botany persistent notice board";
 	persistent_id = "botany";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)

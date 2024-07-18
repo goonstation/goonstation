@@ -32427,7 +32427,8 @@
 	name = "Botany persistent notice board";
 	persistent_id = "botany";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /obj/submachine/seed_manipulator{
 	dir = 8

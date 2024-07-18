@@ -13523,7 +13523,8 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office";
 	pixel_x = 32;
-	pixel_y = 2
+	pixel_y = 2;
+	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -16922,7 +16923,8 @@
 	name = "Customs persistent notice board";
 	persistent_id = "customs";
 	pixel_x = -32;
-	pixel_y = 2
+	pixel_y = 2;
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
