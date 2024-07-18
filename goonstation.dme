@@ -1677,6 +1677,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\storage\unholdable.dm"
 #include "code\modules\storage\items\bag_of_holding.dm"
 #include "code\modules\storage\items\bible.dm"
+#include "code\modules\storage\items\firstaid.dm"
 #include "code\modules\storage\items\lanyard.dm"
 #include "code\modules\storage\items\terminus.dm"
 #include "code\modules\telescience\radiostation.dm"

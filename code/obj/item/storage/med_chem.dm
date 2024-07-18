@@ -7,15 +7,16 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
-	max_wclass = W_CLASS_SMALL // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
+	max_wclass = W_CLASS_TINY // custom storage datum allows for pill bottles
 	var/list/kit_styles = null
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			if (length(kit_styles))
-				icon_state = pick(kit_styles)
-				item_state = icon_state
+		// the parent spawns the contents in; creating a new storage here transfers that contents over
+		src.create_storage(/datum/storage/firstaid, list(), can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn)
+		if (length(kit_styles))
+			icon_state = pick(kit_styles)
+			item_state = icon_state
 
 
 /obj/item/storage/firstaid/regular
