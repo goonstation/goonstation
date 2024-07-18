@@ -1,4 +1,9 @@
 
+(t)thu jul 18 24
+(u)FancySchmancyNecromancy
+(p)20010
+(e)🎨|C-Sprites
+(+)Added a new sprite for the Janicart.
 (t)wed jul 17 24
 (u)LeahTheTech
 (p)20006
