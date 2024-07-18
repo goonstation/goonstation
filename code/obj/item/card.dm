@@ -289,6 +289,12 @@ TYPEINFO(/obj/item/card/emag)
 	src.emagged = 1
 	return TRUE
 
+/obj/item/card/id/syndicate_scientist
+	icon_state = "id_syndie"
+	assignment = "Scientist"
+	desc = "A 'syndicate' identification card, the red paint seems to be peeling off."
+	keep_icon = TRUE
+	access = list(access_research, access_syndicate_research, access_researchfoyer, access_maint_tunnels)
 /*
 /obj/item/card/id/verb/read()
 	set src in usr

@@ -82,6 +82,8 @@
 #define access_syndicate_256 66 // highest level documents in terra8
 #define access_syndicate_512 67 // allude to this but don't use it except for super special things
 
+#define access_syndicate_research 68// for the Syndicate Research Facility
+
 //Owlzone access
 #define access_owlerymaint 70
 #define access_owlerysec 71
