@@ -261,9 +261,9 @@
 		new_state = STOP_FIRING
 
 	// Consume power from network
-	var/adj_charge = clamp(-src.charge, starting_surplus - power_used, src.capacity - src.charge)
+	var/adj_charge = clamp(starting_surplus - power_used, -src.charge, src.capacity - src.charge)
 	power_used -= min(0, adj_charge)
-	var/load = clamp(0, power_used, src.excess)
+	var/load = clamp(power_used, 0, starting_surplus)
 	if(terminal?.add_load(load))						// attempt to add the load to the terminal side network
 		src.charge += adj_charge				// adjust the charge if we did
 		src.load_last_tick = load
