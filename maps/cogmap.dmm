@@ -27441,7 +27441,7 @@
 /area/station/science/lobby)
 "bVo" = (
 /obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "test_chamber";
+	mail_tag = "testchamber";
 	name = "test chamber mail router"
 	},
 /turf/simulated/floor/purple/corner{
