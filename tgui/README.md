@@ -20,8 +20,6 @@ This project uses React. Take your time to read the guide:
 
 - [React guide](https://react.dev/learn)
 
-If you were already familiar with an older, Ractive-based tgui, and want to translate concepts between old and new tgui, read this [interface conversion guide](docs/converting-old-tgui-interfaces.md).
-
 ### Other Documentation
 
 - [Component Reference](docs/component-reference.md) - UI building blocks
