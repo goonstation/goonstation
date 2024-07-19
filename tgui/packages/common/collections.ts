@@ -204,27 +204,27 @@ export const uniqBy = <T extends unknown>(
   let index = -1;
   // prettier-ignore
   outer:
-  while (++index < length) {
-    let value: T | 0 = array[index];
-    const computed = iterateeFn ? iterateeFn(value) : value;
-    if (computed === computed) {
-      let seenIndex = seen.length;
-      while (seenIndex--) {
-        if (seen[seenIndex] === computed) {
-          continue outer;
+    while (++index < length) {
+      let value: T | 0 = array[index];
+      const computed = iterateeFn ? iterateeFn(value) : value;
+      if (computed === computed) {
+        let seenIndex = seen.length;
+        while (seenIndex--) {
+          if (seen[seenIndex] === computed) {
+            continue outer;
+          }
         }
+        if (iterateeFn) {
+          seen.push(computed);
+        }
+        result.push(value);
+      } else if (!seen.includes(computed)) {
+        if (seen !== result) {
+          seen.push(computed);
+        }
+        result.push(value);
       }
-      if (iterateeFn) {
-        seen.push(computed);
-      }
-      result.push(value);
-    } else if (!seen.includes(computed)) {
-      if (seen !== result) {
-        seen.push(computed);
-      }
-      result.push(value);
     }
-  }
   return result;
 };
 
