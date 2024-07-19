@@ -1,15 +1,23 @@
-## NPM
-/node_modules
+## NPM garbage
+node_modules
 *.log
 package-lock.json
 
-## Yarn
+## Yarn stuff
 /.pnp.*
 /.yarn/*
-!/.yarn/plugins
 !/.yarn/releases
+!/.yarn/plugins
 !/.yarn/sdks
+!/.yarn/versions
 !/.yarn/lock.yml
+
+## Build artifacts
+/public/.tmp/**/*
+/public/**/*
+!/public/*.html
+!/public/tgui-polyfill.min.js
+/coverage
 
 # Editor Files
 *.idea/*
