@@ -22,7 +22,7 @@ export { Dropdown } from './Dropdown';
 export { Flex } from './Flex';
 export { Grid } from './Grid';
 export { Icon } from './Icon';
-export { Image } from './Image';
+export { Image } from './goon/Image';
 export { Input } from './Input';
 export { Interactive } from './Interactive';
 export { ItemList } from './goonstation/ItemList';

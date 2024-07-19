@@ -1,6 +1,7 @@
 import { InfernoNode } from 'inferno';
-import { BoxProps, computeBoxProps } from './Box';
-import { Tooltip } from './Tooltip';
+
+import { BoxProps, computeBoxProps } from '../Box';
+import { Tooltip } from '../Tooltip';
 
 type Props = Partial<{
   fixBlur: boolean; // true is default, this is an ie thing
