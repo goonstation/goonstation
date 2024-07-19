@@ -283,7 +283,8 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office";
 	pixel_x = 32;
-	pixel_y = 2
+	pixel_y = 2;
+	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -484,20 +485,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "acb" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "acc" = (
@@ -2693,9 +2681,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "akC" = (
-/obj/storage/cart/forensic,
 /obj/decal/stripe_caution,
 /obj/machinery/recharger/wall/sticky,
+/obj/storage/cart/forensic,
 /turf/simulated/floor,
 /area/station/security/main)
 "akD" = (
@@ -3536,7 +3524,8 @@
 	name = "Brig persistent notice board";
 	persistent_id = "brig";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -5844,7 +5833,8 @@
 	name = "Mechanics Workshop persistent notice board";
 	persistent_id = "mechanics";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -6794,6 +6784,10 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -10243,20 +10237,11 @@
 /area/listeningpost)
 "aNo" = (
 /obj/rack,
-/obj/item/clothing/suit/space/syndicate,
-/obj/item/clothing/head/helmet/space/syndicate,
-/obj/item/tank/jetpack,
+/obj/item/tank/oxygen,
 /turf/simulated/floor/red,
 /area/listeningpost)
-"aNq" = (
-/obj/storage/closet,
-/obj/item/clothing/under/misc/syndicate,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "aNr" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -10485,13 +10470,14 @@
 /turf/space,
 /area/space)
 "aOh" = (
-/obj/table/auto,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/pinpointer/disk,
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
+	},
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
@@ -10664,17 +10650,8 @@
 	dir = 4
 	},
 /area/listeningpost)
-"aOO" = (
-/obj/rack,
-/turf/simulated/floor/red,
-/area/listeningpost)
-"aOQ" = (
-/obj/storage/closet,
-/obj/item/clothing/under/misc/syndicate,
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "aOR" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -10860,7 +10837,8 @@
 	name = "Crew Quarters persistent notice board";
 	persistent_id = "crew quarters";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -11294,7 +11272,8 @@
 	name = "Botany persistent notice board";
 	persistent_id = "botany";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -13250,21 +13229,6 @@
 /area/station/engine/coldloop)
 "aYN" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 8;
-	pixel_y = -4
-	},
-/obj/item/device/timer,
-/obj/item/device/prox_sensor{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/assembly/time_ignite,
-/obj/item/device/igniter,
 /obj/item/device/analyzer/atmospheric,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -15172,9 +15136,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/status_display{
-	pixel_x = 32
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -16674,7 +16635,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "koV" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -18001,6 +17962,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"odD" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "ofD" = (
 /turf/simulated/floor/white/side{
 	dir = 5
@@ -18177,6 +18142,10 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"oSa" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/tools)
 "oSG" = (
 /obj/machinery/microwave{
 	pixel_y = 6;
@@ -18255,8 +18224,6 @@
 	},
 /area/station/medical/medbay)
 "oYk" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
 /obj/machinery/light{
 	layer = 3
 	},
@@ -19062,6 +19029,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
+"rkG" = (
+/obj/table/auto,
+/obj/item/pinpointer/disk,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost)
 "rlI" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/purpleish{
@@ -19138,6 +19110,10 @@
 /obj/submachine/cargopad/artlab,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
+	},
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
@@ -21080,8 +21056,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "xce" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -63281,7 +63255,7 @@ aAr
 abD
 abN
 abD
-abN
+odD
 bie
 adX
 aeI
@@ -66008,7 +65982,7 @@ aco
 ahA
 ahA
 ahA
-ahA
+oSa
 ahA
 aca
 alU
@@ -94843,7 +94817,7 @@ aNG
 aNQ
 aUH
 aOv
-aNG
+rkG
 ohq
 aaa
 aaa
@@ -97261,7 +97235,7 @@ aZF
 aOA
 aNe
 aUH
-aOO
+aNo
 aNf
 aMX
 aYB
@@ -98159,7 +98133,7 @@ aaa
 aaa
 acl
 aNe
-aNq
+aOB
 aUH
 aNe
 aNZ
@@ -98167,7 +98141,7 @@ aJf
 aNX
 aNe
 aUH
-aOQ
+aNY
 aNe
 aJe
 aaa
@@ -98461,7 +98435,7 @@ aaa
 aaa
 aaa
 ohq
-aNq
+aOB
 aUH
 aNe
 aNY
@@ -98469,7 +98443,7 @@ aJf
 aOB
 aNe
 aUH
-aOQ
+aNY
 ohq
 aaa
 aaa
@@ -98763,7 +98737,7 @@ aaa
 aaa
 aaa
 ohq
-aNq
+aOB
 aUH
 aNL
 aOa
@@ -98771,7 +98745,7 @@ aFQ
 aOa
 aNL
 aUH
-aOQ
+aNY
 ohq
 aaa
 aaa

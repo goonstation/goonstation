@@ -105,6 +105,13 @@ TYPEINFO(/obj/machinery/shipalert)
 			//toggle off
 			shipAlertState = SHIP_ALERT_GOOD
 
+			// set status displays to default
+			var/datum/signal/status_signal = get_free_signal()
+			status_signal.data["sender"] = "00000000"
+			status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT
+			status_signal.data["address_tag"] = "STATDISPLAY"
+			radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
+
 			src.update_lights()
 
 			ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
@@ -125,6 +132,15 @@ TYPEINFO(/obj/machinery/shipalert)
 		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
+
+		// status display red alert
+		var/datum/signal/status_signal = get_free_signal()
+		status_signal.data["sender"] = "00000000"
+		status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT
+		status_signal.data["address_tag"] = "STATDISPLAY"
+		status_signal.data["picture_state"] = STATUS_DISPLAY_PACKET_ALERT_REDALERT
+		radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
+
 		ON_COOLDOWN(src, "deactivate_cooldown", src.deactivateCooldown)
 		src.update_lights()
 		src.do_lockdown(user)
@@ -150,7 +166,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			continue
 		if (shutter.z != Z_LEVEL_STATION)
 			continue
-		if (shutter.id != "lockdown" && shutter.id != "ai_core" && shutter.id == "armory")
+		if ((shutter.id != "lockdown") && (shutter.id != "ai_core") && (shutter.id != "armory"))
 			continue
 		shutter.close()
 

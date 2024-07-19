@@ -1770,7 +1770,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aeV" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /turf/simulated/floor,
 /area/russian)
 "aeY" = (
@@ -1885,7 +1885,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "afp" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/cable{
 	icon_state = "4-8"
 	},

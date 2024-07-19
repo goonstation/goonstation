@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 	relaymove(mob/user as mob, dir)
 		// we reset the overlays to null in case the relaymove() call was initiated by a
 		// passenger rather than the driver (we shouldn't have a rider overlay if there is no rider!)
-		src.overlays = null
+		src.ClearSpecificOverlays("rider")
 
 		if(!src.rider || user != src.rider)
 			return
@@ -194,12 +194,13 @@ ABSTRACT_TYPE(/obj/vehicle)
 		var/td = max(src.delay, MINIMUM_EFFECTIVE_DELAY)
 
 		if(src.rider_visible)
-			src.overlays += src.rider
+			src.UpdateOverlays(src.rider, "rider")
 
 		// You can't move in space without the booster upgrade
 		if (src.booster_upgrade)
-			src.overlays += booster_image
+			src.UpdateOverlays(booster_image, "booster_image")
 		else
+			src.ClearSpecificOverlays("booster_image")
 			var/turf/T = get_turf(src)
 
 			if(T.throw_unlimited && istype(T, /turf/space))
@@ -873,7 +874,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	if (target.client)
 		handle_button_addition()
 	rider.pixel_x = 0
-	rider.pixel_y = 10
+	rider.pixel_y = 5
 	src.UpdateOverlays(rider, "rider")
 
 	for (var/mob/C in AIviewers(src))

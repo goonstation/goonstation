@@ -1,5 +1,191 @@
 
+(t)thu jul 18 24
+(u)FancySchmancyNecromancy
+(p)20010
+(e)🎨|C-Sprites
+(+)Added a new sprite for the Janicart.
+(t)wed jul 17 24
+(u)LeahTheTech
+(p)20006
+(e)|
+(+)Removed Nadir nuke plant sites: nerd dungeon, east crew quarters, radio lab.
+(+)Added Nadir nuke plant sites: hydroponics, cafeteria, extraction nexus.
+(u)KakoLookiyam
+(p)20008
+(e)⚖🐁|C-Balance, A-Critters
+(+)Skeleton halberds are once again effective against borgs.
+(t)tue jul 16 24
+(u)tarmunora
+(+)Detective spy sticker pinpointer cannot track stickers that are nested too deeply inside of things - inside a backpack works, but hidden inside a box in a backpack will not.
+(t)mon jul 15 24
+(u)LeahTheTech
+(p)19988
+(e)|
+(+)Head surgeon and other robotic voices should now speak at a more reasonable volume.
+(u)glowbold
+(p)19978
+(e)🪲🔨📡|C-Bug, A-Player-Actions, A-AI
+(*)Dive-kicking items or directly into monkies (and other NPCs) will aggro them.
+(t)sat jul 13 24
+(u)JORJ949
+(p)19928
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Syndicate PDAs now available at the Syndicate clothing vendor (cartridge not included).
+(u)joeled
+(p)19897
+(e)🆕🗺🎨|C-Feature, A-Mapping, C-Sprites
+(+)Loose vendomat items in toxin labs have been moved to the vendomat.
+(u)Wrench
+(p)19953
+(e)🗺💅|A-Mapping, C-QoL
+(+)Adds Cargo Hand Teleporters to Atlas & Clarion's Artlabs
+(t)fri jul 12 24
+(u)Mr. Moriarty
+(p)19549
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)Resprited drinking, wine, cocktail, old fashioned, shot, and round glasses, and champagne flutes, pitchers and milk bottles, and all of their respective reagent overlays.
+(u)LeahTheTech
+(*)Energy shield generators now trickle charge when connected to a cable and will correctly switch to using battery power if the cable becomes unpowered. Basically they shouldn't randomly turn off anymore.
+(+)Showers will no longer bypass energy shield generators.
+(u)Flaborized and LeahTheTech
+(p)19957
+(e)🎨|C-Sprites
+(+)Resprited laser mirrors.
+(u)tarmunora
+(+)non-nukeop fannypacks are standard size.
+(+)Physically Fit mutation stability cost change: -5 -> 5.
+(+)Synchronized Vestigial Ballistics stability cost change: -15 -> 0.
+(u)KakoLookiyam
+(p)19880
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Added new mechcomp inputs to the Power Transmission Laser.
+(u)Wrench
+(p)19952
+(e)🗺💅|A-Mapping, C-QoL
+(+)Adds Tanning Sunglasses to the Kondaru and Nadir Pools.
+(u)LeahTheTech
+(p)19949
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nuclear operatives have acquired a new source of knockoff ElecTek brand PDAs.
+(t)thu jul 11 24
+(u)Kubius
+(p)19860
+(e)🔄⚙|C-Rework, A-Internal
+(+)Tiles constructed outside of an area will now use a single "unconnected zone" area by default, making it much easier to connect these areas to station areas or turn them into a single built zone using an APC.
+(u)JORJ949
+(p)19670
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Objects can now be click-dragged into cyborg docks from further away. Mobs still require the shorter distance.
+(u)Kyle
+(p)19941
+(e)|
+(*)Fix Kudzumen point generation and some other misc changes
+(u)JORJ949
+(p)19510
+(e)🆕🎩|C-Feature, A-Clothing
+(+)As an NT official the Inspector now gets an NT ID and their own headset.
+(u)Tyrant
+(p)19675
+(e)🆕🗺🔬🌠|C-Feature, A-Mapping, A-Science, A-Events
+(+)There's a new destination on the long range teleporter.
+(t)wed jul 10 24
+(u)JORJ949
+(p)19927
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Syndicate Cyborgs now have access to the Listening Post
+(t)tue jul 09 24
+(u)Mordent
+(p)19922
+(e)💅📄|C-QoL, A-UI
+(+)Tab moves focus on multiline dialog popups instead of inserting tab.
+(u)Sovexe
+(p)19921
+(e)🪲📄|C-Bug, A-UI
+(+)The PIN input window now autofocuses for a better user experience
+(u)TheBee03
+(p)19887
+(e)🗺|A-Mapping
+(+)A new and improved toxins on Kondaru, complete with a full 2 burn chamber setup!
+(u)NightmarechaMillian
+(p)19439
+(e)🆕🎨🔒🧛|C-Feature, C-Sprites, A-Secret, A-Gamemodes
+(*)An alternative shotgun has appeared in the M4GP13's barter list! Get 4 barrels of break-action fun for just 1200 points today!
+(u)Flaborized
+(p)19827
+(e)🎨|C-Sprites
+(+)Resprited floor guides.
+(t)mon jul 08 24
+(u)Studenterhue
+(p)19883
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Added the winning movie posters from the June 2024 contest. Congratulations to JOELED, Showerless, Torchwick, Zhail, TemThrush, TheAmazingToast, Cindertroy, Nahuelwg, ATDoop, Rubicubie, and Garash!
+(+)Crunchwrap, Lefinch, meaow589, L0llerbate, Lopdopgop, and kirdy2 didn't win the contest, but the admin team liked their entries so much that they were added anyway, though they appear at lower rates.
+(u)KakoLookiyam
+(p)19889
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Outer suits with coverage will now prevent shoe exposure to puddles.
+(t)sun jul 07 24
+(u)TealSeer
+(p)19873
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)The "Recite Miranda Rights" verb now has a 10 second cooldown.
+(t)sat jul 06 24
+(u)LeahTheTech
+(+)Bricks have mysteriously increased in size.
+(*)Wraith possession will now remove handcuffs, unless they have been dipped in silver.
+(u)Jan.antilles
+(p)19790
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Happy Canada Day! You can now make poutine.
+(+)The kitchen vendor contains gravy boats, which are full of gravy.
+(t)fri jul 05 24
+(u)LeahTheTech
+(*)High power PTL beams can now very slowly melt through walls. Will I regret this? Take your bets!
+(t)thu jul 04 24
+(u)LeahTheTech
+(+)Syndicate daggers now only play their equip sound when equipped from an inventory.
+(u)JORJ949
+(p)19766
+(e)🆕🗺|C-Feature, A-Mapping
+(*)The listening post has been outfitted with an announcement computer. Agents only!
+(u)Flaborized
+(p)19576
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The chameleon outfit traitor item can now disguise as a mail courier.
+(u)Jan.antilles
+(p)19813
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Cinnamon buns can now be made in the oven.
+(u)Kubius
+(p)19665
+(e)🆕🎨🔊📦🚗|C-Feature, C-Sprites, C-Sound, A-Game-Objects, A-Vehicles
+(*)The pod-mounted EFIF-1 Construction System is now available. It can rapidly repair damaged station tiles or build new offsite structures.
+(t)wed jul 03 24
+(u)Cheekybrdy
+(p)19722
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Adds chameleon bombs to mail courier's options as a traitor.
+(u)RubberRats
+(p)19754
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The Lawbringer has been given a new (?) mode for use against the cluwne
 (t)mon jul 01 24
+(u)Lord_Earthfire
+(p)19412
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)The amount of chems a unit of a chemical decays into no longer changes with the speed the person metabolizes it.
+(u)Jan.antilles
+(p)19786
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Add Cream or Salmon Fillet Slices to bagels to make extra tasty Cream Cheese or Lox bagels!
+(u)JORJ949
+(p)19512
+(e)🗺🎨💅🎩|A-Mapping, C-Sprites, C-QoL, A-Clothing
+(*)Listening post gear closets replaced with clothing vendor, restocks are purchasable from C.A.R.L.
+(u)BatElite
+(p)19623
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(+)Portable lamp manufacturers now have a second page of milder colour choices.
 (u)nova2053
 (p)19553
 (e)🪲💊⏰|C-Bug, A-Medical, A-Status-Effects
