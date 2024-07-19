@@ -97,7 +97,7 @@ You can double-click these batch files to achieve the same thing:
 - `bin\tgui-bench.cmd` - Run benchmarks.
 
 **Other Commands**
-- `yarn tgui-polyfill:build` - Build polyfills. You need to run it when updating any of the static (numbered) polyfills. You'll need `terser`.
+- `yarn tgui-polyfill:build` - Build polyfills. You need to run it when updating any of the static (numbered) polyfills.
 
 ## Important Memo
 
