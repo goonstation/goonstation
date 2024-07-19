@@ -7,6 +7,7 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
+
 import { Box } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
@@ -36,7 +37,7 @@ export const Icon = props => {
       className={classes([
         'Icon',
         className,
-        faRegular ? 'fa-regular' : 'fa-solid',
+        faRegular ? 'fa-regular' : 'fa-solid', // TODO-REACT: ensure `faRegular ? 'fa-regular' : 'fa-solid',`
         'fa-' + faName,
         spin && 'fa-spin',
       ])}
