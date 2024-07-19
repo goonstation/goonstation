@@ -494,6 +494,15 @@
 			return 1
 		return ..()
 
+	pixelaction(atom/target, mob/user)
+		var/turf/hit_turf = target
+		if (!istype(hit_turf) || !hit_turf || GET_DIST(hit_turf, user) > 1)
+			..()
+			return 0
+		//get rid of click delay so we can place stuff fast
+		user.next_click = world.time
+
+
 	pick_up_by(var/mob/M)
 		if(level == OVERFLOOR) return ..()
 		//If it's anchored, it can't be picked up!
