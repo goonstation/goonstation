@@ -6,8 +6,9 @@
 */
 
 import { classes } from 'common/react';
+
 import { COLORS } from '../../constants';
-import { Box, computeBoxClassName } from '../../components/Box';
+import { Box, computeBoxClassName } from '../Box';
 
 /*
  * A box that applies a color to its contents depending on the damage type.

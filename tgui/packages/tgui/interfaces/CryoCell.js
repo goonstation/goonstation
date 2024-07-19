@@ -10,7 +10,7 @@ import { AnimatedNumber, Box, Button, Dimmer, Icon, LabeledList, ProgressBar, Se
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { damageNum, HealthStat } from './common/HealthStat';
+import { damageNum, HealthStat } from '../components/goon/HealthStat';
 import { MobStatuses } from './common/MobStatus';
 import { KeyHealthIndicators } from './common/KeyHealthIndicators/index';
 
