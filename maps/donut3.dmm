@@ -4462,7 +4462,8 @@
 	name = "Crew Quarters persistent notice board";
 	persistent_id = "crew quarters";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hangar/arrivals)
@@ -12823,12 +12824,12 @@
 /area/station/chapel/sanctuary)
 "dMJ" = (
 /obj/table/round/auto,
-/obj/machinery/light_switch/auto,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
 	persistent_id = "cargo";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /obj/item/kitchen/food_box/sugar_box{
 	pixel_y = 16
@@ -52718,7 +52719,8 @@
 	name = "Engineering persistent notice board";
 	persistent_id = "engineering";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
@@ -55118,7 +55120,8 @@
 	name = "Mechanics Workshop persistent notice board";
 	persistent_id = "mechanics";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
