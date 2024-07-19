@@ -9,6 +9,7 @@
 	can_hold = list(/obj/item/storage/pill_bottle)
 	throw_range = 8
 	max_wclass = W_CLASS_TINY
+	check_wclass = TRUE
 	var/list/kit_styles = null
 
 	New()
