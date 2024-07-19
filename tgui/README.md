@@ -96,6 +96,9 @@ You can double-click these batch files to achieve the same thing:
 - `bin\tgui-dev-server.bat` - Launch a development server.
 - `bin\tgui-bench.cmd` - Run benchmarks.
 
+**Other Commands**
+- `yarn tgui-polyfill:build` - Build polyfills. You need to run it when updating any of the static (numbered) polyfills. You'll need `terser`.
+
 ## Important Memo
 
 Remember to always run a full build of tgui before submitting a PR, because it comes with the full suite of CI checks, and runs much faster on your computer than on GitHub servers. It will save you some time and possibly a few broken commits! Address the issues that are reported by the tooling as much as possible, because maintainers will beat you with a ruler and force you to address them anyway (unless it's a false positive or something unfixable).

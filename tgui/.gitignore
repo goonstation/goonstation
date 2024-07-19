@@ -12,12 +12,14 @@ package-lock.json
 !/.yarn/versions
 !/.yarn/lock.yml
 
-## Build artifacts
-/public/.tmp/**/*
-/public/**/*
-!/public/*.html
-!/public/tgui-polyfill.min.js
+## Build artifacts |GOONSTATION-CHANGE|
+/../browserassets/tgui/.tmp/**/*
+/../browserassets/tgui/**/*
+!/../browserassets/tgui/*.html
 /coverage
+# |GOONSTATION-ADD|
+!/../browserassets/tgui/*.js
+!/../browserassets/tgui/*.css
 
 # Editor Files
 *.idea/*
