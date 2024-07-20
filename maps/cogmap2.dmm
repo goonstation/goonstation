@@ -23674,6 +23674,10 @@
 	broadcasting = 0
 	},
 /obj/storage/secure/closet/command/hop,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_x = 32;
+	pixel_y = -3
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bsY" = (
@@ -38773,6 +38777,9 @@
 "cjt" = (
 /obj/storage/secure/closet/command/research_director,
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = 27
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "cju" = (
@@ -48662,6 +48669,10 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 4;
 	pixel_x = -4
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = -3;
+	pixel_x = -32
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west,
 /area/station/medical/head)
