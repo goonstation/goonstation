@@ -187,22 +187,6 @@
 	icon_state = "firex"
 	anchored = ANCHORED
 
-/obj/fakeobject/firelock_broken
-	name = "rusted firelock"
-	desc = "Rust has rendered this firelock useless."
-	icon = 'icons/obj/doors/door_fire2.dmi'
-	icon_state = "door0"
-	anchored = ANCHORED
-
-/obj/fakeobject/airlock_broken
-	name = "rusted airlock"
-	desc = "Rust has rendered this airlock useless."
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "doorl";
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
-
 /obj/fakeobject/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."

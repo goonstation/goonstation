@@ -30,15 +30,19 @@
 	src.handset_icon = getFlatIcon(src)
 	processing_items.Add(src)
 
-/obj/item/phone_handset/update_icon()
-	. = ..()
-	src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
-
 /obj/item/phone_handset/disposing()
 	src.parent.handset = null
 	src.parent = null
 	processing_items.Remove(src)
 	. = ..()
+
+/obj/item/phone_handset/attack_hand(mob/user)
+	. = ..()
+	src.parent?.draw_cord()
+
+/obj/item/phone_handset/dropped(mob/user)
+	. = ..()
+	src.parent?.draw_cord()
 
 /obj/item/phone_handset/process()
 	if (!src.parent)
@@ -56,6 +60,10 @@
 	src.parent.hang_up()
 	processing_items.Remove(src)
 	qdel(src)
+
+/obj/item/phone_handset/update_icon()
+	. = ..()
+	src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
 
 /obj/item/phone_handset/hear(datum/say_message/message)
 	if (!src.parent.linked || !src.parent.linked.handset)

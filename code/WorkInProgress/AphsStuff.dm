@@ -148,6 +148,12 @@
 
 		return
 
+	say(message, flags, message_params, atom_listeners_override)
+		if (!src.on)
+			return
+
+		. = ..()
+
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/paper/brad_punchcard))
 

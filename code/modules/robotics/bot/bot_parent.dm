@@ -122,7 +122,7 @@
 			return
 
 		SPAWN(0)
-			var/audio = dectalk("\[:nk\][message]")
+			var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
 			if (!audio || !audio["audio"])
 				return
 

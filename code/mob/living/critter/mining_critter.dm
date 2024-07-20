@@ -57,7 +57,7 @@
 
 	New()
 		..()
-		src.faction |= FACTION_FERMID
+		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))

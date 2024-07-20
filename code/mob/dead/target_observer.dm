@@ -19,7 +19,7 @@
 		//If our target is a mob we should also clean ourselves up and leave their observer list without a null in it.
 		var/mob/living/M = src.target
 		if(istype(M))
-			M.observers -= src
+			LAZYLISTREMOVE(M.observers, src)
 			src.UnregisterSignal(M, list(COMSIG_TGUI_WINDOW_OPEN))
 
 		if (isobj(target))
@@ -75,6 +75,7 @@
 		set hidden = 1
 		return
 
+	/// Let's have a proc so as to make it easier to reassign an observer.
 	proc/set_observe_target(target)
 		//If there's an existing target we should clean up after ourselves
 		if(src.target == target)
@@ -87,12 +88,12 @@
 			for (var/datum/hud/hud in M.huds)
 				src.detach_hud(hud)
 			if(istype(M))
-				M.observers -= src
+				LAZYLISTREMOVE(M.observers, src)
 
 		if(!target) //Uh oh, something went wrong here. Act natural and return the user to a regular ghost.
 			qdel(src)
 			return
-		//Let's have a proc so as to make it easier to reassign an observer.
+
 		src.target = target
 		src.set_loc(target)
 		if(src.ghost?.auto_tgui_open)
@@ -101,7 +102,7 @@
 
 		var/mob/living/M = target
 		if (istype(M))
-			M.observers += src
+			LAZYLISTADD(M.observers, src)
 			if(src.client)
 				M.updateOverlaysClient(src.client)
 			for (var/datum/hud/hud in M.huds)

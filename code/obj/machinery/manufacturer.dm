@@ -1863,7 +1863,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/ensure_contents()
 		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece))
+			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece), slots = INFINITY)
 
 	proc/add_contents(obj/item/W, mob/user = null)
 		src.ensure_contents()

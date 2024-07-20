@@ -372,7 +372,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-
+		if (!src.locked)
+			src.go_out()
+			return
 		if (!processing)
 			SubscribeToProcess()
 
@@ -391,7 +393,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
+		if (is_incapacitated(usr))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -414,7 +416,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		return 0
 
 	relaymove(mob/user as mob)
-		if(!user || !isalive(user) || user.getStatusDuration("stunned") != 0)
+		if(!user || !isalive(user) || is_incapacitated(user))
 			return
 		src.go_out()
 		return
