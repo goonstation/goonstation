@@ -1,5 +1,9 @@
 
 (t)fri jul 19 24
+(u)Wrench
+(p)20002
+(e)🗺💅|A-Mapping, C-QoL
+(+)Adds the HoP's First Bill, the RD's Diploma and the MD's Medical License to all maps currently in rotation.
 (u)JORJ949
 (p)19661
 (e)🗺⚖|A-Mapping, C-Balance
