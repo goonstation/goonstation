@@ -36215,12 +36215,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/computer3/generic/secure_data{
-	dir = 4;
-	tag = ""
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
+/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "gxC" = (
@@ -47173,9 +47169,14 @@
 /area/research_outpost/indigo_rye)
 "ozl" = (
 /obj/machinery/light/emergency,
-/obj/storage/secure/crate/weapon/confiscated_items,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
@@ -49484,9 +49485,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qkd" = (
-/obj/stool/chair/red{
-	dir = 8
-	},
+/obj/machinery/light,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "qkS" = (
@@ -52220,7 +52220,14 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "shZ" = (
-/obj/storage/secure/closet/brig,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4;
+	tag = ""
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "sje" = (
@@ -53463,15 +53470,6 @@
 /obj/machinery/launcher_loader/east,
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/inner/east)
-"tdg" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor,
-/area/station/security/secwing)
 "tdy" = (
 /obj/disposaloutlet/south,
 /obj/disposalpipe/trunk/west,
@@ -116807,7 +116805,7 @@ dha
 tiv
 wVg
 qVZ
-shZ
+raX
 qGc
 xpj
 ftT
@@ -119525,7 +119523,7 @@ bTp
 mnO
 xDR
 gwU
-raX
+shZ
 kqg
 uEv
 cbZ
@@ -120128,7 +120126,7 @@ bRW
 gmO
 mnO
 bVP
-tdg
+wjC
 gxk
 vTU
 szp
