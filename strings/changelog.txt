@@ -1,5 +1,9 @@
 
 (t)fri jul 19 24
+(u)Kubius
+(p)19587
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Cogmap 2's bathroom near QM is now larger - equipped with 2 toilets and a small shower room. Arrivals washroom has a shower head too.
 (u)Wrench
 (p)20002
 (e)🗺💅|A-Mapping, C-QoL
