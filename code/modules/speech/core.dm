@@ -169,7 +169,6 @@ Parity:
 - Potentially deprecate `protected_radio`.
 
 Refactors:
-- AI `say()` and `hear()`. Currently doesn't take into account client modules.
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?
 - Anything that uses `SPAN_NAME` could likely be moved onto the new system.
 - Some form of centralised preference manager for toggling inputs/outputs for types?

@@ -12,7 +12,6 @@
 
 /datum/speech_module_tree/auxiliary/disposing()
 	src.update_target_speech_tree(null)
-	src.target_speech_tree = null
 	. = ..()
 
 /datum/speech_module_tree/auxiliary/process()
@@ -42,6 +41,8 @@
 		for (var/modifier_id in src.speech_modifier_ids_with_subcount)
 			src.target_speech_tree.RemoveModifier(modifier_id, src.speech_modifier_ids_with_subcount[modifier_id])
 
+		src.target_speech_tree.auxiliary_trees -= src
+
 	src.target_speech_tree = speech_tree
 	if (!src.target_speech_tree)
 		return
@@ -51,3 +52,5 @@
 
 	for (var/modifier_id in src.speech_modifier_ids_with_subcount)
 		src.target_speech_tree.AddModifier(modifier_id, src.speech_modifier_ids_with_subcount[modifier_id])
+
+	src.target_speech_tree.auxiliary_trees += src

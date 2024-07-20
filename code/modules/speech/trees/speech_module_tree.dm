@@ -8,6 +8,10 @@
 	var/atom/speaker_parent
 	/// The atom that should act as the origin point for sending messages from this speech module tree.
 	var/atom/speaker_origin
+	/// A list of all atoms that list this speech module tree as their say tree, despite not being the true parent.
+	var/list/atom/secondary_parents
+	/// A list of all auxiliary speech module trees with this speech module tree registered as a target.
+	var/list/datum/speech_module_tree/auxiliary/auxiliary_trees
 
 	/// An associative list of output speech module subscription counts, indexed by the module ID.
 	var/list/output_module_ids_with_subcount
@@ -28,6 +32,8 @@
 
 	src.speaker_parent = parent
 	src.speaker_origin = parent
+	src.secondary_parents = list()
+	src.auxiliary_trees = list()
 
 	src.output_module_ids_with_subcount = list()
 	src.output_modules_by_id = list()
@@ -42,6 +48,11 @@
 		src.AddModifier(modifier_id)
 
 /datum/speech_module_tree/disposing()
+	for (var/datum/speech_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
+		auxiliary_tree.update_target_speech_tree(null)
+
+	src.auxiliary_trees = null
+
 	for (var/output_id in src.output_modules_by_id)
 		qdel(src.output_modules_by_id[output_id])
 
@@ -49,11 +60,18 @@
 	for (var/modifier_id in src.speech_modifiers_by_id)
 		qdel(src.speech_modifiers_by_id[modifier_id])
 
+	for (var/atom/A as anything in src.secondary_parents)
+		A.say_tree = null
+
+	if (src.speaker_parent)
+		src.speaker_parent.say_tree = null
+		src.speaker_parent = null
+
+	src.secondary_parents = null
 	src.output_modules_by_id = null
 	src.speech_modifiers_by_id = null
 	src.output_modules_by_channel = null
 	src.speaker_origin = null
-	src.speaker_parent = null
 
 	. = ..()
 
@@ -125,6 +143,27 @@
 			module_message.process_speech_bubble()
 
 		break
+
+/// Migrates this speech module tree to a new speaker parent and origin.
+/datum/speech_module_tree/proc/migrate_speech_tree(atom/new_parent, atom/new_origin, preserve_old_reference = FALSE)
+	var/atom/old_parent = src.speaker_parent
+	var/atom/old_origin = src.speaker_origin
+	src.speaker_parent = new_parent
+	src.speaker_origin = new_origin
+
+	if (preserve_old_reference)
+		src.secondary_parents += old_parent
+	else
+		old_parent.say_tree = null
+
+	if (new_parent.say_tree != src)
+		qdel(new_parent.say_tree)
+
+	new_parent.say_tree = src
+	src.secondary_parents -= new_parent
+
+	if (old_origin != new_origin)
+		SEND_SIGNAL(src, COMSIG_SPEAKER_ORIGIN_UPDATED, old_origin, new_origin)
 
 /// Update this speech module tree's speaker origin. This will cause spoken messages to appear to originate fom the new speaker origin.
 /datum/speech_module_tree/proc/update_speaker_origin(atom/new_origin)

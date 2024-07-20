@@ -8,6 +8,10 @@
 	var/atom/listener_parent
 	/// The atom that should act as the origin point for listening to messages.
 	var/atom/listener_origin
+	/// A list of all atoms that list this listen module tree as their listen tree, despite not being the true parent.
+	var/list/atom/secondary_parents
+	/// A list of all auxiliary listen module trees with this listen module tree registered as a target.
+	var/list/datum/listen_module_tree/auxiliary/auxiliary_trees
 
 	/// An associative list of input listen module subscription counts, indexed by the module ID.
 	var/list/input_module_ids_with_subcount
@@ -35,6 +39,8 @@
 
 	src.listener_parent = parent
 	src.listener_origin = parent
+	src.secondary_parents = list()
+	src.auxiliary_trees = list()
 
 	src.input_module_ids_with_subcount = list()
 	src.input_modules_by_id = list()
@@ -54,6 +60,11 @@
 		src.AddKnownLanguage(language_id)
 
 /datum/listen_module_tree/disposing()
+	for (var/datum/listen_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
+		auxiliary_tree.update_target_listen_tree(null)
+
+	src.auxiliary_trees = null
+
 	for (var/input_id in src.input_modules_by_id)
 		qdel(src.input_modules_by_id[input_id])
 
@@ -61,11 +72,18 @@
 	for (var/modifier_id in src.listen_modifiers_by_id)
 		qdel(src.listen_modifiers_by_id[modifier_id])
 
+	for (var/atom/A as anything in src.secondary_parents)
+		A.listen_tree = null
+
+	if (src.listener_parent)
+		src.listener_parent.listen_tree = null
+		src.listener_parent = null
+
+	src.secondary_parents = null
 	src.input_modules_by_id = null
 	src.listen_modifiers_by_id = null
 	src.input_modules_by_channel = null
 	src.listener_origin = null
-	src.listener_parent = null
 
 	. = ..()
 
@@ -98,6 +116,27 @@
 
 	/// Pass to the listener atom.
 	src.listener_parent.hear(message)
+
+/// Migrates this listen module tree to a new speaker parent and origin.
+/datum/listen_module_tree/proc/migrate_listen_tree(atom/new_parent, atom/new_origin, preserve_old_reference = FALSE)
+	var/atom/old_parent = src.listener_parent
+	var/atom/old_origin = src.listener_origin
+	src.listener_parent = new_parent
+	src.listener_origin = new_origin
+
+	if (preserve_old_reference)
+		src.secondary_parents += old_parent
+	else
+		old_parent.listen_tree = null
+
+	if (new_parent.listen_tree != src)
+		qdel(new_parent.listen_tree)
+
+	new_parent.listen_tree = src
+	src.secondary_parents -= new_parent
+
+	if (old_origin != new_origin)
+		SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
 
 /// Update this listen module tree's listener origin. This will cause parent to hear messages from the location of the new listener origin.
 /datum/listen_module_tree/proc/update_listener_origin(atom/new_origin)

@@ -12,7 +12,6 @@
 
 /datum/listen_module_tree/auxiliary/disposing()
 	src.update_target_listen_tree(null)
-	src.target_listen_tree = null
 	. = ..()
 
 /datum/listen_module_tree/auxiliary/process()
@@ -56,6 +55,8 @@
 		if (src.understands_all_languages)
 			src.target_listen_tree.RemoveKnownLanguage(LANGUAGE_ALL)
 
+		src.target_listen_tree.auxiliary_trees -= src
+
 	src.target_listen_tree = listen_tree
 	if (!src.target_listen_tree)
 		return
@@ -71,3 +72,5 @@
 
 	if (src.understands_all_languages)
 		src.target_listen_tree.AddKnownLanguage(LANGUAGE_ALL)
+
+	src.target_listen_tree.auxiliary_trees += src

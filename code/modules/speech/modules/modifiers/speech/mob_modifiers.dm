@@ -20,6 +20,7 @@
 	// Handle stuttering modifiers.
 	if (speaker.stuttering)
 		message.say_verb = speaker.speech_verb_stammer
+		message.content = stutter(message.content)
 
 	// Handle berserker modifiers.
 	var/datum/ailment_data/disease/berserker = speaker.find_ailment_by_type(/datum/ailment/disease/berserker)

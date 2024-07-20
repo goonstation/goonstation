@@ -402,14 +402,6 @@ or don't if it uses a custom topopen overlay
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/hear(datum/say_message/message)
-	if (src.deployed_to_eyecam && src.eyecam)
-		src.eyecam.hear(message)
-		return
-
-	. = ..()
-
-
 /mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "")
 	..()
 	if (deployed_to_eyecam && src.eyecam)
@@ -1864,6 +1856,8 @@ or don't if it uses a custom topopen overlay
 		src.eyecam.name = src.name
 		src.eyecam.real_name = src.real_name
 		src.deployed_to_eyecam = 1
+		src.ensure_say_tree().migrate_speech_tree(src.eyecam, src, TRUE)
+		src.ensure_listen_tree().migrate_listen_tree(src.eyecam, src, TRUE)
 		src.mind.transfer_to(src.eyecam)
 
 /mob/living/silicon/ai/proc/notify_attacked()
@@ -1879,6 +1873,8 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/proc/return_to(var/mob/user)
 	if (user.mind)
+		src.eyecam.ensure_say_tree().migrate_speech_tree(src, src, FALSE)
+		src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
 		user.mind.transfer_to(src)
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0
