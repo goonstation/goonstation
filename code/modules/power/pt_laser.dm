@@ -295,7 +295,7 @@
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "output=[src.output]&firing=[src.firing]&charge=[src.charge]&currentbalance=[src.current_balance]&lifetimeearnings=[src.lifetime_earnings]")
 	src.laser_output_needs_update = FALSE
-	src.is_charging = src.charging && power_used > 0 ? TRUE : FALSE
+	src.is_charging = src.charging && power_used > 0 ? FALSE : TRUE
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
