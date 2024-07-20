@@ -257,7 +257,7 @@
 		else //firing and have enough power to carry on
 			power_used += adj_output
 			new_state = CONTINUE_FIRING
-	else if (firing && !online)
+	else if (firing)
 		new_state = STOP_FIRING
 
 	// Consume power from network
