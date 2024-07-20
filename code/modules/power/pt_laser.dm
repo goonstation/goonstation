@@ -238,7 +238,7 @@
 	var/adj_output = abs(output)
 	var/starting_surplus = src.get_available_input_power() // Incoming power beyond battery charge we can use to fuel the laser, capped by chargelevel.
 	var/new_state = NO_CHANGE
-	var/power_used = 0;
+	var/power_used = 0
 	var/connected = terminal && !(src.status & BROKEN)
 
 	if(connected)
