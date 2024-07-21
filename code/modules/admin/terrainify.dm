@@ -277,7 +277,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 						shake_camera(player_mob, 4 SECONDS, rand(55,85))
 					player_mob.changeStatus("knockdown", 5 SECONDS)
 
-		REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry), 10 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry), 10 SECONDS)
 		return
 
 	proc/convert_station_level(params, mob/user)
