@@ -15336,6 +15336,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/computer/ATM,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 27
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "aZU" = (
@@ -24611,6 +24614,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = 27
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bLr" = (
@@ -31718,6 +31724,9 @@
 	},
 /obj/item/matchbook,
 /obj/item/cigpacket/propuffs,
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 27
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "cjy" = (
