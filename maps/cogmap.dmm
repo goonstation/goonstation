@@ -13515,18 +13515,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"aUN" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office";
-	pixel_x = 32;
-	pixel_y = 2
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "aUO" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14558,6 +14546,18 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"aXB" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 2;
+	icon_state = "pipe-c";
+	name = "crematorium pipe"
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "aXC" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/wall/auto/supernorn,
@@ -14843,6 +14843,27 @@
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"aYE" = (
+/obj/table/wood/auto,
+/obj/item/audio_tape{
+	pixel_y = 8
+	},
+/obj/item/audio_tape{
+	pixel_y = 5
+	},
+/obj/item/device/detective_scanner,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"aYF" = (
+/obj/table/wood/auto,
+/obj/item/storage/secure/ssafe{
+	pixel_y = -30
+	},
+/obj/disposalpipe/segment/morgue{
+	name = "crematorium pipe"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -15294,14 +15315,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/heads)
-"aZS" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/computer/ATM,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "aZU" = (
@@ -16869,30 +16882,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
-"beT" = (
-/obj/table/reinforced/auto,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/item_box/postit{
-	pixel_x = -8;
-	pixel_y = 6
-	},
-/obj/item/stamp{
-	pixel_x = 4
-	},
-/obj/machinery/door/firedoor/pyro,
-/obj/noticeboard/persistent{
-	name = "Customs persistent notice board";
-	persistent_id = "customs";
-	pixel_x = -32;
-	pixel_y = 2
-	},
-/turf/simulated/floor/black,
-/area/station/security/checkpoint)
 "beU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -23891,6 +23880,19 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
+"bJm" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/obj/item/mine/radiation/armed,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/abandonedship)
 "bJn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24554,16 +24556,6 @@
 	dir = 5;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/hor)
-"bLp" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/shrub,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bLr" = (
 /turf/simulated/floor,
@@ -31651,15 +31643,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
-"cjw" = (
-/obj/shrub,
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/item/matchbook,
-/obj/item/cigpacket/propuffs,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/head)
 "cjy" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -36907,6 +36890,18 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
+"cBG" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/abandonedship)
 "cBI" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -36924,6 +36919,15 @@
 	dir = 4
 	},
 /obj/structure/girder,
+/turf/simulated/floor/airless/plating/scorched,
+/area/abandonedship)
+"cBL" = (
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
 "cBM" = (
@@ -37921,19 +37925,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
-"ddX" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles2"
-	},
-/obj/fakeobject/airlock_broken/firelock{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
-/obj/item/mine/radiation/armed,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/abandonedship)
 "deH" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -38015,6 +38006,19 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
+"dii" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/shrub,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = 27
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/hor)
 "diN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/medical)
@@ -40625,16 +40629,6 @@
 "eSb" = (
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
-"eSg" = (
-/obj/table/wood/auto,
-/obj/item/storage/secure/ssafe{
-	pixel_y = -30
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "eSu" = (
 /obj/machinery/launcher_loader/north{
 	door_delay = 4
@@ -45573,15 +45567,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"iLz" = (
-/obj/fakeobject/airlock_broken/firelock{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
-/turf/simulated/floor/airless/plating/scorched,
-/area/abandonedship)
 "iLY" = (
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/carpet{
@@ -45961,18 +45946,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"jca" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 2;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/storage/cart/forensic/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "jcv" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -47007,6 +46980,14 @@
 	dir = 4
 	},
 /area/station/solar/south)
+"jSU" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/elect)
 "jTk" = (
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
@@ -54351,18 +54332,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"pHe" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles3"
-	},
-/obj/fakeobject/airlock_broken/firelock{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
-/turf/simulated/floor/airless/plating/damaged3,
-/area/abandonedship)
 "pHX" = (
 /obj/storage/closet/biohazard,
 /obj/decal/stripe_caution,
@@ -54800,17 +54769,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/routing/medsci)
-"pZN" = (
-/obj/table/wood/auto,
-/obj/item/audio_tape{
-	pixel_y = 8
-	},
-/obj/item/audio_tape{
-	pixel_y = 5
-	},
-/obj/item/device/detective_scanner,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "pZP" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -56860,6 +56818,18 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
+"rEM" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/matchbook,
+/obj/item/cigpacket/propuffs,
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 27
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/head)
 "rFl" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -56969,23 +56939,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
-"rIv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/fakeobject/airlock_broken/firelock{
-	desc = "Rust has rendered this airlock useless.";
-	dir = 4;
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "bdoor_pyro";
-	name = "rusted airlock"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/grime,
-/area/station/hallway/primary/east)
 "rIQ" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -57017,6 +56970,19 @@
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"rKi" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office";
+	pixel_x = 32;
+	pixel_y = 2;
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "rKo" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -57174,6 +57140,23 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"rOP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/junk.dmi';
+	icon_state = "bdoor_pyro";
+	name = "rusted airlock"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
 "rPq" = (
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellow/side,
@@ -58561,14 +58544,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"sPF" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/storage/cart/mechcart/tools,
-/turf/simulated/floor/plating/jen,
-/area/station/engine/elect)
 "sQn" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -62447,6 +62422,17 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
+"vOD" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer/ATM,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 27
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "vOT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -64738,6 +64724,31 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/engine/power)
+"xFO" = (
+/obj/table/reinforced/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/item/item_box/postit{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/stamp{
+	pixel_x = 4
+	},
+/obj/machinery/door/firedoor/pyro,
+/obj/noticeboard/persistent{
+	name = "Customs persistent notice board";
+	persistent_id = "customs";
+	pixel_x = -32;
+	pixel_y = 2;
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/checkpoint)
 "xGj" = (
 /obj/storage/closet/emergency,
 /obj/decal/stripe_delivery,
@@ -73977,7 +73988,7 @@ oct
 cAF
 cAY
 cBi
-ddX
+bJm
 cBA
 cBI
 oct
@@ -74885,7 +74896,7 @@ cBb
 cBl
 oct
 oct
-iLz
+cBL
 oct
 adC
 adC
@@ -76092,7 +76103,7 @@ oct
 oct
 oct
 oct
-pHe
+cBG
 oct
 oct
 adC
@@ -94066,7 +94077,7 @@ aVu
 aQR
 aYb
 aKd
-aZS
+vOD
 bbb
 bbT
 bda
@@ -96225,7 +96236,7 @@ adC
 aaf
 aap
 bJY
-bLp
+dii
 bMR
 bOq
 bPH
@@ -96487,7 +96498,7 @@ cQM
 bec
 bdg
 bec
-beT
+xFO
 bfP
 bgL
 bgL
@@ -104095,7 +104106,7 @@ cbQ
 gmU
 cbQ
 cih
-cjw
+rEM
 ckS
 xUX
 cih
@@ -111929,7 +111940,7 @@ xgT
 cff
 cfj
 qMI
-sPF
+jSU
 clf
 vdE
 gZR
@@ -112231,7 +112242,7 @@ xSS
 bIn
 txE
 qMI
-sPF
+jSU
 bNu
 eyq
 clh
@@ -116412,7 +116423,7 @@ aSt
 aUM
 aWf
 aXy
-pZN
+aYE
 aRD
 aYQ
 aYQ
@@ -116711,10 +116722,10 @@ aQD
 aRC
 aSx
 aTA
-aUN
+rKi
 ben
-jca
-eSg
+aXB
+aYF
 aZA
 aWB
 dAz
@@ -117926,7 +117937,7 @@ bLI
 bLI
 bau
 bLI
-rIv
+rOP
 bdq
 bdq
 bfs

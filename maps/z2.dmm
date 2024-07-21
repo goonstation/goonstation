@@ -58963,10 +58963,6 @@
 	icon_state = "2-8"
 	},
 /obj/grille/catwalk,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old{
-	randomise_decomp_stage = 1;
-	headless = 1
-	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "hxO" = (
@@ -68690,9 +68686,6 @@
 /area/iomoon/base)
 "pzo" = (
 /obj/grille/catwalk,
-/obj/mapping_helper/mob_spawn/corpse/human/syndicate/old{
-	randomise_decomp_stage = 1
-	},
 /turf/space,
 /area/watchful_eye_sensor)
 "pzY" = (

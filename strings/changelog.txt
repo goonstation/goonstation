@@ -1,4 +1,28 @@
 
+(t)fri jul 19 24
+(u)Kubius
+(p)19587
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Cogmap 2's bathroom near QM is now larger - equipped with 2 toilets and a small shower room. Arrivals washroom has a shower head too.
+(u)Wrench
+(p)20002
+(e)🗺💅|A-Mapping, C-QoL
+(+)Adds the HoP's First Bill, the RD's Diploma and the MD's Medical License to all maps currently in rotation.
+(u)JORJ949
+(p)19661
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Kondaru AI upload and Book nook have traded locations
+(u)JORJ949
+(p)19775
+(e)🆕🗺🌱|C-Feature, A-Mapping, A-Hydroponics
+(*)Expanded the Cogmap2 ranch significantly.
+(u)LeahTheTech
+(*)Do not feed bricks to washing machines.
+(t)thu jul 18 24
+(u)FancySchmancyNecromancy
+(p)20010
+(e)🎨|C-Sprites
+(+)Added a new sprite for the Janicart.
 (t)wed jul 17 24
 (u)LeahTheTech
 (p)20006

@@ -841,17 +841,6 @@
 "aeD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/hor)
-"aeE" = (
-/obj/storage/secure/closet/command/research_director,
-/obj/machinery/light/incandescent,
-/obj/item/toy/plush/small/possum{
-	desc = "Part of a matching set.";
-	name = "MD's Morty plush"
-	},
-/turf/simulated/floor/purple/side{
-	dir = 9
-	},
-/area/station/crew_quarters/hor)
 "aeF" = (
 /obj/machinery/computer/card/department/research,
 /turf/simulated/floor/purple/side{
@@ -8261,6 +8250,16 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"aQR" = (
+/obj/table/wood/auto{
+	dir = 5
+	},
+/obj/item/storage/secure/sbriefcase,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "aQT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/morgue)
@@ -14721,6 +14720,16 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
+"bCl" = (
+/obj/machinery/camera{
+	c_tag = "Electronics";
+	dir = 1
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "bCo" = (
 /obj/table/auto,
 /obj/item/electronics/resistor,
@@ -17785,6 +17794,22 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"cKW" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
+	dir = 1;
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "secdetector0";
+	name = "Experimental Wireless Power Transceiver";
+	pixel_y = 16
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "cLe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18971,16 +18996,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/wood,
 /area/station/maintenance/west)
-"dxo" = (
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/item/device/radio/intercom/detnet/security{
-	dir = 8
-	},
-/obj/storage/cart/forensic/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "dxB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -23044,6 +23059,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"ggx" = (
+/obj/storage/secure/closet/command/research_director,
+/obj/machinery/light/incandescent,
+/obj/item/toy/plush/small/possum{
+	desc = "Part of a matching set.";
+	name = "MD's Morty plush"
+	},
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = -32
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/crew_quarters/hor)
 "ggJ" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail{
@@ -23686,6 +23716,13 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"gzM" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/storage/cart/forensic/bomb_disposal,
+/turf/simulated/floor/grime,
+/area/station/security/equipment)
 "gBm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -24437,6 +24474,10 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"hbS" = (
+/obj/storage/cart/forensic/security,
+/turf/simulated/floor/grime,
+/area/station/security/equipment)
 "hbZ" = (
 /obj/machinery/r_door_control/podbay/security{
 	name = "Security Hangar Door Control"
@@ -24643,6 +24684,16 @@
 	dir = 5
 	},
 /area/station/quartermaster/office)
+"hje" = (
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/detnet/security{
+	dir = 8
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "hjn" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /obj/item/pinpointer/teg_semi,
@@ -24732,6 +24783,18 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"hmn" = (
+/obj/machinery/light/incandescent,
+/mob/living/critter/small_animal/dog/george/orwell,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = -3;
+	pixel_x = -32
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/heads)
 "hmV" = (
 /obj/landmark/start/job/engineer,
 /obj/disposalpipe/segment/mail{
@@ -25896,10 +25959,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
-"icm" = (
-/obj/storage/cart/forensic/security,
-/turf/simulated/floor/grime,
-/area/station/security/equipment)
 "idF" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -28537,12 +28596,6 @@
 /obj/stool/bench/yellow,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"jMf" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/storage/cart/mechcart/tools,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "jMr" = (
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/horizontal,
@@ -29749,13 +29802,6 @@
 	dir = 10
 	},
 /area/station/hangar/arrivals)
-"kGh" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/storage/cart/forensic/bomb_disposal,
-/turf/simulated/floor/grime,
-/area/station/security/equipment)
 "kGy" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -30532,14 +30578,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"lcp" = (
-/obj/machinery/light/incandescent,
-/mob/living/critter/small_animal/dog/george/orwell,
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/heads)
 "lcJ" = (
 /obj/disposalpipe/junction{
 	dir = 8;
@@ -32360,6 +32398,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor,
 /area/station/hangar/arrivals)
+"mhr" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
 "mhH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -33672,6 +33716,20 @@
 /obj/stool/chair/purple,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
+"mWp" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "secdetector0";
+	name = "Experimental Wireless Power Transceiver";
+	pixel_y = 16
+	},
+/obj/decal/cleanable/writing{
+	words = "why does my skin burn when I stand next to this?"
+	},
+/turf/simulated/floor,
+/area/station/science/testchamber/bombchamber)
 "mWO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34600,22 +34658,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
-"nBt" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
-	dir = 1;
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "secdetector0";
-	name = "Experimental Wireless Power Transceiver";
-	pixel_y = 16
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "nBH" = (
 /obj/landmark/start/job/assistant,
 /obj/item/device/radio/intercom{
@@ -35562,6 +35604,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
+"ofs" = (
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
+/turf/simulated/floor/blueblack{
+	dir = 5
+	},
+/area/station/science/lobby)
 "ofQ" = (
 /obj/item/feather,
 /obj/machinery/space_heater,
@@ -37264,15 +37315,6 @@
 	oxygen = 30.8366
 	},
 /area/station/crew_quarters/kitchen/freezer)
-"oXb" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/science/lobby)
 "oXQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37525,16 +37567,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
-"pic" = (
-/obj/machinery/camera{
-	c_tag = "Electronics";
-	dir = 1
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/storage/cart/mechcart/tools,
-/turf/simulated/floor/plating,
-/area/station/engine/elect)
 "piD" = (
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
@@ -39257,6 +39289,11 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"qjC" = (
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/science/lobby)
 "qjS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39539,20 +39576,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/science/lobby)
-"qtb" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "secdetector0";
-	name = "Experimental Wireless Power Transceiver";
-	pixel_y = 16
-	},
-/obj/decal/cleanable/writing{
-	words = "why does my skin burn when I stand next to this?"
-	},
-/turf/simulated/floor,
-/area/station/science/testchamber/bombchamber)
 "qth" = (
 /obj/storage/crate,
 /obj/item/clothing/head/wig,
@@ -43298,11 +43321,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
-"sMH" = (
-/turf/simulated/floor/blueblack{
-	dir = 5
-	},
-/area/station/science/lobby)
 "sMU" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt/dirt3,
@@ -50328,16 +50346,6 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"xrn" = (
-/obj/table/wood/auto{
-	dir = 5
-	},
-/obj/item/storage/secure/sbriefcase,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "xse" = (
 /obj/cable/blue{
 	icon_state = "1-2"
@@ -75769,7 +75777,7 @@ sKK
 btx
 bAH
 uyM
-jMf
+mhr
 bzg
 bis
 lNM
@@ -76071,7 +76079,7 @@ ydY
 btx
 eFB
 uyM
-pic
+bCl
 bzg
 bis
 lNM
@@ -92972,7 +92980,7 @@ moJ
 wqz
 bqq
 piD
-icm
+hbS
 moJ
 rjn
 ffV
@@ -94137,8 +94145,8 @@ wkZ
 aOi
 lbT
 inl
-dxo
-xrn
+hje
+aQR
 aRG
 aRK
 aRK
@@ -94177,7 +94185,7 @@ bnv
 bop
 uWC
 moJ
-kGh
+gzM
 piD
 rLp
 ldr
@@ -94461,7 +94469,7 @@ kuu
 bcz
 kaZ
 cvS
-lcp
+hmn
 sOF
 beA
 beM
@@ -124868,8 +124876,8 @@ aaa
 ahH
 adW
 adW
-sMH
-oXb
+ofs
+qjC
 aeV
 qHe
 kpN
@@ -125473,7 +125481,7 @@ aaa
 aaa
 aap
 aei
-aeE
+ggx
 fMJ
 fhn
 olV
@@ -131775,7 +131783,7 @@ bxD
 mpL
 bxD
 bxD
-qtb
+mWp
 bgw
 mpL
 aaa
@@ -131815,7 +131823,7 @@ aaa
 adQ
 aaa
 bsn
-nBt
+cKW
 rDc
 tsa
 tMJ

@@ -1065,7 +1065,7 @@ var/datum/job_controller/job_controls
 	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
 	return JOB
 
-///Soft supresses crash on failing to find a job
+///Soft supresses logging on failing to find a job
 /proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
@@ -1095,7 +1095,7 @@ var/datum/job_controller/job_controls
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
 	if (!soft)
-		CRASH("No job found with name '[string]'!")
+		logTheThing(LOG_DEBUG, null, "No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))

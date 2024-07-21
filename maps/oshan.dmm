@@ -4740,21 +4740,6 @@
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aqf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/fakeobject{
-	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "skeleton_stand";
-	name = "Jim"
-	},
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
 "aqg" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -5968,12 +5953,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"atZ" = (
-/obj/stool/bee_bed/heisenbee,
-/obj/critter/domestic_bee/heisenbee,
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/wood,
-/area/station/science/research_director)
 "aua" = (
 /turf/simulated/floor/wood,
 /area/station/science/research_director)
@@ -20524,18 +20503,6 @@
 	icon_state = "green1"
 	},
 /area/station/bridge/hos)
-"bxd" = (
-/obj/table/wood/round/auto,
-/obj/item/stamp/hop,
-/obj/item/device/gps,
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen3"
-	},
-/area/station/bridge/hos)
 "bxe" = (
 /obj/storage/crate,
 /obj/item/clothing/suit/johnny_coat{
@@ -32701,6 +32668,22 @@
 /obj/mapping_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen/freezer)
+"dyC" = (
+/obj/machinery/disposal/mail/small/autoname{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 4;
+	mail_tag = "detective's office"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/storage/cart/forensic/detective,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "dyQ" = (
 /obj/table/reinforced/auto,
 /obj/item/sponge,
@@ -33625,6 +33608,15 @@
 /obj/cable/orange,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"eKD" = (
+/obj/fakeobject/airlock_broken/firelock{
+	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "rusted hatch"
+	},
+/turf/simulated/floor/damaged2,
+/area/derelict_diner)
 "eKI" = (
 /obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/purple/side{
@@ -36732,22 +36724,6 @@
 "jao" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
-"jaG" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "detective's office"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 4;
-	mail_tag = "detective's office"
-	},
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/storage/cart/forensic/detective,
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "jbb" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -38227,6 +38203,21 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"lvA" = (
+/obj/table/wood/round/auto,
+/obj/item/stamp/hop,
+/obj/item/device/gps,
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 26
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen3"
+	},
+/area/station/bridge/hos)
 "lvP" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -40058,6 +40049,16 @@
 /obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"nIg" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/obj/machinery/light/incandescent/warm,
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood,
+/area/station/science/research_director)
 "nIs" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
@@ -42891,6 +42892,24 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"rSo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/fakeobject{
+	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "skeleton_stand";
+	name = "Jim"
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "rSv" = (
 /turf/simulated/wall/auto/asteroid,
 /area/sunken_asteroid)
@@ -44666,15 +44685,6 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
-"uUz" = (
-/obj/fakeobject/airlock_broken/firelock{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "rusted hatch"
-	},
-/turf/simulated/floor/damaged2,
-/area/derelict_diner)
 "uWa" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
@@ -82836,7 +82846,7 @@ aSd
 chc
 smn
 quk
-jaG
+dyC
 mHf
 smn
 nar
@@ -96761,7 +96771,7 @@ aUp
 cks
 cku
 bvL
-bxd
+lvA
 dFS
 bvL
 bzM
@@ -97907,7 +97917,7 @@ fbA
 lYt
 aoh
 aog
-aqf
+rSo
 apA
 apA
 asB
@@ -104555,7 +104565,7 @@ apd
 acz
 arI
 cZv
-atZ
+nIg
 apd
 awI
 axL
@@ -109328,7 +109338,7 @@ kSP
 gUu
 kpv
 fHN
-uUz
+eKD
 xRw
 eTo
 teg
