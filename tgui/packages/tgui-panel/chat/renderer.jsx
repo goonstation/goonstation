@@ -6,8 +6,23 @@
 
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
+import { createRoot } from 'react-dom/client';
+import { Tooltip } from 'tgui/components';
 import { createLogger } from 'tgui/logging';
-import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN } from './constants';
+
+import {
+  COMBINE_MAX_MESSAGES,
+  COMBINE_MAX_TIME_WINDOW,
+  IMAGE_RETRY_DELAY,
+  IMAGE_RETRY_LIMIT,
+  IMAGE_RETRY_MESSAGE_AGE,
+  MAX_PERSISTED_MESSAGES,
+  MAX_VISIBLE_MESSAGES,
+  MESSAGE_PRUNE_INTERVAL,
+  MESSAGE_TYPE_INTERNAL,
+  MESSAGE_TYPE_UNKNOWN,
+  MESSAGE_TYPES,
+} from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 
@@ -17,7 +32,19 @@ const logger = createLogger('chatRenderer');
 // that is still trackable.
 const SCROLL_TRACKING_TOLERANCE = 24;
 
-const findNearestScrollableParent = startingNode => {
+// List of injectable component names to the actual type
+export const TGUI_CHAT_COMPONENTS = {
+  Tooltip,
+};
+
+// List of injectable attibute names mapped to their proper prop
+// We need this because attibutes don't support lowercase names
+export const TGUI_CHAT_ATTRIBUTES_TO_PROPS = {
+  position: 'position',
+  content: 'content',
+};
+
+const findNearestScrollableParent = (startingNode) => {
   const body = document.body;
   let node = startingNode;
   while (node && node !== body) {
@@ -52,7 +79,7 @@ const createReconnectedNode = () => {
   return node;
 };
 
-const handleImageError = e => {
+const handleImageError = (e) => {
   setTimeout(() => {
     /** @type {HTMLImageElement} */
     const node = e.target;
@@ -71,7 +98,7 @@ const handleImageError = e => {
 /**
  * Assigns a "times-repeated" badge to the message.
  */
-const updateMessageBadge = message => {
+const updateMessageBadge = (message) => {
   const { node, times } = message;
   if (!node || !times) {
     // Nothing to update
@@ -80,10 +107,7 @@ const updateMessageBadge = message => {
   const foundBadge = node.querySelector('.Chat__badge');
   const badge = foundBadge || document.createElement('div');
   badge.textContent = times;
-  badge.className = classes([
-    'Chat__badge',
-    'Chat__badge--animate',
-  ]);
+  badge.className = classes(['Chat__badge', 'Chat__badge--animate']);
   requestAnimationFrame(() => {
     badge.className = 'Chat__badge';
   });
@@ -107,13 +131,12 @@ class ChatRenderer {
     /** @type {HTMLElement} */
     this.scrollNode = null;
     this.scrollTracking = true;
-    this.handleScroll = type => {
+    this.handleScroll = (type) => {
       const node = this.scrollNode;
       const height = node.scrollHeight;
       const bottom = node.scrollTop + node.offsetHeight;
-      const scrollTracking = (
-        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE
-      );
+      const scrollTracking =
+        Math.abs(height - bottom) < SCROLL_TRACKING_TOLERANCE;
       if (scrollTracking !== this.scrollTracking) {
         this.scrollTracking = scrollTracking;
         this.events.emit('scrollTrackingChanged', scrollTracking);
@@ -145,7 +168,7 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = findNearestScrollableParent(this.rootNode);
     this.scrollNode.addEventListener('scroll', this.handleScroll);
-    setImmediate(() => {
+    setTimeout(() => {
       this.scrollToBottom();
     });
     // Flush the queue
@@ -170,30 +193,90 @@ class ChatRenderer {
     }
   }
 
-  setHighlight(text, color) {
-    if (!text || !color) {
-      this.highlightRegex = null;
-      this.highlightColor = null;
+  setHighlight(highlightSettings, highlightSettingById) {
+    this.highlightParsers = null;
+    if (!highlightSettings) {
       return;
     }
-    const allowedRegex = /^[a-z0-9_\-\s]+$/ig;
-    const lines = String(text)
-      .split(',')
-      .map(str => str.trim())
-      .filter(str => (
-        // Must be longer than one character
-        str && str.length > 1
-        // Must be alphanumeric (with some punctuation)
-        && allowedRegex.test(str)
-      ));
-    // Nothing to match, reset highlighting
-    if (lines.length === 0) {
-      this.highlightRegex = null;
-      this.highlightColor = null;
-      return;
-    }
-    this.highlightRegex = new RegExp('(' + lines.join('|') + ')', 'gi');
-    this.highlightColor = color;
+    highlightSettings.map((id) => {
+      const setting = highlightSettingById[id];
+      const text = setting.highlightText;
+      const highlightColor = setting.highlightColor;
+      const highlightWholeMessage = setting.highlightWholeMessage;
+      const matchWord = setting.matchWord;
+      const matchCase = setting.matchCase;
+      const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
+      const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
+      const lines = String(text)
+        .split(',')
+        .map((str) => str.trim())
+        .filter(
+          (str) =>
+            // Must be longer than one character
+            str &&
+            str.length > 1 &&
+            // Must be alphanumeric (with some punctuation)
+            allowedRegex.test(str) &&
+            // Reset lastIndex so it does not mess up the next word
+            ((allowedRegex.lastIndex = 0) || true),
+        );
+      let highlightWords;
+      let highlightRegex;
+      // Nothing to match, reset highlighting
+      if (lines.length === 0) {
+        return;
+      }
+      let regexExpressions = [];
+      // Organize each highlight entry into regex expressions and words
+      for (let line of lines) {
+        // Regex expression syntax is /[exp]/
+        if (line.charAt(0) === '/' && line.charAt(line.length - 1) === '/') {
+          const expr = line.substring(1, line.length - 1);
+          // Check if this is more than one character
+          if (/^(\[.*\]|\\.|.)$/.test(expr)) {
+            continue;
+          }
+          regexExpressions.push(expr);
+        } else {
+          // Lazy init
+          if (!highlightWords) {
+            highlightWords = [];
+          }
+          // We're not going to let regex characters fuck up our RegEx operation.
+          line = line.replace(regexEscapeCharacters, '\\$&');
+
+          highlightWords.push(line);
+        }
+      }
+      const regexStr = regexExpressions.join('|');
+      const flags = 'g' + (matchCase ? '' : 'i');
+      // We wrap this in a try-catch to ensure that broken regex doesn't break
+      // the entire chat.
+      try {
+        // setting regex overrides matchword
+        if (regexStr) {
+          highlightRegex = new RegExp('(' + regexStr + ')', flags);
+        } else {
+          const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
+            '|',
+          )})${matchWord ? '\\b' : ''}`;
+          highlightRegex = new RegExp(pattern, flags);
+        }
+      } catch {
+        // We just reset it if it's invalid.
+        highlightRegex = null;
+      }
+      // Lazy init
+      if (!this.highlightParsers) {
+        this.highlightParsers = [];
+      }
+      this.highlightParsers.push({
+        highlightWords,
+        highlightRegex,
+        highlightColor,
+        highlightWholeMessage,
+      });
+    });
   }
 
   scrollToBottom() {
@@ -235,14 +318,14 @@ class ChatRenderer {
     const to = Math.max(0, len - COMBINE_MAX_MESSAGES);
     for (let i = from; i >= to; i--) {
       const message = this.visibleMessages[i];
-      const matches = (
+
+      const matches =
         // Is not an internal message
-        !message.type.startsWith(MESSAGE_TYPE_INTERNAL)
+        !message.type.startsWith(MESSAGE_TYPE_INTERNAL) &&
         // Text payload must fully match
-        && isSameMessage(message, predicate)
+        isSameMessage(message, predicate) &&
         // Must land within the specified time window
-        && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
-      );
+        now < message.createdAt + COMBINE_MAX_TIME_WINDOW;
       if (matches) {
         return message;
       }
@@ -251,17 +334,13 @@ class ChatRenderer {
   }
 
   processBatch(batch, options = {}) {
-    const {
-      prepend,
-      notifyListeners = true,
-    } = options;
+    const { prepend, notifyListeners = true } = options;
     const now = Date.now();
     // Queue up messages until chat is ready
     if (!this.isReady()) {
       if (prepend) {
         this.queue = [...batch, ...this.queue];
-      }
-      else {
+      } else {
         this.queue = [...this.queue, ...batch];
       }
       return;
@@ -297,20 +376,68 @@ class ChatRenderer {
         // Payload is HTML
         else if (message.html) {
           node.innerHTML = message.html;
-        }
-        else {
+        } else {
           logger.error('Error: message is missing text payload', message);
         }
-        // Highlight text
-        if (!message.avoidHighlighting && this.highlightRegex) {
-          const highlighted = highlightNode(node,
-            this.highlightRegex,
-            text => (
-              createHighlightNode(text, this.highlightColor)
-            ));
-          if (highlighted) {
-            node.className += ' ChatMessage--highlighted';
+        // Get all nodes in this message that want to be rendered like jsx
+        const nodes = node.querySelectorAll('[data-component]');
+        for (let i = 0; i < nodes.length; i++) {
+          const childNode = nodes[i];
+          const targetName = childNode.getAttribute('data-component');
+          // Let's pull out the attibute info we need
+          let outputProps = {};
+          for (let j = 0; j < childNode.attributes.length; j++) {
+            const attribute = childNode.attributes[j];
+
+            let working_value = attribute.nodeValue;
+            // We can't do the "if it has no value it's truthy" trick
+            // Because getAttribute returns "", not null. Hate IE
+            if (working_value === '$true') {
+              working_value = true;
+            } else if (working_value === '$false') {
+              working_value = false;
+            } else if (!isNaN(working_value)) {
+              const parsed_float = parseFloat(working_value);
+              if (!isNaN(parsed_float)) {
+                working_value = parsed_float;
+              }
+            }
+
+            let canon_name = attribute.nodeName.replace('data-', '');
+            // html attributes don't support upper case chars, so we need to map
+            canon_name = TGUI_CHAT_ATTRIBUTES_TO_PROPS[canon_name];
+            outputProps[canon_name] = working_value;
           }
+          const oldHtml = { __html: childNode.innerHTML };
+          while (childNode.firstChild) {
+            childNode.removeChild(childNode.firstChild);
+          }
+          const Element = TGUI_CHAT_COMPONENTS[targetName];
+
+          const reactRoot = createRoot(childNode);
+
+          /* eslint-disable react/no-danger */
+          reactRoot.render(
+            <Element {...outputProps}>
+              <span dangerouslySetInnerHTML={oldHtml} />
+            </Element>,
+            childNode,
+          );
+        }
+
+        // Highlight text
+        if (!message.avoidHighlighting && this.highlightParsers) {
+          this.highlightParsers.map((parser) => {
+            const highlighted = highlightNode(
+              node,
+              parser.highlightRegex,
+              parser.highlightWords,
+              (text) => createHighlightNode(text, parser.highlightColor),
+            );
+            if (highlighted && parser.highlightWholeMessage) {
+              node.className += ' ChatMessage--highlighted';
+            }
+          });
         }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');
@@ -330,7 +457,10 @@ class ChatRenderer {
       message.node = node;
       // Query all possible selectors to find out the message type
       if (!message.type) {
-        message.type = MESSAGE_TYPE_UNKNOWN;
+        const typeDef = MESSAGE_TYPES.find(
+          (typeDef) => typeDef.selector && node.querySelector(typeDef.selector),
+        );
+        message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
       }
       updateMessageBadge(message);
       if (!countByType[message.type]) {
@@ -348,12 +478,11 @@ class ChatRenderer {
       const firstChild = this.rootNode.childNodes[0];
       if (prepend && firstChild) {
         this.rootNode.insertBefore(fragment, firstChild);
-      }
-      else {
+      } else {
         this.rootNode.appendChild(fragment);
       }
       if (this.scrollTracking) {
-        setImmediate(() => this.scrollToBottom());
+        setTimeout(() => this.scrollToBottom());
       }
     }
     // Notify listeners that we have processed the batch
@@ -375,8 +504,7 @@ class ChatRenderer {
     // Visible messages
     {
       const messages = this.visibleMessages;
-      const fromIndex = Math.max(0,
-        messages.length - MAX_VISIBLE_MESSAGES);
+      const fromIndex = Math.max(0, messages.length - MAX_VISIBLE_MESSAGES);
       if (fromIndex > 0) {
         this.visibleMessages = messages.slice(fromIndex);
         for (let i = 0; i < fromIndex; i++) {
@@ -386,16 +514,19 @@ class ChatRenderer {
           message.node = 'pruned';
         }
         // Remove pruned messages from the message array
-        this.messages = this.messages.filter(message => (
-          message.node !== 'pruned'
-        ));
+
+        this.messages = this.messages.filter(
+          (message) => message.node !== 'pruned',
+        );
         logger.log(`pruned ${fromIndex} visible messages`);
       }
     }
     // All messages
     {
-      const fromIndex = Math.max(0,
-        this.messages.length - MAX_PERSISTED_MESSAGES);
+      const fromIndex = Math.max(
+        0,
+        this.messages.length - MAX_PERSISTED_MESSAGES,
+      );
       if (fromIndex > 0) {
         this.messages = this.messages.slice(fromIndex);
         logger.log(`pruned ${fromIndex} stored messages`);
@@ -408,8 +539,10 @@ class ChatRenderer {
       return;
     }
     // Make a copy of messages
-    const fromIndex = Math.max(0,
-      this.messages.length - MAX_PERSISTED_MESSAGES);
+    const fromIndex = Math.max(
+      0,
+      this.messages.length - MAX_PERSISTED_MESSAGES,
+    );
     const messages = this.messages.slice(fromIndex);
     // Remove existing nodes
     for (let message of messages) {
@@ -425,6 +558,29 @@ class ChatRenderer {
     });
   }
 
+  /**
+   * @clearChat
+   * @copyright 2023
+   * @author Cheffie
+   * @link https://github.com/CheffieGithub
+   * @license MIT
+   */
+  clearChat() {
+    const messages = this.visibleMessages;
+    this.visibleMessages = [];
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      this.rootNode.removeChild(message.node);
+      // Mark this message as pruned
+      message.node = 'pruned';
+    }
+    // Remove pruned messages from the message array
+    this.messages = this.messages.filter(
+      (message) => message.node !== 'pruned',
+    );
+    logger.log(`Cleared chat`);
+  }
+
   saveToDisk() {
     // Compile currently loaded stylesheets as CSS text
     let cssText = '';
@@ -433,30 +589,36 @@ class ChatRenderer {
       const cssRules = styleSheets[i].cssRules;
       for (let i = 0; i < cssRules.length; i++) {
         const rule = cssRules[i];
-        cssText += rule.cssText + '\n';
+        if (rule && typeof rule.cssText === 'string') {
+          cssText += rule.cssText + '\n';
+        }
       }
     }
     cssText += 'body, html { background-color: #141414 }\n';
     // Compile chat log as HTML text
     let messagesHtml = '';
-    for (let message of this.messages) {
+    for (let message of this.visibleMessages) {
       if (message.node) {
         messagesHtml += message.node.outerHTML + '\n';
       }
     }
     // Create a page
-    const pageHtml = '<!doctype html>\n'
-      + '<html>\n'
-      + '<head>\n'
-      + '<title>SS13 Chat Log</title>\n'
-      + '<style>\n' + cssText + '</style>\n'
-      + '</head>\n'
-      + '<body>\n'
-      + '<div class="Chat">\n'
-      + messagesHtml
-      + '</div>\n'
-      + '</body>\n'
-      + '</html>\n';
+
+    const pageHtml =
+      '<!doctype html>\n' +
+      '<html>\n' +
+      '<head>\n' +
+      '<title>SS13 Chat Log</title>\n' +
+      '<style>\n' +
+      cssText +
+      '</style>\n' +
+      '</head>\n' +
+      '<body>\n' +
+      '<div class="Chat">\n' +
+      messagesHtml +
+      '</div>\n' +
+      '</body>\n' +
+      '</html>\n';
     // Create and send a nice blob
     const blob = new Blob([pageHtml]);
     const timestamp = new Date()

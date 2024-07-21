@@ -4,4 +4,4 @@
  * @license MIT
  */
 
-export const CONNECTION_LOST_AFTER = 15000;
+export const selectAudio = (state) => state.audio;

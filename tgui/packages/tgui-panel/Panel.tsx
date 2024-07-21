@@ -6,26 +6,27 @@
 
 import { Button, Section, Stack } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
+
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping';
+import { ReconnectButton } from './reconnect';
 import { SettingsPanel, useSettings } from './settings';
 
-export const Panel = (props, context) => {
-  const audio = useAudio(context);
-  const settings = useSettings(context);
-  const game = useGame(context);
+export const Panel = (props) => {
+  const audio = useAudio();
+  const settings = useSettings();
+  const game = useGame();
   if (process.env.NODE_ENV !== 'production') {
     const { useDebug, KitchenSink } = require('tgui/debug');
-    const debug = useDebug(context);
+    const debug = useDebug();
     if (debug.kitchenSink) {
-      return (
-        <KitchenSink panel />
-      );
+      return <KitchenSink panel />;
     }
   }
+
   return (
     <Pane theme={settings.theme}>
       <Stack fill vertical>
@@ -45,17 +46,19 @@ export const Panel = (props, context) => {
                   icon="music"
                   tooltip="Music player"
                   tooltipPosition="bottom-start"
-                  onClick={() => audio.toggle()} />
+                  onClick={() => audio.toggle()}
+                />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon={settings.visible ? 'times' : 'cog'}
                   selected={settings.visible}
-                  tooltip={settings.visible
-                    ? 'Close settings'
-                    : 'Open settings'}
+                  tooltip={
+                    settings.visible ? 'Close settings' : 'Open settings'
+                  }
                   tooltipPosition="bottom-start"
-                  onClick={() => settings.toggle()} />
+                  onClick={() => settings.toggle()}
+                />
               </Stack.Item>
             </Stack>
           </Section>
@@ -79,16 +82,9 @@ export const Panel = (props, context) => {
             </Pane.Content>
             <Notifications>
               {game.connectionLostAt && (
-                <Notifications.Item
-                  rightSlot={(
-                    <Button
-                      color="white"
-                      onClick={() => Byond.command('.reconnect')}>
-                      Reconnect
-                    </Button>
-                  )}>
-                  You are either AFK, experiencing lag or the connection
-                  has closed.
+                <Notifications.Item rightSlot={<ReconnectButton />}>
+                  You are either AFK, experiencing lag or the connection has
+                  closed.
                 </Notifications.Item>
               )}
               {game.roundRestartedAt && (

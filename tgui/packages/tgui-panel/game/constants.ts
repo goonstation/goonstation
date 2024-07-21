@@ -4,4 +4,4 @@
  * @license MIT
  */
 
-export const selectGame = state => state.game;
+export const CONNECTION_LOST_AFTER = 45000;

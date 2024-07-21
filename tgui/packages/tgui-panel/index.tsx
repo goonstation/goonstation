@@ -10,11 +10,13 @@ import './styles/themes/light.scss';
 
 import { perf } from 'common/perf';
 import { combineReducers } from 'common/redux';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setGlobalStore } from 'tgui/backend';
 import { setupGlobalEvents } from 'tgui/events';
 import { captureExternalLinks } from 'tgui/links';
 import { createRenderer } from 'tgui/renderer';
-import { configureStore, StoreProvider } from 'tgui/store';
+import { configureStore } from 'tgui/store';
+import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
 import { gameMiddleware, gameReducer } from './game';
@@ -47,12 +49,10 @@ const store = configureStore({
 });
 
 const renderApp = createRenderer(() => {
+  setGlobalStore(store);
+
   const { Panel } = require('./Panel');
-  return (
-    <StoreProvider store={store}>
-      <Panel />
-    </StoreProvider>
-  );
+  return <Panel />;
 });
 
 const setupApp = () => {
@@ -68,20 +68,11 @@ const setupApp = () => {
   setupPanelFocusHacks();
   captureExternalLinks();
 
-  // Subscribe for Redux state updates
+  // Re-render UI on store updates
   store.subscribe(renderApp);
 
-  // Subscribe for bankend updates
-  window.update = msg => store.dispatch(Byond.parseJson(msg));
-
-  // Process the early update queue
-  while (true) {
-    const msg = window.__updateQueue__.shift();
-    if (!msg) {
-      break;
-    }
-    window.update(msg);
-  }
+  // Dispatch incoming messages as store actions
+  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Unhide the panel
   Byond.winset('output', {
@@ -90,25 +81,36 @@ const setupApp = () => {
   Byond.winset('browseroutput', {
     'is-visible': true,
     'is-disabled': false,
-    'pos': '0x0',
-    'size': '0x0',
+    pos: '0x0',
+    size: '0x0',
+  });
+
+  // Resize the panel to match the non-browser output
+  Byond.winget('output').then((output: { size: string }) => {
+    Byond.winset('browseroutput', {
+      size: output.size,
+    });
   });
 
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept([
-      './audio',
-      './chat',
-      './game',
-      './Notifications',
-      './Panel',
-      './ping',
-      './settings',
-      './telemetry',
-    ], () => {
-      renderApp();
-    });
+
+    module.hot.accept(
+      [
+        './audio',
+        './chat',
+        './game',
+        './Notifications',
+        './Panel',
+        './ping',
+        './settings',
+        './telemetry',
+      ],
+      () => {
+        renderApp();
+      },
+    );
   }
 };
 
