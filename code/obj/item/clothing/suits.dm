@@ -2047,7 +2047,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 						hand_overlay_color = "#f80000"
 					if("long_gloves")
 						hand_overlay_color = "#ffff33"
-					if("sway_syndie")
+					if("swat_syndie")
 						hand_overlay_color = "#b22c20"
 					if("swat_NT")
 						hand_overlay_color = "#2050b2"
