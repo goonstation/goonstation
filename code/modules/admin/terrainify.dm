@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				var/mob/player_mob = C.mob
 				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
 					SPAWN(0)
-						shake_camera(player_mob, 20 SECONDS, rand(55,85))
+						shake_camera(player_mob, 20 SECONDS, rand(20,40))
 					player_mob.changeStatus("knockdown", 2 SECONDS)
 
 		return
@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				var/mob/player_mob = C.mob
 				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
 					SPAWN(0)
-						shake_camera(player_mob, 5 SECONDS, rand(55,85))
+						shake_camera(player_mob, 4 SECONDS, rand(55,85))
 					player_mob.changeStatus("knockdown", 5 SECONDS)
 
 		REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry), 10 SECONDS)
