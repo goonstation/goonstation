@@ -1978,6 +1978,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		setProperty("chemprot", 70)
 
+#define BADGE_SHOWOFF_COOLDOWN 2 SECONDS
+
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
@@ -2001,9 +2003,69 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		src.flash_badge(user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		src.flash_badge(user)
+
+	proc/flash_badge(mob/user)
+		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
+			return
+		var/pixel_x_offset = 0
+		var/pixel_y_offset = 2
+		var/hand_icon_state = ""
+		if(user.hand)
+			hand_icon_state = "badge_hold_l"
+			pixel_x_offset = 6
+		else
+			hand_icon_state = "badge_hold_r"
+			pixel_x_offset = -6
+		var/image/badge_overlay = src.SafeGetOverlayImage("badge_overlay", 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi', "security_badge", MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
+		user.UpdateOverlays(badge_overlay, "badge_overlay")
+		var/hand_overlay_color = "#ffffff"
+		if(istype(user, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = user
+			var/datum/appearanceHolder/appearance = H.bioHolder?.mobAppearance
+			if (istype(appearance))
+				hand_overlay_color = appearance.s_tone
+			if (istype(H.gloves))
+				var/obj/item/clothing/gloves/gloves = H.gloves
+				switch(gloves.icon_state)
+					if("black")
+						hand_overlay_color = "#535353"
+					if("inspector")
+						hand_overlay_color = "#2d3c52"
+					if("latex")
+						if (gloves.color)
+							hand_overlay_color = gloves.color
+						else
+							hand_overlay_color = "#f3f3f3"
+					if("yellow")
+						hand_overlay_color = "#ffff33"
+					if("boxinggloves")
+						hand_overlay_color = "#f80000"
+					if("long_gloves")
+						hand_overlay_color = "#ffff33"
+					if("sway_syndie")
+						hand_overlay_color = "#b22c20"
+					if("swat_NT")
+						hand_overlay_color = "#2050b2"
+					if("capgloves")
+						hand_overlay_color = "#3fb54f"
+					if("centcomgloves")
+						hand_overlay_color = "#3c6dc3"
+					if("centcomredgloves")
+						hand_overlay_color = "#d73715"
+
+		var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=hand_overlay_color)
+		user.UpdateOverlays(hand_overlay, "badge_hand_overlay")
+		SPAWN(BADGE_SHOWOFF_COOLDOWN)
+			user.UpdateOverlays(null, "badge_overlay")
+			user.UpdateOverlays(null, "badge_hand_overlay")
+
+
+#undef BADGE_SHOWOFF_COOLDOWN
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"
