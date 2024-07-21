@@ -26,10 +26,12 @@ const setup = async () => {
   assets += `Byond.loadCss('tgui-bench.bundle.css');\n`;
   assets += `</script>\n`;
 
-  const publicDir = path.resolve(__dirname, '../../../browserassets/tgui'); // Modified by Goonstation
-  const page = fs.readFileSync(path.join(publicDir, 'tgui.html'), 'utf-8').replace('<!-- tgui:assets -->', assets);
+  const publicDir = path.resolve(__dirname, '../../../browserassets/tgui');
+  const page = fs
+    .readFileSync(path.join(publicDir, 'tgui.html'), 'utf-8')
+    .replace('<!-- tgui:assets -->\n', assets);
 
-  server.register(require('fastify-static'), {
+  server.register(require('@fastify/static'), {
     root: publicDir,
   });
 
@@ -57,7 +59,6 @@ const setup = async () => {
     }
     if (type === 'finished') {
       await res.send();
-      exec(`kill_ie.vbs`);
       process.exit(0);
     }
     // Unhandled message
@@ -74,6 +75,7 @@ const setup = async () => {
 
   if (process.platform === 'win32') {
     exec(`launch_ie.vbs`);
+    // exec(`start "" "iexplore" "http://127.0.0.1:3002"`);
   }
 
   console.log('Waiting for Internet Explorer to respond.');
