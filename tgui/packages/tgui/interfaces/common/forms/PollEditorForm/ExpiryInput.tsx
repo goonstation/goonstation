@@ -5,9 +5,9 @@
  * @license ISC
  */
 
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
+import { Dropdown, Input, NumberInput, Stack } from 'tgui-core/components';
 
-import { Dropdown, Input, NumberInput, Stack } from '../../../../components';
 import type { ExpiryOptions, ExpiryType } from './types';
 
 const expiryTypeLookup: Record<ExpiryType, string> = {
@@ -56,13 +56,13 @@ export const ExpiryInput = (props: ExpiryInputProps) => {
       expiryType,
       expiryValue: newValue,
     });
-  const handleChangeNumberValuePart = (_e: unknown, newValue: number) => {
+  const handleChangeNumberValuePart = (newValue: number) => {
     onChange({
       expiryType,
       expiryValue: `${newValue}`,
     });
   };
-  let valueControl: InfernoNode = null;
+  let valueControl: ReactNode = null;
   if (expiryType === 'timestamp') {
     valueControl = <Input width="100%" value={expiryValue} onChange={handleChangeValuePart} placeholder="yyyy-mm-dd" />;
   } else if (expiryType && ['minutes', 'days', 'hours'].includes(expiryType)) {
@@ -71,9 +71,9 @@ export const ExpiryInput = (props: ExpiryInputProps) => {
         width="100%"
         value={safeParseInt(expiryValue)}
         onChange={handleChangeNumberValuePart}
-        placeholder="Amount"
         minValue={0}
         maxValue={1_000}
+        step={1}
       />
     );
   }

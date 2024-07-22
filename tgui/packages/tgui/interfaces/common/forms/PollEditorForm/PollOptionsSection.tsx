@@ -5,8 +5,8 @@
  * @license ISC
  */
 
-import { useLocalState } from '../../../../backend';
-import { Button, Input, LabeledList, Section } from '../../../../components';
+import { useState } from 'react';
+import { Button, Input, LabeledList, Section } from 'tgui-core/components';
 
 interface PollOptionsSectionProps {
   onAddOption: () => void;
@@ -18,11 +18,7 @@ interface PollOptionsSectionProps {
 
 export const PollOptionsSection = (props: PollOptionsSectionProps, context: unknown) => {
   const { onAddOption, onChangeOption, onRemoveOption, onSwapOptions, options } = props;
-  const [reorderingOptionIndex, setReorderingOptionIndex] = useLocalState<number | null>(
-    context,
-    'reorderingOptionIndex',
-    null
-  );
+  const [reorderingOptionIndex, setReorderingOptionIndex] = useState<number | null>(null);
   const handleReorder = (index: number) => {
     if (reorderingOptionIndex === null) {
       setReorderingOptionIndex(index);
@@ -37,7 +33,7 @@ export const PollOptionsSection = (props: PollOptionsSectionProps, context: unkn
       fill
       scrollable
       buttons={
-        <Button icon="add" onClick={onAddOption} title="Add option">
+        <Button icon="add" onClick={onAddOption} tooltip="Add option">
           Add
         </Button>
       }>
@@ -72,10 +68,10 @@ const PollOptionListItem = (props: PollOptionListItemProps) => {
   const handleChange = (e: unknown, value: string) => onChange(value);
   const buttons = (
     <>
-      {reordering === 'self' && <Button color="red" icon="cancel" onClick={onReorder} title="Cancel reorder" />}
-      {reordering === 'other' && <Button icon="arrow-down-up-across-line" onClick={onReorder} title="Swap" />}
-      {reordering === 'none' && <Button icon="arrows-up-down" onClick={onReorder} title="Swap" />}
-      <Button color="bad" icon="trash" onClick={onRemove} title="Remove option" />
+      {reordering === 'self' && <Button color="red" icon="cancel" onClick={onReorder} tooltip="Cancel reorder" />}
+      {reordering === 'other' && <Button icon="arrow-down-up-across-line" onClick={onReorder} tooltip="Swap" />}
+      {reordering === 'none' && <Button icon="arrows-up-down" onClick={onReorder} tooltip="Swap" />}
+      <Button color="bad" icon="trash" onClick={onRemove} tooltip="Remove option" />
     </>
   );
   return (

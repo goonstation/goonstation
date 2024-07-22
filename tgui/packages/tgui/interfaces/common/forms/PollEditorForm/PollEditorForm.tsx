@@ -5,7 +5,8 @@
  * @license ISC
  */
 
-import { Button, Dropdown, Input, LabeledList, Section, Stack } from '../../../../components';
+import { Button, Dropdown, Input, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { ExpiryInput } from './ExpiryInput';
 import { PollOptionsSection } from './PollOptionsSection';
 import type { ExpiryOptions, PollSettings } from './types';
