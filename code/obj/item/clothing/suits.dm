@@ -2023,44 +2023,88 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		else
 			hand_icon_state = "badge_hold_r"
 			pixel_x_offset = -6
-		var/image/badge_overlay = src.SafeGetOverlayImage("badge_overlay", 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi', "security_badge", MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
-		user.UpdateOverlays(badge_overlay, "badge_overlay")
-		var/hand_overlay_color = "#ffffff"
+
+		var/hand_overlay_color = null
 		if(istype(user, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = user
-			var/datum/appearanceHolder/appearance = H.bioHolder?.mobAppearance
-			if (istype(appearance))
-				hand_overlay_color = appearance.s_tone
+
 			if (istype(H.gloves))
 				var/obj/item/clothing/gloves/gloves = H.gloves
-				switch(gloves.icon_state)
-					if("black")
-						hand_overlay_color = "#535353"
-					if("inspector")
-						hand_overlay_color = "#2d3c52"
-					if("latex")
-						if (gloves.color)
-							hand_overlay_color = gloves.color
-						else
+				if (gloves.color)
+					hand_overlay_color = gloves.color
+				else
+					switch(gloves.icon_state)
+						if("black")
+							hand_overlay_color = "#535353"
+						if("inspector")
+							hand_overlay_color = "#2d3c52"
+						if("latex")
 							hand_overlay_color = "#f3f3f3"
-					if("yellow")
-						hand_overlay_color = "#ffff33"
-					if("boxinggloves")
-						hand_overlay_color = "#f80000"
-					if("long_gloves")
-						hand_overlay_color = "#ffff33"
-					if("swat_syndie")
-						hand_overlay_color = "#b22c20"
-					if("swat_NT")
-						hand_overlay_color = "#2050b2"
-					if("capgloves")
-						hand_overlay_color = "#3fb54f"
-					if("centcomgloves")
-						hand_overlay_color = "#3c6dc3"
-					if("centcomredgloves")
-						hand_overlay_color = "#d73715"
+						if("yellow")
+							hand_overlay_color = "#ffff33"
+						if("boxinggloves")
+							hand_overlay_color = "#f80000"
+						if("long_gloves")
+							hand_overlay_color = "#ffff33"
+						if("swat_syndie")
+							hand_overlay_color = "#b22c20"
+						if("swat_NT")
+							hand_overlay_color = "#2050b2"
+						if("capgloves")
+							hand_overlay_color = "#3fb54f"
+						if("centcomgloves")
+							hand_overlay_color = "#3c6dc3"
+						if("centcomredgloves")
+							hand_overlay_color = "#d73715"
+						if ("cgaunts")
+							hand_overlay_color = "#535353"
+						if ("stun")
+							hand_overlay_color = "#ffff33"
+						if ("wedglove")
+							hand_overlay_color = "#f3f3f3"
+						if ("princess")
+							hand_overlay_color = "#f3f3f3"
+						if ("combatgauntlets")
+							hand_overlay_color = "#343442"
 
+
+			if (isnull(hand_overlay_color))
+				var/obj/item/parts/limb = null
+				if(H.hand)
+					limb = H.limbs.l_arm
+				else
+					limb = H.limbs.r_arm
+				if (limb)
+					if (limb.skintoned)
+						hand_overlay_color = limb.skin_tone
+					else
+						if (isplantlimb(limb))
+							hand_overlay_color = "#3fb54f"
+						else if (isrobotlimb(limb))
+							hand_overlay_color = "#4e5263"
+						else if (iswolflimb(limb))
+							hand_overlay_color = "#895d37"
+						else if (isskeletonlimb(limb))
+							hand_overlay_color = "#aa9987"
+						else if (istype(limb, /obj/item/parts/human_parts/arm/mutant/monkey))
+							hand_overlay_color = "#745136"
+						else if (istype(limb, /obj/item/parts/artifact_parts/arm))
+							var/obj/item/parts/artifact_parts/artifact_limb = limb
+							switch(artifact_limb.artifact_type)
+								if("eldritch")
+									hand_overlay_color = "#803872"
+								if("martian")
+									hand_overlay_color = "#72924f"
+								if("precursor")
+									hand_overlay_color = "#A5BDC5"
+
+			if (isnull(hand_overlay_color))
+				hand_overlay_color = "#420690"
+
+		var/image/badge_overlay = src.SafeGetOverlayImage("badge_overlay", 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi', "security_badge", MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
 		var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=hand_overlay_color)
+
+		user.UpdateOverlays(badge_overlay, "badge_overlay")
 		user.UpdateOverlays(hand_overlay, "badge_hand_overlay")
 		SPAWN(BADGE_SHOWOFF_COOLDOWN)
 			user.UpdateOverlays(null, "badge_overlay")
