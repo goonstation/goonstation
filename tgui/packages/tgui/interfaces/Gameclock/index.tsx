@@ -1,5 +1,4 @@
 import { useBackend, useLocalState } from '../../backend';
-import { GameClockData } from './types';
 import {
   AnimatedNumber,
   Box,
@@ -12,8 +11,9 @@ import {
   Stack,
   Tooltip,
 } from '../../components';
-import { Window } from '../../layouts';
 import { formatTime } from '../../format';
+import { Window } from '../../layouts';
+import { GameClockData } from './types';
 
 type TeamProps = {
   team: 'white' | 'black';

@@ -6,8 +6,8 @@
  */
 
 import { Button, LabeledList, Section, Stack } from '../../../components';
-import { BankAccount } from '../type';
 import { formatMoney } from '../../../format';
+import { BankAccount } from '../type';
 
 export type CardInfoProps = {
   actionCardLogin: () => void;

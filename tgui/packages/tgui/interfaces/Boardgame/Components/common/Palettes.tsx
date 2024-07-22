@@ -1,8 +1,8 @@
-import { BoardgameData } from '../../utils';
 import { useBackend } from '../../../../backend';
-import { fetchPalettes, PieceSetupType } from '../../games';
-import { useActions, useStates } from '../../utils';
 import { Box, Button, Flex } from '../../../../components';
+import { fetchPalettes, PieceSetupType } from '../../games';
+import { BoardgameData } from '../../utils';
+import { useActions, useStates } from '../../utils';
 
 export const Palettes = (props, context) => {
   const { act, data } = useBackend<BoardgameData>(context);

@@ -5,15 +5,16 @@
  * @license MIT
  */
 
+import { clamp } from 'common/math';
+import { Fragment } from 'inferno';
+
 import { useBackend, useLocalState } from "../backend";
 import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, Table, Tabs } from '../components';
-import { Window } from '../layouts';
-import { Fragment } from 'inferno';
-import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { TableCell, TableRow } from "../components/Table";
-import { clamp } from 'common/math';
-import { capitalize } from './common/stringUtils';
 import { truncate } from '../format';
+import { Window } from '../layouts';
+import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
+import { capitalize } from './common/stringUtils';
 
 const headings = ["name", "species", "damage", "genome", "generation", "maturity rate", "production rate", "lifespan", "yield", "potency", "endurance", "controls"];
 const sortname = ["name", "species", "damage", "genome", "generation", "growtime", "harvesttime", "lifespan", "cropsize", "potency", "endurance", ""];

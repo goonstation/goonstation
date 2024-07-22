@@ -5,11 +5,11 @@
  * @license MIT
  */
 
-import { Loader } from './common/Loader';
 import { KEY_0, KEY_9, KEY_BACKSPACE, KEY_ENTER, KEY_ESCAPE, KEY_NUMPAD_0, KEY_NUMPAD_9, KEY_NUMPAD_DECIMAL } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Autofocus, Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { Loader } from './common/Loader';
 
 type PINInputData = {
   message: string;

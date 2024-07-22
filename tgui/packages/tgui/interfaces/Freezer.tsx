@@ -1,8 +1,8 @@
 import { useBackend } from '../backend';
-import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { AnimatedNumber, Box, Button, Icon, Knob, Section, Stack } from '../components';
-import { Window } from '../layouts';
 import { formatPressure } from '../format';
+import { Window } from '../layouts';
+import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
 type FreezerData = {
   active: number,

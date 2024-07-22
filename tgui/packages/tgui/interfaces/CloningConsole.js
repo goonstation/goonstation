@@ -6,11 +6,12 @@
 * @license ISC
 */
 
+import { clamp } from 'common/math';
+
 import { useBackend, useLocalState, useSharedState } from '../backend';
 import { Box, Button, ColorBox, Flex, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
-import { Window } from '../layouts';
 import { HealthStat } from '../components/goon/HealthStat';
-import { clamp } from 'common/math';
+import { Window } from '../layouts';
 
 const Suffixes = ['', 'k', 'M', 'B', 'T'];
 

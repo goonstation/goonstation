@@ -6,13 +6,14 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-import { resolveAsset } from '../assets';
+import { clamp } from 'common/math';
 import { Component } from 'inferno';
 import marked from 'marked';
+
+import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Flex, Table, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
-import { clamp } from 'common/math';
 import { sanitizeText } from '../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 const WINDOW_TITLEBAR_HEIGHT = 30;

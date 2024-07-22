@@ -12,8 +12,8 @@ import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
 import { CoordinatesSection } from './CoordinatesSection';
-import { LongRangeSection } from './LongRangeSection';
 import { DiskSection } from './DiskSection';
+import { LongRangeSection } from './LongRangeSection';
 import type { TeleConsoleData } from './types';
 import { formatReadout } from './util';
 

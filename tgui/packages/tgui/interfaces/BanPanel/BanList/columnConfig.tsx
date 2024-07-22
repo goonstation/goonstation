@@ -6,12 +6,13 @@
  * @license ISC
  */
 
-import { Button } from '../../../components';
-import type { ColumnConfig } from '../../../components/goonstation/ListGrid';
-import type { BanResource } from '../apiType';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
+import { Button } from '../../../components';
+import type { ColumnConfig } from '../../../components/goonstation/ListGrid';
+import type { BanResource } from '../apiType';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);

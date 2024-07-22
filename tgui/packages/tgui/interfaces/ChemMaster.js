@@ -8,8 +8,8 @@
 import { useBackend, useLocalState, useSharedState } from "../backend";
 import { Box, Button, Dimmer, Image, Input, LabeledControls, Modal, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from './common/stringUtils';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
+import { capitalize } from './common/stringUtils';
 
 const ICON_LIST_PILLS = 0;
 const ICON_LIST_BOTTLES = 1;

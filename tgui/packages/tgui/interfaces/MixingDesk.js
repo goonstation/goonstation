@@ -7,8 +7,8 @@
 
 import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Divider, Icon, Input, LabeledList, Modal, Section, Stack, Tooltip } from '../components';
-import { Window } from '../layouts';
 import { truncate } from '../format.js';
+import { Window } from '../layouts';
 
 export const MixingDesk = (_props, context) => {
   const { act, data } = useBackend(context);

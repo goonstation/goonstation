@@ -5,12 +5,13 @@
  * @license ISC
  */
 
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { Button, Input, Section, Stack } from '../components';
 import { KEY_A, KEY_DOWN, KEY_END, KEY_ENTER, KEY_ESCAPE, KEY_HOME, KEY_PAGEDOWN, KEY_PAGEUP, KEY_TAB, KEY_UP, KEY_Z } from 'common/keycodes';
-import { Window } from '../layouts';
+
 import { useBackend, useLocalState } from '../backend';
+import { Button, Input, Section, Stack } from '../components';
+import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 const nextTick
 = typeof Promise !== 'undefined'

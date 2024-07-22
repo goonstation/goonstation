@@ -6,6 +6,7 @@
  */
 
 import { classes } from 'common/react';
+
 import { Input, Placeholder, Stack } from '../../components';
 
 interface ListSearchProps {

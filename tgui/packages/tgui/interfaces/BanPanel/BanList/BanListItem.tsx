@@ -6,8 +6,8 @@
  */
 
 import { Stack } from '../../../components';
-import { BanResource } from '../apiType';
 import { Cell, ColumnConfig } from '../../../components/goonstation/ListGrid';
+import { BanResource } from '../apiType';
 
 interface BanListItemProps {
   columnConfigs: ColumnConfig<BanResource>[];

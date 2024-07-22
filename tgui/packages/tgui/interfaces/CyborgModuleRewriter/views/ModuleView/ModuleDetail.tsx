@@ -7,8 +7,8 @@
 
 import { useLocalState } from '../../../../backend';
 import { Button, Section, Stack } from '../../../../components';
-import { Tools } from './Tools';
 import type { ToolData } from '../../type/data';
+import { Tools } from './Tools';
 
 const resetOptions = [
   {

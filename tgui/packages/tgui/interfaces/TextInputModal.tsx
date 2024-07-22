@@ -5,11 +5,11 @@
  * @license ISC
  */
 
-import { Loader } from './common/Loader';
-import { InputButtons, Validator } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
+import { InputButtons, Validator } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
  type TextInputData = {
    max_length: number;

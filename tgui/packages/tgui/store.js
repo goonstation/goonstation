@@ -7,6 +7,7 @@
 import { flow } from 'common/fp';
 import { applyMiddleware, combineReducers, createStore } from 'common/redux';
 import { Component } from 'inferno';
+
 import { assetMiddleware } from './assets';
 import { backendMiddleware, backendReducer } from './backend';
 import { debugMiddleware, debugReducer, relayMiddleware } from './debug';

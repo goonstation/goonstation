@@ -6,8 +6,8 @@
 */
 
 import { useBackend, useLocalState } from "../backend";
-import { truncate } from '../format';
 import { Box, Button, Divider, Flex, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs } from "../components";
+import { truncate } from '../format';
 import { Window } from "../layouts";
 
 export const uiCurrentUserPermissions = data => {

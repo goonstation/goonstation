@@ -5,13 +5,13 @@
  * @license ISC
  */
 
-import { Action } from './type/action';
 import type {
   ModuleActionPayload,
   MoveToolActionPayload,
   ResetModuleActionPayload,
   ToolActionPayload,
 } from './type/action';
+import { Action } from './type/action';
 
 type Act = (action: string, payload?: object) => void;
 const createAction

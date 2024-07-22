@@ -1,13 +1,13 @@
 
 import { useBackend, useSharedState } from '../../backend';
 import { Box, Chart, ColorBox, Section, Stack, Table, Tabs } from '../../components';
-import { Window } from '../../layouts';
 import { HealthStat } from '../../components/goon/HealthStat';
 import { COLORS } from '../../constants';
-import { ReagentGraph } from '../common/ReagentInfo';
+import { Window } from '../../layouts';
 import { getStatsMax, processStatsData } from '../common/graphUtils';
-import { capitalize, spaceUnderscores } from '../common/stringUtils';
 import { KeyHealthIndicators } from '../common/KeyHealthIndicators/index';
+import { ReagentGraph } from '../common/ReagentInfo';
+import { capitalize, spaceUnderscores } from '../common/stringUtils';
 import {
   DisplayAnatomicalAnomoliesProps,
   DisplayBloodstreamContentProps,

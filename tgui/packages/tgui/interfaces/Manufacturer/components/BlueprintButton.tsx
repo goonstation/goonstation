@@ -5,13 +5,14 @@
  * @license ISC
  */
 
-import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
-import { ManufacturableData, RequirementData, ResourceData } from '../type';
 import { round } from 'common/math';
-import { ButtonWithBadge } from './ButtonWithBadge';
-import { CenteredText } from './CenteredText';
+
+import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
 import { truncate } from '../../../format';
 import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
+import { ManufacturableData, RequirementData, ResourceData } from '../type';
+import { ButtonWithBadge } from './ButtonWithBadge';
+import { CenteredText } from './CenteredText';
 
 const getBlueprintTime = (time, manufacturerSpeed) => {
   return round(time / 10 / manufacturerSpeed, 0.01);

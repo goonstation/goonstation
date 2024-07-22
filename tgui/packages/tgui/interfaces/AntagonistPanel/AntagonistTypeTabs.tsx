@@ -5,8 +5,9 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState } from '../../backend';
 import { toTitleCase } from 'common/string';
+
+import { useBackend, useLocalState } from '../../backend';
 import { Box, Divider, Section, Tabs } from '../../components';
 import { AntagonistPanelData } from './type';
 

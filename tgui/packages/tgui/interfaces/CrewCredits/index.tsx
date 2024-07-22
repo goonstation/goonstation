@@ -9,11 +9,11 @@
 import { useLocalState } from '../../backend';
 import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
-import { CrewCreditsTabKeys } from './type';
-import { CrewTab } from './CrewTab';
 import { AntagonistsTab } from './AntagonistsTab';
-import { ScoreTab } from './ScoreTab';
 import { CitationsTab } from './CitationsTab';
+import { CrewTab } from './CrewTab';
+import { ScoreTab } from './ScoreTab';
+import { CrewCreditsTabKeys } from './type';
 
 export const CrewCredits = (props, context) => {
   const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.Crew);

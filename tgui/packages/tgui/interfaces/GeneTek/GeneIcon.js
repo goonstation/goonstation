@@ -6,6 +6,7 @@
  */
 
 import { classes, pureComponentHooks } from 'common/react';
+
 import { Box } from '../../components/Box';
 
 export const GeneIcon = props => {

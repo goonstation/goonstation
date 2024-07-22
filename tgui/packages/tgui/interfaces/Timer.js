@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Button, Knob, LabeledList, Section, Stack } from '../components';
-import { Window } from '../layouts';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 const MAX_TIME = 600;
 

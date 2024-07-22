@@ -1,7 +1,7 @@
 import { useBackend } from '../../../../backend';
 import { Box, Button } from '../../../../components';
-import { ButtonConfirm } from './ButtonConfirm';
 import { BoardgameData, useActions, useStates } from '../../utils';
+import { ButtonConfirm } from './ButtonConfirm';
 
 export const TitleBar = (props, context) => {
   const { act } = useBackend<BoardgameData>(context);

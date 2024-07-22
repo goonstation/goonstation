@@ -6,8 +6,8 @@
  */
 
 import { useBackend, useSharedState } from "../../../backend";
-import { BioEffect, GeneList } from "../BioEffect";
 import { Box, Button, LabeledList, Section } from "../../../components";
+import { BioEffect, GeneList } from "../BioEffect";
 
 export const StorageTab = (props, context) => {
   const { data, act } = useBackend(context);

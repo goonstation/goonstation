@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Divider, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
-
 import { capitalize, pluralize } from './common/stringUtils';
 
 const GlassRecyclerProductEntry = (props) => {

@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Flex, Icon, RoundGauge, Section } from '../components';
-import { Window } from '../layouts';
 import { formatPressure } from '../format';
+import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
 export const AirAlarm = (props, context) => {

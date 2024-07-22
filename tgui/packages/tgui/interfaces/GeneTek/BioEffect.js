@@ -7,9 +7,9 @@
 
 import { useBackend, useSharedState } from "../../backend";
 import { Box, Button, Flex, Icon, Input, LabeledList, Modal, NumberInput, Section } from "../../components";
-import { UnlockModal } from "./modals/UnlockModal";
 import { DNASequence } from "./DNASequence";
 import { GeneIcon } from "./GeneIcon";
+import { UnlockModal } from "./modals/UnlockModal";
 
 export const ResearchLevel = {
   None: 0,

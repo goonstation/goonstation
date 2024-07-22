@@ -5,8 +5,9 @@
  * @license ISC
  */
 
-import { SFC } from 'inferno';
 import { classes, pureComponentHooks } from 'common/react';
+import { SFC } from 'inferno';
+
 import * as styles from './style';
 
 interface EmptyPlaceholderProps {

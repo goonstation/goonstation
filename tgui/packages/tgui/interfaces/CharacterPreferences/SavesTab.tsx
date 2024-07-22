@@ -6,6 +6,7 @@
  */
 
 import { Fragment } from 'inferno';
+
 import { useBackend } from '../../backend';
 import { Box, Button, Divider, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';

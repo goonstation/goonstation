@@ -6,6 +6,7 @@
 
 import { perf } from 'common/perf';
 import { render } from 'inferno';
+
 import { createLogger } from './logging';
 
 const logger = createLogger('renderer');

@@ -5,8 +5,9 @@
  * @license ISC
  */
 
-import { Button, LabeledList, Section, Slider, Stack } from "../../../components";
 import { BooleanLike } from "common/react";
+
+import { Button, LabeledList, Section, Slider, Stack } from "../../../components";
 
 type ManufacturerSettingsProps = {
   repeat: BooleanLike;

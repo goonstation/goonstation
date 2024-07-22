@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { Button, Flex, Input, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 const onChange = (value) => act('set_data', { value });
 

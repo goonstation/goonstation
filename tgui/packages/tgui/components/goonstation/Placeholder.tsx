@@ -6,6 +6,7 @@
  */
 
 import { classes } from 'common/react';
+
 import { Box, BoxProps } from '../Box';
 
 interface PlaceholderProps extends BoxProps {}

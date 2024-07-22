@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { BrainDamageData, DisplayOccupiedProps, EmbeddedObjects } from '../common/KeyHealthIndicators/type';
 export interface OperatingComputerData {
   occupied: BooleanLike

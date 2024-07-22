@@ -6,6 +6,7 @@
 
 import { storage } from 'common/storage';
 import { vecAdd, vecInverse, vecMultiply, vecScale } from 'common/vector';
+
 import { createLogger } from './logging';
 
 const logger = createLogger('drag');

@@ -6,8 +6,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { ChemiCompilerData } from './type';
 import { Button, Section, Stack } from '../../components';
+import { ChemiCompilerData } from './type';
 
 export const ChemiCompilerMemory = (_props, context) => {
   const { act, data } = useBackend<ChemiCompilerData>(context);

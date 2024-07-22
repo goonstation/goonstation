@@ -8,9 +8,8 @@
 import { useBackend } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
-import { ComUplinkData, ComUplinkStockData } from './type';
-
 import { pluralize } from '../common/stringUtils';
+import { ComUplinkData, ComUplinkStockData } from './type';
 
 export const ComUplink = (props, context) => {
   const { data } = useBackend<ComUplinkData>(context);

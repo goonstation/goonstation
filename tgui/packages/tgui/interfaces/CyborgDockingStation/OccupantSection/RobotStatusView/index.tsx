@@ -8,12 +8,12 @@
 
 import { Box, LabeledList } from '../../../../components';
 import { DockingAllowedButton } from '../../DockingAllowedButton';
-import { OccupantCellDisplay } from '../OccupantCellDisplay';
-import { DamageReportSection } from './DamageReportSection';
-import { UpgradeReportSection } from './UpgradeReportSection';
-import { DecorationReportSection } from './DecorationReportSection';
-import { ClothingReportSection } from './ClothingReportSection';
 import type { OccupantDataRobot } from '../../type';
+import { OccupantCellDisplay } from '../OccupantCellDisplay';
+import { ClothingReportSection } from './ClothingReportSection';
+import { DamageReportSection } from './DamageReportSection';
+import { DecorationReportSection } from './DecorationReportSection';
+import { UpgradeReportSection } from './UpgradeReportSection';
 
 interface RobotStatusViewProps {
   act: (action: string, payload?: object) => void;

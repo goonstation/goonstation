@@ -6,9 +6,9 @@
  */
 
 import { Button, Divider, LabeledList, Section } from "../../../components";
-import { WireIndicatorsData } from "../type";
 import { is_set } from '../../common/bitflag';
 import { WIRE_PANEL_BUTTONS_WIDTH } from '../constant';
+import { WireIndicatorsData } from "../type";
 
 const ManufacturerWireData = [
   { name: "Teal", colorName: "teal" },

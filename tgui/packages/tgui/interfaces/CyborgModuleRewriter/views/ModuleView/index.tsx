@@ -7,10 +7,10 @@
 
 import { useBackend } from '../../../../backend';
 import { Button, Section, Stack, Tabs } from '../../../../components';
-import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import * as actions from '../../action';
-import type { CyborgModuleRewriterData } from '../../type/data';
+import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import { Direction } from '../../type/action';
+import type { CyborgModuleRewriterData } from '../../type/data';
 import { ModuleDetail } from './ModuleDetail';
 
 // width hard-coded to allow display of widest current module name without resizing when ejected/reset

@@ -1,4 +1,5 @@
 import { Component } from 'inferno';
+
 import { Button } from '../../../../components';
 
 type ButtonConfirmProps = {

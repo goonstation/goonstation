@@ -7,6 +7,7 @@
 
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
+
 import { useBackend, useLocalState } from '../../backend';
 import { BlockQuote, Box, Button, Collapsible, Divider, Image, Section, Stack } from '../../components';
 import { ButtonCheckbox } from '../../components/Button';

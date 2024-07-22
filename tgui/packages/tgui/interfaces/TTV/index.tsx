@@ -5,11 +5,12 @@
  * @license ISC
  */
 
+import { toTitleCase } from 'common/string';
+
 import { useBackend } from '../../backend';
 import { Button, LabeledList, RoundGauge, Section, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { toTitleCase } from 'common/string';
 import { formatPressure } from '../../format';
+import { Window } from '../../layouts';
 
 export const TankInfo = (_props, context) => {
   const { act } = useBackend(context);
