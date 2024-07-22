@@ -5,14 +5,15 @@
  * @license MIT
  */
 
+import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
 import { pluralize } from '../common/stringUtils';
 import { ComUplinkData, ComUplinkStockData } from './type';
 
-export const ComUplink = (props, context) => {
-  const { data } = useBackend<ComUplinkData>(context);
+export const ComUplink = () => {
+  const { data } = useBackend<ComUplinkData>();
   return (
     <Window
       theme="syndicate"
@@ -57,8 +58,8 @@ type StockProps = {
   stock: ComUplinkStockData;
 };
 
-const Stock = ({ stock }: StockProps, context) => {
-  const { data, act } = useBackend<ComUplinkData>(context);
+const Stock = ({ stock }: StockProps) => {
+  const { data, act } = useBackend<ComUplinkData>();
 
   return (
     <Table.Row className="ComUplink__Row" opacity={stock.cost > data.points[stock.category] ? 0.5:1}>
