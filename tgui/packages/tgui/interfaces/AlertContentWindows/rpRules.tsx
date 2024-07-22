@@ -5,8 +5,9 @@
  * @license ISC
  */
 /* eslint-disable max-len */
-import { Section } from '../../components';
-import { AlertContentWindow } from './types';
+import { Section } from 'tgui-core/components';
+
+import type { AlertContentWindow } from './types';
 
 export const rpRules: AlertContentWindow = {
   width: 800,

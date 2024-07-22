@@ -6,7 +6,7 @@
  */
 import { rpRules } from './rpRules';
 import { tgControls } from './tgControls';
-import { AlertContentWindow } from './types';
+import type { AlertContentWindow } from './types';
 
 export const getAlertContentWindow = (alertContentWindowName: string): AlertContentWindow => {
   switch (alertContentWindowName) {

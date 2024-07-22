@@ -5,7 +5,7 @@
  * @license ISC
  */
 import { Box } from '../../components';
-import { AlertContentWindow } from './types';
+import type { AlertContentWindow } from './types';
 
 export const tgControls: AlertContentWindow = {
   width: 470,

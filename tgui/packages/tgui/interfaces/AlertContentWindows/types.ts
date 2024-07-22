@@ -4,11 +4,11 @@
  * @author garash2k
  * @license ISC
  */
-import { InfernoNode } from 'inferno';
+import React from 'react';
 
 export type AlertContentWindow = {
   width: number,
   height: number,
   title: string,
-  content: InfernoNode
-};
+  content: React.ReactNode,
+}
