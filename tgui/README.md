@@ -74,17 +74,16 @@ Run `bin/tgui.bat` with any of the options listed below.
   in the lobby. Start tgui dev server, and once it has finished building,
   press F5 on any tgui window. You'll know that it's hooked correctly if
   you see a green bug icon in titlebar and data gets dumped to the console.
-- `bin/tgui tgui` - Build tgui in production mode.
-- `bin/tgui tgui-dev` - Build tgui in production mode.
-  - `bin/tgui tgui-dev --reload` - Reload byond cache once.
-  - `bin/tgui tgui-dev --debug` - Run server with debug logging enabled.
-  - `bin/tgui tgui-dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
-- `bin/tgui tgui-lint` - Show (and auto-fix) problems with the code.
-- `bin/tgui tgui-sonar` - Analyze code with SonarQube.
-- `bin/tgui tgui-test` - Run unit and integration tests.
-- `bin/tgui tgui-analyze` - Run a bundle analyzer.
-- `bin/tgui tgui-bench` - Run benchmarks.
-- `bin/tgui tgui-clean` - Clean up tgui folder.
+  - `bin/tgui --dev --reload` - Reload byond cache once.
+  - `bin/tgui --dev --debug` - Run server with debug logging enabled.
+  - `bin/tgui --dev --no-hot` - Disable hot module replacement (helps when doing development on IE8).
+  - `bin/tgui --dev --no-tmp` - Don't use the tmp folder
+- `bin/tgui --lint` - Show (and auto-fix) problems with the code.
+- `bin/tgui --sonar` - Analyze code with SonarQube.
+- `bin/tgui --test` - Run unit and integration tests.
+- `bin/tgui --analyze` - Run a bundle analyzer.
+- `bin/tgui --bench` - Run benchmarks. *Windows Only*
+- `bin/tgui --clean` - Clean up tgui folder.
 - `bin/tgui [webpack options]` - Build the project with custom webpack
 options.
 
