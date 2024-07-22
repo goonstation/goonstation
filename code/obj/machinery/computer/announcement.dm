@@ -206,6 +206,7 @@
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
 		return 1
+
 /obj/machinery/computer/announcement/station
 	req_access = null
 	name = "Station Announcement Computer"
