@@ -6,14 +6,15 @@
  */
 
 import { toTitleCase } from 'common/string';
+import { useState } from 'react';
+import { Box, Divider, Section, Tabs } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Divider, Section, Tabs } from '../../components';
+import { useBackend } from '../../backend';
 import { AntagonistPanelData } from './type';
 
-export const AntagonistTypeTabs = (props, context) => {
-  const { data, act } = useBackend<AntagonistPanelData>(context);
-  const [tabIndex, setTab] = useLocalState(context, 'tabIndex', data.tabToOpenOn);
+export const AntagonistTypeTabs = (props) => {
+  const { data, act } = useBackend<AntagonistPanelData>();
+  const [tabIndex, setTab] = useState(data.tabToOpenOn);
 
   const sortTabs = data.tabs.sort((a, b) => a.tabName.localeCompare(b.tabName)) || [];
 

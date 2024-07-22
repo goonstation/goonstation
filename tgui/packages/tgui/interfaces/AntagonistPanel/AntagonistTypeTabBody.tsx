@@ -6,9 +6,10 @@
  */
 
 import { toTitleCase } from 'common/string';
+import { Box, Button, Divider, Icon, LabeledList, ProgressBar, Section, Stack, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Icon, LabeledList, ProgressBar, Section, Stack, Table, Tooltip } from '../../components';
+import { Table } from '../../components';
 import { AntagonistData, AntagonistPanelData, GangLockerData, HeadsData, NuclearBombData, TabSectionData } from './type';
 
 export const AntagonistTypeTabBody = (props: AntagonistPanelData) => (
@@ -129,8 +130,8 @@ const TableDividerRow = () => (
   </Table.Row>
 );
 
-const TableAntagonistEntry = (props: AntagonistData, context) => {
-  const { act, data } = useBackend<AntagonistPanelData>(context);
+const TableAntagonistEntry = (props: AntagonistData) => {
+  const { act, data } = useBackend<AntagonistPanelData>();
 
   const sortSubordinateAntagonists = data.subordinateAntagonists[props.antagonist_datum]?.sort((a, b) =>
     a.real_name.localeCompare(b.real_name)) || [];
@@ -255,8 +256,8 @@ const PlayerName = (props) => {
   );
 };
 
-const TablePositionCell = (props, context) => {
-  const { act } = useBackend<AntagonistPanelData>(context);
+const TablePositionCell = (props) => {
+  const { act } = useBackend<AntagonistPanelData>();
   const {
     mind_ref,
     area,
@@ -284,22 +285,22 @@ const TableButtonsCell = (props: AntagonistData) => (
   </Table.Cell>
 );
 
-const AdminPMButton = (props, context) => {
-  const { act } = useBackend<AntagonistPanelData>(context);
+const AdminPMButton = (props) => {
+  const { act } = useBackend<AntagonistPanelData>();
   const { mind_ref } = props;
 
   return (
     <Button
       content="PM"
-      onClick={() => act("admin_pm", { mind_ref: props.mind_ref })}
+      onClick={() => act("admin_pm", { mind_ref })}
       tooltip="Admin PM"
       mr={1}
     />
   );
 };
 
-const PlayerOptionsButton = (props, context) => {
-  const { act } = useBackend<AntagonistPanelData>(context);
+const PlayerOptionsButton = (props) => {
+  const { act } = useBackend<AntagonistPanelData>();
   const { mind_ref } = props;
 
   return (
@@ -307,15 +308,15 @@ const PlayerOptionsButton = (props, context) => {
       width={2}
       textAlign="center"
       icon="user-gear"
-      onClick={() => act("player_options", { mind_ref: props.mind_ref })}
+      onClick={() => act("player_options", { mind_ref })}
       tooltip="Player Options"
       mr={1}
     />
   );
 };
 
-const ViewVariablesButton = (props, context) => {
-  const { act } = useBackend<AntagonistPanelData>(context);
+const ViewVariablesButton = (props) => {
+  const { act } = useBackend<AntagonistPanelData>();
   const { antagonist_datum } = props;
 
   return (
@@ -323,19 +324,20 @@ const ViewVariablesButton = (props, context) => {
       width={2}
       textAlign="center"
       icon="gear"
-      onClick={() => act("view_variables", { antagonist_datum: props.antagonist_datum })}
+      onClick={() => act("view_variables", { antagonist_datum })}
       tooltip="Antagonist Datum Vars"
     />
   );
 };
 
-const NuclearBombReadout = (props: TabSectionData, context) => {
-  if (!props.sectionData) {
+const NuclearBombReadout = (props: TabSectionData) => {
+  const { sectionData } = props;
+  if (!sectionData) {
     return;
   }
 
-  const { act } = useBackend<AntagonistPanelData>(context);
-  const nuclearBombData: NuclearBombData = props.sectionData;
+  const { act } = useBackend<AntagonistPanelData>();
+  const nuclearBombData: NuclearBombData = sectionData;
 
   return (
     <Section title={toTitleCase(props.sectionName)}>
@@ -424,8 +426,8 @@ const HeadsList = (props: TabSectionData) => {
   );
 };
 
-const TableHeadEntry = (props: HeadsData, context) => {
-  const { data, act } = useBackend<AntagonistPanelData>(context);
+const TableHeadEntry = (props: HeadsData) => {
+  const { data, act } = useBackend<AntagonistPanelData>();
 
   return (
     <Table.Row>
@@ -474,12 +476,12 @@ const GangReadout = (props: TabSectionData) => {
   );
 };
 
-const GangLockerReadout = (props: TabSectionData, context) => {
+const GangLockerReadout = (props: TabSectionData) => {
   if (!props.sectionData) {
     return;
   }
 
-  const { act } = useBackend<AntagonistPanelData>(context);
+  const { act } = useBackend<AntagonistPanelData>();
   const gangLockerData: GangLockerData = props.sectionData;
 
   return (

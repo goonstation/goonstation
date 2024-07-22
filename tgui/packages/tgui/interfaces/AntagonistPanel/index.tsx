@@ -12,8 +12,8 @@ import { AntagonistTypeTabBody } from './AntagonistTypeTabBody';
 import { AntagonistTypeTabs } from './AntagonistTypeTabs';
 import { AntagonistPanelData } from './type';
 
-export const AntagonistPanel = (props, context) => {
-  const { data } = useBackend<AntagonistPanelData>(context);
+export const AntagonistPanel = () => {
+  const { data } = useBackend<AntagonistPanelData>();
 
   return (
     <Window
