@@ -5,23 +5,25 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Button, LabeledList, Section, Stack } from '../../components';
+import { useState } from 'react';
+import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { TankInfo } from "../TTV";
 
 // Returns whether the nth bit starting with 0 for the rightmost is set
 const is_set = (bits, bit) => { return bits & (1 << bit); };
 
-const MaintenencePanel = (props, context) => {
-  const { act, data } = useBackend<SimulatorData>(context);
+const MaintenencePanel = () => {
+  const { act, data } = useBackend<SimulatorData>();
   let resetButton = <Button icon="wifi" onClick={() => reset()}>Reset Connection</Button>;
   const reset = () => {
     act("reset");
     setConnection("NO CONNECTION");
   };
-  const [bits, setBits] = useLocalState(context, "bits", data.net_number);
-  const [connection, setConnection] = useLocalState(context, "connection", "OK CONNECTION");
+  const [bits, setBits] = useState(data.net_number);
+  const [connection, setConnection] = useState("OK CONNECTION");
   if (connection === "NO CONNECTION" && data.host_id !== null) {
     setConnection("OK CONNECTION");
   }
@@ -43,8 +45,8 @@ const MaintenencePanel = (props, context) => {
 
 };
 
-const ConfigSwitch = (props, context) => {
-  const { act, data } = useBackend<SimulatorData>(context);
+const ConfigSwitch = (props) => {
+  const { act } = useBackend<SimulatorData>();
   const { local_bits, setter, bit_pos } = props;
   let bit_is_set = is_set(local_bits, bit_pos);
   const handle_click = () => {
@@ -56,8 +58,8 @@ const ConfigSwitch = (props, context) => {
   );
 };
 
-export const Bombsim = (_props, context) => {
-  const { act, data } = useBackend<SimulatorData>(context);
+export const Bombsim = () => {
+  const { act, data } = useBackend<SimulatorData>();
   let simulationButton = <Button icon="burst" disabled={!data.is_ready} onClick={() => act("simulate")}>Begin Simulation</Button>;
   return (
     <Window width={400} height={(data.panel_open) ? 400 : 300}>
