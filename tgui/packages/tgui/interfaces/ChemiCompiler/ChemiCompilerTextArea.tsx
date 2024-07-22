@@ -5,12 +5,13 @@
  * @license ISC
  */
 
+import { TextArea } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { TextArea } from '../../components';
 import { ChemiCompilerData } from './type';
 
-export const ChemiCompilerTextArea = (_props, context) => {
-  const { act, data } = useBackend<ChemiCompilerData>(context);
+export const ChemiCompilerTextArea = () => {
+  const { act, data } = useBackend<ChemiCompilerData>();
   const { inputValue, loadTimestamp, theme } = data;
   return (
     <TextArea
@@ -22,7 +23,7 @@ export const ChemiCompilerTextArea = (_props, context) => {
       key={loadTimestamp}
       fontFamily="Consolas, monospace"
       fontSize="13px"
-      style={{ "word-break": "break-all", "border-color": (theme === "syndicate" ? "#397439" : null) }}
+      style={{ "wordBreak": "break-all", "borderColor": (theme === "syndicate" ? "#397439" : null) }}
     />
   );
 };
