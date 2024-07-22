@@ -2002,16 +2002,18 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
 	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
+			return
 		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 		src.flash_badge(user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
+			return
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 		src.flash_badge(user)
 
 	proc/flash_badge(mob/user)
-		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
-			return
 		var/pixel_x_offset = 0
 		var/pixel_y_offset = 2
 		var/hand_icon_state = ""
