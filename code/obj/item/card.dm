@@ -218,6 +218,8 @@ TYPEINFO(/obj/item/card/emag)
 			assignment = "Syndicate Commander"
 			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
+#define ID_SHOWOFF_COOLDOWN 2 SECONDS
+
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"
@@ -241,10 +243,11 @@ TYPEINFO(/obj/item/card/emag)
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "flash_id", ID_SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
-
 	src.add_fingerprint(user)
-	return
+	src.flash_id(user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -263,10 +266,34 @@ TYPEINFO(/obj/item/card/emag)
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "flash_id", ID_SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
-
 	src.add_fingerprint(user)
-	return
+	src.flash_id(user)
+
+/obj/item/card/id/proc/flash_id(mob/user)
+	var/pixel_x_offset = 0
+	var/pixel_y_offset = 3
+	var/hand_icon_state = ""
+	if(user.hand)
+		hand_icon_state = "id_hold_l"
+		pixel_x_offset = 5
+	else
+		hand_icon_state = "id_hold_r"
+		pixel_x_offset = -5
+
+	var/image/id_overlay = src.SafeGetOverlayImage("badge_overlay", src.icon, src.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
+	var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_hand_color())
+
+	user.UpdateOverlays(id_overlay, "id_overlay")
+	user.UpdateOverlays(hand_overlay, "id_hand_overlay")
+
+	SPAWN(ID_SHOWOFF_COOLDOWN)
+		user.UpdateOverlays(null, "id_overlay")
+		user.UpdateOverlays(null, "id_hand_overlay")
+
+#undef ID_SHOWOFF_COOLDOWN
 
 /obj/item/card/id/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
