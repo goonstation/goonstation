@@ -6,9 +6,10 @@
  */
 
 import { KEY_LEFT, KEY_RIGHT } from 'common/keycodes';
+import { useState } from 'react';
+import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs } from '../../components';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { CharacterTab } from './CharacterTab';
 import { GameSettingsTab } from './GameSettingsTab';
@@ -19,9 +20,9 @@ import { CharacterPreferencesData, CharacterPreferencesProfile, CharacterPrefere
 
 let nextRotateTime = 0;
 
-export const CharacterPreferences = (_props: any, context: any) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
-  const [menu, setMenu] = useLocalState(context, 'menu', CharacterPreferencesTabKeys.General);
+export const CharacterPreferences = (_props: any) => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
+  const [menu, setMenu] = useState(CharacterPreferencesTabKeys.General);
 
   const handleKeyDown = (e) => {
     if (
@@ -80,10 +81,10 @@ export const CharacterPreferences = (_props: any, context: any) => {
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
-          <Stack.Item grow="1">
+          <Stack.Item grow={1}>
             {(menu === CharacterPreferencesTabKeys.General || menu === CharacterPreferencesTabKeys.Character) && (
               <Stack fill>
-                <Stack.Item basis={0} grow="1">
+                <Stack.Item basis={0} grow={1}>
                   <Section scrollable fill>
                     {menu === CharacterPreferencesTabKeys.General && <GeneralTab />}
                     {menu === CharacterPreferencesTabKeys.Character && <CharacterTab />}
@@ -128,8 +129,8 @@ export const CharacterPreferences = (_props: any, context: any) => {
   );
 };
 
-const SavesAndProfile = (_props: any, context: any) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+const SavesAndProfile = () => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
 
   const activeProfileIndex = data.profiles.findIndex((p) => p.active);
 
@@ -190,9 +191,9 @@ type ProfileProps = {
   profile: CharacterPreferencesProfile;
 };
 
-const Profile = (props: ProfileProps, context: any) => {
+const Profile = (props: ProfileProps) => {
   const { index, profile } = props;
-  const { act } = useBackend<CharacterPreferencesData>(context);
+  const { act } = useBackend<CharacterPreferencesData>();
 
   return (
     <Section

@@ -6,13 +6,14 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
+import { BlockQuote, Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { BlockQuote, Box, Button, ColorButton, LabeledList, Section } from '../../components';
+import { ColorButton } from '../../components';
 import { CharacterPreferencesData } from './type';
 
-export const GeneralTab = (_props, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+export const GeneralTab = () => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
 
   let ellipsis = function ellipsis(text) {
     return text.length > 200 ? text.substring(0, 200) + "…" : text;

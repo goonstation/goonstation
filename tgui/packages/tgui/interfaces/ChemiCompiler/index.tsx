@@ -15,8 +15,8 @@ import { ChemiCompilerData } from './type';
 
 const SIDEBAR_WIDTH = 18;
 
-export const ChemiCompiler = (_props, context) => {
-  const { data } = useBackend<ChemiCompilerData>(context);
+export const ChemiCompiler = () => {
+  const { data } = useBackend<ChemiCompilerData>();
   const { theme } = data;
   return (
     <Window width={600} height={500} theme={theme}>

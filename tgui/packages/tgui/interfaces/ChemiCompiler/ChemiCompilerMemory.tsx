@@ -5,12 +5,13 @@
  * @license ISC
  */
 
+import { Button, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Section, Stack } from '../../components';
 import { ChemiCompilerData } from './type';
 
-export const ChemiCompilerMemory = (_props, context) => {
-  const { act, data } = useBackend<ChemiCompilerData>(context);
+export const ChemiCompilerMemory = () => {
+  const { act, data } = useBackend<ChemiCompilerData>();
   const { buttons, sx, tx, ax, theme } = data;
   return (
     <Section title="Memory">

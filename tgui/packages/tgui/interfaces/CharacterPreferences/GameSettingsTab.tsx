@@ -5,12 +5,13 @@
  * @license MIT
  */
 
+import { Box, Button, Image, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Image, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData, CharacterPreferencesScrollTarget, CharacterPreferencesTooltip } from './type';
 
-export const GameSettingsTab = (_props, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+export const GameSettingsTab = () => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
 
   return (
     <Section>

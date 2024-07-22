@@ -5,12 +5,14 @@
  * @license MIT
  */
 
+import { Box, Button, Image, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, ColorButton, Image, LabeledList, Section } from '../../components';
+import { ColorButton } from '../../components';
 import { CharacterPreferencesData } from './type';
 
-const CustomDetail = ({ id, color, style }, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+const CustomDetail = ({ id, color, style }) => {
+  const { act } = useBackend<CharacterPreferencesData>();
 
   return (
     <>
@@ -23,8 +25,8 @@ const CustomDetail = ({ id, color, style }, context) => {
 };
 
 
-const CustomPart = ({ slot_id }, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+const CustomPart = ({ slot_id }) => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
   return (
     <Button
       onClick={() => act("pick_part", { slot_id: slot_id })}
@@ -40,8 +42,8 @@ const CustomPart = ({ slot_id }, context) => {
   );
 };
 
-export const CharacterTab = (_props, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
+export const CharacterTab = () => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
 
   return (
     <>
