@@ -6,9 +6,11 @@
  * @license MIT
  */
 
+import { useState } from 'react';
+import { Box, Button, Flex, Icon, Section, Stack, Tabs } from 'tgui-core/components';
+
 import { capitalize } from '../../../common/string';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Flex, Icon, Section, Stack, Tabs } from '../../components';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { Allowed, ChemRequestReceiverData, RequestData } from './type';
 
@@ -16,8 +18,8 @@ interface ChemRequestProps extends RequestData {
   interactable: Allowed;
 }
 
-const ChemRequest = (props: ChemRequestProps, context) => {
-  const { act } = useBackend(context);
+const ChemRequest = (props: ChemRequestProps) => {
+  const { act } = useBackend();
   const { name, id, reagent_name, reagent_color, volume, notes, area, state, interactable, age } = props;
   const color_string = reagent_color
     ? 'rgba(' + reagent_color[0] + ',' + reagent_color[1] + ', ' + reagent_color[2] + ', 1)'
@@ -36,7 +38,7 @@ const ChemRequest = (props: ChemRequestProps, context) => {
                   name={'circle'}
                   pt={1}
                   style={{
-                    'text-shadow': '0 0 3px #000',
+                    textShadow: '0 0 3px #000',
                   }}
                   mr={1}
                 />
@@ -87,9 +89,9 @@ const ChemRequest = (props: ChemRequestProps, context) => {
   );
 };
 
-export const ChemRequestReceiver = (props, context) => {
-  const { act, data } = useBackend<ChemRequestReceiverData>(context);
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
+export const ChemRequestReceiver = () => {
+  const { act, data } = useBackend<ChemRequestReceiverData>();
+  const [tabIndex, setTabIndex] = useState(1);
   const { requests, allowed } = data;
   let request_index = 0;
   return (
