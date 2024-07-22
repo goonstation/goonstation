@@ -11,12 +11,12 @@
   font-family: Segoe UI Emoji; // pretty emoji in buttons!
 }
 
-.ListInput__Section .Section__title{
- flex-shrink: 0;
+.ListInput__Section .Section__title {
+  flex-shrink: 0;
 }
 
 .ListInput__Section .Section__titleText {
- font-size: base.em(12px);
+  font-size: base.em(12px);
 }
 
 .ListInput__Loader {
@@ -27,7 +27,9 @@
 
 .ListInput__LoaderProgress {
   position: absolute;
-  transition: background-color 500ms ease-out, width 500ms ease-out;
+  transition:
+    background-color 500ms ease-out,
+    width 500ms ease-out;
   background-color: colors.bg(colors.$primary);
   height: 100%;
 }
