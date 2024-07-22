@@ -271,28 +271,7 @@
 								src.emote("wheeze")
 								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
-						var/list/pulling = list()
-						if (src.pulling)
-							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
-								src.remove_pulling()
-								//hud.update_pulling() // FIXME
-							else
-								pulling += src.pulling
-						for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-							pulling += G.affecting
-
-						for (var/atom/movable/A in pulling)
-							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
-								continue
-							if (A == src || A == pushing)
-								continue
-							if (!isturf(A.loc) || A.anchored)
-								continue // whoops
-							A.animate_movement = SYNC_STEPS
-							A.glide_size = glide
-							step(A, get_dir(A, old_loc))
-							A.glide_size = glide
-							A.OnMove(src)
+						src.do_pulling(old_loc, glide, list())
 			else
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
 					src.set_dir(move_dir)
@@ -312,3 +291,36 @@
 						return
 					src.last_resist = world.time + 20
 					G.do_resist()
+
+/mob/proc/do_pulling(var/turf/old_loc, var/glide, var/list/chain)
+	var/list/pulling = list()
+	if (src.pulling)
+		if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+			src.remove_pulling()
+			//hud.update_pulling() // FIXME
+		else
+			pulling += src.pulling
+	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
+		pulling += G.affecting
+
+	for (var/atom/movable/A in pulling)
+		if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+			continue
+		if (A == src || A == pushing)
+			continue
+		if (!isturf(A.loc) || A.anchored)
+			continue // whoops
+		if (chain.Find(A))
+			continue // no loops
+		A.animate_movement = SYNC_STEPS
+		A.glide_size = glide
+		if (istype(A, /mob/))
+			var/turf/pulled_old_loc = A.loc
+			step(A, get_dir(A, old_loc))
+			chain.Add(A)
+			var/mob/M = A
+			M.do_pulling(pulled_old_loc, glide, chain)
+		else
+			step(A, get_dir(A, old_loc))
+		A.glide_size = glide
+		A.OnMove(src)
