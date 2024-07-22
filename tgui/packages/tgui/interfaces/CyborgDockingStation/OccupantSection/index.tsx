@@ -6,16 +6,17 @@
  * @license ISC
  */
 
+import { LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../../backend';
-import { LabeledList, Section, Stack } from '../../../components';
 import { DockingAllowedButton } from '../DockingAllowedButton';
 import type { CyborgDockingStationData, OccupantData } from '../type';
 import { EyebotStatusView } from './EyebotStatusView';
 import { HumanStatusView } from './HumanStatusView';
 import { RobotStatusView } from './RobotStatusView';
 
-export const OccupantSection = (_props: unknown, context) => {
-  const { act, data } = useBackend<CyborgDockingStationData>(context);
+export const OccupantSection = () => {
+  const { act, data } = useBackend<CyborgDockingStationData>();
   const { cabling, fuel, occupant } = data;
   const hasOccupant = !!occupant?.name;
   const handleEjectOccupant = () => act('occupant-eject');

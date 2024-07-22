@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { LabeledList, ProgressBar } from '../../../components';
+import { LabeledList, ProgressBar } from 'tgui-core/components';
+
 import { OccupantDataHuman } from '../type';
 
 interface HumanStatusViewProps {

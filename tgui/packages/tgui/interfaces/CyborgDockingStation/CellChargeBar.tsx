@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { ProgressBar, Tooltip } from '../../components';
+import { ProgressBar, Tooltip } from 'tgui-core/components';
+
 import type { PowerCellData } from './type';
 
 interface CellChargeBarProps {

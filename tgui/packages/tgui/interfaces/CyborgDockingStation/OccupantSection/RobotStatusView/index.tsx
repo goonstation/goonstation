@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { Box, LabeledList } from '../../../../components';
+import { Box, LabeledList } from 'tgui-core/components';
+
 import { DockingAllowedButton } from '../../DockingAllowedButton';
 import type { OccupantDataRobot } from '../../type';
 import { OccupantCellDisplay } from '../OccupantCellDisplay';

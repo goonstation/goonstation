@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { Box, Flex, LabeledList, Section } from '../../../../components';
+import { Box, Flex, LabeledList, Section } from 'tgui-core/components';
+
 import { COLORS } from '../../../../constants';
 import { DockingAllowedButton } from '../../DockingAllowedButton';
 import { isPresentPartsData, PartData, PartListData } from '../../type';

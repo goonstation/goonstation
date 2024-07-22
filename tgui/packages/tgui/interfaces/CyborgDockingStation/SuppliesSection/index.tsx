@@ -6,14 +6,15 @@
  * @license ISC
  */
 
+import { Button, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../../backend';
-import { Button, LabeledList, Section } from '../../../components';
 import type { CyborgDockingStationData } from '../type';
 import { AvailableCellsSection } from './AvailableCellsSection';
 import { StandardAvailableSection } from './StandardAvailableSection';
 
-export const SuppliesSection = (_props: unknown, context) => {
-  const { act, data } = useBackend<CyborgDockingStationData>(context);
+export const SuppliesSection = () => {
+  const { act, data } = useBackend<CyborgDockingStationData>();
   const { allow_self_service, cabling, cells, clothes, fuel, modules, upgrades, viewer_is_robot } = data;
   const handleToggleSelfService = () => act('self-service');
   const handleInstallModule = (moduleRef: string) => act('module-install', { moduleRef });

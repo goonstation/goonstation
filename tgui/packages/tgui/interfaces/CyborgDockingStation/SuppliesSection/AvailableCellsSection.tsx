@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { Box, LabeledList, Section } from '../../../components';
+import { Box, LabeledList, Section } from 'tgui-core/components';
+
 import { CellChargeBar } from '../CellChargeBar';
 import { DockingAllowedButton } from '../DockingAllowedButton';
 import type { PowerCellData } from '../type';

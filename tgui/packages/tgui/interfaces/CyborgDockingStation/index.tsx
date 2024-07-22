@@ -6,17 +6,19 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Divider, Stack, Tabs } from '../../components';
+import { useState } from 'react';
+import { Box, Divider, Stack, Tabs } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { OccupantSection } from './OccupantSection';
 import { SuppliesSection } from './SuppliesSection';
 import type { CyborgDockingStationData } from './type';
 
-export const CyborgDockingStation = (_props: unknown, context) => {
-  const { data } = useBackend<CyborgDockingStationData>(context);
+export const CyborgDockingStation = () => {
+  const { data } = useBackend<CyborgDockingStationData>();
   const { allow_self_service, conversion_chamber, disabled, occupant, viewer_is_occupant, viewer_is_robot } = data;
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   return (
     <Window
       width={500}

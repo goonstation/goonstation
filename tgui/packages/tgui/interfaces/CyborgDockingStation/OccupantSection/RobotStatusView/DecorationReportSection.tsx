@@ -6,7 +6,8 @@
  * @license ISC
  */
 
-import { ColorBox, LabeledList, Section } from '../../../../components';
+import { ColorBox, LabeledList, Section } from 'tgui-core/components';
+
 import { DockingAllowedButton } from '../../DockingAllowedButton';
 import type { RobotCosmeticsData } from '../../type';
 
