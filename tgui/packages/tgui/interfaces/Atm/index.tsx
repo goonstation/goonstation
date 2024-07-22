@@ -5,8 +5,10 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Icon, NoticeBox, Section, Stack, Tabs } from '../../components';
+import { useState } from 'react';
+import { Box, Button, Divider, Icon, NoticeBox, Section, Stack, Tabs } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { AtmData, AtmTabKeys } from './types';
 
@@ -36,11 +38,11 @@ const TypedNoticeBox = (props) => {
   );
 };
 
-export const Atm = (_, context) => {
-  const { data } = useBackend<AtmData>(context);
+export const Atm = () => {
+  const { data } = useBackend<AtmData>();
   const { name } = data;
 
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', AtmTabKeys.Teller);
+  const [tabIndex, setTabIndex] = useState(AtmTabKeys.Teller);
   return (
     <Window title={name} width={375} height={420}>
       <Window.Content>
@@ -71,8 +73,8 @@ export const Atm = (_, context) => {
   );
 };
 
-const Teller = (_, context) => {
-  const { act, data } = useBackend<AtmData>(context);
+const Teller = () => {
+  const { act, data } = useBackend<AtmData>();
   const { accountBalance, accountName, loggedIn, scannedCard } = data;
   const message = data.message || { text: '', status: '', position: '' };
 
@@ -142,8 +144,8 @@ const Teller = (_, context) => {
   );
 };
 
-const SpacebuxMenu = (_, context) => {
-  const { act, data } = useBackend<AtmData>(context);
+const SpacebuxMenu = () => {
+  const { act, data } = useBackend<AtmData>();
   const { clientKey, spacebuxBalance } = data;
   return (
     <Section title={`${clientKey}'s Spacebux Menu`}>
