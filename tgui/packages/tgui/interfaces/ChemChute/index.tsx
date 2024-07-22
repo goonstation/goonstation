@@ -5,20 +5,21 @@
  * @license MIT
  */
 
+import { Box, Flex, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Flex, Section } from '../../components';
 import { Window } from '../../layouts';
 import { ChemChuteData } from './type';
 
 
-export const ChemChute = (_props, context) => {
-  const { act, data } = useBackend<ChemChuteData>(context);
+export const ChemChute = () => {
+  const { data } = useBackend<ChemChuteData>();
   const {
     productList,
   } = data;
   return (
     <Window
-      title={"Medical supply chute console"}
+      title="Medical supply chute console"
       width={355}
       height={500}
     >
