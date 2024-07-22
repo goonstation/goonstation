@@ -5,7 +5,7 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_open";

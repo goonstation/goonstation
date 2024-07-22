@@ -37,7 +37,6 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
-	var/has_offline_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
@@ -351,7 +350,7 @@
 	return ..()
 
 /mob/living/detach_hud(datum/hud/hud)
-	if (observers.len) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
+	if (length(observers)) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
 		for (var/mob/dead/target_observer/observer in observers)
 			observer.detach_hud(hud)
 	return ..()

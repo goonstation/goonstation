@@ -919,6 +919,10 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			src.playing_dead = 1
 			src.play_dead()
 
+	was_harmed(mob/M, obj/item/weapon, special, intent)
+		. = ..()
+		M.add_karma(-1)
+
 	proc/play_dead(var/addtime = 0)
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
@@ -2871,6 +2875,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (..())
 			return 1
 		boutput(user, SPAN_ALERT("You feel uncomfortable now."))
+
+/// the floating eyes found in the watchful eye sensor array.
+/mob/living/critter/small_animal/floateye/watchful
+	desc = "It seems to be staring directly at the Purple Giant."
+	ai_type = /datum/aiHolder/empty
+	ai_retaliates = FALSE
+	New()
+		..()
+		add_lifeprocess(/datum/lifeprocess/disability) // so that they stop jittering
+		START_TRACKING
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 /* ============================================= */
 /* -------------------- Bat -------------------- */

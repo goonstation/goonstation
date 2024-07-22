@@ -2020,12 +2020,13 @@ proc/countJob(rank)
 //A global cooldown on this so it doesnt destroy the external server
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
-/proc/dectalk(msg)
+///dectalk SAYS its default volume is 5 but it seems to actually be more like 100
+/proc/dectalk(msg, volume = 80)
 	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
-
+		msg = "\[:volume set [volume]\][msg]"
 		var/datum/apiModel/DectalkPlayResource/playDectalkResource
 		try
 			var/datum/apiRoute/dectalk/play/playDectalk = new
@@ -2618,7 +2619,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 
 		if (breathable)
 			var/turf/simulated/T = container.loc
-			if(istype(T) && (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
+			if(!istype(T) || (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
 				continue
 
 		if (no_others)

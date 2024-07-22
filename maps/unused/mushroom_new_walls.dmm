@@ -10527,18 +10527,12 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "bdR" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering,
 /obj/item/clothing/gloves/yellow,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bdS" = (
@@ -10749,27 +10743,14 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "beK" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering,
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "beO" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering,
 /obj/item/clothing/gloves/yellow,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -10778,6 +10759,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "beQ" = (
