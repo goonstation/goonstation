@@ -1788,9 +1788,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			var/grid32 = (32 / grid)
 			var/gridx = round( round((text2num(params["icon-x"]) - 16) / grid32) * grid32 + grid32 / 2 * centered)
 			var/gridy = round( round((text2num(params["icon-y"]) - 16) / grid32) * grid32 + grid32 / 2 * centered)
-
 			src.pixel_x = gridx + offsetx
 			src.pixel_y = gridy + offsety
-			boutput(user, params["icon-x"])
-			boutput(user, params["icon-y"])
 		. = TRUE

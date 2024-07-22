@@ -498,12 +498,8 @@
 		var/turf/hit_turf = target
 		if (!istype(hit_turf) || !hit_turf || GET_DIST(hit_turf, user) > 1)
 			..()
-			return 0
+			return FALSE
 		src.place_to_turf_by_grid(user, params, hit_turf, grid = 2, centered = 1, offsetx = 0, offsety = 2)
-		//user.next_click = world.time //get rid of click delay so we can place stuff fast
-		//if (params && islist(params))
-		//boutput(user, params)
-
 
 	pick_up_by(var/mob/M)
 		if(level == OVERFLOOR) return ..()
