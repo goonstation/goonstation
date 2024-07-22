@@ -1,5 +1,9 @@
 
 (t)mon jul 22 24
+(u)Kakolookiyam
+(p)19982
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)PTL should no longer occasionally shut off when firing beyond its batteries capacity.
 (u)fr4meperfect
 (p)20053
 (e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
