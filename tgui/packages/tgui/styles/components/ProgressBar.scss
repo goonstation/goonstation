@@ -9,8 +9,8 @@
 
 $color-default-fill: colors.bg(colors.$primary) !default;
 $background-color: rgba(0, 0, 0, 0) !default;
-$border-radius: base.$border-radius  !default;
-$bg-map: colors.$bg-map  !default;
+$border-radius: base.$border-radius !default;
+$bg-map: colors.$bg-map !default;
 
 .ProgressBar {
   display: flex;
@@ -33,7 +33,9 @@ $bg-map: colors.$bg-map  !default;
 }
 
 .ProgressBar__fill--animated {
-  transition: background-color 900ms ease-out, width 900ms ease-out;
+  transition:
+    background-color 900ms ease-out,
+    width 900ms ease-out;
 }
 
 .ProgressBar__content {
@@ -51,10 +53,9 @@ $bg-map: colors.$bg-map  !default;
   }
 }
 
-@each $color-name,
-$color-value in $bg-map {
+@each $color-name, $color-value in $bg-map {
   .ProgressBar--color--#{$color-name} {
-    border-color: $color-value  !important;
+    border-color: $color-value !important;
 
     .ProgressBar__fill {
       background-color: $color-value;
