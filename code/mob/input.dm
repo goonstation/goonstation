@@ -271,7 +271,9 @@
 								src.emote("wheeze")
 								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
-						src.do_pulling(old_loc, glide, list())
+						var/list/chain = list()
+						chain.Add(src)
+						src.do_pulling(old_loc, glide, chain)
 			else
 				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
 					src.set_dir(move_dir)
