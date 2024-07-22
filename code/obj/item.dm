@@ -1771,7 +1771,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	src.inhand_image.pixel_x = 0
 	src.inhand_image.pixel_y = hand_offset
 
-/obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2)
+/obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2, centered = 1, offsetx = 0, offsety = 0)
 	// a nice copypaste from /obj/proc/place_on
 	. = FALSE
 	if (src && !isghostdrone(user))
@@ -1785,6 +1785,12 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.set_dir(dirbuffer)
 		src.set_loc(target)
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			src.pixel_x = text2num(params["icon-x"]) - 16
-			src.pixel_y = text2num(params["icon-y"]) - 16
+			var/grid32 = (32 / grid)
+			var/gridx = round( round((text2num(params["icon-x"]) - 16) / grid32) * grid32 + grid32 / 2 * centered)
+			var/gridy = round( round((text2num(params["icon-y"]) - 16) / grid32) * grid32 + grid32 / 2 * centered)
+
+			src.pixel_x = gridx + offsetx
+			src.pixel_y = gridy + offsety
+			boutput(user, params["icon-x"])
+			boutput(user, params["icon-y"])
 		. = TRUE
