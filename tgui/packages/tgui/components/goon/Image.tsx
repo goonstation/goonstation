@@ -1,4 +1,4 @@
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 
 import { BoxProps, computeBoxProps } from '../Box';
 import { Tooltip } from '../Tooltip';
@@ -6,7 +6,7 @@ import { Tooltip } from '../Tooltip';
 type Props = Partial<{
   fixBlur: boolean; // true is default, this is an ie thing
   objectFit: 'contain' | 'cover'; // fill is default
-  tooltip: InfernoNode;
+  tooltip: ReactNode;
 }> &
   IconUnion &
   BoxProps;
@@ -24,7 +24,14 @@ type IconUnion =
 
 /** Image component. Use this instead of Box as="img". */
 export const Image = (props: Props) => {
-  const { className, fixBlur = true, objectFit = 'fill', src, tooltip, ...rest } = props;
+  const {
+    className,
+    fixBlur = true,
+    objectFit = 'fill',
+    src,
+    tooltip,
+    ...rest
+  } = props;
 
   const computedStyle = {
     ...computeBoxProps(rest).style,
