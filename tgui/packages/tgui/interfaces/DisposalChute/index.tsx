@@ -6,7 +6,9 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import { Box, Button, Divider, LabeledList, ProgressBar, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { ListSearch } from '../common/ListSearch';
@@ -27,8 +29,8 @@ const disposalChuteConfigLookup: DisposalChuteConfigLookup = {
   },
 };
 
-export const DisposalChute = (_props, context) => {
-  const { act, data } = useBackend<DisposalChuteData>(context);
+export const DisposalChute = () => {
+  const { act, data } = useBackend<DisposalChuteData>();
   const {
     name,
     destinations = null,
@@ -138,14 +140,14 @@ interface DestinationSearchProps {
   destinationTag: string,
 }
 
-const DestinationSearch = (props: DestinationSearchProps, context) => {
+const DestinationSearch = (props: DestinationSearchProps) => {
   const {
     destinations = [],
     destinationTag,
   } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const [searchText, setSearchText] = useState('');
   const handleSelectDestination = (destination: string) => act('select-destination', {
     destination,
   });
