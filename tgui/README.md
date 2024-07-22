@@ -39,13 +39,13 @@ You will need these programs to start developing in tgui:
 
 ## Usage
 
-**For Git Bash, MSys2, WSL, Linux or macOS users:**
-
-Change your directory to `tgui`.
-
 Run `bin/tgui --install-git-hooks` to install merge drivers which will
 assist you in conflict resolution when rebasing your branches. Only has
 to be done once.
+
+**For Git Bash, MSys2, WSL, Linux or macOS users:**
+
+Change your directory to `tgui`.
 
 Run `bin/tgui` with any of the options listed below.
 

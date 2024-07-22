@@ -77,7 +77,7 @@ function task-install-git-hooks() {
   $git_base_dir = Resolve-Path -Path "$basedir" -Relative
   $git_base_dir = "${git_base_dir}".replace("\", "/")
   Set-Location $basedir
-  git config --replace-all merge.tgui-merge-bundle.driver "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
+  git config --replace-all merge.tgui-merge-bundle.driver "${git_base_dir}/bin/tgui --merge=bundle %P %O %A %B %L"
   Write-Output "tgui: Merge drivers have been successfully installed!"
 }
 
