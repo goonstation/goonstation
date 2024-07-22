@@ -448,9 +448,7 @@ proc/eligible_to_clone(var/datum/mind/mind)
 		return null
 
 	if (istype(M, /mob/new_player))
-		var/mob/new_player/player = M
-		if (player.is_respawned_player)
-			return null
+		return null
 
 	if(istype(M, /mob/dead/target_observer))
 		var/mob/dead/target_observer/tobserver = M
