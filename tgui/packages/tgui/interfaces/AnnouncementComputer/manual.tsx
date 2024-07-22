@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { AnimatedNumber, Button, Input, Section, Stack } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { AnimatedNumber, Button, Input, Section, Stack } from '../../components';
 import { formatTime } from '../../format';
 import { AnnouncementCompData } from './type';
 
@@ -17,11 +18,11 @@ type Status = {
 };
 
 export const ManualAnnouncement = (_props, context) => {
-  const { act, data } = useBackend<AnnouncementCompData>(context);
+  const { act, data } = useBackend<AnnouncementCompData>();
   const { card_name, status_message, time, max_length } = data;
 
-  const [input, setInput] = useSharedState(context, "input", "");
-  const [oldInput, setOldInput] = useSharedState(context, "oldInput", "");
+  const [input, setInput] = useSharedState("input", "");
+  const [oldInput, setOldInput] = useSharedState("oldInput", "");
 
   let status : Status = getStatus(input, max_length, status_message, time);
 
@@ -73,7 +74,7 @@ export const ManualAnnouncement = (_props, context) => {
             value={input}
           />
         </Stack.Item>
-        <Stack.Item label="Button" fontSize="16px">
+        <Stack.Item fontSize="16px">
           <Button
             icon="bullhorn"
             content="Transmit"

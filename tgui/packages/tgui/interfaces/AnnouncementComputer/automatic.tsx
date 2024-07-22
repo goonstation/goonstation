@@ -5,16 +5,17 @@
  * @license ISC
  */
 
+import { Input, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Input, Section, Stack } from '../../components';
 import { AnnouncementCompData } from './type';
 
 export interface AutomaticAnnouncementData {
   arrivalalert: string;
 }
 
-export const AutomaticAnnouncement = (_props, context) => {
-  const { act, data } = useBackend<AnnouncementCompData>(context);
+export const AutomaticAnnouncement = (_props: unknown) => {
+  const { act, data } = useBackend<AnnouncementCompData>();
   const { arrivalalert } = data;
 
   return (
