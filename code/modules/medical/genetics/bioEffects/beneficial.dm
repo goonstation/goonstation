@@ -527,17 +527,32 @@
 	stability_loss = 5
 	degrade_to = "involuntary_teleporting"
 	icon_state  = "radiobrain"
+	var/current_module = null
 
 	OnAdd()
-		radio_brains[owner] = power
+		src.onPowerChange(0, src.power)
 
 	onPowerChange(oldval, newval)
-		radio_brains[owner] = newval
+		src.owner.ensure_listen_tree()
+		if (src.current_module)
+			src.owner.listen_tree.RemoveInput(src.current_module)
+
+		switch (newval)
+			if (1)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY
+			if (2)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY
+			else
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL
+
+		src.owner.listen_tree.AddInput(src.current_module)
 
 	OnRemove()
-		radio_brains -= owner
+		if (!src.current_module)
+			return
 
-var/list/radio_brains = list()
+		src.owner.ensure_listen_tree().RemoveInput(src.current_module)
+
 
 /datum/bioEffect/hulk
 	name = "Gamma Ray Exposure"

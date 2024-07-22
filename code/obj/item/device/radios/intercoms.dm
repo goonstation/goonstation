@@ -123,7 +123,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 #ifndef IN_MAP_EDITOR
 	icon = 'icons/effects/VR.dmi'
 #endif
-	protected_radio = 1
+	protected_radio = TRUE
 // --------------------------------------------
 
 // ** preset intercoms to make mapping suck less augh **

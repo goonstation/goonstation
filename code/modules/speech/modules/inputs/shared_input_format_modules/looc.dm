@@ -62,5 +62,5 @@
 	is_admin = TRUE
 
 
-/datum/shared_input_format_module/ooc/looc/admin_global
+/datum/shared_input_format_module/ooc/looc/admin/admin_global
 	id = LISTEN_INPUT_LOOC_ADMIN_GLOBAL

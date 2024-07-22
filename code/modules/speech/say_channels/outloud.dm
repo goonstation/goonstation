@@ -95,6 +95,7 @@
 		src.PassToListeners(message, heard_clearly_listen_modules_by_type)
 		if (length(heard_distorted_listen_modules_by_type))
 			var/datum/say_message/distorted_message = message.Copy()
+			distorted_message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
 			distorted_message.content = stars(distorted_message.content)
 			src.PassToListeners(distorted_message, heard_distorted_listen_modules_by_type)
 

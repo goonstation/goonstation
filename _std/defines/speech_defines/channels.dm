@@ -74,6 +74,8 @@
 #define SAY_CHANNEL_MENTOR_MOUSE "mentor_mouse"
 #define SAY_CHANNEL_OOC "ooc"
 #define SAY_CHANNEL_GLOBAL_RADIO "global_radio"
+#define SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY "global_radio_default"
+#define SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY "global_radio_unprotected"
 #define SAY_CHANNEL_SILICON "silicon"
 #define SAY_CHANNEL_THRALL "thrall"
 #define SAY_CHANNEL_GLOBAL_THRALL "global_thrall"

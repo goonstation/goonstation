@@ -497,7 +497,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 //OK look, I made these objects, but I probably didn't need to. Setting the frequencies is done in the job equip.
 //Mainly I did it to give them the icon_override vars. Don't spawn these unless you want to set their secure frequencies yourself, because that's what you'd have to do. -Kyle
 /obj/item/device/radio/headset/pod_wars
-	protected_radio = 1
+	protected_radio = TRUE
 	var/team = 0
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
@@ -534,7 +534,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
 	secure_colors = list("#ff69b4")
-	protected_radio = 1
+	protected_radio = TRUE
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate"
 	team = TEAM_SYNDICATE

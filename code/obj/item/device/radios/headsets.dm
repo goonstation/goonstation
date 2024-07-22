@@ -461,7 +461,7 @@
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1 // Ops can spawn with the deaf trait.
+	protected_radio = TRUE // Ops can spawn with the deaf trait.
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate Operative"
 
@@ -533,7 +533,7 @@
 	locked_frequency = TRUE
 	secure_frequencies = list("p" = R_FREQ_PIRATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
-	protected_radio = 1
+	protected_radio = TRUE
 	icon_override = "pirate"
 	icon_tooltip = "Space Pirate"
 

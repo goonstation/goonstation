@@ -155,18 +155,11 @@ Cleanup:
 - `VAR_PRIVATE` where necessary.
 - `RETURN_TYPE` where necessary.
 
-Things To Implement:
-- Radio brain (bioeffect)
-
 Old Code To Remove:
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
 - Check span defines in `chat_output.dm`. Some may now be unused.
-
-Parity:
-- `radio_brain`
-- Potentially deprecate `protected_radio`.
 
 Refactors:
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?

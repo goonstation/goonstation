@@ -316,7 +316,7 @@
 	satchel_compatible = FALSE
 
 /obj/item/device/radio/headset/salvager
-	protected_radio = 1 // Ops can spawn with the deaf trait.
+	protected_radio = TRUE // Ops can spawn with the deaf trait.
 
 /obj/salvager_putt_spawner
 	name = "syndiputt spawner"

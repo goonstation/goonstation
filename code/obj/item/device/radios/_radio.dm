@@ -21,7 +21,7 @@ TYPEINFO(/obj/item/device/radio)
 	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO)
 	start_listen_inputs = list(LISTEN_INPUT_EQUIPPED)
 	start_speech_modifiers = list(SPEECH_MODIFIER_RADIO)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO, SPEECH_OUTPUT_RADIO_GLOBAL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO, SPEECH_OUTPUT_RADIO_GLOBAL, SPEECH_OUTPUT_RADIO_GLOBAL_DEFAULT_ONLY, SPEECH_OUTPUT_RADIO_GLOBAL_UNPROTECTED_ONLY)
 	start_listen_languages = list(LANGUAGE_ALL)
 	say_language = LANGUAGE_ENGLISH
 
@@ -170,9 +170,24 @@ TYPEINFO(/obj/item/device/radio)
 	src.last_transmission = world.time
 
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, signal_frequency))
+		src.ensure_say_tree()
+
+		// Send the message to the global radio channel.
 		var/datum/say_message/global_message = message.Copy()
 		global_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO
-		src.ensure_say_tree().process(global_message)
+		src.say_tree.process(global_message)
+
+		// If the message has been sent on the default frequency, send it to the global radio default channel.
+		if (signal_frequency == R_FREQ_DEFAULT)
+			var/datum/say_message/radio_default_message = message.Copy()
+			radio_default_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
+			src.say_tree.process(radio_default_message)
+
+		// If the radio and frequency is unprotected, send it to the global radio unprotected channel.
+		if (!src.protected_radio && isnull(src.traitorradio) && !(signal_frequency in global.protected_frequencies))
+			var/datum/say_message/radio_unprotected_message = message.Copy()
+			radio_unprotected_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY
+			src.say_tree.process(radio_unprotected_message)
 
 /obj/item/device/radio/receive_signal(datum/signal/signal)
 	if (!src.speaker_enabled || src.bricked || !(src.wires & WIRE_RECEIVE) || !signal.data || !istype(signal.data["message"], /datum/say_message))
