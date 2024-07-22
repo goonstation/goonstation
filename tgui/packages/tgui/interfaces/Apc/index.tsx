@@ -7,15 +7,14 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { SFC } from 'inferno';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
   LabeledList,
   Section,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { AccessPanelSection } from './AccessPanelSection';
 import { MainSection } from './MainSection';
@@ -29,7 +28,7 @@ interface CoverLockProps {
   onCoverLockedChange: (value: boolean) => void;
 }
 
-const CoverLock: SFC<CoverLockProps> = (props) => {
+const CoverLock = (props: CoverLockProps) => {
   const { coverlocked, hasPermission, onCoverLockedChange } = props;
   return (
     <>
@@ -52,14 +51,14 @@ const CoverLock: SFC<CoverLockProps> = (props) => {
 
 const windowWidth = 360;
 
-export const Apc = (_props, context) => {
-  const { data } = useBackend<ApcData>(context);
+export const Apc = (_props: unknown) => {
+  const { data } = useBackend<ApcData>();
   const { area_requires_power } = data;
   return area_requires_power ? <PoweredAreaApc /> : <UnpoweredAreaApc />;
 };
 
-const PoweredAreaApc = (_props, context) => {
-  const { act, data } = useBackend<ApcData>(context);
+const PoweredAreaApc = (_props: unknown) => {
+  const { act, data } = useBackend<ApcData>();
   const {
     area_requires_power,
     can_access_remotely,
@@ -119,7 +118,7 @@ const PoweredAreaApc = (_props, context) => {
 };
 
 const UnpoweredAreaApc = (_props, context) => {
-  const { data } = useBackend<ApcData>(context);
+  const { data } = useBackend<ApcData>();
   const { area_name, area_requires_power } = data;
   const isAccessPanelVisible = getIsAccessPanelVisible(data);
   const windowHeight = calculateWindowHeight(area_requires_power, false, false, false, isAccessPanelVisible, false);

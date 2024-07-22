@@ -6,10 +6,9 @@
  * @license MIT
  */
 
-import { SFC } from 'inferno';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, LabeledList, Section } from '../../components';
 import type { ApcData } from './types';
 import { formatWatts, getHasPermission } from './util';
 
@@ -72,9 +71,9 @@ interface PowerChannelItemProps {
   powerChannel: PowerChannel;
 }
 
-const PowerChannelItem: SFC<PowerChannelItemProps> = (props, context) => {
+const PowerChannelItem = (props: PowerChannelItemProps) => {
   const { powerChannel } = props;
-  const { act, data } = useBackend<ApcData>(context);
+  const { act, data } = useBackend<ApcData>();
 
   const hasPermission = getHasPermission(data);
   const currPowerChannelConfig = powerChannelConfigLookup[powerChannel];
@@ -128,7 +127,7 @@ const PowerChannelItem: SFC<PowerChannelItemProps> = (props, context) => {
 };
 
 export const PowerChannelSection = (_props, context) => {
-  const { data } = useBackend<ApcData>(context);
+  const { data } = useBackend<ApcData>();
   const { lastused_total } = data;
   return (
     <Section title="Power Channel">

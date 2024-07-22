@@ -6,8 +6,6 @@
  * @license MIT
  */
 
-import { SFC } from 'inferno';
-
 import { useBackend } from '../../backend';
 import {
   Button,
@@ -37,7 +35,7 @@ const wireColorConfigs: WireColorConfig[] = [
 ];
 
 export const WireList = (_props, context) => {
-  const { act, data } = useBackend<ApcData>(context);
+  const { act, data } = useBackend<ApcData>();
 
   // #region event handlers
   const handleMend = (wireColor: WireColor) => act('onMendWire', { wire: wireColor });
@@ -74,7 +72,7 @@ interface WireProps {
   onPulse: () => void;
 }
 
-export const WireListItem: SFC<WireProps> = (props) => {
+export const WireListItem = (props: WireProps) => {
   const { color, isCut, name, onBite, onCut, onMend, onPulse } = props;
 
   const actions = isCut ? (

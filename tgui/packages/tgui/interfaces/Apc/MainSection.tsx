@@ -7,16 +7,15 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { SFC } from 'inferno';
-
-import { useBackend } from '../../backend';
 import {
-  Box,
   Button,
   Divider,
   LabeledList,
   Section,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
+import { Box } from '../../components';
 import { CellDisplay } from './CellDisplay';
 import type { ApcData } from './types';
 import { getHasPermission, getIsLocalAccess } from './util';
@@ -42,7 +41,7 @@ interface ExternalPowerListItemProps {
   mainStatus: MainStatus;
 }
 
-const ExternalPowerListItem: SFC<ExternalPowerListItemProps> = (props) => {
+const ExternalPowerListItem = (props: ExternalPowerListItemProps) => {
   const { mainStatus } = props;
   const mainStatusConfig = mainStatusConfigLookup[mainStatus];
   return (
@@ -53,7 +52,7 @@ const ExternalPowerListItem: SFC<ExternalPowerListItemProps> = (props) => {
 };
 
 export const MainSection = (_props, context) => {
-  const { act, data } = useBackend<ApcData>(context);
+  const { act, data } = useBackend<ApcData>();
   const {
     area_name,
     host_id,

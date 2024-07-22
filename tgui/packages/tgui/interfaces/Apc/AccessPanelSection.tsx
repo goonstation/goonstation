@@ -6,18 +6,19 @@
  * @license MIT
  */
 
-import { useBackend } from '../../backend';
 import {
   Box,
   Divider,
   LabeledList,
   Section,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import type { ApcData } from './types';
 import { WireList } from './WireList';
 
-export const AccessPanelSection = (_props, context) => {
-  const { data } = useBackend<ApcData>(context);
+export const AccessPanelSection = (_props: unknown) => {
+  const { data } = useBackend<ApcData>();
   const {
     net_id,
     locked,

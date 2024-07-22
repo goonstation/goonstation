@@ -25,8 +25,8 @@ const getChargingStatusText = (charging, chargecount) => {
   }
 };
 
-export const CellDisplay = (_props, context) => {
-  const { act, data } = useBackend<ApcData>(context);
+export const CellDisplay = (_props: unknown) => {
+  const { act, data } = useBackend<ApcData>();
   const {
     cell_percent,
     cell_present,
