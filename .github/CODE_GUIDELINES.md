@@ -448,7 +448,7 @@ via `atom.verbs += /proc/x`.
 So, be careful when removing `as x` to
 make sure it isn't being used as a verb somewhere else.
 
-## round() does not, in fact, round
+## round() sometimes pretends to be floor()
 
 According to the DM docs, using `round(A)` is actually depreciated. The correct way is to do `round(A,B)` where B is the nearest multiple. For most cases, this will be `1`, although sometimes you'll need it to the nearest 10 or 5.
 
