@@ -5,8 +5,9 @@
  * @license ISC
  */
 
-import { useLocalState } from '../../../../backend';
-import { Button, Section, Stack } from '../../../../components';
+import { useState } from 'react';
+import { Button, Section, Stack } from 'tgui-core/components';
+
 import type { ToolData } from '../../type/data';
 import { Tools } from './Tools';
 
@@ -47,11 +48,7 @@ interface ModuleProps {
 
 export const ModuleDetail = (props: ModuleProps, context: unknown) => {
   const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } = props;
-  const [selectedToolRef, setSelectedToolRef] = useLocalState<string | undefined>(
-    context,
-    'selectedToolRef',
-    undefined
-  );
+  const [selectedToolRef, setSelectedToolRef] = useState<string | undefined>(undefined);
   const handleRemoveTool = (itemRef: string) => {
     const toolIndex = tools.findIndex((tool) => tool.item_ref === itemRef);
     setSelectedToolRef(tools[toolIndex + 1]?.item_ref);
@@ -76,7 +73,7 @@ export const ModuleDetail = (props: ModuleProps, context: unknown) => {
           {resetOptions.map((resetOption) => {
             const { id, name } = resetOption;
             return (
-              <Button key={id} onClick={() => onResetModule(id)} title={name}>
+              <Button key={id} onClick={() => onResetModule(id)} tooltip={name}>
                 {name}
               </Button>
             );
@@ -107,9 +104,9 @@ const OrganizeButtons = (props: OrganizeButtonsProps) => {
   const handleRemoveClick = () => itemRef && onRemove(itemRef);
   return (
     <>
-      <Button icon="arrow-up" disabled={!isItemSelected} onClick={handleMoveUpClick} title="Move Up" />
-      <Button icon="arrow-down" disabled={!isItemSelected} onClick={handleMoveDownClick} title="Move Down" />
-      <Button icon="trash" disabled={!isItemSelected} onClick={handleRemoveClick} title="Remove" />
+      <Button icon="arrow-up" disabled={!isItemSelected} onClick={handleMoveUpClick} tooltip="Move Up" />
+      <Button icon="arrow-down" disabled={!isItemSelected} onClick={handleMoveDownClick} tooltip="Move Down" />
+      <Button icon="trash" disabled={!isItemSelected} onClick={handleRemoveClick} tooltip="Remove" />
     </>
   );
 };

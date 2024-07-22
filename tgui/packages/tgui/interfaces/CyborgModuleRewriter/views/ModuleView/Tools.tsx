@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { SFC } from 'inferno';
+import { PropsWithChildren } from 'react';
 
 import { Tabs } from '../../../../components';
 import { EmptyPlaceholder } from '../../EmptyPlaceholder';
@@ -16,7 +16,7 @@ interface ToolProps {
   onClick: () => void;
 }
 
-const Tool: SFC<ToolProps> = (props) => {
+const Tool = (props: PropsWithChildren<ToolProps>) => {
   const { children, onClick, selected } = props;
   return (
     <Tabs.Tab onClick={onClick} selected={selected}>

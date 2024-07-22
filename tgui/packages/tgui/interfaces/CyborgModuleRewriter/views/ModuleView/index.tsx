@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { Button, Section, Stack, Tabs } from 'tgui-core/components';
+
 import { useBackend } from '../../../../backend';
-import { Button, Section, Stack, Tabs } from '../../../../components';
 import * as actions from '../../action';
 import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import { Direction } from '../../type/action';
@@ -16,8 +17,8 @@ import { ModuleDetail } from './ModuleDetail';
 // width hard-coded to allow display of widest current module name without resizing when ejected/reset
 const SIDEBAR_WIDTH = 20;
 
-export const ModuleView = (_props: unknown, context: unknown) => {
-  const { act, data } = useBackend<CyborgModuleRewriterData>(context);
+export const ModuleView = () => {
+  const { act, data } = useBackend<CyborgModuleRewriterData>();
   const { modules: { available = [], selected } = {} } = data;
   const handleEjectModule = (itemRef: string) => actions.ejectModule(act, { itemRef });
   const handleMoveToolDown = (itemRef: string) =>
@@ -54,7 +55,7 @@ export const ModuleView = (_props: unknown, context: unknown) => {
                   icon="eject"
                   color="transparent"
                   onClick={() => handleEjectModule(itemRef)}
-                  title={`Eject ${name}`}
+                  tooltip={`Eject ${name}`}
                 />
               );
               return (
