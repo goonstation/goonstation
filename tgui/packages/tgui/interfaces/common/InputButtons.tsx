@@ -21,8 +21,8 @@ export type Validator = {
    error: string | null;
  };
 
-export const InputButtons = (props: InputButtonsProps, context) => {
-  const { act } = useBackend<InputButtonsData>(context);
+export const InputButtons = (props: InputButtonsProps) => {
+  const { act } = useBackend<InputButtonsData>();
   const { input, inputIsValid } = props;
 
   const submitButton = (
