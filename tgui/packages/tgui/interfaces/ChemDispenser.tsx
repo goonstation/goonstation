@@ -7,9 +7,10 @@
  */
 
 import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+import { AnimatedNumber, Box, Button, Icon, Input, Modal, NumberInput, Section, Stack, Tabs } from 'tgui-core/components';
 
-import { useBackend, useLocalState, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, Input, Modal, NumberInput, Section, Stack, Tabs } from '../components';
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { MatterState, MatterStateIconMap, Reagent, ReagentContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
@@ -71,16 +72,16 @@ export const ChemDispenser = () => {
 const sectionTitleResetProps = {
   fontSize: 1,
   style: {
-    'font-weight': 'normal',
+    'fontWeight': 'normal',
   },
 };
 
-export const ReagentDispenser = (_props: unknown, context: unknown) => {
-  const { act, data } = useBackend<ChemDispenserData>(context);
+export const ReagentDispenser = () => {
+  const { act, data } = useBackend<ChemDispenserData>();
   const { beakerName = 'beaker', container } = data;
-  const [addAmount, setAddAmount] = useSharedState(context, 'addAmount', 10);
-  const [iconToggle, setIconToggle] = useSharedState(context, 'iconToggle', false);
-  const [hoverOverId, setHoverOverId] = useLocalState(context, 'hoverOver', '');
+  const [addAmount, setAddAmount] = useSharedState('addAmount', 10);
+  const [iconToggle, setIconToggle] = useSharedState('iconToggle', false);
+  const [hoverOverId, setHoverOverId] = useState('');
 
   const dispensableReagents = data.dispensableReagents || [];
 
@@ -157,7 +158,7 @@ export const ReagentDispenser = (_props: unknown, context: unknown) => {
                 color={`rgba(${reagent.colorR},${reagent.colorG},${reagent.colorB}, 1)`}
                 name={iconToggle ? MatterStateIconMap[reagent.state ?? MatterState.Solid].icon : 'circle'}
                 style={{
-                  'text-shadow': '0 0 3px #000',
+                  'textShadow': '0 0 3px #000',
                 }}
                 mr={1}
               />
@@ -171,12 +172,12 @@ export const ReagentDispenser = (_props: unknown, context: unknown) => {
   );
 };
 
-export const Beaker = (_props: unknown, context: unknown) => {
-  const { act, data } = useBackend<ChemDispenserData>(context);
+export const Beaker = () => {
+  const { act, data } = useBackend<ChemDispenserData>();
   const { beakerName, container } = data;
 
-  const [iconToggle] = useSharedState(context, 'iconToggle', false);
-  const [removeAmount, setRemoveAmount] = useSharedState(context, 'removeAmount', 10);
+  const [iconToggle] = useSharedState('iconToggle', false);
+  const [removeAmount, setRemoveAmount] = useSharedState('removeAmount', 10);
   const removeReagentButtons = [removeAmount, 10, 5, 1];
 
   return (
@@ -253,9 +254,9 @@ export const Beaker = (_props: unknown, context: unknown) => {
   );
 };
 
-export const BeakerContentsGraph = (_props: unknown, context: unknown) => {
-  const { data } = useBackend<ChemDispenserData>(context);
-  const [sort, setSort] = useSharedState(context, 'sort', 1);
+export const BeakerContentsGraph = () => {
+  const { data } = useBackend<ChemDispenserData>();
+  const [sort, setSort] = useSharedState('sort', 1);
   const { container } = data;
   return (
     <Section>
@@ -290,10 +291,10 @@ export const BeakerContentsGraph = (_props: unknown, context: unknown) => {
   );
 };
 
-export const ChemGroups = (_props: unknown, context: unknown) => {
-  const { act, data } = useBackend<ChemDispenserData>(context);
-  const [groupName, setGroupName] = useLocalState(context, 'groupName', '');
-  const [reagents, setReagents] = useLocalState(context, 'reagents', '');
+export const ChemGroups = () => {
+  const { act, data } = useBackend<ChemDispenserData>();
+  const [groupName, setGroupName] = useState('');
+  const [reagents, setReagents] = useState('');
   const { groupList, idCardName, idCardInserted, isRecording, activeRecording } = data;
 
   return (
