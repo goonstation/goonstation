@@ -5,12 +5,14 @@
  * @license MIT
 */
 
+import { Box, Collapsible, Divider, Icon, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Collapsible, Divider, Icon, ItemList, LabeledList, Section, Stack } from '../../components';
+import { ItemList } from '../../components';
 import { AntagonistStatisticsProps, AntagonistTabData, VerboseAntagonistProps } from './type';
 
-export const AntagonistsTab = (props, context) => {
-  const { data } = useBackend<AntagonistTabData>(context);
+export const AntagonistsTab = () => {
+  const { data } = useBackend<AntagonistTabData>();
 
   return (
     <>

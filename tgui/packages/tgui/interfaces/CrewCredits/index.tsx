@@ -6,7 +6,8 @@
  * @license MIT
  */
 
-import { useLocalState } from '../../backend';
+import { useState } from 'react';
+
 import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { AntagonistsTab } from './AntagonistsTab';
@@ -15,8 +16,8 @@ import { CrewTab } from './CrewTab';
 import { ScoreTab } from './ScoreTab';
 import { CrewCreditsTabKeys } from './type';
 
-export const CrewCredits = (props, context) => {
-  const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.Crew);
+export const CrewCredits = () => {
+  const [menu, setMenu] = useState(CrewCreditsTabKeys.Crew);
   return (
     <Window title="Round Summary" width={600} height={600}>
       <Window.Content scrollable>

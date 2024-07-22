@@ -5,18 +5,22 @@
  * @license MIT
  */
 
+import { Box, LabeledList, Section, Stack } from "tgui-core/components";
+
 import { useBackend } from "../../backend";
-import { Box, ItemList, LabeledList, Section, Stack } from "../../components";
+import { ItemList } from '../../components';
 import { ScoreCategoryProps, ScoreItemProps, ScoreTabData } from "./type";
 
-export const ScoreTab = (props, context) => {
-  const { data } = useBackend<ScoreTabData>(context);
+export const ScoreTab = () => {
+  const { data } = useBackend<ScoreTabData>();
   const { score_groups, total_score, grade, victory_body, victory_headline } = data;
   const total_score_render = <ColorPercentage items={total_score} />;
   return (
     <>
-      { !!victory_headline && <SummaryDisplay preamble="Round Result:" headline={victory_headline} body={victory_body}> </SummaryDisplay>}
-      { !victory_headline && <SummaryDisplay preamble="Total Score:" headline={total_score_render} body={grade}> </SummaryDisplay>}
+      {victory_headline
+        ? <SummaryDisplay preamble="Round Result:" headline={victory_headline} body={victory_body} />
+        : <SummaryDisplay preamble="Total Score:" headline={total_score_render} body={grade} />
+      }
 
       <Section>
         {score_groups?.map(

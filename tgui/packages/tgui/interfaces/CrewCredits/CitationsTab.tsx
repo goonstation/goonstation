@@ -5,12 +5,13 @@
  * @license MIT
  */
 
+import { Box, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, LabeledList, Section } from '../../components';
 import { CitationByTargetListProps, CitationData, CitationsByTargetData, CitationTabData, isFineData } from './type';
 
-export const CitationsTab = (props, context) => {
-  const { data } = useBackend<CitationTabData>(context);
+export const CitationsTab = () => {
+  const { data } = useBackend<CitationTabData>();
   const { tickets, fines } = data;
   return (
     <>

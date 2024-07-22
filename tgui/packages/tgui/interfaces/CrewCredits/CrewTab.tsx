@@ -6,12 +6,13 @@
  * @license MIT
  */
 
+import { Box, Icon, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Icon, Section, Stack } from '../../components';
 import { CrewMemberProps, CrewTabData, GroupBlockProps } from './type';
 
-export const CrewTab = (props, context) => {
-  const { data } = useBackend<CrewTabData>(context);
+export const CrewTab = () => {
+  const { data } = useBackend<CrewTabData>();
   return (
     <Box>
       {data.groups?.map(
