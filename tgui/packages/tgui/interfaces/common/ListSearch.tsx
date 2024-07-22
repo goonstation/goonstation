@@ -6,8 +6,9 @@
  */
 
 import { classes } from 'common/react';
+import { Input, Stack } from 'tgui-core/components';
 
-import { Input, Placeholder, Stack } from '../../components';
+import { Placeholder } from '../../components';
 
 interface ListSearchProps {
   autoFocus?: boolean,
