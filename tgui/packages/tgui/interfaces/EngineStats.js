@@ -7,8 +7,8 @@
 
 import { useBackend } from '../backend';
 import { Box, Button, Chart, Modal, Section, Stack } from '../components';
-import { Window } from '../layouts';
 import { formatSiUnit } from '../format';
+import { Window } from '../layouts';
 import { getStatsMax, processStatsData } from './common/graphUtils';
 
 /**

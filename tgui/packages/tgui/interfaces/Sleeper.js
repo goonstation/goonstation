@@ -7,9 +7,9 @@
 
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Knob, LabeledList, ProgressBar, Section, TimeDisplay } from '../components';
-import { Window } from '../layouts';
-import { formatTime } from '../format';
 import { HealthStat } from '../components/goon/HealthStat';
+import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 const damageNum = num => num <= 0 ? '0' : num.toFixed(1);
 

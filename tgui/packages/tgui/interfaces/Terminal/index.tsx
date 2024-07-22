@@ -7,12 +7,12 @@
  */
 
 import { useBackend } from '../../backend';
+import { Stack } from '../../components';
 import { Window } from '../../layouts';
-import { TerminalData } from './types';
-import { TerminalOutputSection } from './TerminalOutputSection';
 import { InputAndButtonsSection } from './InputAndButtonsSection';
 import { PheripheralsSection } from './PheripheralsSection';
-import { Stack } from '../../components';
+import { TerminalOutputSection } from './TerminalOutputSection';
+import { TerminalData } from './types';
 
 export const Terminal = (_props, context) => {
   const { data } = useBackend<TerminalData>(context);

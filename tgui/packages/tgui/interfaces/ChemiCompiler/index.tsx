@@ -5,13 +5,13 @@
  * @license ISC
  */
 
-import { Window } from '../../layouts';
 import { useBackend } from '../../backend';
-import { ChemiCompilerData } from './type';
-import { ChemiCompilerTextArea } from './ChemiCompilerTextArea';
-import { ChemiCompilerReservoirs } from './ChemiCompilerReservoirs';
-import { ChemiCompilerMemory } from './ChemiCompilerMemory';
 import { Stack } from '../../components';
+import { Window } from '../../layouts';
+import { ChemiCompilerMemory } from './ChemiCompilerMemory';
+import { ChemiCompilerReservoirs } from './ChemiCompilerReservoirs';
+import { ChemiCompilerTextArea } from './ChemiCompilerTextArea';
+import { ChemiCompilerData } from './type';
 
 const SIDEBAR_WIDTH = 18;
 

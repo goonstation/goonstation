@@ -6,12 +6,13 @@
  */
 
 import { classes } from 'common/react';
+
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
 import { freezeTemperature, getTemperatureChangeName, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
-import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 
 export const ChemHeater = (props, context) => {
   const { act, data } = useBackend(context);

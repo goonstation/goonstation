@@ -6,8 +6,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
 import { Box, Button, ProgressBar, Section, Stack } from '../../components';
+import { Window } from '../../layouts';
 import { PortableHoldingTank } from '../common/PortableAtmos';
 import { LocalGeneratorData } from './type';
 

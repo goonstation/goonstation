@@ -5,12 +5,12 @@
  * @license MIT
  */
 
+import { capitalize } from '../../common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Button, Input, LabeledList, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from '../../common/string';
-import { ListSearch } from './common/ListSearch';
 import { IDCard } from './common/IDCard';
+import { ListSearch } from './common/ListSearch';
 
 const ReagentSearch = (props, context) => {
   const { act } = useBackend(context);

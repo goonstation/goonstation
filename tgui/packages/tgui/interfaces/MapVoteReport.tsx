@@ -5,13 +5,14 @@
  * @license ISC
  */
 
-import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Stack } from '../components';
+import { Window } from '../layouts';
 import { MapPanel } from './MapVote';
 import { MapVoteMapData } from './MapVote';
 import { MAP_PANEL_WIDTH, MAP_ROW_HEIGHT, PANEL_PER_LINE, SPACE_BETWEEN_PANELS, WINDOW_HOZ_PADDING } from './MapVote';
-import { BooleanLike } from 'common/react';
 
 interface MapVoteReportMapData extends MapVoteMapData {
   count: number,

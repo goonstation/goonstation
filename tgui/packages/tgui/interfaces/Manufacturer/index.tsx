@@ -5,21 +5,22 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Window } from '../../layouts';
-import { is_set } from '../common/bitflag';
 import { clamp } from 'common/math';
 import { toTitleCase } from 'common/string';
-import { pluralize } from '../common/stringUtils';
+
+import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Stack } from '../../components';
-import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
-import { AccessLevels, MANUDRIVE_UNLIMITED, RockboxStyle, SETTINGS_WINDOW_WIDTH } from './constant';
+import { Window } from '../../layouts';
+import { is_set } from '../common/bitflag';
+import { pluralize } from '../common/stringUtils';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';
-import { ProductionCard } from './components/ProductionCard';
-import { PowerAlertModal } from './components/PowerAlertModal';
 import { ManufacturerSettings } from './components/ManufacturerSettings';
+import { PowerAlertModal } from './components/PowerAlertModal';
+import { ProductionCard } from './components/ProductionCard';
+import { AccessLevels, MANUDRIVE_UNLIMITED, RockboxStyle, SETTINGS_WINDOW_WIDTH } from './constant';
+import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
 
 export const Manufacturer = (_, context) => {
   const { act, data } = useBackend<ManufacturerData>(context);

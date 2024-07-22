@@ -7,8 +7,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { BanPanelAction, BanPanelSearchFilter, BanPanelTab } from './type';
 import type { BanPanelData } from './type';
+import { BanPanelAction, BanPanelSearchFilter, BanPanelTab } from './type';
 
 export const useBanPanelBackend = (context) => {
   const { act, data } = useBackend<BanPanelData>(context);

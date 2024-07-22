@@ -8,8 +8,8 @@
 
 import { useBackend } from '../../../backend';
 import { Button, LabeledList, Section } from '../../../components';
-import { AvailableCellsSection } from './AvailableCellsSection';
 import type { CyborgDockingStationData } from '../type';
+import { AvailableCellsSection } from './AvailableCellsSection';
 import { StandardAvailableSection } from './StandardAvailableSection';
 
 export const SuppliesSection = (_props: unknown, context) => {

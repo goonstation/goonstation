@@ -6,6 +6,7 @@
  */
 
 import { InfernoNode } from 'inferno';
+
 import { Icon, Stack } from '../../components';
 import { SortDirection } from './constant';
 

@@ -6,8 +6,9 @@
  * @license MIT
  */
 
-import { SFC } from 'inferno';
 import { BooleanLike } from 'common/react';
+import { SFC } from 'inferno';
+
 import { useBackend } from '../../backend';
 import {
   Box,

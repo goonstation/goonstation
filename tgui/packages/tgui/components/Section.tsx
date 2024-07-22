@@ -4,8 +4,9 @@
  * @license MIT
  */
 
-import { Component, createRef, InfernoNode, RefObject } from 'inferno';
 import { canRender, classes } from 'common/react';
+import { Component, createRef, InfernoNode, RefObject } from 'inferno';
+
 import { addScrollableNode, removeScrollableNode } from '../events';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 

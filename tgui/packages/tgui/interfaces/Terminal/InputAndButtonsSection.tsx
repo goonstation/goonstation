@@ -6,8 +6,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { TerminalData } from './types';
 import { Button, Flex, Input, Section, Tooltip } from '../../components';
+import { TerminalData } from './types';
 
 export const InputAndButtonsSection = (_props, context) => {
   const { act, data } = useBackend<TerminalData>(context);

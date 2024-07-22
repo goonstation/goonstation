@@ -5,11 +5,12 @@
  * @license ISC
  */
 
-import { Box, ColorBox, Flex, Icon, NoticeBox, ProgressBar, Section, Stack, Tooltip } from '../../components';
-import { freezeTemperature } from './temperatureUtils';
-import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
+
+import { Box, ColorBox, Flex, Icon, NoticeBox, ProgressBar, Section, Stack, Tooltip } from '../../components';
+import { BoxProps } from '../../components/Box';
+import { freezeTemperature } from './temperatureUtils';
 
 export enum MatterState {
   Solid = 1,

@@ -6,11 +6,12 @@
  */
 
 import { InfernoNode } from 'inferno';
+
 import { useBackend } from '../../backend';
 import { Box, Button, Image, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { isSoulProductData } from './type';
 import type { ZoldorfCommonProductData, ZoldorfPlayerShopData } from './type';
+import { isSoulProductData } from './type';
 
 export const ZoldorfPlayerShop = (_, context) => {
   const { act, data } = useBackend<ZoldorfPlayerShopData>(context);

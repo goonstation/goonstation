@@ -8,8 +8,8 @@
 import { useBackend } from '../backend';
 import { Button, Divider, LabeledList, ProgressBar, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
-import { neutralTemperature } from './common/temperatureUtils';
 import { glitch } from './common/stringUtils';
+import { neutralTemperature } from './common/temperatureUtils';
 
 const Glitch_Text = (emagged, string, number) => {
   if (emagged) {

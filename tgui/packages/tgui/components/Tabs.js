@@ -5,6 +5,7 @@
  */
 
 import { canRender, classes } from 'common/react';
+
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 

@@ -6,6 +6,7 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../../backend';
 import { BlockQuote, Box, Button, ColorButton, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';

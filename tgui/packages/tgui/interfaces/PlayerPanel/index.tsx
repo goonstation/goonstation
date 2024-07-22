@@ -9,8 +9,8 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Input, Table } from '../../components';
 import { Window } from '../../layouts';
-import { Header } from './Header';
 import { Action, SortDirection } from './constant';
+import { Header } from './Header';
 import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig } from './type';
 
 const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<Row, Value>) => `${config.value}`;

@@ -6,6 +6,7 @@
  */
 
 import { KEY_LEFT, KEY_RIGHT } from 'common/keycodes';
+
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, ByondUi, LabeledList, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';

@@ -1,8 +1,8 @@
 import { useBackend } from '../../../../../backend';
+import { Box } from '../../../../../components';
 import { codeRecordFromPieces, fetchPieces } from '../../../games';
 import { useActions, useStates } from '../../../utils';
 import { BoardgameData, PieceDataType } from '../../../utils';
-import { Box } from '../../../../../components';
 
 type GridPieceRendererProps = {
   pieces: PieceDataType[];

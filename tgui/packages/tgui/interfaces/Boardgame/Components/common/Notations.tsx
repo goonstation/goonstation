@@ -1,7 +1,6 @@
 import { useBackend } from '../../../../backend';
 import { Box, Flex } from '../../../../components';
 import { BoardgameData } from '../../utils';
-
 import { generateBoardNotationLetters } from '../../utils';
 import { useStates } from '../../utils';
 

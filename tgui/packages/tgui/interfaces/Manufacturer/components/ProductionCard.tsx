@@ -5,11 +5,11 @@
  * @license ISC
  */
 
-import { truncate } from '../../../format';
 import { Stack, Tooltip } from "../../../components";
+import { truncate } from '../../../format';
+import { ProductionCardStyle } from "../constant";
 import { ButtonWithBadge } from "./ButtonWithBadge";
 import { CenteredText } from "./CenteredText";
-import { ProductionCardStyle } from "../constant";
 
 export type ProductionCardProps = {
   actionQueueRemove: (index:number) => void;

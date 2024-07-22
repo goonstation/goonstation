@@ -1,6 +1,4 @@
-import { Window } from '../layouts';
 import { useBackend } from "../backend";
-
 import {
   Box,
   Button,
@@ -12,6 +10,7 @@ import {
   Slider,
 } from '../components';
 import { formatPower } from '../format';
+import { Window } from '../layouts';
 
 export const TrscArray = (props, context) => {
   const { act, data } = useBackend(context);

@@ -9,12 +9,12 @@
 import { useLocalState } from '../../../backend';
 import { Button, Dropdown, Flex, Input, NumberInput, Section, Stack } from '../../../components';
 import { HeaderCell } from '../../../components/goonstation/ListGrid';
-import { useBanPanelBackend } from '../useBanPanelBackend';
+import type { BanResource } from '../apiType';
 import type { BanListTabData } from '../type';
 import { BanPanelSearchFilter } from '../type';
+import { useBanPanelBackend } from '../useBanPanelBackend';
 import { BanListItem } from './BanListItem';
 import { buildColumnConfigs } from './columnConfig';
-import type { BanResource } from '../apiType';
 
 interface BanListProps {
   data: BanListTabData;

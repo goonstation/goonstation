@@ -5,11 +5,12 @@
  * @license ISC
  */
 
-import { Window } from '../layouts';
+import type { InfernoNode } from 'inferno';
+
 import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from '../components';
-import type { InfernoNode } from 'inferno';
 import { computeBoxProps } from '../components/Box';
+import { Window } from '../layouts';
 
 interface MapVoteMapDetials {
   description: string,

@@ -1,10 +1,11 @@
+import { round } from 'common/math';
+
 import { useBackend } from '../backend';
 import { Box, Button, Knob, RoundGauge, Section, Table } from '../components';
-import { Window } from '../layouts';
 import { Flex } from '../components';
+import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 import { getTemperatureColor } from './common/temperatureUtils';
-import { round } from 'common/math';
 const T0C = 273.15;
 
 const ReactorRow = (shape) => {

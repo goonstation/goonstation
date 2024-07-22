@@ -1,7 +1,8 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { Box, Button, Image, Section } from 'tgui/components';
+
+import { useBackend } from '../backend';
 import { Collapsible, Divider, Flex, LabeledList, Stack } from '../components';
+import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 
 export const Vendors = (props, context) => {

@@ -5,11 +5,12 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
-import { clamp } from 'common/math';
-import { Component, createRef } from 'inferno';
-import { Box } from './Box';
 import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
+import { clamp } from 'common/math';
+import { classes } from 'common/react';
+import { Component, createRef } from 'inferno';
+
+import { Box } from './Box';
 
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 10000;

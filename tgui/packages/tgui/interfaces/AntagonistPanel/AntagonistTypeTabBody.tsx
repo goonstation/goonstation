@@ -5,8 +5,9 @@
  * @license MIT
  */
 
-import { useBackend } from '../../backend';
 import { toTitleCase } from 'common/string';
+
+import { useBackend } from '../../backend';
 import { Box, Button, Divider, Icon, LabeledList, ProgressBar, Section, Stack, Table, Tooltip } from '../../components';
 import { AntagonistData, AntagonistPanelData, GangLockerData, HeadsData, NuclearBombData, TabSectionData } from './type';
 

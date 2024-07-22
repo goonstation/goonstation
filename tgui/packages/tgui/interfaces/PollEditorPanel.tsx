@@ -8,8 +8,8 @@
 import { useBackend, useLocalState } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { PollEditorForm } from './common/forms/PollEditorForm';
 import type { ExpiryOptions, ExpiryType, PollSettings } from './common/forms/PollEditorForm';
+import { PollEditorForm } from './common/forms/PollEditorForm';
 
 interface PollEditorPanelData {
   lastError: string | null;

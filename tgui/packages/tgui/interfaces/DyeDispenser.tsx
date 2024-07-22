@@ -5,11 +5,12 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
-import { Button, ColorBox, Dimmer, Stack } from '../components';
-import { ColorSelector } from './ColorPickerModal';
 import { hexToHsva, HsvaColor, hsvaToHex } from 'common/goonstation/colorful';
+
+import { useBackend, useLocalState } from '../backend';
+import { Button, ColorBox, Dimmer, Stack } from '../components';
+import { Window } from '../layouts';
+import { ColorSelector } from './ColorPickerModal';
 
 type DyeDispenserParams = {
   bottle: boolean,

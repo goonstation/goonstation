@@ -7,8 +7,8 @@
 
 import { useBackend } from '../../backend';
 import { Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../../components';
-import { capitalize } from '../common/stringUtils';
 import { Window } from '../../layouts';
+import { capitalize } from '../common/stringUtils';
 import { Phonebook, PhoneData } from './type';
 
 const CategoryColors = [

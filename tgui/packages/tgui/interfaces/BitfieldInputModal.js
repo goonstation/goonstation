@@ -3,13 +3,13 @@
 * SPDX-License-Identifier: MIT
 */
 
-import { Loader } from './common/Loader';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend } from '../backend';
-import { InputButtons } from './common/InputButtons';
 import { Autofocus, Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { DataInputBitFieldEntry } from './common/DataInput';
-import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 
 export const BitfieldInputModal = (_, context) => {

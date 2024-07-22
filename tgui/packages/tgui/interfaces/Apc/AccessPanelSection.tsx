@@ -13,8 +13,8 @@ import {
   LabeledList,
   Section,
 } from '../../components';
-import { WireList } from './WireList';
 import type { ApcData } from './types';
+import { WireList } from './WireList';
 
 export const AccessPanelSection = (_props, context) => {
   const { data } = useBackend<ApcData>(context);

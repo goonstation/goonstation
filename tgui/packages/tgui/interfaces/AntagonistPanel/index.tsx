@@ -6,10 +6,10 @@
  */
 
 import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
 import { Stack } from '../../components';
-import { AntagonistTypeTabs } from './AntagonistTypeTabs';
+import { Window } from '../../layouts';
 import { AntagonistTypeTabBody } from './AntagonistTypeTabBody';
+import { AntagonistTypeTabs } from './AntagonistTypeTabs';
 import { AntagonistPanelData } from './type';
 
 export const AntagonistPanel = (props, context) => {

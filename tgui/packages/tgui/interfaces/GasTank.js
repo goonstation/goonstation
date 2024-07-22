@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { LabeledList, RoundGauge, Section } from '../components';
-import { Window } from '../layouts';
 import { formatPressure } from '../format';
+import { Window } from '../layouts';
 import { ReleaseValve } from './common/ReleaseValve';
 
 export const GasTank = (props, context) => {

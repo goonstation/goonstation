@@ -5,6 +5,7 @@
  */
 
 import { BooleanLike, classes, pureComponentHooks } from 'common/react';
+
 import { BoxProps, computeBoxClassName, computeBoxProps, unit } from './Box';
 
 export type FlexProps = BoxProps & {

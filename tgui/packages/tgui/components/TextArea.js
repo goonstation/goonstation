@@ -5,11 +5,12 @@
  * @license MIT
  */
 
+import { KEY_ESCAPE } from 'common/keycodes';
 import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
+
 import { Box } from './Box';
 import { toInputValue } from './Input';
-import { KEY_ESCAPE } from 'common/keycodes';
 
 export class TextArea extends Component {
   constructor(props, context) {

@@ -8,7 +8,6 @@
 export { BuyMaterialsModal } from "./modals/BuyMaterialsModal";
 export { CombineGenesModal } from "./modals/CombineGenesModal";
 export { UnlockModal } from "./modals/UnlockModal";
-
 export { MutationsTab } from "./tabs/MutationsTab";
 export { ResearchTab } from "./tabs/ResearchTab";
 export { ScannerTab } from "./tabs/ScannerTab";

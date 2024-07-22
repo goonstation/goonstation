@@ -7,12 +7,12 @@
 
 import { useBackend } from "../backend";
 import { AnimatedNumber, Box, Button, Dimmer, Icon, LabeledList, ProgressBar, Section } from "../components";
-import { Window } from '../layouts';
-import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
-import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { damageNum, HealthStat } from '../components/goon/HealthStat';
-import { MobStatuses } from './common/MobStatus';
+import { Window } from '../layouts';
 import { KeyHealthIndicators } from './common/KeyHealthIndicators/index';
+import { MobStatuses } from './common/MobStatus';
+import { ReagentGraph, ReagentList } from './common/ReagentInfo';
+import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
 export const CryoCell = (_props, context) => {
   return (

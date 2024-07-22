@@ -6,8 +6,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { TerminalData, TerminalOutputSectionProps } from './types';
 import { Box, Section } from '../../components';
+import { TerminalData, TerminalOutputSectionProps } from './types';
 
 export const TerminalOutputSection = (props: TerminalOutputSectionProps, context) => {
   const { data } = useBackend<TerminalData>(context);

@@ -5,8 +5,8 @@
 
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Section } from '../components';
-import { DataInputOptions } from './common/DataInput';
 import { Window } from '../layouts';
+import { DataInputOptions } from './common/DataInput';
 
 export const RandomEvent = (props, context) => {
   const { act, data } = useBackend(context);

@@ -5,13 +5,14 @@
  * @license MIT
  */
 
-import { Loader } from './common/Loader';
+import { KEY_ESCAPE } from 'common/keycodes';
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Section } from '../components';
 import { Window } from '../layouts';
-import { KEY_ESCAPE } from 'common/keycodes';
 import { sanitizeDefAllowTags, sanitizeText } from '../sanitize';
-import { BooleanLike } from 'common/react';
+import { Loader } from './common/Loader';
 
 type MessageInputData = {
   message: string;

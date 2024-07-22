@@ -1,8 +1,8 @@
-import { HorizontalNotations, VerticalNotations } from '../';
+import { useBackend } from '../../../../backend';
 import { Box, Flex } from '../../../../components';
 import { BoardgameData } from '../../utils';
-import { useBackend } from '../../../../backend';
 import { useActions } from '../../utils';
+import { HorizontalNotations, VerticalNotations } from '../';
 import CheckerBoard from './styles/checkerboard';
 
 export const Board = (props, context) => {

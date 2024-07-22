@@ -6,8 +6,8 @@
  */
 
 import { useBackend } from '../../backend';
-import { ChemiCompilerData } from './type';
 import { TextArea } from '../../components';
+import { ChemiCompilerData } from './type';
 
 export const ChemiCompilerTextArea = (_props, context) => {
   const { act, data } = useBackend<ChemiCompilerData>(context);

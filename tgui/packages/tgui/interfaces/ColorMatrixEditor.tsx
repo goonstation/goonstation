@@ -6,8 +6,9 @@
  * @license MIT
  */
 
-import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
+
+import { useBackend } from '../backend';
 import { Box, Button, ByondUi, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 

@@ -6,12 +6,12 @@
  */
 
 import { toTitleCase } from 'common/string';
+
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
-import { WeaponVendorData, WeaponVendorStockData } from './type';
-
 import { pluralize } from '../common/stringUtils';
+import { WeaponVendorData, WeaponVendorStockData } from './type';
 
 export const WeaponVendor = (_props, context) => {
   const { data } = useBackend<WeaponVendorData>(context);

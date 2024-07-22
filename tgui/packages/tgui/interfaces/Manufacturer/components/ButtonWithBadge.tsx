@@ -5,10 +5,11 @@
  * @license ISC
  */
 
-import { Stack } from "../../../components/Stack";
+import { InfernoNode } from "inferno";
+
 import { Button } from "../../../components/Button";
 import { Image } from "../../../components/goon/Image";
-import { InfernoNode } from "inferno";
+import { Stack } from "../../../components/Stack";
 
 type ButtonWithBadgeProps = {
   width?: number | string,

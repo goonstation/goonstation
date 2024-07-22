@@ -9,7 +9,6 @@
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
-
 import { capitalize, glitch } from './common/stringUtils';
 
 const KEY_PAD_INPUT_LAYOUT = [

@@ -1,8 +1,6 @@
-import { Window } from '../layouts';
-import { useBackend } from "../backend";
-import { ReagentBar } from './common/ReagentInfo';
 import { clamp, round } from 'common/math';
 
+import { useBackend } from "../backend";
 import {
   Button,
   Section,
@@ -10,6 +8,8 @@ import {
   Stack,
   Tabs,
 } from '../components';
+import { Window } from '../layouts';
+import { ReagentBar } from './common/ReagentInfo';
 
 const TO_SELF = 0;
 const TO_TARGET = 1;

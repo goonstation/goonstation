@@ -6,10 +6,10 @@
  * @license MIT
  */
 
+import { capitalize } from '../../../common/string';
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Flex, Icon, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
-import { capitalize } from '../../../common/string';
 import { Allowed, ChemRequestReceiverData, RequestData } from './type';
 
 interface ChemRequestProps extends RequestData {
