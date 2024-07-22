@@ -20,6 +20,7 @@ const Story = () => {
     'bottom-start',
     'bottom-end',
   ];
+
   return (
     <Section>
       <Box>
@@ -28,18 +29,17 @@ const Story = () => {
             Box (hover me).
           </Box>
         </Tooltip>
-        <Button
-          tooltip="Tooltip text."
-          content="Button" />
+        <Button tooltip="Tooltip text." content="Button" />
       </Box>
       <Box mt={1}>
-        {positions.map(position => (
+        {positions.map((position) => (
           <Button
             key={position}
             color="transparent"
             tooltip="Tooltip text."
             tooltipPosition={position}
-            content={position} />
+            content={position}
+          />
         ))}
       </Box>
     </Section>

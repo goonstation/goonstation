@@ -5,6 +5,7 @@
  */
 
 import { storage } from 'common/storage';
+
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { formatSiUnit } from '../format';
 
@@ -13,27 +14,25 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props, context) => {
+const Story = (props) => {
   if (!window.localStorage) {
-    return (
-      <NoticeBox>
-        Local storage is not available.
-      </NoticeBox>
-    );
+    return <NoticeBox>Local storage is not available.</NoticeBox>;
   }
   return (
     <Section
       title="Local Storage"
-      buttons={(
+      buttons={
         <Button
           icon="recycle"
           onClick={() => {
             localStorage.clear();
             storage.clear();
-          }}>
+          }}
+        >
           Clear
         </Button>
-      )}>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Keys in use">
           {localStorage.length}

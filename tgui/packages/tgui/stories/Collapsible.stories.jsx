@@ -12,14 +12,10 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props, context) => {
+const Story = (props) => {
   return (
     <Section>
-      <Collapsible
-        title="Collapsible Demo"
-        buttons={(
-          <Button icon="cog" />
-        )}>
+      <Collapsible title="Collapsible Demo" buttons={<Button icon="cog" />}>
         <BoxWithSampleText />
       </Collapsible>
     </Section>
