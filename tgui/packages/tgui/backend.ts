@@ -16,7 +16,7 @@ import { createAction } from 'common/redux';
 
 import { setupDrag } from './drag';
 import { globalEvents } from './events';
-import { focusMap } from './focus';
+import { focusMap, hasWindowFocus } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 
@@ -177,7 +177,7 @@ export const backendMiddleware = (store) => {
       Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
-      setTimeout(() => focusMap());
+      setTimeout(() => { if (hasWindowFocus()) focusMap(); });
     }
 
     if (type === 'backend/update') {

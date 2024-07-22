@@ -6,9 +6,6 @@
 
 // Themes
 import './styles/main.scss';
-// import './styles/themes/abductor.scss';
-// import './styles/themes/cardtable.scss';
-// import './styles/themes/generic.scss';
 import './styles/themes/genetek.scss';
 import './styles/themes/genetek-disabled.scss';
 // import './styles/themes/hackerman.scss';
@@ -24,11 +21,14 @@ import './styles/theme-modes/ntos-light.scss';
 
 import { perf } from 'common/perf';
 import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+
+import { setGlobalStore } from './backend';
+import { setupGlobalEvents } from './events';
 import { setupHotKeys } from './hotkeys';
+import { loadIconRefMap } from './icons';
 import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
-import { configureStore, StoreProvider } from './store';
-import { setupGlobalEvents } from './events';
+import { configureStore } from './store';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
@@ -36,16 +36,15 @@ perf.mark('init');
 const store = configureStore();
 
 const renderApp = createRenderer(() => {
+  setGlobalStore(store);
+  loadIconRefMap();
+
   const { getRoutedComponent } = require('./routes');
   const Component = getRoutedComponent(store);
-  return (
-    <StoreProvider store={store}>
-      <Component />
-    </StoreProvider>
-  );
+  return <Component />;
 });
 
-const setupApp = () => {
+function setupApp() {
   // Delay setup
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupApp);
@@ -56,24 +55,16 @@ const setupApp = () => {
   setupHotKeys();
   captureExternalLinks();
 
-  // Subscribe for state updates
+  // Re-render UI on store updates
   store.subscribe(renderApp);
 
-  // Dispatch incoming messages
-  window.update = msg => store.dispatch(Byond.parseJson(msg));
-
-  // Process the early update queue
-  while (true) {
-    const msg = window.__updateQueue__.shift();
-    if (!msg) {
-      break;
-    }
-    window.update(msg);
-  }
+  // Dispatch incoming messages as store actions
+  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
+    // prettier-ignore
     module.hot.accept([
       './components',
       './debug',
@@ -83,6 +74,6 @@ const setupApp = () => {
       renderApp();
     });
   }
-};
+}
 
 setupApp();
