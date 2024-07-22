@@ -6,19 +6,19 @@
  */
 
 import { toTitleCase } from 'common/string';
-import { Fragment } from 'inferno';
+import { Fragment, useState } from 'react';
+import { BlockQuote, Box, Button, Collapsible, Divider, Image, Section, Stack } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
-import { BlockQuote, Box, Button, Collapsible, Divider, Image, Section, Stack } from '../../components';
+import { useBackend } from '../../backend';
 import { ButtonCheckbox } from '../../components/Button';
 import { CharacterPreferencesData, CharacterPreferencesTrait } from './type';
 
 const sortTraits = (a: CharacterPreferencesTrait, b: CharacterPreferencesTrait) =>
   a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
 
-export const TraitsTab = (_props, context) => {
-  const { act, data } = useBackend<CharacterPreferencesData>(context);
-  const [filterAvailable, setFilterAvailable] = useLocalState(context, `filter-available`, false);
+export const TraitsTab = () => {
+  const { act, data } = useBackend<CharacterPreferencesData>();
+  const [filterAvailable, setFilterAvailable] = useState(false);
 
   const traitsByCategory: Record<string, CharacterPreferencesTrait[]> = {};
 
@@ -140,11 +140,9 @@ const TraitCategoryList = (props: TraitCategoryListProps, context) => {
   );
 };
 
-const Trait = (props: CharacterPreferencesTrait, context) => {
-  const { act } = useBackend<CharacterPreferencesData>(context);
-
+const Trait = (props: CharacterPreferencesTrait) => {
   const { id, name, desc, points, selected, available, img } = props;
-
+  const { act } = useBackend<CharacterPreferencesData>();
   return (
     <Stack>
       <Stack.Item>
