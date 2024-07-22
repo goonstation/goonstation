@@ -1770,3 +1770,21 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.inhand_image.color = src.inhand_color
 	src.inhand_image.pixel_x = 0
 	src.inhand_image.pixel_y = hand_offset
+
+/obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2)
+	// a nice copypaste from /obj/proc/place_on
+	. = FALSE
+	if (src && !isghostdrone(user))
+		var/dirbuffer
+		dirbuffer = src.dir
+		if (user)
+			if (src.cant_drop)
+				return
+			user.drop_item()
+		if(src.dir != dirbuffer)
+			src.set_dir(dirbuffer)
+		src.set_loc(target)
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			src.pixel_x = text2num(params["icon-x"]) - 16
+			src.pixel_y = text2num(params["icon-y"]) - 16
+		. = TRUE
