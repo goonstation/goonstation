@@ -32,8 +32,8 @@ module.exports = (env = {}, argv) => {
     target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
       tgui: ['./packages/tgui-polyfill', './packages/tgui'],
-      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
-      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'], // TODO-REACT: since we're not impling this uhh
+      // 'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
+      // 'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
     },
     output: {
       path: argv.useTmpFolder
@@ -136,6 +136,7 @@ module.exports = (env = {}, argv) => {
       new EsbuildPlugin({
         target: 'ie11',
         css: true,
+        legalComments: 'none', // We're open source, these are in the original source files
       }),
     ];
   }
@@ -144,6 +145,9 @@ module.exports = (env = {}, argv) => {
   if (mode !== 'production') {
     config.devtool = 'cheap-module-source-map';
   }
+
+  // Uncomment the below if you need to locally generate source maps to debug production
+  // config.devtool = 'source-map';
 
   // Development server specific options
   if (argv.devServer) {
