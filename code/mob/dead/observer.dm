@@ -13,7 +13,7 @@
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
 
-	start_listen_modifiers = list(LISTEN_MODIFIER_ADMIN_HEARING)
+	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
 	start_listen_languages = list(LANGUAGE_ALL)
 
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true

@@ -1720,7 +1720,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\modules\inputs\shared_input_format_modules\siliconchat.dm"
 #include "code\modules\speech\modules\inputs\shared_input_format_modules\spooky.dm"
 #include "code\modules\speech\modules\modifiers\listen\_listen_modifier_parent.dm"
-#include "code\modules\speech\modules\modifiers\listen\admin_hearing.dm"
+#include "code\modules\speech\modules\modifiers\listen\chat_context_flags.dm"
 #include "code\modules\speech\modules\modifiers\listen\phone_formatting.dm"
 #include "code\modules\speech\modules\modifiers\listen\radio_formatting.dm"
 #include "code\modules\speech\modules\modifiers\speech\_speech_modifier_parent.dm"

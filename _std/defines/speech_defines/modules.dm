@@ -114,6 +114,6 @@
 #define LISTEN_INPUT_THRALLCHAT_GLOBAL "global_thrallchat"
 
 //------------ Listen Modifiers ------------//
-#define LISTEN_MODIFIER_ADMIN_HEARING "admin_hearing"
+#define LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS "chat_context_flags"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
