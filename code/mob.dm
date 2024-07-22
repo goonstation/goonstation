@@ -3376,3 +3376,8 @@
 	src.delStatus("knockdown")
 	src.delStatus("unconscious")
 	src.delStatus("paralysis")
+
+/mob/proc/get_hand_color()
+	if (src.bioHolder?.mobAppearance)
+		return src.bioHolder.mobAppearance.s_tone
+	return "#042069"
