@@ -10330,8 +10330,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 8
 	},
 /turf/simulated/floor/circuit,
@@ -24110,11 +24109,8 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/decal/stripe_delivery,
+/obj/machinery/computer/announcement/station/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bJN" = (
@@ -57800,10 +57796,8 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
