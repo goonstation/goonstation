@@ -5,16 +5,16 @@
  * @license ISC
  */
 
-import { PropsWithChildren } from "react";
+import { PropsWithChildren } from 'react';
 
-import { Button } from "../../../components/Button";
-import { Image } from "../../../components/goon/Image";
-import { Stack } from "../../../components/Stack";
+import { Button } from '../../../components/Button';
+import { Image } from '../../../components/goon/Image';
+import { Stack } from '../../../components/Stack';
 
 interface ButtonWithBadgeProps {
-  width?: number | string,
-  height?: number | string,
-  noImageShadow?: boolean,
+  width?: number | string;
+  height?: number | string;
+  noImageShadow?: boolean;
   imagePath: string | null;
   disabled?: boolean;
   onClick?: Function;
@@ -23,7 +23,9 @@ interface ButtonWithBadgeProps {
   opacity?: number;
 }
 
-export const ButtonWithBadge = (props: PropsWithChildren<ButtonWithBadgeProps>) => {
+export const ButtonWithBadge = (
+  props: PropsWithChildren<ButtonWithBadgeProps>,
+) => {
   const {
     width,
     height,
@@ -41,8 +43,8 @@ export const ButtonWithBadge = (props: PropsWithChildren<ButtonWithBadgeProps>) 
     <Button
       opacity={opacity}
       onClick={onClick}
-      width={width || "100%"}
-      height={height || "100%"}
+      width={width || '100%'}
+      height={height || '100%'}
       p={0}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -53,9 +55,9 @@ export const ButtonWithBadge = (props: PropsWithChildren<ButtonWithBadgeProps>) 
           {imagePath && (
             <Image
               verticalAlign="top"
-              height={height || "100%"}
+              height={height || '100%'}
               src={imagePath}
-              backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
+              backgroundColor={noImageShadow ? null : 'rgba(0,0,0,0.2)'}
             />
           )}
         </Stack.Item>

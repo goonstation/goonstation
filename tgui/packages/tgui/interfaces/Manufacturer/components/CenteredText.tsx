@@ -5,42 +5,37 @@
  * @license ISC
  */
 
-import { Box } from "tgui-core/components";
+import { Box } from 'tgui-core/components';
 
 type CenteredTextProps = {
-  position?:string;
-  width?:number | string,
-  height?:number | string,
-  text:string;
-}
+  position?: string;
+  width?: number | string;
+  height?: number | string;
+  text: string;
+};
 
-export const CenteredText = (props:CenteredTextProps) => {
-  const {
-    position,
-    width,
-    height,
-    text,
-  } = props;
+export const CenteredText = (props: CenteredTextProps) => {
+  const { position, width, height, text } = props;
   return (
     <Box
       preserveWhitespace
       inline
       position={position}
-      width={(width !== undefined) ? width : "100%"}
-      height={(height !== undefined) ? height : "100%"}
-      lineHeight={(height !== undefined) ? height : "100%"}
+      width={width !== undefined ? width : '100%'}
+      height={height !== undefined ? height : '100%'}
+      lineHeight={height !== undefined ? height : '100%'}
       textAlign="center"
       px={0.5} // comfort padding
     >
       <span
         style={{
-          display: "inline-block",
-          verticalAlign: "middle",
-          lineHeight: "normal",
-        }}>
+          display: 'inline-block',
+          verticalAlign: 'middle',
+          lineHeight: 'normal',
+        }}
+      >
         {text}
       </span>
     </Box>
   );
 };
-
