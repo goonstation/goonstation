@@ -1719,7 +1719,7 @@ var/global/noir = 0
 				if (!trait_to_add_name)
 					return // user canceled
 				M.onProcCalled("addTrait", list(all_traits[trait_to_add_name]))
-				M.traitHolder.addTrait(all_traits[trait_to_add_name])
+				M.traitHolder.addTrait(all_traits[trait_to_add_name], force_trait=TRUE)
 				message_admins("[key_name(usr)] added the trait [trait_to_add_name] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added the trait [trait_to_add_name] to [constructTarget(M,"admin")].")
 				if (origin == "managetraits")//called via trait management panel

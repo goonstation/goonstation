@@ -163,7 +163,7 @@
 		for(var/id in traits)
 			other.addTrait(id, traits[id])
 
-	proc/addTrait(id, datum/trait/trait_instance=null)
+	proc/addTrait(id, datum/trait/trait_instance=null, force_trait=FALSE)
 		if(!(id in traits))
 			var/datum/trait/T = null
 			if(isnull(trait_instance))
@@ -174,7 +174,7 @@
 			if(T.afterlife_blacklisted && inafterlifebar(owner))
 				return
 			var/resolved_role = owner?.mind?.assigned_role || src.mind_role_fallback
-			if (T.preventAddTrait(owner, resolved_role))
+			if (T.preventAddTrait(owner, resolved_role) && force_trait==FALSE)
 				return
 			traits[id] = T
 			if(!isnull(owner))
