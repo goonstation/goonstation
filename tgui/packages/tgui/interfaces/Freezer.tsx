@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
 import { AnimatedNumber, Box, Button, Icon, Knob, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
