@@ -9,8 +9,7 @@
 // Mostly custom code to properly align the modal box with the screen while applying the dimmer to a specific element
 
 import { classes } from 'common/react';
-
-import { Blink, Flex, Icon } from "../../../components";
+import { Blink, Flex, Icon } from "tgui-core/components";
 
 type PowerAlertModalProps = {
   width: string | number;

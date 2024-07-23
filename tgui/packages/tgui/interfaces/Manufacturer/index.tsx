@@ -7,9 +7,10 @@
 
 import { clamp } from 'common/math';
 import { toTitleCase } from 'common/string';
+import { useState } from 'react';
+import { Box, Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Stack } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, Input, LabeledList, ProgressBar, Section, Stack } from '../../components';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
 import { pluralize } from '../common/stringUtils';
@@ -22,10 +23,10 @@ import { ProductionCard } from './components/ProductionCard';
 import { AccessLevels, MANUDRIVE_UNLIMITED, RockboxStyle, SETTINGS_WINDOW_WIDTH } from './constant';
 import { ManufacturableData, ManufacturerData, OreData, QueueBlueprint, ResourceData, RockboxData } from './type';
 
-export const Manufacturer = (_, context) => {
-  const { act, data } = useBackend<ManufacturerData>(context);
-  const [search, setSearchData] = useLocalState(context, "query", "");
-  const [swappingMaterialRef, setSwappingMaterialRef] = useLocalState<string | null>(context, "swap", null);
+export const Manufacturer = () => {
+  const { act, data } = useBackend<ManufacturerData>();
+  const [search, setSearchData] = useState("");
+  const [swappingMaterialRef, setSwappingMaterialRef] = useState<string | null>(null);
   // Define some actions for the interface and its children
   const actionCardLogout = () => act("card", { "remove": true });
   const actionCardLogin = () => act("card", { "scan": true });

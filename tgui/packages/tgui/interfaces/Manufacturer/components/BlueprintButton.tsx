@@ -6,8 +6,8 @@
  */
 
 import { round } from 'common/math';
+import { Button, Icon, LabeledList, Section, Stack, Tooltip } from 'tgui-core/components';
 
-import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
 import { truncate } from '../../../format';
 import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
 import { ManufacturableData, RequirementData, ResourceData } from '../type';

@@ -5,7 +5,8 @@
  * @license ISC
  */
 
-import { Button, Divider, LabeledList, Section } from "../../../components";
+import { Button, Divider, LabeledList, Section } from "tgui-core/components";
+
 import { is_set } from '../../common/bitflag';
 import { WIRE_PANEL_BUTTONS_WIDTH } from '../constant';
 import { WireIndicatorsData } from "../type";
