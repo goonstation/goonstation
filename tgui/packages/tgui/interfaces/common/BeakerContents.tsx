@@ -1,6 +1,11 @@
-import { Box } from '../../components';
+import { Box } from 'tgui-core/components';
 
-export const BeakerContents = props => {
+interface BeakerContentsProps {
+  beakerContents;
+  beakerLoaded;
+}
+
+export const BeakerContents = (props: BeakerContentsProps) => {
   const { beakerLoaded, beakerContents } = props;
   return (
     <Box>
