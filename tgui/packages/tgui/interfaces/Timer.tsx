@@ -1,12 +1,22 @@
+import { AnimatedNumber, Button, Knob, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, Knob, LabeledList, Section, Stack } from '../components';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 
 const MAX_TIME = 600;
 
-export const Timer = (props, context) => {
-  const { data, act } = useBackend(context);
+interface TimerData {
+  armButton;
+  armed;
+  minTime;
+  name;
+  time;
+  timing;
+}
+
+export const Timer = () => {
+  const { data, act } = useBackend<TimerData>();
   const setTime = (value) => {
     act("set-time", { 'value': value * 10 });
   };
@@ -16,7 +26,7 @@ export const Timer = (props, context) => {
   };
 
   return (
-    <Window width="280" height="200" title={data.name}>
+    <Window width={280} height={200} title={data.name}>
       <Window.Content>
         <Section>
           <LabeledList>
