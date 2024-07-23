@@ -1,5 +1,6 @@
+import { AnimatedNumber, Box, Button, Icon, Knob, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, Knob, Section, Stack } from '../components';
 import { formatPressure } from '../format';
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
@@ -11,8 +12,8 @@ type FreezerData = {
   air_pressure: number,
 }
 
-export const Freezer = (props, context) => {
-  const { act, data } = useBackend<FreezerData>(context);
+export const Freezer = () => {
+  const { act, data } = useBackend<FreezerData>();
   const { target_temperature, active, air_temperature, air_pressure } = data;
 
   return (
@@ -28,7 +29,7 @@ export const Freezer = (props, context) => {
                 minValue={73.15}
                 maxValue={293.15}
                 format={value => value + " K"}
-                onDrag={(e, value) => act('set_target_temperature', { value: value })}
+                onDrag={(_e, value) => act('set_target_temperature', { value: value })}
               />
             </Stack.Item>
             <Stack.Item grow basis={0} overflow="hidden">
@@ -80,7 +81,7 @@ export const Freezer = (props, context) => {
                 width="50%"
                 fontSize={1.3}>
                 <Box fontSize={1}>Current Pressure</Box>
-                <AnimatedNumber value={formatPressure(air_pressure)} />
+                <AnimatedNumber value={air_pressure} format={formatPressure} />
               </Box>
             </Stack.Item>
           </Stack>
