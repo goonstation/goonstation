@@ -27,11 +27,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#if defined(SPACEMAN_DMM) && !defined(DISABLE_SECRETS) // For StrongDMM since it dies on the fexists() check - doesn't die if the file doesn't exist
+#if fexists("+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
 #include "+secret\__secret.dme"
-#endif
-#if fexists("./+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS) && !defined(SECRETS_ENABLED)
-#include ".\+secret\__secret.dme" // This needs to be a ""different path""
 #endif
 #include "code\__secret_public.dme"
 
@@ -559,6 +556,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\intangible\blob_overmind\ai.dm"
 #include "code\mob\living\intangible\flock\flockmind.dm"
 #include "code\mob\living\intangible\flock\flocktrace.dm"
+#include "code\mob\living\intangible\wraith\poltergeist.dm"
 #include "code\mob\living\life\blindness.dm"
 #include "code\mob\living\life\blood.dm"
 #include "code\mob\living\life\bodytemp.dm"
@@ -591,7 +589,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\silicon\hivebot\hive_modules.dm"
 #include "code\mob\living\silicon\hivebot\hivebot_statusupdate.dm"
 #include "code\mob\living\silicon\hivebot\mainframe.dm"
-#include "code\mob\wraith\poltergeist.dm"
 #include "code\modules\admin\abilitymanager.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_holder.dm"
@@ -1795,6 +1792,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
 #include "code\obj\electric_chair.dm"
+#include "code\obj\fakedoor.dm"
 #include "code\obj\fakeobject.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
