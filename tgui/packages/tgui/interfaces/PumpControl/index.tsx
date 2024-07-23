@@ -5,17 +5,20 @@
  * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Button, Section, Slider, Stack } from '../../components';
+import { useState } from 'react';
+import { Button, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
+import { Slider } from '../../components';
 import { Window } from '../../layouts';
 
 // Responsible for providing information and settings for a pump.
-const PumpSettings = (props:any, context:any) => {
-  const { act } = useBackend<PumpData>(context);
+const PumpSettings = (props) => {
+  const { act } = useBackend<PumpData>();
   const { pump } = props;
   // Local states allow to keep the appearance of seamless response, but do not cope well with button spamming
-  const [target_output, setOutput] = useLocalState(context, pump.netid+"pressure", pump.target_output);
-  const [power, setPower] = useLocalState(context, pump.netid+"power", pump.power);
+  const [target_output, setOutput] = useState(pump.target_output);
+  const [power, setPower] = useState(pump.power);
 
   const setPressure = (newPressure: number) => {
     setOutput(newPressure);
@@ -70,8 +73,8 @@ const PumpSettings = (props:any, context:any) => {
 
 
 // Responsible for creating a section for the pumps in an area.
-const PumpArea = (props: any, context: any) => {
-  const { data } = useBackend<AreaList>(context);
+const PumpArea = (props) => {
+  const { data } = useBackend<AreaList>();
   const { area } = props;
 
   // Need the keys as a list >:(
@@ -93,8 +96,8 @@ const PumpArea = (props: any, context: any) => {
 };
 
 // Main element, responsible for building the window.
-export const PumpControl = (props, context) => {
-  const { act, data } = useBackend<AreaList>(context);
+export const PumpControl = () => {
+  const { act, data } = useBackend<AreaList>();
   const refresh = () => act('refresh');
 
   // Need this as list >:(
