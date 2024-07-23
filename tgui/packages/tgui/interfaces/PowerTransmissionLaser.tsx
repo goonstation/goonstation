@@ -5,23 +5,45 @@
  * @license ISC
  */
 
+import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { formatMoney, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
-export const PowerTransmissionLaser = (props, context) => {
-  const { data } = useBackend(context);
+interface PowerTransmissionLaserData {
+  capacity;
+  charge;
+  excessPower;
+  gridLoad;
+  inputLevel;
+  inputMultiplier;
+  inputNumber;
+  isCharging;
+  isChargingEnabled;
+  isEmagged,
+  isFiring,
+  isLaserEnabled,
+  lifetimeEarnings;
+  name;
+  outputLevel,
+  outputMultiplier,
+  outputNumber,
+  storedBalance;
+  totalGridPower;
+}
+
+export const PowerTransmissionLaser = () => {
+  const { data } = useBackend<PowerTransmissionLaserData>();
   const {
-    lifetimeEarnings,
     storedBalance,
     name = 'Power Transmission Laser',
   } = data;
   return (
     <Window
       title={name}
-      width="310"
-      height="485">
+      width={310}
+      height={485}>
       <Window.Content>
         <Status />
         <InputControls />
@@ -34,8 +56,8 @@ export const PowerTransmissionLaser = (props, context) => {
   );
 };
 
-const Status = (props, context) => {
-  const { data } = useBackend(context);
+const Status = () => {
+  const { data } = useBackend<PowerTransmissionLaserData>();
   const {
     capacity,
     charge,
@@ -76,7 +98,7 @@ const Status = (props, context) => {
 };
 
 const InputControls = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<PowerTransmissionLaserData>();
   const {
     isChargingEnabled,
     excessPower,
@@ -153,8 +175,8 @@ const InputControls = (props, context) => {
   );
 };
 
-const OutputControls = (props, context) => {
-  const { act, data } = useBackend(context);
+const OutputControls = () => {
+  const { act, data } = useBackend<PowerTransmissionLaserData>();
   const {
     isEmagged,
     isFiring,
