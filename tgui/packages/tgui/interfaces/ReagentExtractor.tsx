@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-import { Fragment } from 'inferno';
+import { Fragment, useState } from 'react';
+import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from 'tgui-core/components';
 
-import { useBackend, useLocalState, useSharedState } from "../backend";
-import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from '../components';
+import { useBackend, useSharedState } from "../backend";
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
@@ -18,8 +18,14 @@ const extractablesPerPage = 25;
 
 const clamp = (value, min, max) => Math.min(Math.max(min, value), max);
 
-export const ReagentExtractor = (props, context) => {
-  const { data } = useBackend(context);
+interface ReagentExtractorData {
+  autoextract;
+  containersData;
+  ingredientsData;
+}
+
+export const ReagentExtractor = () => {
+  const { data } = useBackend<ReagentExtractorData>();
 
   const { containersData } = data;
 
@@ -62,11 +68,11 @@ export const ReagentExtractor = (props, context) => {
   );
 };
 
-const ReagentDisplay = (props, context) => {
-  const { act } = useBackend(context);
+const ReagentDisplay = (props) => {
+  const { act } = useBackend();
   const { insertable } = props;
   const container = props.container || NoContainer;
-  const [transferAmount, setTransferAmount] = useSharedState(context, `transferAmount_${container.id}`, 10);
+  const [transferAmount, setTransferAmount] = useSharedState(`transferAmount_${container.id}`, 10);
 
   return (
     <Section
@@ -74,7 +80,7 @@ const ReagentDisplay = (props, context) => {
       buttons={
         <>
           <Button
-            title="Flush All"
+            tooltip="Flush All"
             icon="times"
             color="red"
             disabled={!container.totalVolume}
@@ -82,7 +88,7 @@ const ReagentDisplay = (props, context) => {
           />
           {!insertable || (
             <Button
-              title="Eject"
+              tooltip="Eject"
               icon="eject"
               disabled={!props.container}
               onClick={() => act('ejectcontainer')}
@@ -111,14 +117,14 @@ const ReagentDisplay = (props, context) => {
                 mr={1.5}
                 icon="filter"
                 color="red"
-                title="Isolate"
+                tooltip="Isolate"
                 onClick={() => act('isolate', { container_id: container.id, reagent_id: reagent.id })}
               />
               <Button
                 px={0.75}
                 icon="times"
                 color="red"
-                title="Flush"
+                tooltip="Flush"
                 onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
               />
             </>
@@ -133,7 +139,7 @@ const ReagentDisplay = (props, context) => {
             width={17}
             textAlign="center"
             selected={container.selected}
-            title="Select Extraction and Transfer Target"
+            tooltip="Select Extraction and Transfer Target"
             icon={container.selected ? "check-square-o" : "square-o"}
             onClick={() => act('extractto', { container_id: container.id })}
           >
@@ -154,7 +160,8 @@ const ReagentDisplay = (props, context) => {
                 format={value => value + "u"}
                 minValue={1}
                 maxValue={500}
-                onDrag={(e, value) => setTransferAmount(value)}
+                step={1}
+                onDrag={(value) => setTransferAmount(value)}
               />
             </Flex.Item>
             <Flex.Item>
@@ -172,11 +179,11 @@ const ReagentDisplay = (props, context) => {
   );
 };
 
-const ExtractableList = (props, context) => {
-  const { act, data } = useBackend(context);
+const ExtractableList = () => {
+  const { act, data } = useBackend<ReagentExtractorData>();
   const { autoextract } = data;
   const extractables = data.ingredientsData || [];
-  const [page, setPage] = useLocalState(context, 'page', 1);
+  const [page, setPage] = useState(1);
   const totalPages = Math.max(1, Math.ceil(extractables.length / extractablesPerPage));
   if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
   const extractablesOnPage = extractables.slice(extractablesPerPage*(page - 1),
@@ -210,7 +217,7 @@ const ExtractableList = (props, context) => {
                     </Button>
                     <Button
                       icon="eject"
-                      title="Eject"
+                      tooltip="Eject"
                       onClick={() => act('ejectingredient', { ingredient_id: extractable.id })}
                     />
                   </Flex.Item>
@@ -224,7 +231,7 @@ const ExtractableList = (props, context) => {
           <Flex.Item textAlign="center" basis={1.5}>
             <Button
               icon="caret-left"
-              title="Previous Page"
+              tooltip="Previous Page"
               disabled={page < 2}
               onClick={() => setPage(page - 1)}
             />
@@ -233,12 +240,13 @@ const ExtractableList = (props, context) => {
               format={value => "Page " + value + "/" + totalPages}
               minValue={1}
               maxValue={totalPages}
+              step={1}
               stepPixelSize={15}
-              onChange={(e, value) => setPage(value)}
+              onChange={setPage}
             />
             <Button
               icon="caret-right"
-              title="Next Page"
+              tooltip="Next Page"
               disabled={page > totalPages - 1}
               onClick={() => setPage(page + 1)}
             />
