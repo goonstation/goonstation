@@ -6,14 +6,33 @@
  */
 
 import { toFixed } from 'common/math';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Knob,
+  LabeledControls,
+  NoticeBox,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Icon, Knob, LabeledControls, NoticeBox, NumberInput, Section } from '../components';
 import { truncate } from '../format.js';
 import { Window } from '../layouts';
 
-export const DJPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+interface DJPanelProps {
+  adminChannel: number;
+  loadedSound: string;
+  volume: number;
+  frequency: number;
+  announceMode: boolean;
+  preloadedSounds: string[];
+}
+
+export const DJPanel = () => {
+  const { act, data } = useBackend<DJPanelProps>();
   const { loadedSound, adminChannel, preloadedSounds } = data;
   return (
     <Window width={430} height={306} title="DJ Panel">
@@ -24,7 +43,7 @@ export const DJPanel = (props, context) => {
             <Button
               icon={loadedSound ? 'file-audio' : 'upload'}
               selected={!loadedSound}
-              content={loadedSound ? truncate(loadedSound, 38) : "Upload"}
+              content={loadedSound ? truncate(loadedSound, 38) : 'Upload'}
               tooltip={loadedSound}
               onClick={() => act('set-file')}
             />
@@ -36,36 +55,33 @@ export const DJPanel = (props, context) => {
           <Box>
             <Button
               icon="music"
-              selected={loadedSound}
+              selected={!!loadedSound}
               disabled={!loadedSound}
               content="Play Music"
               onClick={() => act('play-music')}
             />
             <Button
               icon="volume-up"
-              selected={loadedSound}
+              selected={!!loadedSound}
               disabled={!loadedSound}
               content="Play Sound"
               onClick={() => act('play-sound')}
             />
             <Button
               icon="record-vinyl"
-              selected={loadedSound}
+              selected={!!loadedSound}
               disabled={!loadedSound}
               content="Play Ambience"
               onClick={() => act('play-ambience')}
             />
             <Box as="span" color="grey" textAlign="right" pl={1}>
-              <Icon name="satellite" /> Channel: <em>{ -adminChannel + 1024 }</em>
+              <Icon name="satellite" /> Channel: <em>{-adminChannel + 1024}</em>
             </Box>
           </Box>
         </Section>
         <Section>
           <Box>
-            <Button
-              content="Play Remote"
-              onClick={() => act('play-remote')}
-            />
+            <Button content="Play Remote" onClick={() => act('play-remote')} />
             <Button
               disabled={!loadedSound}
               content="Play To Player"
@@ -117,31 +133,34 @@ export const DJPanel = (props, context) => {
   );
 };
 
-
-const AnnounceActive = (props, context) => {
-  const { data } = useBackend(context);
+interface AnnounceActiveProps {
+  announceMode: boolean;
+}
+const AnnounceActive = () => {
+  const { data } = useBackend<AnnounceActiveProps>();
   const { announceMode } = data;
 
   if (announceMode) {
-    return (
-      <NoticeBox info>
-        Announce Mode Enabled
-      </NoticeBox>
-    );
+    return <NoticeBox info>Announce Mode Enabled</NoticeBox>;
   }
 };
 
-const formatDoublePercent = value => toFixed(value * 2) + '%';
-const formatHundredPercent = value => toFixed(value * 100) + '%';
+const formatDoublePercent = (value) => toFixed(value * 2) + '%';
+const formatHundredPercent = (value) => toFixed(value * 100) + '%';
 
-const KnobZone = (props, context) => {
-  const { act, data } = useBackend(context);
+interface KnobZoneProps {
+  loadedSound: string;
+  volume: number;
+  frequency: number;
+}
+const KnobZone = () => {
+  const { act, data } = useBackend<KnobZoneProps>();
   const { loadedSound, volume, frequency } = data;
 
-  const setVolume = (e, value) => act('set-volume', { volume: value });
-  const resetVolume = (e, value) => act('set-volume', { volume: "reset" });
-  const setFreq = (e, value) => act('set-freq', { frequency: value });
-  const resetFreq = (e, value) => act('set-freq', { frequency: "reset" });
+  const setVolume = (value) => act('set-volume', { volume: value });
+  const resetVolume = (value) => act('set-volume', { volume: 'reset' });
+  const setFreq = (value) => act('set-freq', { frequency: value });
+  const resetFreq = (value) => act('set-freq', { frequency: 'reset' });
 
   return (
     <Box>
@@ -154,9 +173,10 @@ const KnobZone = (props, context) => {
             maxValue={100}
             format={formatDoublePercent}
             onDrag={setVolume}
+            step={1}
           />
         </LabeledControls.Item>
-        <LabeledControls.Item>
+        <LabeledControls.Item label="">
           <Knob
             minValue={0}
             maxValue={100}
@@ -187,9 +207,8 @@ const KnobZone = (props, context) => {
             onDrag={setFreq}
           />
         </LabeledControls.Item>
-        <LabeledControls.Item>
+        <LabeledControls.Item label="">
           <Knob
-            disabled={!loadedSound}
             minValue={-100}
             maxValue={100}
             step={0.1}
