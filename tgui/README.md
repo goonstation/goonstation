@@ -202,12 +202,14 @@ For additional font styles you can use, see the [FontAwesome Docs](https://fonta
 
 ## License
 
-All tgui code in the Goonstation repository is licensed under **MIT** unless otherwise indicated.
+### All tgui code in the Goonstation repository is licensed under [**MIT**](https://choosealicense.com/licenses/mit/) unless otherwise indicated.
+
 The original source code on the tgstation repository is covered by /tg/station's parent license - **AGPL-3.0**
 (see their main [README](https://github.com/tgstation/tgstation/blob/master/README.md)).
 
 However, tgui files from tgstation used by us are annotated with a copyright header,
 which explicitly states the copyright holder and license of the file.
 Most of the tgui source code is available under the **MIT** or **ISC** license.
+
 
 The Authors retain all copyright to their respective work here submitted.
