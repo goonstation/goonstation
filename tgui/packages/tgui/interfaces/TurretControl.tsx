@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
 import { Box, Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
