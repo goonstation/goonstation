@@ -5,8 +5,10 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Flex, Icon, Modal, Section, Stack, TimeDisplay } from "../components";
+import { useState } from "react";
+import { Box, Button, Dimmer, Divider, Flex, Icon, Modal, Section, Stack, TimeDisplay } from "tgui-core/components";
+
+import { useBackend } from "../backend";
 import { formatTime } from "../format";
 import { Window } from '../layouts';
 
@@ -19,17 +21,28 @@ const getMagnetCondition = (condition) => {
   else return <Box inline color="bad">Connection Lost</Box>;
 };
 
-export const MineralMagnet = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface MineralMagnetData {
+  isLinked;
+  linkedMagnets;
+  magnetActive;
+  magnetAutomaticMode;
+  magnetCooldownOverride;
+  magnetHealth;
+  magnetLastUsed;
+  miningEncounters;
+  time;
+}
 
-  const { isLinked, magnetActive, magnetAutomaticMode, magnetCooldownOverride, magnetHealth, magnetLastUsed } = data;
-  const { time } = data;
+export const MineralMagnet = () => {
+  const { act, data } = useBackend<MineralMagnetData>();
+
+  const { isLinked, magnetActive, magnetAutomaticMode, magnetCooldownOverride, magnetHealth, magnetLastUsed, time } = data;
   const linkedMagnets = data.linkedMagnets || [];
   const miningEncounters = data.miningEncounters || [];
 
   const onCooldown = magnetLastUsed > time;
 
-  const [viewEncounters, setViewEncounters] = useLocalState(context, 'viewEncounters', false);
+  const [viewEncounters, setViewEncounters] = useState(false);
 
   return (
     <Window
@@ -85,12 +98,12 @@ export const MineralMagnet = (_props, context) => {
           </Button>
           <Button.Checkbox checked={magnetCooldownOverride}
             onClick={() => act('overridecooldown')}
-            style={{ 'z-index': '1' }}>
+            style={{ 'zIndex': '1' }}>
             Override Cooldown
           </Button.Checkbox>
           <Button.Checkbox checked={magnetAutomaticMode}
             onClick={() => act('automode')}
-            style={{ 'z-index': '1' }}>
+            style={{ 'zIndex': '1' }}>
             Automatic Mode
           </Button.Checkbox>
         </Section>
