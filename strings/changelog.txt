@@ -1,5 +1,7 @@
 
 (t)mon jul 22 24
+(u)LeahTheTech
+(*)The arcfiend jolt ability is no longer interrupted by attacks and now shoots periodic arcs of electricity at nearby mobs.
 (u)Kakolookiyam
 (p)19982
 (e)🪲💡|C-Bug, A-Station-Systems

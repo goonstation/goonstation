@@ -82,6 +82,18 @@
 			S.start()
 			src.owner.set_dir(get_dir(src.owner, src.target))
 
+		if (!ON_COOLDOWN(src.owner, "jolt_arc", 2 SECONDS))
+			var/list/targets = list()
+			for (var/mob/living/M in range(4, src.owner))
+				if (M != src.target && M != src.owner)
+					targets += M
+			if (!length(targets)) //no mobs, pick a turf instead
+				for (var/turf/T in range(3, src.owner))
+					targets += T
+			if (length(targets))
+				var/atom/target = pick(targets)
+				arcFlash(src.owner, target, 200 KILO WATTS) // 1/3 of the arcflash ability
+
 	onStart()
 		..()
 		src.particles.spawning = initial(src.particles.spawning)
