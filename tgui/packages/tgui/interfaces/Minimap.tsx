@@ -1,9 +1,16 @@
+import { ByondUi } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { ByondUi } from '../components';
 import { Window } from '../layouts';
 
-export const Minimap = (params, context) => {
-  const { data } = useBackend(context);
+interface MinimapData {
+  minimap_id;
+  theme;
+  title;
+}
+
+export const Minimap = () => {
+  const { data } = useBackend<MinimapData>();
   const {
     title,
     theme,
