@@ -45,6 +45,10 @@
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
 
+	//robotic transformation isn't *technically* death but should still remove the role I think
+	borged()
+		src.owner.remove_antagonist(src.id)
+
 	announce_objectives()
 		return
 

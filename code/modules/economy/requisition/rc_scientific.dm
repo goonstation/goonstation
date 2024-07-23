@@ -687,16 +687,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/stack/fancy_cloth
 	name = "high-grade cloth (carbon or bee wool)"
-	typepath = /obj/item/material_piece/cloth/carbon
-	typepath_alt = /obj/item/material_piece/cloth/beewool
+	typepath = /obj/item/material_piece/cloth
 
-	rc_eval(obj/item/eval_item)
-		. = ..()
-		if (.) return
-		if (istype(eval_item, /obj/item/material_piece/cloth))
-			if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
-				rollcount += eval_item.amount
-				. = TRUE
+	extra_eval(obj/item/eval_item)
+		. = FALSE
+		if(eval_item.material?.getID() == "carbonfibre" || eval_item.material?.getID() == "beewool")
+			return TRUE
 
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"

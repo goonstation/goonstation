@@ -284,7 +284,7 @@
 /area/prefab/bee_sanctuary)
 "jJ" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/caution/west,
 /area/prefab/bee_sanctuary)
 "ke" = (
@@ -1077,7 +1077,7 @@
 /area/prefab/bee_sanctuary)
 "HX" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "Ic" = (
@@ -1617,7 +1617,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "UT" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";

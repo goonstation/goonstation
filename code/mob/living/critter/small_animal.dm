@@ -30,6 +30,7 @@
   - bats
    - angry bats
    - Dr. Acula
+   - Tiny Bat Rina (admin office pet)
   - wasps
   - raccoons
   - slugs
@@ -917,6 +918,10 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 		if (I.force && src.playing_dead)
 			src.playing_dead = 1
 			src.play_dead()
+
+	was_harmed(mob/M, obj/item/weapon, special, intent)
+		. = ..()
+		M.add_karma(-1)
 
 	proc/play_dead(var/addtime = 0)
 		if (addtime > 0) // we're adding more time
@@ -2871,6 +2876,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return 1
 		boutput(user, SPAN_ALERT("You feel uncomfortable now."))
 
+/// the floating eyes found in the watchful eye sensor array.
+/mob/living/critter/small_animal/floateye/watchful
+	desc = "It seems to be staring directly at the Purple Giant."
+	ai_type = /datum/aiHolder/empty
+	ai_retaliates = FALSE
+	New()
+		..()
+		add_lifeprocess(/datum/lifeprocess/disability) // so that they stop jittering
+		START_TRACKING
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
 /* ============================================= */
 /* -------------------- Bat -------------------- */
 /* ============================================= */
@@ -2960,6 +2978,43 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 30
 	is_pet = 2
 	player_can_spawn_with_pet = FALSE
+
+/* ------------------ Tiny Bat Rina ------------------ */
+
+/mob/living/critter/small_animal/bat/rina //for Jan's office
+	name = "Tiny Bat Rina"
+	real_name = "Tiny Bat Rina"
+	desc = "Why does this little bat have a purple ponytail?"
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "batrina"
+	icon_state_dead = "batrina-dead"
+	health_brute = 30
+	health_burn = 30
+	player_can_spawn_with_pet = FALSE
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					flick("batrina-dance", src)
+					return SPAN_EMOTE("<b>[src]</b> dances!")
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_EMOTE("<b>[src]</b> makes a tiny bat squeak!")
+		return ..()
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","dance")
+				return 2
+		return ..()
+
+	animate_lying(lying)
+		if (lying)
+			src.icon_state = "batrina-sleeping"
+		else
+			src.icon_state = initial(src.icon_state)
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */

@@ -6,7 +6,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
 	c_flags = ONBELT
-	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
 	/// which part of the person or robot suit does it go on???????
 	var/slot = null

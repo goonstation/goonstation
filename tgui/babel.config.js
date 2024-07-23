@@ -5,11 +5,7 @@
  */
 
 const createBabelConfig = options => {
-  const {
-    // mode, // uncomment if future config needs to depend on environment
-    presets = [],
-    plugins = [],
-  } = options;
+  const { presets = [], plugins = [], removeConsole } = options;
   return {
     presets: [
       [require.resolve('@babel/preset-typescript'), {
@@ -24,17 +20,17 @@ const createBabelConfig = options => {
         targets: [],
       }],
       ...presets,
-    ],
+    ].filter(Boolean),
     plugins: [
       [require.resolve('@babel/plugin-proposal-class-properties'), {
         loose: true,
       }],
       require.resolve('@babel/plugin-transform-jscript'),
       require.resolve('babel-plugin-inferno'),
-      require.resolve('babel-plugin-transform-remove-console'),
+      removeConsole && require.resolve('babel-plugin-transform-remove-console'),
       require.resolve('common/string.babel-plugin.cjs'),
       ...plugins,
-    ],
+    ].filter(Boolean),
   };
 };
 

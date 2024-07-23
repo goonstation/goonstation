@@ -5491,7 +5491,7 @@
 /turf/simulated/floor/grey,
 /area/space)
 "qb" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/simulated/floor/wood/eight{
 	icon_state = "wooden-8";
 	dir = 4

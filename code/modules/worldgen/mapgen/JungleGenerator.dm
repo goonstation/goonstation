@@ -117,6 +117,9 @@
 
 				air.temperature = temperature
 
+		if(station_repair.allows_vehicles)
+			src.allows_vehicles = station_repair.allows_vehicles
+
 		return src
 
 /turf/unsimulated/floor/plating/asteroid/mountain

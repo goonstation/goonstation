@@ -48,6 +48,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
+		if (locate(/obj/item/chair) in src.loc)
+			return TRUE
+		if (locate(/obj/rack) in src.loc)
+			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
 			return TRUE
 		if (locate(/obj/storage/secure/closet/fridge) in src.loc) // includes fridges
@@ -1132,12 +1136,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Caution - fragile."
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "glass-drink"
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	icon_state = "drinking"
 	item_state = "drink_glass"
-	var/icon_style = "drink"
 	g_amt = 30
-	var/glass_style = "drink"
 	var/salted = 0
 	var/obj/item/reagent_containers/food/snacks/plant/wedge = null
 	var/obj/item/cocktail_stuff/drink_umbrella/umbrella = null
@@ -1146,74 +1148,102 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	var/smashed = 0
 	var/shard_amt = 1
 
-	var/image/fluid_image
-	var/image/image_ice
-	var/image/image_salt
-	var/image/image_wedge
-	var/image/image_doodad
+	/// The icon file that this container should for reagent overlays.
+	var/reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	/// The icon state that this container should for reagent overlays.
+	var/reagent_overlay_icon_state = null
+	/// The number of reagent overlay states that this container has.
+	var/reagent_overlay_states = 12
+	/// The scaling that this container's fluid overlays should use.
+	var/reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR
 
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
+	var/umbrella_x_offset = 3
+	var/umbrella_y_offset = 6
+	var/decoration_x_offset = -1
+	var/decoration_y_offset = -1
+	var/wedge_x_offset = -1
+	var/wedge_y_offset = 2
+
+	New()
+		. = ..()
+		src.reagent_overlay_icon_state ||= src.icon_state
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = src.reagent_overlay_icon, \
+			reagent_overlay_icon_state = src.reagent_overlay_icon_state, \
+			reagent_overlay_states = src.reagent_overlay_states, \
+			reagent_overlay_scaling = src.reagent_overlay_scaling, \
+		)
 
 	update_icon()
-
-		src.underlays = null
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[src.glass_style][fluid_state]", -1)
-			else
-				src.fluid_image.icon_state = "fluid-[src.glass_style][fluid_state]"
-			src.icon_state = "glass-[src.glass_style][fluid_state]"
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
-		else
-			src.icon_state = "glass-[src.glass_style]"
-
 		if (src.salted)
-			if (!src.image_salt)
-				src.image_salt = image(src.icon, "[glass_style]-salted", layer = FLOAT_LAYER)
-			else
-				src.image_salt.icon_state = "[glass_style]-salted"
-			src.UpdateOverlays(src.image_salt, "salt")
+			if (!src.GetOverlayImage("salt_overlay"))
+				var/image/salt_image = image(src.reagent_overlay_icon, "[src.reagent_overlay_icon_state]-salt", layer = FLOAT_LAYER - 1)
+				src.AddOverlays(salt_image, "salt_overlay")
 		else
-			src.UpdateOverlays(null, "salt")
+			src.ClearSpecificOverlays("salt_overlay")
 
-		if (istype(src.in_glass))
-			var/new_layer = FLOAT_LAYER - 0.2
-			if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
-				new_layer = FLOAT_LAYER + 0.2
-			if (!src.image_doodad)
-				src.image_doodad = image(src.icon, "[glass_style]-[src.in_glass.icon_state]", layer = new_layer)
-			else
-				src.image_doodad.icon_state = "[glass_style]-[src.in_glass.icon_state]"
-				src.image_doodad.layer = new_layer
-			src.UpdateOverlays(src.image_doodad, "doodad")
+		if (src.in_glass)
+			if (!src.GetOverlayImage("decoration_overlay"))
+				var/x_offset = 0
+				var/y_offset = 0
+
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+					x_offset = src.umbrella_x_offset
+					y_offset = src.umbrella_y_offset
+				else
+					x_offset = src.decoration_x_offset
+					y_offset = src.decoration_y_offset
+
+				var/icon/silhouette = icon(src.reagent_overlay_icon, "front-silhouette-[src.reagent_overlay_icon_state]")
+				silhouette.Blend(icon(src.reagent_overlay_icon, src.in_glass.icon_state), ICON_MULTIPLY, x = 1 + x_offset, y = 1 + y_offset)
+				silhouette.Crop(1 + x_offset, 1 + y_offset, 32 + x_offset, 32 + y_offset)
+
+				var/image/outside_glass = new()
+				outside_glass.overlays += silhouette
+				outside_glass.layer = FLOAT_LAYER
+				outside_glass.pixel_x = x_offset
+				outside_glass.pixel_y = y_offset
+
+				var/image/inside_glass = image(src.reagent_overlay_icon, src.in_glass.icon_state, layer = FLOAT_LAYER - 1, pixel_x = x_offset, pixel_y = y_offset)
+				inside_glass.alpha = 128
+
+				var/image/decoration_overlay = new()
+				decoration_overlay.layer = FLOAT_LAYER
+				decoration_overlay.overlays += inside_glass
+				decoration_overlay.overlays += outside_glass
+
+				src.AddOverlays(decoration_overlay, "decoration_overlay")
+
 		else
-			src.UpdateOverlays(null, "doodad")
+			src.ClearSpecificOverlays("decoration_overlay")
+
+		if (src.wedge)
+			if (!src.GetOverlayImage("wedge_overlay"))
+				var/image/wedge_overlay = image(
+					src.reagent_overlay_icon,
+					src.wedge.icon_state,
+					layer = FLOAT_LAYER,
+					pixel_x = src.wedge_x_offset,
+					pixel_y = src.wedge_y_offset,
+				)
+
+				src.UpdateOverlays(wedge_overlay, "wedge_overlay")
+
+		else
+			src.ClearSpecificOverlays("wedge_overlay")
 
 		if (src.reagents.has_reagent("ice"))
-			if (!src.image_ice)
-				src.image_ice = image(src.icon, "[glass_style]-ice", layer = FLOAT_LAYER - 0.1)
-			else
-				src.image_ice.icon_state = "[glass_style]-ice"
-			src.UpdateOverlays(src.image_ice, "ice")
-		else
-			src.UpdateOverlays(null, "ice")
+			if (!src.GetOverlayImage("ice_overlay"))
+				var/image/ice_image = image(src.reagent_overlay_icon, "[src.reagent_overlay_icon_state]-ice", layer = FLOAT_LAYER)
+				src.UpdateOverlays(ice_image, "ice_overlay")
 
-		if (istype(src.wedge))
-			if (!src.image_wedge)
-				src.image_wedge = image(src.icon, "[glass_style]-[src.wedge.icon_state]", layer = FLOAT_LAYER + 0.1)
-			else
-				src.image_wedge.icon_state = "[glass_style]-[src.wedge.icon_state]"
-			src.UpdateOverlays(src.image_wedge, "wedge")
 		else
-			src.UpdateOverlays(null, "wedge")
+			src.ClearSpecificOverlays("ice_overlay")
 
-		signal_event("icon_updated")
-		return
+	on_reagent_change()
+		. = ..()
+		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/ice))
@@ -1541,11 +1571,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot
 	name = "shot glass"
-	icon_state = "glass-shot"
-	glass_style = "shot"
+	icon_state = "shot"
 	amount_per_transfer_from_this = 15
 	gulp_size = 15
 	initial_volume = 15
+	reagent_overlay_states = 4
+	umbrella_x_offset = 3
+	umbrella_y_offset = 2
+	decoration_x_offset = 1
+	decoration_y_offset = 1
+	wedge_x_offset = 0
+	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
 	amount_per_transfer_from_this = 50
@@ -1567,41 +1603,89 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
-	icon_state = "glass-oldf"
-	glass_style = "oldf"
+	icon_state = "old_fashioned"
 	initial_volume = 20
+	reagent_overlay_states = 7
+	umbrella_x_offset = 3
+	umbrella_y_offset = 3
+	decoration_x_offset = 0
+	decoration_y_offset = -1
+	wedge_x_offset = -1
+	wedge_y_offset = -1
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/round
 	name = "round glass"
-	icon_state = "glass-round"
-	glass_style = "round"
+	icon_state = "round"
 	initial_volume = 100
+	reagent_overlay_states = 9
+	umbrella_x_offset = 6
+	umbrella_y_offset = 4
+	decoration_x_offset = -3
+	decoration_y_offset = -1
+	wedge_x_offset = -3
+	wedge_y_offset = 0
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine
 	name = "wine glass"
-	icon_state = "glass-wine"
-	glass_style = "wine"
+	icon_state = "wine"
 	initial_volume = 30
+	reagent_overlay_states = 6
+	umbrella_x_offset = 3
+	umbrella_y_offset = 7
+	decoration_x_offset = 1
+	decoration_y_offset = 4
+	wedge_x_offset = -1
+	wedge_y_offset = 3
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail
 	name = "cocktail glass"
-	icon_state = "glass-cocktail"
-	glass_style = "cocktail"
+	icon_state = "cocktail"
 	initial_volume = 20
+	reagent_overlay_states = 5
+	umbrella_x_offset = 3
+	umbrella_y_offset = 6
+	decoration_x_offset = 1
+	decoration_y_offset = 4
+	wedge_x_offset = -2
+	wedge_y_offset = 2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute
 	name = "champagne flute"
-	icon_state = "glass-flute"
-	glass_style = "flute"
+	icon_state = "flute"
 	initial_volume = 20
+	reagent_overlay_states = 12
+	umbrella_x_offset = 2
+	umbrella_y_offset = 11
+	decoration_x_offset = 0
+	decoration_y_offset = 8
+	wedge_x_offset = 0
+	wedge_y_offset = 7
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher
 	name = "glass pitcher"
 	desc = "A big container for holding a lot of liquid that you then serve to people. Probably alcohol, let's be honest."
-	icon_state = "glass-pitcher"
-	glass_style = "pitcher"
+	icon_state = "pitcher"
 	initial_volume = 120
 	shard_amt = 2
+	reagent_overlay_states = 12
+	umbrella_x_offset = 4
+	umbrella_y_offset = 5
+	decoration_x_offset = -1
+	decoration_y_offset = -3
+	wedge_x_offset = -2
+	wedge_y_offset = 2
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pint
+	name = "pint glass"
+	icon_state = "pint"
+	initial_volume = 80
+	reagent_overlay_states = 15
+	umbrella_x_offset = 3
+	umbrella_y_offset = 10
+	decoration_x_offset = 0
+	decoration_y_offset = -2
+	wedge_x_offset = -2
+	wedge_y_offset = 3
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing
 	name = "icing tube"
@@ -1611,6 +1695,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	amount_per_transfer_from_this = 5
 	can_recycle = FALSE
+	reagent_overlay_states = 0
 	var/image/chem = new /image('icons/obj/foodNdrink/food.dmi',"icing_tube_chem")
 
 	on_reagent_change()
@@ -1645,36 +1730,39 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		qdel(src)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style
-	rand_pos = 1
+	rand_pos = TRUE
+	var/list/glass_types = list(
+		/obj/item/reagent_containers/food/drinks/drinkingglass,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/flute,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/oldf,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/round,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+	)
+
 	New()
-		..()
-		pick_style()
+		src.pick_style()
+		. = ..()
 
 	proc/pick_style()
-		src.glass_style = pick("drink","shot","wine","cocktail","flute")
-		switch(src.glass_style)
-			if ("shot")
-				src.name = "shot glass"
-				src.icon_state = "glass-shot"
-				src.amount_per_transfer_from_this = 15
-				src.gulp_size = 15
-				src.initial_volume = 15
-				src.reagents.maximum_volume = 15
-			if ("wine")
-				src.name = "wine glass"
-				src.icon_state = "glass-wine"
-				src.initial_volume = 30
-				src.reagents.maximum_volume = 30
-			if ("cocktail")
-				src.name = "cocktail glass"
-				src.icon_state = "glass-cocktail"
-				src.initial_volume = 20
-				src.reagents.maximum_volume = 20
-			if ("flute")
-				src.name = "champagne flute"
-				src.icon_state = "glass-flute"
-				src.initial_volume = 20
-				src.reagents.maximum_volume = 20
+		var/obj/item/reagent_containers/food/drinks/drinkingglass/glass_style = pick(src.glass_types)
+		src.name = glass_style::name
+		src.icon_state = glass_style::icon_state
+		src.amount_per_transfer_from_this = glass_style::amount_per_transfer_from_this
+		src.gulp_size = glass_style::gulp_size
+		src.initial_volume = glass_style::initial_volume
+		src.reagent_overlay_icon = glass_style::reagent_overlay_icon
+		src.reagent_overlay_icon_state = glass_style::reagent_overlay_icon_state
+		src.reagent_overlay_states = glass_style::reagent_overlay_states
+		src.reagent_overlay_scaling = glass_style::reagent_overlay_scaling
+		src.umbrella_x_offset = glass_style::umbrella_x_offset
+		src.umbrella_y_offset = glass_style::umbrella_y_offset
+		src.decoration_x_offset = glass_style::decoration_x_offset
+		src.decoration_y_offset = glass_style::decoration_y_offset
+		src.wedge_x_offset = glass_style::wedge_x_offset
+		src.wedge_y_offset = glass_style::wedge_y_offset
 
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled

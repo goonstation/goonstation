@@ -124,7 +124,7 @@
 /obj/item/reagent_containers/glass/beaker/strange_reagent{
 	name = "beaker"
 	},
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "aC" = (

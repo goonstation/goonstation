@@ -360,7 +360,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > (T0C + 430))
-				src.visible_message(SPAN_ALERT(" [src] ignites!"), group = "candle_ignite")
+				src.visible_message(SPAN_ALERT("[src] ignites!"), group = "candle_ignite")
 				src.light()
 
 	process()

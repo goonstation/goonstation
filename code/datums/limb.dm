@@ -1142,6 +1142,7 @@
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
+	can_beat_up_robots = TRUE
 	var/weak = 0
 
 	werewolf

@@ -41,6 +41,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 			var/datum/contextAction/t_scanner/action = new actionType(src)
 			actions += action
 
+	dropped(mob/user)
+		. = ..()
+		user.closeContextActions()
+
 	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
 		on = new_on
@@ -720,7 +724,6 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 			var/obj/item/device/analyzer/atmospheric/a = src
 			a.analyzer_upgrade = 1
 			a.icon_state = "atmos"
-			a.item_state = "atmosphericnalyzer"
 
 		else
 			boutput(user, SPAN_ALERT("That cartridge won't fit in there!"))

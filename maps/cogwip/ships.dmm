@@ -5121,7 +5121,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "nO" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -5700,7 +5700,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "pt" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -5710,7 +5710,7 @@
 /turf/simulated/floor/airless/scorched,
 /area/space)
 "pu" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/simulated/floor/airless/scorched,
 /area/space)
 "pv" = (
@@ -5818,7 +5818,6 @@
 /area/space)
 "pL" = (
 /obj/table/auto,
-/obj/item/synthmodule/assistant,
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "pM" = (
@@ -7334,7 +7333,7 @@
 /turf/unsimulated/floor/black,
 /area/space)
 "tl" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/unsimulated/floor/black,
 /area/space)
 "tm" = (
@@ -9146,10 +9145,10 @@
 /turf/unsimulated/floor/white,
 /area/space)
 "xI" = (
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/storage/crate{
 	name = "Robotic limbs"
 	},
@@ -10578,7 +10577,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";

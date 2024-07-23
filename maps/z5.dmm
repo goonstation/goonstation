@@ -1413,14 +1413,14 @@
 /area/mining/mainasteroid)
 "rZ" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Manufacturing Room";
-	req_access_txt = "51"
+	name = "Manufacturing Room"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "sf" = (
@@ -1473,11 +1473,11 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Power Room";
-	req_access_txt = "51"
+	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/power)
 "sB" = (
@@ -1907,15 +1907,12 @@
 	},
 /area/station/solar/small_backup3)
 "vB" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Power Room";
-	req_access_txt = "51"
+	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "vC" = (
@@ -2071,9 +2068,9 @@
 "wv" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "ww" = (
@@ -2476,10 +2473,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/external{
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "yV" = (
@@ -2522,15 +2519,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Power Room";
-	req_access_txt = "51"
+	name = "Power Room"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "zm" = (
@@ -2628,10 +2622,10 @@
 "zP" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "zQ" = (
@@ -2742,10 +2736,10 @@
 /area/evilreaver/chapel)
 "Az" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Shuttle Dock";
-	req_access_txt = "51"
+	name = "Shuttle Dock"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "AA" = (
@@ -3121,9 +3115,9 @@
 "Da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Db" = (
@@ -4243,8 +4237,7 @@
 "Kr" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -4252,6 +4245,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Kt" = (
@@ -4894,10 +4888,10 @@
 /area/noGenerate)
 "Or" = (
 /obj/machinery/door/airlock/pyro/external{
-	name = "Mining Outpost Airlock";
-	req_access_txt = "51"
+	name = "Mining Outpost Airlock"
 	},
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "Os" = (
@@ -5233,14 +5227,15 @@
 /area/mining/comms)
 "Rj" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Emergency Comms Room";
-	req_access_txt = "51|40"
+	name = "Emergency Comms Room"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/mapping_helper/access/mining_outpost,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor,
 /area/mining/comms)
 "Rk" = (
@@ -5321,10 +5316,10 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Shuttle Dock";
-	req_access_txt = "51"
+	name = "Shuttle Dock"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/hangar)
 "RK" = (
@@ -5433,13 +5428,13 @@
 "SC" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mineral Magnet";
-	req_access_txt = "51"
+	name = "Mineral Magnet"
 	},
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "SK" = (
@@ -5563,10 +5558,10 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "TH" = (
@@ -6046,10 +6041,10 @@
 "WI" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Mining Outpost";
-	req_access_txt = "51"
+	name = "Mining Outpost"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/refinery)
 "WJ" = (
@@ -6266,13 +6261,13 @@
 /area/mining/dock)
 "Ye" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Mineral Magnet";
-	req_access_txt = "51"
+	name = "Mineral Magnet"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Yf" = (

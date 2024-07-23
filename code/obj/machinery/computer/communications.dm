@@ -124,18 +124,18 @@
 		// Status display stuff
 		if("setstat")
 			switch(href_list["statdisp"])
-				if("message")
-					post_status("message", stat_msg1, stat_msg2)
-				if("alert")
-					post_status("alert", href_list["alert"])
+				if(STATUS_DISPLAY_PACKET_MODE_MESSAGE)
+					post_status(STATUS_DISPLAY_PACKET_MODE_MESSAGE, stat_msg1, stat_msg2)
+				if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT)
+					post_status(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT, href_list["alert"])
 				else
 					post_status(href_list["statdisp"])
 
-		if("setmsg1")
+		if(STATUS_DISPLAY_PACKET_MESSAGE_TEXT_1)
 			stat_msg1 = input("Line 1", "Enter Message Text", stat_msg1) as text|null
 			stat_msg1 = copytext(adminscrub(stat_msg1), 1, MAX_MESSAGE_LEN)
 			src.updateDialog()
-		if("setmsg2")
+		if(STATUS_DISPLAY_PACKET_MESSAGE_TEXT_2)
 			stat_msg2 = input("Line 2", "Enter Message Text", stat_msg2) as text|null
 			stat_msg2 = copytext(adminscrub(stat_msg2), 1, MAX_MESSAGE_LEN)
 			src.updateDialog()
@@ -325,6 +325,10 @@
 		return
 	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
+	if (emergency_shuttle.online)
+		boutput(usr, SPAN_ALERT("The emergency shuttle is currently in flight!"))
 		return
 
 	logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
