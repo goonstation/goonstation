@@ -3,12 +3,22 @@
  * SPDX-License-Identifier: ISC
  */
 
+import { BlockQuote, Button, Icon, NoticeBox, NumberInput, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Icon, NoticeBox, NumberInput, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const SlotMachine = (_props, context) => {
-  const { data } = useBackend(context);
+interface SlotMachineData {
+  account_funds;
+  busy;
+  money;
+  plays;
+  scannedCard;
+  wager;
+}
+
+export const SlotMachine = () => {
+  const { data } = useBackend<SlotMachineData>();
   const { busy, scannedCard } = data;
   return (
     <Window
@@ -27,8 +37,8 @@ export const SlotMachine = (_props, context) => {
   );
 };
 
-const InsertCard = (_props, context) => {
-  const { act } = useBackend(context);
+const InsertCard = () => {
+  const { act } = useBackend();
   return (
     <>
       <NoticeBox danger>
@@ -44,8 +54,8 @@ const InsertCard = (_props, context) => {
   );
 };
 
-const SlotWindow = (_props, context) => {
-  const { act, data } = useBackend(context);
+const SlotWindow = () => {
+  const { act, data } = useBackend<SlotMachineData>();
   const {
     account_funds,
     money,
@@ -109,7 +119,8 @@ const SlotWindow = (_props, context) => {
                 maxValue={1000}
                 value={wager}
                 format={value => value + "⪽"}
-                onDrag={(_e, value) => act('set_wager', { bet: value })}
+                step={1}
+                onDrag={(value) => act('set_wager', { bet: value })}
               />
             </Stack.Item>
           </Stack>
@@ -149,7 +160,7 @@ const SlotWindow = (_props, context) => {
 
 const BusyWindow = () => {
   return (
-    <NoticeBox warning>
+    <NoticeBox danger>
       The Machine is busy, please wait!
     </NoticeBox>
   );
