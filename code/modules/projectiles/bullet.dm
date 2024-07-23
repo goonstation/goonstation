@@ -2054,7 +2054,7 @@ datum/projectile/bullet/autocannon
 	icon_state = "120mm"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	damage = 10
+	damage = 200
 	stun = 200
 	dissipation_delay = 300
 	dissipation_rate = 5
