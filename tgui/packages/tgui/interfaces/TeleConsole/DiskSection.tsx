@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Button, Section } from '../../components';
+import { Button, Section } from 'tgui-core/components';
 
 interface DiskSectionProps {
   isDiskPresent: boolean;

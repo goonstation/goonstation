@@ -7,9 +7,9 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
+import { useState } from 'react';
+import { Button, Input, LabeledList, Section } from 'tgui-core/components';
 
-import { useLocalState } from '../../backend';
-import { Button, Input, LabeledList, Section } from '../../components';
 import { TeleConsoleData } from './types';
 import { formatCoordinates } from './util';
 
@@ -23,7 +23,7 @@ type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
 
 export const BookmarksSection = (props: BookmarksSectionProps, context) => {
   const { bookmarks, maxBookmarks, onAddBookmark, onDeleteBookmark, onRestoreBookmark, targetCoords } = props;
-  const [newBookmarkName, setNewBookmarkName] = useLocalState(context, 'newBookmarkName', '');
+  const [newBookmarkName, setNewBookmarkName] = useState('');
   const handleAddBookmark = (name: string) => {
     onAddBookmark(name);
     setNewBookmarkName('');

@@ -6,8 +6,7 @@
  */
 
 import { clamp } from 'common/math';
-
-import { Button, Icon, Slider, Stack } from '../../components';
+import { Button, Icon, Slider, Stack } from 'tgui-core/components';
 
 // slice of props that are unchanged from standard Slider component
 interface SliderProps {

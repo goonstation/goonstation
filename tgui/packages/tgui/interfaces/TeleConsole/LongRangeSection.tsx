@@ -5,7 +5,8 @@
  * @license ISC
  */
 
-import { Box, Button, Icon, LabeledList, Section } from '../../components';
+import { Box, Button, Icon, LabeledList, Section } from 'tgui-core/components';
+
 import type { LongRangeData } from './types';
 
 interface LongRangeSectionProps {
