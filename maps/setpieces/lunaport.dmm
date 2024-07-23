@@ -468,7 +468,7 @@
 	name = "Concourse D"
 	})
 "bX" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -3829,7 +3829,7 @@
 	},
 /area/moon/underground)
 "oQ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -5169,7 +5169,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground)
 "tF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6346,7 +6346,7 @@
 	},
 /area/moon/underground)
 "xy" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6363,7 +6363,7 @@
 /turf/unsimulated/iomoon/floor,
 /area/space)
 "xB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6475,7 +6475,7 @@
 	name = "Concourse B"
 	})
 "xZ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -8514,7 +8514,7 @@
 	name = "Concourse B"
 	})
 "FW" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -10144,7 +10144,7 @@
 	name = "Concourse D"
 	})
 "Mv" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -11464,7 +11464,7 @@
 	name = "SPECTRE Showroom"
 	})
 "RR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Just a door. A door that's not for you.";
 	dir = 4;
@@ -12332,7 +12332,7 @@
 	name = "Concourse B"
 	})
 "UQ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -12976,7 +12976,7 @@
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "Xf" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -13710,7 +13710,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar,
 /area/moon/underground)
 "ZF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;

@@ -525,7 +525,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/industrial/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist)
 
@@ -626,7 +626,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/fireaxe,
 		/obj/item/storage/grenade_pouch/napalm,
 		/obj/item/storage/grenade_pouch/incendiary,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/firebrand,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/firebrand)
 
@@ -636,7 +636,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/gun/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/glasses/thermal/traitor,
 		/obj/item/clothing/suit/space/syndicate/specialist/sniper,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/sniper)
@@ -655,7 +655,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout."
 		spawn_contents = list(/obj/item/breaching_hammer/rock_sledge,
 		/obj/item/device/radio/headset/syndicate/bard,
-		/obj/item/storage/fanny/syndie,
+		/obj/item/storage/fanny/syndie/large,
 		/obj/item/clothing/suit/space/syndicate/specialist/bard,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/bard)
 

@@ -2556,13 +2556,13 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avt" = (
-/obj/storage/cart/forensic,
 /obj/machinery/disposal/small{
 	dir = 8
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "avv" = (
@@ -8997,10 +8997,6 @@
 /obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve,
 /obj/item/hand_labeler,
-/obj/item/device/prox_sensor,
-/obj/item/device/prox_sensor,
-/obj/item/assembly/time_ignite,
-/obj/item/assembly/time_ignite,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bfU" = (
@@ -9389,10 +9385,6 @@
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
-/obj/item/device/igniter,
-/obj/item/device/igniter,
-/obj/item/device/timer,
-/obj/item/device/timer,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bjv" = (
@@ -9572,16 +9564,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "bla" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/blind_switch/area/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/east{
 	pixel_y = -4
+	},
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
@@ -10284,7 +10274,7 @@
 /area/station/science/lab)
 "bpA" = (
 /obj/machinery/atmospherics/unary/vent_pump{
-	dir = 4;
+	dir = 1;
 	external_pressure_bound = 0;
 	icon_state = "in";
 	initialize_directions = 1;
@@ -11483,14 +11473,13 @@
 	},
 /area/station/crew_quarters/ce)
 "bwG" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	tag = "icon-comm (EAST)"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0;
+	dir = 4
+	},
+/obj/machinery/computer/announcement/station/engineering{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -11752,6 +11741,9 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "byu" = (
@@ -12869,13 +12861,13 @@
 	dir = 1;
 	pixel_x = -1
 	},
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/listeningpost)
 "bKS" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -13141,9 +13133,9 @@
 	},
 /area/listeningpost)
 "bLL" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
-	name = "Weather Satellite"
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
@@ -16527,6 +16519,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"ega" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "ege" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -20181,8 +20177,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/glass,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "gYz" = (
@@ -21233,9 +21231,8 @@
 /area/station/hallway/primary/south)
 "hLx" = (
 /obj/machinery/firealarm/east,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	tag = "icon-comm (WEST)"
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -26074,9 +26071,6 @@
 /area/station/quartermaster/office)
 "lsP" = (
 /obj/machinery/vending/paint/broken,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "lsX" = (
@@ -26245,7 +26239,7 @@
 	dir = 4;
 	pixel_x = -15
 	},
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor,
 /area/station/science/lab)
 "lzy" = (
@@ -27051,6 +27045,10 @@
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = -3;
+	pixel_x = -32
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -28615,6 +28613,10 @@
 	switchon = 1
 	},
 /obj/machinery/firealarm/north,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -29979,12 +29981,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	arrivalalert = "$NAME, $JOB, has exited cryogenic stasis.";
-	dir = 8;
-	name = "Bridge Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -31350,14 +31348,12 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "ppb" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -32429,7 +32425,8 @@
 	name = "Botany persistent notice board";
 	persistent_id = "botany";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -33009,6 +33006,10 @@
 	pixel_y = 21
 	},
 /obj/storage/closet/office,
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -33114,10 +33115,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "qIY" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 8
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
@@ -34768,23 +34767,8 @@
 	},
 /area/station/medical/medbay)
 "saG" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
 /obj/machinery/firealarm/south,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
 "sbG" = (
@@ -40122,22 +40106,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "vWi" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -40659,6 +40628,10 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
+"wvO" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/garden/aviary)
 "wwE" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -82399,7 +82372,7 @@ abe
 aaw
 aap
 aap
-acl
+wvO
 lsP
 ovf
 bxj
@@ -86325,7 +86298,7 @@ aaa
 sqY
 plf
 bzy
-bzy
+ega
 aar
 lqn
 bsu

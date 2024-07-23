@@ -70,6 +70,7 @@
 		HH.can_range_attack = 1
 
 /datum/limb/halberd
+	can_beat_up_robots = TRUE
 	attack_range(atom/target, var/mob/user, params)
 		switch (user.a_intent)
 			if (INTENT_HELP)

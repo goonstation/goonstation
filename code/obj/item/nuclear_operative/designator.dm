@@ -76,8 +76,6 @@
 
 		return src.airstrike(target, params, user, reach)
 
-
-
 /obj/machinery/broadside_gun //Thanks to Cogwerks for the sprites
 	name = "Broadside Gun Parent"
 	icon = 'icons/obj/large/96x32.dmi'
@@ -120,10 +118,10 @@
 		target_overlay = null
 
 /obj/machinery/broadside_gun/artillery_cannon
-	name = "Artillery Cannon"
+	name = "BlastoTek 12-inch Cannon"
 	icon = 'icons/obj/large/96x32.dmi'
 	icon_state = "152mm"
-	desc = "A 152 millimeter artillery cannon, used for heavy fire support."
+	desc = "A massive artillery cannon that breaks the terms of the Frontier Cruiser Treaty. Used for heavy fire support."
 	bound_width = 96
 	firingfrom = ""
 	ammo = -1
@@ -147,7 +145,7 @@
 		sleep(2.5 SECONDS)
 		var/area/designated_area = get_area(target_turf)
 		command_alert("Heavy ordinace has been detected launching from the Cairngorm towards the [initial(designated_area.name)], ETA 5 seconds.","Central Command Alert")
-		flick("152mm_firing", src)
+		flick("152mm-firing", src)
 		firing_turf = get_step(firing_turf, WEST)
 		firing_turf = get_step(firing_turf, WEST)
 		var/atom/movable/overlay/animation = new /atom/movable/overlay(firing_turf)
@@ -177,3 +175,80 @@
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+
+
+ADMIN_INTERACT_PROCS(/obj/machinery/broadside_gun/directfire, proc/fire)
+
+ABSTRACT_TYPE(/obj/machinery/broadside_gun/directfire)
+/obj/machinery/broadside_gun/directfire
+	name = "Shipscale Gun"
+	ammo = -1
+	dir = WEST
+	icon = 'icons/obj/large/96x32.dmi'
+	var/icon_firing = null
+	var/current_projectile = new/datum/projectile/bullet/rifle_762_NATO
+	var/muzzle_flash = null
+
+	proc/fire()
+		if(src.icon_firing)
+			flick(src.icon_firing, src)
+			src.visible_message(SPAN_ALERT("<b>[src] fires!</b>"))
+			shoot_projectile_DIR(src, current_projectile, dir)
+		if(src.muzzle_flash)
+			var/turf/firing_turf = get_turf(src)
+			firing_turf = get_step(get_step(firing_turf, WEST), WEST)
+			var/atom/movable/overlay/animation = new /atom/movable/overlay(firing_turf)
+			animation.icon = 'icons/obj/large/96x32.dmi'
+			animation.icon_state = "nothing"
+			SPAWN(0)
+				flick(src.muzzle_flash, animation)
+				sleep(1.2 SECONDS)
+				qdel(animation)
+			return
+
+	siege
+		name = "BlastoTek 12-inch Siege Gun"
+		desc = "An absolute behemoth of a gun. Usage is restricted to battleship- and battlecruiser-class vessels flying under military authorization. "
+		icon_state = "305mm"
+		icon_firing = "305mm-firing"
+		current_projectile = new/datum/projectile/bullet/howitzer/siege
+		muzzle_flash = "120mm-flash"
+
+	onetwentytwo
+		name = "Zvezda-122"
+		desc = "A hefty cannon firing 122mm standard Soviet howitzer rounds. Vast stockpiles of old munitions were recalled for service in the Martian Wars."
+		icon_state = "zvezda122"
+		icon_firing = "zvezda122-firing"
+		current_projectile = new/datum/projectile/bullet/howitzer
+		muzzle_flash = "120mm-flash"
+
+	onetwenty
+		name = "BlastoTek 120mm Howitzer"
+		desc = "A hefty cannon firing 4.7 inch high explosive rounds. Usage by armed merchant cruisers and convoy escorts is strictly regulated."
+		icon_state = "120mm"
+		icon_firing = "120mm-firing"
+		current_projectile = new/datum/projectile/bullet/howitzer
+		muzzle_flash = "120mm-flash"
+
+	fourty
+		name = "BlastoTek Dual 2-pdrs"
+		desc = "Two anti-spacecraft cannons on a tandem mount. Typically seen on convoy escorts, frigates, armed merchant cruisers, or in secondary batteries for larger warships."
+		icon_state = "40mm"
+		icon_firing = "40mm-firing"
+		current_projectile = new/datum/projectile/bullet/grenade_round/high_explosive/double
+
+	twenty
+		name = "BlastoTek 20mm Repeater Cannon"
+		desc = "A basic rapid-fire cannon for close-in defense, an easy solution to repel Martians, merchant raiders or deter space hazards and debris. Often used FOR raiding merchant convoys."
+		icon_state = "20mm"
+		icon_firing = "20mm-firing"
+		current_projectile = new/datum/projectile/bullet/cannon/burst
+		muzzle_flash = "20mm-flash"
+
+	molotok
+		name = "Auto-Molotok-4"
+		desc = "A burstfire AA cannon adapted by the Zvezda Design Bureau for the Martian Wars, capable of rapidly shredding Martian biomechanical ships."
+		icon_state = "molotok"
+		icon_firing = "molotok-firing"
+		current_projectile = new/datum/projectile/bullet/kuvalda_shrapnel/burst
+		muzzle_flash = "20mm-flash"

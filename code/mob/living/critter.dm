@@ -1305,7 +1305,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/is_heat_resistant()
 	if (!get_health_holder("burn"))
 		return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/critter/ex_act(var/severity)
 	..() // Logs.

@@ -5121,7 +5121,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "nO" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -5700,7 +5700,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "pt" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -7333,7 +7333,7 @@
 /turf/unsimulated/floor/black,
 /area/space)
 "tl" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/unsimulated/floor/black,
 /area/space)
 "tm" = (
@@ -10577,7 +10577,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
