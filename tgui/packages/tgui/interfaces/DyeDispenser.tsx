@@ -6,21 +6,22 @@
  */
 
 import { hexToHsva, HsvaColor, hsvaToHex } from 'common/goonstation/colorful';
+import { useState } from 'react';
+import { Button, ColorBox, Dimmer, Stack } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../backend';
-import { Button, ColorBox, Dimmer, Stack } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { ColorSelector } from './ColorPickerModal';
 
-type DyeDispenserParams = {
-  bottle: boolean,
-  uses_left: number,
-  bottle_color: string
-};
+interface DyeDispenserData {
+  bottle: boolean;
+  uses_left: number;
+  bottle_color: string;
+}
 const initialColor = "#FFFFFF";
 
-export const DyeDispenser = (_props, context) => {
-  const { act, data } = useBackend<DyeDispenserParams>(context);
+export const DyeDispenser = () => {
+  const { act, data } = useBackend<DyeDispenserData>();
   const { bottle, uses_left, bottle_color } = data;
 
   const isFilled = bottle && uses_left > 0;
@@ -30,7 +31,7 @@ export const DyeDispenser = (_props, context) => {
   const handleFillBottle = () => act('fillb', { selectedColor: hsvaToHex(selectedColor) });
   const handleInsertBottle = () => act('insertb', { });
 
-  let [selectedColor, setSelectedColor] = useLocalState<HsvaColor>(context, 'color_picker_choice', hexToHsva(bottle_color || initialColor));
+  let [selectedColor, setSelectedColor] = useState<HsvaColor>(hexToHsva(bottle_color || initialColor));
 
   return (
     <Window width={500} height={340}>
