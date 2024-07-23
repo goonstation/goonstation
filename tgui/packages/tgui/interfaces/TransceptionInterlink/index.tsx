@@ -5,8 +5,9 @@
  * @license MIT
  */
 
+import { Box, Button, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { TransceptionInterlinkData } from './type';
 
@@ -25,11 +26,11 @@ const PadStatusToColor = (status: string) => {
   }
 };
 
-export const TransceptionInterlink = (_props, context) => {
-  const { data, act } = useBackend<TransceptionInterlinkData>(context);
+export const TransceptionInterlink = () => {
+  const { data, act } = useBackend<TransceptionInterlinkData>();
   const { pads, crate_count } = data;
   return (
-    <Window title="Transception Interlink" height="252" width="475">
+    <Window title="Transception Interlink" height={252} width={475}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
