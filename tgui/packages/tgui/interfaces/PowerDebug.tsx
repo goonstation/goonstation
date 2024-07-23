@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Box, Button, Flex, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
 export const AreaData = props => {
@@ -36,8 +37,8 @@ export const AreaData = props => {
   );
 };
 
-export const MachineData = (props, context) => {
-  const { act } = useBackend(context);
+export const MachineData = (props) => {
+  const { act } = useBackend();
   const {
     machineData,
   } = props;
@@ -73,8 +74,12 @@ export const MachineData = (props, context) => {
   );
 };
 
-export const PowerDebug = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PowerDebugData {
+  areaData;
+}
+
+export const PowerDebug = () => {
+  const { data } = useBackend<PowerDebugData>();
   const {
     areaData,
   } = data;
