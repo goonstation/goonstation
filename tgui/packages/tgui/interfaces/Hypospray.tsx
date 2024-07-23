@@ -5,14 +5,21 @@
  * @license ISC
  */
 
+import { Button, Section, Slider } from "tgui-core/components";
+
 import { useBackend } from "../backend";
-import { Button, Section, Slider } from "../components";
 import { Window } from '../layouts';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { glitch } from './common/stringUtils';
 
-export const Hypospray = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface HyposprayData {
+  emagged;
+  injectionAmount;
+  reagentData;
+}
+
+export const Hypospray = () => {
+  const { act, data } = useBackend<HyposprayData>();
   const { emagged, injectionAmount, reagentData } = data;
 
   return (
