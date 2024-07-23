@@ -1,5 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, Flex, Section, Stack } from '../components';
+import { useState } from 'react';
+import { Box, Button, Divider, Flex, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize, pluralize } from './common/stringUtils';
 
@@ -21,8 +23,7 @@ const GlassRecyclerProductEntry = (props) => {
           <img
             src={`data:image/png;base64,${img}`}
             style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
+              verticalAlign: 'middle',
             }}
           />
         </Flex.Item>
@@ -45,14 +46,19 @@ const GlassRecyclerProductEntry = (props) => {
   );
 };
 
+interface GlassRecyclerData {
+  glassAmt;
+  products;
+}
+
 export const GlassRecycler = (_props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<GlassRecyclerData>();
   const {
     glassAmt,
     products,
   } = data;
 
-  const [filterAvailable, setFilterAvailable] = useLocalState(context, 'filter-available', false);
+  const [filterAvailable, setFilterAvailable] = useState(false);
 
   return (
     <Window
