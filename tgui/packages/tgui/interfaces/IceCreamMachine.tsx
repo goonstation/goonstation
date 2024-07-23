@@ -5,13 +5,20 @@
  * @license ISC
  */
 
+import { Button, Flex, Icon, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Flex, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { ReagentGraph } from './common/ReagentInfo';
 
-export const StandardFlavors = (props, context) => {
-  const { act, data } = useBackend(context);
+interface IceCreamMachineData {
+  beaker;
+  cone;
+  flavors;
+}
+
+export const StandardFlavors = () => {
+  const { act, data } = useBackend<IceCreamMachineData>();
   const standardFlavors = data.flavors;
 
   return (
@@ -29,7 +36,7 @@ export const StandardFlavors = (props, context) => {
             color={"rgba(" + flavor.colorR + "," + flavor.colorG + ", " + flavor.colorB + ", 1)"}
             name="circle"
             pt={1}
-            style={{ "text-shadow": "0 0 3px #000" }}
+            style={{ textShadow: "0 0 3px #000" }}
           />
           {flavor.name}
         </Button>
@@ -38,8 +45,8 @@ export const StandardFlavors = (props, context) => {
   );
 };
 
-export const BeakerFlavor = (props, context) => {
-  const { act, data } = useBackend(context);
+export const BeakerFlavor = () => {
+  const { act, data } = useBackend<IceCreamMachineData>();
   const beaker = data.beaker;
 
   return (
@@ -72,8 +79,8 @@ export const BeakerFlavor = (props, context) => {
   );
 };
 
-export const IceCreamMachine = (props, context) => {
-  const { data } = useBackend(context);
+export const IceCreamMachine = () => {
+  const { act, data } = useBackend<IceCreamMachineData>();
   const cone = data.cone;
 
   return (
