@@ -7,8 +7,8 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createRoot } from 'react-dom/client';
-import { Tooltip } from 'tgui/components';
 import { createLogger } from 'tgui/logging';
+import { Tooltip } from 'tgui-core/components';
 
 import {
   COMBINE_MAX_MESSAGES,

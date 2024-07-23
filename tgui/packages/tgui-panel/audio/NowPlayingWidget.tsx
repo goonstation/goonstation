@@ -6,7 +6,7 @@
 
 import { toFixed } from 'common/math';
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Button, Collapsible, Flex, Knob, Section } from 'tgui/components';
+import { Button, Collapsible, Flex, Knob, Section } from 'tgui-core/components';
 
 import { useSettings } from '../settings';
 import { selectAudio } from './selectors';

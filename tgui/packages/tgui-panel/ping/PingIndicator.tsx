@@ -7,7 +7,7 @@
 import { Color } from 'common/color';
 import { toFixed } from 'common/math';
 import { useSelector } from 'tgui/backend';
-import { Box } from 'tgui/components';
+import { Box } from 'tgui-core/components';
 
 import { selectPing } from './selectors';
 

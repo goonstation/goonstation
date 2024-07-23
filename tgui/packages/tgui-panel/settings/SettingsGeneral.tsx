@@ -11,7 +11,7 @@ import {
   NumberInput,
   Section,
   Stack,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';

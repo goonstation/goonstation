@@ -12,7 +12,7 @@ import {
   Input,
   Section,
   Stack,
-} from 'tgui/components';
+} from 'tgui-core/components';
 
 import {
   moveChatPageLeft,
@@ -115,7 +115,7 @@ export const ChatPageSettings = (props) => {
         )}
       </Stack>
       <Divider />
-      <Section title="Messages to display" level={2}>
+      <Section title="Messages to display" /* level={2}*/>
         {MESSAGE_TYPES.filter(
           (typeDef) => !typeDef.important && !typeDef.admin,
         ).map((typeDef) => (
