@@ -1,10 +1,22 @@
+import { Chart, LabeledList, NumberInput, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Chart, LabeledList, NumberInput, Stack } from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 
-export const TurbineControl = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface TurbineControlData {
+  rpm,
+  load,
+  power,
+  volume,
+  history,
+  overspeed,
+  overtemp,
+  undertemp,
+}
+
+export const TurbineControl = () => {
+  const { act, data } = useBackend<TurbineControlData>();
   const {
     rpm,
     load,
@@ -84,17 +96,21 @@ export const TurbineControl = (_props, context) => {
             Stator Load:
             <NumberInput
               minValue={1}
+              maxValue={10e30}
               value={load}
               format={value => value + " Joules/Revolution"}
-              onChange={(e, value) => act("loadChange", { newVal: value })} />
+              step={1}
+              onChange={(value) => act("loadChange", { newVal: value })} />
           </Stack.Item>
           <Stack.Item>
             Flow Rate:
             <NumberInput
               minValue={1}
+              maxValue={10e5}
               value={volume}
               format={value => value + " L/s"}
-              onChange={(e, value) => act("volChange", { newVal: value })} />
+              step={1}
+              onChange={(value) => act("volChange", { newVal: value })} />
           </Stack.Item>
         </Stack>
       </Window.Content>
