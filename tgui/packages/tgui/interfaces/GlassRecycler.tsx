@@ -1,17 +1,24 @@
 import { useState } from 'react';
-import { Box, Button, Divider, Flex, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize, pluralize } from './common/stringUtils';
 
-const GlassRecyclerProductEntry = (props) => {
+const GlassRecyclerProductEntry = (props: {
+  product: Product;
+  disabled: any;
+  onClick: any;
+}) => {
   const {
-    product: {
-      name,
-      cost,
-      img,
-    },
+    product: { name, cost, img },
     disabled,
     onClick,
   } = props;
@@ -28,12 +35,8 @@ const GlassRecyclerProductEntry = (props) => {
           />
         </Flex.Item>
         <Flex.Item grow={1}>
-          <Box bold>
-            {capitalize(name)}
-          </Box>
-          <Box>
-            {`Cost: ${cost} ${pluralize('Unit', cost)}`}
-          </Box>
+          <Box bold>{capitalize(name)}</Box>
+          <Box>{`Cost: ${cost} ${pluralize('Unit', cost)}`}</Box>
         </Flex.Item>
         <Flex.Item>
           <Button onClick={onClick} disabled={disabled}>
@@ -47,25 +50,25 @@ const GlassRecyclerProductEntry = (props) => {
 };
 
 interface GlassRecyclerData {
-  glassAmt;
-  products;
+  glassAmt: number;
+  products: Product[];
 }
 
-export const GlassRecycler = (_props, context) => {
+interface Product {
+  name: string;
+  type: string;
+  cost: number;
+  img: string;
+}
+
+export const GlassRecycler = () => {
   const { act, data } = useBackend<GlassRecyclerData>();
-  const {
-    glassAmt,
-    products,
-  } = data;
+  const { glassAmt, products } = data;
 
   const [filterAvailable, setFilterAvailable] = useState(false);
 
   return (
-    <Window
-      title="Glass Recycler"
-      width={300}
-      height={400}
-    >
+    <Window title="Glass Recycler" width={300} height={400}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -77,7 +80,10 @@ export const GlassRecycler = (_props, context) => {
                   </Box>
                 </Flex.Item>
                 <Flex.Item>
-                  <Button.Checkbox checked={filterAvailable} onClick={() => setFilterAvailable(!filterAvailable)}>
+                  <Button.Checkbox
+                    checked={filterAvailable}
+                    onClick={() => setFilterAvailable(!filterAvailable)}
+                  >
                     Filter Available
                   </Button.Checkbox>
                 </Flex.Item>
@@ -85,18 +91,11 @@ export const GlassRecycler = (_props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow={1}>
-            <Section
-              fill
-              scrollable
-              title="Products"
-            >
+            <Section fill scrollable title="Products">
               {products
-                .filter(({ cost }) => !filterAvailable || (glassAmt >= cost))
-                .map(product => {
-                  const {
-                    cost,
-                    type,
-                  } = product;
+                .filter(({ cost }) => !filterAvailable || glassAmt >= cost)
+                .map((product) => {
+                  const { cost, type } = product;
                   return (
                     <GlassRecyclerProductEntry
                       key={type}
