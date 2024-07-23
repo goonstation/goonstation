@@ -5,10 +5,9 @@
 * @license MIT
 */
 
-import { Button, LabeledList, NumberInput } from '../../components';
+import { Button, LabeledList, NumberInput } from 'tgui-core/components';
 
 export const ReleaseValve = props => {
-
   const {
     valveIsOpen,
     releasePressure = 0,
@@ -36,7 +35,8 @@ export const ReleaseValve = props => {
           value={releasePressure}
           minValue={minRelease}
           maxValue={maxRelease}
-          onChange={(e, targetPressure) => onSetPressure(targetPressure)} />
+          step={1}
+          onChange={(targetPressure) => onSetPressure(targetPressure)} />
         <Button
           onClick={() => onSetPressure(maxRelease)}
           content="Max" />
