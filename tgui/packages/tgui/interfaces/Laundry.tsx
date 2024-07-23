@@ -2,8 +2,13 @@ import { useBackend } from '../backend';
 import { Box, Button, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
-export const Laundry = (props, context) => {
-  const { data } = useBackend(context);
+interface LaundryData {
+  door;
+  on;
+}
+
+export const Laundry = () => {
+  const { data } = useBackend<LaundryData>();
   const {
     on,
   } = data;
@@ -26,24 +31,20 @@ export const Laundry = (props, context) => {
   );
 };
 
-const StatusActive = (props, context) => {
-  return (
-    <NoticeBox warning>
-      Please wait, machine is currently running.
-    </NoticeBox>
-  );
-};
+const StatusActive = () => (
+  <NoticeBox warning>
+    Please wait, machine is currently running.
+  </NoticeBox>
+);
 
-const StatusInactive = (props, context) => {
-  return (
-    <NoticeBox info>
-      Insert items and press &quot;Turn On&quot; to start.
-    </NoticeBox>
-  );
-};
+const StatusInactive = () => (
+  <NoticeBox info>
+    Insert items and press &quot;Turn On&quot; to start.
+  </NoticeBox>
+);
 
-const ButtonCycle = (props, context) => {
-  const { act, data } = useBackend(context);
+const ButtonCycle = () => {
+  const { act, data } = useBackend<LaundryData>();
   const {
     on,
   } = data;
@@ -58,8 +59,8 @@ const ButtonCycle = (props, context) => {
   );
 };
 
-const ButtonDoor = (props, context) => {
-  const { act, data } = useBackend(context);
+const ButtonDoor = () => {
+  const { act, data } = useBackend<LaundryData>();
   const {
     on,
     door,
