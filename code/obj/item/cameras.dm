@@ -24,7 +24,7 @@ TYPEINFO(/obj/item/camera/large)
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	flags = TABLEPASS | EXTRADELAY | CONDUCT
 	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5

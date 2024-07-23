@@ -52,3 +52,37 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			D.cycle_id = src.cycle_id
 			D.cycle_enter_id = src.enter_id
 			D.attempt_cycle_link()
+
+/obj/mapping_helper/airlock/breaker
+	name = "fake airlock converter"
+	desc = "Turns a real door into a false one that can't be opened."
+	icon_state = "broken"
+
+	setup()
+		// use the bolt and weld vars to determine how the fake door should look.
+		if (/obj/mapping_helper/airlock/bolter in range(0,src))
+			src.bolt = TRUE
+		if (/obj/mapping_helper/airlock/welder in range(0,src))
+			src.weld = TRUE
+		for (var/obj/machinery/door/airlock/D in range(0,src))
+			if (D.locked)
+				src.bolt = TRUE
+			if (D.welded)
+				src.weld = TRUE
+			// now we know it is bolted/welded; create the door
+			var/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken
+			// make sure it's using the right icon state
+			if (src.bolt)
+				D.locked = TRUE
+				D.UpdateIcon()
+			// apply the welded effect if there is one
+			if (src.weld)
+				F.UpdateOverlays(image(D.icon, D.welded_icon_state), "weld")
+			// set icon on the fake image
+			F.icon = D.icon
+			F.icon_state = F.icon_state
+			// final touches
+			F.name = D.name
+			F.desc = D.desc
+			F.density = D.density
+			qdel(D)

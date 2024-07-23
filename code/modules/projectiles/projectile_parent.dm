@@ -292,7 +292,8 @@
 			if (!proj_data) return //ZeWaka: Fix for null.override_color
 			if (!proj_data.override_color)
 				src.color = "#ffffff"
-
+	proc/get_len()
+		return sqrt(src.xo**2 + src.yo**2)
 	// Awful var names. TODO rename pretty much everything here, or at least document the functions
 	proc/setup()
 		if(QDELETED(src))
@@ -307,14 +308,12 @@
 		goes_through_mobs = src.proj_data.goes_through_mobs
 		set_icon()
 
-		var/len = sqrt(src.xo**2 + src.yo**2)
-
+		var/len = src.get_len()
 		if (len == 0 || proj_data.projectile_speed == 0)
 			return //will die on next step before moving
 
 		src.xo = src.xo / len
 		src.yo = src.yo / len
-
 		if (src.yo == 0)
 			if (src.xo < 0)
 				src.angle = -90
@@ -352,8 +351,8 @@
 				ys = -1
 				y32 = -y32
 		var/max_t = src.max_range * (32/speed)
-		var/next_x = x32 / 2
-		var/next_y = y32 / 2
+		var/next_x = x32 * (16-wx*xs)/32
+		var/next_y = y32 * (16-wy*ys)/32
 		var/ct = 0
 		var/turf/T = get_turf(src)
 		var/cx = T.x
@@ -710,6 +709,30 @@ ABSTRACT_TYPE(/datum/projectile)
 			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
 			if (disrupt)
 				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
+
+		///copies the name, visuals, and sfx of another projectile datum - for varedit shenanigans
+		copy_appearance_of(datum/projectile/P)
+			src.name = P.name
+			src.sname = P.sname
+
+			src.icon = P.icon
+			src.icon_state = P.icon_state
+
+			src.invisibility = P.invisibility
+			src.brightness = P.brightness
+
+			src.color_red = P.color_red
+			src.color_green = P.color_green
+			src.color_blue = P.color_blue
+			src.color_icon = P.color_icon
+			src.override_color = P.override_color
+
+			src.shot_sound = P.shot_sound
+			src.shot_sound_extrarange = P.shot_sound_extrarange
+			src.shot_volume = P.shot_volume
+
+			src.ie_type = P.ie_type
+			src.impact_image_state = P.impact_image_state
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)

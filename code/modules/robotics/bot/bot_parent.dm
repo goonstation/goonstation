@@ -5,7 +5,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
 	event_handler_flags = USE_FLUID_ENTER
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
 	pass_unstable = TRUE
@@ -196,7 +195,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
-				var/audio = dectalk("\[:nk\][message]")
+				var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
 						if (!O.client)

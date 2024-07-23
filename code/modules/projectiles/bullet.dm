@@ -893,6 +893,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
+	silentshot = TRUE
 
 /datum/projectile/bullet/grenade_fragment
 	name = "grenade fragment"
@@ -905,6 +906,7 @@ toxic - poisons
 	dissipation_delay = 8
 	damage_type = D_KINETIC
 	ricochets = TRUE
+	silentshot = TRUE
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
@@ -1797,12 +1799,15 @@ datum/projectile/bullet/autocannon
 		if (auto_find_targets)
 			P.targets = list()
 			for(var/mob/M in view(P,15))
-				if (M == P.shooter) continue
+				if (!is_valid_target(M, P)) continue
 				P.targets += M
 
 		if (length(src.targets))
 			P.targets = src.targets
 			src.targets = list()
+
+	proc/is_valid_target(mob/M, obj/projectile/P)
+		return (M != P.shooter && M != P.mob_shooter)
 
 	proc/calc_desired_x_y(var/obj/projectile/P)
 		.= 0
@@ -1872,6 +1877,10 @@ datum/projectile/bullet/autocannon
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
 
 /datum/projectile/bullet/homing/pod_seeking_missile
 	name = "pod-seeking missile"

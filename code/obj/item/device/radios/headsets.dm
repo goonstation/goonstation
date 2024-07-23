@@ -11,7 +11,7 @@
 	var/protective_temperature = 0
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
@@ -122,6 +122,12 @@
 
 /obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
+
+/obj/item/device/radio/headset/command/inspector
+	name = "inspector's headset"
+	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
+	icon_override = "inspector"
+	icon_tooltip = "Inspector"
 
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"

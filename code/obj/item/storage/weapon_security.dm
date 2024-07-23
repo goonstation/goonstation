@@ -261,7 +261,6 @@
 	sneaky = 1
 	stealthy_storage = TRUE
 	var/cloaked = 0
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
 
@@ -378,16 +377,6 @@
 	desc = "A case that contains 2 syndicate chameleon bombs"
 	icon_state = "hard_case"
 	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
-
-// Starter kit used in the conspiracy/spy game mode.
-/obj/item/storage/box/spykit
-	name = "spy starter kit"
-	icon_state = "implant"
-	spawn_contents = list(/obj/item/dagger/syndicate,\
-	/obj/item/gun/kinetic/silenced_22,\
-	/obj/item/ammo/bullets/bullet_22,\
-	/obj/item/card/id/syndicate,\
-	/obj/item/device/spy_implanter)
 
 // Boxes for Nuke Ops Class Crates
 

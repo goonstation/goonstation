@@ -225,6 +225,7 @@
 
 		S.layer = 2
 		S.set_dir(D.dir)
+		S.powered_locally = FALSE
 		if(!src.emagged)
 			S.linked_door = D
 			D.linked_forcefield = S

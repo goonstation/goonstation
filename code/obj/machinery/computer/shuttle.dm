@@ -509,7 +509,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	name = "Elevator Safety Sign"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
-	flags = FPRINT
 	density = 0
 	anchored = ANCHORED
 

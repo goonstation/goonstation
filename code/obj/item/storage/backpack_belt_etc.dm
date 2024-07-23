@@ -7,7 +7,6 @@
 	icon_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -258,6 +257,80 @@
 	desc = "This backpack gives you wings (that are entirely non-functional)!"
 	icon_state = "bp_angel"
 	item_state = "bp_angel"
+
+/obj/item/storage/backpack/recharge_bay
+	name = "portable recharge bay"
+	desc = "A rigid, luggable pack capable of passively recharging approved devices using an onboard cell."
+	icon_state = "bp_recharger0"
+	slots = 6
+	spawn_contents = list()
+	var/obj/item/cell/source_cell
+	///Whether the access port is open to allow for swapping of power cell (and tampering with systems)
+	var/cell_port_open = FALSE
+	///Disallows recharging of weaponry
+	var/safety_regulator = TRUE
+
+	New()
+		..()
+		processing_items |= src
+
+	disposing()
+		processing_items -= src
+		..()
+
+	attack_self(mob/user)
+		src.cell_port_open = src.cell_port_open ? FALSE : TRUE
+		boutput(user, SPAN_NOTICE("You [src.cell_port_open ? "open" : "close"] [src]'s cell compartment."))
+		src.icon_state = "bp_recharger[src.cell_port_open ? 1 : 0]"
+
+	attack_hand(mob/user)
+		if(src.cell_port_open && user.find_in_hand(src))
+			if(src.source_cell)
+				user.put_in_hand_or_drop(src.source_cell)
+				src.source_cell = null
+				boutput(user, SPAN_NOTICE("You remove the power cell."))
+			else
+				boutput(user, SPAN_ALERT("[src]'s cell compartment is currently open, and has no cell to remove."))
+		else
+			return ..()
+
+	attackby(obj/item/W, mob/user)
+		if(src.cell_port_open && user.find_in_hand(src))
+			if(istype(W, /obj/item/cell))
+				if(!src.source_cell)
+					boutput(user, SPAN_NOTICE("You install the power cell into [src]."))
+					src.source_cell = W
+					user.u_equip(W)
+					W.set_loc(src)
+				else
+					boutput(user, SPAN_ALERT("[src]'s cell compartment is currently open. It already has a power cell."))
+			else if(istype(W, /obj/item/card/emag) && src.safety_regulator)
+				boutput(user, "You short out [src]'s weapon charging safety regulator.")
+				src.safety_regulator = FALSE
+			else
+				boutput(user, SPAN_ALERT("[src]'s cell compartment is currently open. You can't put [W] in it."))
+		else
+			return ..()
+
+	process()
+		var/do_flash = FALSE
+		if(src.source_cell && !cell_port_open)
+			for(var/obj/item/pack_item in src.storage.stored_items)
+				if(!(SEND_SIGNAL(pack_item, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE)) //does the item have a chargeable cell?
+					continue
+				else
+					if(istype(pack_item,/obj/item/gun/energy) && src.safety_regulator) //disallow gun charging unless pack is tampered with
+						continue
+					var/list/ret = list()
+					if(SEND_SIGNAL(pack_item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) //ensure we can fetch cell data
+						if (ret["charge"] < ret["max_charge"]) //if the item isn't fully charged
+							if (src.source_cell.charge >= 20) //and we can start charging it,
+								src.source_cell.use(min((ret["max_charge"] - ret["charge"])*4,20)) //get that trickle charge goin'
+								//not "efficient" compared to the standard recharger, but cells will last a While
+								SEND_SIGNAL(pack_item, COMSIG_CELL_CHARGE, 5)
+								do_flash = TRUE
+		if(do_flash)
+			flick("bp_recharger_activate", src)
 
 /obj/item/storage/backpack/satchel
 	name = "satchel"
@@ -519,6 +592,7 @@
 				var/mob/parent = src.loc
 				parent.update_clothing()
 
+
 /* -------------------- Fanny Packs -------------------- */
 
 /obj/item/storage/fanny
@@ -527,7 +601,6 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	w_class = W_CLASS_BULKY
 	slots = 5
@@ -561,7 +634,6 @@
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
 	icon_state = "syndie"
 	item_state = "syndie"
-	slots = 7
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -570,6 +642,11 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+/obj/item/storage/fanny/syndie/large
+	name = "syndicate tactical espionage belt pack XL"
+	desc = "It's different than a fanny pack. It's bigger, tactical, and action-packed!"
+	slots = 7
 
 /obj/item/storage/fanny/janny
 	name = "janny pack"
@@ -591,7 +668,6 @@
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "belt"
 	item_state = "belt"
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	max_wclass = W_CLASS_POCKET_SIZED
 	opens_if_worn = TRUE
@@ -1013,7 +1089,6 @@ TYPEINFO(/obj/item/inner_tube)
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "pool_ring"
 	item_state = "pool_ring"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

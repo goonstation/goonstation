@@ -10,6 +10,10 @@
 	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
 
+	///A business card or other item type to occasionally include with orders
+	var/business_card = null
+	var/business_card_chance = 20
+
 	// lists of commodity datums that the trader will buy or sell, and the cart
 	// these are the base lists of commodities this trader will have
 	var/list/base_goods_buy = list()
@@ -182,6 +186,9 @@
 		var/obj/item/paper/invoice = new /obj/item/paper(S)
 		invoice.name = "Sale Invoice ([src.name])"
 		invoice.info = "Invoice of Sale from [src.name]<br><br>"
+
+		if (src.business_card && prob(src.business_card_chance))
+			new src.business_card(S)
 
 		var/total_price = 0
 		for (var/datum/commodity/trader/C in src.shopping_cart)

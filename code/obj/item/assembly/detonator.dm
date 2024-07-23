@@ -25,7 +25,7 @@
 	var/dfcodeTries = 3 //How many code attempts before *boom*
 	var/mob/builtBy = null
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 1
 	throwforce = 2
 	throw_speed = 1

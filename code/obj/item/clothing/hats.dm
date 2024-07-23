@@ -11,7 +11,6 @@
 	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
 	duration_remove = 1.5 SECONDS
@@ -96,7 +95,6 @@ proc/filter_trait_hats(var/type)
 
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -129,7 +127,6 @@ proc/filter_trait_hats(var/type)
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
-	path_prot = 0
 	acid_survival_time = 3 MINUTES
 
 	setupProperties()
@@ -550,6 +547,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The hat of a postmaster."
 	icon_state = "mailcap"
 	item_state = "mailcap"
+
+	april_fools
+		icon_state = "mailcap-alt"
+		item_state = "mailcap-alt"
 
 /obj/item/clothing/head/chefhattall
     name = "Tall Chef's Hat"
@@ -1438,6 +1439,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
 			H.wear_image = src.wear_image
+			H.wear_layer = MOB_FULL_SUIT_LAYER
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
@@ -1447,7 +1449,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	desc = "Aww, cute and fuzzy."
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-
 	random
 		New()
 			..()

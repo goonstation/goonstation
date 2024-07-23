@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
 	var/amount_per_transfer_from_this = 5
@@ -203,7 +203,7 @@ proc/ui_describe_reagents(atom/A)
 	var/splash_all_contents = 1
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 
 	/// The icon file that this container should for fluid overlays.
@@ -568,7 +568,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
 	initial_volume = 120
-	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	flags = OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
@@ -711,7 +711,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 50
 	amount_per_transfer_from_this = 10
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/large
 	name = "large reagent glass"
@@ -720,7 +720,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"
@@ -753,7 +753,7 @@ proc/ui_describe_reagents(atom/A)
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
 	splash_all_contents = FALSE
-	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	object_flags = OPENCONTAINER | SUPPRESSATTACK
 	initial_volume = 100
 	accepts_lid = TRUE
 	fluid_overlay_states = 5
@@ -1300,3 +1300,72 @@ proc/ui_describe_reagents(atom/A)
 #undef BUNSEN_LOW
 #undef BUNSEN_MEDIUM
 #undef BUNSEN_HIGH
+
+/obj/item/reagent_containers/glass/vial
+	name = "vial"
+	desc = "A vial. Can hold up to 5 units."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "phial"
+	item_state = "vial"
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	accepts_lid = TRUE
+	fluid_overlay_states = 5
+	container_style = "phial"
+
+	New()
+		var/datum/reagents/R = new /datum/reagents(5)
+		R.my_atom = src
+		src.reagents = R
+		..()
+
+/obj/item/reagent_containers/glass/vial/plastic
+	name = "plastic vial"
+	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
+
+/obj/item/reagent_containers/glass/petridish
+	name = "Petri Dish"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "petri0"
+	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
+	rc_flags = 0
+	flags = TABLEPASS | CONDUCT | OPENCONTAINER
+
+/obj/item/bloodslide
+	name = "Blood Slide"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "slide0"
+	desc = "An item used by scientists and serial killers operating in the Miami area to store blood samples."
+
+	var/datum/reagent/blood/blood = null
+
+	flags = TABLEPASS | CONDUCT | NOSPLASH
+
+	New()
+		..()
+		var/datum/reagents/R = new /datum/reagents(5)
+		src.reagents = R
+
+	attackby(obj/item/I, mob/user)
+		return
+
+	on_reagent_change()
+		..()
+		reagents.maximum_volume = reagents.total_volume // This should make the blood slide... permanent.
+		if (reagents.has_reagent("blood") || reagents.has_reagent("bloodc"))
+			icon_state = "slide1"
+			desc = "The blood slide contains a drop of blood."
+			if (reagents.has_reagent("blood"))
+				blood = reagents.get_reagent("blood")
+			else if (reagents.has_reagent("bloodc"))
+				blood = reagents.get_reagent("bloodc")
+			if (blood == null)
+				boutput(usr, SPAN_ALERT("Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS."))
+				return
+		else
+			desc = "This blood slide is contaminated and useless."

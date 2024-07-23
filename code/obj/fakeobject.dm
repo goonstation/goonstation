@@ -187,22 +187,6 @@
 	icon_state = "firex"
 	anchored = ANCHORED
 
-/obj/fakeobject/firelock_broken
-	name = "rusted firelock"
-	desc = "Rust has rendered this firelock useless."
-	icon = 'icons/obj/doors/door_fire2.dmi'
-	icon_state = "door0"
-	anchored = ANCHORED
-
-/obj/fakeobject/airlock_broken
-	name = "rusted airlock"
-	desc = "Rust has rendered this airlock useless."
-	icon = 'icons/obj/doors/Door1.dmi';
-	icon_state = "doorl";
-	anchored = ANCHORED
-	density = 1
-	opacity = 1
-
 /obj/fakeobject/lighttube_broken
 	name = "shattered light tube"
 	desc = "Something has broken this light."
@@ -393,3 +377,63 @@
 	icon_state = "arrival_missile_synd-crash"
 	bound_width = 32
 	bound_height = 64
+
+// pathology
+
+/obj/fakeobject/centrifuge
+	name = "Centrifuge"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "centrifuge0"
+	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
+	anchored = ANCHORED
+	density = 1
+
+/obj/fakeobject/microscope
+	name = "Microscope"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "microscope0"
+	desc = "A device which provides a magnified view of a culture in a petri dish."
+
+/obj/fakeobject/synthomatic
+	name = "Synth-O-Matic"
+	desc = "The leading technological assistant in synthesizing cures for certain pathogens."
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "synth1"
+	density = 1
+	anchored = ANCHORED
+
+/obj/fakeobject/autoclave
+	name = "Autoclave"
+	desc = "A bulky machine used for sanitizing pathogen growth equipment."
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "autoclave"
+	density = 1
+	anchored = ANCHORED
+
+/obj/fakeobject/incubator
+	name = "Incubator"
+	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "incubator"
+	anchored = ANCHORED
+	density = 1
+
+/obj/fakeobject/pathogen_manipulator
+	name = "Pathogen Manipulator"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "manipulator"
+	desc = "A large, softly humming machine."
+	density = 1
+	anchored = ANCHORED
+
+/obj/fakeobject/pathogen_computer
+	name = "Pathology Research"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "pathologyb"
+	desc = "A bulky machine used to control the pathogen manipulator. It looks super old and busted."
+
+/obj/fakeobject/pathology_vendor
+	name = "Path-o-Matic"
+	desc = "Pathology equipment dispenser. It looks super old and busted."
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "med-broken"

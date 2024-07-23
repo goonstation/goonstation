@@ -609,7 +609,7 @@
 	},
 /area/swampzone/interiors)
 "aKR" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	icon = 'icons/obj/doors/doormed.dmi';
@@ -620,7 +620,7 @@
 /turf/unsimulated/floor,
 /area/space)
 "aLh" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "aLH" = (
@@ -1531,11 +1531,11 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/deeps)
 "bPF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/map/light/graveyard,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -3688,7 +3688,7 @@
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "eve" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/machinery/door/airlock/glass,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
@@ -5068,7 +5068,7 @@
 /turf/unsimulated/floor/auto/swamp,
 /area/swampzone/interiors/bonktek)
 "fSY" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -5613,7 +5613,7 @@
 /turf/unsimulated/greek/water,
 /area/swampzone/ground)
 "gzr" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical,
@@ -5630,7 +5630,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "gCg" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	icon = 'icons/obj/doors/doormed.dmi';
@@ -10106,7 +10106,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/research)
 "lXB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/machinery/door/airlock/medical{
@@ -11055,7 +11055,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
 "ndF" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1
 	},
 /obj/machinery/door/airlock/glass,
@@ -13747,7 +13747,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "qtL" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "qwT" = (
@@ -14630,7 +14630,7 @@
 	},
 /area/crater/biodome/research)
 "rwh" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "rwN" = (
@@ -15176,7 +15176,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
 "snk" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/machinery/door/airlock/glass,
@@ -16848,7 +16848,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "ukq" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crypt/sigma/kitchen)
@@ -18133,7 +18133,7 @@
 	},
 /area/swampzone/interiors/outbuildings)
 "vHV" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "vIy" = (
@@ -19220,7 +19220,7 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
 "wOz" = (
-/obj/machinery/incubator,
+/obj/fakeobject/incubator,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "wOE" = (
@@ -19414,7 +19414,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "xbB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock is jammed.";
 	icon = 'icons/obj/doors/doormed.dmi';
@@ -19923,7 +19923,7 @@
 	},
 /area/swampzone/deeps)
 "xSc" = (
-/obj/machinery/computer/pathology,
+/obj/fakeobject/pathogen_computer,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xSs" = (
@@ -20077,7 +20077,7 @@
 /area/syndicate_station)
 "xXU" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xYv" = (
