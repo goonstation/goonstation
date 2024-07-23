@@ -3,12 +3,20 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Button, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const LongRangeTeleporter = (props, context) => {
-  const { act, data } = useBackend(context);
+interface LongRangeTeleporterData {
+  destinations,
+  receive_allowed,
+  send_allowed,
+  syndicate,
+}
+
+export const LongRangeTeleporter = () => {
+  const { act, data } = useBackend<LongRangeTeleporterData>();
 
   const {
     destinations,
