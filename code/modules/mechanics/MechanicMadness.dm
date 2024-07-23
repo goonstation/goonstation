@@ -496,7 +496,7 @@
 
 	pixelaction(atom/target, params, mob/user)
 		var/turf/hit_turf = target
-		if (!istype(hit_turf) || !hit_turf || GET_DIST(hit_turf, user) > 1)
+		if (!istype(hit_turf) || !hit_turf || hit_turf.density || !can_reach(user, hit_turf))
 			..()
 			return FALSE
 		src.place_to_turf_by_grid(user, params, hit_turf, grid = 2, centered = 1, offsetx = 0, offsety = 2)
