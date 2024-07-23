@@ -1,12 +1,13 @@
+import { AnimatedNumber, Box, Button, Icon, Knob, NumberInput, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Icon, Knob, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { PortableHoldingTank } from './common/PortableAtmos';
 import { ReagentBar } from './common/ReagentInfo';
 import { freezeTemperature, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
-const PilotLight = (props, context) => {
-  const { act } = useBackend(context);
+const PilotLight = (props) => {
+  const { act } = useBackend();
   const {
     lit,
     maxTemp,
@@ -61,8 +62,8 @@ const PilotLight = (props, context) => {
   );
 };
 
-const FuelControl = (props, context) => {
-  const { act } = useBackend(context);
+const FuelControl = (props) => {
+  const { act } = useBackend();
   const {
     mode,
     minVolume,
@@ -84,7 +85,8 @@ const FuelControl = (props, context) => {
             value={chamberVolume}
             minValue={minVolume}
             maxValue={maxVolume}
-            onChange={(e, value) => act('change_volume', { volume: value })}
+            step={1}
+            onChange={(value) => act('change_volume', { volume: value })}
           />
         </Stack.Item>
       </Stack>
@@ -92,8 +94,13 @@ const FuelControl = (props, context) => {
   );
 };
 
-export const Flamethrower = (props, context) => {
-  const { act, data } = useBackend(context);
+interface FlamethrowerData {
+  fuelTank;
+  gasTank;
+}
+
+export const Flamethrower = () => {
+  const { act, data } = useBackend<FlamethrowerData>();
   const {
     gasTank,
     fuelTank,
