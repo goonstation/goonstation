@@ -2004,8 +2004,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
 	cost = PAY_TRADESMAN
 	containername = "Newspaper Crate"
-	contains = list(/obj/item/paper/newspaper/rolled)
-	amount = 8
+	contains = list(/obj/item/paper/newspaper/rolled = 8)
 	containertype = /obj/storage/crate/packing
 
 /datum/supply_packs/electricguitar

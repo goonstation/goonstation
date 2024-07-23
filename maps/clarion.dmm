@@ -9564,16 +9564,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "bla" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/blind_switch/area/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/east{
 	pixel_y = -4
+	},
+/obj/machinery/computer/announcement/station/security{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/security/hos)
@@ -11475,14 +11473,13 @@
 	},
 /area/station/crew_quarters/ce)
 "bwG" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	tag = "icon-comm (EAST)"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/item/device/radio/intercom/bridge{
 	broadcasting = 0;
+	dir = 4
+	},
+/obj/machinery/computer/announcement/station/engineering{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -21234,9 +21231,8 @@
 /area/station/hallway/primary/south)
 "hLx" = (
 /obj/machinery/firealarm/east,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	tag = "icon-comm (WEST)"
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -29985,12 +29981,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	arrivalalert = "$NAME, $JOB, has exited cryogenic stasis.";
-	dir = 8;
-	name = "Bridge Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -31356,14 +31348,12 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "ppb" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -33125,10 +33115,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "qIY" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 8
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)

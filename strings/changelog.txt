@@ -1,4 +1,15 @@
 
+(t)mon jul 22 24
+(u)LeahTheTech
+(*)The arcfiend jolt ability is no longer interrupted by attacks and now shoots periodic arcs of electricity at nearby mobs.
+(u)Kakolookiyam
+(p)19982
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)PTL should no longer occasionally shut off when firing beyond its batteries capacity.
+(u)fr4meperfect
+(p)20053
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Adds a pint glass to bar glass recyclers.
 (t)fri jul 19 24
 (u)Kubius
 (p)19587

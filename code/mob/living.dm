@@ -923,7 +923,7 @@
 
 	last_words = message
 
-	if (src.stuttering)
+	if (src.stuttering && !isrobot(src))
 		message = stutter(message)
 
 	if (src.get_brain_damage() >= 60)
