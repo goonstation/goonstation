@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { Box, Button, LabeledList, Section } from '../../components';
+import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 interface ConnectionSectionProps {
   isConnected: boolean;

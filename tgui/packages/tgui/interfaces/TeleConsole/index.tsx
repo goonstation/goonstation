@@ -6,8 +6,9 @@
  * @license ISC
  */
 
+import { Button, Icon, Section, Stack, Tabs } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { Button, Icon, Section, Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
@@ -22,9 +23,9 @@ const Tab = {
   LongRange: 'lrt',
 };
 
-export const TeleConsole = (_props, context) => {
-  const { act, data } = useBackend<TeleConsoleData>(context);
-  const [tab, setTab] = useSharedState(context, 'tab', Tab.Local);
+export const TeleConsole = () => {
+  const { act, data } = useBackend<TeleConsoleData>();
+  const [tab, setTab] = useSharedState('tab', Tab.Local);
   const { xTarget, yTarget, zTarget, hostId, bookmarks,
     readout, isPanelOpen, padNum, maxBookmarks, disk, destinations } = data;
   const isConnectedToHost = !!hostId;
