@@ -1,8 +1,17 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, NumberInput, Section, Stack } from '../components';
+/**
+ * @file
+ * @copyright 2022
+ * @author LeahTheTech (https://github.com/TobleroneSwordfish)
+ * @license MIT
+ */
+
+import { useState } from 'react';
+import { Box, Button, NumberInput, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const BarcodeComputerSection = (props, context) => {
+const BarcodeComputerSection = (props) => {
   const {
     title,
     destinations,
@@ -30,7 +39,7 @@ const BarcodeComputerSection = (props, context) => {
   );
 };
 
-const IDCard = (props, context) => {
+const IDCard = (props) => {
   if (!props.card) {
     return;
   }
@@ -49,13 +58,18 @@ const IDCard = (props, context) => {
   );
 };
 
-export const BarcodeComputer = (props, context) => {
-  const { act, data } = useBackend(context);
+interface BarcodeComputerData {
+  sections,
+  card,
+}
+
+export const BarcodeComputer = () => {
+  const { act, data } = useBackend<BarcodeComputerData>();
   const {
     sections,
     card,
   } = data;
-  const [amount, setAmount] = useLocalState(context, 'amount', 1);
+  const [amount, setAmount] = useState(1);
   return (
     <Window
       title="Barcode computer"
@@ -69,10 +83,12 @@ export const BarcodeComputer = (props, context) => {
               <Box align="center">
                 <NumberInput
                   value={amount}
-                  minValue={1} maxValue={5}
+                  minValue={1}
+                  maxValue={5}
+                  step={1}
                   stepPixelSize={15}
                   unit={"Barcodes"}
-                  onDrag={(e, value) => setAmount(value)}
+                  onDrag={(value) => setAmount(value)}
                 />
               </Box>
             </Section>

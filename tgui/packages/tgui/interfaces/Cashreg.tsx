@@ -6,9 +6,9 @@
  */
 
 import { classes } from 'common/react';
+import { Button, Stack, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, Stack, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export interface CashregData {
@@ -23,8 +23,8 @@ export interface CashregData {
   total: number;
 }
 
-export const Cashreg = (_, context) => {
-  const { act, data } = useBackend<CashregData>(context);
+export const Cashreg = () => {
+  const { act, data } = useBackend<CashregData>();
   const { active_transaction, amount, is_authorised, is_owner, name, owner, tip_proportion } = data;
 
   return (
@@ -85,8 +85,8 @@ export const Cashreg = (_, context) => {
   );
 };
 
-const CenterPart = (_, context) => {
-  const { act, data } = useBackend<CashregData>(context);
+const CenterPart = () => {
+  const { act, data } = useBackend<CashregData>();
   const { amount, is_owner, owner, tip_amount, tip_proportion, total } = data;
 
   return (

@@ -1,11 +1,23 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Ilysen (https://github.com/Ilysen)
+ * @license MIT
+ */
+
+import { Button, Flex, Input, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Flex, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-const onChange = (value) => act('set_data', { value });
+interface MarionetteRemoteData {
+  entered_data;
+  implants;
+  selected_command;
+}
 
-export const MarionetteRemote = (_props, context) => {
-  const { act, data } = useBackend(context);
+export const MarionetteRemote = () => {
+  const { act, data } = useBackend<MarionetteRemoteData>();
   const { entered_data, selected_command, implants } = data;
 
   return (
