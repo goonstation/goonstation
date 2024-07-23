@@ -4,13 +4,21 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Box, Button, NumberInput, Section, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { ReagentList } from './common/ReagentInfo';
 
-export const Precipitation = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PrecipitationData {
+  containerData;
+  cooldown;
+  poolDepth;
+  probability;
+}
+
+export const Precipitation = () => {
+  const { act, data } = useBackend<PrecipitationData>();
   const {
     probability,
     cooldown,
@@ -32,7 +40,7 @@ export const Precipitation = (props, context) => {
                 value={cooldown}
                 width={4}
                 minValue={0}
-                onChange={(e, value) => act('set-cooldown', {
+                onChange={(value) => act('set-cooldown', {
                   value,
                 })}
               />
@@ -46,7 +54,7 @@ export const Precipitation = (props, context) => {
                 width={4}
                 minValue={0}
                 maxValue={100}
-                onChange={(e, value) => act('set-probability', {
+                onChange={(value) => act('set-probability', {
                   value,
                 })}
               />
@@ -61,7 +69,7 @@ export const Precipitation = (props, context) => {
                 width={4}
                 minValue={0}
                 maxValue={100}
-                onChange={(e, value) => act('set-poolDepth', {
+                onChange={(value) => act('set-poolDepth', {
                   value,
                 })}
               />
@@ -78,14 +86,14 @@ export const Precipitation = (props, context) => {
                       mr={1.5}
                       icon="filter"
                       color="red"
-                      title="Isolate"
+                      tooltip="Isolate"
                       onClick={() => act('isolate', { container_id: containerData.id, reagent_id: reagent.id })}
                     />
                     <Button
                       px={0.75}
                       icon="times"
                       color="red"
-                      title="Flush"
+                      tooltip="Flush"
                       onClick={() => act('flush_reagent', { container_id: containerData.id, reagent_id: reagent.id })}
                     />
                   </>
