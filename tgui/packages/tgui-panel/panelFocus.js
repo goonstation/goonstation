@@ -7,9 +7,9 @@
  * @license MIT
  */
 
-import { vecLength, vecSubtract } from 'common/vector';
 import { canStealFocus, globalEvents } from 'tgui/events';
 import { focusMap } from 'tgui/focus';
+import { vecLength, vecSubtract } from 'tgui-core/vector';
 
 // Empyrically determined number for the smallest possible
 // text you can select with the mouse.

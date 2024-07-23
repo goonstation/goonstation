@@ -1,5 +1,3 @@
-import { toFixed } from 'common/math';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'tgui/backend';
 import {
@@ -12,6 +10,8 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { capitalize } from 'tgui-core/string';
 
 import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
