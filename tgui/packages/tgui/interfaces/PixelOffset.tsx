@@ -1,9 +1,16 @@
+import { Box, Button, NumberInput, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const PixelOffset = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PixelOffsetData {
+  x;
+  y;
+  thing_name;
+}
+
+export const PixelOffset = () => {
+  const { act, data } = useBackend<PixelOffsetData>();
 
   const {
     x,
@@ -30,7 +37,10 @@ export const PixelOffset = (props, context) => {
                   fontSize="35px"
                   stepPixelSize={7}
                   width="2.7em"
-                  onDrag={(_, value) => act("set_x", { x: value })}
+                  step={1}
+                  minValue={-1_000}
+                  maxValue={1_000}
+                  onDrag={(value) => act("set_x", { x: value })}
                 />
                 <Button
                   icon="sync-alt"
@@ -53,8 +63,11 @@ export const PixelOffset = (props, context) => {
                   value={y}
                   fontSize="35px"
                   width="2.7em"
+                  step={1}
                   stepPixelSize={7}
-                  onDrag={(_, value) => act("set_y", { y: value })}
+                  minValue={-1_000}
+                  maxValue={1_000}
+                  onDrag={(value) => act("set_y", { y: value })}
                 />
                 <Button
                   icon="sync-alt"
