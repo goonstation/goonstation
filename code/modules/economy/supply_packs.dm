@@ -1102,6 +1102,17 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "ABCU Unit Crate (Cardlocked \[Engineering])"
 	access = access_engineering
 
+/datum/supply_packs/efif1
+	name = "EFIF-1 Construction System"
+	desc = "A top-of-the-line pod-mounted mass construction tool, suitable for large-scale repairs and offsite building projects."
+	category = "Engineering Department"
+	contains = list(/obj/item/shipcomponent/mainweapon/constructor/stocked,
+					/obj/item/paper/efif_disclaimer)
+	cost = PAY_DOCTORATE*15
+	containertype = /obj/storage/secure/crate
+	containername = "EFIF-1 Crate (Cardlocked \[Engineering])"
+	access = access_engineering
+
 /datum/supply_packs/janitor_supplies
 	name = "Janitorial Supplies Refill"
 	desc = "Supplies to restock your hard-working Janitor."
@@ -1993,8 +2004,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
 	cost = PAY_TRADESMAN
 	containername = "Newspaper Crate"
-	contains = list(/obj/item/paper/newspaper/rolled)
-	amount = 8
+	contains = list(/obj/item/paper/newspaper/rolled = 8)
 	containertype = /obj/storage/crate/packing
 
 /datum/supply_packs/electricguitar

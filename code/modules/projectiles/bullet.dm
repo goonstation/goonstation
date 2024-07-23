@@ -859,6 +859,18 @@ toxic - poisons
 			bleed(P.special_data["unfortunate"],0,1,P.special_data["last_projectile_locs"])
 		..()
 
+	burst
+		shot_delay = 0.20 SECONDS
+		shot_number = 4
+		pierces = 2
+		projectile_speed = 72
+		dissipation_delay = 50
+		armor_ignored = 0.5
+		implanted = /obj/item/implant/projectile/shrapnel
+
+
+
+
 
 /datum/projectile/bullet/flak_chunk
 	name = "flak chunk"
@@ -1140,13 +1152,14 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
-	damage = 150
-	dissipation_delay = 1
+	damage = 100
+	dissipation_delay = 30
 	dissipation_rate = 5
 	cost = 1
 	shot_sound = 'sound/weapons/20mm.ogg'
 	shot_volume = 130
 	implanted = null
+	projectile_speed = 128
 
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
@@ -1209,6 +1222,10 @@ toxic - poisons
 				T.throw_shrapnel(T, 1, 1)
 				T.ex_act(2)
 
+	burst
+		shot_delay = 0.125 SECONDS
+		shot_number = 4
+		damage = 50
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
 	name = "metal rod"
@@ -1454,6 +1471,12 @@ datum/projectile/bullet/autocannon
 
 		on_hit(atom/hit)
 			explosion_new(null,get_turf(hit), 8, 0.75)
+
+		double
+			shot_delay = 0.20 SECONDS
+			shot_number = 2
+			damage = 50
+			shot_sound = 'sound/effects/exlow.ogg'
 
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
@@ -1776,12 +1799,15 @@ datum/projectile/bullet/autocannon
 		if (auto_find_targets)
 			P.targets = list()
 			for(var/mob/M in view(P,15))
-				if (M == P.shooter) continue
+				if (!is_valid_target(M, P)) continue
 				P.targets += M
 
 		if (length(src.targets))
 			P.targets = src.targets
 			src.targets = list()
+
+	proc/is_valid_target(mob/M, obj/projectile/P)
+		return (M != P.shooter && M != P.mob_shooter)
 
 	proc/calc_desired_x_y(var/obj/projectile/P)
 		.= 0
@@ -1851,6 +1877,10 @@ datum/projectile/bullet/autocannon
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
 
 /datum/projectile/bullet/homing/pod_seeking_missile
 	name = "pod-seeking missile"
@@ -2021,8 +2051,7 @@ datum/projectile/bullet/autocannon
 	name = "howitzer round"
 	brightness = 0.7
 	window_pass = 0
-	icon = 'icons/obj/large/bigprojectiles.dmi'
-	icon_state = "152mm-shot"
+	icon_state = "120mm"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	damage = 200
@@ -2037,15 +2066,32 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
 	shot_sound_extrarange = 1
+	projectile_speed = 64
 
 	on_hit(atom/hit)
-		for(var/turf/T in range(get_turf(hit), 4))
-			new /obj/effects/explosion/dangerous(T)
-		explosion_new(null, get_turf(hit), 100)
+		var/turf/T = get_turf(hit)
+		explosion_new(null, T, 40)
+		for(var/turf/T2 in range(hit, 2))
+			spawn(rand(1,3))
+				explosion_new(null, T, 30)
 
 	on_launch(obj/projectile/proj)
-		for(var/mob/M in range(proj.loc, 5))
-			shake_camera(M, 3, 6)
+		for(var/mob/M in range(proj.loc, 4))
+			shake_camera(M, 2, 4)
+
+	siege
+		name = "siege round"
+		icon_state = "305mm"
+		damage = 1600
+		shot_sound = 'sound/effects/explosion_new1.ogg'
+
+		on_hit(atom/hit)
+			var/turf/T = get_turf(hit)
+			explosion_new(null, T, 80)
+			for(var/turf/T2 in range(hit, 3))
+				spawn(rand(1,3))
+					explosion_new(null, T, 50)
+
 
 /datum/projectile/bullet/glitch
 	name = "bullet"

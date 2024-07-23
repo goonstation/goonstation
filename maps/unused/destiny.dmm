@@ -21744,6 +21744,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"eBx" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/construction)
 "eBK" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/yellow{
@@ -23149,7 +23153,6 @@
 	},
 /area/station/chapel/sanctuary)
 "fdn" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -23157,6 +23160,7 @@
 /obj/machinery/light_switch/west{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fdA" = (
@@ -29001,6 +29005,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
+"hXN" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/artifact)
 "hXP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -44039,16 +44047,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
-"pOY" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/simulated/floor/yellow,
-/area/station/hallway/secondary/construction)
 "pPB" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -49542,7 +49540,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "sMG" = (
-/obj/fakeobject/pathology_computer{
+/obj/fakeobject/pathogen_computer{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -50831,6 +50829,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"ttu" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "ttC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54570,6 +54572,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "vgU" = (
+/obj/machinery/status_display/market,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
 "vgX" = (
@@ -56976,9 +56979,6 @@
 	},
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 30
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/primary/east)
@@ -113216,7 +113216,7 @@ dsA
 mub
 sPw
 nOV
-nYu
+ttu
 wsT
 psH
 tDL
@@ -115948,8 +115948,8 @@ kmN
 bil
 xQd
 uCi
-qPl
-pOY
+eBx
+pMQ
 pBg
 pMQ
 qPl
@@ -117449,7 +117449,7 @@ mAZ
 wXo
 wXo
 wXo
-wXo
+hXN
 gvb
 brW
 xQd

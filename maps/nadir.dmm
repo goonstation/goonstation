@@ -2960,40 +2960,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "bpY" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -1;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -7;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 6
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -5
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
+/obj/storage/cart/mechcart/breach/acid,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -3943,21 +3910,7 @@
 	},
 /area/shuttle/arrival/station)
 "bKB" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "1"
-	},
+/obj/storage/cart/forensic/security,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "bKE" = (
@@ -8180,10 +8133,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "dHz" = (
-/obj/machinery/computer/announcement{
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -8191,6 +8140,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
 	},
+/obj/machinery/computer/announcement/station/research,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "dHI" = (
@@ -15866,18 +15816,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "gUq" = (
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/storage/cart/forensic{
-	name = "crisis cart";
-	req_access_txt = "1"
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
+/obj/storage/cart/forensic/bomb_disposal,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "gUy" = (
@@ -16256,11 +16195,6 @@
 	},
 /area/listeningpost/power)
 "haW" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Command Announcement Computer"
-	},
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
 	icon_state = "line1"
@@ -16272,6 +16206,9 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
@@ -17610,6 +17547,10 @@
 "hAs" = (
 /obj/storage/closet/biohazard,
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = 32
+	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "hAU" = (
@@ -17747,15 +17688,13 @@
 	name = "Cargo Primary Endpoint"
 	})
 "hDb" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -21351,6 +21290,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = -3;
+	pixel_x = 32
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -21651,7 +21594,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/obj/rack/organized/techstorage_med/sea,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
@@ -22785,6 +22728,7 @@
 /obj/landmark/start/job/assistant,
 /obj/item/device/radio/intercom,
 /obj/stool/chair/pool,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -25448,19 +25392,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/northeast)
 "kFE" = (
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
@@ -25884,46 +25816,12 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -1;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -7;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 6
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -5
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/reagent_containers/emergency_injector/calomel,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24;
 	pixel_y = -4
 	},
+/obj/storage/cart/mechcart/breach/acid,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -28320,13 +28218,6 @@
 	},
 /area/station/security/brig)
 "lOT" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Executive Announcement Computer";
-	pixel_x = -3;
-	pixel_y = 4;
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -28336,6 +28227,11 @@
 	pixel_x = 7;
 	pixel_y = 32;
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/obj/machinery/computer/announcement/station/captain{
+	dir = 4;
+	pixel_x = -3;
+	pixel_y = 4
 	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
@@ -33999,6 +33895,7 @@
 "omm" = (
 /obj/landmark/start/job/assistant,
 /obj/stool/chair/pool,
+/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -41796,19 +41693,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "rOC" = (
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
@@ -43204,6 +43089,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
+"stG" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/cargooffice)
 "stQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43227,14 +43116,6 @@
 /turf/space/fluid/acid,
 /area/space)
 "sum" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/box/lightbox/bulbs,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/device/multitool,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -43242,6 +43123,7 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
@@ -44810,12 +44692,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "tdf" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	pixel_x = -7
-	},
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "tdj" = (
@@ -47262,22 +47139,8 @@
 	},
 /area/pasiphae/bridge)
 "udZ" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "4"
-	},
 /obj/machinery/firealarm/west,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "uel" = (
@@ -47987,6 +47850,13 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
+"usV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage{
+	name = "Cargo Auxiliary Endpoint"
+	})
 "uti" = (
 /obj/surgery_tray,
 /obj/machinery/light/small/floor/netural,
@@ -51242,40 +51112,7 @@
 	name = "Southeast Breach Hull"
 	})
 "vTc" = (
-/obj/storage/cart/mechcart{
-	desc = "A big rolling supply cart equipped for handling hull breaches.";
-	name = "breach repair cart";
-	req_access_txt = "40"
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -1;
-	pixel_y = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_x = -7;
-	pixel_y = -4
-	},
-/obj/item/reagent_containers/food/drinks/fueltank{
-	pixel_x = 6
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -5
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
+/obj/storage/cart/mechcart/breach/acid,
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
@@ -103145,7 +102982,7 @@ kqZ
 wbj
 wmh
 cqc
-oxJ
+stG
 mIV
 mIV
 qTA
@@ -104360,7 +104197,7 @@ ktm
 bHE
 wxe
 cLn
-oUb
+usV
 jkd
 pAd
 qcD

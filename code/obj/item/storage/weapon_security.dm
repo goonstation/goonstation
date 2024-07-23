@@ -378,16 +378,6 @@
 	icon_state = "hard_case"
 	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
 
-// Starter kit used in the conspiracy/spy game mode.
-/obj/item/storage/box/spykit
-	name = "spy starter kit"
-	icon_state = "implant"
-	spawn_contents = list(/obj/item/dagger/syndicate,\
-	/obj/item/gun/kinetic/silenced_22,\
-	/obj/item/ammo/bullets/bullet_22,\
-	/obj/item/card/id/syndicate,\
-	/obj/item/device/spy_implanter)
-
 // Boxes for Nuke Ops Class Crates
 
 /obj/item/storage/box/demo_grenade_kit

@@ -537,7 +537,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && (FACTION_SYNDICATE in C.faction)) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (FACTION_SYNDICATE in C.faction) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED
