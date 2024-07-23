@@ -5,8 +5,11 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState, useSharedState } from "../backend";
-import { Box, Button, Dimmer, Image, Input, LabeledControls, Modal, NumberInput, Section, Stack } from '../components';
+import { useState } from 'react';
+import { Box, Button, Dimmer, Image, Input, Modal, NumberInput, Section, Stack } from 'tgui-core/components';
+
+import { useBackend, useSharedState } from "../backend";
+import { LabeledControls } from '../components';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
@@ -15,12 +18,20 @@ const ICON_LIST_PILLS = 0;
 const ICON_LIST_BOTTLES = 1;
 const ICON_LIST_PATCHES = 2;
 
-export const ReagentDisplay = (props, context) => {
-  const { act } = useBackend(context);
+interface ChemMasterData {
+  bottle_icons;
+  container,
+  default_name,
+  patch_icons;
+  pill_icons;
+}
+
+export const ReagentDisplay = (props) => {
+  const { act } = useBackend();
   const { max_volume } = props;
   const container = props.container || NoContainer;
 
-  const [remove_amount, set_remove_amount] = useSharedState(context, "remove_amount", 10);
+  const [remove_amount, set_remove_amount] = useSharedState("remove_amount", 10);
 
   return (
     <Section
@@ -28,14 +39,14 @@ export const ReagentDisplay = (props, context) => {
       buttons={
         <>
           <Button
-            title="Flush All"
+            tooltip="Flush All"
             icon="times"
             color="red"
             disabled={!container.totalVolume}
             onClick={() => act("flushall")}
           />
           <Button
-            title="Eject"
+            tooltip="Eject"
             icon="eject"
             disabled={!props.container}
             onClick={() => act("eject")}
@@ -48,7 +59,7 @@ export const ReagentDisplay = (props, context) => {
               value={remove_amount}
               minValue={1}
               maxValue={max_volume}
-              onDrag={(e, value) => set_remove_amount(Math.round(value))}
+              onDrag={(value) => set_remove_amount(Math.round(value))}
             />
           </Box>
         </>
@@ -74,7 +85,7 @@ export const ReagentDisplay = (props, context) => {
                 mr={1.5}
                 icon="search"
                 color="green"
-                title="Analyze"
+                tooltip="Analyze"
                 onClick={() => act("analyze", { reagent_id: reagent.id })}
               />
               <Button
@@ -82,7 +93,7 @@ export const ReagentDisplay = (props, context) => {
                 mr={1.5}
                 icon="filter"
                 color="red"
-                title="Isolate"
+                tooltip="Isolate"
                 onClick={() => act("isolate", { reagent_id: reagent.id })}
               />
               <Button
@@ -90,14 +101,14 @@ export const ReagentDisplay = (props, context) => {
                 mr={1.5}
                 icon="times"
                 color="red"
-                title="Flush all"
+                tooltip="Flush all"
                 onClick={() => act("flush", { reagent_id: reagent.id })}
               />
               <Button
                 px={0.75}
                 icon="minus"
                 color="yellow"
-                title="Flush variable amount of units"
+                tooltip="Flush variable amount of units"
                 bold
                 onClick={() => act("flushinput", { reagent_id: reagent.id, amount: remove_amount })}>
                 {remove_amount}u
@@ -111,9 +122,8 @@ export const ReagentDisplay = (props, context) => {
   );
 };
 
-
-export const SelectIconModal = (props, context) => {
-  const { data } = useBackend(context);
+export const SelectIconModal = (props) => {
+  const { data } = useBackend<ChemMasterData>();
 
   const pill_icons = data.pill_icons ?? [];
   const bottle_icons = data.bottle_icons ?? [];
@@ -122,7 +132,7 @@ export const SelectIconModal = (props, context) => {
   const { icon_list, set_icon, cancel_modal } = props;
 
   const cancel_button = (<Button
-    title="Cancel"
+    tooltip="Cancel"
     icon="times"
     color="red"
     mr={1}
@@ -137,9 +147,9 @@ export const SelectIconModal = (props, context) => {
         height="32px" width="32px"
         src={`data:image/png;base64,${icon_list !== ICON_LIST_PILLS ? item[1] : item}`}
         style={{
-          'vertical-align': 'middle',
-          'horizontal-align': 'middle',
-        }} />
+          verticalAlign: 'middle',
+        }}
+      />
       {
         icon_list !== ICON_LIST_PILLS && (
           <Box
@@ -188,8 +198,7 @@ export const IconButtonControl = (props) => {
           height="32px" width="32px"
           src={`data:image/png;base64,${imageb64}`}
           style={{
-            'vertical-align': 'middle',
-            'horizontal-align': 'middle',
+            'verticalAlign': 'middle',
           }}
         />
       </Button>
@@ -207,7 +216,7 @@ export const AmountInputControl = (props) => {
         value={current_amount}
         minValue={5}
         maxValue={max_amount}
-        onDrag={(e, value) => set_amount(Math.round(value))}
+        onDrag={(value) => set_amount(Math.round(value))}
       />
     </LabeledControls.Item>
   );
@@ -237,15 +246,15 @@ export const CheckboxControl = (props) => {
   );
 };
 
-export const MakePill = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MakePill = (props) => {
+  const { act, data } = useBackend<ChemMasterData>();
 
   const { item_name, max_volume } = props;
-  const [single_pill_amount, set_single_pill_amount] = useSharedState(context, "single_pill_amount", max_volume);
+  const [single_pill_amount, set_single_pill_amount] = useSharedState("single_pill_amount", max_volume);
 
   const { pill_icons } = data;
-  const [modal_singlepill, set_modal_singlepill] = useLocalState(context, "modal_singlepill", false);
-  const [icon_singlepill, set_icon_singlepill] = useSharedState(context, "icon_singlepill", 0);
+  const [modal_singlepill, set_modal_singlepill] = useState(false);
+  const [icon_singlepill, set_icon_singlepill] = useSharedState("icon_singlepill", 0);
   const close_modal = () => set_modal_singlepill(false); // cancel/close modal
   const set_icon = (index) => {
     set_icon_singlepill(index);
@@ -261,7 +270,7 @@ export const MakePill = (props, context) => {
         <IconButtonControl modal_function={set_modal_singlepill}
           imageb64={pill_icons ? pill_icons[icon_singlepill] : undefined} />
         <MakeButtonControl text="Create single pill"
-          onClick={() => act("makepill", { item_name: item_name, amount: single_pill_amount, icon: icon_singlepill })} />
+          onClick={() => act("makepill", { item_name, amount: single_pill_amount, icon: icon_singlepill })} />
         <AmountInputControl set_amount={set_single_pill_amount}
           current_amount={single_pill_amount} max_amount={max_volume} />
       </LabeledControls>
@@ -269,16 +278,16 @@ export const MakePill = (props, context) => {
   );
 };
 
-export const MakePills = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MakePills = (props) => {
+  const { act, data } = useBackend<ChemMasterData>();
 
   const { item_name, max_volume } = props;
-  const [use_bottle, set_use_bottle] = useSharedState(context, "use_bottle", true);
-  const [pills_amount, set_pills_amount] = useSharedState(context, "multiple_pills_amount", 5);
+  const [use_bottle, set_use_bottle] = useSharedState("use_bottle", true);
+  const [pills_amount, set_pills_amount] = useSharedState("multiple_pills_amount", 5);
 
   const { pill_icons } = data;
-  const [modal_multiplepills, set_modal_multiplepills] = useLocalState(context, "modal_multiplepills", false);
-  const [icon_multiplepills, set_icon_multiplepills] = useSharedState(context, "icon_multiplepills", 0);
+  const [modal_multiplepills, set_modal_multiplepills] = useState(false);
+  const [icon_multiplepills, set_icon_multiplepills] = useSharedState("icon_multiplepills", 0);
   const close_modal = () => set_modal_multiplepills(false); // cancel/close modal
   const set_icon = (index) => {
     set_icon_multiplepills(index);
@@ -294,7 +303,7 @@ export const MakePills = (props, context) => {
         <IconButtonControl modal_function={set_modal_multiplepills}
           imageb64={pill_icons ? pill_icons[icon_multiplepills] : undefined} />
         <MakeButtonControl text="Create multiple pills"
-          onClick={() => act("makepills", { item_name: item_name, amount: pills_amount, use_bottle: use_bottle, icon: icon_multiplepills })} />
+          onClick={() => act("makepills", { item_name, amount: pills_amount, use_bottle: use_bottle, icon: icon_multiplepills })} />
         <AmountInputControl set_amount={set_pills_amount}
           current_amount={pills_amount} max_amount={max_volume} />
         <CheckboxControl label="Use bottle" checked={use_bottle} set_function={set_use_bottle} />
@@ -304,14 +313,14 @@ export const MakePills = (props, context) => {
 };
 
 export const MakeBottle = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ChemMasterData>();
 
-  const [bottle_amount, set_bottle_amount] = useSharedState(context, "bottle_amount", 50);
+  const [bottle_amount, set_bottle_amount] = useSharedState("bottle_amount", 50);
 
   const { item_name } = props;
   const { bottle_icons } = data;
-  const [modal_bottle, set_modal_bottle] = useLocalState(context, "modal_bottle", false);
-  const [icon_bottle, set_icon_bottle] = useSharedState(context, "icon_bottle", 2);
+  const [modal_bottle, set_modal_bottle] = useState(false);
+  const [icon_bottle, set_icon_bottle] = useSharedState("icon_bottle", 2);
   const close_modal = () => set_modal_bottle(false); // cancel/close modal
   const set_icon = (index) => {
     set_icon_bottle(index);
@@ -328,7 +337,7 @@ export const MakeBottle = (props, context) => {
         <IconButtonControl modal_function={set_modal_bottle}
           imageb64={bottle_icons ? bottle_icons[icon_bottle][1] : undefined} />
         <MakeButtonControl text="Create bottle"
-          onClick={() => act("makebottle", { item_name: item_name, amount: bottle_amount, bottle: icon_bottle })} />
+          onClick={() => act("makebottle", { item_name, amount: bottle_amount, bottle: icon_bottle })} />
         <AmountInputControl set_amount={set_bottle_amount}
           current_amount={bottle_amount}
           max_amount={bottle_icons ? bottle_icons[icon_bottle][0] : 50} />
@@ -337,15 +346,15 @@ export const MakeBottle = (props, context) => {
   );
 };
 
-export const MakePatch = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MakePatch = (props) => {
+  const { act, data } = useBackend<ChemMasterData>();
 
-  const [single_patch_amount, set_single_patch_amount] = useSharedState(context, "single_patch_amount", 30);
+  const [single_patch_amount, set_single_patch_amount] = useSharedState("single_patch_amount", 30);
 
   const { item_name } = props;
   const { patch_icons } = data;
-  const [modal_singlepatch, set_modal_singlepatch] = useLocalState(context, "modal_singlepatch", false);
-  const [icon_singlepatch, set_icon_singlepatch] = useSharedState(context, "icon_singlepatch", 1);
+  const [modal_singlepatch, set_modal_singlepatch] = useState(false);
+  const [icon_singlepatch, set_icon_singlepatch] = useSharedState("icon_singlepatch", 1);
   const close_modal = () => set_modal_singlepatch(false); // cancel/close modal
   const set_icon = (index) => {
     set_icon_singlepatch(index);
@@ -362,7 +371,7 @@ export const MakePatch = (props, context) => {
         <IconButtonControl modal_function={set_modal_singlepatch}
           imageb64={patch_icons ? patch_icons[icon_singlepatch][1] : undefined} />
         <MakeButtonControl text="Create single patch"
-          onClick={() => act("makepatch", { item_name: item_name, amount: single_patch_amount, patch: icon_singlepatch })} />
+          onClick={() => act("makepatch", { item_name, amount: single_patch_amount, patch: icon_singlepatch })} />
         <AmountInputControl set_amount={set_single_patch_amount}
           current_amount={single_patch_amount}
           max_amount={patch_icons ? patch_icons[icon_singlepatch][0] : 30} />
@@ -371,15 +380,15 @@ export const MakePatch = (props, context) => {
   );
 };
 
-export const MakePatches = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [use_box, set_use_box] = useSharedState(context, "use_box", true);
-  const [patches_amount, set_patches_amount] = useSharedState(context, "multiple_patches_amount", 30);
+export const MakePatches = (props) => {
+  const { act, data } = useBackend<ChemMasterData>();
+  const [use_box, set_use_box] = useSharedState("use_box", true);
+  const [patches_amount, set_patches_amount] = useSharedState("multiple_patches_amount", 30);
 
   const { item_name } = props;
   const { patch_icons } = data;
-  const [modal_multiplepatches, set_modal_multiplepatches] = useLocalState(context, "modal_multiplepatches", false);
-  const [icon_multiplepatches, set_icon_multiplepatches] = useSharedState(context, "icon_multiplepatches", 1);
+  const [modal_multiplepatches, set_modal_multiplepatches] = useState(false);
+  const [icon_multiplepatches, set_icon_multiplepatches] = useSharedState("icon_multiplepatches", 1);
   const close_modal = () => set_modal_multiplepatches(false); // cancel/close modal
   const set_icon = (index) => {
     set_icon_multiplepatches(index);
@@ -396,7 +405,7 @@ export const MakePatches = (props, context) => {
         <IconButtonControl modal_function={set_modal_multiplepatches}
           imageb64={patch_icons ? patch_icons[icon_multiplepatches][1] : undefined} />
         <MakeButtonControl text="Create multiple patches"
-          onClick={() => act("makepatches", { item_name: item_name, amount: patches_amount, use_box: use_box, patch: icon_multiplepatches })} />
+          onClick={() => act("makepatches", { item_name, amount: patches_amount, use_box: use_box, patch: icon_multiplepatches })} />
         <AmountInputControl set_amount={set_patches_amount}
           current_amount={patches_amount}
           max_amount={patch_icons ? patch_icons[icon_multiplepatches][0] : 30} />
@@ -406,8 +415,7 @@ export const MakePatches = (props, context) => {
   );
 };
 
-export const OperationsSection = (props, context) => {
-  const { act } = useBackend(context);
+export const OperationsSection = (props) => {
   const { placeholder, item_name, set_item_name, max_volume } = props;
 
   const operation_height = 3;
@@ -447,11 +455,11 @@ export const OperationsSection = (props, context) => {
   );
 };
 
-export const ChemMaster = (props, context) => {
-  const { data } = useBackend(context);
+export const ChemMaster = () => {
+  const { data } = useBackend<ChemMasterData>();
 
   const placeholder_name = data.default_name ?? null;
-  const [item_name, set_item_name] = useLocalState(context, "item_name", "");
+  const [item_name, set_item_name] = useState("");
   const max_volume = data.container ? data.container.maxVolume : 100;
 
   return (
