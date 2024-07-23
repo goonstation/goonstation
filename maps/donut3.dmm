@@ -23312,30 +23312,6 @@
 /area/station/medical/medbay/lobby)
 "gUa" = (
 /obj/table/auto,
-/obj/item/device/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 10
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 10;
-	pixel_y = 10
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 10;
-	pixel_y = -2
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = -9;
-	pixel_y = -2
-	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "gUw" = (
@@ -31367,6 +31343,11 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen,
 /area/station/library)
+"juA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/east)
 "juB" = (
 /obj/cable,
 /obj/cable{
@@ -35059,6 +35040,14 @@
 	},
 /turf/space,
 /area/space)
+"kBA" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/jen/yellow,
+/area/station/quartermaster/office)
 "kBH" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -41850,7 +41839,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/lobby)
 "mEk" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "mEm" = (
@@ -68297,11 +68286,8 @@
 /turf/simulated/floor/circuit,
 /area/station/bridge)
 "uFJ" = (
-/obj/item/clothing/under/misc/syndicate,
-/obj/item/clothing/under/misc/syndicate,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
-/obj/item/storage/fanny/syndie,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -76002,7 +75988,7 @@
 	},
 /area/station/crew_quarters/sauna)
 "wSw" = (
-/obj/storage/closet/syndicate/personal,
+/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "wSx" = (
@@ -77394,9 +77380,7 @@
 /area/station/chapel/sanctuary)
 "xli" = (
 /obj/table/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/station/science/storage)
 "xlw" = (
@@ -78014,6 +77998,9 @@
 "xti" = (
 /obj/machinery/light{
 	dir = 8
+	},
+/obj/machinery/computer/announcement/syndicate{
+	dir = 4
 	},
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -132217,7 +132204,7 @@ mhe
 mhe
 mXS
 fiL
-jnN
+kBA
 uEF
 gNg
 wyb
@@ -136441,7 +136428,7 @@ dOa
 xPd
 jPR
 ffz
-heB
+juA
 pkd
 xnW
 buq

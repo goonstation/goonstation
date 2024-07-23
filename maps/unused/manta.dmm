@@ -3028,7 +3028,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "akN" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "akO" = (
@@ -25938,7 +25938,7 @@
 	dir = 5;
 	icon_state = "line4"
 	},
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/greenwhite/corner{
 	dir = 4
@@ -27450,7 +27450,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bzo" = (
@@ -27549,7 +27549,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
@@ -28078,7 +28078,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bAR" = (
@@ -28115,7 +28115,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
@@ -28724,7 +28724,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -29143,7 +29143,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/machinery/light_switch/auto{
 	pixel_x = -24
 	},
@@ -29159,7 +29159,7 @@
 	icon_state = "line3"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/greenwhite{
 	dir = 1
@@ -36242,7 +36242,7 @@
 	nostick = 1;
 	pixel_y = 20
 	},
-/obj/machinery/incubator{
+/obj/fakeobject/incubator{
 	dir = 1
 	},
 /turf/simulated/floor/greenwhite,
@@ -39783,7 +39783,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
 	nostick = 1;

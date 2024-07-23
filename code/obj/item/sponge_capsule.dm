@@ -83,7 +83,7 @@
 	var/atom/C = new animal_to_spawn(T)
 	if (ismobcritter(C))
 		var/mob/living/critter/M = C
-		M.faction |= FACTION_SPONGE
+		LAZYLISTADDUNIQUE(M.faction, FACTION_SPONGE)
 	T.visible_message(SPAN_NOTICE("What was once [src] has become [C.name]!"))
 	qdel(src)
 

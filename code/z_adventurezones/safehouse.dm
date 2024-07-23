@@ -60,7 +60,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
 		autoclose = TRUE

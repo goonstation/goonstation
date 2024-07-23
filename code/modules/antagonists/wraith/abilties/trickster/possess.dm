@@ -150,6 +150,11 @@
 		src.wraith_mind.transfer_to(T)
 		src.wraith_mob.delStatus("corporeal")
 		src.wraith_mob.set_loc(T)
+		if (T.handcuffs)
+			if (T.handcuffs.material?.getID() == "silver")
+				boutput(T, SPAN_ALERT(SPAN_BOLD("These silver bindings resist your eldritch power! Hisss!")))
+			else
+				T.handcuffs.drop_handcuffs(T)
 		boutput(T, "<span class='bold' style='color:red;font-size:150%'>You have assumed control of this body! You don't have long...</span>")
 		RegisterSignal(T, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 		APPLY_ATOM_PROPERTY(T, PROP_MOB_NO_SELF_HARM, T)
