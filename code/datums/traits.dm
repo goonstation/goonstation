@@ -562,6 +562,7 @@
 			if (E)
 				E.curable_by_mutadone = FALSE
 				E.name = "Reinforced " + E.name
+				E.altered = 1 //don't let them combine the reinforced gene with another one
 			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
 /datum/trait/stablegenes
