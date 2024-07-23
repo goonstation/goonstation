@@ -925,6 +925,7 @@ toxic - poisons
 	dissipation_delay = 3
 	dissipation_rate = 2
 	damage_type = D_PIERCING
+	hit_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
 	damage = 8
@@ -938,19 +939,31 @@ toxic - poisons
 	implanted = null
 	damage = 6
 
+	on_launch(var/obj/projectile/P)
+		..()
+		if(prob(50)) //let's get some variation in here
+			icon_state = "glass2"
+		if(prob(20)) //we want implants, but we only want a few
+			implanted = /obj/item/implant/projectile/glass_shard
+
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
 	sname = "fragments"
-	icon_state = "trace"
+	icon_state = "scrap"
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
 	damage = 10
 
+	on_launch(var/obj/projectile/P)
+		..()
+		if(prob(50)) //keep things from getting boring
+			icon_state = "scrap2"
+
 /datum/projectile/bullet/improvbone
 	name = "bone"
 	sname = "bone"
-	icon_state = "trace"
+	icon_state = "bone"
 	dissipation_delay = 1
 	dissipation_rate = 3
 	damage_type = D_KINETIC
@@ -959,6 +972,11 @@ toxic - poisons
 	damage = 9
 	hit_mob_sound = 'sound/effects/skeleton_break.ogg'
 	impact_image_state = null // in my mind these are just literal bones fragments being thrown at people, wouldn't stick into walls
+
+	on_launch(var/obj/projectile/P)
+		..()
+		if(prob(40))
+			icon_state = "bone2"
 
 	on_hit(atom/hit)
 		var/turf/T = get_turf(hit)

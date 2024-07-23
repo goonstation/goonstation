@@ -842,19 +842,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
-	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
+	desc = "Some mean-looking plasmaglass crystals that have been jammed into cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/plasglass
 	icon_state = "makeshiftplasglass"
 
 /obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"
-	desc = "This appears to be some glass shards haphazardly shoved into a few cut open pipe frames."
+	desc = "Some broken glass that's been jammed into cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/glass
 	icon_state = "makeshiftglass"
 
 /obj/item/ammo/bullets/pipeshot/scrap // scrap handmade shells
 	sname = "scrap load"
-	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
+	desc = "Some metal bits that have been jammed into cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
 
 /obj/item/ammo/bullets/pipeshot/scrap/five
@@ -863,8 +863,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/pipeshot/bone // scrap handmade bone shells
 	sname = "bone load"
-	desc = "This appears to be some bone fragments haphazardly shoved into a few cut open pipe frames - grotesque!"
+	desc = "Chunks of bone that have been jammed into cut open pipe frames - grotesque!"
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/bone
+	icon_state = "makeshiftbone"
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"
