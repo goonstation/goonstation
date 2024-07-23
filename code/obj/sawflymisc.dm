@@ -142,6 +142,7 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 
 // ---------------limb---------------
 /datum/limb/sawfly_blades
+	can_beat_up_robots = TRUE
 
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not

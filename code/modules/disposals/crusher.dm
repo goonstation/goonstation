@@ -21,6 +21,9 @@ TYPEINFO(/obj/machinery/crusher)
 
 	var/last_sfx = 0
 
+/obj/machinery/crusher/wall
+	power_usage = 0
+
 /obj/machinery/crusher/Bumped(atom/movable/AM)
 	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)

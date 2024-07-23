@@ -75,6 +75,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	var/timeout = 60 //The time until we auto disconnect (if we don't get a refresh ping)
 	var/timeout_alert = 0 //Have we sent a timeout refresh alert?
 	var/hardened = 0 // azone/listening post apcs that you dont want fucked with. immune to explosions, blobs, meteors
+	var/update_requested = FALSE // Whether the next APC process should include an update (set after turfs are reallocated to this APC's area)
 
 //	luminosity = 1
 	var/debug = 0
@@ -100,7 +101,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname E APC"
 		dir = EAST
 		autoname_on_spawn = 1
-		pixel_x = 24
+		pixel_x = 20
 
 		nopoweralert
 			noalerts = 1
@@ -136,7 +137,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		name = "Autoname W APC"
 		dir = WEST
 		autoname_on_spawn = 1
-		pixel_x = -24
+		pixel_x = -20
 
 		nopoweralert
 			noalerts = 1
@@ -176,12 +177,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	..()
 	START_TRACKING
 	// offset 24 pixels in direction of dir
+	//+excluding east and west which is now 20 pixels
 	// this allows the APC to be embedded in a wall, yet still inside an area
 
 	tdir = dir		// to fix Vars bug
 	// dir = SOUTH
 
-	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 20 : -20)
 	pixel_y = (tdir & 3)? (tdir ==1 ? 24 : -24) : 0
 
 	// is starting with a power cell installed, create it and set its charge level
@@ -200,7 +202,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (src.autoname_on_spawn == 1 || (name == "N APC" || name == "E APC" || name == "S APC" || name == "W APC"))
 			src.name = "[area.name] APC"
 	if (!QDELETED(src.area))
-		src.area.area_apc = src
+		if(istype(src.area,/area/unconnected_zone)) //if we built in an as-yet APCless zone, we've created a new built zone as a consequence
+			unconnected_zone.propagate_zone(get_turf(src))
+		else
+			src.area.area_apc = src
 
 	src.UpdateIcon()
 
@@ -904,6 +909,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/proc/report()
 	return "[area.name] : [equipment]/[lighting]/[environ] ([lastused_equip+lastused_light+lastused_environ]) : [cell? cell.percent() : "N/C"] ([charging])"
 
+/obj/machinery/power/apc/proc/request_update()
+	src.update_requested = TRUE
+
 /obj/machinery/power/apc/proc/update()
 	if (!QDELETED(src.area))
 
@@ -1303,7 +1311,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 	// update icon & area power if anything changed
 
-	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging)
+	if(last_lt != lighting || last_eq != equipment || last_en != environ || last_ch != charging || update_requested)
+		if(update_requested)
+			update_requested = FALSE
 		UpdateIcon()
 		update()
 
