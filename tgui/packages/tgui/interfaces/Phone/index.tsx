@@ -5,8 +5,9 @@
  * @license MIT
  */
 
+import { Button, Collapsible, Dimmer, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Collapsible, Dimmer, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { capitalize } from '../common/stringUtils';
 import { Phonebook, PhoneData } from './type';
@@ -23,8 +24,8 @@ const CategoryColors = [
 const categorySort = (a, b) => a.category.localeCompare(b.category);
 const idSort = (a, b) => a.id.localeCompare(b.id);
 
-export const Phone = (props, context) => {
-  const { data } = useBackend<PhoneData>(context);
+export const Phone = () => {
+  const { data } = useBackend<PhoneData>();
   const { dialing, inCall, lastCalled, name } = data;
   const phonebook = data.phonebook.sort(categorySort) || [];
 
@@ -61,8 +62,8 @@ type AddressGroupProps = {
   phonebook: Phonebook;
 };
 
-const AddressGroup = ({ phonebook }: AddressGroupProps, context) => {
-  const { act } = useBackend<PhoneData>(context);
+const AddressGroup = ({ phonebook }: AddressGroupProps) => {
+  const { act } = useBackend<PhoneData>();
   const categoryName = capitalize(phonebook.category);
   const phones = phonebook.phones.sort(idSort);
 
@@ -74,12 +75,13 @@ const AddressGroup = ({ phonebook }: AddressGroupProps, context) => {
       {phones.map((currentPhone) => (
         <Button
           fluid
-          content={currentPhone.id}
           key={currentPhone.id}
           onClick={() => act('call', { target: currentPhone.id })}
           textAlign="center"
           className="phone__button"
-        />
+        >
+          {currentPhone.id}
+        </Button>
       ))}
     </Collapsible>
   );
