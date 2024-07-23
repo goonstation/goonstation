@@ -5,14 +5,15 @@
  * @license MIT
  */
 
+import { Box, Button, ProgressBar, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, ProgressBar, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { PortableHoldingTank } from '../common/PortableAtmos';
 import { LocalGeneratorData } from './type';
 
-export const LocalGenerator = (props, context) => {
-  const { act, data } = useBackend<LocalGeneratorData>(context);
+export const LocalGenerator = () => {
+  const { act, data } = useBackend<LocalGeneratorData>();
 
   const {
     name,
