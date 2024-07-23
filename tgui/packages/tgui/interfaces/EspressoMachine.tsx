@@ -5,12 +5,13 @@
  * @license ISC
  */
 
+import { Box, Button, Flex, NoticeBox, Section, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, NoticeBox, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-export const DrinksList = (props, context) => {
-  const { act } = useBackend(context);
+export const DrinksList = (props) => {
+  const { act } = useBackend();
 
   const {
     drinks,
@@ -34,19 +35,19 @@ export const DrinksList = (props, context) => {
   );
 };
 
-export const ContainerButtons = (props, context) => {
-  const { act } = useBackend(context);
+export const ContainerButtons = (props) => {
+  const { act } = useBackend();
   const { index } = props;
 
   return (
     <Flex>
       <Flex.Item nowrap>
         <Button
-          icon="eject" color="blue" title="Eject"
+          icon="eject" color="blue" tooltip="Eject"
           mr="10px"
           onClick={() => act("eject", { cup_index: index })} />
         <Button
-          icon="times" color="red" title="Flush All"
+          icon="times" color="red" tooltip="Flush All"
           onClick={() => act("flush", { cup_index: index })} />
       </Flex.Item>
     </Flex>
@@ -76,8 +77,7 @@ export const ReagentBlocks = (props) => {
   );
 };
 
-export const DrinkContainer = (props, context) => {
-  const { act } = useBackend(context);
+export const DrinkContainer = (props) => {
   const { cup } = props;
 
   return (
@@ -95,8 +95,13 @@ export const DrinkContainer = (props, context) => {
   );
 };
 
-export const EspressoMachine = (props, context) => {
-  const { data } = useBackend(context);
+interface EspressoMachineData {
+  containers;
+  drinks;
+}
+
+export const EspressoMachine = () => {
+  const { data } = useBackend<EspressoMachineData>();
 
   const drinkslist = data.drinks;
   const cupslist = data.containers.map(cup => {
