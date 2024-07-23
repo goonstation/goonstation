@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-import type { InfernoNode } from 'inferno';
+import { type ReactNode } from 'react';
+import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from '../components';
 import { computeBoxProps } from '../components/Box';
 import { Window } from '../layouts';
 
@@ -40,8 +40,8 @@ export const PANEL_PER_LINE = 4;
 const BASE_HEIGHT = 100;
 export const MAP_ROW_HEIGHT = 130;
 
-export const MapVote = (_props, context) => {
-  const { data, act } = useBackend<MapVoteData>(context);
+export const MapVote = () => {
+  const { data, act } = useBackend<MapVoteData>();
   const { playersVoting, mapList, clientVoteMap } = data;
 
   const height = BASE_HEIGHT + MAP_ROW_HEIGHT * Math.ceil(mapList.length / PANEL_PER_LINE);
@@ -98,10 +98,10 @@ export const MapVote = (_props, context) => {
 type MapPanelProps = Pick<MapVoteMapData, 'name' | 'thumbnail' | 'details'> & {
   voted?: boolean
   won?: boolean,
-  button?: InfernoNode,
+  button?: ReactNode,
   onClick?: () => void,
   style?: Record<string, string>,
-  children?: InfernoNode,
+  children?: ReactNode,
 };
 
 export const MapPanel = (props: MapPanelProps) => {
@@ -120,7 +120,7 @@ export const MapPanel = (props: MapPanelProps) => {
     <Section
       title={(
         <Box inline nowrap overflow="hidden"
-          style={{ "text-overflow": "ellipsis" }}
+          style={{ textOverflow: "ellipsis" }}
           maxWidth={`${MAP_PANEL_WIDTH - 35}px`}>
           {name}
         </Box>)}
