@@ -4,12 +4,18 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Button, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const TankDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
+interface TankDispenserData {
+  oxygen;
+  plasma;
+}
+
+export const TankDispenser = () => {
+  const { act, data } = useBackend<TankDispenserData>();
   return (
     <Window width={280} height={105}>
       <Window.Content>
