@@ -41,7 +41,7 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound\impact_sounds\taser_hit.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit.ogg'
 
 
 //Any special things when it hits shit?
@@ -393,7 +393,7 @@ toxic - poisons
 	disruption = 2
 	ie_type = "T"
 
-	hit_mob_sound = 'sound\impact_sounds\taser_hit02.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
@@ -432,7 +432,7 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound\impact_sounds\taser_hit02.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
