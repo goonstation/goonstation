@@ -1,5 +1,6 @@
+import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, LabeledList, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { HumanInventoryData, HumanInventorySlot } from './types';
 
@@ -21,8 +22,8 @@ const SLOT_NAMES = {
   'slot_r_store': 'Right Pocket',
 };
 
-export const HumanInventory = (_props, context) => {
-  const { data, act } = useBackend<HumanInventoryData>(context);
+export const HumanInventory = () => {
+  const { data, act } = useBackend<HumanInventoryData>();
 
   return (
     <Window width={300} height={490} title={data.name}>
@@ -58,8 +59,8 @@ export const HumanInventory = (_props, context) => {
 
 type SlotProps = { name: string; slot: HumanInventorySlot };
 
-const Slot = (props: SlotProps, context) => {
-  const { act } = useBackend<HumanInventoryData>(context);
+const Slot = (props: SlotProps) => {
+  const { act } = useBackend<HumanInventoryData>();
   const { slot, name } = props;
   const { id, item } = slot;
 
