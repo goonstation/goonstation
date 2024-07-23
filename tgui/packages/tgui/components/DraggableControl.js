@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { clamp } from 'common/math';
 import { pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
+import { clamp } from 'tgui-core/math';
 
 import { AnimatedNumber } from './AnimatedNumber';
 
@@ -41,17 +41,18 @@ export class DraggableControl extends Component {
           suppressingFlicker: true,
         });
         clearTimeout(this.flickerTimer);
-        this.flickerTimer = setTimeout(() => this.setState({
-          suppressingFlicker: false,
-        }), suppressFlicker);
+        this.flickerTimer = setTimeout(
+          () =>
+            this.setState({
+              suppressingFlicker: false,
+            }),
+          suppressFlicker,
+        );
       }
     };
 
-    this.handleDragStart = e => {
-      const {
-        value,
-        dragMatrix,
-      } = this.props;
+    this.handleDragStart = (e) => {
+      const { value, dragMatrix } = this.props;
       const { editing } = this.state;
       if (editing) {
         return;
@@ -80,54 +81,38 @@ export class DraggableControl extends Component {
       document.addEventListener('mouseup', this.handleDragEnd);
     };
 
-    this.handleDragMove = e => {
-      const {
-        minValue,
-        maxValue,
-        step,
-        stepPixelSize,
-        dragMatrix,
-      } = this.props;
-      this.setState(prevState => {
+    this.handleDragMove = (e) => {
+      const { minValue, maxValue, step, stepPixelSize, dragMatrix } =
+        this.props;
+      this.setState((prevState) => {
         const state = { ...prevState };
         const offset = getScalarScreenOffset(e, dragMatrix) - state.origin;
         if (prevState.dragging) {
-          const stepOffset = Number.isFinite(minValue)
-            ? minValue % step
-            : 0;
+          const stepOffset = Number.isFinite(minValue) ? minValue % step : 0;
           // Translate mouse movement to value
           // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
-            state.internalValue
-              + offset * step / stepPixelSize,
+            state.internalValue + (offset * step) / stepPixelSize,
             minValue - step,
-            maxValue + step);
+            maxValue + step,
+          );
           // Clamp the final value
           state.value = clamp(
-            state.internalValue
-              - state.internalValue % step
-              + stepOffset,
+            state.internalValue - (state.internalValue % step) + stepOffset,
             minValue,
-            maxValue);
+            maxValue,
+          );
           state.origin = getScalarScreenOffset(e, dragMatrix);
-        }
-        else if (Math.abs(offset) > 4) {
+        } else if (Math.abs(offset) > 4) {
           state.dragging = true;
         }
         return state;
       });
     };
 
-    this.handleDragEnd = e => {
-      const {
-        onChange,
-        onDrag,
-      } = this.props;
-      const {
-        dragging,
-        value,
-        internalValue,
-      } = this.state;
+    this.handleDragEnd = (e) => {
+      const { onChange, onDrag } = this.props;
+      const { dragging, value, internalValue } = this.state;
       document.body.style['pointer-events'] = 'auto';
       clearTimeout(this.timer);
       clearInterval(this.dragInterval);
@@ -146,16 +131,14 @@ export class DraggableControl extends Component {
         if (onDrag) {
           onDrag(e, value);
         }
-      }
-      else if (this.inputRef) {
+      } else if (this.inputRef) {
         const input = this.inputRef.current;
         input.value = internalValue;
 
         try {
           input.focus();
           input.select();
-        }
-        catch {}
+        } catch {}
       }
     };
   }
@@ -190,22 +173,14 @@ export class DraggableControl extends Component {
     // Setup a display element
     // Shows a formatted number based on what we are currently doing
     // with the draggable surface.
-    const renderDisplayElement = value => (
-      value + (unit ? ' ' + unit : '')
-    );
-    const displayElement = (
-      animated && !dragging && !suppressingFlicker && (
-        <AnimatedNumber
-          value={displayValue}
-          format={format}>
+    const renderDisplayElement = (value) => value + (unit ? ' ' + unit : '');
+    const displayElement =
+      (animated && !dragging && !suppressingFlicker && (
+        <AnimatedNumber value={displayValue} format={format}>
           {renderDisplayElement}
         </AnimatedNumber>
-      ) || (
-        renderDisplayElement(format
-          ? format(displayValue)
-          : displayValue)
-      )
-    );
+      )) ||
+      renderDisplayElement(format ? format(displayValue) : displayValue);
     // Setup an input element
     // Handles direct input via the keyboard
     const inputElement = (
@@ -218,19 +193,15 @@ export class DraggableControl extends Component {
           'line-height': lineHeight,
           'font-size': fontSize,
         }}
-        onBlur={e => {
+        onBlur={(e) => {
           if (!editing) {
             return;
           }
           let value;
           if (unclamped) {
             value = e.target.value;
-          }
-          else {
-            value = clamp(
-              parseFloat(e.target.value),
-              minValue,
-              maxValue);
+          } else {
+            value = clamp(parseFloat(e.target.value), minValue, maxValue);
             if (Number.isNaN(value)) {
               this.setState({
                 editing: false,
@@ -250,17 +221,13 @@ export class DraggableControl extends Component {
             onDrag(e, value);
           }
         }}
-        onKeyDown={e => {
+        onKeyDown={(e) => {
           if (e.keyCode === 13) {
             let value;
             if (unclamped) {
               value = e.target.value;
-            }
-            else {
-              value = clamp(
-                parseFloat(e.target.value),
-                minValue,
-                maxValue);
+            } else {
+              value = clamp(parseFloat(e.target.value), minValue, maxValue);
               if (Number.isNaN(value)) {
                 this.setState({
                   editing: false,
@@ -287,7 +254,8 @@ export class DraggableControl extends Component {
             });
             return;
           }
-        }} />
+        }}
+      />
     );
     // Return a part of the state for higher-level components to use.
     return children({

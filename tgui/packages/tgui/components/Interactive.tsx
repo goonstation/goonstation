@@ -12,8 +12,8 @@
  * SOFTWARE.
  */
 
-import { clamp } from 'common/math';
 import { Component, createRef, RefObject } from 'inferno';
+import { clamp } from 'tgui-core/math';
 
 export interface Interaction {
   left: number;
@@ -26,12 +26,25 @@ const getParentWindow = (node?: HTMLDivElement | null): Window => {
 };
 
 // Returns a relative position of the pointer inside the node's bounding box
-const getRelativePosition = (node: HTMLDivElement, event: MouseEvent): Interaction => {
+const getRelativePosition = (
+  node: HTMLDivElement,
+  event: MouseEvent,
+): Interaction => {
   const rect = node.getBoundingClientRect();
   const pointer = event as MouseEvent;
   return {
-    left: clamp((pointer.pageX - (rect.left + getParentWindow(node).pageXOffset)) / rect.width, 0, 1),
-    top: clamp((pointer.pageY - (rect.top + getParentWindow(node).pageYOffset)) / rect.height, 0, 1),
+    left: clamp(
+      (pointer.pageX - (rect.left + getParentWindow(node).pageXOffset)) /
+        rect.width,
+      0,
+      1,
+    ),
+    top: clamp(
+      (pointer.pageY - (rect.top + getParentWindow(node).pageYOffset)) /
+        rect.height,
+      0,
+      1,
+    ),
   };
 };
 
@@ -106,7 +119,9 @@ export class Interactive extends Component {
     const parentWindow = getParentWindow(el);
 
     // Add or remove additional pointer event listeners
-    const toggleEvent = state ? parentWindow.addEventListener : parentWindow.removeEventListener;
+    const toggleEvent = state
+      ? parentWindow.addEventListener
+      : parentWindow.removeEventListener;
     toggleEvent('mousemove', this.handleMove);
     toggleEvent('mouseup', this.handleMoveEnd);
   }
@@ -129,7 +144,8 @@ export class Interactive extends Component {
         className="react-colorful__interactive"
         onKeyDown={this.handleKeyDown}
         tabIndex={0}
-        role="slider">
+        role="slider"
+      >
         {this.props.children}
       </div>
     );

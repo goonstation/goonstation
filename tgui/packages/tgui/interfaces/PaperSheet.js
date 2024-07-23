@@ -6,9 +6,9 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-import { clamp } from 'common/math';
 import { Component } from 'inferno';
 import marked from 'marked';
+import { clamp } from 'tgui-core/math';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
@@ -20,55 +20,85 @@ const WINDOW_TITLEBAR_HEIGHT = 30;
 // Hacky, yes, works?...yes
 const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
-  font = fontsize + "x " + font;
+  font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
-  const ctx = c.getContext("2d");
+  const ctx = c.getContext('2d');
   ctx.font = font;
   return ctx.measureText(text).width;
 };
 
-const setFontinText = (text, font, color, bold=false) => {
-  return "<span style=\""
-    + "color:" + color + ";"
-    + "font-family:" + font + ";"
-    + ((bold)
-      ? "font-weight: bold;"
-      : "")
-    + "\">" + text + "</span>";
+const setFontinText = (text, font, color, bold = false) => {
+  return (
+    '<span style="' +
+    'color:' +
+    color +
+    ';' +
+    'font-family:' +
+    font +
+    ';' +
+    (bold ? 'font-weight: bold;' : '') +
+    '">' +
+    text +
+    '</span>'
+  );
 };
 
-const createIDHeader = index => {
-  return "paperfield_" + index;
+const createIDHeader = (index) => {
+  return 'paperfield_' + index;
 };
 // To make a field you do a [_______] or however long the field is
 // we will then output a TEXT input for it that hopefully covers
 // the exact amount of spaces
 const fieldRegex = /\[(_+)\]/g;
 // TODO: regex needs documentation
-const fieldTagRegex = /\[<input\s+(?!disabled)(.*?)\s+id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
-const signRegex = /%s(?:ign)?(?=\\s|$)?/igm;
+const fieldTagRegex =
+  /\[<input\s+(?!disabled)(.*?)\s+id="(?<id>paperfield_\d+)"(.*?)\/>\]/gm;
+const signRegex = /%s(?:ign)?(?=\\s|$)?/gim;
 
-const createInputField = (length, width, font,
-  fontsize, color, id) => {
-  return "[<input "
-      + "type=\"text\" "
-      + "style=\""
-      + "font:'" + fontsize + "x " + font + "';"
-      + "color:'" + color + "';"
-      + "min-width:" + width + ";"
-      + "max-width:" + width + ";"
-      + "\" "
-      + "id=\"" + id + "\" "
-      + "maxlength=" + length +" "
-      + "size=" + length + " "
-      + "/>]";
+const createInputField = (length, width, font, fontsize, color, id) => {
+  return (
+    '[<input ' +
+    'type="text" ' +
+    'style="' +
+    "font:'" +
+    fontsize +
+    'x ' +
+    font +
+    "';" +
+    "color:'" +
+    color +
+    "';" +
+    'min-width:' +
+    width +
+    ';' +
+    'max-width:' +
+    width +
+    ';' +
+    '" ' +
+    'id="' +
+    id +
+    '" ' +
+    'maxlength=' +
+    length +
+    ' ' +
+    'size=' +
+    length +
+    ' ' +
+    '/>]'
+  );
 };
 
 const createFields = (txt, font, fontsize, color, counter) => {
   const retText = txt.replace(fieldRegex, (match, p1, offset, string) => {
-    const width = textWidth(match, font, fontsize) + "px";
-    return createInputField(p1.length,
-      width, font, fontsize, color, createIDHeader(counter++));
+    const width = textWidth(match, font, fontsize) + 'px';
+    return createInputField(
+      p1.length,
+      width,
+      font,
+      fontsize,
+      color,
+      createIDHeader(counter++),
+    );
   });
   return {
     counter,
@@ -78,14 +108,14 @@ const createFields = (txt, font, fontsize, color, counter) => {
 
 const signDocument = (txt, color, user) => {
   return txt.replace(signRegex, () => {
-    return setFontinText(user, "Times New Roman", color, true);
+    return setFontinText(user, 'Times New Roman', color, true);
   });
 };
 
-const runMarkedDefault = value => {
+const runMarkedDefault = (value) => {
   // Override function, any links and images should
   // kill any other marked tokens we don't want here
-  const walkTokens = token => {
+  const walkTokens = (token) => {
     switch (token.type) {
       case 'url':
       case 'autolink':
@@ -95,7 +125,7 @@ const runMarkedDefault = value => {
         token.type = 'text';
         // Once asset system is up change to some default image
         // or rewrite for icon images
-        token.href = "";
+        token.href = '';
         break;
     }
   };
@@ -110,17 +140,17 @@ const runMarkedDefault = value => {
 };
 
 /*
-** This gets the field, and finds the dom object and sees if
-** the user has typed something in.  If so, it replaces,
-** the dom object, in txt with the value, spaces so it
-** fits the [] format and saves the value into a object
-** There may be ways to optimize this in javascript but
-** doing this in byond is nightmarish.
-**
-** It returns any values that were saved and a corrected
-** html code or null if nothing was updated
-*/
-const checkAllFields = (txt, font, color, userName, bold=false) => {
+ ** This gets the field, and finds the dom object and sees if
+ ** the user has typed something in.  If so, it replaces,
+ ** the dom object, in txt with the value, spaces so it
+ ** fits the [] format and saves the value into a object
+ ** There may be ways to optimize this in javascript but
+ ** doing this in byond is nightmarish.
+ **
+ ** It returns any values that were saved and a corrected
+ ** html code or null if nothing was updated
+ */
+const checkAllFields = (txt, font, color, userName, bold = false) => {
   let matches;
   let values = {};
   let replace = [];
@@ -135,7 +165,7 @@ const checkAllFields = (txt, font, color, userName, bold=false) => {
       const dom = document.getElementById(id);
       // make sure we got data, and kill any html that might
       // be in it
-      const domText = dom && dom.value ? dom.value : "";
+      const domText = dom && dom.value ? dom.value : '';
       if (domText.length === 0) {
         continue;
       }
@@ -147,71 +177,67 @@ const checkAllFields = (txt, font, color, userName, bold=false) => {
       const target = dom.cloneNode(true);
       // in case they sign in a field
       if (sanitizedText.match(signRegex)) {
-        target.style.fontFamily = "Times New Roman";
+        target.style.fontFamily = 'Times New Roman';
         bold = true;
         target.defaultValue = userName;
-      }
-      else {
+      } else {
         target.style.fontFamily = font;
         target.defaultValue = sanitizedText;
       }
       if (bold) {
-        target.style.fontWeight = "bold";
+        target.style.fontWeight = 'bold';
       }
       target.style.color = color;
       target.disabled = true;
       const wrap = document.createElement('div');
       wrap.appendChild(target);
       values[id] = sanitizedText; // save the data
-      replace.push({ value: "[" + wrap.innerHTML + "]", rawText: fullMatch });
+      replace.push({ value: '[' + wrap.innerHTML + ']', rawText: fullMatch });
     }
   }
   if (replace.length > 0) {
     for (const o of replace) {
-
       txt = txt.replace(o.rawText, o.value);
     }
   }
   return { text: txt, fields: values };
 };
 
-const pauseEvent = e => {
-  if (e.stopPropagation) { e.stopPropagation(); }
-  if (e.preventDefault) { e.preventDefault(); }
-  e.cancelBubble=true;
-  e.returnValue=false;
+const pauseEvent = (e) => {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  e.cancelBubble = true;
+  e.returnValue = false;
   return false;
 };
 
 const Stamp = (props, context) => {
-  const {
-    image,
-    opacity,
-    activeStamp,
-  } = props;
+  const { image, opacity, activeStamp } = props;
   const stampTransform = {
-    'left': image.x + 'px',
-    'top': image.y + 'px',
-    'transform': 'rotate(' + image.rotate + 'deg)',
-    'opacity': opacity || 1.0,
+    left: image.x + 'px',
+    top: image.y + 'px',
+    transform: 'rotate(' + image.rotate + 'deg)',
+    opacity: opacity || 1.0,
   };
-  return (
-    image.sprite.match("stamp-.*") ? (
-      <img
-        id={activeStamp && "stamp"}
-        style={stampTransform}
-        className="paper__stamp"
-        src={resolveAsset(image.sprite)}
-      />
-    )
-      : (
-        <Box
-          id={activeStamp && "stamp"}
-          style={stampTransform}
-          className="paper__stamp-text">
-          {image.sprite}
-        </Box>
-      )
+  return image.sprite.match('stamp-.*') ? (
+    <img
+      id={activeStamp && 'stamp'}
+      style={stampTransform}
+      className="paper__stamp"
+      src={resolveAsset(image.sprite)}
+    />
+  ) : (
+    <Box
+      id={activeStamp && 'stamp'}
+      style={stampTransform}
+      className="paper__stamp-text"
+    >
+      {image.sprite}
+    </Box>
   );
 };
 
@@ -224,17 +250,13 @@ const setInputReadonly = (text, readonly) => {
 // got to make this a full component if we
 // want to control updates
 export const PaperSheetView = (props, context) => {
-  const {
-    value = "",
-    stamps = [],
-    backgroundColor,
-    readOnly,
-  } = props;
+  const { value = '', stamps = [], backgroundColor, readOnly } = props;
   const stampList = stamps || [];
   const textHtml = {
-    __html: '<span class="paper-text">'
-      + setInputReadonly(value, readOnly)
-      + '</span>',
+    __html:
+      '<span class="paper-text">' +
+      setInputReadonly(value, readOnly) +
+      '</span>',
   };
   return (
     <Box
@@ -242,7 +264,8 @@ export const PaperSheetView = (props, context) => {
       position="relative"
       backgroundColor={backgroundColor}
       width="100%"
-      height="100%">
+      height="100%"
+    >
       <Box
         color="black"
         backgroundColor={backgroundColor}
@@ -250,10 +273,13 @@ export const PaperSheetView = (props, context) => {
         width="100%"
         height="100%"
         dangerouslySetInnerHTML={textHtml}
-        p="10px" />
+        p="10px"
+      />
       {stampList.map((o, i) => (
-        <Stamp key={o[0] + i}
-          image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }} />
+        <Stamp
+          key={o[0] + i}
+          image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }}
+        />
       ))}
     </Box>
   );
@@ -269,20 +295,26 @@ class PaperSheetStamper extends Component {
       rotate: 0,
     };
     this.style = null;
-    this.handleMouseMove = e => {
+    this.handleMouseMove = (e) => {
       const pos = this.findStampPosition(e);
-      if (!pos) { return; }
+      if (!pos) {
+        return;
+      }
       // center offset of stamp & rotate
       pauseEvent(e);
       this.setState({ x: pos[0], y: pos[1], rotate: pos[2] });
     };
-    this.handleMouseClick = e => {
-      if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) { return; }
+    this.handleMouseClick = (e) => {
+      if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) {
+        return;
+      }
       const { act } = useBackend(this.context);
       const stampObj = {
-        x: this.state.x, y: this.state.y, r: this.state.rotate,
+        x: this.state.x,
+        y: this.state.y,
+        r: this.state.rotate,
       };
-      act("stamp", stampObj);
+      act('stamp', stampObj);
     };
   }
 
@@ -293,28 +325,26 @@ class PaperSheetStamper extends Component {
       rotating = true;
     }
 
-    const stamp = document.getElementById("stamp");
-    if (stamp)
-    {
+    const stamp = document.getElementById('stamp');
+    if (stamp) {
       const stampHeight = stamp.clientHeight;
       const stampWidth = stamp.clientWidth;
 
       const currentHeight = rotating
         ? this.state.y
         : e.pageY + windowRef.scrollTop - stampHeight;
-      const currentWidth = rotating ? this.state.x : e.pageX - (stampWidth / 2);
+      const currentWidth = rotating ? this.state.x : e.pageX - stampWidth / 2;
 
       const widthMin = 0;
       const heightMin = 0;
 
       const widthMax = windowRef.clientWidth - stampWidth;
-      const heightMax = (
-        windowRef.clientHeight + windowRef.scrollTop - stampHeight
-      );
+      const heightMax =
+        windowRef.clientHeight + windowRef.scrollTop - stampHeight;
 
       const radians = Math.atan2(
         e.pageX - currentWidth,
-        e.pageY - currentHeight
+        e.pageY - currentHeight,
       );
 
       const rotate = rotating
@@ -330,21 +360,17 @@ class PaperSheetStamper extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener("mousemove", this.handleMouseMove);
-    document.addEventListener("click", this.handleMouseClick);
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('click', this.handleMouseClick);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousemove", this.handleMouseMove);
-    document.removeEventListener("click", this.handleMouseClick);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('click', this.handleMouseClick);
   }
 
   render() {
-    const {
-      value,
-      stampClass,
-      stamps,
-    } = this.props;
+    const { value, stampClass, stamps } = this.props;
     const stampList = stamps || [];
     const currentPos = {
       sprite: stampClass,
@@ -354,14 +380,8 @@ class PaperSheetStamper extends Component {
     };
     return (
       <>
-        <PaperSheetView
-          readOnly
-          value={value}
-          stamps={stampList} />
-        <Stamp
-          activeStamp
-          opacity={0.5}
-          image={currentPos} />
+        <PaperSheetView readOnly value={value} stamps={stampList} />
+        <Stamp activeStamp opacity={0.5} image={currentPos} />
       </>
     );
   }
@@ -374,10 +394,10 @@ class PaperSheetEdit extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      previewSelected: "Preview",
-      oldText: props.value || "",
-      textAreaText: "",
-      combinedText: props.value || "",
+      previewSelected: 'Preview',
+      oldText: props.value || '',
+      textAreaText: '',
+      combinedText: props.value || '',
       showingHelpTip: false,
     };
   }
@@ -386,14 +406,7 @@ class PaperSheetEdit extends Component {
   // as well as the form fields
   createPreview(value, doFields = false) {
     const { data } = useBackend(this.context);
-    const {
-      text,
-      penColor,
-      penFont,
-      isCrayon,
-      fieldCounter,
-      editUsr,
-    } = data;
+    const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
     const out = { text: text };
     // check if we are adding to paper, if not
     // we still have to check if someone entered something
@@ -405,13 +418,22 @@ class PaperSheetEdit extends Component {
       const signedText = signDocument(sanitizedText, penColor, editUsr);
       // Third we replace the [__] with fields as markedjs fucks them up
       const fieldedText = createFields(
-        signedText, penFont, 12, penColor, fieldCounter);
+        signedText,
+        penFont,
+        12,
+        penColor,
+        fieldCounter,
+      );
       // Fourth, parse the text using markup
       const formattedText = runMarkedDefault(fieldedText.text);
       // Fifth, we wrap the created text in the pin color, and font.
       // crayon is bold (<b> tags), maybe make fountain pin italic?
       const fontedText = setFontinText(
-        formattedText, penFont, penColor, isCrayon);
+        formattedText,
+        penFont,
+        penColor,
+        isCrayon,
+      );
       out.text += fontedText;
       out.fieldCounter = fieldedText.counter;
     }
@@ -420,7 +442,12 @@ class PaperSheetEdit extends Component {
       // if any data was entered by the user and
       // if it was return the data and modify the text
       const finalProcessing = checkAllFields(
-        out.text, penFont, penColor, editUsr, isCrayon);
+        out.text,
+        penFont,
+        penColor,
+        editUsr,
+        isCrayon,
+      );
       out.text = finalProcessing.text;
       out.formFields = finalProcessing.fields;
     }
@@ -429,15 +456,17 @@ class PaperSheetEdit extends Component {
 
   onInputHandler(e, value) {
     if (value !== this.state.textAreaText) {
-      const combinedLength = this.state.oldText.length
-        + this.state.textAreaText.length;
+      const combinedLength =
+        this.state.oldText.length + this.state.textAreaText.length;
       if (combinedLength > MAX_PAPER_LENGTH) {
-        if ((combinedLength - MAX_PAPER_LENGTH) >= value.length) {
+        if (combinedLength - MAX_PAPER_LENGTH >= value.length) {
           // Basically we cannot add any more text to the paper
           value = '';
         } else {
-          value = value.substr(0, value.length
-            - (combinedLength - MAX_PAPER_LENGTH));
+          value = value.substr(
+            0,
+            value.length - (combinedLength - MAX_PAPER_LENGTH),
+          );
         }
         // we check again to save an update
         if (value === this.state.textAreaText) {
@@ -456,86 +485,87 @@ class PaperSheetEdit extends Component {
     const { act } = useBackend(this.context);
     const finalProcessing = this.createPreview(newText, true);
     act('save', finalProcessing);
-    this.setState(() => { return {
-      textAreaText: "",
-      previewSelected: "save",
-      combinedText: finalProcessing.text,
-    }; });
+    this.setState(() => {
+      return {
+        textAreaText: '',
+        previewSelected: 'save',
+        combinedText: finalProcessing.text,
+      };
+    });
     // byond should switch us to readonly mode from here
   }
 
   render() {
-    const {
-      textColor,
-      fontFamily,
-      stamps,
-      backgroundColor,
-    } = this.props;
+    const { textColor, fontFamily, stamps, backgroundColor } = this.props;
     return (
-      <Flex
-        direction="column"
-        fillPositionedParent>
+      <Flex direction="column" fillPositionedParent>
         <Flex.Item>
-          <Tabs
-            size="100%">
+          <Tabs size="100%">
             <Tabs.Tab
               key="marked_edit"
               textColor="black"
-              backgroundColor={this.state.previewSelected === "Edit"
-                ? "grey"
-                : "white"}
-              selected={this.state.previewSelected === "Edit"}
-              onClick={() => this.setState({ previewSelected: "Edit" })}>
+              backgroundColor={
+                this.state.previewSelected === 'Edit' ? 'grey' : 'white'
+              }
+              selected={this.state.previewSelected === 'Edit'}
+              onClick={() => this.setState({ previewSelected: 'Edit' })}
+            >
               Edit
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_preview"
               textColor="black"
-              backgroundColor={this.state.previewSelected === "Preview"
-                ? "grey"
-                : "white"}
-              selected={this.state.previewSelected === "Preview"}
-              onClick={() => this.setState(() => {
-                const newState = {
-                  previewSelected: "Preview",
-                  textAreaText: this.state.textAreaText,
-                  combinedText: this.createPreview(
-                    this.state.textAreaText).text,
-                };
-                return newState;
-              })}>
+              backgroundColor={
+                this.state.previewSelected === 'Preview' ? 'grey' : 'white'
+              }
+              selected={this.state.previewSelected === 'Preview'}
+              onClick={() =>
+                this.setState(() => {
+                  const newState = {
+                    previewSelected: 'Preview',
+                    textAreaText: this.state.textAreaText,
+                    combinedText: this.createPreview(this.state.textAreaText)
+                      .text,
+                  };
+                  return newState;
+                })
+              }
+            >
               Preview
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_done"
               textColor="black"
-              backgroundColor={this.state.previewSelected === "confirm"
-                ? "red"
-                : this.state.previewSelected === "save"
-                  ? "grey"
-                  : "white"}
-              selected={this.state.previewSelected === "confirm"
-                || this.state.previewSelected === "save"}
+              backgroundColor={
+                this.state.previewSelected === 'confirm'
+                  ? 'red'
+                  : this.state.previewSelected === 'save'
+                    ? 'grey'
+                    : 'white'
+              }
+              selected={
+                this.state.previewSelected === 'confirm' ||
+                this.state.previewSelected === 'save'
+              }
               onClick={() => {
-                if (this.state.previewSelected === "confirm") {
+                if (this.state.previewSelected === 'confirm') {
                   this.finalUpdate(this.state.textAreaText);
-                }
-                else if (this.state.previewSelected === "Edit") {
+                } else if (this.state.previewSelected === 'Edit') {
                   this.setState(() => {
                     const newState = {
-                      previewSelected: "confirm",
+                      previewSelected: 'confirm',
                       textAreaText: this.state.textAreaText,
-                      combinedText: this.createPreview(
-                        this.state.textAreaText).text,
+                      combinedText: this.createPreview(this.state.textAreaText)
+                        .text,
                     };
                     return newState;
                   });
+                } else {
+                  this.setState({ previewSelected: 'confirm' });
                 }
-                else {
-                  this.setState({ previewSelected: "confirm" });
-                }
-              }}>
-              {this.state.previewSelected === "confirm" ? "Confirm" : "Save"}
+              }}
+            >
+              {this.state.previewSelected === 'confirm' ? 'Confirm' : 'Save'}
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_help"
@@ -547,33 +577,32 @@ class PaperSheetEdit extends Component {
               }}
               onmouseout={() => {
                 this.setState({ showingHelpTip: false });
-              }}>
+              }}
+            >
               Help
             </Tabs.Tab>
           </Tabs>
         </Flex.Item>
-        <Flex.Item
-          grow={1}
-          basis={1}>
-          {this.state.previewSelected === "Edit" && (
+        <Flex.Item grow={1} basis={1}>
+          {(this.state.previewSelected === 'Edit' && (
             <TextArea
               value={this.state.textAreaText}
               textColor={textColor}
               fontFamily={fontFamily}
-              height={(window.innerHeight - 60) + "px"}
+              height={window.innerHeight - 60 + 'px'}
               backgroundColor={backgroundColor}
-              onInput={this.onInputHandler.bind(this)} />
-          ) || (
+              onInput={this.onInputHandler.bind(this)}
+            />
+          )) || (
             <PaperSheetView
               value={this.state.combinedText}
               stamps={stamps}
               fontFamily={fontFamily}
-              textColor={textColor} />
+              textColor={textColor}
+            />
           )}
         </Flex.Item>
-        {this.state.showingHelpTip && (
-          <HelpToolip />
-        )}
+        {this.state.showingHelpTip && <HelpToolip />}
       </Flex>
     );
   }
@@ -584,9 +613,9 @@ export const PaperSheet = (props, context) => {
   const {
     editMode,
     text,
-    paperColor = "white",
-    penColor = "black",
-    penFont = "Verdana",
+    paperColor = 'white',
+    penColor = 'black',
+    penFont = 'Verdana',
     stamps,
     stampClass,
     sizeX,
@@ -594,18 +623,11 @@ export const PaperSheet = (props, context) => {
     name,
     scrollbar,
   } = data;
-  const stampList = !stamps
-    ? []
-    : stamps;
-  const decideMode = mode => {
+  const stampList = !stamps ? [] : stamps;
+  const decideMode = (mode) => {
     switch (mode) {
       case 0:
-        return (
-          <PaperSheetView
-            value={text}
-            stamps={stampList}
-            readOnly />
-        );
+        return <PaperSheetView value={text} stamps={stampList} readOnly />;
       case 1:
         return (
           <PaperSheetEdit
@@ -613,17 +635,19 @@ export const PaperSheet = (props, context) => {
             textColor={penColor}
             fontFamily={penFont}
             stamps={stampList}
-            backgroundColor={paperColor} />
+            backgroundColor={paperColor}
+          />
         );
       case 2:
         return (
           <PaperSheetStamper
             value={text}
             stamps={stampList}
-            stampClass={stampClass} />
+            stampClass={stampClass}
+          />
         );
       default:
-        return "ERROR ERROR WE CANNOT BE HERE!!";
+        return 'ERROR ERROR WE CANNOT BE HERE!!';
     }
   };
   return (
@@ -631,14 +655,10 @@ export const PaperSheet = (props, context) => {
       title={name}
       theme="paper"
       width={sizeX || 400}
-      height={sizeY || 500}>
-      <Window.Content
-        backgroundColor={paperColor}
-        scrollable={scrollbar}>
-        <Box
-          id="page"
-          fitted
-          fillPositionedParent>
+      height={sizeY || 500}
+    >
+      <Window.Content backgroundColor={paperColor} scrollable={scrollbar}>
+        <Box id="page" fitted fillPositionedParent>
           {decideMode(editMode)}
         </Box>
       </Window.Content>
@@ -655,88 +675,61 @@ const HelpToolip = () => {
       width="300px"
       height="350px"
       backgroundColor="#E8E4C9" // offset from paper color
-      textAlign="center">
-      <h3>
-        Markdown Syntax
-      </h3>
+      textAlign="center"
+    >
+      <h3>Markdown Syntax</h3>
       <Table>
         <Table.Row>
           <Table.Cell>
-            <Box>
-              Heading
-            </Box>
+            <Box>Heading</Box>
             =====
           </Table.Cell>
           <Table.Cell>
-            <h2>
-              Heading
-            </h2>
+            <h2>Heading</h2>
           </Table.Cell>
         </Table.Row>
 
         <Table.Row>
           <Table.Cell>
-            <Box>
-              Sub Heading
-            </Box>
+            <Box>Sub Heading</Box>
             ------
           </Table.Cell>
           <Table.Cell>
-            <h4>
-              Sub Heading
-            </h4>
+            <h4>Sub Heading</h4>
+          </Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell>_Italic Text_</Table.Cell>
+          <Table.Cell>
+            <i>Italic Text</i>
+          </Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell>**Bold Text**</Table.Cell>
+          <Table.Cell>
+            <b>Bold Text</b>
+          </Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell>`Code Text`</Table.Cell>
+          <Table.Cell>
+            <code>Code Text</code>
+          </Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell>~~Strikethrough Text~~</Table.Cell>
+          <Table.Cell>
+            <s>Strikethrough Text</s>
           </Table.Cell>
         </Table.Row>
 
         <Table.Row>
           <Table.Cell>
-            _Italic Text_
-          </Table.Cell>
-          <Table.Cell>
-            <i>
-              Italic Text
-            </i>
-          </Table.Cell>
-        </Table.Row>
-
-        <Table.Row>
-          <Table.Cell>
-            **Bold Text**
-          </Table.Cell>
-          <Table.Cell>
-            <b>
-              Bold Text
-            </b>
-          </Table.Cell>
-        </Table.Row>
-
-        <Table.Row>
-          <Table.Cell>
-            `Code Text`
-          </Table.Cell>
-          <Table.Cell>
-            <code>
-              Code Text
-            </code>
-          </Table.Cell>
-        </Table.Row>
-
-        <Table.Row>
-          <Table.Cell>
-            ~~Strikethrough Text~~
-          </Table.Cell>
-          <Table.Cell>
-            <s>
-              Strikethrough Text
-            </s>
-          </Table.Cell>
-        </Table.Row>
-
-        <Table.Row>
-          <Table.Cell>
-            <Box>
-              Horizontal Rule
-            </Box>
+            <Box>Horizontal Rule</Box>
             ---
           </Table.Cell>
           <Table.Cell>
@@ -748,28 +741,16 @@ const HelpToolip = () => {
         <Table.Row>
           <Table.Cell>
             <Table>
-              <Table.Row>
-                * List Element 1
-              </Table.Row>
-              <Table.Row>
-                * List Element 2
-              </Table.Row>
-              <Table.Row>
-                * Etc...
-              </Table.Row>
+              <Table.Row>* List Element 1</Table.Row>
+              <Table.Row>* List Element 2</Table.Row>
+              <Table.Row>* Etc...</Table.Row>
             </Table>
           </Table.Cell>
           <Table.Cell>
             <ul>
-              <li>
-                List Element 1
-              </li>
-              <li>
-                List Element 2
-              </li>
-              <li>
-                Etc...
-              </li>
+              <li>List Element 1</li>
+              <li>List Element 2</li>
+              <li>Etc...</li>
             </ul>
           </Table.Cell>
         </Table.Row>
@@ -777,28 +758,16 @@ const HelpToolip = () => {
         <Table.Row>
           <Table.Cell>
             <Table>
-              <Table.Row>
-                1. List Element 1
-              </Table.Row>
-              <Table.Row>
-                2. List Element 2
-              </Table.Row>
-              <Table.Row>
-                3. Etc...
-              </Table.Row>
+              <Table.Row>1. List Element 1</Table.Row>
+              <Table.Row>2. List Element 2</Table.Row>
+              <Table.Row>3. Etc...</Table.Row>
             </Table>
           </Table.Cell>
           <Table.Cell>
             <ol>
-              <li>
-                List Element 1
-              </li>
-              <li>
-                List Element 2
-              </li>
-              <li>
-                Etc...
-              </li>
+              <li>List Element 1</li>
+              <li>List Element 2</li>
+              <li>Etc...</li>
             </ol>
           </Table.Cell>
         </Table.Row>

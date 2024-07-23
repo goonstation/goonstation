@@ -1,13 +1,7 @@
-import { clamp, round } from 'common/math';
+import { clamp, round } from 'tgui-core/math';
 
-import { useBackend } from "../backend";
-import {
-  Button,
-  Section,
-  Slider,
-  Stack,
-  Tabs,
-} from '../components';
+import { useBackend } from '../backend';
+import { Button, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { ReagentBar } from './common/ReagentInfo';
 
@@ -15,10 +9,7 @@ const TO_SELF = 0;
 const TO_TARGET = 1;
 
 const DropperModeSection = (props) => {
-  const {
-    transferMode,
-    onTransferModeChange,
-  } = props;
+  const { transferMode, onTransferModeChange } = props;
   return (
     <Section fitted fill>
       <Tabs vertical>
@@ -97,12 +88,12 @@ export const MechanicalDropper = (_props, context) => {
   } = data;
 
   const onTransferModeChange = (mode) => {
-    act("mode", { mode });
+    act('mode', { mode });
   };
 
   const onTransferAmtChange = (amt) => {
     amt = round(clamp(amt, minTransferAmt, maxTransferAmt), 1);
-    act("amt", { amt });
+    act('amt', { amt });
   };
 
   return (

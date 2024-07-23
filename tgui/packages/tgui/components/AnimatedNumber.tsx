@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { clamp, toFixed } from 'common/math';
 import { Component, createRef } from 'inferno';
+import { clamp, toFixed } from 'tgui-core/math';
 
 const isSafeNumber = (value: number) => {
   // prettier-ignore
@@ -35,25 +35,25 @@ export type AnimatedNumberProps = {
 };
 
 /**
-  * Animated numbers are animated at roughly 60 frames per second.
-  */
+ * Animated numbers are animated at roughly 60 frames per second.
+ */
 const SIXTY_HZ = 1_000.0 / 60.0;
 
 /**
-  * The exponential moving average coefficient. Larger values result in a faster
-  * convergence.
-  */
+ * The exponential moving average coefficient. Larger values result in a faster
+ * convergence.
+ */
 const Q = 0.8333;
 
 /**
-  * A small number.
-  */
+ * A small number.
+ */
 const EPSILON = 10e-4;
 
 /**
-  * An animated number label. Shows a number, formatted with an optionally
-  * provided function, and animates it towards its target value.
-  */
+ * An animated number label. Shows a number, formatted with an optionally
+ * provided function, and animates it towards its target value.
+ */
 export class AnimatedNumber extends Component<AnimatedNumberProps> {
   /**
    * The inner `<span/>` being updated sixty times per second.

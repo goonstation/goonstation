@@ -6,9 +6,9 @@
  */
 
 import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
-import { clamp } from 'common/math';
 import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
+import { clamp } from 'tgui-core/math';
 
 import { Box } from './Box';
 
@@ -64,8 +64,8 @@ const clampGuessedNumber = (
     ? parseFloat(softSanitizedNumber)
     : parseInt(softSanitizedNumber, 10);
   if (
-    !isNaN(parsed)
-    && (softSanitizedNumber.slice(-1) !== '.' || parsed < Math.floor(minValue))
+    !isNaN(parsed) &&
+    (softSanitizedNumber.slice(-1) !== '.' || parsed < Math.floor(minValue))
   ) {
     let clamped = clamp(parsed, minValue, maxValue);
     if (parsed !== clamped) {
