@@ -5,7 +5,8 @@
  * @license ISC
  */
 
-import { Stack, Tooltip } from "../../../components";
+import { Stack, Tooltip } from "tgui-core/components";
+
 import { truncate } from '../../../format';
 import { ProductionCardStyle } from "../constant";
 import { ButtonWithBadge } from "./ButtonWithBadge";

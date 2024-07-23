@@ -5,13 +5,14 @@
  * @license MIT
  */
 
+import { Chart, LabeledList, Stack, Table } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Chart, LabeledList, Stack, Table } from '../../components';
 import { formatPower } from '../../format';
 import { PowerMonitorSmesData, PowerMonitorSmesItemData } from './type';
 
-export const PowerMonitorSmesGlobal = (_props, context) => {
-  const { data } = useBackend<PowerMonitorSmesData>(context);
+export const PowerMonitorSmesGlobal = () => {
+  const { data } = useBackend<PowerMonitorSmesData>();
 
   const availableHistory = data.history.map((v) => v[0]);
   const availableHistoryData = availableHistory.map((v, i) => [i, v]);
@@ -73,9 +74,9 @@ type PowerMonitorSmesTableRowsProps = {
   search: string;
 };
 
-export const PowerMonitorSmesTableRows = (props: PowerMonitorSmesTableRowsProps, context) => {
+export const PowerMonitorSmesTableRows = (props: PowerMonitorSmesTableRowsProps) => {
   const { search } = props;
-  const { data } = useBackend<PowerMonitorSmesData>(context);
+  const { data } = useBackend<PowerMonitorSmesData>();
 
   return (
     <>
@@ -91,11 +92,11 @@ type PowerMonitorSmesTableRowProps = {
   search: string;
 };
 
-const PowerMonitorSmesTableRow = (props: PowerMonitorSmesTableRowProps, context) => {
+const PowerMonitorSmesTableRow = (props: PowerMonitorSmesTableRowProps) => {
   const { unit, search } = props;
   // Indexed array to lower data transfer between byond and the window.
   const [ref, stored, charging, input, output, online, load] = unit;
-  const { data } = useBackend<PowerMonitorSmesData>(context);
+  const { data } = useBackend<PowerMonitorSmesData>();
   const name = data.unitNames[ref] ?? 'N/A';
 
   if (search && !name.toLowerCase().includes(search.toLowerCase())) {

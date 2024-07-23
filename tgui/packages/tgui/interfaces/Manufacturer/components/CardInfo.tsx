@@ -5,7 +5,8 @@
  * @license ISC
  */
 
-import { Button, LabeledList, Section, Stack } from '../../../components';
+import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { formatMoney } from '../../../format';
 import { BankAccount } from '../type';
 

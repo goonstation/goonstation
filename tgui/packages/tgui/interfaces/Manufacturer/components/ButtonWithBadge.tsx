@@ -5,18 +5,17 @@
  * @license ISC
  */
 
-import { InfernoNode } from "inferno";
+import { PropsWithChildren } from "react";
 
 import { Button } from "../../../components/Button";
 import { Image } from "../../../components/goon/Image";
 import { Stack } from "../../../components/Stack";
 
-type ButtonWithBadgeProps = {
+interface ButtonWithBadgeProps {
   width?: number | string,
   height?: number | string,
   noImageShadow?: boolean,
   imagePath: string | null;
-  children?: InfernoNode;
   disabled?: boolean;
   onClick?: Function;
   onMouseEnter?: Function;
@@ -24,7 +23,7 @@ type ButtonWithBadgeProps = {
   opacity?: number;
 }
 
-export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
+export const ButtonWithBadge = (props: PropsWithChildren<ButtonWithBadgeProps>) => {
   const {
     width,
     height,
