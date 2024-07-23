@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Ilysen (https://github.com/Ilysen)
+ * @license MIT
+ */
+
 import { useBackend } from '../backend';
 import { Button, Flex, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
