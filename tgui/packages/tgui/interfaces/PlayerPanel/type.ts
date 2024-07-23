@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
 
 import { SortDirection } from './constant';
 
@@ -14,7 +14,7 @@ export interface Column<Row extends object, Value> {
   id: string,
   name: string,
   sorter?: (a: Value, b: Value) => number,
-  template?: (config: CellTemplateConfig<Row, Value>) => InfernoNode,
+  template?: (config: CellTemplateConfig<Row, Value>) => ReactNode,
   valueSelector?: (config: CellValueSelectorConfig<Row, Value>) => Value,
 }
 

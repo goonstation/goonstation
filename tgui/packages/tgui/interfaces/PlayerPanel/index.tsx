@@ -6,8 +6,10 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Button, Input, Table } from '../../components';
+import { useState } from 'react';
+import { Button, Input, Table } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { Action, SortDirection } from './constant';
 import { Header } from './Header';
@@ -103,11 +105,11 @@ const columns: Column<PlayerData, unknown>[] = [
   { ...createDefaultColumnConfig('ping'), name: 'Ping', sorter: numberSorter },
 ];
 
-export const PlayerPanel = (props, context) => {
-  const { act, data } = useBackend<PlayerPanelData>(context);
+export const PlayerPanel = () => {
+  const { act, data } = useBackend<PlayerPanelData>();
   const { players } = data;
-  const [search, setSearch] = useLocalState(context, 'search', '');
-  const [sort, setSort] = useLocalState<SortConfig>(context, 'sort', null);
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState<SortConfig>(null);
   let resolvedPlayers = Object.keys(players).map(ckey => players[ckey]);
 
   // generate all values up front (to avoid having to generate multiple times)

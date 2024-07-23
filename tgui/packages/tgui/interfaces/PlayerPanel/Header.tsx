@@ -5,18 +5,17 @@
  * @license ISC
  */
 
-import { InfernoNode } from 'inferno';
+import { PropsWithChildren } from 'react';
 
 import { Icon, Stack } from '../../components';
 import { SortDirection } from './constant';
 
 interface HeaderProps {
-  children: InfernoNode,
   onSortClick?: () => any,
   sortDirection?: SortDirection,
 }
 
-export const Header = (props: HeaderProps) => {
+export const Header = (props: PropsWithChildren<HeaderProps>) => {
   const {
     children,
     onSortClick,
