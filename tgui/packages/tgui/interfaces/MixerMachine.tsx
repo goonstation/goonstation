@@ -5,12 +5,13 @@
  * @license ISC
  */
 
+import { Box, Button, Flex, Image, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const MixerItem = (props, context) => {
-  const { act } = useBackend(context);
+export const MixerItem = (props) => {
+  const { act } = useBackend();
 
   const { mixerItem, working } = props;
 
@@ -25,7 +26,7 @@ export const MixerItem = (props, context) => {
         nowrap
         icon="eject"
         color="blue"
-        title={"Eject " + mixerItem.name}
+        tooltip={`Eject ${mixerItem.name}`}
         textAlign="center"
         disabled={working}
         onClick={() => act("eject", { index: mixerItem.index })} />
@@ -41,8 +42,14 @@ export const MixerItem = (props, context) => {
   );
 };
 
-export const MixerMachine = (props, context) => {
-  const { data, act } = useBackend(context);
+interface MixerMachineData {
+  maxItems;
+  mixerContents;
+  working;
+}
+
+export const MixerMachine = () => {
+  const { data, act } = useBackend<MixerMachineData>();
   const items = data.mixerContents;
   return (
     <Window
@@ -67,7 +74,7 @@ export const MixerMachine = (props, context) => {
               mt="0.5rem"
               backgroundColor="green"
               icon="check"
-              title={"Start Mixing"}
+              tooltip="Start Mixing"
               textAlign="center"
               disabled={data.working || items.length === 0}
               onClick={() => act("mix", {})}>Mix
@@ -76,7 +83,7 @@ export const MixerMachine = (props, context) => {
             <Button
               backgroundColor="blue"
               icon="eject"
-              title={"Eject All"}
+              tooltip="Eject All"
               textAlign="center"
               disabled={data.working || items.length === 0}
               onClick={() => act("ejectAll", {})}>Eject All
