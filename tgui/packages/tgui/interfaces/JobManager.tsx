@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { Button, Collapsible, LabeledList, NoticeBox, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Collapsible, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 const JobItem = ({ name, count, limit, type, onEdit, onAlterCap, onRemove }) => (
@@ -56,8 +57,15 @@ const JobCategory = ({ title, jobs, act }) => (
   </Collapsible>
 );
 
-export const JobManager = (props, context) => {
-  const { act, data } = useBackend(context);
+interface JobManagerData {
+  allowSpecialJobs;
+  hiddenJobs;
+  specialJobs;
+  stapleJobs;
+}
+
+export const JobManager = () => {
+  const { act, data } = useBackend<JobManagerData>();
 
   const {
     stapleJobs = [],
