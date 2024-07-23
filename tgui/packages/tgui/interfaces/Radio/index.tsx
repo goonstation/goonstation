@@ -5,8 +5,9 @@
  * @license MIT
  */
 
+import { AnimatedNumber, Box, Button, Knob, LabeledList, Section, Stack, Table } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { AnimatedNumber, Box, Button, Knob, LabeledList, Section, Stack, Table } from '../../components';
 import { formatFrequency } from '../../format';
 import { Window } from '../../layouts';
 import { RadioData, RadioWires } from './type';
@@ -16,8 +17,8 @@ const MAX_FREQ = 1489;
 const MIN_CODE = 1;
 const MAX_CODE = 100;
 
-export const Radio = (_props, context) => {
-  const { data, act } = useBackend<RadioData>(context);
+export const Radio = () => {
+  const { data, act } = useBackend<RadioData>();
 
   const setFrequency = (value: number, finish: boolean) => {
     act('set-frequency', { value, finish });
@@ -28,7 +29,7 @@ export const Radio = (_props, context) => {
 
 
   return (
-    <Window width="280" height="400" title={data.name}>
+    <Window width={280} height={400} title={data.name}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
