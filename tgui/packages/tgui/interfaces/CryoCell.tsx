@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { AnimatedNumber, Box, Button, Dimmer, Icon, LabeledList, ProgressBar, Section } from "tgui-core/components";
+
 import { useBackend } from "../backend";
-import { AnimatedNumber, Box, Button, Dimmer, Icon, LabeledList, ProgressBar, Section } from "../components";
 import { damageNum, HealthStat } from '../components/goon/HealthStat';
 import { Window } from '../layouts';
 import { KeyHealthIndicators } from './common/KeyHealthIndicators/index';
@@ -14,7 +15,18 @@ import { MobStatuses } from './common/MobStatus';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
-export const CryoCell = (_props, context) => {
+interface CryoCellData {
+  cellTemp;
+  containerData;
+  hasDefib;
+  occupant;
+  status;
+  reagentScanActive;
+  reagentScanEnabled;
+  showBeakerContents;
+}
+
+export const CryoCell = () => {
   return (
     <Window
       width={485}
@@ -28,8 +40,8 @@ export const CryoCell = (_props, context) => {
   );
 };
 
-const CryoCellControl = (props, context) => {
-  const { act, data } = useBackend(context);
+const CryoCellControl = () => {
+  const { act, data } = useBackend<CryoCellData>();
   const { cellTemp, status } = data;
   return (
     <Section title="Cryo Cell Control System">
@@ -40,7 +52,10 @@ const CryoCellControl = (props, context) => {
           color={getTemperatureColor(cellTemp)}
           mb="1rem">
           <Icon name={getTemperatureIcon(cellTemp)} pr={0.5} />
-          <AnimatedNumber value={(cellTemp - 273.15).toPrecision(4)} /> °C
+          <AnimatedNumber
+            value={(cellTemp - 273.15)}
+            format={(value) => value.toPrecision(4)}
+          /> °C
         </Box>
         <Button
           icon="power-off"
@@ -54,8 +69,8 @@ const CryoCellControl = (props, context) => {
     </Section>);
 };
 
-const Occupant = (props, context) => {
-  const { act, data } = useBackend(context);
+const Occupant = () => {
+  const { act, data } = useBackend<CryoCellData>();
   const { occupant, reagentScanEnabled, reagentScanActive, hasDefib } = data;
   const occupantStatus = occupant ? MobStatuses[occupant.occupantStat] : null;
 
@@ -136,8 +151,8 @@ const Occupant = (props, context) => {
   );
 };
 
-export const Beaker = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Beaker = () => {
+  const { act, data } = useBackend<CryoCellData>();
   const { showBeakerContents, containerData } = data;
   return (
     <Section title="Beaker"
