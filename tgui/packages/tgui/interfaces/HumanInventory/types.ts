@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author Lynncubus (https://github.com/Lynncubus)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 
 export type HumanInventoryData = {

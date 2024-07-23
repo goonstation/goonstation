@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author Lynncubus (https://github.com/Lynncubus)
+ * @license MIT
+ */
+
 import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
