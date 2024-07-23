@@ -1771,8 +1771,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	src.inhand_image.pixel_x = 0
 	src.inhand_image.pixel_y = hand_offset
 
+/// Move item to turf, and snap its pixel offsets to a grid of the input size.
 /obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2, centered = 1, offsetx = 0, offsety = 0)
-	// a nice copypaste from /obj/proc/place_on
 	. = FALSE
 	if (src && !isghostdrone(user))
 		var/dirbuffer
