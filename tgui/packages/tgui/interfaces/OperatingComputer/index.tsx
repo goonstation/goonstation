@@ -1,6 +1,7 @@
 
+import { Box, Chart, ColorBox, Section, Stack, Table, Tabs } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { Box, Chart, ColorBox, Section, Stack, Table, Tabs } from '../../components';
 import { HealthStat } from '../../components/goon/HealthStat';
 import { COLORS } from '../../constants';
 import { Window } from '../../layouts';
@@ -22,11 +23,11 @@ import {
   PatientSummaryProps,
 } from './type';
 
-export const OperatingComputer = (props, context) => {
-  const [tabIndex, setTabIndex] = useSharedState(context, 'tabIndex', 1);
+export const OperatingComputer = () => {
+  const [tabIndex, setTabIndex] = useSharedState('tabIndex', 1);
 
   return (
-    <Window title="Operating Computer" width="560" height="760">
+    <Window title="Operating Computer" width={560} height={760}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
@@ -98,8 +99,8 @@ const HealthSummary = (props) => {
   );
 };
 
-const PatientTab = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
+const PatientTab = () => {
+  const { data } = useBackend<OperatingComputerData>();
   return (
     <Section>
       <DisplayTitle
@@ -262,8 +263,8 @@ const DisplayLimb = (props:DisplayLimbProps) => {
   );
 };
 
-const DisplayVitals = (props, context) => {
-  const { data } = useBackend<OperatingComputerData>(context);
+const DisplayVitals = () => {
+  const { data } = useBackend<OperatingComputerData>();
   const processedData = processStatsData(data.patient_data);
   const oxy = data.occupied ? Math.floor(data.oxygen).toString() : "--";
   const oxy_data = data.occupied && processedData ? processedData["oxygen"] : [];
