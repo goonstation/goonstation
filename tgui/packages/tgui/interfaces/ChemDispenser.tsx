@@ -8,9 +8,10 @@
 
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
-import { AnimatedNumber, Box, Button, Icon, Input, Modal, NumberInput, Section, Stack, Tabs } from 'tgui-core/components';
+import { AnimatedNumber, Box, Icon, Input, Modal, NumberInput, Section, Stack, Tabs } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../backend';
+import { Button } from '../components';
 import { Window } from '../layouts';
 import { MatterState, MatterStateIconMap, Reagent, ReagentContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
