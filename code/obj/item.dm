@@ -1786,8 +1786,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.set_loc(target)
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			var/grid32 = (32 / grid)
-			var/gridx = round( round((text2num(params["icon-x"]) - 16) / grid32, 1) * grid32 + grid32 / 2 * centered, 1)
-			var/gridy = round( round((text2num(params["icon-y"]) - 16) / grid32, 1) * grid32 + grid32 / 2 * centered, 1)
-			src.pixel_x = gridx + offsetx
-			src.pixel_y = gridy + offsety
+			// the inner round is flooring, the outer round is rounding, yes that's right
+			var/gridx = round( round((text2num(params["icon-x"])) / grid32) * grid32 + grid32 / 2 * centered, 1)
+			var/gridy = round( round((text2num(params["icon-y"])) / grid32) * grid32 + grid32 / 2 * centered, 1)
+			src.pixel_x = gridx + offsetx - 16 // -16 to center the sprite
+			src.pixel_y = gridy + offsety - 16
 		. = TRUE
