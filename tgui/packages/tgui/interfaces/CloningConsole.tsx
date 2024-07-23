@@ -7,11 +7,34 @@
 */
 
 import { clamp } from 'common/math';
+import { useState } from 'react';
+import { Box, Button, ColorBox, Flex, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Stack, Tabs } from 'tgui-core/components';
 
-import { useBackend, useLocalState, useSharedState } from '../backend';
-import { Box, Button, ColorBox, Flex, Icon, LabeledList, Modal, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
+import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goon/HealthStat';
 import { Window } from '../layouts';
+
+interface CloningConsoleData {
+  allowMindErasure,
+  allowedToDelete,
+  balance,
+  cloneHack,
+  cloneRecords,
+  clonesForCash,
+  cloningWithRecords,
+  completion,
+  disk,
+  diskReadOnly,
+  geneticAnalysis,
+  meatLevels,
+  message,
+  mindWipe,
+  occupantScanned,
+  podNames,
+  scannerGone,
+  scannerLocked,
+  scannerOccupied,
+}
 
 const Suffixes = ['', 'k', 'M', 'B', 'T'];
 
@@ -62,8 +85,8 @@ const TypedNoticeBox = props => {
   return <NoticeBox {...typeProps} {...rest} />;
 };
 
-export const CloningConsole = (props, context) => {
-  const { data, act } = useBackend(context);
+export const CloningConsole = () => {
+  const { data, act } = useBackend<CloningConsoleData>();
   const {
     balance,
     cloneHack,
@@ -73,9 +96,9 @@ export const CloningConsole = (props, context) => {
   } = data;
 
   // N.B. uses `deletionTarget` that is shared with Records component
-  const [deletionTarget, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
-  const [viewingNote, setViewingNote] = useLocalState(context, 'viewingNote', '');
-  const [tab, setTab] = useSharedState(context, 'tab', Tab.Records);
+  const [deletionTarget, setDeletionTarget] = useState('');
+  const [viewingNote, setViewingNote] = useState<{ id: string, note: string } | null>(null);
+  const [tab, setTab] = useSharedState('tab', Tab.Records);
 
   if (!cloningWithRecords && tab === Tab.Records) {
     setTab(Tab.Pods);
@@ -137,7 +160,7 @@ export const CloningConsole = (props, context) => {
             <Button
               fontSize="26px"
               color="blue"
-              onClick={() => setViewingNote('')}
+              onClick={() => setViewingNote(null)}
               style={{ position: "absolute", top: "5px", right: "5px" }}
             >
               X
@@ -149,8 +172,8 @@ export const CloningConsole = (props, context) => {
                 icon="trash"
                 mx={1}
                 onClick={() => {
-                  setViewingNote('');
                   act("deleteNote", { id: viewingNote.id });
+                  setViewingNote(null);
                 }}
               />
             )}
@@ -197,7 +220,12 @@ export const CloningConsole = (props, context) => {
             <StatusSection />
           </Stack.Item>
           <Stack.Item grow={1}>
-            {(tab === Tab.Records && !!cloningWithRecords) && <Records />}
+            {(tab === Tab.Records && !!cloningWithRecords) && (
+              <Records
+                setDeletionTarget={setDeletionTarget}
+                setViewingNote={setViewingNote}
+              />
+            )}
             {tab === Tab.Pods && <Pods />}
             {tab === Tab.Functions && <Functions />}
           </Stack.Item>
@@ -207,8 +235,8 @@ export const CloningConsole = (props, context) => {
   );
 };
 
-const Functions = (props, context) => {
-  const { act, data } = useBackend(context);
+const Functions = () => {
+  const { act, data } = useBackend<CloningConsoleData>();
   const {
     allowMindErasure,
     disk,
@@ -311,8 +339,8 @@ const Functions = (props, context) => {
   );
 };
 
-const StatusSection = (props, context) => {
-  const { act, data } = useBackend(context);
+const StatusSection = () => {
+  const { act, data } = useBackend<CloningConsoleData>();
   const {
     scannerLocked,
     occupantScanned,
@@ -403,8 +431,14 @@ const StatusSection = (props, context) => {
   );
 };
 
-const Records = (props, context) => {
-  const { act, data } = useBackend(context);
+interface RecordsProps {
+  setDeletionTarget: (data: string) => void;
+  setViewingNote: (data: { note: string, id: string }) => void;
+}
+
+const Records = (props: RecordsProps) => {
+  const { setDeletionTarget, setViewingNote } = props;
+  const { act, data } = useBackend<CloningConsoleData>();
   const {
     disk,
     diskReadOnly,
@@ -412,17 +446,13 @@ const Records = (props, context) => {
     meatLevels,
   } = data;
   const records = data.cloneRecords || [];
-  // N.B. uses `deletionTarget` that is shared with CloningConsole component
-  const [, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
-  const [viewingNote, setViewingNote] = useLocalState(context, 'viewingNote', '');
-
   return (
     <Flex direction="column" height="100%">
       <Flex.Item>
         <Section
           mb={0}
           title="Records"
-          style={{ 'border-bottom': '2px solid rgba(51, 51, 51, 0.4);' }}
+          style={{ borderBottom: '2px solid rgba(51, 51, 51, 0.4);' }}
         >
           <Flex className="cloning-console__flex__head">
             <Flex.Item className="cloning-console__head__row" mr={2}>
@@ -533,7 +563,7 @@ const Records = (props, context) => {
                         <Button
                           icon={(!!diskReadOnly || !!record.saved) ? '' : 'save'}
                           color="blue"
-                          alignText="center"
+                          textAlign="center"
                           width="22px"
                           disabled={record.saved || diskReadOnly}
                           onClick={() => act('saveToDisk', { id: record.id })}
@@ -577,8 +607,8 @@ const Records = (props, context) => {
   );
 };
 
-const Pods = (props, context) => {
-  const { data } = useBackend(context);
+const Pods = () => {
+  const { data } = useBackend<CloningConsoleData>();
   const {
     completion,
     meatLevels,
