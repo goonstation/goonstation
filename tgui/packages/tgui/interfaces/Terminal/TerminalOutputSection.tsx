@@ -5,16 +5,15 @@
  * @license ISC
  */
 
+import { Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Section } from '../../components';
+import { Box } from '../../components';
 import { TerminalData, TerminalOutputSectionProps } from './types';
 
-export const TerminalOutputSection = (props: TerminalOutputSectionProps, context) => {
-  const { data } = useBackend<TerminalData>(context);
-  const {
-    fontColor,
-    bgColor,
-  } = data;
+export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
+  const { data } = useBackend<TerminalData>();
+  const { fontColor, bgColor } = data;
   const { displayHTML } = props;
 
   return (
