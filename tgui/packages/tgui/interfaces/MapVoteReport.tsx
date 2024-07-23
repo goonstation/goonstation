@@ -28,8 +28,8 @@ export interface MapVoteReportData {
 const BASE_HEIGHT = 70;
 const VOTERS_HEIGHT = 80;
 
-export const MapVoteReport = (_props, context) => {
-  const { data } = useBackend<MapVoteReportData>(context);
+export const MapVoteReport = () => {
+  const { data } = useBackend<MapVoteReportData>();
   const { mapList, winner, isDetailed } = data;
 
   const height = BASE_HEIGHT
