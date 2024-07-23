@@ -1,10 +1,23 @@
+import { Button, Divider, LabeledList, NumberInput } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, NumberInput } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 
-export const PortablePump = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PortablePumpData {
+  connected;
+  direction_out;
+  holding;
+  maxPressure;
+  maxRelease;
+  minRelease;
+  on;
+  pressure;
+  targetPressure;
+}
+
+export const PortablePump = () => {
+  const { act, data } = useBackend<PortablePumpData>();
 
   const {
     connected,
@@ -45,7 +58,8 @@ export const PortablePump = (props, context) => {
                 value={targetPressure}
                 minValue={minRelease}
                 maxValue={maxRelease}
-                onChange={(e, newTargetPressure) => act("set-pressure", { targetPressure: newTargetPressure })} />
+                step={1}
+                onChange={(newTargetPressure) => act("set-pressure", { targetPressure: newTargetPressure })} />
               <Button
                 onClick={() => act("set-pressure", { targetPressure: maxRelease })}
                 content="Max" />
