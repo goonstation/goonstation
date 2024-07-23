@@ -1,4 +1,7 @@
 
+(t)tue jul 23 24
+(u)Sord
+(+)Tasers have a new sound when they hit a mob
 (t)mon jul 22 24
 (u)LeahTheTech
 (*)The arcfiend jolt ability is no longer interrupted by attacks and now shoots periodic arcs of electricity at nearby mobs.
