@@ -173,7 +173,6 @@
 				T = trait_instance
 			if(T.afterlife_blacklisted && inafterlifebar(owner))
 				return
-			// TODO: probably fix syntax
 			var/resolved_role = owner?.mind?.assigned_role || src.mind_role_fallback
 			if (T.preventAddTrait(owner, resolved_role))
 				return
