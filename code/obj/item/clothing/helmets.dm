@@ -25,6 +25,7 @@
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
+	path_prot = 0
 
 	setupProperties()
 		..()
@@ -271,6 +272,7 @@
 	item_state = "s_helmet"
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
 	seal_hair = 1
+	path_prot = 0
 	acid_survival_time = 5 MINUTES
 
 	setupProperties()

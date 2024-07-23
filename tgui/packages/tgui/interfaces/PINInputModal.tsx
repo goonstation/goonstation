@@ -8,7 +8,7 @@
 import { Loader } from './common/Loader';
 import { KEY_0, KEY_9, KEY_BACKSPACE, KEY_ENTER, KEY_ESCAPE, KEY_NUMPAD_0, KEY_NUMPAD_9, KEY_NUMPAD_DECIMAL } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { Autofocus, Button, NoticeBox, Section, Stack } from '../components';
+import { Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type PINInputData = {
@@ -75,7 +75,6 @@ export const PINInputModal = (_, context) => {
           onClick(number);
         }
       }}>
-        <Autofocus />
         {giveWarning ? (
           <NoticeBox danger>
             The PIN you entered is outside the valid range of {min_value}-{max_value}.

@@ -704,7 +704,6 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	density = 1
 	anchored = UNANCHORED
 	p_class = 6
-	can_leghole = FALSE
 	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
 	var/homeloc = null
 

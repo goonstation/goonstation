@@ -2,7 +2,6 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
 	anchored = ANCHORED_ALWAYS
-	layer = ABOVE_OBJ_LAYER //layer over mirrors
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0

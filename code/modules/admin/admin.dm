@@ -1498,47 +1498,24 @@ var/global/noir = 0
 				if (A)
 					usr.client.check_reagents_internal(A, refresh = 1)
 
-		if ("checkreagent_add")
-			if (src.level >= LEVEL_SA)
-				var/atom/A = locate(href_list["target"])
-				if (A)
-					usr.client.addreagents(A)
-					usr.client.check_reagents_internal(A, refresh = 1)
-
-		if ("checkreagent_flush")
-			if (src.level >= LEVEL_SA)
-				var/atom/A = locate(href_list["target"])
-				if (A)
-					usr.client.flushreagents(A)
-					usr.client.check_reagents_internal(A, refresh = 1)
-
 		if ("removereagent")
-			// similar to /client/proc/addreagents, but in a different place.
-			// originally limited to mobs, but i made it any atoms
-			if (src.level < LEVEL_SA)
-				tgui_alert(usr, "You need to be at least a Secondary Administrator to remove reagents.")
-				return
+			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+				var/mob/M = locate(href_list["target"])
 
-			var/atom/A = locate(href_list["target"])
+				if (!M.reagents) // || !target.reagents.total_volume)
+					boutput(usr, SPAN_NOTICE("<b>[M] contains no reagents.</b>"))
+					return
+				var/datum/reagents/reagents = M.reagents
 
-			if (!A.reagents) // || !target.reagents.total_volume)
-				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
-				return
-			var/datum/reagents/reagents = A.reagents
-
-			var/pick_id
-			var/pick
-			if (href_list["skip_pick"])
-				pick_id = href_list["skip_pick"]
-				pick = href_list["skip_pick"]
-			else
 				var/list/target_reagents = list()
+				var/pick
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 					target_reagents += current_reagent.name
 				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
+				var/pick_id
 				if(!isnull(reagents.reagent_list[pick]))
 					pick_id = pick
 				else
@@ -1548,24 +1525,24 @@ var/global/noir = 0
 							pick_id = current_reagent.id
 							break
 
-			if (!pick_id)
-				return
+				if (pick_id)
+					var/string_version
 
-			var/amt = input("How much of [pick]?", "Remove Reagent") as null|num
-			if (!amt || amt < 0)
-				return
+					var/amt = input("How much of [pick]?","Remove Reagent") as null|num
+					if(!amt || amt < 0)
+						return
 
-			if (A.reagents)
-				if (!A.reagents.remove_reagent(pick_id,amt))
-					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
-					return
+					if (M.reagents)
+						M.reagents.remove_reagent(pick_id,amt)
 
-			boutput(usr, SPAN_SUCCESS("Removed [amt] units of [pick_id] from [A]."))
+					if (string_version)
+						string_version = "[string_version], [amt] \"[pick]\""
+					else
+						string_version = "[amt] \"[pick]\""
 
-			// Brought in line with adding reagents via the player panel (Convair880).
-			logTheThing(LOG_ADMIN, src, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
-			if (ismob(A))
-				message_admins("[key_name(src)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
+					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
+			else
+				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -3413,6 +3390,17 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 
+		if ("view_logs_pathology_strain")
+			if (src.level >= LEVEL_MOD)
+				var/gettxt
+				if (href_list["presearch"])
+					gettxt = href_list["presearch"]
+				else
+					gettxt = input("Which pathogen tree?", "Pathogen tree") in pathogen_controller.pathogen_trees
+
+				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
+				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
+
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -3813,6 +3801,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_BOMBING]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log'>Signaler Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log_string'><small>(Search)</small></A><BR>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log'>Pathology Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log_string'><small>(Search)</small></A>
+				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log'>Chemistry Log</A>

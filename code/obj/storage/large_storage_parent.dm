@@ -47,7 +47,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	var/emagged = 0
 	var/jiggled = 0
 	var/legholes = 0
-	var/can_leghole = TRUE
 	var/flip_health = 3
 	var/can_flip_bust = 0 // Can the trapped mob damage this container by flipping?
 	var/obj/item/card/id/scan = null
@@ -305,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 							return
 						src._health = src._max_health
 						src.visible_message(SPAN_ALERT("[user] repairs [src] with [I]."))
-					else if (!src.is_short && !src.legholes && src.can_leghole)
+					else if (!src.is_short && !src.legholes)
 						if (!weldingtool.try_weld(user, 1))
 							return
 						src.legholes = 1

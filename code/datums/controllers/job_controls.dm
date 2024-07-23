@@ -1076,6 +1076,9 @@ var/datum/job_controller/job_controls
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
 	#endif
+	#ifndef CREATE_PATHOGENS
+	excluded_strings += "Pathologist"
+	#endif
 	if (string in excluded_strings)
 		return null
 	var/list/results = list()

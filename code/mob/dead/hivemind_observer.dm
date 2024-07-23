@@ -37,7 +37,7 @@
 		set hidden = 1
 
 	disposing()
-		LAZYLISTREMOVE(observers, src)
+		observers -= src
 		hivemind_owner?.hivemind -= src
 		..()
 

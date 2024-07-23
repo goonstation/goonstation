@@ -1,6 +1,6 @@
 # 🔈 Goonstation Audio Guidelines 🔊
 
-[ToC]
+{%hackmd @ZeWaka/dark-theme %}
 
 ## Creating sound effects for Goonstation
 

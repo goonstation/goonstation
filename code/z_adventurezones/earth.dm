@@ -94,7 +94,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	cal
 		ckey = "mexicat"
 		name = "Office of Cal"
-		active = 2
 	cogwerks
 		ckey = "drcogwerks"
 		name = "Office of Cogwerks"
@@ -242,7 +241,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
-		active = 2
 	tterc
 		ckey = "tterc"
 		name = "Office of Caroline Audibert"

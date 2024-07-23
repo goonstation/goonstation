@@ -147,15 +147,3 @@
 	icon_state = "medical"
 	desc = "A cartridge that restocks the portable nanomed vending machine."
 	vendingType = "port_a_nanomed"
-
-//---------------Job Clothing Vendors--------------//
-
-/obj/item/vending/restock_cartridge/jobclothing
-	name = "generic clothing restock cartridge"
-	icon_state = "clothing"
-	vendingType =  "jobclothing"
-
-/obj/item/vending/restock_cartridge/jobclothing/syndicate
-	name = "syndicate clothing restock cartridge"
-	desc = "A cartridge that restocks syndicate clothing vending machines."
-	vendingType = "jobclothing/syndicate"

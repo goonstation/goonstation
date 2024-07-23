@@ -74,6 +74,7 @@ var/global/logLength = 0
 			if (LOG_PDAMSG) logs[LOG_PDAMSG] += ingameLog
 			if (LOG_SIGNALERS) logs[LOG_SIGNALERS] += ingameLog
 			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
+			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
 			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog

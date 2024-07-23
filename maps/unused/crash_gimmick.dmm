@@ -9093,7 +9093,7 @@
 	},
 /area/russian/radiation)
 "btS" = (
-/obj/fakeobject/microscope,
+/obj/machinery/microscope,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/table/reinforced/chemistry/auto,
@@ -9104,7 +9104,7 @@
 	},
 /area/russian/radiation)
 "btT" = (
-/obj/fakeobject/centrifuge,
+/obj/machinery/centrifuge,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white{
@@ -9416,7 +9416,7 @@
 	},
 /area/russian/radiation)
 "bvh" = (
-/obj/fakeobject/autoclave,
+/obj/machinery/autoclave,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
@@ -9434,7 +9434,7 @@
 	},
 /area/russian/radiation)
 "bvj" = (
-/obj/fakeobject/pathogen_manipulator,
+/obj/machinery/pathogen_manipulator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white{
@@ -9746,7 +9746,7 @@
 	},
 /area/russian/radiation)
 "bvV" = (
-/obj/fakeobject/pathogen_computer{
+/obj/machinery/computer/pathology{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -9998,7 +9998,7 @@
 	},
 /area/russian/radiation)
 "bxo" = (
-/obj/fakeobject/synthomatic,
+/obj/machinery/synthomatic,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -10010,7 +10010,7 @@
 	},
 /area/russian/radiation)
 "bxp" = (
-/obj/fakeobject/pathology_vendor,
+/obj/machinery/vending/pathology,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -10022,7 +10022,7 @@
 	},
 /area/russian/radiation)
 "bxq" = (
-/obj/fakeobject/incubator,
+/obj/machinery/incubator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment/transport,

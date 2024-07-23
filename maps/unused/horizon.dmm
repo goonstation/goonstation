@@ -5883,7 +5883,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/treatment1)
 "arP" = (
-/obj/fakeobject/centrifuge,
+/obj/machinery/centrifuge,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/machinery/firealarm{
@@ -7716,7 +7716,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "axx" = (
-/obj/fakeobject/microscope,
+/obj/machinery/microscope,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/table/reinforced/chemistry/auto,
@@ -7908,7 +7908,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "ayc" = (
-/obj/fakeobject/pathogen_manipulator,
+/obj/machinery/pathogen_manipulator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white,
@@ -8069,7 +8069,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "ayD" = (
-/obj/fakeobject/pathogen_computer{
+/obj/machinery/computer/pathology{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -8440,12 +8440,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "azu" = (
-/obj/fakeobject/autoclave,
+/obj/machinery/autoclave,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "azv" = (
-/obj/fakeobject/synthomatic,
+/obj/machinery/synthomatic,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -8454,7 +8454,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "azw" = (
-/obj/fakeobject/pathology_vendor,
+/obj/machinery/vending/pathology,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -8641,7 +8641,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aAf" = (
-/obj/fakeobject/incubator,
+/obj/machinery/incubator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment/transport,
@@ -13240,10 +13240,6 @@
 /obj/item/storage/wall/fire,
 /turf/simulated/shuttle/wall/escape,
 /area/station/hallway/secondary/exit)
-"aNn" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "aNo" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -28796,7 +28792,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/junk,
+/obj/random_item_spawner,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "bER" = (
@@ -28981,6 +28977,9 @@
 "bFs" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 6
 	},
@@ -44808,9 +44807,7 @@
 	})
 "czu" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/station/science/artifact{
-	name = "Artifact Lounge"
-	})
+/area/supply/delivery_point)
 "czv" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/storage/scanner{
@@ -48007,6 +48004,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
+"fgn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/airless/random,
+/area/space)
 "fgx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49895,10 +49897,6 @@
 /obj/mapping_helper/access/syndie_shuttle,
 /turf/simulated/floor/black/grime,
 /area/listeningpost)
-"irf" = (
-/obj/machinery/status_display,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/engineering)
 "irt" = (
 /obj/table/wood/auto,
 /obj/disposalpipe/segment/morgue{
@@ -53113,11 +53111,6 @@
 	},
 /turf/space,
 /area/space)
-"nCz" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/status_display/market,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/east)
 "nCW" = (
 /obj/item/currency/spacecash/ten,
 /turf/simulated/floor/plating/random,
@@ -97810,7 +97803,7 @@ mml
 mml
 mVf
 onx
-ctY
+fgn
 aaa
 aaa
 aaa
@@ -128822,7 +128815,7 @@ mha
 bzG
 bCt
 bFs
-irf
+bzU
 bLe
 bOq
 bRa
@@ -129119,7 +129112,7 @@ cBx
 bmE
 mhW
 xFm
-nCz
+bmE
 oqk
 bdT
 fRr
@@ -132437,7 +132430,7 @@ wWH
 aAk
 aAk
 bkk
-aNn
+bkk
 bmP
 bpV
 clg

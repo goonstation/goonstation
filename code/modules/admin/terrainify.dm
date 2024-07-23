@@ -56,7 +56,7 @@ var/datum/station_zlevel_repair/station_repair = new
 						new src.weather_effect(T)
 				T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
-	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE, season=null)
+	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
 		var/list/turfs_to_fix = get_turfs_to_fix()
 		clear_out_turfs(turfs_to_fix)
 
@@ -65,51 +65,8 @@ var/datum/station_zlevel_repair/station_repair = new
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
 
-		set_station_season(season)
-
 		if (remove_parallax)
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
-
-
-	proc/set_station_season(season)
-		switch(season)
-			if("Winter")
-#ifndef SEASON_WINTER
-				for(var/turf/simulated/floor/grass/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-					T.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
-
-				for_by_tcl(V, /obj/machinery/vending)
-					if(V.z != Z_LEVEL_STATION)
-						continue
-
-					if(istype(V,/obj/machinery/vending/jobclothing/research))
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
-					else if(istype(V,/obj/machinery/vending/jobclothing/engineering))
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
-					else if(istype(V,/obj/machinery/vending/jobclothing/medical))
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/genetics, 2)
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/nurse, 2)
-					else if(istype(V,/obj/machinery/vending/jobclothing/security))
-						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
-#endif
-			if("Autumn")
-#ifndef SEASON_AUTUMN
-				for(var/turf/simulated/floor/grass/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-					T.try_set_icon_state(T.icon_state + "_autumn", T.icon)
-					if(istype(T, /turf/simulated/floor/auto/grass/leafy))
-						var/turf/simulated/floor/auto/grass/leafy/edgy_turf = T
-						edgy_turf.icon_state_edge = "leafy_edge_autumn"
-
-				for(var/turf/simulated/floor/grasstodirt/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-					T.try_set_icon_state("autumntodirt", T.icon)
-
-				for_by_tcl(S, /obj/shrub)
-					if(S.z != Z_LEVEL_STATION)
-						continue
-					S.try_set_icon_state(S.icon_state + "_autumn", S.icon)
-#endif
 
 	proc/get_turfs_to_fix()
 		. = list()
@@ -819,7 +776,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/winterify
 	name = "Winter Station"
 	desc = "Turns space into a colder snowy place"
-	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"), "Season"=list("None", "Winter"))
+	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
 	New()
@@ -862,7 +819,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(params["Prefabs"])
 				place_prefabs(10)
 
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, season=params["Season"])
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
 
 			log_terrainify(user, "turned space into a snowscape.")
@@ -870,7 +827,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/forestify
 	name = "Forest Station"
 	desc = "Turns space into a lush and wooden place"
-	additional_options = list("Mining"=list("None", "Normal", "Rich"), "Season"=list("None", "Autumn"))
+	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Spooky"=FALSE)
 
 	New()
@@ -906,7 +863,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(params["Prefabs"])
 				place_prefabs(10)
 
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, season=params["Season"])
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
 
 			if(params["Spooky"])

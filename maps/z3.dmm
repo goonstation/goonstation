@@ -7357,7 +7357,7 @@
 /turf/space,
 /area/space)
 "aLz" = (
-/obj/fakeobject/pathology_vendor,
+/obj/machinery/vending/pathology,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedmedicalship)
 "aLA" = (
@@ -7402,6 +7402,7 @@
 /area/abandonedmedicalship)
 "aLH" = (
 /obj/table/auto,
+/obj/item/synthmodule/assistant,
 /turf/simulated/floor/airless/damaged4,
 /area/abandonedmedicalship)
 "aLI" = (
@@ -12021,6 +12022,7 @@
 /area/h7)
 "bag" = (
 /obj/table/auto,
+/obj/item/synthmodule/radiation,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -12065,7 +12067,6 @@
 /area/abandonedoutpostthing)
 "bau" = (
 /obj/table/auto,
-/obj/fakeobject/microscope,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -12286,7 +12287,7 @@
 	},
 /area/h7)
 "bbl" = (
-/obj/fakeobject/pathogen_manipulator,
+/obj/machinery/pathogen_manipulator,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -12527,12 +12528,12 @@
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "bbZ" = (
+/obj/machinery/synthomatic,
 /obj/machinery/light,
-/obj/fakeobject/synthomatic,
 /turf/simulated/floor/purplewhite,
 /area/abandonedoutpostthing)
 "bcb" = (
-/obj/fakeobject/centrifuge,
+/obj/machinery/centrifuge,
 /turf/simulated/floor/purplewhite,
 /area/abandonedoutpostthing)
 "bcg" = (
@@ -12569,6 +12570,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bcm" = (
+/obj/item/synthmodule/synthesizer,
 /obj/storage/crate,
 /obj/item/grinder_upgrade,
 /turf/simulated/floor/purplewhite{
@@ -21747,7 +21749,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
 "sFV" = (
-/obj/fakeobject/pathogen_computer{
+/obj/machinery/computer/pathology{
 	dir = 4
 	},
 /turf/simulated/floor/purplewhite{

@@ -17,6 +17,7 @@ datum
 		var/id = "reagent"
 		var/description = ""
 		var/datum/reagents/holder = null
+		var/list/pathogen_nutrition = null
 		var/reagent_state = SOLID
 		var/data = null
 		var/volume = 0
@@ -238,10 +239,17 @@ datum
 				return
 			if (!holder)
 				holder = M.reagents
-			var/deplRate = src.calculate_depletion_rate(M, mult)
-
+			var/deplRate = depletion_rate
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
+				if (H.traitHolder.hasTrait("slowmetabolism"))
+					deplRate /= 2
+				if (H.organHolder && !ischangeling(H))
+					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+						deplRate /= 2
+					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+						deplRate /= 2
+
 				if (H.sims)
 					if (src.thirst_value)
 						H.sims.affectMotive("Thirst", thirst_value)
@@ -251,7 +259,7 @@ datum
 						H.sims.affectMotive("Bladder", bladder_value)
 					if (src.energy_value)
 						H.sims.affectMotive("Energy", energy_value)
-
+			deplRate = deplRate * mult
 			if (addiction_prob)
 				src.handle_addiction(M, deplRate, addiction_prob)
 
@@ -266,19 +274,6 @@ datum
 
 			if(M && overdose > 0) check_overdose(M, mult)
 			return
-
-		///This calculates the depletion rate of a chem. In case you want to modify the result of the chems normal depletion rate
-		proc/calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
-			SHOULD_CALL_PARENT(TRUE)
-
-			var/resulting_depletion = src.depletion_rate * mult
-			if (isliving(affected_mob))
-				var/mob/living/living_mob = affected_mob
-				resulting_depletion *= living_mob.get_chem_depletion_multiplier()
-
-			return resulting_depletion
-
-
 
 		//when we entirely drained from sstem, do this
 		proc/on_mob_life_complete(var/mob/M)
@@ -316,7 +311,7 @@ datum
 
 
 
-		proc/handle_addiction(var/mob/living/M, var/rate, var/addProb)
+		proc/handle_addiction(var/mob/M, var/rate, var/addProb)
 			//DEBUG_MESSAGE("[src.id].handle_addiction([M],[rate])")
 			var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 			if (AD)
@@ -341,13 +336,13 @@ datum
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb))
 				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
-				AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
+				AD = new
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday
 				AD.name = "[src.name] addiction"
 				AD.affected_mob = M
 				AD.max_severity = src.max_addiction_severity
-				M.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
+				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
 			if (addiction_min < current_tally + 3 && !ON_COOLDOWN(M, "addiction_warn_[src.id]", 5 MINUTES))

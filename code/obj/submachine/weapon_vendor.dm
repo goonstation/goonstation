@@ -521,7 +521,7 @@
 */
 /datum/materiel/utility/belt
 	name = "Tactical Espionage Belt"
-	path = /obj/item/storage/fanny/syndie/large
+	path = /obj/item/storage/fanny/syndie
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife

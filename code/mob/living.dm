@@ -351,7 +351,7 @@
 	return ..()
 
 /mob/living/detach_hud(datum/hud/hud)
-	if (length(observers)) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
+	if (observers.len) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
 		for (var/mob/dead/target_observer/observer in observers)
 			observer.detach_hud(hud)
 	return ..()
@@ -2130,6 +2130,13 @@
 	else
 		shock_damage = 1 * prot
 
+	if (H)
+		for (var/uid in H.pathogens)
+			var/datum/pathogen/P = H.pathogens[uid]
+			shock_damage = P.onshocked(shock_damage, wattage)
+			if (!shock_damage)
+				return 0
+
 	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
@@ -2297,12 +2304,6 @@
 		else
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
-
-
-/// Returns a multiplier for how much chems to deplete from their reagent holder per Life()
-/// This will be multiplied by that chems corresponding depletion rate
-/mob/living/proc/get_chem_depletion_multiplier()
-	return 1
 
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()

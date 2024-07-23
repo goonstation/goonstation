@@ -6777,12 +6777,12 @@
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
 /obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left/standard,
-/obj/item/parts/robot_parts/leg/right/standard,
+/obj/item/parts/robot_parts/leg/left,
+/obj/item/parts/robot_parts/leg/right,
 /obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/left,
+/obj/item/parts/robot_parts/arm/right,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
 /obj/item/pen/pencil,
@@ -11189,11 +11189,11 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "eVd" = (
+/obj/machinery/vending/standard,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -19374,6 +19374,7 @@
 	rand_pos = 0
 	},
 /obj/disposalpipe/segment/mail,
+/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
 	pixel_y = 6;
@@ -26228,8 +26229,8 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right/standard,
-/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right,
 /obj/machinery/light/incandescent/greenish,
 /obj/item/device/multitool,
 /obj/decal/tile_edge/stripe{
@@ -31300,6 +31301,7 @@
 	name = "Corpse Tunnel"
 	})
 "nNJ" = (
+/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
 	pixel_x = 14;
@@ -44506,10 +44508,6 @@
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
 /area/station/engine/monitoring)
-"tCN" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/primary/south)
 "tCO" = (
 /obj/table/reinforced/auto,
 /obj/item/weldingtool{
@@ -51296,10 +51294,6 @@
 /area/station/security/brig{
 	name = "Brig Bathroom"
 	})
-"wBj" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "wBp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -102109,7 +102103,7 @@ tvO
 tvO
 tvO
 oEt
-tCN
+ldM
 wXJ
 bna
 bna
@@ -106042,7 +106036,7 @@ uKe
 hwm
 lIC
 vSC
-wBj
+tnb
 uDO
 uDO
 uDO

@@ -8997,6 +8997,10 @@
 /obj/item/device/transfer_valve,
 /obj/item/device/transfer_valve,
 /obj/item/hand_labeler,
+/obj/item/device/prox_sensor,
+/obj/item/device/prox_sensor,
+/obj/item/assembly/time_ignite,
+/obj/item/assembly/time_ignite,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bfU" = (
@@ -9385,6 +9389,10 @@
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/atmospheric,
 /obj/item/device/analyzer/atmospheric,
+/obj/item/device/igniter,
+/obj/item/device/igniter,
+/obj/item/device/timer,
+/obj/item/device/timer,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bjv" = (
@@ -11744,9 +11752,6 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
 /turf/simulated/floor,
 /area/station/hangar/science)
 "byu" = (
@@ -12864,13 +12869,13 @@
 	dir = 1;
 	pixel_x = -1
 	},
-/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/listeningpost)
 "bKS" = (
-/obj/machinery/computer/announcement/syndicate,
+/obj/table/auto,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -12944,8 +12949,8 @@
 	},
 /area/listeningpost)
 "bLd" = (
+/obj/storage/closet/syndicate/personal,
 /obj/window/east,
-/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "green2"
@@ -12971,7 +12976,9 @@
 	dir = 8
 	},
 /obj/table/wood/round/auto,
+/obj/item/clothing/under/misc/syndicate,
 /obj/item/clothing/shoes/swat,
+/obj/item/clothing/head/helmet/space/syndicate,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "green2"
@@ -16522,10 +16529,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
-"ega" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "ege" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -26073,6 +26076,9 @@
 /area/station/quartermaster/office)
 "lsP" = (
 /obj/machinery/vending/paint/broken,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "lsX" = (
@@ -26241,7 +26247,7 @@
 	dir = 4;
 	pixel_x = -15
 	},
-/obj/machinery/vending/standard/toxins,
+/obj/machinery/vending/standard,
 /turf/simulated/floor,
 /area/station/science/lab)
 "lzy" = (
@@ -40655,10 +40661,6 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
-"wvO" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/supernorn,
-/area/station/garden/aviary)
 "wwE" = (
 /obj/machinery/computer/airbr/emergency_shuttle{
 	density = 0;
@@ -82399,7 +82401,7 @@ abe
 aaw
 aap
 aap
-wvO
+acl
 lsP
 ovf
 bxj
@@ -86325,7 +86327,7 @@ aaa
 sqY
 plf
 bzy
-ega
+bzy
 aar
 lqn
 bsu

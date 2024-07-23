@@ -6,6 +6,7 @@
 // Outpost self-destruct !nuke!
 // A wirenet -> wireless link thing.
 // A printer! All the fun of printing, now in SS13!
+// Pathogen manipulator TO-DO
 // Security system monitor
 // A dangerous teleportation-oriented testing apparatus.
 // Generic testing appartus

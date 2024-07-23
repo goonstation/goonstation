@@ -21651,7 +21651,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med/sea,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
@@ -22785,7 +22785,6 @@
 /obj/landmark/start/job/assistant,
 /obj/item/device/radio/intercom,
 /obj/stool/chair/pool,
-/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -22921,7 +22920,6 @@
 	pixel_x = -6;
 	pixel_y = 16
 	},
-/obj/item/crowbar,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -25587,7 +25585,19 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "kIX" = (
-/obj/machinery/vending/jobclothing/syndicate,
+/obj/storage/closet/syndicate,
+/obj/item/clothing/under/misc/syndicate{
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/storage/fanny/syndie,
+/obj/item/device/multitool{
+	pixel_x = 5
+	},
+/obj/item/crowbar,
+/obj/item/cell/supercell/charged{
+	pixel_y = -8
+	},
 /turf/simulated/floor/red,
 /area/listeningpost)
 "kJh" = (
@@ -34000,7 +34010,6 @@
 "omm" = (
 /obj/landmark/start/job/assistant,
 /obj/stool/chair/pool,
-/obj/item/clothing/glasses/sunglasses/tanning,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -43016,12 +43025,6 @@
 	pixel_x = -2;
 	pixel_y = 15
 	},
-/obj/item/cell/supercell/charged{
-	pixel_y = -8
-	},
-/obj/item/device/multitool{
-	pixel_x = 5
-	},
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
 "sqP" = (
@@ -43206,10 +43209,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
-"stG" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/cargooffice)
 "stQ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44816,7 +44815,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "tdf" = (
-/obj/machinery/computer/announcement/syndicate,
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_x = -7
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "tdj" = (
@@ -47988,13 +47992,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
-"usV" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/status_display/market,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage{
-	name = "Cargo Auxiliary Endpoint"
-	})
 "uti" = (
 /obj/surgery_tray,
 /obj/machinery/light/small/floor/netural,
@@ -103153,7 +103150,7 @@ kqZ
 wbj
 wmh
 cqc
-stG
+oxJ
 mIV
 mIV
 qTA
@@ -104368,7 +104365,7 @@ ktm
 bHE
 wxe
 cLn
-usV
+oUb
 jkd
 pAd
 qcD

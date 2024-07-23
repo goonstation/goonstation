@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.1
+        uses: hecrj/setup-rust-action@v2.0.0
 
       - uses: actions/setup-node@v4
         with:
@@ -38,7 +38,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
@@ -74,7 +73,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: robinraju/release-downloader@v1.11
+      - uses: robinraju/release-downloader@v1.9
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
@@ -92,8 +91,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: /home/runner/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
+          path: $HOME/BYOND
+          key: ${{ runner.os }}-byond
 
       - name: Setup BYOND
         run: |
@@ -135,8 +134,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: /home/runner/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
+          path: $HOME/BYOND
+          key: ${{ runner.os }}-byond
 
       - name: Setup BYOND
         run: |
@@ -155,7 +154,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.1
+        uses: hecrj/setup-rust-action@v2.0.0
 
       - uses: actions/setup-node@v4
         with:

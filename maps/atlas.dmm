@@ -6795,10 +6795,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = 23
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -10247,11 +10243,20 @@
 /area/listeningpost)
 "aNo" = (
 /obj/rack,
-/obj/item/tank/oxygen,
+/obj/item/clothing/suit/space/syndicate,
+/obj/item/clothing/head/helmet/space/syndicate,
+/obj/item/tank/jetpack,
 /turf/simulated/floor/red,
 /area/listeningpost)
+"aNq" = (
+/obj/storage/closet,
+/obj/item/clothing/under/misc/syndicate,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "aNr" = (
-/obj/machinery/vending/jobclothing/syndicate,
+/obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -10480,14 +10485,13 @@
 /turf/space,
 /area/space)
 "aOh" = (
+/obj/table/auto,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/computer/announcement/syndicate{
-	dir = 4
-	},
+/obj/item/pinpointer/disk,
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
@@ -10660,8 +10664,17 @@
 	dir = 4
 	},
 /area/listeningpost)
+"aOO" = (
+/obj/rack,
+/turf/simulated/floor/red,
+/area/listeningpost)
+"aOQ" = (
+/obj/storage/closet,
+/obj/item/clothing/under/misc/syndicate,
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "aOR" = (
-/obj/machinery/vending/jobclothing/syndicate,
+/obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -13237,6 +13250,21 @@
 /area/station/engine/coldloop)
 "aYN" = (
 /obj/table/auto,
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/timer,
+/obj/item/device/prox_sensor{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/assembly/time_ignite,
+/obj/item/device/igniter,
 /obj/item/device/analyzer/atmospheric,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
@@ -15144,6 +15172,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/status_display{
+	pixel_x = 32
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -16643,7 +16674,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "koV" = (
-/obj/machinery/vending/standard/toxins,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -17970,10 +18001,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"odD" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "ofD" = (
 /turf/simulated/floor/white/side{
 	dir = 5
@@ -18150,10 +18177,6 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"oSa" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/supernorn,
-/area/station/storage/tools)
 "oSG" = (
 /obj/machinery/microwave{
 	pixel_y = 6;
@@ -18232,6 +18255,8 @@
 	},
 /area/station/medical/medbay)
 "oYk" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
 /obj/machinery/light{
 	layer = 3
 	},
@@ -19037,11 +19062,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
-"rkG" = (
-/obj/table/auto,
-/obj/item/pinpointer/disk,
-/turf/simulated/floor/circuit/red,
-/area/listeningpost)
 "rlI" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/purpleish{
@@ -19118,10 +19138,6 @@
 /obj/submachine/cargopad/artlab,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
-	},
-/obj/item/cargotele{
-	pixel_x = 5;
-	pixel_y = 8
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
@@ -21064,6 +21080,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "xce" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -63263,7 +63281,7 @@ aAr
 abD
 abN
 abD
-odD
+abN
 bie
 adX
 aeI
@@ -65990,7 +66008,7 @@ aco
 ahA
 ahA
 ahA
-oSa
+ahA
 ahA
 aca
 alU
@@ -94825,7 +94843,7 @@ aNG
 aNQ
 aUH
 aOv
-rkG
+aNG
 ohq
 aaa
 aaa
@@ -97243,7 +97261,7 @@ aZF
 aOA
 aNe
 aUH
-aNo
+aOO
 aNf
 aMX
 aYB
@@ -98141,7 +98159,7 @@ aaa
 aaa
 acl
 aNe
-aOB
+aNq
 aUH
 aNe
 aNZ
@@ -98149,7 +98167,7 @@ aJf
 aNX
 aNe
 aUH
-aNY
+aOQ
 aNe
 aJe
 aaa
@@ -98443,7 +98461,7 @@ aaa
 aaa
 aaa
 ohq
-aOB
+aNq
 aUH
 aNe
 aNY
@@ -98451,7 +98469,7 @@ aJf
 aOB
 aNe
 aUH
-aNY
+aOQ
 ohq
 aaa
 aaa
@@ -98745,7 +98763,7 @@ aaa
 aaa
 aaa
 ohq
-aOB
+aNq
 aUH
 aNL
 aOa
@@ -98753,7 +98771,7 @@ aFQ
 aOa
 aNL
 aUH
-aNY
+aOQ
 ohq
 aaa
 aaa

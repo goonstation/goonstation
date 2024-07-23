@@ -427,7 +427,7 @@ datum
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(1 * mult)
 				if (prob(10))
-					M.reagents.add_reagent("histamine", randfloat(12.5 , 37.5) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("histamine", rand(5,15) * mult)
 				..()
 				return
 
@@ -837,7 +837,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(6))
-					M.reagents.add_reagent("histamine", randfloat(11 , 33.4) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("histamine", rand(1,3) * mult)
 				if (prob(2))
 					boutput(M, SPAN_ALERT("<b><font size='[rand(2,5)]'>AHHHHHH!</font></b>"))
 					random_brute_damage(M,5 * mult)
@@ -1361,7 +1361,7 @@ datum
 
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(125, 250) * src.calculate_depletion_rate(M, mult))
+					M.reagents.add_reagent("histamine", rand(5,10) * mult)
 				if (our_amt < 20)
 					M.take_toxin_damage(0.75 * mult)
 					random_brute_damage(M, 0.75 * mult)
@@ -1932,6 +1932,7 @@ datum
 			fluid_b = 0
 			transparency = 255
 			depletion_rate = 2
+			pathogen_nutrition = list("dna_mutagen")
 
 			var/tmp/progress_timer = 1
 

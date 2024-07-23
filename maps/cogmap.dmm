@@ -4235,7 +4235,7 @@
 /obj/item/pen,
 /obj/machinery/light{
 	dir = 1;
-	pixel_y = 3
+	pixel_y = 21
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
@@ -23531,7 +23531,6 @@
 /area/station/quartermaster/office)
 "bGX" = (
 /obj/grille/steel,
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bGY" = (
@@ -25840,16 +25839,38 @@
 	dir = 4
 	},
 /obj/item/device/analyzer/atmospheric{
-	pixel_x = -2;
+	pixel_x = -9;
 	pixel_y = 12
 	},
 /obj/item/device/analyzer/atmospheric{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -9
+	},
+/obj/item/device/timer{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/device/timer{
 	pixel_x = -2;
 	pixel_y = 7
 	},
-/obj/item/device/analyzer/atmospheric{
+/obj/item/device/timer{
 	pixel_x = -2;
 	pixel_y = 2
+	},
+/obj/item/device/igniter{
+	pixel_x = 9;
+	pixel_y = 14
+	},
+/obj/item/device/igniter{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/device/igniter{
+	pixel_x = 9
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -27779,7 +27800,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bWt" = (
-/obj/machinery/vending/standard/toxins,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bWw" = (
@@ -36410,7 +36431,8 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "czS" = (
-/obj/machinery/computer/announcement/syndicate,
+/obj/table/wood/auto,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "czT" = (
@@ -36426,8 +36448,8 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "czW" = (
+/obj/storage/closet/syndicate/personal,
 /obj/decal/stripe_caution,
-/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor,
 /area/listeningpost)
 "czX" = (
@@ -36537,6 +36559,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/item/clothing/under/misc/syndicate,
+/obj/item/clothing/under/misc/syndicate,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
@@ -38488,6 +38512,18 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"dvf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Power Room"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_control,
+/turf/simulated/floor/grime,
+/area/station/engine/power)
 "dvn" = (
 /obj/item/device/radio/intercom/medical{
 	dir = 4
@@ -43918,9 +43954,8 @@
 	},
 /area/station/hallway/primary/south)
 "huq" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	can_rupture = 0;
-	dir = 10
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
@@ -45221,18 +45256,6 @@
 	icon_state = "L3"
 	},
 /area/station/crew_quarters/market)
-"irs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Monkey Pen"
-	},
-/obj/mapping_helper/access/medical,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/medical/medbay)
 "isN" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -45348,18 +45371,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
-"ixR" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Psychiatrist's Office"
-	},
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/darkblue,
-/area/station/medical/medbay/psychiatrist)
 "ixY" = (
 /obj/stool/bed,
 /obj/item/device/radio/intercom/engineering{
@@ -45580,12 +45591,6 @@
 	dir = 10
 	},
 /area/station/quartermaster/office)
-"iIF" = (
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/science/storage)
 "iIP" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -48797,6 +48802,9 @@
 	dir = 6
 	},
 /obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
@@ -48834,18 +48842,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/ranch)
-"lsz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Power Room"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_control,
-/turf/simulated/floor/grime,
-/area/station/engine/power)
 "lsA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -50156,6 +50152,12 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"mxm" = (
+/obj/machinery/door/airlock/pyro/medical,
+/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "mxI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50334,7 +50336,6 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/status_display/market,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "mDt" = (
@@ -51910,6 +51911,28 @@
 /area/station/engine/coldloop)
 "nPn" = (
 /obj/table/auto,
+/obj/item/assembly/time_ignite{
+	pixel_x = 13;
+	pixel_y = 13
+	},
+/obj/item/assembly/time_ignite{
+	pixel_x = 1;
+	pixel_y = 14
+	},
+/obj/item/assembly/time_ignite{
+	pixel_x = -11;
+	pixel_y = 15
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = -12
+	},
+/obj/item/device/prox_sensor{
+	pixel_y = -1
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 12;
+	pixel_y = -2
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "nPp" = (
@@ -52442,6 +52465,18 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"okt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Psychiatrist's Office"
+	},
+/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "okz" = (
 /obj/decal/poster/wallsign/stencil/left/g{
 	pixel_x = -10
@@ -53610,12 +53645,6 @@
 /area/station/maintenance/storage{
 	name = "Medical Storage"
 	})
-"pbG" = (
-/obj/machinery/door/airlock/pyro/medical,
-/obj/mapping_helper/access/medical,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/darkblue,
-/area/station/medical/medbay/psychiatrist)
 "pbM" = (
 /obj/machinery/firealarm/south,
 /obj/machinery/plantpot,
@@ -54067,29 +54096,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"prR" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	icon_state = "eng_locked";
-	locked = 1;
-	name = "Substation Access"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_engine,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/hotloop)
 "prW" = (
 /obj/stool/chair{
 	dir = 8
@@ -54293,6 +54299,32 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
+"pAQ" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Electrical Substation"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "aipower";
+	enter_id = "outer";
+	name = "AI Power"
+	},
+/obj/mapping_helper/access/engineering_control,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload_foyer)
 "pCg" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/firedoor_spawn,
@@ -57398,10 +57430,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"rYg" = (
-/obj/machinery/status_display/market,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/cargooffice)
 "rYi" = (
 /obj/decal/stripe_caution,
 /obj/cable{
@@ -58520,6 +58548,18 @@
 /obj/machinery/status_display,
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/secwing)
+"sNO" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Monkey Pen"
+	},
+/obj/mapping_helper/access/pathology,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/medical/medbay)
 "sOG" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -62252,32 +62292,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
-"vHz" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Electrical Substation"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/mapping_helper/airlock/cycler{
-	cycle_id = "aipower";
-	enter_id = "outer";
-	name = "AI Power"
-	},
-/obj/mapping_helper/access/engineering_control,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload_foyer)
 "vHP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -63419,6 +63433,29 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"wBg" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	icon_state = "eng_locked";
+	locked = 1;
+	name = "Substation Access"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/hotloop)
 "wCc" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -65170,7 +65207,6 @@
 	pixel_x = -2;
 	pixel_y = 10
 	},
-/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "xZQ" = (
@@ -91713,7 +91749,7 @@ bOd
 bHW
 bYT
 huq
-iIF
+cak
 ite
 ced
 cfl
@@ -100497,7 +100533,7 @@ dJb
 ubz
 sfo
 sfo
-pbG
+mxm
 lkr
 upK
 cEi
@@ -101404,7 +101440,7 @@ mky
 mky
 mky
 ucm
-ixR
+okt
 hGk
 hGk
 hGk
@@ -104727,7 +104763,7 @@ dgt
 dhj
 dhj
 wIS
-irs
+sNO
 cjk
 aah
 adC
@@ -108298,7 +108334,7 @@ bvO
 bwF
 bxx
 bxx
-vHz
+pAQ
 bxx
 bxx
 bCh
@@ -109204,7 +109240,7 @@ bqk
 emN
 lLd
 izk
-prR
+wBg
 bqk
 bqk
 bqk
@@ -111630,7 +111666,7 @@ ogp
 bsN
 bGw
 piQ
-lsz
+dvf
 bHo
 hRQ
 bLU
@@ -123102,7 +123138,7 @@ adC
 iWf
 mSG
 mwn
-rYg
+smf
 fRt
 bGX
 pNt

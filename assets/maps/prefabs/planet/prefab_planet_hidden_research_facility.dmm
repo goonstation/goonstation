@@ -18,7 +18,7 @@
 /turf/simulated/floor/white,
 /area/noGenerate)
 "fR" = (
-/obj/fakeobject/pathogen_manipulator,
+/obj/machinery/pathogen_manipulator,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/noGenerate)
@@ -179,11 +179,11 @@
 /turf/simulated/floor/black,
 /area/noGenerate)
 "wS" = (
-/obj/fakeobject/synthomatic,
+/obj/machinery/synthomatic,
 /turf/simulated/floor/white,
 /area/noGenerate)
 "xV" = (
-/obj/fakeobject/pathogen_computer,
+/obj/machinery/computer/pathology,
 /turf/simulated/floor/white,
 /area/noGenerate)
 "yn" = (
@@ -351,7 +351,7 @@
 /turf/simulated/floor/white,
 /area/noGenerate)
 "OU" = (
-/obj/fakeobject/centrifuge,
+/obj/machinery/centrifuge,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/noGenerate)

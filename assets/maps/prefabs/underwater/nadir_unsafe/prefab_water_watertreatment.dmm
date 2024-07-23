@@ -253,7 +253,7 @@
 /area/prefab/water_treatment)
 "bi" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/fakeobject/microscope,
+/obj/machinery/microscope,
 /turf/simulated/floor/redblack{
 	icon_state = "redblack";
 	dir = 10

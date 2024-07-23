@@ -1004,9 +1004,14 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/fridge/pathology
 	name = "pathology lab fridge"
-	desc = "Looks like it's been raided before the shift started."
 	req_access = list(access_medical_lockers)
+	//PATHOLOGY REMOVAL
+	#ifdef CREATE_PATHOGENS
+	spawn_contents = list(/obj/item/reagent_containers/glass/vial/prepared = 10,
+	/obj/item/reagent_containers/syringe/antiviral = 3)
+	#else
 	spawn_contents = list(/obj/item/reagent_containers/syringe/antiviral = 3)
+	#endif
 
 /* ================ */
 /* ----- Misc ----- */

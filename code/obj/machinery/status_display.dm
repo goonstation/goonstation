@@ -29,32 +29,31 @@ TYPEINFO(/obj/machinery/status_display)
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 
-	/// Current mode of the display
-	var/mode = STATUS_DISPLAY_SHUTTLE
+	var/mode = 1	// 0 = Blank
+					// 1 = Shuttle timer
+					// 2 = Arbitrary message(s)
+					// 3 = alert picture
+					// 4 = Supply shuttle timer  -- NO LONGER SUPPORTED
+					// 5 = Research station destruct timer
+					// 6 = Mining Ore Score Tracking -- NO LONGER SUPPORTED
+					// 7 = Nuclear Operative Timer
 
-	/// icon_state of alert picture
-	var/picture_state
-	/// message line 1
-	var/message1 = ""
-	/// message line 2
-	var/message2 = ""
-	// display index for scrolling messages or 0 if non-scrolling
-	var/index1
+	var/picture_state	// icon_state of alert picture
+	var/message1 = ""	// message line 1
+	var/message2 = ""	// message line 2
+	var/index1			// display index for scrolling messages or 0 if non-scrolling
 	var/index2
 	var/use_maptext = TRUE
 
-	// the cached last displays
-	var/lastdisplayline1 = ""
+	var/lastdisplayline1 = ""		// the cached last displays
 	var/lastdisplayline2 = ""
 
 	var/net_id = null
-	var/frequency = FREQ_STATUS_DISPLAY
+	var/frequency = FREQ_STATUS_DISPLAY		// radio frequency
 
-	/// Screen will show zeta station self destruct messages
-	var/zeta_selfdestruct = FALSE
+	var/display_type = 0		// bitmask of messages types to display: 0=normal  1=supply shuttle  2=reseach stn destruct
 
-	/// Repeat update this ptick
-	var/repeat_update = FALSE
+	var/repeat_update = FALSE	// true if we are going to update again this ptick
 
 	/// Reference to the nuclear bomb in Nuclear Operatives mode
 	var/obj/machinery/nuclearbomb/the_bomb = null
@@ -112,12 +111,12 @@ TYPEINFO(/obj/machinery/status_display)
 	process()
 		if(status & NOPOWER)
 			maptext = ""
-			src.ClearAllOverlays()
+			ClearAllOverlays()
 			return
 
 		..()
 
-		src.update()
+		update()
 
 
 	// set what is displayed
@@ -126,19 +125,23 @@ TYPEINFO(/obj/machinery/status_display)
 			return
 
 		switch(mode)
-			if(STATUS_DISPLAY_BLANK)
+			if(0)
 				maptext = ""
-				src.ClearAllOverlays()
+				ClearAllOverlays()
 
-			if(STATUS_DISPLAY_SHUTTLE)
-				if(emergency_shuttle?.online)
+			if(1)	// shuttle timer
+				if(emergency_shuttle.online)
 					var/displayloc
 					if(emergency_shuttle.location == SHUTTLE_LOC_STATION)
 						displayloc = "ETD "
 					else
 						displayloc = "ETA "
 
-					update_display_lines(displayloc, get_shuttle_timer())
+					var/displaytime = get_shuttle_timer()
+					if(length(displaytime) > MAX_LEN)
+						displaytime = "**~**"
+
+					update_display_lines(displayloc, displaytime)
 
 					if(repeat_update)
 						var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
@@ -157,7 +160,7 @@ TYPEINFO(/obj/machinery/status_display)
 				else
 					set_picture("default")
 
-			if(STATUS_DISPLAY_MESSAGE)
+			if(2)
 				var/line1
 				var/line2
 				var/line_len = use_maptext ? 4 : 5
@@ -192,10 +195,8 @@ TYPEINFO(/obj/machinery/status_display)
 						repeat_update = TRUE
 
 				update_display_lines(line1,line2)
-			if(STATUS_DISPLAY_MARKET)
-				update_display_lines("TRADE", get_market_timer())
 
-			if(STATUS_DISPLAY_NUCLEAR) // Nuclear Operative Bomb Armed!
+			if(7) // Nuclear Operative Bomb Armed!
 				if(QDELETED(src.the_bomb))
 					if(ticker.mode.type == /datum/game_mode/nuclear)
 						var/datum/game_mode/nuclear/game_mode = ticker.mode
@@ -251,11 +252,6 @@ TYPEINFO(/obj/machinery/status_display)
 		lastdisplayline1 = null
 		lastdisplayline2 = null
 
-	/// Generate the time left text for our display
-	proc/timeleft_to_text(var/timeleft) // note ~ translates into a smaller :
-		. = "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
-		if(length(.) > MAX_LEN)
-			. = "**~**"
 #undef MAX_LEN
 
 	proc/set_maptext(var/line1, var/line2)
@@ -315,19 +311,12 @@ TYPEINFO(/obj/machinery/status_display)
 			UpdateOverlays(null, "overlay_image")
 			UpdateOverlays(crt_image, "crt")
 
-
-	/// Get text for next shipping market shift
-	proc/get_market_timer()
-		var/timeleft = shippingmarket.timeleft()
-		if(timeleft)
-			return src.timeleft_to_text(round(timeleft/10))
-		return ""
-
-	/// Get text for next emergency shuttle milestone (arriving, departing, centcom)
+	// return shuttle timer as text
 	proc/get_shuttle_timer()
 		var/timeleft = emergency_shuttle.timeleft()
 		if(timeleft)
-			return src.timeleft_to_text(timeleft)
+			return "[add_zero(num2text((timeleft / 60) % 60),2)]~[add_zero(num2text(timeleft % 60), 2)]"
+			// note ~ translates into a smaller :
 		return ""
 
 	receive_signal(datum/signal/signal)
@@ -338,54 +327,46 @@ TYPEINFO(/obj/machinery/status_display)
 			return
 
 		switch(signal.data["command"])
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT)
-				src.mode = initial(src.mode)
-				src.update()
+			if("blank")
+				mode = 0
 
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_BLANK)
-				src.mode = STATUS_DISPLAY_BLANK
+			if("shuttle")
+				mode = 1
+				repeat_update = TRUE
 
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_SHUTTLE)
-				src.mode = STATUS_DISPLAY_SHUTTLE
-				src.repeat_update = TRUE
+			if("message")
+				mode = 2
+				set_message(strip_html(signal.data["msg1"]), strip_html(signal.data["msg2"]))
 
-			if(STATUS_DISPLAY_PACKET_MODE_MESSAGE)
-				src.mode = STATUS_DISPLAY_MESSAGE
-				src.set_message(strip_html(signal.data["msg1"]), strip_html(signal.data["msg2"]))
+			if("alert")
+				mode = 3
+				set_picture(signal.data["picture_state"])
 
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT)
-				src.mode = STATUS_DISPLAY_PICTURE
-				src.set_picture(signal.data["picture_state"])
-
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_MARKET)
-				src.mode = STATUS_DISPLAY_MARKET
-				src.repeat_update = TRUE
-
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_SELFDES)
-				if(src.zeta_selfdestruct)
-					src.mode = STATUS_DISPLAY_SELFDES
+			if("destruct")
+				if(display_type & 2)
+					mode = 5
 					var/timeleft = signal.data["time"]
 					if(text2num(timeleft) <= 30)
-						src.set_picture_overlay("destruct_small", "d[timeleft]")
+						set_picture_overlay("destruct_small", "d[timeleft]")
 					else
-						src.set_picture("destruct")
+						set_picture("destruct")
 
-			if(STATUS_DISPLAY_PACKET_MODE_DISPLAY_NUCLEAR)
-				src.mode = STATUS_DISPLAY_NUCLEAR
-				src.repeat_update = TRUE
+			if("nuclear")
+				mode = 7
+				repeat_update = TRUE
 
-/// Shows the time to market shift by default
-/obj/machinery/status_display/market
-	name = "market shift status display"
-	mode = STATUS_DISPLAY_MARKET
 
-/// Will show the zeta station self-destruct countdown
+/obj/machinery/status_display/supply_shuttle
+	name = "status display"
+
+
 /obj/machinery/status_display/research
-	zeta_selfdestruct = TRUE
+	name = "status display"
+	display_type = 2
 
 /obj/machinery/status_display/mining
 	name = "mining display"
-	mode = STATUS_DISPLAY_ROCKBOX
+	mode = 6
 
 TYPEINFO(/obj/machinery/ai_status_display)
 	mats = list("metal" = 2,

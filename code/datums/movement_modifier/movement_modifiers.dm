@@ -291,6 +291,11 @@
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
 
+// pathogen stuff
+
+/datum/movement_modifier/patho_oxygen
+	multiplicative_slowdown = 0.75
+
 // shivering
 
 /datum/movement_modifier/shiver

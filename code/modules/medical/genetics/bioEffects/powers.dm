@@ -2216,9 +2216,6 @@
 
 	OnLife(var/mult)
 		..()
-		if(src.safety && src.stability_loss)
-			src.owner.bioHolder.genetic_stability += src.stability_loss
-			src.stability_loss = 0
 
 		if (count < ticks_to_explode)
 			count += mult

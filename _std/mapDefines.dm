@@ -44,6 +44,7 @@
 
 #elif defined(MAP_OVERRIDE_OSHAN)
 #define UNDERWATER_MAP 1
+#define SCIENCE_PATHO_MAP 1
 #define HOTSPOTS_ENABLED 1
 
 #elif defined(MAP_OVERRIDE_NADIR)
@@ -55,6 +56,7 @@
 #define UNDERWATER_MAP 1
 #define MOVING_SUB_MAP 1
 #define SUBMARINE_MAP 1
+#define SCIENCE_PATHO_MAP 1
 
 #elif defined(MAP_OVERRIDE_DESTINY)
 

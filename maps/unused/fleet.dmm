@@ -60,11 +60,6 @@
 /area/station/solar/small_backup3{
 	name = "Tenebrae Solar Array"
 	})
-"al" = (
-/obj/table/wood/auto,
-/obj/fakeobject/microscope,
-/turf/simulated/floor/airless,
-/area/space)
 "am" = (
 /obj/lattice,
 /turf/space,
@@ -82,6 +77,11 @@
 /obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
+/turf/simulated/floor/airless,
+/area/space)
+"ap" = (
+/obj/table/wood/auto,
+/obj/machinery/microscope,
 /turf/simulated/floor/airless,
 /area/space)
 "aq" = (
@@ -17437,6 +17437,25 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"MR" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/atmosphere/mixercontrol{
+	frequency = 1225;
+	id = "engine_combust_control";
+	mixerid = "engine_combust";
+	name = "Gas Mixer Control (Combustion Chamber)";
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
 "MS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21190,25 +21209,6 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
-	})
-"Ur" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/computer/atmosphere/mixercontrol{
-	frequency = 1225;
-	id = "engine_combust_control";
-	mixerid = "engine_combust";
-	name = "Gas Mixer Control (Combustion Chamber)";
-	dir = 4
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/power{
-	name = "Erebus Power Room"
 	})
 "Ut" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -76501,7 +76501,7 @@ GD
 Xi
 Mz
 MI
-Ur
+MR
 Ng
 Xi
 NA
@@ -92017,7 +92017,7 @@ aa
 aa
 aa
 af
-al
+ap
 aw
 aC
 ah

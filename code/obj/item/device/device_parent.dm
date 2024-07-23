@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/device)
 /obj/item/device
 	icon = 'icons/obj/items/device.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'

@@ -8960,7 +8960,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Ll" = (
-/obj/fakeobject/microscope{
+/obj/machinery/microscope{
 	pixel_y = 5
 	},
 /obj/table/reinforced/chemistry/auto/chemstorage,

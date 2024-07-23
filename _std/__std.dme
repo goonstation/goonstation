@@ -11,7 +11,6 @@
 #include "mapDefines.dm"			// knowing if we're underwater is important for some later macros
 #include "setup.dm"					// initializes important stuff for later macros
 #include "defines\_units.dm"		// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
-#include "macros\_unit_conversions.dm"
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "address.dm"
 #include "types.dm"					// stuff like childrentypesof()
@@ -86,6 +85,7 @@
 #include "defines\movement.dm"
 #include "defines\mutantraces.dm"
 #include "defines\obj.dm"
+#include "defines\pathology.dm"
 #include "defines\pod_door_access_levels.dm"
 #include "defines\preferences.dm"
 #include "defines\process.dm"
@@ -105,7 +105,6 @@
 #include "defines\spacebee_extension.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
-#include "defines\status_display.dm"
 #include "defines\status_effects.dm"
 #include "defines\storage.dm"
 #include "defines\surgery.dm"

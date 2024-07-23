@@ -27,11 +27,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "_std\__std.dme"
 
 // Secret Code Handling
-#if defined(SPACEMAN_DMM) && !defined(DISABLE_SECRETS) // For StrongDMM since it dies on the fexists() check - doesn't die if the file doesn't exist
+#if fexists("+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS)
 #include "+secret\__secret.dme"
-#endif
-#if fexists("./+secret/__secret.dme") && !defined(FASTDMM) && !defined(DISABLE_SECRETS) && !defined(SECRETS_ENABLED)
-#include ".\+secret\__secret.dme" // This needs to be a ""different path""
 #endif
 #include "code\__secret_public.dme"
 
@@ -391,6 +388,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\gamemodes\pod_wars.dm"
 #include "code\datums\gamemodes\revolution.dm"
 #include "code\datums\gamemodes\salvager.dm"
+#include "code\datums\gamemodes\spy.dm"
 #include "code\datums\gamemodes\spy_theft.dm"
 #include "code\datums\gamemodes\traitor.dm"
 #include "code\datums\gamemodes\vampire.dm"
@@ -1505,6 +1503,17 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\genetics\bioEffects\powers.dm"
 #include "code\modules\medical\genetics\bioEffects\speech.dm"
 #include "code\modules\medical\genetics\bioEffects\useless.dm"
+#include "code\modules\medical\pathology\_pathogen_constants.dm"
+#include "code\modules\medical\pathology\pathogen.dm"
+#include "code\modules\medical\pathology\pathogen_ailments.dm"
+#include "code\modules\medical\pathology\pathogen_benevolent.dm"
+#include "code\modules\medical\pathology\pathogen_dna.dm"
+#include "code\modules\medical\pathology\pathogen_helpers.dm"
+#include "code\modules\medical\pathology\pathogen_machines.dm"
+#include "code\modules\medical\pathology\pathogen_microbodies.dm"
+#include "code\modules\medical\pathology\pathogen_suppressants.dm"
+#include "code\modules\medical\pathology\pathogen_symptoms.dm"
+#include "code\modules\medical\pathology\pathogen_tools.dm"
 #include "code\modules\mentor\mentorhelp.dm"
 #include "code\modules\minimap\minimap.dm"
 #include "code\modules\minimap\minimap_marker.dm"
@@ -1674,7 +1683,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\status_system\statusFoodBad.dm"
 #include "code\modules\status_system\statusFoodBuffs.dm"
 #include "code\modules\status_system\statusSystem.dm"
-#include "code\modules\storage\machine.dm"
 #include "code\modules\storage\no_hud.dm"
 #include "code\modules\storage\storage.dm"
 #include "code\modules\storage\unholdable.dm"
@@ -1831,7 +1839,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\shieldgen.dm"
 #include "code\obj\soup_pot.dm"
 #include "code\obj\spawner.dm"
-#include "code\obj\statue.dm"
 #include "code\obj\stool.dm"
 #include "code\obj\structure.dm"
 #include "code\obj\table.dm"

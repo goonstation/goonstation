@@ -14,7 +14,7 @@ TYPEINFO(/turf/simulated/wall)
 	density = 1
 	gas_impermeable = 1
 	pathable = 1
-	flags = FLUID_DENSE
+	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
 	default_material = "steel"

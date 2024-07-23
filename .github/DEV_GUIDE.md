@@ -2,6 +2,8 @@
 
 [ToC]
 
+{%hackmd @ZeWaka/dark-theme %}
+
 ## :exclamation: Disclaimer
 
 This guide is the one to follow to get started developing and making changes to Goonstation.<br>
