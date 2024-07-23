@@ -1,11 +1,24 @@
+import { Button, Divider, LabeledList, NumberInput, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReagentGraph } from './common/ReagentInfo';
 
-export const PortableScrubber = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PortableScrubberData {
+  connected,
+  on,
+  holding,
+  inletFlow,
+  pressure,
+  maxPressure,
+  maxFlow,
+  minFlow,
+  reagent_container,
+}
+
+export const PortableScrubber = () => {
+  const { act, data } = useBackend<PortableScrubberData>();
 
   const {
     connected,
@@ -46,7 +59,8 @@ export const PortableScrubber = (props, context) => {
                 value={inletFlow}
                 minValue={minFlow}
                 maxValue={maxFlow}
-                onChange={(e, newInletFlow) => act("set-inlet-flow", { inletFlow: newInletFlow })} />
+                step={1}
+                onChange={(newInletFlow) => act("set-inlet-flow", { inletFlow: newInletFlow })} />
               <Button
                 onClick={() => act("set-inlet-flow", { inletFlow: maxFlow })}
                 content="Max" />
