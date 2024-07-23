@@ -6,8 +6,9 @@
  */
 
 
+import { Box, Button, Flex, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { capitalize, glitch } from './common/stringUtils';
 
@@ -22,14 +23,13 @@ const stylizeCode = (attempt, codeLen) => {
   return attempt.padEnd(codeLen, "*").split("").join(" ");
 };
 
-const SecureSafeScreen = (props, _context) => {
+const SecureSafeScreen = (props) => {
   const {
     attempt,
     codeLen,
     disabled,
     emagged,
     padMsg,
-    theme,
   } = props;
 
   let content = padMsg ? padMsg : stylizeCode(attempt, codeLen);
@@ -45,13 +45,13 @@ const SecureSafeScreen = (props, _context) => {
       fontFamily="Courier"
       bold
       textAlign="center"
-      padding="3px"
+      p="3px"
       backgroundColor="#342210"
       style={{
-        "border-width": "0.1em",
-        "border-style": "solid",
-        "border-radius": "0.16em",
-        "border-color": "#FC8E1F",
+        "borderWidth": "0.1em",
+        "borderStyle": "solid",
+        "borderRadius": "0.16em",
+        "borderColor": "#FC8E1F",
       }}
     >
       {content}
@@ -59,7 +59,7 @@ const SecureSafeScreen = (props, _context) => {
   );
 };
 
-const SecureSafeKeyPad = (props, _context) => {
+const SecureSafeKeyPad = (props) => {
   const {
     act,
   } = props;
@@ -128,8 +128,18 @@ const SecureSafeKeyPad = (props, _context) => {
   );
 };
 
-export const SecureSafe = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface SecureSafeData {
+  attempt,
+  codeLen,
+  disabled,
+  emagged,
+  padMsg,
+  safeName,
+  theme,
+}
+
+export const SecureSafe = () => {
+  const { act, data } = useBackend<SecureSafeData>();
   const {
     attempt,
     codeLen,
