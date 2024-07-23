@@ -5,17 +5,29 @@
  * @license MIT
  */
 
-import { capitalize } from '../../common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Input, LabeledList, NumberInput, Section, Stack } from '../components';
+import { capitalize } from 'common/string';
+import { useCallback, useState } from 'react';
+import { Button, Input, LabeledList, NumberInput, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { IDCard } from './common/IDCard';
 import { ListSearch } from './common/ListSearch';
 
-const ReagentSearch = (props, context) => {
-  const { act } = useBackend(context);
+interface ChemRequesterData {
+  chemicals,
+  card,
+  selected_reagent,
+  volume,
+  max_volume,
+  notes,
+  silicon_user,
+}
+
+const ReagentSearch = (props) => {
+  const { act } = useBackend();
   const { chemicals } = props;
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const [searchText, setSearchText] = useState('');
   const filteredReagents = (
     Object.keys(chemicals).filter(chemical => chemical.includes(searchText))
   );
@@ -34,8 +46,8 @@ const ReagentSearch = (props, context) => {
   );
 };
 
-export const ChemRequester = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ChemRequester = () => {
+  const { act, data } = useBackend<ChemRequesterData>();
   const {
     chemicals,
     card,
@@ -45,9 +57,10 @@ export const ChemRequester = (props, context) => {
     notes,
     silicon_user,
   } = data;
-  const [notesText, setNotesText] = useLocalState(context, 'notesText', '');
+  const [notesText, setNotesText] = useState('');
+  const handleNotesInput = useCallback((e, value) => setNotesText(value), []);
   return (
-    <Window title="Chemical request" width={400} height={600}>
+    <Window title="Chemical Request" width={400} height={600}>
       <Window.Content align="center">
         {!!card && (
           <Stack vertical>
@@ -67,14 +80,20 @@ export const ChemRequester = (props, context) => {
             <Stack.Item>
               <LabeledList>
                 <LabeledList.Item label="Amount">
-                  <NumberInput align="left" unit="u" minValue={5} step={5} maxValue={max_volume} value={volume} onChange={(e, value) => { act("set_volume", { volume: value }); }} />
+                  <NumberInput
+                    unit="u"
+                    minValue={5}
+                    step={5}
+                    maxValue={max_volume}
+                    value={volume}
+                    onChange={(value) => { act("set_volume", { volume: value }); }} />
                 </LabeledList.Item>
                 <LabeledList.Item label="Notes">
                   <Input
                     width="100%"
                     value={notesText}
                     maxLength={65}
-                    onInput={setNotesText}
+                    onInput={handleNotesInput}
                     onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}
                   </Input>
                 </LabeledList.Item>

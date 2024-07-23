@@ -19,7 +19,7 @@ interface ListSearchProps {
   onSelect: (value: string) => void,
   options: string[],
   searchPlaceholder?: string,
-  selectedOption: string,
+  selectedOption?: string,
 }
 
 export const ListSearch = (props: ListSearchProps) => {
