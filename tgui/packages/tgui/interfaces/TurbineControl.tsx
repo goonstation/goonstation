@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author Amylizzle https://github.com/amylizzle
+ * @license MIT
+ */
+
 import { Chart, LabeledList, NumberInput, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
