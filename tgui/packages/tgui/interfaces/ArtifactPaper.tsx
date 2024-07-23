@@ -5,12 +5,26 @@
  * @license MIT
  */
 
+import { Button, Flex, Section, TextArea } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 
-export const ArtifactPaper = (props, context) => {
-  const { act, data } = useBackend(context);
+interface ArtifactPaperData {
+  artifactName,
+  artifactOrigin,
+  artifactType,
+  artifactTriggers,
+  artifactFaults,
+  artifactDetails,
+  allArtifactOrigins,
+  allArtifactTypes,
+  allArtifactTriggers,
+  crossed,
+}
+
+export const ArtifactPaper = () => {
+  const { act, data } = useBackend<ArtifactPaperData>();
   const {
     artifactName,
     artifactOrigin,
