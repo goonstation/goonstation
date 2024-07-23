@@ -93,7 +93,7 @@ You can double-click these batch files to achieve the same thing:
 
 - `bin\tgui.bat` - Build the project in production mode.
 - `bin\tgui-dev-server.bat` - Launch a development server.
-- `bin\tgui-bench.cmd` - Run benchmarks.
+- `bin\tgui-bench.bat` - Run benchmarks.
 
 **Other Commands**
 - `yarn tgui-polyfill:build` - Build polyfills. You need to run it when updating any of the static (numbered) polyfills.

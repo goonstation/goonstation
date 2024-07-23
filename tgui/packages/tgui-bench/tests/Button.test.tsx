@@ -1,5 +1,5 @@
-import { Button } from 'tgui/components';
 import { createRenderer } from 'tgui/renderer';
+import { Button } from 'tgui-core/components';
 
 const render = createRenderer();
 
