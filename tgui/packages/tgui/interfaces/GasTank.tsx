@@ -1,11 +1,20 @@
+import { LabeledList, RoundGauge, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { LabeledList, RoundGauge, Section } from '../components';
 import { formatPressure } from '../format';
 import { Window } from '../layouts';
 import { ReleaseValve } from './common/ReleaseValve';
 
-export const GasTank = (props, context) => {
-  const { act, data } = useBackend(context);
+interface GasTankData {
+  pressure;
+  maxPressure;
+  maxRelease;
+  releasePressure;
+  valveIsOpen;
+}
+
+export const GasTank = () => {
+  const { act, data } = useBackend<GasTankData>();
 
   const {
     pressure,
