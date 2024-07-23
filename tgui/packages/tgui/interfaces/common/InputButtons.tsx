@@ -5,21 +5,21 @@
  * @license ISC
  */
 
+import { Box, Button, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Stack } from '../../components';
 
- type InputButtonsData = {
- };
+type InputButtonsData = {};
 
- type InputButtonsProps = {
-   input: string | number | null;
-   inputIsValid?: Validator;
- };
+type InputButtonsProps = {
+  input: string | number | null;
+  inputIsValid?: Validator;
+};
 
 export type Validator = {
-   isValid: boolean;
-   error: string | null;
- };
+  isValid: boolean;
+  error: string | null;
+};
 
 export const InputButtons = (props: InputButtonsProps) => {
   const { act } = useBackend<InputButtonsData>();
@@ -34,7 +34,8 @@ export const InputButtons = (props: InputButtonsProps) => {
       pt={0}
       textAlign="center"
       tooltip={inputIsValid?.error || null}
-      width={6}>
+      width={6}
+    >
       {'Submit'}
     </Button>
   );
@@ -45,7 +46,8 @@ export const InputButtons = (props: InputButtonsProps) => {
       onClick={() => act('cancel')}
       pt={0}
       textAlign="center"
-      width={6}>
+      width={6}
+    >
       {'Cancel'}
     </Button>
   );
