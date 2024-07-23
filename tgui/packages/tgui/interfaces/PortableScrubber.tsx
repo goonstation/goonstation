@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author cringe (https://github.com/Laboredih123)
+ * @license MIT
+ */
+
 import { Button, Divider, LabeledList, NumberInput, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';

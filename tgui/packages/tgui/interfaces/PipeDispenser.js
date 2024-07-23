@@ -1,7 +1,7 @@
 /**
  * @file
  * @copyright 2023
- * @author Laboredih123 (https://github.com/Laboredih123)
+ * @author cringe (https://github.com/Laboredih123)
  * @license MIT
  */
 
