@@ -6,9 +6,9 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { ReactNode } from 'react';
+import { Box, ColorBox, Flex, Icon, NoticeBox, ProgressBar, Section, Stack, Tooltip } from 'tgui-core/components';
 
-import { Box, ColorBox, Flex, Icon, NoticeBox, ProgressBar, Section, Stack, Tooltip } from '../../components';
 import { BoxProps } from '../../components/Box';
 import { freezeTemperature } from './temperatureUtils';
 
@@ -150,7 +150,7 @@ interface ReagentListProps extends ReagentInfoProps {
   /**
    * Allows you to render elements (such as buttons) for each reagent in the list.
    */
-  renderButtons?(reagent: Reagent): InfernoNode;
+  renderButtons?(reagent: Reagent): ReactNode;
   /**
    * If you are using the renderButtons property, and you want the buttons to change based on certain dependency
    * value(s), pass the value(s) to this property (in an array if there are multiple dependency values).
@@ -186,7 +186,7 @@ export const ReagentList = (props: ReagentListProps) => {
                 pr={showState && reagent.state ? MatterStateIconMap[reagent.state].pr : 0.9}
                 name={showState && reagent.state ? MatterStateIconMap[reagent.state].icon : "circle"}
                 style={{
-                  "text-shadow": "0 0 3px #000;",
+                  textShadow: "0 0 3px #000;",
                 }}
                 color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
               />
@@ -204,7 +204,7 @@ export const ReagentList = (props: ReagentListProps) => {
               pr={0.9}
               name="circle-o"
               style={{
-                "text-shadow": "0 0 3px #000;",
+                textShadow: "0 0 3px #000;",
               }}
             />
             Empty
@@ -320,11 +320,11 @@ export const ReagentBar = (props: ReagentInfoProps) => {
       </Stack.Item>
       <Stack.Item grow>
         <ProgressBar
+          {...rest}
           value={totalVolume}
           minValue={0}
           maxValue={maxVolume}
           color={finalColor}
-          {...rest}
         />
       </Stack.Item>
       <Stack.Item>
