@@ -4,9 +4,8 @@
  * @author jlsnow301 (https://github.com/jlsnow301)
  * @license ISC
  */
+import { Box } from 'tgui-core/components';
 import { clamp01 } from 'tgui-core/math';
-
-import { Box } from '../../components';
 
 export const Loader = (props) => {
   const { value } = props;

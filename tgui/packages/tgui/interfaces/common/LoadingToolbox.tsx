@@ -3,7 +3,7 @@
  * Licensed under MIT (https://choosealicense.com/licenses/mit/)
  */
 
-import { Dimmer, Icon, Stack } from '../../components';
+import { Dimmer, Icon, Stack } from 'tgui-core/components';
 
 /** Spinner that represents loading states.
  *

@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { BooleanLike } from 'tgui-core/react';
 import { ReactNode } from 'react';
 import {
   Box,
@@ -18,6 +17,7 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { BoxProps } from '../../components/Box';
 import { freezeTemperature } from './temperatureUtils';
@@ -250,8 +250,9 @@ const reagentCheck = (a: Reagent, b: Reagent): boolean => {
     a.colorR !== b.colorR ||
     a.colorG !== b.colorG ||
     a.colorB !== b.colorB
-  )
-    return true; // a property used by ReagentGraph/List has changed, update
+  ) {
+    return true;
+  } // a property used by ReagentGraph/List has changed, update
   return false;
 };
 
@@ -265,8 +266,9 @@ const containerCheck = (
     a.totalVolume !== b.totalVolume ||
     a.finalColor !== b.finalColor ||
     a.maxVolume !== b.maxVolume
-  )
-    return true; // a property used by ReagentGraph/List has changed, update
+  ) {
+    return true;
+  } // a property used by ReagentGraph/List has changed, update
   if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
   if (a.contents && b.contents) {
     for (let i = 0; i < a.contents.length; i++) {
