@@ -4,9 +4,9 @@
  * @author LeahTheTech (https://github.com/TobleroneSwordfish)
  * @license MIT
  */
-import { Button } from '../../components';
+import { Button } from 'tgui-core/components';
 
-export const IDCard = (props, context) => {
+export const IDCard = (props) => {
   if (!props.card) {
     return;
   }
@@ -17,10 +17,11 @@ export const IDCard = (props, context) => {
   return (
     <Button
       icon="eject"
-      content={card.name + ` (${card.role})`}
       tooltip="Clear scanned card"
       tooltipPosition="bottom-end"
       onClick={onEject}
-    />
+    >
+      {`${card.name} (${card.role})`}
+    </Button>
   );
 };
