@@ -1,5 +1,6 @@
+import { Box, Button, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { randInt } from './common/mathUtils';
 import { glitch } from './common/stringUtils';
@@ -16,8 +17,16 @@ const generate_kill = (number) => {
   return out.map((kill, index) => (<Box inline preserveWhitespace fontSize={randInt(11, 25) + "px"} key={index}>{kill}</Box>));
 };
 
-export const TurretControl = (props, context) => {
-  const { act, data } = useBackend(context);
+interface TurretControlData {
+  enabled;
+  lethal;
+  emagged;
+  area;
+  locked;
+}
+
+export const TurretControl = () => {
+  const { act, data } = useBackend<TurretControlData>();
   const {
     enabled,
     lethal,
@@ -72,7 +81,7 @@ export const TurretControl = (props, context) => {
             <Box align="center" fontFamily="Courier New">
               {glitch("ERROR: UNABLE TO READ AUTHORIZATION", 12)}
             </Box>
-            <Box align="center" style={{ "font-size": "20px" }}>
+            <Box align="center" style={{ fontSize: "20px" }}>
               {generate_kill(7)}
             </Box>
           </Box>
