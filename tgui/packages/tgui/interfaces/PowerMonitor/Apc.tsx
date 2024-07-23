@@ -5,8 +5,9 @@
  * @license MIT
  */
 
+import { Box, Chart, LabeledList, Stack, Table, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Chart, LabeledList, Stack, Table, Tooltip } from '../../components';
 import { formatPower } from '../../format';
 import { PowerMonitorApcData, PowerMonitorApcItemData } from './type';
 
@@ -37,8 +38,8 @@ const apcCellState = {
   [2]: 'Charged',
 };
 
-export const PowerMonitorApcGlobal = (_props, context) => {
-  const { data } = useBackend<PowerMonitorApcData>(context);
+export const PowerMonitorApcGlobal = () => {
+  const { data } = useBackend<PowerMonitorApcData>();
 
   const availableHistory = data.history.map((v) => v[0]);
   const availableHistoryData = availableHistory.map((v, i) => [i, v]);
@@ -116,9 +117,9 @@ type PowerMonitorApcTableRowsProps = {
   search: string;
 };
 
-export const PowerMonitorApcTableRows = (props: PowerMonitorApcTableRowsProps, context) => {
+export const PowerMonitorApcTableRows = (props: PowerMonitorApcTableRowsProps) => {
   const { search } = props;
-  const { data } = useBackend<PowerMonitorApcData>(context);
+  const { data } = useBackend<PowerMonitorApcData>();
 
   return (
     <>
@@ -134,11 +135,11 @@ type PowerMonitorApcTableRowProps = {
   search: string;
 };
 
-const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps, context) => {
+const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps) => {
   const { apc, search } = props;
   // Indexed array to lower data transfer between byond and the window.
   const [ref, equipment, lighting, environment, load, cellCharge, cellCharging = 0] = apc;
-  const { data } = useBackend<PowerMonitorApcData>(context);
+  const { data } = useBackend<PowerMonitorApcData>();
   const name = data.apcNames[ref] ?? 'N/A';
 
   if (search && !name.toLowerCase().includes(search.toLowerCase())) {

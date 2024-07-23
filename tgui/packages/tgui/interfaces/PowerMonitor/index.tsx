@@ -5,16 +5,17 @@
  * @license MIT
  */
 
+import { Input, LabeledList, Section, Stack, Table } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../../backend';
-import { Input, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';
 import { PowerMonitorApcGlobal, PowerMonitorApcTableHeader, PowerMonitorApcTableRows } from './Apc';
 import { PowerMonitorSmesGlobal, PowerMonitorSmesTableHeader, PowerMonitorSmesTableRows } from './Smes';
 import { isDataForApc, isDataForSmes, PowerMonitorData } from './type';
 
-export const PowerMonitor = (_props, context) => {
-  const { data } = useBackend<PowerMonitorData>(context);
-  const [search, setSearch] = useSharedState(context, 'search', '');
+export const PowerMonitor = () => {
+  const { data } = useBackend<PowerMonitorData>();
+  const [search, setSearch] = useSharedState('search', '');
 
   return (
     <Window width={700} height={700} theme="retro-dark">
