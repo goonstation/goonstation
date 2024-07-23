@@ -5,25 +5,26 @@
  * @license ISC
  */
 
+import { Box, Input, Section, Stack, TextArea } from 'tgui-core/components';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Input, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 import { InputButtons, Validator } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
- type TextInputData = {
-   max_length: number;
-   message: string;
-   multiline: boolean;
-   placeholder: string;
-   timeout: number;
-   title: string;
-   allowEmpty: boolean;
-   theme: string;
- };
+type TextInputData = {
+  max_length: number;
+  message: string;
+  multiline: boolean;
+  placeholder: string;
+  timeout: number;
+  title: string;
+  allowEmpty: boolean;
+  theme: string;
+};
 
-export const TextInputModal = (_, context) => {
-  const { data } = useBackend<TextInputData>(context);
+export const TextInputModal = () => {
+  const { data } = useBackend<TextInputData>();
   const {
     max_length,
     message,
@@ -34,11 +35,10 @@ export const TextInputModal = (_, context) => {
     allowEmpty,
     theme,
   } = data;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
+  const [input, setInput] = useLocalState('input', placeholder);
   const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    context,
     'inputIsValid',
-    { isValid: allowEmpty || !!message, error: null }
+    { isValid: allowEmpty || !!message, error: null },
   );
   const onType = (event) => {
     event.preventDefault();
@@ -47,11 +47,16 @@ export const TextInputModal = (_, context) => {
     setInput(target.value);
   };
   // Dynamically changes the window height based on the message.
-  const windowHeight
-     = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
+  const windowHeight =
+    130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 
   return (
-    <Window title={title} width={325} height={windowHeight} theme={theme || 'nanotrasen'}>
+    <Window
+      title={title}
+      width={325}
+      height={windowHeight}
+      theme={theme || 'nanotrasen'}
+    >
       {timeout && <Loader value={timeout} />}
       <Window.Content>
         <Section fill>
@@ -75,8 +80,8 @@ export const TextInputModal = (_, context) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
+const InputArea = (props) => {
+  const { act, data } = useBackend<TextInputData>();
   const { multiline } = data;
   const { input, inputIsValid, onType } = props;
 
@@ -117,7 +122,7 @@ const InputArea = (props, context) => {
 };
 
 /** Helper functions */
-const validateInput = (input, max_length, allowEmpty) => {
+const validateInput = (input, max_length: number, allowEmpty: boolean) => {
   if (!!max_length && input.length > max_length) {
     return { isValid: false, error: `Too long!` };
   } else if (input.length === 0 && !allowEmpty) {
