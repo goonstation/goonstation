@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export type HumanInventoryData = {
   name: string;

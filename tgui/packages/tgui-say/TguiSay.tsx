@@ -1,5 +1,5 @@
 import { isEscape, KEY } from 'common/keys';
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 import { Component, createRef, RefObject } from 'react';
 import { dragStartHandler } from 'tgui/drag';
 

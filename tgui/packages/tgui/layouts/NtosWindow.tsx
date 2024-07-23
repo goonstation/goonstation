@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';

@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 import { Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -27,7 +27,13 @@ export const Elevator = (_props: unknown, context: unknown) => {
           Location: <em>{location}</em>
         </Section>
         <Section fontSize={1.5}>
-          <Button onClick={handleSend} disabled={!!active} color={active ? 'grey' : 'green'} icon="elevator" fluid>
+          <Button
+            onClick={handleSend}
+            disabled={!!active}
+            color={active ? 'grey' : 'green'}
+            icon="elevator"
+            fluid
+          >
             {active ? 'Moving' : 'Move Elevator'}
           </Button>
         </Section>

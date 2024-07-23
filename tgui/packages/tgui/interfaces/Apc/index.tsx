@@ -6,13 +6,8 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
-import {
-  Box,
-  Button,
-  LabeledList,
-  Section,
-} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -20,7 +15,12 @@ import { AccessPanelSection } from './AccessPanelSection';
 import { MainSection } from './MainSection';
 import { PowerChannelSection } from './PowerChannelSection';
 import type { ApcData } from './types';
-import { calculateWindowHeight, getHasPermission, getIsAccessPanelVisible, getIsLocalAccess } from './util';
+import {
+  calculateWindowHeight,
+  getHasPermission,
+  getIsAccessPanelVisible,
+  getIsLocalAccess,
+} from './util';
 
 interface CoverLockProps {
   coverlocked: BooleanLike;
@@ -43,7 +43,8 @@ const CoverLock = (props: CoverLockProps) => {
         disabled={!hasPermission && !coverlocked}
         onClick={() => onCoverLockedChange(true)}
         selected={!!coverlocked}
-      >On
+      >
+        On
       </Button>
     </>
   );
@@ -59,11 +60,7 @@ export const Apc = (_props: unknown) => {
 
 const PoweredAreaApc = (_props: unknown) => {
   const { act, data } = useBackend<ApcData>();
-  const {
-    area_requires_power,
-    can_access_remotely,
-    coverlocked,
-  } = data;
+  const { area_requires_power, can_access_remotely, coverlocked } = data;
   const isLocalAccess = getIsLocalAccess(data);
   const hasPermission = getHasPermission(data);
   const canOverload = !!can_access_remotely;
@@ -78,7 +75,8 @@ const PoweredAreaApc = (_props: unknown) => {
   );
 
   // #region event handlers
-  const handleCoverLockedChange = (coverlocked: BooleanLike) => act('onCoverLockedChange', { coverlocked });
+  const handleCoverLockedChange = (coverlocked: BooleanLike) =>
+    act('onCoverLockedChange', { coverlocked });
   const handleOverload = () => act('onOverload');
   // #endregion
 
@@ -96,19 +94,27 @@ const PoweredAreaApc = (_props: unknown) => {
           <LabeledList>
             <LabeledList.Item
               label="Cover Lock"
-              buttons={(
+              buttons={
                 <CoverLock
                   coverlocked={coverlocked}
                   hasPermission={hasPermission}
                   onCoverLockedChange={handleCoverLockedChange}
                 />
-              )}
+              }
             />
           </LabeledList>
         </Section>
         {canOverload && (
           <Section>
-            <Button align="center" color="red" fluid icon="bolt" onClick={handleOverload}>Overload Lighting Circuit</Button>
+            <Button
+              align="center"
+              color="red"
+              fluid
+              icon="bolt"
+              onClick={handleOverload}
+            >
+              Overload Lighting Circuit
+            </Button>
           </Section>
         )}
         {isAccessPanelVisible && <AccessPanelSection />}
@@ -121,7 +127,14 @@ const UnpoweredAreaApc = (_props, context) => {
   const { data } = useBackend<ApcData>();
   const { area_name, area_requires_power } = data;
   const isAccessPanelVisible = getIsAccessPanelVisible(data);
-  const windowHeight = calculateWindowHeight(area_requires_power, false, false, false, isAccessPanelVisible, false);
+  const windowHeight = calculateWindowHeight(
+    area_requires_power,
+    false,
+    false,
+    false,
+    isAccessPanelVisible,
+    false,
+  );
   return (
     <Window
       title="Area Power Controller"

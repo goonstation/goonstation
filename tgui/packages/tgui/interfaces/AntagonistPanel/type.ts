@@ -5,10 +5,10 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export interface AntagonistPanelData {
-  tabs: AntagonistTypeTabData[]
+  tabs: AntagonistTypeTabData[];
 
   tabToOpenOn: string;
   currentTabSections: TabSectionData[];
