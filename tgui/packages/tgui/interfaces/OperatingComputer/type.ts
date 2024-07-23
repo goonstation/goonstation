@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
 import { BooleanLike } from 'common/react';
 
 import { BrainDamageData, DisplayOccupiedProps, EmbeddedObjects } from '../common/KeyHealthIndicators/type';

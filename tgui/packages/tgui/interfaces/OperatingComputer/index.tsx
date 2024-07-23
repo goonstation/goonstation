@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
 
 import { Box, Chart, ColorBox, Section, Stack, Table, Tabs } from 'tgui-core/components';
 
