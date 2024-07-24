@@ -93,7 +93,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "eN" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "airlock_open";

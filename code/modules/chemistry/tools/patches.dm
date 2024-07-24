@@ -13,7 +13,7 @@
 	var/style = "patch"
 	initial_volume = 30
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | EXTRADELAY
+	flags = TABLEPASS | SUPPRESSATTACK | EXTRADELAY
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
 	var/in_use = 0
 	var/good_throw = 0
@@ -359,12 +359,21 @@
 	medical = 1
 	initial_reagents = "synthflesh"
 
+/obj/item/reagent_containers/patch/synthetic
+	name = "synthetic anticyst"
+	desc = "It reeks like an abandoned TV dinner. Hopefully it's healthier than one."
+	icon_state = "synthpatch"
+	style = "synthpatch"
+	sticker_icon_state = "synthpatch"
+	initial_volume = 10
+	initial_reagents = "synthflesh"
+
 /obj/item/patch_stack
 	name = "Patch Stack"
 	desc = "A stack, holding patches. The top patch can be used."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "patch_stack"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	var/list/patches = list()
 
 	proc/update_overlay()
@@ -444,7 +453,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	var/tampered = 0
 	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
@@ -685,7 +694,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	initial_reagents = "nicotine"
 	// item_state = "ecigrefill"
 	icon_state = "mender-refill"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	var/image/fluid_image
 
 	New()

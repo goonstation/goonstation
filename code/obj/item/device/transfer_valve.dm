@@ -628,6 +628,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
 	w_class = W_CLASS_SMALL
+	c_flags = ONBELT
 
 	var/obj/item/pressure_crystal/crystal
 

@@ -230,12 +230,12 @@
 	name = "Concourse B"
 	})
 "aU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -431,7 +431,7 @@
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -440,7 +440,7 @@
 	dir = 4;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -468,7 +468,7 @@
 	name = "Concourse D"
 	})
 "bX" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -536,7 +536,7 @@
 	name = "Concourse D"
 	})
 "cp" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /obj/map/light/screen,
 /turf/unsimulated/floor/circuit/purple,
 /area/moon/underground/hemera{
@@ -596,7 +596,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cy" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/unsimulated/floor/circuit/purple,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -623,12 +623,12 @@
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -707,7 +707,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cP" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /obj/map/light/screen,
 /turf/unsimulated/floor/circuit/purple,
 /area/moon/underground/hemera{
@@ -744,7 +744,7 @@
 	name = "Deep Archives"
 	})
 "cS" = (
-/obj/decal/fakeobjects/moon_on_a_stick{
+/obj/fakeobject/moon_on_a_stick{
 	pixel_x = -16
 	},
 /turf/unsimulated/floor/terrazzo/black,
@@ -765,7 +765,7 @@
 	name = "Deep Archives"
 	})
 "cW" = (
-/obj/decal/fakeobjects/cpucontroller,
+/obj/fakeobject/cpucontroller,
 /obj/map/light/screen,
 /turf/unsimulated/floor/circuit/purple,
 /area/moon/underground/hemera{
@@ -795,7 +795,7 @@
 	name = "Blue Line platform"
 	})
 "dd" = (
-/obj/decal/fakeobjects/tallsmes{
+/obj/fakeobject/tallsmes{
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
 	icon = 'icons/misc/hospital.dmi'
 	},
@@ -896,7 +896,7 @@
 /turf/unsimulated/grimycarpet,
 /area/moon/underground)
 "du" = (
-/obj/decal/fakeobjects/console_randompc,
+/obj/fakeobject/console_randompc,
 /obj/decal/poster/wallsign/statistics2{
 	desc = "A poster with a line chart depicting daily ridership statistics.";
 	pixel_y = 31
@@ -1027,7 +1027,7 @@
 	},
 /area/moon/underground)
 "eb" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/light/incandescent/harsh{
 	dir = 1;
 	pixel_y = 20
@@ -1053,12 +1053,12 @@
 	name = "Hogge & Wylde Archives"
 	})
 "ee" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1113,12 +1113,12 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "eu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -1243,7 +1243,7 @@
 	},
 /area/moon/underground)
 "eP" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
+/obj/fakeobject/mantacontainer/upwards/yellow,
 /turf/unsimulated/floor/engine,
 /area/moon/underground)
 "eR" = (
@@ -1326,7 +1326,7 @@
 	name = "Deep Archives"
 	})
 "fc" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -1350,7 +1350,7 @@
 	name = "dried blood"
 	},
 /obj/machinery/light/small/frostedred,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1418,7 +1418,7 @@
 	name = "Deep Archives"
 	})
 "ft" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -1507,7 +1507,7 @@
 	name = "Wine Vault"
 	})
 "fK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -1718,7 +1718,7 @@
 	name = "Hogge & Wylde"
 	})
 "gr" = (
-/obj/decal/fakeobjects/robotpedestal{
+/obj/fakeobject/robotpedestal{
 	color = "#775555";
 	desc = "A small table for holding candles.";
 	name = "candle stand"
@@ -1755,7 +1755,7 @@
 	})
 "gw" = (
 /obj/decal/tile_edge/stripe/big,
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	desc = "An inactive Kingsway Systems' robotic cargo hauler.";
 	name = "hydraulic stevedore"
 	},
@@ -1837,7 +1837,7 @@
 	name = "Deep Archives"
 	})
 "gL" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -1846,7 +1846,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1899,8 +1899,8 @@
 	name = "Deep Archives"
 	})
 "gT" = (
-/obj/decal/fakeobjects/robotpedestal,
-/obj/decal/fakeobjects/robot/servotron/old{
+/obj/fakeobject/robotpedestal,
+/obj/fakeobject/robot/servotron/old{
 	pixel_y = 6
 	},
 /turf/unsimulated/floor/minitiles/black,
@@ -1909,7 +1909,7 @@
 	name = "Concourse B"
 	})
 "gU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This particular geegaw is probably related to power control or fire systems or something.  It could also be a really elaborate light switch.";
@@ -1946,8 +1946,8 @@
 	name = "Hogge & Wylde"
 	})
 "hj" = (
-/obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
-/obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
+/obj/fakeobject/carcosa/brokenwall/ruined_one,
+/obj/fakeobject/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 6;
@@ -2202,7 +2202,7 @@
 	name = "Hogge & Wylde Archives"
 	})
 "id" = (
-/obj/decal/fakeobjects/console_randompc,
+/obj/fakeobject/console_randompc,
 /obj/decoration/clock{
 	pixel_y = 32
 	},
@@ -2229,17 +2229,17 @@
 	name = "Hogge & Wylde Archives"
 	})
 "ik" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
@@ -2533,7 +2533,7 @@
 	name = "Deep Archives"
 	})
 "jx" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	dir = 8;
 	pixel_y = 18
 	},
@@ -2561,7 +2561,7 @@
 	},
 /area/moon/underground)
 "jB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2613,7 +2613,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground)
 "jL" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2626,7 +2626,7 @@
 /turf/unsimulated/wall/setpieces/bunker_grille,
 /area/moon/underground)
 "jR" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2702,7 +2702,7 @@
 	name = "Concourse D"
 	})
 "km" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of weirdo trainyard machine.  It might be broken.  Or just off.  Who knows!!";
@@ -2818,7 +2818,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "kE" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -2997,7 +2997,7 @@
 /area/moon/underground)
 "ll" = (
 /obj/table/wood/round/auto,
-/obj/decal/fakeobjects/brokengamblebot{
+/obj/fakeobject/brokengamblebot{
 	pixel_x = -1;
 	pixel_y = 10
 	},
@@ -3063,7 +3063,7 @@
 	desc = "An old camping cot.";
 	name = "cot"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Hi, Greg.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "greg";
@@ -3105,7 +3105,7 @@
 	name = "Hogge & Wylde Archives"
 	})
 "ly" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -3167,12 +3167,12 @@
 	name = "Deep Archives"
 	})
 "lK" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/minitiles/black,
@@ -3241,12 +3241,12 @@
 	},
 /area/moon/underground)
 "lY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3259,7 +3259,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "lZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A 2030's model robuddy. It looks like it hasn't been active for at least a decade.";
 	icon = 'icons/misc/lunar.dmi';
@@ -3288,7 +3288,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	desc = "An inactive Kingsway Systems' robotic railyard worker.";
 	name = "hydraulic rail-hostler"
 	},
@@ -3488,7 +3488,7 @@
 	name = "Blue Line platform"
 	})
 "mX" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	pixel_y = 20
 	},
 /turf/unsimulated/floor/lunar,
@@ -3558,7 +3558,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "ny" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -3642,7 +3642,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "nQ" = (
-/obj/decal/fakeobjects/carcosa/brokenwall/arch_one,
+/obj/fakeobject/carcosa/brokenwall/arch_one,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 5;
@@ -3662,12 +3662,12 @@
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -3681,7 +3681,7 @@
 	name = "Blue Line platform"
 	})
 "nY" = (
-/obj/decal/fakeobjects/moonrock,
+/obj/fakeobject/moonrock,
 /turf/unsimulated/floor/lunar,
 /area/moon/underground/hemera{
 	name = "Concourse D"
@@ -3712,7 +3712,7 @@
 /obj/grille/catwalk/jen{
 	icon_state = "M12-0"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The dessicated remains of some kind of reporter type.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "mangledhusk";
@@ -3786,7 +3786,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "oA" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/light/incandescent/harsh,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
@@ -3829,7 +3829,7 @@
 	},
 /area/moon/underground)
 "oQ" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;
@@ -4021,17 +4021,17 @@
 	name = "Wine Vault"
 	})
 "pt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
@@ -4115,7 +4115,7 @@
 	name = "Concourse B"
 	})
 "pG" = (
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	desc = "An inactive Kingsway Systems' robotic cargo hauler.";
 	name = "hydraulic stevedore"
 	},
@@ -4154,12 +4154,12 @@
 	dir = 2;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -4265,7 +4265,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "qe" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	density = 0;
 	dir = 1
 	},
@@ -4492,7 +4492,7 @@
 	name = "Deep Archives"
 	})
 "qR" = (
-/obj/decal/fakeobjects/carcosa/statue/broken,
+/obj/fakeobject/carcosa/statue/broken,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -4568,7 +4568,7 @@
 	name = "Hogge & Wylde"
 	})
 "rk" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An old tape drive of train schedules.  It doesn't look like it has been touched in a while";
@@ -4695,7 +4695,7 @@
 	})
 "ry" = (
 /obj/map/light/yellow,
-/obj/decal/fakeobjects/plantpot,
+/obj/fakeobject/plantpot,
 /obj/shrub{
 	icon = 'icons/obj/hydroponics/plants_crop.dmi';
 	icon_state = "TreeDogwood-G4";
@@ -4714,7 +4714,7 @@
 	})
 "rA" = (
 /obj/map/light/yellow,
-/obj/decal/fakeobjects/plantpot,
+/obj/fakeobject/plantpot,
 /obj/shrub{
 	dir = 8;
 	pixel_y = 10
@@ -4801,7 +4801,7 @@
 /area/moon/underground)
 "rU" = (
 /obj/map/light/yellow,
-/obj/decal/fakeobjects/plantpot,
+/obj/fakeobject/plantpot,
 /obj/shrub{
 	dir = 8;
 	pixel_y = 10
@@ -4890,7 +4890,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "sr" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -4958,7 +4958,7 @@
 /obj/cable/conduit{
 	dir = 8
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -4994,7 +4994,7 @@
 	},
 /area/moon/underground)
 "sL" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -5043,7 +5043,7 @@
 	name = "Blue Line platform"
 	})
 "ta" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A photo of the Apollo 11 astronauts.  Buzz Aldrin, Neil Armstrong, and that third guy who didn't actually land on the moon.";
 	icon = 'icons/misc/lunar.dmi';
@@ -5144,12 +5144,12 @@
 /turf/simulated/nicegrass/random,
 /area/moon/underground)
 "tz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -5169,7 +5169,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground)
 "tF" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -5322,12 +5322,12 @@
 	name = "Concourse B"
 	})
 "uk" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	desc = "An inactive Kingsway Systems' robotic railyard worker.";
 	name = "hydraulic rail-hostler"
 	},
@@ -5490,12 +5490,12 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "uC" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -5537,12 +5537,12 @@
 	name = "Concourse D"
 	})
 "uN" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -5562,7 +5562,7 @@
 	},
 /area/moon/underground)
 "uO" = (
-/obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
+/obj/fakeobject/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/wall/setpieces/lunar{
 	dir = 5;
 	fullbright = 0;
@@ -5636,17 +5636,17 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground)
 "vk" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
@@ -5659,7 +5659,7 @@
 	name = "Hogge & Wylde Archives"
 	})
 "vm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -5768,7 +5768,7 @@
 	name = "Concourse B"
 	})
 "vJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Looks like it fell off a train. The body has been stripped for parts.";
@@ -5889,7 +5889,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -5910,7 +5910,7 @@
 	name = "Deep Archives"
 	})
 "we" = (
-/obj/decal/fakeobjects/cultiststatue{
+/obj/fakeobject/cultiststatue{
 	color = "#666666"
 	},
 /turf/simulated/floor/marble/border_bw,
@@ -6101,7 +6101,7 @@
 /area/moon/underground)
 "wT" = (
 /obj/map/light/yellow,
-/obj/decal/fakeobjects/plantpot,
+/obj/fakeobject/plantpot,
 /obj/shrub{
 	icon = 'icons/obj/hydroponics/plants_crop.dmi';
 	icon_state = "TreeDogwood-G4";
@@ -6119,7 +6119,7 @@
 	name = "Hogge & Wylde"
 	})
 "wU" = (
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	pixel_x = -37
 	},
 /turf/unsimulated/floor/plating,
@@ -6196,7 +6196,7 @@
 /turf/unsimulated/grimycarpet,
 /area/moon/underground)
 "xf" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -6288,7 +6288,7 @@
 	},
 /area/moon/underground)
 "xr" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/item/clothing/suit/armor{
 	desc = "A suit of medieval armor.";
 	name = "ye olde armor";
@@ -6346,7 +6346,7 @@
 	},
 /area/moon/underground)
 "xy" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6363,7 +6363,7 @@
 /turf/unsimulated/iomoon/floor,
 /area/space)
 "xB" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6384,7 +6384,7 @@
 	name = "Hogge & Wylde"
 	})
 "xE" = (
-/obj/decal/fakeobjects/carcosa/brokenwall/two,
+/obj/fakeobject/carcosa/brokenwall/two,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 6;
@@ -6475,7 +6475,7 @@
 	name = "Concourse B"
 	})
 "xZ" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -6606,7 +6606,7 @@
 	})
 "yE" = (
 /obj/map/light/graveyard,
-/obj/decal/fakeobjects/carcosa/statue,
+/obj/fakeobject/carcosa/statue,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "yG" = (
@@ -6698,7 +6698,7 @@
 	name = "Blue Line platform"
 	})
 "zg" = (
-/obj/decal/fakeobjects/circle{
+/obj/fakeobject/circle{
 	alpha = 150;
 	color = "black";
 	desc = "How ominous!";
@@ -6720,7 +6720,7 @@
 	desc = "An old camping cot.";
 	name = "cot"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The dessicated remains of some kind of reporter type.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "mangledhusk";
@@ -6935,7 +6935,7 @@
 	},
 /area/moon/underground)
 "zW" = (
-/obj/decal/fakeobjects/barbuddy_dispenser{
+/obj/fakeobject/barbuddy_dispenser{
 	pixel_y = 22
 	},
 /turf/unsimulated/floor/minitiles,
@@ -7432,7 +7432,7 @@
 /obj/cable/conduit{
 	dir = 5
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -7508,7 +7508,7 @@
 	name = "Concourse D"
 	})
 "BS" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/buddyfactory{
 	desc = "A simplified industrial robot.";
 	name = "assembly bot";
@@ -7629,7 +7629,7 @@
 	name = "Blue Line platform"
 	})
 "Cq" = (
-/obj/decal/fakeobjects/safehouse/airfilter,
+/obj/fakeobject/safehouse/airfilter,
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "Cr" = (
@@ -7815,8 +7815,8 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "Da" = (
-/obj/decal/fakeobjects/robotpedestal,
-/obj/decal/fakeobjects/robot/servotron{
+/obj/fakeobject/robotpedestal,
+/obj/fakeobject/robot/servotron{
 	pixel_y = 6
 	},
 /turf/unsimulated/floor/minitiles/black,
@@ -7852,7 +7852,7 @@
 	name = "Concourse B"
 	})
 "Dd" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Part of an older automated trackyard system. It's been offline for a long time.";
@@ -8025,17 +8025,17 @@
 	name = "Concourse B"
 	})
 "DM" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
@@ -8121,7 +8121,7 @@
 	})
 "En" = (
 /obj/cable/conduit,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -8161,7 +8161,7 @@
 	name = "Blue Line platform"
 	})
 "Ez" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";
 	dir = 4;
@@ -8248,7 +8248,7 @@
 	name = "Concourse D"
 	})
 "EU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -8333,7 +8333,7 @@
 	name = "Wine Cellar"
 	})
 "Fl" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "vent-map";
 	name = "rusted vent"
@@ -8348,7 +8348,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "Fo" = (
-/obj/decal/fakeobjects/plantpot,
+/obj/fakeobject/plantpot,
 /obj/shrub{
 	dir = 4;
 	pixel_y = 6
@@ -8377,7 +8377,7 @@
 	name = "Concourse D"
 	})
 "Fy" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -8514,7 +8514,7 @@
 	name = "Concourse B"
 	})
 "FW" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's bolted as heck. You're not gonna be able to unbolt this.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -8600,12 +8600,12 @@
 	name = "Blue Line platform"
 	})
 "Gw" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -8615,7 +8615,7 @@
 	dir = 2;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	desc = "An inactive Kingsway Systems' robotic railyard worker.";
 	name = "hydraulic rail-hostler";
 	pixel_y = 3
@@ -8692,7 +8692,7 @@
 	dir = 4;
 	pixel_x = 6
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "A 2030's model robuddy. It looks like it hasn't been active for at least a decade.";
 	icon = 'icons/misc/lunar.dmi';
@@ -8702,7 +8702,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "GM" = (
-/obj/decal/fakeobjects/robotpedestal,
+/obj/fakeobject/robotpedestal,
 /obj/machinery/bot/guardbot{
 	anchored = 1;
 	desc = "A display model of the popular PR-6 Robuddy.";
@@ -8917,7 +8917,7 @@
 	name = "SPECTRE Showroom"
 	})
 "Hv" = (
-/obj/decal/fakeobjects/mantacontainer/upwards,
+/obj/fakeobject/mantacontainer/upwards,
 /turf/unsimulated/floor/engine,
 /area/moon/underground)
 "Hw" = (
@@ -9097,7 +9097,7 @@
 	},
 /area/moon/underground)
 "It" = (
-/obj/decal/fakeobjects/junction_box,
+/obj/fakeobject/junction_box,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	name = "Concourse D"
@@ -9397,7 +9397,7 @@
 	name = "Concourse B"
 	})
 "Jv" = (
-/obj/decal/fakeobjects/junction_box,
+/obj/fakeobject/junction_box,
 /obj/cable/conduit,
 /turf/unsimulated/floor/plating,
 /area/moon/monorail_station{
@@ -9493,7 +9493,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "JU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -9530,7 +9530,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "Kb" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -9601,7 +9601,7 @@
 	name = "Concourse D"
 	})
 "Kr" = (
-/obj/decal/fakeobjects/robot/servotron/older{
+/obj/fakeobject/robot/servotron/older{
 	desc = "An inactive Kingsway Systems' robotic cargo hauler.";
 	name = "hydraulic stevedore"
 	},
@@ -9838,7 +9838,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground)
 "Lq" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -10144,7 +10144,7 @@
 	name = "Concourse D"
 	})
 "Mv" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -10414,7 +10414,7 @@
 	name = "Concourse D"
 	})
 "NG" = (
-/obj/decal/fakeobjects/carcosa/brokenwall/ruined_one,
+/obj/fakeobject/carcosa/brokenwall/ruined_one,
 /turf/unsimulated/floor/lunar/cavern{
 	desc = "Regolith, but in a cavern.  Wow!  Whoa!!";
 	dir = 6;
@@ -10430,7 +10430,7 @@
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "NN" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "The goods inside the machine probably expired before you were even born.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "hvending";
@@ -10499,7 +10499,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "NZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It's busted! These fans have been running on their own for a long time. ";
@@ -10536,7 +10536,7 @@
 	name = "Hogge & Wylde"
 	})
 "Og" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -10612,7 +10612,7 @@
 	name = "Concourse B"
 	})
 "Ou" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -10644,7 +10644,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "Oz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -10895,7 +10895,7 @@
 	name = "Wine Cellar"
 	})
 "Py" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of machine from Old Lunaport.";
@@ -11065,7 +11065,7 @@
 	name = "Wine Cellar"
 	})
 "Qi" = (
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/obj/fakeobject/safehouse/airhandlingunit,
 /turf/unsimulated/floor/industrial,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -11194,7 +11194,7 @@
 /turf/unsimulated/floor/wood/five,
 /area/moon/underground)
 "QG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -11216,7 +11216,7 @@
 	name = "Hogge & Wylde"
 	})
 "QQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -11293,7 +11293,7 @@
 	name = "Blue Line platform"
 	})
 "Re" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -11362,12 +11362,12 @@
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -11375,7 +11375,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "Rz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -11440,7 +11440,7 @@
 	name = "SPECTRE Showroom"
 	})
 "RM" = (
-/obj/decal/fakeobjects/console_lever{
+/obj/fakeobject/console_lever{
 	pixel_y = 20
 	},
 /obj/map/light/screen,
@@ -11464,7 +11464,7 @@
 	name = "SPECTRE Showroom"
 	})
 "RR" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Just a door. A door that's not for you.";
 	dir = 4;
@@ -11504,12 +11504,12 @@
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -11772,12 +11772,12 @@
 	},
 /area/moon/underground)
 "SU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -11796,7 +11796,7 @@
 	},
 /area/moon/underground)
 "SW" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -11805,7 +11805,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -11867,7 +11867,7 @@
 	name = "Wine Vault"
 	})
 "Ti" = (
-/obj/decal/fakeobjects/junction_box,
+/obj/fakeobject/junction_box,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -12047,7 +12047,7 @@
 	name = "Concourse B"
 	})
 "TQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -12071,7 +12071,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -12128,7 +12128,7 @@
 	dir = 1;
 	icon_state = "line-broken1"
 	},
-/obj/decal/fakeobjects/robotarm{
+/obj/fakeobject/robotarm{
 	pixel_x = -21
 	},
 /turf/unsimulated/floor/plating,
@@ -12332,7 +12332,7 @@
 	name = "Concourse B"
 	})
 "UQ" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "Rust has rendered this airlock useless.";
 	dir = 4;
@@ -12481,7 +12481,7 @@
 /obj/decoration/frontwalldamage{
 	dir = 1
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -12526,7 +12526,7 @@
 	icon_state = "floor3";
 	name = "dried blood"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -12612,12 +12612,12 @@
 	name = "Concourse B"
 	})
 "VO" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -12643,12 +12643,12 @@
 	name = "Wine Vault"
 	})
 "VS" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -12776,7 +12776,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/underground)
 "Wq" = (
-/obj/decal/fakeobjects/carcosa/brokenwall/ruined_two,
+/obj/fakeobject/carcosa/brokenwall/ruined_two,
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "Wr" = (
@@ -12976,7 +12976,7 @@
 /turf/unsimulated/floor/industrial,
 /area/moon/underground)
 "Xf" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -12990,7 +12990,7 @@
 	name = "Concourse B"
 	})
 "Xg" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "The goods inside the machine probably expired before you were even born.";
@@ -13010,7 +13010,7 @@
 /turf/unsimulated/floor/setpieces/oldfloor,
 /area/moon/underground)
 "Xk" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -13163,7 +13163,7 @@
 	name = "Concourse D"
 	})
 "XU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An auxilliary node of the MNX-12/777 superminicomputer that managed Lunaport for decades. It's been offline since 2041.";
@@ -13346,7 +13346,7 @@
 	name = "Deep Archives"
 	})
 "Yy" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -13527,7 +13527,7 @@
 	},
 /area/moon/underground)
 "Ze" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -13675,7 +13675,7 @@
 /obj/decoration/frontwalldamage{
 	dir = 4
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -13710,7 +13710,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar,
 /area/moon/underground)
 "ZF" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	dir = 4;

@@ -13,7 +13,7 @@ TYPEINFO(/obj/item/device/powersink)
 	icon_state = "powersink0"
 	item_state = "electronic"
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 2
@@ -40,6 +40,7 @@ TYPEINFO(/obj/item/device/powersink)
 
 	attackby(var/obj/item/I, var/mob/user)
 		if (isscrewingtool(I))
+			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
 				if(isturf(T) && !T.intact)

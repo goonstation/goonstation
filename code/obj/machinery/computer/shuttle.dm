@@ -295,7 +295,7 @@ var/bombini_saved
 			sleep(3 SECONDS)
 			Console.visible_message(SPAN_ALERT("The shuttle engine alarms start blaring!"))
 			playsound(T, 'sound/machines/pod_alarm.ogg', 60, TRUE)
-			var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(Console)
+			var/obj/fakeobject/shuttleengine/smokyEngine = locate() in get_area(Console)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(5, 0, smokyEngine)
 			smoke.start()
@@ -509,7 +509,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	name = "Elevator Safety Sign"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
-	flags = FPRINT
 	density = 0
 	anchored = ANCHORED
 

@@ -19,6 +19,8 @@
 	var/attack_strength_modifier = 1
 	/// if the limb can gun grab with a held gun
 	var/can_gun_grab = TRUE
+	/// if true, bypasses unarmed attack immunity for cyborgs (separate to weird special case handling for them)
+	var/can_beat_up_robots = FALSE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -208,6 +210,7 @@
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
+	can_beat_up_robots = TRUE //so pointblanking works
 
 	attack_range(atom/target, var/mob/user, params)
 		src.shoot(target, user, FALSE, params)
@@ -259,7 +262,11 @@
 		return
 
 	attack_hand(atom/target, mob/user, var/reach, params, location, control)
-		return
+		switch(user.a_intent) //we're a gun, so we don't want to do normal attack_hand stuff
+			if (INTENT_DISARM)
+				src.disarm(target, user)
+			if (INTENT_HARM)
+				src.harm(target, user)
 
 	help(mob/living/target, mob/living/user)
 		return
@@ -712,6 +719,7 @@
 				holder.remove_object.AfterAttack(target, user, reach)
 
 /datum/limb/bear
+	can_beat_up_robots = TRUE //it's a bear!
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
@@ -1134,6 +1142,7 @@
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
+	can_beat_up_robots = TRUE
 	var/weak = 0
 
 	werewolf
@@ -1494,6 +1503,7 @@
 		return
 
 /datum/limb/claw
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return

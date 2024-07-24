@@ -2,8 +2,6 @@
 
 [ToC]
 
-{%hackmd @ZeWaka/dark-theme %}
-
 ## :exclamation: Disclaimer
 
 This guide is the one to follow to get started developing and making changes to Goonstation.<br>
@@ -78,6 +76,8 @@ If this does not work, search for the following extensions:
  - Space Station 13 Extension Pack - Extension pack with all the extensions we recommend using.
  - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
+
+For the DreamMaker extension that is installed, be sure you turn on auto-updates. You'll also want to ensure BYOND is installed in the default location for ease of use.
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime it just breaks. :shrug:
 

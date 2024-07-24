@@ -116,7 +116,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
-	flags = FPRINT // no fluid submerge images and we also don't need tgui interactability
+	flags = 0 // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
@@ -1653,7 +1653,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[power_a]&powerfmt=[engineering_notation(power_a)]W")
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(power_a), 50)]&powerfmt=[engineering_notation(power_a)]W")
 			..()
 	else
 		var/power_a = 0

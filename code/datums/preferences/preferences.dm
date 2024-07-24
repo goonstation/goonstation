@@ -1378,7 +1378,7 @@ var/list/removed_jobs = list(
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				if (!J_Fav.has_rounds_needed(user.client.player))
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[J_Fav.rounds_needed_to_play].</b>"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1569,7 +1569,7 @@ var/list/removed_jobs = list(
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[temp_job.rounds_needed_to_play].</b>"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null

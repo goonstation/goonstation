@@ -73,7 +73,7 @@
 			var/datum/reagent/R = CR.reagent_list[current_id]
 			src.reagents.add_reagent(current_id, min(R.volume * 5, 50))
 
-		src.faction |= FACTION_WIZARD
+		LAZYLISTADDUNIQUE(src.faction, FACTION_WIZARD)
 		src.desc = "An elemental entity composed mainly of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 
 	death(var/gibbed)

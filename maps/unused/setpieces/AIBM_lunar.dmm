@@ -604,7 +604,7 @@
 	name = "Security Checkpoint";
 	req_access_txt = "255"
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this firelock useless.  Well I mean actually it doesnt have much at all, but it's probably in key areas or something.  Get off my back."
 	},
 /turf/unsimulated/floor/red,
@@ -712,7 +712,7 @@
 	},
 /area/moon/underground)
 "ck" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -752,7 +752,7 @@
 /turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "co" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -854,7 +854,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 0;
@@ -902,7 +902,7 @@
 	},
 /area/moon/underground)
 "cH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -910,7 +910,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -921,7 +921,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cJ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -930,7 +930,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -942,7 +942,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cL" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -963,7 +963,7 @@
 	},
 /area/moon/underground)
 "cO" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -981,7 +981,7 @@
 	},
 /area/moon/underground)
 "cS" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -995,12 +995,12 @@
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/moon/underground/hemera)
 "cU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1008,12 +1008,12 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cV" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1021,7 +1021,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cW" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1029,7 +1029,7 @@
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -1037,17 +1037,17 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
@@ -1055,36 +1055,36 @@
 /turf/unsimulated/floor/mauxite,
 /area/moon/underground)
 "cY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects/junction_box,
+/obj/fakeobject/junction_box,
 /turf/unsimulated/floor/mauxite,
 /area/moon/underground)
 "cZ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 6
@@ -1093,7 +1093,7 @@
 /turf/unsimulated/floor/mauxite,
 /area/moon/underground)
 "da" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1106,7 +1106,7 @@
 	},
 /area/moon/underground)
 "db" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1123,7 +1123,7 @@
 /turf/unsimulated/floor/red,
 /area/moon/underground/hemera)
 "de" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1131,7 +1131,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "df" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1153,7 +1153,7 @@
 	},
 /area/space)
 "dh" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1201,7 +1201,7 @@
 	},
 /area/moon/underground)
 "dq" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1225,7 +1225,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "dt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -1294,7 +1294,7 @@
 	},
 /area/moon/underground)
 "dF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -1302,7 +1302,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "dG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -1312,12 +1312,12 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "dH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The dessicated remains of some kind of reporter type.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "mangledhusk";
@@ -1326,7 +1326,7 @@
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "dI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	icon_state = "intact";
 	tag = "icon-intact-f (EAST)"
@@ -1383,7 +1383,7 @@
 	},
 /area/moon/underground)
 "dU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1396,7 +1396,7 @@
 	},
 /area/moon/underground)
 "dV" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1407,7 +1407,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "dX" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -1418,7 +1418,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "dY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -1437,7 +1437,7 @@
 	},
 /area/moon/underground)
 "ea" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1459,7 +1459,7 @@
 	},
 /area/moon/underground)
 "ed" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
@@ -1469,7 +1469,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "ee" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1477,7 +1477,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "ef" = (
-/obj/decal/fakeobjects/junction_box,
+/obj/fakeobject/junction_box,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1518,7 +1518,7 @@
 /turf/unsimulated/floor/mauxite,
 /area/moon/underground)
 "em" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -1526,12 +1526,12 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "en" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -1556,7 +1556,7 @@
 	},
 /area/moon/underground)
 "er" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -1565,7 +1565,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "es" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "It's jammed, apparently.  Or just really locked.";
 	name = "sealed airlock"
 	},
@@ -1746,7 +1746,7 @@
 	},
 /area/moon)
 "eT" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	density = 0;
 	dir = 1
 	},
@@ -1840,7 +1840,7 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "fj" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	dir = 8
 	},
 /turf/unsimulated/floor/lunar,
@@ -1853,7 +1853,7 @@
 	},
 /area/moon)
 "fl" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/underground)
 "fm" = (
@@ -1884,7 +1884,7 @@
 /obj/rail{
 	dir = 4
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A slightly more recent Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.  This one is attached to a track.";
@@ -2031,7 +2031,7 @@
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar,
 /area/moon/museum/west)
 "fN" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -2106,7 +2106,7 @@
 	},
 /area/moon)
 "ga" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	dir = 4;
 	icon = 'icons/misc/lunar.dmi'
 	},
@@ -2201,7 +2201,7 @@
 	},
 /area/moon/museum/west)
 "gq" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2264,7 +2264,7 @@
 	},
 /area/moon/museum/west)
 "gy" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -2277,7 +2277,7 @@
 	},
 /area/moon/museum/west)
 "gz" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2289,7 +2289,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2301,7 +2301,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gB" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2313,7 +2313,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2325,7 +2325,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "gD" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2343,14 +2343,14 @@
 	},
 /area/moon)
 "gF" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	density = 0;
 	dir = 1
 	},
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "gG" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -2406,7 +2406,7 @@
 	},
 /area/moon/museum/west)
 "gO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A model of a habitation module of the LESA lunar base, constructed on the moon in the 1970s. ";
@@ -2490,7 +2490,7 @@
 	},
 /area/moon/museum/west)
 "gZ" = (
-/obj/decal/fakeobjects/lunar_lander,
+/obj/fakeobject/lunar_lander,
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "ha" = (
@@ -2531,18 +2531,18 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
 "hd" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
 /obj/mopbucket,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
 	dir = 1;
 	icon_state = "bulb0";
@@ -2552,12 +2552,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "he" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2569,7 +2569,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
 	dir = 4;
 	icon_state = "bulb0";
@@ -2601,7 +2601,7 @@
 	},
 /area/moon/museum/west)
 "hj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -2630,7 +2630,7 @@
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "ho" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A United States flag, placed here 84 years ago.  Well, placed and then moved and placed again...  It's faded from decades of ultraviolet light exposure.";
 	icon = 'icons/misc/lunar.dmi';
@@ -2647,7 +2647,7 @@
 	},
 /area/moon)
 "hq" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -2657,7 +2657,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
 "hr" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -2681,12 +2681,12 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
 "ht" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2694,12 +2694,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "hu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2710,12 +2710,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "hv" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -2726,12 +2726,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -2739,17 +2739,17 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "hx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -2784,7 +2784,7 @@
 	},
 /area/moon/museum/west)
 "hA" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -2797,7 +2797,7 @@
 	},
 /area/moon/museum/west)
 "hB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -2838,7 +2838,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/moon/museum)
 "hH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -2846,7 +2846,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "hI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2908,7 +2908,7 @@
 	},
 /area/moon/museum)
 "hQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -2925,7 +2925,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "hS" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -2938,7 +2938,7 @@
 	},
 /area/moon/museum/west)
 "hT" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
 	dir = 4;
 	icon_state = "bulb0";
@@ -2953,7 +2953,7 @@
 	},
 /area/moon/museum/west)
 "hU" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "A mockup tank.  For giving the appearance of storing air.";
 	dir = 8;
@@ -2986,7 +2986,7 @@
 	},
 /area/moon/museum/west)
 "hW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "Some kind of LESA base equipment doodad.  It's not clear what it was used for originally, but now it seems to just be configured for blinky lights.";
@@ -3034,7 +3034,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ic" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3047,7 +3047,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "id" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3082,7 +3082,7 @@
 	},
 /area/moon/museum)
 "ih" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -3094,7 +3094,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ii" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3108,7 +3108,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -3132,7 +3132,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "im" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -3145,7 +3145,7 @@
 	},
 /area/moon/museum/west)
 "in" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3209,7 +3209,7 @@
 	},
 /area/moon/museum/west)
 "iq" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3244,7 +3244,7 @@
 	},
 /area/moon/museum/west)
 "it" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3267,7 +3267,7 @@
 	},
 /area/moon/museum/west)
 "iu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It won't budge.";
 	dir = 2;
 	icon = 'icons/obj/pipe-item.dmi';
@@ -3277,7 +3277,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iv" = (
-/obj/decal/fakeobjects/moonrock,
+/obj/fakeobject/moonrock,
 /turf/unsimulated/floor/lunar,
 /area/moon)
 "iw" = (
@@ -3285,7 +3285,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ix" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3298,7 +3298,7 @@
 /turf/unsimulated/floor/caution/west,
 /area/moon/museum)
 "iz" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -3309,7 +3309,7 @@
 	},
 /area/moon/museum)
 "iA" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3320,7 +3320,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iB" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -3343,7 +3343,7 @@
 	name = "maintenance light";
 	tag = ""
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -3370,12 +3370,12 @@
 	},
 /area/moon/museum/west)
 "iE" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -3383,7 +3383,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iF" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3397,7 +3397,7 @@
 	},
 /area/moon/museum)
 "iH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -3409,12 +3409,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iI" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -3429,7 +3429,7 @@
 	},
 /area/moon/museum)
 "iK" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3457,7 +3457,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -3473,7 +3473,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "iO" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3481,14 +3481,14 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iP" = (
-/obj/decal/fakeobjects/pipe,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe,
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
@@ -3521,7 +3521,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iT" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3553,7 +3553,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iX" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
@@ -3563,7 +3563,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";
 	dir = 8;
@@ -3603,7 +3603,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "je" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -3627,7 +3627,7 @@
 	},
 /area/moon/museum/west)
 "jh" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3635,7 +3635,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "ji" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -3644,14 +3644,14 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jj" = (
-/obj/decal/fakeobjects/pipe,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe,
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
@@ -3666,7 +3666,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jk" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
@@ -3676,7 +3676,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jl" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3684,12 +3684,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3700,12 +3700,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jn" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3719,7 +3719,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jo" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6
@@ -3755,7 +3755,7 @@
 	},
 /area/moon/museum)
 "js" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A photo of the Apollo 11 astronauts.  Buzz Aldrin, Neil Armstrong, and that third guy who didn't actually land on the moon.";
 	icon = 'icons/misc/lunar.dmi';
@@ -3790,7 +3790,7 @@
 	},
 /area/moon/museum)
 "jw" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -3803,7 +3803,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -3814,7 +3814,7 @@
 /area/moon/museum)
 "jy" = (
 /obj/cable,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3822,7 +3822,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3852,7 +3852,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jE" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3863,14 +3863,14 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jF" = (
-/obj/decal/fakeobjects/pipe,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe,
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
@@ -3885,7 +3885,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jG" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -3902,7 +3902,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3967,7 +3967,7 @@
 /turf/unsimulated/floor/grey/side,
 /area/moon/museum)
 "jO" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -3980,7 +3980,7 @@
 	},
 /area/moon/museum)
 "jP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -3994,7 +3994,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
@@ -4011,12 +4011,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jS" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -4047,14 +4047,14 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jV" = (
-/obj/decal/fakeobjects/pipe,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe,
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
@@ -4080,7 +4080,7 @@
 	},
 /area/moon/museum)
 "jY" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
@@ -4094,12 +4094,12 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ka" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -4111,7 +4111,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "kb" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4123,7 +4123,7 @@
 	},
 /area/moon/museum/west)
 "kc" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4135,7 +4135,7 @@
 	},
 /area/moon/museum/west)
 "kd" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4153,7 +4153,7 @@
 	},
 /area/moon/museum)
 "kf" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4172,7 +4172,7 @@
 	},
 /area/moon/museum)
 "kh" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4184,7 +4184,7 @@
 	},
 /area/moon/museum)
 "ki" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -4202,7 +4202,7 @@
 	},
 /area/moon/museum)
 "kk" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4210,7 +4210,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -4222,7 +4222,7 @@
 	},
 /area/moon/museum)
 "kl" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -4241,7 +4241,7 @@
 	},
 /area/moon/museum)
 "kn" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 5;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -4252,7 +4252,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "ko" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 10;
 	icon_state = "intact";
 	name = "grimy pipe";
@@ -4281,7 +4281,7 @@
 	},
 /area/moon/museum/west)
 "ks" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4332,7 +4332,7 @@
 	},
 /area/moon/museum/west)
 "kw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Hi, Greg.";
 	icon = 'icons/misc/lunar.dmi';
 	icon_state = "greg";
@@ -4341,7 +4341,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum/west)
 "kx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4360,7 +4360,7 @@
 	},
 /area/moon/museum/west)
 "kz" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4368,7 +4368,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
@@ -4425,13 +4425,13 @@
 	},
 /area/moon/museum)
 "kE" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -4518,7 +4518,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum)
 "kQ" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4526,7 +4526,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -4584,13 +4584,13 @@
 /area/moon/museum/west)
 "kX" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/unsimulated/floor/grey/side{
 	dir = 1
 	},
 /area/moon/museum/west)
 "kY" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An Apollo Lunar Loader robot, the backbone of initial plasma mining efforts.  It's an ancestor of the modern MULEbot.";
@@ -4653,7 +4653,7 @@
 /turf/unsimulated/floor/black,
 /area/moon/museum)
 "ld" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes.dmi';
@@ -4665,7 +4665,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "le" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -4673,7 +4673,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "lf" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -4740,12 +4740,12 @@
 	},
 /area/moon/museum)
 "lm" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 9;
 	icon_state = "intact";
 	name = "grimy pipe"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
@@ -4785,7 +4785,7 @@
 	},
 /area/moon/museum)
 "lt" = (
-/obj/decal/fakeobjects/moon_on_a_stick,
+/obj/fakeobject/moon_on_a_stick,
 /turf/unsimulated/floor/black,
 /area/moon/museum)
 "lu" = (
@@ -4799,13 +4799,13 @@
 	},
 /area/moon/museum)
 "lv" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -4816,7 +4816,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "lw" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4948,7 +4948,7 @@
 	},
 /area/moon/museum)
 "lK" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -4976,7 +4976,7 @@
 /turf/unsimulated/floor/wood,
 /area/moon/museum/west)
 "lM" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -4987,7 +4987,7 @@
 /turf/unsimulated/floor/wood,
 /area/moon/museum/west)
 "lN" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 0;
 	density = 1;
 	desc = "A model of a PR-3 robuddy, introduced in the 2030s.  Well, it's probably a real shell, but it looks kinda empty.";
@@ -5000,7 +5000,7 @@
 /turf/unsimulated/floor/circuit/white,
 /area/moon/museum/west)
 "lO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This is the central node of the MNX-12/777 superminicomputer that managed Lunaport for decades.";
@@ -5012,7 +5012,7 @@
 /turf/unsimulated/floor/circuit/white,
 /area/moon/museum/west)
 "lP" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5030,7 +5030,7 @@
 /area/moon/museum)
 "lR" = (
 /obj/item/sheet/electrum,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -5076,7 +5076,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "lZ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -5128,7 +5128,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum/giftshop)
 "mh" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5141,7 +5141,7 @@
 	},
 /area/moon/museum)
 "mi" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5159,7 +5159,7 @@
 	},
 /area/moon/museum/giftshop)
 "mk" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "It's jammed, apparently.  Or just really locked.";
 	icon = 'icons/obj/doors/Doormaint.dmi';
@@ -5192,7 +5192,7 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "mo" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5242,14 +5242,14 @@
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "ms" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 1;
 	icon_state = "tube0";
@@ -5480,7 +5480,7 @@
 	},
 /area/moon/museum)
 "mR" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5493,7 +5493,7 @@
 	},
 /area/moon/museum)
 "mS" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -5572,7 +5572,7 @@
 	pixel_x = -4;
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -5585,7 +5585,7 @@
 	},
 /area/moon/museum)
 "nd" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -5606,7 +5606,7 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "nf" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "A security door used to separate museum compartments.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -5695,7 +5695,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/moon/museum)
 "nq" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -5719,7 +5719,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/moon/museum)
 "nt" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 6;
 	icon_state = "intact";
 	name = "grimy pipe"
@@ -5728,7 +5728,7 @@
 	anchored = 1;
 	dir = 8
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -5741,7 +5741,7 @@
 	},
 /area/moon/museum)
 "nu" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -5755,7 +5755,7 @@
 	},
 /area/moon/museum)
 "nv" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = 0
@@ -5786,7 +5786,7 @@
 	},
 /area/moon/museum)
 "ny" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;

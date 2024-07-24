@@ -134,12 +134,11 @@
 				if (istype(target, /obj/item/bloodslide))
 					var/obj/item/bloodslide/BL = target
 					if (BL.reagents.total_volume)
-						boutput(user, SPAN_ALERT("There is already a pathogen sample on [target]."))
+						boutput(user, SPAN_ALERT("There is already a sample on [target]."))
 						return
 					var/transferred = src.reagents.trans_to(target, src.amount_per_transfer_from_this)
 					user.update_inhands()
 					boutput(user, SPAN_NOTICE("You fill the blood slide with [transferred] units of the solution."))
-					// contingency
 					BL.on_reagent_change()
 					return
 
@@ -302,7 +301,7 @@
 	icon_state = "baster_0"
 	initial_volume = 100
 	amount_per_transfer_from_this = 25
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
 	afterattack(var/atom/target, mob/user, flag)
 		switch (mode)

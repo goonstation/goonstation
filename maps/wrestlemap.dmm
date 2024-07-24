@@ -4043,7 +4043,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
 "bOP" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets{
 	name = "Engineering Toilets"
@@ -6777,12 +6777,12 @@
 /obj/item/cable_coil/cut,
 /obj/storage/crate,
 /obj/item/parts/robot_parts/robot_frame,
-/obj/item/parts/robot_parts/leg/left,
-/obj/item/parts/robot_parts/leg/right,
+/obj/item/parts/robot_parts/leg/left/standard,
+/obj/item/parts/robot_parts/leg/right/standard,
 /obj/item/parts/robot_parts/chest/light,
 /obj/item/parts/robot_parts/head/standard,
-/obj/item/parts/robot_parts/arm/left,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/left/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
 /obj/item/pen/pencil,
@@ -7862,7 +7862,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/staff_room)
 "dyX" = (
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/station/security/detectives_office)
 "dza" = (
@@ -8717,8 +8717,6 @@
 /area/station/hallway/primary/west)
 "dPw" = (
 /obj/table/wood/auto,
-/obj/item/device/detective_scanner,
-/obj/item/spraybottle/detective,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -11189,11 +11187,11 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "eVd" = (
-/obj/machinery/vending/standard,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -12858,7 +12856,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "fHe" = (
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow,
+/obj/fakeobject/mantacontainer/upwards/yellow,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "fHf" = (
@@ -13528,18 +13526,10 @@
 /turf/simulated/floor/grey,
 /area/station/security/interrogation)
 "fUH" = (
-/obj/storage/cart/medcart,
-/obj/item/storage/firstaid/toxin,
-/obj/item/staple_gun,
-/obj/item/clothing/gloves/latex,
-/obj/item/reagent_containers/iv_drip/saline,
-/obj/item/robodefibrillator{
-	pixel_x = 4;
-	pixel_y = 2
-	},
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16640,7 +16630,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hsK" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -19374,7 +19364,6 @@
 	rand_pos = 0
 	},
 /obj/disposalpipe/segment/mail,
-/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
 	pixel_y = 6;
@@ -20743,7 +20732,7 @@
 /turf/simulated/floor/carpet/green/decal,
 /area/station/crew_quarters/bar)
 "jbX" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -25631,7 +25620,7 @@
 	},
 /area/station/medical/medbay/treatment1)
 "lmk" = (
-/obj/decal/fakeobjects/firealarm_broken,
+/obj/fakeobject/firealarm_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "lmJ" = (
@@ -26229,8 +26218,8 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/item/parts/robot_parts/arm/right,
-/obj/item/parts/robot_parts/arm/right,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
 /obj/machinery/light/incandescent/greenish,
 /obj/item/device/multitool,
 /obj/decal/tile_edge/stripe{
@@ -28208,7 +28197,7 @@
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "mto" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "mue" = (
@@ -30999,7 +30988,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "nHi" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -31301,7 +31290,6 @@
 	name = "Corpse Tunnel"
 	})
 "nNJ" = (
-/obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
 	pixel_x = 14;
@@ -36220,7 +36208,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
@@ -36523,7 +36511,7 @@
 /turf/simulated/floor/white/grime,
 /area/station/bridge)
 "qdD" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 8;
 	pixel_x = -10
 	},
@@ -36717,6 +36705,12 @@
 "qhg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
+"qhs" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/orange/side{
+	dir = 4
+	},
+/area/station/hallway/primary/south)
 "qhz" = (
 /obj/decal/tile_edge/stripe,
 /obj/item/material_piece/slag{
@@ -37926,7 +37920,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/catering)
 "qIe" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -37934,7 +37928,6 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
-/obj/item/hand_labeler,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "qIs" = (
@@ -38275,7 +38268,7 @@
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "qQw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -41872,15 +41865,7 @@
 	name = "Security Lobby"
 	})
 "suv" = (
-/obj/storage/cart/medcart,
-/obj/item/hand_labeler,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/storage/firstaid/oxygen,
-/obj/item/bandage,
-/obj/item/robodefibrillator{
-	pixel_x = 4;
-	pixel_y = 2
-	},
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -42393,7 +42378,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
 "sIk" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/toilets{
 	name = "Central Toilets"
@@ -44502,6 +44487,10 @@
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
 /area/station/engine/monitoring)
+"tCN" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/south)
 "tCO" = (
 /obj/table/reinforced/auto,
 /obj/item/weldingtool{
@@ -44947,7 +44936,7 @@
 	name = "The Cage Arena"
 	})
 "tLR" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -45566,7 +45555,7 @@
 /area/station/medical/dome)
 "udG" = (
 /obj/decal/cleanable/rust,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/airless/black,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -49582,7 +49571,7 @@
 /area/station/hallway/secondary/exit)
 "vRO" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/airless/plating,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -49732,7 +49721,7 @@
 /area/station/crew_quarters/captain)
 "vTN" = (
 /obj/disposalpipe/junction/left/east,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -51288,6 +51277,10 @@
 /area/station/security/brig{
 	name = "Brig Bathroom"
 	})
+"wBj" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/office)
 "wBp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -102097,7 +102090,7 @@ tvO
 tvO
 tvO
 oEt
-ldM
+tCN
 wXJ
 bna
 bna
@@ -103004,7 +102997,7 @@ aKz
 xhx
 oqv
 dKJ
-dKJ
+qhs
 gpS
 lyA
 cdh
@@ -106030,7 +106023,7 @@ uKe
 hwm
 lIC
 vSC
-tnb
+wBj
 uDO
 uDO
 uDO

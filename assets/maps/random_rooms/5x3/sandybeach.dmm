@@ -6,7 +6,7 @@
 /turf/simulated/floor/dojo/sand,
 /area/dmm_suite/clear_area)
 "e" = (
-/obj/decal/fakeobjects/palmtree,
+/obj/fakeobject/palmtree,
 /obj/item/reagent_containers/food/snacks/plant/coconut{
 	pixel_y = -10;
 	pixel_x = 6

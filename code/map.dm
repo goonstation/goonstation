@@ -44,8 +44,6 @@ var/global/list/mapNames = list(
 	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",		"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
-	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
-	//"Gehenna" =			list("id" = "GEHENNA",		"settings" = "gehenna",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
 	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
@@ -748,7 +746,7 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the nuclear reactor room" = list(/area/station/engine/core/nuclear),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
@@ -861,10 +859,10 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the engineering staff room" = list(/area/station/engine/engineering),
 		"the medical bay's central room" = list(/area/station/medical/medbay),
-		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
-		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the extraction nexus" = list(/area/station/science/construction),
+		"the cafeteria" = list(/area/station/crew_quarters/cafeteria, /area/station/crew_quarters/bar),
 		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the radio lab" = list(/area/station/crew_quarters/radio/lab),
+		"the hydroponics bay" = list(/area/station/hydroponics),
 		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
@@ -1003,6 +1001,10 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 	escape_dir = EAST
 
 /datum/map_settings/trunkmap

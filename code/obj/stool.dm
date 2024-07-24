@@ -22,7 +22,7 @@
 	desc = "A four-legged padded stool for crewmembers to relax on."
 	icon = 'icons/obj/furniture/chairs.dmi'
 	icon_state = "stool"
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
@@ -960,7 +960,7 @@ TYPEINFO(/obj/item/chair/folded)
 	item_state = "folded_chair"
 	w_class = W_CLASS_BULKY
 	throwforce = 10
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 5
 	stamina_damage = 45
 	stamina_cost = 21
