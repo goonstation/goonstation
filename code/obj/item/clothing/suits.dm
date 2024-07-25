@@ -2024,6 +2024,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			hand_icon_state = "badge_hold_r"
 			pixel_x_offset = -6
 
+		user.dir = SOUTH
+
 		var/image/badge_overlay = src.SafeGetOverlayImage("badge_overlay", src.icon, src.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
 		var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_hand_color())
 
