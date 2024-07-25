@@ -1,5 +1,9 @@
 
 (t)wed jul 24 24
+(u)JORJ949
+(p)19799
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Cargo can now order a crate full of departmental clothing vendor restock cartridges.
 (u)Smilg
 (p)20071
 (e)💅📦|C-QoL, A-Game-Objects
