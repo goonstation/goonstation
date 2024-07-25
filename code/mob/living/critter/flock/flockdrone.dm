@@ -160,6 +160,7 @@
 	src.dormant = FALSE
 	src.anchored = UNANCHORED
 	pilot.atom_hovered_over = null
+	pilot.ensure_listen_tree().migrate_listen_tree(src, src, TRUE)
 
 	var/datum/mind/mind = pilot.mind
 	if (mind)
@@ -175,7 +176,6 @@
 			ticker.minds += src.mind
 
 	pilot.set_loc(src)
-	pilot.boutput_relay_mob = src
 	controller = pilot
 	src.flock_name_tag.set_info_tag(src.controller.real_name)
 	src.client?.set_color()
@@ -220,6 +220,8 @@
 		else
 			src.move_controller_to_station()
 
+		controller.ensure_listen_tree().migrate_listen_tree(controller, controller, FALSE)
+
 		var/datum/mind/mind = src.mind
 		if (mind)
 			mind.transfer_to(controller)
@@ -232,7 +234,6 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
-		controller.boutput_relay_mob = null
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
 		var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
@@ -272,6 +273,9 @@
 		controller.set_loc(get_turf(src))
 	else
 		src.move_controller_to_station()
+
+	controller.ensure_listen_tree().migrate_listen_tree(controller, controller, FALSE)
+
 	var/datum/mind/mind = src.mind
 	if (mind)
 		mind.transfer_to(controller)
@@ -283,7 +287,6 @@
 		controller.mind.key = key
 		controller.mind.current = controller
 		ticker.minds += controller.mind
-	controller.boutput_relay_mob = null
 	if (give_alert)
 		src.flock.system_say_source.say("Control of drone [src.real_name] ended abruptly.", atom_listeners_override = list(src.controller))
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
@@ -317,6 +320,7 @@
 
 	if (src.controller)
 		src.move_controller_to_station()
+		controller.ensure_listen_tree().migrate_listen_tree(controller, controller, FALSE)
 
 		var/datum/mind/mind = src.mind
 		if (mind)
@@ -330,7 +334,6 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
-		controller.boutput_relay_mob = null
 		src.flock.system_say_source.say("Connection to drone [src.real_name] lost.", atom_listeners_override = list(controller))
 		controller = null
 	src.is_npc = TRUE // To ensure right message formatting.

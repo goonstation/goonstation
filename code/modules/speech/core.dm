@@ -155,7 +155,6 @@ Cleanup:
 - `RETURN_TYPE` where necessary.
 
 Old Code To Remove:
-- Deprecate `boutput_relay_mob`. This also causes a bug with flocks.
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
