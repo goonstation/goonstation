@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/speech_module/output)
  */
 /datum/speech_module/output
 	id = "output_base"
+	priority = SPEECH_OUTPUT_PRIORITY_DEFAULT
 	/// The channel ID that this output module should pass say messages to.
 	var/channel = "none"
 	/// The say channel datum that this module should pass say messages to.

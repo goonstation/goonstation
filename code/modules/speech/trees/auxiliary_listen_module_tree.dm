@@ -17,6 +17,9 @@
 /datum/listen_module_tree/auxiliary/process()
 	return
 
+/datum/listen_module_tree/auxiliary/flush_message_buffer()
+	return
+
 /datum/listen_module_tree/auxiliary/AddInput(input_id)
 	src.target_listen_tree?.AddInput(input_id)
 	. = ..()

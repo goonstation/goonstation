@@ -105,6 +105,7 @@
 #include "defines\speech_defines\channels.dm"
 #include "defines\speech_defines\languages.dm"
 #include "defines\speech_defines\modules.dm"
+#include "defines\speech_defines\priorities.dm"
 #include "defines\speech_defines\relays.dm"
 #include "defines\speech_defines\sayflags.dm"
 #include "defines\speech_defines\speech.dm"

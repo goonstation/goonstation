@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/datum/listen_module/input)
  */
 /datum/listen_module/input
 	id = "input_base"
+	priority = LISTEN_INPUT_PRIORITY_DEFAULT
 	/// The channel ID that this listen module should listen on.
 	var/channel = "none"
 	/// The say channel datum that this module is currently listening on.

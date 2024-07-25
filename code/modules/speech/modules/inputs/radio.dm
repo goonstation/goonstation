@@ -5,6 +5,7 @@
 
 /datum/listen_module/input/distorted_radio
 	id = LISTEN_INPUT_RADIO_DISTORTED
+	priority = LISTEN_INPUT_PRIORITY_DISTORTED
 	channel = SAY_CHANNEL_GLOBAL_RADIO
 
 

@@ -1,6 +1,6 @@
 /datum/speech_module/modifier/bot
 	id = SPEECH_MODIFIER_BOT
-	priority = -100
+	priority = SPEECH_MODIFIER_PRIORITY_VERY_LOW
 
 /datum/speech_module/modifier/bot/process(datum/say_message/message)
 	. = message

@@ -1,6 +1,6 @@
 /datum/speech_module/modifier/mob_modifiers
 	id = SPEECH_MODIFIER_MOB_MODIFIERS
-	priority = 100
+	priority = SPEECH_MODIFIER_PRIORITY_VERY_HIGH
 
 /datum/speech_module/modifier/mob_modifiers/process(datum/say_message/message)
 	. = message

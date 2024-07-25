@@ -155,6 +155,8 @@
 #define COMSIG_SPEAKER_ORIGIN_UPDATED "speaker_origin_updated"
 /// When a listen module tree's listener origin is updated. (listen tree, old_listener_origin, new_listener_origin)
 #define COMSIG_LISTENER_ORIGIN_UPDATED "listener_origin_updated"
+/// Flush all message buffers associated with the target datum.
+#define COMSIG_FLUSH_MESSAGE_BUFFER "flush_message_buffer"
 
 // ---- Client Signals ----
 /// When a client logs into a mob. (client, mob)

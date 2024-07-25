@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 /datum/speech_module/modifier/accent
 	id = "accent_base"
-	priority = -10
+	priority = SPEECH_MODIFIER_PRIORITY_ACCENTS
 
 
 // Dialects:

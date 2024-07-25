@@ -126,6 +126,8 @@
 	if (message.flags & SAYFLAG_DO_NOT_OUTPUT)
 		return
 
+	message.signal_recipient = message
+
 	// Attempt to use the highest priority module as an output, defaulting to the next highest priority on failure.
 	for (var/datum/speech_module/output/output_module as anything in output_modules)
 		if (!CAN_PASS_MESSAGE_TO_SAY_CHANNEL(output_module.say_channel, message))
@@ -143,6 +145,8 @@
 			module_message.process_speech_bubble()
 
 		break
+
+	SEND_SIGNAL(message, COMSIG_FLUSH_MESSAGE_BUFFER)
 
 /// Migrates this speech module tree to a new speaker parent and origin.
 /datum/speech_module_tree/proc/migrate_speech_tree(atom/new_parent, atom/new_origin, preserve_old_reference = FALSE)

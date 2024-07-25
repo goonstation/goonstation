@@ -46,6 +46,10 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	var/real_ident = null
 
 	// Message Information Variables:
+	/// The non-unique ID of this message. A listener may only hear one message of a specific ID at any time.
+	var/id = ""
+	/// The datum that should act as a signal recipient for every copy of this message.
+	var/datum/signal_recipient
 	/// The original contents of this message, uneditied, unsanitised.
 	var/original_content = ""
 	/// Message flags. See `_std/defines/speech_defines/sayflags.dm`.
@@ -111,6 +115,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	src.speaker = speaker.say_tree.speaker_parent
 	src.original_speaker = speaker.say_tree.speaker_parent
 	src.message_origin = speaker.say_tree.speaker_origin
+	src.id = "\ref[src]"
 	src.flags |= flags
 	src.atom_listeners_override = atom_listeners_override
 	src.maptext_css_values = list()

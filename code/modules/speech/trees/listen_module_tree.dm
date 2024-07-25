@@ -12,6 +12,10 @@
 	var/list/atom/secondary_parents
 	/// A list of all auxiliary listen module trees with this listen module tree registered as a target.
 	var/list/datum/listen_module_tree/auxiliary/auxiliary_trees
+	/// A temporary buffer of all received messages that are to be outputted to the parent when the buffer is flushed.
+	var/list/datum/say_message/message_buffer
+	/// An associative list of all signal recipients that may cause the message buffer to flush.
+	var/list/datum/signal_recipients
 
 	/// An associative list of input listen module subscription counts, indexed by the module ID.
 	var/list/input_module_ids_with_subcount
@@ -41,6 +45,8 @@
 	src.listener_origin = parent
 	src.secondary_parents = list()
 	src.auxiliary_trees = list()
+	src.message_buffer = list()
+	src.signal_recipients = list()
 
 	src.input_module_ids_with_subcount = list()
 	src.input_modules_by_id = list()
@@ -60,6 +66,11 @@
 		src.AddKnownLanguage(language_id)
 
 /datum/listen_module_tree/disposing()
+	for (var/datum/signal_recipient as anything in src.signal_recipients)
+		src.UnregisterSignal(signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
+
+	src.signal_recipients = null
+
 	for (var/datum/listen_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
 		auxiliary_tree.update_target_listen_tree(null)
 
@@ -80,6 +91,8 @@
 		src.listener_parent = null
 
 	src.secondary_parents = null
+	src.message_buffer = null
+	src.signal_recipients = null
 	src.input_modules_by_id = null
 	src.listen_modifiers_by_id = null
 	src.input_modules_by_channel = null
@@ -114,8 +127,27 @@
 			if (QDELETED(message))
 				return
 
-	/// Pass to the listener atom.
-	src.listener_parent.hear(message)
+	// If a message of this ID already exists in the buffer, do not buffer the new message unless it was heard by a higher priority module.
+	if (src.message_buffer[message.id] && (message.received_module.priority <= src.message_buffer[message.id].received_module.priority))
+		return
+
+	src.message_buffer[message.id] = message
+
+	if (!src.signal_recipients[message.signal_recipient])
+		src.signal_recipients[message.signal_recipient] = TRUE
+		src.RegisterSignal(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER, PROC_REF(flush_message_buffer))
+
+/// Outputs all messages stored in the message buffer to the listener parent.
+/datum/listen_module_tree/proc/flush_message_buffer()
+	for (var/id in src.message_buffer)
+		var/datum/say_message/message = src.message_buffer[id]
+		src.listener_parent.hear(message)
+
+		if (src.signal_recipients[message.signal_recipient])
+			src.UnregisterSignal(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
+			src.signal_recipients -= message.signal_recipient
+
+	src.message_buffer = list()
 
 /// Migrates this listen module tree to a new speaker parent and origin.
 /datum/listen_module_tree/proc/migrate_listen_tree(atom/new_parent, atom/new_origin, preserve_old_reference = FALSE)

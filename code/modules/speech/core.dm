@@ -147,7 +147,6 @@ Contributing:
 
 Limitations To Later Code Out:
 - Currently tree can only support one instance of each module ID - this is not ideal for delimited listen and speech modules.
-- Delimited listen modules do not harmonise with associted global listen modules - two messages will be displayed.
 
 Cleanup:
 - Move say procs into this directory.
@@ -156,6 +155,7 @@ Cleanup:
 - `RETURN_TYPE` where necessary.
 
 Old Code To Remove:
+- Deprecate `boutput_relay_mob`. This also causes a bug with flocks.
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
 - `say()` implementations that predate the rework.
 - Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
@@ -163,6 +163,7 @@ Old Code To Remove:
 
 Refactors:
 - Perhaps refactor `/mob/living/say_radio()` to be cleaner?
+- Perhaps prevent input modules stored on aux trees from instantiating.
 - Anything that uses `SPAN_NAME` could likely be moved onto the new system.
 - Some form of centralised preference manager for toggling inputs/outputs for types?
 	- `togglepersonaldeadchat`, `toggle_ghost_radio`, `toggle_ooc`, `toggle_looc`, etc.

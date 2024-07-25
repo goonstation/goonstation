@@ -21,7 +21,7 @@
 
 /datum/message_modifier/postprocessing/singing
 	sayflag = SAYFLAG_SINGING
-	priority = -10
+	priority = SAYFLAG_PRIORITY_LOW
 
 /datum/message_modifier/postprocessing/singing/process(datum/say_message/message)
 	. = message

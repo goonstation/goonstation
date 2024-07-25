@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/datum/message_modifier)
 	/// The sayflag associated with this message modifier; it *MUST* be unique.
 	var/sayflag = 0
 	/// How far up the message modifier list this modifier should go. High values get processed before low values.
-	var/priority = 0
+	var/priority = SAYFLAG_PRIORITY_DEFAULT
 
 /// Handle all processing that pertains to the say pipeline. Return `null` to prevent the message being processed further, or a `/datum/say_message` instance to continue.
 /datum/message_modifier/proc/process(datum/say_message/message)

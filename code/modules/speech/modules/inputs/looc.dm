@@ -9,4 +9,5 @@
 
 /datum/listen_module/input/looc/admin_global
 	id = LISTEN_INPUT_LOOC_ADMIN_GLOBAL
+	priority = LISTEN_INPUT_PRIORITY_GLOBAL
 	channel = SAY_CHANNEL_GLOBAL_LOOC
