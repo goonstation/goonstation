@@ -1,4 +1,9 @@
 
+(t)wed jul 24 24
+(u)Smilg
+(p)20071
+(e)💅📦|C-QoL, A-Game-Objects
+(*)You can now hit the floor with MechComps to place them on a neat 2x2 grid.
 (t)tue jul 23 24
 (u)Sord
 (+)Tasers have a new sound when they hit a mob
