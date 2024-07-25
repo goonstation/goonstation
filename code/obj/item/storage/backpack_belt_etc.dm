@@ -634,7 +634,6 @@
 	desc = "It's different than a fanny pack. It's tactical and action-packed!"
 	icon_state = "syndie"
 	item_state = "syndie"
-	slots = 7
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -643,6 +642,11 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+/obj/item/storage/fanny/syndie/large
+	name = "syndicate tactical espionage belt pack XL"
+	desc = "It's different than a fanny pack. It's bigger, tactical, and action-packed!"
+	slots = 7
 
 /obj/item/storage/fanny/janny
 	name = "janny pack"

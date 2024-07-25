@@ -3,7 +3,7 @@
 /obj/machinery/door/airlock/pyro
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 /obj/machinery/door/airlock/pyro/safe
 	can_shock = FALSE
@@ -73,9 +73,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	req_access = null
 	cant_emag = TRUE
 	cyborgBumpAccess = FALSE
-
-
-
 
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"
@@ -210,7 +207,6 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 
 /obj/machinery/door/airlock/pyro/reinforced/syndicate
 	req_access_txt = "52"
-	cyborgBumpAccess = FALSE
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 
@@ -320,7 +316,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	health_max = 500
 	layer = EFFECTS_LAYER_UNDER_4 // under lights and blinds, above pretty much everything else
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
-	flags = IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/machinery/door/airlock/pyro/glass/windoor/opened()

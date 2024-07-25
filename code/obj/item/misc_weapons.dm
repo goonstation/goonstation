@@ -638,6 +638,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
+	throwforce = 10
+	throw_speed = 0.5
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()

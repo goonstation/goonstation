@@ -2603,7 +2603,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "zongzi-wrapped"
 	bites_left = 3
 	heal_amt = 2
-	var/unwrapped = 0
+	var/unwrapped = FALSE
 	food_effects = list("food_all", "food_energized_big")
 
 
@@ -2621,9 +2621,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attack_self(mob/user as mob)
 		if (unwrapped)
 			attack(user, user)
+			return
 
-		unwrapped = 1
-		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
+		unwrapped = TRUE
+		user.visible_message("[user] unwraps [src]!", "You unwrap [src].")
 		icon_state = "zongzi"
 		desc = "A glutinous rice snack. The distinctive bamboo leaf wrapper seems to be missing."
 

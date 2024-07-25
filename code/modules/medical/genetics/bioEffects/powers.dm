@@ -310,7 +310,6 @@
 			boutput(usr, SPAN_ALERT("You can't jump right now!"))
 			return 1
 
-		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
 		var/jump_tiles = 10 * linked_power.power
 		var/pixel_move = 8 * linked_power.power
 		var/sleep_time = 1 / linked_power.power
@@ -358,9 +357,6 @@
 			boutput(usr, SPAN_ALERT("You can't jump right now!"))
 			return 1
 
-		//store both x and y as transforms mid jump can cause unwanted pixel offsetting
-		var/original_x_offset = owner.pixel_x
-		var/original_y_offset = owner.pixel_y
 		var/jump_tiles = 10 * linked_power.power
 		var/pixel_move = 8 * linked_power.power
 		var/sleep_time = 0.5 / linked_power.power
@@ -374,36 +370,34 @@
 			owner.changeStatus("knockdown", 10 SECONDS)
 			owner.changeStatus("stunned", 5 SECONDS)
 
+			animate(owner,
+				pixel_y = pixel_move * jump_tiles / 2,
+				time = sleep_time * jump_tiles / 2,
+				easing = EASE_OUT | CIRCULAR_EASING,
+				flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+			animate(
+				pixel_y = -pixel_move * jump_tiles / 2,
+				time = sleep_time * jump_tiles / 2,
+				easing = EASE_IN | CIRCULAR_EASING,
+				flags = ANIMATION_RELATIVE)
+
 			SPAWN(0)
 				for(var/i=0, i < jump_tiles, i++)
-					if(i < jump_tiles / 2)
-						owner.pixel_y += pixel_move
-					else
-						owner.pixel_y -= pixel_move
+					step(owner, owner.dir)
 					sleep(sleep_time)
 
-				owner.pixel_x = original_x_offset
-				owner.pixel_y = original_y_offset
 				owner.layer = prevLayer
 
 		if (istype(owner.loc,/obj/))
 			var/obj/container = owner.loc
 			boutput(owner, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
-			owner.changeStatus("unconscious", 5 SECONDS)
-			owner.changeStatus("knockdown", 5 SECONDS)
+			owner.changeStatus("knockdown", 10 SECONDS)
+			owner.changeStatus("stunned", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[owner.loc]</b> emits a loud thump and rattles a bit."))
-			playsound(owner.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
-			SPAWN(0)
-				var/wiggle = 6
-				while(wiggle > 0)
-					wiggle--
-					container.pixel_x = rand(-3,3)
-					container.pixel_y = rand(-3,3)
-					sleep(0.1 SECONDS)
-				container.pixel_x = 0
-				container.pixel_y = 0
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
+			animate_storage_thump(container)
 
-		return
+		return TRUE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2216,6 +2210,9 @@
 
 	OnLife(var/mult)
 		..()
+		if(src.safety && src.stability_loss)
+			src.owner.bioHolder.genetic_stability += src.stability_loss
+			src.stability_loss = 0
 
 		if (count < ticks_to_explode)
 			count += mult

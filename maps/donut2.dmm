@@ -848,6 +848,10 @@
 	desc = "Part of a matching set.";
 	name = "MD's Morty plush"
 	},
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -2345,10 +2349,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "anF" = (
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -7769,15 +7770,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aOt" = (
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent,
+/obj/machinery/computer/announcement/station/medical,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "aOu" = (
@@ -8266,7 +8264,6 @@
 	dir = 5
 	},
 /obj/item/storage/secure/sbriefcase,
-/obj/item/spraybottle/detective,
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -9096,8 +9093,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -14763,11 +14759,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/storage/cart/mechcart,
-/obj/item/deconstructor,
-/obj/item/electronics/scanner,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bCo" = (
@@ -17828,7 +17820,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cKW" = (
-/obj/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
 	dir = 1;
@@ -23725,24 +23717,10 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "gzM" = (
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/storage/cart/forensic{
-	desc = "A big rolling supply cart for crisis management.";
-	name = "crisis cart";
-	req_access_txt = "1"
-	},
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/device/multitool,
-/obj/item/device/multitool,
-/obj/item/screwdriver,
-/obj/item/screwdriver,
 /obj/machinery/light/small{
 	dir = 1
 	},
+/obj/storage/cart/forensic/bomb_disposal,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "gBm" = (
@@ -24497,22 +24475,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "hbS" = (
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/audio_log,
-/obj/item/device/detective_scanner,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/forensic{
-	req_access_txt = "1"
-	},
+/obj/storage/cart/forensic/security,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "hbZ" = (
@@ -24728,6 +24691,7 @@
 /obj/item/device/radio/intercom/detnet/security{
 	dir = 8
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "hjn" = (
@@ -25072,30 +25036,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "hxT" = (
-/obj/item/device/prox_sensor{
-	pixel_x = -8;
-	pixel_y = 10
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 1;
-	pixel_y = 10
-	},
-/obj/item/device/prox_sensor{
-	pixel_x = 10;
-	pixel_y = 10
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 1;
-	pixel_y = -3
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = 10;
-	pixel_y = -2
-	},
-/obj/item/assembly/time_ignite{
-	pixel_x = -9;
-	pixel_y = -2
-	},
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -26417,9 +26357,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "iss" = (
@@ -30629,6 +30567,10 @@
 "lcp" = (
 /obj/machinery/light/incandescent,
 /mob/living/critter/small_animal/dog/george/orwell,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen2"
@@ -32461,11 +32403,7 @@
 "mhr" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/storage/cart/mechcart,
-/obj/item/deconstructor,
-/obj/item/electronics/scanner,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "mhH" = (
@@ -32791,6 +32729,9 @@
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/engineering_power,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "mqD" = (
@@ -33778,7 +33719,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/science/lobby)
 "mWp" = (
-/obj/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
 	icon = 'icons/obj/networked.dmi';
@@ -37352,10 +37293,6 @@
 	},
 /area/station/crew_quarters/kitchen/freezer)
 "oXb" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -43345,6 +43282,10 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "sMH" = (
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
@@ -43750,11 +43691,11 @@
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
-/obj/machinery/computer/announcement,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -44746,7 +44687,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "tDT" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "tEL" = (
