@@ -1,4 +1,13 @@
 
+(t)fri jul 26 24
+(u)LeahTheTech
+(+)Maneaters and skeleton commanders no longer bleed.
+(u)TDHooligan
+(p)19063
+(e)⚖💊|C-Balance, A-Medical
+(*)Sharp weapons cause bleeding more reliably.
+(*)Heavy bleeding (Artery nicks) cannot be naturally regenerated, and require bandages/sutures/cauterization/staunching.
+(*)As compensation, bleeding slows down as you lose blood. Coagulants (proconvertin) also limit incoming bleeds, like 'Bleed Armor'.
 (t)thu jul 25 24
 (u)Azrun
 (p)18570
