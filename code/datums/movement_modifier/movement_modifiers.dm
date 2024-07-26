@@ -298,6 +298,7 @@
 	if (user.lying)
 		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
 		return list(0-(applied_modifier),1)
+	else return list(0, 1)
 
 // shivering
 
