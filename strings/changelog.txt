@@ -1,5 +1,7 @@
 
 (t)fri jul 26 24
+(u)LeahTheTech
+(+)Maneaters and skeleton commanders no longer bleed.
 (u)TDHooligan
 (p)19063
 (e)⚖💊|C-Balance, A-Medical
