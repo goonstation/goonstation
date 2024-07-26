@@ -733,9 +733,9 @@ toxic - poisons
 			var/turf/target = get_edge_target_turf(M, dirflag)
 			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
-		if (ismob(hit))
+		if (ismob(hit) && prob(60))
 			var/mob/M = hit
-			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1)
+			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1, override_bleed_level=rand(2,4))
 		..()
 
 /datum/projectile/bullet/kuvalda_slug //engine block destroying slug. not as fun as Buck, but longer range and AP.
@@ -2054,7 +2054,7 @@ datum/projectile/bullet/autocannon
 	icon_state = "120mm"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	damage = 10
+	damage = 200
 	stun = 200
 	dissipation_delay = 300
 	dissipation_rate = 5
