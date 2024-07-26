@@ -3623,3 +3623,9 @@
 			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
 				arrestState = ARREST_STATE_CONTRABAND
 	src.arrestIcon.icon_state = arrestState
+
+/mob/living/carbon/human/get_genetic_traits()
+	return list(5,5,1)
+
+mob/living/carbon/human/has_genetics()
+	return TRUE
