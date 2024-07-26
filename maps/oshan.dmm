@@ -37974,7 +37974,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med/sea,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "kXn" = (
