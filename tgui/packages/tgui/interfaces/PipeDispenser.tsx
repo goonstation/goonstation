@@ -5,12 +5,24 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Image, NumberInput, Section, Stack } from '../components';
+import { useState } from 'react';
+import { Box, Button, Image, NumberInput, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const PipeDispenser = (props, context) => {
-  const { data } = useBackend(context);
+interface PipeDispenserData {
+  disposalpipes,
+  dispenser_ready,
+  windowName,
+  mobile,
+  removing_pipe,
+  laying_pipe,
+  max_disposal_pipes,
+}
+
+export const PipeDispenser = () => {
+  const { data } = useBackend<PipeDispenserData>();
   const disposalpipes = data.disposalpipes || [];
   const {
     dispenser_ready,
@@ -23,7 +35,7 @@ export const PipeDispenser = (props, context) => {
   return (
     <Window
       title={windowName}
-      width="325"
+      width={325}
       height={mobile ? 365 : 270}>
       <Window.Content scrollable>
         <Section>
@@ -47,9 +59,9 @@ export const PipeDispenser = (props, context) => {
   );
 };
 
-export const DisposalPipeRow = (props, context) => {
-  const { act } = useBackend(context);
-  const [amount, setAmount] = useLocalState(context, 'amount', 1);
+export const DisposalPipeRow = (props) => {
+  const { act } = useBackend();
+  const [amount, setAmount] = useState(1);
   const {
     dispenser_ready,
     max_disposal_pipes,
@@ -57,7 +69,7 @@ export const DisposalPipeRow = (props, context) => {
   } = props;
 
   return (
-    <Stack style={{ "border-bottom": "1px #555 solid" }}>
+    <Stack style={{ borderBottom: "1px #555 solid" }}>
       {disposalpipe.image && (
         <Stack.Item>
           <Box style={{ "overflow": "show", "height": "32px" }}>
@@ -71,28 +83,30 @@ export const DisposalPipeRow = (props, context) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          "display": "flex",
-          "justify-content": "center",
-          "flex-direction": "column",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
         }}>
         Amount:
         <NumberInput
           value={amount}
           minValue={1}
           maxValue={max_disposal_pipes}
-          onChange={(e, value) => setAmount(Math.round(value))} />
+          step={1}
+          onChange={(value) => setAmount(Math.round(value))} />
       </Stack.Item>
       <Stack.Item style={{
-        "margin-left": "5px",
-        "display": "flex",
-        "justify-content": "center",
-        "flex-direction": "column",
+        marginLeft: "5px",
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
       }}>
         <Button
           color={dispenser_ready ? "green" : "grey"}
           content="Dispense"
           disabled={!dispenser_ready}
-          style={{ "width": "70px", "text-align": "center" }}
+          textAlign="center"
+          width="70px"
           onClick={() => act('dmake', { 'disposal_type': disposalpipe.disposaltype, 'amount': amount })}
         />
       </Stack.Item>
@@ -100,8 +114,8 @@ export const DisposalPipeRow = (props, context) => {
   );
 };
 
-export const AutoPipeLaying = (props, context) => {
-  const { act } = useBackend(context);
+export const AutoPipeLaying = (props) => {
+  const { act } = useBackend<PipeDispenserData>();
   const {
     laying_pipe,
     removing_pipe,
