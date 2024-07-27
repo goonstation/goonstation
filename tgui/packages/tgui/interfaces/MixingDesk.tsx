@@ -6,40 +6,43 @@
  */
 
 import { KeyboardEventHandler, useCallback } from 'react';
-import { Box, Button, Divider, Icon, Input, LabeledList, Modal, Section, Stack, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Input,
+  LabeledList,
+  Modal,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../backend';
-import { truncate } from '../format.js';
+import { truncate } from '../format';
 import { Window } from '../layouts';
 
 interface MixingDeskData {
-  voices,
-  selected_voice,
-  say_popup,
+  voices;
+  selected_voice;
+  say_popup;
 }
 
 export const MixingDesk = () => {
   const { act, data } = useBackend<MixingDeskData>();
-  const {
-    voices,
-    selected_voice,
-    say_popup,
-  } = data;
+  const { voices, selected_voice, say_popup } = data;
   const [message, setMessage] = useSharedState<string | null>('message', null);
 
   const sayPopup = () => (
     <Modal>
-      Say as {
-        (selected_voice > 0 && selected_voice <= voices.length)
-          ? voices[selected_voice - 1].name
-          : 'yourself'
-      }:
+      Say as{' '}
+      {selected_voice > 0 && selected_voice <= voices.length
+        ? voices[selected_voice - 1].name
+        : 'yourself'}
+      :
       <br />
-      <Box
-        pt="5px"
-        pr="10px"
-        textAlign="center"
-      >
+      <Box pt="5px" pr="10px" textAlign="center">
         <Input
           autoFocus
           selfClear
@@ -72,40 +75,39 @@ export const MixingDesk = () => {
           Cancel
         </Button>
       </Box>
-    </Modal>);
+    </Modal>
+  );
 
-  const handleKeyDown = useCallback<KeyboardEventHandler>(e => {
-    let key = String.fromCharCode(e.keyCode);
-    let caught_key = true;
-    if (key === 'T') {
-      act('say_popup');
-    }
-    else if (e.keyCode === 27 && say_popup) { // escape
-      act('cancel_say');
-      setMessage('');
-    }
-    else if (!say_popup) {
-      let num = Number(key);
-      if (String(num) === key) {
-        // apparently in js this is the correct way to check if it's a number
-        act('switch_voice', { id: num });
-      }
-      else {
+  const handleKeyDown = useCallback<KeyboardEventHandler>(
+    (e) => {
+      let key = String.fromCharCode(e.keyCode);
+      let caught_key = true;
+      if (key === 'T') {
+        act('say_popup');
+      } else if (e.keyCode === 27 && say_popup) {
+        // escape
+        act('cancel_say');
+        setMessage('');
+      } else if (!say_popup) {
+        let num = Number(key);
+        if (String(num) === key) {
+          // apparently in js this is the correct way to check if it's a number
+          act('switch_voice', { id: num });
+        } else {
+          caught_key = false;
+        }
+      } else {
         caught_key = false;
       }
-    }
-    else {
-      caught_key = false;
-    }
-    if (caught_key) {
-      e.stopPropagation();
-    }
-  }, [act, say_popup]);
+      if (caught_key) {
+        e.stopPropagation();
+      }
+    },
+    [act, say_popup],
+  );
 
   return (
-    <Window
-      height={375}
-      width={370}>
+    <Window height={375} width={370}>
       <Window.Content onKeyDown={handleKeyDown}>
         {!!say_popup && sayPopup()}
         <Section title="Voice Synthesizer">
@@ -115,7 +117,7 @@ export const MixingDesk = () => {
               <LabeledList.Item
                 key={entry['name']}
                 label={`${index + 1} ${truncate(entry['name'], 18)}${entry['accent'] ? ` [${entry['accent']}]` : ''}`}
-                labelColor={index + 1 === selected_voice ? "red" : "label"}
+                labelColor={index + 1 === selected_voice ? 'red' : 'label'}
               >
                 <Button
                   icon="trash-alt"
@@ -123,7 +125,7 @@ export const MixingDesk = () => {
                 />
                 <Button
                   icon="bullhorn"
-                  onClick={() => act("say_popup", { id: index + 1 })}
+                  onClick={() => act('say_popup', { id: index + 1 })}
                 />
               </LabeledList.Item>
             ))}

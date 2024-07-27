@@ -19,7 +19,7 @@ import {
 import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { truncate } from '../format.js';
+import { truncate } from '../format';
 import { Window } from '../layouts';
 
 interface DJPanelProps {
