@@ -34,7 +34,6 @@ export { Modal } from './Modal';
 export { NoticeBox } from './NoticeBox';
 export { NumberInput } from './NumberInput';
 export { Pointer } from './Pointer';
-export { Popper } from './Popper';
 export { ProgressBar } from './ProgressBar';
 export { RestrictedInput } from './RestrictedInput';
 export { RoundGauge } from './RoundGauge';
