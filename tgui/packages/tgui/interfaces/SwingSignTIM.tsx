@@ -5,8 +5,10 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, Section, Stack, TextArea } from '../components';
+import { useState } from 'react';
+import { Box, Section, Stack, TextArea } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InputButtons, Validator } from './common/InputButtons';
 
@@ -20,8 +22,8 @@ import { InputButtons, Validator } from './common/InputButtons';
    columns: number;
  };
 
-export const SwingSignTIM = (_, context) => {
-  const { data } = useBackend<TextInputData>(context);
+export const SwingSignTIM = () => {
+  const { data } = useBackend<TextInputData>();
   const {
     max_length,
     message,
@@ -31,10 +33,8 @@ export const SwingSignTIM = (_, context) => {
     rows,
     columns,
   } = data;
-  const [input, setInput] = useLocalState(context, 'input', placeholder);
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    context,
-    'inputIsValid',
+  const [input, setInput] = useState(placeholder);
+  const [inputIsValid, setInputIsValid] = useState<Validator>(
     { isValid: allowEmpty || !!message, error: null }
   );
   const onType = (event) => {
@@ -72,15 +72,15 @@ export const SwingSignTIM = (_, context) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
-  const { input, inputIsValid, onType } = props;
+const InputArea = (props) => {
+  const { act } = useBackend<TextInputData>();
+  const { input, onType } = props;
   const textareaStyle = {
     overflow: "hidden",
     // textAlign: "center",
     whiteSpace: "pre-line",
     wrap: "hard",
-    textAlignLast: "center",
+    textAlignLast: "center" as const,
   };
 
   return (
