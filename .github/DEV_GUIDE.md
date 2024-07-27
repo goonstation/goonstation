@@ -77,6 +77,8 @@ If this does not work, search for the following extensions:
  - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
 
+For the DreamMaker extension that is installed, be sure you turn on auto-updates. You'll also want to ensure BYOND is installed in the default location for ease of use.
+
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime it just breaks. :shrug:
 
 :::warning

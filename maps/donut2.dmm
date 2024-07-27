@@ -836,6 +836,10 @@
 	desc = "Part of a matching set.";
 	name = "MD's Morty plush"
 	},
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -2333,10 +2337,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "anF" = (
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -7757,15 +7758,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aOt" = (
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent,
+/obj/machinery/computer/announcement/station/medical,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "aOu" = (
@@ -9083,8 +9081,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -26352,9 +26349,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "iss" = (
@@ -30569,6 +30564,10 @@
 "lcp" = (
 /obj/machinery/light/incandescent,
 /mob/living/critter/small_animal/dog/george/orwell,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = -3;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen2"
@@ -37277,10 +37276,6 @@
 	},
 /area/station/crew_quarters/kitchen/freezer)
 "oXb" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -43280,6 +43275,10 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "sMH" = (
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
 /turf/simulated/floor/blueblack{
 	dir = 5
 	},
@@ -43685,11 +43684,11 @@
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
-/obj/machinery/computer/announcement,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
