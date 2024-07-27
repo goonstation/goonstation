@@ -5,8 +5,10 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from '../components';
+import { useState } from 'react';
+import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { pluralize } from './common/stringUtils';
 
@@ -23,14 +25,23 @@ const categorySorter = (a, b) => (
   (DefaultSort[a.name] || DefaultSort.Other) - (DefaultSort[b.name] || DefaultSort.Other)
 );
 
-export const SeedFabricator = (_props, context) => {
-  const { data } = useBackend(context);
+interface SeedFabricatorData {
+  canVend;
+  isWorking;
+  maxSeed;
+  name;
+  seedCategories;
+  seedCount;
+}
+
+export const SeedFabricator = () => {
+  const { data } = useBackend<SeedFabricatorData>();
   const { canVend, isWorking, maxSeed, name, seedCount } = data;
   const categories = data.seedCategories || [];
 
   categories.sort(categorySorter);
 
-  const [dispenseAmount, setDispenseAmount] = useLocalState(context, 'dispenseAmount', 1);
+  const [dispenseAmount, setDispenseAmount] = useState(1);
 
   return (
     <Window
@@ -64,7 +75,8 @@ export const SeedFabricator = (_props, context) => {
                 format={value => value + pluralize(' seed', value)}
                 minValue={1}
                 maxValue={10}
-                onDrag={(_e, value) => setDispenseAmount(value)}
+                step={1}
+                onDrag={(value) => setDispenseAmount(value)}
               />
             </Flex.Item>
             <Flex.Item grow={2}>
@@ -109,8 +121,8 @@ export const SeedFabricator = (_props, context) => {
 
 const seedsSorter = (a, b) => a.name.localeCompare(b.name);
 
-const SeedCategory = (props, context) => {
-  const { act } = useBackend(context);
+const SeedCategory = (props) => {
+  const { act } = useBackend<SeedFabricatorData>();
   const { category, dispenseAmount } = props;
   const { name, seeds } = category;
 
@@ -135,8 +147,7 @@ const SeedCategory = (props, context) => {
                 {seed.img ? (
                   <img
                     style={{
-                      'vertical-align': 'middle',
-                      'horizontal-align': 'middle',
+                      'verticalAlign': 'middle',
                     }}
                     height="32px"
                     width="32px"
@@ -144,8 +155,7 @@ const SeedCategory = (props, context) => {
                 ) : (
                   <Icon
                     style={{
-                      'vertical-align': 'middle',
-                      'horizontal-align': 'middle',
+                      'verticalAlign': 'middle',
                     }}
                     height="32px"
                     width="32px"
@@ -157,7 +167,7 @@ const SeedCategory = (props, context) => {
               </Flex.Item>
               <Flex.Item
                 overflow="hidden"
-                style={{ 'text-overflow': 'ellipsis' }}
+                style={{ 'textOverflow': 'ellipsis' }}
                 title={seed.name}
               >
                 {seed.name}
