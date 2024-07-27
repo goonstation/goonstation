@@ -5,13 +5,24 @@
  * @license ISC
  */
 
+import { Box, Button, Dropdown, Section, Slider } from "tgui-core/components";
+
 import { useBackend } from "../backend";
-import { Box, Button, Dropdown, Section, Slider } from "../components";
 import { Window } from '../layouts';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 
-export const AutoInjector = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface AutoInjectorData {
+  condition,
+  conditionDamage,
+  conditionTreshold,
+  conditions,
+  injectionAmount,
+  minimumTime,
+  reagentData,
+}
+
+export const AutoInjector = () => {
+  const { act, data } = useBackend<AutoInjectorData>();
   const { injectionAmount, reagentData, minimumTime, condition, conditionTreshold, conditionDamage, conditions } = data;
 
   return (
@@ -23,7 +34,7 @@ export const AutoInjector = (_props, context) => {
         <Section title={"Contents"}
           buttons={
             <Button
-              title="Eject"
+              tooltip="Eject"
               icon="eject"
               disabled={!reagentData}
               onClick={() => act('remove_cont')}
