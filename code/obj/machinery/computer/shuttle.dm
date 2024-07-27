@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 		..()
 		var/area/top = locate(areaUpper)
 		var/turf/topshaft = top.find_middle()
-		if(topshaft.type == endTurfToLeave)
+		if(topshaft?.type == endTurfToLeave)
 			location = 0
 		else
 			location = 1
