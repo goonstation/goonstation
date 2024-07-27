@@ -1,5 +1,9 @@
 
 (t)fri jul 26 24
+(u)cringe
+(p)19847
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nanotrasen has built better glass floors that are seamless. They also let through light.
 (u)LeahTheTech
 (+)Maneaters and skeleton commanders no longer bleed.
 (u)TDHooligan
