@@ -1,12 +1,31 @@
-import { Box, Button, Image, Section } from 'tgui/components';
+import { Box, Button, Collapsible, Divider, Flex, Image, LabeledList, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Collapsible, Divider, Flex, LabeledList, Stack } from '../components';
 import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 
-export const Vendors = (props, context) => {
-  const { act, data } = useBackend(context);
+interface VendorsData {
+  bankMoney,
+  busy,
+  busyphrase,
+  cardname,
+  cash,
+  currentlyVending,
+  lightColors
+  loading,
+  name,
+  owner,
+  playerBuilt,
+  productList,
+  requiresMoney,
+  unlocked,
+  windowName,
+  wiresList,
+  wiresOpen,
+}
+
+export const Vendors = () => {
+  const { act, data } = useBackend<VendorsData>();
   const wiresList = data.wiresList || [];
   const productList = data.productList || [];
   const indicators = data.lightColors || [];
@@ -38,9 +57,8 @@ export const Vendors = (props, context) => {
   return (
     <Window
       title={windowName}
-      width="500"
-      height="600"
-      fontFamily="Consolas"
+      width={500}
+      height={600}
       font-size="10pt">
       <Window.Content>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
@@ -147,7 +165,7 @@ export const Vendors = (props, context) => {
                             {(playerBuilt && wiresOpen) && <Button inline
                               color="green"
                               icon="images"
-                              style={{ "margin-left": "5px" }}
+                              style={{ "marginLeft": "5px" }}
                               onClick={() => act('setIcon', { target: product.ref })}
                             />}
                           </Box>
@@ -161,13 +179,13 @@ export const Vendors = (props, context) => {
                         {(playerBuilt && unlocked) ? <Button.Input
                           color={canVend(product) ? "green" : "grey"}
                           content={getCost(product)}
-                          style={{ "width": "50px", "text-align": "center" }}
+                          style={{ "width": "50px", "textAlign": "center" }}
                           onCommit={(e, value) => act('setPrice', { target: product.ref, cost: value })}
                         /> : <Button
                           color={canVend(product) ? "green" : "grey"}
                           content={getCost(product)}
                           disabled={canVend(product) ? false : true}
-                          style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
+                          style={{ "width": "50px", "textAlign": "center", "padding": "0px" }}
                           onClick={() => act('vend', {
                             target: product.ref, cost: product.cost, amount: product.amount })}
                         />}
