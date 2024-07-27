@@ -5,19 +5,27 @@
  * @license MIT
  */
 
+import { KeyboardEventHandler, useCallback } from 'react';
+import { Box, Button, Divider, Icon, Input, LabeledList, Modal, Section, Stack, Tooltip } from 'tgui-core/components';
+
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Divider, Icon, Input, LabeledList, Modal, Section, Stack, Tooltip } from '../components';
 import { truncate } from '../format.js';
 import { Window } from '../layouts';
 
-export const MixingDesk = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface MixingDeskData {
+  voices,
+  selected_voice,
+  say_popup,
+}
+
+export const MixingDesk = () => {
+  const { act, data } = useBackend<MixingDeskData>();
   const {
     voices,
     selected_voice,
     say_popup,
   } = data;
-  const [message, setMessage] = useSharedState(context, 'message', null);
+  const [message, setMessage] = useSharedState<string | null>('message', null);
 
   const sayPopup = () => (
     <Modal>
@@ -66,7 +74,7 @@ export const MixingDesk = (_props, context) => {
       </Box>
     </Modal>);
 
-  const onKeyDown = e => {
+  const handleKeyDown = useCallback<KeyboardEventHandler>(e => {
     let key = String.fromCharCode(e.keyCode);
     let caught_key = true;
     if (key === 'T') {
@@ -92,13 +100,13 @@ export const MixingDesk = (_props, context) => {
     if (caught_key) {
       e.stopPropagation();
     }
-  };
+  }, [act, say_popup]);
 
   return (
     <Window
       height={375}
       width={370}>
-      <Window.Content onkeydown={onKeyDown}>
+      <Window.Content onKeyDown={handleKeyDown}>
         {!!say_popup && sayPopup()}
         <Section title="Voice Synthesizer">
           <Divider />
