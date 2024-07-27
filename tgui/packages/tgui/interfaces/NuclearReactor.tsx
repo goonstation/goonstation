@@ -1,8 +1,7 @@
+import { Box, Button, Flex, Knob, RoundGauge, Section, Table } from 'tgui-core/components';
 import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Box, Button, Knob, RoundGauge, Section, Table } from '../components';
-import { Flex } from '../components';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 import { getTemperatureColor } from './common/temperatureUtils';
@@ -15,9 +14,8 @@ const ReactorRow = (shape) => {
       {components.map((c, index) => {
         if (c === null) {
           return (
-            <Table.Cell key={name}>
+            <Table.Cell key={index}>
               <Button
-                key={name}
                 fluid
                 color="transparent"
                 m={1}
@@ -26,11 +24,10 @@ const ReactorRow = (shape) => {
                 <img
                   src={`data:image/png;base64,${emptySlotIcon}`}
                   style={{
-                    'vertical-align': 'middle',
-                    'border-color': '#AAAAAA',
-                    'border-style': 'solid',
-                    'border-radius': '4px',
-                    'horizontal-align': 'middle',
+                    verticalAlign: 'middle',
+                    borderColor: '#AAAAAA',
+                    borderStyle: 'solid',
+                    borderRadius: '4px',
                   }}
                 />
               </Button>
@@ -73,12 +70,11 @@ const ReactorRow = (shape) => {
                 <img
                   src={`data:image/png;base64,${img}`}
                   style={{
-                    'box-shadow': `0px 0px 20px ${getTemperatureColor(temp, 2000)}`,
-                    'vertical-align': 'middle',
-                    'border-color': `${getTemperatureColor(temp, 2000)}`,
-                    'border-style': 'solid',
-                    'border-radius': '4px',
-                    'horizontal-align': 'middle',
+                    boxShadow: `0px 0px 20px ${getTemperatureColor(temp, 2000)}`,
+                    verticalAlign: 'middle',
+                    borderColor: `${getTemperatureColor(temp, 2000)}`,
+                    borderStyle: 'solid',
+                    borderRadius: '4px',
                   }}
                 />
               </Button>
@@ -95,9 +91,8 @@ const ReactorGrid = (shape) => {
   return (
     <Table>
       {components.map((r, index) => {
-        const { comp } = r;
         return (
-          <Table.Row key>
+          <Table.Row key={index}>
             <ReactorRow
               rowID={index}
               components={r}
@@ -111,8 +106,19 @@ const ReactorGrid = (shape) => {
   );
 };
 
-export const NuclearReactor = (props, context) => {
-  const { act, data } = useBackend(context);
+interface NuclearReactorData {
+  gridW,
+  gridH,
+  emptySlotIcon,
+  components,
+  reactorTemp,
+  reactorRads,
+  configuredControlRodLevel,
+  actualControlRodLevel,
+}
+
+export const NuclearReactor = () => {
+  const { act, data } = useBackend<NuclearReactorData>();
   const {
     gridW,
     gridH,
@@ -124,7 +130,7 @@ export const NuclearReactor = (props, context) => {
     actualControlRodLevel,
   } = data;
   return (
-    <Window resizable title="Nuclear Reactor" width={500} height={700}>
+    <Window title="Nuclear Reactor" width={500} height={700}>
       <Window.Content>
         <Section>
           <ReactorGrid
