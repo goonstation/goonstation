@@ -1,11 +1,19 @@
+import { AnimatedNumber, Box, Flex, Icon, RoundGauge, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Flex, Icon, RoundGauge, Section } from '../components';
 import { formatPressure } from '../format';
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
-export const AirAlarm = (props, context) => {
-  const { act, data } = useBackend(context);
+interface AirAlarmData {
+  boundaries;
+  gasses;
+  temperature;
+  safe;
+}
+
+export const AirAlarm = () => {
+  const { act, data } = useBackend<AirAlarmData>();
 
   const {
     boundaries,
