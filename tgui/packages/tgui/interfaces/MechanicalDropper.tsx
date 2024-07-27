@@ -1,7 +1,7 @@
+import { Button, Section, Slider, Stack, Tabs } from 'tgui-core/components';
 import { clamp, round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Button, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { ReagentBar } from './common/ReagentInfo';
 
@@ -76,8 +76,16 @@ const DropperAmountSection = (props) => {
   );
 };
 
-export const MechanicalDropper = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface MechanicalDropperData {
+  curTransferAmt,
+  minTransferAmt,
+  maxTransferAmt,
+  transferMode,
+  reagents,
+}
+
+export const MechanicalDropper = () => {
+  const { act, data } = useBackend<MechanicalDropperData>();
 
   const {
     curTransferAmt,
