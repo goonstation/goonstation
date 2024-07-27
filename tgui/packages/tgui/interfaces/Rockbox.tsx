@@ -1,17 +1,23 @@
-import { Fragment } from 'inferno';
+import { Fragment, useState } from 'react';
+import { Box, Button, Divider, NumberInput, Section, Stack, Table, Tooltip } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Divider, NumberInput, Section, Stack, Table, Tooltip } from '../components';
-import { ButtonCheckbox } from '../components/Button';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const Rockbox = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface RockboxData {
+  autosell;
+  default_price;
+  ores;
+}
+
+export const Rockbox = () => {
+  const { act, data } = useBackend<RockboxData>();
   const {
-    default_price,
     autosell,
+    default_price,
+    ores,
   } = data;
-  const [takeAmount, setTakeAmount] = useLocalState(context, 'takeAmount', 1);
+  const [takeAmount, setTakeAmount] = useState(1);
   return (
     <Window
       title="Rockbox"
@@ -26,10 +32,11 @@ export const Rockbox = (_props, context) => {
                 {"Amount to eject: "}
                 <NumberInput
                   value={takeAmount}
-                  width={4}
                   minValue={1}
-                  onDrag={(e, value) => setTakeAmount(value)}
-                  onChange={(e, value) => setTakeAmount(value)}
+                  maxValue={50}
+                  step={1}
+                  onDrag={(value) => setTakeAmount(value)}
+                  onChange={(value) => setTakeAmount(value)}
                 />
               </Box>
               <Divider />
@@ -39,10 +46,11 @@ export const Rockbox = (_props, context) => {
                   {"Default Price: "}
                   <NumberInput
                     value={default_price}
-                    width={4}
                     minValue={0}
+                    maxValue={Infinity}
+                    step={1}
                     format={value => value + "⪽"}
-                    onChange={(e, value) => act('set-default-price', { newPrice: value })}
+                    onChange={(value) => act('set-default-price', { newPrice: value })}
                   />
                 </Box>
               </Tooltip>
@@ -56,7 +64,7 @@ export const Rockbox = (_props, context) => {
           </Stack.Item>
           <Stack.Item grow={1}>
             <Section fill scrollable>
-              {data.ores.length
+              {ores.length
                 ? (
                   <Box>
                     {data.ores.map((currentOre) => (
@@ -67,7 +75,7 @@ export const Rockbox = (_props, context) => {
                         >
                           <Table>
                             <Table.Row>
-                              <Table.Cell style={{ "vertical-align": "top" }}>
+                              <Table.Cell style={{ verticalAlign: "top" }}>
                                 <Box>{`${currentOre.name}: ${currentOre.amount}`}</Box>
                               </Table.Cell>
                               <Table.Cell textAlign="right">
@@ -76,15 +84,16 @@ export const Rockbox = (_props, context) => {
                                     {'Price: '}
                                     <NumberInput
                                       value={currentOre.price}
-                                      width={4}
                                       minValue={0}
+                                      maxValue={Infinity}
+                                      step={1}
                                       format={value => value + "⪽"}
-                                      onChange={(e, value) => act('set-ore-price', {
+                                      onChange={(value) => act('set-ore-price', {
                                         newPrice: value,
                                         ore: currentOre.name,
                                       })}
                                     />
-                                    <ButtonCheckbox
+                                    <Button.Checkbox
                                       content="For Sale"
                                       color={currentOre.forSale ? 'green' : 'red'}
                                       checked={currentOre.forSale}
@@ -106,8 +115,6 @@ export const Rockbox = (_props, context) => {
                                           && <Box>{`Amount sold: ${currentOre.amountSold}`}</Box>}
                                   </Stack.Item>
                                 </Stack>
-
-
                               </Table.Cell>
                             </Table.Row>
                           </Table>
