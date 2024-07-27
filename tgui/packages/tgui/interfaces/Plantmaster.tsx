@@ -20,7 +20,6 @@ import {
 import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { TableRow } from '../components/Table';
 import { truncate } from '../format';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
@@ -225,7 +224,7 @@ const TitleRow = (props) => {
   const { show_damage, sortBy, sortAsc } = props;
 
   return (
-    <TableRow>
+    <Table.Row>
       {headings.map(
         (heading, index) =>
           (show_damage || heading !== 'damage') && (
@@ -251,7 +250,7 @@ const TitleRow = (props) => {
             </Table.Cell>
           ),
       )}
-    </TableRow>
+    </Table.Row>
   );
 };
 const PlantRow = (props) => {
