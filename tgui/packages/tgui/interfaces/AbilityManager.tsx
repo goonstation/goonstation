@@ -5,19 +5,29 @@
  * @license ISC
  */
 
+import { Box, Button, NumberInput, Section, Table } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-const NumberInputCell = ({ number, unit, onChange, abilityRef }) => (
+interface NumberInputCellProps {
+  number: number;
+  unit?: string,
+  onChange: (abilityRef: string, value: number) => void;
+  abilityRef: string,
+}
+
+const NumberInputCell = ({ number, unit, onChange, abilityRef }: NumberInputCellProps) => (
   <Table.Cell py="0.5em" collapsing>
     <Box align="center">
       <NumberInput
         minValue={0}
+        maxValue={Infinity}
         unit={unit}
         width="5em"
         value={number}
-        onChange={(e, value) => onChange(abilityRef, value)} />
+        step={1}
+        onChange={(value) => onChange(abilityRef, value)} />
     </Box>
   </Table.Cell>
 );
@@ -40,8 +50,13 @@ const HeaderRow = () => (
   </Table.Row>
 );
 
-export const AbilityManager = (props, context) => {
-  const { act, data } = useBackend(context);
+interface AbilityManagerData {
+  abilities;
+  target_name;
+}
+
+export const AbilityManager = () => {
+  const { act, data } = useBackend<AbilityManagerData>();
   const { abilities, target_name } = data;
 
   // Defining the actions that can be performed from the UI.
@@ -53,7 +68,7 @@ export const AbilityManager = (props, context) => {
   const deleteAbility = (abilityRef) => act('deleteAbility', { abilityRef });
 
   return (
-    <Window title="Ability Manager" width="750" height="300">
+    <Window title="Ability Manager" width={750} height={300}>
       <Window.Content>
         <Section
           title={`Abilities of ${target_name}`}
@@ -89,7 +104,7 @@ export const AbilityManager = (props, context) => {
                   />
                   {/* Buttons for managing and deleting the ability */}
                   <Table.Cell py="0.5em" collapsing>
-                    <Box direction="row" align="center" nowrap>
+                    <Box align="center" nowrap>
                       <Button
                         tooltip="View Variables"
                         tooltipPosition="top"
