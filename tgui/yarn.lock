@@ -2848,6 +2848,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:1.11.12":
+  version: 1.11.12
+  resolution: "dayjs@npm:1.11.12"
+  checksum: 10c0/9673d37f3f9ad8a91caaeae9b3fea9a0010c81c7f58599fb9d860bc3359b86632fbff8eb7dddc86c2acaab01c5e6860bc672952f17b58c9286140c52b077c8e4
+  languageName: node
+  linkType: hard
+
 "debounce@npm:^1.2.1":
   version: 1.2.1
   resolution: "debounce@npm:1.2.1"
@@ -7740,6 +7747,7 @@ __metadata:
     "@types/react": "npm:^18.2.74"
     common: "workspace:*"
     dateformat: "npm:^4.6.3"
+    dayjs: "npm:1.11.12"
     dompurify: "npm:^2.4.9"
     highlight.js: "npm:^11.9.0"
     jest: "npm:^29.7.0"
