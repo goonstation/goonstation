@@ -5,12 +5,42 @@
 * @license ISC
 */
 
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Divider, Flex, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs } from "../components";
+import { useState } from "react";
+import { Box, Button, Divider, Flex, LabeledList, Modal, NoticeBox, ProgressBar, Section, Tabs } from "tgui-core/components";
+
+import { useBackend } from "../backend";
 import { truncate } from '../format';
 import { Window } from "../layouts";
 
-export const uiCurrentUserPermissions = data => {
+interface AirlockData {
+  accessCode,
+  aiControlVar,
+  aiHacking,
+  backupTimeLeft,
+  boltsAreUp,
+  canAiControl,
+  canAiHack,
+  hackMessage,
+  hackingProgression,
+  idScanner,
+  mainTimeLeft,
+  name,
+  netId,
+  noPower,
+  opened,
+  panelOpen,
+  powerIsOn,
+  safety,
+  shockTimeLeft,
+  signalers,
+  userStates,
+  welded,
+  wireColors,
+  wireStates,
+  wires,
+}
+
+export const uiCurrentUserPermissions = (data: AirlockData) => {
   const {
     panelOpen,
     userStates,
@@ -30,8 +60,8 @@ export const uiCurrentUserPermissions = data => {
   };
 };
 
-export const Airlock = (props, context) => {
-  const { data } = useBackend(context);
+export const Airlock = () => {
+  const { data } = useBackend<AirlockData>();
   const userPerms = uiCurrentUserPermissions(data);
   //  We render 3 different interfaces so we can change the window sizes
   return (
@@ -57,8 +87,8 @@ export const Airlock = (props, context) => {
 };
 
 
-const AirlockAndAccessPanel = (props, context) => {
-  const { data } = useBackend(context);
+const AirlockAndAccessPanel = () => {
+  const { data } = useBackend<AirlockData>();
 
   const {
     name,
@@ -68,7 +98,7 @@ const AirlockAndAccessPanel = (props, context) => {
     noPower,
   } = data;
 
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   return (
     <Window
       width={354}
@@ -98,7 +128,7 @@ const AirlockAndAccessPanel = (props, context) => {
                 <Modal
                   textAlign="center"
                   fontSize="24px">
-                  <Box width={20} height={5} algin="center">
+                  <Box width={20} height={5} align="center">
                     {hackMessage ? hackMessage : "Airlock Controls Disabled"}
                   </Box>
                 </Modal>
@@ -120,8 +150,8 @@ const AirlockAndAccessPanel = (props, context) => {
   );
 };
 
-const AirlockControlsOnly = (props, context) => {
-  const { data } = useBackend(context);
+const AirlockControlsOnly = () => {
+  const { data } = useBackend<AirlockData>();
 
   const {
     name,
@@ -141,7 +171,7 @@ const AirlockControlsOnly = (props, context) => {
           <Modal
             textAlign="center"
             fontSize="26px">
-            <Box width={20} height={5} algin="center">
+            <Box width={20} height={5} align="center">
               {hackMessage ? hackMessage : "Airlock Controls Disabled"}
             </Box>
             {!!canAiHack && (
@@ -157,8 +187,8 @@ const AirlockControlsOnly = (props, context) => {
   );
 };
 
-const AccessPanelOnly = (props, context) => {
-  const { data } = useBackend(context);
+const AccessPanelOnly = () => {
+  const { data } = useBackend<AirlockData>();
   const {
     name,
   } = data;
@@ -175,8 +205,8 @@ const AccessPanelOnly = (props, context) => {
   );
 };
 
-const PowerStatus = (props, context) => {
-  const { act, data } = useBackend(context);
+const PowerStatus = () => {
+  const { act, data } = useBackend<AirlockData>();
   const {
     mainTimeLeft,
     backupTimeLeft,
@@ -246,8 +276,8 @@ const PowerStatus = (props, context) => {
   );
 };
 
-const AccessAndDoorControl = (props, context) => {
-  const { act, data } = useBackend(context);
+const AccessAndDoorControl = () => {
+  const { act, data } = useBackend<AirlockData>();
   const {
     mainTimeLeft,
     backupTimeLeft,
@@ -328,8 +358,8 @@ const AccessAndDoorControl = (props, context) => {
 };
 
 
-const Electrify = (props, context) => {
-  const { act, data } = useBackend(context);
+const Electrify = () => {
+  const { act, data } = useBackend<AirlockData>();
   const {
     mainTimeLeft,
     backupTimeLeft,
@@ -391,8 +421,8 @@ const Electrify = (props, context) => {
 };
 
 
-const Hack = (props, context) => {
-  const { act, data } = useBackend(context);
+const Hack = () => {
+  const { act, data } = useBackend<AirlockData>();
   const {
     aiHacking,
     hackingProgression,
@@ -400,7 +430,7 @@ const Hack = (props, context) => {
 
   return (
     <Box
-      fitted py={0.5} pt={2}
+      py={0.5} pt={2}
       align="center">
       {!aiHacking && (
         <Button
@@ -430,8 +460,8 @@ const Hack = (props, context) => {
   );
 };
 
-export const AccessPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const AccessPanel = () => {
+  const { act, data } = useBackend<AirlockData>();
   const {
     signalers,
     wireColors,
