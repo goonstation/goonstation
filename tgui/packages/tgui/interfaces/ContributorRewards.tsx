@@ -5,19 +5,24 @@
  * @license ISC
  */
 
+import { Box, Button, Collapsible, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ContributorRewards = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface ContributorRewardsData {
+  rewardDescs,
+  rewardTitles,
+}
+
+export const ContributorRewards = () => {
+  const { act, data } = useBackend<ContributorRewardsData>();
   const {
     rewardTitles,
     rewardDescs,
   } = data;
   return (
     <Window
-      resizable
       title="Contributor Rewards"
       width={350}
       height={200}>
