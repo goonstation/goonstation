@@ -1,7 +1,8 @@
 import { classes } from 'common/react';
+import { useState } from 'react';
+import { Box, Button, Flex, Input, Knob } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, Knob } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {
@@ -13,18 +14,16 @@ type MusicInstrumentData = {
   noteKeysString: string;
 };
 
-export const MusicInstrument = (_props, context) => {
-  const { act, data } = useBackend<MusicInstrumentData>(context);
+export const MusicInstrument = () => {
+  const { act, data } = useBackend<MusicInstrumentData>();
   const { name, notes, volume, transpose, keybindToggle, noteKeysString } = data;
 
-  const [noteKeysOrder, setNoteKeysOrder] = useLocalState(
-    context,
-    'keyboardBindingsOrder',
+  const [noteKeysOrder, setNoteKeysOrder] = useState(
     noteKeysString.split('')
   );
 
-  const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', {}); // new Array(notes.length)
-  const [keyOffset, setKeyOffset] = useLocalState(context, 'keyOffset', 0);
+  const [activeKeys, setActiveKeys] = useState({}); // new Array(notes.length)
+  const [keyOffset, setKeyOffset] = useState(0);
 
   const setVolume = (value: number) => {
     act('set_volume', { value });
@@ -100,15 +99,15 @@ export const MusicInstrument = (_props, context) => {
                 <Box className="instrument__keyboardsupport">
                   <Button
                     className="instrument__toggle-keyboard-button"
-                    title="Toggle keyboard support (toggle with ctrl)"
+                    tooltip="Toggle keyboard support (toggle with ctrl)"
                     onClick={toggleKeybind}
                     icon="keyboard"
                   />
                   <Box
                     className="instrument__keybind-indicator"
                     style={{
-                      'box-shadow': `0px 0px 5px ${keybindToggle ? '#1b9b37' : '#5a1919'}`,
-                      'background': `${keybindToggle ? '#1b9b37' : '#5a1919'}`,
+                      boxShadow: `0px 0px 5px ${keybindToggle ? '#1b9b37' : '#5a1919'}`,
+                      background: `${keybindToggle ? '#1b9b37' : '#5a1919'}`,
                     }}
                   />
                 </Box>
@@ -120,12 +119,12 @@ export const MusicInstrument = (_props, context) => {
                     maxValue={24}
                     value={keyOffset}
                     onDrag={(e, v) => setKeyOffset(v)}
-                    title={'Keybind offset'}
+                    title="Keybind offset"
                   />
                   <span>Offset</span>
                 </Box>
                 <Box className="instrument_panel-info">
-                  <h1 style={{ 'text-align': 'center' }}>{name.toUpperCase()}</h1>
+                  <h1 style={{ textAlign: 'center' }}>{name.toUpperCase()}</h1>
                 </Box>
                 <Box className="instrument__panel-input">
                   <Knob
