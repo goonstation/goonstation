@@ -7,16 +7,31 @@
  * @license MIT
  */
 
+import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from '../components';
 import { formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
 // Common power multiplier
 const POWER_MUL = 1e3;
 
-export const Smes = (props, context) => {
-  const { act, data } = useBackend(context);
+interface SmesData {
+  charge,
+  capacity,
+  inputAttempt,
+  inputting,
+  inputLevel,
+  inputLevelMax,
+  inputAvailable,
+  outputAttempt,
+  outputting,
+  outputLevel,
+  outputLevelMax,
+}
+
+export const Smes = () => {
+  const { act, data } = useBackend<SmesData>();
   const {
     charge,
     capacity,
