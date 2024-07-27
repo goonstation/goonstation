@@ -5,13 +5,12 @@
  * @author Changes Azrun
  * @author Changes Sovexe (https://github.com/Sovexe)
  * @author Changes ZeWaka (https://github.com/ZeWaka)
+ * @author Changes Mordent (https://github.com/mordent-goonstation)
  * @license MIT
  */
 
-import { toFixed } from 'tgui-core/math';
-
-import { numberOfDecimalDigits } from '../../common/math';
-import { useBackend, useLocalState } from '../backend';
+import { numberOfDecimalDigits } from 'common/math';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -24,20 +23,33 @@ import {
   NumberInput,
   Section,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { logger } from '../logging';
 
-const ParticleIntegerEntry = (props, context) => {
+interface ParticoolData {
+  target_particle;
+}
+
+interface ParticleIntegerEntryProps {
+  name,
+  tooltip,
+  value,
+}
+
+const ParticleIntegerEntry = (props: ParticleIntegerEntryProps) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   return (
     <Tooltip position="bottom" content={tooltip}>
       <NumberInput
         value={value}
         stepPixelSize={5}
         width="39px"
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -46,14 +58,23 @@ const ParticleIntegerEntry = (props, context) => {
             },
           })
         }
+        step={1}
+        maxValue={Infinity}
+        minValue={-Infinity}
       />
     </Tooltip>
   );
 };
 
-const ParticleMatrixEntry = (props, context) => {
+interface ParticleMatrixEntryProps {
+  name,
+  tooltip,
+  value,
+}
+
+const ParticleMatrixEntry = (props: ParticleMatrixEntryProps) => {
   let { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
 
   // Actual matrix, or matrix of 0
   value = value || [1, 0, 0, 1, 0, 0]; // this doesn't make sense, it should be [1, 0, 0, 0, 1, 0] but it's not
@@ -65,7 +86,10 @@ const ParticleMatrixEntry = (props, context) => {
             <NumberInput
               value={val}
               key={i}
-              onDrag={(e, v) => {
+              maxValue={Infinity}
+              minValue={-Infinity}
+              step={1}
+              onDrag={(v) => {
                 value[i] = v;
                 act('modify_particle_value', {
                   new_data: {
@@ -83,15 +107,22 @@ const ParticleMatrixEntry = (props, context) => {
   );
 };
 
-const ParticleFloatEntry = (props, context) => {
+interface ParticleFloatEntryProps {
+  name,
+  particleFloatStep,
+  tooltip,
+  value,
+}
+
+const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   let entry = null;
   let isGen = typeof value === 'string';
   if (isGen) {
-    entry = ParticleGeneratorEntry(props, context);
+    entry = <ParticleGeneratorEntry {...props} />;
   } else {
-    entry = ParticleFloatNonGenEntry(props, context);
+    entry = <ParticleFloatNonGenEntry {...props} />;
   }
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -124,19 +155,27 @@ const ParticleFloatEntry = (props, context) => {
   );
 };
 
-const ParticleFloatNonGenEntry = (props, context) => {
-  const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
-  const [step, _] = useLocalState(context, 'particleFloatStep', 0.01);
+interface ParticleFloatNonGenEntryProps {
+  name,
+  particleFloatStep,
+  tooltip,
+  value,
+}
+
+const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
+  const { value, tooltip, name, particleFloatStep } = props;
+  const { act } = useBackend<ParticoolData>();
   return (
     <Tooltip position="bottom" content={tooltip}>
       <NumberInput
         value={value}
         stepPixelSize={4}
-        step={step}
-        format={(value) => toFixed(value, numberOfDecimalDigits(step))}
+        step={particleFloatStep}
+        maxValue={Infinity}
+        minValue={-Infinity}
+        format={(value) => toFixed(value, numberOfDecimalDigits(particleFloatStep))}
         width="80px"
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('modify_particle_value', {
             new_data: {
               name: name,
@@ -150,15 +189,21 @@ const ParticleFloatNonGenEntry = (props, context) => {
   );
 };
 
-const ParticleVectorEntry = (props, context) => {
+interface ParticleVectorEntryProps {
+  name,
+  tooltip,
+  value,
+}
+
+const ParticleVectorEntry = (props: ParticleVectorEntryProps) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   let entry = null;
   let isGen = typeof value === 'string';
   if (isGen) {
-    entry = ParticleGeneratorEntry(props, context);
+    entry = <ParticleGeneratorEntry {...props} />;
   } else {
-    entry = ParticleVectorNonGenEntry(props, context);
+    entry = <ParticleVectorNonGenEntry {...props} />;
   }
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -192,9 +237,9 @@ const ParticleVectorEntry = (props, context) => {
 };
 
 const ParticleVectorNonGenEntryVarLen = (len) => {
-  return (props, context) => {
+  return (props) => {
     let { value, tooltip, name } = props;
-    const { act } = useBackend(context);
+    const { act } = useBackend<ParticoolData>();
 
     value = value || Array(len).fill(0);
     if (!isNaN(value)) {
@@ -210,7 +255,7 @@ const ParticleVectorNonGenEntryVarLen = (len) => {
                 value={val}
                 key={i}
                 width="40px"
-                onDrag={(e, v) => {
+                onDrag={(v) => {
                   value[i] = v;
                   act('modify_particle_value', {
                     new_data: {
@@ -220,6 +265,9 @@ const ParticleVectorNonGenEntryVarLen = (len) => {
                     },
                   });
                 }}
+                maxValue={Infinity}
+                minValue={-Infinity}
+                step={1}
               />
             ))}
           </Flex.Item>
@@ -231,15 +279,15 @@ const ParticleVectorNonGenEntryVarLen = (len) => {
 
 const ParticleVectorNonGenEntry = ParticleVectorNonGenEntryVarLen(3);
 
-const ParticleVector2Entry = (props, context) => {
+const ParticleVector2Entry = (props) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   let entry = null;
   let isGen = typeof value === 'string';
   if (isGen) {
-    entry = ParticleGeneratorEntry(props, context);
+    entry = ParticleGeneratorEntry(props);
   } else {
-    entry = ParticleVectorNonGenEntryVarLen(2)(props, context);
+    entry = ParticleVectorNonGenEntryVarLen(2)(props);
   }
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -272,9 +320,9 @@ const ParticleVector2Entry = (props, context) => {
   );
 };
 
-const ParticleGeneratorEntry = (props, context) => {
+const ParticleGeneratorEntry = (props) => {
   const { value, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   const generatorTypes = [
     'num',
     'vector',
@@ -322,14 +370,10 @@ const ParticleGeneratorEntry = (props, context) => {
     }
   }
 
-  const [genType, setGenType] = useLocalState(
-    context,
-    name + 'genType',
-    tempGenType,
-  );
-  const [a, setA] = useLocalState(context, name + 'a', tempA);
-  const [b, setB] = useLocalState(context, name + 'b', tempB);
-  const [rand, setRand] = useLocalState(context, name + 'rand', tempRand);
+  const [genType, setGenType] = useState(tempGenType);
+  const [a, setA] = useState(tempA);
+  const [b, setB] = useState(tempB);
+  const [rand, setRand] = useState(tempRand);
 
   const doAct = () => {
     logger.log(genType);
@@ -376,7 +420,7 @@ const ParticleGeneratorEntry = (props, context) => {
 
 const ParticleTextEntry = (props, context) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
 
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -397,9 +441,9 @@ const ParticleTextEntry = (props, context) => {
   );
 };
 
-const ParticleNumListEntry = (props, context) => {
+const ParticleNumListEntry = (props) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
 
   let valArr = value ? Object.keys(value).map((key) => value[key]) : [];
 
@@ -422,9 +466,9 @@ const ParticleNumListEntry = (props, context) => {
   );
 };
 
-const ParticleListEntry = (props, context) => {
+const ParticleListEntry = (props) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
 
   let valArr = value ? Object.keys(value).map((key) => value[key]) : [];
 
@@ -447,9 +491,9 @@ const ParticleListEntry = (props, context) => {
   );
 };
 
-const ParticleColorNonGenEntry = (props, context) => {
+const ParticleColorNonGenEntry = (props) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   return (
     <Tooltip position="bottom" content={tooltip}>
       <Button icon="pencil-alt" onClick={() => act('modify_color_value')} />
@@ -471,15 +515,15 @@ const ParticleColorNonGenEntry = (props, context) => {
   );
 };
 
-const ParticleColorEntry = (props, context) => {
+const ParticleColorEntry = (props) => {
   const { value, tooltip, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   let entry = null;
   let isGen = typeof value === 'string' && value.charAt(0) !== '#';
   if (isGen) {
-    entry = ParticleGeneratorEntry(props, context);
+    entry = ParticleGeneratorEntry(props);
   } else {
-    entry = ParticleColorNonGenEntry(props, context);
+    entry = ParticleColorNonGenEntry(props);
   }
   return (
     <Tooltip position="bottom" content={tooltip}>
@@ -512,9 +556,9 @@ const ParticleColorEntry = (props, context) => {
   );
 };
 
-const ParticleIconEntry = (props, context) => {
+const ParticleIconEntry = (props) => {
   const { value, tooltip } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<ParticoolData>();
   return (
     <Tooltip position="bottom" content={tooltip}>
       <Button icon="pencil-alt" onClick={() => act('modify_icon_value')} />
@@ -606,7 +650,14 @@ const particleEntryMap = {
   },
 };
 
-const ParticleDataEntry = (props, context) => {
+interface ParticleDataEntryProps {
+  name,
+  particleFloatStep,
+  tooltip,
+  value,
+}
+
+const ParticleDataEntry = (props: ParticleDataEntryProps) => {
   const { name } = props;
 
   const particleEntryTypes = {
@@ -634,8 +685,13 @@ const ParticleDataEntry = (props, context) => {
   );
 };
 
-const ParticleEntry = (props, context) => {
-  const { particle } = props;
+interface ParticleEntryProps {
+  particle,
+  particleFloatStep,
+}
+
+const ParticleEntry = (props: ParticleEntryProps) => {
+  const { particle, particleFloatStep } = props;
   return (
     <LabeledList>
       {Object.keys(particleEntryMap).map((entryName) => {
@@ -648,6 +704,7 @@ const ParticleEntry = (props, context) => {
             name={entryName}
             tooltip={tooltip}
             value={value}
+            particleFloatStep={particleFloatStep}
           />
         );
       })}
@@ -731,17 +788,13 @@ const GeneratorHelp = () => {
   );
 };
 
-export const Particool = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Particool = () => {
+  const { act, data } = useBackend<ParticoolData>();
   const particles = data.target_particle || {};
   const hasParticles = particles && Object.keys(particles).length > 0;
-  const [step, setStep] = useLocalState(context, 'particleFloatStep', 0.01);
+  const [particleFloatStep, setParticleFloatStep] = useState(0.01);
 
-  const [hiddenSecret, setHiddenSecret] = useLocalState(
-    context,
-    'hidden',
-    false,
-  );
+  const [hiddenSecret, setHiddenSecret] = useState(false);
   return (
     <Window title="Particool" width={700} height={500}>
       <Window.Content scrollable>
@@ -756,7 +809,7 @@ export const Particool = (props, context) => {
         )}
         <Section
           title={
-            <Box inline onDblClick={() => setHiddenSecret(true)}>
+            <Box inline onDoubleClick={() => setHiddenSecret(true)}>
               Particle
             </Box>
           }
@@ -805,17 +858,19 @@ export const Particool = (props, context) => {
               Float change step:
             </Box>
             <NumberInput
-              value={step}
+              value={particleFloatStep}
               step={0.001}
-              format={(value) => toFixed(value, numberOfDecimalDigits(step))}
+              format={(value) => toFixed(value, numberOfDecimalDigits(particleFloatStep))}
               width="70px"
-              onChange={(e, value) => setStep(value)}
+              maxValue={Infinity}
+              minValue={-Infinity}
+              onChange={(value) => setParticleFloatStep(value)}
             />
           </Box>
           {!hasParticles ? (
             <Box>No particle</Box>
           ) : (
-            <ParticleEntry particle={particles} />
+            <ParticleEntry particle={particles} particleFloatStep={particleFloatStep} />
           )}
         </Section>
       </Window.Content>
