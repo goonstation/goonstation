@@ -3,12 +3,21 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Box, Button, Flex, Input, LabeledList, NumberInput, Section, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Input, LabeledList, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 
-export const GimmickObject = (props, context) => {
-  const { act, data } = useBackend(context);
+interface GimmickObjectData {
+  eventList,
+  interactiveTypes,
+  activeStage,
+  icon,
+  iconState,
+}
+
+export const GimmickObject = () => {
+  const { act, data } = useBackend<GimmickObjectData>();
   const {
     eventList,
     interactiveTypes,
@@ -95,7 +104,8 @@ export const GimmickObject = (props, context) => {
                             value={eventList[event].duration}
                             minValue={1}
                             maxValue={90000}
-                            onChange={(e, targetDuration) => act('duration', { event: eventIndex, value: targetDuration })} />
+                            step={1}
+                            onChange={(targetDuration) => act('duration', { event: eventIndex, value: targetDuration })} />
                           Seconds
                         </LabeledList.Item>
                       </Tooltip>
