@@ -1,5 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Divider, Flex, Section, Stack } from '../components';
+import { useState } from 'react';
+import { BlockQuote, Box, Button, Divider, Flex, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const SBPurchaseEntry = (props) => {
@@ -20,8 +22,7 @@ const SBPurchaseEntry = (props) => {
           <img
             src={`data:image/png;base64,${img}`}
             style={{
-              'vertical-align': 'middle',
-              'horizontal-align': 'middle',
+              'verticalAlign': 'middle',
             }}
           />
         </Flex.Item>
@@ -30,7 +31,7 @@ const SBPurchaseEntry = (props) => {
             {pname}
           </Box>
           <Box>
-            {`Cost: ${cost}`} <i class="fa-solid fa-coins" />
+            {`Cost: ${cost}`} <i className="fa-solid fa-coins" />
           </Box>
         </Flex.Item>
         <Flex.Item>
@@ -44,8 +45,15 @@ const SBPurchaseEntry = (props) => {
   );
 };
 
+interface SpendSpacebuxData {
+  purchasables,
+  held,
+  balance,
+  truebalance,
+}
+
 export const SpendSpacebux = (_props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<SpendSpacebuxData>();
   const {
     purchasables,
     held,
@@ -53,11 +61,10 @@ export const SpendSpacebux = (_props, context) => {
     truebalance,
   } = data;
 
-  const [filterAvailable, setFilterAvailable] = useLocalState(context, 'filter-available', false);
+  const [filterAvailable, setFilterAvailable] = useState(false);
 
   return (
     <Window
-      resizable
       title="Spend Spacebux"
       width={300}
       height={600}>
@@ -81,7 +88,7 @@ export const SpendSpacebux = (_props, context) => {
                 <Flex direction="row" align="center">
                   <Flex.Item grow={1}>
                     <Box>
-                      Balance: {balance} <i class="fa-solid fa-coins" />
+                      Balance: {balance} <i className="fa-solid fa-coins" />
                     </Box>
                   </Flex.Item>
                   <Flex.Item>
