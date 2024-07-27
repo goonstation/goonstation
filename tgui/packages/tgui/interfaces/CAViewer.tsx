@@ -3,12 +3,21 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Box, Button, Dropdown, NumberInput, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const CAViewer = (props, context) => {
-  const { act, data } = useBackend(context);
+interface CAViewerData {
+  CAData,
+  CAType,
+  settings,
+  typeData,
+  viewWidth,
+}
+
+export const CAViewer = () => {
+  const { act, data } = useBackend<CAViewerData>();
   const {
     CAType,
     CAData,
@@ -62,7 +71,8 @@ export const CAViewer = (props, context) => {
                         maxValue={500}
                         stepPixelSize={5}
                         width="39px"
-                        onDrag={(e, value) => act('settings', {
+                        step={1}
+                        onDrag={(value) => act('settings', {
                           name: typeData[CAType].options[optionName],
                           data: value })}
                       />
@@ -90,7 +100,7 @@ export const CAViewer = (props, context) => {
           <Section>
             <Box
               preserveWhitespace
-              style={{ "font-size": "9px", "line-height": "5px" }}
+              style={{ fontSize: "9px", lineHeight: "5px" }}
               fontFamily="Consolas"
             >
               {CAText}
