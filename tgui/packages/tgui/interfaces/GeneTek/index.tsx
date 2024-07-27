@@ -7,25 +7,17 @@
 
 import { Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Tabs, TimeDisplay } from "tgui-core/components";
 
-import { useBackend, useSharedState } from "../backend";
-import { Window } from "../layouts";
-import { BuyMaterialsModal, CombineGenesModal, MutationsTab, RecordTab, ResearchTab, ScannerTab, StorageTab } from "./GeneTek/index";
+import { useBackend, useSharedState } from "../../backend";
+import { Window } from "../../layouts";
+import { BuyMaterialsModal } from "./modals/BuyMaterialsModal";
+import { CombineGenesModal } from "./modals/CombineGenesModal";
+import { MutationsTab } from "./tabs/MutationsTab";
+import { ResearchTab } from "./tabs/ResearchTab";
+import { ScannerTab } from "./tabs/ScannerTab";
+import { RecordTab, StorageTab } from "./tabs/StorageTab";
+import type { GeneTekData } from "./type";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
-
-interface GeneTekData {
-  materialCur,
-  materialMax,
-  currentResearch,
-  equipmentCooldown,
-  subject,
-  costPerMaterial,
-  budget,
-  record,
-  scannerAlert,
-  scannerError,
-  allowed,
-}
 
 export const GeneTek = () => {
   const { data, act } = useBackend<GeneTekData>();
