@@ -3,17 +3,25 @@
 * SPDX-License-Identifier: MIT
 */
 
-import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
+import { Autofocus, Box, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Autofocus, Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { DataInputBitFieldEntry } from './common/DataInput';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
+interface BitfieldInputModalData {
+  timeout,
+  message,
+  title,
+  autofocus,
+  default_value
+}
 
-export const BitfieldInputModal = (_, context) => {
-  const { act, data } = useBackend(context);
+export const BitfieldInputModal = () => {
+  const { act, data } = useBackend<BitfieldInputModalData>();
   const { timeout, message, title, autofocus, default_value = 0 } = data;
 
   return (
