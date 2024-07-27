@@ -1,5 +1,6 @@
+import { Box, Button, NoticeBox } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 interface LaundryData {
@@ -32,7 +33,7 @@ export const Laundry = () => {
 };
 
 const StatusActive = () => (
-  <NoticeBox warning>
+  <NoticeBox info>
     Please wait, machine is currently running.
   </NoticeBox>
 );
