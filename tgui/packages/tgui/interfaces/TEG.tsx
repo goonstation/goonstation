@@ -5,13 +5,29 @@
  * @license ISC
  */
 
+import { Box, Chart, Divider, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Chart, Divider, LabeledList, Section } from '../components';
 import { formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
-export const TEG = (props, context) => {
-  const { act, data } = useBackend(context);
+interface TEGData {
+  output,
+  history,
+  hotCircStatus,
+  hotInletTemp,
+  hotOutletTemp,
+  hotInletPres,
+  hotOutletPres,
+  coldCircStatus,
+  coldInletTemp,
+  coldOutletTemp,
+  coldInletPres,
+  coldOutletPres,
+}
+
+export const TEG = () => {
+  const { data } = useBackend<TEGData>();
   const {
     output,
     history,
@@ -32,8 +48,8 @@ export const TEG = (props, context) => {
     `${temperature >= 1000 ? temperature.toExponential(3) : temperature} K`;
   return (
     <Window
-      height="520"
-      width="300" >
+      height={520}
+      width={300} >
       <Window.Content>
         <Section title="Status">
           <LabeledList>
