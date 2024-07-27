@@ -8,7 +8,7 @@
 import { PropsWithChildren } from 'react';
 
 import { Button } from '../../../components/Button';
-import { Image } from '../../../components/goon/Image';
+import { Image } from '../../../components/goonstation/Image';
 import { Stack } from '../../../components/Stack';
 
 interface ButtonWithBadgeProps {

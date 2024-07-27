@@ -5,15 +5,27 @@
  * @license ISC
  */
 
-import { AnimatedNumber, Box, Button, Dimmer, Icon, LabeledList, ProgressBar, Section } from "tgui-core/components";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
 
-import { useBackend } from "../backend";
-import { damageNum, HealthStat } from '../components/goon/HealthStat';
+import { useBackend } from '../backend';
+import { damageNum, HealthStat } from '../components/goonstation/HealthStat';
 import { Window } from '../layouts';
 import { KeyHealthIndicators } from './common/KeyHealthIndicators/index';
 import { MobStatuses } from './common/MobStatus';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
+import {
+  getTemperatureColor,
+  getTemperatureIcon,
+} from './common/temperatureUtils';
 
 interface CryoCellData {
   cellTemp;
@@ -28,9 +40,7 @@ interface CryoCellData {
 
 export const CryoCell = () => {
   return (
-    <Window
-      width={485}
-      height={575}>
+    <Window width={485} height={575}>
       <Window.Content scrollable>
         <CryoCellControl />
         <Occupant />
@@ -47,26 +57,26 @@ const CryoCellControl = () => {
     <Section title="Cryo Cell Control System">
       <Box textAlign="center">
         Current Cell Temperature
-        <Box
-          fontSize={2}
-          color={getTemperatureColor(cellTemp)}
-          mb="1rem">
+        <Box fontSize={2} color={getTemperatureColor(cellTemp)} mb="1rem">
           <Icon name={getTemperatureIcon(cellTemp)} pr={0.5} />
           <AnimatedNumber
-            value={(cellTemp - 273.15)}
+            value={cellTemp - 273.15}
             format={(value) => value.toPrecision(4)}
-          /> °C
+          />{' '}
+          °C
         </Box>
         <Button
           icon="power-off"
-          color={status ? "green" : "red"}
+          color={status ? 'green' : 'red'}
           fontSize={1.25}
           textAlign="center"
-          onClick={() => act("start")}>
-          {status ? "Activated" : "Deactivated"}
+          onClick={() => act('start')}
+        >
+          {status ? 'Activated' : 'Deactivated'}
         </Button>
       </Box>
-    </Section>);
+    </Section>
+  );
 };
 
 const Occupant = () => {
@@ -75,33 +85,40 @@ const Occupant = () => {
   const occupantStatus = occupant ? MobStatuses[occupant.occupantStat] : null;
 
   return (
-    <Section title="Occupant"
+    <Section
+      title="Occupant"
       buttons={
         <>
           {!!reagentScanEnabled && (
-            <Button onClick={() => act("reagent_scan_active")} icon={reagentScanActive ? "eye-slash" : "eye"}>
-              {reagentScanActive ? "Hide" : "Show"} Reagents
+            <Button
+              onClick={() => act('reagent_scan_active')}
+              icon={reagentScanActive ? 'eye-slash' : 'eye'}
+            >
+              {reagentScanActive ? 'Hide' : 'Show'} Reagents
             </Button>
           )}
           {hasDefib && (
-            <Button onClick={() => act("defib")} icon="bolt" color="yellow">
+            <Button onClick={() => act('defib')} icon="bolt" color="yellow">
               Defibrillate
             </Button>
           )}
-          <Button onClick={() => act("eject_occupant")} icon="eject" disabled={!occupant} color="green">
+          <Button
+            onClick={() => act('eject_occupant')}
+            icon="eject"
+            disabled={!occupant}
+            color="green"
+          >
             Eject
           </Button>
         </>
-      }>
-
+      }
+    >
       {!!occupant && (
         <>
           <LabeledList>
             <LabeledList.Item label="Status">
-              <Icon
-                color={occupantStatus.color}
-                name={occupantStatus.icon} />
-              {" "}{occupantStatus.name}
+              <Icon color={occupantStatus.color} name={occupantStatus.icon} />{' '}
+              {occupantStatus.name}
             </LabeledList.Item>
             <LabeledList.Item label="Overall Health">
               <ProgressBar
@@ -110,7 +127,8 @@ const Occupant = () => {
                   good: [0.9, Infinity],
                   average: [0.5, 0.9],
                   bad: [-Infinity, 0.5],
-                }} />
+                }}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Damage Breakdown">
               <HealthStat inline align="center" type="oxy" width={5}>
@@ -135,8 +153,11 @@ const Occupant = () => {
             <KeyHealthIndicators mobData={occupant} />
             {!!occupant.hasRoboticOrgans && (
               <Box textAlign="center">
-                <Box bold fontSize={1.2} color="purple">Unknown augmented organs detected.</Box>
-              </Box>)}
+                <Box bold fontSize={1.2} color="purple">
+                  Unknown augmented organs detected.
+                </Box>
+              </Box>
+            )}
           </Section>
         </>
       )}
@@ -155,17 +176,27 @@ export const Beaker = () => {
   const { act, data } = useBackend<CryoCellData>();
   const { showBeakerContents, containerData } = data;
   return (
-    <Section title="Beaker"
+    <Section
+      title="Beaker"
       buttons={
         <>
-          <Button onClick={() => act("show_beaker_contents")} icon={showBeakerContents ? "eye-slash" : "eye"}>
-            {showBeakerContents ? "Hide" : "Show"} Contents
+          <Button
+            onClick={() => act('show_beaker_contents')}
+            icon={showBeakerContents ? 'eye-slash' : 'eye'}
+          >
+            {showBeakerContents ? 'Hide' : 'Show'} Contents
           </Button>
-          <Button onClick={() => act("eject")} icon="eject" disabled={!containerData} color="green">
+          <Button
+            onClick={() => act('eject')}
+            icon="eject"
+            disabled={!containerData}
+            color="green"
+          >
             Eject
           </Button>
         </>
-      }>
+      }
+    >
       {!!showBeakerContents && (
         <>
           {containerData && (
@@ -175,8 +206,12 @@ export const Beaker = () => {
               <Box
                 fontSize={2}
                 color={getTemperatureColor(containerData.temperature)}
-                textAlign="center">
-                <Icon name={getTemperatureIcon(containerData.temperature)} pr={0.5} />
+                textAlign="center"
+              >
+                <Icon
+                  name={getTemperatureIcon(containerData.temperature)}
+                  pr={0.5}
+                />
                 <AnimatedNumber value={containerData.temperature} /> K
               </Box>
             </>
@@ -187,12 +222,14 @@ export const Beaker = () => {
                 icon="eject"
                 fontSize={1.5}
                 onClick={() => act('insert')}
-                bold>
+                bold
+              >
                 Insert Beaker
               </Button>
             </Dimmer>
           )}
-        </>)}
+        </>
+      )}
     </Section>
   );
 };

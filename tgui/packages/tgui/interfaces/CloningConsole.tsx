@@ -24,7 +24,7 @@ import {
 import { clamp } from 'tgui-core/math';
 
 import { useBackend, useSharedState } from '../backend';
-import { HealthStat } from '../components/goon/HealthStat';
+import { HealthStat } from '../components/goonstation/HealthStat';
 import { Window } from '../layouts';
 
 interface CloningConsoleData {

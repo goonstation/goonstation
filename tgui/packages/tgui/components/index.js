@@ -19,7 +19,7 @@ export { Divider } from './Divider';
 export { DraggableControl } from './DraggableControl';
 export { Dropdown } from './Dropdown';
 export { Flex } from './Flex';
-export { Image } from './goon/Image';
+export { Image } from './goonstation/Image';
 export { ColorButton } from './goonstation/ColorButton';
 export { ItemList } from './goonstation/ItemList';
 export { Placeholder } from './goonstation/Placeholder';

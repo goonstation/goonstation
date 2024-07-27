@@ -5,14 +5,24 @@
  * @license ISC
  */
 
-import { Box, Button, Flex, Icon, Knob, LabeledList, ProgressBar, Section, TimeDisplay } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Knob,
+  LabeledList,
+  ProgressBar,
+  Section,
+  TimeDisplay,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { HealthStat } from '../components/goon/HealthStat';
+import { HealthStat } from '../components/goonstation/HealthStat';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
 
-const damageNum = num => num <= 0 ? '0' : num.toFixed(1);
+const damageNum = (num) => (num <= 0 ? '0' : num.toFixed(1));
 
 const OccupantStatus = {
   Conscious: 0,
@@ -39,21 +49,21 @@ const occupantStatuses = {
 };
 
 interface SleeperData {
-  sleeperGone,
-  hasOccupant,
-  occupantStat,
-  health,
-  oxyDamage,
-  toxDamage,
-  burnDamage,
-  bruteDamage,
-  recharging,
-  rejuvinators,
-  isTiming,
-  time,
-  timeStarted,
-  timeNow,
-  maxTime,
+  sleeperGone;
+  hasOccupant;
+  occupantStat;
+  health;
+  oxyDamage;
+  toxDamage;
+  burnDamage;
+  bruteDamage;
+  recharging;
+  rejuvinators;
+  isTiming;
+  time;
+  timeStarted;
+  timeNow;
+  maxTime;
 }
 
 export const Sleeper = () => {
@@ -76,37 +86,39 @@ export const Sleeper = () => {
     maxTime,
   } = data;
 
-  const curTime = Math.max(timeStarted
-    ? (time || 0) + timeStarted - timeNow
-    : (time || 0), 0);
+  const curTime = Math.max(
+    timeStarted ? (time || 0) + timeStarted - timeNow : time || 0,
+    0,
+  );
   const canInject = hasOccupant && !isTiming && !recharging && occupantStat < 2;
   const occupantStatus = occupantStatuses[occupantStat];
 
   return (
-    <Window
-      theme="ntos"
-      width={440}
-      height={440}>
+    <Window theme="ntos" width={440} height={440}>
       <Window.Content>
-        <Section title="Occupant Statistics"
+        <Section
+          title="Occupant Statistics"
           buttons={
             <Button
               icon="eject"
               align="center"
               color="good"
               disabled={!hasOccupant || !!isTiming}
-              onClick={() => act('eject')}>
+              onClick={() => act('eject')}
+            >
               Eject
             </Button>
-          }>
-          {!hasOccupant && (sleeperGone ? "Check connection to sleeper pod." : "The sleeper is unoccupied.")}
+          }
+        >
+          {!hasOccupant &&
+            (sleeperGone
+              ? 'Check connection to sleeper pod.'
+              : 'The sleeper is unoccupied.')}
           {!!hasOccupant && (
             <LabeledList>
               <LabeledList.Item label="Status">
-                <Icon
-                  color={occupantStatus.color}
-                  name={occupantStatus.icon} />
-                {" "}{occupantStatus.name}
+                <Icon color={occupantStatus.color} name={occupantStatus.icon} />{' '}
+                {occupantStatus.name}
               </LabeledList.Item>
               <LabeledList.Item label="Overall Health">
                 <ProgressBar
@@ -115,7 +127,8 @@ export const Sleeper = () => {
                     good: [0.9, Infinity],
                     average: [0.5, 0.9],
                     bad: [-Infinity, 0.5],
-                  }} />
+                  }}
+                />
               </LabeledList.Item>
               <LabeledList.Item label="Damage Breakdown">
                 <HealthStat inline align="center" type="oxy" width={5}>
@@ -138,23 +151,31 @@ export const Sleeper = () => {
           )}
         </Section>
         {!!hasOccupant && (
-          <Section title="Detected Rejuvinators"
+          <Section
+            title="Detected Rejuvinators"
             buttons={
               <Button
                 icon="syringe"
                 align="center"
                 color="good"
                 disabled={!canInject}
-                onClick={() => act('inject')}>
+                onClick={() => act('inject')}
+              >
                 Inject
               </Button>
-            }>
+            }
+          >
             <Section height={10} scrollable>
-              {!rejuvinators.length ? "No rejuvinators detected in occupant's bloodstream." : (
+              {!rejuvinators.length ? (
+                "No rejuvinators detected in occupant's bloodstream."
+              ) : (
                 <LabeledList>
-                  {rejuvinators.map(r => (
+                  {rejuvinators.map((r) => (
                     <LabeledList.Item key={r.name} label={r.name}>
-                      <Icon name={!r.od || r.volume < r.od ? 'circle' : 'skull'} color={r.color} />
+                      <Icon
+                        name={!r.od || r.volume < r.od ? 'circle' : 'skull'}
+                        color={r.color}
+                      />
                       {' ' + r.volume.toFixed(3)}
                       {!!r.od && r.volume >= r.od && (
                         <Box inline color="bad" pl={1}>
@@ -180,7 +201,8 @@ export const Sleeper = () => {
               align="center"
               color={isTiming ? 'bad' : 'good'}
               disabled={!hasOccupant || occupantStat > 1 || time <= 0}
-              onClick={() => act('timer')}>
+              onClick={() => act('timer')}
+            >
               {isTiming ? 'Stop Timer' : 'Start Timer'}
             </Button>
           }
@@ -196,7 +218,10 @@ export const Sleeper = () => {
                 minValue={0}
                 maxValue={maxTime / 10}
                 value={curTime / 10}
-                onDrag={(e, targetValue) => act('time_add', { tp: targetValue - curTime / 10 })} />
+                onDrag={(e, targetValue) =>
+                  act('time_add', { tp: targetValue - curTime / 10 })
+                }
+              />
             </Flex.Item>
             <Flex.Item>
               <Box
@@ -206,16 +231,19 @@ export const Sleeper = () => {
                 color="good"
                 maxWidth="90px"
                 width="90px"
-                fontSize="20px">
-                <TimeDisplay value={curTime}
+                fontSize="20px"
+              >
+                <TimeDisplay
+                  value={curTime}
                   timing={!!isTiming}
-                  format={value => formatTime(value)} />
+                  format={(value) => formatTime(value)}
+                />
               </Box>
             </Flex.Item>
             <Flex.Item shrink={1}>
               <Box italic textAlign="center" color="label" pl={1}>
-                System will inject rejuvenators automatically
-                when occupant is in hibernation.
+                System will inject rejuvenators automatically when occupant is
+                in hibernation.
               </Box>
             </Flex.Item>
           </Flex>
