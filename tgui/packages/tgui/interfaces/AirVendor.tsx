@@ -6,13 +6,14 @@
  * @license ISC
  */
 
+import { Button, Dimmer, LabeledList, Section, Slider, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Dimmer, LabeledList, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
 
-interface AirVendorParams {
+interface AirVendorData {
   cash: number;
   cardname: string;
   bankMoney: number;
@@ -27,8 +28,8 @@ interface AirVendorParams {
   current_fill: number;
 }
 
-const VendorSection = (_props, context) => {
-  const { act, data } = useBackend<AirVendorParams>(context);
+const VendorSection = () => {
+  const { act, data } = useBackend<AirVendorData>();
   const {
     air_cost,
     bankMoney,
@@ -92,8 +93,8 @@ const VendorSection = (_props, context) => {
   );
 };
 
-const TankSection = (_props, context) => {
-  const { act, data } = useBackend<AirVendorParams>(context);
+const TankSection = () => {
+  const { act, data } = useBackend<AirVendorData>();
   const { holding, holding_pressure, max_pressure } = data;
 
   const handleTankEject = () => act('o2_eject');
@@ -119,8 +120,8 @@ const TankSection = (_props, context) => {
   );
 };
 
-export const AirVendor = (_props, context) => {
-  const { act, data } = useBackend<AirVendorParams>(context);
+export const AirVendor = () => {
+  const { act, data } = useBackend<AirVendorData>();
   const { cash, cardname, bankMoney } = data;
 
   const handleCardEject = () => act('logout');
