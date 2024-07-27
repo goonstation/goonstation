@@ -22,14 +22,25 @@ interface ColumnConfigsCallbacks {
   editBan: (id: number) => void;
 }
 
-export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnConfig<BanResource>[] => [
+export const buildColumnConfigs = (
+  callbacks: ColumnConfigsCallbacks,
+): ColumnConfig<BanResource>[] => [
   {
     header: '',
     id: 'actions',
     renderContents: ({ rowId }) => (
       <>
-        <Button key="edit" icon="pencil" onClick={() => callbacks.editBan(rowId)} />
-        <Button key="delete" icon="trash" onClick={() => callbacks.deleteBan(rowId)} color="red" />
+        <Button
+          key="edit"
+          icon="pencil"
+          onClick={() => callbacks.editBan(rowId)}
+        />
+        <Button
+          key="delete"
+          icon="trash"
+          onClick={() => callbacks.deleteBan(rowId)}
+          color="red"
+        />
       </>
     ),
     basis: 4.5,
@@ -38,14 +49,18 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
     header: 'ID',
     id: 'id',
     getValue: (data) => data.id,
-    renderContents: ({ value }) => <a href={`https://goonhub.com/admin/bans/${value}`}>{value}</a>,
+    renderContents: ({ value }) => (
+      <a href={`https://goonhub.com/admin/bans/${value}`}>{value}</a>
+    ),
     basis: 4,
   },
   {
     header: 'ckey',
     id: 'ckey',
     getValue: (data) => data.original_ban_detail?.ckey ?? 'N/A',
-    renderContents: ({ value }) => <a href={`https://goonhub.com/admin/players/${value}`}>{value}</a>,
+    renderContents: ({ value }) => (
+      <a href={`https://goonhub.com/admin/players/${value}`}>{value}</a>
+    ),
     basis: 10, // I think 32 chars is the max, this is slightly below but whatever
     grow: 1,
   },
@@ -67,7 +82,9 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
     getValueTooltip: (data) => {
       // Banned Date
       const createdAtDate = dayjs(data.created_at);
-      let tooltipText = [<>{createdAtDate.format('[Banned ] YYYY-MM-DD HH:mm [UTC]\n')}</>];
+      let tooltipText = [
+        <>{createdAtDate.format('[Banned ] YYYY-MM-DD HH:mm [UTC]\n')}</>,
+      ];
 
       // Expiration Date
       if (data.expires_at === null) {
@@ -75,12 +92,20 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
         tooltipText.push(<strong>Permanent</strong>);
       } else {
         const expiresAtDate = dayjs(data.expires_at);
-        tooltipText.push(<>{expiresAtDate.format('[Expires] YYYY-MM-DD HH:mm [UTC]')}</>);
+        tooltipText.push(
+          <>{expiresAtDate.format('[Expires] YYYY-MM-DD HH:mm [UTC]')}</>,
+        );
       }
 
       // Deletion Date
       if (data.deleted_at !== null) {
-        tooltipText.push(<>{dayjs(data.deleted_at).format('\n[Deleted] YYYY-MM-DD HH:mm [UTC]')}</>);
+        tooltipText.push(
+          <>
+            {dayjs(data.deleted_at).format(
+              '\n[Deleted] YYYY-MM-DD HH:mm [UTC]',
+            )}
+          </>,
+        );
       }
       return <pre>{tooltipText}</pre>;
     },
@@ -103,7 +128,10 @@ export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnCon
     id: 'admin',
     getValue: (data) => data.game_admin ?? 'N/A',
     renderContents: ({ value }) => (
-      <a href={`https://goonhub.com/admin/game-admins/${value.id}`} class="NoColor">
+      <a
+        href={`https://goonhub.com/admin/game-admins/${value.id}`}
+        className="NoColor"
+      >
         {value.name}
       </a>
     ),
