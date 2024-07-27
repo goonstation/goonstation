@@ -3,13 +3,19 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Box, Button, Flex, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
 import { DataInputOptions } from './common/DataInput';
 
-export const RandomEvent = (props, context) => {
-  const { act, data } = useBackend(context);
+interface RandomEventData {
+  eventName,
+  eventOptions,
+}
+
+export const RandomEvent = () => {
+  const { act, data } = useBackend<RandomEventData>();
   const {
     eventName,
     eventOptions,
