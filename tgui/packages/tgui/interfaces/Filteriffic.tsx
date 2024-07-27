@@ -6,10 +6,8 @@
  */
 
 import { map } from 'common/collections';
-import { toFixed } from 'tgui-core/math';
-
-import { numberOfDecimalDigits } from '../../common/math';
-import { useBackend, useLocalState } from '../backend';
+import { numberOfDecimalDigits } from 'common/math';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -22,20 +20,30 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const FilterIntegerEntry = (props, context) => {
+interface FilterifficData {
+  filter_info;
+  target_name;
+  target_filter_data;
+}
+
+const FilterIntegerEntry = (props) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<FilterifficData>();
   return (
     <NumberInput
       value={value}
       minValue={-500}
       maxValue={500}
       stepPixelSize={5}
+      step={1}
       width="39px"
-      onDrag={(e, value) =>
+      onDrag={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {
@@ -47,10 +55,10 @@ const FilterIntegerEntry = (props, context) => {
   );
 };
 
-const FilterFloatEntry = (props, context) => {
+const FilterFloatEntry = (props) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
-  const [step, setStep] = useLocalState(context, `${filterName}-${name}`, 0.01);
+  const { act } = useBackend<FilterifficData>();
+  const [step, setStep] = useState(0.01);
   return (
     <>
       <NumberInput
@@ -61,7 +69,7 @@ const FilterFloatEntry = (props, context) => {
         step={step}
         format={(value) => toFixed(value, numberOfDecimalDigits(step))}
         width="80px"
-        onDrag={(e, value) =>
+        onDrag={(value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {
@@ -78,15 +86,17 @@ const FilterFloatEntry = (props, context) => {
         step={0.001}
         format={(value) => toFixed(value, 4)}
         width="70px"
-        onChange={(e, value) => setStep(value)}
+        onChange={(value) => setStep(value)}
+        maxValue={Infinity}
+        minValue={-Infinity}
       />
     </>
   );
 };
 
-const FilterTextEntry = (props, context) => {
+const FilterTextEntry = (props) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<FilterifficData>();
 
   return (
     <Input
@@ -104,9 +114,9 @@ const FilterTextEntry = (props, context) => {
   );
 };
 
-const FilterTransformEntry = (props, context) => {
+const FilterTransformEntry = (props) => {
   const { value, name, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<FilterifficData>();
   let transMatrix = value;
   if (transMatrix === null) {
     transMatrix = Array(1, 0, 0, 0, 1, 0);
@@ -124,12 +134,11 @@ const FilterTransformEntry = (props, context) => {
                   {col === 2 && row === 2 && 1}
                   {col < 2 && (
                     <NumberInput
-                      inline
                       value={transMatrix[col * 3 + row]}
                       step={0.01}
                       width="50px"
                       format={(v) => toFixed(v, 2)}
-                      onDrag={(e, v) => {
+                      onDrag={(v) => {
                         let retTrans = transMatrix;
                         retTrans[col * 3 + row] = v;
                         act('transition_filter_value', {
@@ -139,6 +148,8 @@ const FilterTransformEntry = (props, context) => {
                           },
                         });
                       }}
+                      maxValue={Infinity}
+                      minValue={-Infinity}
                     />
                   )}
                 </Stack.Item>
@@ -153,7 +164,7 @@ const FilterTransformEntry = (props, context) => {
 
 const FilterColorEntry = (props, context) => {
   const { value, filterName, name } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<FilterifficData>();
   const prefixes = ['r', 'g', 'b', 'a', 'c'];
   if (Array.isArray(value)) {
     // standardise to 20 val color matrix
@@ -208,12 +219,11 @@ const FilterColorEntry = (props, context) => {
                       {`${prefixes[row]}${prefixes[col]}:`}
                     </Box>
                     <NumberInput
-                      inline
                       value={colmatrix[row * 4 + col]}
                       step={0.01}
                       width="50px"
                       format={(v) => toFixed(v, 2)}
-                      onDrag={(e, v) => {
+                      onDrag={(v) => {
                         let retColor = colmatrix;
                         retColor[row * 4 + col] = v;
                         act('transition_filter_value', {
@@ -223,6 +233,8 @@ const FilterColorEntry = (props, context) => {
                           },
                         });
                       }}
+                      maxValue={Infinity}
+                      minValue={-Infinity}
                     />
                   </Stack.Item>
                 ))}
@@ -270,9 +282,9 @@ const FilterColorEntry = (props, context) => {
   }
 };
 
-const FilterIconEntry = (props, context) => {
+const FilterIconEntry = (props) => {
   const { value, filterName } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend<FilterifficData>();
   return (
     <>
       <Button
@@ -290,13 +302,13 @@ const FilterIconEntry = (props, context) => {
   );
 };
 
-const FilterFlagsEntry = (props, context) => {
+const FilterFlagsEntry = (props) => {
   const { name, value, filterName, filterType } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<FilterifficData>();
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
-  return map(flags, (bitField, flagName) => (
+  return map(flags, (bitField: number, flagName) => (
     <Button.Checkbox
       checked={value & bitField}
       content={flagName}
@@ -312,9 +324,9 @@ const FilterFlagsEntry = (props, context) => {
   ));
 };
 
-const FilterSpaceEntry = (props, context) => {
+const FilterSpaceEntry = (props) => {
   const { name, value, filterName, filterType } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<FilterifficData>();
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['space'];
@@ -334,9 +346,9 @@ const FilterSpaceEntry = (props, context) => {
   ));
 };
 
-const FilterBlendmodeEntry = (props, context) => {
+const FilterBlendmodeEntry = (props) => {
   const { name, value, filterName, filterType } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<FilterifficData>();
 
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['blend_mode'];
@@ -356,7 +368,7 @@ const FilterBlendmodeEntry = (props, context) => {
   ));
 };
 
-const FilterDataEntry = (props, context) => {
+const FilterDataEntry = (props) => {
   const { name, value, hasValue, filterName } = props;
 
   const filterEntryTypes = {
@@ -403,8 +415,8 @@ const FilterDataEntry = (props, context) => {
   );
 };
 
-const FilterEntry = (props, context) => {
-  const { act, data } = useBackend(context);
+const FilterEntry = (props) => {
+  const { act, data } = useBackend<FilterifficData>();
   const { name, filterDataEntry } = props;
   const { type, priority, ...restOfProps } = filterDataEntry;
 
@@ -423,7 +435,10 @@ const FilterEntry = (props, context) => {
             value={priority}
             stepPixelSize={10}
             width="60px"
-            onChange={(e, value) =>
+            maxValue={Infinity}
+            minValue={-Infinity}
+            step={1}
+            onChange={(value) =>
               act('change_priority', {
                 name: name,
                 new_priority: value,
@@ -471,24 +486,16 @@ const FilterEntry = (props, context) => {
   );
 };
 
-export const Filteriffic = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Filteriffic = () => {
+  const { act, data } = useBackend<FilterifficData>();
   const name = data.target_name || 'Unknown Object';
   const filters = data.target_filter_data || {};
-  const hasFilters = filters !== {};
+  const hasFilters = Object.keys(filters).length === 0;
   const filterDefaults = data['filter_info'];
-  const [massApplyPath, setMassApplyPath] = useLocalState(
-    context,
-    'massApplyPath',
-    '',
-  );
-  const [hiddenSecret, setHiddenSecret] = useLocalState(
-    context,
-    'hidden',
-    false,
-  );
+  const [massApplyPath, setMassApplyPath] = useState('');
+  const [hiddenSecret, setHiddenSecret] = useState(false);
   return (
-    <Window width={500} height={500} title="Filteriffic" resizable>
+    <Window width={500} height={500} title="Filteriffic">
       <Window.Content scrollable>
         <NoticeBox danger>
           DO NOT MESS WITH EXISTING FILTERS IF YOU DO NOT KNOW THE CONSEQUENCES.
@@ -513,7 +520,7 @@ export const Filteriffic = (props, context) => {
                 />
               </>
             ) : (
-              <Box inline onDblClick={() => setHiddenSecret(true)}>
+              <Box inline onDoubleClick={() => setHiddenSecret(true)}>
                 {name}
               </Box>
             )
@@ -522,7 +529,7 @@ export const Filteriffic = (props, context) => {
             <Dropdown
               icon="plus"
               displayText="Add Filter"
-              nochevron
+              noChevron
               options={Object.keys(filterDefaults)}
               onSelected={(value) =>
                 act('add_filter', {
