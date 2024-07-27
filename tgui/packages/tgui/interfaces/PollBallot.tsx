@@ -1,5 +1,6 @@
+import { Button, ProgressBar, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const getServerButtonType = (servers) => {
@@ -110,12 +111,20 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerI
   );
 };
 
-export const PollBallot = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PollBallotData {
+  isAdmin;
+  filterInactive;
+  polls;
+  playerId;
+  showVotes;
+}
+
+export const PollBallot = () => {
+  const { act, data } = useBackend<PollBallotData>();
   const { isAdmin, filterInactive, polls, playerId, showVotes } = data;
 
   return (
-    <Window title="Poll Ballot" width="750" height="800">
+    <Window title="Poll Ballot" width={750} height={800}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
