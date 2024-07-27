@@ -1,10 +1,15 @@
-
 /**
  * Copyright (c) 2022 @Azrun
  * SPDX-License-Identifier: MIT
  */
 
-import { Box, Button, NumberInput, Section, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  NumberInput,
+  Section,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -19,18 +24,10 @@ interface PrecipitationData {
 
 export const Precipitation = () => {
   const { act, data } = useBackend<PrecipitationData>();
-  const {
-    probability,
-    cooldown,
-    poolDepth,
-    containerData,
-  } = data;
+  const { probability, cooldown, poolDepth, containerData } = data;
 
   return (
-    <Window
-      title="Precipitation"
-      width={300}
-      height={425}>
+    <Window title="Precipitation" width={300} height={425}>
       <Window.Content scrollable>
         <Section title="Precipitation">
           <Tooltip content="Cooldown for how fast ATOMs can be rained on.">
@@ -38,11 +35,15 @@ export const Precipitation = () => {
               Cooldown
               <NumberInput
                 value={cooldown}
-                width={4}
+                width={'4'}
                 minValue={0}
-                onChange={(value) => act('set-cooldown', {
-                  value,
-                })}
+                maxValue={999}
+                step={1}
+                onChange={(value) =>
+                  act('set-cooldown', {
+                    value,
+                  })
+                }
               />
             </Box>
           </Tooltip>
@@ -51,12 +52,15 @@ export const Precipitation = () => {
               Probability
               <NumberInput
                 value={probability}
-                width={4}
+                width={'4'}
                 minValue={0}
                 maxValue={100}
-                onChange={(value) => act('set-probability', {
-                  value,
-                })}
+                step={1}
+                onChange={(value) =>
+                  act('set-probability', {
+                    value,
+                  })
+                }
               />
             </Box>
           </Tooltip>
@@ -66,18 +70,22 @@ export const Precipitation = () => {
               Maximum Pool Depth
               <NumberInput
                 value={poolDepth}
-                width={4}
+                width={'4'}
                 minValue={0}
                 maxValue={100}
-                onChange={(value) => act('set-poolDepth', {
-                  value,
-                })}
+                step={1}
+                onChange={(value) =>
+                  act('set-poolDepth', {
+                    value,
+                  })
+                }
               />
             </Box>
           </Tooltip>
 
           <Section title="Reagents">
-            <ReagentList container={containerData}
+            <ReagentList
+              container={containerData}
               renderButtons={(reagent) => {
                 return (
                   <>
@@ -87,42 +95,42 @@ export const Precipitation = () => {
                       icon="filter"
                       color="red"
                       tooltip="Isolate"
-                      onClick={() => act('isolate', { container_id: containerData.id, reagent_id: reagent.id })}
+                      onClick={() =>
+                        act('isolate', {
+                          container_id: containerData.id,
+                          reagent_id: reagent.id,
+                        })
+                      }
                     />
                     <Button
                       px={0.75}
                       icon="times"
                       color="red"
                       tooltip="Flush"
-                      onClick={() => act('flush_reagent', { container_id: containerData.id, reagent_id: reagent.id })}
+                      onClick={() =>
+                        act('flush_reagent', {
+                          container_id: containerData.id,
+                          reagent_id: reagent.id,
+                        })
+                      }
                     />
                   </>
                 );
               }}
             />
             <Box m={1}>
-              <Button
-                ml={1}
-                onClick={() => act("add_reagents")}
-              >
+              <Button ml={1} onClick={() => act('add_reagents')}>
                 Add Reagents
               </Button>
-              <Button
-                ml={1}
-                onClick={() => act("flush")}
-              >
+              <Button ml={1} onClick={() => act('flush')}>
                 Clear Reagents
               </Button>
-
             </Box>
           </Section>
 
           <Section title="Particle">
             <Box m={1}>
-              <Button
-                fluid
-                onClick={() => act("particle_editor")}
-              >
+              <Button fluid onClick={() => act('particle_editor')}>
                 Edit Particle
               </Button>
             </Box>
