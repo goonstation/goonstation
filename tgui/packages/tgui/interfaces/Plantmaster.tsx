@@ -5,10 +5,7 @@
  * @license MIT
  */
 
-import { Fragment } from 'inferno';
-import { clamp } from 'tgui-core/math';
-
-import { useBackend, useLocalState } from '../backend';
+import { Fragment, useState } from 'react';
 import {
   Box,
   Button,
@@ -19,8 +16,11 @@ import {
   Section,
   Table,
   Tabs,
-} from '../components';
-import { TableCell, TableRow } from '../components/Table';
+} from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
+import { TableRow } from '../components/Table';
 import { truncate } from '../format';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
@@ -55,8 +55,23 @@ const sortname = [
   '',
 ];
 
-export const Plantmaster = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PlantmasterData {
+  extractables,
+  seeds,
+  category,
+  category_lengths,
+  inserted,
+  inserted_container,
+  seedoutput,
+  splice_chance,
+  show_splicing,
+  splice_seeds,
+  sortBy,
+  sortAsc,
+}
+
+export const Plantmaster = () => {
+  const { act, data } = useBackend<PlantmasterData>();
   const {
     extractables,
     seeds,
@@ -71,8 +86,9 @@ export const Plantmaster = (props, context) => {
     sortBy,
     sortAsc,
   } = data;
+  const [page, setPage] = useState(1);
   return (
-    <Window resizable title="Plantmaster Mk4" width={1100} height={450}>
+    <Window title="Plantmaster Mk4" width={1100} height={450}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -127,6 +143,8 @@ export const Plantmaster = (props, context) => {
             produce={extractables}
             sortBy={sortBy}
             sortAsc={sortAsc}
+            page={page}
+            setPage={setPage}
           />
         )}
         {category === 'seedlist' && (
@@ -138,6 +156,8 @@ export const Plantmaster = (props, context) => {
             splice_seeds={splice_seeds}
             sortBy={sortBy}
             sortAsc={sortAsc}
+            page={page}
+            setPage={setPage}
           />
         )}
       </Window.Content>
@@ -160,8 +180,8 @@ const compare = function (a, b, sortBy, sortAsc) {
   }
 };
 
-const ReagentDisplay = (props, context) => {
-  const { act } = useBackend(context);
+const ReagentDisplay = (props) => {
+  const { act } = useBackend<PlantmasterData>();
   const container = props.container || NoContainer;
 
   return (
@@ -184,8 +204,7 @@ const ReagentDisplay = (props, context) => {
   );
 };
 
-const PlantOverview = (props, context) => {
-  const { act } = useBackend(context);
+const PlantOverview = (props) => {
   const { cat_lens, container } = props;
   return (
     <Section title="Overview">
@@ -201,8 +220,8 @@ const PlantOverview = (props, context) => {
     </Section>
   );
 };
-const TitleRow = (props, context) => {
-  const { act } = useBackend(context);
+const TitleRow = (props) => {
+  const { act } = useBackend<PlantmasterData>();
   const { show_damage, sortBy, sortAsc } = props;
 
   return (
@@ -210,7 +229,7 @@ const TitleRow = (props, context) => {
       {headings.map(
         (heading, index) =>
           (show_damage || heading !== 'damage') && (
-            <TableCell key={heading} textAlign="center">
+            <Table.Cell key={heading} textAlign="center">
               <Button
                 color="transparent"
                 icon={
@@ -229,20 +248,20 @@ const TitleRow = (props, context) => {
               >
                 <b>{capitalize(heading)}</b>
               </Button>
-            </TableCell>
+            </Table.Cell>
           ),
       )}
     </TableRow>
   );
 };
-const PlantRow = (props, context) => {
-  const { act } = useBackend(context);
+const PlantRow = (props) => {
+  const { act } = useBackend<PlantmasterData>();
   const { extractable, show_damage, infuse, extract, splice, splice_disable } =
     props;
   return (
     <Fragment key={extractable.ref[1]}>
-      <TableRow>
-        <TableCell width="100px" textAlign="center">
+      <Table.Row>
+        <Table.Cell width="100px" textAlign="center">
           <Button.Input
             width="100px"
             tooltip="Click to rename"
@@ -258,87 +277,87 @@ const PlantRow = (props, context) => {
               })
             }
           />
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           width="100px"
           textAlign="center"
           bold={extractable.species[1]}
           backgroundColor={extractable.species[1] ? '#333333' : ''}
         >
           {extractable.species[0]}
-        </TableCell>
+        </Table.Cell>
         {show_damage && (
-          <TableCell
+          <Table.Cell
             textAlign="center"
             bold={extractable.damage[1]}
             backgroundColor={extractable.damage[1] ? '#333333' : ''}
           >
             {extractable.damage[0]}%
-          </TableCell>
+          </Table.Cell>
         )}
-        <TableCell
+        <Table.Cell
           textAlign="center"
           bold={extractable.genome[1]}
           backgroundColor={extractable.genome[1] ? '#333333' : ''}
         >
           {extractable.genome[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.generation[1]}
           backgroundColor={extractable.generation[1] ? '#333333' : ''}
         >
           {extractable.generation[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.growtime[1]}
           backgroundColor={extractable.growtime[1] ? '#333333' : ''}
         >
           {extractable.growtime[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.harvesttime[1]}
           backgroundColor={extractable.harvesttime[1] ? '#333333' : ''}
         >
           {extractable.harvesttime[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.lifespan[1]}
           backgroundColor={extractable.lifespan[1] ? '#333333' : ''}
         >
           {extractable.lifespan[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.cropsize[1]}
           backgroundColor={extractable.cropsize[1] ? '#333333' : ''}
         >
           {extractable.cropsize[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.potency[1]}
           backgroundColor={extractable.potency[1] ? '#333333' : ''}
         >
           {extractable.potency[0]}
-        </TableCell>
-        <TableCell
+        </Table.Cell>
+        <Table.Cell
           textAlign="center"
           bold={extractable.endurance[1]}
           backgroundColor={extractable.endurance[1] ? '#333333' : ''}
         >
           {extractable.endurance[0]}
-        </TableCell>
-        <TableCell textAlign="center">
+        </Table.Cell>
+        <Table.Cell textAlign="center">
           <Flex>
             <Flex.Item nowrap>
               {infuse && (
                 <Button
                   icon="fill-drip"
-                  title="Infuse"
+                  tooltip="Infuse"
                   fontSize={1.1}
                   disabled={!extractable.allow_infusion[1]}
                   onClick={() =>
@@ -349,7 +368,7 @@ const PlantRow = (props, context) => {
               {extract && (
                 <Button
                   icon="seedling"
-                  title="Extract Seeds"
+                  tooltip="Extract Seeds"
                   fontSize={1.1}
                   onClick={() =>
                     act('extract', { extract_ref: extractable.ref[0] })
@@ -363,7 +382,7 @@ const PlantRow = (props, context) => {
                     extractable.splicing[1] ? 'window-close' : 'code-branch'
                   }
                   color={extractable.splicing[1] ? 'red' : ''}
-                  title={extractable.splicing[1] ? 'Cancel Splice' : 'Splice'}
+                  tooltip={extractable.splicing[1] ? 'Cancel Splice' : 'Splice'}
                   fontSize={1.1}
                   onClick={() =>
                     act('splice_select', {
@@ -374,7 +393,7 @@ const PlantRow = (props, context) => {
               )}
               <Button
                 icon="search"
-                title="Analyze"
+                tooltip="Analyze"
                 fontSize={1.1}
                 onClick={() =>
                   act('analyze', { analyze_ref: extractable.ref[0] })
@@ -382,21 +401,21 @@ const PlantRow = (props, context) => {
               />
               <Button
                 icon="eject"
-                title="Eject"
+                tooltip="Eject"
                 fontSize={1.1}
                 onClick={() => act('eject', { eject_ref: extractable.ref[0] })}
               />
             </Flex.Item>
           </Flex>
-        </TableCell>
-      </TableRow>
+        </Table.Cell>
+      </Table.Row>
       <Divider />
     </Fragment>
   );
 };
 
-const PlantSeeds = (props, context) => {
-  const { act } = useBackend(context);
+const PlantSeeds = (props) => {
+  const { act } = useBackend<PlantmasterData>();
   const {
     seedoutput,
     seeds,
@@ -405,12 +424,13 @@ const PlantSeeds = (props, context) => {
     splice_chance,
     sortBy,
     sortAsc,
+    page,
+    setPage,
   } = props;
   const extractables = (seeds || []).sort((a, b) =>
     compare(a, b, sortBy, sortAsc),
   );
   const extractablesPerPage = splicing ? 7 : 10;
-  const [page, setPage] = useLocalState(context, 'page', 1);
   const totalPages = Math.max(
     1,
     Math.ceil(extractables.length / extractablesPerPage),
@@ -436,7 +456,7 @@ const PlantSeeds = (props, context) => {
           </Button>
           <Button
             icon="caret-left"
-            title="Previous Page"
+            tooltip="Previous Page"
             disabled={page < 2}
             onClick={() => setPage(page - 1)}
           />
@@ -445,12 +465,13 @@ const PlantSeeds = (props, context) => {
             format={(value) => 'Page ' + value + '/' + totalPages}
             minValue={1}
             maxValue={totalPages}
+            step={1}
             stepPixelSize={15}
-            onChange={(e, value) => setPage(value)}
+            onChange={(value) => setPage(value)}
           />
           <Button
             icon="caret-right"
-            title="Next Page"
+            tooltip="Next Page"
             disabled={page > totalPages - 1}
             onClick={() => setPage(page + 1)}
           />
@@ -517,18 +538,19 @@ const PlantSeeds = (props, context) => {
 };
 
 const PlantExtractables = (props, context) => {
-  const { act } = useBackend(context);
-  const { seedoutput, produce, sortBy, sortAsc } = props;
+  const { act } = useBackend<PlantmasterData>();
+  const { seedoutput, produce, sortBy, sortAsc, page, setPage } = props;
   const extractables = (produce || []).sort((a, b) =>
     compare(a, b, sortBy, sortAsc),
   );
   const extractablesPerPage = 10;
-  const [page, setPage] = useLocalState(context, 'page', 1);
   const totalPages = Math.max(
     1,
     Math.ceil(extractables.length / extractablesPerPage),
   );
-  if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
+  if (page < 1 || page > totalPages) {
+    setPage(clamp(page, 1, totalPages));
+  }
   const extractablesOnPage = extractables.slice(
     extractablesPerPage * (page - 1),
     extractablesPerPage * (page - 1) + extractablesPerPage,
@@ -549,7 +571,7 @@ const PlantExtractables = (props, context) => {
           </Button>
           <Button
             icon="caret-left"
-            title="Previous Page"
+            tooltip="Previous Page"
             disabled={page < 2}
             onClick={() => setPage(page - 1)}
           />
@@ -558,12 +580,13 @@ const PlantExtractables = (props, context) => {
             format={(value) => 'Page ' + value + '/' + totalPages}
             minValue={1}
             maxValue={totalPages}
+            step={1}
             stepPixelSize={15}
-            onChange={(e, value) => setPage(value)}
+            onChange={(value) => setPage(value)}
           />
           <Button
             icon="caret-right"
-            title="Next Page"
+            tooltip="Next Page"
             disabled={page > totalPages - 1}
             onClick={() => setPage(page + 1)}
           />
