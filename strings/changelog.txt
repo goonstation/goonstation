@@ -1,5 +1,9 @@
 
 (t)sat jul 27 24
+(u)Colossus
+(p)20086
+(e)🆕🔬|C-Feature, A-Science
+(+)Tetrodotoxin now may appear in eldritch artifacts and ??? pills.
 (u)glowbold & soleil
 (p)20096
 (e)🪲🗺📦💡|C-Bug, A-Mapping, A-Game-Objects, A-Station-Systems
