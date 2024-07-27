@@ -1,9 +1,17 @@
+import { BlockQuote, Box, Button, Collapsible, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Collapsible, Section } from '../components';
 import { Window } from '../layouts';
 
-export const AIRack = (props, context) => {
-  const { act, data } = useBackend(context);
+interface AIRackData {
+  lawTitles,
+  lawText,
+  welded,
+  screwed,
+}
+
+export const AIRack = () => {
+  const { act, data } = useBackend<AIRackData>();
   const {
     lawTitles,
     lawText,
@@ -12,7 +20,6 @@ export const AIRack = (props, context) => {
   } = data;
   return (
     <Window
-      resizable
       title="AI Law Rack"
       width={600}
       height={800}>
