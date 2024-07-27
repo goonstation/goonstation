@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Box, Button, Flex, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
 export const TerrainChoice = props => {
@@ -121,9 +122,19 @@ export const TerrainOptions = props => {
   );
 };
 
+interface TerrainifyData {
+  typeData,
+  terrain,
+  fabricator,
+  cars,
+  allowVehicles,
+  locked,
+  activeOptions,
+  activeToggles,
+}
 
-export const Terrainify = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Terrainify = () => {
+  const { act, data } = useBackend<TerrainifyData>();
   const {
     typeData,
     terrain,
