@@ -6,13 +6,13 @@
  */
 
 import { classes } from 'common/react';
+import { Box, Button, Divider, Image, LabeledList, NoticeBox, Section, Stack, Tabs } from "tgui-core/components";
 
 import { useBackend } from "../backend";
-import { Box, Button, Divider, Image, LabeledList, NoticeBox, Section, Stack, Tabs } from "../components";
 import { Window } from '../layouts';
 
-const DeptBox = (props, context) => {
-  const { act } = useBackend(context);
+const DeptBox = (props) => {
+  const { act } = useBackend();
   const {
     name,
     colour,
@@ -67,8 +67,24 @@ const DeptBox = (props, context) => {
   );
 };
 
-export const IDComputer = (_props, context) => {
-  const { act, data } = useBackend(context);
+interface IDComputerData {
+  mode,
+  manifest,
+  target_name,
+  target_owner,
+  target_rank,
+  target_card_look,
+  scan_name,
+  pronouns,
+  custom_names,
+  target_accesses,
+  standard_jobs,
+  accesses_by_area,
+  icons,
+}
+
+export const IDComputer = () => {
+  const { act, data } = useBackend<IDComputerData>();
   const { mode, manifest, target_name, target_owner, target_rank, target_card_look, scan_name, pronouns, custom_names,
     target_accesses, standard_jobs, accesses_by_area, icons } = data;
 
@@ -212,7 +228,7 @@ export const IDComputer = (_props, context) => {
                 </>
               )}
               {mode === "unauthenticated" && scan_name && target_name && (
-                <NoticeBox mt="0.5rem" warning>Identity <em>{scan_name}</em> unauthorized to perform ID modifications.</NoticeBox>
+                <NoticeBox mt="0.5rem" danger>Identity <em>{scan_name}</em> unauthorized to perform ID modifications.</NoticeBox>
               )}
             </>
           )}
