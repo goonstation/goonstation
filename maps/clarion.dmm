@@ -19731,9 +19731,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/command{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/command,
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
