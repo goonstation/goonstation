@@ -6,7 +6,6 @@
  * @license ISC
  */
 
-import { BooleanLike } from 'tgui-core/react';
 import { useState } from 'react';
 import {
   AnimatedNumber,
@@ -19,6 +18,7 @@ import {
   Stack,
   Tabs,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
 import { Button } from '../components';
@@ -154,10 +154,11 @@ export const ReagentDispenser = () => {
                 <NumberInput
                   value={addAmount}
                   format={(value: number) => `${value}u`}
-                  width={4}
+                  width={'4'}
                   minValue={1}
                   maxValue={100}
-                  onDrag={(_e: unknown, value: number) => setAddAmount(value)}
+                  step={1}
+                  onDrag={(value: number) => setAddAmount(value)}
                 />
               </Stack.Item>
             </Stack>
@@ -237,14 +238,13 @@ export const Beaker = () => {
               <Stack.Item>Remove Amount:</Stack.Item>
               <Stack.Item>
                 <NumberInput
-                  width={4}
+                  width={'4'}
                   format={(value: number) => `${value}u`}
                   value={removeAmount}
                   minValue={1}
                   maxValue={100}
-                  onDrag={(_e: unknown, value: number) =>
-                    setRemoveAmount(value)
-                  }
+                  step={1}
+                  onDrag={(value: number) => setRemoveAmount(value)}
                 />
               </Stack.Item>
             </Stack>
