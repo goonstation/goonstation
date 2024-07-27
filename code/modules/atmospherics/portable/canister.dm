@@ -94,7 +94,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
-	full_gas_name = "Fadeev-Popov Anhydrous Anomalous Evaporate (FAAE, commonly called plasma)"
+	full_gas_name = "Faddeev-Popov Anhydrous Anomalous Evaporate (FAAE, commonly called plasma)"
 	icon_state = "orange"
 	casecolor = "orange"
 

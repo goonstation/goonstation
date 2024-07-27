@@ -24442,12 +24442,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/disposalpipe/segment/transport,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bwf" = (
@@ -30339,15 +30337,13 @@
 	},
 /area/station/bridge)
 "bLn" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -30602,10 +30598,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -40053,10 +40047,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
+/obj/machinery/computer/announcement/station/research{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
@@ -47012,10 +47004,7 @@
 /area/station/quartermaster/office)
 "cJW" = (
 /obj/disposalpipe/segment/mineral,
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "cJX" = (
@@ -68305,11 +68294,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "qmO" = (
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/light/incandescent,
+/obj/machinery/computer/announcement/station/medical,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head)
 "qnl" = (

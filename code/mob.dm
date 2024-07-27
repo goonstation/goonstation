@@ -3376,3 +3376,9 @@
 	src.delStatus("knockdown")
 	src.delStatus("unconscious")
 	src.delStatus("paralysis")
+
+/mob/proc/has_genetics()
+	return FALSE
+
+/mob/proc/get_genetic_traits()
+	return list(0,0,0)
