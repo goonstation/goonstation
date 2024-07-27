@@ -1,9 +1,14 @@
+import { Image, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const FlockStructures = (props, context) => {
-  const { act, data } = useBackend(context);
+interface FlockStructuresData {
+  structures;
+}
+
+export const FlockStructures = () => {
+  const { data } = useBackend<FlockStructuresData>();
   const {
     structures,
   } = data;
