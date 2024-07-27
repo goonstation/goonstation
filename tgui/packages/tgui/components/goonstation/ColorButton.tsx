@@ -9,11 +9,12 @@ import { Box } from '../Box';
 import { Button } from '../Button';
 import { ColorBox } from '../ColorBox';
 
-export const ColorButton = props => {
-  const {
-    color,
-    ...rest
-  } = props;
+interface ColorButtonProps {
+  color: string;
+}
+
+export const ColorButton = (props: ColorButtonProps) => {
+  const { color, ...rest } = props;
 
   return (
     <Button {...rest}>
