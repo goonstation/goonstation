@@ -3,15 +3,24 @@
  * @copyright 2023 Caio029 (https://github.com/caiofrancisco)
  * @license MIT
  */
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Icon, Image, Input, Section, Stack, Tabs } from '../components';
+import { useState } from 'react';
+import { Box, Button, ByondUi, Icon, Image, Input, Section, Stack, Tabs } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const sidebarWidth = "200px";
 
-export const BarberingMenu = (_props, context) => {
-  const { data } = useBackend(context);
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+interface BarberingMenuData {
+  available_styles;
+  current_hair_style;
+  preview;
+  selected_hair_portion;
+}
+
+export const BarberingMenu = () => {
+  const { data } = useBackend<BarberingMenuData>();
+  const [searchText, setSearchText] = useState('');
   const { available_styles } = data;
 
   const styles_keys = Object.keys(available_styles);
@@ -73,22 +82,22 @@ const HairPreviewList = (props) => {
     </Stack>);
 };
 
-const CreateWigButton = (_props, context) => {
-  const { act } = useBackend(context);
+const CreateWigButton = () => {
+  const { act } = useBackend<BarberingMenuData>();
   return (
     <Button fluid icon="cut" color="red" bold onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
   );
 };
 
-const ResetPreviewButton = (_props, context) => {
-  const { act } = useBackend(context);
+const ResetPreviewButton = () => {
+  const { act } = useBackend<BarberingMenuData>();
   return (
     <Button fluid icon="rotate-left" color="red" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
   );
 };
 
-const HairPreview = (props, context) => {
-  const { act } = useBackend(context);
+const HairPreview = (props) => {
+  const { act } = useBackend<BarberingMenuData>();
   const { hairStyle, hairName } = props;
   return (
     <Section width="140px" align="center">
@@ -106,8 +115,8 @@ const HairPreview = (props, context) => {
   );
 };
 
-const ArrowButtons = (_props, context) => {
-  const { act } = useBackend(context);
+const ArrowButtons = () => {
+  const { act } = useBackend();
   return (
     <Stack justify="space-around">
       <Stack.Item align="center">
@@ -120,8 +129,8 @@ const ArrowButtons = (_props, context) => {
   );
 };
 
-const Sidebar = (props, context) => {
-  const { data } = useBackend(context);
+const Sidebar = (props) => {
+  const { data } = useBackend<BarberingMenuData>();
   const { preview } = data;
   const { onSearchTextInput } = props;
   return (
@@ -163,9 +172,9 @@ const Sidebar = (props, context) => {
   );
 };
 
-const HairPortionItem = (props, context) => {
+const HairPortionItem = (props) => {
   const { children, hairPortion, icon } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<BarberingMenuData>();
   const { current_hair_style, selected_hair_portion } = data;
   const rightSlot = <Box align="right">{current_hair_style[hairPortion]}</Box>;
   return (
