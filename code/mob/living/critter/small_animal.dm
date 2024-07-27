@@ -919,6 +919,10 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			src.playing_dead = 1
 			src.play_dead()
 
+	was_harmed(mob/M, obj/item/weapon, special, intent)
+		. = ..()
+		M.add_karma(-1)
+
 	proc/play_dead(var/addtime = 0)
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
