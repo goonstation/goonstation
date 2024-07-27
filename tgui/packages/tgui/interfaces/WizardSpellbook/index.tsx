@@ -6,9 +6,10 @@
  * @license ISC
  */
 
+import { useState } from 'react';
 import { Box, Flex, Input, Section, Stack, Tabs } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { PlaceholderItem } from './PlaceholderItem';
 import { SpellItem } from './SpellItem';
@@ -18,10 +19,8 @@ const SIDEBAR_WIDTH = '160px';
 
 export const WizardSpellbook = () => {
   const { data } = useBackend<WizardSpellbookData>();
-  const [searchQuery, setSearchQuery] = useLocalState('searchQuery', '');
-  const [categoryFilters, setCategoryFilters] = useLocalState<
-    Record<string, boolean>
-  >('categoryFilters', {});
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilters, setCategoryFilters] = useState<Record<string, boolean>>({});
   const clearFilters = () => {
     setSearchQuery('');
     setCategoryFilters({});

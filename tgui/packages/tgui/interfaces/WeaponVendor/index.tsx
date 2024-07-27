@@ -5,6 +5,7 @@
  * @license MIT
  */
 
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -16,17 +17,14 @@ import {
 } from 'tgui-core/components';
 import { toTitleCase } from 'tgui-core/string';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { pluralize } from '../common/stringUtils';
 import { WeaponVendorData, WeaponVendorStockData } from './type';
 
 export const WeaponVendor = () => {
   const { data } = useBackend<WeaponVendorData>();
-  const [filterAvailable, setFilterAvailable] = useLocalState(
-    'filter-available',
-    false,
-  );
+  const [filterAvailable, setFilterAvailable] = useState(false);
 
   return (
     <Window width={550} height={700}>

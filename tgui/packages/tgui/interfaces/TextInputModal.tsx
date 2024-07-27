@@ -5,9 +5,10 @@
  * @license ISC
  */
 
+import { useState } from 'react';
 import { Box, Input, Section, Stack, TextArea } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { InputButtons, Validator } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -35,9 +36,8 @@ export const TextInputModal = () => {
     allowEmpty,
     theme,
   } = data;
-  const [input, setInput] = useLocalState('input', placeholder);
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    'inputIsValid',
+  const [input, setInput] = useState(placeholder);
+  const [inputIsValid, setInputIsValid] = useState<Validator>(
     { isValid: allowEmpty || !!message, error: null },
   );
   const onType = (event) => {
