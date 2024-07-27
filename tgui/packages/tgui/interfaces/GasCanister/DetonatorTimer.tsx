@@ -1,20 +1,21 @@
-import { Box, TimeDisplay } from '../../components';
+import { Box, TimeDisplay } from 'tgui-core/components';
+
 import { formatTime } from '../../format';
 
-export const DetonatorTimer = props => {
+export const DetonatorTimer = (props) => {
   const {
     time,
     isPrimed,
     warningThreshold = 300,
     dangerThreshold = 100,
-    explosionMessage = "BO:OM",
+    explosionMessage = 'BO:OM',
   } = props;
 
-  let timeColor = "green";
+  let timeColor = 'green';
   if (time <= dangerThreshold) {
-    timeColor = "red";
+    timeColor = 'red';
   } else if (time <= warningThreshold) {
-    timeColor = "orange";
+    timeColor = 'orange';
   }
 
   return (
@@ -25,11 +26,13 @@ export const DetonatorTimer = props => {
       color={timeColor}
       maxWidth="90px"
       width="90px"
-      fontSize="20px">
+      fontSize="20px"
+    >
       <TimeDisplay
         value={time}
         timing={isPrimed}
-        format={value => formatTime(value, explosionMessage)} />
+        format={(value: number) => formatTime(value, explosionMessage)}
+      />
     </Box>
   );
 };
