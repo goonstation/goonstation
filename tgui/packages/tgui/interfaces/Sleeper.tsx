@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { Box, Button, Flex, Icon, Knob, LabeledList, ProgressBar, Section, TimeDisplay } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, Knob, LabeledList, ProgressBar, Section, TimeDisplay } from '../components';
 import { HealthStat } from '../components/goon/HealthStat';
 import { formatTime } from '../format';
 import { Window } from '../layouts';
@@ -37,8 +38,26 @@ const occupantStatuses = {
   },
 };
 
-export const Sleeper = (props, context) => {
-  const { data, act } = useBackend(context);
+interface SleeperData {
+  sleeperGone,
+  hasOccupant,
+  occupantStat,
+  health,
+  oxyDamage,
+  toxDamage,
+  burnDamage,
+  bruteDamage,
+  recharging,
+  rejuvinators,
+  isTiming,
+  time,
+  timeStarted,
+  timeNow,
+  maxTime,
+}
+
+export const Sleeper = () => {
+  const { data, act } = useBackend<SleeperData>();
   const {
     sleeperGone,
     hasOccupant,
