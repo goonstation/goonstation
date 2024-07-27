@@ -5,9 +5,16 @@
  * @license ISC
  */
 
+import { Button, Input, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
+
+interface CentComViewerData {
+  banData;
+  key,
+  filterInactive;
+}
 
 const getBanLength = (bannedOn, expires) => {
   const ONE_SECOND = 1000;
@@ -25,7 +32,8 @@ const getBanLength = (bannedOn, expires) => {
     { interval: ONE_YEAR, label: 'year' },
   ];
 
-  const banLength = new Date(expires) - new Date(bannedOn);
+  // `+` to convert to numbers, keeps TS happy
+  const banLength = +new Date(expires) - +new Date(bannedOn);
 
   for (const { interval, label } of intervals.reverse()) {
     if (banLength >= interval) {
@@ -103,20 +111,20 @@ const BanList = ({ banData, filterInactive }) => {
 };
 
 // Define the main RenderBans component.
-const RenderBans = (props, context) => {
-  const { data } = useBackend(context);
+const RenderBans = () => {
+  const { data } = useBackend<CentComViewerData>();
   const { banData, filterInactive } = data;
 
   return <BanList banData={banData} filterInactive={filterInactive} />;
 };
 
 
-export const CentComViewer = (props, context) => {
-  const { act, data } = useBackend(context);
+export const CentComViewer = () => {
+  const { act, data } = useBackend<CentComViewerData>();
   const { key, filterInactive } = data;
 
   return (
-    <Window title="CentCom Viewer" width="650" height="500">
+    <Window title="CentCom Viewer" width={650} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
