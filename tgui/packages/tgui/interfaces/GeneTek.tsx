@@ -5,18 +5,33 @@
  * @license ISC
  */
 
+import { Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Tabs, TimeDisplay } from "tgui-core/components";
+
 import { useBackend, useSharedState } from "../backend";
-import { Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Tabs, TimeDisplay } from "../components";
 import { Window } from "../layouts";
 import { BuyMaterialsModal, CombineGenesModal, MutationsTab, RecordTab, ResearchTab, ScannerTab, StorageTab } from "./GeneTek/index";
 
 const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
 
-export const GeneTek = (props, context) => {
-  const { data, act } = useBackend(context);
-  const [menu, setMenu] = useSharedState(context, "menu", "research");
-  const [buyMats, setBuyMats] = useSharedState(context, "buymats", null);
-  const [isCombining] = useSharedState(context, "iscombining", false);
+interface GeneTekData {
+  materialCur,
+  materialMax,
+  currentResearch,
+  equipmentCooldown,
+  subject,
+  costPerMaterial,
+  budget,
+  record,
+  scannerAlert,
+  scannerError,
+  allowed,
+}
+
+export const GeneTek = () => {
+  const { data, act } = useBackend<GeneTekData>();
+  const [menu, setMenu] = useSharedState("menu", "research");
+  const [buyMats, setBuyMats] = useSharedState("buymats", null);
+  const [isCombining] = useSharedState("iscombining", false);
   const {
     materialCur,
     materialMax,
@@ -43,6 +58,8 @@ export const GeneTek = (props, context) => {
     Math.floor(budget / costPerMaterial),
   );
 
+  const scannerAlertNoticeProps = scannerError ? { danger: true } : { info: true };
+
   return (
     <Window
       theme={allowed ? "genetek" : "genetek-disabled"}
@@ -58,7 +75,7 @@ export const GeneTek = (props, context) => {
             height="100%">
             {!allowed && (
               <>
-                <div style={{ "color": "#ff3333", "text-align": "center" }}>
+                <div style={{ "color": "#ff3333", "textAlign": "center" }}>
                   Insufficient access to interact.
                 </div>
                 <Divider />
@@ -141,7 +158,7 @@ export const GeneTek = (props, context) => {
               ))}
             </Flex.Item>
             {!!scannerAlert && (
-              <NoticeBox info={!scannerError} danger={!!scannerError}>
+              <NoticeBox {...scannerAlertNoticeProps}>
                 {scannerAlert}
               </NoticeBox>
             )}
