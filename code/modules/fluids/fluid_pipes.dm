@@ -13,6 +13,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	density = FALSE
 	level = UNDERFLOOR
 	var/capacity = DEFAULT_FLUID_CAPACITY
+	/// What directions are valid for connections.
 	var/initialize_directions
 	/// The network we belong to.
 	var/datum/flow_network/network
@@ -73,7 +74,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	..()
 
 /obj/fluid_pipe/straight/see_fluid
-	icon_state = "straight-glass"
+	icon_state = "straight-viewable"
 
 /obj/fluid_pipe/straight/see_fluid/overfloor
 	level = OVERFLOOR
@@ -133,6 +134,39 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 
 /obj/fluid_pipe/quad/overfloor
 	level = OVERFLOOR
+
+/obj/fluid_pipe/fluid_tank
+	name = "fluid tank"
+	desc = "A big ol' tank of fluid."
+	icon_state = "tank"
+	plane = PLANE_DEFAULT
+	layer = OBJ_LAYER
+	level = OVERFLOOR
+	capacity = LARGE_FLUID_CAPACITY
+
+/obj/fluid_pipe/fluid_tank/New()
+	switch(dir)
+		if(NORTH, SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST, WEST)
+			initialize_directions = EAST|WEST
+	..()
+
+/obj/fluid_pipe/fluid_tank/see_fluid
+	icon_state = "tank-viewable"
+
+/obj/fluid_pipe/fluid_tank/see_fluid/New()
+	..()
+	src.AddComponent( \
+		/datum/component/reagent_overlay/fluid_pipe, \
+		reagent_overlay_icon = src.icon, \
+		reagent_overlay_icon_state = src.icon_state, \
+		reagent_overlay_states = 10)
+
+/obj/fluid_pipe/fluid_tank/see_fluid/get_desc(dist, mob/user)
+	if (dist > 2)
+		return
+	. = "<br>[SPAN_NOTICE("[src.network.reagents.get_description(user, RC_FULLNESS | RC_VISIBLE | RC_SPECTRO)]")]"
 
 // Represents a single connected set of fluid pipes
 /datum/flow_network
