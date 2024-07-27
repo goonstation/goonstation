@@ -1,10 +1,29 @@
+import { Button, LabeledList, NumberInput, Section, TextArea } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section, TextArea } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 
-export const SpawnEvent = (props, context) => {
-  const { act, data } = useBackend(context);
+interface SpawnEventData {
+  thing_to_spawn,
+  thing_name,
+  spawn_directly,
+  spawn_loc,
+  ghost_confirmation_delay,
+  amount_to_spawn,
+  antag_role,
+  objective_text,
+  spawn_type,
+  loc_type,
+  incompatible_antag,
+  equip_antag,
+  ask_permission,
+  allow_dnr,
+  eligible_player_count,
+}
+
+export const SpawnEvent = () => {
+  const { act, data } = useBackend<SpawnEventData>();
   const {
     thing_to_spawn,
     thing_name,
@@ -66,7 +85,8 @@ export const SpawnEvent = (props, context) => {
                   value={ghost_confirmation_delay / 10}
                   minValue={0}
                   maxValue={120}
-                  onDrag={(e, spawn_delay) => act('set_spawn_delay', { spawn_delay: (spawn_delay * 10) })}
+                  step={1}
+                  onDrag={(spawn_delay) => act('set_spawn_delay', { spawn_delay: (spawn_delay * 10) })}
                   disabled={!ask_permission}
                 />
               )}
@@ -83,7 +103,8 @@ export const SpawnEvent = (props, context) => {
                 value={amount_to_spawn}
                 minValue={1}
                 maxValue={100}
-                onDrag={(e, amount) => act('set_amount', { amount })} />
+                step={1}
+                onDrag={(amount) => act('set_amount', { amount })} />
               /{eligible_player_count} <Button icon="refresh" onClick={() => act('refresh_player_count')} />
               {amount_to_spawn === 1 && spawn_type === "mob_ref" && thing_name && (
                 <ButtonCheckbox
