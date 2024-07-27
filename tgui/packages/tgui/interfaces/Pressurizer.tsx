@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo } from './common/PortableAtmos';
 
@@ -14,14 +15,34 @@ const FanState = {
   Out: 2,
 };
 
-const GaugeRanges = {
+const GaugeRanges: Record<string, [number, number]> = {
   good: [1, Infinity],
   average: [0.75, 1],
   bad: [-Infinity, 0.75],
 };
 
-export const Pressurizer = (props, context) => {
-  const { act, data } = useBackend(context);
+interface PressurizerData {
+  airSafe,
+  blastArmed,
+  blastDelay,
+  connected,
+  emagged,
+  fanState,
+  materialsCount,
+  materialsProgress,
+  maxArmDelay,
+  maxPressure,
+  maxRelease,
+  minArmDelay,
+  minBlastPercent,
+  minRelease,
+  pressure,
+  processRate,
+  releasePressure,
+}
+
+export const Pressurizer = () => {
+  const { act, data } = useBackend<PressurizerData>();
 
   const {
     airSafe,
@@ -122,7 +143,8 @@ export const Pressurizer = (props, context) => {
                 value={blastDelay}
                 minValue={minArmDelay}
                 maxValue={maxArmDelay}
-                onChange={(e, targetDelay) => handleSetBlastDelay(targetDelay)} />
+                step={1}
+                onChange={(targetDelay) => handleSetBlastDelay(targetDelay)} />
               <Button onClick={() => handleSetBlastDelay(maxArmDelay)}>
                 Max
               </Button>
@@ -160,7 +182,8 @@ export const Pressurizer = (props, context) => {
                 value={releasePressure}
                 minValue={minRelease}
                 maxValue={maxRelease}
-                onChange={(e, targetPressure) => handleSetPressure(targetPressure)} />
+                step={1}
+                onChange={(targetPressure) => handleSetPressure(targetPressure)} />
               <Button onClick={() => handleSetPressure(maxRelease)}>
                 Max
               </Button>
