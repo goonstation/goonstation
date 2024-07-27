@@ -10,7 +10,6 @@ import { Fragment, useState } from 'react';
 import { BlockQuote, Box, Button, Collapsible, Divider, Image, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { ButtonCheckbox } from '../../components/Button';
 import { CharacterPreferencesData, CharacterPreferencesTrait } from './type';
 
 const sortTraits = (a: CharacterPreferencesTrait, b: CharacterPreferencesTrait) =>
@@ -67,9 +66,9 @@ export const TraitsTab = () => {
                 fill
                 scrollable
                 buttons={
-                  <ButtonCheckbox checked={filterAvailable} onClick={() => setFilterAvailable(!filterAvailable)}>
+                  <Button.Checkbox checked={filterAvailable} onClick={() => setFilterAvailable(!filterAvailable)}>
                     Filter available
-                  </ButtonCheckbox>
+                  </Button.Checkbox>
                 }>
                 {traitCategories.map((category) => {
                   const traits = traitsByCategory[category];
