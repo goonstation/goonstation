@@ -2383,7 +2383,7 @@
 		name = "Graphene"
 		id = "graphene"
 		result = "graphene"
-		required_reagents = list("fuel" = 4, "iron" = 1, "silicon_dioxide" = 1)
+		required_reagents = list("fuel" = 4, "iron" = 1, "silicon" = 1) //silicon dioxide -> silicon because this whole chain is too damn long
 		min_temperature = T0C + 150
 		result_amount = 2
 		reaction_speed = 1
