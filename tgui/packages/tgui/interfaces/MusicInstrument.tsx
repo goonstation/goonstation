@@ -1,8 +1,9 @@
 import { classes } from 'common/react';
 import { useState } from 'react';
-import { Box, Button, Flex, Input, Knob } from 'tgui-core/components';
+import { Box, Button, Flex, Input } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+import { Knob } from '../components';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {
@@ -16,11 +17,10 @@ type MusicInstrumentData = {
 
 export const MusicInstrument = () => {
   const { act, data } = useBackend<MusicInstrumentData>();
-  const { name, notes, volume, transpose, keybindToggle, noteKeysString } = data;
+  const { name, notes, volume, transpose, keybindToggle, noteKeysString } =
+    data;
 
-  const [noteKeysOrder, setNoteKeysOrder] = useState(
-    noteKeysString.split('')
-  );
+  const [noteKeysOrder, setNoteKeysOrder] = useState(noteKeysString.split(''));
 
   const [activeKeys, setActiveKeys] = useState({}); // new Array(notes.length)
   const [keyOffset, setKeyOffset] = useState(0);
@@ -45,7 +45,8 @@ export const MusicInstrument = () => {
     setKeybindToggle(!keybindToggle);
   };
 
-  const keyIndexWithinRange = (index: number) => index + transpose >= 0 && index + transpose < notes.length;
+  const keyIndexWithinRange = (index: number) =>
+    index + transpose >= 0 && index + transpose < notes.length;
 
   const playNote = (index: number) => {
     if (keyIndexWithinRange(index) && !activeKeys[index]) {
@@ -67,7 +68,8 @@ export const MusicInstrument = () => {
   };
 
   const getKeyboardIndex = (key: string) => {
-    const keyboardIndex = keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
+    const keyboardIndex =
+      keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
     if (keyboardIndex >= 0) return keyboardIndex;
     return -1;
   };
@@ -90,7 +92,8 @@ export const MusicInstrument = () => {
           if (ev.key === 'Control') {
             toggleKeybind();
           }
-        }}>
+        }}
+      >
         <Box className="instrument__keyboardwrapper">
           <Box className="instrument__outerpanel">
             <Box className="instrument__speaker" />
@@ -171,9 +174,16 @@ export const MusicInstrument = () => {
             {notes.map((note, index) => {
               const isBlackKey = note.includes('-');
               const keybind = noteKeysOrder[index - keyOffset];
-              const keyClass = isBlackKey ? 'instruments__piano-key-black' : 'instruments__piano-key-white';
-              const isWhiteOffsetKey = ['d', 'e', 'g', 'a', 'b'].includes(note.split('')[0]);
-              const whiteKeyOffsetClass = isWhiteOffsetKey && !isBlackKey ? 'instruments__piano-key-white-offset' : '';
+              const keyClass = isBlackKey
+                ? 'instruments__piano-key-black'
+                : 'instruments__piano-key-white';
+              const isWhiteOffsetKey = ['d', 'e', 'g', 'a', 'b'].includes(
+                note.split('')[0],
+              );
+              const whiteKeyOffsetClass =
+                isWhiteOffsetKey && !isBlackKey
+                  ? 'instruments__piano-key-white-offset'
+                  : '';
 
               return (
                 <li
@@ -190,10 +200,15 @@ export const MusicInstrument = () => {
                   ])}
                   onMouseDown={() => playNote(index)}
                   onMouseLeave={() => playNoteRelease(index)}
-                  onMouseUp={() => playNoteRelease(index)}>
+                  onMouseUp={() => playNoteRelease(index)}
+                >
                   <Box className="instruments__notedetails">
-                    {keybind && <Box className="instruments__notekey">{keybind}</Box>}
-                    <Box className="instruments__notename">{note.replace('-', '#')}</Box>
+                    {keybind && (
+                      <Box className="instruments__notekey">{keybind}</Box>
+                    )}
+                    <Box className="instruments__notename">
+                      {note.replace('-', '#')}
+                    </Box>
                   </Box>
                 </li>
               );
