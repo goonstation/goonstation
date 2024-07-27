@@ -5,12 +5,14 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Dropdown, Icon, Section, Stack, Tabs, Tooltip } from "../components";
+import { useState } from "react";
+import { Box, Button, Dropdown, Icon, Section, Stack, Tabs, Tooltip } from "tgui-core/components";
+
+import { useBackend } from "../backend";
 import { Window } from '../layouts';
 
-const FlockPartitions = (props, context) => {
-  const { act } = useBackend(context);
+const FlockPartitions = (props) => {
+  const { act } = useBackend();
   const {
     partitions,
   } = props;
@@ -122,8 +124,13 @@ const capitalizeString = function (string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const FlockDrones = (props, context) => {
-  const { act } = useBackend(context);
+interface FlockDronesProps {
+  drones;
+  sortBy;
+}
+
+const FlockDrones = (props) => {
+  const { act } = useBackend();
   const {
     drones,
     sortBy,
@@ -196,8 +203,8 @@ const FlockDrones = (props, context) => {
 };
 
 // TODO: actual structure information (power draw/generation etc.)
-const FlockStructures = (props, context) => {
-  const { act } = useBackend(context);
+const FlockStructures = (props) => {
+  const { act } = useBackend();
   const { structures } = props;
   return (
     <Stack vertical>
@@ -251,8 +258,8 @@ const FlockStructures = (props, context) => {
 };
 
 
-const FlockEnemies = (props, context) => {
-  const { act } = useBackend(context);
+const FlockEnemies = (props) => {
+  const { act } = useBackend();
   const { enemies } = props;
   return (
     <Stack vertical>
@@ -302,7 +309,7 @@ const FlockEnemies = (props, context) => {
   );
 };
 
-const FlockStats = (props, context) => {
+const FlockStats = (props) => {
   const { stats } = props;
   return (
     <Stack vertical>
@@ -325,9 +332,20 @@ const FlockStats = (props, context) => {
   );
 };
 
-export const FlockPanel = (props, context) => {
-  const { data, act } = useBackend(context);
-  const [sortBy, setSortBy] = useLocalState(context, 'sortBy', 'resources');
+interface FlockPanelData {
+  vitals,
+  partitions,
+  drones,
+  structures,
+  enemies,
+  stats,
+  category_lengths,
+  category,
+}
+
+export const FlockPanel = () => {
+  const { data, act } = useBackend<FlockPanelData>();
+  const [sortBy, setSortBy] = useState('resources');
   const {
     vitals,
     partitions,
