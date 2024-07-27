@@ -1,10 +1,27 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Dropdown, Flex, Image, Input, Modal, NumberInput, Section, Stack } from '../components';
+import { useState } from 'react';
+import { Box, Button, ByondUi, Dropdown, Flex, Image, Input, Modal, NumberInput, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 
-export const MinimapController = (params, context) => {
-  const { act, data } = useBackend(context);
+interface MinimapControllerData {
+  title,
+  theme,
+  minimap_id,
+  markers_visible,
+  selecting_coordinates,
+  minimap_markers,
+  placable_marker_states,
+  placable_marker_images,
+  icon,
+  image,
+  pos_x,
+  pos_y,
+}
+
+export const MinimapController = () => {
+  const { act, data } = useBackend<MinimapControllerData>();
   const {
     title,
     theme,
@@ -20,8 +37,8 @@ export const MinimapController = (params, context) => {
     pos_y,
   } = data;
 
-  const [name, setName] = useLocalState(context, 'name');
-  const [showNewMarkerMenu, toggleNewMarkerMenu] = useLocalState(context, 'show_menu', false);
+  const [name, setName] = useState('');
+  const [showNewMarkerMenu, toggleNewMarkerMenu] = useState(false);
 
   const newMarker = () => {
     toggleNewMarkerMenu(!showNewMarkerMenu);
@@ -141,9 +158,10 @@ export const MinimapController = (params, context) => {
                               className="minimap-controller__number-inputs"
                               minValue={1}
                               maxValue={300}
+                              step={1}
                               value={pos_x}
                               format={value => "x, " + value}
-                              onDrag={(e, value) => setPosX(value)}
+                              onDrag={(value) => setPosX(value)}
                             />
                           </Flex.Item>
                           <Flex.Item>
@@ -151,9 +169,10 @@ export const MinimapController = (params, context) => {
                               className="minimap-controller__number-inputs"
                               minValue={1}
                               maxValue={300}
+                              step={1}
                               value={pos_y}
                               format={value => "y, " + value}
-                              onDrag={(e, value) => setPosY(value)}
+                              onDrag={(value) => setPosY(value)}
                             />
                           </Flex.Item>
                         </Flex>
