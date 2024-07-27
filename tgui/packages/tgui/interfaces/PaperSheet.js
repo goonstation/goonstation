@@ -6,13 +6,13 @@
  * @author Changes ThePotato97
  * @license MIT
  */
-import { Component } from 'inferno';
 import marked from 'marked';
+import { Component } from 'react';
+import { Box, Flex, Table, Tabs, TextArea } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Flex, Table, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
@@ -215,7 +215,7 @@ const pauseEvent = (e) => {
   return false;
 };
 
-const Stamp = (props, context) => {
+const Stamp = (props) => {
   const { image, opacity, activeStamp } = props;
   const stampTransform = {
     left: image.x + 'px',
@@ -249,7 +249,7 @@ const setInputReadonly = (text, readonly) => {
 
 // got to make this a full component if we
 // want to control updates
-export const PaperSheetView = (props, context) => {
+export const PaperSheetView = (props) => {
   const { value = '', stamps = [], backgroundColor, readOnly } = props;
   const stampList = stamps || [];
   const textHtml = {
@@ -287,8 +287,8 @@ export const PaperSheetView = (props, context) => {
 
 // again, need the states for dragging and such
 class PaperSheetStamper extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       x: 0,
       y: 0,
@@ -308,7 +308,7 @@ class PaperSheetStamper extends Component {
       if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) {
         return;
       }
-      const { act } = useBackend(this.context);
+      const { act } = useBackend();
       const stampObj = {
         x: this.state.x,
         y: this.state.y,
@@ -391,8 +391,8 @@ class PaperSheetStamper extends Component {
 // component too if I want to keep updates
 // low and keep the weird flashing down
 class PaperSheetEdit extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.state = {
       previewSelected: 'Preview',
       oldText: props.value || '',
@@ -405,7 +405,7 @@ class PaperSheetEdit extends Component {
   // This is the main rendering part, this creates the html from marked text
   // as well as the form fields
   createPreview(value, doFields = false) {
-    const { data } = useBackend(this.context);
+    const { data } = useBackend();
     const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
     const out = { text: text };
     // check if we are adding to paper, if not
@@ -482,7 +482,7 @@ class PaperSheetEdit extends Component {
   }
   // the final update send to byond, final upkeep
   finalUpdate(newText) {
-    const { act } = useBackend(this.context);
+    const { act } = useBackend();
     const finalProcessing = this.createPreview(newText, true);
     act('save', finalProcessing);
     this.setState(() => {
@@ -608,8 +608,8 @@ class PaperSheetEdit extends Component {
   }
 }
 
-export const PaperSheet = (props, context) => {
-  const { data } = useBackend(context);
+export const PaperSheet = () => {
+  const { data } = useBackend();
   const {
     editMode,
     text,
