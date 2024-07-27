@@ -4,22 +4,27 @@
  * @author LeahTheTech (https://github.com/TobleroneSwordfish)
  * @license MIT
  */
+import { AnimatedNumber, Knob, LabeledList, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Knob, LabeledList, Section, Stack } from '../components';
 import { formatFrequency } from '../format';
 import { Window } from '../layouts';
 
 const MIN_FREQ = 1141;
 const MAX_FREQ = 1489;
 
-export const PacketVision = (_props, context) => {
-  const { data, act } = useBackend(context);
+interface PacketVisionData {
+  frequency: number;
+}
+
+export const PacketVision = () => {
+  const { data, act } = useBackend<PacketVisionData>();
 
   const setFrequency = (value, finish) => {
     act('set-frequency', { value, finish });
   };
   return (
-    <Window width="280" height="150" title="Packetvision HUD">
+    <Window width={280} height={150} title="Packetvision HUD">
       <Window.Content>
         <Section>
           <LabeledList>
