@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { Box, Button, NumberInput, Section, Table } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 // Pass the id to the callbacks
@@ -26,10 +27,12 @@ const NumberInputCell = ({ number, unit, onChange, id }) => (
     <Box align="center">
       <NumberInput
         minValue={0}
+        maxValue={Infinity}
         unit={unit}
         width="5em"
         value={number}
-        onChange={(e, value) => onChange(id, value)} />
+        step={1}
+        onChange={(value) => onChange(id, value)} />
     </Box>
   </Table.Cell>
 );
@@ -55,8 +58,14 @@ const HeaderRow = () => (
   </Table.Row>
 );
 
-export const BioEffectManager = (props, context) => {
-  const { act, data } = useBackend(context);
+interface BioEffectManagerData {
+  bioEffects,
+  stability,
+  target_name
+}
+
+export const BioEffectManager = () => {
+  const { act, data } = useBackend<BioEffectManagerData>();
   const { bioEffects, stability, target_name } = data;
 
   // Defining the actions that can be performed from the UI.
@@ -71,7 +80,7 @@ export const BioEffectManager = (props, context) => {
   const deleteBioEffect = (id) => act('deleteBioEffect', { id });
 
   return (
-    <Window title="Bioeffect Manager" width="750" height="300">
+    <Window title="Bioeffect Manager" width={750} height={300}>
       <Window.Content>
         <Section
           title={`Bioeffects of ${target_name}`}
@@ -83,10 +92,11 @@ export const BioEffectManager = (props, context) => {
               Stability:
               <NumberInput
                 minValue={0}
+                maxValue={Infinity}
                 width="5em"
-                placeholder={100}
+                step={1}
                 value={stability}
-                onChange={(e, value) => updateStability(value)} />
+                onChange={(value) => updateStability(value)} />
               {/* Button for adding a new Bioeffect */}
               <Button
                 icon="plus"
@@ -112,7 +122,7 @@ export const BioEffectManager = (props, context) => {
                   <NumberInputCell number={effect.cooldown} unit="ds" onChange={updateCooldown} id={effect.id} />
                   {/* Buttons for managing and deleting the bioeffect */}
                   <Table.Cell py="0.5em" collapsing>
-                    <Box direction="row" align="center" nowrap>
+                    <Box align="center" nowrap>
                       <Button tooltip="View Variables" tooltipPosition="top" align="left" icon="gear" onClick={() => manageBioEffect(effect.id)} />
                       <Button.Confirm tooltip="Remove" tooltipPosition="top" align="left" icon="trash" color="bad" onClick={() => deleteBioEffect(effect.id)} />
                     </Box>
