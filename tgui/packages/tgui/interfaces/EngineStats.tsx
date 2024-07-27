@@ -5,11 +5,18 @@
  * @license ISC
  */
 
+import { Box, Button, Chart, Modal, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Button, Chart, Modal, Section, Stack } from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 import { getStatsMax, processStatsData } from './common/graphUtils';
+
+interface EngineStatsData {
+  chamberData,
+  tegData,
+  turnedOn,
+}
 
 /**
  * Generates stack items of labeled charts for display
@@ -42,8 +49,8 @@ const generateChartsFromStats = stats => {
 };
 
 
-export const EngineStats = (props, context) => {
-  const { act, data } = useBackend(context);
+export const EngineStats = () => {
+  const { act, data } = useBackend<EngineStatsData>();
   const {
     turnedOn,
     tegData,
@@ -57,8 +64,8 @@ export const EngineStats = (props, context) => {
 
   return (
     <Window
-      height="560"
-      width="760"
+      height={560}
+      width={760}
       theme="retro-dark"
       title="Engine Statistics"
     >
