@@ -5,11 +5,13 @@
  * @license MIT
  */
 
+import { useState } from 'react';
+import { Autofocus, Box, Button, Flex, Section, Stack } from 'tgui-core/components';
+
 import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
-import { useBackend, useLocalState } from '../backend';
-import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { getAlertContentWindow } from './AlertContentWindows/index';
+import { getAlertContentWindow } from './AlertContentWindows';
 import { Loader } from './common/Loader';
 
 type AlertModalData = {
@@ -25,8 +27,8 @@ type AlertModalData = {
 const KEY_DECREMENT = -1;
 const KEY_INCREMENT = 1;
 
-export const AlertModal = (props, context) => {
-  const { act, data } = useBackend<AlertModalData>(context);
+export const AlertModal = () => {
+  const { act, data } = useBackend<AlertModalData>();
   const {
     autofocus,
     items = [],
@@ -36,7 +38,7 @@ export const AlertModal = (props, context) => {
     title,
     theme,
   } = data;
-  const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
+  const [selected, setSelected] = useState(0);
 
   const typedContentWindow = content_window ? getAlertContentWindow(content_window) : null;
 
@@ -105,8 +107,8 @@ export const AlertModal = (props, context) => {
   * Technically this handles more than 2 items, but you
   * should just be using a list input in that case.
   */
-const ButtonDisplay = (props, context) => {
-  const { data } = useBackend<AlertModalData>(context);
+const ButtonDisplay = (props) => {
+  const { data } = useBackend<AlertModalData>();
   const { items = [] } = data;
   const { selected } = props;
 
@@ -135,8 +137,8 @@ const ButtonDisplay = (props, context) => {
 /**
   * Displays a button with variable sizing.
   */
-const AlertButton = (props, context) => {
-  const { act, data } = useBackend<AlertModalData>(context);
+const AlertButton = (props) => {
+  const { act } = useBackend<AlertModalData>();
   const { button, selected } = props;
   const buttonWidth = button.length > 7 ? button.length : 7;
 
