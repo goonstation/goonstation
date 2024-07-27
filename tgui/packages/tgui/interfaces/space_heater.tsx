@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { Button, Divider, LabeledList, ProgressBar, Section, Slider, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Divider, LabeledList, ProgressBar, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 import { glitch } from './common/stringUtils';
 import { neutralTemperature } from './common/temperatureUtils';
@@ -36,8 +37,19 @@ const Set_Icon = (emagged, temperature, on) => {
   else { return "eject"; }
 };
 
-export const space_heater = (props, context) => {
-  const { data } = useBackend(context);
+interface SpaceHeaterData {
+  cell,
+  cell_charge,
+  cell_name,
+  emagged,
+  max,
+  min,
+  on,
+  set_temperature,
+}
+
+export const space_heater = () => {
+  const { data } = useBackend<SpaceHeaterData>();
   const {
     emagged,
     on,
@@ -56,8 +68,8 @@ export const space_heater = (props, context) => {
   );
 };
 
-const BatteryStatus = (props, context) => {
-  const { data, act } = useBackend(context);
+const BatteryStatus = () => {
+  const { data, act } = useBackend<SpaceHeaterData>();
   const {
     emagged,
     on,
@@ -86,14 +98,13 @@ const BatteryStatus = (props, context) => {
           label={Glitch_Text(emagged, "Cell Power", 1)}
           verticalAlign={"middle"}>
           <ProgressBar
-            grow
             color={cell !== null ? Set_Color(set_temperature, "green"): "red"}
             ranges={{
               "green": [0.5, Infinity],
               "yellow": [0.1, 0.5],
               "red": [-Infinity, 0.1],
             }}
-            value={Math.max(0, [cell !== null ? cell_charge/100 : 0])}
+            value={Math.max(0, cell !== null ? cell_charge/100 : 0)}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -101,8 +112,8 @@ const BatteryStatus = (props, context) => {
   );
 };
 
-const TemperatureRegulator = (props, context) => {
-  const { data, act } = useBackend(context);
+const TemperatureRegulator = () => {
+  const { data, act } = useBackend<SpaceHeaterData>();
   const {
     emagged,
     on,
