@@ -5,12 +5,14 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from "../../../backend";
-import { Box, Button, Divider, Knob, LabeledList, Modal } from "../../../components";
+import { Box, Button, Divider, Knob, LabeledList, Modal } from "tgui-core/components";
 
-export const BuyMaterialsModal = (props, context) => {
-  const { data, act } = useBackend(context);
-  const [buyMats, setBuyMats] = useSharedState(context, "buymats", null);
+import { useBackend, useSharedState } from "../../../backend";
+import type { GeneTekData } from "../type";
+
+export const BuyMaterialsModal = (props) => {
+  const { data, act } = useBackend<GeneTekData>();
+  const [buyMats, setBuyMats] = useSharedState<number | null>("buymats", null);
   const maxBuyMats = props.maxAmount;
   const {
     budget,

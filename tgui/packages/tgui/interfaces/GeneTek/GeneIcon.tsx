@@ -5,11 +5,17 @@
  * @license ISC
  */
 
-import { classes, pureComponentHooks } from 'common/react';
+import { classes } from 'common/react';
+import { memo } from 'react';
+import { Box } from 'tgui-core/components';
 
-import { Box } from '../../components/Box';
+interface GeneIconProps {
+  name,
+  size,
+  style,
+}
 
-export const GeneIcon = props => {
+export const GeneIcon = memo((props: GeneIconProps) => {
   const {
     name,
     size,
@@ -29,6 +35,4 @@ export const GeneIcon = props => {
       style={style}
       {...rest} />
   );
-};
-
-GeneIcon.defaultHooks = pureComponentHooks;
+});

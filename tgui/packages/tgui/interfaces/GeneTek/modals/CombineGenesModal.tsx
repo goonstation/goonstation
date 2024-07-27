@@ -6,12 +6,14 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from '../../../backend';
-import { Box, Button, Modal, Section, Stack } from '../../../components';
+import { Box, Button, Modal, Section, Stack } from 'tgui-core/components';
 
-export const CombineGenesModal = (_props, context) => {
-  const { data, act } = useBackend(context);
-  const [isCombining, setIsCombining] = useSharedState(context, 'iscombining', false);
+import { useBackend, useSharedState } from '../../../backend';
+import type { GeneTekData } from '../type';
+
+export const CombineGenesModal = () => {
+  const { data, act } = useBackend<GeneTekData>();
+  const [isCombining, setIsCombining] = useSharedState('iscombining', false);
   const { savedMutations, combining = [] } = data;
   return (
     <Modal full width={20}>

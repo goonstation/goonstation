@@ -5,12 +5,14 @@
  * @license ISC
  */
 
-import { useBackend } from "../../../backend";
-import { AnimatedNumber, Button, LabeledList, Section } from "../../../components";
-import { Description } from "../BioEffect";
+import { AnimatedNumber, Button, LabeledList, Section } from "tgui-core/components";
 
-export const ResearchTab = (props, context) => {
-  const { data, act } = useBackend(context);
+import { useBackend } from "../../../backend";
+import { Description } from "../BioEffect";
+import { GeneTekData } from "../type";
+
+export const ResearchTab = (props) => {
+  const { data, act } = useBackend<GeneTekData>();
   const {
     materialCur,
     materialMax,

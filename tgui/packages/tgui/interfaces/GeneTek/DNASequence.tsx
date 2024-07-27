@@ -26,8 +26,8 @@ const typeColor = {
   "5": "bad",
 };
 
-export const DNASequence = (props, context) => {
-  const { act } = useBackend(context);
+export const DNASequence = (props) => {
+  const { act } = useBackend();
   const {
     gene,
     isPotential,
@@ -61,9 +61,9 @@ export const DNASequence = (props, context) => {
   return blocks.map((block, i) => (
     <table key={i} style={{
       display: "inline-table",
-      "margin-top": "1em",
-      "margin-left": i % 4 === 0 ? "0" : "0.25em",
-      "margin-right": i % 4 === 3 ? "0" : "0.25em",
+      marginTop: "1em",
+      marginLeft: i % 4 === 0 ? "0" : "0.25em",
+      marginRight: i % 4 === 3 ? "0" : "0.25em",
     }}>
       <tr>
         {block.map((pair, j) => (
@@ -79,7 +79,7 @@ export const DNASequence = (props, context) => {
       </tr>
       <tr>
         {block.map((pair, j) => (
-          <td key={j} style={{ "text-align": "center" }}>
+          <td key={j} style={{ "textAlign": "center" }}>
             {allGood ? "|" : pair.marker === "locked" ? (
               <Icon
                 name="lock"

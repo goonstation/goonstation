@@ -5,14 +5,16 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from "../../../backend";
-import { Box, Button, LabeledList, Section } from "../../../components";
-import { BioEffect, GeneList } from "../BioEffect";
+import { Box, Button, LabeledList, Section } from "tgui-core/components";
 
-export const StorageTab = (props, context) => {
-  const { data, act } = useBackend(context);
-  const [menu, setMenu] = useSharedState(context, "menu", "research");
-  const [isCombining, setIsCombining] = useSharedState(context, "iscombining", false);
+import { useBackend, useSharedState } from "../../../backend";
+import { BioEffect, GeneList } from "../BioEffect";
+import type { GeneTekData } from "../type";
+
+export const StorageTab = () => {
+  const { data, act } = useBackend<GeneTekData>();
+  const [menu, setMenu] = useSharedState("menu", "research");
+  const [isCombining, setIsCombining] = useSharedState("iscombining", false);
   const {
     saveSlots,
     samples,
@@ -113,8 +115,8 @@ export const StorageTab = (props, context) => {
   );
 };
 
-export const RecordTab = (props, context) => {
-  const { data } = useBackend(context);
+export const RecordTab = () => {
+  const { data } = useBackend<GeneTekData>();
   const {
     record,
   } = data;

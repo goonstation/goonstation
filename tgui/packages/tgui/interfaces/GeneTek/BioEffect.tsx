@@ -5,11 +5,13 @@
  * @license ISC
  */
 
+import { Box, Button, Flex, Icon, Input, LabeledList, Modal, NumberInput, Section } from "tgui-core/components";
+
 import { useBackend, useSharedState } from "../../backend";
-import { Box, Button, Flex, Icon, Input, LabeledList, Modal, NumberInput, Section } from "../../components";
 import { DNASequence } from "./DNASequence";
 import { GeneIcon } from "./GeneIcon";
 import { UnlockModal } from "./modals/UnlockModal";
+import type { GeneTekData } from "./type";
 
 export const ResearchLevel = {
   None: 0,
@@ -38,9 +40,9 @@ export const onCooldown = (equipmentCooldown, name) => {
   return true;
 };
 
-export const BioEffect = (props, context) => {
-  const { data, act } = useBackend(context);
-  const [booth, setBooth] = useSharedState(context, "booth", null);
+export const BioEffect = (props) => {
+  const { data, act } = useBackend<GeneTekData>();
+  const [booth, setBooth] = useSharedState("booth", null);
   const {
     materialCur,
     researchCost,
@@ -94,15 +96,15 @@ export const BioEffect = (props, context) => {
             title={name}
             style={{
               "margin": "-10px",
-              "margin-right": "2px",
+              "marginRight": "2px",
             }}
             buttons={(
               <GeneIcon
                 name={icon}
                 size={4}
                 style={{
-                  "margin-top": "-2px",
-                  "margin-right": "-4px",
+                  "marginTop": "-2px",
+                  "marginRight": "-4px",
                 }} />
             )}>
             <LabeledList>
@@ -112,7 +114,7 @@ export const BioEffect = (props, context) => {
                   maxValue={999999}
                   width={5}
                   value={booth.price}
-                  onChange={(_, price) => setBooth({
+                  onChange={(price) => setBooth({
                     ref: booth.ref,
                     price: price,
                     desc: booth.desc,
@@ -303,8 +305,8 @@ export const Description = (props, context) => {
   ));
 };
 
-export const GeneList = (props, context) => {
-  const { data, act } = useBackend(context);
+export const GeneList = (props) => {
+  const { data, act } = useBackend<GeneTekData>();
   const {
     activeGene,
   } = data;

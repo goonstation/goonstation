@@ -5,12 +5,14 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from "../../../backend";
-import { Box, Button, Input, LabeledList, Modal } from "../../../components";
+import { Box, Button, Input, LabeledList, Modal } from "tgui-core/components";
 
-export const UnlockModal = (props, context) => {
-  const { data, act } = useBackend(context);
-  const [unlockCode, setUnlockCode] = useSharedState(context, "unlockcode", "");
+import { useBackend, useSharedState } from "../../../backend";
+import type { GeneTekData } from "../type";
+
+export const UnlockModal = () => {
+  const { data, act } = useBackend<GeneTekData>();
+  const [unlockCode, setUnlockCode] = useSharedState("unlockcode", "");
   const {
     autoDecryptors,
     unlock,

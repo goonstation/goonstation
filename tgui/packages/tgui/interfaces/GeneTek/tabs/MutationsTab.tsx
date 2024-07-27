@@ -5,14 +5,16 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState } from "../../../backend";
-import { Button, Section } from "../../../components";
-import { BioEffect } from "../BioEffect";
+import { Button, Section } from "tgui-core/components";
 
-export const MutationsTab = (props, context) => {
-  const { data } = useBackend(context);
-  const [sortMode, setSortMode] = useSharedState(context, "mutsortmode", "time");
-  const [showSequence, toggleShowSequence] = useSharedState(context, 'showSequence', false);
+import { useBackend, useSharedState } from "../../../backend";
+import { BioEffect } from "../BioEffect";
+import type { GeneTekData } from "../type";
+
+export const MutationsTab = () => {
+  const { data } = useBackend<GeneTekData>();
+  const [sortMode, setSortMode] = useSharedState("mutsortmode", "time");
+  const [showSequence, toggleShowSequence] = useSharedState('showSequence', false);
   const bioEffects = (data.bioEffects || []).slice(0);
 
   if (sortMode === "time") {

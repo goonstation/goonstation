@@ -5,16 +5,18 @@
  * @license ISC
  */
 
+import { Box, Button, ByondUi, Flex, LabeledList, Modal, Section } from "tgui-core/components";
+
 import { useBackend, useSharedState } from "../../../backend";
-import { Box, Button, ByondUi, Flex, LabeledList, Modal, Section } from "../../../components";
 import { AppearanceEditor } from "../AppearanceEditor";
 import { GeneList, haveDevice, onCooldown } from "../BioEffect";
 import { GeneIcon } from "../GeneIcon";
+import { GeneTekData } from "../type";
 
-export const ScannerTab = (props, context) => {
-  const { data, act } = useBackend(context);
-  let [changingMutantRace, setChangingMutantRace] = useSharedState(context, "changingmutantrace", false);
-  const [showPreview, togglePreview] = useSharedState(context, 'togglePreview', false);
+export const ScannerTab = () => {
+  const { data, act } = useBackend<GeneTekData>();
+  let [changingMutantRace, setChangingMutantRace] = useSharedState("changingmutantrace", false);
+  const [showPreview, togglePreview] = useSharedState('togglePreview', false);
   const {
     haveScanner,
     subject,

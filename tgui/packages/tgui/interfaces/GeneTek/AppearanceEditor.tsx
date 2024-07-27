@@ -5,11 +5,12 @@
  * @license ISC
  */
 
-import { useBackend } from "../../backend";
-import { Box, Button, ByondUi, ColorBox, Dropdown, Flex, Knob, LabeledList, Section } from "../../components";
+import { Box, Button, ByondUi, ColorBox, Dropdown, Flex, Knob, LabeledList, Section } from "tgui-core/components";
 
-export const AppearanceEditor = (params, context) => {
-  const { act } = useBackend(context);
+import { useBackend } from "../../backend";
+
+export const AppearanceEditor = (props) => {
+  const { act } = useBackend();
   const {
     preview,
     hairStyles,
@@ -26,7 +27,7 @@ export const AppearanceEditor = (params, context) => {
     hasSkin,
     hasHair,
     channels,
-  } = params;
+  } = props;
 
   return (
     <Section
