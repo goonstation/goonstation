@@ -5,6 +5,7 @@
  * @license MIT
  */
 
+import { useState } from 'react';
 import {
   Autofocus,
   Button,
@@ -23,7 +24,7 @@ import {
   KEY_NUMPAD_9,
   KEY_NUMPAD_DECIMAL,
 } from '../../common/keycodes';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Loader } from './common/Loader';
 
@@ -41,8 +42,8 @@ export const PINInputModal = () => {
   const { act, data } = useBackend<PINInputData>();
   const { message, init_value, min_value, max_value, timeout, title, theme } =
     data;
-  const [pin, setPin] = useLocalState('input', setupPinState(init_value));
-  const [giveWarning, setGiveWarning] = useLocalState('giveWarning', false);
+  const [pin, setPin] = useState(setupPinState(init_value));
+  const [giveWarning, setGiveWarning] = useState(false);
 
   const onClick = (value: number) => {
     // If the pin is less than 4 digits, add the new digit to the right.
