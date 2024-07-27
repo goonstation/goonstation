@@ -136,6 +136,8 @@
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
+		ON_COOLDOWN(src, "unauth", 5 MINUTES)
+
 		src.authorized = null
 		src.authorized_registered = null
 
@@ -312,7 +314,6 @@
 			boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
 			playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
 			return
-		if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-			unauthorize()
-			playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
-			boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
+		unauthorize()
+		playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
+		boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
