@@ -6,10 +6,10 @@
  */
 
 import { KEY_ESCAPE } from 'common/keycodes';
+import { Box, Section } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Section } from '../components';
 import { Window } from '../layouts';
 import { sanitizeDefAllowTags, sanitizeText } from '../sanitize';
 import { Loader } from './common/Loader';
@@ -22,8 +22,8 @@ type MessageInputData = {
   sanitize: BooleanLike;
 };
 
-export const MessageModal = (_, context) => {
-  const { act, data } = useBackend<MessageInputData>(context);
+export const MessageModal = () => {
+  const { act, data } = useBackend<MessageInputData>();
   const { message, timeout, title, theme, sanitize } = data;
   // Dynamically changes the window height based on the message.
   const windowHeight = 125 + Math.ceil(message?.length / 3);
