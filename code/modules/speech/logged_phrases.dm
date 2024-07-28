@@ -173,7 +173,7 @@ var/global/datum/phrase_log/phrase_log = new
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
 		if(is_uncool(phrase))
-			phrase = replacetext(phrase, src.uncool_words, "**<b>$1</b>**")
+			phrase = replacetext(phrase, src.uncool_words, "**$1**")
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
