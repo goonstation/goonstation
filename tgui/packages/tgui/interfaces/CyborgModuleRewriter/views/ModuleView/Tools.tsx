@@ -6,8 +6,8 @@
  */
 
 import { PropsWithChildren } from 'react';
+import { Tabs } from 'tgui-core/components';
 
-import { Tabs } from '../../../../components';
 import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import type { ToolData } from '../../type/data';
 
@@ -41,7 +41,11 @@ export const Tools = (props: ToolsProps) => {
       {tools.map((tool) => {
         const { name, item_ref: itemRef } = tool;
         return (
-          <Tool key={itemRef} onClick={() => onSelectTool(itemRef)} selected={itemRef === selectedToolRef}>
+          <Tool
+            key={itemRef}
+            onClick={() => onSelectTool(itemRef)}
+            selected={itemRef === selectedToolRef}
+          >
             {name}
           </Tool>
         );

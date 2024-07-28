@@ -23,5 +23,4 @@ export { NoticeBox } from './NoticeBox';
 export { ProgressBar } from './ProgressBar';
 export { Slider } from './Slider';
 export { Table } from './Table';
-export { Tabs } from './Tabs';
 export { TextArea } from './TextArea';
