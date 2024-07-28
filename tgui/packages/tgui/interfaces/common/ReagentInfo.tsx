@@ -137,7 +137,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
                 <Box>
                   <ColorBox color={finalColor} /> Current Mixture Color
                 </Box>
-              ) as unknown as string // Elements/InfernoNodes work in Tooltip.content anyways.
+              ) as unknown as string // Elements/ReactNodes work in Tooltip.content anyways.
             }
             position="bottom"
           >
