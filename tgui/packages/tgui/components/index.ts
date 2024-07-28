@@ -6,7 +6,6 @@
 
 export { Box } from './Box';
 export { Button } from './Button';
-export { Collapsible } from './Collapsible';
 export { Dimmer } from './Dimmer';
 export { Dropdown } from './Dropdown';
 export { ColorButton } from './goonstation/ColorButton';
