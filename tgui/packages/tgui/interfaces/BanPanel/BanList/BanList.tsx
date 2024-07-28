@@ -7,7 +7,15 @@
  */
 
 import { useState } from 'react';
-import { Button, Dropdown, Flex, Input, NumberInput, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  Dropdown,
+  Flex,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { HeaderCell } from '../../../components/goonstation/ListGrid';
 import type { BanResource } from '../apiType';
@@ -25,15 +33,16 @@ const DEFAULT_PAGE_SIZE = 30;
 const filterOptions = Object.keys(BanPanelSearchFilter);
 const getRowId = (data: BanResource) => `${data.id}`;
 
-export const BanList = (props: BanListProps, context) => {
+export const BanList = (props: BanListProps) => {
   const { data } = props;
   const { ban_list, per_page } = data;
-  const { action } = useBanPanelBackend(context);
+  const { action } = useBanPanelBackend();
   const { search_response } = ban_list ?? {};
   const { data: banResources } = search_response ?? {};
   const [searchText, setSearchText] = useState('');
   const [searchFilter, setSearchFilter] = useState(BanPanelSearchFilter.ckey);
-  const handleSearch = () => action.searchBans(searchText, BanPanelSearchFilter[searchFilter]);
+  const handleSearch = () =>
+    action.searchBans(searchText, BanPanelSearchFilter[searchFilter]);
   const handleSearchTextChange = (_e, value: string) => setSearchText(value);
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
@@ -81,7 +90,12 @@ export const BanList = (props: BanListProps, context) => {
         <Section fill scrollable>
           <Stack vertical zebra mb={1}>
             {(banResources ?? []).map((banData) => (
-              <BanListItem key={banData.id} columnConfigs={columnConfigs} data={banData} rowId={getRowId(banData)} />
+              <BanListItem
+                key={banData.id}
+                columnConfigs={columnConfigs}
+                data={banData}
+                rowId={getRowId(banData)}
+              />
             ))}
           </Stack>
         </Section>

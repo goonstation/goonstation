@@ -7,8 +7,8 @@
  */
 
 import { useState } from 'react';
+import { Stack, Tabs } from 'tgui-core/components';
 
-import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { AntagonistsTab } from './AntagonistsTab';
 import { CitationsTab } from './CitationsTab';
@@ -26,22 +26,26 @@ export const CrewCredits = () => {
             <Tabs>
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Crew}
-                onClick={() => setMenu(CrewCreditsTabKeys.Crew)}>
+                onClick={() => setMenu(CrewCreditsTabKeys.Crew)}
+              >
                 Crew Credits
               </Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Antagonists}
-                onClick={() => setMenu(CrewCreditsTabKeys.Antagonists)}>
+                onClick={() => setMenu(CrewCreditsTabKeys.Antagonists)}
+              >
                 Antagonists
               </Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Score}
-                onClick={() => setMenu(CrewCreditsTabKeys.Score)}>
+                onClick={() => setMenu(CrewCreditsTabKeys.Score)}
+              >
                 Station Score
               </Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Citations}
-                onClick={() => setMenu(CrewCreditsTabKeys.Citations)}>
+                onClick={() => setMenu(CrewCreditsTabKeys.Citations)}
+              >
                 Tickets/Fines
               </Tabs.Tab>
             </Tabs>

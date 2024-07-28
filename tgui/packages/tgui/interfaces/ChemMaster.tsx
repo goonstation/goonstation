@@ -16,9 +16,10 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { LabeledControls } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../backend';
-import { LabeledControls, Modal } from '../components';
+import { Modal } from '../components';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
@@ -210,7 +211,7 @@ export const SelectIconModal = (props) => {
 export const IconButtonControl = (props) => {
   const { modal_function, imageb64 } = props;
   return (
-    <LabeledControls.Item>
+    <LabeledControls.Item label="">
       <Button
         tooltip="Change type"
         tooltipPosition="top"
@@ -232,7 +233,7 @@ export const IconButtonControl = (props) => {
 export const AmountInputControl = (props) => {
   const { set_amount, current_amount, max_amount } = props;
   return (
-    <LabeledControls.Item>
+    <LabeledControls.Item label="">
       <NumberInput
         width={'5'}
         format={(value) => value + 'u'}
@@ -249,7 +250,7 @@ export const AmountInputControl = (props) => {
 export const MakeButtonControl = (props) => {
   const { text, onClick } = props;
   return (
-    <LabeledControls.Item>
+    <LabeledControls.Item label="">
       <Button onClick={onClick} width={13}>
         {text}
       </Button>
@@ -260,7 +261,7 @@ export const MakeButtonControl = (props) => {
 export const CheckboxControl = (props) => {
   const { label, checked, set_function } = props;
   return (
-    <LabeledControls.Item>
+    <LabeledControls.Item label="">
       <Button.Checkbox checked={checked} onClick={() => set_function(!checked)}>
         {label}
       </Button.Checkbox>

@@ -7,12 +7,23 @@
  */
 
 import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Divider,
+  LabeledList,
+  ProgressBar,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, LabeledList, ProgressBar, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { ListSearch } from '../common/ListSearch';
-import { DisposalChuteConfigLookup, DisposalChuteData, DisposalChuteState } from './type';
+import {
+  DisposalChuteConfigLookup,
+  DisposalChuteData,
+  DisposalChuteState,
+} from './type';
 
 const disposalChuteConfigLookup: DisposalChuteConfigLookup = {
   [DisposalChuteState.Off]: {
@@ -41,18 +52,14 @@ export const DisposalChute = () => {
   } = data;
 
   const disposalChuteConfig = disposalChuteConfigLookup[mode];
-  const {
-    pumpColor,
-    pumpText,
-  } = disposalChuteConfig;
+  const { pumpColor, pumpText } = disposalChuteConfig;
 
   return (
-    <Window
-      title={name}
-      width={355}
-      height={destinations ? 350 : 140}
-    >
-      <Window.Content className="disposal-chute-interface" scrollable={!!destinations}>
+    <Window title={name} width={355} height={destinations ? 350 : 140}>
+      <Window.Content
+        className="disposal-chute-interface"
+        scrollable={!!destinations}
+      >
         <Stack vertical>
           <Stack.Item>
             <LabeledList>
@@ -89,8 +96,8 @@ export const DisposalChute = () => {
             label="Chute Handle"
             buttons={
               <Button
-                icon={destinations ? "envelope" : "trash-alt"}
-                content={flush ? "Flushing" : "Flush"}
+                icon={destinations ? 'envelope' : 'trash-alt'}
+                content={flush ? 'Flushing' : 'Flush'}
                 color={flush ? '' : 'red'}
                 onClick={() => act('toggleHandle')}
               />
@@ -115,8 +122,10 @@ export const DisposalChute = () => {
                       <Button
                         icon="search"
                         content="Rescan"
-                        onClick={() => act('rescanDest')} />
-                    } >
+                        onClick={() => act('rescanDest')}
+                      />
+                    }
+                  >
                     {destinationTag}
                   </LabeledList.Item>
                 </LabeledList>
@@ -136,24 +145,22 @@ export const DisposalChute = () => {
 };
 
 interface DestinationSearchProps {
-  destinations: string[],
-  destinationTag: string,
+  destinations: string[];
+  destinationTag: string;
 }
 
 const DestinationSearch = (props: DestinationSearchProps) => {
-  const {
-    destinations = [],
-    destinationTag,
-  } = props;
+  const { destinations = [], destinationTag } = props;
   const { act } = useBackend();
 
   const [searchText, setSearchText] = useState('');
-  const handleSelectDestination = (destination: string) => act('select-destination', {
-    destination,
-  });
+  const handleSelectDestination = (destination: string) =>
+    act('select-destination', {
+      destination,
+    });
 
-  const filteredDestinations = (
-    destinations.filter(destination => destination.includes(searchText))
+  const filteredDestinations = destinations.filter((destination) =>
+    destination.includes(searchText),
   );
 
   return (

@@ -5,7 +5,8 @@
  * @license ISC
  */
 
-import { Stack } from '../../../components';
+import { Stack } from 'tgui-core/components';
+
 import { Cell, ColumnConfig } from '../../../components/goonstation/ListGrid';
 import { BanResource } from '../apiType';
 
@@ -21,7 +22,12 @@ export const BanListItem = (props: BanListItemProps) => {
     <Stack.Item>
       <Stack>
         {columnConfigs.map((columnConfig) => (
-          <Cell key={columnConfig.id} columnConfig={columnConfig} data={data} rowId={rowId} />
+          <Cell
+            key={columnConfig.id}
+            columnConfig={columnConfig}
+            data={data}
+            rowId={rowId}
+          />
         ))}
       </Stack>
     </Stack.Item>
