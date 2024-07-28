@@ -293,6 +293,15 @@
 		icon_state = "rancher"
 		item_state = "rancher"
 
+	courier
+		name = "postmaster's jumpsuit"
+		desc = "The crisp threads of a postmaster."
+		icon_state = "mail"
+		item_state = "mail"
+		sprite_item = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
+		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
+		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+
 /obj/item/clothing/head/chameleon
 	name = "hat"
 	desc = "A knit cap in red."
@@ -444,6 +453,13 @@
 		desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 		seal_hair = FALSE
 
+	hardhat_CE
+		name = "chief engineer's hard hat"
+		icon_state = "hardhat_chief_engineer0"
+		item_state = "hardhat_chief_engineer0"
+		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
+		seal_hair = FALSE
+
 	security
 		name = "helmet"
 		icon_state = "helmet-sec"
@@ -541,6 +557,13 @@
 		desc = "This hood protects you from harmful biological contaminants."
 		seal_hair = TRUE
 		hides_from_examine = C_EARS
+
+	postal_cap
+		name = "postmaster's hat"
+		desc = "The hat of a postmaster."
+		icon_state = "mailcap"
+		item_state = "mailcap"
+		seal_hair = FALSE
 
 /obj/item/clothing/suit/chameleon
 	name = "hoodie"
@@ -676,7 +699,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		icon_state = "MDlabcoat"
 		item_state = "MDlabcoat"
 
-	labcoat_sciene
+	labcoat_science
 		name = "scientist's labcoat"
 		desc = "A protective laboratory coat with the purple markings of a Scientist."
 		icon_state = "SCIlabcoat"
@@ -687,6 +710,13 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
 		icon_state = "MDlonglabcoat"
 		item_state = "MDlonglabcoat"
+
+	labcoat_RD
+		name = "research director's labcoat"
+		desc = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
+		icon_state = "RDlabcoat"
+		item_state = "RDlabcoat"
+
 
 	paramedic
 		name = "paramedic suit"
@@ -1860,7 +1890,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 	chief_engineer
 		name = "Chief Engineer"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/chief_engineer
-		hat_type = new/datum/chameleon_hat_pattern/hardhat
+		hat_type = new/datum/chameleon_hat_pattern/hardhat_CE
 		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
 		glasses_type = new/datum/chameleon_glasses_pattern/meson
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
@@ -1883,7 +1913,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		name = "Research Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/research_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
-		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_RD
 		glasses_type = new/datum/chameleon_glasses_pattern/spectro
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
@@ -1927,7 +1957,7 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		name = "Scientist"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/scientist
 		hat_type = new/datum/chameleon_hat_pattern
-		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_science
 		glasses_type = new/datum/chameleon_glasses_pattern/spectro
 		shoes_type = new/datum/chameleon_shoes_pattern/white
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
@@ -2065,6 +2095,17 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
+
+	mail_courier //did you know you can go to jail for up to 3 years for impersonating a US mail carrier
+		name = "Mail Courier"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/courier
+		hat_type = new/datum/chameleon_hat_pattern/postal_cap
+		suit_type = new/datum/chameleon_suit_pattern/hoodie
+		glasses_type = new/datum/chameleon_glasses_pattern
+		shoes_type = new/datum/chameleon_shoes_pattern/brown
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/satchel
 
 	new_outfit
 		function = "new_outfit"

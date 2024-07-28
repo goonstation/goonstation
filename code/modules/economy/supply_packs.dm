@@ -1102,6 +1102,17 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "ABCU Unit Crate (Cardlocked \[Engineering])"
 	access = access_engineering
 
+/datum/supply_packs/efif1
+	name = "EFIF-1 Construction System"
+	desc = "A top-of-the-line pod-mounted mass construction tool, suitable for large-scale repairs and offsite building projects."
+	category = "Engineering Department"
+	contains = list(/obj/item/shipcomponent/mainweapon/constructor/stocked,
+					/obj/item/paper/efif_disclaimer)
+	cost = PAY_DOCTORATE*15
+	containertype = /obj/storage/secure/crate
+	containername = "EFIF-1 Crate (Cardlocked \[Engineering])"
+	access = access_engineering
+
 /datum/supply_packs/janitor_supplies
 	name = "Janitorial Supplies Refill"
 	desc = "Supplies to restock your hard-working Janitor."
@@ -1382,6 +1393,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_DOCTORATE*4
 	containertype = /obj/storage/crate
 	containername = "Electronics Vending Machine Restocking Pack"
+
+/datum/supply_packs/clothing_vending_restock
+	name = "Clothing Vending Machine Restock Pack"
+	desc = "Various Vending Machine Restock Cartridges for departmental apparel vendors"
+	contains = list(/obj/item/vending/restock_cartridge/jobclothing/security,
+					/obj/item/vending/restock_cartridge/jobclothing/medical,
+					/obj/item/vending/restock_cartridge/jobclothing/engineering,
+					/obj/item/vending/restock_cartridge/jobclothing/catering,
+					/obj/item/vending/restock_cartridge/jobclothing/research,)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate
+	containername = "Clothing Vending Machine Restocking Pack"
 
 /*
 	Umm, apparently the packs below never get added? What's up with that. Construction mode :S -ZeWaka
@@ -1993,8 +2016,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
 	cost = PAY_TRADESMAN
 	containername = "Newspaper Crate"
-	contains = list(/obj/item/paper/newspaper/rolled)
-	amount = 8
+	contains = list(/obj/item/paper/newspaper/rolled = 8)
 	containertype = /obj/storage/crate/packing
 
 /datum/supply_packs/electricguitar

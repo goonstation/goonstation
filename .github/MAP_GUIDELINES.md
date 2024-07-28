@@ -14,8 +14,6 @@ If you are creating a new map for Goonstation, we have the following mapping gui
 
 ## Goonstation Mapping Guidelines
 
-{%hackmd @ZeWaka/dark-theme %}
-
 ## :heavy_exclamation_mark:Required:heavy_exclamation_mark: 
 
 ###### These are fundamental map features that need to be checked to be working prior to submission.

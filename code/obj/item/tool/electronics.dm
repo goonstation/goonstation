@@ -15,7 +15,7 @@
 	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
 	..()
@@ -898,7 +898,6 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

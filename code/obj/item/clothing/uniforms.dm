@@ -10,7 +10,6 @@
 	item_state = "black"
 	body_parts_covered = TORSO|LEGS|ARMS
 	protective_temperature = T0C + 50
-	flags = FPRINT|TABLEPASS
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
@@ -704,7 +703,14 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	icon_state = "mail"
 	item_state = "mail"
 
+	april_fools
+		icon_state = "mail-alt"
+		item_state = "mail-alt"
+
 	syndicate
+		april_fools  // This pathing is weird and I hate it
+			icon_state = "mail-alt"
+			item_state = "mail-alt"
 
 /obj/item/clothing/under/misc/barber
 	name = "barber's uniform"
@@ -988,22 +994,27 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	item_state = "fswimW"
 
 	red
+		name = "red swimsuit"
 		icon_state = "fswimR"
 		item_state = "fswimR"
 
 	green
+		name = "green swimsuit"
 		icon_state = "fswimG"
 		item_state = "fswimG"
 
 	blue
+		name = "blue swimsuit"
 		icon_state = "fswimBl"
 		item_state = "fswimBl"
 
 	purple
+		name = "purple swimsuit"
 		icon_state = "fswimP"
 		item_state = "fswimP"
 
 	black
+		name = "black swimsuit"
 		icon_state = "fswimB"
 		item_state = "fswimB"
 

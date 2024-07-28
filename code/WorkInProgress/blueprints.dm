@@ -783,7 +783,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	icon_state = "blueprintmarker"
 	item_state = "gun"
 
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	var/prints_left = 5

@@ -82,7 +82,7 @@ TYPEINFO(/datum/component/foldable)
 	icon_state = "briefcase"
 	desc = "A briefcase."
 	HELP_MESSAGE_OVERRIDE("Can be <b>unfolded</b> in the right click menu to reveal its contents.")
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4

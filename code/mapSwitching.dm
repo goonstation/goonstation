@@ -403,7 +403,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	map_vote_holder.show_window(usr.client)
 
 /datum/map_vote_holder
-	var/list/client/vote_map = list() // a map of ckeys to (a map of map_names to the ckey's current vote)
+	var/list/list/client/vote_map = list() // a map of ckeys to (a map of map_names to the ckey's current vote)
 	var/voters = 0
 
 	disposing()

@@ -4,7 +4,7 @@
 	name = "ammo"
 	var/sname = "Generic Ammo"
 	icon = 'icons/obj/items/ammo.dmi'
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "syringe_kit"
 	m_amt = 40000
 	g_amt = 0
@@ -808,6 +808,10 @@
 		two //for coachgun
 			amount_left = 2
 			max_amount = 2
+
+		four //for FLW
+			amount_left = 4
+			max_amount = 4
 
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo

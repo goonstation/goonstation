@@ -3,7 +3,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "podfire"
 	density = 1
-	flags = FPRINT | USEDELAY
+	flags = USEDELAY
 	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
@@ -172,6 +172,11 @@
 			src.keyed++
 			src.add_fingerprint(user)
 			return
+
+		if (istype(W, /obj/item/sheet))
+			if (src.m_w_system && istype(src.m_w_system,/obj/item/shipcomponent/mainweapon/constructor))
+				src.m_w_system.Attackby(W,user)
+				return
 
 		if (istype(W, /obj/item/tank/plasma))
 			src.open_parts_panel(user)

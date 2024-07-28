@@ -207,6 +207,43 @@
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
 		return 1
 
+/obj/machinery/computer/announcement/station
+	req_access = null
+	name = "Station Announcement Computer"
+
+	bridge
+		req_access = list(access_heads)
+		name = "Bridge Announcement Computer"
+		announces_arrivals = 1
+
+	captain
+		req_access = list(access_captain)
+		name = "Executive Announcement Computer"
+
+	security
+		req_access = list(access_maxsec)
+		name = "Security Announcement Computer"
+
+	research
+		req_access = list(access_research_director)
+		name = "Research Announcement Computer"
+
+	medical
+		req_access = list(access_medical_director)
+		name = "Medical Announcement Computer"
+
+	engineering
+		req_access = list(access_engineering_chief)
+		name = "Engineering Announcement Computer"
+
+	cargo
+		req_access = list(access_cargo)
+		name = "QM Announcement Computer"
+
+	ai
+		req_access = list(access_ai_upload)
+		name = "AI Announcement Computer"
+
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "announcement1"
@@ -214,13 +251,18 @@
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "announcement2"
 
-/obj/machinery/computer/announcement/syndie
+/obj/machinery/computer/announcement/syndicate
+	name = "Syndicate Announcement computer"
+	theme = "syndicate"
+	req_access = list(access_syndicate_shuttle)
+
+	commander
+		req_access = list(access_syndicate_commander)
+
+	console
 		icon_state = "syndiepc14"
 		icon = 'icons/obj/decoration.dmi'
 		req_access = null
-		name = "Syndicate Announcement computer"
-		voice_name = "Syndicate Announcement Computer"
-		theme = "syndicate"
 
 /obj/machinery/computer/announcement/clown
 	req_access = null
