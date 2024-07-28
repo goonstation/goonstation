@@ -6,6 +6,7 @@
  * @license ISC
  */
 
+import { ReactNode } from 'react';
 import { Box, Stack, Tooltip } from 'tgui-core/components';
 
 import { ColumnConfig, isValuedColumnConfig, RowId } from './type';
@@ -25,7 +26,7 @@ export const Cell = <T extends object, V>(props: CellProps<T, V>) => {
   const contents = renderContents ? (
     renderContents({ data, rowId, value })
   ) : (
-    <Box>{value}</Box>
+    <Box>{value as ReactNode}</Box>
   );
   const cellContents = tooltipText ? (
     <Tooltip content={tooltipText}>{contents}</Tooltip>
