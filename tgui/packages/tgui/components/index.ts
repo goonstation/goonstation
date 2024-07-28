@@ -14,7 +14,6 @@ export { ByondUi } from './ByondUi';
 export { Collapsible } from './Collapsible';
 export { Dimmer } from './Dimmer';
 export { Divider } from './Divider';
-export { DraggableControl } from './DraggableControl';
 export { Dropdown } from './Dropdown';
 export { Flex } from './Flex';
 export { ColorButton } from './goonstation/ColorButton';
