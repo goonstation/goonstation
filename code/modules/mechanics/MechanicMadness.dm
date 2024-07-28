@@ -220,6 +220,7 @@
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
 		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
+		throwforce = 10
 		num_f_icons=3
 		density=1
 		anchored = UNANCHORED
@@ -1019,12 +1020,14 @@
 				src.set_loc(target)
 		return
 
+
+#define GRAVITON_ITEM_COOLDOWN 100
+#define GRAVITON_CONTAINER_COOLDOWN 350
 /obj/item/mechanics/accelerator
 	name = "Graviton accelerator"
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = TRUE // non-functional
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -1032,39 +1035,49 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activateproc))
 
-	proc/drivecurrent()
+	proc/drivecurrent(var/obj/item/storage/mechanics/container = null)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/count = 0
-		for(var/atom/movable/M in src.loc)
-			if(M.anchored) continue
-			count++
-			if(M == src) continue
-			throwstuff(M)
-			if(count > 50) return
-			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
+
+		if(container)
+			if(container.anchored) return;
+			throwstuff(container, 3)
+			if(APPROX_TICK_USE > GRAVITON_CONTAINER_COOLDOWN) return // failsafe
+		else
+			var/count = 0
+			for(var/atom/movable/M in src.loc)
+				if(M.anchored) continue
+				count++
+				if(M == src) continue
+				throwstuff(M)
+				if(count > 50) return
+				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
+
+			var/obj/item/storage/mechanics/container  = src.stored?.linked_item
+			var/in_container = istype(container,/obj/item/storage/mechanics)
 			SPAWN(0)
 				icon_state = "[under_floor ? "u":""]comp_accel1"
 				active = 1
-				drivecurrent()
+				drivecurrent(container)
 				sleep(0.5 SECONDS)
-				drivecurrent()
+				if (!in_container)
+					drivecurrent() // Gravitons in lockers only bonk once
 				sleep(2.5 SECONDS)
 				icon_state = "[under_floor ? "u":""]comp_accel"
 				active = 0
 		return
 
-	proc/throwstuff(atom/movable/AM as mob|obj)
+	proc/throwstuff(atom/movable/AM as mob|obj, range = 50)
 		if(level == OVERFLOOR || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
+		var/datum/thrown_thing/thr = AM.throw_at(target, range, 1)
 		thr?.user = (owner)
 		return
 
@@ -1078,6 +1091,8 @@
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+#undef GRAVITON_ITEM_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN
 
 /// Tesla Coil mechanics component - zaps people
 /obj/item/mechanics/zapper
