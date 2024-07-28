@@ -127,7 +127,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
-			uncool_words = regex(jointext(json_decode(file2text(src.uncool_words_filename)),"|"), "i")
+			uncool_words = regex("([jointext(json_decode(file2text(src.uncool_words_filename)),"|")])", "i")
 		if(fexists(src.filename))
 			src.phrases = json_decode(file2text(src.filename))
 		else
@@ -173,6 +173,7 @@ var/global/datum/phrase_log/phrase_log = new
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
 		if(is_uncool(phrase))
+			phrase = replacetext(phrase, src.uncool_words, "**<b>$1</b>**")
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
