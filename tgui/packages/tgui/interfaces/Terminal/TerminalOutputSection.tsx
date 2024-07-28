@@ -17,7 +17,7 @@ export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
   const { displayHTML } = props;
 
   return (
-    <Section backgroundColor={bgColor} scrollable fill id="terminalOutput">
+    <Section backgroundColor={bgColor} scrollable fill>
       <Box
         fontFamily="Consolas"
         fill
