@@ -6,9 +6,10 @@
  */
 
 import { classes } from 'common/react';
+import { Box } from 'tgui-core/components';
 
 import { COLORS } from '../../constants';
-import { Box, computeBoxClassName } from '../Box';
+import { computeBoxClassName } from '../Box';
 
 interface HealthStatProps extends React.ComponentProps<typeof Box> {
   type: 'oxy' | 'toxin' | 'burn' | 'brute';

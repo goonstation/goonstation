@@ -6,10 +6,9 @@
  */
 
 import { PropsWithChildren } from 'react';
+import { Button, Stack } from 'tgui-core/components';
 
-import { Button } from '../../../components/Button';
 import { Image } from '../../../components/goonstation/Image';
-import { Stack } from '../../../components/Stack';
 
 interface ButtonWithBadgeProps {
   width?: number | string;
@@ -17,9 +16,7 @@ interface ButtonWithBadgeProps {
   noImageShadow?: boolean;
   imagePath: string | null;
   disabled?: boolean;
-  onClick?: Function;
-  onMouseEnter?: Function;
-  onMouseLeave?: Function;
+  onClick?: (e: any) => void;
   opacity?: number;
 }
 
@@ -33,8 +30,6 @@ export const ButtonWithBadge = (
     imagePath,
     children,
     onClick,
-    onMouseEnter,
-    onMouseLeave,
     opacity,
     disabled,
   } = props;
@@ -46,8 +41,6 @@ export const ButtonWithBadge = (
       width={width || '100%'}
       height={height || '100%'}
       p={0}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
       disabled={disabled}
     >
       <Stack>

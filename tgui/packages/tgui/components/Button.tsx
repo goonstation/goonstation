@@ -35,7 +35,7 @@ type EllipsisUnion =
       ellipsis: undefined;
     }>;
 
-type Props = Partial<{
+export type ButtonProps = Partial<{
   /** Captures keyboard events */
   captureKeys: boolean;
   /** Makes the button circular */
@@ -71,7 +71,7 @@ type Props = Partial<{
   BoxProps;
 
 /** Clickable button. Comes with variants. Read more in the documentation. */
-export function Button(props: Props) {
+export function Button(props: ButtonProps) {
   const {
     captureKeys = true,
     children,
@@ -196,7 +196,7 @@ export function Button(props: Props) {
 type CheckProps = Partial<{
   checked: BooleanLike;
 }> &
-  Props;
+  ButtonProps;
 
 /** Visually toggles between checked and unchecked states. */
 export function ButtonCheckbox(props: CheckProps) {
@@ -219,7 +219,7 @@ type ConfirmProps = Partial<{
   confirmContent: ReactNode;
   confirmIcon: string;
 }> &
-  Props;
+  ButtonProps;
 
 /**  Requires user confirmation before triggering its action. */
 function ButtonConfirm(props: ConfirmProps) {
@@ -268,7 +268,7 @@ type InputProps = Partial<{
   onCommit: (e: any, value: string) => void;
   placeholder: string;
 }> &
-  Props;
+  ButtonProps;
 
 /** Accepts and handles user input. */
 function ButtonInput(props: InputProps) {
@@ -382,7 +382,7 @@ type FileProps = {
   accept: string;
   multiple?: boolean;
   onSelectFiles: (files: string | string[]) => void;
-} & Props;
+} & ButtonProps;
 
 /**  Accepts file input */
 function ButtonFile(props: FileProps) {
