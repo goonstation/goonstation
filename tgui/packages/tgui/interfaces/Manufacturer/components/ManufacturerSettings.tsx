@@ -6,9 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
-
-import { Slider } from '../../../components';
+import { Button, LabeledList, Section, Slider, Stack } from 'tgui-core/components';
 
 type ManufacturerSettingsProps = {
   repeat: BooleanLike;
@@ -65,7 +63,6 @@ export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
                   maxValue={max_speed}
                   step={1}
                   stepPixelSize={50}
-                  disabled={mode === 'working'}
                   onChange={(_e: any, value: number) => actionSetSpeed(value)}
                 />
               </Stack.Item>
