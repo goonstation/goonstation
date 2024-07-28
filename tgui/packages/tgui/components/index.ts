@@ -20,4 +20,3 @@ export { NoticeBox } from './NoticeBox';
 export { ProgressBar } from './ProgressBar';
 export { Slider } from './Slider';
 export { Table } from './Table';
-export { TextArea } from './TextArea';
