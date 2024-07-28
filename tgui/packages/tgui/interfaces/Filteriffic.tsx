@@ -531,6 +531,7 @@ export const Filteriffic = () => {
               displayText="Add Filter"
               noChevron
               options={Object.keys(filterDefaults)}
+              selected={undefined} // TODO-REACT test this
               onSelected={(value) =>
                 act('add_filter', {
                   name: 'default',
