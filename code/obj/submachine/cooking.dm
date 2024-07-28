@@ -698,10 +698,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread(src)
 			src.recipes += new /datum/cookingrecipe/oven/cinnamonbun(src)
 			src.recipes += new /datum/cookingrecipe/oven/fairybread(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_apple(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_blueb(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_weed(src)
+			src.recipes += new /datum/cookingrecipe/oven/danish_cheese(src)
 			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
 

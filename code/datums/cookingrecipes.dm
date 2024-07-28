@@ -1090,6 +1090,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/danish_weed
 	category = "Pastries and bread-likes"
 
+/datum/cookingrecipe/oven/danish_cheese
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/danish_cheese
+	category = "Pastries and bread-likes"
+
 /datum/cookingrecipe/oven/fairybread
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
@@ -1105,6 +1113,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/cinnamonbun
 	category = "Pastries and bread-likes"
+
+/datum/cookingrecipe/oven/chocolate_cherry
+	item1 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+	item2 = /obj/item/reagent_containers/food/snacks/plant/cherry
+	item3 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 3
+	output = /obj/item/reagent_containers/food/snacks/chocolate_cherry
 
 //Cookies
 /datum/cookingrecipe/oven/stroopwafel
