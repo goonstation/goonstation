@@ -6,8 +6,9 @@
  * @license MIT
  */
 
+import { Button, LabeledList, ProgressBar } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, LabeledList, ProgressBar } from '../../components';
 import type { ApcData } from './types';
 import { getHasPermission } from './util';
 

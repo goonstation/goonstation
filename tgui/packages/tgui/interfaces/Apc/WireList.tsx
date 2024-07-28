@@ -6,11 +6,12 @@
  * @license MIT
  */
 
-import { useBackend } from '../../backend';
 import {
   Button,
   LabeledList,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import type { ApcData, ApcWireCutData } from './types';
 
 enum WireColor {
@@ -34,7 +35,7 @@ const wireColorConfigs: WireColorConfig[] = [
   { id: WireColor.Yellow, name: 'Yellow', color: 'yellow', getIsCut: ({ yellow_cut }) => !!yellow_cut },
 ];
 
-export const WireList = (_props, context) => {
+export const WireList = () => {
   const { act, data } = useBackend<ApcData>();
 
   // #region event handlers

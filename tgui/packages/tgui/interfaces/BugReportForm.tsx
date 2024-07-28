@@ -4,6 +4,10 @@
  * @license MIT
  */
 
+export const BugReportForm = () => {};
+
+// TODO-REACT unstub
+/*
 import { useBackend, useLocalState } from '../backend';
 import { Flex, Input, Section } from '../components';
 import { ButtonCheckbox } from '../components/Button';
@@ -161,3 +165,4 @@ export const BugReportForm = (props, context) => {
     </Window>
   );
 };
+*/

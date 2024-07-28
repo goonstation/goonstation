@@ -1,16 +1,17 @@
 import { classes } from 'common/react';
+import { useState } from 'react';
+import { Box, Button, Divider, Dropdown, Image, Section, Stack } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Image, Section, Stack } from '../../components';
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { capitalize } from '../common/stringUtils';
-import { ClothingBoothData } from './type';
+import type { ClothingBoothData } from './type';
 
-export const ClothingBooth = (_, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
+export const ClothingBooth = () => {
+  const { data } = useBackend<ClothingBoothData>();
   const categories = data.clothingBoothCategories || [];
 
-  const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
+  const [selectedCategory, selectCategory] = useState(categories[0]);
   const { items } = selectedCategory;
 
   return (
@@ -72,8 +73,12 @@ export const ClothingBooth = (_, context) => {
   );
 };
 
-const ClothingBoothItem = (props, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+interface ClothingBoothItemProps {
+  item
+}
+
+const ClothingBoothItem = (props: ClothingBoothItemProps) => {
+  const { act, data } = useBackend<ClothingBoothData>();
   const { item } = props;
 
   return (
@@ -98,8 +103,8 @@ const ClothingBoothItem = (props, context) => {
   );
 };
 
-const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+const CharacterPreview = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
@@ -118,8 +123,8 @@ const CharacterPreview = (_, context) => {
   );
 };
 
-const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+const PurchaseInfo = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   return (
     <Stack bold vertical textAlign="center">
       {data.selectedItemName ? (
