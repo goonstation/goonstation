@@ -1,5 +1,6 @@
+import { Box, Flex } from 'tgui-core/components';
+
 import { useBackend } from '../../../../backend';
-import { Box, Flex } from '../../../../components';
 import { BoardgameData } from '../../utils';
 import { generateBoardNotationLetters } from '../../utils';
 import { useStates } from '../../utils';
@@ -8,11 +9,11 @@ export type NotationsProps = {
   direction: 'vertical' | 'horizontal';
 };
 
-export const HorizontalNotations = (props, context) => {
-  const { data } = useBackend<BoardgameData>(context);
+export const HorizontalNotations = () => {
+  const { data } = useBackend<BoardgameData>();
   const { width } = data.boardInfo;
   const { border, tileColor1, tileColor2 } = data.styling;
-  const { isFlipped } = useStates(context);
+  const { isFlipped } = useStates();
 
   const bgcolor = border || tileColor2 || 'black';
   const color = tileColor1 || 'white';
@@ -38,11 +39,11 @@ export const HorizontalNotations = (props, context) => {
   );
 };
 
-export const VerticalNotations = (props, context) => {
-  const { data } = useBackend<BoardgameData>(context);
+export const VerticalNotations = () => {
+  const { data } = useBackend<BoardgameData>();
   const { height } = data.boardInfo;
   const { border, tileColor1, tileColor2 } = data.styling;
-  const { isFlipped } = useStates(context);
+  const { isFlipped } = useStates();
 
   const bgcolor = border || tileColor2 || 'black';
   const color = tileColor1 || 'white';

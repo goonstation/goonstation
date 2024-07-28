@@ -1,11 +1,12 @@
+import { Box, Button } from 'tgui-core/components';
+
 import { useBackend } from '../../../../backend';
-import { Box, Button } from '../../../../components';
 import { BoardgameData, useActions, useStates } from '../../utils';
 import { ButtonConfirm } from './ButtonConfirm';
 
-export const TitleBar = (props, context) => {
-  const { act } = useBackend<BoardgameData>(context);
-  const { isFlipped, toggleFlip, helpModalOpen, helpModalClose, isHelpModalOpen } = useStates(context);
+export const TitleBar = () => {
+  const { act } = useBackend<BoardgameData>();
+  const { isFlipped, toggleFlip, helpModalOpen, helpModalClose, isHelpModalOpen } = useStates();
   const { boardClear, applyGNot } = useActions(act);
 
   return (

@@ -1,12 +1,12 @@
+import { Box, Button, Flex } from 'tgui-core/components';
+
 import { useBackend } from '../../../../backend';
-import { Box, Button, Flex } from '../../../../components';
 import { fetchPalettes, PieceSetupType } from '../../games';
 import { BoardgameData } from '../../utils';
 import { useActions, useStates } from '../../utils';
 
-export const Palettes = (props, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
-  const { isExpanded } = useStates(context);
+export const Palettes = () => {
+  const { isExpanded } = useStates();
   return (
     <Box className={'boardgame__palettes'}>
       {fetchPalettes().map((set, i) => (
@@ -30,8 +30,8 @@ type PaletteProps = {
   piece: PieceSetupType;
 };
 
-const Palette = ({ piece }: PaletteProps, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+const Palette = ({ piece }: PaletteProps) => {
+  const { act, data } = useBackend<BoardgameData>();
   const { currentUser } = data;
 
   const { paletteSet } = useActions(act);
@@ -51,8 +51,8 @@ type PaletteExpandButtonProps = {
   setId: string;
 };
 
-const PaletteExpandButton = ({ index, setId }: PaletteExpandButtonProps, context) => {
-  const { isExpanded, togglePalette } = useStates(context);
+const PaletteExpandButton = ({ index, setId }: PaletteExpandButtonProps) => {
+  const { isExpanded, togglePalette } = useStates();
   return (
     <Button.Checkbox
       className={'boardgame__palettes-set-toggle'}

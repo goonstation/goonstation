@@ -6,8 +6,7 @@
  */
 
 import { useState } from 'react';
-import { Button, Section, Stack } from 'tgui-core/components';
-import { Slider } from 'tgui-core/components';
+import { Button, Section, Slider, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -54,7 +53,6 @@ const PumpSettings = (props) => {
             </Stack.Item>
             <Stack.Item grow>
               <Slider
-                disabled={pump.alive !== 1}
                 value={target_output}
                 minValue={pump.min_output}
                 maxValue={pump.max_output}

@@ -6,9 +6,9 @@ import { BoardgameData } from '../../../utils';
  * Renders help overlay for the board
  */
 
-const GridGuideRenderer = (props, context) => {
-  const { data } = useBackend<BoardgameData>(context);
-  const { mouseCoords, tileSize, isFlipped } = useStates(context);
+const GridGuideRenderer = () => {
+  const { data } = useBackend<BoardgameData>();
+  const { mouseCoords, tileSize, isFlipped } = useStates();
   const { width, height } = data.boardInfo;
 
   const currentUser = data.currentUser;

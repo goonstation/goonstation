@@ -1,8 +1,8 @@
 import { useBackend } from '../../../../../../backend';
 import { BoardgameData } from '../../../../utils';
 
-const CheckerBoardPattern = (props, context) => {
-  const { data } = useBackend<BoardgameData>(context);
+const CheckerBoardPattern = () => {
+  const { data } = useBackend<BoardgameData>();
   const { tileColor1, tileColor2 } = data.styling;
 
   const width = 100 / data.boardInfo.width;

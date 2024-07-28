@@ -1,4 +1,4 @@
-import { createRef } from 'inferno';
+import { useRef } from 'react';
 
 import { useBackend } from '../../../../../../backend';
 import { useActions, useStates } from '../../../../utils';
@@ -7,15 +7,15 @@ import GridGuideRenderer from '../../common/GridGuideRenderer';
 import GridPieceRenderer from '../../common/GridPieceRenderer';
 import CheckerBoardPattern from './CheckerBoardPattern';
 
-export const CheckerBoard = (props, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+export const CheckerBoard = () => {
+  const { act, data } = useBackend<BoardgameData>();
   const { pieces, currentUser } = data;
   const { tileColor2 } = data.styling;
-  const { tileSize, isFlipped, mouseCoords } = useStates(context);
+  const { tileSize, isFlipped, mouseCoords } = useStates();
   const { width, height } = tileSize;
   const { piecePlace } = useActions(act);
 
-  const boardRef = createRef<HTMLDivElement>();
+  const boardRef = useRef<HTMLDivElement>();
 
   const boardPos = () => {
     const { x, y } = mouseCoords;
@@ -45,7 +45,7 @@ export const CheckerBoard = (props, context) => {
   return (
     <div
       style={{
-        'background-color': tileColor2,
+        backgroundColor: tileColor2,
       }}
       ref={boardRef}
       className="boardgame__board-checkerboard"

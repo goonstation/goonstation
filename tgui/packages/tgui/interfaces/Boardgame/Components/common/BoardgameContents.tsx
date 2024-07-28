@@ -3,8 +3,8 @@ import { useStates } from '../../utils';
 import { Palettes } from '../';
 import { Board } from '../board';
 
-export const BoardgameContents = (props, context) => {
-  const { mouseCoordsSet } = useStates(context);
+export const BoardgameContents = () => {
+  const { mouseCoordsSet } = useStates();
 
   return (
     <Window.Content

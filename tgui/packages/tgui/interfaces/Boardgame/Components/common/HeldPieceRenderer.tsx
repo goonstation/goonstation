@@ -1,16 +1,17 @@
+import { Box } from 'tgui-core/components';
+
 import { useBackend } from '../../../../backend';
-import { Box } from '../../../../components';
 import { codeRecordFromPieces, fetchPieces } from '../../games';
 import { BoardgameData } from '../../utils';
 import { useStates } from '../../utils';
 
-export const HeldPieceRenderer = (_, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+export const HeldPieceRenderer = () => {
+  const { data } = useBackend<BoardgameData>();
 
   // Exit early if there is no current user
   if (!data.currentUser) return null;
 
-  const { mouseCoords } = useStates(context);
+  const { mouseCoords } = useStates();
   const { x, y } = mouseCoords;
 
   // Get the piece code
@@ -41,9 +42,9 @@ export const HeldPieceRenderer = (_, context) => {
       </Box>
       <Box
         style={{
-          'font-size': '12px',
-          'font-weight': 'bold',
-          'text-shadow': '0 0 2px black',
+          'fontSize': '12px',
+          'fontWeight': 'bold',
+          'textShadow': '0 0 2px black',
         }}>
         Right click to cancel
       </Box>

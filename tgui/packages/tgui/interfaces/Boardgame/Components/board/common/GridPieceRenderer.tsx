@@ -1,5 +1,6 @@
+import { Box } from 'tgui-core/components';
+
 import { useBackend } from '../../../../../backend';
-import { Box } from '../../../../../components';
 import { codeRecordFromPieces, fetchPieces } from '../../../games';
 import { useActions, useStates } from '../../../utils';
 import { BoardgameData, PieceDataType } from '../../../utils';
@@ -8,11 +9,11 @@ type GridPieceRendererProps = {
   pieces: PieceDataType[];
 };
 
-const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+const GridPieceRenderer = ({ pieces }: GridPieceRendererProps) => {
+  const { act, data } = useBackend<BoardgameData>();
 
   const { currentUser, users } = data;
-  const { isFlipped, tileSize } = useStates(context);
+  const { isFlipped, tileSize } = useStates();
   const { pieceSelect, pieceRemove, piecePlace } = useActions(act);
   const { width, height } = data.boardInfo;
 
@@ -45,7 +46,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
         return (
           <div
             className="boardgame__board-gprenderer-piece"
-            onmousedown={(e) => {
+            onMouseDown={(e) => {
               if (e.button === 0 && !selected) {
                 if (currentUser.palette) {
                   piecePlace(currentUser.ckey, x, y);
@@ -65,7 +66,7 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps, context) => {
                 }
               }
             }}
-            onmouseup={(e) => {
+            onMouseUp={(e) => {
               if (currentUser.palette) {
                 piecePlace(currentUser.ckey, x, y);
               }

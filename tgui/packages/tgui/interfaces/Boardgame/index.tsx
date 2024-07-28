@@ -1,7 +1,7 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
+import { Box, Dimmer, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box, Dimmer, Icon } from '../../components';
 import { Window } from '../../layouts';
 import { BoardgameContents } from './Components/common/BoardgameContents';
 import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
@@ -15,12 +15,12 @@ export class Boardgame extends Component<BoardgameData, any> {
   }
 
   componentDidUpdate() {
-    handleEvents(this.context);
-    adjustSizes(this.context);
+    handleEvents();
+    adjustSizes();
   }
 
   render() {
-    const { data } = useBackend<BoardgameData>(this.context);
+    const { data } = useBackend<BoardgameData>();
     const name = data?.boardInfo?.name || 'Boardgame';
 
     return (
@@ -34,8 +34,8 @@ export class Boardgame extends Component<BoardgameData, any> {
   }
 }
 
-const HelpModal = (props, context) => {
-  const { helpModalClose, isHelpModalOpen } = useStates(context);
+const HelpModal = () => {
+  const { helpModalClose, isHelpModalOpen } = useStates();
 
   if (!isHelpModalOpen) return null;
 
