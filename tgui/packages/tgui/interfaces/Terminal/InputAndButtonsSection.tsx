@@ -32,6 +32,7 @@ export const InputAndButtonsSection = () => {
       <Flex align="center">
         <Flex.Item grow>
           <Input
+            // @ts-ignore - TODO-REACT
             id="terminalInput"
             placeholder="Type Here"
             selfClear

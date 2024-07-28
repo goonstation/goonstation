@@ -36,18 +36,13 @@ export const Terminal = () => {
   };
 
   return (
-    <Window
-      theme="retro-dark"
-      title={windowName}
-      fontFamily="Consolas"
-      width={380}
-      height={350}
-    >
-      <Window.Content>
+    <Window theme="retro-dark" title={windowName} width={380} height={350}>
+      <Window.Content fontFamily="Consolas">
         <Stack vertical fill>
           <Stack.Item grow>
             <TerminalOutputSection
               displayHTML={displayHTML}
+              // @ts-ignore - TODO-REACT
               onComponentDidMount={scrollToBottom}
               onComponentDidUpdate={handleTerminalOutputComponentDidUpdate}
             />
