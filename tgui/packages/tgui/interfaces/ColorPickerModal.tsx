@@ -14,22 +14,25 @@ import {
   validHex,
 } from 'common/goonstation/colorful';
 import { classes } from 'common/react';
-import { Component, FocusEvent, FormEvent } from 'inferno';
-import { Interaction, Interactive } from 'tgui/components/Interactive';
+import { Component, FocusEvent, FormEvent } from 'react';
 import { logger } from 'tgui/logging';
-import { clamp } from 'tgui-core/math';
-
-import { useBackend, useLocalState } from '../backend';
 import {
   Autofocus,
   Box,
   Flex,
   NumberInput,
-  Pointer,
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
+
+import { useBackend, useLocalState } from '../backend';
+import { Pointer } from '../components';
+import {
+  Interaction,
+  Interactive,
+} from '../components/goonstation/colorful/Interactive';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -45,8 +48,8 @@ type ColorPickerData = {
   default_color: string;
 };
 
-export const ColorPickerModal = (_, context) => {
-  const { data } = useBackend<ColorPickerData>(context);
+export const ColorPickerModal = () => {
+  const { data } = useBackend<ColorPickerData>();
   const {
     timeout,
     message,
@@ -55,7 +58,6 @@ export const ColorPickerModal = (_, context) => {
     default_color = '#000000',
   } = data;
   let [selectedColor, setSelectedColor] = useLocalState<HsvaColor>(
-    context,
     'color_picker_choice',
     hexToHsva(default_color),
   );
@@ -380,7 +382,7 @@ export class ColorInput extends Component<ColorInputBaseProps> {
   state: { localValue: string };
 
   constructor(props: ColorInputBaseProps) {
-    super();
+    super(props);
     this.props = props;
     this.state = { localValue: this.props.escape(this.props.color) };
   }

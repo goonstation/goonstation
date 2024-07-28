@@ -12,7 +12,13 @@
  * SOFTWARE.
  */
 
-import { Component, createRef, RefObject } from 'inferno';
+import {
+  Component,
+  createRef,
+  KeyboardEvent,
+  MouseEvent,
+  RefObject,
+} from 'react';
 import { clamp } from 'tgui-core/math';
 
 export interface Interaction {
@@ -60,7 +66,7 @@ export class Interactive extends Component {
   props: InteractiveProps;
 
   constructor(props: InteractiveProps) {
-    super();
+    super(props);
     this.props = props;
     this.containerRef = createRef();
   }
@@ -76,7 +82,7 @@ export class Interactive extends Component {
     this.toggleDocumentEvents(true);
   };
 
-  handleMove = (event: MouseEvent) => {
+  handleMove = (_window: Window, event: MouseEvent) => {
     // Prevent text selection
     event.preventDefault();
 
@@ -98,7 +104,7 @@ export class Interactive extends Component {
     this.toggleDocumentEvents(false);
   };
 
-  handleKeyDown = (event: KeyboardEvent) => {
+  handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const keyCode = event.which || event.keyCode;
 
     // Ignore all keys except arrow ones
