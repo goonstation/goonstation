@@ -56,17 +56,17 @@ const advTag = ['img'];
  * Feed it a string and it should spit out a sanitized version.
  *
  * @param input - Input HTML string to sanitize
+ * @param advHtml - Flag to enable/disable advanced HTML
  * @param tags - List of allowed HTML tags
  * @param forbidAttr - List of forbidden HTML attributes
- * @param advHtml - Flag to enable/disable advanced HTML
  * @param advTags - List of advanced HTML tags allowed for trusted sources
 
  */
 export const sanitizeText = (
   input: string,
+  advHtml = false,
   tags = sanitizeDefAllowTags,
   forbidAttr = sanitizeDefForbidAttrs,
-  advHtml = false,
   advTags = advTag,
 ) => {
   // This is VERY important to think first if you NEED

@@ -169,7 +169,7 @@ const checkAllFields = (txt, font, color, userName, bold = false) => {
       if (domText.length === 0) {
         continue;
       }
-      const sanitizedText = sanitizeText(dom.value.trim(), []);
+      const sanitizedText = sanitizeText(dom.value.trim(), false, []);
       if (sanitizedText.length === 0) {
         continue;
       }
