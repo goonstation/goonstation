@@ -1074,18 +1074,20 @@
 		))
 
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
-	. = list("research"=list(),
-					"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
-					"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
-					"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
-					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
-					"materialMax" = genResearch.max_material,
-					"mutantRaces" = list(list(
-						"name" = "Clear Mutantrace",
-						"icon" = "template",
-						"ref" = "\ref[null]",
-						)),
-					)
+	. = list(
+			"research"=list(),
+			"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
+			"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
+			"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
+			"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
+			"materialMax" = genResearch.max_material,
+			"mutantRaces" = list(list(
+				"name" = "Clear Mutantrace",
+				"icon" = "template",
+				"ref" = "\ref[null]",
+				)
+			),
+		)
 
 	var/bioEffects = list()
 	for (var/id as anything in bioEffectList)
@@ -1116,7 +1118,7 @@
 /obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "GeneTek", "GeneTek Console v2.01")
+		ui = new(user, src, "GeneTek", "GeneTek Console v2.02")
 		ui.open()
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
