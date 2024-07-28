@@ -1,4 +1,3 @@
-import { useBackend, useLocalState } from '../../backend';
 import {
   AnimatedNumber,
   Box,
@@ -10,24 +9,26 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend, useLocalState } from '../../backend';
 import { formatTime } from '../../format';
 import { Window } from '../../layouts';
-import { GameClockData } from './types';
+import type { GameClockData } from './types';
 
 type TeamProps = {
   team: 'white' | 'black';
 };
 
-export const Gameclock = (_props, context) => {
-  const { data } = useBackend<GameClockData>(context);
+export const Gameclock = () => {
+  const { data } = useBackend<GameClockData>();
 
   const { name } = data.clockStatic;
 
-  const [configModalOpen] = useLocalState(context, 'configModalOpen', false);
-  const [swap] = useLocalState(context, 'swap', false);
+  const [configModalOpen] = useLocalState('configModalOpen', false);
+  const [swap] = useLocalState('swap', false);
 
-  const [helpModalOpen, setHelpModalOpen] = useLocalState(context, 'helpModalOpen', false);
+  const [helpModalOpen, setHelpModalOpen] = useLocalState('helpModalOpen', false);
 
   return (
     <Window title={name} width={220} height={380}>
@@ -55,14 +56,14 @@ export const Gameclock = (_props, context) => {
   );
 };
 
-const ConfigModal = (_, context) => {
-  const { data, act } = useBackend<GameClockData>(context);
+const ConfigModal = () => {
+  const { data, act } = useBackend<GameClockData>();
 
   const { defaultTime } = data.clockStatic;
 
-  const [, setConfigModalOpen] = useLocalState(context, 'configModalOpen', false);
-  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState(context, 'whiteTimeBuffer', 0);
-  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState(context, 'blackTimeBuffer', 0);
+  const [, setConfigModalOpen] = useLocalState('configModalOpen', false);
+  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState('whiteTimeBuffer', 0);
+  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState('blackTimeBuffer', 0);
 
   const setTime = (whiteTime, blackTime) => {
     act('set_time', {
@@ -121,14 +122,14 @@ const HelpModal = () => {
 };
 
 const TimeInput = (props: TeamProps, context) => {
-  const { data } = useBackend<GameClockData>(context);
+  const { data } = useBackend<GameClockData>();
 
   const { minTime, maxTime } = data.clockStatic;
 
   const { team } = props;
 
-  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState(context, 'whiteTimeBuffer', 0);
-  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState(context, 'blackTimeBuffer', 0);
+  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState('whiteTimeBuffer', 0);
+  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState('blackTimeBuffer', 0);
 
   const showTime = (value) => {
     return formatTime(value * 10);
@@ -136,7 +137,7 @@ const TimeInput = (props: TeamProps, context) => {
 
   return (
     <NumberInput
-      onDrag={(_e, value) => {
+      onDrag={(value) => {
         team === 'white' ? setWhiteTimeBuffer(value) : setBlackTimeBuffer(value);
       }}
       format={showTime}
@@ -161,8 +162,8 @@ const TeamIcon = (props: TeamProps, context) => {
   );
 };
 
-const SidePart = (props: TeamProps, context) => {
-  const { data, act } = useBackend<GameClockData>(context);
+const SidePart = (props: TeamProps) => {
+  const { data, act } = useBackend<GameClockData>();
 
   const { team } = props;
 
@@ -186,12 +187,12 @@ const SidePart = (props: TeamProps, context) => {
 };
 
 const MidPart = (_, context) => {
-  const { data, act } = useBackend<GameClockData>(context);
+  const { data, act } = useBackend<GameClockData>();
 
-  const [, setConfigModalOpen] = useLocalState(context, 'configModalOpen', false);
-  const [, setWhiteTimeBuffer] = useLocalState(context, 'whiteTimeBuffer', 0);
-  const [, setBlackTimeBuffer] = useLocalState(context, 'blackTimeBuffer', 0);
-  const [swap, toggleSwap] = useLocalState(context, 'swap', false);
+  const [, setConfigModalOpen] = useLocalState('configModalOpen', false);
+  const [, setWhiteTimeBuffer] = useLocalState('whiteTimeBuffer', 0);
+  const [, setBlackTimeBuffer] = useLocalState('blackTimeBuffer', 0);
+  const [swap, toggleSwap] = useLocalState('swap', false);
 
   return (
     <Stack direction={'row'} className="gameclock__mid">
