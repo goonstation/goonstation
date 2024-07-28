@@ -5,8 +5,9 @@
  * @license ISC
  */
 
+import { Button, Icon } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Icon } from '../../components';
 
 const letterColor = {
   '?': 'grey',

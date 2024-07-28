@@ -7,9 +7,9 @@
 
 import { useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
+import { Slider } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Slider } from '../../components';
 import { Window } from '../../layouts';
 
 // Responsible for providing information and settings for a pump.
@@ -25,7 +25,7 @@ const PumpSettings = (props) => {
     act('setPressure', { netid: pump.netid, pressure: newPressure });
   };
   const togglePump = () => {
-    setPower((power === "on") ? "off" : "on");
+    setPower(power === 'on' ? 'off' : 'on');
     act('togglePump', { netid: pump.netid });
   };
 
@@ -34,11 +34,9 @@ const PumpSettings = (props) => {
       <Stack vertical>
         <Stack.Item>
           <Stack>
-            <Stack.Item>
-              {pump.tag}
-            </Stack.Item>
+            <Stack.Item>{pump.tag}</Stack.Item>
             <Stack.Item textAlign="right" grow={1}>
-              {pump.alive === -1 ? "Establishing Connection..." : "Connected"}
+              {pump.alive === -1 ? 'Establishing Connection...' : 'Connected'}
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -48,9 +46,10 @@ const PumpSettings = (props) => {
               <Button
                 width={4}
                 icon="power-off"
-                color={(power === 'on') ? "green" : "red"}
-                onClick={() => togglePump()}>
-                {(power === 'on') ? 'On' : 'Off'}
+                color={power === 'on' ? 'green' : 'red'}
+                onClick={() => togglePump()}
+              >
+                {power === 'on' ? 'On' : 'Off'}
               </Button>
             </Stack.Item>
             <Stack.Item grow>
@@ -71,7 +70,6 @@ const PumpSettings = (props) => {
   );
 };
 
-
 // Responsible for creating a section for the pumps in an area.
 const PumpArea = (props) => {
   const { data } = useBackend<AreaList>();
@@ -88,7 +86,9 @@ const PumpArea = (props) => {
         {pump_controls.length > 0 ? (
           pump_controls
         ) : (
-          <Stack.Item>No pumps found for {area}, please refresh and check connection.</Stack.Item>
+          <Stack.Item>
+            No pumps found for {area}, please refresh and check connection.
+          </Stack.Item>
         )}
       </Stack>
     </Section>
@@ -105,20 +105,16 @@ export const PumpControl = () => {
   for (let area in data.area_list) areas.push(area);
 
   return (
-    <Window
-      title="Pump Control Computer"
-      width={400}
-      height={550}>
+    <Window title="Pump Control Computer" width={400} height={550}>
       <Window.Content scrollable>
         <Section>
-          <Button
-            icon="wifi"
-            onClick={() => refresh()}
-          >
+          <Button icon="wifi" onClick={() => refresh()}>
             Requery Pumps
           </Button>
         </Section>
-        {areas.map((area) => (<PumpArea area={area} key={area} />))}
+        {areas.map((area) => (
+          <PumpArea area={area} key={area} />
+        ))}
       </Window.Content>
     </Window>
   );

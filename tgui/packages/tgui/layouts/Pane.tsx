@@ -5,9 +5,9 @@
  */
 
 import { classes } from 'common/react';
+import { Box } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box } from '../components';
 import { BoxProps } from '../components/Box';
 import { useDebug } from '../debug';
 import { Layout } from './Layout';

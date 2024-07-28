@@ -7,10 +7,10 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { PropsWithChildren, ReactNode, useEffect } from 'react';
+import { Icon } from 'tgui-core/components';
 
 import { backendSuspendStart, useBackend } from '../backend';
 import { globalStore } from '../backend';
-import { Icon } from '../components';
 import { BoxProps } from '../components/Box';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { useDebug } from '../debug';
@@ -205,12 +205,12 @@ const TitleBar = (props: TitleBarProps) => {
       {(status === undefined && (
         <Icon className="TitleBar__statusIcon" name="tools" opacity={0.5} />
       )) || (
-          <Icon
-            className="TitleBar__statusIcon"
-            color={statusToColor(status)}
-            name="eye"
-          />
-        )}
+        <Icon
+          className="TitleBar__statusIcon"
+          color={statusToColor(status)}
+          name="eye"
+        />
+      )}
       <div
         className="TitleBar__dragZone"
         onMouseDown={(e) => fancy && onDragStart && onDragStart(e)}
