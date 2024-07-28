@@ -5,17 +5,28 @@
  * @license ISC
  */
 
-import { Box, Button, ByondUi, Flex, LabeledList, Modal, Section } from "tgui-core/components";
+import {
+  Box,
+  Button,
+  ByondUi,
+  Flex,
+  LabeledList,
+  Modal,
+  Section,
+} from 'tgui-core/components';
 
-import { useBackend, useSharedState } from "../../../backend";
-import { AppearanceEditor } from "../AppearanceEditor";
-import { GeneList, haveDevice, onCooldown } from "../BioEffect";
-import { GeneIcon } from "../GeneIcon";
-import { GeneTekData } from "../type";
+import { useBackend, useSharedState } from '../../../backend';
+import { AppearanceEditor } from '../AppearanceEditor';
+import { GeneList, haveDevice, onCooldown } from '../BioEffect';
+import { GeneIcon } from '../GeneIcon';
+import { GeneTekData } from '../type';
 
 export const ScannerTab = () => {
   const { data, act } = useBackend<GeneTekData>();
-  let [changingMutantRace, setChangingMutantRace] = useSharedState("changingmutantrace", false);
+  let [changingMutantRace, setChangingMutantRace] = useSharedState(
+    'changingmutantrace',
+    false,
+  );
   const [showPreview, togglePreview] = useSharedState('togglePreview', false);
   const {
     haveScanner,
@@ -39,8 +50,7 @@ export const ScannerTab = () => {
     active,
   } = subject || {};
 
-  if (changingMutantRace
-    && (!subject || !human || premature)) {
+  if (changingMutantRace && (!subject || !human || premature)) {
     changingMutantRace = false;
     setChangingMutantRace(false);
   }
@@ -48,7 +58,9 @@ export const ScannerTab = () => {
   if (!subject) {
     return (
       <Section title="Scanner Error">
-        {haveScanner ? "Subject has absconded." : "Check connection to scanner."}
+        {haveScanner
+          ? 'Subject has absconded.'
+          : 'Check connection to scanner.'}
       </Section>
     );
   }
@@ -60,7 +72,7 @@ export const ScannerTab = () => {
           <Box bold width={20} mb={0.5}>
             Change to which body type?
           </Box>
-          {mutantRaces.map(mr => (
+          {mutantRaces.map((mr) => (
             <Box key={mr.ref}>
               <Button
                 color="blue"
@@ -68,15 +80,17 @@ export const ScannerTab = () => {
                 mt={0.5}
                 onClick={() => {
                   setChangingMutantRace(false);
-                  act("mutantrace", { ref: mr.ref });
-                }}>
+                  act('mutantrace', { ref: mr.ref });
+                }}
+              >
                 <GeneIcon
                   name={mr.icon}
                   size={1.5}
                   style={{
-                    "margin": "-4px",
-                    "margin-right": "4px",
-                  }} />
+                    margin: '-4px',
+                    'margin-right': '4px',
+                  }}
+                />
                 {mr.name}
               </Button>
             </Box>
@@ -85,7 +99,8 @@ export const ScannerTab = () => {
             <Button
               color="bad"
               icon="times"
-              onClick={() => setChangingMutantRace(false)}>
+              onClick={() => setChangingMutantRace(false)}
+            >
               Cancel
             </Button>
           </Box>
@@ -101,48 +116,63 @@ export const ScannerTab = () => {
                 <LabeledList>
                   <LabeledList.Item
                     label="Name"
-                    buttons={haveDevice(equipmentCooldown, "Emitter") && (
-                      <Button
-                        icon="radiation"
-                        disabled={onCooldown(equipmentCooldown, "Emitter") || health <= 0}
-                        color="bad"
-                        onClick={() => act("emitter")}>
-                        Scramble DNA
-                      </Button>
-                    )}>
+                    buttons={
+                      haveDevice(equipmentCooldown, 'Emitter') && (
+                        <Button
+                          icon="radiation"
+                          disabled={
+                            onCooldown(equipmentCooldown, 'Emitter') ||
+                            health <= 0
+                          }
+                          color="bad"
+                          onClick={() => act('emitter')}
+                        >
+                          Scramble DNA
+                        </Button>
+                      )
+                    }
+                  >
                     {name}
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Body Type"
-                    buttons={!!human && (
-                      <>
-                        <Button
-                          icon="user"
-                          color="blue"
-                          disabled={!!premature}
-                          onClick={() => setChangingMutantRace(true)}>
-                          Change
-                        </Button>
-                        <Button
-                          icon="wrench"
-                          color="average"
-                          disabled={!canAppearance}
-                          onClick={() => act("editappearance")} />
-                      </>
-                    )}>
+                    buttons={
+                      !!human && (
+                        <>
+                          <Button
+                            icon="user"
+                            color="blue"
+                            disabled={!!premature}
+                            onClick={() => setChangingMutantRace(true)}
+                          >
+                            Change
+                          </Button>
+                          <Button
+                            icon="wrench"
+                            color="average"
+                            disabled={!canAppearance}
+                            onClick={() => act('editappearance')}
+                          />
+                        </>
+                      )
+                    }
+                  >
                     {mutantRace}
                   </LabeledList.Item>
                   <LabeledList.Item
                     label="Physical Age"
-                    buttons={!!human && (
-                      <Button.Checkbox
-                        inline
-                        color="good"
-                        content="DNA Render"
-                        checked={showPreview}
-                        onClick={() => togglePreview(!showPreview)}
-                      />
-                    )}>
+                    buttons={
+                      !!human && (
+                        <Button.Checkbox
+                          inline
+                          color="good"
+                          content="DNA Render"
+                          checked={showPreview}
+                          onClick={() => togglePreview(!showPreview)}
+                        />
+                      )
+                    }
+                  >
                     {age} years
                   </LabeledList.Item>
                   <LabeledList.Item label="Blood Type">
@@ -155,13 +185,14 @@ export const ScannerTab = () => {
                   <ByondUi
                     params={{
                       id: preview,
-                      type: "map",
+                      type: 'map',
                     }}
                     style={{
-                      width: "64px",
-                      height: "128px",
+                      width: '64px',
+                      height: '128px',
                     }}
-                    hideOnScroll />
+                    hideOnScroll
+                  />
                 </Flex.Item>
               )}
             </Flex>
@@ -170,13 +201,15 @@ export const ScannerTab = () => {
             <GeneList
               genes={potential}
               noGenes="All detected potential mutations are active."
-              isPotential />
+              isPotential
+            />
           </Section>
           <Section title="Active Mutations">
             <GeneList
               genes={active}
               noGenes="Subject has no detected mutations."
-              isActive />
+              isActive
+            />
           </Section>
         </>
       )}

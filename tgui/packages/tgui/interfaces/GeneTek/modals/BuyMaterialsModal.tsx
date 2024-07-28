@@ -5,42 +5,42 @@
  * @license ISC
  */
 
-import { Box, Button, Divider, Knob, LabeledList, Modal } from "tgui-core/components";
+import {
+  Box,
+  Button,
+  Divider,
+  Knob,
+  LabeledList,
+  Modal,
+} from 'tgui-core/components';
 
-import { useBackend, useSharedState } from "../../../backend";
-import type { GeneTekData } from "../type";
+import { useBackend, useSharedState } from '../../../backend';
+import type { GeneTekData } from '../type';
 
 export const BuyMaterialsModal = (props) => {
   const { data, act } = useBackend<GeneTekData>();
-  const [buyMats, setBuyMats] = useSharedState<number | null>("buymats", null);
+  const [buyMats, setBuyMats] = useSharedState<number | null>('buymats', null);
   const maxBuyMats = props.maxAmount;
-  const {
-    budget,
-    costPerMaterial,
-  } = data;
+  const { budget, costPerMaterial } = data;
 
   const resolvedBuyMats = Math.min(buyMats, maxBuyMats);
 
   return (
     <Modal full>
-      <Box
-        position="relative"
-        width={18}>
-        <Box
-          position="absolute"
-          right={1}
-          top={0}>
+      <Box position="relative" width={18}>
+        <Box position="absolute" right={1} top={0}>
           <Knob
             inline
             value={resolvedBuyMats}
             onChange={(e, value) => setBuyMats(value)}
             minValue={1}
-            maxValue={maxBuyMats} />
+            maxValue={maxBuyMats}
+          />
         </Box>
         <LabeledList>
           <LabeledList.Item label="Purchase">
             {resolvedBuyMats}
-            {resolvedBuyMats === 1 ? " Material" : " Materials"}
+            {resolvedBuyMats === 1 ? ' Material' : ' Materials'}
           </LabeledList.Item>
           <LabeledList.Item label="Budget">
             {`${budget} Credits`}
@@ -50,10 +50,13 @@ export const BuyMaterialsModal = (props) => {
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Remainder">
-            <Box inline color={budget - resolvedBuyMats * costPerMaterial < 0 && "bad"}>
+            <Box
+              inline
+              color={budget - resolvedBuyMats * costPerMaterial < 0 && 'bad'}
+            >
               {budget - resolvedBuyMats * costPerMaterial}
             </Box>
-            {" Credits"}
+            {' Credits'}
           </LabeledList.Item>
         </LabeledList>
         <Divider hidden />
@@ -63,17 +66,15 @@ export const BuyMaterialsModal = (props) => {
             icon="dollar-sign"
             disabled={resolvedBuyMats <= 0}
             onClick={() => {
-              act("purchasematerial", { amount: resolvedBuyMats });
+              act('purchasematerial', { amount: resolvedBuyMats });
               setBuyMats(null);
-            }}>
+            }}
+          >
             Submit
           </Button>
         </Box>
         <Box inline width="50%" textAlign="center">
-          <Button
-            color="bad"
-            icon="times"
-            onClick={() => setBuyMats(null)}>
+          <Button color="bad" icon="times" onClick={() => setBuyMats(null)}>
             Cancel
           </Button>
         </Box>
