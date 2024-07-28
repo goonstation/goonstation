@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-export { Blink } from './Blink';
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
 export { Button } from './Button';
