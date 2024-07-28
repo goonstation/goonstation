@@ -9,7 +9,6 @@ export { Box } from './Box';
 export { Button } from './Button';
 export { Collapsible } from './Collapsible';
 export { Dimmer } from './Dimmer';
-export { Divider } from './Divider';
 export { Dropdown } from './Dropdown';
 export { ColorButton } from './goonstation/ColorButton';
 export { Interactive } from './goonstation/colorful/Interactive';
