@@ -5,10 +5,11 @@
  * @license ISC
  */
 
+import { Stack } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Stack } from '../components';
+import { Box } from '../components';
 import { Window } from '../layouts';
 import { MapPanel } from './MapVote';
 import { MapVoteMapData } from './MapVote';
