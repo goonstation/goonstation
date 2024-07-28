@@ -5,9 +5,7 @@
  * @license ISC
  */
 
-import { Table } from 'tgui-core/components';
-
-import { Button } from '../../components';
+import { Button, Table } from 'tgui-core/components';
 
 interface VendorCashTableProps {
   cardname: string;
@@ -28,7 +26,7 @@ export const VendorCashTable = (props: VendorCashTableProps) => {
             <Button
               icon="id-card"
               mr="100%"
-              title={cardname ? cardname : ''}
+              tooltip={cardname ? cardname : ''}
               onClick={onCardClick}
               ellipsis
               maxWidth="100%"
