@@ -6,11 +6,10 @@
  * @license MIT
  */
 
+import { Box, Button, Divider, LabeledList, Section } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
-import { Button, Divider, LabeledList, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Box } from '../../components';
 import { CellDisplay } from './CellDisplay';
 import type { ApcData } from './types';
 import { getHasPermission, getIsLocalAccess } from './util';
@@ -66,7 +65,7 @@ export const MainSection = (_props, context) => {
     <Section title={area_name}>
       {isLocalAccess && (
         <>
-          <Box align="center" bold fill>
+          <Box align="center" bold>
             Swipe ID card to {locked ? 'unlock' : 'lock'} interface
           </Box>
           <Divider />
