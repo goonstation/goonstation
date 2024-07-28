@@ -4,8 +4,9 @@
  * @license MIT
  */
 
+import { Input, LabeledList, Section } from 'tgui-core/components';
+
 import { useLocalState } from '../backend';
-import { Input, LabeledList, Section } from '../components';
 
 export const meta = {
   title: 'Themes',
@@ -13,7 +14,7 @@ export const meta = {
 };
 
 const Story = (props) => {
-  const [theme, setTheme] = useLocalState('kitchenSinkTheme');
+  const [theme, setTheme] = useLocalState('kitchenSinkTheme', undefined);
   return (
     <Section>
       <LabeledList>

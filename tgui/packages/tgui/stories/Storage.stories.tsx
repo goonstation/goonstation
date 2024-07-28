@@ -5,8 +5,8 @@
  */
 
 import { storage } from 'common/storage';
+import { Button, LabeledList, NoticeBox, Section } from 'tgui-core/components';
 
-import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { formatSiUnit } from '../format';
 
 export const meta = {

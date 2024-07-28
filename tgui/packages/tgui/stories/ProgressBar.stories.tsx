@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +11,9 @@ import {
   LabeledList,
   ProgressBar,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useLocalState } from '../backend';
 
 export const meta = {
   title: 'ProgressBar',
@@ -35,10 +36,12 @@ const Story = (props) => {
 
   return (
     <Section>
+      {/* @ts-ignore */}
       <ProgressBar {...color_data} minValue={-1} maxValue={1} value={progress}>
         Value: {Number(progress).toFixed(1)}
       </ProgressBar>
       <Box mt={1}>
+        {/* @ts-ignore */}
         <LabeledList mt="2em">
           <LabeledList.Item label="Adjust value">
             <Button

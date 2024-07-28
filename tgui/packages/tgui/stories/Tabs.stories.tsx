@@ -4,9 +4,10 @@
  * @license MIT
  */
 
-import { useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
+import { Button, Section, Tabs } from 'tgui-core/components';
 
-import { Button, Section, Tabs } from '../components';
+import { BoxProps } from '../components/Box';
 
 export const meta = {
   title: 'Tabs',
@@ -15,8 +16,17 @@ export const meta = {
 
 const TAB_RANGE = ['Tab #1', 'Tab #2', 'Tab #3', 'Tab #4'];
 
-const Story = (props) => {
-  const [tabProps, setTabProps] = useState({});
+type TabProps = Partial<{
+  className: string;
+  fill: boolean;
+  fluid: boolean;
+  vertical: boolean;
+}> &
+  BoxProps &
+  PropsWithChildren;
+
+const Story = () => {
+  const [tabProps, setTabProps] = useState<TabProps>({});
   return (
     <>
       <Section>
@@ -102,9 +112,9 @@ const Story = (props) => {
   );
 };
 
-const TabsPrefab = (props) => {
+const TabsPrefab = () => {
   const [tabIndex, setTabIndex] = useState(0);
-  const [tabProps] = useState({});
+  const [tabProps] = useState<TabProps>({});
   return (
     <Tabs
       vertical={tabProps.vertical}

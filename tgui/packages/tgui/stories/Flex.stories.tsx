@@ -5,15 +5,14 @@
  */
 
 import { useState } from 'react';
-
-import { Button, Flex, Section } from '../components';
+import { Button, Flex, Section } from 'tgui-core/components';
 
 export const meta = {
   title: 'Flex & Sections',
   render: () => <Story />,
 };
 
-const Story = (props) => {
+const Story = () => {
   const [grow, setGrow] = useState(1);
   const [direction, setDirection] = useState('column');
   const [fill, setFill] = useState(true);
