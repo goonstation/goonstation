@@ -10,10 +10,8 @@ import { classes } from 'common/react';
 import { COLORS } from '../../constants';
 import { Box, computeBoxClassName } from '../Box';
 
-interface HealthStatProps {
+interface HealthStatProps extends React.ComponentProps<typeof Box> {
   type: 'oxy' | 'toxin' | 'burn' | 'brute';
-  children: React.ReactNode;
-  className?: string;
 }
 
 /*
