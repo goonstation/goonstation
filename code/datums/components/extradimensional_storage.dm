@@ -178,25 +178,21 @@ TYPEINFO(/datum/component/extradimensional_storage)
 
 
 /datum/component/extradimensional_storage/floor/default_init_region()
-	region.clean_up(parent.type)
+	. = ..()
+	var/turf/origin = parent
 	for(var/x in 2 to region.width - 1)
 		var/turf/T = region.turf_at(x, 2)
-		new/obj/decal/nothing{dir=NORTH; color="#000"; mouse_opacity=FALSE}(T)
-		new /obj/map/light/brightwhite(T)
 		T.warptarget = get_step(exit, SOUTH)
-
 		T = region.turf_at(x, region.height - 1)
-		new/obj/decal/nothing{dir=SOUTH; color="#000"; mouse_opacity=FALSE}(T)
-		new /obj/map/light/brightwhite(T)
 		T.warptarget = get_step(exit, NORTH)
 
 	for(var/y in 2 to region.height - 1)
 		var/turf/T = region.turf_at(2, y)
-		new/obj/decal/nothing{dir=WEST; color="#000"; mouse_opacity=FALSE}(T)
-		new /obj/map/light/brightwhite(T)
 		T.warptarget = get_step(exit, WEST)
-
 		T = region.turf_at(region.width - 1, y)
-		new/obj/decal/nothing{dir=EAST; color="#000"; mouse_opacity=FALSE}(T)
-		new /obj/map/light/brightwhite(T)
 		T.warptarget = get_step(exit, EAST)
+
+	for(var/x in 2 to region.width - 1)
+		for(var/y in 2 to region.height - 1)
+			var/turf/T = region.turf_at(x, y)
+			T.appearance = origin.appearance
