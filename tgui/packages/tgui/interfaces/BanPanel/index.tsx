@@ -18,8 +18,8 @@ export const BanPanel = () => {
   const { action, data } = useBanPanelBackend();
   const { current_tab } = data;
   return (
-    <Window width={1100} height={640} title="Ban Panel" className="BanPanel">
-      <Window.Content>
+    <Window width={1100} height={640} title="Ban Panel">
+      <Window.Content className="BanPanel">
         <Stack fill vertical>
           <Stack.Item>
             <Tabs>

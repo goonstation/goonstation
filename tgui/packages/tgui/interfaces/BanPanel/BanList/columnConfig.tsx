@@ -9,6 +9,7 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { ReactNode } from 'react';
 
 import { Button } from '../../../components';
 import type { ColumnConfig } from '../../../components/goonstation/ListGrid';
@@ -111,9 +112,13 @@ export const buildColumnConfigs = (
     },
     renderContents: (options: { data: BanResource; value: unknown }) => {
       if (options.data.deleted_at !== null) {
-        return <div className="ExpiredBan BanText">{options.value}</div>;
+        return (
+          <div className="ExpiredBan BanText">{options.value as ReactNode}</div>
+        );
       }
-      return <div className="CurrentBan BanText">{options.value}</div>;
+      return (
+        <div className="CurrentBan BanText">{options.value as ReactNode}</div>
+      );
     },
     basis: 7.5,
   },
