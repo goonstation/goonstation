@@ -41,18 +41,18 @@ export const ListInputModal = (props: ListInputModalProps) => {
     if (key === KEY_DOWN) {
       if (selected === null || selected === len) {
         setSelected(0);
-        document!.getElementById('0')?.scrollIntoView();
+        document!.getElementById('0')?.focus();
       } else {
         setSelected(selected + 1);
-        document!.getElementById((selected + 1).toString())?.scrollIntoView();
+        document!.getElementById((selected + 1).toString())?.focus();
       }
     } else if (key === KEY_UP) {
       if (selected === null || selected === 0) {
         setSelected(len);
-        document!.getElementById(len.toString())?.scrollIntoView();
+        document!.getElementById(len.toString())?.focus();
       } else {
         setSelected(selected - 1);
-        document!.getElementById((selected - 1).toString())?.scrollIntoView();
+        document!.getElementById((selected - 1).toString())?.focus();
       }
     }
   };
@@ -77,7 +77,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
     if (foundItem) {
       const foundIndex = items.indexOf(foundItem);
       setSelected(foundIndex);
-      document!.getElementById(foundIndex.toString())?.scrollIntoView();
+      document!.getElementById(foundIndex.toString())?.focus();
     }
   };
   // User types into search bar
@@ -87,7 +87,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
     }
     setSearchQuery(query);
     setSelected(0);
-    document!.getElementById('0')?.scrollIntoView();
+    document!.getElementById('0')?.focus();
   };
   // User presses the search button
   const onSearchBarToggle = () => {
