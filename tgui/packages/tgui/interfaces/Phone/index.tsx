@@ -5,7 +5,14 @@
  * @license MIT
  */
 
-import { Button, Collapsible, Dimmer, LabeledList, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  Collapsible,
+  Dimmer,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -41,7 +48,9 @@ export const Phone = () => {
           <Stack.Item>
             <Section fill>
               <LabeledList>
-                <LabeledList.Item label="Last Called">{lastCalled ? `${lastCalled}` : `None`}</LabeledList.Item>
+                <LabeledList.Item label="Last Called">
+                  {lastCalled ? `${lastCalled}` : `None`}
+                </LabeledList.Item>
               </LabeledList>
             </Section>
           </Stack.Item>
@@ -67,11 +76,18 @@ const AddressGroup = ({ phonebook }: AddressGroupProps) => {
   const categoryName = capitalize(phonebook.category);
   const phones = phonebook.phones.sort(idSort);
 
-  const getCategoryColor
-    = CategoryColors[CategoryColors.findIndex(({ department }) => department === phonebook.category)].color;
+  const getCategoryColor =
+    CategoryColors[
+      CategoryColors.findIndex(
+        ({ department }) => department === phonebook.category,
+      )
+    ].color;
 
   return (
-    <Collapsible title={categoryName} color={!!getCategoryColor && getCategoryColor}>
+    <Collapsible
+      title={categoryName}
+      color={!!getCategoryColor && getCategoryColor}
+    >
       {phones.map((currentPhone) => (
         <Button
           fluid
