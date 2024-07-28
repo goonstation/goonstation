@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   BlockQuote,
   Button,
@@ -6,7 +7,7 @@ import {
   Section,
 } from 'tgui-core/components';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Observable = {
@@ -71,10 +72,7 @@ const GetRandomAlivePlayer = function (observableArray: Array<Observable>) {
 
 export const ObserverMenu = () => {
   const { act, data } = useBackend<Observables>();
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    '',
-  );
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const filteredItems = data.mydata.filter(
     (item) =>
       item?.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -89,10 +87,8 @@ export const ObserverMenu = () => {
     }
     setSearchQuery(query);
   };
-  const [deadFilter, setDeadFilter] = useLocalState<boolean>(
-    'filterDead',
-    false,
-  );
+  const [deadFilter, setDeadFilter] = useState<boolean>(false);
+
   return (
     <Window title="Choose something to observe" width={600} height={600}>
       <Window.Content scrollable>
@@ -102,7 +98,6 @@ export const ObserverMenu = () => {
           buttons={
             <>
               <Button
-                id="random_observe_button"
                 disabled={
                   data.mydata.filter((obs) => obs.player && !obs.dead)
                     .length === 0
@@ -118,7 +113,6 @@ export const ObserverMenu = () => {
               <Button.Checkbox
                 icon="skull"
                 tooltip={deadFilter ? 'Show dead mobs' : 'Hide dead mobs'}
-                id="dead_filter_button"
                 checked={!deadFilter}
                 onClick={() => setDeadFilter(!deadFilter)}
               />
@@ -126,7 +120,6 @@ export const ObserverMenu = () => {
                 width={20}
                 autoFocus
                 autoSelect
-                id="search_bar"
                 onInput={(_, value) => onSearch(value)}
                 placeholder="Search by name or job"
                 value={searchQuery}
