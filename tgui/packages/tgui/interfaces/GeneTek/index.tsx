@@ -5,25 +5,36 @@
  * @license ISC
  */
 
-import { Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Tabs, TimeDisplay } from "tgui-core/components";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Tabs,
+  TimeDisplay,
+} from 'tgui-core/components';
 
-import { useBackend, useSharedState } from "../../backend";
-import { Window } from "../../layouts";
-import { BuyMaterialsModal } from "./modals/BuyMaterialsModal";
-import { CombineGenesModal } from "./modals/CombineGenesModal";
-import { MutationsTab } from "./tabs/MutationsTab";
-import { ResearchTab } from "./tabs/ResearchTab";
-import { ScannerTab } from "./tabs/ScannerTab";
-import { RecordTab, StorageTab } from "./tabs/StorageTab";
-import type { GeneTekData } from "./type";
+import { useBackend, useSharedState } from '../../backend';
+import { Window } from '../../layouts';
+import { BuyMaterialsModal } from './modals/BuyMaterialsModal';
+import { CombineGenesModal } from './modals/CombineGenesModal';
+import { MutationsTab } from './tabs/MutationsTab';
+import { ResearchTab } from './tabs/ResearchTab';
+import { ScannerTab } from './tabs/ScannerTab';
+import { RecordTab, StorageTab } from './tabs/StorageTab';
+import type { GeneTekData } from './type';
 
-const formatSeconds = v => v > 0 ? (v / 10).toFixed(0) + "s" : "Ready";
+const formatSeconds = (v) => (v > 0 ? (v / 10).toFixed(0) + 's' : 'Ready');
 
 export const GeneTek = () => {
   const { data, act } = useBackend<GeneTekData>();
-  const [menu, setMenu] = useSharedState("menu", "research");
-  const [buyMats, setBuyMats] = useSharedState("buymats", null);
-  const [isCombining] = useSharedState("iscombining", false);
+  const [menu, setMenu] = useSharedState('menu', 'research');
+  const [buyMats, setBuyMats] = useSharedState('buymats', null);
+  const [isCombining] = useSharedState('iscombining', false);
   const {
     materialCur,
     materialMax,
@@ -38,49 +49,45 @@ export const GeneTek = () => {
     allowed,
   } = data;
 
-  const {
-    name,
-    stat,
-    health,
-    stability,
-  } = subject || {};
+  const { name, stat, health, stability } = subject || {};
 
   const maxBuyMats = Math.min(
     materialMax - materialCur,
     Math.floor(budget / costPerMaterial),
   );
 
-  const scannerAlertNoticeProps = scannerError ? { danger: true } : { info: true };
+  const scannerAlertNoticeProps = scannerError
+    ? { danger: true }
+    : { info: true };
 
   return (
     <Window
-      theme={allowed ? "genetek" : "genetek-disabled"}
+      theme={allowed ? 'genetek' : 'genetek-disabled'}
       width={730}
-      height={415}>
+      height={415}
+    >
       <Flex height="100%">
         <Flex.Item
           width="245px"
           height="100%"
-          style={{ "padding": "5px 5px 5px 5px" }}>
-          <Flex
-            direction="column"
-            height="100%">
+          style={{ padding: '5px 5px 5px 5px' }}
+        >
+          <Flex direction="column" height="100%">
             {!allowed && (
               <>
-                <div style={{ "color": "#ff3333", "textAlign": "center" }}>
+                <div style={{ color: '#ff3333', textAlign: 'center' }}>
                   Insufficient access to interact.
                 </div>
                 <Divider />
               </>
             )}
             <Flex>
-              <ProgressBar
-                value={materialCur}
-                maxValue={materialMax}
-                mb={1}>
-                <Box position="absolute" bold>Materials</Box>
+              <ProgressBar value={materialCur} maxValue={materialMax} mb={1}>
+                <Box position="absolute" bold>
+                  Materials
+                </Box>
                 {materialCur}
-                {" / "}
+                {' / '}
                 {materialMax}
               </ProgressBar>
               <Flex.Item grow={0} shrink={0} ml={1}>
@@ -89,14 +96,13 @@ export const GeneTek = () => {
                   compact
                   icon="dollar-sign"
                   disabled={maxBuyMats <= 0}
-                  onClick={() => setBuyMats(1)} />
+                  onClick={() => setBuyMats(1)}
+                />
               </Flex.Item>
             </Flex>
             {subject && (
               <LabeledList>
-                <LabeledList.Item label="Occupant">
-                  {name}
-                </LabeledList.Item>
+                <LabeledList.Item label="Occupant">{name}</LabeledList.Item>
                 <LabeledList.Item label="Health">
                   <ProgressBar
                     ranges={{
@@ -104,16 +110,21 @@ export const GeneTek = () => {
                       average: [0.15, 0.75],
                       good: [0.75, Infinity],
                     }}
-                    value={health}>
-                    {stat < 2 ? health <= 0 ? (
-                      <Box color="bad">
-                        <Icon name="exclamation-triangle" />
-                        {" Critical"}
-                      </Box>
-                    ) : (health * 100).toFixed(0) + "%" : (
+                    value={health}
+                  >
+                    {stat < 2 ? (
+                      health <= 0 ? (
+                        <Box color="bad">
+                          <Icon name="exclamation-triangle" />
+                          {' Critical'}
+                        </Box>
+                      ) : (
+                        (health * 100).toFixed(0) + '%'
+                      )
+                    ) : (
                       <Box>
                         <Icon name="skull" />
-                        {" Deceased"}
+                        {' Deceased'}
                       </Box>
                     )}
                   </ProgressBar>
@@ -126,21 +137,21 @@ export const GeneTek = () => {
                       good: [75, Infinity],
                     }}
                     value={stability}
-                    maxValue={100} />
+                    maxValue={100}
+                  />
                 </LabeledList.Item>
               </LabeledList>
             )}
             <Divider />
-            <Flex.Item grow={1} style={{ overflow: "hidden" }}>
-              {currentResearch.map(r => (
+            <Flex.Item grow={1} style={{ overflow: 'hidden' }}>
+              {currentResearch.map((r) => (
                 <ProgressBar
                   key={r.ref}
                   value={r.total - r.current}
                   maxValue={r.total}
-                  mb={1}>
-                  <Box position="absolute">
-                    {r.name}
-                  </Box>
+                  mb={1}
+                >
+                  <Box position="absolute">{r.name}</Box>
                   <TimeDisplay
                     timing
                     value={r.current}
@@ -150,15 +161,15 @@ export const GeneTek = () => {
               ))}
             </Flex.Item>
             {!!scannerAlert && (
-              <NoticeBox {...scannerAlertNoticeProps}>
-                {scannerAlert}
-              </NoticeBox>
+              <NoticeBox {...scannerAlertNoticeProps}>{scannerAlert}</NoticeBox>
             )}
             <Divider />
             <LabeledList>
-              {equipmentCooldown.map(e => (
+              {equipmentCooldown.map((e) => (
                 <LabeledList.Item key={e.label} label={e.label}>
-                  {e.cooldown < 0 ? "Ready" : (
+                  {e.cooldown < 0 ? (
+                    'Ready'
+                  ) : (
                     <TimeDisplay
                       timing
                       value={e.cooldown}
@@ -176,54 +187,66 @@ export const GeneTek = () => {
               <Tabs>
                 <Tabs.Tab
                   icon="flask"
-                  selected={menu === "research"}
-                  onClick={() => setMenu("research")}>
+                  selected={menu === 'research'}
+                  onClick={() => setMenu('research')}
+                >
                   Research
                 </Tabs.Tab>
                 <Tabs.Tab
                   icon="radiation"
-                  selected={menu === "mutations"}
-                  onClick={() => setMenu("mutations")}>
+                  selected={menu === 'mutations'}
+                  onClick={() => setMenu('mutations')}
+                >
                   Mutations
                 </Tabs.Tab>
                 <Tabs.Tab
                   icon="server"
-                  selected={menu === "storage" || (!record && menu === "record")}
-                  onClick={() => setMenu("storage")}>
+                  selected={
+                    menu === 'storage' || (!record && menu === 'record')
+                  }
+                  onClick={() => setMenu('storage')}
+                >
                   Storage
                 </Tabs.Tab>
                 {!!record && (
                   <Tabs.Tab
                     icon="save"
-                    selected={menu === "record"}
-                    onClick={() => setMenu("record")}
-                    rightSlot={menu === "record" && (
-                      <Button
-                        circular
-                        compact
-                        color="transparent"
-                        icon="times"
-                        onClick={() => act("clearrecord")} />
-                    )}>
+                    selected={menu === 'record'}
+                    onClick={() => setMenu('record')}
+                    rightSlot={
+                      menu === 'record' && (
+                        <Button
+                          circular
+                          compact
+                          color="transparent"
+                          icon="times"
+                          onClick={() => act('clearrecord')}
+                        />
+                      )
+                    }
+                  >
                     Record
                   </Tabs.Tab>
                 )}
                 {subject && (
                   <Tabs.Tab
                     icon="dna"
-                    selected={menu === "scanner"}
-                    onClick={() => setMenu("scanner")}>
+                    selected={menu === 'scanner'}
+                    onClick={() => setMenu('scanner')}
+                  >
                     Scanner
                   </Tabs.Tab>
                 )}
               </Tabs>
               {buyMats !== null && <BuyMaterialsModal maxAmount={maxBuyMats} />}
               {!!isCombining && <CombineGenesModal />}
-              {menu === "research" && <ResearchTab maxBuyMats={maxBuyMats} setBuyMats={setBuyMats} />}
-              {menu === "mutations" && <MutationsTab />}
-              {menu === "storage" && <StorageTab />}
-              {menu === "record" && (record ? <RecordTab /> : <StorageTab />)}
-              {menu === "scanner" && <ScannerTab />}
+              {menu === 'research' && (
+                <ResearchTab maxBuyMats={maxBuyMats} setBuyMats={setBuyMats} />
+              )}
+              {menu === 'mutations' && <MutationsTab />}
+              {menu === 'storage' && <StorageTab />}
+              {menu === 'record' && (record ? <RecordTab /> : <StorageTab />)}
+              {menu === 'scanner' && <ScannerTab />}
             </Box>
           </Flex.Item>
         </Window.Content>

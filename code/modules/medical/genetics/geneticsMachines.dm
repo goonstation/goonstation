@@ -1006,6 +1006,7 @@
 			if (GBE.secret && !genResearch.see_secret)
 				continue
 			.["subject"]["active"] += list(serialize_bioeffect_for_tgui(BE, active = TRUE, full_data=(BE == src.currently_browsing)))
+
 		if (src.modify_appearance)
 			.["modifyAppearance"] = src.modify_appearance.ui_data(user)
 		else

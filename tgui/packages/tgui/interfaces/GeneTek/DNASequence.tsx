@@ -5,33 +5,30 @@
  * @license ISC
  */
 
-import { useBackend } from "../../backend";
-import { Button, Icon } from "../../components";
+import { useBackend } from '../../backend';
+import { Button, Icon } from '../../components';
 
 const letterColor = {
-  "?": "grey",
-  "A": "red",
-  "T": "blue",
-  "C": "yellow",
-  "G": "green",
+  '?': 'grey',
+  A: 'red',
+  T: 'blue',
+  C: 'yellow',
+  G: 'green',
 };
 
 const typeColor = {
-  "": "good",
-  "X": "grey",
-  "1": "good",
-  "2": "olive",
-  "3": "average",
-  "4": "orange",
-  "5": "bad",
+  '': 'good',
+  X: 'grey',
+  '1': 'good',
+  '2': 'olive',
+  '3': 'average',
+  '4': 'orange',
+  '5': 'bad',
 };
 
 export const DNASequence = (props) => {
   const { act } = useBackend();
-  const {
-    gene,
-    isPotential,
-  } = props;
+  const { gene, isPotential } = props;
 
   const sequence = gene.dna;
   let allGood = true;
@@ -49,9 +46,9 @@ export const DNASequence = (props) => {
     }
   }
 
-  const advancePair = i => {
+  const advancePair = (i) => {
     if (isPotential) {
-      act("advancepair", {
+      act('advancepair', {
         ref: gene.ref,
         pair: i,
       });
@@ -59,12 +56,15 @@ export const DNASequence = (props) => {
   };
 
   return blocks.map((block, i) => (
-    <table key={i} style={{
-      display: "inline-table",
-      marginTop: "1em",
-      marginLeft: i % 4 === 0 ? "0" : "0.25em",
-      marginRight: i % 4 === 3 ? "0" : "0.25em",
-    }}>
+    <table
+      key={i}
+      style={{
+        display: 'inline-table',
+        marginTop: '1em',
+        marginLeft: i % 4 === 0 ? '0' : '0.25em',
+        marginRight: i % 4 === 3 ? '0' : '0.25em',
+      }}
+    >
       <tr>
         {block.map((pair, j) => (
           <td key={j}>
@@ -73,24 +73,33 @@ export const DNASequence = (props) => {
               type={pair.style}
               mark={pair.marker}
               useLetterColor={allGood}
-              onClick={() => advancePair(i * 4 + j + 1)} />
+              onClick={() => advancePair(i * 4 + j + 1)}
+            />
           </td>
         ))}
       </tr>
       <tr>
         {block.map((pair, j) => (
-          <td key={j} style={{ "textAlign": "center" }}>
-            {allGood ? "|" : pair.marker === "locked" ? (
+          <td key={j} style={{ textAlign: 'center' }}>
+            {allGood ? (
+              '|'
+            ) : pair.marker === 'locked' ? (
               <Icon
                 name="lock"
                 color="average"
-                onClick={() => advancePair(i * 4 + j + 1)} />
+                onClick={() => advancePair(i * 4 + j + 1)}
+              />
             ) : (
-              <Icon name={
-                pair.style === "" ? "check" // correct
-                  : pair.style === "5" ? "times" // incorrect
-                    : "question" // changed since last analyze
-              } color={typeColor[pair.style]} />
+              <Icon
+                name={
+                  pair.style === ''
+                    ? 'check' // correct
+                    : pair.style === '5'
+                      ? 'times' // incorrect
+                      : 'question' // changed since last analyze
+                }
+                color={typeColor[pair.style]}
+              />
             )}
           </td>
         ))}
@@ -103,7 +112,8 @@ export const DNASequence = (props) => {
               type={pair.style}
               mark={pair.marker}
               useLetterColor={allGood}
-              onClick={() => advancePair(i * 4 + j + 1)} />
+              onClick={() => advancePair(i * 4 + j + 1)}
+            />
           </td>
         ))}
       </tr>
@@ -111,23 +121,13 @@ export const DNASequence = (props) => {
   ));
 };
 
-export const Nucleotide = props => {
-  const {
-    letter,
-    type,
-    mark,
-    useLetterColor,
-    ...rest
-  } = props;
+export const Nucleotide = (props) => {
+  const { letter, type, mark, useLetterColor, ...rest } = props;
 
   const color = useLetterColor ? letterColor[letter] : typeColor[type];
 
   return (
-    <Button
-      width="1.75em"
-      textAlign="center"
-      color={color}
-      {...rest}>
+    <Button width="1.75em" textAlign="center" color={color} {...rest}>
       {letter}
     </Button>
   );
