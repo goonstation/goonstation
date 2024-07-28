@@ -35,4 +35,3 @@ export { Stack } from './Stack';
 export { Table } from './Table';
 export { Tabs } from './Tabs';
 export { TextArea } from './TextArea';
-export { Tooltip } from './Tooltip';
