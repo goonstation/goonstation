@@ -11,8 +11,24 @@ import { ReleaseValve } from '../common/ReleaseValve';
 import { PaperSheetView } from '../PaperSheet';
 import { Detonator } from './Detonator';
 
+interface GasCanisterData {
+  connected,
+  holding,
+  hasValve,
+  valveIsOpen,
+  pressure,
+  maxPressure,
+  releasePressure,
+  minRelease,
+  maxRelease,
+  detonator,
+  detonatorAttachments,
+  hasPaper,
+  paperData,
+}
+
 export const GasCanister = () => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<GasCanisterData>();
 
   const {
     connected,
@@ -137,7 +153,7 @@ class PaperView extends Component {
   }
 
   render() {
-    const { data } = useBackend();
+    const { data } = useBackend<GasCanisterData>();
     const { text, stamps } = data.paperData;
     return (
       <Section
