@@ -6,9 +6,6 @@
  * @license MIT
  */
 
-import { toFixed } from 'tgui-core/math';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -16,24 +13,28 @@ import {
   NumberInput,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface ColorMatrixEditorData {
   previewRef: string;
   targetIsClient: boolean;
-  currentColor: string[][];
+  currentColor: number[];
 }
 
-export const ColorMatrixEditor = (props, context) => {
-  const { act, data } = useBackend<ColorMatrixEditorData>(context);
-  const [
-    [rr, rg, rb, ra],
-    [gr, gg, gb, ga],
-    [br, bg, bb, ba],
-    [ar, ag, ab, aa],
-    [cr, cg, cb, ca],
-  ] = data.currentColor;
+export const ColorMatrixEditor = () => {
+  const { act, data } = useBackend<ColorMatrixEditorData>();
+  // How the currentColor array is structured:
+  // const [
+  //   rr, rg, rb, ra,
+  //   gr, gg, gb, ga,
+  //   br, bg, bb, ba,
+  //   ar, ag, ab, aa,
+  //   cr, cg, cb, ca,
+  // ] = data.currentColor;
   const prefixes = ['r', 'g', 'b', 'a', 'c'];
   return (
     <Window title="Color Matrix Editor" width={560} height={245}>
@@ -54,12 +55,13 @@ export const ColorMatrixEditor = (props, context) => {
                                 {`${prefixes[row]}${prefixes[col]}:`}
                               </Box>
                               <NumberInput
-                                inline
                                 value={data.currentColor[row * 4 + col]}
                                 step={0.01}
+                                minValue={-Infinity}
+                                maxValue={Infinity}
                                 width="50px"
                                 format={(value) => toFixed(value, 2)}
-                                onDrag={(_e, value: string[]) => {
+                                onDrag={(value: number) => {
                                   let retColor = data.currentColor;
                                   retColor[row * 4 + col] = value;
                                   act('transition_color', { color: retColor });
@@ -76,20 +78,19 @@ export const ColorMatrixEditor = (props, context) => {
               <Stack.Item grow />
               <Stack.Item align="left">
                 <Button.Confirm
-                  content="Confirm"
                   confirmContent="Confirm?"
                   onClick={() => act('confirm')}
-                />
+                >
+                  Confirm
+                </Button.Confirm>
                 {data.targetIsClient ? (
                   <>
-                    <Button
-                      content="Preview Color"
-                      onClick={() => act('client-preview')}
-                    />
-                    <Button
-                      content="Reset Your Color"
-                      onClick={() => act('client-reset')}
-                    />
+                    <Button onClick={() => act('client-preview')}>
+                      Preview Color
+                    </Button>
+                    <Button onClick={() => act('client-reset')}>
+                      Reset Your Color
+                    </Button>
                   </>
                 ) : (
                   ''
