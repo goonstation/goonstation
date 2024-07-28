@@ -5,16 +5,10 @@
  * @license ISC
  */
 
-import {
-  Box,
-  Button,
-  Divider,
-  Knob,
-  LabeledList,
-  Modal,
-} from 'tgui-core/components';
+import { Box, Button, Divider, Knob, LabeledList } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../../backend';
+import { Modal } from '../../../components';
 import type { GeneTekData } from '../type';
 
 export const BuyMaterialsModal = (props) => {

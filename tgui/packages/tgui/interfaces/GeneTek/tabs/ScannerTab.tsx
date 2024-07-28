@@ -11,11 +11,11 @@ import {
   ByondUi,
   Flex,
   LabeledList,
-  Modal,
   Section,
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../../backend';
+import { Modal } from '../../../components';
 import { AppearanceEditor } from '../AppearanceEditor';
 import { GeneList, haveDevice, onCooldown } from '../BioEffect';
 import { GeneIcon } from '../GeneIcon';

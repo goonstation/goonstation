@@ -5,18 +5,16 @@
  * @license ISC
  */
 
-import { Box, Button, Input, LabeledList, Modal } from "tgui-core/components";
+import { Box, Button, Input, LabeledList } from 'tgui-core/components';
 
-import { useBackend, useSharedState } from "../../../backend";
-import type { GeneTekData } from "../type";
+import { useBackend, useSharedState } from '../../../backend';
+import { Modal } from '../../../components';
+import type { GeneTekData } from '../type';
 
 export const UnlockModal = () => {
   const { data, act } = useBackend<GeneTekData>();
-  const [unlockCode, setUnlockCode] = useSharedState("unlockcode", "");
-  const {
-    autoDecryptors,
-    unlock,
-  } = data;
+  const [unlockCode, setUnlockCode] = useSharedState('unlockcode', '');
+  const { autoDecryptors, unlock } = data;
 
   if (!unlock) {
     return;
@@ -30,13 +28,14 @@ export const UnlockModal = () => {
             {unlock.length} characters
           </LabeledList.Item>
           <LabeledList.Item label="Possible Characters">
-            {unlock.chars.join(" ")}
+            {unlock.chars.join(' ')}
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Enter Unlock Code">
             <Input
               value={unlockCode}
-              onChange={(_, code) => setUnlockCode(code.toUpperCase())} />
+              onChange={(_, code) => setUnlockCode(code.toUpperCase())}
+            />
           </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Correct Characters">
@@ -49,18 +48,17 @@ export const UnlockModal = () => {
             {unlock.tries} before mutation
           </LabeledList.Item>
         </LabeledList>
-        <Box
-          textAlign="right"
-          mt={2}>
+        <Box textAlign="right" mt={2}>
           <Button
             icon="magic"
             color="average"
-            tooltip={"Auto-Decryptors Available: " + autoDecryptors}
+            tooltip={'Auto-Decryptors Available: ' + autoDecryptors}
             disabled={autoDecryptors < 1}
             onClick={() => {
-              setUnlockCode("");
-              act("unlock", { code: "UNLOCK" });
-            }}>
+              setUnlockCode('');
+              act('unlock', { code: 'UNLOCK' });
+            }}
+          >
             Use Auto-Decryptor
           </Button>
         </Box>
@@ -69,25 +67,34 @@ export const UnlockModal = () => {
             mr={1}
             icon="check"
             color="good"
-            tooltip={unlockCode.length !== unlock.length
-              ? "Code is the wrong length."
-              : unlockCode.split("").some(c => unlock.chars.indexOf(c) === -1)
-                ? "Invalid character in code." : ""}
-            disabled={unlockCode.length !== unlock.length
-              || unlockCode.split("").some(c => unlock.chars.indexOf(c) === -1)}
+            tooltip={
+              unlockCode.length !== unlock.length
+                ? 'Code is the wrong length.'
+                : unlockCode
+                      .split('')
+                      .some((c) => unlock.chars.indexOf(c) === -1)
+                  ? 'Invalid character in code.'
+                  : ''
+            }
+            disabled={
+              unlockCode.length !== unlock.length ||
+              unlockCode.split('').some((c) => unlock.chars.indexOf(c) === -1)
+            }
             onClick={() => {
-              setUnlockCode("");
-              act("unlock", { code: unlockCode });
-            }}>
+              setUnlockCode('');
+              act('unlock', { code: unlockCode });
+            }}
+          >
             Attempt Decryption
           </Button>
           <Button
             icon="times"
             color="bad"
             onClick={() => {
-              setUnlockCode("");
-              act("unlock", { code: null });
-            }}>
+              setUnlockCode('');
+              act('unlock', { code: null });
+            }}
+          >
             Cancel
           </Button>
         </Box>

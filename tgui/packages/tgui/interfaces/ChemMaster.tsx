@@ -12,14 +12,13 @@ import {
   Dimmer,
   Image,
   Input,
-  Modal,
   NumberInput,
   Section,
   Stack,
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../backend';
-import { LabeledControls } from '../components';
+import { LabeledControls, Modal } from '../components';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';

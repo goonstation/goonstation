@@ -6,9 +6,10 @@
  * @license ISC
  */
 
-import { Box, Button, Modal, Section, Stack } from 'tgui-core/components';
+import { Box, Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../../backend';
+import { Modal } from '../../../components';
 import type { GeneTekData } from '../type';
 
 export const CombineGenesModal = () => {
@@ -23,7 +24,8 @@ export const CombineGenesModal = () => {
             <Stack.Item key={g.ref}>
               <Button.Checkbox
                 checked={combining.indexOf(g.ref) >= 0}
-                onClick={() => act('togglecombine', { ref: g.ref })}>
+                onClick={() => act('togglecombine', { ref: g.ref })}
+              >
                 {g.name}
               </Button.Checkbox>
             </Stack.Item>
@@ -40,7 +42,8 @@ export const CombineGenesModal = () => {
           onClick={() => {
             act('combinegenes');
             setIsCombining(false);
-          }}>
+          }}
+        >
           Combine
         </Button>
       </Box>

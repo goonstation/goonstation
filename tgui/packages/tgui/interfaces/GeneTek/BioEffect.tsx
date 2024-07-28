@@ -12,12 +12,12 @@ import {
   Icon,
   Input,
   LabeledList,
-  Modal,
   NumberInput,
   Section,
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
+import { Modal } from '../../components';
 import { DNASequence } from './DNASequence';
 import { GeneIcon } from './GeneIcon';
 import { UnlockModal } from './modals/UnlockModal';

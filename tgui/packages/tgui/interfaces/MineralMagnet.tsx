@@ -5,20 +5,62 @@
  * @license ISC
  */
 
-import { useState } from "react";
-import { Box, Button, Dimmer, Divider, Flex, Icon, Modal, Section, Stack, TimeDisplay } from "tgui-core/components";
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Divider,
+  Flex,
+  Icon,
+  Section,
+  Stack,
+  TimeDisplay,
+} from 'tgui-core/components';
 
-import { useBackend } from "../backend";
-import { formatTime } from "../format";
+import { useBackend } from '../backend';
+import { Modal } from '../components';
+import { formatTime } from '../format';
 import { Window } from '../layouts';
 
 const getMagnetCondition = (condition) => {
-  if (condition >= 95) return <Box inline color="good">Optimal</Box>;
-  else if (condition >= 70) return <Box inline color="olive">Mild Structural Damage</Box>;
-  else if (condition >= 40) return <Box inline color="yellow">Heavy Structural Damage</Box>;
-  else if (condition >= 10) return <Box inline color="average">Extreme Structural Damage</Box>;
-  else if (condition > 0) return <Box inline color="bad">Destruction Imminent</Box>;
-  else return <Box inline color="bad">Connection Lost</Box>;
+  if (condition >= 95) {
+    return (
+      <Box inline color="good">
+        Optimal
+      </Box>
+    );
+  } else if (condition >= 70) {
+    return (
+      <Box inline color="olive">
+        Mild Structural Damage
+      </Box>
+    );
+  } else if (condition >= 40) {
+    return (
+      <Box inline color="yellow">
+        Heavy Structural Damage
+      </Box>
+    );
+  } else if (condition >= 10) {
+    return (
+      <Box inline color="average">
+        Extreme Structural Damage
+      </Box>
+    );
+  } else if (condition > 0) {
+    return (
+      <Box inline color="bad">
+        Destruction Imminent
+      </Box>
+    );
+  } else {
+    return (
+      <Box inline color="bad">
+        Connection Lost
+      </Box>
+    );
+  }
 };
 
 interface MineralMagnetData {
@@ -36,7 +78,15 @@ interface MineralMagnetData {
 export const MineralMagnet = () => {
   const { act, data } = useBackend<MineralMagnetData>();
 
-  const { isLinked, magnetActive, magnetAutomaticMode, magnetCooldownOverride, magnetHealth, magnetLastUsed, time } = data;
+  const {
+    isLinked,
+    magnetActive,
+    magnetAutomaticMode,
+    magnetCooldownOverride,
+    magnetHealth,
+    magnetLastUsed,
+    time,
+  } = data;
   const linkedMagnets = data.linkedMagnets || [];
   const miningEncounters = data.miningEncounters || [];
 
@@ -45,83 +95,109 @@ export const MineralMagnet = () => {
   const [viewEncounters, setViewEncounters] = useState(false);
 
   return (
-    <Window
-      width={300}
-      height={240}>
+    <Window width={300} height={240}>
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
-            Condition: {isLinked ? getMagnetCondition(magnetHealth) : <Box inline color="bad">No Magnet Linked</Box>}
+            Condition:{' '}
+            {isLinked ? (
+              getMagnetCondition(magnetHealth)
+            ) : (
+              <Box inline color="bad">
+                No Magnet Linked
+              </Box>
+            )}
           </Box>
           <Box>
-            Status: {magnetActive ? "Pulling New Mineral Source" : (
-              onCooldown ? (
-                <>
-                  Cooling Down: <TimeDisplay value={Math.max(magnetLastUsed - time, 0)}
-                    timing
-                    format={value => formatTime(value)} />
-                </>
-              ) : "Idle"
+            Status:{' '}
+            {magnetActive ? (
+              'Pulling New Mineral Source'
+            ) : onCooldown ? (
+              <>
+                Cooling Down:{' '}
+                <TimeDisplay
+                  value={Math.max(magnetLastUsed - time, 0)}
+                  timing
+                  format={(value) => formatTime(value)}
+                />
+              </>
+            ) : (
+              'Idle'
             )}
           </Box>
         </Section>
-        <Section title="Magnet Controls"
+        <Section
+          title="Magnet Controls"
           buttons={
             <Button
               textAlign="center"
               icon="rss"
-              onClick={() => act('geoscan')}>
+              onClick={() => act('geoscan')}
+            >
               Scan
             </Button>
-          }>
+          }
+        >
           {(!!magnetActive || (onCooldown && !magnetCooldownOverride)) && (
             <Dimmer fontSize={1.75} pb={2}>
-              {magnetActive ? "Magnet Active" : "On Cooldown"}
+              {magnetActive ? 'Magnet Active' : 'On Cooldown'}
             </Dimmer>
           )}
           <Button
             textAlign="center"
-            color={onCooldown && magnetCooldownOverride && "average"}
+            color={onCooldown && magnetCooldownOverride && 'average'}
             icon="magnet"
             onClick={() => act('activatemagnet')}
-            fluid>
+            fluid
+          >
             Activate Magnet
           </Button>
           <Button
             textAlign="center"
-            color={onCooldown && magnetCooldownOverride && "average"}
+            color={onCooldown && magnetCooldownOverride && 'average'}
             icon="search"
             disabled={!miningEncounters.length}
             onClick={() => setViewEncounters(true)}
-            fluid>
+            fluid
+          >
             Activate telescope location
           </Button>
-          <Button.Checkbox checked={magnetCooldownOverride}
+          <Button.Checkbox
+            checked={magnetCooldownOverride}
             onClick={() => act('overridecooldown')}
-            style={{ 'zIndex': '1' }}>
+            style={{ zIndex: '1' }}
+          >
             Override Cooldown
           </Button.Checkbox>
-          <Button.Checkbox checked={magnetAutomaticMode}
+          <Button.Checkbox
+            checked={magnetAutomaticMode}
             onClick={() => act('automode')}
-            style={{ 'zIndex': '1' }}>
+            style={{ zIndex: '1' }}
+          >
             Automatic Mode
           </Button.Checkbox>
         </Section>
         {viewEncounters && (
-          <Modal full
+          <Modal
+            full
             ml={1} // For some reason modals only seem properly centered with this
             width="230px"
-            height="200px">
+            height="200px"
+          >
             <Stack vertical fill>
               <Stack.Item grow>
                 <Section scrollable fill>
-                  {miningEncounters.map(encounter => (
-                    <Button key={encounter.id}
+                  {miningEncounters.map((encounter) => (
+                    <Button
+                      key={encounter.id}
                       onClick={() => {
-                        act('activateselectable', { encounter_id: encounter.id });
+                        act('activateselectable', {
+                          encounter_id: encounter.id,
+                        });
                         setViewEncounters(false);
                       }}
-                      fluid>
+                      fluid
+                    >
                       {encounter.name}
                     </Button>
                   ))}
@@ -129,16 +205,15 @@ export const MineralMagnet = () => {
               </Stack.Item>
               <Stack.Item>
                 <Flex>
-                  <Flex.Item grow
-                    pt={0.5}
-                    color="label">
+                  <Flex.Item grow pt={0.5} color="label">
                     <Icon name="search" /> Choose a location
                   </Flex.Item>
                   <Flex.Item>
                     <Button
                       color="bad"
                       icon="times"
-                      onClick={() => setViewEncounters(false)}>
+                      onClick={() => setViewEncounters(false)}
+                    >
                       Cancel
                     </Button>
                   </Flex.Item>
@@ -148,10 +223,7 @@ export const MineralMagnet = () => {
           </Modal>
         )}
         {!!isLinked || (
-          <Modal full
-            ml={1}
-            width="270px"
-            height="200px">
+          <Modal full ml={1} width="270px" height="200px">
             <Section title="Choose Linked Magnet" scrollable fill>
               <Button
                 textAlign="center"
@@ -162,9 +234,9 @@ export const MineralMagnet = () => {
                 Scan for Magnets
               </Button>
               <Divider />
-              {linkedMagnets.map(magnet => (
+              {linkedMagnets.map((magnet) => (
                 <Button
-                  icon={magnet.angle === undefined ? "circle" : "arrow-right"}
+                  icon={magnet.angle === undefined ? 'circle' : 'arrow-right'}
                   iconRotation={magnet.angle ?? 0}
                   textAlign="center"
                   fluid
