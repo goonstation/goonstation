@@ -33,7 +33,7 @@ export const Rockbox = () => {
                 <NumberInput
                   value={takeAmount}
                   minValue={1}
-                  maxValue={50}
+                  maxValue={Infinity}
                   step={1}
                   onDrag={(value) => setTakeAmount(value)}
                   onChange={(value) => setTakeAmount(value)}

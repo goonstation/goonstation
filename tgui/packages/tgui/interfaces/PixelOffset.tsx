@@ -45,8 +45,8 @@ export const PixelOffset = () => {
                   stepPixelSize={7}
                   width="2.7em"
                   step={1}
-                  minValue={-1_000}
-                  maxValue={1_000}
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   onDrag={(value) => act("set_x", { x: value })}
                 />
                 <Button
@@ -72,8 +72,8 @@ export const PixelOffset = () => {
                   width="2.7em"
                   step={1}
                   stepPixelSize={7}
-                  minValue={-1_000}
-                  maxValue={1_000}
+                  minValue={-Infinity}
+                  maxValue={Infinity}
                   onDrag={(value) => act("set_y", { y: value })}
                 />
                 <Button

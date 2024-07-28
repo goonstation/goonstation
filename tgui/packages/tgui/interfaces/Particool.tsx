@@ -157,7 +157,7 @@ const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
 
 interface ParticleFloatNonGenEntryProps {
   name,
-  particleFloatStep,
+  particleFloatStep: number,
   tooltip,
   value,
 }

@@ -37,7 +37,7 @@ export const Precipitation = () => {
                 value={cooldown}
                 width={'4'}
                 minValue={0}
-                maxValue={999}
+                maxValue={Infinity}
                 step={1}
                 onChange={(value) =>
                   act('set-cooldown', {
