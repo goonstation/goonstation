@@ -1,4 +1,5 @@
-import { Component } from 'inferno';
+
+import { Component } from 'react';
 
 import { Button } from '../../../../components';
 

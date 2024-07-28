@@ -8,16 +8,16 @@ export const DEFAULT_STATES = {
   MOUSE_COORDS: { x: 0, y: 0 },
 };
 
-export const STATES = (context) => {
+export const STATES = () => {
   return {
     // TODO: add more states here
-    flip: useLocalState<boolean>(context, 'flip', DEFAULT_STATES.FLIP),
-    zoom: useLocalState<number>(context, 'zoom', DEFAULT_STATES.ZOOM),
-    mouseCoords: useLocalState<XYType>(context, 'mouseCoords', DEFAULT_STATES.MOUSE_COORDS),
-    palettesExpanded: useLocalState<PalleteExpandType>(context, 'palettesExpanded', {}),
-    paletteLastElement: useLocalState<HTMLElement | null>(context, 'paletteLastElement', null),
-    tileSize: useLocalState<TileSizeType>(context, 'tileSize', { width: 0, height: 0 }),
-    helpModalOpen: useLocalState<boolean>(context, 'helpModalOpen', false),
+    flip: useLocalState<boolean>('flip', DEFAULT_STATES.FLIP),
+    zoom: useLocalState<number>('zoom', DEFAULT_STATES.ZOOM),
+    mouseCoords: useLocalState<XYType>('mouseCoords', DEFAULT_STATES.MOUSE_COORDS),
+    palettesExpanded: useLocalState<PalleteExpandType>('palettesExpanded', {}),
+    paletteLastElement: useLocalState<HTMLElement | null>('paletteLastElement', null),
+    tileSize: useLocalState<TileSizeType>('tileSize', { width: 0, height: 0 }),
+    helpModalOpen: useLocalState<boolean>('helpModalOpen', false),
   };
 };
 
@@ -26,8 +26,8 @@ export const STATES = (context) => {
  * @param context
  * @returns an object with functions to update the state
  */
-export const useStates = (context) => {
-  const states = STATES(context);
+export const useStates = () => {
+  const states = STATES();
 
   return {
     paletteLastElementSet: (element: HTMLElement) => {
