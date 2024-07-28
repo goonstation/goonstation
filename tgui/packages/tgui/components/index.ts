@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
 export { Button } from './Button';
 export { Collapsible } from './Collapsible';
