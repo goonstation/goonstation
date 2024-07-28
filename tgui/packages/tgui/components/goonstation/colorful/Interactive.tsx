@@ -128,6 +128,8 @@ export class Interactive extends Component {
     const toggleEvent = state
       ? parentWindow.addEventListener
       : parentWindow.removeEventListener;
+    // @ts-ignore TODO-REACT,
+    // probably should just replace a bunch of this with a fork of colorful that exposes internals
     toggleEvent('mousemove', this.handleMove);
     toggleEvent('mouseup', this.handleMoveEnd);
   }
