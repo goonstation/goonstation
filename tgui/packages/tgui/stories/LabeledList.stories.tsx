@@ -4,14 +4,14 @@
  * @license MIT
  */
 
-import { Button, LabeledList } from '../components';
+import { Button, LabeledList } from 'tgui-core/components';
 
 export const meta = {
   title: 'LabeledList',
   render: () => <Story />,
 };
 
-const Story = (props) => {
+const Story = () => {
   return (
     <>
       <LabeledList>
