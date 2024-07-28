@@ -14,6 +14,7 @@
 	health_brute_vuln = 0.7
 	health_burn = 90
 	health_burn_vuln = 0.3
+	can_bleed = FALSE
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 

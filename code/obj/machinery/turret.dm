@@ -229,6 +229,8 @@
 		src.health -= (damage*2)
 	else if(P.proj_data.damage_type == D_ENERGY)
 		src.health -= damage / 2
+	if (damage > 0)
+		hit_twitch(src)
 
 	if (src.health <= 0)
 		src.die()
