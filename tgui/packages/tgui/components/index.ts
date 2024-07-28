@@ -12,7 +12,6 @@ export { Box } from './Box';
 export { Button } from './Button';
 export { ByondUi } from './ByondUi';
 export { Collapsible } from './Collapsible';
-export { ColorBox } from './ColorBox';
 export { Dimmer } from './Dimmer';
 export { Divider } from './Divider';
 export { DraggableControl } from './DraggableControl';

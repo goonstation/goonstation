@@ -5,9 +5,10 @@
  * @license ISC
  */
 
+import { ColorBox } from 'tgui-core/components';
+
 import { Box } from '../Box';
 import { Button } from '../Button';
-import { ColorBox } from '../ColorBox';
 
 interface ColorButtonProps {
   color: string;
