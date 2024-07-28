@@ -1075,7 +1075,6 @@
 
 /obj/machinery/computer/genetics/ui_static_data(mob/user)
 	. = list(
-			"research"=list(),
 			"boothCost" = genResearch.isResearched(/datum/geneticsResearchEntry/genebooth) ? genResearch.genebooth_cost : -1,
 			"injectorCost" = genResearch.isResearched(/datum/geneticsResearchEntry/injector) ? genResearch.injector_cost : -1,
 			"saveSlots" = genResearch.isResearched(/datum/geneticsResearchEntry/saver) ? genResearch.max_save_slots : 0,
@@ -1104,6 +1103,7 @@
 			))
 	.["bioEffects"] = bioEffects
 
+	.["research"] = list()
 	for(var/key as anything in genResearch.researchTree)
 		var/datum/geneticsResearchEntry/R = genResearch.researchTree[key]
 
