@@ -7,7 +7,6 @@
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
 export { Button } from './Button';
-export { ByondUi } from './ByondUi';
 export { Collapsible } from './Collapsible';
 export { Dimmer } from './Dimmer';
 export { Divider } from './Divider';
