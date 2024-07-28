@@ -1,5 +1,4 @@
-import { Component } from 'react';
-import { Box, Divider, Flex, Section } from 'tgui-core/components';
+import { Box, Divider, Flex } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -8,23 +7,23 @@ import {
   PortableHoldingTank,
 } from '../common/PortableAtmos';
 import { ReleaseValve } from '../common/ReleaseValve';
-import { PaperSheetView } from '../PaperSheet';
+// import { PaperSheetView } from '../PaperSheet'; TODO-REACT
 import { Detonator } from './Detonator';
 
 interface GasCanisterData {
-  connected,
-  holding,
-  hasValve,
-  valveIsOpen,
-  pressure,
-  maxPressure,
-  releasePressure,
-  minRelease,
-  maxRelease,
-  detonator,
-  detonatorAttachments,
-  hasPaper,
-  paperData,
+  connected;
+  holding;
+  hasValve;
+  valveIsOpen;
+  pressure;
+  maxPressure;
+  releasePressure;
+  minRelease;
+  maxRelease;
+  detonator;
+  detonatorAttachments;
+  hasPaper;
+  paperData;
 }
 
 export const GasCanister = () => {
@@ -136,9 +135,7 @@ export const GasCanister = () => {
             )}
           </Flex.Item>
           {!!hasPaper && (
-            <Flex.Item width="410px">
-              <PaperView />
-            </Flex.Item>
+            <Flex.Item width="410px">{/* <PaperView /> */}</Flex.Item>
           )}
         </Flex>
       </Window.Content>
@@ -146,25 +143,26 @@ export const GasCanister = () => {
   );
 };
 
-class PaperView extends Component {
-  constructor(props) {
-    super(props);
-    this.el = document.createElement('div');
-  }
+// TODO-REACT
+// class PaperView extends Component {
+//   constructor(props) {
+//     super(props);
+//     this.el = document.createElement('div');
+//   }
 
-  render() {
-    const { data } = useBackend<GasCanisterData>();
-    const { text, stamps } = data.paperData;
-    return (
-      <Section
-        scrollable
-        width="400px"
-        height="518px"
-        backgroundColor="white"
-        style={{ overflowWrap: 'break-word' }}
-      >
-        <PaperSheetView value={text ? text : ''} stamps={stamps} readOnly />
-      </Section>
-    );
-  }
-}
+//   render() {
+//     const { data } = useBackend<GasCanisterData>();
+//     const { text, stamps } = data.paperData;
+//     return (
+//       <Section
+//         scrollable
+//         width="400px"
+//         height="518px"
+//         backgroundColor="white"
+//         style={{ overflowWrap: 'break-word' }}
+//       >
+//         <PaperSheetView value={text ? text : ''} stamps={stamps} readOnly />
+//       </Section>
+//     );
+//   }
+// }
