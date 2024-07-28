@@ -7,7 +7,6 @@
 export { Box } from './Box';
 export { Button } from './Button';
 export { Dimmer } from './Dimmer';
-export { Dropdown } from './Dropdown';
 export { ColorButton } from './goonstation/ColorButton';
 export { Interactive } from './goonstation/colorful/Interactive';
 export { Pointer } from './goonstation/colorful/Pointer';
