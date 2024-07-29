@@ -123,7 +123,7 @@ snippet (make sure component name matches the file name):
 
 ```jsx
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
@@ -255,7 +255,7 @@ JSX code, and wrap it into a second, smaller React component:
 
 ```jsx
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
@@ -327,7 +327,7 @@ And the template:
 
 ```jsx
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
