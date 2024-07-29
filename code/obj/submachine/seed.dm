@@ -502,7 +502,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			user.drop_item()
 			W.set_loc(src)
 			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
-			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+			for (var/datum/tgui/ui as anything in src.open_uis) //this is basically tgui_process.update_uis for static data
 				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 					update_static_data(ui.user, ui)
 			tgui_process.update_uis(src)
@@ -515,7 +515,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
 			W.dropped(user)
-			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+			for (var/datum/tgui/ui as anything in src.open_uis) //this is basically tgui_process.update_uis for static data
 				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 					update_static_data(ui.user, ui)
 			tgui_process.update_uis(src)
@@ -543,7 +543,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
 				S.tooltip_rebuild = 1
-				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+				for (var/datum/tgui/ui as anything in src.open_uis) //this is basically tgui_process.update_uis for static data
 					if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 						update_static_data(ui.user, ui)
 				tgui_process.update_uis(src)
@@ -576,7 +576,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				P.set_loc(src)
 				sleep(0.3 SECONDS)
 			boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
-			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
+			for (var/datum/tgui/ui as anything in src.open_uis) //this is basically tgui_process.update_uis for static data
 				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 					update_static_data(ui.user, ui)
 			tgui_process.update_uis(src)

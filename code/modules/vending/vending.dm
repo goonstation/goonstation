@@ -2287,7 +2287,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		. = ..()
 		if (src.static_data_invalid)
 			src.static_data_invalid = FALSE
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
+			for (var/datum/tgui/ui as anything in src.open_uis)
 				src.update_static_data(null, ui)
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)

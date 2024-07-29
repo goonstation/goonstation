@@ -806,7 +806,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	process()
 		if (src.static_data_invalid)
 			src.static_data_invalid = FALSE
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
+			for (var/datum/tgui/ui as anything in src.open_uis)
 				src.update_static_data(null, ui)
 
 /datum/action/bar/icon/shoveMobIntoChute
