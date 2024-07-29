@@ -1021,8 +1021,12 @@
 		return
 
 
-#define GRAVITON_ITEM_COOLDOWN 100
-#define GRAVITON_CONTAINER_COOLDOWN 350
+#define GRAVITON_ITEM_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN 35
+#define GRAVITON_CONTAINER_FAIL_SOUND_VOLUME 30
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN_ID "Graviton container cooldown"
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID "Graviton container fail sound cooldown"
 /obj/item/mechanics/accelerator
 	name = "Graviton accelerator"
 	desc = ""
@@ -1040,9 +1044,12 @@
 		LIGHT_UP_HOUSING
 
 		if(container)
-			if(container.anchored) return;
+			if(ON_COOLDOWN(container, GRAVITON_CONTAINER_COOLDOWN_ID, GRAVITON_CONTAINER_COOLDOWN) || container.anchored) // Cooldown is shared between all gravitons in locker
+				if(ON_COOLDOWN(container, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN)) // cooldown in a cooldown
+					playsound(src, 'sound/machines/buzz-sigh.ogg', GRAVITON_CONTAINER_FAIL_SOUND_VOLUME, 0, 0)
+				return
 			throwstuff(container, 3)
-			if(APPROX_TICK_USE > GRAVITON_CONTAINER_COOLDOWN) return // failsafe
+			if(APPROX_TICK_USE > GRAVITON_CONTAINER_COOLDOWN * 10) return // failsafe
 		else
 			var/count = 0
 			for(var/atom/movable/M in src.loc)
@@ -1051,7 +1058,7 @@
 				if(M == src) continue
 				throwstuff(M)
 				if(count > 50) return
-				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN) return //fuck it, failsafe
+				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN * 10) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
@@ -1093,6 +1100,10 @@
 		return
 #undef GRAVITON_ITEM_COOLDOWN
 #undef GRAVITON_CONTAINER_COOLDOWN
+#undef GRAVITON_CONTAINER_FAIL_SOUND_VOLUME
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN_ID
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID
 
 /// Tesla Coil mechanics component - zaps people
 /obj/item/mechanics/zapper
