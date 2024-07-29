@@ -112,9 +112,9 @@ proc/filtered_concrete_typesof(type, filter)
 /// Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 proc/get_singleton(type)
 	RETURN_TYPE(type)
-	if(!(type in singletons))
-		singletons[type] = new type
-	return singletons[type]
+	. = singletons[type]
+	if(isnull(.))
+		. = singletons[type] = new type
 
 var/global/list/singletons = list()
 
