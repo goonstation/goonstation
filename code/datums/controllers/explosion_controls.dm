@@ -10,12 +10,12 @@ var/datum/explosion_controller/explosions
 	var/kaboom_ready = FALSE
 	var/next_turf_safe = FALSE
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation = FALSE)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation_multiplier = 0)
 		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction, flash_radiation)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction, flash_radiation_multiplier)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -77,8 +77,8 @@ var/datum/explosion_controller/explosions
 
 			for(var/mob/M in T)
 				M.ex_act(ex_act_power, explosion?.last_touched, p, explosion)
-				if (M && explosion?.flash_radiation)
-					M.take_radiation_dose(p/2)
+				if (M && explosion?.flash_radiation_multiplier)
+					M.take_radiation_dose(explosion.flash_radiation_multiplier * p)
 
 		LAGCHECK(LAG_HIGH)
 
@@ -173,10 +173,10 @@ var/datum/explosion_controller/explosions
 	var/user
 	var/turf_safe
 	var/range_cutoff_fraction
-	var/flash_radiation //! Boolean which controls whether or not to do a considerable amount of radiation damage to affected persons
+	var/flash_radiation_multiplier //! Number (0-1) related to power which determines how devastating the radioactive component of the explosion is, at all
 	var/last_touched = "*null*"
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation=FALSE)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation_multiplier=0)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -187,7 +187,7 @@ var/datum/explosion_controller/explosions
 		src.user = user
 		src.turf_safe = turf_safe
 		src.range_cutoff_fraction = range_cutoff_fraction
-		src.flash_radiation = flash_radiation
+		src.flash_radiation_multiplier = flash_radiation_multiplier
 
 	proc/logMe(var/power)
 		if(istype(src.source))
@@ -195,11 +195,13 @@ var/datum/explosion_controller/explosions
 			var/area/A = get_area(epicenter)
 			if(!A.dont_log_combat)
 				var/list/log_attributes = list()
-				if(src.flash_radiation)
+				var/radioactive_power_info = ""
+				if(src.flash_radiation_multiplier)
 					log_attributes += "radioactive"
 				if (src.turf_safe)
 					log_attributes += "turf-safe"
-				var/logmsg = "Explosion [length(log_attributes) > 0 ? "([list2text(log_attributes, ",")]) " : ""]with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+					radioactive_power_info = " and radioactive power [src.flash_radiation_multiplier] "
+				var/logmsg = "Explosion [length(log_attributes) > 0 ? "([list2text(log_attributes, ",")]) " : ""]with power [power][radioactive_power_info] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 				var/mob/M = null
 				if(ismob(user))
 					M = user
