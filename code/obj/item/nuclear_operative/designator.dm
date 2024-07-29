@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/obj/machinery/broadside_gun/directfire)
 		icon_firing = "40mm-firing"
 		current_projectile = new/datum/projectile/bullet/grenade_round/high_explosive/double
 
-	thirtycal
+	twenty
 		name = "BlastoTek 20mm Autocannon"
 		desc = "A basic rapid-fire gun for close-in defense, an easy solution to repel Martians, merchant raiders or deter space hazards and debris. Often used FOR raiding merchant convoys."
 		icon_state = "20mm"
