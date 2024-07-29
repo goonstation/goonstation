@@ -1,5 +1,5 @@
 export { generateBoardNotationLetters, numToBoardNotation } from './notations';
-export {
+export type {
   BoardgameData,
   BoardInfoType,
   PalleteExpandType,
