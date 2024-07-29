@@ -15,11 +15,11 @@ import {
   ProgressBar,
   Section,
   Stack,
+  Table,
   Tooltip,
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Table } from '../../components';
 import {
   AntagonistData,
   AntagonistPanelData,
@@ -122,7 +122,7 @@ const AntagonistList = (props: TabSectionData) => {
 
   return (
     <Section>
-      <Table fill vertical>
+      <Table>
         <Table.Row bold>
           <Table.Cell>
             {' '}
@@ -442,7 +442,7 @@ const HeadsList = (props: TabSectionData) => {
 
   return (
     <Section>
-      <Table fill vertical>
+      <Table>
         <Table.Row bold>
           <Table.Cell> Role </Table.Cell>
           <Table.Cell> Name </Table.Cell>

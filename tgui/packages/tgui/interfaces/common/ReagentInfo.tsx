@@ -278,6 +278,7 @@ const containerCheck = (
   return false;
 };
 
+// TODO-REACT React implementation
 // modified versions of the shallowDiffers function from common/react.ts
 ReagentGraph.defaultHooks = {
   onComponentShouldUpdate: (a: ReagentGraphProps, b: ReagentGraphProps) => {
@@ -298,6 +299,7 @@ ReagentGraph.defaultHooks = {
   },
 };
 
+// TODO-REACT React implementation
 ReagentList.defaultHooks = {
   onComponentShouldUpdate: (a: ReagentListProps, b: ReagentListProps) => {
     let i;

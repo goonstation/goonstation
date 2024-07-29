@@ -10,8 +10,8 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { ReactNode } from 'react';
+import { Button } from 'tgui-core/components';
 
-import { Button } from '../../../components';
 import type { ColumnConfig } from '../../../components/goonstation/ListGrid';
 import type { BanResource } from '../apiType';
 
