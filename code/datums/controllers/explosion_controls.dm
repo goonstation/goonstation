@@ -194,12 +194,12 @@ var/datum/explosion_controller/explosions
 			//I do not give a flying FUCK about what goes on in the colosseum and sims. =I
 			var/area/A = get_area(epicenter)
 			if(!A.dont_log_combat)
-				// Cannot read null.name
-				var/list/log_attributes = list(
-					"[flash_radiation ? "radioactive" : ""]",
-					"[turf_safe ? "turf-safe" : ""]",
-				)
-				var/logmsg = "Explosion ([list2text(log_attributes, ",")]) with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				var/list/log_attributes = list()
+				if(src.flash_radiation)
+					log_attributes += "radioactive"
+				if (src.turf_safe)
+					log_attributes += "turf-safe"
+				var/logmsg = "Explosion [len(log_attributes) > 0 ? "[list2text(log_attributes, ",")] " : ""]with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 				var/mob/M = null
 				if(ismob(user))
 					M = user
