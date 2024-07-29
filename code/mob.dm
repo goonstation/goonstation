@@ -4,7 +4,7 @@
 	animate_movement = 2
 	soundproofing = 10
 
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 

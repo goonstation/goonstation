@@ -13,7 +13,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
-	flags = FPRINT | NOSPLASH | FLUID_SUBMERGE
+	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"
@@ -91,7 +91,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (!islist(src.spawn_contents))
 			return 0
 
-		var/i = 0
+		var/i = 1
 		for (var/thing in src.spawn_contents)
 			var/amt = 1
 			if (isnum(spawn_contents[thing])) //Instead of duplicate entries in the list, let's make them associative

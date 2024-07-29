@@ -136,11 +136,6 @@
 	req_access = list(access_engineering_control)
 	color = ENGINEERING
 
-/obj/mapping_helper/access/mining_shuttle
-	name = "mining_shuttle access spawn"
-	req_access = list(access_mining_shuttle)
-	color = CARGO
-
 /obj/mapping_helper/access/mining
 	name = "mining EVA access spawn"
 	req_access = list(access_mining)
@@ -198,11 +193,6 @@
 	req_access = list(access_maint_tunnels)
 	color = MAINTENANCE
 
-/obj/mapping_helper/access/emergency_storage
-	name = "emergency storage access spawn"
-	req_access = list(access_emergency_storage)
-	color = MAINTENANCE
-
 /obj/mapping_helper/access/chapel_office
 	name = "chapel office access spawn"
 	req_access = list(access_chapel_office)
@@ -244,11 +234,6 @@
 	color = MAINTENANCE
 
 //////////// Command/Heads ////
-/obj/mapping_helper/access/emergency_storage // technically unused, sorta, mostly, kinda
-	name = "emergency storage access spawn"
-	req_access = list(access_emergency_storage)
-	color = MAINTENANCE
-
 /obj/mapping_helper/access/ai_upload
 	name = "ai upload access spawn"
 	req_access = list(access_ai_upload)
@@ -335,12 +320,6 @@
 	setup()
 		for (var/obj/O in src.loc)
 			O.req_access = null
-
-//////////// unsorted/unused ////
-/obj/mapping_helper/access/hangar
-	name = "hangar access spawn"
-	req_access = list(access_hangar)
-	color = CARGO
 
 //////////////////////owlzone access///////
 /obj/mapping_helper/access/owlmaint

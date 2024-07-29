@@ -121,6 +121,10 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
 			if(IN_RANGE(user,B,1))
 				return TRUE
+	else if (source in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -205,6 +209,13 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 		for_by_tcl(B, /obj/item/bible)
 			if(IN_RANGE(user,B,1))
 				target = B
+				break
+		if (!target)
+			return 0
+	if (target in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				target = TR
 				break
 		if (!target)
 			return 0
