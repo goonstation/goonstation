@@ -745,3 +745,5 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			..()
 			src.air_contents.toxins = null
 			return
+
+#undef TANK_VOLUME_LITRES
