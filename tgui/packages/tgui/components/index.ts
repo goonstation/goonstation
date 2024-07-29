@@ -16,6 +16,5 @@ export { Placeholder } from './goonstation/Placeholder';
 export { Icon } from './Icon';
 export { Knob } from './Knob';
 export { Modal } from './Modal';
-export { ProgressBar } from './ProgressBar';
 export { Slider } from './Slider';
 export { Table } from './Table';
