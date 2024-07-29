@@ -77,7 +77,7 @@ var/datum/explosion_controller/explosions
 
 			for(var/mob/M in T)
 				M.ex_act(ex_act_power, explosion?.last_touched, p, explosion)
-				if (explosion?.flash_radiation)
+				if (M && explosion?.flash_radiation)
 					M.take_radiation_dose(p/2)
 
 		LAGCHECK(LAG_HIGH)
