@@ -199,7 +199,7 @@ var/datum/explosion_controller/explosions
 					log_attributes += "radioactive"
 				if (src.turf_safe)
 					log_attributes += "turf-safe"
-				var/logmsg = "Explosion [len(log_attributes) > 0 ? "[list2text(log_attributes, ",")] " : ""]with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				var/logmsg = "Explosion [length(log_attributes) > 0 ? "[list2text(log_attributes, ",")] " : ""]with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 				var/mob/M = null
 				if(ismob(user))
 					M = user
