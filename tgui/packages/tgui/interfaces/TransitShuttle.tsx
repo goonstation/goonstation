@@ -1,7 +1,7 @@
 import { BlockQuote, Button, Divider, Section } from 'tgui-core/components';
+import { Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Table } from '../components';
 import { Window } from '../layouts';
 
 interface TransitShuttleData {
@@ -33,7 +33,7 @@ export const TransitShuttle = () => {
         {destinations.map((Destination) => {
           return (
             <>
-              <Table direction="row" align="center" key={Destination.type}>
+              <Table align="center" key={Destination.type}>
                 <Table.Row>
                   <Table.Cell>
                     <Button

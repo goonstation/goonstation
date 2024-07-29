@@ -6,22 +6,38 @@
  */
 
 import { toTitleCase } from 'common/string';
-import { Box, Button, Divider, Icon, LabeledList, ProgressBar, Section, Stack, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Table } from '../../components';
-import { AntagonistData, AntagonistPanelData, GangLockerData, HeadsData, NuclearBombData, TabSectionData } from './type';
+import {
+  AntagonistData,
+  AntagonistPanelData,
+  GangLockerData,
+  HeadsData,
+  NuclearBombData,
+  TabSectionData,
+} from './type';
 
 export const AntagonistTypeTabBody = (props: AntagonistPanelData) => (
   <Box>
-    {props.currentTabSections
-      ? props.currentTabSections.map((section, index) => (
-        <AntagonistTabSection
-          key={index}
-          {...section}
-        />
+    {props.currentTabSections ? (
+      props.currentTabSections.map((section, index) => (
+        <AntagonistTabSection key={index} {...section} />
       ))
-      : <GeneralInformation {...props} />}
+    ) : (
+      <GeneralInformation {...props} />
+    )}
   </Box>
 );
 
@@ -42,7 +58,10 @@ const GeneralInformation = (props: AntagonistPanelData) => (
         <Section title="Antagonist Mortality Rate">
           <ProgressBar
             minValue={0}
-            maxValue={(props.mortalityRates.antagonistsAlive + props.mortalityRates.antagonistsDead) || 1}
+            maxValue={
+              props.mortalityRates.antagonistsAlive +
+                props.mortalityRates.antagonistsDead || 1
+            }
             value={props.mortalityRates.antagonistsDead}
             color="red"
             backgroundColor="green"
@@ -62,19 +81,20 @@ const GeneralInformation = (props: AntagonistPanelData) => (
         <Section title="Crew Mortality Rate">
           <ProgressBar
             minValue={0}
-            maxValue={(props.mortalityRates.crewAlive + props.mortalityRates.crewDead) || 1}
+            maxValue={
+              props.mortalityRates.crewAlive + props.mortalityRates.crewDead ||
+              1
+            }
             value={props.mortalityRates.crewDead}
             color="red"
             backgroundColor="green"
             mb={1}
           />
           <LabeledList>
-            <LabeledList.Item
-              label="Alive Crew">
+            <LabeledList.Item label="Alive Crew">
               {props.mortalityRates.crewAlive}
             </LabeledList.Item>
-            <LabeledList.Item
-              label="Dead Crew">
+            <LabeledList.Item label="Dead Crew">
               {props.mortalityRates.crewDead}
             </LabeledList.Item>
           </LabeledList>
@@ -87,9 +107,7 @@ const GeneralInformation = (props: AntagonistPanelData) => (
 const AntagonistTabSection = (props: TabSectionData) => {
   const SectionContents = getSectionComponent(props.sectionType);
 
-  return (
-    <SectionContents {...props} />
-  );
+  return <SectionContents {...props} />;
 };
 
 const AntagonistList = (props: TabSectionData) => {
@@ -99,24 +117,24 @@ const AntagonistList = (props: TabSectionData) => {
     return;
   }
 
-  const sortAntagonists = antagonistData.sort((a, b) => a.real_name.localeCompare(b.real_name)) || [];
+  const sortAntagonists =
+    antagonistData.sort((a, b) => a.real_name.localeCompare(b.real_name)) || [];
 
   return (
     <Section>
       <Table fill vertical>
         <Table.Row bold>
-          <Table.Cell> {props.sectionName ? props.sectionName : "Name"} </Table.Cell>
+          <Table.Cell>
+            {' '}
+            {props.sectionName ? props.sectionName : 'Name'}{' '}
+          </Table.Cell>
           <Table.Cell> Location </Table.Cell>
           <Table.Cell> Commands </Table.Cell>
         </Table.Row>
         <TableDividerRow />
         {sortAntagonists?.map((antagonist, index) => (
-          <TableAntagonistEntry
-            key={index}
-            {...antagonist}
-          />
-        )
-        )}
+          <TableAntagonistEntry key={index} {...antagonist} />
+        ))}
       </Table>
     </Section>
   );
@@ -124,17 +142,28 @@ const AntagonistList = (props: TabSectionData) => {
 
 const TableDividerRow = () => (
   <Table.Row>
-    <Table.Cell> <Divider /> </Table.Cell>
-    <Table.Cell> <Divider /> </Table.Cell>
-    <Table.Cell> <Divider /> </Table.Cell>
+    <Table.Cell>
+      {' '}
+      <Divider />{' '}
+    </Table.Cell>
+    <Table.Cell>
+      {' '}
+      <Divider />{' '}
+    </Table.Cell>
+    <Table.Cell>
+      {' '}
+      <Divider />{' '}
+    </Table.Cell>
   </Table.Row>
 );
 
 const TableAntagonistEntry = (props: AntagonistData) => {
   const { act, data } = useBackend<AntagonistPanelData>();
 
-  const sortSubordinateAntagonists = data.subordinateAntagonists[props.antagonist_datum]?.sort((a, b) =>
-    a.real_name.localeCompare(b.real_name)) || [];
+  const sortSubordinateAntagonists =
+    data.subordinateAntagonists[props.antagonist_datum]?.sort((a, b) =>
+      a.real_name.localeCompare(b.real_name),
+    ) || [];
 
   return (
     <>
@@ -146,7 +175,8 @@ const TableAntagonistEntry = (props: AntagonistData) => {
                 <ClientTooltip {...props} />
                 <JobTooltip {...props} />
               </LabeledList>
-            }>
+            }
+          >
             <Box inline>
               {!!props.has_subordinate_antagonists && (
                 <Button
@@ -154,11 +184,21 @@ const TableAntagonistEntry = (props: AntagonistData) => {
                   textAlign="center"
                   my={-0.5}
                   mr={0.8}
-                  icon={data.subordinateAntagonists[props.antagonist_datum] ? 'chevron-down' : 'chevron-right'}
-                  onClick={() => act(`${data.subordinateAntagonists[props.antagonist_datum]
-                    ? "unrequest_subordinate_antagonist_data"
-                    : "request_subordinate_antagonist_data"}`,
-                  { antagonist_datum: props.antagonist_datum })}
+                  icon={
+                    data.subordinateAntagonists[props.antagonist_datum]
+                      ? 'chevron-down'
+                      : 'chevron-right'
+                  }
+                  onClick={() =>
+                    act(
+                      `${
+                        data.subordinateAntagonists[props.antagonist_datum]
+                          ? 'unrequest_subordinate_antagonist_data'
+                          : 'request_subordinate_antagonist_data'
+                      }`,
+                      { antagonist_datum: props.antagonist_datum },
+                    )
+                  }
                   tooltip="Subordinate Antagonists"
                 />
               )}
@@ -173,11 +213,8 @@ const TableAntagonistEntry = (props: AntagonistData) => {
         <TableButtonsCell {...props} />
       </Table.Row>
       {sortSubordinateAntagonists.map((antagonist, index) => (
-        <Table.Row
-          key={index}>
-          <Table.Cell
-            py="0.5em"
-            pl={1.6}>
+        <Table.Row key={index}>
+          <Table.Cell py="0.5em" pl={1.6}>
             <Tooltip
               content={
                 <LabeledList>
@@ -185,13 +222,10 @@ const TableAntagonistEntry = (props: AntagonistData) => {
                   <ClientTooltip {...antagonist} />
                   <JobTooltip {...antagonist} />
                 </LabeledList>
-              }>
-              <Box
-                inline>
-                <Icon
-                  name="caret-right"
-                  mr={1.6}
-                />
+              }
+            >
+              <Box inline>
+                <Icon name="caret-right" mr={1.6} />
                 <PlayerName {...antagonist} />
               </Box>
             </Tooltip>
@@ -205,9 +239,7 @@ const TableAntagonistEntry = (props: AntagonistData) => {
 };
 
 const AntagonistRoleTooltip = (props) => {
-  const {
-    display_name,
-  } = props;
+  const { display_name } = props;
 
   return (
     <LabeledList.Item label="Antagonist Role">
@@ -217,52 +249,55 @@ const AntagonistRoleTooltip = (props) => {
 };
 
 const ClientTooltip = (props) => {
-  const {
-    ckey,
-  } = props;
+  const { ckey } = props;
 
   return (
     <LabeledList.Item label="Client">
-      {props.ckey ? props.ckey : <Box inline italic>No Client</Box>}
+      {props.ckey ? (
+        props.ckey
+      ) : (
+        <Box inline italic>
+          No Client
+        </Box>
+      )}
     </LabeledList.Item>
   );
 };
 
 const JobTooltip = (props) => {
-  const {
-    job,
-  } = props;
+  const { job } = props;
 
   return (
     <LabeledList.Item label="Job">
-      {props.job ? props.job : <Box inline italic>N/A</Box>}
+      {props.job ? (
+        props.job
+      ) : (
+        <Box inline italic>
+          N/A
+        </Box>
+      )}
     </LabeledList.Item>
   );
 };
 
 const PlayerName = (props) => {
-  const {
-    real_name,
-    ckey,
-    dead,
-  } = props;
+  const { real_name, ckey, dead } = props;
 
   return (
-    <Box
-      inline>
+    <Box inline>
       {!!props.dead && <Icon name="skull" />} {`${props.real_name} `}
-      {!props.ckey && <Box inline italic>(no client)</Box>}
+      {!props.ckey && (
+        <Box inline italic>
+          (no client)
+        </Box>
+      )}
     </Box>
   );
 };
 
 const TablePositionCell = (props) => {
   const { act } = useBackend<AntagonistPanelData>();
-  const {
-    mind_ref,
-    area,
-    coordinates,
-  } = props;
+  const { mind_ref, area, coordinates } = props;
 
   return (
     <Table.Cell>
@@ -270,7 +305,7 @@ const TablePositionCell = (props) => {
       <Button
         color="transparent"
         content={coordinates}
-        onClick={() => act("jump_to", { target: props.mind_ref })}
+        onClick={() => act('jump_to', { target: props.mind_ref })}
         tooltip="Jump To Position"
       />
     </Table.Cell>
@@ -292,7 +327,7 @@ const AdminPMButton = (props) => {
   return (
     <Button
       content="PM"
-      onClick={() => act("admin_pm", { mind_ref })}
+      onClick={() => act('admin_pm', { mind_ref })}
       tooltip="Admin PM"
       mr={1}
     />
@@ -308,7 +343,7 @@ const PlayerOptionsButton = (props) => {
       width={2}
       textAlign="center"
       icon="user-gear"
-      onClick={() => act("player_options", { mind_ref })}
+      onClick={() => act('player_options', { mind_ref })}
       tooltip="Player Options"
       mr={1}
     />
@@ -324,7 +359,7 @@ const ViewVariablesButton = (props) => {
       width={2}
       textAlign="center"
       icon="gear"
-      onClick={() => act("view_variables", { antagonist_datum })}
+      onClick={() => act('view_variables', { antagonist_datum })}
       tooltip="Antagonist Datum Vars"
     />
   );
@@ -349,7 +384,8 @@ const NuclearBombReadout = (props: TabSectionData) => {
             fontFamily="Consolas"
             fontSize={5}
             m={0.5}
-            mr={2}>
+            mr={2}
+          >
             {nuclearBombData.timeRemaining}
           </Box>
         </Stack.Item>
@@ -370,7 +406,9 @@ const NuclearBombReadout = (props: TabSectionData) => {
               <Button
                 color="transparent"
                 content={nuclearBombData.coordinates}
-                onClick={() => act("jump_to", { target: nuclearBombData.nuclearBomb })}
+                onClick={() =>
+                  act('jump_to', { target: nuclearBombData.nuclearBomb })
+                }
                 tooltip="Jump To Position"
               />
             </LabeledList.Item>
@@ -389,15 +427,18 @@ const HeadsList = (props: TabSectionData) => {
   }
 
   const headsOrder = [
-    "Captain",
-    "Head of Personnel",
-    "Head of Security",
-    "Chief Engineer",
-    "Research Director",
-    "Medical Director",
+    'Captain',
+    'Head of Personnel',
+    'Head of Security',
+    'Chief Engineer',
+    'Research Director',
+    'Medical Director',
   ];
 
-  const sortHeads = headsData.sort((a, b) => headsOrder.indexOf(a.role) - headsOrder.indexOf(b.role)) || [];
+  const sortHeads =
+    headsData.sort(
+      (a, b) => headsOrder.indexOf(a.role) - headsOrder.indexOf(b.role),
+    ) || [];
 
   return (
     <Section>
@@ -409,18 +450,26 @@ const HeadsList = (props: TabSectionData) => {
           <Table.Cell> Commands </Table.Cell>
         </Table.Row>
         <Table.Row>
-          <Table.Cell> <Divider /> </Table.Cell>
-          <Table.Cell> <Divider /> </Table.Cell>
-          <Table.Cell> <Divider /> </Table.Cell>
-          <Table.Cell> <Divider /> </Table.Cell>
+          <Table.Cell>
+            {' '}
+            <Divider />{' '}
+          </Table.Cell>
+          <Table.Cell>
+            {' '}
+            <Divider />{' '}
+          </Table.Cell>
+          <Table.Cell>
+            {' '}
+            <Divider />{' '}
+          </Table.Cell>
+          <Table.Cell>
+            {' '}
+            <Divider />{' '}
+          </Table.Cell>
         </Table.Row>
         {sortHeads?.map((head, index) => (
-          <TableHeadEntry
-            key={index}
-            {...head}
-          />
-        )
-        )}
+          <TableHeadEntry key={index} {...head} />
+        ))}
       </Table>
     </Section>
   );
@@ -431,18 +480,19 @@ const TableHeadEntry = (props: HeadsData) => {
 
   return (
     <Table.Row>
-      <Table.Cell
-        py="0.5em">
-        {toTitleCase(props.role)}
-      </Table.Cell>
+      <Table.Cell py="0.5em">{toTitleCase(props.role)}</Table.Cell>
       <Table.Cell>
         <Tooltip
           content={
             <LabeledList>
               <ClientTooltip {...props} />
             </LabeledList>
-          }>
-          <Box inline> <PlayerName {...props} /> </Box>
+          }
+        >
+          <Box inline>
+            {' '}
+            <PlayerName {...props} />{' '}
+          </Box>
         </Tooltip>
       </Table.Cell>
       <TablePositionCell
@@ -467,10 +517,7 @@ const GangReadout = (props: TabSectionData) => {
   return (
     <Section title={props.sectionName}>
       {gangData.map((section, index) => (
-        <AntagonistTabSection
-          key={index}
-          {...section}
-        />
+        <AntagonistTabSection key={index} {...section} />
       ))}
     </Section>
   );
@@ -486,19 +533,17 @@ const GangLockerReadout = (props: TabSectionData) => {
 
   return (
     <Section>
-      <Box bold>
-        {toTitleCase(props.sectionName)}
-      </Box>
+      <Box bold>{toTitleCase(props.sectionName)}</Box>
       <Divider />
       <LabeledList>
-        <LabeledList.Item
-          label="Location"
-          verticalAlign="middle">
+        <LabeledList.Item label="Location" verticalAlign="middle">
           {gangLockerData.area}
           <Button
             color="transparent"
             content={gangLockerData.coordinates}
-            onClick={() => act("jump_to", { target: gangLockerData.gangLocker })}
+            onClick={() =>
+              act('jump_to', { target: gangLockerData.gangLocker })
+            }
             tooltip="Jump To Position"
           />
         </LabeledList.Item>
@@ -517,9 +562,9 @@ const getSectionComponent = (sectionType) => {
 };
 
 const sectionComponents = {
-  "AntagonistList": AntagonistList,
-  "NuclearBombReadout": NuclearBombReadout,
-  "HeadsList": HeadsList,
-  "GangReadout": GangReadout,
-  "GangLockerReadout": GangLockerReadout,
+  AntagonistList: AntagonistList,
+  NuclearBombReadout: NuclearBombReadout,
+  HeadsList: HeadsList,
+  GangReadout: GangReadout,
+  GangLockerReadout: GangLockerReadout,
 };
