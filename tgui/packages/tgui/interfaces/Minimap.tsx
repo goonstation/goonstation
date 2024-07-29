@@ -11,19 +11,10 @@ interface MinimapData {
 
 export const Minimap = () => {
   const { data } = useBackend<MinimapData>();
-  const {
-    title,
-    theme,
-    minimap_id,
-  } = data;
+  const { title, theme, minimap_id } = data;
 
   return (
-    <Window
-      title={title}
-      theme={theme}
-      width={610}
-      height={640}
-    >
+    <Window title={title} theme={theme} width={610} height={640}>
       <Window.Content>
         <ByondUi
           params={{
@@ -31,9 +22,10 @@ export const Minimap = () => {
             type: 'map',
           }}
           style={{
-            width: "600px",
-            height: "600px",
-          }} />
+            width: '600px',
+            height: '600px',
+          }}
+        />
       </Window.Content>
     </Window>
   );

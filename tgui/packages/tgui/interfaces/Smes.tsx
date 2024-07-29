@@ -7,7 +7,15 @@
  * @license MIT
  */
 
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { formatPower, formatSiUnit } from '../format';
@@ -17,17 +25,17 @@ import { Window } from '../layouts';
 const POWER_MUL = 1e3;
 
 interface SmesData {
-  charge,
-  capacity,
-  inputAttempt,
-  inputting,
-  inputLevel,
-  inputLevelMax,
-  inputAvailable,
-  outputAttempt,
-  outputting,
-  outputLevel,
-  outputLevelMax,
+  charge;
+  capacity;
+  inputAttempt;
+  inputting;
+  inputLevel;
+  inputLevelMax;
+  inputAvailable;
+  outputAttempt;
+  outputting;
+  outputLevel;
+  outputLevelMax;
 }
 
 export const Smes = () => {
@@ -45,25 +53,20 @@ export const Smes = () => {
     outputLevel,
     outputLevelMax,
   } = data;
-  const inputState = (
-    ((charge / capacity) >= 1 && 'good')
-    || ((inputting && inputLevel) && 'average')
-    || 'bad'
-  );
-  const outputState = (
-    ((outputAttempt && outputting) && 'good')
-    || (charge > 0 && 'average')
-    || 'bad'
-  );
+  const inputState =
+    (charge / capacity >= 1 && 'good') ||
+    (inputting && inputLevel && 'average') ||
+    'bad';
+  const outputState =
+    (outputAttempt && outputting && 'good') ||
+    (charge > 0 && 'average') ||
+    'bad';
   return (
-    <Window
-      width={340}
-      height={360}>
+    <Window width={340} height={360}>
       <Window.Content>
         <Section title="Stored Energy">
           <LabeledList>
-            <LabeledList.Item
-              label="Stored Energy" >
+            <LabeledList.Item label="Stored Energy">
               {formatSiUnit(charge, 0, 'J')}
             </LabeledList.Item>
           </LabeledList>
@@ -74,7 +77,8 @@ export const Smes = () => {
               good: [0.5, Infinity],
               average: [0.15, 0.5],
               bad: [-Infinity, 0.15],
-            }} />
+            }}
+          />
         </Section>
         <Section title="Input">
           <LabeledList>
@@ -83,17 +87,22 @@ export const Smes = () => {
               buttons={
                 <Button
                   icon="power-off"
-                  color={inputAttempt ? "green" : "red"}
-                  onClick={() => act('toggle-input')}>
+                  color={inputAttempt ? 'green' : 'red'}
+                  onClick={() => act('toggle-input')}
+                >
                   {inputAttempt ? 'On' : 'Off'}
                 </Button>
-              }>
+              }
+            >
               <Box color={inputState}>
-                {((charge / capacity) >= 1 && 'Fully Charged')
-                  || ((inputAttempt && inputLevel && !inputting) && 'Initializing')
-                  || ((inputAttempt && inputLevel && inputting) && 'Charging')
-                  || ((inputAttempt && inputting) && 'Idle')
-                  || 'Not Charging'}
+                {(charge / capacity >= 1 && 'Fully Charged') ||
+                  (inputAttempt &&
+                    inputLevel &&
+                    !inputting &&
+                    'Initializing') ||
+                  (inputAttempt && inputLevel && inputting && 'Charging') ||
+                  (inputAttempt && inputting && 'Idle') ||
+                  'Not Charging'}
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Input">
@@ -102,15 +111,21 @@ export const Smes = () => {
                   <Button
                     icon="fast-backward"
                     disabled={inputLevel === 0}
-                    onClick={() => act('set-input', {
-                      target: 'min',
-                    })} />
+                    onClick={() =>
+                      act('set-input', {
+                        target: 'min',
+                      })
+                    }
+                  />
                   <Button
                     icon="backward"
                     disabled={inputLevel === 0}
-                    onClick={() => act('set-input', {
-                      adjust: -10000,
-                    })} />
+                    onClick={() =>
+                      act('set-input', {
+                        adjust: -10000,
+                      })
+                    }
+                  />
                 </Flex.Item>
                 <Flex.Item grow={1} mx={1}>
                   <Slider
@@ -120,24 +135,33 @@ export const Smes = () => {
                     maxValue={inputLevelMax / POWER_MUL}
                     step={5}
                     stepPixelSize={4}
-                    format={value => formatPower(value * POWER_MUL, 1)}
-                    onDrag={(e, value) => act('set-input', {
-                      target: value * POWER_MUL,
-                    })} />
+                    format={(value) => formatPower(value * POWER_MUL, 1)}
+                    onDrag={(e, value) =>
+                      act('set-input', {
+                        target: value * POWER_MUL,
+                      })
+                    }
+                  />
                 </Flex.Item>
                 <Flex.Item>
                   <Button
                     icon="forward"
                     disabled={inputLevel === inputLevelMax}
-                    onClick={() => act('set-input', {
-                      adjust: 10000,
-                    })} />
+                    onClick={() =>
+                      act('set-input', {
+                        adjust: 10000,
+                      })
+                    }
+                  />
                   <Button
                     icon="fast-forward"
                     disabled={inputLevel === inputLevelMax}
-                    onClick={() => act('set-input', {
-                      target: 'max',
-                    })} />
+                    onClick={() =>
+                      act('set-input', {
+                        target: 'max',
+                      })
+                    }
+                  />
                 </Flex.Item>
               </Flex>
             </LabeledList.Item>
@@ -153,16 +177,18 @@ export const Smes = () => {
               buttons={
                 <Button
                   icon="power-off"
-                  color={outputAttempt ? "green" : "red"}
-                  onClick={() => act('toggle-output')}>
+                  color={outputAttempt ? 'green' : 'red'}
+                  onClick={() => act('toggle-output')}
+                >
                   {outputAttempt ? 'On' : 'Off'}
                 </Button>
-              }>
+              }
+            >
               <Box color={outputState}>
-                {((outputting && outputAttempt) && 'Enabled')
-                  || (outputAttempt && 'Idle')
-                  || (charge && 'Disabled')
-                  || 'No Charge'}
+                {(outputting && outputAttempt && 'Enabled') ||
+                  (outputAttempt && 'Idle') ||
+                  (charge && 'Disabled') ||
+                  'No Charge'}
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Output">
@@ -171,15 +197,21 @@ export const Smes = () => {
                   <Button
                     icon="fast-backward"
                     disabled={outputLevel === 0}
-                    onClick={() => act('set-output', {
-                      target: 'min',
-                    })} />
+                    onClick={() =>
+                      act('set-output', {
+                        target: 'min',
+                      })
+                    }
+                  />
                   <Button
                     icon="backward"
                     disabled={outputLevel === 0}
-                    onClick={() => act('set-output', {
-                      adjust: -10000,
-                    })} />
+                    onClick={() =>
+                      act('set-output', {
+                        adjust: -10000,
+                      })
+                    }
+                  />
                 </Flex.Item>
                 <Flex.Item grow={1} mx={1}>
                   <Slider
@@ -188,24 +220,33 @@ export const Smes = () => {
                     maxValue={outputLevelMax / POWER_MUL}
                     step={5}
                     stepPixelSize={4}
-                    format={value => formatPower(value * POWER_MUL, 1)}
-                    onDrag={(e, value) => act('set-output', {
-                      target: value * POWER_MUL,
-                    })} />
+                    format={(value) => formatPower(value * POWER_MUL, 1)}
+                    onDrag={(e, value) =>
+                      act('set-output', {
+                        target: value * POWER_MUL,
+                      })
+                    }
+                  />
                 </Flex.Item>
                 <Flex.Item>
                   <Button
                     icon="forward"
                     disabled={outputLevel === outputLevelMax}
-                    onClick={() => act('set-output', {
-                      adjust: 10000,
-                    })} />
+                    onClick={() =>
+                      act('set-output', {
+                        adjust: 10000,
+                      })
+                    }
+                  />
                   <Button
                     icon="fast-forward"
                     disabled={outputLevel === outputLevelMax}
-                    onClick={() => act('set-output', {
-                      target: 'max',
-                    })} />
+                    onClick={() =>
+                      act('set-output', {
+                        target: 'max',
+                      })
+                    }
+                  />
                 </Flex.Item>
               </Flex>
             </LabeledList.Item>

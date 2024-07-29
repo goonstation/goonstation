@@ -7,8 +7,8 @@
 import React from 'react';
 
 export type AlertContentWindow = {
-  width: number,
-  height: number,
-  title: string,
-  content: React.ReactNode,
-}
+  width: number;
+  height: number;
+  title: string;
+  content: React.ReactNode;
+};

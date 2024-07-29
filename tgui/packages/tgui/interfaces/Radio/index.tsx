@@ -5,7 +5,16 @@
  * @license MIT
  */
 
-import { AnimatedNumber, Box, Button, Knob, LabeledList, Section, Stack, Table } from 'tgui-core/components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Knob,
+  LabeledList,
+  Section,
+  Stack,
+  Table,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { formatFrequency } from '../../format';
@@ -27,7 +36,6 @@ export const Radio = () => {
     act('set-code', { value, finish });
   };
 
-
   return (
     <Window width={280} height={400} title={data.name}>
       <Window.Content>
@@ -37,20 +45,29 @@ export const Radio = () => {
               <LabeledList>
                 {!!data.hasToggleButton && (
                   <LabeledList.Item label="Power">
-                    <Button.Checkbox checked={data.power} onClick={() => act('toggle-power')}>
+                    <Button.Checkbox
+                      checked={data.power}
+                      onClick={() => act('toggle-power')}
+                    >
                       {data.power ? 'Powered on' : 'Powered off'}
                     </Button.Checkbox>
                   </LabeledList.Item>
                 )}
                 {!!data.hasMicrophone && (
                   <LabeledList.Item label="Microphone">
-                    <Button.Checkbox checked={data.broadcasting} onClick={() => act('toggle-broadcasting')}>
+                    <Button.Checkbox
+                      checked={data.broadcasting}
+                      onClick={() => act('toggle-broadcasting')}
+                    >
                       {data.broadcasting ? 'Engaged' : 'Disengaged'}
                     </Button.Checkbox>
                   </LabeledList.Item>
                 )}
                 <LabeledList.Item label="Speaker">
-                  <Button.Checkbox checked={data.listening} onClick={() => act('toggle-listening')}>
+                  <Button.Checkbox
+                    checked={data.listening}
+                    onClick={() => act('toggle-listening')}
+                  >
                     {data.listening ? 'Engaged' : 'Disengaged'}
                   </Button.Checkbox>
                 </LabeledList.Item>
@@ -65,13 +82,20 @@ export const Radio = () => {
                           maxValue={MAX_FREQ}
                           stepPixelSize={2}
                           format={formatFrequency}
-                          onDrag={(_e: any, value: number) => setFrequency(value, false)}
-                          onChange={(_e: any, value: number) => setFrequency(value, true)}
+                          onDrag={(_e: any, value: number) =>
+                            setFrequency(value, false)
+                          }
+                          onChange={(_e: any, value: number) =>
+                            setFrequency(value, true)
+                          }
                         />
                       )}
                     </Stack.Item>
                     <Stack.Item>
-                      <AnimatedNumber value={data.frequency} format={formatFrequency} />
+                      <AnimatedNumber
+                        value={data.frequency}
+                        format={formatFrequency}
+                      />
                     </Stack.Item>
                   </Stack>
                 </LabeledList.Item>
@@ -85,8 +109,12 @@ export const Radio = () => {
                           minValue={MIN_CODE}
                           maxValue={MAX_CODE}
                           stepPixelSize={1}
-                          onDrag={(_e: any, value: number) => setCode(value, false)}
-                          onChange={(_e: any, value: number) => setCode(value, true)}
+                          onDrag={(_e: any, value: number) =>
+                            setCode(value, false)
+                          }
+                          onChange={(_e: any, value: number) =>
+                            setCode(value, true)
+                          }
                         />
                       </Stack.Item>
                       <Stack.Item>
@@ -97,7 +125,15 @@ export const Radio = () => {
                 )}
                 {!!data.sendButton && (
                   <LabeledList.Item>
-                    <Button align="center" onClick={() => { act("send"); }} icon="wifi">Send signal</Button>
+                    <Button
+                      align="center"
+                      onClick={() => {
+                        act('send');
+                      }}
+                      icon="wifi"
+                    >
+                      Send signal
+                    </Button>
                   </LabeledList.Item>
                 )}
               </LabeledList>
@@ -130,17 +166,32 @@ export const Radio = () => {
               <Section title="Access Panel">
                 <LabeledList>
                   <LabeledList.Item label="Green Wire" labelColor="green">
-                    <Button color="green" onClick={() => act('toggle-wire', { wire: RadioWires.Transmit })}>
+                    <Button
+                      color="green"
+                      onClick={() =>
+                        act('toggle-wire', { wire: RadioWires.Transmit })
+                      }
+                    >
                       {data.wires & RadioWires.Transmit ? 'Cut' : 'Mend'}
                     </Button>
                   </LabeledList.Item>
                   <LabeledList.Item label="Red Wire" labelColor="red">
-                    <Button color="red" onClick={() => act('toggle-wire', { wire: RadioWires.Receive })}>
+                    <Button
+                      color="red"
+                      onClick={() =>
+                        act('toggle-wire', { wire: RadioWires.Receive })
+                      }
+                    >
                       {data.wires & RadioWires.Receive ? 'Cut' : 'Mend'}
                     </Button>
                   </LabeledList.Item>
                   <LabeledList.Item label="Blue Wire" labelColor="blue">
-                    <Button color="blue" onClick={() => act('toggle-wire', { wire: RadioWires.Signal })}>
+                    <Button
+                      color="blue"
+                      onClick={() =>
+                        act('toggle-wire', { wire: RadioWires.Signal })
+                      }
+                    >
                       {data.wires & RadioWires.Signal ? 'Cut' : 'Mend'}
                     </Button>
                   </LabeledList.Item>

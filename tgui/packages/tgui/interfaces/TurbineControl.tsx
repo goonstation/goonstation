@@ -12,28 +12,20 @@ import { formatPower } from '../format';
 import { Window } from '../layouts';
 
 interface TurbineControlData {
-  rpm,
-  load,
-  power,
-  volume,
-  history,
-  overspeed,
-  overtemp,
-  undertemp,
+  rpm;
+  load;
+  power;
+  volume;
+  history;
+  overspeed;
+  overtemp;
+  undertemp;
 }
 
 export const TurbineControl = () => {
   const { act, data } = useBackend<TurbineControlData>();
-  const {
-    rpm,
-    load,
-    power,
-    volume,
-    history,
-    overspeed,
-    overtemp,
-    undertemp,
-  } = data;
+  const { rpm, load, power, volume, history, overspeed, overtemp, undertemp } =
+    data;
   const rpmHistory = history.map((v) => v[0]);
   const rpmHistoryData = rpmHistory.map((v, i) => [i, v]);
 
@@ -48,15 +40,14 @@ export const TurbineControl = () => {
   const loadmax = Math.max(...loadHistory);
 
   return (
-    <Window
-      width={375}
-      height={400}
-    >
+    <Window width={375} height={400}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <LabeledList>
-              <LabeledList.Item label="Turbine Output">{formatPower(power)}</LabeledList.Item>
+              <LabeledList.Item label="Turbine Output">
+                {formatPower(power)}
+              </LabeledList.Item>
             </LabeledList>
             <Chart.Line
               mt="5px"
@@ -70,10 +61,30 @@ export const TurbineControl = () => {
           </Stack.Item>
           <Stack.Item>
             <LabeledList>
-              <LabeledList.Item label="Turbine Speed">{rpm} RPM</LabeledList.Item>
-              {overspeed ? <LabeledList.Item label="ALERT" color="#FF0000" >OVERSPEED</LabeledList.Item> : ""}
-              {overtemp ? <LabeledList.Item label="ALERT" color="#FF0000">OVER TEMPERATURE</LabeledList.Item> : ""}
-              {undertemp ? <LabeledList.Item label="ALERT" color="#FF0000">UNDER TEMPERATURE</LabeledList.Item> : ""}
+              <LabeledList.Item label="Turbine Speed">
+                {rpm} RPM
+              </LabeledList.Item>
+              {overspeed ? (
+                <LabeledList.Item label="ALERT" color="#FF0000">
+                  OVERSPEED
+                </LabeledList.Item>
+              ) : (
+                ''
+              )}
+              {overtemp ? (
+                <LabeledList.Item label="ALERT" color="#FF0000">
+                  OVER TEMPERATURE
+                </LabeledList.Item>
+              ) : (
+                ''
+              )}
+              {undertemp ? (
+                <LabeledList.Item label="ALERT" color="#FF0000">
+                  UNDER TEMPERATURE
+                </LabeledList.Item>
+              ) : (
+                ''
+              )}
             </LabeledList>
             <Chart.Line
               mt="5px"
@@ -87,7 +98,9 @@ export const TurbineControl = () => {
           </Stack.Item>
           <Stack.Item>
             <LabeledList>
-              <LabeledList.Item label="Turbine Load">{load} Joules/Revolution</LabeledList.Item>
+              <LabeledList.Item label="Turbine Load">
+                {load} Joules/Revolution
+              </LabeledList.Item>
             </LabeledList>
             <Chart.Line
               mt="5px"
@@ -105,9 +118,10 @@ export const TurbineControl = () => {
               minValue={1}
               maxValue={10e30}
               value={load}
-              format={value => value + " Joules/Revolution"}
+              format={(value) => value + ' Joules/Revolution'}
               step={1}
-              onChange={(value) => act("loadChange", { newVal: value })} />
+              onChange={(value) => act('loadChange', { newVal: value })}
+            />
           </Stack.Item>
           <Stack.Item>
             Flow Rate:
@@ -115,9 +129,10 @@ export const TurbineControl = () => {
               minValue={1}
               maxValue={10e5}
               value={volume}
-              format={value => value + " L/s"}
+              format={(value) => value + ' L/s'}
               step={1}
-              onChange={(value) => act("volChange", { newVal: value })} />
+              onChange={(value) => act('volChange', { newVal: value })}
+            />
           </Stack.Item>
         </Stack>
       </Window.Content>

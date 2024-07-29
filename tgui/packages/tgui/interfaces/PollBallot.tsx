@@ -4,15 +4,23 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const getServerButtonType = (servers) => {
-  if (servers.includes("global")) {
-    return { tooltip: "Global Poll", icon: "globe" };
-  } else if (servers.includes("rp_only")) {
-    return { tooltip: "RP Only Poll", icon: "masks-theater" };
+  if (servers.includes('global')) {
+    return { tooltip: 'Global Poll', icon: 'globe' };
+  } else if (servers.includes('rp_only')) {
+    return { tooltip: 'RP Only Poll', icon: 'masks-theater' };
   }
-  return { tooltip: "Local Poll", icon: "location-dot" };
+  return { tooltip: 'Local Poll', icon: 'location-dot' };
 };
 
-const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryDate, servers }) => {
+const PollControls = ({
+  isAdmin,
+  act,
+  pollId,
+  isExpired,
+  multipleChoice,
+  expiryDate,
+  servers,
+}) => {
   const serverButtonProps = getServerButtonType(servers);
   return (
     <Stack>
@@ -31,7 +39,7 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
           onClick={() => act('editServers', { pollId })}
         />
         <Button
-          tooltip={expiryDate ? expiryDate : "No Expiration Date"}
+          tooltip={expiryDate ? expiryDate : 'No Expiration Date'}
           tooltipPosition="top"
           color={isExpired ? 'bad' : 'good'}
           icon={isExpired ? 'lock' : 'lock-open'}
@@ -39,14 +47,25 @@ const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryD
         />
         {isAdmin ? (
           <>
-            <Button tooltip="Add Option" tooltipPosition="top" icon="plus" onClick={() => act('addOption', { pollId })} />
+            <Button
+              tooltip="Add Option"
+              tooltipPosition="top"
+              icon="plus"
+              onClick={() => act('addOption', { pollId })}
+            />
             <Button
               tooltip="Edit Poll"
               tooltipPosition="top"
               icon="pen"
               onClick={() => act('editPoll', { pollId })}
             />
-            <Button.Confirm tooltip="Delete Poll" tooltipPosition="top" icon="trash" color="bad" onClick={() => act('deletePoll', { pollId })} />
+            <Button.Confirm
+              tooltip="Delete Poll"
+              tooltipPosition="top"
+              icon="trash"
+              color="bad"
+              onClick={() => act('deletePoll', { pollId })}
+            />
           </>
         ) : null}
       </Stack.Item>
@@ -59,14 +78,30 @@ const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
   return (
     <Stack>
       <Stack.Item>
-        <Button icon="pen" onClick={() => act('editOption', { pollId, optionId })} />
-        <Button.Confirm icon="trash" color="bad" onClick={() => act('deleteOption', { pollId, optionId })} />
+        <Button
+          icon="pen"
+          onClick={() => act('editOption', { pollId, optionId })}
+        />
+        <Button.Confirm
+          icon="trash"
+          color="bad"
+          onClick={() => act('deleteOption', { pollId, optionId })}
+        />
       </Stack.Item>
     </Stack>
   );
 };
 
-const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerId, showVotes }) => {
+const Poll = ({
+  options,
+  total_answers,
+  act,
+  pollId,
+  isAdmin,
+  isExpired,
+  playerId,
+  showVotes,
+}) => {
   if (!options || options.length === 0) return null;
   return (
     <Stack vertical>
@@ -80,7 +115,9 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerI
                     <Button.Checkbox
                       disabled={isExpired}
                       checked={option.answers_player_ids.includes(playerId)}
-                      onClick={() => act('vote', { pollId, optionId: option.id })}
+                      onClick={() =>
+                        act('vote', { pollId, optionId: option.id })
+                      }
                     >
                       {option.option}
                     </Button.Checkbox>
@@ -102,7 +139,9 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerI
               </Stack.Item>
             </Stack>
             <Stack.Item>
-              <ProgressBar value={total_answers ? option.answers_count / total_answers : 0} />
+              <ProgressBar
+                value={total_answers ? option.answers_count / total_answers : 0}
+              />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -132,13 +171,17 @@ export const PollBallot = () => {
               <Stack.Item>
                 <Button.Checkbox
                   checked={filterInactive}
-                  onClick={() => act('toggle-filterInactive')}>Filter Closed Polls
+                  onClick={() => act('toggle-filterInactive')}
+                >
+                  Filter Closed Polls
                 </Button.Checkbox>
               </Stack.Item>
               <Stack.Item>
                 <Button.Checkbox
                   checked={showVotes}
-                  onClick={() => act('toggle-showVotes')}>Show Votes
+                  onClick={() => act('toggle-showVotes')}
+                >
+                  Show Votes
                 </Button.Checkbox>
               </Stack.Item>
               {isAdmin ? (
@@ -148,43 +191,53 @@ export const PollBallot = () => {
               ) : null}
             </Stack>
           </Stack.Item>
-          {
-            polls && polls.filter(poll => {
-              // Check if the poll is expired by comparing the current date to expires_at.
-              const isExpired = poll.expires_at ? new Date() >= new Date(poll.expires_at) : false;
-              // If filterInactive is true, exclude expired polls. Otherwise, include all.
-              return !filterInactive || !isExpired;
-            }).map((poll, index) => (
-              <Stack.Item key={index}>
-                <Section
-                  title={poll.question}
-                  buttons={
-                    <PollControls
-                      isAdmin={isAdmin}
-                      act={act}
-                      pollId={poll.id}
-                      isExpired={poll.expires_at && (new Date() > new Date(poll.expires_at))}
-                      multipleChoice={poll.multiple_choice}
-                      expiryDate={poll.expires_at}
-                      servers={poll.servers}
-                    />
-                  }>
-                  <Stack vertical>
-                    <Poll
-                      options={poll.options}
-                      total_answers={poll.total_answers}
-                      act={act}
-                      pollId={poll.id}
-                      isAdmin={isAdmin}
-                      isExpired={poll.expires_at && (new Date() > new Date(poll.expires_at))}
-                      playerId={playerId}
-                      showVotes={showVotes}
-                    />
-                  </Stack>
-                </Section>
-              </Stack.Item>
-            ))
-          }
+          {polls &&
+            polls
+              .filter((poll) => {
+                // Check if the poll is expired by comparing the current date to expires_at.
+                const isExpired = poll.expires_at
+                  ? new Date() >= new Date(poll.expires_at)
+                  : false;
+                // If filterInactive is true, exclude expired polls. Otherwise, include all.
+                return !filterInactive || !isExpired;
+              })
+              .map((poll, index) => (
+                <Stack.Item key={index}>
+                  <Section
+                    title={poll.question}
+                    buttons={
+                      <PollControls
+                        isAdmin={isAdmin}
+                        act={act}
+                        pollId={poll.id}
+                        isExpired={
+                          poll.expires_at &&
+                          new Date() > new Date(poll.expires_at)
+                        }
+                        multipleChoice={poll.multiple_choice}
+                        expiryDate={poll.expires_at}
+                        servers={poll.servers}
+                      />
+                    }
+                  >
+                    <Stack vertical>
+                      <Poll
+                        options={poll.options}
+                        total_answers={poll.total_answers}
+                        act={act}
+                        pollId={poll.id}
+                        isAdmin={isAdmin}
+                        isExpired={
+                          poll.expires_at &&
+                          new Date() > new Date(poll.expires_at)
+                        }
+                        playerId={playerId}
+                        showVotes={showVotes}
+                      />
+                    </Stack>
+                  </Section>
+                </Stack.Item>
+              ))}
         </Stack>
       </Window.Content>
     </Window>

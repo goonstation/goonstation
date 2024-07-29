@@ -12,7 +12,11 @@
  * SOFTWARE.
  */
 
-const round = (number: number, digits = 0, base = Math.pow(10, digits)): number => {
+const round = (
+  number: number,
+  digits = 0,
+  base = Math.pow(10, digits),
+): number => {
   return Math.round(base * number) / base;
 };
 
@@ -46,7 +50,13 @@ export interface HsvaColor extends HsvColor {
   a: number;
 }
 
-export type ObjectColor = RgbColor | HslColor | HsvColor | RgbaColor | HslaColor | HsvaColor;
+export type ObjectColor =
+  | RgbColor
+  | HslColor
+  | HsvColor
+  | RgbaColor
+  | HslaColor
+  | HsvaColor;
 
 export type AnyColor = string | ObjectColor;
 
@@ -63,7 +73,9 @@ const angleUnits: Record<string, number> = {
 export const hexToHsva = (hex: string): HsvaColor => rgbaToHsva(hexToRgba(hex));
 
 export const hexToRgba = (hex: string): RgbaColor => {
-  if (!hex) { return { r: 0, g: 0, b: 0, a: 0 }; }
+  if (!hex) {
+    return { r: 0, g: 0, b: 0, a: 0 };
+  }
 
   if (hex[0] === '#') hex = hex.substring(1);
 
@@ -89,8 +101,8 @@ export const parseHue = (value: string, unit = 'deg'): number => {
 };
 
 export const hslaStringToHsva = (hslString: string): HsvaColor => {
-  const matcher
-    = /hsla?\(?\s*(-?\d*\.?\d+)(deg|rad|grad|turn)?[,\s]+(-?\d*\.?\d+)%?[,\s]+(-?\d*\.?\d+)%?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
+  const matcher =
+    /hsla?\(?\s*(-?\d*\.?\d+)(deg|rad|grad|turn)?[,\s]+(-?\d*\.?\d+)%?[,\s]+(-?\d*\.?\d+)%?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
   const match = matcher.exec(hslString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
@@ -116,14 +128,19 @@ export const hslaToHsva = ({ h, s, l, a }: HslaColor): HsvaColor => {
   };
 };
 
-export const hsvaToHex = (hsva: HsvaColor): string => rgbaToHex(hsvaToRgba(hsva));
+export const hsvaToHex = (hsva: HsvaColor): string =>
+  rgbaToHex(hsvaToRgba(hsva));
 
 export const hsvaToHsla = ({ h, s, v, a }: HsvaColor): HslaColor => {
   const hh = ((200 - s) * v) / 100;
 
   return {
     h: round(h),
-    s: round(hh > 0 && hh < 200 ? ((s * v) / 100 / (hh <= 100 ? hh : 200 - hh)) * 100 : 0),
+    s: round(
+      hh > 0 && hh < 200
+        ? ((s * v) / 100 / (hh <= 100 ? hh : 200 - hh)) * 100
+        : 0,
+    ),
     l: round(hh / 2),
     a: round(a, 2),
   };
@@ -179,8 +196,8 @@ export const hsvaToRgbaString = (hsva: HsvaColor): string => {
 };
 
 export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
-  const matcher
-    = /hsva?\(?\s*(-?\d*\.?\d+)(deg|rad|grad|turn)?[,\s]+(-?\d*\.?\d+)%?[,\s]+(-?\d*\.?\d+)%?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
+  const matcher =
+    /hsva?\(?\s*(-?\d*\.?\d+)(deg|rad|grad|turn)?[,\s]+(-?\d*\.?\d+)%?[,\s]+(-?\d*\.?\d+)%?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
   const match = matcher.exec(hsvString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
@@ -196,8 +213,8 @@ export const hsvaStringToHsva = (hsvString: string): HsvaColor => {
 export const hsvStringToHsva = hsvaStringToHsva;
 
 export const rgbaStringToHsva = (rgbaString: string): HsvaColor => {
-  const matcher
-    = /rgba?\(?\s*(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
+  const matcher =
+    /rgba?\(?\s*(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?[,\s]+(-?\d*\.?\d+)(%)?,?\s*[/\s]*(-?\d*\.?\d+)?(%)?\s*\)?/i;
   const match = matcher.exec(rgbaString);
 
   if (!match) return { h: 0, s: 0, v: 0, a: 1 };
@@ -219,7 +236,9 @@ const format = (number: number) => {
 
 export const rgbaToHex = ({ r, g, b, a }: RgbaColor): string => {
   const alphaHex = a < 1 ? format(round(a * 255)) : '';
-  return '#' + format(round(r)) + format(round(g)) + format(round(b)) + alphaHex;
+  return (
+    '#' + format(round(r)) + format(round(g)) + format(round(b)) + alphaHex
+  );
 };
 
 export const rgbaToHsva = ({ r, g, b, a }: RgbaColor): HsvaColor => {
@@ -266,9 +285,9 @@ export const validHex = (value: string, alpha?: boolean): boolean => {
   const length = match ? match[1].length : 0;
 
   return (
-    length === 3 // '#rgb' format
-    || length === 6 // '#rrggbb' format
-    || (!!alpha && length === 4) // '#rgba' format
-    || (!!alpha && length === 8) // '#rrggbbaa' format
+    length === 3 || // '#rgb' format
+    length === 6 || // '#rrggbb' format
+    (!!alpha && length === 4) || // '#rgba' format
+    (!!alpha && length === 8) // '#rrggbbaa' format
   );
 };

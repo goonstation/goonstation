@@ -6,7 +6,14 @@
  * @license ISC
  */
 
-import { Button, Dimmer, LabeledList, Section, Slider, Stack } from 'tgui-core/components';
+import {
+  Button,
+  Dimmer,
+  LabeledList,
+  Section,
+  Slider,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -43,10 +50,12 @@ const VendorSection = () => {
   } = data;
 
   const handleFillClick = () => act('o2_fill');
-  const handleChangePressure = (pressure: number) => act('o2_changepressure', { pressure: pressure });
+  const handleChangePressure = (pressure: number) =>
+    act('o2_changepressure', { pressure: pressure });
 
   const isFree = !air_cost;
-  const canVend = isFree || (fill_cost > 0 && (bankMoney >= fill_cost || cash >= fill_cost));
+  const canVend =
+    isFree || (fill_cost > 0 && (bankMoney >= fill_cost || cash >= fill_cost));
 
   return (
     <Section title={`Buy ${vend_type}!`}>
@@ -76,7 +85,9 @@ const VendorSection = () => {
                 maxValue={max_pressure}
                 step={10}
                 stepPixelSize={4}
-                onChange={(_e: any, value: number) => handleChangePressure(value)}
+                onChange={(_e: any, value: number) =>
+                  handleChangePressure(value)
+                }
               />
             </Stack.Item>
             <Stack.Item>
@@ -107,8 +118,13 @@ const TankSection = () => {
         <Button onClick={handleTankEject} icon="eject" disabled={!holding}>
           Eject
         </Button>
-      }>
-      <GasTankInfo pressure={holding_pressure || 0} maxPressure={max_pressure || 1} name={holding || 'N/A'} />
+      }
+    >
+      <GasTankInfo
+        pressure={holding_pressure || 0}
+        maxPressure={max_pressure || 1}
+        name={holding || 'N/A'}
+      />
       {!holding && (
         <Dimmer>
           <Button icon="eject" fontSize={1.5} onClick={handleTankInsert} bold>

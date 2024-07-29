@@ -46,7 +46,8 @@ const HelpModal = () => {
           <strong>Help</strong>
         </p>
         <p>
-          <Icon name="mouse" /> Click on a piece to select it, click on a tile to move it there.
+          <Icon name="mouse" /> Click on a piece to select it, click on a tile
+          to move it there.
         </p>
         <p>Pieces may also be click-dragged to a target tile.</p>
         <p>

@@ -1,6 +1,14 @@
 import { classes } from 'common/react';
 import { useState } from 'react';
-import { Box, Button, Divider, Dropdown, Image, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Image,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -28,9 +36,15 @@ export const ClothingBooth = () => {
                     className="clothingbooth__dropdown"
                     options={categories.map((category) => category.category)}
                     selected={selectedCategory.category}
-                    onSelected={(value) => (
-                      selectCategory(categories[categories.findIndex((category) => category.category === value)])
-                    )}
+                    onSelected={(value) =>
+                      selectCategory(
+                        categories[
+                          categories.findIndex(
+                            (category) => category.category === value,
+                          )
+                        ],
+                      )
+                    }
                   />
                 </Stack.Item>
               </Stack>
@@ -74,7 +88,7 @@ export const ClothingBooth = () => {
 };
 
 interface ClothingBoothItemProps {
-  item
+  item;
 }
 
 const ClothingBoothItem = (props: ClothingBoothItemProps) => {
@@ -87,9 +101,11 @@ const ClothingBoothItem = (props: ClothingBoothItemProps) => {
         align="center"
         className={classes([
           'clothingbooth__boothitem',
-          item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
+          item.name === data.selectedItemName &&
+            'clothingbooth__boothitem-selected',
         ])}
-        onClick={() => act('select', { path: item.path })}>
+        onClick={() => act('select', { path: item.path })}
+      >
         <Stack.Item>
           <img src={`data:image/png;base64,${item.img}`} />
         </Stack.Item>
@@ -108,10 +124,18 @@ const CharacterPreview = () => {
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
-        <Image height={data.previewHeight * 2 + "px"} src={`data:image/png;base64,${data.previewIcon}`} />
+        <Image
+          height={data.previewHeight * 2 + 'px'}
+          src={`data:image/png;base64,${data.previewIcon}`}
+        />
       </Stack.Item>
       <Stack.Item>
-        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
+        <Button
+          icon="chevron-left"
+          tooltip="Clockwise"
+          tooltipPosition="right"
+          onClick={() => act('rotate-cw')}
+        />
         <Button
           icon="chevron-right"
           tooltip="Counter-clockwise"
@@ -135,8 +159,11 @@ const PurchaseInfo = () => {
             <Button
               color="green"
               disabled={data.selectedItemCost > data.money}
-              onClick={() => act('purchase')}>
-              {(data.selectedItemCost <= data.money) ? `Purchase` : `Insufficient Cash`}
+              onClick={() => act('purchase')}
+            >
+              {data.selectedItemCost <= data.money
+                ? `Purchase`
+                : `Insufficient Cash`}
             </Button>
           </Stack.Item>
         </>

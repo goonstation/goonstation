@@ -16,9 +16,20 @@ interface PollOptionsSectionProps {
   options: string[];
 }
 
-export const PollOptionsSection = (props: PollOptionsSectionProps, context: unknown) => {
-  const { onAddOption, onChangeOption, onRemoveOption, onSwapOptions, options } = props;
-  const [reorderingOptionIndex, setReorderingOptionIndex] = useState<number | null>(null);
+export const PollOptionsSection = (
+  props: PollOptionsSectionProps,
+  context: unknown,
+) => {
+  const {
+    onAddOption,
+    onChangeOption,
+    onRemoveOption,
+    onSwapOptions,
+    options,
+  } = props;
+  const [reorderingOptionIndex, setReorderingOptionIndex] = useState<
+    number | null
+  >(null);
   const handleReorder = (index: number) => {
     if (reorderingOptionIndex === null) {
       setReorderingOptionIndex(index);
@@ -36,7 +47,8 @@ export const PollOptionsSection = (props: PollOptionsSectionProps, context: unkn
         <Button icon="add" onClick={onAddOption} tooltip="Add option">
           Add
         </Button>
-      }>
+      }
+    >
       <LabeledList>
         {options.map((option, index) => (
           <PollOptionListItem
@@ -45,7 +57,13 @@ export const PollOptionsSection = (props: PollOptionsSectionProps, context: unkn
             onChange={(value: string) => onChangeOption(index, value)}
             onRemove={() => onRemoveOption(index)}
             onReorder={() => handleReorder(index)}
-            reordering={index === reorderingOptionIndex ? 'self' : reorderingOptionIndex ? 'other' : 'none'}
+            reordering={
+              index === reorderingOptionIndex
+                ? 'self'
+                : reorderingOptionIndex
+                  ? 'other'
+                  : 'none'
+            }
             value={option}
           />
         ))}
@@ -68,15 +86,40 @@ const PollOptionListItem = (props: PollOptionListItemProps) => {
   const handleChange = (e: unknown, value: string) => onChange(value);
   const buttons = (
     <>
-      {reordering === 'self' && <Button color="red" icon="cancel" onClick={onReorder} tooltip="Cancel reorder" />}
-      {reordering === 'other' && <Button icon="arrow-down-up-across-line" onClick={onReorder} tooltip="Swap" />}
-      {reordering === 'none' && <Button icon="arrows-up-down" onClick={onReorder} tooltip="Swap" />}
-      <Button color="bad" icon="trash" onClick={onRemove} tooltip="Remove option" />
+      {reordering === 'self' && (
+        <Button
+          color="red"
+          icon="cancel"
+          onClick={onReorder}
+          tooltip="Cancel reorder"
+        />
+      )}
+      {reordering === 'other' && (
+        <Button
+          icon="arrow-down-up-across-line"
+          onClick={onReorder}
+          tooltip="Swap"
+        />
+      )}
+      {reordering === 'none' && (
+        <Button icon="arrows-up-down" onClick={onReorder} tooltip="Swap" />
+      )}
+      <Button
+        color="bad"
+        icon="trash"
+        onClick={onRemove}
+        tooltip="Remove option"
+      />
     </>
   );
   return (
     <LabeledList.Item label={label} buttons={buttons}>
-      <Input width="100%" value={value} placeholder="Option text..." onChange={handleChange} />
+      <Input
+        width="100%"
+        value={value}
+        placeholder="Option text..."
+        onChange={handleChange}
+      />
     </LabeledList.Item>
   );
 };

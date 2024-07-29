@@ -15,7 +15,8 @@ export const BoardgameContents = () => {
         });
       }}
       fitted
-      className="boardgame__window">
+      className="boardgame__window"
+    >
       <Board />
       <Palettes />
     </Window.Content>

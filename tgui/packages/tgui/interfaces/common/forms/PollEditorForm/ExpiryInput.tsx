@@ -11,20 +11,18 @@ import { Dropdown, Input, NumberInput, Stack } from 'tgui-core/components';
 import type { ExpiryOptions, ExpiryType } from './types';
 
 const expiryTypeLookup: Record<ExpiryType, string> = {
-  'never': 'Never',
-  'minutes': 'Minutes',
-  'hours': 'Hours',
-  'days': 'Days',
-  'timestamp': 'Timestamp',
+  never: 'Never',
+  minutes: 'Minutes',
+  hours: 'Hours',
+  days: 'Days',
+  timestamp: 'Timestamp',
 };
 
-export const expiryTypeLookupByName: Partial<Record<string, ExpiryType>> = Object.entries(expiryTypeLookup).reduce(
-  (acc, [id, name]) => {
+export const expiryTypeLookupByName: Partial<Record<string, ExpiryType>> =
+  Object.entries(expiryTypeLookup).reduce((acc, [id, name]) => {
     acc[name] = id;
     return acc;
-  },
-  {}
-);
+  }, {});
 
 export const expiryTypeOptions = Object.keys(expiryTypeLookupByName);
 
@@ -64,7 +62,14 @@ export const ExpiryInput = (props: ExpiryInputProps) => {
   };
   let valueControl: ReactNode = null;
   if (expiryType === 'timestamp') {
-    valueControl = <Input width="100%" value={expiryValue} onChange={handleChangeValuePart} placeholder="yyyy-mm-dd" />;
+    valueControl = (
+      <Input
+        width="100%"
+        value={expiryValue}
+        onChange={handleChangeValuePart}
+        placeholder="yyyy-mm-dd"
+      />
+    );
   } else if (expiryType && ['minutes', 'days', 'hours'].includes(expiryType)) {
     valueControl = (
       <NumberInput

@@ -4,7 +4,7 @@
  * @param {*} rawData - [ { foo: v, bar: v2, ... }, { foo: v3, bar: v4, ... }, ... ]
  * @returns - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...], ... }
  */
-export const processStatsData = rawData => {
+export const processStatsData = (rawData) => {
   if ((rawData ?? []).length === 0) {
     return null;
   }
@@ -16,7 +16,11 @@ export const processStatsData = rawData => {
     return acc;
   }, {});
 
-  for (let statsDataIndex = 0; statsDataIndex < rawData.length; statsDataIndex++) {
+  for (
+    let statsDataIndex = 0;
+    statsDataIndex < rawData.length;
+    statsDataIndex++
+  ) {
     const tegValues = rawData[statsDataIndex];
     for (let keyIndex = 0; keyIndex < keys.length; keyIndex++) {
       const key = keys[keyIndex];
@@ -32,7 +36,7 @@ export const processStatsData = rawData => {
  * @param {*} stats - { [i, value], [i+1, value2], ...}
  * @returns float maximum value
  */
-export const getStatsMax = stats => {
+export const getStatsMax = (stats) => {
   let found_maximum = 0; // Chart always starts at 0
   for (const index in stats) {
     const stat = stats[index][1]; // get the value

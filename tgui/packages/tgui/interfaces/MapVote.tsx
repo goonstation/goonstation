@@ -6,30 +6,38 @@
  */
 
 import { type ReactNode } from 'react';
-import { Box, Button, Dimmer, Image, Section, Stack, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Image,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { computeBoxProps } from '../components/Box';
 import { Window } from '../layouts';
 
 interface MapVoteMapDetials {
-  description: string,
-  location: string,
-  engine: string,
-  mining: string,
-  idealPlayers: string
+  description: string;
+  location: string;
+  engine: string;
+  mining: string;
+  idealPlayers: string;
 }
 
 export interface MapVoteMapData {
-  name: string,
-  thumbnail: string,
-  details: MapVoteMapDetials
+  name: string;
+  thumbnail: string;
+  details: MapVoteMapDetials;
 }
 
 export interface MapVoteData {
-  playersVoting: boolean,
-  mapList: Array<MapVoteMapData>,
-  clientVoteMap: any,
+  playersVoting: boolean;
+  mapList: Array<MapVoteMapData>;
+  clientVoteMap: any;
 }
 
 export const MAP_PANEL_WIDTH = 150;
@@ -44,14 +52,17 @@ export const MapVote = () => {
   const { data, act } = useBackend<MapVoteData>();
   const { playersVoting, mapList, clientVoteMap } = data;
 
-  const height = BASE_HEIGHT + MAP_ROW_HEIGHT * Math.ceil(mapList.length / PANEL_PER_LINE);
-  const width = (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * PANEL_PER_LINE + WINDOW_HOZ_PADDING;
+  const height =
+    BASE_HEIGHT + MAP_ROW_HEIGHT * Math.ceil(mapList.length / PANEL_PER_LINE);
+  const width =
+    (MAP_PANEL_WIDTH + SPACE_BETWEEN_PANELS) * PANEL_PER_LINE +
+    WINDOW_HOZ_PADDING;
 
   return (
     <Window height={height} width={width}>
       <Window.Content>
         <Stack wrap justify="space-around">
-          {mapList.map(map => (
+          {mapList.map((map) => (
             <MapPanel
               key={map.name}
               name={map.name}
@@ -60,11 +71,12 @@ export const MapVote = () => {
               button={
                 <Button.Checkbox
                   checked={clientVoteMap[map.name]}
-                  color={clientVoteMap[map.name] ? "green" : "red"}
-                  tooltip="Vote" />
+                  color={clientVoteMap[map.name] ? 'green' : 'red'}
+                  tooltip="Vote"
+                />
               }
               onClick={() => act('toggle_vote', { map_name: map.name })}
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               voted={!!clientVoteMap[map.name]}
             />
           ))}
@@ -77,57 +89,52 @@ export const MapVote = () => {
               <Button.Checkbox
                 checked
                 color="green"
-                onClick={() => act('all_yes')}>
+                onClick={() => act('all_yes')}
+              >
                 Vote Yes to All
               </Button.Checkbox>
-              <Button.Checkbox
-                color="red"
-                onClick={() => act('all_no')}
-                ml={1}>
+              <Button.Checkbox color="red" onClick={() => act('all_no')} ml={1}>
                 Vote No to All
               </Button.Checkbox>
             </>
-          } />
-        {!playersVoting && (<Dimmer fontSize={1.5}>Map Vote has ended</Dimmer>)}
+          }
+        />
+        {!playersVoting && <Dimmer fontSize={1.5}>Map Vote has ended</Dimmer>}
       </Window.Content>
     </Window>
   );
 };
 
-
 type MapPanelProps = Pick<MapVoteMapData, 'name' | 'thumbnail' | 'details'> & {
-  voted?: boolean
-  won?: boolean,
-  button?: ReactNode,
-  onClick?: () => void,
-  style?: Record<string, string>,
-  children?: ReactNode,
+  voted?: boolean;
+  won?: boolean;
+  button?: ReactNode;
+  onClick?: () => void;
+  style?: Record<string, string>;
+  children?: ReactNode;
 };
 
 export const MapPanel = (props: MapPanelProps) => {
-  const {
-    name,
-    thumbnail,
-    details,
-    button,
-    children,
-    voted,
-    won,
-    ...rest
-  } = props;
+  const { name, thumbnail, details, button, children, voted, won, ...rest } =
+    props;
 
   const panel = (
     <Section
-      title={(
-        <Box inline nowrap overflow="hidden"
-          style={{ textOverflow: "ellipsis" }}
-          maxWidth={`${MAP_PANEL_WIDTH - 35}px`}>
+      title={
+        <Box
+          inline
+          nowrap
+          overflow="hidden"
+          style={{ textOverflow: 'ellipsis' }}
+          maxWidth={`${MAP_PANEL_WIDTH - 35}px`}
+        >
           {name}
-        </Box>)}
-      className={`MapPanel ${voted ? "MapPanel--voted" : ""} ${won ? "MapPanel--won" : ""}`}
+        </Box>
+      }
+      className={`MapPanel ${voted ? 'MapPanel--voted' : ''} ${won ? 'MapPanel--won' : ''}`}
       buttons={button}
       width={`${MAP_PANEL_WIDTH}px`}
-      align={button ? null : "center"}
+      align={button ? null : 'center'}
       mb={1}
       {...computeBoxProps(rest)}
     >
@@ -140,9 +147,13 @@ export const MapPanel = (props: MapPanelProps) => {
 
   return (
     <Stack.Item>
-      {details
-        ? <Tooltip content={<MapPanelTooltip name={name} details={details} />}>{panel}</Tooltip>
-        : panel}
+      {details ? (
+        <Tooltip content={<MapPanelTooltip name={name} details={details} />}>
+          {panel}
+        </Tooltip>
+      ) : (
+        panel
+      )}
     </Stack.Item>
   );
 };
@@ -153,12 +164,18 @@ const MapPanelTooltip = (props: MapPanelTooltipProps) => {
   const { name, details } = props;
   return (
     <>
-      <strong>{name}</strong><br />
-      {details.description}<br />
-      <strong>Location:</strong> {details.location}<br />
-      <strong>Engine:</strong> {details.engine}<br />
-      <strong>Mining:</strong> {details.mining}<br />
-      <strong>Ideal Players:</strong> {details.idealPlayers}<br />
+      <strong>{name}</strong>
+      <br />
+      {details.description}
+      <br />
+      <strong>Location:</strong> {details.location}
+      <br />
+      <strong>Engine:</strong> {details.engine}
+      <br />
+      <strong>Mining:</strong> {details.mining}
+      <br />
+      <strong>Ideal Players:</strong> {details.idealPlayers}
+      <br />
     </>
   );
 };

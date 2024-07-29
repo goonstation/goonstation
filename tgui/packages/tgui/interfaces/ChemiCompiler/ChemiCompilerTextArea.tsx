@@ -23,7 +23,10 @@ export const ChemiCompilerTextArea = () => {
       key={loadTimestamp}
       fontFamily="Consolas, monospace"
       fontSize="13px"
-      style={{ "wordBreak": "break-all", "borderColor": (theme === "syndicate" ? "#397439" : null) }}
+      style={{
+        wordBreak: 'break-all',
+        borderColor: theme === 'syndicate' ? '#397439' : null,
+      }}
     />
   );
 };

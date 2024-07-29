@@ -1,4 +1,11 @@
-import { AnimatedNumber, Button, Knob, LabeledList, Section, Stack } from 'tgui-core/components';
+import {
+  AnimatedNumber,
+  Button,
+  Knob,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { formatTime } from '../format';
@@ -18,7 +25,7 @@ interface TimerData {
 export const Timer = () => {
   const { data, act } = useBackend<TimerData>();
   const setTime = (value) => {
-    act("set-time", { 'value': value * 10 });
+    act('set-time', { value: value * 10 });
   };
 
   const showTime = (value) => {
@@ -32,13 +39,19 @@ export const Timer = () => {
           <LabeledList>
             {!!data.armButton && (
               <LabeledList.Item label="Armed">
-                <Button.Checkbox checked={data.armed} onClick={() => act('toggle-armed')}>
+                <Button.Checkbox
+                  checked={data.armed}
+                  onClick={() => act('toggle-armed')}
+                >
                   {data.armed ? 'Armed' : 'Not armed'}
                 </Button.Checkbox>
               </LabeledList.Item>
             )}
             <LabeledList.Item label="Timing">
-              <Button.Checkbox checked={data.timing} onClick={() => act('toggle-timing')}>
+              <Button.Checkbox
+                checked={data.timing}
+                onClick={() => act('toggle-timing')}
+              >
                 {data.timing ? 'Timing' : 'Not timing'}
               </Button.Checkbox>
             </LabeledList.Item>

@@ -53,7 +53,8 @@ interface OccupantSectionContentsProps {
 }
 
 const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
-  const { act, cabling, fuel, occupant, onEjectOccupant, onRenameOccupant } = props;
+  const { act, cabling, fuel, occupant, onEjectOccupant, onRenameOccupant } =
+    props;
   const occupantTypeDescription = occupantTypeDescriptionLens(occupant);
   return (
     <>
@@ -69,15 +70,31 @@ const OccupantSectionContents = (props: OccupantSectionContentsProps) => {
                   tooltip="Change the occupant's designation"
                 />
               )}
-              {<DockingAllowedButton onClick={onEjectOccupant} icon="eject" tooltip="Eject the occupant" />}
+              {
+                <DockingAllowedButton
+                  onClick={onEjectOccupant}
+                  icon="eject"
+                  tooltip="Eject the occupant"
+                />
+              }
             </>
-          }>
+          }
+        >
           {occupant.name}
         </LabeledList.Item>
-        <LabeledList.Item label="Type">{occupantTypeDescription}</LabeledList.Item>
+        <LabeledList.Item label="Type">
+          {occupantTypeDescription}
+        </LabeledList.Item>
       </LabeledList>
       <Section title="Status">
-        {occupant.kind === 'robot' && <RobotStatusView occupant={occupant} fuel={fuel} cabling={cabling} act={act} />}
+        {occupant.kind === 'robot' && (
+          <RobotStatusView
+            occupant={occupant}
+            fuel={fuel}
+            cabling={cabling}
+            act={act}
+          />
+        )}
         {occupant.kind === 'human' && <HumanStatusView occupant={occupant} />}
         {occupant.kind === 'eyebot' && <EyebotStatusView occupant={occupant} />}
       </Section>

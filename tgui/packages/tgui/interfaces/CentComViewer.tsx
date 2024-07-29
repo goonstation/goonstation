@@ -5,14 +5,20 @@
  * @license ISC
  */
 
-import { Button, Input, LabeledList, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface CentComViewerData {
   banData;
-  key,
+  key;
   filterInactive;
 }
 
@@ -51,11 +57,11 @@ const Ban = ({ ban }) => {
 
   let currentStatus = '';
   if (ban.active && !expired) {
-    currentStatus = "Banned";
+    currentStatus = 'Banned';
   } else if (!unbannedBy && expired) {
-    currentStatus = "Expired";
+    currentStatus = 'Expired';
   } else if (unbannedBy) {
-    currentStatus = "Unbanned";
+    currentStatus = 'Unbanned';
   }
 
   return (
@@ -74,17 +80,19 @@ const Ban = ({ ban }) => {
         <LabeledList.Item label="Length">
           {getBanLength(bannedOn, expires)}
         </LabeledList.Item>
-        <LabeledList.Item label="Reason">
-          {reason}
-        </LabeledList.Item>
+        <LabeledList.Item label="Reason">{reason}</LabeledList.Item>
         {jobs && (
-          <LabeledList.Item label="Jobs">
-            {jobs.join(", ")}
-          </LabeledList.Item>
+          <LabeledList.Item label="Jobs">{jobs.join(', ')}</LabeledList.Item>
         )}
         <LabeledList.Item
           label="Status"
-          color={currentStatus === "Banned" ? "bad" : currentStatus === "Expired" ? "average" : "good"}
+          color={
+            currentStatus === 'Banned'
+              ? 'bad'
+              : currentStatus === 'Expired'
+                ? 'average'
+                : 'good'
+          }
         >
           {currentStatus}
         </LabeledList.Item>
@@ -118,7 +126,6 @@ const RenderBans = () => {
   return <BanList banData={banData} filterInactive={filterInactive} />;
 };
 
-
 export const CentComViewer = () => {
   const { act, data } = useBackend<CentComViewerData>();
   const { key, filterInactive } = data;
@@ -139,16 +146,19 @@ export const CentComViewer = () => {
                   />
                 </>
               }
-              buttons={(
+              buttons={
                 <Button.Checkbox
                   checked={filterInactive}
-                  onClick={() => act('toggle-filterInactive')}>Filter Inactive
+                  onClick={() => act('toggle-filterInactive')}
+                >
+                  Filter Inactive
                 </Button.Checkbox>
-              )} />
+              }
+            />
           </Stack.Item>
           <Stack.Item grow>
             <Section scrollable fill>
-              <Stack vertical >
+              <Stack vertical>
                 <RenderBans />
               </Stack>
             </Section>

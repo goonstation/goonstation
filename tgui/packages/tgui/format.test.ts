@@ -109,7 +109,8 @@ describe('formatSiBaseTenUnit', () => {
   });
 });
 
-describe('formatTime', () => { // |GOONSTATION-CHANGE|
+describe('formatTime', () => {
+  // |GOONSTATION-CHANGE|
   it('formats time values', () => {
     expect(formatTime(36000)).toBe('60:00');
     expect(formatTime(36001)).toBe('60:00'); // over an hour maxes out at 60 minutes

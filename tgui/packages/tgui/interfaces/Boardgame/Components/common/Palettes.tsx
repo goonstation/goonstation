@@ -15,7 +15,9 @@ export const Palettes = () => {
             <PaletteExpandButton index={i} setId={set.name} />
           </Box>
 
-          <Flex className={`boardgame__palettes-set ${isExpanded(i) ? '' : 'boardgame__palettes-set-minimized'}`}>
+          <Flex
+            className={`boardgame__palettes-set ${isExpanded(i) ? '' : 'boardgame__palettes-set-minimized'}`}
+          >
             {set.pieces.map((piece, index) => (
               <Palette key={index} piece={piece} />
             ))}
@@ -40,7 +42,8 @@ const Palette = ({ piece }: PaletteProps) => {
     <Flex.Item
       className="boardgame__palettes-set-piece"
       key={piece.name}
-      onMouseDown={() => paletteSet(currentUser.ckey, piece.code)}>
+      onMouseDown={() => paletteSet(currentUser.ckey, piece.code)}
+    >
       <img src={piece.image} />
     </Flex.Item>
   );
@@ -57,7 +60,8 @@ const PaletteExpandButton = ({ index, setId }: PaletteExpandButtonProps) => {
     <Button.Checkbox
       className={'boardgame__palettes-set-toggle'}
       checked={isExpanded(index)}
-      onClick={() => togglePalette(index)}>
+      onClick={() => togglePalette(index)}
+    >
       {setId}
     </Button.Checkbox>
   );

@@ -29,7 +29,8 @@ export const HorizontalNotations = () => {
         'background-color': bgcolor,
         color,
       }}
-      className="boardgame__notations boardgame__notations-horizontal">
+      className="boardgame__notations boardgame__notations-horizontal"
+    >
       {letters.map((letter, index) => (
         <Flex.Item key={index} grow={1}>
           <Box className="boardgame__notation-letter">{letter}</Box>
@@ -59,7 +60,8 @@ export const VerticalNotations = () => {
         'background-color': bgcolor,
         color,
       }}
-      className="boardgame__notations boardgame__notations-vertical">
+      className="boardgame__notations boardgame__notations-vertical"
+    >
       {numbers.map((_, index) => (
         <Flex.Item className="boardgame__notations-number" key={index} grow={1}>
           {isFlipped ? index + 1 : height - index}

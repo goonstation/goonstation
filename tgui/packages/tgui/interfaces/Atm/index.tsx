@@ -6,7 +6,16 @@
  */
 
 import { useState } from 'react';
-import { Box, Button, Divider, Icon, NoticeBox, Section, Stack, Tabs } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  Icon,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -52,13 +61,15 @@ export const Atm = () => {
               <Tabs.Tab
                 icon="money-bills"
                 selected={tabIndex === AtmTabKeys.Teller}
-                onClick={() => setTabIndex(AtmTabKeys.Teller)}>
+                onClick={() => setTabIndex(AtmTabKeys.Teller)}
+              >
                 ATM
               </Tabs.Tab>
               <Tabs.Tab
                 icon="coins"
                 selected={tabIndex === AtmTabKeys.Spacebux}
-                onClick={() => setTabIndex(AtmTabKeys.Spacebux)}>
+                onClick={() => setTabIndex(AtmTabKeys.Spacebux)}
+              >
                 Spacebux
               </Tabs.Tab>
             </Tabs>
@@ -84,14 +95,22 @@ const Teller = () => {
         <Section title="Automatic Teller Machine">
           <Stack vertical fill>
             <Stack.Item>
-              {!scannedCard && <NoticeBox info>Please swipe card and enter PIN to access your account.</NoticeBox>}
+              {!scannedCard && (
+                <NoticeBox info>
+                  Please swipe card and enter PIN to access your account.
+                </NoticeBox>
+              )}
               <Button
                 icon="id-card"
                 content={scannedCard ? scannedCard : 'Swipe ID'}
-                onClick={scannedCard ? () => act('logout') : () => act('insert_card')}
+                onClick={
+                  scannedCard ? () => act('logout') : () => act('insert_card')
+                }
               />
               {message.text && message.position === 'splash' && (
-                <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
+                <TypedNoticeBox type={message.status}>
+                  {message.text}
+                </TypedNoticeBox>
               )}
             </Stack.Item>
             {loggedIn === LoggedInStates.LoggedIn ? (
@@ -103,13 +122,20 @@ const Teller = () => {
                       Welcome, <strong>{accountName}.</strong>
                     </Stack.Item>
                     <Stack.Item>
-                      Your account balance is <strong>{accountBalance}⪽.</strong>
+                      Your account balance is{' '}
+                      <strong>{accountBalance}⪽.</strong>
                     </Stack.Item>
                     <Stack.Item>
                       <Divider />
-                      <Button icon="money-bill" content="Withdraw cash" onClick={() => act('withdraw_cash')} />
+                      <Button
+                        icon="money-bill"
+                        content="Withdraw cash"
+                        onClick={() => act('withdraw_cash')}
+                      />
                       {message.text && message.position === 'atm' && (
-                        <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
+                        <TypedNoticeBox type={message.status}>
+                          {message.text}
+                        </TypedNoticeBox>
                       )}
                     </Stack.Item>
                   </Stack>
@@ -118,9 +144,15 @@ const Teller = () => {
             ) : (
               scannedCard && (
                 <Stack.Item>
-                  <Button icon="sign-out-alt" content={'Enter PIN'} onClick={() => act('login_attempt')} />
+                  <Button
+                    icon="sign-out-alt"
+                    content={'Enter PIN'}
+                    onClick={() => act('login_attempt')}
+                  />
                   {message.text && message.position === 'login' && (
-                    <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
+                    <TypedNoticeBox type={message.status}>
+                      {message.text}
+                    </TypedNoticeBox>
                   )}
                 </Stack.Item>
               )
@@ -131,11 +163,19 @@ const Teller = () => {
       <Stack.Item>
         {loggedIn === LoggedInStates.LoggedIn && (
           <Section title="Lottery">
-            <NoticeBox info>To claim your winnings, you must insert your lottery ticket.</NoticeBox>
+            <NoticeBox info>
+              To claim your winnings, you must insert your lottery ticket.
+            </NoticeBox>
             <Divider />
-            <Button icon="ticket-alt" content="Purchase Lottery Ticket (100⪽)" onClick={() => act('buy')} />
+            <Button
+              icon="ticket-alt"
+              content="Purchase Lottery Ticket (100⪽)"
+              onClick={() => act('buy')}
+            />
             {message.text && message.position === 'lottery' && (
-              <TypedNoticeBox type={message.status}>{message.text}</TypedNoticeBox>
+              <TypedNoticeBox type={message.status}>
+                {message.text}
+              </TypedNoticeBox>
             )}
           </Section>
         )}
@@ -152,7 +192,8 @@ const SpacebuxMenu = () => {
       <Stack vertical fill>
         <Stack.Item>
           <NoticeBox info>
-            This menu is only visible to you. Deposit Spacebux into your account by inserting a token.
+            This menu is only visible to you. Deposit Spacebux into your account
+            by inserting a token.
           </NoticeBox>
           <Divider />
         </Stack.Item>
@@ -164,10 +205,18 @@ const SpacebuxMenu = () => {
         </Stack.Item>
         <Stack.Item>
           <Divider />
-          <Button icon="coins" content="Withdraw Spacebux" onClick={() => act('withdraw_spacebux')} />
+          <Button
+            icon="coins"
+            content="Withdraw Spacebux"
+            onClick={() => act('withdraw_spacebux')}
+          />
         </Stack.Item>
         <Stack.Item>
-          <Button icon="envelope" content="Securely send Spacebux" onClick={() => act('transfer_spacebux')} />
+          <Button
+            icon="envelope"
+            content="Securely send Spacebux"
+            onClick={() => act('transfer_spacebux')}
+          />
         </Stack.Item>
       </Stack>
     </Section>

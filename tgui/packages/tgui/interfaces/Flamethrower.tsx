@@ -1,33 +1,41 @@
-import { AnimatedNumber, Box, Button, Icon, Knob, NumberInput, Section, Stack } from 'tgui-core/components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Icon,
+  Knob,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { PortableHoldingTank } from './common/PortableAtmos';
 import { ReagentBar } from './common/ReagentInfo';
-import { freezeTemperature, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
+import {
+  freezeTemperature,
+  getTemperatureColor,
+  getTemperatureIcon,
+} from './common/temperatureUtils';
 
 const PilotLight = (props) => {
   const { act } = useBackend();
-  const {
-    lit,
-    maxTemp,
-    minTemp,
-    sprayTemp,
-  } = props;
+  const { lit, maxTemp, minTemp, sprayTemp } = props;
   return (
     <Section fill title="Pilot Light">
       <Stack justify="center" align="center">
         <Stack.Item>
           <Button
             icon="fire"
-            color={lit ? "orange" : null}
-            iconColor={lit ? "yellow" : null}
+            color={lit ? 'orange' : null}
+            iconColor={lit ? 'yellow' : null}
             onClick={() => act('light')}
             align="center"
             width="5em"
             fontSize={1.25}
           >
-            {lit ? "Lit" : "Unlit"}
+            {lit ? 'Lit' : 'Unlit'}
           </Button>
         </Stack.Item>
         <Stack.Item>
@@ -37,8 +45,10 @@ const PilotLight = (props) => {
             value={sprayTemp}
             minValue={minTemp}
             maxValue={maxTemp}
-            format={value => Math.floor(value - freezeTemperature) + " C"}
-            onChange={(e, value) => act('change_temperature', { temperature: (value) })}
+            format={(value) => Math.floor(value - freezeTemperature) + ' C'}
+            onChange={(e, value) =>
+              act('change_temperature', { temperature: value })
+            }
           />
         </Stack.Item>
         <Stack.Item>
@@ -48,12 +58,11 @@ const PilotLight = (props) => {
             p={1}
             fontSize={1.5}
             color={getTemperatureColor(sprayTemp)}
-            backgroundColor="black">
+            backgroundColor="black"
+          >
             <Box fontSize={1}>Temperature</Box>
             <Icon name={getTemperatureIcon(sprayTemp)} pr={0.5} />
-            <AnimatedNumber
-              value={Math.floor(sprayTemp - freezeTemperature)}
-            />
+            <AnimatedNumber value={Math.floor(sprayTemp - freezeTemperature)} />
             C
           </Box>
         </Stack.Item>
@@ -64,23 +73,33 @@ const PilotLight = (props) => {
 
 const FuelControl = (props) => {
   const { act } = useBackend();
-  const {
-    mode,
-    minVolume,
-    maxVolume,
-    chamberVolume,
-  } = props;
+  const { mode, minVolume, maxVolume, chamberVolume } = props;
   return (
     <Section fill title="Fuel Control">
       <Stack vertical>
         <Stack.Item>
-          {"Fire mode: "}
-          <Button selected={mode === 'auto'} onClick={() => act('change_mode', { mode: 'auto' })}>Full Auto</Button>
-          <Button selected={mode === 'burst'} onClick={() => act('change_mode', { mode: 'burst' })}>Wide Burst</Button>
-          <Button selected={mode === 'semi_auto'} onClick={() => act('change_mode', { mode: 'semi_auto' })}>Semi Auto</Button>
+          {'Fire mode: '}
+          <Button
+            selected={mode === 'auto'}
+            onClick={() => act('change_mode', { mode: 'auto' })}
+          >
+            Full Auto
+          </Button>
+          <Button
+            selected={mode === 'burst'}
+            onClick={() => act('change_mode', { mode: 'burst' })}
+          >
+            Wide Burst
+          </Button>
+          <Button
+            selected={mode === 'semi_auto'}
+            onClick={() => act('change_mode', { mode: 'semi_auto' })}
+          >
+            Semi Auto
+          </Button>
         </Stack.Item>
         <Stack.Item>
-          {"Chamber volume: "}
+          {'Chamber volume: '}
           <NumberInput
             value={chamberVolume}
             minValue={minVolume}
@@ -101,17 +120,9 @@ interface FlamethrowerData {
 
 export const Flamethrower = () => {
   const { act, data } = useBackend<FlamethrowerData>();
-  const {
-    gasTank,
-    fuelTank,
-  } = data;
+  const { gasTank, fuelTank } = data;
   return (
-    <Window
-      width={580}
-      height={270}
-      theme="ntos"
-      title="Flamethrower"
-    >
+    <Window width={580} height={270} theme="ntos" title="Flamethrower">
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
@@ -137,16 +148,16 @@ export const Flamethrower = () => {
                 <Section
                   title="Fuel Tank"
                   fill
-                  buttons={(
+                  buttons={
                     <Button
                       icon="eject"
                       content="Eject"
                       disabled={!fuelTank}
-                      onClick={() => act('remove_fuel')} />
-                  )}
+                      onClick={() => act('remove_fuel')}
+                    />
+                  }
                 >
-                  {fuelTank
-              && <ReagentBar container={fuelTank} height="5em" /> }
+                  {fuelTank && <ReagentBar container={fuelTank} height="5em" />}
                 </Section>
               </Stack.Item>
             </Stack>

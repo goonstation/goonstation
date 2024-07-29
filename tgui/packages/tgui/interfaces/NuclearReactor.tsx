@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Knob, RoundGauge, Section, Table } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Knob,
+  RoundGauge,
+  Section,
+  Table,
+} from 'tgui-core/components';
 import { round } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
@@ -107,14 +115,14 @@ const ReactorGrid = (shape) => {
 };
 
 interface NuclearReactorData {
-  gridW,
-  gridH,
-  emptySlotIcon,
-  components,
-  reactorTemp,
-  reactorRads,
-  configuredControlRodLevel,
-  actualControlRodLevel,
+  gridW;
+  gridH;
+  emptySlotIcon;
+  components;
+  reactorTemp;
+  reactorRads;
+  configuredControlRodLevel;
+  actualControlRodLevel;
 }
 
 export const NuclearReactor = () => {

@@ -7,13 +7,24 @@
 
 import { toTitleCase } from 'common/string';
 import { Fragment, useState } from 'react';
-import { BlockQuote, Box, Button, Collapsible, Divider, Image, Section, Stack } from 'tgui-core/components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Collapsible,
+  Divider,
+  Image,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { CharacterPreferencesData, CharacterPreferencesTrait } from './type';
 
-const sortTraits = (a: CharacterPreferencesTrait, b: CharacterPreferencesTrait) =>
-  a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+const sortTraits = (
+  a: CharacterPreferencesTrait,
+  b: CharacterPreferencesTrait,
+) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
 
 export const TraitsTab = () => {
   const { act, data } = useBackend<CharacterPreferencesData>();
@@ -21,13 +32,18 @@ export const TraitsTab = () => {
 
   const traitsByCategory: Record<string, CharacterPreferencesTrait[]> = {};
 
-  const traits: CharacterPreferencesTrait[] = data.traitsAvailable.map((trait) => ({
-    ...trait,
-    ...data.traitsData[trait.id],
-  }));
+  const traits: CharacterPreferencesTrait[] = data.traitsAvailable.map(
+    (trait) => ({
+      ...trait,
+      ...data.traitsData[trait.id],
+    }),
+  );
 
   for (const trait of traits) {
-    const categories = trait.category && trait.category.length > 0 ? trait.category : ['uncategorized'];
+    const categories =
+      trait.category && trait.category.length > 0
+        ? trait.category
+        : ['uncategorized'];
 
     for (const category of categories) {
       if (!traitsByCategory[category]) {
@@ -41,10 +57,15 @@ export const TraitsTab = () => {
   let traitCategories = Object.keys(traitsByCategory).sort();
   // Uncategorized always goes last.
   if (traitCategories.includes('uncategorized')) {
-    traitCategories = [...traitCategories.filter((c) => c !== 'uncategorized'), 'uncategorized'];
+    traitCategories = [
+      ...traitCategories.filter((c) => c !== 'uncategorized'),
+      'uncategorized',
+    ];
   }
 
-  const selectedAmount = data.traitsAvailable.filter((trait) => trait.selected).length;
+  const selectedAmount = data.traitsAvailable.filter(
+    (trait) => trait.selected,
+  ).length;
 
   return (
     <Section fill>
@@ -66,10 +87,14 @@ export const TraitsTab = () => {
                 fill
                 scrollable
                 buttons={
-                  <Button.Checkbox checked={filterAvailable} onClick={() => setFilterAvailable(!filterAvailable)}>
+                  <Button.Checkbox
+                    checked={filterAvailable}
+                    onClick={() => setFilterAvailable(!filterAvailable)}
+                  >
                     Filter available
                   </Button.Checkbox>
-                }>
+                }
+              >
                 {traitCategories.map((category) => {
                   const traits = traitsByCategory[category];
 
@@ -79,7 +104,9 @@ export const TraitsTab = () => {
                       category={category}
                       traits={traits
                         .filter((trait) => !trait.selected)
-                        .filter((trait) => (filterAvailable ? trait.available : true))
+                        .filter((trait) =>
+                          filterAvailable ? trait.available : true,
+                        )
                         .sort(sortTraits)}
                     />
                   );
@@ -94,7 +121,12 @@ export const TraitsTab = () => {
                 title={`Selected (${selectedAmount}${data.traitsMax !== Infinity ? `/${data.traitsMax}` : ''})`}
                 fill
                 scrollable
-                buttons={<Button onClick={() => act('reset-traits')}>Reset traits</Button>}>
+                buttons={
+                  <Button onClick={() => act('reset-traits')}>
+                    Reset traits
+                  </Button>
+                }
+              >
                 {traitCategories.map((category) => {
                   const traits = traitsByCategory[category];
 
@@ -102,7 +134,9 @@ export const TraitsTab = () => {
                     <TraitCategoryList
                       key={category}
                       category={category}
-                      traits={traits.filter((trait) => trait.selected).sort(sortTraits)}
+                      traits={traits
+                        .filter((trait) => trait.selected)
+                        .sort(sortTraits)}
                     />
                   );
                 })}
@@ -145,13 +179,21 @@ const Trait = (props: CharacterPreferencesTrait) => {
   return (
     <Stack>
       <Stack.Item>
-        <Image width="32px" height="32px" src={`data:image/png;base64,${img}`} backgroundColor="transparent" />
+        <Image
+          width="32px"
+          height="32px"
+          src={`data:image/png;base64,${img}`}
+          backgroundColor="transparent"
+        />
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack align="center" mb={1}>
           <Stack.Item grow>
             {name}{' '}
-            <Box as="span" color={points < 0 ? 'bad' : points > 0 ? 'good' : 'label'}>
+            <Box
+              as="span"
+              color={points < 0 ? 'bad' : points > 0 ? 'good' : 'label'}
+            >
               ({points > 0 ? '+' : ''}
               {points})
             </Box>
@@ -160,7 +202,10 @@ const Trait = (props: CharacterPreferencesTrait) => {
             <Button
               disabled={!available}
               icon={selected ? 'minus' : 'plus'}
-              onClick={() => act(selected ? 'unselect-trait' : 'select-trait', { id })}>
+              onClick={() =>
+                act(selected ? 'unselect-trait' : 'select-trait', { id })
+              }
+            >
               {selected ? 'Remove' : 'Add'}
             </Button>
           </Stack.Item>

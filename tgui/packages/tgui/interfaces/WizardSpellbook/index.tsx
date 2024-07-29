@@ -20,7 +20,9 @@ const SIDEBAR_WIDTH = '160px';
 export const WizardSpellbook = () => {
   const { data } = useBackend<WizardSpellbookData>();
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilters, setCategoryFilters] = useState<Record<string, boolean>>({});
+  const [categoryFilters, setCategoryFilters] = useState<
+    Record<string, boolean>
+  >({});
   const clearFilters = () => {
     setSearchQuery('');
     setCategoryFilters({});

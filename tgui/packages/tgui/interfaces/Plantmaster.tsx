@@ -55,18 +55,18 @@ const sortname = [
 ];
 
 interface PlantmasterData {
-  extractables,
-  seeds,
-  category,
-  category_lengths,
-  inserted,
-  inserted_container,
-  seedoutput,
-  splice_chance,
-  show_splicing,
-  splice_seeds,
-  sortBy,
-  sortAsc,
+  extractables;
+  seeds;
+  category;
+  category_lengths;
+  inserted;
+  inserted_container;
+  seedoutput;
+  splice_chance;
+  show_splicing;
+  splice_seeds;
+  sortBy;
+  sortAsc;
 }
 
 export const Plantmaster = () => {

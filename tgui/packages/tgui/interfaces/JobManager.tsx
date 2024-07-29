@@ -5,12 +5,26 @@
  * @license ISC
  */
 
-import { Button, Collapsible, LabeledList, NoticeBox, Section } from 'tgui-core/components';
+import {
+  Button,
+  Collapsible,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const JobItem = ({ name, count, limit, type, onEdit, onAlterCap, onRemove }) => (
+const JobItem = ({
+  name,
+  count,
+  limit,
+  type,
+  onEdit,
+  onAlterCap,
+  onRemove,
+}) => (
   <LabeledList.Item
     label={name}
     buttons={
@@ -20,11 +34,7 @@ const JobItem = ({ name, count, limit, type, onEdit, onAlterCap, onRemove }) => 
           tooltip="Alter Cap"
           onClick={onAlterCap}
         />
-        <Button
-          icon="edit"
-          tooltip="Edit Job"
-          onClick={onEdit}
-        />
+        <Button icon="edit" tooltip="Edit Job" onClick={onEdit} />
         {type === 'created' && (
           <Button.Confirm
             icon="trash"
@@ -41,7 +51,7 @@ const JobItem = ({ name, count, limit, type, onEdit, onAlterCap, onRemove }) => 
 const JobCategory = ({ title, jobs, act }) => (
   <Collapsible title={title}>
     <LabeledList>
-      {jobs.map(job => (
+      {jobs.map((job) => (
         <JobItem
           key={job.name}
           name={job.name}
@@ -77,23 +87,23 @@ export const JobManager = () => {
   const jobCategories = [
     {
       name: 'Command Jobs',
-      jobs: stapleJobs.filter(job => job.type === 'command'),
+      jobs: stapleJobs.filter((job) => job.type === 'command'),
     },
     {
       name: 'Security Jobs',
-      jobs: stapleJobs.filter(job => job.type === 'security'),
+      jobs: stapleJobs.filter((job) => job.type === 'security'),
     },
     {
       name: 'Research Jobs',
-      jobs: stapleJobs.filter(job => job.type === 'research'),
+      jobs: stapleJobs.filter((job) => job.type === 'research'),
     },
     {
       name: 'Engineering Jobs',
-      jobs: stapleJobs.filter(job => job.type === 'engineering'),
+      jobs: stapleJobs.filter((job) => job.type === 'engineering'),
     },
     {
       name: 'Civilian Jobs',
-      jobs: stapleJobs.filter(job => job.type === 'civilian'),
+      jobs: stapleJobs.filter((job) => job.type === 'civilian'),
     },
   ];
 
@@ -111,7 +121,7 @@ export const JobManager = () => {
     <Window title="Job Manager" width={500} height={600}>
       <Window.Content scrollable>
         <Section title="Job Controls">
-          {jobCategories.map(category => (
+          {jobCategories.map((category) => (
             <JobCategory
               key={category.name}
               title={category.name}
@@ -119,16 +129,8 @@ export const JobManager = () => {
               act={act}
             />
           ))}
-          <JobCategory
-            title="Special Jobs"
-            jobs={specialJobs}
-            act={act}
-          />
-          <JobCategory
-            title="Hidden Jobs"
-            jobs={hiddenJobs}
-            act={act}
-          />
+          <JobCategory title="Special Jobs" jobs={specialJobs} act={act} />
+          <JobCategory title="Hidden Jobs" jobs={hiddenJobs} act={act} />
           <Button.Checkbox
             content="Special Jobs"
             checked={allowSpecialJobs}

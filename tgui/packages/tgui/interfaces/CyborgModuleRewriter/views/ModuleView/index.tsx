@@ -20,7 +20,8 @@ const SIDEBAR_WIDTH = 20;
 export const ModuleView = () => {
   const { act, data } = useBackend<CyborgModuleRewriterData>();
   const { modules: { available = [], selected } = {} } = data;
-  const handleEjectModule = (itemRef: string) => actions.ejectModule(act, { itemRef });
+  const handleEjectModule = (itemRef: string) =>
+    actions.ejectModule(act, { itemRef });
   const handleMoveToolDown = (itemRef: string) =>
     actions.moveTool(act, {
       dir: Direction.Down,
@@ -31,9 +32,12 @@ export const ModuleView = () => {
       dir: Direction.Up,
       itemRef,
     });
-  const handleRemoveTool = (itemRef: string) => actions.removeTool(act, { itemRef });
-  const handleResetModule = (moduleId: string) => actions.resetModule(act, { moduleId });
-  const handleSelectModule = (itemRef: string) => actions.selectModule(act, { itemRef });
+  const handleRemoveTool = (itemRef: string) =>
+    actions.removeTool(act, { itemRef });
+  const handleResetModule = (moduleId: string) =>
+    actions.resetModule(act, { moduleId });
+  const handleSelectModule = (itemRef: string) =>
+    actions.selectModule(act, { itemRef });
   const { item_ref: selectedModuleRef, tools = [] } = selected || {};
 
   if (available.length === 0) {
@@ -63,7 +67,8 @@ export const ModuleView = () => {
                   key={itemRef}
                   onClick={() => handleSelectModule(itemRef)}
                   rightSlot={ejectButton}
-                  selected={itemRef === selectedModuleRef}>
+                  selected={itemRef === selectedModuleRef}
+                >
                   {name}
                 </Tabs.Tab>
               );

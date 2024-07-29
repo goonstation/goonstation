@@ -9,8 +9,8 @@ export type Product = {
   name: string;
   img: string;
   amount: number;
-}
+};
 
 export interface ChemChuteData {
-  productList: Product[]
+  productList: Product[];
 }

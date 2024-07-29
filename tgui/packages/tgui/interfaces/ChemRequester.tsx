@@ -7,7 +7,14 @@
 
 import { capitalize } from 'common/string';
 import { useCallback, useState } from 'react';
-import { Button, Input, LabeledList, NumberInput, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -15,24 +22,27 @@ import { IDCard } from './common/IDCard';
 import { ListSearch } from './common/ListSearch';
 
 interface ChemRequesterData {
-  chemicals,
-  card,
-  selected_reagent,
-  volume,
-  max_volume,
-  notes,
-  silicon_user,
+  chemicals;
+  card;
+  selected_reagent;
+  volume;
+  max_volume;
+  notes;
+  silicon_user;
 }
 
 const ReagentSearch = (props) => {
   const { act } = useBackend();
   const { chemicals } = props;
   const [searchText, setSearchText] = useState('');
-  const filteredReagents = (
-    Object.keys(chemicals).filter(chemical => chemical.includes(searchText))
+  const filteredReagents = Object.keys(chemicals).filter((chemical) =>
+    chemical.includes(searchText),
   );
   const handleSelectReagent = (reagent) => {
-    act("set_reagent", { reagent_name: reagent, reagent_id: chemicals[reagent] });
+    act('set_reagent', {
+      reagent_name: reagent,
+      reagent_id: chemicals[reagent],
+    });
     setSearchText('');
   };
   return (
@@ -65,7 +75,12 @@ export const ChemRequester = () => {
         {!!card && (
           <Stack vertical>
             <Stack.Item>
-              <IDCard card={card} onEject={() => { act("reset_id"); }} />
+              <IDCard
+                card={card}
+                onEject={() => {
+                  act('reset_id');
+                }}
+              />
             </Stack.Item>
             <Stack.Item>
               {!selected_reagent && (
@@ -74,7 +89,13 @@ export const ChemRequester = () => {
                 </Section>
               )}
               {!!selected_reagent && (
-                <Button onClick={() => { act("set_reagent", { reagent: null }); }}>{capitalize(selected_reagent)}</Button>
+                <Button
+                  onClick={() => {
+                    act('set_reagent', { reagent: null });
+                  }}
+                >
+                  {capitalize(selected_reagent)}
+                </Button>
               )}
             </Stack.Item>
             <Stack.Item>
@@ -86,7 +107,10 @@ export const ChemRequester = () => {
                     step={5}
                     maxValue={max_volume}
                     value={volume}
-                    onChange={(value) => { act("set_volume", { volume: value }); }} />
+                    onChange={(value) => {
+                      act('set_volume', { volume: value });
+                    }}
+                  />
                 </LabeledList.Item>
                 <LabeledList.Item label="Notes">
                   <Input
@@ -94,26 +118,35 @@ export const ChemRequester = () => {
                     value={notesText}
                     maxLength={65}
                     onInput={handleNotesInput}
-                    onChange={(e, value) => { act("set_notes", { notes: value }); }} >{notes}
+                    onChange={(e, value) => {
+                      act('set_notes', { notes: value });
+                    }}
+                  >
+                    {notes}
                   </Input>
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
             <Stack.Item>
-              <Button onClick={() => {
-                act("submit");
-                setNotesText('');
-              }}
+              <Button
+                onClick={() => {
+                  act('submit');
+                  setNotesText('');
+                }}
               >
                 Submit request
               </Button>
             </Stack.Item>
           </Stack>
         )}
-        {!card && !silicon_user && <Section>Please swipe ID to place request.</Section>}
+        {!card && !silicon_user && (
+          <Section>Please swipe ID to place request.</Section>
+        )}
         {!card && !!silicon_user && (
           <Section>
-            <Button onClick={() => act("silicon_login")}>Login to place request.</Button>
+            <Button onClick={() => act('silicon_login')}>
+              Login to place request.
+            </Button>
           </Section>
         )}
       </Window.Content>

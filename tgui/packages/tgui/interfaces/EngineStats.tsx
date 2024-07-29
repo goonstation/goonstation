@@ -5,7 +5,14 @@
  * @license ISC
  */
 
-import { Box, Button, Chart, Modal, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Chart,
+  Modal,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { formatSiUnit } from '../format';
@@ -13,9 +20,9 @@ import { Window } from '../layouts';
 import { getStatsMax, processStatsData } from './common/graphUtils';
 
 interface EngineStatsData {
-  chamberData,
-  tegData,
-  turnedOn,
+  chamberData;
+  tegData;
+  turnedOn;
 }
 
 type StatsData = Record<string, any[]>;
@@ -28,15 +35,17 @@ type StatsData = Record<string, any[]>;
 const generateChartsFromStats = (stats: StatsData) => {
   return Object.entries(stats).map(([key, chart_data], index) => (
     // margin fuckery is to remove the extra left margin on the first stack item for alignment reasons
-    <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
+    <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined}>
       <Box>
-        { key.split("|")[0] }
+        {key.split('|')[0]}
         :&nbsp;
-        {
-          chart_data[chart_data.length - 1][1] === 0
-            ? ("No Data")
-            : (formatSiUnit(chart_data[chart_data.length - 1][1], 0, key.split("|")[1]))
-        }
+        {chart_data[chart_data.length - 1][1] === 0
+          ? 'No Data'
+          : formatSiUnit(
+              chart_data[chart_data.length - 1][1],
+              0,
+              key.split('|')[1],
+            )}
       </Box>
       <Chart.Line
         height="3.5em"
@@ -45,11 +54,11 @@ const generateChartsFromStats = (stats: StatsData) => {
         rangeX={[0, chart_data.length - 1]}
         rangeY={[0, getStatsMax(chart_data)]}
         strokeColor="	rgba(55,170,25, 1)"
-        fillColor="rgba(55,170,25, 0.25)" />
+        fillColor="rgba(55,170,25, 0.25)"
+      />
     </Stack.Item>
   ));
 };
-
 
 export const EngineStats = () => {
   const { act, data } = useBackend<EngineStatsData>();
@@ -72,58 +81,49 @@ export const EngineStats = () => {
       title="Engine Statistics"
     >
       <Window.Content>
-        {!turnedOn || !tegStats || !chamberStats // Need stats or window will freak out
-          ? (
-            // Turned off screen
-            <Modal
-              textAlign="center"
-              width={20}
-              height={5}
-              fontSize={2}
-              fontFamily="Courier">
-              POWER ON
-              <Button
-                tooltip="Power"
-                icon="power-off"
-                selected={turnedOn}
-                color="caution"
-                ml={3}
-                onClick={() => act('toggle-power')}
-              />
-            </Modal>
-          )
-          : (
-            <Box>
-              <Section
-                title="TEG Data"
-                buttons={(
-                  <Button
-                    tooltip="Power"
-                    icon="power-off"
-                    color="caution"
-                    onClick={() => act('toggle-power')}
-                  />
-                )}
-              >
-                <Stack
-                  wrap="wrap"
-                  justify="space-around"
-                  ml={-1}
-                >
-                  {generateChartsFromStats(tegStats)}
-                </Stack>
-              </Section>
-              <Section title="Combustion Chamber Data">
-                <Stack
-                  wrap="wrap"
-                  justify="space-around"
-                  ml={-1}
-                >
-                  { generateChartsFromStats(chamberStats) }
-                </Stack>
-              </Section>
-            </Box>
-          )}
+        {!turnedOn || !tegStats || !chamberStats ? ( // Need stats or window will freak out
+          // Turned off screen
+          <Modal
+            textAlign="center"
+            width={20}
+            height={5}
+            fontSize={2}
+            fontFamily="Courier"
+          >
+            POWER ON
+            <Button
+              tooltip="Power"
+              icon="power-off"
+              selected={turnedOn}
+              color="caution"
+              ml={3}
+              onClick={() => act('toggle-power')}
+            />
+          </Modal>
+        ) : (
+          <Box>
+            <Section
+              title="TEG Data"
+              buttons={
+                <Button
+                  tooltip="Power"
+                  icon="power-off"
+                  color="caution"
+                  onClick={() => act('toggle-power')}
+                />
+              }
+            >
+              <Stack wrap="wrap" justify="space-around" ml={-1}>
+                {generateChartsFromStats(tegStats)}
+              </Stack>
+            </Section>
+            <Section title="Combustion Chamber Data">
+              <Stack wrap="wrap" justify="space-around" ml={-1}>
+                {generateChartsFromStats(chamberStats)}
+              </Stack>
+            </Section>
+          </Box>
+        )}
       </Window.Content>
     </Window>
   );

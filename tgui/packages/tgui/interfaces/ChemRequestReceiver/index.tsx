@@ -7,7 +7,15 @@
  */
 
 import { useState } from 'react';
-import { Box, Button, Flex, Icon, Section, Stack, Tabs } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
 
 import { capitalize } from '../../../common/string';
 import { useBackend } from '../../backend';
@@ -20,11 +28,30 @@ interface ChemRequestProps extends RequestData {
 
 const ChemRequest = (props: ChemRequestProps) => {
   const { act } = useBackend();
-  const { name, id, reagent_name, reagent_color, volume, notes, area, state, interactable, age } = props;
+  const {
+    name,
+    id,
+    reagent_name,
+    reagent_color,
+    volume,
+    notes,
+    area,
+    state,
+    interactable,
+    age,
+  } = props;
   const color_string = reagent_color
-    ? 'rgba(' + reagent_color[0] + ',' + reagent_color[1] + ', ' + reagent_color[2] + ', 1)'
+    ? 'rgba(' +
+      reagent_color[0] +
+      ',' +
+      reagent_color[1] +
+      ', ' +
+      reagent_color[2] +
+      ', 1)'
     : undefined;
-  const resolvedReagentName = reagent_name ? capitalize(reagent_name) : '(Unknown)';
+  const resolvedReagentName = reagent_name
+    ? capitalize(reagent_name)
+    : '(Unknown)';
   return (
     <Section>
       <Flex direction="column" height={10}>
@@ -62,7 +89,8 @@ const ChemRequest = (props: ChemRequestProps) => {
                   icon="ban"
                   onClick={() => {
                     act('deny', { id: id });
-                  }}>
+                  }}
+                >
                   Deny
                 </Button>
                 <Button
@@ -72,13 +100,17 @@ const ChemRequest = (props: ChemRequestProps) => {
                   icon="check"
                   onClick={() => {
                     act('fulfil', { id: id });
-                  }}>
+                  }}
+                >
                   Mark as fulfilled
                 </Button>
               </>
             )}
             {state !== 'pending' && (
-              <Box align="center" backgroundColor={state === 'denied' ? 'red' : 'green'}>
+              <Box
+                align="center"
+                backgroundColor={state === 'denied' ? 'red' : 'green'}
+              >
                 {capitalize(state)}
               </Box>
             )}
@@ -107,9 +139,17 @@ export const ChemRequestReceiver = () => {
         </Tabs>
         <Stack wrap="wrap">
           {requests.map((request) => {
-            if ((request.state === 'pending' && tabIndex === 1) || (request.state !== 'pending' && tabIndex === 2)) {
+            if (
+              (request.state === 'pending' && tabIndex === 1) ||
+              (request.state !== 'pending' && tabIndex === 2)
+            ) {
               return (
-                <Stack.Item py={1} width={23} key={request.id} ml={request_index++ === 0 ? 1 : undefined}>
+                <Stack.Item
+                  py={1}
+                  width={23}
+                  key={request.id}
+                  ml={request_index++ === 0 ? 1 : undefined}
+                >
                   <ChemRequest interactable={allowed} {...request} />
                 </Stack.Item>
               );

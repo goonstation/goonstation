@@ -182,10 +182,10 @@ export const formatSiBaseTenUnit = (
  * @example formatTime(0, 'BO:OM')
  * //returns `BO:OM`
  */
-export const formatTime = (time: number, msg = "") => {
-  let seconds: number|string = Math.floor((time / 10) % 60);
-  let minutes: number|string = Math.floor(((time / 10) - seconds) / 60);
-  if (time <= 0 && msg !== "") {
+export const formatTime = (time: number, msg = '') => {
+  let seconds: number | string = Math.floor((time / 10) % 60);
+  let minutes: number | string = Math.floor((time / 10 - seconds) / 60);
+  if (time <= 0 && msg !== '') {
     return msg;
   }
   if (seconds < 10) {
@@ -214,7 +214,7 @@ export const formatPressure = (value: number) => {
  * Truncates a string with an ellipsis after n characters. Default is 25.
  */
 export const truncate = (str: string, n = 25) => {
-  return (str.length > n) ? str.substr(0, n-1) + '…' : str;
+  return str.length > n ? str.substr(0, n - 1) + '…' : str;
 };
 
 /**
@@ -222,5 +222,5 @@ export const truncate = (str: string, n = 25) => {
  */
 export const formatFrequency = (f: number): string => {
   f = Math.round(f);
-  return Math.floor(f / 10) + "." + (f % 10);
+  return Math.floor(f / 10) + '.' + (f % 10);
 };

@@ -77,11 +77,11 @@ const DropperAmountSection = (props) => {
 };
 
 interface MechanicalDropperData {
-  curTransferAmt,
-  minTransferAmt,
-  maxTransferAmt,
-  transferMode,
-  reagents,
+  curTransferAmt;
+  minTransferAmt;
+  maxTransferAmt;
+  transferMode;
+  reagents;
 }
 
 export const MechanicalDropper = () => {

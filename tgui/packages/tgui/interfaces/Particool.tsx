@@ -35,9 +35,9 @@ interface ParticoolData {
 }
 
 interface ParticleIntegerEntryProps {
-  name,
-  tooltip,
-  value,
+  name;
+  tooltip;
+  value;
 }
 
 const ParticleIntegerEntry = (props: ParticleIntegerEntryProps) => {
@@ -67,9 +67,9 @@ const ParticleIntegerEntry = (props: ParticleIntegerEntryProps) => {
 };
 
 interface ParticleMatrixEntryProps {
-  name,
-  tooltip,
-  value,
+  name;
+  tooltip;
+  value;
 }
 
 const ParticleMatrixEntry = (props: ParticleMatrixEntryProps) => {
@@ -108,10 +108,10 @@ const ParticleMatrixEntry = (props: ParticleMatrixEntryProps) => {
 };
 
 interface ParticleFloatEntryProps {
-  name,
-  particleFloatStep,
-  tooltip,
-  value,
+  name;
+  particleFloatStep;
+  tooltip;
+  value;
 }
 
 const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
@@ -156,10 +156,10 @@ const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
 };
 
 interface ParticleFloatNonGenEntryProps {
-  name,
-  particleFloatStep: number,
-  tooltip,
-  value,
+  name;
+  particleFloatStep: number;
+  tooltip;
+  value;
 }
 
 const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
@@ -173,7 +173,9 @@ const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
         step={particleFloatStep}
         maxValue={Infinity}
         minValue={-Infinity}
-        format={(value) => toFixed(value, numberOfDecimalDigits(particleFloatStep))}
+        format={(value) =>
+          toFixed(value, numberOfDecimalDigits(particleFloatStep))
+        }
         width="80px"
         onDrag={(value) =>
           act('modify_particle_value', {
@@ -190,9 +192,9 @@ const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
 };
 
 interface ParticleVectorEntryProps {
-  name,
-  tooltip,
-  value,
+  name;
+  tooltip;
+  value;
 }
 
 const ParticleVectorEntry = (props: ParticleVectorEntryProps) => {
@@ -651,10 +653,10 @@ const particleEntryMap = {
 };
 
 interface ParticleDataEntryProps {
-  name,
-  particleFloatStep,
-  tooltip,
-  value,
+  name;
+  particleFloatStep;
+  tooltip;
+  value;
 }
 
 const ParticleDataEntry = (props: ParticleDataEntryProps) => {
@@ -686,8 +688,8 @@ const ParticleDataEntry = (props: ParticleDataEntryProps) => {
 };
 
 interface ParticleEntryProps {
-  particle,
-  particleFloatStep,
+  particle;
+  particleFloatStep;
 }
 
 const ParticleEntry = (props: ParticleEntryProps) => {
@@ -860,7 +862,9 @@ export const Particool = () => {
             <NumberInput
               value={particleFloatStep}
               step={0.001}
-              format={(value) => toFixed(value, numberOfDecimalDigits(particleFloatStep))}
+              format={(value) =>
+                toFixed(value, numberOfDecimalDigits(particleFloatStep))
+              }
               width="70px"
               maxValue={Infinity}
               minValue={-Infinity}
@@ -870,7 +874,10 @@ export const Particool = () => {
           {!hasParticles ? (
             <Box>No particle</Box>
           ) : (
-            <ParticleEntry particle={particles} particleFloatStep={particleFloatStep} />
+            <ParticleEntry
+              particle={particles}
+              particleFloatStep={particleFloatStep}
+            />
           )}
         </Section>
       </Window.Content>

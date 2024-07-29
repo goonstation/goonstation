@@ -32,20 +32,22 @@ export const HeldPieceRenderer = () => {
     <Box
       className={`boardgame__heldpiece`}
       style={{
-        'top': y + 'px',
-        'left': x + 'px',
+        top: y + 'px',
+        left: x + 'px',
         width: '120px',
         height: '120px',
-      }}>
+      }}
+    >
       <Box className="boardgame__heldpiece-inner">
         <img src={piece.image} />
       </Box>
       <Box
         style={{
-          'fontSize': '12px',
-          'fontWeight': 'bold',
-          'textShadow': '0 0 2px black',
-        }}>
+          fontSize: '12px',
+          fontWeight: 'bold',
+          textShadow: '0 0 2px black',
+        }}
+      >
         Right click to cancel
       </Box>
     </Box>

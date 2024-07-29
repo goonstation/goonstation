@@ -6,7 +6,13 @@
  * @license MIT
  */
 
-import { Box, Button, Divider, LabeledList, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  LabeledList,
+  Section,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';

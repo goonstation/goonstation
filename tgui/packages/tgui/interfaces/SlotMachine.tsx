@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: ISC
  */
 
-import { BlockQuote, Button, Icon, NoticeBox, NumberInput, Stack } from 'tgui-core/components';
+import {
+  BlockQuote,
+  Button,
+  Icon,
+  NoticeBox,
+  NumberInput,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -21,17 +28,9 @@ export const SlotMachine = () => {
   const { data } = useBackend<SlotMachineData>();
   const { busy, scannedCard } = data;
   return (
-    <Window
-      title="Slot Machine"
-      width={375}
-      height={220}
-    >
+    <Window title="Slot Machine" width={375} height={220}>
       <Window.Content>
-        {
-          !scannedCard
-            ? <InsertCard />
-            : (busy ? <BusyWindow /> : <SlotWindow />)
-        }
+        {!scannedCard ? <InsertCard /> : busy ? <BusyWindow /> : <SlotWindow />}
       </Window.Content>
     </Window>
   );
@@ -41,13 +40,8 @@ const InsertCard = () => {
   const { act } = useBackend();
   return (
     <>
-      <NoticeBox danger>
-        You must insert your ID to continue!
-      </NoticeBox>
-      <Button
-        icon="id-card"
-        onClick={() => act('insert_card')}
-      >
+      <NoticeBox danger>You must insert your ID to continue!</NoticeBox>
+      <Button icon="id-card" onClick={() => act('insert_card')}>
         Insert ID
       </Button>
     </>
@@ -56,13 +50,7 @@ const InsertCard = () => {
 
 const SlotWindow = () => {
   const { act, data } = useBackend<SlotMachineData>();
-  const {
-    account_funds,
-    money,
-    plays,
-    scannedCard,
-    wager,
-  } = data;
+  const { account_funds, money, plays, scannedCard, wager } = data;
 
   return (
     <>
@@ -86,9 +74,7 @@ const SlotWindow = () => {
               <strong>Account Balance:</strong>
             </Stack.Item>
             <Stack.Item>
-              <Icon name="dollar-sign" />
-              {' '}
-              {account_funds}
+              <Icon name="dollar-sign" /> {account_funds}
             </Stack.Item>
             <Stack.Item>
               <Button
@@ -118,7 +104,7 @@ const SlotWindow = () => {
                 minValue={20}
                 maxValue={1000}
                 value={wager}
-                format={value => value + "⪽"}
+                format={(value) => value + '⪽'}
                 step={1}
                 onDrag={(value) => act('set_wager', { bet: value })}
               />
@@ -131,16 +117,12 @@ const SlotWindow = () => {
               <strong>Credits Remaining:</strong>
             </Stack.Item>
             <Stack.Item>
-              <Icon name="dollar-sign" />
-              {' '}
-              {money}
+              <Icon name="dollar-sign" /> {money}
             </Stack.Item>
           </Stack>
         </Stack.Item>
         <Stack.Item>
-          <BlockQuote>
-            {plays} attempts have been made today!
-          </BlockQuote>
+          <BlockQuote>{plays} attempts have been made today!</BlockQuote>
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
@@ -159,10 +141,5 @@ const SlotWindow = () => {
 };
 
 const BusyWindow = () => {
-  return (
-    <NoticeBox danger>
-      The Machine is busy, please wait!
-    </NoticeBox>
-  );
+  return <NoticeBox danger>The Machine is busy, please wait!</NoticeBox>;
 };
-

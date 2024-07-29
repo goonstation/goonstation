@@ -28,16 +28,12 @@ const getChargingStatusText = (charging, chargecount) => {
 
 export const CellDisplay = (_props: unknown) => {
   const { act, data } = useBackend<ApcData>();
-  const {
-    cell_percent,
-    cell_present,
-    chargecount,
-    chargemode,
-    charging,
-  } = data;
+  const { cell_percent, cell_present, chargecount, chargemode, charging } =
+    data;
   const hasPermission = getHasPermission(data);
   const chargingStatusText = getChargingStatusText(charging, chargecount);
-  const buildChargeModeChangeHandler = (chargemode) => () => act('onChargeModeChange', { chargemode });
+  const buildChargeModeChangeHandler = (chargemode) => () =>
+    act('onChargeModeChange', { chargemode });
   return (
     <>
       <LabeledList.Item
@@ -47,14 +43,14 @@ export const CellDisplay = (_props: unknown) => {
           <>
             <Button
               onClick={buildChargeModeChangeHandler(CHARGE_MODE_OFF)}
-              disabled={!hasPermission && (chargemode !== CHARGE_MODE_OFF)}
+              disabled={!hasPermission && chargemode !== CHARGE_MODE_OFF}
               selected={chargemode === CHARGE_MODE_OFF}
             >
               Off
             </Button>
             <Button
               onClick={buildChargeModeChangeHandler(CHARGE_MODE_AUTO)}
-              disabled={!hasPermission && (chargemode !== CHARGE_MODE_AUTO)}
+              disabled={!hasPermission && chargemode !== CHARGE_MODE_AUTO}
               selected={chargemode === CHARGE_MODE_AUTO}
             >
               Auto
@@ -69,7 +65,9 @@ export const CellDisplay = (_props: unknown) => {
           value={cell_percent}
           minValue={0}
           maxValue={100}
-          color={cell_percent < 20 ? 'red' : cell_percent < 50 ? 'yellow' : 'green'}
+          color={
+            cell_percent < 20 ? 'red' : cell_percent < 50 ? 'yellow' : 'green'
+          }
         />
       </LabeledList.Item>
     </>

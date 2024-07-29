@@ -14,7 +14,9 @@ interface EmptyPlaceholderProps {
   className?: string;
 }
 
-export const EmptyPlaceholder = (props: PropsWithChildren<EmptyPlaceholderProps>) => {
+export const EmptyPlaceholder = (
+  props: PropsWithChildren<EmptyPlaceholderProps>,
+) => {
   const { children, className } = props;
   const cn = classes([styles.EmptyPlaceholder, className]);
   return <div className={cn}>{children}</div>;

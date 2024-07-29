@@ -16,10 +16,10 @@ type PumpData = {
   area_name: string; // Name of the area this pump is in
   processing: boolean; // Whether we are waiting for packet response or not
   alive: number; // A value of -1, 0, or 1 where -1 is checking if the pump is alive, 0 is dead, and 1 is alive
-}
+};
 
 // List of areas which have pumps
 type AreaList = {
-  area_list: { [key: string] : { [key: string] : PumpData } };
+  area_list: { [key: string]: { [key: string]: PumpData } };
   frequency: number;
 };

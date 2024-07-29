@@ -16,15 +16,10 @@ interface GasTankData {
 export const GasTank = () => {
   const { act, data } = useBackend<GasTankData>();
 
-  const {
-    pressure,
-    maxPressure,
-    valveIsOpen,
-    releasePressure,
-    maxRelease,
-  } = data;
+  const { pressure, maxPressure, valveIsOpen, releasePressure, maxRelease } =
+    data;
 
-  const handleSetPressure = releasePressure => {
+  const handleSetPressure = (releasePressure) => {
     act('set-pressure', {
       releasePressure,
     });
@@ -35,15 +30,10 @@ export const GasTank = () => {
   };
 
   return (
-    <Window
-      width={400}
-      height={220}>
+    <Window width={400} height={220}>
       <Window.Content>
-        <Section
-          title="Status">
-          <GasTankInfo
-            pressure={pressure}
-            maxPressure={maxPressure} />
+        <Section title="Status">
+          <GasTankInfo pressure={pressure} maxPressure={maxPressure} />
         </Section>
         <Section>
           <ReleaseValve
@@ -51,43 +41,35 @@ export const GasTank = () => {
             releasePressure={releasePressure}
             maxRelease={maxRelease}
             onToggleValve={handleToggleValve}
-            onSetPressure={handleSetPressure} />
+            onSetPressure={handleSetPressure}
+          />
         </Section>
       </Window.Content>
     </Window>
   );
-
 };
 
-export const GasTankInfo = props => {
-  const {
-    pressure,
-    maxPressure,
-    name,
-  } = props;
+export const GasTankInfo = (props) => {
+  const { pressure, maxPressure, name } = props;
 
   return (
     <LabeledList>
-      <LabeledList.Item
-        label="Pressure">
+      <LabeledList.Item label="Pressure">
         <RoundGauge
           size={1.75}
           value={pressure}
           minValue={0}
           maxValue={maxPressure}
-          alertAfter={maxPressure * 0.70}
+          alertAfter={maxPressure * 0.7}
           ranges={{
-            "good": [0, maxPressure * 0.70],
-            "average": [maxPressure * 0.70, maxPressure * 0.85],
-            "bad": [maxPressure * 0.85, maxPressure],
+            good: [0, maxPressure * 0.7],
+            average: [maxPressure * 0.7, maxPressure * 0.85],
+            bad: [maxPressure * 0.85, maxPressure],
           }}
           format={formatPressure}
         />
       </LabeledList.Item>
-      {name ? (
-        <LabeledList.Item label="Label">
-          {name}
-        </LabeledList.Item>) : null}
+      {name ? <LabeledList.Item label="Label">{name}</LabeledList.Item> : null}
     </LabeledList>
   );
 };

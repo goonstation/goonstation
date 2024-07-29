@@ -5,7 +5,14 @@
  * @license MIT
  */
 
-import { Box, Chart, LabeledList, Stack, Table, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Chart,
+  LabeledList,
+  Stack,
+  Table,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { formatPower } from '../../format';
@@ -53,7 +60,9 @@ export const PowerMonitorApcGlobal = () => {
     <Stack fill>
       <Stack.Item width="50%">
         <LabeledList>
-          <LabeledList.Item label="Total Power">{formatPower(data.available)}</LabeledList.Item>
+          <LabeledList.Item label="Total Power">
+            {formatPower(data.available)}
+          </LabeledList.Item>
         </LabeledList>
         <Chart.Line
           mt="5px"
@@ -67,7 +76,9 @@ export const PowerMonitorApcGlobal = () => {
       </Stack.Item>
       <Stack.Item width="50%">
         <LabeledList>
-          <LabeledList.Item label="Total Load">{formatPower(data.load)}</LabeledList.Item>
+          <LabeledList.Item label="Total Load">
+            {formatPower(data.load)}
+          </LabeledList.Item>
         </LabeledList>
         <Chart.Line
           mt="5px"
@@ -117,7 +128,9 @@ type PowerMonitorApcTableRowsProps = {
   search: string;
 };
 
-export const PowerMonitorApcTableRows = (props: PowerMonitorApcTableRowsProps) => {
+export const PowerMonitorApcTableRows = (
+  props: PowerMonitorApcTableRowsProps,
+) => {
   const { search } = props;
   const { data } = useBackend<PowerMonitorApcData>();
 
@@ -138,7 +151,15 @@ type PowerMonitorApcTableRowProps = {
 const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps) => {
   const { apc, search } = props;
   // Indexed array to lower data transfer between byond and the window.
-  const [ref, equipment, lighting, environment, load, cellCharge, cellCharging = 0] = apc;
+  const [
+    ref,
+    equipment,
+    lighting,
+    environment,
+    load,
+    cellCharge,
+    cellCharging = 0,
+  ] = apc;
   const { data } = useBackend<PowerMonitorApcData>();
   const name = data.apcNames[ref] ?? 'N/A';
 
@@ -161,8 +182,15 @@ const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps) => {
             {cellCharge}%
           </Table.Cell>
           <Table.Cell
-            color={cellCharging > 0 ? (cellCharging === 1 ? 'average' : 'good') : 'bad'}
-            nowrap>
+            color={
+              cellCharging > 0
+                ? cellCharging === 1
+                  ? 'average'
+                  : 'good'
+                : 'bad'
+            }
+            nowrap
+          >
             {apcCellState[cellCharging]}
           </Table.Cell>
         </>

@@ -3,7 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Button, Divider, LabeledList, NumberInput, ProgressBar, Section } from 'tgui-core/components';
+import {
+  Button,
+  Divider,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -22,23 +29,23 @@ const GaugeRanges: Record<string, [number, number]> = {
 };
 
 interface PressurizerData {
-  airSafe,
-  blastArmed,
-  blastDelay,
-  connected,
-  emagged,
-  fanState,
-  materialsCount,
-  materialsProgress,
-  maxArmDelay,
-  maxPressure,
-  maxRelease,
-  minArmDelay,
-  minBlastPercent,
-  minRelease,
-  pressure,
-  processRate,
-  releasePressure,
+  airSafe;
+  blastArmed;
+  blastDelay;
+  connected;
+  emagged;
+  fanState;
+  materialsCount;
+  materialsProgress;
+  maxArmDelay;
+  maxPressure;
+  maxRelease;
+  minArmDelay;
+  minBlastPercent;
+  minRelease;
+  pressure;
+  processRate;
+  releasePressure;
 }
 
 export const Pressurizer = () => {
@@ -64,26 +71,26 @@ export const Pressurizer = () => {
     releasePressure,
   } = data;
 
-  const handleSetPressure = releasePressure => {
-    act("set-pressure", {
+  const handleSetPressure = (releasePressure) => {
+    act('set-pressure', {
       releasePressure,
     });
   };
 
-  const handleSetBlastDelay = blastDelay => {
-    act("set-blast-delay", {
+  const handleSetBlastDelay = (blastDelay) => {
+    act('set-blast-delay', {
       blastDelay,
     });
   };
 
-  const handleSetProcessRate = processRate => {
-    act("set-process_rate", {
+  const handleSetProcessRate = (processRate) => {
+    act('set-process_rate', {
       processRate,
     });
   };
 
-  const handleSetFan = fanState => {
-    act("fan", {
+  const handleSetFan = (fanState) => {
+    act('fan', {
       fanState,
     });
   };
@@ -92,35 +99,33 @@ export const Pressurizer = () => {
 
   const getArmedState = () => {
     if (hasSufficientPressure) {
-      return "Insufficient Pressure";
+      return 'Insufficient Pressure';
     }
     if (!airSafe) {
-      return "AIR UNSAFE - Locked";
+      return 'AIR UNSAFE - Locked';
     }
     if (blastArmed) {
-      return "Armed";
+      return 'Armed';
     }
-    return "Ready";
+    return 'Ready';
   };
 
   const handleEjectContents = () => {
-    act("eject-materials");
+    act('eject-materials');
   };
 
   const handleArmPressurizer = () => {
-    act("arm");
+    act('arm');
   };
 
   return (
-    <Window
-      theme={emagged ? 'syndicate' : 'ntos'}
-      width={390}
-      height={380}>
+    <Window theme={emagged ? 'syndicate' : 'ntos'} width={390} height={380}>
       <Window.Content>
         <PortableBasicInfo
           connected={connected}
           pressure={pressure}
-          maxPressure={maxPressure}>
+          maxPressure={maxPressure}
+        >
           <Divider />
           <LabeledList>
             <LabeledList.Item label="Emergency Blast Release">
@@ -131,7 +136,8 @@ export const Pressurizer = () => {
                 content={getArmedState()}
                 disabled={hasSufficientPressure || !airSafe}
                 color={blastArmed ? 'bad' : 'average'}
-                onClick={() => handleArmPressurizer()} />
+                onClick={() => handleArmPressurizer()}
+              />
             </LabeledList.Item>
             <LabeledList.Item label="Delay">
               <Button onClick={() => handleSetBlastDelay(minArmDelay)}>
@@ -144,7 +150,8 @@ export const Pressurizer = () => {
                 minValue={minArmDelay}
                 maxValue={maxArmDelay}
                 step={1}
-                onChange={(targetDelay) => handleSetBlastDelay(targetDelay)} />
+                onChange={(targetDelay) => handleSetBlastDelay(targetDelay)}
+              />
               <Button onClick={() => handleSetBlastDelay(maxArmDelay)}>
                 Max
               </Button>
@@ -173,9 +180,7 @@ export const Pressurizer = () => {
               </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Release Pressure">
-              <Button onClick={() => handleSetPressure(minRelease)}>
-                Min
-              </Button>
+              <Button onClick={() => handleSetPressure(minRelease)}>Min</Button>
               <NumberInput
                 animated
                 width="7em"
@@ -183,23 +188,24 @@ export const Pressurizer = () => {
                 minValue={minRelease}
                 maxValue={maxRelease}
                 step={1}
-                onChange={(targetPressure) => handleSetPressure(targetPressure)} />
-              <Button onClick={() => handleSetPressure(maxRelease)}>
-                Max
-              </Button>
+                onChange={(targetPressure) => handleSetPressure(targetPressure)}
+              />
+              <Button onClick={() => handleSetPressure(maxRelease)}>Max</Button>
             </LabeledList.Item>
           </LabeledList>
         </PortableBasicInfo>
         <Section
           title="Material Processing"
-          buttons={(
+          buttons={
             <Button
               icon="eject"
               disabled={materialsCount === 0}
-              onClick={() => handleEjectContents()}>
+              onClick={() => handleEjectContents()}
+            >
               Eject
             </Button>
-          )}>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Speed">
               <Button
@@ -240,7 +246,8 @@ export const Pressurizer = () => {
             <LabeledList.Item label="Progress">
               <ProgressBar
                 ranges={GaugeRanges}
-                value={materialsProgress / 100} />
+                value={materialsProgress / 100}
+              />
             </LabeledList.Item>
           </LabeledList>
         </Section>

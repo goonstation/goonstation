@@ -17,7 +17,9 @@ export const CrewTab = () => {
     <Box>
       {data.groups?.map(
         (group, index) =>
-          data.groups[index].crew.length > 0 && <GroupBlock key={index} title={group.title} crew={group.crew} />
+          data.groups[index].crew.length > 0 && (
+            <GroupBlock key={index} title={group.title} crew={group.crew} />
+          ),
       )}
     </Box>
   );

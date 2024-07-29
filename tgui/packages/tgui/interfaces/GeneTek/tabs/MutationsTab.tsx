@@ -5,21 +5,24 @@
  * @license ISC
  */
 
-import { Button, Section } from "tgui-core/components";
+import { Button, Section } from 'tgui-core/components';
 
-import { useBackend, useSharedState } from "../../../backend";
-import { BioEffect } from "../BioEffect";
-import type { GeneTekData } from "../type";
+import { useBackend, useSharedState } from '../../../backend';
+import { BioEffect } from '../BioEffect';
+import type { GeneTekData } from '../type';
 
 export const MutationsTab = () => {
   const { data } = useBackend<GeneTekData>();
-  const [sortMode, setSortMode] = useSharedState("mutsortmode", "time");
-  const [showSequence, toggleShowSequence] = useSharedState('showSequence', false);
+  const [sortMode, setSortMode] = useSharedState('mutsortmode', 'time');
+  const [showSequence, toggleShowSequence] = useSharedState(
+    'showSequence',
+    false,
+  );
   const bioEffects = (data.bioEffects || []).slice(0);
 
-  if (sortMode === "time") {
+  if (sortMode === 'time') {
     bioEffects.sort((a, b) => a.time - b.time);
-  } else if (sortMode === "alpha") {
+  } else if (sortMode === 'alpha') {
     bioEffects.sort((a, b) => {
       if (a.name > b.name) {
         return 1;
@@ -37,8 +40,9 @@ export const MutationsTab = () => {
     <>
       <Section>
         <Button
-          icon={sortMode === "time" ? "clock" : "sort-alpha-down"}
-          onClick={() => setSortMode(sortMode === "time" ? "alpha" : "time")}>
+          icon={sortMode === 'time' ? 'clock' : 'sort-alpha-down'}
+          onClick={() => setSortMode(sortMode === 'time' ? 'alpha' : 'time')}
+        >
           Sort Mode
         </Button>
         <Button.Checkbox
@@ -48,11 +52,8 @@ export const MutationsTab = () => {
           onClick={() => toggleShowSequence(!showSequence)}
         />
       </Section>
-      {bioEffects.map(be => (
-        <BioEffect
-          key={be.ref}
-          gene={be}
-          showSequence={showSequence} />
+      {bioEffects.map((be) => (
+        <BioEffect key={be.ref} gene={be} showSequence={showSequence} />
       ))}
     </>
   );

@@ -12,19 +12,11 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const BarcodeComputerSection = (props) => {
-  const {
-    title,
-    destinations,
-    act,
-    amount,
-  } = props;
+  const { title, destinations, act, amount } = props;
   return (
     <Section title={title}>
-      {destinations.map(destination => {
-        const {
-          crate_tag,
-          name,
-        } = destination;
+      {destinations.map((destination) => {
+        const { crate_tag, name } = destination;
         return (
           <Button
             width="100%"
@@ -43,39 +35,31 @@ const IDCard = (props) => {
   if (!props.card) {
     return;
   }
-  const {
-    card,
-    act,
-  } = props;
+  const { card, act } = props;
   return (
     <Button
       icon="eject"
       content={card.name + ` (${card.role})`}
       tooltip="Clear scanned card"
       tooltipPosition="bottom-end"
-      onClick={() => { act("reset_id"); }}
+      onClick={() => {
+        act('reset_id');
+      }}
     />
   );
 };
 
 interface BarcodeComputerData {
-  sections,
-  card,
+  sections;
+  card;
 }
 
 export const BarcodeComputer = () => {
   const { act, data } = useBackend<BarcodeComputerData>();
-  const {
-    sections,
-    card,
-  } = data;
+  const { sections, card } = data;
   const [amount, setAmount] = useState(1);
   return (
-    <Window
-      title="Barcode computer"
-      width={600}
-      height={450}
-    >
+    <Window title="Barcode computer" width={600} height={450}>
       <Window.Content scrollable>
         <Stack>
           <Stack.Item grow={1}>
@@ -87,7 +71,7 @@ export const BarcodeComputer = () => {
                   maxValue={5}
                   step={1}
                   stepPixelSize={15}
-                  unit={"Barcodes"}
+                  unit={'Barcodes'}
                   onDrag={(value) => setAmount(value)}
                 />
               </Box>
@@ -105,18 +89,16 @@ export const BarcodeComputer = () => {
         </Stack>
         <br />
         <Stack>
-          {sections.map(section => {
-            const {
-              title,
-              destinations,
-            } = section;
+          {sections.map((section) => {
+            const { title, destinations } = section;
             return (
               <Stack.Item key={title} width="33%">
                 <BarcodeComputerSection
                   title={title}
                   destinations={destinations}
                   act={act}
-                  amount={amount} />
+                  amount={amount}
+                />
               </Stack.Item>
             );
           })}

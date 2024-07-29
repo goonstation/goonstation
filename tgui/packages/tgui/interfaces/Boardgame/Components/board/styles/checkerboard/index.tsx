@@ -75,7 +75,8 @@ export const CheckerBoard = () => {
             // Check if the position is same as the piece's current position, if it's not, place it
           }
         }
-      }}>
+      }}
+    >
       <CheckerBoardPattern />
       <GridGuideRenderer />
       <GridPieceRenderer pieces={pieces} />

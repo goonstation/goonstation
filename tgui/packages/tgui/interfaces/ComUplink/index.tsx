@@ -5,7 +5,15 @@
  * @license MIT
  */
 
-import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  LabeledList,
+  Section,
+  Stack,
+  Table,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -19,14 +27,22 @@ export const ComUplink = () => {
       theme="syndicate"
       title="Syndicate Commander Uplink"
       width={500}
-      height={500}>
+      height={500}
+    >
       <Window.Content scrollable>
         <Stack className="ComUplink" />
         <Stack.Item>
           <Section fill>
             <LabeledList>
               <LabeledList.Item label="Points">
-                <Box key={data.points} inline bold color="green" mr="5px" className={`ComUplink__Points--commander`}>
+                <Box
+                  key={data.points}
+                  inline
+                  bold
+                  color="green"
+                  mr="5px"
+                  className={`ComUplink__Points--commander`}
+                >
                   {data.points}
                 </Box>
               </LabeledList.Item>
@@ -34,15 +50,16 @@ export const ComUplink = () => {
           </Section>
         </Stack.Item>
         <Stack.Item grow={1}>
-          <Section
-            fill
-            scrollable
-            title="Uplink Items"
-          />
-          <Collapsible className={`ComUplink__Category--Main`} title="Equipment" open color="Main">
+          <Section fill scrollable title="Uplink Items" />
+          <Collapsible
+            className={`ComUplink__Category--Main`}
+            title="Equipment"
+            open
+            color="Main"
+          >
             <Table>
               {data.stock
-                .filter((stock) => stock.category === "Main")
+                .filter((stock) => stock.category === 'Main')
                 .map((stock) => (
                   <Stock key={stock.name} stock={stock} />
                 ))}
@@ -62,7 +79,10 @@ const Stock = ({ stock }: StockProps) => {
   const { data, act } = useBackend<ComUplinkData>();
 
   return (
-    <Table.Row className="ComUplink__Row" opacity={stock.cost > data.points[stock.category] ? 0.5:1}>
+    <Table.Row
+      className="ComUplink__Row"
+      opacity={stock.cost > data.points[stock.category] ? 0.5 : 1}
+    >
       <Table.Cell className="ComUplink__Cell" py="5px">
         <Box mb="5px" bold>
           {stock.name}
@@ -72,7 +92,8 @@ const Stock = ({ stock }: StockProps) => {
       <Table.Cell className="ComUplink__Cell" py="5px" textAlign="right">
         <Button
           disabled={stock.cost > data.points}
-          onClick={() => act('redeem', { ref: stock.ref })}>
+          onClick={() => act('redeem', { ref: stock.ref })}
+        >
           Purchase {stock.cost} {pluralize('point', stock.cost)}
         </Button>
       </Table.Cell>

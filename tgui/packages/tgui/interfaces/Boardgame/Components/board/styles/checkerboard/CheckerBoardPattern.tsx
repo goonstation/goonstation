@@ -16,11 +16,28 @@ const CheckerBoardPattern = () => {
         y="0"
         width={width * 2 + '%'}
         height={height * 2 + '%'}
-        patternUnits="userSpaceOnUse">
+        patternUnits="userSpaceOnUse"
+      >
         <rect width={width + '%'} height={height + '%'} fill={tileColor1} />
-        <rect x={width + '%'} y={height + '%'} width={width + '%'} height={height + '%'} fill={tileColor1} />
-        <rect x={width + '%'} width={width + '%'} height={height + '%'} fill={tileColor2} />
-        <rect y={height + '%'} width={width + '%'} height={height + '%'} fill={tileColor2} />
+        <rect
+          x={width + '%'}
+          y={height + '%'}
+          width={width + '%'}
+          height={height + '%'}
+          fill={tileColor1}
+        />
+        <rect
+          x={width + '%'}
+          width={width + '%'}
+          height={height + '%'}
+          fill={tileColor2}
+        />
+        <rect
+          y={height + '%'}
+          width={width + '%'}
+          height={height + '%'}
+          fill={tileColor2}
+        />
       </pattern>
       <rect width="100%" height="100%" fill="url(#checkerboardpattern)" />
     </svg>

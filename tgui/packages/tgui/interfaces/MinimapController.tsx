@@ -1,23 +1,35 @@
 import { useState } from 'react';
-import { Box, Button, ByondUi, Dropdown, Flex, Image, Input, Modal, NumberInput, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Dropdown,
+  Flex,
+  Image,
+  Input,
+  Modal,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { capitalize } from './common/stringUtils';
 
 interface MinimapControllerData {
-  title,
-  theme,
-  minimap_id,
-  markers_visible,
-  selecting_coordinates,
-  minimap_markers,
-  placable_marker_states,
-  placable_marker_images,
-  icon,
-  image,
-  pos_x,
-  pos_y,
+  title;
+  theme;
+  minimap_id;
+  markers_visible;
+  selecting_coordinates;
+  minimap_markers;
+  placable_marker_states;
+  placable_marker_images;
+  icon;
+  image;
+  pos_x;
+  pos_y;
 }
 
 export const MinimapController = () => {
@@ -70,26 +82,22 @@ export const MinimapController = () => {
   };
 
   return (
-    <Window
-      title={title}
-      theme={theme}
-      width={750}
-      height={390}
-    >
+    <Window title={title} theme={theme} width={750} height={390}>
       <Window.Content>
         <Stack justify="center">
           <Stack.Item>
             <Section
               title="Minimap"
               fill
-              buttons={(
+              buttons={
                 <Button
                   icon="undo"
                   color="green"
                   content="Reset Map Scale"
                   onClick={() => act('reset_scale')}
                 />
-              )}>
+              }
+            >
               <Flex>
                 <Flex.Item>
                   <ByondUi
@@ -98,8 +106,8 @@ export const MinimapController = () => {
                       type: 'map',
                     }}
                     style={{
-                      width: "300px",
-                      height: "300px",
+                      width: '300px',
+                      height: '300px',
                     }}
                   />
                 </Flex.Item>
@@ -110,7 +118,7 @@ export const MinimapController = () => {
             <Section
               title="Minimap Markers"
               fill
-              buttons={(
+              buttons={
                 <>
                   <Button
                     icon="plus"
@@ -119,16 +127,16 @@ export const MinimapController = () => {
                     onClick={() => toggleNewMarkerMenu(!showNewMarkerMenu)}
                   />
                   <Button
-                    icon={markers_visible ? "eye-slash" : "eye"}
-                    color={markers_visible ? "red" : "green"}
-                    content={markers_visible ? "Hide All" : "Show All"}
+                    icon={markers_visible ? 'eye-slash' : 'eye'}
+                    color={markers_visible ? 'red' : 'green'}
+                    content={markers_visible ? 'Hide All' : 'Show All'}
                     onClick={() => act('toggle_visibility_all')}
                   />
                 </>
-              )}>
-              {(!!showNewMarkerMenu) && (
-                <Modal
-                  mr={2}>
+              }
+            >
+              {!!showNewMarkerMenu && (
+                <Modal mr={2}>
                   <Box>
                     <Flex>
                       <Flex.Item backgroundColor="black">
@@ -160,7 +168,7 @@ export const MinimapController = () => {
                               maxValue={300}
                               step={1}
                               value={pos_x}
-                              format={value => "x, " + value}
+                              format={(value) => 'x, ' + value}
                               onDrag={(value) => setPosX(value)}
                             />
                           </Flex.Item>
@@ -171,7 +179,7 @@ export const MinimapController = () => {
                               maxValue={300}
                               step={1}
                               value={pos_y}
-                              format={value => "y, " + value}
+                              format={(value) => 'y, ' + value}
                               onDrag={(value) => setPosY(value)}
                             />
                           </Flex.Item>
@@ -179,8 +187,12 @@ export const MinimapController = () => {
                         <Button
                           fluid
                           textAlign="center"
-                          color={selecting_coordinates ? "orange" : "default"}
-                          content={selecting_coordinates ? "Select Position" : "Select (x, y) From Map"}
+                          color={selecting_coordinates ? 'orange' : 'default'}
+                          content={
+                            selecting_coordinates
+                              ? 'Select Position'
+                              : 'Select (x, y) From Map'
+                          }
                           onClick={() => act('location_from_minimap')}
                           mt="10px"
                         />
@@ -211,37 +223,50 @@ export const MinimapController = () => {
                 <Flex direction="column">
                   <Flex.Item>
                     <Flex.Item>
-                      {Object.keys(minimap_markers).map(marker => (
-                        <Flex key={data.minimap_markers[marker]}
+                      {Object.keys(minimap_markers).map((marker) => (
+                        <Flex
+                          key={data.minimap_markers[marker]}
                           className="minimap-controller__marker-list"
                         >
                           <Flex.Item inline>
-                            <Flex.Item
-                              fontSize={1.1}
-                              bold
-                            >{capitalize(data.minimap_markers[marker].name)}
+                            <Flex.Item fontSize={1.1} bold>
+                              {capitalize(data.minimap_markers[marker].name)}
                             </Flex.Item>
-                            <Flex.Item
-                              inline
-                              lineHeight={1.7}
-                            >{data.minimap_markers[marker].pos}
+                            <Flex.Item inline lineHeight={1.7}>
+                              {data.minimap_markers[marker].pos}
                             </Flex.Item>
                           </Flex.Item>
-                          <Flex.Item
-                            inline
-                          >
+                          <Flex.Item inline>
                             <Button
                               className="minimap-controller__buttons"
-                              icon={data.minimap_markers[marker].visible ? "eye" : "eye-slash"}
-                              color={data.minimap_markers[marker].visible ? "green" : "red"}
-                              onClick={() => act('toggle_visibility', { index: data.minimap_markers[marker].index })}
+                              icon={
+                                data.minimap_markers[marker].visible
+                                  ? 'eye'
+                                  : 'eye-slash'
+                              }
+                              color={
+                                data.minimap_markers[marker].visible
+                                  ? 'green'
+                                  : 'red'
+                              }
+                              onClick={() =>
+                                act('toggle_visibility', {
+                                  index: data.minimap_markers[marker].index,
+                                })
+                              }
                             />
                             <Button
                               className="minimap-controller__buttons"
                               icon="trash-alt"
                               color="red"
-                              disabled={!data.minimap_markers[marker].can_be_deleted}
-                              onClick={() => act('delete_marker', { index: data.minimap_markers[marker].index })}
+                              disabled={
+                                !data.minimap_markers[marker].can_be_deleted
+                              }
+                              onClick={() =>
+                                act('delete_marker', {
+                                  index: data.minimap_markers[marker].index,
+                                })
+                              }
                             />
                           </Flex.Item>
                         </Flex>

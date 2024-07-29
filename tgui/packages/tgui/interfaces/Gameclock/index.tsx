@@ -28,7 +28,10 @@ export const Gameclock = () => {
   const [configModalOpen] = useLocalState('configModalOpen', false);
   const [swap] = useLocalState('swap', false);
 
-  const [helpModalOpen, setHelpModalOpen] = useLocalState('helpModalOpen', false);
+  const [helpModalOpen, setHelpModalOpen] = useLocalState(
+    'helpModalOpen',
+    false,
+  );
 
   return (
     <Window title={name} width={220} height={380}>
@@ -38,12 +41,15 @@ export const Gameclock = () => {
         <Box className="gameclock__help">
           <Button
             className="gameclock__helpbutton"
-            tooltip={helpModalOpen ? "Close" : "Help"}
+            tooltip={helpModalOpen ? 'Close' : 'Help'}
             icon={helpModalOpen ? 'xmark' : 'question'}
             color={helpModalOpen && 'orange'}
-            onClick={!configModalOpen && (
-              () => { setHelpModalOpen(!helpModalOpen); }
-            )}
+            onClick={
+              !configModalOpen &&
+              (() => {
+                setHelpModalOpen(!helpModalOpen);
+              })
+            }
           />
         </Box>
         <TeamIcon team={swap ? 'white' : 'black'} />
@@ -62,13 +68,19 @@ const ConfigModal = () => {
   const { defaultTime } = data.clockStatic;
 
   const [, setConfigModalOpen] = useLocalState('configModalOpen', false);
-  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState('whiteTimeBuffer', 0);
-  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState('blackTimeBuffer', 0);
+  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState(
+    'whiteTimeBuffer',
+    0,
+  );
+  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState(
+    'blackTimeBuffer',
+    0,
+  );
 
   const setTime = (whiteTime, blackTime) => {
     act('set_time', {
-      'whiteTime': whiteTime * 10,
-      'blackTime': blackTime * 10,
+      whiteTime: whiteTime * 10,
+      blackTime: blackTime * 10,
     });
   };
 
@@ -104,18 +116,31 @@ const ConfigModal = () => {
 };
 
 const HelpModal = () => {
-
   return (
     <Dimmer>
       <Section>
         <p>
           <strong>Help</strong>
         </p>
-        <p>These clocks are used in two-player games where the players move in turns.</p>
-        <p>Click on the clock face corresponding to your color to end your turn.</p>
-        <p>The time value (in seconds) for each clock can be set using the Clocks Setup button.</p>
-        <p>Before starting the clock, ensure that the Current Turn is set to the correct side.</p>
-        <p>The positions of the White and Black clocks can be swapped on your client using the rotate view button.</p>
+        <p>
+          These clocks are used in two-player games where the players move in
+          turns.
+        </p>
+        <p>
+          Click on the clock face corresponding to your color to end your turn.
+        </p>
+        <p>
+          The time value (in seconds) for each clock can be set using the Clocks
+          Setup button.
+        </p>
+        <p>
+          Before starting the clock, ensure that the Current Turn is set to the
+          correct side.
+        </p>
+        <p>
+          The positions of the White and Black clocks can be swapped on your
+          client using the rotate view button.
+        </p>
       </Section>
     </Dimmer>
   );
@@ -128,8 +153,14 @@ const TimeInput = (props: TeamProps, context) => {
 
   const { team } = props;
 
-  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState('whiteTimeBuffer', 0);
-  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState('blackTimeBuffer', 0);
+  const [whiteTimeBuffer, setWhiteTimeBuffer] = useLocalState(
+    'whiteTimeBuffer',
+    0,
+  );
+  const [blackTimeBuffer, setBlackTimeBuffer] = useLocalState(
+    'blackTimeBuffer',
+    0,
+  );
 
   const showTime = (value) => {
     return formatTime(value * 10);
@@ -138,7 +169,9 @@ const TimeInput = (props: TeamProps, context) => {
   return (
     <NumberInput
       onDrag={(value) => {
-        team === 'white' ? setWhiteTimeBuffer(value) : setBlackTimeBuffer(value);
+        team === 'white'
+          ? setWhiteTimeBuffer(value)
+          : setBlackTimeBuffer(value);
       }}
       format={showTime}
       value={team === 'white' ? whiteTimeBuffer : blackTimeBuffer}
@@ -156,7 +189,10 @@ const TeamIcon = (props: TeamProps, context) => {
   return (
     <Stack direction={'column'}>
       <Tooltip content={team === 'white' ? 'White' : 'Black'}>
-        <Icon className="gameclock__teamicon" name={`circle${team === 'white' ? '' : '-o'}`} />
+        <Icon
+          className="gameclock__teamicon"
+          name={`circle${team === 'white' ? '' : '-o'}`}
+        />
       </Tooltip>
     </Stack>
   );
@@ -175,11 +211,17 @@ const SidePart = (props: TeamProps) => {
     <Stack direction={'column'} fill className="gameclock__sidepart">
       <Button
         color="orange"
-        disabled={!data.timing || (data.turn ? team === 'black' : team === 'white')}
+        disabled={
+          !data.timing || (data.turn ? team === 'black' : team === 'white')
+        }
         className="gameclock__timebutton"
-        onClick={() => act('end_turn')}>
+        onClick={() => act('end_turn')}
+      >
         <Stack className="gameclock__timeflex">
-          <AnimatedNumber value={team === 'white' ? data.whiteTime : data.blackTime} format={showTime} />
+          <AnimatedNumber
+            value={team === 'white' ? data.whiteTime : data.blackTime}
+            format={showTime}
+          />
         </Stack>
       </Button>
     </Stack>

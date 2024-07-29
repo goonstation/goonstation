@@ -1,8 +1,4 @@
-import {
-  getGasColor,
-  getGasFromId,
-  getGasLabel,
-} from './constants';
+import { getGasColor, getGasFromId, getGasLabel } from './constants';
 
 describe('gas helper functions', () => {
   it('should get the proper gas label', () => {

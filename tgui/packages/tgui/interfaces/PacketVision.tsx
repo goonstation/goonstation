@@ -4,7 +4,13 @@
  * @author LeahTheTech (https://github.com/TobleroneSwordfish)
  * @license MIT
  */
-import { AnimatedNumber, Knob, LabeledList, Section, Stack } from 'tgui-core/components';
+import {
+  AnimatedNumber,
+  Knob,
+  LabeledList,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { formatFrequency } from '../format';
@@ -43,7 +49,10 @@ export const PacketVision = () => {
                   />
                 </Stack.Item>
                 <Stack.Item>
-                  <AnimatedNumber value={data.frequency} format={formatFrequency} />
+                  <AnimatedNumber
+                    value={data.frequency}
+                    format={formatFrequency}
+                  />
                 </Stack.Item>
               </Stack>
             </LabeledList.Item>

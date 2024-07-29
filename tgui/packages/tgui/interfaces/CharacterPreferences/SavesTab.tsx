@@ -6,7 +6,13 @@
  */
 
 import { Fragment } from 'react';
-import { Box, Button, Divider, LabeledList, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Divider,
+  LabeledList,
+  Section,
+} from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { CharacterPreferencesData } from './type';
@@ -54,9 +60,13 @@ const Cloudsave = ({ name, index }: CloudSaveProps) => {
             {/* Just a small gap between these so you dont accidentally hit one */}
             <Button onClick={() => act('cloud-load', { name })}>Load</Button> -{' '}
             <Button onClick={() => act('cloud-save', { name })}>Save</Button> -{' '}
-            <Button.Confirm onClick={() => act('cloud-delete', { name })} content="Delete" />
+            <Button.Confirm
+              onClick={() => act('cloud-delete', { name })}
+              content="Delete"
+            />
           </>
-        }>
+        }
+      >
         {name}
       </LabeledList.Item>
     </LabeledList>

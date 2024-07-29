@@ -4,12 +4,22 @@
  * @license MIT
  */
 import { useState } from 'react';
-import { Box, Button, ByondUi, Icon, Image, Input, Section, Stack, Tabs } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Icon,
+  Image,
+  Input,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const sidebarWidth = "200px";
+const sidebarWidth = '200px';
 
 interface BarberingMenuData {
   available_styles;
@@ -26,11 +36,7 @@ export const BarberingMenu = () => {
   const styles_keys = Object.keys(available_styles);
 
   return (
-    <Window
-      width={700}
-      height={500}
-      title="Barber"
-    >
+    <Window width={700} height={500} title="Barber">
       <Window.Content scrollable m={0}>
         <Stack>
           <Stack.Item width={sidebarWidth}>
@@ -59,7 +65,11 @@ const HairStyleSearchBox = (props) => {
         <Icon name="magnifying-glass" />
       </Stack.Item>
       <Stack.Item grow>
-        <Input style={{ width: '100%' }} onInput={(_e, value) => onInput(value)} placeholder="Search..." />
+        <Input
+          style={{ width: '100%' }}
+          onInput={(_e, value) => onInput(value)}
+          placeholder="Search..."
+        />
       </Stack.Item>
     </Stack>
   );
@@ -68,7 +78,9 @@ const HairStyleSearchBox = (props) => {
 const HairPreviewList = (props) => {
   const { searchText, allHairNames, allHairStyles } = props;
   const lowerSearchText = searchText.toLowerCase();
-  const filteredList = allHairNames.filter((x) => x.toLowerCase().includes(lowerSearchText));
+  const filteredList = allHairNames.filter((x) =>
+    x.toLowerCase().includes(lowerSearchText),
+  );
   return (
     <Stack wrap>
       {filteredList.map((hairName) => (
@@ -79,20 +91,36 @@ const HairPreviewList = (props) => {
           />
         </Stack.Item>
       ))}
-    </Stack>);
+    </Stack>
+  );
 };
 
 const CreateWigButton = () => {
   const { act } = useBackend<BarberingMenuData>();
   return (
-    <Button fluid icon="cut" color="red" bold onClick={() => act("do_hair", { "style_id": null })}>Create Wig</Button>
+    <Button
+      fluid
+      icon="cut"
+      color="red"
+      bold
+      onClick={() => act('do_hair', { style_id: null })}
+    >
+      Create Wig
+    </Button>
   );
 };
 
 const ResetPreviewButton = () => {
   const { act } = useBackend<BarberingMenuData>();
   return (
-    <Button fluid icon="rotate-left" color="red" onClick={() => act("update_preview", { "action": "reset" })}>Reset</Button>
+    <Button
+      fluid
+      icon="rotate-left"
+      color="red"
+      onClick={() => act('update_preview', { action: 'reset' })}
+    >
+      Reset
+    </Button>
   );
 };
 
@@ -103,12 +131,33 @@ const HairPreview = (props) => {
     <Section width="140px" align="center">
       <Stack vertical>
         <Stack.Item>
-          <Image width="60px" height="100px" src={`${hairStyle["hair_icon"]}`} />
+          <Image
+            width="60px"
+            height="100px"
+            src={`${hairStyle['hair_icon']}`}
+          />
         </Stack.Item>
         <Stack.Item>{hairName}</Stack.Item>
         <Stack.Item>
-          <Button color="blue" icon="cut" onClick={() => act("do_hair", { "style_id": hairStyle["hair_id"] })}>Cut</Button>
-          <Button color="blue" icon="eye" onClick={() => act("update_preview", { "action": "new_hair", "style_id": hairStyle["hair_id"] })}>Preview</Button>
+          <Button
+            color="blue"
+            icon="cut"
+            onClick={() => act('do_hair', { style_id: hairStyle['hair_id'] })}
+          >
+            Cut
+          </Button>
+          <Button
+            color="blue"
+            icon="eye"
+            onClick={() =>
+              act('update_preview', {
+                action: 'new_hair',
+                style_id: hairStyle['hair_id'],
+              })
+            }
+          >
+            Preview
+          </Button>
         </Stack.Item>
       </Stack>
     </Section>
@@ -120,10 +169,23 @@ const ArrowButtons = () => {
   return (
     <Stack justify="space-around">
       <Stack.Item align="center">
-        <Button icon="rotate-left" onClick={() => act("update_preview", { "action": "change_direction", "direction": -90 })} />
+        <Button
+          icon="rotate-left"
+          onClick={() =>
+            act('update_preview', {
+              action: 'change_direction',
+              direction: -90,
+            })
+          }
+        />
       </Stack.Item>
       <Stack.Item align="center">
-        <Button icon="rotate-right" onClick={() => act("update_preview", { "action": "change_direction", "direction": 90 })} />
+        <Button
+          icon="rotate-right"
+          onClick={() =>
+            act('update_preview', { action: 'change_direction', direction: 90 })
+          }
+        />
       </Stack.Item>
     </Stack>
   );
@@ -152,8 +214,8 @@ const Sidebar = (props) => {
                 type: 'map',
               }}
               style={{
-                width: "80px",
-                height: "160px",
+                width: '80px',
+                height: '160px',
               }}
             />
           </Box>
@@ -182,7 +244,7 @@ const HairPortionItem = (props) => {
       icon={icon}
       rightSlot={rightSlot}
       selected={selected_hair_portion === hairPortion}
-      onClick={() => act('change_hair_portion', { 'new_portion': hairPortion })}
+      onClick={() => act('change_hair_portion', { new_portion: hairPortion })}
     >
       {children}
     </Tabs.Tab>
@@ -192,9 +254,15 @@ const HairPortionItem = (props) => {
 const HairPortionList = () => {
   return (
     <Tabs vertical mb={0}>
-      <HairPortionItem hairPortion="top" icon="arrows-up-to-line">Top</HairPortionItem>
-      <HairPortionItem hairPortion="middle" icon="arrow-down-up-across-line">Middle</HairPortionItem>
-      <HairPortionItem hairPortion="bottom" icon="arrows-down-to-line">Bottom</HairPortionItem>
+      <HairPortionItem hairPortion="top" icon="arrows-up-to-line">
+        Top
+      </HairPortionItem>
+      <HairPortionItem hairPortion="middle" icon="arrow-down-up-across-line">
+        Middle
+      </HairPortionItem>
+      <HairPortionItem hairPortion="bottom" icon="arrows-down-to-line">
+        Bottom
+      </HairPortionItem>
     </Tabs>
   );
 };

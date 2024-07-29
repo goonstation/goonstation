@@ -31,14 +31,19 @@ export const AvailableCellsSection = (props: AvailableCellsSectionProps) => {
                   label={item.name}
                   buttons={
                     <>
-                      <DockingAllowedButton onClick={() => onInstall(item.ref)} icon="plus" tooltip="Add to occupant" />
+                      <DockingAllowedButton
+                        onClick={() => onInstall(item.ref)}
+                        icon="plus"
+                        tooltip="Add to occupant"
+                      />
                       <DockingAllowedButton
                         onClick={() => onEject(item.ref)}
                         icon="eject"
                         tooltip="Eject from station"
                       />
                     </>
-                  }>
+                  }
+                >
                   <CellChargeBar cell={item} />
                 </LabeledList.Item>
               </div>

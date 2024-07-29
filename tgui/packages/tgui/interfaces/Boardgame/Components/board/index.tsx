@@ -22,7 +22,8 @@ export const Board = () => {
               if (data.currentUser?.selected) {
                 pieceDeselect(data.currentUser.ckey);
               }
-            }}>
+            }}
+          >
             <DesignSelector />
           </Flex.Item>
           <VerticalNotations />

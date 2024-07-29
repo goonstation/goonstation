@@ -6,9 +6,17 @@
  */
 
 import { Fragment, useState } from 'react';
-import { Button, Dimmer, Divider, Flex, NumberInput, Section, Stack } from 'tgui-core/components';
+import {
+  Button,
+  Dimmer,
+  Divider,
+  Flex,
+  NumberInput,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
@@ -32,11 +40,7 @@ export const ReagentExtractor = () => {
   const { inserted, storage_tank_1, storage_tank_2 } = containersData;
 
   return (
-    <Window
-      title="Reagent Extractor"
-      width={500}
-      height={739}
-      theme="ntos">
+    <Window title="Reagent Extractor" width={500} height={739} theme="ntos">
       <Window.Content>
         <Stack vertical fill>
           {/* Insertable Container */}
@@ -72,7 +76,10 @@ const ReagentDisplay = (props) => {
   const { act } = useBackend();
   const { insertable } = props;
   const container = props.container || NoContainer;
-  const [transferAmount, setTransferAmount] = useSharedState(`transferAmount_${container.id}`, 10);
+  const [transferAmount, setTransferAmount] = useSharedState(
+    `transferAmount_${container.id}`,
+    10,
+  );
 
   return (
     <Section
@@ -95,20 +102,23 @@ const ReagentDisplay = (props) => {
             />
           )}
         </>
-      }>
+      }
+    >
       {!!props.container || (
         <Dimmer>
           <Button
             icon="eject"
             fontSize={1.5}
             onClick={() => act('insertcontainer')}
-            bold>
+            bold
+          >
             Insert Beaker
           </Button>
         </Dimmer>
       )}
       <ReagentGraph container={container} />
-      <ReagentList container={container}
+      <ReagentList
+        container={container}
         renderButtons={(reagent) => {
           return (
             <>
@@ -118,14 +128,24 @@ const ReagentDisplay = (props) => {
                 icon="filter"
                 color="red"
                 tooltip="Isolate"
-                onClick={() => act('isolate', { container_id: container.id, reagent_id: reagent.id })}
+                onClick={() =>
+                  act('isolate', {
+                    container_id: container.id,
+                    reagent_id: reagent.id,
+                  })
+                }
               />
               <Button
                 px={0.75}
                 icon="times"
                 color="red"
                 tooltip="Flush"
-                onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
+                onClick={() =>
+                  act('flush_reagent', {
+                    container_id: container.id,
+                    reagent_id: reagent.id,
+                  })
+                }
               />
             </>
           );
@@ -140,7 +160,7 @@ const ReagentDisplay = (props) => {
             textAlign="center"
             selected={container.selected}
             tooltip="Select Extraction and Transfer Target"
-            icon={container.selected ? "check-square-o" : "square-o"}
+            icon={container.selected ? 'check-square-o' : 'square-o'}
             onClick={() => act('extractto', { container_id: container.id })}
           >
             Select
@@ -151,13 +171,18 @@ const ReagentDisplay = (props) => {
             <Flex.Item grow>
               <Button
                 disabled={container.selected}
-                onClick={() => act('chemtransfer', { container_id: container.id, amount: transferAmount })}
+                onClick={() =>
+                  act('chemtransfer', {
+                    container_id: container.id,
+                    amount: transferAmount,
+                  })
+                }
               >
                 Transfer
               </Button>
               <NumberInput
                 value={transferAmount}
-                format={value => value + "u"}
+                format={(value) => value + 'u'}
                 minValue={1}
                 maxValue={500}
                 step={1}
@@ -167,7 +192,12 @@ const ReagentDisplay = (props) => {
             <Flex.Item>
               <Button
                 disabled={container.selected}
-                onClick={() => act('chemtransfer', { container_id: container.id, amount: 500 })}
+                onClick={() =>
+                  act('chemtransfer', {
+                    container_id: container.id,
+                    amount: 500,
+                  })
+                }
               >
                 Transfer All
               </Button>
@@ -184,41 +214,55 @@ const ExtractableList = () => {
   const { autoextract } = data;
   const extractables = data.ingredientsData || [];
   const [page, setPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(extractables.length / extractablesPerPage));
+  const totalPages = Math.max(
+    1,
+    Math.ceil(extractables.length / extractablesPerPage),
+  );
   if (page < 1 || page > totalPages) setPage(clamp(page, 1, totalPages));
-  const extractablesOnPage = extractables.slice(extractablesPerPage*(page - 1),
-    extractablesPerPage*(page - 1) + extractablesPerPage);
+  const extractablesOnPage = extractables.slice(
+    extractablesPerPage * (page - 1),
+    extractablesPerPage * (page - 1) + extractablesPerPage,
+  );
 
   return (
-    <Section fill
+    <Section
+      fill
       title="Extractable Items"
-      buttons={(
+      buttons={
         <Button.Checkbox
           checked={autoextract}
           tooltip="Items will be extracted into the selected container automatically upon insertion."
-          onClick={() => act('autoextract')}>
+          onClick={() => act('autoextract')}
+        >
           Auto-Extract
         </Button.Checkbox>
-      )}>
+      }
+    >
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Section scrollable fill>
             {extractablesOnPage.map((extractable, index) => (
               <Fragment key={extractable.id}>
                 <Flex>
-                  <Flex.Item grow>
-                    {extractable.name}
-                  </Flex.Item>
+                  <Flex.Item grow>{extractable.name}</Flex.Item>
                   <Flex.Item nowrap>
                     <Button
-                      onClick={() => act('extractingredient', { ingredient_id: extractable.id })}
+                      onClick={() =>
+                        act('extractingredient', {
+                          ingredient_id: extractable.id,
+                        })
+                      }
                     >
                       Extract
                     </Button>
                     <Button
                       icon="eject"
                       tooltip="Eject"
-                      onClick={() => act('ejectingredient', { ingredient_id: extractable.id })}
+                      onClick={() =>
+                        act('ejectingredient', {
+                          ingredient_id: extractable.id,
+                        })
+                      }
                     />
                   </Flex.Item>
                 </Flex>
@@ -237,7 +281,7 @@ const ExtractableList = () => {
             />
             <NumberInput
               value={page}
-              format={value => "Page " + value + "/" + totalPages}
+              format={(value) => 'Page ' + value + '/' + totalPages}
               minValue={1}
               maxValue={totalPages}
               step={1}

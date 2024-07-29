@@ -1,7 +1,7 @@
 /*
-* Copyright (c) 2024 @Azrun
-* SPDX-License-Identifier: MIT
-*/
+ * Copyright (c) 2024 @Azrun
+ * SPDX-License-Identifier: MIT
+ */
 
 import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
 import { Autofocus, Box, Section, Stack } from 'tgui-core/components';
@@ -13,11 +13,11 @@ import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
 
 interface BitfieldInputModalData {
-  timeout,
-  message,
-  title,
-  autofocus,
-  default_value
+  timeout;
+  message;
+  title;
+  autofocus;
+  default_value;
 }
 
 export const BitfieldInputModal = () => {
@@ -36,7 +36,8 @@ export const BitfieldInputModal = () => {
           if (keyCode === KEY_ESCAPE) {
             act('cancel');
           }
-        }}>
+        }}
+      >
         <Stack fill vertical>
           {message && (
             <Stack.Item m={1}>

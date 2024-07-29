@@ -8,18 +8,18 @@ import { Box, Button, Flex, Section } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const AreaData = props => {
-  const {
-    areaData,
-  } = props;
+export const AreaData = (props) => {
+  const { areaData } = props;
 
   return (
     <Flex.Item mb={1}>
       <Flex direction="column">
         {Object.keys(areaData).map((areaType, Index) => (
           <Flex.Item mb={1} key={Index}>
-            <Section title={areaData[areaType].name} >
-              {(!areaData[areaType].total) ? 'NO APC' : (
+            <Section title={areaData[areaType].name}>
+              {!areaData[areaType].total ? (
+                'NO APC'
+              ) : (
                 <Flex justify="space-between">
                   <Flex.Item>Total:{areaData[areaType].total} </Flex.Item>
                   <Flex.Item>Equip:{areaData[areaType].equip}</Flex.Item>
@@ -28,8 +28,7 @@ export const AreaData = props => {
                 </Flex>
               )}
             </Section>
-            <MachineData
-              machineData={areaData[areaType].machines} />
+            <MachineData machineData={areaData[areaType].machines} />
           </Flex.Item>
         ))}
       </Flex>
@@ -39,39 +38,24 @@ export const AreaData = props => {
 
 export const MachineData = (props) => {
   const { act } = useBackend();
-  const {
-    machineData,
-  } = props;
+  const { machineData } = props;
 
   const handleJMP = (ref) => {
-    act("jmp", {
+    act('jmp', {
       ref: ref,
     });
   };
 
-  return (
-    Object.keys(machineData).map((machine, index) => (
-      <Flex direction="row" key={index}>
-        <Flex.Item>
-          <Button
-            onClick={() => handleJMP(machine)}
-          >
-            JMP
-          </Button>
-        </Flex.Item>
-        <Flex.Item basis={20.0}>
-          {machineData[machine].name}
-        </Flex.Item>
-        <Flex.Item basis={8.0}>
-          {machineData[machine].data}
-        </Flex.Item>
-        <Flex.Item>
-          {machineData[machine].power_usage}
-        </Flex.Item>
-
-      </Flex>
-    ))
-  );
+  return Object.keys(machineData).map((machine, index) => (
+    <Flex direction="row" key={index}>
+      <Flex.Item>
+        <Button onClick={() => handleJMP(machine)}>JMP</Button>
+      </Flex.Item>
+      <Flex.Item basis={20.0}>{machineData[machine].name}</Flex.Item>
+      <Flex.Item basis={8.0}>{machineData[machine].data}</Flex.Item>
+      <Flex.Item>{machineData[machine].power_usage}</Flex.Item>
+    </Flex>
+  ));
 };
 
 interface PowerDebugData {
@@ -80,26 +64,14 @@ interface PowerDebugData {
 
 export const PowerDebug = () => {
   const { data } = useBackend<PowerDebugData>();
-  const {
-    areaData,
-  } = data;
+  const { areaData } = data;
 
   return (
-    <Window
-      title="PowerDebug"
-      width={500}
-      height={600}>
+    <Window title="PowerDebug" width={500} height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Power Debug
-            </Box>
-          }>
+        <Section title={<Box inline>Power Debug</Box>}>
           <Flex direction="row">
-            <AreaData
-              areaData={areaData} />
+            <AreaData areaData={areaData} />
           </Flex>
         </Section>
       </Window.Content>

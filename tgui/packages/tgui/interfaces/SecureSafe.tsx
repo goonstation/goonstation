@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-
 import { Box, Button, Flex, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -20,21 +19,15 @@ const KEY_PAD_INPUT_LAYOUT = [
 ];
 
 const stylizeCode = (attempt, codeLen) => {
-  return attempt.padEnd(codeLen, "*").split("").join(" ");
+  return attempt.padEnd(codeLen, '*').split('').join(' ');
 };
 
 const SecureSafeScreen = (props) => {
-  const {
-    attempt,
-    codeLen,
-    disabled,
-    emagged,
-    padMsg,
-  } = props;
+  const { attempt, codeLen, disabled, emagged, padMsg } = props;
 
   let content = padMsg ? padMsg : stylizeCode(attempt, codeLen);
   if (disabled) {
-    content = "NO ACCESS";
+    content = 'NO ACCESS';
   }
   if (emagged) {
     content = glitch(content, 2);
@@ -48,10 +41,10 @@ const SecureSafeScreen = (props) => {
       p="3px"
       backgroundColor="#342210"
       style={{
-        "borderWidth": "0.1em",
-        "borderStyle": "solid",
-        "borderRadius": "0.16em",
-        "borderColor": "#FC8E1F",
+        borderWidth: '0.1em',
+        borderStyle: 'solid',
+        borderRadius: '0.16em',
+        borderColor: '#FC8E1F',
       }}
     >
       {content}
@@ -60,9 +53,7 @@ const SecureSafeScreen = (props) => {
 };
 
 const SecureSafeKeyPad = (props) => {
-  const {
-    act,
-  } = props;
+  const { act } = props;
 
   return (
     <>
@@ -70,11 +61,7 @@ const SecureSafeKeyPad = (props) => {
         {KEY_PAD_INPUT_LAYOUT.map((row, rowIndex) => {
           const rowLen = row.length;
           return (
-            <Flex
-              key={`row-${rowIndex}`}
-              justify="space-between"
-              mt={1}
-            >
+            <Flex key={`row-${rowIndex}`} justify="space-between" mt={1}>
               {row.map((input, colIndex) => {
                 return (
                   <Flex.Item
@@ -129,32 +116,24 @@ const SecureSafeKeyPad = (props) => {
 };
 
 interface SecureSafeData {
-  attempt,
-  codeLen,
-  disabled,
-  emagged,
-  padMsg,
-  safeName,
-  theme,
+  attempt;
+  codeLen;
+  disabled;
+  emagged;
+  padMsg;
+  safeName;
+  theme;
 }
 
 export const SecureSafe = () => {
   const { act, data } = useBackend<SecureSafeData>();
-  const {
-    attempt,
-    codeLen,
-    disabled,
-    emagged,
-    padMsg,
-    safeName,
-    theme,
-  } = data;
+  const { attempt, codeLen, disabled, emagged, padMsg, safeName, theme } = data;
   return (
     <Window
       title={capitalize(safeName)}
       width={200}
       height={328}
-      theme={theme || "retro-dark"}
+      theme={theme || 'retro-dark'}
     >
       <Window.Content>
         <Section fill>

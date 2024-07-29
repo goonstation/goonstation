@@ -177,7 +177,9 @@ export const backendMiddleware = (store) => {
       Byond.winset(Byond.windowId, {
         'is-visible': false,
       });
-      setTimeout(() => { if (hasWindowFocus()) focusMap(); });
+      setTimeout(() => {
+        if (hasWindowFocus()) focusMap();
+      });
     }
 
     if (type === 'backend/update') {

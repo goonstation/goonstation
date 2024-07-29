@@ -8,7 +8,7 @@
 @use '../base.scss';
 @use '../colors.scss';
 
-$neutral: #AAAAAA !default;
+$neutral: #aaaaaa !default;
 $hot: #f2711c !default;
 $cold: #2185d0 !default;
 
@@ -38,9 +38,7 @@ $cold: #2185d0 !default;
   }
 }
 
-
 .ChemHeater {
-
   &__TemperatureNumber {
     transition: color 500ms ease-out;
   }

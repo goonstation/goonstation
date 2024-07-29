@@ -5,7 +5,15 @@
  * @license ISC
  */
 
-import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Knob,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { formatMoney, formatPower, formatSiUnit } from '../format';
@@ -21,29 +29,23 @@ interface PowerTransmissionLaserData {
   inputNumber;
   isCharging;
   isChargingEnabled;
-  isEmagged,
-  isFiring,
-  isLaserEnabled,
+  isEmagged;
+  isFiring;
+  isLaserEnabled;
   lifetimeEarnings;
   name;
-  outputLevel,
-  outputMultiplier,
-  outputNumber,
+  outputLevel;
+  outputMultiplier;
+  outputNumber;
   storedBalance;
   totalGridPower;
 }
 
 export const PowerTransmissionLaser = () => {
   const { data } = useBackend<PowerTransmissionLaserData>();
-  const {
-    storedBalance,
-    name = 'Power Transmission Laser',
-  } = data;
+  const { storedBalance, name = 'Power Transmission Laser' } = data;
   return (
-    <Window
-      title={name}
-      width={310}
-      height={485}>
+    <Window title={name} width={310} height={485}>
       <Window.Content>
         <Status />
         <InputControls />
@@ -58,18 +60,12 @@ export const PowerTransmissionLaser = () => {
 
 const Status = () => {
   const { data } = useBackend<PowerTransmissionLaserData>();
-  const {
-    capacity,
-    charge,
-    gridLoad,
-    totalGridPower,
-  } = data;
+  const { capacity, charge, gridLoad, totalGridPower } = data;
 
   return (
     <Section title="Status">
       <LabeledList>
-        <LabeledList.Item
-          label="Reserve Power" >
+        <LabeledList.Item label="Reserve Power">
           {formatSiUnit(charge, 0, 'J')}
         </LabeledList.Item>
       </LabeledList>
@@ -81,7 +77,8 @@ const Status = () => {
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
-        value={charge / capacity} />
+        value={charge / capacity}
+      />
       <LabeledList>
         <LabeledList.Item label="Grid Saturation" />
       </LabeledList>
@@ -92,7 +89,8 @@ const Status = () => {
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
-        value={totalGridPower ? (gridLoad / totalGridPower) : 0} />
+        value={totalGridPower ? gridLoad / totalGridPower : 0}
+      />
     </Section>
   );
 };
@@ -118,23 +116,26 @@ const InputControls = (props, context) => {
               icon="power-off"
               content={isChargingEnabled ? 'Enabled' : 'Disabled'}
               color={isChargingEnabled ? 'green' : 'red'}
-              onClick={() => act('toggleInput')} />
-          } >
+              onClick={() => act('toggleInput')}
+            />
+          }
+        >
           <Box
-            color={(isCharging && 'good')
-              || (isChargingEnabled && 'average')
-              || 'bad'}>
-            {(isCharging && 'Online')
-              || (isChargingEnabled && 'Idle')
-              || 'Offline'}
+            color={
+              (isCharging && 'good') ||
+              (isChargingEnabled && 'average') ||
+              'bad'
+            }
+          >
+            {(isCharging && 'Online') ||
+              (isChargingEnabled && 'Idle') ||
+              'Offline'}
           </Box>
         </LabeledList.Item>
-        <LabeledList.Item
-          label="Input Level" >
+        <LabeledList.Item label="Input Level">
           {formatPower(inputLevel)}
         </LabeledList.Item>
-        <LabeledList.Item
-          label="Optimal" >
+        <LabeledList.Item label="Optimal">
           {formatPower(excessPower)}
         </LabeledList.Item>
       </LabeledList>
@@ -149,27 +150,33 @@ const InputControls = (props, context) => {
           minValue={0}
           maxValue={999}
           value={inputNumber}
-          onDrag={(e, setInput) => act('setInput', { setInput })} />
+          onDrag={(e, setInput) => act('setInput', { setInput })}
+        />
         <Button
           content={'W'}
-          selected={inputMultiplier===1}
-          onClick={() => act('inputW')} />
+          selected={inputMultiplier === 1}
+          onClick={() => act('inputW')}
+        />
         <Button
           content={'kW'}
-          selected={inputMultiplier===10**3}
-          onClick={() => act('inputkW')} />
+          selected={inputMultiplier === 10 ** 3}
+          onClick={() => act('inputkW')}
+        />
         <Button
           content={'MW'}
-          selected={inputMultiplier===10**6}
-          onClick={() => act('inputMW')} />
+          selected={inputMultiplier === 10 ** 6}
+          onClick={() => act('inputMW')}
+        />
         <Button
           content={'GW'}
-          selected={inputMultiplier===10**9}
-          onClick={() => act('inputGW')} />
+          selected={inputMultiplier === 10 ** 9}
+          onClick={() => act('inputGW')}
+        />
         <Button
           content={'TW'}
-          selected={inputMultiplier===10**12}
-          onClick={() => act('inputTW')} />
+          selected={inputMultiplier === 10 ** 12}
+          onClick={() => act('inputTW')}
+        />
       </Box>
     </Section>
   );
@@ -189,25 +196,28 @@ const OutputControls = () => {
   return (
     <Section title="Output Controls">
       <LabeledList>
-        <LabeledList.Item label="Laser Circuit"
+        <LabeledList.Item
+          label="Laser Circuit"
           buttons={
             <Button
               icon="power-off"
               content={isLaserEnabled ? 'Enabled' : 'Disabled'}
               color={isLaserEnabled ? 'green' : 'red'}
-              onClick={() => act('toggleOutput')} />
-          } >
+              onClick={() => act('toggleOutput')}
+            />
+          }
+        >
           <Box
-            color={(isFiring && 'good')
-              || (isLaserEnabled && 'average')
-              || 'bad'}>
-            {(isFiring && 'Online')
-              || (isLaserEnabled && 'Idle')
-              || 'Offline'}
+            color={
+              (isFiring && 'good') || (isLaserEnabled && 'average') || 'bad'
+            }
+          >
+            {(isFiring && 'Online') || (isLaserEnabled && 'Idle') || 'Offline'}
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Output Level">
-          {outputNumber < 0 ? '-' + formatPower(Math.abs(outputLevel))
+          {outputNumber < 0
+            ? '-' + formatPower(Math.abs(outputLevel))
             : formatPower(outputLevel)}
         </LabeledList.Item>
       </LabeledList>
@@ -223,19 +233,23 @@ const OutputControls = () => {
           maxValue={isEmagged ? 0 : 999}
           ranges={{ bad: [-Infinity, -1] }}
           value={outputNumber}
-          onDrag={(e, setOutput) => act('setOutput', { setOutput })} />
+          onDrag={(e, setOutput) => act('setOutput', { setOutput })}
+        />
         <Button
           content={'MW'}
-          selected={outputMultiplier===10**6}
-          onClick={() => act('outputMW')} />
+          selected={outputMultiplier === 10 ** 6}
+          onClick={() => act('outputMW')}
+        />
         <Button
           content={'GW'}
-          selected={outputMultiplier===10**9}
-          onClick={() => act('outputGW')} />
+          selected={outputMultiplier === 10 ** 9}
+          onClick={() => act('outputGW')}
+        />
         <Button
           content={'TW'}
-          selected={outputMultiplier===10**12}
-          onClick={() => act('outputTW')} />
+          selected={outputMultiplier === 10 ** 12}
+          onClick={() => act('outputTW')}
+        />
       </Box>
     </Section>
   );

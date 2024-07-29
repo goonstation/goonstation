@@ -21,7 +21,8 @@ export const MixerItem = (props) => {
         verticalAlign="middle"
         height="24px"
         width="24px"
-        src={`data:image/png;base64,${mixerItem.iconData}`} />
+        src={`data:image/png;base64,${mixerItem.iconData}`}
+      />
       <Button
         nowrap
         icon="eject"
@@ -29,13 +30,16 @@ export const MixerItem = (props) => {
         tooltip={`Eject ${mixerItem.name}`}
         textAlign="center"
         disabled={working}
-        onClick={() => act("eject", { index: mixerItem.index })} />
+        onClick={() => act('eject', { index: mixerItem.index })}
+      />
 
-      <Box nowrap
+      <Box
+        nowrap
         as="span"
         key={mixerItem.index}
         m="0.25rem"
-        textAlign="center">
+        textAlign="center"
+      >
         {mixerItem.name}
       </Box>
     </Flex>
@@ -52,20 +56,23 @@ export const MixerMachine = () => {
   const { data, act } = useBackend<MixerMachineData>();
   const items = data.mixerContents;
   return (
-    <Window
-      title="Kitchen Helper"
-      width={500}
-      height={220}>
-      <Window.Content >
+    <Window title="Kitchen Helper" width={500} height={220}>
+      <Window.Content>
         <Stack m="0.25rem" vertical fill>
-
           <Stack.Item grow={1}>
-            <Section fill title={`Contents: (${items.length}/${data.maxItems})`}>
-              {
-                (items.length > 0)
-                  ? items.map(item => (<MixerItem key={item.index} mixerItem={item} working={data.working} />))
-                  : 'No contents in mixer'
-              }
+            <Section
+              fill
+              title={`Contents: (${items.length}/${data.maxItems})`}
+            >
+              {items.length > 0
+                ? items.map((item) => (
+                    <MixerItem
+                      key={item.index}
+                      mixerItem={item}
+                      working={data.working}
+                    />
+                  ))
+                : 'No contents in mixer'}
             </Section>
           </Stack.Item>
 
@@ -77,7 +84,9 @@ export const MixerMachine = () => {
               tooltip="Start Mixing"
               textAlign="center"
               disabled={data.working || items.length === 0}
-              onClick={() => act("mix", {})}>Mix
+              onClick={() => act('mix', {})}
+            >
+              Mix
             </Button>
 
             <Button
@@ -86,11 +95,12 @@ export const MixerMachine = () => {
               tooltip="Eject All"
               textAlign="center"
               disabled={data.working || items.length === 0}
-              onClick={() => act("ejectAll", {})}>Eject All
+              onClick={() => act('ejectAll', {})}
+            >
+              Eject All
             </Button>
           </Stack.Item>
         </Stack>
-
       </Window.Content>
     </Window>
   );

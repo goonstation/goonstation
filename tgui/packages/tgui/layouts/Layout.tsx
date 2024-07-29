@@ -22,7 +22,13 @@ type Props = Partial<{
   BoxProps;
 
 export function Layout(props: Props) {
-  const { className, theme = 'nanotrasen', mode = 'dark', children, ...rest } = props;
+  const {
+    className,
+    theme = 'nanotrasen',
+    mode = 'dark',
+    children,
+    ...rest
+  } = props;
 
   // |GOONSTATION-CHANGE|
   return (

@@ -53,7 +53,8 @@ const adjustWindowSize = () => {
       return;
     }
 
-    let shortestSide = wrapperWidth < wrapperHeight ? wrapperWidth : wrapperHeight;
+    let shortestSide =
+      wrapperWidth < wrapperHeight ? wrapperWidth : wrapperHeight;
 
     // Set the width and height to the shortest side
     width = shortestSide + PaletteSetPadding;

@@ -5,20 +5,27 @@
  * @license MIT
  */
 
-import { useState } from "react";
-import { Box, Button, Dropdown, Icon, Section, Stack, Tabs, Tooltip } from "tgui-core/components";
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
+} from 'tgui-core/components';
 
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const FlockPartitions = (props) => {
   const { act } = useBackend();
-  const {
-    partitions,
-  } = props;
+  const { partitions } = props;
   return (
     <Stack vertical>
-      {partitions.map(partition => {
+      {partitions.map((partition) => {
         return (
           <Stack.Item key={partition.ref}>
             <Stack align="center" height="100%">
@@ -31,14 +38,18 @@ const FlockPartitions = (props) => {
               {/* show host if they are in one */}
               <Stack.Item height="100%" grow={1}>
                 <Section height="100%">
-                  {partition.host
-                  && (
+                  {partition.host && (
                     <Stack>
-                      <Stack.Item><Icon name="wifi" size={3} /></Stack.Item>
+                      <Stack.Item>
+                        <Icon name="wifi" size={3} />
+                      </Stack.Item>
                       <Stack.Item>
                         <Stack vertical align="center">
                           <Stack.Item>{partition.host}</Stack.Item>
-                          <Stack.Item >{partition.health}<Icon name="heart" /></Stack.Item>
+                          <Stack.Item>
+                            {partition.health}
+                            <Icon name="heart" />
+                          </Stack.Item>
                         </Stack>
                       </Stack.Item>
                     </Stack>
@@ -49,26 +60,41 @@ const FlockPartitions = (props) => {
               <Stack.Item height="100%">
                 <Section height="100%">
                   <Stack>
-                    {partition.host
-                    && (
+                    {partition.host && (
                       <Stack.Item>
-                        <Button onClick={() => act('eject_trace', { 'origin': partition.ref })} >
+                        <Button
+                          onClick={() =>
+                            act('eject_trace', { origin: partition.ref })
+                          }
+                        >
                           Eject
                         </Button>
                       </Stack.Item>
                     )}
                     <Stack.Item>
-                      <Button onClick={() => act('promote_trace', { 'origin': partition.ref })} >
+                      <Button
+                        onClick={() =>
+                          act('promote_trace', { origin: partition.ref })
+                        }
+                      >
                         Promote sentience
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
-                      <Button onClick={() => act('delete_trace', { 'origin': partition.ref })} >
+                      <Button
+                        onClick={() =>
+                          act('delete_trace', { origin: partition.ref })
+                        }
+                      >
                         Remove sentience
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
-                      <Button onClick={() => act('jump_to', { 'origin': partition.ref })} >
+                      <Button
+                        onClick={() =>
+                          act('jump_to', { origin: partition.ref })
+                        }
+                      >
                         Jump
                       </Button>
                     </Stack.Item>
@@ -93,31 +119,31 @@ const compare = function (a, b, sortBy) {
 
 // maps drone tasks to icons
 const iconLookup = {
-  "thinking": "brain",
-  "shooting": "bolt",
-  "rummaging": "dumpster",
-  "wandering": "route",
-  "building": "hammer",
-  "nesting": "hammer",
-  "harvesting": "cogs",
-  "controlled": "wifi",
-  "replicating": "egg",
-  "rallying": "map-marker",
-  "opening container": "box-open",
-  "butchering": "recycle",
-  "repairing": "tools",
-  "capturing": "bars",
-  "depositing": "border-style",
-  "observing": "eye",
-  "deconstructing": "trash",
-  "hibernating": "stop-circle",
+  thinking: 'brain',
+  shooting: 'bolt',
+  rummaging: 'dumpster',
+  wandering: 'route',
+  building: 'hammer',
+  nesting: 'hammer',
+  harvesting: 'cogs',
+  controlled: 'wifi',
+  replicating: 'egg',
+  rallying: 'map-marker',
+  'opening container': 'box-open',
+  butchering: 'recycle',
+  repairing: 'tools',
+  capturing: 'bars',
+  depositing: 'border-style',
+  observing: 'eye',
+  deconstructing: 'trash',
+  hibernating: 'stop-circle',
 };
 const taskIcon = function (task) {
   let iconString = iconLookup[task];
   if (iconString) {
     return <Icon size={3} name={iconString} />;
   }
-  return "";
+  return '';
 };
 
 const capitalizeString = function (string) {
@@ -131,16 +157,12 @@ interface FlockDronesProps {
 
 const FlockDrones = (props) => {
   const { act } = useBackend();
-  const {
-    drones,
-    sortBy,
-  } = props;
+  const { drones, sortBy } = props;
   return (
     <Stack vertical>
       {drones
-        .sort(
-          (a, b) => (compare(a, b, sortBy))
-        ).map(drone => {
+        .sort((a, b) => compare(a, b, sortBy))
+        .map((drone) => {
           return (
             <Stack.Item key={drone.ref}>
               <Stack>
@@ -148,8 +170,12 @@ const FlockDrones = (props) => {
                 <Stack.Item width="20%">
                   <Section height="100%">
                     <Stack vertical align="center">
-                      <Stack.Item >{drone.name}</Stack.Item>
-                      <Stack.Item >{drone.health}<Icon name="heart" /> {drone.resources}<Icon name="cog" /></Stack.Item>
+                      <Stack.Item>{drone.name}</Stack.Item>
+                      <Stack.Item>
+                        {drone.health}
+                        <Icon name="heart" /> {drone.resources}
+                        <Icon name="cog" />
+                      </Stack.Item>
                     </Stack>
                   </Section>
                 </Stack.Item>
@@ -158,12 +184,11 @@ const FlockDrones = (props) => {
                   <Section height="100%">
                     <Stack align="center">
                       <Stack.Item width="50px">
-                        <Box align="center">
-                          {taskIcon(drone.task)}
-                        </Box>
+                        <Box align="center">{taskIcon(drone.task)}</Box>
                       </Stack.Item>
                       <Stack.Item>
-                        <b>{drone.area}</b> <br /> {drone.task && capitalizeString(drone.task)}
+                        <b>{drone.area}</b> <br />{' '}
+                        {drone.task && capitalizeString(drone.task)}
                       </Stack.Item>
                     </Stack>
                   </Section>
@@ -172,28 +197,36 @@ const FlockDrones = (props) => {
                 <Stack.Item>
                   <Section height="100%">
                     <Stack>
-                      {drone.task === "controlled"
-                          && (
-                            <Stack.Item>
-                              <Button onClick={() => act('eject_trace', { 'origin': drone.controller_ref })} >
-                                Eject Trace
-                              </Button>
-                            </Stack.Item>
-                          )}
+                      {drone.task === 'controlled' && (
+                        <Stack.Item>
+                          <Button
+                            onClick={() =>
+                              act('eject_trace', {
+                                origin: drone.controller_ref,
+                              })
+                            }
+                          >
+                            Eject Trace
+                          </Button>
+                        </Stack.Item>
+                      )}
                       <Stack.Item>
-                        <Button onClick={() => act('rally', { 'origin': drone.ref })} >
+                        <Button
+                          onClick={() => act('rally', { origin: drone.ref })}
+                        >
                           Rally
                         </Button>
                       </Stack.Item>
                       <Stack.Item>
-                        <Button onClick={() => act('jump_to', { 'origin': drone.ref })} >
+                        <Button
+                          onClick={() => act('jump_to', { origin: drone.ref })}
+                        >
                           Jump
                         </Button>
                       </Stack.Item>
                     </Stack>
                   </Section>
                 </Stack.Item>
-
               </Stack>
             </Stack.Item>
           );
@@ -208,7 +241,7 @@ const FlockStructures = (props) => {
   const { structures } = props;
   return (
     <Stack vertical>
-      {structures.map(structure => {
+      {structures.map((structure) => {
         return (
           <Stack.Item key={structure.ref}>
             <Stack>
@@ -217,38 +250,47 @@ const FlockStructures = (props) => {
                 <Tooltip position="bottom" content={structure.desc}>
                   <Section position="relative">
                     <Stack vertical align="center">
-                      <Stack.Item >{structure.name}</Stack.Item>
-                      <Stack.Item >{structure.health} <Icon name="heart" /></Stack.Item>
+                      <Stack.Item>{structure.name}</Stack.Item>
+                      <Stack.Item>
+                        {structure.health} <Icon name="heart" />
+                      </Stack.Item>
                     </Stack>
                   </Section>
                 </Tooltip>
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section height="100%">
-                  {structure.compute > 0 && ("Compute provided: " + structure.compute)}
+                  {structure.compute > 0 &&
+                    'Compute provided: ' + structure.compute}
                 </Section>
               </Stack.Item>
               {/* buttons */}
               <Stack.Item>
                 <Section height="100%">
                   <Stack>
-                    {structure.name === "Construction Tealprint"
-                          && (
-                            <Stack.Item>
-                              <Button onClick={() => act('cancel_tealprint', { 'origin': structure.ref })} >
-                                Cancel
-                              </Button>
-                            </Stack.Item>
-                          )}
+                    {structure.name === 'Construction Tealprint' && (
+                      <Stack.Item>
+                        <Button
+                          onClick={() =>
+                            act('cancel_tealprint', { origin: structure.ref })
+                          }
+                        >
+                          Cancel
+                        </Button>
+                      </Stack.Item>
+                    )}
                     <Stack.Item>
-                      <Button onClick={() => act('jump_to', { 'origin': structure.ref })} >
+                      <Button
+                        onClick={() =>
+                          act('jump_to', { origin: structure.ref })
+                        }
+                      >
                         Jump
                       </Button>
                     </Stack.Item>
                   </Stack>
                 </Section>
               </Stack.Item>
-
             </Stack>
           </Stack.Item>
         );
@@ -257,21 +299,18 @@ const FlockStructures = (props) => {
   );
 };
 
-
 const FlockEnemies = (props) => {
   const { act } = useBackend();
   const { enemies } = props;
   return (
     <Stack vertical>
-      {enemies.map(enemy => {
+      {enemies.map((enemy) => {
         return (
           <Stack.Item key={enemy.ref}>
             <Stack>
               {/* name and remove button */}
               <Stack.Item width="30%">
-                <Section height="100%">
-                  {enemy.name}
-                </Section>
+                <Section height="100%">{enemy.name}</Section>
               </Stack.Item>
               {/* area and jump button */}
               <Stack.Item grow={1}>
@@ -280,7 +319,6 @@ const FlockEnemies = (props) => {
                     <Stack.Item grow={1}>
                       <b>{enemy.area}</b>
                     </Stack.Item>
-
                   </Stack>
                 </Section>
               </Stack.Item>
@@ -288,19 +326,25 @@ const FlockEnemies = (props) => {
                 <Section height="100%">
                   <Stack>
                     <Stack.Item>
-                      <Button icon="times" onClick={() => act('remove_enemy', { 'origin': enemy.ref })} >
+                      <Button
+                        icon="times"
+                        onClick={() =>
+                          act('remove_enemy', { origin: enemy.ref })
+                        }
+                      >
                         Remove
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
-                      <Button onClick={() => act('jump_to', { 'origin': enemy.ref })} >
+                      <Button
+                        onClick={() => act('jump_to', { origin: enemy.ref })}
+                      >
                         Jump
                       </Button>
                     </Stack.Item>
                   </Stack>
                 </Section>
               </Stack.Item>
-
             </Stack>
           </Stack.Item>
         );
@@ -313,14 +357,16 @@ const FlockStats = (props) => {
   const { stats } = props;
   return (
     <Stack vertical>
-      {stats.map(stat => {
+      {stats.map((stat) => {
         return (
           <Stack.Item key={stat.name}>
             <Stack>
               <Stack.Item width="100%">
                 <Section height="100%">
                   <Stack vertical align="left">
-                    <Stack.Item >{stat.name} {stat.value}</Stack.Item>
+                    <Stack.Item>
+                      {stat.name} {stat.value}
+                    </Stack.Item>
                   </Stack>
                 </Section>
               </Stack.Item>
@@ -333,14 +379,14 @@ const FlockStats = (props) => {
 };
 
 interface FlockPanelData {
-  vitals,
-  partitions,
-  drones,
-  structures,
-  enemies,
-  stats,
-  category_lengths,
-  category,
+  vitals;
+  partitions;
+  drones;
+  structures;
+  enemies;
+  stats;
+  category_lengths;
+  category;
 }
 
 export const FlockPanel = () => {
@@ -359,7 +405,7 @@ export const FlockPanel = () => {
   return (
     <Window
       theme="flock"
-      title={"Flockmind " + vitals.name}
+      title={'Flockmind ' + vitals.name}
       width={600}
       height={450}
     >
@@ -368,45 +414,49 @@ export const FlockPanel = () => {
           <Tabs.Tab
             selected={category === 'drones'}
             onClick={() => {
-              act('change_tab', { 'tab': 'drones' });
-            }}>
+              act('change_tab', { tab: 'drones' });
+            }}
+          >
             Drones {`(${category_lengths['drones']})`}
           </Tabs.Tab>
           <Tabs.Tab
             selected={category === 'traces'}
             onClick={() => {
-              act('change_tab', { 'tab': 'traces' });
-            }}>
+              act('change_tab', { tab: 'traces' });
+            }}
+          >
             Partitions {`(${category_lengths['traces']})`}
           </Tabs.Tab>
           <Tabs.Tab
             selected={category === 'structures'}
             onClick={() => {
-              act('change_tab', { 'tab': 'structures' });
-            }}>
+              act('change_tab', { tab: 'structures' });
+            }}
+          >
             Structures {`(${category_lengths['structures']})`}
           </Tabs.Tab>
           <Tabs.Tab
             selected={category === 'enemies'}
             onClick={() => {
-              act('change_tab', { 'tab': 'enemies' });
-            }}>
+              act('change_tab', { tab: 'enemies' });
+            }}
+          >
             Enemies {`(${category_lengths['enemies']})`}
           </Tabs.Tab>
           <Tabs.Tab
             selected={category === 'stats'}
             onClick={() => {
-              act('change_tab', { 'tab': 'stats' });
-            }}>
+              act('change_tab', { tab: 'stats' });
+            }}
+          >
             Stats
           </Tabs.Tab>
         </Tabs>
 
-        {category === 'drones'
-        && (
+        {category === 'drones' && (
           <Box>
             <Dropdown
-              options={["name", "health", "resources", "area"]}
+              options={['name', 'health', 'resources', 'area']}
               selected="resources"
               onSelected={(value) => setSortBy(value)}
             />
@@ -414,7 +464,9 @@ export const FlockPanel = () => {
           </Box>
         )}
         {category === 'traces' && <FlockPartitions partitions={partitions} />}
-        {category === 'structures' && <FlockStructures structures={structures} />}
+        {category === 'structures' && (
+          <FlockStructures structures={structures} />
+        )}
         {category === 'enemies' && <FlockEnemies enemies={enemies} />}
         {category === 'stats' && <FlockStats stats={stats} />}
       </Window.Content>

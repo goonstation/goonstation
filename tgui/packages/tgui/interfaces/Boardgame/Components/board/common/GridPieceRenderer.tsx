@@ -80,7 +80,8 @@ const GridPieceRenderer = ({ pieces }: GridPieceRendererProps) => {
               width: tileSize.width + 'px',
               height: tileSize.height + 'px',
             }}
-            key={index}>
+            key={index}
+          >
             <img
               style={{
                 width: tileSize.width + 'px',

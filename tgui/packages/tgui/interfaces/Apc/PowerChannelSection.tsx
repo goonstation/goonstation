@@ -33,10 +33,12 @@ interface PowerChannelConfig {
   statusChangeAction: string;
 }
 
-const autoPowerChannelStatuses = [PowerChannelStatus.AutoOff, PowerChannelStatus.AutoOn];
-const getPowerChannelStatusIsAuto = (powerChannelStatus: PowerChannelStatus) => (
-  autoPowerChannelStatuses.includes(powerChannelStatus)
-);
+const autoPowerChannelStatuses = [
+  PowerChannelStatus.AutoOff,
+  PowerChannelStatus.AutoOn,
+];
+const getPowerChannelStatusIsAuto = (powerChannelStatus: PowerChannelStatus) =>
+  autoPowerChannelStatuses.includes(powerChannelStatus);
 
 const powerChannelConfig: PowerChannelConfig[] = [
   {
@@ -64,7 +66,7 @@ const powerChannelConfig: PowerChannelConfig[] = [
 
 const powerChannelConfigLookup = powerChannelConfig.reduce(
   (acc, cur) => ({ ...acc, [cur.id]: cur }),
-  {} as Record<PowerChannel, PowerChannelConfig>
+  {} as Record<PowerChannel, PowerChannelConfig>,
 );
 
 interface PowerChannelItemProps {
@@ -98,22 +100,30 @@ const PowerChannelItem = (props: PowerChannelItemProps) => {
       buttons={
         <>
           <Button
-            disabled={!hasPermission && currentStatus !== PowerChannelStatus.Off}
-            onClick={() => handlePowerChannelStatusChange(PowerChannelStatus.Off)}
+            disabled={
+              !hasPermission && currentStatus !== PowerChannelStatus.Off
+            }
+            onClick={() =>
+              handlePowerChannelStatusChange(PowerChannelStatus.Off)
+            }
             selected={currentStatus === PowerChannelStatus.Off}
           >
             Off
           </Button>
           <Button
             disabled={!hasPermission && currentStatus !== PowerChannelStatus.On}
-            onClick={() => handlePowerChannelStatusChange(PowerChannelStatus.On)}
+            onClick={() =>
+              handlePowerChannelStatusChange(PowerChannelStatus.On)
+            }
             selected={currentStatus === PowerChannelStatus.On}
           >
             On
           </Button>
           <Button
             disabled={!hasPermission && !currentStatusIsAuto}
-            onClick={() => handlePowerChannelStatusChange(PowerChannelStatus.AutoOn)}
+            onClick={() =>
+              handlePowerChannelStatusChange(PowerChannelStatus.AutoOn)
+            }
             selected={currentStatusIsAuto}
           >
             Auto

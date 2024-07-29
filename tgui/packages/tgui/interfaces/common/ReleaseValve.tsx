@@ -1,13 +1,13 @@
 /**
-* @file
-* @copyright 2020
-* @author PrimeNumb (https://github.com/primenumb)
-* @license MIT
-*/
+ * @file
+ * @copyright 2020
+ * @author PrimeNumb (https://github.com/primenumb)
+ * @license MIT
+ */
 
 import { Button, LabeledList, NumberInput } from 'tgui-core/components';
 
-export const ReleaseValve = props => {
+export const ReleaseValve = (props) => {
   const {
     valveIsOpen,
     releasePressure = 0,
@@ -23,12 +23,11 @@ export const ReleaseValve = props => {
         <Button
           content={valveIsOpen ? 'Open' : 'Closed'}
           color={valveIsOpen ? 'average' : 'default'}
-          onClick={onToggleValve} />
+          onClick={onToggleValve}
+        />
       </LabeledList.Item>
       <LabeledList.Item label="Release pressure">
-        <Button
-          onClick={() => onSetPressure(minRelease)}
-          content="Min" />
+        <Button onClick={() => onSetPressure(minRelease)} content="Min" />
         <NumberInput
           animated
           width="7em"
@@ -36,12 +35,10 @@ export const ReleaseValve = props => {
           minValue={minRelease}
           maxValue={maxRelease}
           step={1}
-          onChange={(targetPressure) => onSetPressure(targetPressure)} />
-        <Button
-          onClick={() => onSetPressure(maxRelease)}
-          content="Max" />
+          onChange={(targetPressure) => onSetPressure(targetPressure)}
+        />
+        <Button onClick={() => onSetPressure(maxRelease)} content="Max" />
       </LabeledList.Item>
     </LabeledList>
   );
-
 };

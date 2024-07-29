@@ -23,24 +23,28 @@ export const TankDispenser = () => {
           <LabeledList>
             <LabeledList.Item
               label="Plasma"
-              buttons={(
+              buttons={
                 <Button
                   icon={data.plasma ? 'circle' : 'circle-o'}
                   content="Dispense"
                   disabled={!data.plasma}
-                  onClick={() => act('dispense-plasma')} />
-              )}>
+                  onClick={() => act('dispense-plasma')}
+                />
+              }
+            >
               {data.plasma}
             </LabeledList.Item>
             <LabeledList.Item
               label="Oxygen"
-              buttons={(
+              buttons={
                 <Button
                   icon={data.oxygen ? 'circle' : 'circle-o'}
                   content="Dispense"
                   disabled={!data.oxygen}
-                  onClick={() => act('dispense-oxygen')} />
-              )}>
+                  onClick={() => act('dispense-oxygen')}
+                />
+              }
+            >
               {data.oxygen}
             </LabeledList.Item>
           </LabeledList>

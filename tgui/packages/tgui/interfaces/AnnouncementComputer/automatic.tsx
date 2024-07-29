@@ -22,7 +22,8 @@ export const AutomaticAnnouncement = (_props: unknown) => {
     <Section title="Arrival Announcement Message">
       <Stack vertical>
         <Stack.Item>
-          Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR. Leave the field empty for no message.
+          Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR. Leave the
+          field empty for no message.
         </Stack.Item>
         <Stack.Item>
           <Input

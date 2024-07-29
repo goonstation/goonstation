@@ -6,7 +6,13 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { Button, LabeledList, Section, Slider, Stack } from 'tgui-core/components';
+import {
+  Button,
+  LabeledList,
+  Section,
+  Slider,
+  Stack,
+} from 'tgui-core/components';
 
 type ManufacturerSettingsProps = {
   repeat: BooleanLike;

@@ -13,9 +13,15 @@ export const STATES = () => {
     // TODO: add more states here
     flip: useLocalState<boolean>('flip', DEFAULT_STATES.FLIP),
     zoom: useLocalState<number>('zoom', DEFAULT_STATES.ZOOM),
-    mouseCoords: useLocalState<XYType>('mouseCoords', DEFAULT_STATES.MOUSE_COORDS),
+    mouseCoords: useLocalState<XYType>(
+      'mouseCoords',
+      DEFAULT_STATES.MOUSE_COORDS,
+    ),
     palettesExpanded: useLocalState<PalleteExpandType>('palettesExpanded', {}),
-    paletteLastElement: useLocalState<HTMLElement | null>('paletteLastElement', null),
+    paletteLastElement: useLocalState<HTMLElement | null>(
+      'paletteLastElement',
+      null,
+    ),
     tileSize: useLocalState<TileSizeType>('tileSize', { width: 0, height: 0 }),
     helpModalOpen: useLocalState<boolean>('helpModalOpen', false),
   };
@@ -68,7 +74,10 @@ export const useStates = () => {
 
     togglePalette: (index: number) => {
       const [, setPalettesExpanded] = states.palettesExpanded;
-      setPalettesExpanded({ ...states.palettesExpanded[0], [index]: !states.palettesExpanded[0][index] });
+      setPalettesExpanded({
+        ...states.palettesExpanded[0],
+        [index]: !states.palettesExpanded[0][index],
+      });
     },
 
     isExpanded: (index: number) => {

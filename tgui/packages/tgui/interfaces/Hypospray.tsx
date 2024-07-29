@@ -5,9 +5,9 @@
  * @license ISC
  */
 
-import { Button, Section, Slider } from "tgui-core/components";
+import { Button, Section, Slider } from 'tgui-core/components';
 
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { glitch } from './common/stringUtils';
@@ -26,9 +26,11 @@ export const Hypospray = () => {
     <Window
       width={320}
       height={300}
-      theme={emagged ? "syndicate" : "nanotrasen"}>
+      theme={emagged ? 'syndicate' : 'nanotrasen'}
+    >
       <Window.Content>
-        <Section title={emagged ? glitch("Contents", 3) : "Contents"}
+        <Section
+          title={emagged ? glitch('Contents', 3) : 'Contents'}
           buttons={
             <Button
               icon="times"
@@ -38,14 +40,15 @@ export const Hypospray = () => {
             >
               Dump
             </Button>
-          }>
+          }
+        >
           <ReagentGraph container={reagentData} />
           <ReagentList container={reagentData} />
         </Section>
         <Section title="Injection Amount">
           <Slider
             value={injectionAmount}
-            format={value => value + "u"}
+            format={(value) => value + 'u'}
             minValue={1}
             maxValue={reagentData.maxVolume}
             step={1}

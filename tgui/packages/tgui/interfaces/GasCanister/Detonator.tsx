@@ -42,9 +42,9 @@ export const Detonator = (props) => {
 };
 
 interface DetonatorWireProps {
-  detonator,
-  onWireInteract,
-  onSetTimer,
+  detonator;
+  onWireInteract;
+  onSetTimer;
 }
 
 const DetonatorWires = (props: DetonatorWireProps) => {
@@ -122,12 +122,12 @@ const DetonatorWires = (props: DetonatorWireProps) => {
 };
 
 interface DetonatorUtilityProps {
-  detonator,
-  detonatorAttachments,
-  onToggleAnchor,
-  onToggleSafety,
-  onPrimeDetonator,
-  onTriggerActivate,
+  detonator;
+  detonatorAttachments;
+  onToggleAnchor;
+  onToggleSafety;
+  onPrimeDetonator;
+  onTriggerActivate;
 }
 
 const DetonatorUtility = (props: DetonatorUtilityProps) => {

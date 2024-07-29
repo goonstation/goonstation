@@ -10,10 +10,7 @@ export const IDCard = (props) => {
   if (!props.card) {
     return;
   }
-  const {
-    card,
-    onEject,
-  } = props;
+  const { card, onEject } = props;
   return (
     <Button
       icon="eject"

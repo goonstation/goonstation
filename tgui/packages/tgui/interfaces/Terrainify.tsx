@@ -8,12 +8,8 @@ import { Box, Button, Flex, Section } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const TerrainChoice = props => {
-  const {
-    typeData,
-    terrain,
-    onTerrainValue,
-  } = props;
+export const TerrainChoice = (props) => {
+  const { typeData, terrain, onTerrainValue } = props;
 
   return (
     <Flex.Item mb={1}>
@@ -21,9 +17,11 @@ export const TerrainChoice = props => {
         <Section title="Types">
           {Object.keys(typeData).map((terrainType, buttonIndex) => (
             <Flex.Item mb={1} key={buttonIndex}>
-              <Button fluid
+              <Button
+                fluid
                 selected={terrain === terrainType}
-                onClick={() => onTerrainValue(terrainType)}>
+                onClick={() => onTerrainValue(terrainType)}
+              >
                 {typeData[terrainType].name}
               </Button>
             </Flex.Item>
@@ -34,7 +32,7 @@ export const TerrainChoice = props => {
   );
 };
 
-export const TerrainVehicleChoice = props => {
+export const TerrainVehicleChoice = (props) => {
   const {
     fabricator,
     cars,
@@ -49,17 +47,18 @@ export const TerrainVehicleChoice = props => {
       <Section title="Vehicle Options">
         <Button.Checkbox
           checked={fabricator}
-          content={"Add Subs to Fabricators"}
+          content={'Add Subs to Fabricators'}
           onClick={() => onToggleFabricators()}
-        /><br />
+        />
+        <br />
         <Button.Checkbox
           checked={cars}
-          content={"Convert some Cars"}
+          content={'Convert some Cars'}
           onClick={() => onToggleCars()}
         />
         <Button.Checkbox
           checked={allowVehicles}
-          content={"Allow Pods"}
+          content={'Allow Pods'}
           onClick={() => onToggleAllowVehicles()}
         />
       </Section>
@@ -67,18 +66,15 @@ export const TerrainVehicleChoice = props => {
   );
 };
 
-export const TerrainToggles = props => {
-  const {
-    terrain,
-    typeData,
-    activeToggles,
-    onToggle,
-  } = props;
+export const TerrainToggles = (props) => {
+  const { terrain, typeData, activeToggles, onToggle } = props;
 
-  return (
-    terrain && typeData[terrain].toggles && Object.keys(typeData[terrain].toggles).length ? (
-      <Section title="Toggles">
-        {Object.keys(typeData[terrain].toggles).map((toggleOption, buttonIndex) => (
+  return terrain &&
+    typeData[terrain].toggles &&
+    Object.keys(typeData[terrain].toggles).length ? (
+    <Section title="Toggles">
+      {Object.keys(typeData[terrain].toggles).map(
+        (toggleOption, buttonIndex) => (
           <Flex.Item mb={1} key={buttonIndex}>
             <Button.Checkbox
               checked={activeToggles[toggleOption]}
@@ -86,51 +82,49 @@ export const TerrainToggles = props => {
               onClick={() => onToggle(toggleOption)}
             />
           </Flex.Item>
-        ))}
-      </Section>
-    )
-      : ""
+        ),
+      )}
+    </Section>
+  ) : (
+    ''
   );
 };
 
-export const TerrainOptions = props => {
-  const {
-    terrain,
-    typeData,
-    activeOptions,
-    onSelect,
-  } = props;
+export const TerrainOptions = (props) => {
+  const { terrain, typeData, activeOptions, onSelect } = props;
 
-  return (
-    terrain && typeData[terrain].options && Object.keys(typeData[terrain].options).length ? (
-      Object.keys(typeData[terrain].options).map((toggleType, sectionIndex) => (
+  return terrain &&
+    typeData[terrain].options &&
+    Object.keys(typeData[terrain].options).length
+    ? Object.keys(typeData[terrain].options).map((toggleType, sectionIndex) => (
         <Section title={toggleType} key={sectionIndex}>
-          {typeData[terrain].options[toggleType].map((toggleOption, buttonIndex) => (
-            <Flex.Item mb={1} key={buttonIndex}>
-              <Button fluid
-                selected={activeOptions[toggleType] === toggleOption}
-                onClick={() => onSelect(toggleType, toggleOption)}
-              >
-                {toggleOption}
-              </Button>
-            </Flex.Item>
-          ))}
+          {typeData[terrain].options[toggleType].map(
+            (toggleOption, buttonIndex) => (
+              <Flex.Item mb={1} key={buttonIndex}>
+                <Button
+                  fluid
+                  selected={activeOptions[toggleType] === toggleOption}
+                  onClick={() => onSelect(toggleType, toggleOption)}
+                >
+                  {toggleOption}
+                </Button>
+              </Flex.Item>
+            ),
+          )}
         </Section>
       ))
-    )
-      : ""
-  );
+    : '';
 };
 
 interface TerrainifyData {
-  typeData,
-  terrain,
-  fabricator,
-  cars,
-  allowVehicles,
-  locked,
-  activeOptions,
-  activeToggles,
+  typeData;
+  terrain;
+  fabricator;
+  cars;
+  allowVehicles;
+  locked;
+  activeOptions;
+  activeToggles;
 }
 
 export const Terrainify = () => {
@@ -146,53 +140,51 @@ export const Terrainify = () => {
     activeToggles,
   } = data;
 
-  const handleToggleCars= () => {
-    act("cars");
+  const handleToggleCars = () => {
+    act('cars');
   };
 
   const handleToggleFabs = () => {
-    act("fabricator");
+    act('fabricator');
   };
 
   const handleToggleAllowVehicles = () => {
-    act("allowVehicles");
+    act('allowVehicles');
   };
 
-  const handleToggleGeneric = toggle => {
-    act("toggle", {
+  const handleToggleGeneric = (toggle) => {
+    act('toggle', {
       toggle,
     });
   };
 
   const handleOptionGeneric = (key, value) => {
-    act("option", {
+    act('option', {
       key: key,
       value: value,
     });
   };
 
-  const handleSetTerrain = terrain => {
-    act("terrain", {
+  const handleSetTerrain = (terrain) => {
+    act('terrain', {
       terrain,
     });
   };
 
   return (
-    <Window
-      title="Terrainify"
-      width={500}
-      height={600}>
+    <Window title="Terrainify" width={500} height={600}>
       <Window.Content scrollable>
         <Section title="Terrainify">
           <Flex direction="row">
             <TerrainChoice
               typeData={typeData}
               terrain={terrain}
-              onTerrainValue={handleSetTerrain} />
+              onTerrainValue={handleSetTerrain}
+            />
             <Flex.Item ml={2} />
             <Flex.Item ml={1}>
               <Section title="Description">
-                {!terrain ? "..." : typeData[terrain].description}
+                {!terrain ? '...' : typeData[terrain].description}
               </Section>
               <TerrainVehicleChoice
                 fabricator={fabricator}
@@ -200,7 +192,8 @@ export const Terrainify = () => {
                 allowVehicles={allowVehicles}
                 onToggleAllowVehicles={handleToggleAllowVehicles}
                 onToggleFabricators={handleToggleFabs}
-                onToggleCars={handleToggleCars} />
+                onToggleCars={handleToggleCars}
+              />
               <TerrainToggles
                 typeData={typeData}
                 terrain={terrain}
@@ -211,15 +204,12 @@ export const Terrainify = () => {
                 typeData={typeData}
                 terrain={terrain}
                 activeOptions={activeOptions}
-                onSelect={handleOptionGeneric} />
+                onSelect={handleOptionGeneric}
+              />
             </Flex.Item>
           </Flex>
           <Box m={1}>
-            <Button
-              fluid
-              disabled={locked}
-              onClick={() => act("activate")}
-            >
+            <Button fluid disabled={locked} onClick={() => act('activate')}>
               Transform Station
             </Button>
           </Box>

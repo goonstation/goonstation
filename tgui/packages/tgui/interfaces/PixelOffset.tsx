@@ -19,26 +19,29 @@ interface PixelOffsetData {
 export const PixelOffset = () => {
   const { act, data } = useBackend<PixelOffsetData>();
 
-  const {
-    x,
-    y,
-    thing_name,
-  } = data;
+  const { x, y, thing_name } = data;
   return (
-    <Window
-      title={`Pixel Offsets for ${thing_name}`}
-      width={400}
-      height={180}>
+    <Window title={`Pixel Offsets for ${thing_name}`} width={400} height={180}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
             <Stack>
               <Stack.Item>
-                <Box fontSize="3em" width="1.3em">X:</Box>
+                <Box fontSize="3em" width="1.3em">
+                  X:
+                </Box>
               </Stack.Item>
               <Stack.Item>
-                <Button icon="plus" fontSize="1.5em" onClick={() => act("set_x", { x: x + 1 })} />
-                <Button icon="minus" fontSize="1.5em" onClick={() => act("set_x", { x: x - 1 })} />
+                <Button
+                  icon="plus"
+                  fontSize="1.5em"
+                  onClick={() => act('set_x', { x: x + 1 })}
+                />
+                <Button
+                  icon="minus"
+                  fontSize="1.5em"
+                  onClick={() => act('set_x', { x: x - 1 })}
+                />
                 <NumberInput
                   value={x}
                   fontSize="35px"
@@ -47,13 +50,13 @@ export const PixelOffset = () => {
                   step={1}
                   minValue={-Infinity}
                   maxValue={Infinity}
-                  onDrag={(value) => act("set_x", { x: value })}
+                  onDrag={(value) => act('set_x', { x: value })}
                 />
                 <Button
                   icon="sync-alt"
                   color="red"
                   fontSize="1.5em"
-                  onClick={() => act("set_x", { x: 0 })}
+                  onClick={() => act('set_x', { x: 0 })}
                 />
               </Stack.Item>
             </Stack>
@@ -61,11 +64,21 @@ export const PixelOffset = () => {
           <Stack.Item>
             <Stack>
               <Stack.Item>
-                <Box fontSize="3em" width="1.3em">Y:</Box>
+                <Box fontSize="3em" width="1.3em">
+                  Y:
+                </Box>
               </Stack.Item>
               <Stack.Item>
-                <Button icon="plus" fontSize="1.5em" onClick={() => act("set_y", { y: y + 1 })} />
-                <Button icon="minus" fontSize="1.5em" onClick={() => act("set_y", { y: y - 1 })} />
+                <Button
+                  icon="plus"
+                  fontSize="1.5em"
+                  onClick={() => act('set_y', { y: y + 1 })}
+                />
+                <Button
+                  icon="minus"
+                  fontSize="1.5em"
+                  onClick={() => act('set_y', { y: y - 1 })}
+                />
                 <NumberInput
                   value={y}
                   fontSize="35px"
@@ -74,13 +87,13 @@ export const PixelOffset = () => {
                   stepPixelSize={7}
                   minValue={-Infinity}
                   maxValue={Infinity}
-                  onDrag={(value) => act("set_y", { y: value })}
+                  onDrag={(value) => act('set_y', { y: value })}
                 />
                 <Button
                   icon="sync-alt"
                   color="red"
                   fontSize="1.5em"
-                  onClick={() => act("set_y", { y: 0 })}
+                  onClick={() => act('set_y', { y: 0 })}
                 />
               </Stack.Item>
             </Stack>

@@ -11,15 +11,15 @@ import { Input, Stack } from 'tgui-core/components';
 import { Placeholder } from '../../components';
 
 interface ListSearchProps {
-  autoFocus?: boolean,
-  className?: string,
-  currentSearch: string,
-  noResultsPlaceholder?: string,
-  onSearch: (value: string) => void,
-  onSelect: (value: string) => void,
-  options: string[],
-  searchPlaceholder?: string,
-  selectedOption?: string,
+  autoFocus?: boolean;
+  className?: string;
+  currentSearch: string;
+  noResultsPlaceholder?: string;
+  onSearch: (value: string) => void;
+  onSelect: (value: string) => void;
+  options: string[];
+  searchPlaceholder?: string;
+  selectedOption?: string;
 }
 
 export const ListSearch = (props: ListSearchProps) => {
@@ -51,14 +51,11 @@ export const ListSearch = (props: ListSearchProps) => {
       </Stack.Item>
       <Stack.Item>
         {options.length === 0 && (
-          <Placeholder
-            mx={1}
-            py={0.5}
-          >
+          <Placeholder mx={1} py={0.5}>
             {noResultsPlaceholder}
           </Placeholder>
         )}
-        {options.map(option => (
+        {options.map((option) => (
           <div
             className={classes([
               'list-search-interface__search-option',

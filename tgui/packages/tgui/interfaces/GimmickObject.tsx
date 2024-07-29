@@ -3,34 +3,34 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Box, Button, Flex, Input, LabeledList, NumberInput, Section, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface GimmickObjectData {
-  eventList,
-  interactiveTypes,
-  activeStage,
-  icon,
-  iconState,
+  eventList;
+  interactiveTypes;
+  activeStage;
+  icon;
+  iconState;
 }
 
 export const GimmickObject = () => {
   const { act, data } = useBackend<GimmickObjectData>();
-  const {
-    eventList,
-    interactiveTypes,
-    activeStage,
-    icon,
-    iconState,
-  } = data;
+  const { eventList, interactiveTypes, activeStage, icon, iconState } = data;
 
   return (
-    <Window
-      title="Gimmick Object Editor"
-      width={675}
-      height={600}>
+    <Window title="Gimmick Object Editor" width={675} height={600}>
       <Window.Content scrollable>
         <Section title="Edit Interactive Steps">
           <Flex direction="column">
@@ -42,62 +42,82 @@ export const GimmickObject = () => {
                       <Button
                         icon="angle-down"
                         disabled={parseInt(event, 10) >= eventList.length - 1}
-                        onClick={() => act('move-down', { event: eventIndex })} />
+                        onClick={() => act('move-down', { event: eventIndex })}
+                      />
                     </Tooltip>
 
                     <Tooltip content="Move Step Down">
-
                       <Button
                         icon="angle-up"
                         disabled={parseInt(event, 10) <= 0}
-                        onClick={() => act('move-up', { event: eventIndex })} />
+                        onClick={() => act('move-up', { event: eventIndex })}
+                      />
                     </Tooltip>
 
                     <Tooltip content="Make Active Step">
-
                       <Button
                         icon="play"
                         // color=
-                        disabled={parseInt(event, 10) === parseInt(activeStage, 10)-1}
-                        onClick={() => act('active_step', { event: eventIndex })} />
+                        disabled={
+                          parseInt(event, 10) === parseInt(activeStage, 10) - 1
+                        }
+                        onClick={() =>
+                          act('active_step', { event: eventIndex })
+                        }
+                      />
                     </Tooltip>
 
-
                     <Tooltip content="Remove step from Gimmick">
-
                       <Button
                         icon="trash"
                         color="red"
-                        onClick={() => act('delete_event', { event: eventIndex })}
+                        onClick={() =>
+                          act('delete_event', { event: eventIndex })
+                        }
                       />
                     </Tooltip>
 
                     <LabeledList>
                       <Tooltip content="Set Tool Interactive Flags (Blank will be AttackHand)">
-                        <LabeledList.Item label="Interactive Flags" >
-                          {Object.keys(interactiveTypes).map((type, interactiveIndex) => (
-                            <Button
-                              key={interactiveIndex}
-                              selected={eventList[event].interaction & interactiveTypes[type]}
-                              onClick={() => act('interaction', { event: eventIndex, value: interactiveTypes[type] })}>
-                              {type}
-                            </Button>
-                          ))}
+                        <LabeledList.Item label="Interactive Flags">
+                          {Object.keys(interactiveTypes).map(
+                            (type, interactiveIndex) => (
+                              <Button
+                                key={interactiveIndex}
+                                selected={
+                                  eventList[event].interaction &
+                                  interactiveTypes[type]
+                                }
+                                onClick={() =>
+                                  act('interaction', {
+                                    event: eventIndex,
+                                    value: interactiveTypes[type],
+                                  })
+                                }
+                              >
+                                {type}
+                              </Button>
+                            ),
+                          )}
                         </LabeledList.Item>
                       </Tooltip>
                       <Tooltip content="Hint appended to examine text">
                         <LabeledList.Item label="Description">
-
-
-                          <Input fluid
+                          <Input
+                            fluid
                             value={eventList[event].description}
-                            onInput={(e, description) => act('description', { event: eventIndex, value: description })} />
+                            onInput={(e, description) =>
+                              act('description', {
+                                event: eventIndex,
+                                value: description,
+                              })
+                            }
+                          />
                         </LabeledList.Item>
                       </Tooltip>
 
                       <Tooltip content="Actionbar Duration">
                         <LabeledList.Item label="Duration">
-
                           <NumberInput
                             animated
                             width="7em"
@@ -105,41 +125,52 @@ export const GimmickObject = () => {
                             minValue={1}
                             maxValue={90000}
                             step={1}
-                            onChange={(targetDuration) => act('duration', { event: eventIndex, value: targetDuration })} />
+                            onChange={(targetDuration) =>
+                              act('duration', {
+                                event: eventIndex,
+                                value: targetDuration,
+                              })
+                            }
+                          />
                           Seconds
                         </LabeledList.Item>
                       </Tooltip>
                       <Tooltip content="Visible Text Appended after [src]">
                         <LabeledList.Item label="Visible Message">
-
-                          <Input fluid
+                          <Input
+                            fluid
                             value={eventList[event].message}
-                            onInput={(e, message) => act('message', { event: eventIndex, value: message })} />
+                            onInput={(e, message) =>
+                              act('message', {
+                                event: eventIndex,
+                                value: message,
+                              })
+                            }
+                          />
                         </LabeledList.Item>
                       </Tooltip>
                     </LabeledList>
                     <Tooltip content="Notify in-game admins that action was performed">
-
                       <Button
                         icon="flag"
                         selected={eventList[event].notify}
-                        onClick={() => act('notify', { event: eventIndex, value: !eventList[event].notify })}
+                        onClick={() =>
+                          act('notify', {
+                            event: eventIndex,
+                            value: !eventList[event].notify,
+                          })
+                        }
                       >
                         Notify Admins
                       </Button>
                     </Tooltip>
-
                   </Flex.Item>
                 </Section>
               </Flex.Item>
             ))}
           </Flex>
           <Box m={1}>
-            <Button
-              onClick={() => act('add_new')}
-            >
-              Add Event
-            </Button>
+            <Button onClick={() => act('add_new')}>Add Event</Button>
           </Box>
         </Section>
       </Window.Content>

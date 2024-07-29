@@ -39,7 +39,8 @@ export const COLORS = {
     burn: '#e67e22',
     brute: '#e74c3c',
   },
-  damageTypeFill: { // |GOONSTATION-CHANGE|
+  damageTypeFill: {
+    // |GOONSTATION-CHANGE|
     oxy: 'rgba(52, 152, 219, 0.5)',
     toxin: 'rgba(46, 204, 113, 0.5)',
     burn: 'rgba(230, 126, 34, 0.5)',

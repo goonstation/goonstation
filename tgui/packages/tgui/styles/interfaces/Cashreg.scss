@@ -5,9 +5,9 @@
  * @license MIT
  */
 
- @use '.././colors.scss';
+@use '.././colors.scss';
 
- .cashreg__ {
+.cashreg__ {
   &ownerbutton,
   &pay,
   &tip {
@@ -25,7 +25,7 @@
   }
 
   &amount:hover {
-    background-color: lighten(colors.$blue, colors.$fg-lightness)
+    background-color: lighten(colors.$blue, colors.$fg-lightness);
   }
 
   &table {

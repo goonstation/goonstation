@@ -41,7 +41,11 @@ export const TransceptionInterlink = () => {
                   {crate_count === 0 && 'No pending crates'}
                 </Stack.Item>
                 <Stack.Item>
-                  <Button icon="refresh" content="Link Transception Pads" onClick={() => act('ping')} />
+                  <Button
+                    icon="refresh"
+                    content="Link Transception Pads"
+                    onClick={() => act('ping')}
+                  />
                 </Stack.Item>
               </Stack>
             </Section>
@@ -69,15 +73,20 @@ export const TransceptionInterlink = () => {
                           <Button
                             icon="arrow-up"
                             content="Send"
-                            onClick={() => act('send', { device_netid: pad.device_netid })}
+                            onClick={() =>
+                              act('send', { device_netid: pad.device_netid })
+                            }
                           />
                           <Button
                             icon="arrow-down"
                             content="Receive"
-                            onClick={() => act('receive', { device_netid: pad.device_netid })}
+                            onClick={() =>
+                              act('receive', { device_netid: pad.device_netid })
+                            }
                           />
                         </>
-                      }>
+                      }
+                    >
                       {pad.array_link}
                     </LabeledList.Item>
                   ))}

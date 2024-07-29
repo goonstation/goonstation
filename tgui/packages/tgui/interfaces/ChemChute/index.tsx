@@ -11,54 +11,64 @@ import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { ChemChuteData } from './type';
 
-
 export const ChemChute = () => {
   const { data } = useBackend<ChemChuteData>();
-  const {
-    productList,
-  } = data;
+  const { productList } = data;
   return (
-    <Window
-      title="Medical supply chute console"
-      width={355}
-      height={500}
-    >
+    <Window title="Medical supply chute console" width={355} height={500}>
       <Window.Content>
-        <Section fill scrollable title="Dispensary interlink stock view" height="100%">
-          {productList.map(product => {
+        <Section
+          fill
+          scrollable
+          title="Dispensary interlink stock view"
+          height="100%"
+        >
+          {productList.map((product) => {
             return (
-              <Flex key={product.name} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
+              <Flex
+                key={product.name}
+                justify="space-between"
+                align="stretch"
+                style={{ 'border-bottom': '1px #555 solid' }}
+              >
                 <Flex.Item direction="row">
                   {product.img && (
-                    <Box style={{ "overflow": "show", "height": "24px" }}>
+                    <Box style={{ overflow: 'show', height: '24px' }}>
                       <img
                         src={`data:image/png;base64,${product.img}`}
                         style={{
-                          'transform': 'translate(0, -4px)',
+                          transform: 'translate(0, -4px)',
                         }}
                       />
-                    </Box>)}
+                    </Box>
+                  )}
                 </Flex.Item>
-                <Flex.Item direction="row"
-                  grow style={{
-                    "display": "flex",
-                    "justify-content": "center",
-                    "flex-direction": "column",
-                  }}>
+                <Flex.Item
+                  direction="row"
+                  grow
+                  style={{
+                    display: 'flex',
+                    'justify-content': 'center',
+                    'flex-direction': 'column',
+                  }}
+                >
                   <Box>
                     <Box inline italic>
                       {`${product.amount} x`}&nbsp;
                     </Box>
-                    <Box inline>
-                      {product.name}
-                    </Box>
+                    <Box inline>{product.name}</Box>
                   </Box>
                 </Flex.Item>
-                <Flex.Item bold direction="row" style={{ "margin-left": "5px",
-                  "display": "flex",
-                  "justify-content": "center",
-                  "flex-direction": "column",
-                }} />
+                <Flex.Item
+                  bold
+                  direction="row"
+                  style={{
+                    'margin-left': '5px',
+                    display: 'flex',
+                    'justify-content': 'center',
+                    'flex-direction': 'column',
+                  }}
+                />
               </Flex>
             );
           })}

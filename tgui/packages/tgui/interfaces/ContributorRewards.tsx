@@ -11,36 +11,29 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface ContributorRewardsData {
-  rewardDescs,
-  rewardTitles,
+  rewardDescs;
+  rewardTitles;
 }
 
 export const ContributorRewards = () => {
   const { act, data } = useBackend<ContributorRewardsData>();
-  const {
-    rewardTitles,
-    rewardDescs,
-  } = data;
+  const { rewardTitles, rewardDescs } = data;
   return (
-    <Window
-      title="Contributor Rewards"
-      width={350}
-      height={200}>
+    <Window title="Contributor Rewards" width={350} height={200}>
       <Window.Content scrollable>
-        {"Howdy, contributor! These rewards don't revert until you respawn somehow."}
+        {
+          "Howdy, contributor! These rewards don't revert until you respawn somehow."
+        }
         <Section>
           <Box>
             {rewardTitles.map((_item, index) => (
-              <Collapsible
-                key={index}
-                title={rewardTitles[index]}
-                open>
+              <Collapsible key={index} title={rewardTitles[index]} open>
                 {rewardDescs[index]}
                 <Button
                   ml={1}
                   icon="check-circle"
                   content="Redeem"
-                  onClick={() => act("redeem", { reward_idx: index+1 })}
+                  onClick={() => act('redeem', { reward_idx: index + 1 })}
                 />
               </Collapsible>
             ))}

@@ -6,13 +6,27 @@
  */
 
 import { classes } from 'common/react';
-import { AnimatedNumber, Box, Button, Dimmer, Icon, Knob, Section, Stack } from 'tgui-core/components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Knob,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
 import { capitalize } from './common/stringUtils';
-import { freezeTemperature, getTemperatureChangeName, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
+import {
+  freezeTemperature,
+  getTemperatureChangeName,
+  getTemperatureColor,
+  getTemperatureIcon,
+} from './common/temperatureUtils';
 
 interface ChemHeaterData {
   containerData;
@@ -25,12 +39,13 @@ export const ChemHeater = () => {
   const { containerData, isActive, targetTemperature } = data;
 
   return (
-    <Window
-      title="Reagent Heater/Cooler"
-      width={320}
-      height={385}>
+    <Window title="Reagent Heater/Cooler" width={320} height={385}>
       <Window.Content>
-        <ChemDisplay container={containerData} targetTemperature={targetTemperature} active={isActive} />
+        <ChemDisplay
+          container={containerData}
+          targetTemperature={targetTemperature}
+          active={isActive}
+        />
         <Section title="Temperature Control">
           <Stack align="center">
             <Stack.Item>
@@ -40,7 +55,7 @@ export const ChemHeater = () => {
                 value={targetTemperature}
                 minValue={0}
                 maxValue={1000}
-                format={value => value + " K"}
+                format={(value) => value + ' K'}
                 onDrag={(e, value) => act('adjustTemp', { temperature: value })}
               />
             </Stack.Item>
@@ -51,7 +66,8 @@ export const ChemHeater = () => {
                 p={1}
                 fontSize={1.5}
                 color={getTemperatureColor(targetTemperature)}
-                backgroundColor="black">
+                backgroundColor="black"
+              >
                 <Box fontSize={1}>Target</Box>
                 <Icon name={getTemperatureIcon(targetTemperature)} pr={0.5} />
                 <AnimatedNumber value={targetTemperature} /> K
@@ -61,13 +77,14 @@ export const ChemHeater = () => {
               <Button
                 icon="power-off"
                 disabled={!containerData?.totalVolume}
-                color={isActive ? "red" : "green"}
+                color={isActive ? 'red' : 'green'}
                 fluid
                 height="100%"
                 fontSize={1.25}
                 textAlign="center"
-                onClick={() => act(isActive ? 'stop' : 'start')}>
-                {isActive ? "Deactivate" : "Activate"}
+                onClick={() => act(isActive ? 'stop' : 'start')}
+              >
+                {isActive ? 'Deactivate' : 'Activate'}
               </Button>
             </Stack.Item>
           </Stack>
@@ -91,25 +108,40 @@ const ChemDisplay = (props) => {
         <Button
           icon="eject"
           disabled={!props.container}
-          onClick={() => act('eject')}>
+          onClick={() => act('eject')}
+        >
           Eject
         </Button>
-      }>
+      }
+    >
       <ReagentGraph container={container} />
       <ReagentList container={container} />
       <Box
-        className={classes(["ChemHeater__TemperatureBox", working && `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`])}>
+        className={classes([
+          'ChemHeater__TemperatureBox',
+          working &&
+            `ChemHeater__TemperatureBox__${getTemperatureChangeName(temperature, targetTemperature)}`,
+        ])}
+      >
         {!totalVolume || (
           <Box
             fontSize={2}
             color={getTemperatureColor(temperature)}
-            className={"ChemHeater__TemperatureNumber"}>
-            <Icon name="long-arrow-alt-down"
-              className={classes(["ChemHeater__TemperatureArrow", working && `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`])}
+            className={'ChemHeater__TemperatureNumber'}
+          >
+            <Icon
+              name="long-arrow-alt-down"
+              className={classes([
+                'ChemHeater__TemperatureArrow',
+                working &&
+                  `ChemHeater__TemperatureArrow__${getTemperatureChangeName(temperature, targetTemperature)}`,
+              ])}
               pt="2px"
               pr={0.25}
               style={{
-                transform: active ? `scaleY(${Math.sign(temperature - targetTemperature)})` : "scaleY(0)",
+                transform: active
+                  ? `scaleY(${Math.sign(temperature - targetTemperature)})`
+                  : 'scaleY(0)',
               }}
             />
             <Icon name={getTemperatureIcon(temperature)} pr={0.5} />
@@ -123,7 +155,8 @@ const ChemDisplay = (props) => {
             icon="eject"
             fontSize={1.5}
             onClick={() => act('insert')}
-            bold>
+            bold
+          >
             Insert Beaker
           </Button>
         </Dimmer>

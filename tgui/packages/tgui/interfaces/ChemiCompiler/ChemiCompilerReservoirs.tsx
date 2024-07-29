@@ -23,8 +23,9 @@ export const ChemiCompilerReservoirs = () => {
               onClick={() => act('reservoir', { index })}
               width={8}
               icon="eject"
-              tooltip={reservoir && "Eject"}
-              ellipsis>
+              tooltip={reservoir && 'Eject'}
+              ellipsis
+            >
               {reservoir || `None (${index + 1})`}
             </Button>
           </Stack.Item>
