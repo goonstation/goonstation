@@ -16538,9 +16538,6 @@
 /obj/cable/blue{
 	icon_state = "0-10"
 	},
-/obj/machinery/power/smes/magical{
-	output = 30000000000000
-	},
 /turf/simulated/floor/black,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -17111,15 +17108,6 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
-"htx" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/power/debug_generator,
-/turf/simulated/floor/black,
-/area/station/engine/monitoring{
-	name = "Nuclear Control Room"
-	})
 "htX" = (
 /obj/machinery/disposal/mail/autoname/public/medbay_lobby,
 /obj/disposalpipe/trunk/mail/north,
@@ -110823,7 +110811,7 @@ gQb
 dfm
 gKd
 hhO
-htx
+kYA
 mYy
 heN
 ejj
