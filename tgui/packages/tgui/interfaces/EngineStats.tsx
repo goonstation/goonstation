@@ -18,12 +18,14 @@ interface EngineStatsData {
   turnedOn,
 }
 
+type StatsData = Record<string, any[]>;
+
 /**
  * Generates stack items of labeled charts for display
  * @param {*} stats - { foo: [[i, v], [i+1, v2], ...], bar: [[i, v3], [i+1, v4], ...] }
  * @returns JSX of stack items
  */
-const generateChartsFromStats = stats => {
+const generateChartsFromStats = (stats: StatsData) => {
   return Object.entries(stats).map(([key, chart_data], index) => (
     // margin fuckery is to remove the extra left margin on the first stack item for alignment reasons
     <Stack.Item key={key} mt={0.5} ml={index === 0 ? 1 : undefined} >
@@ -108,7 +110,7 @@ export const EngineStats = () => {
                   justify="space-around"
                   ml={-1}
                 >
-                  { generateChartsFromStats(tegStats) }
+                  {generateChartsFromStats(tegStats)}
                 </Stack>
               </Section>
               <Section title="Combustion Chamber Data">
