@@ -824,9 +824,3 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 	if (istype(I, /obj/item/magtractor))
 		var/obj/item/magtractor/mag = I
 		return get_id_card(mag.holding)
-
-/// check if a mob is allowed to eject occupants from various machines
-/proc/can_eject_occupant(mob/user)
-	if (!isalive(user) || isintangible(user) || isghostcritter(user) || isghostdrone(user) || !can_act(user))
-		return FALSE
-	return TRUE
