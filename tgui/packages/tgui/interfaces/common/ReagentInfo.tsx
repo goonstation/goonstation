@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import {
   Box,
   ColorBox,
@@ -75,169 +75,6 @@ export const NoContainer: ReagentContainer = {
   fake: true,
 };
 
-interface ReagentInfoProps extends BoxProps {
-  /**
-   * The reagent container object to use. The ui_describe_reagents proc can generate an object like this.
-   */
-  container: ReagentContainer | null;
-  /**
-   * Optional sort function for the reagents.
-   */
-  sort?: (a: Reagent, b: Reagent) => number;
-}
-
-interface ReagentGraphProps extends ReagentInfoProps {}
-
-export const ReagentGraph = (props: ReagentGraphProps) => {
-  const { className: _className, height, sort, ...rest } = props;
-  const container = props.container ?? NoContainer;
-  const { contents = [], maxVolume, totalVolume, finalColor } = container;
-  const maybeSortedContents = sort ? [...contents].sort(sort) : contents;
-  rest.height = height || '50px';
-
-  return (
-    <Box {...rest}>
-      <Flex height="100%" direction="column">
-        <Flex.Item grow>
-          <Flex height="100%">
-            {maybeSortedContents.map((reagent) => (
-              <Flex.Item grow={reagent.volume / maxVolume} key={reagent.id}>
-                <Tooltip
-                  content={`${reagent.name} (${reagent.volume}u)`}
-                  position="bottom"
-                >
-                  <Box
-                    px={0}
-                    my={0}
-                    height="100%"
-                    backgroundColor={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
-                  />
-                </Tooltip>
-              </Flex.Item>
-            ))}
-            <Flex.Item grow={(maxVolume - totalVolume) / maxVolume}>
-              <Tooltip
-                content={`Nothing${container.fake ? '' : ` (${maxVolume - totalVolume}u)`}`}
-                position="bottom"
-              >
-                <NoticeBox
-                  px={0}
-                  my={0}
-                  height="100%"
-                  backgroundColor="rgba(0, 0, 0, 0)" // invisible noticebox kind of nice
-                />
-              </Tooltip>
-            </Flex.Item>
-          </Flex>
-        </Flex.Item>
-        <Flex.Item>
-          <Tooltip
-            content={
-              (
-                <Box>
-                  <ColorBox color={finalColor} /> Current Mixture Color
-                </Box>
-              ) as unknown as string // Elements/ReactNodes work in Tooltip.content anyways.
-            }
-            position="bottom"
-          >
-            <Box
-              height="14px" // same height as a Divider
-              backgroundColor={
-                maybeSortedContents.length ? finalColor : 'rgba(0, 0, 0, 0.1)'
-              }
-              textAlign="center"
-            >
-              {container.fake || (
-                <Box as="span" backgroundColor="rgba(0, 0, 0, 0.5)" px={1}>
-                  {`${totalVolume}/${maxVolume}`}
-                </Box>
-              )}
-            </Box>
-          </Tooltip>
-        </Flex.Item>
-      </Flex>
-    </Box>
-  );
-};
-
-interface ReagentListProps extends ReagentInfoProps {
-  /**
-   * Allows you to render elements (such as buttons) for each reagent in the list.
-   */
-  renderButtons?(reagent: Reagent): ReactNode;
-  /**
-   * If you are using the renderButtons property, and you want the buttons to change based on certain dependency
-   * value(s), pass the value(s) to this property (in an array if there are multiple dependency values).
-   */
-  renderButtonsDeps?: string | number | boolean | (string | number | boolean)[];
-  /**
-   * Whether or not to show the matter state of the elements in the list.
-   */
-  showState?: BooleanLike;
-}
-
-export const ReagentList = (props: ReagentListProps) => {
-  const {
-    className = '',
-    renderButtons,
-    sort,
-    showState,
-    height,
-    ...rest
-  } = props;
-  const container = props.container ?? NoContainer;
-  const { contents = [] } = container;
-  const maybeSortedContents = sort ? [...contents].sort(sort) : contents;
-  rest.height = height || 6;
-
-  return (
-    <Section scrollable={height !== 'auto'}>
-      <Box {...rest}>
-        {maybeSortedContents.length ? (
-          contents.map((reagent) => (
-            <Flex key={reagent.id} mb={0.2} align="center">
-              <Flex.Item grow>
-                <Icon
-                  pr={
-                    showState && reagent.state
-                      ? MatterStateIconMap[reagent.state].pr
-                      : 0.9
-                  }
-                  name={
-                    showState && reagent.state
-                      ? MatterStateIconMap[reagent.state].icon
-                      : 'circle'
-                  }
-                  style={{
-                    textShadow: '0 0 3px #000;',
-                  }}
-                  color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
-                />
-                {`( ${reagent.volume}u ) ${reagent.name}`}
-              </Flex.Item>
-              {renderButtons && (
-                <Flex.Item nowrap>{renderButtons(reagent)}</Flex.Item>
-              )}
-            </Flex>
-          ))
-        ) : (
-          <Box color="label">
-            <Icon
-              pr={0.9}
-              name="circle-o"
-              style={{
-                textShadow: '0 0 3px #000;',
-              }}
-            />
-            Empty
-          </Box>
-        )}
-      </Box>
-    </Section>
-  );
-};
-
 const reagentCheck = (a: Reagent, b: Reagent): boolean => {
   if (a === b) return false;
   // eslint-disable-next-line sonarjs/prefer-single-boolean-return
@@ -278,18 +115,100 @@ const containerCheck = (
   return false;
 };
 
-// TODO-REACT React implementation
-// modified versions of the shallowDiffers function from common/react.ts
-ReagentGraph.defaultHooks = {
-  onComponentShouldUpdate: (a: ReagentGraphProps, b: ReagentGraphProps) => {
-    let i;
-    for (i in a) {
+interface ReagentInfoProps extends BoxProps {
+  /**
+   * The reagent container object to use. The ui_describe_reagents proc can generate an object like this.
+   */
+  container: ReagentContainer | null;
+  /**
+   * Optional sort function for the reagents.
+   */
+  sort?: (a: Reagent, b: Reagent) => number;
+}
+
+interface ReagentGraphProps extends ReagentInfoProps {}
+
+export const ReagentGraph = React.memo(
+  (props: ReagentGraphProps) => {
+    const { className: _className, height, sort, ...rest } = props;
+    const container = props.container ?? NoContainer;
+    const { contents = [], maxVolume, totalVolume, finalColor } = container;
+    const maybeSortedContents = sort ? [...contents].sort(sort) : contents;
+    rest.height = height || '50px';
+
+    return (
+      <Box {...rest}>
+        <Flex height="100%" direction="column">
+          <Flex.Item grow>
+            <Flex height="100%">
+              {maybeSortedContents.map((reagent) => (
+                <Flex.Item grow={reagent.volume / maxVolume} key={reagent.id}>
+                  <Tooltip
+                    content={`${reagent.name} (${reagent.volume}u)`}
+                    position="bottom"
+                  >
+                    <Box
+                      px={0}
+                      my={0}
+                      height="100%"
+                      backgroundColor={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
+                    />
+                  </Tooltip>
+                </Flex.Item>
+              ))}
+              <Flex.Item grow={(maxVolume - totalVolume) / maxVolume}>
+                <Tooltip
+                  content={`Nothing${container.fake ? '' : ` (${maxVolume - totalVolume}u)`}`}
+                  position="bottom"
+                >
+                  <NoticeBox
+                    px={0}
+                    my={0}
+                    height="100%"
+                    backgroundColor="rgba(0, 0, 0, 0)" // invisible noticebox kind of nice
+                  />
+                </Tooltip>
+              </Flex.Item>
+            </Flex>
+          </Flex.Item>
+          <Flex.Item>
+            <Tooltip
+              content={
+                (
+                  <Box>
+                    <ColorBox color={finalColor} /> Current Mixture Color
+                  </Box>
+                ) as unknown as string // Elements/ReactNodes work in Tooltip.content anyways.
+              }
+              position="bottom"
+            >
+              <Box
+                height="14px" // same height as a Divider
+                backgroundColor={
+                  maybeSortedContents.length ? finalColor : 'rgba(0, 0, 0, 0.1)'
+                }
+                textAlign="center"
+              >
+                {container.fake || (
+                  <Box as="span" backgroundColor="rgba(0, 0, 0, 0.5)" px={1}>
+                    {`${totalVolume}/${maxVolume}`}
+                  </Box>
+                )}
+              </Box>
+            </Tooltip>
+          </Flex.Item>
+        </Flex>
+      </Box>
+    );
+  },
+  (a: ReagentGraphProps, b: ReagentGraphProps) => {
+    for (const i in a) {
       if (i === 'container') continue;
       if (!(i in b)) {
         return true;
       }
     }
-    for (i in b) {
+    for (const i in b) {
       if (i === 'container') continue;
       if (a[i] !== b[i]) {
         return true;
@@ -297,19 +216,93 @@ ReagentGraph.defaultHooks = {
     }
     return containerCheck(a.container, b.container);
   },
-};
+);
 
-// TODO-REACT React implementation
-ReagentList.defaultHooks = {
-  onComponentShouldUpdate: (a: ReagentListProps, b: ReagentListProps) => {
-    let i;
-    for (i in a) {
+interface ReagentListProps extends ReagentInfoProps {
+  /**
+   * Allows you to render elements (such as buttons) for each reagent in the list.
+   */
+  renderButtons?(reagent: Reagent): ReactNode;
+  /**
+   * If you are using the renderButtons property, and you want the buttons to change based on certain dependency
+   * value(s), pass the value(s) to this property (in an array if there are multiple dependency values).
+   */
+  renderButtonsDeps?: string | number | boolean | (string | number | boolean)[];
+  /**
+   * Whether or not to show the matter state of the elements in the list.
+   */
+  showState?: BooleanLike;
+}
+
+export const ReagentList = React.memo(
+  (props: ReagentListProps) => {
+    const {
+      className = '',
+      renderButtons,
+      sort,
+      showState,
+      height,
+      ...rest
+    } = props;
+    const container = props.container ?? NoContainer;
+    const { contents = [] } = container;
+    const maybeSortedContents = sort ? [...contents].sort(sort) : contents;
+    rest.height = height || 6;
+
+    return (
+      <Section scrollable={height !== 'auto'}>
+        <Box {...rest}>
+          {maybeSortedContents.length ? (
+            contents.map((reagent) => (
+              <Flex key={reagent.id} mb={0.2} align="center">
+                <Flex.Item grow>
+                  <Icon
+                    pr={
+                      showState && reagent.state
+                        ? MatterStateIconMap[reagent.state].pr
+                        : 0.9
+                    }
+                    name={
+                      showState && reagent.state
+                        ? MatterStateIconMap[reagent.state].icon
+                        : 'circle'
+                    }
+                    style={{
+                      textShadow: '0 0 3px #000;',
+                    }}
+                    color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
+                  />
+                  {`( ${reagent.volume}u ) ${reagent.name}`}
+                </Flex.Item>
+                {renderButtons && (
+                  <Flex.Item nowrap>{renderButtons(reagent)}</Flex.Item>
+                )}
+              </Flex>
+            ))
+          ) : (
+            <Box color="label">
+              <Icon
+                pr={0.9}
+                name="circle-o"
+                style={{
+                  textShadow: '0 0 3px #000;',
+                }}
+              />
+              Empty
+            </Box>
+          )}
+        </Box>
+      </Section>
+    );
+  },
+  (a: ReagentListProps, b: ReagentListProps) => {
+    for (const i in a) {
       if (i === 'container' || i === 'renderButtons') continue;
       if (!(i in b)) {
         return true;
       }
     }
-    for (i in b) {
+    for (const i in b) {
       if (i === 'container' || i === 'renderButtons') continue;
       if (
         i === 'renderButtonsDeps' &&
@@ -337,7 +330,7 @@ ReagentList.defaultHooks = {
     }
     return containerCheck(a.container, b.container);
   },
-};
+);
 
 export const ReagentBar = (props: ReagentInfoProps) => {
   const { className = '', container, ...rest } = props;
