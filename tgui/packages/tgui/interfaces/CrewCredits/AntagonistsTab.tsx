@@ -209,7 +209,11 @@ const SuccinctAntagonistData = (props) => {
           <Stack fill justify="space-between">
             <Stack.Item grow>{antagonist.antagonist_role}</Stack.Item>
             <Stack.Item shrink textAlign="right">
-              {!!antagonist.dead && <Icon name="skull" />}{' '}
+              {!!antagonist.dead && (
+                <>
+                  <Icon name="skull" />{' '}
+                </>
+              )}
               {antagonist.real_name} (played by {antagonist.player})
             </Stack.Item>
           </Stack>

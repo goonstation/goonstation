@@ -327,8 +327,8 @@ const Functions = () => {
           }
         >
           <Box>
-            <Icon color={diskReadOnly ? 'bad' : 'good'} name={'check'} />{' '}
-            {diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}
+            <Icon color={diskReadOnly ? 'bad' : 'good'} name={'check'} />
+            {` ${diskReadOnly ? 'Disk is read only.' : 'Disk is writeable.'}`}
           </Box>
         </Section>
       )}
@@ -395,12 +395,8 @@ const StatusSection = () => {
               <Icon
                 color={scannerGone || !scannerOccupied ? 'bad' : 'good'}
                 name={scannerGone || !scannerOccupied ? 'times' : 'check'}
-              />{' '}
-              {!!scannerGone && 'No scanner detected.'}
-              {!scannerGone &&
-                (scannerOccupied
-                  ? 'Occupant scanned.'
-                  : 'Scanner has no occupant.')}
+              />
+              {` ${scannerGone ? 'No scanner detected.' : scannerOccupied ? 'Occupant scanned.' : 'Scanner has no occupant.'}`}
             </Box>
           )}
         {!scannerGone &&

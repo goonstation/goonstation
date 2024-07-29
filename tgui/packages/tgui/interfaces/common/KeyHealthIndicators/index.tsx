@@ -255,9 +255,7 @@ const DisplayEmbeddedObjects = (props) => {
       )}
       {!!embedded_objects['foreign_object_count'] && (
         <Box bold fontSize={1.2} color="red">
-          Foreign{' '}
-          {`${pluralize('object', embedded_objects['foreign_object_count'])}`}{' '}
-          detected!
+          {`Foreign ${pluralize('object', embedded_objects['foreign_object_count'])} detected!`}
         </Box>
       )}
     </Box>

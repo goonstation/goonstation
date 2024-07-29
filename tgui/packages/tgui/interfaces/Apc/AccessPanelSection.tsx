@@ -19,7 +19,7 @@ export const AccessPanelSection = (_props: unknown) => {
   return (
     <Section title="Access Panel">
       <Box>
-        {"An identifier is engraved above the APC's wires:"}{' '}
+        {"An identifier is engraved above the APC's wires: "}
         <Box inline italic>
           {net_id}
         </Box>

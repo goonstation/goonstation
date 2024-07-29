@@ -138,7 +138,7 @@ export const CharacterTab = () => {
             <CustomPart slot_id={'r_arm'} />
             <CustomPart slot_id={'l_arm'} />
             <Box>
-              Trait points:{' '}
+              {'Trait points: '}
               <Box
                 as="span"
                 color={data.traitsPointsTotal > 0 ? 'good' : 'bad'}

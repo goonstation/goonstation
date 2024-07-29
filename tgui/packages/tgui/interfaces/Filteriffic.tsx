@@ -405,11 +405,14 @@ const FilterDataEntry = (props) => {
 
   return (
     <LabeledList.Item label={name}>
-      {filterEntryTypes[filterEntryMap[name]] || 'Not Found (This is an error)'}{' '}
+      {filterEntryTypes[filterEntryMap[name]] || 'Not Found (This is an error)'}
       {!hasValue && (
-        <Box inline color="average">
-          (Default)
-        </Box>
+        <>
+          {' '}
+          <Box inline color="average">
+            (Default)
+          </Box>
+        </>
       )}
     </LabeledList.Item>
   );

@@ -125,11 +125,10 @@ const AntagonistList = (props: TabSectionData) => {
       <Table>
         <Table.Row bold>
           <Table.Cell>
-            {' '}
-            {props.sectionName ? props.sectionName : 'Name'}{' '}
+            {props.sectionName ? props.sectionName : 'Name'}
           </Table.Cell>
-          <Table.Cell> Location </Table.Cell>
-          <Table.Cell> Commands </Table.Cell>
+          <Table.Cell>Location</Table.Cell>
+          <Table.Cell>Commands</Table.Cell>
         </Table.Row>
         <TableDividerRow />
         {sortAntagonists?.map((antagonist, index) => (
@@ -143,16 +142,13 @@ const AntagonistList = (props: TabSectionData) => {
 const TableDividerRow = () => (
   <Table.Row>
     <Table.Cell>
-      {' '}
-      <Divider />{' '}
+      <Divider />
     </Table.Cell>
     <Table.Cell>
-      {' '}
-      <Divider />{' '}
+      <Divider />
     </Table.Cell>
     <Table.Cell>
-      {' '}
-      <Divider />{' '}
+      <Divider />
     </Table.Cell>
   </Table.Row>
 );
@@ -451,20 +447,16 @@ const HeadsList = (props: TabSectionData) => {
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            {' '}
-            <Divider />{' '}
+            <Divider />
           </Table.Cell>
           <Table.Cell>
-            {' '}
-            <Divider />{' '}
+            <Divider />
           </Table.Cell>
           <Table.Cell>
-            {' '}
-            <Divider />{' '}
+            <Divider />
           </Table.Cell>
           <Table.Cell>
-            {' '}
-            <Divider />{' '}
+            <Divider />
           </Table.Cell>
         </Table.Row>
         {sortHeads?.map((head, index) => (
@@ -490,8 +482,7 @@ const TableHeadEntry = (props: HeadsData) => {
           }
         >
           <Box inline>
-            {' '}
-            <PlayerName {...props} />{' '}
+            <PlayerName {...props} />
           </Box>
         </Tooltip>
       </Table.Cell>

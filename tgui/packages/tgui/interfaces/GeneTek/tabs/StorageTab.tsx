@@ -89,8 +89,8 @@ export const StorageTab = () => {
                 <Box mt={0.5}>
                   <Box inline color="grey">
                     Stored Copies:
-                  </Box>{' '}
-                  {c.count}
+                  </Box>
+                  {` ${c.count}`}
                 </Box>
               </LabeledList.Item>
             ))}

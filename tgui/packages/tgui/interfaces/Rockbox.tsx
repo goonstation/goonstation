@@ -46,7 +46,6 @@ export const Rockbox = () => {
                 position="bottom"
               >
                 <Box as="span">
-                  {' '}
                   {/* necessary for tooltip to work */}
                   {'Default Price: '}
                   <NumberInput

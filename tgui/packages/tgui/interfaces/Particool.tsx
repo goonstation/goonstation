@@ -802,7 +802,6 @@ export const Particool = () => {
       <Window.Content scrollable>
         {!!hiddenSecret && (
           <NoticeBox danger>
-            {' '}
             {String(Date.now())} <br />
             Particles? {hasParticles.toString()} -
             {(data.target_particle === null).toString()} <br />
@@ -828,8 +827,7 @@ export const Particool = () => {
                     icon="file-image"
                     content="Save Particle + Icon"
                     onClick={() => act('save_particle_with_icon')}
-                  />{' '}
-                  {/* eslint-disable-next-line */}
+                  />
                 </>
               )}
               <Button

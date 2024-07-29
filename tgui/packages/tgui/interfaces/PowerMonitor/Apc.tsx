@@ -22,7 +22,7 @@ const apcState = {
   [0]: 'Off',
   [1]: (
     <Box inline>
-      Off{' '}
+      {'Off '}
       <Box inline color="grey">
         (Auto)
       </Box>
@@ -31,7 +31,7 @@ const apcState = {
   [2]: 'On',
   [3]: (
     <Box inline>
-      On{' '}
+      {'On '}
       <Box inline color="grey">
         (Auto)
       </Box>

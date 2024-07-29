@@ -36,11 +36,11 @@ export const MixingDesk = () => {
 
   const sayPopup = () => (
     <Modal>
-      Say as{' '}
-      {selected_voice > 0 && selected_voice <= voices.length
-        ? voices[selected_voice - 1].name
-        : 'yourself'}
-      :
+      {`Say as ${
+        selected_voice > 0 && selected_voice <= voices.length
+          ? voices[selected_voice - 1].name
+          : 'yourself'
+      }:`}
       <br />
       <Box pt="5px" pr="10px" textAlign="center">
         <Input

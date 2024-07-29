@@ -62,7 +62,7 @@ const CryoCellControl = () => {
           <AnimatedNumber
             value={cellTemp - 273.15}
             format={(value) => value.toPrecision(4)}
-          />{' '}
+          />
           °C
         </Box>
         <Button
@@ -117,8 +117,8 @@ const Occupant = () => {
         <>
           <LabeledList>
             <LabeledList.Item label="Status">
-              <Icon color={occupantStatus.color} name={occupantStatus.icon} />{' '}
-              {occupantStatus.name}
+              <Icon color={occupantStatus.color} name={occupantStatus.icon} />
+              {` ${occupantStatus.name}`}
             </LabeledList.Item>
             <LabeledList.Item label="Overall Health">
               <ProgressBar

@@ -72,7 +72,7 @@ export const TraitsTab = () => {
       <Stack vertical fill>
         <Stack.Item>
           <Box>
-            Available points:{' '}
+            {'Available points: '}
             <Box as="span" color={data.traitsPointsTotal > 0 ? 'good' : 'bad'}>
               {data.traitsPointsTotal}
             </Box>
@@ -189,7 +189,7 @@ const Trait = (props: CharacterPreferencesTrait) => {
       <Stack.Item grow={1}>
         <Stack align="center" mb={1}>
           <Stack.Item grow>
-            {name}{' '}
+            {`${name} `}
             <Box
               as="span"
               color={points < 0 ? 'bad' : points > 0 ? 'good' : 'label'}

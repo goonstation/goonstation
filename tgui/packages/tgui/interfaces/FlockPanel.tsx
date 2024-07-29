@@ -187,7 +187,8 @@ const FlockDrones = (props) => {
                         <Box align="center">{taskIcon(drone.task)}</Box>
                       </Stack.Item>
                       <Stack.Item>
-                        <b>{drone.area}</b> <br />{' '}
+                        <b>{drone.area}</b>
+                        <br />
                         {drone.task && capitalizeString(drone.task)}
                       </Stack.Item>
                     </Stack>

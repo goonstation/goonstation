@@ -126,7 +126,7 @@ export const TrscArray = () => {
               <strong>
                 Power Loss Failsafe:
                 <br />
-                {failsafeThreshold} |{' '}
+                {`${failsafeThreshold} | `}
               </strong>
               <Button content="Toggle" onClick={() => act('toggle_failsafe')} />
             </Flex.Item>

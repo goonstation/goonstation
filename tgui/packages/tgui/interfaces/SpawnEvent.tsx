@@ -119,7 +119,7 @@ export const SpawnEvent = () => {
                 step={1}
                 onDrag={(amount) => act('set_amount', { amount })}
               />
-              /{eligible_player_count}{' '}
+              {`/${eligible_player_count} `}
               <Button
                 icon="refresh"
                 onClick={() => act('refresh_player_count')}

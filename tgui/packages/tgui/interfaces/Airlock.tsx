@@ -190,13 +190,13 @@ const PowerStatus = () => {
   return (
     <Section title="Power Status">
       <Box>
-        {'Access sensor reports the net identifer is:'}{' '}
+        {'Access sensor reports the net identifer is: '}
         <Box inline italic>
           {netId}
         </Box>
       </Box>
       <Box>
-        {'Net access code:'}{' '}
+        {'Net access code: '}
         <Box inline italic>
           {accessCode}
         </Box>
@@ -218,9 +218,9 @@ const PowerStatus = () => {
             </Button>
           }
         >
-          {mainTimeLeft ? 'Offline' : 'Online'}{' '}
-          {((!wires.main_1 || !wires.main_2) && '[Wires cut!]') ||
-            (mainTimeLeft > 0 && `[${mainTimeLeft}s]`)}
+          {mainTimeLeft ? 'Offline' : 'Online'}
+          {((!wires.main_1 || !wires.main_2) && ' [Wires cut!]') ||
+            (mainTimeLeft > 0 && ` [${mainTimeLeft}s]`)}
         </LabeledList.Item>
         <LabeledList.Item
           label="Backup"
@@ -238,9 +238,9 @@ const PowerStatus = () => {
             </Button>
           }
         >
-          {backupTimeLeft ? 'Offline' : 'Online'}{' '}
-          {((!wires.backup_1 || !wires.backup_2) && '[Wires cut!]') ||
-            (backupTimeLeft > 0 && `[${backupTimeLeft}s]`)}
+          {backupTimeLeft ? 'Offline' : 'Online'}
+          {((!wires.backup_1 || !wires.backup_2) && ' [Wires cut!]') ||
+            (backupTimeLeft > 0 && ` [${backupTimeLeft}s]`)}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -344,10 +344,10 @@ const Electrify = () => {
           color={shockTimeLeft ? 'average' : 'good'}
           label="Electrify"
         >
-          {!shockTimeLeft ? 'Safe' : 'Electrified'}{' '}
-          {(!wires.shock && '[Wires cut!]') ||
-            (shockTimeLeft > 0 && `[${shockTimeLeft}s]`) ||
-            (shockTimeLeft === -1 && '[Permanent]')}
+          {!shockTimeLeft ? 'Safe' : 'Electrified'}
+          {(!wires.shock && ' [Wires cut!]') ||
+            (shockTimeLeft > 0 && ` [${shockTimeLeft}s]`) ||
+            (shockTimeLeft === -1 && ' [Permanent]')}
         </LabeledList.Item>
         <LabeledList.Item color={!shockTimeLeft ? 'Average' : 'Bad'}>
           <Box pl={shockTimeLeft ? 18 : 0} pt={0.5}>
@@ -452,13 +452,13 @@ export const AccessPanel = () => {
         </Modal>
       )}
       <Box>
-        {"An identifier is engraved under the airlock's card sensors:"}{' '}
+        {"An identifier is engraved under the airlock's card sensors: "}
         <Box inline italic>
           {netId}
         </Box>
       </Box>
       <Box>
-        {'A display shows net access code:'}{' '}
+        {'A display shows net access code: '}
         <Box inline italic>
           {accessCode}
         </Box>

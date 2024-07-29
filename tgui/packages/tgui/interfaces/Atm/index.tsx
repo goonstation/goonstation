@@ -122,7 +122,7 @@ const Teller = () => {
                       Welcome, <strong>{accountName}.</strong>
                     </Stack.Item>
                     <Stack.Item>
-                      Your account balance is{' '}
+                      {'Your account balance is '}
                       <strong>{accountBalance}⪽.</strong>
                     </Stack.Item>
                     <Stack.Item>
@@ -198,7 +198,7 @@ const SpacebuxMenu = () => {
           <Divider />
         </Stack.Item>
         <Stack.Item>
-          Your Spacebux balance is currently{' '}
+          {'Your Spacebux balance is currently '}
           <strong>
             {spacebuxBalance} <Icon name="fa-solid fa-coins" />
           </strong>

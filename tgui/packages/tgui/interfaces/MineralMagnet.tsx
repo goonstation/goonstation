@@ -99,7 +99,7 @@ export const MineralMagnet = () => {
       <Window.Content>
         <Section title="Magnet Status">
           <Box>
-            Condition:{' '}
+            {'Condition: '}
             {isLinked ? (
               getMagnetCondition(magnetHealth)
             ) : (
@@ -109,12 +109,12 @@ export const MineralMagnet = () => {
             )}
           </Box>
           <Box>
-            Status:{' '}
+            {'Status: '}
             {magnetActive ? (
               'Pulling New Mineral Source'
             ) : onCooldown ? (
               <>
-                Cooling Down:{' '}
+                {'Cooling Down: '}
                 <TimeDisplay
                   value={Math.max(magnetLastUsed - time, 0)}
                   timing

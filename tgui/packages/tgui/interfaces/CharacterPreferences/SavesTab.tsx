@@ -58,8 +58,10 @@ const Cloudsave = ({ name, index }: CloudSaveProps) => {
         buttons={
           <>
             {/* Just a small gap between these so you dont accidentally hit one */}
-            <Button onClick={() => act('cloud-load', { name })}>Load</Button> -{' '}
-            <Button onClick={() => act('cloud-save', { name })}>Save</Button> -{' '}
+            <Button onClick={() => act('cloud-load', { name })}>Load</Button>
+            {' - '}
+            <Button onClick={() => act('cloud-save', { name })}>Save</Button>
+            {' - '}
             <Button.Confirm
               onClick={() => act('cloud-delete', { name })}
               content="Delete"

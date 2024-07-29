@@ -117,8 +117,8 @@ export const Sleeper = () => {
           {!!hasOccupant && (
             <LabeledList>
               <LabeledList.Item label="Status">
-                <Icon color={occupantStatus.color} name={occupantStatus.icon} />{' '}
-                {occupantStatus.name}
+                <Icon color={occupantStatus.color} name={occupantStatus.icon} />
+                {` ${occupantStatus.name}`}
               </LabeledList.Item>
               <LabeledList.Item label="Overall Health">
                 <ProgressBar
