@@ -2802,7 +2802,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 /obj/item/reagent_containers/food/snacks/chocolate_cherry
 	name = "chocolate covered cherry"
-	desc = "Soon"
+	desc = "A cherry lovingly coverered with chocolate."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "chocolate_cherry"
 	bites_left = 2
