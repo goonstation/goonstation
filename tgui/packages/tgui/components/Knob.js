@@ -5,10 +5,10 @@
  */
 
 import { classes } from 'common/react';
+import { DraggableControl } from 'tgui-core/components';
 import { keyOfMatchingRange, scale } from 'tgui-core/math';
 
 import { computeBoxClassName, computeBoxProps } from './Box';
-import { DraggableControl } from './DraggableControl';
 
 export const Knob = (props) => {
   const {
