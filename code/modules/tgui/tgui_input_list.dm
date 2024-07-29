@@ -123,6 +123,7 @@
 	.["capitalize"] = capitalize
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	SHOULD_CALL_PARENT(FALSE)
 	// We need to omit the parent call for this specifically, as the action parsing conflicts with parent.
 	if(!ui || ui.status != UI_INTERACTIVE)
 		return

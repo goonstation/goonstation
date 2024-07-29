@@ -185,6 +185,7 @@
 		return tgui_admin_state
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		switch (action)
 			if ("select_mob")
 				var/mob/selected = pick_ref(ui.user)
