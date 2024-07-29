@@ -247,6 +247,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			W.affecting.set_loc(src)
 			src.open = 0
 			src.on = 1
+			src.cycle = PRE
 			var/mob/M = W.affecting
 			src.occupant = M
 			UpdateIcon()

@@ -1,5 +1,24 @@
-
+(t)mon jul 29 24
+(u)LeahTheTech
+(+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
+(t)sat jul 27 24
+(u)Colossus
+(p)20086
+(e)🆕🔬|C-Feature, A-Science
+(+)Tetrodotoxin now may appear in eldritch artifacts and ??? pills.
+(u)glowbold & soleil
+(p)20096
+(e)🪲🗺📦💡|C-Bug, A-Mapping, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(u)LeahTheTech
+(p)20067
+(e)⚖💅⚗|C-Balance, C-QoL, A-Chemistry
+(*)Graphene now takes silicon, rather than silicon dioxide to make.
 (t)fri jul 26 24
+(u)cringe
+(p)19847
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nanotrasen has built better glass floors that are seamless. They also let through light.
 (u)LeahTheTech
 (+)Maneaters and skeleton commanders no longer bleed.
 (u)TDHooligan

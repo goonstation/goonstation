@@ -144,5 +144,5 @@
 
 	return
 
-/obj/machinery/portable_atmospherics/return_air()
+/obj/machinery/portable_atmospherics/return_air(direct = FALSE)
 	return air_contents
