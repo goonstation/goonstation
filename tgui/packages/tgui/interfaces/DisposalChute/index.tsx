@@ -84,10 +84,11 @@ export const DisposalChute = () => {
             buttons={
               <Button
                 icon="power-off"
-                content={mode ? 'Enabled' : 'Disabled'}
                 color={mode ? 'green' : 'red'}
                 onClick={() => act('togglePump')}
-              />
+              >
+                {mode ? 'Enabled' : 'Disabled'}
+              </Button>
             }
           >
             <Box color={pumpColor}>{pumpText}</Box>
@@ -97,17 +98,16 @@ export const DisposalChute = () => {
             buttons={
               <Button
                 icon={destinations ? 'envelope' : 'trash-alt'}
-                content={flush ? 'Flushing' : 'Flush'}
                 color={flush ? '' : 'red'}
                 onClick={() => act('toggleHandle')}
-              />
+              >
+                {flush ? 'Flushing' : 'Flush'}
+              </Button>
             }
           >
-            <Button
-              content="Eject Contents"
-              icon="eject"
-              onClick={() => act('eject')}
-            />
+            <Button icon="eject" onClick={() => act('eject')}>
+              Eject Contents
+            </Button>
           </LabeledList.Item>
         </LabeledList>
         {!!destinations && (
@@ -119,11 +119,9 @@ export const DisposalChute = () => {
                   <LabeledList.Item
                     label="Destination"
                     buttons={
-                      <Button
-                        icon="search"
-                        content="Rescan"
-                        onClick={() => act('rescanDest')}
-                      />
+                      <Button icon="search" onClick={() => act('rescanDest')}>
+                        Rescan
+                      </Button>
                     }
                   >
                     {destinationTag}

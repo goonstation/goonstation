@@ -37,7 +37,6 @@ export const TransitShuttle = () => {
                 <Table.Row>
                   <Table.Cell>
                     <Button
-                      content={Destination.name}
                       disabled={
                         locked ||
                         moving ||
@@ -48,7 +47,9 @@ export const TransitShuttle = () => {
                           dest: Destination.type,
                         })
                       }
-                    />
+                    >
+                      {Destination.name}
+                    </Button>
                   </Table.Cell>
                 </Table.Row>
               </Table>

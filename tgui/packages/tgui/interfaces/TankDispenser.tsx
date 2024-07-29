@@ -26,10 +26,11 @@ export const TankDispenser = () => {
               buttons={
                 <Button
                   icon={data.plasma ? 'circle' : 'circle-o'}
-                  content="Dispense"
                   disabled={!data.plasma}
                   onClick={() => act('dispense-plasma')}
-                />
+                >
+                  Dispense
+                </Button>
               }
             >
               {data.plasma}
@@ -39,10 +40,11 @@ export const TankDispenser = () => {
               buttons={
                 <Button
                   icon={data.oxygen ? 'circle' : 'circle-o'}
-                  content="Dispense"
                   disabled={!data.oxygen}
                   onClick={() => act('dispense-oxygen')}
-                />
+                >
+                  Dispense
+                </Button>
               }
             >
               {data.oxygen}

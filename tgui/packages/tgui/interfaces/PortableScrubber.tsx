@@ -57,16 +57,18 @@ export const PortableScrubber = () => {
           <LabeledList>
             <LabeledList.Item label="Scrubber Power">
               <Button
-                content={on ? 'On' : 'Off'}
                 color={on ? 'average' : 'default'}
                 onClick={() => act('toggle-power')}
-              />
+              >
+                {on ? 'On' : 'Off'}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Inlet Flow">
               <Button
                 onClick={() => act('set-inlet-flow', { inletFlow: minFlow })}
-                content="Min"
-              />
+              >
+                Min
+              </Button>
               <NumberInput
                 animated
                 width="7em"
@@ -80,8 +82,9 @@ export const PortableScrubber = () => {
               />
               <Button
                 onClick={() => act('set-inlet-flow', { inletFlow: maxFlow })}
-                content="Max"
-              />
+              >
+                Max
+              </Button>
             </LabeledList.Item>
           </LabeledList>
         </PortableBasicInfo>

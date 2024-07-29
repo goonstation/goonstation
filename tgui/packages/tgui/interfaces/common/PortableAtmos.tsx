@@ -46,12 +46,9 @@ export const PortableHoldingTank = (props) => {
       title={title || 'Holding Tank'}
       minHeight="115px"
       buttons={
-        <Button
-          icon="eject"
-          content="Eject"
-          disabled={!holding}
-          onClick={() => onEjectTank()}
-        />
+        <Button icon="eject" disabled={!holding} onClick={() => onEjectTank()}>
+          Eject
+        </Button>
       }
     >
       {holding ? (

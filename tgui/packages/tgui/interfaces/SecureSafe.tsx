@@ -75,9 +75,10 @@ const SecureSafeKeyPad = (props) => {
                       fontSize="25px"
                       fontFamily="Courier"
                       bold
-                      content={input}
                       onClick={() => act('input', { input })}
-                    />
+                    >
+                      {input}
+                    </Button>
                   </Flex.Item>
                 );
               })}
@@ -94,9 +95,10 @@ const SecureSafeKeyPad = (props) => {
               fontSize="20px"
               fontFamily="Courier"
               bold
-              content="ENTER"
               onClick={() => act('enter')}
-            />
+            >
+              ENTER
+            </Button>
           </Flex.Item>
           <Flex.Item grow={1}>
             <Button
@@ -105,9 +107,10 @@ const SecureSafeKeyPad = (props) => {
               fontSize="20px"
               fontFamily="Courier"
               bold
-              content="RESET"
               onClick={() => act('reset')}
-            />
+            >
+              RESET
+            </Button>
           </Flex.Item>
         </Flex>
       </Flex.Item>

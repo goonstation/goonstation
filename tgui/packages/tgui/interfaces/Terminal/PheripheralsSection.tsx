@@ -24,11 +24,12 @@ export const PheripheralsSection = () => {
           <Button
             key={peripheral.card}
             icon={peripheral.icon}
-            content={peripheral.label}
             fontFamily={peripheral.Clown ? 'Comic Sans MS' : 'Consolas'}
             color={peripheral.color ? 'green' : 'grey'}
             onClick={() => handlePheripheralClick(peripheral)}
-          />
+          >
+            {peripheral.label}
+          </Button>
         );
       })}
     </Section>

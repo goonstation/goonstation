@@ -62,10 +62,9 @@ const Cloudsave = ({ name, index }: CloudSaveProps) => {
             {' - '}
             <Button onClick={() => act('cloud-save', { name })}>Save</Button>
             {' - '}
-            <Button.Confirm
-              onClick={() => act('cloud-delete', { name })}
-              content="Delete"
-            />
+            <Button.Confirm onClick={() => act('cloud-delete', { name })}>
+              Delete
+            </Button.Confirm>
           </>
         }
       >

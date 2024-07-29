@@ -266,7 +266,6 @@ const PlantRow = (props) => {
             tooltip="Click to rename"
             color="transparent"
             textColor="#FFFFFF"
-            content={truncate(extractable.name[0], 10)}
             defaultValue={extractable.name[0]}
             currentValue={extractable.name[0]}
             onCommit={(e, new_name) =>
@@ -275,7 +274,9 @@ const PlantRow = (props) => {
                 label_new: new_name,
               })
             }
-          />
+          >
+            {truncate(extractable.name[0], 10)}
+          </Button.Input>
         </Table.Cell>
         <Table.Cell
           width="100px"

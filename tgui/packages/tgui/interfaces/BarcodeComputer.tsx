@@ -22,9 +22,10 @@ const BarcodeComputerSection = (props) => {
             width="100%"
             align="center"
             key={crate_tag}
-            content={name ? name : crate_tag}
             onClick={() => act('print', { crate_tag, amount })}
-          />
+          >
+            {name || crate_tag}
+          </Button>
         );
       })}
     </Section>
@@ -39,13 +40,14 @@ const IDCard = (props) => {
   return (
     <Button
       icon="eject"
-      content={card.name + ` (${card.role})`}
       tooltip="Clear scanned card"
       tooltipPosition="bottom-end"
       onClick={() => {
         act('reset_id');
       }}
-    />
+    >
+      {`${card.name} (${card.role})`}
+    </Button>
   );
 };
 

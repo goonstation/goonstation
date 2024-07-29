@@ -98,7 +98,9 @@ export const WireListItem = (props: WireProps) => {
   const { color, isCut, name, onBite, onCut, onMend, onPulse } = props;
 
   const actions = isCut ? (
-    <Button content="Mend" onClick={onMend} selected />
+    <Button onClick={onMend} selected>
+      Mend
+    </Button>
   ) : (
     <>
       <Button icon="cut" onClick={onCut}>

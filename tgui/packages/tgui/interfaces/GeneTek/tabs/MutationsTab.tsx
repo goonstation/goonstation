@@ -47,10 +47,11 @@ export const MutationsTab = () => {
         </Button>
         <Button.Checkbox
           inline
-          content="Show Sequence"
           checked={showSequence}
           onClick={() => toggleShowSequence(!showSequence)}
-        />
+        >
+          Show Sequence
+        </Button.Checkbox>
       </Section>
       {bioEffects.map((be) => (
         <BioEffect key={be.ref} gene={be} showSequence={showSequence} />

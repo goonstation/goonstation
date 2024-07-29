@@ -44,9 +44,10 @@ const ButtonCycle = () => {
       disabled={on}
       color={on ? '' : 'good'}
       icon="fas fa-power-off"
-      content="Turn On"
       onClick={() => act('cycle')}
-    />
+    >
+      Turn On
+    </Button>
   );
 };
 
@@ -58,8 +59,9 @@ const ButtonDoor = () => {
       disabled={on}
       color={door ? 'orange' : ''}
       icon={door ? 'fas fa-door-open' : 'fas fa-door-closed'}
-      content={door ? 'Open' : 'Closed'}
       onClick={() => act('door')}
-    />
+    >
+      {door ? 'Open' : 'Closed'}
+    </Button>
   );
 };

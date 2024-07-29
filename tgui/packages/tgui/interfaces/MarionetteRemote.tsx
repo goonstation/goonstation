@@ -76,34 +76,40 @@ export const MarionetteRemote = () => {
                 <LabeledList.Item key="command" label="Command">
                   <Button
                     onClick={() => act('set_command', { new_command: 'say' })}
-                    content="Say"
                     selected={selected_command === 'say'}
-                  />
+                  >
+                    Say
+                  </Button>
                   <Button
                     onClick={() => act('set_command', { new_command: 'emote' })}
-                    content="Emote"
                     selected={selected_command === 'emote'}
-                  />
+                  >
+                    Emote
+                  </Button>
                   <Button
                     onClick={() => act('set_command', { new_command: 'step' })}
-                    content="Step"
                     selected={selected_command === 'step'}
-                  />
+                  >
+                    Step
+                  </Button>
                   <Button
                     onClick={() => act('set_command', { new_command: 'drop' })}
-                    content="Drop"
                     selected={selected_command === 'drop'}
-                  />
+                  >
+                    Drop
+                  </Button>
                   <Button
                     onClick={() => act('set_command', { new_command: 'use' })}
-                    content="Use"
                     selected={selected_command === 'use'}
-                  />
+                  >
+                    Use
+                  </Button>
                   <Button
                     onClick={() => act('set_command', { new_command: 'shock' })}
-                    content="Shock"
                     selected={selected_command === 'shock'}
-                  />
+                  >
+                    Shock
+                  </Button>
                 </LabeledList.Item>
                 <LabeledList.Item key="action_heat" label="Heat Per Action">
                   {selected_command === 'shock' || selected_command === 'drop'
@@ -119,11 +125,9 @@ export const MarionetteRemote = () => {
         <Section
           title="Implants"
           buttons={
-            <Button
-              icon="rotate"
-              content="Ping All"
-              onClick={() => act('ping_all')}
-            />
+            <Button icon="rotate" onClick={() => act('ping_all')}>
+              Ping All
+            </Button>
           }
         >
           {mapImplants(act, entered_data, selected_command, implants)}
@@ -167,13 +171,13 @@ const mapImplants = (act, entered_data, selected_command, implants) => {
               <Button icon="info" tooltip={tooltipForStatus(implant.status)} />
               <Button
                 icon="satellite-dish"
-                content="Ping"
                 onClick={() => act('ping', { address: implant.address })}
                 disabled={implant.status === 'BURNED OUT'}
-              />
+              >
+                Ping
+              </Button>
               <Button
                 icon="envelope"
-                content="Activate"
                 onClick={() =>
                   act('activate', {
                     address: implant.address,
@@ -182,7 +186,9 @@ const mapImplants = (act, entered_data, selected_command, implants) => {
                   })
                 }
                 disabled={implant.status === 'BURNED OUT'}
-              />
+              >
+                Activate
+              </Button>
               <Button.Confirm
                 icon="link-slash"
                 onClick={() =>

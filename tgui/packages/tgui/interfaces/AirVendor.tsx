@@ -62,11 +62,12 @@ const VendorSection = () => {
       <LabeledList>
         <LabeledList.Item label="Cost" verticalAlign="middle">
           <Button
-            content={isFree ? 'Free!' : `${fill_cost || 0}⪽`}
             color={canVend ? 'green' : undefined}
             disabled={!canVend}
             onClick={handleFillClick}
-          />
+          >
+            {isFree ? 'Free!' : `${fill_cost || 0}⪽`}
+          </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Pressure" verticalAlign="middle">
           <Stack>
@@ -74,8 +75,9 @@ const VendorSection = () => {
               <Button
                 disabled={target_pressure === min_pressure}
                 onClick={() => handleChangePressure(min_pressure)}
-                content="Min"
-              />
+              >
+                Min
+              </Button>
             </Stack.Item>
             <Stack.Item grow>
               <Slider
@@ -94,8 +96,9 @@ const VendorSection = () => {
               <Button
                 disabled={target_pressure === max_pressure}
                 onClick={() => handleChangePressure(max_pressure)}
-                content="Max"
-              />
+              >
+                Max
+              </Button>
             </Stack.Item>
           </Stack>
         </LabeledList.Item>

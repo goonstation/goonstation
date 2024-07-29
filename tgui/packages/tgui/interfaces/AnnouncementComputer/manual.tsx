@@ -81,11 +81,12 @@ export const ManualAnnouncement = (_props, context) => {
         <Stack.Item fontSize="16px">
           <Button
             icon="bullhorn"
-            content="Transmit"
             fluid
             disabled={!status['canTransmit']}
             onClick={() => onTransmit()}
-          />
+          >
+            Transmit
+          </Button>
         </Stack.Item>
       </Stack>
     </Section>

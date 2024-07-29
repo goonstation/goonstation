@@ -102,11 +102,12 @@ const Teller = () => {
               )}
               <Button
                 icon="id-card"
-                content={scannedCard ? scannedCard : 'Swipe ID'}
                 onClick={
                   scannedCard ? () => act('logout') : () => act('insert_card')
                 }
-              />
+              >
+                {scannedCard || 'Swipe ID'}
+              </Button>
               {message.text && message.position === 'splash' && (
                 <TypedNoticeBox type={message.status}>
                   {message.text}
@@ -129,9 +130,10 @@ const Teller = () => {
                       <Divider />
                       <Button
                         icon="money-bill"
-                        content="Withdraw cash"
                         onClick={() => act('withdraw_cash')}
-                      />
+                      >
+                        Withdraw cash
+                      </Button>
                       {message.text && message.position === 'atm' && (
                         <TypedNoticeBox type={message.status}>
                           {message.text}
@@ -146,9 +148,10 @@ const Teller = () => {
                 <Stack.Item>
                   <Button
                     icon="sign-out-alt"
-                    content={'Enter PIN'}
                     onClick={() => act('login_attempt')}
-                  />
+                  >
+                    Enter PIN
+                  </Button>
                   {message.text && message.position === 'login' && (
                     <TypedNoticeBox type={message.status}>
                       {message.text}
@@ -167,11 +170,9 @@ const Teller = () => {
               To claim your winnings, you must insert your lottery ticket.
             </NoticeBox>
             <Divider />
-            <Button
-              icon="ticket-alt"
-              content="Purchase Lottery Ticket (100⪽)"
-              onClick={() => act('buy')}
-            />
+            <Button icon="ticket-alt" onClick={() => act('buy')}>
+              Purchase Lottery Ticket (100⪽)
+            </Button>
             {message.text && message.position === 'lottery' && (
               <TypedNoticeBox type={message.status}>
                 {message.text}
@@ -205,18 +206,14 @@ const SpacebuxMenu = () => {
         </Stack.Item>
         <Stack.Item>
           <Divider />
-          <Button
-            icon="coins"
-            content="Withdraw Spacebux"
-            onClick={() => act('withdraw_spacebux')}
-          />
+          <Button icon="coins" onClick={() => act('withdraw_spacebux')}>
+            Withdraw Spacebux
+          </Button>
         </Stack.Item>
         <Stack.Item>
-          <Button
-            icon="envelope"
-            content="Securely send Spacebux"
-            onClick={() => act('transfer_spacebux')}
-          />
+          <Button icon="envelope" onClick={() => act('transfer_spacebux')}>
+            Securely send Spacebux
+          </Button>
         </Stack.Item>
       </Stack>
     </Section>

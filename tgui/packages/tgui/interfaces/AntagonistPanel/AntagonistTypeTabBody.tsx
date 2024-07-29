@@ -300,10 +300,11 @@ const TablePositionCell = (props) => {
       {area}
       <Button
         color="transparent"
-        content={coordinates}
         onClick={() => act('jump_to', { target: props.mind_ref })}
         tooltip="Jump To Position"
-      />
+      >
+        {coordinates}
+      </Button>
     </Table.Cell>
   );
 };
@@ -322,11 +323,12 @@ const AdminPMButton = (props) => {
 
   return (
     <Button
-      content="PM"
       onClick={() => act('admin_pm', { mind_ref })}
       tooltip="Admin PM"
       mr={1}
-    />
+    >
+      PM
+    </Button>
   );
 };
 
@@ -401,12 +403,13 @@ const NuclearBombReadout = (props: TabSectionData) => {
               {nuclearBombData.area}
               <Button
                 color="transparent"
-                content={nuclearBombData.coordinates}
                 onClick={() =>
                   act('jump_to', { target: nuclearBombData.nuclearBomb })
                 }
                 tooltip="Jump To Position"
-              />
+              >
+                {nuclearBombData.coordinates}
+              </Button>
             </LabeledList.Item>
           </LabeledList>
         </Stack.Item>
@@ -531,12 +534,13 @@ const GangLockerReadout = (props: TabSectionData) => {
           {gangLockerData.area}
           <Button
             color="transparent"
-            content={gangLockerData.coordinates}
             onClick={() =>
               act('jump_to', { target: gangLockerData.gangLocker })
             }
             tooltip="Jump To Position"
-          />
+          >
+            {gangLockerData.coordinates}
+          </Button>
         </LabeledList.Item>
       </LabeledList>
     </Section>

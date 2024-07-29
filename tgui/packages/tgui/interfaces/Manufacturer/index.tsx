@@ -243,10 +243,11 @@ export const Manufacturer = () => {
                     buttons={
                       <Button
                         icon="eject"
-                        content="Eject"
                         disabled={data.mode !== 'ready'}
                         onClick={() => act('manudrive', { action: 'eject' })}
-                      />
+                      >
+                        Eject
+                      </Button>
                     }
                   >
                     {manudriveName}

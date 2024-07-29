@@ -88,7 +88,6 @@ export const DataInputBitFieldEntry = (props) => {
           minWidth={4}
           checked={value & (1 << buttonIndex)}
           key={buttonIndex}
-          content={buttonIndex + 1}
           onClick={() =>
             act('modify_value', {
               name: name,
@@ -96,7 +95,9 @@ export const DataInputBitFieldEntry = (props) => {
               value: value ^ (1 << buttonIndex),
             })
           }
-        />
+        >
+          {buttonIndex + 1}
+        </Button.Checkbox>
       ))}
     </Section>
   );

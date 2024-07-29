@@ -35,22 +35,25 @@ export const AIRack = () => {
                 </BlockQuote>
                 <Button
                   icon={item ? 'circle' : 'circle-o'}
-                  content={item ? 'Remove' : 'Empty'}
                   onClick={() => act('rack', { rack_index: index + 1 })}
                   disabled={welded[index] || screwed[index]}
-                />
+                >
+                  {item ? 'Remove' : 'Empty'}
+                </Button>
                 <Button
                   icon={welded[index] ? 'circle' : 'circle-o'}
-                  content={welded[index] ? 'Welded' : 'Not Welded'}
                   onClick={() => act('weld', { rack_index: index + 1 })}
                   color={welded[index] ? 'red' : 'green'}
-                />
+                >
+                  {welded[index] ? 'Welded' : 'Not Welded'}
+                </Button>
                 <Button
                   icon={screwed[index] ? 'circle' : 'circle-o'}
-                  content={screwed[index] ? 'Screwed In' : 'Not Screwed In'}
                   onClick={() => act('screw', { rack_index: index + 1 })}
                   color={screwed[index] ? 'red' : 'green'}
-                />
+                >
+                  {screwed[index] ? 'Screwed In' : 'Not Screwed In'}
+                </Button>
               </Collapsible>
             ))}
           </Box>

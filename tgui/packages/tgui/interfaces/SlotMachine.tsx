@@ -62,11 +62,12 @@ const SlotWindow = () => {
           <strong>Your card: </strong>
           <Button
             icon="eject"
-            content={scannedCard}
             tooltip="Pull Funds and Eject Card"
             tooltipPosition="bottom-end"
             onClick={() => act('eject')}
-          />
+          >
+            {scannedCard}
+          </Button>
         </Stack.Item>
         <Stack.Item>
           <Stack align="center">

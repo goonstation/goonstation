@@ -96,20 +96,22 @@ const ConfigModal = () => {
       </LabeledList>
       <Box className="gameclock__configmodalbuttoncontainer">
         <Button
-          content="Reset to default"
           onClick={() => {
             setWhiteTimeBuffer(defaultTime);
             setBlackTimeBuffer(defaultTime);
           }}
-        />
+        >
+          Reset to default
+        </Button>
         <Button
-          content="Apply"
           onClick={() => {
             setConfigModalOpen(false);
             setTime(whiteTimeBuffer, blackTimeBuffer);
           }}
-        />
-        <Button content="Cancel" onClick={() => setConfigModalOpen(false)} />
+        >
+          Apply
+        </Button>
+        <Button onClick={() => setConfigModalOpen(false)}>Cancel</Button>
       </Box>
     </Dimmer>
   );

@@ -106,7 +106,6 @@ export const DisposalPipeRow = (props) => {
       >
         <Button
           color={dispenser_ready ? 'green' : 'grey'}
-          content="Dispense"
           disabled={!dispenser_ready}
           textAlign="center"
           width="70px"
@@ -116,7 +115,9 @@ export const DisposalPipeRow = (props) => {
               amount: amount,
             })
           }
-        />
+        >
+          Dispense
+        </Button>
       </Stack.Item>
     </Stack>
   );
@@ -130,26 +131,24 @@ export const AutoPipeLaying = (props) => {
     <Section title="Automatic Pipe Options">
       <Button
         color={laying_pipe ? 'average' : 'green'}
-        content={
-          laying_pipe
-            ? 'Stop Laying Pipe Automatically'
-            : 'Start Laying Pipe Automatically'
-        }
         fluid
         align="center"
         onClick={() => act('toggle_laying')}
-      />
+      >
+        {laying_pipe
+          ? 'Stop Laying Pipe Automatically'
+          : 'Start Laying Pipe Automatically'}
+      </Button>
       <Button
         color={removing_pipe ? 'average' : 'green'}
-        content={
-          removing_pipe
-            ? 'Stop Removing Pipe Automatically'
-            : 'Start Removing Pipe Automatically'
-        }
         fluid
         align="center"
         onClick={() => act('toggle_removing')}
-      />
+      >
+        {removing_pipe
+          ? 'Stop Removing Pipe Automatically'
+          : 'Start Removing Pipe Automatically'}
+      </Button>
     </Section>
   );
 };

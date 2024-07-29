@@ -93,9 +93,10 @@ export const MinimapController = () => {
                 <Button
                   icon="undo"
                   color="green"
-                  content="Reset Map Scale"
                   onClick={() => act('reset_scale')}
-                />
+                >
+                  Reset Map Scale
+                </Button>
               }
             >
               <Flex>
@@ -123,15 +124,17 @@ export const MinimapController = () => {
                   <Button
                     icon="plus"
                     color="green"
-                    content="New"
                     onClick={() => toggleNewMarkerMenu(!showNewMarkerMenu)}
-                  />
+                  >
+                    New
+                  </Button>
                   <Button
                     icon={markers_visible ? 'eye-slash' : 'eye'}
                     color={markers_visible ? 'red' : 'green'}
-                    content={markers_visible ? 'Hide All' : 'Show All'}
                     onClick={() => act('toggle_visibility_all')}
-                  />
+                  >
+                    {markers_visible ? 'Hide All' : 'Show All'}
+                  </Button>
                 </>
               }
             >
@@ -188,30 +191,31 @@ export const MinimapController = () => {
                           fluid
                           textAlign="center"
                           color={selecting_coordinates ? 'orange' : 'default'}
-                          content={
-                            selecting_coordinates
-                              ? 'Select Position'
-                              : 'Select (x, y) From Map'
-                          }
                           onClick={() => act('location_from_minimap')}
                           mt="10px"
-                        />
+                        >
+                          {selecting_coordinates
+                            ? 'Select Position'
+                            : 'Select (x, y) From Map'}
+                        </Button>
                         <Flex mt="20px" justify="space-between">
                           <Flex.Item>
                             <Button
                               icon="check"
                               color="green"
-                              content="Confirm"
                               onClick={() => newMarker()}
-                            />
+                            >
+                              Confirm
+                            </Button>
                           </Flex.Item>
                           <Flex.Item>
                             <Button
                               icon="xmark"
                               color="red"
-                              content="Cancel"
                               onClick={() => cancelNewMarker()}
-                            />
+                            >
+                              Cancel
+                            </Button>
                           </Flex.Item>
                         </Flex>
                       </Flex.Item>

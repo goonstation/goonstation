@@ -131,7 +131,6 @@ const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
         <Flex.Item align="right">
           <Button.Checkbox
             checked={isGen}
-            content="generator"
             onClick={() =>
               act('modify_particle_value', {
                 new_data: {
@@ -148,7 +147,9 @@ const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
                 },
               })
             }
-          />
+          >
+            Generator
+          </Button.Checkbox>
         </Flex.Item>
       </Flex>
     </Tooltip>
@@ -214,7 +215,6 @@ const ParticleVectorEntry = (props: ParticleVectorEntryProps) => {
         <Flex.Item align="right">
           <Button.Checkbox
             checked={isGen}
-            content="generator"
             onClick={() =>
               act('modify_particle_value', {
                 new_data: {
@@ -231,7 +231,9 @@ const ParticleVectorEntry = (props: ParticleVectorEntryProps) => {
                 },
               })
             }
-          />
+          >
+            Generator
+          </Button.Checkbox>
         </Flex.Item>
       </Flex>
     </Tooltip>
@@ -298,7 +300,6 @@ const ParticleVector2Entry = (props) => {
         <Flex.Item align="right">
           <Button.Checkbox
             checked={isGen}
-            content="generator"
             onClick={() =>
               act('modify_particle_value', {
                 new_data: {
@@ -315,7 +316,9 @@ const ParticleVector2Entry = (props) => {
                 },
               })
             }
-          />
+          >
+            Generator
+          </Button.Checkbox>
         </Flex.Item>
       </Flex>
     </Tooltip>
@@ -414,7 +417,7 @@ const ParticleGeneratorEntry = (props) => {
             </Tooltip>
           </LabeledList.Item>
         </LabeledList>
-        <Button content="Set" onClick={() => doAct()} />
+        <Button onClick={() => doAct()}>Set</Button>
       </Section>
     </Collapsible>
   );
@@ -534,7 +537,6 @@ const ParticleColorEntry = (props) => {
         <Flex.Item align="right">
           <Button.Checkbox
             checked={isGen}
-            content="generator"
             onClick={() =>
               act('modify_particle_value', {
                 new_data: {
@@ -551,7 +553,9 @@ const ParticleColorEntry = (props) => {
                 },
               })
             }
-          />
+          >
+            Generator
+          </Button.Checkbox>
         </Flex.Item>
       </Flex>
     </Tooltip>
@@ -818,37 +822,32 @@ export const Particool = () => {
             <>
               {!!hasParticles && (
                 <>
-                  <Button
-                    icon="save"
-                    content="Save Particle"
-                    onClick={() => act('save_particle')}
-                  />
+                  <Button icon="save" onClick={() => act('save_particle')}>
+                    Save Particle
+                  </Button>
                   <Button
                     icon="file-image"
-                    content="Save Particle + Icon"
                     onClick={() => act('save_particle_with_icon')}
-                  />
+                  >
+                    Save Particle + Icon
+                  </Button>
                 </>
               )}
-              <Button
-                icon="upload"
-                content="Load Particle"
-                onClick={() => act('load_particle')}
-              />
+              <Button icon="upload" onClick={() => act('load_particle')}>
+                Load Particle
+              </Button>
               {!hasParticles ? (
-                <Button
-                  icon="plus"
-                  content="Add Particle"
-                  onClick={() => act('add_particle')}
-                />
+                <Button icon="plus" onClick={() => act('add_particle')}>
+                  Add Particle
+                </Button>
               ) : (
                 <Button.Confirm
                   icon="minus"
-                  content="Remove Particle"
                   onClick={() => act('remove_particle')}
-                />
+                >
+                  Remove Particle
+                </Button.Confirm>
               )}
-              <Button />
             </>
           }
         >

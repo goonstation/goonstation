@@ -47,20 +47,20 @@ export const TerrainVehicleChoice = (props) => {
       <Section title="Vehicle Options">
         <Button.Checkbox
           checked={fabricator}
-          content={'Add Subs to Fabricators'}
           onClick={() => onToggleFabricators()}
-        />
+        >
+          Add Subs to Fabricators
+        </Button.Checkbox>
         <br />
-        <Button.Checkbox
-          checked={cars}
-          content={'Convert some Cars'}
-          onClick={() => onToggleCars()}
-        />
+        <Button.Checkbox checked={cars} onClick={() => onToggleCars()}>
+          Convert some Cars
+        </Button.Checkbox>
         <Button.Checkbox
           checked={allowVehicles}
-          content={'Allow Pods'}
           onClick={() => onToggleAllowVehicles()}
-        />
+        >
+          Allow Pods
+        </Button.Checkbox>
       </Section>
     </Flex.Item>
   );
@@ -78,9 +78,10 @@ export const TerrainToggles = (props) => {
           <Flex.Item mb={1} key={buttonIndex}>
             <Button.Checkbox
               checked={activeToggles[toggleOption]}
-              content={toggleOption}
               onClick={() => onToggle(toggleOption)}
-            />
+            >
+              {toggleOption}
+            </Button.Checkbox>
           </Flex.Item>
         ),
       )}

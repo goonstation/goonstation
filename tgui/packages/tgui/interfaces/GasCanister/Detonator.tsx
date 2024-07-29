@@ -63,16 +63,15 @@ const DetonatorWires = (props: DetonatorWireProps) => {
               <Box height={1.7}>
                 {wireStatus && wireStatus[i] ? (
                   <>
-                    <Button
-                      icon="cut"
-                      content="Cut"
-                      onClick={() => onWireInteract('cut', i)}
-                    />
+                    <Button icon="cut" onClick={() => onWireInteract('cut', i)}>
+                      Cut
+                    </Button>
                     <Button
                       icon="bolt"
-                      content="Pulse"
                       onClick={() => onWireInteract('pulse', i)}
-                    />
+                    >
+                      Pulse
+                    </Button>
                   </>
                 ) : (
                   <Box color="average" minHeight={1.4}>
@@ -145,12 +144,9 @@ const DetonatorUtility = (props: DetonatorUtilityProps) => {
       return 'The safety is on, therefore, you cannot prime the bomb.';
     } else if (!isPrimed) {
       return (
-        <Button
-          color="danger"
-          icon="bomb"
-          content="Prime"
-          onClick={onPrimeDetonator}
-        />
+        <Button color="danger" icon="bomb" onClick={onPrimeDetonator}>
+          Prime
+        </Button>
       );
     } else {
       return (
@@ -170,7 +166,9 @@ const DetonatorUtility = (props: DetonatorUtilityProps) => {
         {isAnchored ? (
           'Anchored. There are no controls for undoing this.'
         ) : (
-          <Button icon="anchor" content="Anchor" onClick={onToggleAnchor} />
+          <Button icon="anchor" onClick={onToggleAnchor}>
+            Anchor
+          </Button>
         )}
       </LabeledList.Item>
       <LabeledList.Item
@@ -188,12 +186,9 @@ const DetonatorUtility = (props: DetonatorUtilityProps) => {
         label="Safety"
       >
         {safetyIsOn ? (
-          <Button
-            color="average"
-            icon="power-off"
-            content="Turn Off"
-            onClick={onToggleSafety}
-          />
+          <Button color="average" icon="power-off" onClick={onToggleSafety}>
+            Turn Off
+          </Button>
         ) : (
           <Box color="average">Off</Box>
         )}

@@ -79,24 +79,26 @@ export const Vendors = () => {
                           <Button
                             ml="10%"
                             my="1%"
-                            content="Pulse"
                             onClick={() =>
                               act('pulsewire', {
                                 wire: wire.name,
                               })
                             }
-                          />
+                          >
+                            Pulse
+                          </Button>
                         </Flex.Item>
                         <Flex.Item>
                           <Button
                             m="1%"
-                            content={wire.uncut ? 'Cut' : 'Mend'}
                             onClick={() =>
                               act(wire.uncut ? 'cutwire' : 'mendwire', {
                                 wire: wire.name,
                               })
                             }
-                          />
+                          >
+                            {wire.uncut ? 'Cut' : 'Mend'}
+                          </Button>
                         </Flex.Item>
                       </Flex>
                     );
@@ -105,21 +107,22 @@ export const Vendors = () => {
                 <Divider />
                 {playerBuilt && (
                   <>
+                    <Button onClick={() => act('togglelock')}>
+                      {`Owner: ${owner} (${unlocked ? 'Unlocked' : 'Locked'})`}
+                    </Button>
                     <Button
-                      content={`Owner: ${owner} (${unlocked ? 'Unlocked' : 'Locked'})`}
-                      onClick={() => act('togglelock')}
-                    />
-                    <Button
-                      content="Loading Chute"
                       disabled={!unlocked}
                       color={loading ? 'green' : 'red'}
                       onClick={() => act('togglechute')}
-                    />
+                    >
+                      Loading Chute
+                    </Button>
                     <Button.Input
-                      content={name}
                       defaultValue={name}
                       onCommit={(e, value) => act('rename', { name: value })}
-                    />
+                    >
+                      {name}
+                    </Button.Input>
                   </>
                 )}
                 <Flex justify="space-between" align="stretch">
@@ -210,7 +213,6 @@ export const Vendors = () => {
                         {playerBuilt && unlocked ? (
                           <Button.Input
                             color={canVend(product) ? 'green' : 'grey'}
-                            content={getCost(product)}
                             style={{ width: '50px', textAlign: 'center' }}
                             onCommit={(e, value) =>
                               act('setPrice', {
@@ -218,11 +220,12 @@ export const Vendors = () => {
                                 cost: value,
                               })
                             }
-                          />
+                          >
+                            {getCost(product)}
+                          </Button.Input>
                         ) : (
                           <Button
                             color={canVend(product) ? 'green' : 'grey'}
-                            content={getCost(product)}
                             disabled={canVend(product) ? false : true}
                             style={{
                               width: '50px',
@@ -236,7 +239,9 @@ export const Vendors = () => {
                                 amount: product.amount,
                               })
                             }
-                          />
+                          >
+                            {getCost(product)}
+                          </Button>
                         )}
                       </Flex.Item>
                     </Flex>

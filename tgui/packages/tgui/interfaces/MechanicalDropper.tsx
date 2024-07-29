@@ -49,9 +49,10 @@ const DropperAmountSection = (props) => {
           <Button
             textAlign="center"
             width="3em"
-            content="Min"
             onClick={() => onTransferAmtChange(minTransferAmt)}
-          />
+          >
+            Min
+          </Button>
         </Stack.Item>
         <Stack.Item grow>
           <Slider
@@ -67,9 +68,10 @@ const DropperAmountSection = (props) => {
           <Button
             textAlign="center"
             width="3em"
-            content="Max"
             onClick={() => onTransferAmtChange(maxTransferAmt)}
-          />
+          >
+            Max
+          </Button>
         </Stack.Item>
       </Stack>
     </Section>

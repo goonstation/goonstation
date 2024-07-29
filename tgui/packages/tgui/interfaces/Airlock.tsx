@@ -357,12 +357,13 @@ const Electrify = () => {
                 p={0.5}
                 align="center"
                 color="average"
-                content="Temporary"
                 confirmContent="Are you sure?"
                 icon="bolt"
                 disabled={!wires.shock || (mainTimeLeft && backupTimeLeft)}
                 onClick={() => act('shockTemp')}
-              />
+              >
+                Temporary
+              </Button.Confirm>
             )}
             <Button.Confirm
               width={9}
@@ -371,14 +372,15 @@ const Electrify = () => {
               color={shockTimeLeft ? 'good' : 'bad'}
               icon="bolt"
               confirmContent="Are you sure?"
-              content={shockTimeLeft ? 'Restore' : 'Permanent'}
               disabled={!wires.shock || (mainTimeLeft && backupTimeLeft)}
               onClick={
                 shockTimeLeft
                   ? () => act('shockRestore')
                   : () => act('shockPerm')
               }
-            />
+            >
+              {shockTimeLeft ? 'Restore' : 'Permanent'}
+            </Button.Confirm>
           </Box>
         </LabeledList.Item>
       </LabeledList>

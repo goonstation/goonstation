@@ -55,18 +55,20 @@ export const PortablePump = () => {
           <LabeledList>
             <LabeledList.Item label="Pump Power">
               <Button
-                content={on ? 'On' : 'Off'}
                 color={on ? 'average' : 'default'}
                 onClick={() => act('toggle-power')}
-              />
+              >
+                {on ? 'On' : 'Off'}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Target Pressure">
               <Button
                 onClick={() =>
                   act('set-pressure', { targetPressure: minRelease })
                 }
-                content="Min"
-              />
+              >
+                Min
+              </Button>
               <NumberInput
                 animated
                 width="7em"
@@ -82,15 +84,17 @@ export const PortablePump = () => {
                 onClick={() =>
                   act('set-pressure', { targetPressure: maxRelease })
                 }
-                content="Max"
-              />
+              >
+                Max
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Pump Direction">
               <Button
-                content={direction_out ? 'Out' : 'In'}
                 color={direction_out ? 'yellow' : 'blue'}
                 onClick={() => act('toggle-pump')}
-              />
+              >
+                {direction_out ? 'Out' : 'In'}
+              </Button>
             </LabeledList.Item>
           </LabeledList>
         </PortableBasicInfo>

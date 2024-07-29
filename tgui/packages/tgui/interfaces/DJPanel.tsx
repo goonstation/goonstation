@@ -43,10 +43,11 @@ export const DJPanel = () => {
             <Button
               icon={loadedSound ? 'file-audio' : 'upload'}
               selected={!loadedSound}
-              content={loadedSound ? truncate(loadedSound, 38) : 'Upload'}
               tooltip={loadedSound}
               onClick={() => act('set-file')}
-            />
+            >
+              {loadedSound ? truncate(loadedSound, 38) : 'Upload'}
+            </Button>
           </Box>
           <Divider />
           <KnobZone />
@@ -57,23 +58,26 @@ export const DJPanel = () => {
               icon="music"
               selected={!!loadedSound}
               disabled={!loadedSound}
-              content="Play Music"
               onClick={() => act('play-music')}
-            />
+            >
+              Play Music
+            </Button>
             <Button
               icon="volume-up"
               selected={!!loadedSound}
               disabled={!loadedSound}
-              content="Play Sound"
               onClick={() => act('play-sound')}
-            />
+            >
+              Play Sound
+            </Button>
             <Button
               icon="record-vinyl"
               selected={!!loadedSound}
               disabled={!loadedSound}
-              content="Play Ambience"
               onClick={() => act('play-ambience')}
-            />
+            >
+              Play Ambience
+            </Button>
             <Box as="span" color="grey" textAlign="right" pl={1}>
               <Icon name="satellite" /> Channel: <em>{-adminChannel + 1024}</em>
             </Box>
@@ -81,50 +85,44 @@ export const DJPanel = () => {
         </Section>
         <Section>
           <Box>
-            <Button content="Play Remote" onClick={() => act('play-remote')} />
-            <Button
-              disabled={!loadedSound}
-              content="Play To Player"
-              onClick={() => act('play-player')}
-            />
+            <Button onClick={() => act('play-remote')}>Play Remote</Button>
+            <Button disabled={!loadedSound} onClick={() => act('play-player')}>
+              Play To Player
+            </Button>
           </Box>
           <Box>
             <Button
               disabled={!loadedSound}
-              content="Preload Sound"
               onClick={() => act('preload-sound')}
-            />
+            >
+              Preload Sound
+            </Button>
             <Button
               disabled={!Object.keys(preloadedSounds).length}
-              content="Play Preloaded Sound"
               onClick={() => act('play-preloaded')}
-            />
+            >
+              Play Preloaded Sound
+            </Button>
           </Box>
           <Box>
-            <Button
-              color="yellow"
-              content="Toggle DJ Announcements"
-              onClick={() => act('toggle-announce')}
-            />
-            <Button
-              color="yellow"
-              content="Toggle DJ For Player"
-              onClick={() => act('toggle-player-dj')}
-            />
+            <Button color="yellow" onClick={() => act('toggle-announce')}>
+              Toggle DJ Announcements
+            </Button>
+            <Button color="yellow" onClick={() => act('toggle-player-dj')}>
+              Toggle DJ For Player
+            </Button>
           </Box>
           <Box>
-            <Button
-              icon="stop"
-              color="red"
-              content="Stop Last Sound"
-              onClick={() => act('stop-sound')}
-            />
+            <Button icon="stop" color="red" onClick={() => act('stop-sound')}>
+              Stop Last Sound
+            </Button>
             <Button
               icon="broadcast-tower"
               color="red"
-              content="Stop The Radio For Everyone"
               onClick={() => act('stop-radio')}
-            />
+            >
+              Stop The Radio For Everyone
+            </Button>
           </Box>
         </Section>
         <AnnounceActive />
@@ -189,12 +187,9 @@ const KnobZone = () => {
             format={formatDoublePercent}
             onDrag={setVolume}
           />
-          <Button
-            icon="sync-alt"
-            top="0.3em"
-            content="Reset"
-            onClick={resetVolume}
-          />
+          <Button icon="sync-alt" top="0.3em" onClick={resetVolume}>
+            Reset
+          </Button>
         </LabeledControls.Item>
         <LabeledControls.Item label="Frequency">
           <NumberInput
@@ -222,12 +217,9 @@ const KnobZone = () => {
             format={formatHundredPercent}
             onDrag={setFreq}
           />
-          <Button
-            icon="sync-alt"
-            top="0.3em"
-            content="Reset"
-            onClick={resetFreq}
-          />
+          <Button icon="sync-alt" top="0.3em" onClick={resetFreq}>
+            Reset
+          </Button>
         </LabeledControls.Item>
       </LabeledControls>
     </Box>

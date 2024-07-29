@@ -270,13 +270,14 @@ const FilterColorEntry = (props, context) => {
           }
         />
         <Button
-          content="Convert to color matrix"
           onClick={() =>
             act('convert_color_value_matrix', {
               name: filterName,
             })
           }
-        />
+        >
+          Convert to color matrix
+        </Button>
       </>
     );
   }
@@ -311,7 +312,6 @@ const FilterFlagsEntry = (props) => {
   return map(flags, (bitField: number, flagName) => (
     <Button.Checkbox
       checked={value & bitField}
-      content={flagName}
       onClick={() =>
         act('modify_filter_value', {
           name: filterName,
@@ -320,7 +320,9 @@ const FilterFlagsEntry = (props) => {
           },
         })
       }
-    />
+    >
+      {flagName}
+    </Button.Checkbox>
   ));
 };
 
@@ -333,7 +335,6 @@ const FilterSpaceEntry = (props) => {
   return map(flags, (spaceField, flagName) => (
     <Button.Checkbox
       checked={value === spaceField}
-      content={flagName}
       onClick={() =>
         act('modify_filter_value', {
           name: filterName,
@@ -342,7 +343,9 @@ const FilterSpaceEntry = (props) => {
           },
         })
       }
-    />
+    >
+      {flagName}
+    </Button.Checkbox>
   ));
 };
 
@@ -355,7 +358,6 @@ const FilterBlendmodeEntry = (props) => {
   return map(flags, (flagField, flagName) => (
     <Button.Checkbox
       checked={value === flagField}
-      content={flagName}
       onClick={() =>
         act('modify_filter_value', {
           name: filterName,
@@ -364,7 +366,9 @@ const FilterBlendmodeEntry = (props) => {
           },
         })
       }
-    />
+    >
+      {flagName}
+    </Button.Checkbox>
   ));
 };
 
@@ -449,7 +453,6 @@ const FilterEntry = (props) => {
             }
           />
           <Button.Input
-            content="Rename"
             placeholder={name}
             onCommit={(e, new_name) =>
               act('rename_filter', {
@@ -458,7 +461,9 @@ const FilterEntry = (props) => {
               })
             }
             width="90px"
-          />
+          >
+            Rename
+          </Button.Input>
           <Button.Confirm
             icon="minus"
             onClick={() => act('remove_filter', { name: name })}
@@ -517,10 +522,11 @@ export const Filteriffic = () => {
                   onInput={(e, value) => setMassApplyPath(value)}
                 />
                 <Button.Confirm
-                  content="Apply"
                   confirmContent="ARE YOU SURE?"
                   onClick={() => act('mass_apply', { path: massApplyPath })}
-                />
+                >
+                  Apply
+                </Button.Confirm>
               </>
             ) : (
               <Box inline onDoubleClick={() => setHiddenSecret(true)}>

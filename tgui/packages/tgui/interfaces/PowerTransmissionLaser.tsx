@@ -114,10 +114,11 @@ const InputControls = (props, context) => {
           buttons={
             <Button
               icon="power-off"
-              content={isChargingEnabled ? 'Enabled' : 'Disabled'}
               color={isChargingEnabled ? 'green' : 'red'}
               onClick={() => act('toggleInput')}
-            />
+            >
+              {isChargingEnabled ? 'Enabled' : 'Disabled'}
+            </Button>
           }
         >
           <Box
@@ -152,31 +153,33 @@ const InputControls = (props, context) => {
           value={inputNumber}
           onDrag={(e, setInput) => act('setInput', { setInput })}
         />
+        <Button selected={inputMultiplier === 1} onClick={() => act('inputW')}>
+          W
+        </Button>
         <Button
-          content={'W'}
-          selected={inputMultiplier === 1}
-          onClick={() => act('inputW')}
-        />
-        <Button
-          content={'kW'}
           selected={inputMultiplier === 10 ** 3}
           onClick={() => act('inputkW')}
-        />
+        >
+          kW
+        </Button>
         <Button
-          content={'MW'}
           selected={inputMultiplier === 10 ** 6}
           onClick={() => act('inputMW')}
-        />
+        >
+          MW
+        </Button>
         <Button
-          content={'GW'}
           selected={inputMultiplier === 10 ** 9}
           onClick={() => act('inputGW')}
-        />
+        >
+          GW
+        </Button>
         <Button
-          content={'TW'}
           selected={inputMultiplier === 10 ** 12}
           onClick={() => act('inputTW')}
-        />
+        >
+          TW
+        </Button>
       </Box>
     </Section>
   );
@@ -201,10 +204,11 @@ const OutputControls = () => {
           buttons={
             <Button
               icon="power-off"
-              content={isLaserEnabled ? 'Enabled' : 'Disabled'}
               color={isLaserEnabled ? 'green' : 'red'}
               onClick={() => act('toggleOutput')}
-            />
+            >
+              {isLaserEnabled ? 'Enabled' : 'Disabled'}
+            </Button>
           }
         >
           <Box
@@ -236,20 +240,23 @@ const OutputControls = () => {
           onDrag={(e, setOutput) => act('setOutput', { setOutput })}
         />
         <Button
-          content={'MW'}
           selected={outputMultiplier === 10 ** 6}
           onClick={() => act('outputMW')}
-        />
+        >
+          MW
+        </Button>
         <Button
-          content={'GW'}
           selected={outputMultiplier === 10 ** 9}
           onClick={() => act('outputGW')}
-        />
+        >
+          GW
+        </Button>
         <Button
-          content={'TW'}
           selected={outputMultiplier === 10 ** 12}
           onClick={() => act('outputTW')}
-        />
+        >
+          TW
+        </Button>
       </Box>
     </Section>
   );

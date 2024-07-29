@@ -29,11 +29,9 @@ const JobItem = ({
     label={name}
     buttons={
       <>
-        <Button
-          content={`${count}/${limit}`}
-          tooltip="Alter Cap"
-          onClick={onAlterCap}
-        />
+        <Button tooltip="Alter Cap" onClick={onAlterCap}>
+          {`${count}/${limit}`}
+        </Button>
         <Button icon="edit" tooltip="Edit Job" onClick={onEdit} />
         {type === 'created' && (
           <Button.Confirm
@@ -132,11 +130,12 @@ export const JobManager = () => {
           <JobCategory title="Special Jobs" jobs={specialJobs} act={act} />
           <JobCategory title="Hidden Jobs" jobs={hiddenJobs} act={act} />
           <Button.Checkbox
-            content="Special Jobs"
             checked={allowSpecialJobs}
             onClick={() => act('toggle_special_jobs')}
-          />
-          <Button content="Create New Job" onClick={() => act('job_creator')} />
+          >
+            Special Jobs
+          </Button.Checkbox>
+          <Button onClick={() => act('job_creator')}>Create New Job</Button>
         </Section>
       </Window.Content>
     </Window>

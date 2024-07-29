@@ -32,9 +32,10 @@ export const ContributorRewards = () => {
                 <Button
                   ml={1}
                   icon="check-circle"
-                  content="Redeem"
                   onClick={() => act('redeem', { reward_idx: index + 1 })}
-                />
+                >
+                  Redeem
+                </Button>
               </Collapsible>
             ))}
           </Box>

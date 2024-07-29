@@ -166,10 +166,11 @@ export const ScannerTab = () => {
                         <Button.Checkbox
                           inline
                           color="good"
-                          content="DNA Render"
                           checked={showPreview}
                           onClick={() => togglePreview(!showPreview)}
-                        />
+                        >
+                          DNA Render
+                        </Button.Checkbox>
                       )
                     }
                   >

@@ -21,13 +21,14 @@ export const ReleaseValve = (props) => {
     <LabeledList>
       <LabeledList.Item label="Release valve">
         <Button
-          content={valveIsOpen ? 'Open' : 'Closed'}
           color={valveIsOpen ? 'average' : 'default'}
           onClick={onToggleValve}
-        />
+        >
+          {valveIsOpen ? 'Open' : 'Closed'}
+        </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Release pressure">
-        <Button onClick={() => onSetPressure(minRelease)} content="Min" />
+        <Button onClick={() => onSetPressure(minRelease)}>Min</Button>
         <NumberInput
           animated
           width="7em"
@@ -37,7 +38,7 @@ export const ReleaseValve = (props) => {
           step={1}
           onChange={(targetPressure) => onSetPressure(targetPressure)}
         />
-        <Button onClick={() => onSetPressure(maxRelease)} content="Max" />
+        <Button onClick={() => onSetPressure(maxRelease)}>Max</Button>
       </LabeledList.Item>
     </LabeledList>
   );

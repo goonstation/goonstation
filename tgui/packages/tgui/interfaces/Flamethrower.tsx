@@ -151,10 +151,11 @@ export const Flamethrower = () => {
                   buttons={
                     <Button
                       icon="eject"
-                      content="Eject"
                       disabled={!fuelTank}
                       onClick={() => act('remove_fuel')}
-                    />
+                    >
+                      Eject
+                    </Button>
                   }
                 >
                   {fuelTank && <ReagentBar container={fuelTank} height="5em" />}

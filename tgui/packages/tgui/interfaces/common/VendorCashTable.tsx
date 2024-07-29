@@ -39,14 +39,13 @@ export const VendorCashTable = (props: VendorCashTableProps) => {
       </Table.Row>
       <Table.Row>
         <Table.Cell bold>
-          {cash > 0 && 'Cash: ' + cash + '⪽'}
-          {cash > 0 && cash && (
-            <Button
-              icon="eject"
-              ml="1%"
-              content={'eject'}
-              onClick={onCashClick}
-            />
+          {cash > 0 && (
+            <>
+              {'Cash: ' + cash + '⪽ '}
+              <Button icon="eject" onClick={onCashClick}>
+                Eject
+              </Button>
+            </>
           )}
         </Table.Cell>
       </Table.Row>

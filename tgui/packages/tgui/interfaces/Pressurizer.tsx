@@ -133,11 +133,12 @@ export const Pressurizer = () => {
                 fluid
                 textAlign="center"
                 icon="circle"
-                content={getArmedState()}
                 disabled={hasSufficientPressure || !airSafe}
                 color={blastArmed ? 'bad' : 'average'}
                 onClick={() => handleArmPressurizer()}
-              />
+              >
+                {getArmedState()}
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Delay">
               <Button onClick={() => handleSetBlastDelay(minArmDelay)}>

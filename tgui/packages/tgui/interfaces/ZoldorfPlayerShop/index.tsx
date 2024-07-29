@@ -29,25 +29,27 @@ export const ZoldorfPlayerShop = () => {
                       {isSoulProductData(product) ? (
                         <Button
                           color="red"
-                          content={`${product.soul_percentage}%`}
                           disabled={product.soul_percentage > data.user_soul}
                           onClick={() =>
                             act('soul_purchase', { item: product.name })
                           }
                           align="center"
                           width="50px"
-                        />
+                        >
+                          {`${product.soul_percentage}%`}
+                        </Button>
                       ) : (
                         <Button
                           color="green"
-                          content={`${product.price}⪽`}
                           disabled={product.price > credits}
                           onClick={() =>
                             act('credit_purchase', { item: product.name })
                           }
                           align="center"
                           width="50px"
-                        />
+                        >
+                          {`${product.price}⪽`}
+                        </Button>
                       )}
                     </ZoldorfProductListItem>
                   );
@@ -58,12 +60,9 @@ export const ZoldorfPlayerShop = () => {
           {credits !== 0 && (
             <Stack.Item bold>
               <Box inline>{`Cash: ${credits}⪽`}</Box>
-              <Button
-                ml={1}
-                icon="eject"
-                content="Eject"
-                onClick={() => act('returncash')}
-              />
+              <Button ml={1} icon="eject" onClick={() => act('returncash')}>
+                Eject
+              </Button>
             </Stack.Item>
           )}
         </Stack>
