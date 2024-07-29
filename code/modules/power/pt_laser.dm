@@ -143,6 +143,8 @@
 		// var/amount = tgui_input_number(user, "Withdraw how much?", "Withdraw amount", src.current_balance, src.current_balance, 0, 0, FALSE)
 		var/amount = input(user, "Withdraw how much?", "Withdraw amount", src.current_balance)
 		amount = clamp(amount, 0, src.current_balance)
+		if (!amount)
+			return TRUE
 		src.current_balance -= amount
 		account["current_money"] += amount
 

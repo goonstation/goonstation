@@ -11047,7 +11047,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/white,
 /area/station/security/main)
 "diK" = (
@@ -25981,7 +25980,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "hMf" = (
-/obj/storage/secure/closet/brig,
+/obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -33406,8 +33405,10 @@
 	},
 /area/station/science/lobby)
 "kat" = (
-/obj/storage/closet/wardrobe/orange,
-/obj/machinery/light_switch/west,
+/obj/storage/secure/closet/brig,
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -80045,6 +80046,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/white,
 /area/station/security/main)
 "xYz" = (
@@ -103730,9 +103732,9 @@ jhw
 ilj
 jhw
 kat
-fOF
-hMf
 lOG
+hMf
+fOF
 rag
 ieY
 rce

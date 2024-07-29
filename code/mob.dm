@@ -2926,7 +2926,7 @@
 
 /mob/proc/is_hulk()
 	. = FALSE
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
+	if (src.bioHolder && src.bioHolder.HasAnyEffect(list("hulk", "hulk_hidden")))
 		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
