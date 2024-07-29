@@ -5,14 +5,21 @@
  * @license ISC
  */
 
-import { AnimatedNumber, Button, Input, Section, Stack } from 'tgui-core/components';
+import {
+  AnimatedNumber,
+  Button,
+  Input,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../../backend';
 import { formatTime } from '../../format';
 import { AnnouncementCompData } from './type';
 
 type Status = {
-  canTransmit: boolean;
+  canTransmit: BooleanLike;
   text: string;
   color: string;
 };
@@ -21,10 +28,10 @@ export const ManualAnnouncement = (_props, context) => {
   const { act, data } = useBackend<AnnouncementCompData>();
   const { card_name, status_message, time, max_length } = data;
 
-  const [input, setInput] = useSharedState("input", "");
-  const [oldInput, setOldInput] = useSharedState("oldInput", "");
+  const [input, setInput] = useSharedState('input', '');
+  const [oldInput, setOldInput] = useSharedState('oldInput', '');
 
-  let status : Status = getStatus(input, max_length, status_message, time);
+  let status: Status = getStatus(input, max_length, status_message, time);
 
   const onChange = () => {
     if (input === oldInput) {
@@ -36,8 +43,8 @@ export const ManualAnnouncement = (_props, context) => {
 
   const onTransmit = () => {
     act('transmit', { value: input });
-    setInput("");
-    setOldInput("");
+    setInput('');
+    setOldInput('');
   };
 
   const onType = (event) => {
@@ -50,15 +57,12 @@ export const ManualAnnouncement = (_props, context) => {
   return (
     <Section title="Make an Announcement">
       <Stack vertical>
-        <Stack.Item color={status["color"]}>
-          Status: {status["text"]}
+        <Stack.Item color={status['color']}>
+          Status: {status['text']}
         </Stack.Item>
         <Stack.Item>
-          <Button
-            onClick={() => act("id")}
-            icon="eject"
-            preserveWhitespace>
-            {card_name || "Insert card"}
+          <Button onClick={() => act('id')} icon="eject" preserveWhitespace>
+            {card_name || 'Insert card'}
           </Button>
         </Stack.Item>
         <Stack.Item>
@@ -79,8 +83,9 @@ export const ManualAnnouncement = (_props, context) => {
             icon="bullhorn"
             content="Transmit"
             fluid
-            disabled={!status["canTransmit"]}
-            onClick={() => onTransmit()} />
+            disabled={!status['canTransmit']}
+            onClick={() => onTransmit()}
+          />
         </Stack.Item>
       </Stack>
     </Section>
@@ -89,15 +94,23 @@ export const ManualAnnouncement = (_props, context) => {
 
 const getStatus = (input, max_length, status, time) => {
   if (time > 0) {
-    return { canTransmit: false, text: "Broadcast delay in effect.", color: "bad" };
-  } else if (status === "Insert Card") {
-    return { canTransmit: false, text: "Insert Card", color: "average" };
+    return {
+      canTransmit: false,
+      text: 'Broadcast delay in effect.',
+      color: 'bad',
+    };
+  } else if (status === 'Insert Card') {
+    return { canTransmit: false, text: 'Insert Card', color: 'average' };
   } else if (status) {
-    return { canTransmit: false, text: status, color: "bad" };
+    return { canTransmit: false, text: status, color: 'bad' };
   } else if (!!max_length && input.length > max_length) {
-    return { canTransmit: false, text: `Message too long, maximium is ${max_length} characters.`, color: "average" };
+    return {
+      canTransmit: false,
+      text: `Message too long, maximium is ${max_length} characters.`,
+      color: 'average',
+    };
   } else if (!input) {
-    return { canTransmit: false, text: "Input message.", color: "average" };
+    return { canTransmit: false, text: 'Input message.', color: 'average' };
   }
-  return { canTransmit: true, text: "Ready to transmit!", color: "good" };
+  return { canTransmit: true, text: 'Ready to transmit!', color: 'good' };
 };

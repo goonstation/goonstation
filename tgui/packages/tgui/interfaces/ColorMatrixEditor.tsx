@@ -15,13 +15,14 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface ColorMatrixEditorData {
   previewRef: string;
-  targetIsClient: boolean;
+  targetIsClient: BooleanLike;
   currentColor: number[];
 }
 
