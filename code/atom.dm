@@ -235,7 +235,8 @@ TYPEINFO(/atom)
 	proc/remove_air(amount)
 		return null
 
-	proc/return_air()
+	///if direct then only return gas ACTUALLY inside the thing rather than surrounding air
+	proc/return_air(direct = FALSE)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling

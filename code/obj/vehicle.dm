@@ -53,8 +53,9 @@ ABSTRACT_TYPE(/obj/vehicle)
 	remove_air(amount)
 		return src.loc.remove_air(amount)
 
-	return_air()
-		return src.loc.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc.return_air()
 
 	attackby(obj/item/W, mob/user)
 		if(src.rider && src.rider_visible && W.force)

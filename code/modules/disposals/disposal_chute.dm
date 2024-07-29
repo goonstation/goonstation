@@ -523,8 +523,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.suiciding = 0
 		return 1
 
-	return_air()
-		return src.loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc?.return_air()
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'

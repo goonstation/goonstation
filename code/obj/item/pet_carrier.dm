@@ -155,9 +155,10 @@
 		var/turf/current_turf = get_turf(src)
 		. = current_turf.remove_air(amount)
 
-	return_air()
-		var/turf/current_turf = get_turf(src)
-		. = current_turf.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			var/turf/current_turf = get_turf(src)
+			. = current_turf.return_air()
 
 	mob_flip_inside(mob/user)
 		..(user)
