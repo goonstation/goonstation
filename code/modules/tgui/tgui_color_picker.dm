@@ -1,4 +1,4 @@
-/**
+/*
  * @file
  * @copyright 2023
  * @author itsmeow (https://github.com/itsmeow)

@@ -1,4 +1,4 @@
-/**
+/*
  * tgui process
  *
  * Contains most of tgui state and process code. Rest is in tgui.dm for the process.
