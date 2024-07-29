@@ -147,10 +147,7 @@ proc/maximal_subtype(var/list/L)
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
 // to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
-#ifdef SPACEMAN_DMM // just don't ask
-	#define START_TRACKING
-	#define STOP_TRACKING
-#elif defined(OPENDREAM) // Yay, actual sanity!
+#if defined(OPENDREAM) || defined(SPACEMAN_DMM) // Yay, actual sanity!
 	#define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
 	#define STOP_TRACKING by_type[__TYPE__].Remove(src)
 #else
