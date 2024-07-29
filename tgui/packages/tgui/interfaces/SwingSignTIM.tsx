@@ -1,16 +1,16 @@
 /**
  * @file
- * @copyright 2022
- * @author jlsnow301 (https://github.com/jlsnow301)
+ * @copyright 2023
+ * @author Ozzzim (https://github.com/Ozzzim)
  * @license ISC
  */
 
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { InputButtons, Validator } from './common/InputButtons';
+import { InputButtons } from './common/InputButtons';
 
  type TextInputData = {
    max_length: number;
@@ -21,6 +21,11 @@ import { InputButtons, Validator } from './common/InputButtons';
    rows: number;
    columns: number;
  };
+
+interface Validator {
+  isValid: boolean;
+  error: string | null;
+}
 
 export const SwingSignTIM = () => {
   const { data } = useBackend<TextInputData>();
@@ -58,11 +63,13 @@ export const SwingSignTIM = () => {
             </Stack.Item>
             <InputArea
               input={input}
-              inputIsValid={inputIsValid}
               onType={onType}
             />
+            {!inputIsValid.isValid && (
+              <Stack.Item>{inputIsValid.error}</Stack.Item>
+            )}
             <Stack.Item pl={5} pr={5}>
-              <InputButtons input={input} inputIsValid={inputIsValid} />
+              <InputButtons input={input} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -71,13 +78,17 @@ export const SwingSignTIM = () => {
   );
 };
 
+interface InputAreaProps {
+  input: string;
+  onType: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
+}
+
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props) => {
+const InputArea = (props: InputAreaProps) => {
   const { act } = useBackend<TextInputData>();
   const { input, onType } = props;
   const textareaStyle = {
     overflow: "hidden",
-    // textAlign: "center",
     whiteSpace: "pre-line",
     wrap: "hard",
     textAlignLast: "center" as const,
@@ -90,7 +101,7 @@ const InputArea = (props) => {
         height="100%"
         textAlign="center"
         fontFamily="Consolas"
-        onInput={(event) => onType(event)}
+        onInput={onType}
         onEnter={() => {
           act('submit', { entry: input });
         }}
