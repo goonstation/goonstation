@@ -621,16 +621,21 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
 	default_material = "slag"
+	var/datum/gas_mixture/leak_gas = new
 
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
+		leak_gas.radgas = 100
+		leak_gas.temperature = T20C
+		leak_gas.volume = 200 //I guess??
+
+	return_air(direct = FALSE)
+		return src.leak_gas
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea
 		var/turf/current_loc = get_turf(src)
-		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
-		leak_gas.radgas += 100
-		current_loc.assume_air(leak_gas)
+		current_loc.assume_air(src.leak_gas)
 		qdel(src)
 
 /obj/tombstone/nuclear_warning

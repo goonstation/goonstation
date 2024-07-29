@@ -1,4 +1,6 @@
-
+(t)mon jul 29 24
+(u)LeahTheTech
+(+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
 (t)sat jul 27 24
 (u)Colossus
 (p)20086
