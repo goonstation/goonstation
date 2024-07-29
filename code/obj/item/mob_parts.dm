@@ -378,6 +378,31 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/on_life(datum/controller/process/mobs/parent)
 		return
 
+	/// Fingertip color, used to tint overlays
+	proc/fingertip_color()
+		if (src.skintoned)
+			return src.skin_tone
+		else
+			if (isplantlimb(src))
+				return "#3fb54f"
+			else if (isrobotlimb(src))
+				return "#4e5263"
+			else if (iswolflimb(src))
+				return "#895d37"
+			else if (isskeletonlimb(src))
+				return "#aa9987"
+			else if (istype(src, /obj/item/parts/human_parts/arm/mutant/monkey))
+				return "#745136"
+			else if (istype(src, /obj/item/parts/artifact_parts/arm))
+				var/obj/item/parts/artifact_parts/artifact_limb = src
+				switch(artifact_limb.artifact_type)
+					if("eldritch")
+						return "#803872"
+					if("martian")
+						return "#72924f"
+					if("precursor")
+						return "#A5BDC5"
+
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
 	var/dist = rand(1,6)

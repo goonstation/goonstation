@@ -3632,48 +3632,12 @@ mob/living/carbon/human/has_genetics()
 	return TRUE
 
 /mob/living/carbon/human/get_hand_color()
+	var/hand_color = null
 	if (istype(src.gloves))
 		var/obj/item/clothing/gloves/gloves = src.gloves
-		if (gloves.color)
-			return gloves.color
-		else
-			switch(gloves.icon_state)
-				if("black")
-					return "#535353"
-				if("inspector")
-					return "#2d3c52"
-				if("latex")
-					return "#f3f3f3"
-				if("yellow")
-					return "#ffff33"
-				if("boxinggloves")
-					return "#f80000"
-				if("cgaunts")
-					return "#535353"
-				if("stun")
-					return "#ffff33"
-				if("wedgloves")
-					return "#f3f3f3"
-				if("sailormoon")
-					return "#f3f3f3"
-				if("long_gloves")
-					return "#ffff33"
-				if("swat_syndie")
-					return "#b22c20"
-				if("swat_NT")
-					return "#2050b2"
-				if("capgloves")
-					return "#3fb54f"
-				if("centcomgloves")
-					return "#3c6dc3"
-				if("centcomredgloves")
-					return "#d73715"
-				if("kote")
-					return "#2d3c52"
-				if("princess")
-					return "#f3f3f3"
-				if("combatgauntlets")
-					return "#343442"
+		hand_color = gloves.fingertip_color()
+		if (!isnull(hand_color))
+			return hand_color
 
 	var/obj/item/parts/limb = null
 	if(src.hand)
@@ -3681,26 +3645,8 @@ mob/living/carbon/human/has_genetics()
 	else
 		limb = src.limbs.r_arm
 	if (istype(limb))
-		if (limb.skintoned)
-			return limb.skin_tone
-		else
-			if (isplantlimb(limb))
-				return "#3fb54f"
-			else if (isrobotlimb(limb))
-				return "#4e5263"
-			else if (iswolflimb(limb))
-				return "#895d37"
-			else if (isskeletonlimb(limb))
-				return "#aa9987"
-			else if (istype(limb, /obj/item/parts/human_parts/arm/mutant/monkey))
-				return "#745136"
-			else if (istype(limb, /obj/item/parts/artifact_parts/arm))
-				var/obj/item/parts/artifact_parts/artifact_limb = limb
-				switch(artifact_limb.artifact_type)
-					if("eldritch")
-						return "#803872"
-					if("martian")
-						return "#72924f"
-					if("precursor")
-						return "#A5BDC5"
+		hand_color = limb.fingertip_color()
+		if (!isnull(hand_color))
+			return hand_color
+
 	. = ..()

@@ -203,6 +203,48 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		user.next_click = world.time + user.combat_click_delay
 		return 1
 
+	/// Fingertip color, used to tint overlays
+	proc/fingertip_color()
+		if (src.color)
+			return src.color
+		else
+			switch(src.icon_state)
+				if("black")
+					return "#535353"
+				if("inspector")
+					return "#2d3c52"
+				if("latex")
+					return "#f3f3f3"
+				if("yellow")
+					return "#ffff33"
+				if("boxinggloves")
+					return "#f80000"
+				if("cgaunts")
+					return "#535353"
+				if("stun")
+					return "#ffff33"
+				if("wedgloves")
+					return "#f3f3f3"
+				if("sailormoon")
+					return "#f3f3f3"
+				if("long_gloves")
+					return "#ffff33"
+				if("swat_syndie")
+					return "#b22c20"
+				if("swat_NT")
+					return "#2050b2"
+				if("capgloves")
+					return "#3fb54f"
+				if("centcomgloves")
+					return "#3c6dc3"
+				if("centcomredgloves")
+					return "#d73715"
+				if("kote")
+					return "#2d3c52"
+				if("princess")
+					return "#f3f3f3"
+				if("combatgauntlets")
+					return "#343442"
 
 /obj/item/clothing/gloves/long // adhara stuff
 	desc = "These long gloves protect your sleeves and skin from whatever dirty job you may be doing."
