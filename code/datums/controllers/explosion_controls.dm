@@ -10,12 +10,12 @@ var/datum/explosion_controller/explosions
 	var/kaboom_ready = FALSE
 	var/next_turf_safe = FALSE
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation = FALSE)
 		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction, flash_radiation)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -65,15 +65,20 @@ var/datum/explosion_controller/explosions
 			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING))
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
+			// Determine power of explosion. 1 is strongest, 3 is weakest. Also factors in the literal power p
+			/// This is a very old variable which essentially determines how devastating an explosion should be to a mob.
+			var/ex_act_power
 			if (p >= 6)
-				for (var/mob/M in T)
-					M.ex_act(1, explosion?.last_touched, p, explosion)
+				ex_act_power = 1
 			else if (p > 3)
-				for (var/mob/M in T)
-					M.ex_act(2, explosion?.last_touched, p, explosion)
+				ex_act_power = 2
 			else
-				for (var/mob/M in T)
-					M.ex_act(3, explosion?.last_touched, p, explosion)
+				ex_act_power = 3
+
+			for(var/mob/M in T)
+				M.ex_act(ex_act_power, explosion?.last_touched, p, explosion)
+				if (explosion?.flash_radiation)
+					M.take_radiation_dose(p/2)
 
 		LAGCHECK(LAG_HIGH)
 
@@ -168,9 +173,10 @@ var/datum/explosion_controller/explosions
 	var/user
 	var/turf_safe
 	var/range_cutoff_fraction
+	var/flash_radiation //! Boolean which controls whether or not to do a considerable amount of radiation damage to affected persons
 	var/last_touched = "*null*"
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1, flash_radiation=FALSE)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -181,6 +187,7 @@ var/datum/explosion_controller/explosions
 		src.user = user
 		src.turf_safe = turf_safe
 		src.range_cutoff_fraction = range_cutoff_fraction
+		src.flash_radiation = flash_radiation
 
 	proc/logMe(var/power)
 		if(istype(src.source))
@@ -188,7 +195,11 @@ var/datum/explosion_controller/explosions
 			var/area/A = get_area(epicenter)
 			if(!A.dont_log_combat)
 				// Cannot read null.name
-				var/logmsg = "[turf_safe ? "Turf-safe e" : "E"]xplosion with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
+				var/list/log_attributes = list(
+					"[flash_radiation ? "radioactive" : ""]",
+					"[turf_safe ? "turf-safe" : ""]",
+				)
+				var/logmsg = "Explosion ([list2text(log_attributes, ",")]) with power [power] (Source: [source ? "[source.name]" : "*unknown*"])  at [log_loc(epicenter)]. Source last touched by: [key_name(source?.fingerprintslast)] (usr: [ismob(user) ? key_name(user) : user])"
 				var/mob/M = null
 				if(ismob(user))
 					M = user
