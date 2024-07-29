@@ -251,3 +251,8 @@
 		/obj/item/circuitboard/chem_request,
 		/obj/item/circuitboard/chem_request_receiver,
 	)
+
+/obj/rack/organized/techstorage_med/sea
+	New()
+		src.items_to_spawn += /obj/item/circuitboard/sea_elevator
+		. = ..()
