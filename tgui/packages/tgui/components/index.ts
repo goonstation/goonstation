@@ -17,4 +17,3 @@ export { Icon } from './Icon';
 export { Knob } from './Knob';
 export { Modal } from './Modal';
 export { Slider } from './Slider';
-export { Table } from './Table';
