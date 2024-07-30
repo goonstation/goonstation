@@ -379,7 +379,7 @@
 /datum/overlayComposition/steelmask
 	New()
 		var/datum/overlayDefinition/dither = new()
-		dither.d_icon = 'icons/effects/overlays/steelmask.dmi'
+		dither.d_icon = 'icons/effects/overlays/weldingmask.dmi'
 		dither.d_icon_state = "steelmask"
 		dither.d_blend_mode = 2
 		dither.d_mouse_opacity = 0
