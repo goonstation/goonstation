@@ -33,6 +33,8 @@ If this is your first time using VSCode, take a minute to familiarize yourself w
 4. This is the current file that you've selected's contents.
 5. This is the output terminal. If and when you have any bugs, you'll see them here, and you can track your code compiling from here, as well as being able to interface with git directly through command-line prompts.
 
+<u>You'll also want to ensure BYOND is installed in the **default location** for ease of use.</u>
+
 
 Now, we need to create our own repository to contribute to! :rocket:
 
@@ -77,7 +79,7 @@ If this does not work, search for the following extensions:
  - GitHub Pull Requests - Lets you make a pull request directly from the editor for the purposes of this tutorial.
 :::
 
-For the DreamMaker extension that is installed, be sure you turn on auto-updates. You'll also want to ensure BYOND is installed in the default location for ease of use.
+For the DreamMaker extension that is installed, be sure you turn on auto-updates.
 
 For the GitHub Pull Requests extension, you'll have to sign in to GitHub to link it properly. Also, sometime it just breaks. :shrug:
 
