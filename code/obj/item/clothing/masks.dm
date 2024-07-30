@@ -635,6 +635,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	icon_state = "steel"
 	item_state = "steel"
 	see_face = FALSE
+	allow_staple = 0
 	var/low_visibility = TRUE
 
 	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
