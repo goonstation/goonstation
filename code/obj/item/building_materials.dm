@@ -246,7 +246,6 @@ MATERIAL
 
 			user.visible_message(SPAN_ALERT("<B>[user]</B> welds the sheets together into a mask."))
 			UpdateStackAppearance()
-			if(src.amount < 1)	qdel(src)
 			return
 
 		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
