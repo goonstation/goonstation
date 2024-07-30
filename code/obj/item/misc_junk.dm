@@ -222,7 +222,7 @@ TYPEINFO(/obj/item/disk)
 		if (!src.user_can_suicide(user))
 			return 0
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
-		user.visible_message(SPAN_ALERT("<b>[user] throws the [src] into the air!.</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] throws [src] into the air!</b>"))
 
 		src.set_loc(get_turf(user))
 		src.pixel_x = 0
