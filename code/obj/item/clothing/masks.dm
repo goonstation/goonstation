@@ -645,7 +645,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 			user.removeOverlayComposition(/datum/overlayComposition/weldingmask)
 			user.updateOverlaysClient(user.client)
 			setProperty("meleeprot_head", 3)
-			setProperty("disorient_resist_eye", 5)
+			delProperty("disorient_resist_eye")
 			src.low_visibility = FALSE
 			src.desc = "A crudely welded mask made by attaching bent sheets. It's had it's eye slits widened for better visibility."
 		else
