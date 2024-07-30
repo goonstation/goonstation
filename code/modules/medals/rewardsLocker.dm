@@ -749,6 +749,7 @@
 			if (H.head)
 				var/obj/item/clothing/M = H.head
 				var/obj/item/clothing/head/det_hat/gadget/G = H.head
+				var/obj/item/clothing/head/det_hat/folded_scuttlebot/S = H.head
 				if (istype(G))
 					var/prev = M.name
 					G.icon_state = "inspector"
@@ -757,6 +758,18 @@
 					G.inspector = TRUE
 					H.set_clothing_icon_dirty()
 					succ = TRUE
+
+				else if (istype(S))
+					var/prev = M.name
+					S.icon_state = "inspector"
+					S.item_state = "inspector"
+					S.name = "inspector's hat"
+					S.real_name = "inspector's hat"
+					S.desc = "A hat for the modern detective. It looks a bit heavier than it should. (Base Item: [prev])"
+					S.inspector = TRUE
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 				else if (istype(M, /obj/item/clothing/head/det_hat))
 					var/prev = M.name
 					M.icon_state = "inspector"

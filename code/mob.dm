@@ -2836,34 +2836,33 @@
 				continue
 			else
 				if (force_instead || tgui_alert(src, "Use the name [newname]?", newname, list("Yes", "No")) == "Yes")
-					if(!src.traitHolder.hasTrait("stowaway"))// stowaway entertainers shouldn't be on the manifest
-						for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
-							var/datum/db_record/R = DB.find_record("id", src.datacore_id)
-							if (R)
-								R["name"] = newname
-								if (R["full_name"])
-									R["full_name"] = newname
-						for (var/obj/item/I in src.contents)
-							var/obj/item/card/id/ID = get_id_card(I)
-							if (!ID)
-								if(length(I.contents)>0)
-									for(var/obj/item/J in I.contents)
-										var/obj/item/card/id/ID_maybe = get_id_card(J)
-										if(!ID_maybe)
-											continue
-										if(ID_maybe && ID_maybe.registered == src.real_name)
-											ID = ID_maybe
-							if(ID)
-								ID.registered = newname
-								ID.update_name()
-						for (var/obj/item/device/pda2/PDA in src.contents)
-							PDA.registered = newname
-							PDA.owner = newname
-							PDA.name = "PDA-[newname]"
-							if(PDA.ID_card)
-								var/obj/item/card/id/ID = PDA.ID_card
-								ID.registered = newname
-								ID.update_name()
+					for (var/datum/record_database/DB in list(data_core.bank, data_core.security, data_core.general, data_core.medical))
+						var/datum/db_record/R = DB.find_record("id", src.datacore_id)
+						if (R)
+							R["name"] = newname
+							if (R["full_name"])
+								R["full_name"] = newname
+					for (var/obj/item/I in src.contents)
+						var/obj/item/card/id/ID = get_id_card(I)
+						if (!ID)
+							if(length(I.contents)>0)
+								for(var/obj/item/J in I.contents)
+									var/obj/item/card/id/ID_maybe = get_id_card(J)
+									if(!ID_maybe)
+										continue
+									if(ID_maybe && ID_maybe.registered == src.real_name)
+										ID = ID_maybe
+						if(ID)
+							ID.registered = newname
+							ID.update_name()
+					for (var/obj/item/device/pda2/PDA in src.contents)
+						PDA.registered = newname
+						PDA.owner = newname
+						PDA.name = "PDA-[newname]"
+						if(PDA.ID_card)
+							var/obj/item/card/id/ID = PDA.ID_card
+							ID.registered = newname
+							ID.update_name()
 					src.real_name = newname
 					src.UpdateName()
 					return 1
@@ -2927,7 +2926,7 @@
 
 /mob/proc/is_hulk()
 	. = FALSE
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
+	if (src.bioHolder && src.bioHolder.HasAnyEffect(list("hulk", "hulk_hidden")))
 		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
@@ -3377,3 +3376,9 @@
 	src.delStatus("knockdown")
 	src.delStatus("unconscious")
 	src.delStatus("paralysis")
+
+/mob/proc/has_genetics()
+	return FALSE
+
+/mob/proc/get_genetic_traits()
+	return list(0,0,0)

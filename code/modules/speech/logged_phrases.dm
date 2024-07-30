@@ -127,7 +127,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
-			uncool_words = regex(jointext(json_decode(file2text(src.uncool_words_filename)),"|"), "i")
+			uncool_words = regex("([jointext(json_decode(file2text(src.uncool_words_filename)),"|")])", "i")
 		if(fexists(src.filename))
 			src.phrases = json_decode(file2text(src.filename))
 		else
@@ -173,6 +173,7 @@ var/global/datum/phrase_log/phrase_log = new
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
 		if(is_uncool(phrase))
+			phrase = replacetext(phrase, src.uncool_words, "**$1**")
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
@@ -184,6 +185,8 @@ var/global/datum/phrase_log/phrase_log = new
 				ircbot.export("admin", ircmsg)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, SPAN_ADMIN("Uncool word - [key_name(user)] [category]: \"[phrase]\""))
 			return
+		if(length(phrase) > 4000)
+			return //for massive papers etc
 		if(category in src.phrases)
 			if(no_duplicates)
 				src.phrases[category] |= phrase

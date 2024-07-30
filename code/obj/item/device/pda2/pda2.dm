@@ -151,6 +151,22 @@
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
+	nt_medical
+		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+		setup_drive_size = 32
+		mailgroups = list(MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+
+	nt_engineer
+		icon_state = "pda-nt"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		setup_default_module = /obj/item/device/pda_module/tray
+		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
+
+
 	ai
 		icon_state = "pda-h"
 		setup_default_pen = null // ai don't need no pens
@@ -332,8 +348,6 @@
 		icon_state = "pda-syn"
 		name = "Military PDA"
 		desc = "A cheap knockoff looking portable microcomputer claiming to be made by ElecTek LTD. It has a slot for an ID card, and a hole to put a pen into."
-		owner = "John Doe"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
 		setup_system_os_path = /datum/computer/file/pda_program/os/main_os/knockoff
 		locked_bg_color = TRUE
 		bg_color = "#A33131"
@@ -341,8 +355,19 @@
 		screen_x = 2
 		window_title = "Personnel Data Actuator"
 
+		nuclear
+			owner = "John Doe"
+			setup_default_cartridge = /obj/item/disk/data/cartridge/nuclear
+
+			New()
+				START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+				..()
+
+			disposing()
+				STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+				..()
+
 		New()
-			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 			var/datum/computer/file/text/pda2manual/old_manual = locate() in src.hd.root.contents
 			src.hd.root.remove_file(old_manual)
@@ -350,9 +375,6 @@
 			src.hd.root.remove_file(crisis)
 			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
 
-		disposing()
-			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-			..()
 
 /obj/item/device/pda2/pickup(mob/user)
 	..()

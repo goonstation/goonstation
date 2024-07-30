@@ -4462,7 +4462,8 @@
 	name = "Crew Quarters persistent notice board";
 	persistent_id = "crew quarters";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hangar/arrivals)
@@ -5055,47 +5056,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/kitchen)
 "bua" = (
-/obj/storage/cart/medcart,
-/obj/item/body_bag{
-	pixel_x = -9;
-	pixel_y = -10
-	},
-/obj/item/body_bag{
-	pixel_x = -1;
-	pixel_y = -10
-	},
-/obj/item/body_bag{
-	pixel_x = 8;
-	pixel_y = -10
-	},
-/obj/item/storage/firstaid/brute{
-	pixel_x = -11;
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -3;
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 11
-	},
-/obj/item/storage/firstaid/oxygen{
-	pixel_x = 10;
-	pixel_y = 11
-	},
-/obj/item/bandage{
-	pixel_x = 11;
-	pixel_y = -4
-	},
-/obj/item/bandage{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/bandage{
-	pixel_x = -1;
-	pixel_y = -4
-	},
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -7165,14 +7126,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bZT" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -11087,7 +11047,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/white,
 /area/station/security/main)
 "diK" = (
@@ -12131,16 +12090,13 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "AI Announcement Computer";
-	req_access_txt = "16";
-	req_access = list(16)
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/ai{
+	dir = 4
+	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/AIsat)
 "dzZ" = (
@@ -12174,14 +12130,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "dAJ" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
 /obj/decal/stripe_caution,
 /obj/disposalpipe/segment/brig,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "dBe" = (
@@ -12868,12 +12819,12 @@
 /area/station/chapel/sanctuary)
 "dMJ" = (
 /obj/table/round/auto,
-/obj/machinery/light_switch/auto,
 /obj/noticeboard/persistent{
 	name = "Cargo persistent notice board";
 	persistent_id = "cargo";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /obj/item/kitchen/food_box/sugar_box{
 	pixel_y = 16
@@ -15842,13 +15793,10 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "eIF" = (
-/obj/machinery/computer/announcement{
-	name = "Security Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 25
 	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "eIG" = (
@@ -17147,6 +17095,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/disposalpipe/segment/morgue,
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 27
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
@@ -24028,6 +23979,9 @@
 /area/station/hallway/primary/east)
 "hge" = (
 /obj/storage/secure/closet/command/hop,
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 27
+	},
 /turf/simulated/floor/carpet/green/fancy/narrow/west,
 /area/station/crew_quarters/heads)
 "hgB" = (
@@ -26026,7 +25980,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "hMf" = (
-/obj/storage/secure/closet/brig,
+/obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -33451,8 +33405,10 @@
 	},
 /area/station/science/lobby)
 "kat" = (
-/obj/storage/closet/wardrobe/orange,
-/obj/machinery/light_switch/west,
+/obj/storage/secure/closet/brig,
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -37416,13 +37372,8 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "lpF" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
 /obj/decal/stripe_caution,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "lpJ" = (
@@ -43001,11 +42952,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "mXS" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	pixel_x = -10;
@@ -43015,6 +42961,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
 	},
@@ -47523,11 +47472,6 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "oqp" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -47538,6 +47482,9 @@
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
 	icon_state = "line2"
+	},
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -52005,11 +51952,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
 "pGJ" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -52017,6 +51959,9 @@
 /obj/cable,
 /obj/machinery/door_control/bolter/new_walls/east{
 	id = "quarters_ce"
+	},
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
@@ -52768,7 +52713,8 @@
 	name = "Engineering persistent notice board";
 	persistent_id = "engineering";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/breakroom)
@@ -55168,7 +55114,8 @@
 	name = "Mechanics Workshop persistent notice board";
 	persistent_id = "mechanics";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -55553,19 +55500,10 @@
 /area/station/medical/medbay/lobby)
 "qKa" = (
 /obj/machinery/firealarm/east,
-/obj/storage/cart/forensic,
-/obj/item/storage/box/body_bag,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/spraybottle/detective,
-/obj/item/device/audio_log,
-/obj/item/audio_tape,
-/obj/item/audio_tape,
-/obj/item/hand_labeler,
-/obj/item/device/detective_scanner,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "qKk" = (
@@ -58129,15 +58067,13 @@
 "rzO" = (
 /obj/machinery/firealarm/east,
 /obj/machinery/light/small/greenish,
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Captain's Announcement Computer";
-	voice_name = "Captain's Announcement Computer"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -60593,10 +60529,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "sob" = (
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -60604,6 +60536,7 @@
 /obj/machinery/door_control/bolter/new_walls/north{
 	id = "quarters_mdir"
 	},
+/obj/machinery/computer/announcement/station/medical,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fblue2"
@@ -71072,15 +71005,13 @@
 	},
 /area/station/security/main)
 "vxW" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/door_control/bolter/new_walls/east{
 	id = "quarters_rd"
+	},
+/obj/machinery/computer/announcement/station/research{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge{
 	dir = 6
@@ -80115,6 +80046,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/white,
 /area/station/security/main)
 "xYz" = (
@@ -103800,9 +103732,9 @@ jhw
 ilj
 jhw
 kat
-fOF
-hMf
 lOG
+hMf
+fOF
 rag
 ieY
 rce

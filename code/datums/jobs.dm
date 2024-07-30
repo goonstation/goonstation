@@ -1230,7 +1230,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 2
 	wages = 0
 	trait_list = list("stowaway")
+	add_to_manifest = FALSE
 	low_priority_job = TRUE
+	slot_card = null
 	slot_head = list(\
 	/obj/item/clothing/head/green = 1,
 	/obj/item/clothing/head/red = 1,
@@ -2336,7 +2338,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/nt_specialist
-	slot_poc1 = list(/obj/item/device/pda2/heads)
+	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/NTberet,
@@ -2370,6 +2372,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
@@ -2411,6 +2414,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/reagent_containers/glass/bottle/omnizine,

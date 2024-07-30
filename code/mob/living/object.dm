@@ -306,8 +306,9 @@
 		else
 			return SPAN_ALERT("<B>[src] attacks [T]!</B>")
 
-	return_air()
-		return loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return loc?.return_air()
 
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)

@@ -801,6 +801,7 @@
 					if("contest-other12")
 						src.name = "The Cluwne"
 						src.icon_state = "the_cluwne"
+						src.desc = "\"This summer...things are getting...honked.\""
 					if("contest-other13")
 						src.name = "Cluwne XVII"
 						src.icon_state = "cluwnexvii"

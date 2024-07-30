@@ -154,3 +154,45 @@ TYPEINFO(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage/shrink/UnregisterFromParent()
 	UnregisterSignal(src.parent, COMSIG_ATTACKHAND)
 	. = ..()
+
+/datum/component/extradimensional_storage/floor
+
+/datum/component/extradimensional_storage/floor/Initialize(width=9, height=9, region_init_proc)
+	if(!istype(parent, /turf))
+		return COMPONENT_INCOMPATIBLE
+	exit = parent
+	. = ..()
+	//do some viscontent mirroring ig, etc
+	RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_disposing))
+
+/datum/component/extradimensional_storage/floor/on_entered(turf/floor, atom/movable/Obj, atom/OldLoc)
+	var/enterDir = get_dir(parent, OldLoc)
+	Obj.set_loc(region.turf_at((enterDir&EAST) ? region.width-2 : (enterDir&WEST) ? 3 : floor((region.width+1)/2),
+	(enterDir&NORTH) ? region.height-2 : (enterDir&SOUTH) ? 3 : floor((region.height+1)/2)))
+
+/datum/component/extradimensional_storage/floor/UnregisterFromParent()
+	UnregisterSignal(src.parent, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING)
+	. = ..()
+
+
+/datum/component/extradimensional_storage/floor/default_init_region()
+	. = ..()
+	var/turf/origin = parent
+	for(var/x in 2 to region.width - 1)
+		var/turf/T = region.turf_at(x, 2)
+		T.warptarget = get_step(exit, SOUTH)
+		T = region.turf_at(x, region.height - 1)
+		T.warptarget = get_step(exit, NORTH)
+
+	for(var/y in 2 to region.height - 1)
+		var/turf/T = region.turf_at(2, y)
+		T.warptarget = get_step(exit, WEST)
+		T = region.turf_at(region.width - 1, y)
+		T.warptarget = get_step(exit, EAST)
+
+	for(var/x in 2 to region.width - 1)
+		for(var/y in 2 to region.height - 1)
+			var/turf/T = region.turf_at(x, y)
+			T.appearance = origin.appearance

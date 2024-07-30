@@ -802,7 +802,7 @@ datum
 						H.visible_message(SPAN_ALERT("<b>[H] explodes in a shower of gibs, hair and piracy!</b>"),SPAN_ALERT("<b>Oh god, too much hair!</b>"))
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
-						logTheThing(LOG_COMBAT, src, "was gibbed by the reagent [name].")
+						logTheThing(LOG_COMBAT, H, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")

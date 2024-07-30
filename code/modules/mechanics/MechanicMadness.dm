@@ -494,6 +494,13 @@
 			return 1
 		return ..()
 
+	pixelaction(atom/target, params, mob/user)
+		var/turf/hit_turf = target
+		if (!istype(hit_turf) || !hit_turf || hit_turf.density || !can_reach(user, hit_turf))
+			..()
+			return FALSE
+		src.place_to_turf_by_grid(user, params, hit_turf, grid = 2, centered = 1, offsetx = 0, offsety = 2)
+
 	pick_up_by(var/mob/M)
 		if(level == OVERFLOOR) return ..()
 		//If it's anchored, it can't be picked up!
@@ -772,7 +779,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/item/mechanics/thprint

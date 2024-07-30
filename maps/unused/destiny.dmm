@@ -469,7 +469,7 @@
 /area/station/bridge/captain)
 "abW" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
@@ -23153,7 +23153,6 @@
 	},
 /area/station/chapel/sanctuary)
 "fdn" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -23161,6 +23160,7 @@
 /obj/machinery/light_switch/west{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fdA" = (
