@@ -27488,6 +27488,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
 "bVi" = (
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -37974,7 +37977,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med/sea,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "kXn" = (

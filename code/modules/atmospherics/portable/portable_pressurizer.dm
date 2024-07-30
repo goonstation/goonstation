@@ -110,7 +110,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		else
 			UpdateOverlays(null, "armed")
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	proc/process_fan()

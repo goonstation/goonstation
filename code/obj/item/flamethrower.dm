@@ -175,7 +175,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 
-/obj/item/gun/flamethrower/return_air()
+/obj/item/gun/flamethrower/return_air(direct = FALSE)
 	return src.gastank?.return_air()
 
 /obj/item/gun/flamethrower/assembled

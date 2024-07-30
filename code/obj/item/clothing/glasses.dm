@@ -471,6 +471,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					if (S.is_inspector)
 						newscuttle.make_inspector()
 			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			S.drop_item()
 			qdel(S)
 			qdel(src)
 		else
