@@ -180,8 +180,11 @@ var/global/list/material_cache
 		icon = src.icon
 	if(isnull(global.valid_icon_states[icon]))
 		global.valid_icon_states[icon] = list()
+		var/start_time = TIME
 		for(var/icon_state in icon_states(icon))
 			global.valid_icon_states[icon][icon_state] = 1
+		if (TIME != start_time) //we took longer than a tick
+			logTheThing(LOG_DEBUG, src, "is_valid_icon_state took [TIME - start_time] ticks(!!!) to cache [icon]")
 	return state in global.valid_icon_states[icon]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
