@@ -21946,7 +21946,7 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen/freezer)
+/area/station/crew_quarters/kitchen)
 "jqn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cryogenics Chamber"
