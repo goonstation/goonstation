@@ -3947,7 +3947,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket, can talk to [him_or_her(M)], and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
-		M.ensure_listen_tree().AddInput(LISTEN_INPUT_MENTOR_MOUSE)
+		M.ensure_listen_tree().AddListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		obs.set_observe_target(M)
 		obs.my_mouse = src
 		src.set_loc(obs)

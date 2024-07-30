@@ -8,9 +8,19 @@ ABSTRACT_TYPE(/datum/speech_module)
 	var/id = "abstract_base"
 	/// How far up the tree this module should go. High values get processed before low values.
 	var/priority = 0
+	/// The speech tree that this module belongs to.
+	var/datum/speech_module_tree/parent_tree
+
+/datum/speech_module/New(datum/speech_module_tree/parent)
+	. = ..()
+	if (!istype(parent))
+		CRASH("Tried to instantiate a speech module without a parent speech tree. You can't do that!")
+
+	src.parent_tree = parent
 
 /// Process the message, applying module specific effects. Return `null` to prevent the message being processed further, or a `/datum/say_message` instance to continue.
 /datum/speech_module/proc/process(datum/say_message/message)
+	RETURN_TYPE(/datum/say_message)
 	return message
 
 
@@ -41,4 +51,5 @@ ABSTRACT_TYPE(/datum/listen_module)
 
 /// Process the message, applying module specific effects. Return `null` to prevent the message being processed further, or a `/datum/say_message` instance to continue.
 /datum/listen_module/proc/process(datum/say_message/message)
+	RETURN_TYPE(/datum/say_message)
 	return message

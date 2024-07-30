@@ -910,7 +910,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 	return
 
-/obj/machinery/vending/say(message, flags, message_params, atom_listeners_override)
+/obj/machinery/vending/say(message, flags, list/message_params, list/atom/atom_listeners_override)
 	if (src.status & NOPOWER)
 		return
 

@@ -140,11 +140,11 @@ var/global/IP_alerts = 1
 
 	src.only_local_looc = !src.only_local_looc
 	if (src.only_local_looc)
-		src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
-		src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 	else
-		src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
-		src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
 
 	boutput(usr, SPAN_NOTICE("Toggled seeing all LOOC messages [src.only_local_looc ?"off":"on"]!"))
 
@@ -165,16 +165,16 @@ var/global/IP_alerts = 1
 	if (global_hearing_enabled && !(src.mob_flags & MOB_HEARS_ALL))
 		src.mob_flags |= MOB_HEARS_ALL
 
-		src.listen_tree.RemoveInput(LISTEN_INPUT_EARS)
-		src.listen_tree.AddInput(LISTEN_INPUT_GLOBAL_HEARING)
-		src.listen_tree.AddInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_EARS)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_GLOBAL_HEARING)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
 
 	else if (src.mob_flags & MOB_HEARS_ALL)
 		src.mob_flags &= ~MOB_HEARS_ALL
 
-		src.listen_tree.RemoveInput(LISTEN_INPUT_GLOBAL_HEARING)
-		src.listen_tree.RemoveInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
-		src.listen_tree.AddInput(LISTEN_INPUT_EARS)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_GLOBAL_HEARING)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_GLOBAL_HEARING_LOCAL_COUNTERPART)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_EARS)
 
 /client/proc/toggle_attack_messages()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -300,14 +300,14 @@ client/proc/toggle_ghost_respawns()
 		player_mode_mhelp = 0
 
 		if (src.preferences.listen_ooc)
-			src.listen_tree.AddInput(LISTEN_INPUT_OOC_ADMIN)
-			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
+			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
 		if (src.preferences.listen_looc)
 			if (src.only_local_looc)
-				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
 			else
-				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
-			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC)
+				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
 
 		src.holder.admin_say_tree.update_target_speech_tree(src.say_tree)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
@@ -369,14 +369,14 @@ client/proc/toggle_ghost_respawns()
 				return
 
 		if (src.preferences.listen_ooc)
-			src.listen_tree.AddInput(LISTEN_INPUT_OOC)
-			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC_ADMIN)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC)
+			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
 		if (src.preferences.listen_looc)
-			src.listen_tree.AddInput(LISTEN_INPUT_LOOC)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
 			if (src.only_local_looc)
-				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
 			else
-				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 
 		src.holder.admin_say_tree.update_target_speech_tree()
 		src.holder.admin_listen_tree.update_target_listen_tree()
@@ -911,11 +911,11 @@ client/proc/toggle_ghost_respawns()
 
 	if (!src.deadchatoff)
 		src.deadchatoff = TRUE
-		src.listen_tree.RemoveInput(LISTEN_INPUT_DEADCHAT)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_DEADCHAT)
 		boutput(usr, SPAN_NOTICE("No longer viewing deadchat."))
 	else
 		src.deadchatoff = FALSE
-		src.listen_tree.AddInput(LISTEN_INPUT_DEADCHAT)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_DEADCHAT)
 		boutput(usr, SPAN_NOTICE("Now viewing deadchat."))
 
 /datum/admins/proc/toggleaprilfools()

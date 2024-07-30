@@ -10,15 +10,10 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 	var/channel = "none"
 	/// The say channel datum that this module should pass say messages to.
 	var/datum/say_channel/say_channel
-	/// The speech tree that this module belongs to.
-	var/datum/speech_module_tree/parent_tree
 
 /datum/speech_module/output/New(datum/speech_module_tree/parent)
 	. = ..()
-	if (!istype(parent))
-		CRASH("Tried to instantiate a listen input without a parent listen tree. You can't do that!")
 
-	src.parent_tree = parent
 	src.say_channel = global.SpeechManager.GetSayChannelInstance(src.channel)
 	src.say_channel.RegisterOutput(src)
 
@@ -41,6 +36,11 @@ ABSTRACT_TYPE(/datum/speech_module/output/bundled)
  */
 /datum/speech_module/output/bundled
 	var/subchannel = "none"
+
+/datum/speech_module/output/bundled/New(datum/speech_module_tree/parent, subchannel)
+	src.subchannel = subchannel
+
+	. = ..()
 
 /datum/speech_module/output/bundled/process(datum/say_message/message)
 	PASS_MESSAGE_TO_SAY_CHANNEL(src.say_channel, message, src.subchannel)

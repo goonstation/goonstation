@@ -331,29 +331,13 @@ proc/get_default_flock()
 		aH = T.abilityHolder
 		aH?.updateTiles(tiles_owned)
 
-/datum/flock/proc/update_speech_channels_of_flockmob(mob/M, subchannel = "\ref[src]")
-	var/datum/speech_module/output/bundled/flock_say/output = M.ensure_say_tree().GetOutputByID(SPEECH_OUTPUT_FLOCK)
-	output.subchannel = subchannel
-	output.flock = src
-
-/datum/flock/proc/update_listen_channels_of_flockmob(mob/M, subchannel = "\ref[src]")
-	var/datum/listen_module/input/bundled/flock/input = M.ensure_listen_tree().GetInputByID(LISTEN_INPUT_FLOCK)
-	input.ChangeSubchannel(subchannel)
-
-/datum/flock/proc/update_speech_channels_of_flockstructure(atom/A, subchannel = "\ref[src]")
-	var/datum/speech_module/output/bundled/flock_say/output = A.ensure_say_tree().GetOutputByID(SPEECH_OUTPUT_FLOCK_SYSTEM)
-	output.subchannel = subchannel
-	output.flock = src
-
 /datum/flock/proc/registerFlockmind(mob/living/intangible/flock/flockmind/F)
 	if(!F)
 		return
 
 	src.flockmind = F
-	src.update_speech_channels_of_flockmob(src.flockmind)
-
-	var/datum/listen_module/input/bundled/flockmind/input = src.flockmind.ensure_listen_tree().GetInputByID(LISTEN_INPUT_FLOCKMIND)
-	input.ChangeSubchannel("\ref[src]")
+	src.flockmind.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_FLOCK, subchannel = "\ref[src]", flock = src)
+	src.flockmind.ensure_listen_tree().AddListenInput(LISTEN_INPUT_FLOCKMIND, subchannel = "\ref[src]")
 
 //since flocktraces need to be given their flock in New this is useful for debug
 /datum/flock/proc/spawnTrace()
@@ -365,8 +349,8 @@ proc/get_default_flock()
 		return
 	src.traces |= T
 	src.update_computes(TRUE)
-	src.update_speech_channels_of_flockmob(T)
-	src.update_listen_channels_of_flockmob(T)
+	T.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_FLOCK, subchannel = "\ref[src]", flock = src)
+	T.ensure_listen_tree().AddListenInput(LISTEN_INPUT_FLOCK, subchannel = "\ref[src]")
 
 /datum/flock/proc/removeTrace(mob/living/intangible/flock/trace/T)
 	if(!T)
@@ -375,8 +359,8 @@ proc/get_default_flock()
 	src.active_names -= T.real_name
 	hideAnnotations(T)
 	src.update_computes(TRUE)
-	src.update_speech_channels_of_flockmob(T, null)
-	src.update_listen_channels_of_flockmob(T, null)
+	T.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_FLOCK, subchannel = "\ref[src]")
+	T.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_FLOCK, subchannel = "\ref[src]")
 
 /datum/flock/proc/ping(var/atom/target, var/mob/living/intangible/flock/pinger)
 	//awful typecheck because turfs and movables have vis_contents defined seperately because god hates us
@@ -565,7 +549,7 @@ proc/get_default_flock()
 			src.total_compute += comp_provided
 		src.update_computes()
 
-	src.update_speech_channels_of_flockmob(D)
+	D.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_FLOCK, subchannel = "\ref[src]", flock = src)
 
 /datum/flock/proc/removeDrone(mob/living/critter/flock/D)
 	if(!isflockmob(D))
@@ -585,9 +569,9 @@ proc/get_default_flock()
 		if (comp_provided > 0)
 			src.total_compute -= comp_provided
 		src.update_computes()
-	D.flock = null
 
-	src.update_speech_channels_of_flockmob(D, null)
+	D.flock = null
+	D.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_FLOCK, subchannel = "\ref[src]")
 
 // TRACES
 
@@ -626,7 +610,7 @@ proc/get_default_flock()
 			src.total_compute += comp_provided
 		src.update_computes()
 
-	src.update_speech_channels_of_flockstructure(S)
+	S.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_FLOCK_SYSTEM, subchannel = "\ref[src]", flock = src)
 
 /datum/flock/proc/removeStructure(obj/flock_structure/S)
 	if(!isflockstructure(S))
@@ -643,7 +627,7 @@ proc/get_default_flock()
 			src.total_compute -= comp_provided
 		src.update_computes()
 
-	src.update_speech_channels_of_flockstructure(S, null)
+	S.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_FLOCK_SYSTEM, subchannel = "\ref[src]")
 
 /datum/flock/proc/getComplexDroneCount()
 	if (!src.units)

@@ -355,9 +355,9 @@ TYPEINFO(/obj/item/device/radio)
 
 	src.ensure_listen_tree()
 	if (src.microphone_enabled)
-		src.listen_tree.AddInput(src.microphone_listen_input)
+		src.listen_tree.AddListenInput(src.microphone_listen_input)
 	else
-		src.listen_tree.RemoveInput(src.microphone_listen_input)
+		src.listen_tree.RemoveListenInput(src.microphone_listen_input)
 
 /// Toggles the radio speaker, determining whether received radio messages should be spoken.
 /obj/item/device/radio/proc/toggle_speaker(speaker_enabled)

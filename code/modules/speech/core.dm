@@ -4,7 +4,7 @@
 /atom/var/list/start_listen_modifiers
 /// The listen inputs that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_listen_inputs
-/// The listen languages that this atom *starts* with. It will not be updated nor used again after initialisation. Note this is the languages that the atom understands when heard.
+/// The listen languages that this atom *starts* with. It will not be updated nor used again after initialisation. Note that this is the languages that the atom understands when heard.
 /atom/var/list/start_listen_languages
 
 /atom/New()
@@ -145,14 +145,9 @@ Contributing:
 	Thorough documentation,
 	The use of `src` and `global` when accessing applicable variables.
 
-Limitations To Later Code Out:
-- Currently tree can only support one instance of each module ID - this is not ideal for delimited listen and speech modules.
-
 Cleanup:
 - Move say procs into this directory.
 - Tidy speech variables on types. Especially mobs. (search for speech_verb_)
-- `VAR_PRIVATE` where necessary.
-- `RETURN_TYPE` where necessary.
 
 Old Code To Remove:
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
@@ -214,15 +209,15 @@ Follow-Up PRs:
 
 	if (src.preferences.listen_ooc)
 		if (src.holder && !src.player_mode)
-			src.listen_tree.AddInput(LISTEN_INPUT_OOC_ADMIN)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC_ADMIN)
 		else
-			src.listen_tree.AddInput(LISTEN_INPUT_OOC)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_OOC)
 
 	else
 		if (src.holder && !src.player_mode)
-			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC_ADMIN)
+			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC_ADMIN)
 		else
-			src.listen_tree.RemoveInput(LISTEN_INPUT_OOC)
+			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
 
 /client/proc/toggle_looc(looc_enabled)
 	if (src.preferences.listen_looc == looc_enabled)
@@ -233,20 +228,20 @@ Follow-Up PRs:
 	if (src.preferences.listen_looc)
 		if (src.holder && !src.player_mode)
 			if (src.only_local_looc)
-				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
 			else
-				src.listen_tree.AddInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 		else
-			src.listen_tree.AddInput(LISTEN_INPUT_LOOC)
+			src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC)
 
 	else
 		if (src.holder && !src.player_mode)
 			if (src.only_local_looc)
-				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
+				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_LOCAL)
 			else
-				src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
+				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 		else
-			src.listen_tree.RemoveInput(LISTEN_INPUT_LOOC)
+			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
 
 /mob/Login()
 	. = ..()

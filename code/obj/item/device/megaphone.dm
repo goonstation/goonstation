@@ -21,10 +21,10 @@
 	pickup(mob/M)
 		. = ..()
 
-		M.ensure_say_tree().AddModifier(SPEECH_MODIFIER_MEGAPHONE)
+		M.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_MEGAPHONE)
 
 	dropped(mob/M)
-		M.ensure_say_tree().RemoveModifier(SPEECH_MODIFIER_MEGAPHONE)
+		M.ensure_say_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MEGAPHONE)
 
 		. = ..()
 

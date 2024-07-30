@@ -28,19 +28,15 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 		src.owner.transfer_to(critter)
 		qdel(old_mob)
 
-		var/datum/speech_module/output/bundled/hivemind/output = src.owner.current.ensure_say_tree().AddOutput(src.speech_output)
-		output.subchannel = "\ref[src.master_ability_holder]"
-
-		var/datum/listen_module/input/bundled/hivemind/input = src.owner.current.ensure_listen_tree().AddInput(LISTEN_INPUT_HIVECHAT)
-		input.ChangeSubchannel("\ref[src.master_ability_holder]")
-
+		src.owner.current.ensure_say_tree().AddSpeechOutput(src.speech_output, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.ensure_listen_tree().AddListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.master_ability_holder]")
 		src.owner.current.default_speech_output_channel = SAY_CHANNEL_HIVEMIND
 
 	remove_equipment()
 		src.master_ability_holder.hivemind -= src.owner.current
 
-		src.owner.current.ensure_say_tree().RemoveOutput(src.speech_output)
-		src.owner.current.ensure_listen_tree().RemoveInput(LISTEN_INPUT_HIVECHAT)
+		src.owner.current.ensure_say_tree().RemoveSpeechOutput(src.speech_output, subchannel = "\ref[src.master_ability_holder]")
+		src.owner.current.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_HIVECHAT, subchannel = "\ref[src.master_ability_holder]")
 		src.owner.current.default_speech_output_channel = null
 
 	add_to_image_groups()

@@ -1,3 +1,14 @@
+//------------- WRAPPERS -------------//
+/// A wrapper for _AddSpeechOutput that permits the usage of named arguments.
+#define AddSpeechOutput(output_id, arguments...) _AddSpeechOutput(output_id, list(##arguments))
+/// A wrapper for _AddSpeechModifier that permits the usage of named arguments.
+#define AddSpeechModifier(modifier_id, arguments...) _AddSpeechModifier(modifier_id, list(##arguments))
+/// A wrapper for _AddListenInput that permits the usage of named arguments.
+#define AddListenInput(input_id, arguments...) _AddListenInput(input_id, list(##arguments))
+/// A wrapper for _AddListenModifier that permits the usage of named arguments.
+#define AddListenModifier(modifier_id, arguments...) _AddListenModifier(modifier_id, list(##arguments))
+
+
 //------------- COOLDOWNS -------------//
 /// The minimum time between voice sound effects for a single atom. Measured in tenths of a second.
 #define VOICE_SOUND_COOLDOWN 8

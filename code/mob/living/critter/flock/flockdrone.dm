@@ -65,8 +65,9 @@
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
 			src.is_npc = FALSE
 		else
-			emote("beep")
-			src.say(pick_string("flockmind.txt", "flockdrone_created"))
+			SPAWN(1)
+				emote("beep")
+				src.say(pick_string("flockmind.txt", "flockdrone_created"))
 		if (src.flock) //can't do flock?.stats due to http://www.byond.com/forum/post/2841585
 			src.flock.stats.drones_made++
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)

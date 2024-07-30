@@ -382,6 +382,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 /// Create a copy of this say message datum.
 /datum/say_message/proc/Copy()
+	RETURN_TYPE(/datum/say_message)
+
 	var/datum/say_message/copy = new(is_copy = TRUE)
 	for (var/V in src.vars)
 		if (!issaved(src.vars[V]))

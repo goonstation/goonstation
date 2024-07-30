@@ -17,29 +17,29 @@
 /datum/speech_module_tree/auxiliary/process()
 	return
 
-/datum/speech_module_tree/auxiliary/AddOutput(output_id)
-	src.target_speech_tree?.AddOutput(output_id)
+/datum/speech_module_tree/auxiliary/_AddSpeechOutput(output_id, arguments, count)
+	src.target_speech_tree?._AddSpeechOutput(output_id, arguments, count)
 	. = ..()
 
-/datum/speech_module_tree/auxiliary/RemoveOutput(output_id)
-	src.target_speech_tree?.RemoveOutput(output_id)
+/datum/speech_module_tree/auxiliary/RemoveSpeechOutput(output_id, subchannel, count)
+	src.target_speech_tree?.RemoveSpeechOutput(output_id, subchannel, count)
 	. = ..()
 
-/datum/speech_module_tree/auxiliary/AddModifier(modifier_id)
-	src.target_speech_tree?.AddModifier(modifier_id)
+/datum/speech_module_tree/auxiliary/_AddSpeechModifier(modifier_id, arguments, count)
+	src.target_speech_tree?._AddSpeechModifier(modifier_id, arguments, count)
 	. = ..()
 
-/datum/speech_module_tree/auxiliary/RemoveModifier(modifier_id)
-	src.target_speech_tree?.RemoveModifier(modifier_id)
+/datum/speech_module_tree/auxiliary/RemoveSpeechModifier(modifier_id, count)
+	src.target_speech_tree?.RemoveSpeechModifier(modifier_id, count)
 	. = ..()
 
 /datum/speech_module_tree/auxiliary/proc/update_target_speech_tree(datum/speech_module_tree/speech_tree)
 	if (src.target_speech_tree)
 		for (var/output_id in src.output_module_ids_with_subcount)
-			src.target_speech_tree.RemoveOutput(output_id, src.output_module_ids_with_subcount[output_id])
+			src.target_speech_tree.RemoveSpeechOutput(output_id, count = src.output_module_ids_with_subcount[output_id])
 
 		for (var/modifier_id in src.speech_modifier_ids_with_subcount)
-			src.target_speech_tree.RemoveModifier(modifier_id, src.speech_modifier_ids_with_subcount[modifier_id])
+			src.target_speech_tree.RemoveSpeechModifier(modifier_id, count = src.speech_modifier_ids_with_subcount[modifier_id])
 
 		src.target_speech_tree.auxiliary_trees -= src
 
@@ -48,9 +48,9 @@
 		return
 
 	for (var/output_id in src.output_module_ids_with_subcount)
-		src.target_speech_tree.AddOutput(output_id, src.output_module_ids_with_subcount[output_id])
+		src.target_speech_tree._AddSpeechOutput(output_id, count = src.output_module_ids_with_subcount[output_id])
 
 	for (var/modifier_id in src.speech_modifier_ids_with_subcount)
-		src.target_speech_tree.AddModifier(modifier_id, src.speech_modifier_ids_with_subcount[modifier_id])
+		src.target_speech_tree._AddSpeechModifier(modifier_id, count = src.speech_modifier_ids_with_subcount[modifier_id])
 
 	src.target_speech_tree.auxiliary_trees += src

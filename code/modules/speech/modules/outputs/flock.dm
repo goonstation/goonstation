@@ -4,9 +4,10 @@
 	var/datum/flock/flock
 	var/datum/say_channel/distorted_flock/distorted_flock_channel
 
-/datum/speech_module/output/bundled/flock_say/New()
+/datum/speech_module/output/bundled/flock_say/New(datum/speech_module_tree/parent, subchannel, datum/flock/flock)
 	. = ..()
 
+	src.flock = flock
 	src.distorted_flock_channel = global.SpeechManager.GetSayChannelInstance(SAY_CHANNEL_DISTORTED_FLOCK)
 
 /datum/speech_module/output/bundled/flock_say/process(datum/say_message/message)

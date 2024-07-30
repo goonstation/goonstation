@@ -116,5 +116,5 @@
 		if(!get_turf(src))
 			src.my_mouse.gib()
 		src.my_mouse = null
-		src.target.ensure_listen_tree().RemoveInput(LISTEN_INPUT_MENTOR_MOUSE)
+		src.target.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_MENTOR_MOUSE)
 		qdel(src)

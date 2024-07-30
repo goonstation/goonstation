@@ -351,7 +351,7 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 			o2.layer = 5
 			src.vis_contents += o2
 
-			z.ensure_listen_tree().AddInput(LISTEN_INPUT_DEADCHAT)
+			z.ensure_listen_tree().AddListenInput(LISTEN_INPUT_DEADCHAT)
 			boutput(z, SPAN_NOTICE("<b>You begin to hear the whisperings of the dead...</b>"))
 
 			for(var/i=1,i<=6,i++)
@@ -366,7 +366,7 @@ var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob 
 
 			if(src)
 				if(z.loc == src)
-					z.ensure_listen_tree().RemoveInput(LISTEN_INPUT_DEADCHAT)
+					z.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_DEADCHAT)
 					boutput(z, SPAN_NOTICE("<b>The whispers and wails of those parted fade into nothingness...</b>"))
 				src.lightfade()
 				src.remove_simple_light("zoldorf")

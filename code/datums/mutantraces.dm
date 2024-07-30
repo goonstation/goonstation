@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.say_language = src.override_language
 
 		if (src.mutantrace_speech_modifier)
-			M.ensure_say_tree().AddModifier(src.mutantrace_speech_modifier)
+			M.ensure_say_tree().AddSpeechModifier(src.mutantrace_speech_modifier)
 
 		M.ensure_listen_tree()
 		for (var/language_id in src.understood_languages)
@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.mob.say_language = initial(src.mob.say_language)
 
 			if (src.mutantrace_speech_modifier)
-				src.mob.ensure_say_tree().RemoveModifier(src.mutantrace_speech_modifier)
+				src.mob.ensure_say_tree().RemoveSpeechModifier(src.mutantrace_speech_modifier)
 
 			src.mob.ensure_listen_tree()
 			for (var/language_id in src.understood_languages)
@@ -2054,8 +2054,8 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-				H.ensure_say_tree().AddOutput(SPEECH_OUTPUT_KUDZUCHAT)
-				H.ensure_listen_tree().AddInput(LISTEN_INPUT_KUDZUCHAT)
+				H.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
+				H.ensure_listen_tree().AddListenInput(LISTEN_INPUT_KUDZUCHAT)
 
 				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
 					var/datum/abilityHolder/composite/ch = H.abilityHolder
@@ -2067,8 +2067,8 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 
-			H.ensure_say_tree().RemoveOutput(SPEECH_OUTPUT_KUDZUCHAT)
-			H.ensure_listen_tree().RemoveInput(LISTEN_INPUT_KUDZUCHAT)
+			H.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
+			H.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_KUDZUCHAT)
 
 		return ..()
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead

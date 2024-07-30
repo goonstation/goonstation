@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/say_channel)
 		if (!A.listen_tree)
 			continue
 
-		for (var/datum/listen_module/input/input as anything in A.listen_tree.input_modules_by_channel[src.channel_id])
+		for (var/datum/listen_module/input/input as anything in A.listen_tree.GetInputsByChannel(src.channel_id))
 			listen_modules_by_type[input.type] ||= list()
 			listen_modules_by_type[input.type] += input
 

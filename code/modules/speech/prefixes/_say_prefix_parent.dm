@@ -17,4 +17,5 @@ ABSTRACT_TYPE(/datum/say_prefix)
 
 /// Process the message, applying prefix specific effects. This typically involves copying the message and sending it to an equipped module.
 /datum/say_prefix/proc/process(datum/say_message/message, datum/speech_module_tree/say_tree)
+	RETURN_TYPE(/datum/say_message)
 	return message

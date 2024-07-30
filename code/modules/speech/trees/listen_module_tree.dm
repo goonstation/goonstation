@@ -9,34 +9,34 @@
 	/// The atom that should act as the origin point for listening to messages.
 	var/atom/listener_origin
 	/// A list of all atoms that list this listen module tree as their listen tree, despite not being the true parent.
-	var/list/atom/secondary_parents
+	VAR_PROTECTED/list/atom/secondary_parents
 	/// A list of all auxiliary listen module trees with this listen module tree registered as a target.
-	var/list/datum/listen_module_tree/auxiliary/auxiliary_trees
+	VAR_PROTECTED/list/datum/listen_module_tree/auxiliary/auxiliary_trees
 	/// A temporary buffer of all received messages that are to be outputted to the parent when the buffer is flushed.
-	var/list/datum/say_message/message_buffer
+	VAR_PROTECTED/list/datum/say_message/message_buffer
 	/// An associative list of all signal recipients that may cause the message buffer to flush.
-	var/list/datum/signal_recipients
+	VAR_PROTECTED/list/datum/signal_recipients
 
 	/// An associative list of input listen module subscription counts, indexed by the module ID.
-	var/list/input_module_ids_with_subcount
+	VAR_PROTECTED/list/input_module_ids_with_subcount
 	/// An associative list of input listen modules, indexed by the module ID.
-	var/list/datum/listen_module/input/input_modules_by_id
+	VAR_PROTECTED/list/datum/listen_module/input/input_modules_by_id
 	/// An associative list of input listen modules, indexed by the module channel.
-	var/list/list/datum/listen_module/input/input_modules_by_channel
+	VAR_PROTECTED/list/list/datum/listen_module/input/input_modules_by_channel
 
 	/// An associative list of modifier listen module subscription counts, indexed by the module ID.
-	var/list/listen_modifier_ids_with_subcount
+	VAR_PROTECTED/list/listen_modifier_ids_with_subcount
 	/// An associative list of modifier listen modules, indexed by the module ID.
-	var/list/datum/listen_module/modifier/listen_modifiers_by_id
+	VAR_PROTECTED/list/datum/listen_module/modifier/listen_modifiers_by_id
 	/// An associative list of modifier listen modules that overide say channel modifier preferences, indexed by the module ID.
-	var/list/datum/speech_module/modifier/persistent_listen_modifiers_by_id
+	VAR_PROTECTED/list/datum/speech_module/modifier/persistent_listen_modifiers_by_id
 
 	/// An associative list of language datum subscription counts, indexed by the language ID.
-	var/list/known_language_ids_with_subcount
+	VAR_PROTECTED/list/known_language_ids_with_subcount
 	/// An associative list of language datums, indexed by the language ID.
-	var/list/datum/language/known_languages_by_id
+	VAR_PROTECTED/list/datum/language/known_languages_by_id
 	/// Whether this listen module tree is capable of understanding all languages.
-	var/understands_all_languages = FALSE
+	VAR_PROTECTED/understands_all_languages = FALSE
 
 /datum/listen_module_tree/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/languages = list())
 	. = ..()
@@ -52,13 +52,13 @@
 	src.input_modules_by_id = list()
 	src.input_modules_by_channel = list()
 	for (var/input_id in inputs)
-		src.AddInput(input_id)
+		src.AddListenInput(input_id)
 
 	src.listen_modifier_ids_with_subcount = list()
 	src.listen_modifiers_by_id = list()
 	src.persistent_listen_modifiers_by_id = list()
 	for (var/modifier_id in modifiers)
-		src.AddModifier(modifier_id)
+		src.AddListenModifier(modifier_id)
 
 	src.known_language_ids_with_subcount = list()
 	src.known_languages_by_id = list()
@@ -178,54 +178,58 @@
 	SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
 
 /// Adds a new input module to the tree. Returns a reference to the new input module on success.
-/datum/listen_module_tree/proc/AddInput(input_id, count = 1)
+/datum/listen_module_tree/proc/_AddListenInput(input_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/listen_module/input)
 
-	src.input_module_ids_with_subcount[input_id] += count
-	if (src.input_modules_by_id[input_id])
-		return src.input_modules_by_id[input_id]
+	var/module_id = "[input_id][arguments["subchannel"]]"
+	src.input_module_ids_with_subcount[module_id] += count
+	if (src.input_modules_by_id[module_id])
+		return src.input_modules_by_id[module_id]
 
-	var/datum/listen_module/input/new_input = global.SpeechManager.GetInputInstance(input_id, src)
+	arguments["parent"] = src
+	var/datum/listen_module/input/new_input = global.SpeechManager.GetInputInstance(input_id, arguments)
 	if (!istype(new_input))
 		return
 
-	src.input_modules_by_id[input_id] = new_input
+	src.input_modules_by_id[module_id] = new_input
 	src.input_modules_by_channel[new_input.channel] ||= list()
 	src.input_modules_by_channel[new_input.channel] += new_input
 	return new_input
 
 /// Removes an input from the tree. Returns TRUE on success, FALSE on failure.
-/datum/listen_module_tree/proc/RemoveInput(input_id, count = 1)
-	if (!src.input_modules_by_id[input_id])
+/datum/listen_module_tree/proc/RemoveListenInput(input_id, subchannel, count = 1)
+	var/module_id = "[input_id][subchannel]"
+	if (!src.input_modules_by_id[module_id])
 		return FALSE
 
-	src.input_module_ids_with_subcount[input_id] -= count
-	if (!src.input_module_ids_with_subcount[input_id])
-		src.input_modules_by_channel[src.input_modules_by_id[input_id].channel] -= src.input_modules_by_id[input_id]
-		qdel(src.input_modules_by_id[input_id])
-		src.input_modules_by_id -= input_id
+	src.input_module_ids_with_subcount[module_id] -= count
+	if (!src.input_module_ids_with_subcount[module_id])
+		src.input_modules_by_channel[src.input_modules_by_id[module_id].channel] -= src.input_modules_by_id[module_id]
+		qdel(src.input_modules_by_id[module_id])
+		src.input_modules_by_id -= module_id
 
 	return TRUE
 
 /// Returns the input module that matches the specified ID.
-/datum/listen_module_tree/proc/GetInputByID(input_id)
+/datum/listen_module_tree/proc/GetInputByID(input_id, subchannel)
 	RETURN_TYPE(/datum/listen_module/input)
-	return src.input_modules_by_id[input_id]
+	return src.input_modules_by_id["[input_id][subchannel]"]
 
 /// Returns a list of output modules that output to the specified channel.
-/datum/listen_module_tree/proc/GetInputByChannel(channel_id)
+/datum/listen_module_tree/proc/GetInputsByChannel(channel_id)
 	RETURN_TYPE(/list/datum/listen_module/input)
 	return src.input_modules_by_channel[channel_id]
 
 /// Adds a new modifier module to the tree. Returns a reference to the new modifier module on success.
-/datum/listen_module_tree/proc/AddModifier(modifier_id, count = 1)
+/datum/listen_module_tree/proc/_AddListenModifier(modifier_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/listen_module/modifier)
 
 	src.listen_modifier_ids_with_subcount[modifier_id] += count
 	if (src.listen_modifiers_by_id[modifier_id])
 		return src.listen_modifiers_by_id[modifier_id]
 
-	var/datum/listen_module/modifier/new_modifier = global.SpeechManager.GetListenModifierInstance(modifier_id, src)
+	arguments["parent"] = src
+	var/datum/listen_module/modifier/new_modifier = global.SpeechManager.GetListenModifierInstance(modifier_id, arguments)
 	if (!istype(new_modifier))
 		return
 
@@ -239,7 +243,7 @@
 	return new_modifier
 
 /// Removes a modifier from the tree. Returns TRUE on success, FALSE on failure.
-/datum/listen_module_tree/proc/RemoveModifier(modifier_id, count = 1)
+/datum/listen_module_tree/proc/RemoveListenModifier(modifier_id, count = 1)
 	if (!src.listen_modifiers_by_id[modifier_id])
 		return FALSE
 

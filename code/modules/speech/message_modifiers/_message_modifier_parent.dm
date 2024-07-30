@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/datum/message_modifier)
 
 /// Handle all processing that pertains to the say pipeline. Return `null` to prevent the message being processed further, or a `/datum/say_message` instance to continue.
 /datum/message_modifier/proc/process(datum/say_message/message)
+	RETURN_TYPE(/datum/say_message)
 	return message
 
 

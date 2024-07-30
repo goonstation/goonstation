@@ -287,9 +287,9 @@
 	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
 
 	if (usr.client.mute_ghost_radio)
-		src.ensure_listen_tree().RemoveInput(LISTEN_INPUT_RADIO_GLOBAL)
+		src.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_RADIO_GLOBAL)
 	else
-		src.ensure_listen_tree().AddInput(LISTEN_INPUT_RADIO_GLOBAL)
+		src.ensure_listen_tree().AddListenInput(LISTEN_INPUT_RADIO_GLOBAL)
 
 	boutput(usr, SPAN_NOTICE("[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost."))
 

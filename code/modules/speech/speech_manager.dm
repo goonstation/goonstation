@@ -6,13 +6,13 @@ var/global/datum/speech_manager/SpeechManager = new()
  */
 /datum/speech_manager
 	/// An associative list of cached modifier speech module types, indexed by their ID.
-	VAR_PRIVATE/list/modifier_cache
+	VAR_PRIVATE/list/speech_modifier_cache
 	/// An associative list of cached output speech module types, indexed by their ID.
 	VAR_PRIVATE/list/output_cache
 	/// An associative list of cached input listen module types, indexed by their ID.
 	VAR_PRIVATE/list/input_cache
 	/// An associative list of cached modifier listen module types, indexed by their ID.
-	VAR_PRIVATE/list/listen_mod_cache
+	VAR_PRIVATE/list/listen_modifier_cache
 
 	/// An associative list of cached shared input format module datum singletons, indexed by their ID.
 	VAR_PRIVATE/list/datum/shared_input_format_module/shared_input_format_cache
@@ -37,19 +37,19 @@ var/global/datum/speech_manager/SpeechManager = new()
 	. = ..()
 
 	// Populate the module caches.
-	src.modifier_cache = list()
-	for (var/datum/speech_module/modifier/T as anything in concrete_typesof(/datum/speech_module/modifier))
-		var/module_id = initial(T.id)
-		if (src.modifier_cache[module_id])
-			CRASH("Non unique modifier found: [module_id]. These MUST be unique.")
-		src.modifier_cache[module_id] = T
-
 	src.output_cache = list()
 	for (var/datum/speech_module/output/T as anything in concrete_typesof(/datum/speech_module/output))
 		var/module_id = initial(T.id)
 		if (src.output_cache[module_id])
 			CRASH("Non unique output found: [module_id]. These MUST be unique.")
 		src.output_cache[module_id] = T
+
+	src.speech_modifier_cache = list()
+	for (var/datum/speech_module/modifier/T as anything in concrete_typesof(/datum/speech_module/modifier))
+		var/module_id = initial(T.id)
+		if (src.speech_modifier_cache[module_id])
+			CRASH("Non unique modifier found: [module_id]. These MUST be unique.")
+		src.speech_modifier_cache[module_id] = T
 
 	src.input_cache = list()
 	for (var/datum/listen_module/input/T as anything in concrete_typesof(/datum/listen_module/input))
@@ -58,12 +58,12 @@ var/global/datum/speech_manager/SpeechManager = new()
 			CRASH("Non unique input found: [module_id]. These MUST be unique.")
 		src.input_cache[module_id] = T
 
-	src.listen_mod_cache = list()
+	src.listen_modifier_cache = list()
 	for (var/datum/listen_module/modifier/T as anything in concrete_typesof(/datum/listen_module/modifier))
 		var/module_id = initial(T.id)
-		if (src.listen_mod_cache[module_id])
+		if (src.listen_modifier_cache[module_id])
 			CRASH("Non unique listen modifer found: [module_id]. These MUST be unique.")
-		src.listen_mod_cache[module_id] = T
+		src.listen_modifier_cache[module_id] = T
 
 	// Populate the shared input format module cache.
 	src.shared_input_format_cache = list()
@@ -111,41 +111,41 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 	sortList(src.postprocessing_message_modifier_cache, GLOBAL_PROC_REF(cmp_message_modifier), TRUE)
 
-/// Returns a unique instance of the modifier speech module requested, or runtimes on bad ID.
-/datum/speech_manager/proc/GetSpeechModifierInstance(mod_id)
-	RETURN_TYPE(/datum/speech_module/modifier)
-	var/result = src.modifier_cache[mod_id]
-	if (result)
-		return new result()
-	else
-		CRASH("Invalid modifier lookup: [mod_id]")
-
 /// Returns a unique instance of the output speech module requested, or runtimes on bad ID.
-/datum/speech_manager/proc/GetOutputInstance(output_id, datum/listen_module_tree/parent)
+/datum/speech_manager/proc/GetOutputInstance(output_id, list/arguments)
 	RETURN_TYPE(/datum/speech_module/output)
 	var/result = src.output_cache[output_id]
 	if (result)
-		return new result(parent)
+		return new result(arglist(arguments))
 	else
 		CRASH("Invalid output lookup: [output_id]")
 
+/// Returns a unique instance of the modifier speech module requested, or runtimes on bad ID.
+/datum/speech_manager/proc/GetSpeechModifierInstance(modifier_id, list/arguments)
+	RETURN_TYPE(/datum/speech_module/modifier)
+	var/result = src.speech_modifier_cache[modifier_id]
+	if (result)
+		return new result(arglist(arguments))
+	else
+		CRASH("Invalid modifier lookup: [modifier_id]")
+
 /// Returns a unique instance of the input listen module requested, or runtimes on bad ID.
-/datum/speech_manager/proc/GetInputInstance(input_id, datum/listen_module_tree/parent)
+/datum/speech_manager/proc/GetInputInstance(input_id, list/arguments)
 	RETURN_TYPE(/datum/listen_module/input)
 	var/result = src.input_cache[input_id]
 	if (result)
-		return new result(parent)
+		return new result(arglist(arguments))
 	else
 		CRASH("Invalid input lookup: [input_id]")
 
 /// Returns a unique instance of the modifier listen module requested, or runtimes on bad ID.
-/datum/speech_manager/proc/GetListenModifierInstance(mod_id, datum/listen_module_tree/parent)
+/datum/speech_manager/proc/GetListenModifierInstance(modifier_id, list/arguments)
 	RETURN_TYPE(/datum/listen_module/modifier)
-	var/result = src.listen_mod_cache[mod_id]
+	var/result = src.listen_modifier_cache[modifier_id]
 	if (result)
-		return new result(parent)
+		return new result(arglist(arguments))
 	else
-		CRASH("Invalid listen modifier lookup: [mod_id]")
+		CRASH("Invalid listen modifier lookup: [modifier_id]")
 
 /// Returns the global instance of the shared input module datum corresponding to the ID given. Does not runtime of bad ID.
 /datum/speech_manager/proc/GetSharedInputFormatModuleInstance(module_id)

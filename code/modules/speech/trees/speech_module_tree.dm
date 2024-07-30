@@ -9,23 +9,23 @@
 	/// The atom that should act as the origin point for sending messages from this speech module tree.
 	var/atom/speaker_origin
 	/// A list of all atoms that list this speech module tree as their say tree, despite not being the true parent.
-	var/list/atom/secondary_parents
+	VAR_PROTECTED/list/atom/secondary_parents
 	/// A list of all auxiliary speech module trees with this speech module tree registered as a target.
-	var/list/datum/speech_module_tree/auxiliary/auxiliary_trees
+	VAR_PROTECTED/list/datum/speech_module_tree/auxiliary/auxiliary_trees
 
 	/// An associative list of output speech module subscription counts, indexed by the module ID.
-	var/list/output_module_ids_with_subcount
+	VAR_PROTECTED/list/output_module_ids_with_subcount
 	/// An associative list of output speech modules, indexed by the module ID.
-	var/list/datum/speech_module/output/output_modules_by_id
+	VAR_PROTECTED/list/datum/speech_module/output/output_modules_by_id
 	/// An associative list of output speech modules, indexed by the module channel. Additionally, each sublist of modules is sorted by priority.
-	var/list/datum/speech_module/output/output_modules_by_channel
+	VAR_PROTECTED/list/datum/speech_module/output/output_modules_by_channel
 
 	/// An associative list of modifier speech module subscription counts, indexed by the module ID.
-	var/list/speech_modifier_ids_with_subcount
+	VAR_PROTECTED/list/speech_modifier_ids_with_subcount
 	/// An associative list of modifier speech modules, indexed by the module ID.
-	var/list/datum/speech_module/modifier/speech_modifiers_by_id
+	VAR_PROTECTED/list/datum/speech_module/modifier/speech_modifiers_by_id
 	/// An associative list of modifier speech modules that overide say channel modifier preferences, indexed by the module ID.
-	var/list/datum/speech_module/modifier/persistent_speech_modifiers_by_id
+	VAR_PROTECTED/list/datum/speech_module/modifier/persistent_speech_modifiers_by_id
 
 /datum/speech_module_tree/New(atom/parent, list/modifiers = list(), list/outputs = list())
 	. = ..()
@@ -39,13 +39,13 @@
 	src.output_modules_by_id = list()
 	src.output_modules_by_channel = list()
 	for (var/output_id in outputs)
-		src.AddOutput(output_id)
+		src.AddSpeechOutput(output_id)
 
 	src.speech_modifier_ids_with_subcount = list()
 	src.speech_modifiers_by_id = list()
 	src.persistent_speech_modifiers_by_id = list()
 	for (var/modifier_id in modifiers)
-		src.AddModifier(modifier_id)
+		src.AddSpeechModifier(modifier_id)
 
 /datum/speech_module_tree/disposing()
 	for (var/datum/speech_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
@@ -86,7 +86,7 @@
 		if (output_override)
 			output_modules = list(output_override)
 	else
-		output_modules = src.GetOutputByChannel(message.output_module_channel)
+		output_modules = src.GetOutputsByChannel(message.output_module_channel)
 
 	if (!length(output_modules))
 		return
@@ -177,55 +177,59 @@
 	SEND_SIGNAL(src, COMSIG_SPEAKER_ORIGIN_UPDATED, old_origin, new_origin)
 
 /// Adds a new output module to the tree. Returns a reference to the new output module on success.
-/datum/speech_module_tree/proc/AddOutput(output_id, count = 1)
+/datum/speech_module_tree/proc/_AddSpeechOutput(output_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/speech_module/output)
 
-	src.output_module_ids_with_subcount[output_id] += count
-	if (src.output_modules_by_id[output_id])
-		return src.output_modules_by_id[output_id]
+	var/module_id = "[output_id][arguments["subchannel"]]"
+	src.output_module_ids_with_subcount[module_id] += count
+	if (src.output_modules_by_id[module_id])
+		return src.output_modules_by_id[module_id]
 
-	var/datum/speech_module/output/new_output = global.SpeechManager.GetOutputInstance(output_id, src)
+	arguments["parent"] = src
+	var/datum/speech_module/output/new_output = global.SpeechManager.GetOutputInstance(output_id, arguments)
 	if (!istype(new_output))
 		return
 
-	src.output_modules_by_id[output_id] = new_output
+	src.output_modules_by_id[module_id] = new_output
 	src.output_modules_by_channel[new_output.channel] ||= list()
 	src.output_modules_by_channel[new_output.channel] += new_output
 	sortList(src.output_modules_by_channel[new_output.channel], GLOBAL_PROC_REF(cmp_say_modules))
 	return new_output
 
 /// Removes an output module from the tree. Returns TRUE on success, FALSE on failure.
-/datum/speech_module_tree/proc/RemoveOutput(output_id, count = 1)
-	if (!src.output_modules_by_id[output_id])
+/datum/speech_module_tree/proc/RemoveSpeechOutput(output_id, subchannel, count = 1)
+	var/module_id = "[output_id][subchannel]"
+	if (!src.output_modules_by_id[module_id])
 		return FALSE
 
-	src.output_module_ids_with_subcount[output_id] -= count
-	if (!src.output_module_ids_with_subcount[output_id])
-		src.output_modules_by_channel[src.output_modules_by_id[output_id].channel] -= src.output_modules_by_id[output_id]
-		qdel(src.output_modules_by_id[output_id])
-		src.output_modules_by_id -= output_id
+	src.output_module_ids_with_subcount[module_id] -= count
+	if (!src.output_module_ids_with_subcount[module_id])
+		src.output_modules_by_channel[src.output_modules_by_id[module_id].channel] -= src.output_modules_by_id[module_id]
+		qdel(src.output_modules_by_id[module_id])
+		src.output_modules_by_id -= module_id
 
 	return TRUE
 
 /// Returns the output module that matches the specified ID.
-/datum/speech_module_tree/proc/GetOutputByID(output_id)
+/datum/speech_module_tree/proc/GetOutputByID(output_id, subchannel)
 	RETURN_TYPE(/datum/speech_module/output)
-	return src.output_modules_by_id[output_id]
+	return src.output_modules_by_id["[output_id][subchannel]"]
 
 /// Returns a list of output modules that output to the specified channel.
-/datum/speech_module_tree/proc/GetOutputByChannel(channel_id)
+/datum/speech_module_tree/proc/GetOutputsByChannel(channel_id)
 	RETURN_TYPE(/list/datum/speech_module/output)
 	return src.output_modules_by_channel[channel_id]
 
 /// Adds a new modifier module to the tree. Returns a reference to the new modifier module on success.
-/datum/speech_module_tree/proc/AddModifier(modifier_id, count = 1)
+/datum/speech_module_tree/proc/_AddSpeechModifier(modifier_id, list/arguments = list(), count = 1)
 	RETURN_TYPE(/datum/speech_module/modifier)
 
 	src.speech_modifier_ids_with_subcount[modifier_id] += count
 	if (src.speech_modifiers_by_id[modifier_id])
 		return src.speech_modifiers_by_id[modifier_id]
 
-	var/datum/speech_module/modifier/new_modifier = global.SpeechManager.GetSpeechModifierInstance(modifier_id)
+	arguments["parent"] = src
+	var/datum/speech_module/modifier/new_modifier = global.SpeechManager.GetSpeechModifierInstance(modifier_id, arguments)
 	if (!istype(new_modifier))
 		return
 
@@ -239,7 +243,7 @@
 	return new_modifier
 
 /// Removes a modifier from the tree. Returns TRUE on success, FALSE on failure.
-/datum/speech_module_tree/proc/RemoveModifier(modifier_id, count = 1)
+/datum/speech_module_tree/proc/RemoveSpeechModifier(modifier_id, count = 1)
 	if (!src.speech_modifiers_by_id[modifier_id])
 		return FALSE
 

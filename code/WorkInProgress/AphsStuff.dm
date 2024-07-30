@@ -148,7 +148,7 @@
 
 		return
 
-	say(message, flags, message_params, atom_listeners_override)
+	say(message, flags, list/message_params, list/atom/atom_listeners_override)
 		if (!src.on)
 			return
 

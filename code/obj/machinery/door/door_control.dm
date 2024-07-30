@@ -508,7 +508,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
 
-/obj/machinery/door_control/say(message, flags, message_params, atom_listeners_override)
+/obj/machinery/door_control/say(message, flags, list/message_params, list/atom/atom_listeners_override)
 	if (src.status & NOPOWER)
 		return
 

@@ -535,7 +535,7 @@
 	onPowerChange(oldval, newval)
 		src.owner.ensure_listen_tree()
 		if (src.current_module)
-			src.owner.listen_tree.RemoveInput(src.current_module)
+			src.owner.listen_tree.RemoveListenInput(src.current_module)
 
 		switch (newval)
 			if (1)
@@ -545,13 +545,13 @@
 			else
 				src.current_module = LISTEN_INPUT_RADIO_GLOBAL
 
-		src.owner.listen_tree.AddInput(src.current_module)
+		src.owner.listen_tree.AddListenInput(src.current_module)
 
 	OnRemove()
 		if (!src.current_module)
 			return
 
-		src.owner.ensure_listen_tree().RemoveInput(src.current_module)
+		src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
 
 
 /datum/bioEffect/hulk

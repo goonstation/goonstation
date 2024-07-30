@@ -37,7 +37,7 @@
 	src.radio = new src.radio_type(src)
 	src.radio.toggle_microphone(FALSE)
 	src.radio.toggle_speaker(FALSE)
-	src.radio.ensure_listen_tree().AddInput(LISTEN_INPUT_EQUIPPED)
+	src.radio.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EQUIPPED)
 
 	src.radio.set_frequency(src.default_frequency)
 	src.radio.chat_class = src.radio_chat_class

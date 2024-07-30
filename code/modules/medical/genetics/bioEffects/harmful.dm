@@ -42,10 +42,10 @@
 
 	OnAdd()
 		. = ..()
-		owner.ensure_say_tree().AddModifier(SPEECH_MODIFIER_MUTE)
+		owner.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_MUTE)
 
 	OnRemove()
-		owner.ensure_say_tree().RemoveModifier(SPEECH_MODIFIER_MUTE)
+		owner.ensure_say_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUTE)
 		. = ..()
 
 /datum/bioEffect/deaf

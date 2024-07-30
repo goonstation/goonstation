@@ -36,11 +36,11 @@
 	. = ..()
 
 	src.ensure_listen_tree()
-	var/datum/listen_module/global_radio = src.listen_tree.AddInput(LISTEN_INPUT_RADIO_GLOBAL)
+	var/datum/listen_module/global_radio = src.listen_tree.AddListenInput(LISTEN_INPUT_RADIO_GLOBAL)
 	if (!src.client.mute_ghost_radio && !global_radio)
-		src.listen_tree.AddInput(LISTEN_INPUT_RADIO_GLOBAL)
+		src.listen_tree.AddListenInput(LISTEN_INPUT_RADIO_GLOBAL)
 	else if (src.client.mute_ghost_radio && global_radio)
-		src.listen_tree.RemoveInput(LISTEN_INPUT_RADIO_GLOBAL)
+		src.listen_tree.RemoveListenInput(LISTEN_INPUT_RADIO_GLOBAL)
 
 	if(client?.holder?.ghost_interaction)
 		setalive(src)

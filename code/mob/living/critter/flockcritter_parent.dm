@@ -21,7 +21,7 @@ TYPEINFO(/mob/living/critter/flock)
 	start_listen_modifiers = null
 	start_listen_inputs = null
 	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_FLOCK)
+	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
 	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
 	say_language = LANGUAGE_FEATHER
@@ -68,7 +68,6 @@ TYPEINFO(/mob/living/critter/flock)
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	src.flock = F || get_default_flock()
-	src.flock.update_speech_channels_of_flockmob(src)
 
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)

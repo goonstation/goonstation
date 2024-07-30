@@ -27,18 +27,6 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	message.received_module = src
 	src.parent_tree.process(message)
 
-/// Changes the channel this listen module should be registered to and re-registers it.
-/datum/listen_module/input/proc/ChangeChannel(new_channel)
-	src.say_channel.UnregisterInput(src)
-	src.say_channel = null
-	src.parent_tree.input_modules_by_channel[src.channel] -= src
-
-	src.channel = new_channel
-	src.say_channel = global.SpeechManager.GetSayChannelInstance(src.channel)
-	src.say_channel.RegisterInput(src)
-	src.parent_tree.input_modules_by_channel[src.channel] ||= list()
-	src.parent_tree.input_modules_by_channel[src.channel] += src
-
 
 ABSTRACT_TYPE(/datum/listen_module/input/bundled)
 /**
@@ -48,8 +36,7 @@ ABSTRACT_TYPE(/datum/listen_module/input/bundled)
 /datum/listen_module/input/bundled
 	var/subchannel = "none"
 
-/// Changes the subchannel this listen module should be registered to and re-registers it.
-/datum/listen_module/input/bundled/proc/ChangeSubchannel(new_subchannel)
-	src.say_channel.UnregisterInput(src)
-	src.subchannel = new_subchannel
-	src.say_channel.RegisterInput(src)
+/datum/listen_module/input/bundled/New(datum/listen_module_tree/parent, subchannel)
+	src.subchannel = subchannel
+
+	. = ..()
