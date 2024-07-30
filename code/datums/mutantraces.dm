@@ -2250,7 +2250,7 @@ TYPEINFO(/datum/mutantrace/cow)
 					return // use muted scream emote handling
 				if (src.mob.emote_check(voluntary, 50))
 					. = "<B>[src.mob]</B> moos!"
-					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.mob, 'sound/voice/screams/moo.ogg', 100, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
 					.= release_milk()
