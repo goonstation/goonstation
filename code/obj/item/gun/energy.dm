@@ -543,7 +543,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
-	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1680,7 +1680,7 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 				"electrum" = 25)
 /obj/item/gun/energy/optio1
 	name = "\improper Optio I"
-	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
+	desc = "It's a laser gun? Or a handgun? Yeah, you're pretty sure it's a handgun."
 	w_class = W_CLASS_SMALL
 	icon_state = "optio_1"
 	item_state = "protopistol"
