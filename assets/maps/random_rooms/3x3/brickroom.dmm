@@ -5,25 +5,25 @@
 	},
 /obj/machinery/light/small/floor/broken,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "c" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
 /obj/machinery/light/small/floor/broken,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "d" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /obj/machinery/light/small/floor/broken,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "w" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -33,25 +33,25 @@
 	},
 /obj/machinery/light/small/floor/broken,
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "y" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/table/mauxite,
 /obj/item/brick{
@@ -69,7 +69,7 @@
 	pixel_x = -7
 	},
 /turf/simulated/floor/industrial,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 w
