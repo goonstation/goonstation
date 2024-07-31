@@ -501,6 +501,47 @@ ABSTRACT_TYPE(/datum/job/security)
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
 
+// Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
+/datum/job/security/nt_security
+	linkcolor = "#3348ff"
+	name = "Nanotrasen Security Consultant"
+	limit = 1 // backup during HELL WEEK. players will probably like it
+	unique = TRUE
+	wages = PAY_TRADESMAN
+	trait_list = list("training_security")
+	requires_whitelist = TRUE
+	counts_as = "Security Officer"
+	allow_traitors = FALSE
+	allow_spy_theft = FALSE
+	can_join_gangs = FALSE
+	cant_spawn_as_rev = TRUE
+	receives_badge = TRUE
+	receives_miranda = TRUE
+	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
+	slot_jump = list(/obj/item/clothing/under/misc/turds)
+	slot_head = list(/obj/item/clothing/head/NTberet)
+	slot_foot = list(/obj/item/clothing/shoes/swat)
+	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
+	slot_card = /obj/item/card/id/nt_specialist
+	slot_poc1 = list(/obj/item/device/pda2/ntso)
+	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular,
+							/obj/item/clothing/head/helmet/space/ntso,
+							/obj/item/clothing/suit/space/ntso,
+							/obj/item/cloth/handkerchief/nt)
+	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
+
+	faction = list(FACTION_NANOTRASEN)
+
+	New()
+		..()
+		src.access = get_access("Security Officer") + list(access_heads)
+		return
+
 /datum/job/security/security_officer
 	name = "Security Officer"
 	limit = 5
@@ -2425,48 +2466,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	New()
 		..()
 		src.access = get_all_accesses() + access_centcom
-
-// Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
-/datum/job/special/nt_security
-	linkcolor = "#3348ff"
-	name = "Nanotrasen Security Consultant"
-	limit = 1 // backup during HELL WEEK. players will probably like it
-	unique = TRUE
-	wages = PAY_TRADESMAN
-	trait_list = list("training_security")
-	requires_whitelist = TRUE
-	requires_supervisor_job = "Head of Security"
-	counts_as = "Security Officer"
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
-	receives_miranda = TRUE
-	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
-	slot_back = list(/obj/item/storage/backpack/NT)
-	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
-	slot_jump = list(/obj/item/clothing/under/misc/turds)
-	slot_head = list(/obj/item/clothing/head/NTberet)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
-	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
-	slot_card = /obj/item/card/id/nt_specialist
-	slot_poc1 = list(/obj/item/device/pda2/ntso)
-	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/clothing/head/helmet/space/ntso,
-							/obj/item/clothing/suit/space/ntso,
-							/obj/item/cloth/handkerchief/nt)
-	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
-
-	faction = list(FACTION_NANOTRASEN)
-
-	New()
-		..()
-		src.access = get_access("Security Officer") + list(access_heads)
-		return
 
 /datum/job/special/headminer
 	name = "Head of Mining"

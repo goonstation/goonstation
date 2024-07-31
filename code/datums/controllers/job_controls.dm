@@ -134,6 +134,9 @@ var/datum/job_controller/job_controls
 			if (job && check_job_eligibility(player, job, STAPLE_JOBS))
 				player.mind.assigned_role = job.name
 				job.assigned++
+				if (job.counts_as)
+					var/datum/job/other = find_job_in_controller_by_string(job.counts_as)
+					other.assigned++
 				return job
 		return
 
@@ -152,6 +155,9 @@ var/datum/job_controller/job_controls
 				job = find_job_in_controller_by_path(/datum/job/civilian/staff_assistant) // very random
 				player.mind.assigned_role = job.name
 				job.assigned++
+				if (job.counts_as)
+					var/datum/job/other = find_job_in_controller_by_string(job.counts_as)
+					other.assigned++
 			logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (random job)")
 			return job
 
@@ -170,6 +176,9 @@ var/datum/job_controller/job_controls
 				if (check_job_eligibility(player, job, STAPLE_JOBS))
 					player.mind.assigned_role = job.name
 					job.assigned++
+					if (job.counts_as)
+						var/datum/job/other = find_job_in_controller_by_string(job.counts_as)
+						other.assigned++
 					logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (favorite job)")
 					return job
 
@@ -196,6 +205,9 @@ var/datum/job_controller/job_controls
 			var/datum/job/job = pick(low_priority_jobs)
 			player.mind.assigned_role = job.name
 			job.assigned++
+			if (job.counts_as)
+				var/datum/job/other = find_job_in_controller_by_string(job.counts_as)
+				other.assigned++
 			logTheThing(LOG_DEBUG, player, "<b>Jobs:</b> Assigned job: [job.name] (fallback job).")
 			return job
 
