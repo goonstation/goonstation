@@ -1,4 +1,5 @@
-
+(t)wed jul 31 24
+(+)Crayon drawings will no longer show up in the right click menu.
 (t)tue jul 30 24
 (u)Colossus
 (p)20131
