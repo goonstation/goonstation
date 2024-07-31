@@ -52,6 +52,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "Meadow"
 	icon_state = "nothing_earth"
 	ambient_light = CENTCOM_LIGHT
+	sanctuary = TRUE
 
 /area/centcom/gallery
 	name = "NT Art Gallery"

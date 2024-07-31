@@ -51,6 +51,11 @@
 		boutput(src, SPAN_ALERT("You find yourself unable to go through with killing yourself!"))
 		return
 
+	var/area/area = get_area(src)
+	if (area?.sanctuary)
+		boutput(src, SPAN_ALERT("You can't hurt yourself here."))
+		return
+
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
