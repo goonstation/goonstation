@@ -20690,11 +20690,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
+/obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "vXs" = (

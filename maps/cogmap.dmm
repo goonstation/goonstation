@@ -40972,15 +40972,13 @@
 /turf/simulated/floor/plating,
 /area/station/routing/medsci)
 "ffc" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
+/obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "ffe" = (

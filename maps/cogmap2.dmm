@@ -66500,9 +66500,7 @@
 /area/station/com_dish/auxdish)
 "owh" = (
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Armory"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
@@ -66510,6 +66508,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "owx" = (

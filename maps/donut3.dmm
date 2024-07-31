@@ -2306,6 +2306,7 @@
 	dir = 4;
 	req_access = null
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "aEf" = (
@@ -19855,9 +19856,7 @@
 /area/station/crew_quarters/courtroom)
 "fUg" = (
 /obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	dir = 4;
-	req_access = null
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
@@ -29158,9 +29157,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "iOl" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner,
 /obj/cable{
@@ -29169,6 +29166,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "iOn" = (
@@ -50890,10 +50888,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "psu" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	aiControlDisabled = 1;
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner,
 /obj/decal/stripe_delivery,
