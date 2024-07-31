@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
+#if defined(MAP_OVERRIDE_POD_WARS)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (team_num)
@@ -41,6 +42,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 					return
 			else
 				return ..(target, user, second_shot)
+#endif
 
 	disposing()
 		indicator_display = null
