@@ -418,6 +418,10 @@
 		A2.machines += src
 		src.power_change()
 
+/// check if a mob is allowed to eject occupants from various machines
+/obj/machinery/proc/can_eject_occupant(mob/user)
+	return !(isintangible(user) || isghostcritter(user) || isghostdrone(user) || !can_act(user))
+
 /datum/action/bar/icon/rotate_machinery
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -450,3 +454,4 @@
 	onEnd()
 		..()
 		src.machine.set_dir(turn(src.machine.dir, -90))
+

@@ -6778,6 +6778,23 @@
 /obj/item/pen,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
+"aAm" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/science/artifact)
 "aAn" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -8665,20 +8682,6 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
-"aHp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/submachine/cargopad/artlab,
-/obj/disposalpipe/segment/ejection{
-	dir = 8
-	},
-/obj/item/cargotele{
-	pixel_x = 5;
-	pixel_y = 8
-	},
-/turf/simulated/floor/circuit/purple,
-/area/station/science/artifact)
 "aHr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -13226,6 +13229,14 @@
 	icon_state = "corner_east"
 	},
 /area/station/engine/coldloop)
+"aYN" = (
+/obj/table/auto,
+/obj/item/device/analyzer/atmospheric,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/purplewhite,
+/area/station/science/lab)
 "aYO" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/grime,
@@ -15371,6 +15382,15 @@
 	dir = 1
 	},
 /area/station/mining/refinery)
+"ghZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "gmG" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -15522,23 +15542,6 @@
 /obj/table/auto,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
-"gNj" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = 23
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 1
-	},
-/area/station/science/artifact)
 "gNp" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
@@ -16640,6 +16643,12 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
+"koV" = (
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/lab)
 "koZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17277,12 +17286,6 @@
 "mmr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/white,
-/area/station/science/lab)
-"mou" = (
-/obj/machinery/vending/standard/toxins,
-/turf/simulated/floor/purplewhite{
-	dir = 4
-	},
 /area/station/science/lab)
 "moQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -18416,14 +18419,6 @@
 /obj/item/surgical_spoon,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"pqy" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "pqD" = (
 /obj/machinery/navbeacon/mule/catering_north,
 /obj/decal/mule/beacon,
@@ -19123,6 +19118,20 @@
 /obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
+"rty" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/submachine/cargopad/artlab,
+/obj/disposalpipe/segment/ejection{
+	dir = 8
+	},
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/turf/simulated/floor/circuit/purple,
+/area/station/science/artifact)
 "rvp" = (
 /obj/table/wood/auto/desk,
 /obj/noticeboard/persistent{
@@ -19324,14 +19333,6 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
-"sez" = (
-/obj/table/auto,
-/obj/item/device/analyzer/atmospheric,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5
-	},
-/turf/simulated/floor/purplewhite,
-/area/station/science/lab)
 "sgM" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -63904,7 +63905,7 @@ aIT
 nUY
 exF
 mmr
-sez
+aYN
 aKH
 aaa
 aaa
@@ -64205,7 +64206,7 @@ aIv
 aIR
 vqf
 aJI
-mou
+koV
 aKy
 aKH
 aaa
@@ -65709,7 +65710,7 @@ aUx
 aSD
 aKv
 aSL
-aHp
+rty
 aDU
 aCs
 aIR
@@ -66007,7 +66008,7 @@ axg
 avQ
 aDV
 aDT
-gNj
+aAm
 aFn
 aFn
 aVC
@@ -75042,7 +75043,7 @@ afE
 gTj
 upB
 puj
-pqy
+ghZ
 plm
 ajI
 nER

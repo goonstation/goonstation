@@ -4971,10 +4971,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"clb" = (
-/obj/storage/secure/closet/brig,
-/turf/simulated/floor/redblack,
-/area/station/security/main)
 "cle" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8418,12 +8414,6 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/shuttle/arrival/station)
-"dOM" = (
-/obj/storage/closet/wardrobe/orange,
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/security/brig)
 "dPx" = (
 /turf/simulated/floor/redblack/corner,
 /area/station/hangar/sec)
@@ -10094,6 +10084,20 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"eFb" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/mapping_helper/access/armory,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/ai_monitored/armory)
 "eFd" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable{
@@ -20353,6 +20357,17 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"iDz" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_x = -15
+	},
+/obj/item/matchbook{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "iDK" = (
 /obj/cable/blue{
 	icon_state = "6-9"
@@ -21932,17 +21947,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/pasiphae/crew)
-"jpW" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/breadloaf{
-	pixel_x = -15
-	},
-/obj/item/matchbook{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen/freezer)
 "jqn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cryogenics Chamber"
@@ -26110,18 +26114,6 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
-"kXB" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/redblack{
-	dir = 6
-	},
-/area/station/security/brig)
 "kXC" = (
 /obj/table/auto,
 /obj/item/storage/box/cablesbox,
@@ -29253,12 +29245,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"mhQ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/brig)
 "mif" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -35988,6 +35974,16 @@
 /obj/submachine/mixing_desk,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"phk" = (
+/obj/storage/secure/crate/gear{
+	desc = "A secure crate for transferring contraband, and definitely not people.";
+	name = "Secure Transfer Crate";
+	req_access_txt = "1"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/brig)
 "pho" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -37538,6 +37534,22 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"pQK" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/obj/storage/secure/closet/brig,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/brig)
 "pQL" = (
 /obj/table/nanotrasen/auto,
 /obj/machinery/networked/printer{
@@ -37551,19 +37563,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/pasiphae/survey)
-"pQX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/engine/caution/westeast,
-/area/station/ai_monitored/armory)
 "pRb" = (
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -38916,6 +38915,13 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"quY" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/west,
+/turf/simulated/floor/black,
+/area/station/security/brig)
 "qvr" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -40949,19 +40955,6 @@
 "rvR" = (
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
-"rwt" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/security/brig)
 "rxv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -41651,6 +41644,15 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"rNh" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs/dark/wide,
+/area/station/security/brig)
 "rNq" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/grey/blackgrime,
@@ -48321,6 +48323,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
+"uCV" = (
+/obj/storage/secure/closet/brig,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/brig)
 "uDe" = (
 /obj/item/sheet/steel/fullstack{
 	pixel_x = -8
@@ -49155,6 +49166,10 @@
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
+"uYK" = (
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/redblack,
+/area/station/security/main)
 "uYO" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -49339,20 +49354,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"vef" = (
-/obj/disposalpipe/segment/ejection{
-	dir = 2
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/stairs/dark/wide,
-/area/station/security/brig)
 "veC" = (
 /obj/structure/girder/reinforced,
 /obj/item/raw_material/scrap_metal,
@@ -91508,7 +91509,7 @@ wdh
 bKB
 qLh
 qLh
-pQX
+eFb
 qLh
 qLh
 qLh
@@ -91778,7 +91779,7 @@ iHN
 vAs
 bhF
 maE
-jpW
+iDz
 lHe
 eDO
 pGy
@@ -92411,7 +92412,7 @@ pel
 wWj
 glR
 dAa
-clb
+uYK
 qLh
 btg
 llS
@@ -95140,9 +95141,9 @@ nKu
 iqQ
 nKu
 kGf
-vef
+rNh
 lXZ
-mhQ
+quY
 bab
 ydL
 ebB
@@ -95434,14 +95435,14 @@ uCa
 qmZ
 jhm
 cvy
-dOM
+phk
 kJV
 jQy
 uuy
 lIL
 lOS
-rwt
-kXB
+uCV
+pQK
 lVA
 qEj
 mpA

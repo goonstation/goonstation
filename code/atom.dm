@@ -235,7 +235,8 @@ TYPEINFO(/atom)
 	proc/remove_air(amount)
 		return null
 
-	proc/return_air()
+	///if direct then only return gas ACTUALLY inside the thing rather than surrounding air
+	proc/return_air(direct = FALSE)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
@@ -868,7 +869,11 @@ TYPEINFO(/atom/movable)
 		return
 	src.material_trigger_when_attacked(W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
-		user.visible_message(SPAN_COMBAT("<B>[user] hits [src] with [W]!</B>"))
+		var/hits = src
+		if (!src.name && isobj(src)) //shut up
+			var/obj/self = src
+			hits = "\the [self.real_name]"
+		user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")

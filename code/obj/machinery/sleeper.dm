@@ -605,7 +605,8 @@ TYPEINFO(/obj/machinery/sleeper)
 		eject_occupant(usr)
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user) || isintangible(user)) return
+		if (!src.can_eject_occupant(user))
+			return
 		src.go_out()
 		add_fingerprint(user)
 

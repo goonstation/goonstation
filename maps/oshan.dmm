@@ -27487,11 +27487,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
-"bVi" = (
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/station/security/main)
 "bVj" = (
 /obj/table/reinforced/auto,
 /obj/item/device/audio_log,
@@ -31249,15 +31244,6 @@
 /obj/decal/poster/wallsign/construction,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/inner/central)
-"cjz" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure,
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "cjB" = (
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
@@ -35950,6 +35936,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
+"hMq" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "hNb" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -38979,6 +38977,16 @@
 /obj/item/pen,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"mpV" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "mqo" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
@@ -39093,6 +39101,14 @@
 /obj/item/currency/spacecash/fifty,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"mAC" = (
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/main)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -43291,17 +43307,6 @@
 /mob/living/carbon/human/fathergrife,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"sDC" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "sDQ" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
@@ -91032,7 +91037,7 @@ bJR
 kxQ
 bRG
 bSM
-cjz
+mpV
 bVX
 bVX
 bWH
@@ -92545,7 +92550,7 @@ bSO
 bTT
 bVc
 bVc
-sDC
+hMq
 bVc
 bVc
 bVc
@@ -95865,7 +95870,7 @@ bQR
 aCG
 bSV
 bTW
-bVi
+mAC
 bWg
 bWT
 aql
