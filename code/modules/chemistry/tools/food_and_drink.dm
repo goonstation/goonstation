@@ -48,6 +48,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE // there are no ants in deep space...
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
+		if (locate(/obj/item/chair) in src.loc)
+			return TRUE
+		if (locate(/obj/rack) in src.loc)
+			return TRUE
 		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
 			return TRUE
 		if (locate(/obj/storage/secure/closet/fridge) in src.loc) // includes fridges
@@ -1670,6 +1674,18 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	decoration_y_offset = -3
 	wedge_x_offset = -2
 	wedge_y_offset = 2
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pint
+	name = "pint glass"
+	icon_state = "pint"
+	initial_volume = 80
+	reagent_overlay_states = 15
+	umbrella_x_offset = 3
+	umbrella_y_offset = 10
+	decoration_x_offset = 0
+	decoration_y_offset = -2
+	wedge_x_offset = -2
+	wedge_y_offset = 3
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing
 	name = "icing tube"

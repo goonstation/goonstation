@@ -54,11 +54,9 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.togglelock(1)
 
-
-
 	relaymove(mob/user as mob, dir)
-		eject_occupant(user)
-
+		if(!ismobcritter(user) || user.client)
+			eject_occupant(user)
 
 	Click(location, control, params)
 		if(!src.ghost_observe_occupant(usr, src.occupant))
@@ -96,9 +94,13 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
-			return 0
-		if(!iscarbon(target) )
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+			if(!target.has_genetics())
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this genetic structure.</B>"))
+				return 0
+		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
@@ -147,7 +149,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user))
+		if (!src.can_eject_occupant(user))
 			return
 		if (src.locked)
 			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))
@@ -160,16 +162,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if (!istype(G))
 			return
 
-		if (src.occupant)
-			boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
-			return
-
-		if (src.locked)
-			boutput(usr, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
-			return
-
-		if(!iscarbon(G.affecting))
-			boutput(user, SPAN_NOTICE("<B>The scanner supports only carbon based lifeforms.</B>"))
+		if(!can_operate(user, G.affecting))
 			return
 
 		var/mob/living/L = user

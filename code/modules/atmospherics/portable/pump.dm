@@ -91,7 +91,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 	src.UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/pump/return_air()
+/obj/machinery/portable_atmospherics/pump/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/pump/attackby(obj/item/W, mob/user)
