@@ -249,6 +249,10 @@ TYPEINFO(/obj/item/card/emag)
 	src.add_fingerprint(user)
 	src.flash_id(user)
 
+/obj/item/card/id/dabbing_license/flash_id(mob/user)
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
+	. = ..()
+
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
 		boutput(user, SPAN_ALERT("The ID-Card explodes."))
