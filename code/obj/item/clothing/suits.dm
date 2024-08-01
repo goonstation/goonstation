@@ -2005,36 +2005,49 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
 			return
 		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
-		src.flash_badge(user)
+		actions.start(new /datum/action/show_badge(user, src), user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
 			return
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
-		src.flash_badge(user)
+		actions.start(new /datum/action/show_badge(user, src), user)
 
-	proc/flash_badge(mob/user)
+/datum/action/show_badge
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = BADGE_SHOWOFF_COOLDOWN
+	var/mob/user = null
+	var/obj/item/clothing/suit/security_badge/badge = null
+
+	New(mob/user, obj/item/clothing/suit/security_badge/badge)
+		. = ..()
+		src.user = user
+		src.badge = badge
+
+	onStart()
+		. = ..()
 		var/pixel_x_offset = 0
 		var/pixel_y_offset = 2
 		var/hand_icon_state = ""
-		if(user.hand)
+		if(src.user.hand)
 			hand_icon_state = "badge_hold_l"
 			pixel_x_offset = 6
 		else
 			hand_icon_state = "badge_hold_r"
 			pixel_x_offset = -6
 
-		user.dir = SOUTH
+		var/image/badge_overlay = src.badge.SafeGetOverlayImage("badge_overlay", src.badge.icon, src.badge.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
+		var/image/hand_overlay = src.badge.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
 
-		var/image/badge_overlay = src.SafeGetOverlayImage("badge_overlay", src.icon, src.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
-		var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
+		src.user.UpdateOverlays(badge_overlay, "badge_overlay")
+		src.user.UpdateOverlays(hand_overlay, "badge_hand_overlay")
 
-		user.UpdateOverlays(badge_overlay, "badge_overlay")
-		user.UpdateOverlays(hand_overlay, "badge_hand_overlay")
+		src.user.dir = SOUTH
 
-		SPAWN(BADGE_SHOWOFF_COOLDOWN)
-			user.UpdateOverlays(null, "badge_overlay")
-			user.UpdateOverlays(null, "badge_hand_overlay")
+	onDelete()
+		. = ..()
+		src.user.UpdateOverlays(null, "badge_overlay")
+		src.user.UpdateOverlays(null, "badge_hand_overlay")
 
 #undef BADGE_SHOWOFF_COOLDOWN
 

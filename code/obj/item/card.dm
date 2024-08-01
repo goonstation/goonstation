@@ -247,11 +247,8 @@ TYPEINFO(/obj/item/card/emag)
 		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
 	src.add_fingerprint(user)
-	src.flash_id(user)
-
-/obj/item/card/id/dabbing_license/flash_id(mob/user)
-	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
-	. = ..()
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
+	actions.start(new /datum/action/show_id(user, src), user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -274,30 +271,43 @@ TYPEINFO(/obj/item/card/emag)
 		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
-	src.flash_id(user)
+	actions.start(new /datum/action/show_id(user, src), user)
 
-/obj/item/card/id/proc/flash_id(mob/user)
-	var/pixel_x_offset = 0
-	var/pixel_y_offset = 3
-	var/hand_icon_state = ""
-	if(user.hand)
-		hand_icon_state = "id_hold_l"
-		pixel_x_offset = 5
-	else
-		hand_icon_state = "id_hold_r"
-		pixel_x_offset = -5
+/datum/action/show_id
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = ID_SHOWOFF_COOLDOWN
+	var/mob/user = null
+	var/obj/item/card/id_card = null
 
-	var/image/id_overlay = src.SafeGetOverlayImage("badge_overlay", src.icon, src.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
-	var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
+	New(mob/user, obj/item/card/card)
+		. = ..()
+		src.user = user
+		src.id_card = card
 
-	user.UpdateOverlays(id_overlay, "id_overlay")
-	user.UpdateOverlays(hand_overlay, "id_hand_overlay")
+	onStart()
+		. = ..()
+		var/pixel_x_offset = 0
+		var/pixel_y_offset = 3
+		var/hand_icon_state = ""
+		if(src.user.hand)
+			hand_icon_state = "id_hold_l"
+			pixel_x_offset = 5
+		else
+			hand_icon_state = "id_hold_r"
+			pixel_x_offset = -5
 
-	user.dir = SOUTH
+		var/image/id_overlay = src.id_card.SafeGetOverlayImage("id_overlay", src.id_card.icon, src.id_card.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
+		var/image/hand_overlay = src.id_card.SafeGetOverlayImage("id_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
 
-	SPAWN(ID_SHOWOFF_COOLDOWN)
-		user.UpdateOverlays(null, "id_overlay")
-		user.UpdateOverlays(null, "id_hand_overlay")
+		src.user.UpdateOverlays(id_overlay, "id_overlay")
+		src.user.UpdateOverlays(hand_overlay, "id_hand_overlay")
+
+		src.user.dir = SOUTH
+
+	onDelete()
+		. = ..()
+		src.user.UpdateOverlays(null, "id_overlay")
+		src.user.UpdateOverlays(null, "id_hand_overlay")
 
 #undef ID_SHOWOFF_COOLDOWN
 
@@ -543,3 +553,4 @@ TYPEINFO(/obj/item/card/emag)
 					owner.vis_contents -= indicator
 			owner = user
 		..()
+
