@@ -860,7 +860,7 @@ toxic - poisons
 		..()
 
 	burst
-		shot_delay = 0.20 SECONDS
+		shot_delay = 1
 		shot_number = 4
 		pierces = 2
 		projectile_speed = 72
@@ -1145,19 +1145,19 @@ toxic - poisons
 
 //0.787
 /datum/projectile/bullet/cannon // autocannon should probably be renamed next
-	name = "cannon round"
+	name = "20mm AP round"
 	brightness = 0.7
 	window_pass = 0
 	icon_state = "20mm"
 	damage_type = D_PIERCING
-	armor_ignored = 0.66
-	hit_type = DAMAGE_CUT
+	armor_ignored = 0.8
+	hit_type = DAMAGE_STAB
 	damage = 100
 	dissipation_delay = 30
 	dissipation_rate = 5
 	cost = 1
 	shot_sound = 'sound/weapons/20mm.ogg'
-	shot_volume = 130
+	shot_volume = 100
 	implanted = null
 	projectile_speed = 128
 
@@ -1179,14 +1179,8 @@ toxic - poisons
 			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
-			new /obj/effects/rendersparks (T)
+			new /obj/effects/explosion/smoky(T)
 			var/impact = clamp(1,3, proj.pierces_left % 4)
-			if(proj.pierces_left <= 1 )
-				new /obj/effects/explosion/dangerous(T)
-				new /obj/effects/explosion/dangerous(get_step(T, dirflag))
-				new /obj/effects/explosion/dangerous(get_step(get_step(T, dirflag), dirflag))
-				proj.die()
-				return
 
 			if(hit && ismob(hit))
 				var/mob/living/M = hit
@@ -1204,28 +1198,15 @@ toxic - poisons
 
 			if(hit && isobj(hit))
 				var/obj/O = hit
-				O.throw_shrapnel(T, 1, 1)
-
-				if(istype(hit, /obj/machinery/door))
-					var/obj/machinery/door/D = hit
-					if(!D.cant_emag)
-						D.take_damage(D.health) //fuck up doors without needing ex_act(1)
-
-				else if(istype(hit, /obj/window))
-					var/obj/window/W = hit
-					W.smash()
-
-				else
-					O.ex_act(impact)
+				O.blowthefuckup(impact)
 
 			if(hit && isturf(hit))
 				T.throw_shrapnel(T, 1, 1)
-				T.ex_act(2)
+				T.meteorhit()
 
-	burst
-		shot_delay = 0.125 SECONDS
+	antiair_burst
 		shot_number = 4
-		damage = 50
+
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
 	name = "metal rod"
@@ -1353,6 +1334,7 @@ datum/projectile/bullet/autocannon
 
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
+
 
 	plasma_orb
 		name = "fusion orb"
@@ -2048,7 +2030,7 @@ datum/projectile/bullet/autocannon
 	damage = 6
 
 /datum/projectile/bullet/howitzer
-	name = "howitzer round"
+	name = "high explosive round"
 	brightness = 0.7
 	window_pass = 0
 	icon_state = "120mm"
@@ -2066,31 +2048,32 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
 	shot_sound_extrarange = 1
-	projectile_speed = 64
+	projectile_speed = 48
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, obj/projectile/P)
 		var/turf/T = get_turf(hit)
 		explosion_new(null, T, 40)
-		for(var/turf/T2 in range(hit, 2))
-			spawn(rand(1,3))
-				explosion_new(null, T, 30)
+		for(var/turf/T2 in range(hit, 3))
+			spawn(rand(1,2))
+				new /obj/effects/explosion/dangerous(T2)
 
 	on_launch(obj/projectile/proj)
-		for(var/mob/M in range(proj.loc, 4))
+		for(var/mob/M in range(proj.loc, 2))
 			shake_camera(M, 2, 4)
 
 	siege
 		name = "siege round"
 		icon_state = "305mm"
 		damage = 1600
+		projectile_speed = 24
 		shot_sound = 'sound/effects/explosion_new1.ogg'
 
-		on_hit(atom/hit)
+		on_hit(atom/hit, obj/projectile/P)
 			var/turf/T = get_turf(hit)
 			explosion_new(null, T, 80)
-			for(var/turf/T2 in range(hit, 3))
-				spawn(rand(1,3))
-					explosion_new(null, T, 50)
+			for(var/turf/T2 in range(hit, 4))
+				spawn(rand(1,2))
+					new /obj/effects/explosion/dangerous(T2)
 
 
 /datum/projectile/bullet/glitch

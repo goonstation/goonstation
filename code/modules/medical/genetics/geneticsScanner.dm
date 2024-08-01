@@ -149,7 +149,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user))
+		if (!src.can_eject_occupant(user))
 			return
 		if (src.locked)
 			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))

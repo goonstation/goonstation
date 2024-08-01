@@ -2005,6 +2005,22 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 
+/obj/item/clothing/suit/security_badge/shielded
+	name = "NTSO Tactical Badge"
+	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
+	tooltip_flags = REBUILD_ALWAYS
+
+	get_desc()
+		. = ..()
+		var/ret = list()
+		if ((SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += " It has [ret["charge"]]/[ret["max_charge"]] PUs left!"
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
+		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, FALSE)
+
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"
 	desc = ""

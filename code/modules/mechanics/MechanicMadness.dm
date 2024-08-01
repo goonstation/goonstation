@@ -779,7 +779,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/item/mechanics/thprint

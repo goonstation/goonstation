@@ -79,7 +79,7 @@ Contains:
 	remove_air(amount)
 		return air_contents.remove(amount)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	assume_air(datum/gas_mixture/giver)

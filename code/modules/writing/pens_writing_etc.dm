@@ -730,6 +730,7 @@
 
 			src.remove_filter("reagent_coloration")
 			src.reset_color()
+		G.name = null
 
 	get_desc()
 		. = ..()

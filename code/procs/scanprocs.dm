@@ -724,7 +724,7 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = A.return_air()
+	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null
 	var/total_moles = null
 

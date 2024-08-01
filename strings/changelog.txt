@@ -1,4 +1,14 @@
-
+(t)wed jul 31 24
+(u)LeahTheTech
+(+)Crayon drawings will no longer show up in the right click menu.
+(t)tue jul 30 24
+(u)Colossus
+(p)20131
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added metal masks to the game, which can be crafted by using a welder on a stack of 5 or more steel sheets. Masks offer protection in exchange for visibility.
+(t)mon jul 29 24
+(u)LeahTheTech
+(+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
 (t)sat jul 27 24
 (u)Colossus
 (p)20086
