@@ -126,7 +126,7 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_speech_modifiers = null
+	start_speech_modifiers = list(SPEECH_MODIFIER_BRADBURY)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	start_listen_languages = list(LANGUAGE_ALL)
@@ -147,12 +147,6 @@
 		light.set_brightness(0.8)
 
 		return
-
-	say(message, flags, list/message_params, list/atom/atom_listeners_override)
-		if (!src.on)
-			return
-
-		. = ..()
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/paper/brad_punchcard))

@@ -7,11 +7,7 @@
 		. = ..()
 		src.stam_monitor = new /obj/machinery/maptext_monitor/stamina(src)
 		src.AddComponent(/datum/component/health_maptext)
-
-
-	say(message, flags, list/message_params, list/atom/atom_listeners_override)
-		if(!shutup)
-			. = ..()
+		src.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_TEST_DUMMY)
 
 	disposing()
 		qdel(src.stam_monitor)

@@ -60,7 +60,7 @@
  */
 /atom/proc/say(message as text, flags = 0, list/message_params = null, list/atom/atom_listeners_override = null)
 	RETURN_TYPE(/datum/say_message)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (dd_hasprefix(message, "*"))
 		src.emote(copytext(message, 2), 1)
@@ -153,8 +153,6 @@ Cleanup:
 
 Old Code To Remove:
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
-- `say()` implementations that predate the rework.
-- Replace `COMSIG_MOB_SAY` with `COMSIG_ATOM_SAY`.
 - Check span defines in `chat_output.dm`. Some may now be unused.
 
 Refactors:

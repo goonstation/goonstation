@@ -66,7 +66,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	speech_verb_say = "beeps"
-	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_VENDING_MACHINE)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/freestuff = 0
@@ -909,12 +909,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		src.throw_item()
 
 	return
-
-/obj/machinery/vending/say(message, flags, list/message_params, list/atom/atom_listeners_override)
-	if (src.status & NOPOWER)
-		return
-
-	. = ..()
 
 /obj/machinery/vending/proc/prevend_effect()
 	playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)

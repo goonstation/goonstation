@@ -23,7 +23,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
 
 	speech_verb_say = "beeps"
-	start_speech_modifiers = list(SPEECH_MODIFIER_DOOR_CONTROL)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MACHINERY, SPEECH_MODIFIER_DOOR_CONTROL)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 
@@ -507,12 +507,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
-
-/obj/machinery/door_control/say(message, flags, list/message_params, list/atom/atom_listeners_override)
-	if (src.status & NOPOWER)
-		return
-
-	. = ..()
 
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner

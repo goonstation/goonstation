@@ -3,12 +3,12 @@
 	priority = SPEECH_MODIFIER_PRIORITY_VERY_LOW
 
 /datum/speech_module/modifier/bot/process(datum/say_message/message)
-	. = message
-
 	var/obj/machinery/bot/bot = message.speaker
-	if (!istype(bot))
+	if (!istype(bot) || !bot.on || bot.muted)
+		qdel(message)
 		return
 
+	. = message
 	message.maptext_css_values["color"] = bot.bot_speech_color
 
 
@@ -17,6 +17,8 @@
 
 /datum/speech_module/modifier/bot/bad/process(datum/say_message/message)
 	. = ..()
+	if (!.)
+		return
 
 	switch (rand(1, 10))
 		if (1)
@@ -63,6 +65,10 @@
 	id = SPEECH_MODIFIER_BOT_BOOTLEG
 
 /datum/speech_module/modifier/bot/bootleg/process(datum/say_message/message)
+	. = ..()
+	if (!.)
+		return
+
 	message.content = uppertext(message.content)
 	message.message_size_override = 3
 
@@ -85,57 +91,65 @@
 	message.format_content_style_suffix = "</font>"
 	message.content = "[message.content]!!"
 
-	. = ..()
-
 
 /datum/speech_module/modifier/bot/chef
 	id = SPEECH_MODIFIER_BOT_CHEF
 
 /datum/speech_module/modifier/bot/chef/process(datum/say_message/message)
-	message.content = uppertext(message.content)
-
 	. = ..()
+	if (!.)
+		return
+
+	message.content = uppertext(message.content)
 
 
 /datum/speech_module/modifier/bot/old
 	id = SPEECH_MODIFIER_BOT_OLD
 
 /datum/speech_module/modifier/bot/old/process(datum/say_message/message)
+	. = ..()
+	if (!.)
+		return
+
 	message.content = uppertext(message.content)
 	message.format_content_style_prefix = "<span style=\"font-family: 'Consolas', monospace;\">"
 	message.format_content_style_suffix = "</span>"
-
-	. = ..()
 
 
 /datum/speech_module/modifier/bot/secbot
 	id = SPEECH_MODIFIER_BOT_SECURITY
 
 /datum/speech_module/modifier/bot/secbot/process(datum/say_message/message)
-	var/obj/machinery/bot/secbot/bot = message.speaker
-	if (istype(bot) && (bot.emagged >= 2))
-		message.content = capitalize(ckeyEx(message.content))
-
 	. = ..()
+	if (!.)
+		return
+
+	var/obj/machinery/bot/secbot/bot = message.speaker
+	if (bot.emagged >= 2)
+		message.content = capitalize(ckeyEx(message.content))
 
 
 /datum/speech_module/modifier/bot/soviet
 	id = SPEECH_MODIFIER_BOT_SOVIET
 
 /datum/speech_module/modifier/bot/soviet/process(datum/say_message/message)
+	. = ..()
+	if (!.)
+		return
+
 	message.content = uppertext(message.content)
 	message.format_content_style_prefix = "<font face='Curlz MT'>"
 	message.format_content_style_suffix = "</font>"
-
-	. = ..()
 
 
 /datum/speech_module/modifier/bot/xmas
 	id = SPEECH_MODIFIER_BOT_XMAS
 
 /datum/speech_module/modifier/bot/xmas/process(datum/say_message/message)
+	. = ..()
+	if (!.)
+		return
+
 	message.content = uppertext(message.content)
 	message.format_content_style_prefix = "<font face='Segoe Script'><i><b>"
 	message.format_content_style_suffix = "</b></i></font>"
-
-	. = ..()

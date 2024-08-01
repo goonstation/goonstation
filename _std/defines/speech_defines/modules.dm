@@ -47,6 +47,8 @@
 #define SPEECH_MODIFIER_ACCENT_ADMIN_RAINGLOW "accent_fabmin"
 #define SPEECH_MODIFIER_ACCENT_CLUWNE "accent_cluwne"
 #define SPEECH_MODIFIER_ACCENT_HORSE "accent_horse"
+#define SPEECH_MODIFIER_BRADBURY "bradbury"
+#define SPEECH_MODIFIER_MACHINERY "machinery"
 #define SPEECH_MODIFIER_MUTANTRACE_ABOMINATION "mutantrace_abomination"
 #define SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN "mutantrace_amphibian"
 #define SPEECH_MODIFIER_MUTANTRACE_COW "mutantrace_cow"
@@ -58,6 +60,7 @@
 #define SPEECH_MODIFIER_BOT_BAD "bad_bot"
 #define SPEECH_MODIFIER_BOT_BOOTLEG "bootleg_bot"
 #define SPEECH_MODIFIER_BOT_CHEF "chef_bot"
+#define SPEECH_MODIFIER_BOT_DECTALK "bot_dectalk"
 #define SPEECH_MODIFIER_BOT_OLD "old_bot"
 #define SPEECH_MODIFIER_BOT_SECURITY "sec_bot"
 #define SPEECH_MODIFIER_BOT_SOVIET "soviet_bot"
@@ -74,6 +77,7 @@
 #define SPEECH_MODIFIER_MONOSPACE_DECORATOR "monospace_decorator"
 #define SPEECH_MODIFIER_RADIO "radio"
 #define SPEECH_MODIFIER_REVENANT "revenant"
+#define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
 
 //------------ Speech Prefixes ------------//
