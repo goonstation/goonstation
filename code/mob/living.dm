@@ -385,8 +385,13 @@
 	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target.loc))
-				pixelable = TRUE
+			if (istype(target, /atom/movable))
+				if (isturf(target.loc))
+					pixelable = TRUE
+				else if (istype(target.loc, /obj/item/plate))
+					pixelable = TRUE
+				else if (istype(target.loc, /obj/item/reagent_containers/food/snacks/ingredient/pizza_base))
+					pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
 				if (!QDELETED(W))
