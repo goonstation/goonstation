@@ -1,6 +1,7 @@
 /datum/speech_module/prefix/radio
 	id = SPEECH_PREFIX_RADIO
-	prefix_id = list(";", ":")
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
+	prefix_id = ":"
 
 /datum/speech_module/prefix/radio/process(datum/say_message/message)
 	. = message
@@ -40,12 +41,32 @@
 
 	. = list()
 
-	var/general_channel_name = global.headset_channel_lookup["[radio.frequency]"] || "???"
-	var/general_channel_frequency = global.format_frequency(radio.frequency)
-	.["[general_channel_name]: \[[general_channel_frequency]\]"] = ";"
-
 	for (var/prefix in radio.secure_frequencies)
 		var/frequency = radio.secure_frequencies[prefix]
 		var/channel_name = global.headset_channel_lookup["[frequency]"] || "???"
 		var/channel_frequency = global.format_frequency(frequency)
 		.["[channel_name]: \[[channel_frequency]\]"] = ":[prefix]"
+
+
+/datum/speech_module/prefix/radio/general
+	id = SPEECH_PREFIX_RADIO_GENERAL
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 1
+	prefix_id = ";"
+
+/datum/speech_module/prefix/radio/general/get_prefix_choices()
+	var/obj/item/device/radio/radio
+	if (ismob(src.parent_tree.speaker_origin))
+		var/mob/mob_speaker = src.parent_tree.speaker_origin
+		radio = mob_speaker.find_radio()
+	else
+		var/obj/item/organ/head/head = src.parent_tree.speaker_origin
+		radio = head.ears
+
+	if (!istype(radio) || radio.bricked)
+		return
+
+	. = list()
+
+	var/general_channel_name = global.headset_channel_lookup["[radio.frequency]"] || "???"
+	var/general_channel_frequency = global.format_frequency(radio.frequency)
+	.["[general_channel_name]: \[[general_channel_frequency]\]"] = ";"

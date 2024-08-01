@@ -41,14 +41,14 @@ var/global/datum/speech_manager/SpeechManager = new()
 	// Populate the module caches.
 	src.speech_output_cache = list()
 	for (var/datum/speech_module/output/T as anything in concrete_typesof(/datum/speech_module/output))
-		var/module_id = initial(T.id)
+		var/module_id = T::id
 		if (src.speech_output_cache[module_id])
 			CRASH("Non unique output found: [module_id]. These MUST be unique.")
 		src.speech_output_cache[module_id] = T
 
 	src.speech_modifier_cache = list()
 	for (var/datum/speech_module/modifier/T as anything in concrete_typesof(/datum/speech_module/modifier))
-		var/module_id = initial(T.id)
+		var/module_id = T::id
 		if (src.speech_modifier_cache[module_id])
 			CRASH("Non unique modifier found: [module_id]. These MUST be unique.")
 		src.speech_modifier_cache[module_id] = T
@@ -56,28 +56,22 @@ var/global/datum/speech_manager/SpeechManager = new()
 	src.speech_prefix_cache = list()
 	src.prefix_id_cache = list()
 	for (var/datum/speech_module/prefix/T as anything in concrete_typesof(/datum/speech_module/prefix))
-		var/module_id = initial(T.id)
+		var/module_id = T::id
 		if (src.speech_prefix_cache[module_id])
 			CRASH("Non unique prefix found: [module_id]. These MUST be unique.")
 		src.speech_prefix_cache[module_id] = T
-
-		var/datum/speech_module/prefix/prefix = new T
-		if (islist(prefix.prefix_id))
-			for (var/id in prefix.prefix_id)
-				src.prefix_id_cache[id] = prefix.id
-		else
-			src.prefix_id_cache[prefix.prefix_id] = prefix.id
+		src.prefix_id_cache[T::prefix_id] = module_id
 
 	src.listen_input_cache = list()
 	for (var/datum/listen_module/input/T as anything in concrete_typesof(/datum/listen_module/input))
-		var/module_id = initial(T.id)
+		var/module_id = T::id
 		if (src.listen_input_cache[module_id])
 			CRASH("Non unique input found: [module_id]. These MUST be unique.")
 		src.listen_input_cache[module_id] = T
 
 	src.listen_modifier_cache = list()
 	for (var/datum/listen_module/modifier/T as anything in concrete_typesof(/datum/listen_module/modifier))
-		var/module_id = initial(T.id)
+		var/module_id = T::id
 		if (src.listen_modifier_cache[module_id])
 			CRASH("Non unique listen modifer found: [module_id]. These MUST be unique.")
 		src.listen_modifier_cache[module_id] = T

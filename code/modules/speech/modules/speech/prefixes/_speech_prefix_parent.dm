@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix)
 /datum/speech_module/prefix
 	id = "prefix_base"
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
-	/// The prefix ID that this prefix module corresponds to. May be a list of prefixes.
+	/// The prefix ID that this prefix module corresponds to.
 	var/prefix_id = null
 
 /// Returns an associative list of channel names, indexed by prefix.

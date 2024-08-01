@@ -90,6 +90,7 @@
 #define SPEECH_PREFIX_LOOC "looc"
 #define SPEECH_PREFIX_OOC "ooc"
 #define SPEECH_PREFIX_RADIO "radio"
+#define SPEECH_PREFIX_RADIO_GENERAL "radio_general"
 #define SPEECH_PREFIX_RIGHT_HAND "right_hand"
 #define SPEECH_PREFIX_SILICON "silicon"
 

@@ -335,17 +335,10 @@
 	src.speech_prefixes_by_id[prefix_id] = new_prefix
 	sortList(src.speech_prefixes, GLOBAL_PROC_REF(cmp_say_modules))
 
-	var/list/target_cache
 	if (istype(new_prefix, /datum/speech_module/prefix/premodifier))
-		target_cache = src.premodifier_speech_prefixes_by_prefix_id
+		src.premodifier_speech_prefixes_by_prefix_id[new_prefix.prefix_id] = new_prefix
 	else
-		target_cache = src.postmodifier_speech_prefixes_by_prefix_id
-
-	if (islist(new_prefix.prefix_id))
-		for (var/id in new_prefix.prefix_id)
-			target_cache[id] = new_prefix
-	else
-		target_cache[new_prefix.prefix_id] = new_prefix
+		src.postmodifier_speech_prefixes_by_prefix_id[new_prefix.prefix_id] = new_prefix
 
 	return new_prefix
 
