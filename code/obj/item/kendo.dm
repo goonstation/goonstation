@@ -41,6 +41,7 @@
 	crit_override = 1
 	bonus_crit_chance = 0
 	stamina_dmg_mult = 0.35
+	fingertip_color = "#2d3c52"
 
 	setupProperties()
 		..()

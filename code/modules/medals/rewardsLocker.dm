@@ -805,7 +805,7 @@
 					succ = TRUE
 
 			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
+				var/obj/item/clothing/gloves/M = H.gloves
 				if (istype(M, /obj/item/clothing/gloves/black))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -813,6 +813,7 @@
 					M.name = "inspector's gloves"
 					M.real_name = "inspector's gloves"
 					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					M.fingertip_color = "#2d3c52"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 

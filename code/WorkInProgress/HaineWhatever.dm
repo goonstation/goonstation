@@ -1017,6 +1017,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	fingertip_color = "#f3f3f3"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
