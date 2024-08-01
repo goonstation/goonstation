@@ -9,6 +9,11 @@ ABSTRACT_TYPE(/datum/speech_module/prefix)
 	/// The prefix ID that this prefix module corresponds to. May be a list of prefixes.
 	var/prefix_id = null
 
+/// Returns an associative list of channel names, indexed by prefix.
+/datum/speech_module/prefix/proc/get_prefix_choices()
+	RETURN_TYPE(/list)
+	return
+
 
 ABSTRACT_TYPE(/datum/speech_module/prefix/premodifier)
 /**

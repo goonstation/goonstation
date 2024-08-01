@@ -159,7 +159,6 @@ Old Code To Remove:
 - Check span defines in `chat_output.dm`. Some may now be unused.
 
 Refactors:
-- Perhaps refactor `/mob/living/say_radio()` to be cleaner?
 - Perhaps prevent input modules stored on aux trees from instantiating.
 - Anything that uses `SPAN_NAME` could likely be moved onto the new system.
 - Some form of centralised preference manager for toggling inputs/outputs for types?

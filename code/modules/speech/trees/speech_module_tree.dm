@@ -363,3 +363,11 @@
 /datum/speech_module_tree/proc/GetPrefixByID(prefix_id)
 	RETURN_TYPE(/datum/speech_module/prefix)
 	return src.speech_prefixes_by_id[prefix_id]
+
+/// Returns all speech prefix modules on this speech tree.
+/datum/speech_module_tree/proc/GetAllPrefixes()
+	RETURN_TYPE(/list/datum/speech_module/prefix)
+
+	. = list()
+	for (var/prefix_id in src.speech_prefixes_by_id)
+		. += src.speech_prefixes_by_id[prefix_id]

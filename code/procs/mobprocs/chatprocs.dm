@@ -48,98 +48,32 @@
 	set name = "say_radio"
 	set hidden = 1
 
-	if (isAI(src))
-		var/mob/living/silicon/ai/A = src
-		var/list/choices = list()
-		var/list/channels = list()
-		var/list/radios = list(A.radio1, A.radio2, A.radio3)
-		for (var/i = 1, i <= radios.len, i++)
-			var/obj/item/device/radio/R = radios[i]
-			var/channel_name
+	var/list/choices = list()
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_say_tree().GetAllPrefixes())
+		var/list/prefix_choice = prefix_module.get_prefix_choices()
+		if (!length(prefix_choice))
+			continue
 
-			if (!istype(R, /obj/item/device/radio/headset/command/ai))
-				// Skip the AI headset (radio 3) because it reads the first char as a channel.
-				// Honestly this should probably be fixed in some other way, but, effort.
-				channel_name = "[format_frequency(R.frequency)] - " + (headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "(Unknown)")
-				choices += channel_name
-				channels[channel_name] = ":[i]"
-			if (R.bricked)
-				usr.show_text(R.bricked_msg, "red")
-				return
-			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
-				for (var/sayToken in R.secure_frequencies)
-					channel_name = "[format_frequency(R.secure_frequencies[sayToken])] - " + (headset_channel_lookup["[R.secure_frequencies[sayToken]]"] ? headset_channel_lookup["[R.secure_frequencies[sayToken]]"] : "(Unknown)")
+		choices += prefix_choice
 
-					choices += channel_name
-					channels[channel_name] = ":[i][sayToken]"
+	if (!length(choices))
+		return
 
-		if (A.ensure_say_tree().GetOutputByID(SPEECH_OUTPUT_SILICONCHAT))
-			var/channel_name = "* - Robot Talk"
-			channels[channel_name] = ":s"
-			choices += channel_name
-
-		var/choice = 0
-		if (length(choices) == 1)
-			choice = choices[1]
-		else
-			choice = input("", "Select Radio and Channel", null) as null|anything in choices
-		if (!choice)
-			return
-
-		var/token = channels[choice]
-		if (!token)
-			boutput(src, "Somehow '[choice]' didn't match anything. Welp. Probably busted.")
-		var/text = input("", "Speaking over [choice] ([token])") as null|text
-		if (text)
-			src.say_verb(token + " " + text)
-
+	var/choice
+	if (length(choices) == 1)
+		choice = choices[1]
 	else
-		var/obj/item/device/radio/R = null
-		if ((src.ears && istype(src.ears, /obj/item/device/radio)))
-			R = src.ears
-		else if (ishuman(src))	//Check if the decapitated skeleton head has a headset
-			var/mob/living/carbon/human/H = src
-			var/datum/mutantrace/skeleton/S = H.mutantrace
-			if (isskeleton(H) && !H.organHolder.head && S.head_tracker.ears && istype(S.head_tracker.ears, /obj/item/device/radio))
-				R = S.head_tracker.ears
-		if (R)
-			if (R.bricked)
-				usr.show_text(R.bricked_msg, "red")
-				return
-			var/token = ""
-			var/list/choices = list()
-			choices += "[ headset_channel_lookup["[R.frequency]"] ? headset_channel_lookup["[R.frequency]"] : "???" ]: \[[format_frequency(R.frequency)]]"
+		choice = input("", "Select Radio Channel") as null | anything in choices
 
-			if (istype(R.secure_frequencies) && length(R.secure_frequencies))
-				for (var/sayToken in R.secure_frequencies)
-					choices += "[ headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] ? headset_channel_lookup["[R.secure_frequencies["[sayToken]"]]"] : "???" ]: \[[format_frequency(R.secure_frequencies["[sayToken]"])]]"
+	if (!choice)
+		return
 
-			if (src.ensure_say_tree().GetOutputByID(SPEECH_OUTPUT_SILICONCHAT))
-				choices += "Robot Talk: \[***]"
+	var/prefix = choices[choice]
+	var/message = input("", "Speaking to [choice] Frequency") as null | text
+	if (!message)
+		return
 
-
-			var/choice = 0
-			if (length(choices) == 1)
-				choice = choices[1]
-			else
-				choice = input("", "Select Radio Channel", null) as null|anything in choices
-			if (!choice)
-				return
-
-			var/choice_index = choices.Find(choice)
-			if (choice_index == 1)
-				token = ";"
-			else if (choice == "Robot Talk: \[***]")
-				token = ":s"
-			else
-				token = ":" + R.secure_frequencies[choice_index - 1]
-
-			var/text = input("", "Speaking to [choice] frequency") as null|text
-			if (!text)
-				return
-			src.say_verb(token + " " + text)
-		else
-			boutput(src, SPAN_NOTICE("You must put a headset on your ear slot to speak on the radio."))
+	src.say_verb("[prefix] [message]")
 
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
