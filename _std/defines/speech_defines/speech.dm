@@ -3,6 +3,8 @@
 #define AddSpeechOutput(output_id, arguments...) _AddSpeechOutput(output_id, list(##arguments))
 /// A wrapper for _AddSpeechModifier that permits the usage of named arguments.
 #define AddSpeechModifier(modifier_id, arguments...) _AddSpeechModifier(modifier_id, list(##arguments))
+/// A wrapper for _AddSpeechPrefix that permits the usage of named arguments.
+#define AddSpeechPrefix(prefix_id, arguments...) _AddSpeechPrefix(prefix_id, list(##arguments))
 /// A wrapper for _AddListenInput that permits the usage of named arguments.
 #define AddListenInput(input_id, arguments...) _AddListenInput(input_id, list(##arguments))
 /// A wrapper for _AddListenModifier that permits the usage of named arguments.

@@ -6,7 +6,7 @@
 /datum/speech_module_tree/auxiliary
 	var/datum/speech_module_tree/target_speech_tree
 
-/datum/speech_module_tree/auxiliary/New(atom/parent, list/modifiers = list(), list/outputs = list(), datum/speech_module_tree/target_speech_tree)
+/datum/speech_module_tree/auxiliary/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list(), datum/speech_module_tree/target_speech_tree)
 	src.target_speech_tree = target_speech_tree
 	. = ..()
 
@@ -33,6 +33,14 @@
 	src.target_speech_tree?.RemoveSpeechModifier(modifier_id, count)
 	. = ..()
 
+/datum/speech_module_tree/auxiliary/_AddSpeechPrefix(prefix_id, arguments, count)
+	src.target_speech_tree?._AddSpeechPrefix(prefix_id, arguments, count)
+	. = ..()
+
+/datum/speech_module_tree/auxiliary/RemoveSpeechPrefix(prefix_id, count)
+	src.target_speech_tree?.RemoveSpeechPrefix(prefix_id, count)
+	. = ..()
+
 /datum/speech_module_tree/auxiliary/proc/update_target_speech_tree(datum/speech_module_tree/speech_tree)
 	if (src.target_speech_tree)
 		for (var/output_id in src.output_module_ids_with_subcount)
@@ -40,6 +48,9 @@
 
 		for (var/modifier_id in src.speech_modifier_ids_with_subcount)
 			src.target_speech_tree.RemoveSpeechModifier(modifier_id, count = src.speech_modifier_ids_with_subcount[modifier_id])
+
+		for (var/prefix_id in src.speech_prefix_ids_with_subcount)
+			src.target_speech_tree.RemoveSpeechPrefix(prefix_id, count = src.speech_prefix_ids_with_subcount[prefix_id])
 
 		src.target_speech_tree.auxiliary_trees -= src
 
@@ -52,5 +63,8 @@
 
 	for (var/modifier_id in src.speech_modifier_ids_with_subcount)
 		src.target_speech_tree._AddSpeechModifier(modifier_id, count = src.speech_modifier_ids_with_subcount[modifier_id])
+
+	for (var/prefix_id in src.speech_prefix_ids_with_subcount)
+		src.target_speech_tree._AddSpeechPrefix(prefix_id, count = src.speech_prefix_ids_with_subcount[prefix_id])
 
 	src.target_speech_tree.auxiliary_trees += src

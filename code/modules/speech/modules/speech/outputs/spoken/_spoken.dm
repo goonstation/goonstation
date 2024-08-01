@@ -4,11 +4,6 @@
 	var/send_to_global = TRUE
 
 /datum/speech_module/output/spoken/process(datum/say_message/message)
-	if (ismob(message.speaker))
-		var/mob/M = message.speaker
-		if (M.stat != STAT_ALIVE)
-			return
-
 	src.format(message)
 
 	if (isliving(message.speaker))
@@ -17,10 +12,6 @@
 
 	if (!src.send_to_global)
 		message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY
-
-	global.SpeechManager.ProcessMessagePrefix(message, src.parent_tree)
-	if (QDELETED(message))
-		return
 
 	. = ..()
 

@@ -98,7 +98,7 @@
 
 	New(client/C)
 		. = ..()
-		src.admin_say_tree = new(null, ADMIN_SPEECH_MODIFIERS, ADMIN_SPEECH_OUTPUTS)
+		src.admin_say_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS)
 		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_UNDERSTOOD_LANGUAGES)
 
 		src.owner = C

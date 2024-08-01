@@ -18,6 +18,11 @@ ABSTRACT_TYPE(/datum/speech_module)
 
 	src.parent_tree = parent
 
+/datum/speech_module/disposing()
+	src.parent_tree = null
+
+	. = ..()
+
 /// Process the message, applying module specific effects. Return `null` to prevent the message being processed further, or a `/datum/say_message` instance to continue.
 /datum/speech_module/proc/process(datum/say_message/message)
 	RETURN_TYPE(/datum/say_message)

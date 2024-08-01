@@ -1,10 +1,8 @@
-/datum/say_prefix/intercom
-	id = ":in"
+/datum/speech_module/prefix/intercom
+	id = SPEECH_PREFIX_INTERCOM
+	prefix_id = ":in"
 
-/datum/say_prefix/intercom/is_compatible_with(datum/say_message/message, datum/speech_module_tree/say_tree)
-	return TRUE
-
-/datum/say_prefix/intercom/process(datum/say_message/message, datum/speech_module_tree/say_tree)
+/datum/speech_module/prefix/intercom/process(datum/say_message/message)
 	. = message
 
 	message.atom_listeners_to_be_excluded ||= list()
@@ -20,4 +18,6 @@
 
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = intercoms
-	say_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+
+	message.flags |= SAYFLAG_WHISPER

@@ -5,12 +5,14 @@ var/global/datum/speech_manager/SpeechManager = new()
  *	modifier processing.
  */
 /datum/speech_manager
+	/// An associative list of cached output speech module types, indexed by their ID.
+	VAR_PRIVATE/list/speech_output_cache
 	/// An associative list of cached modifier speech module types, indexed by their ID.
 	VAR_PRIVATE/list/speech_modifier_cache
-	/// An associative list of cached output speech module types, indexed by their ID.
-	VAR_PRIVATE/list/output_cache
+	/// An associative list of cached prefix speech module types, indexed by their ID.
+	VAR_PRIVATE/list/speech_prefix_cache
 	/// An associative list of cached input listen module types, indexed by their ID.
-	VAR_PRIVATE/list/input_cache
+	VAR_PRIVATE/list/listen_input_cache
 	/// An associative list of cached modifier listen module types, indexed by their ID.
 	VAR_PRIVATE/list/listen_modifier_cache
 
@@ -20,8 +22,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 	VAR_PRIVATE/list/datum/say_channel/say_channel_cache
 	/// An associative list of cached language datum singletons, indexed by their ID.
 	VAR_PRIVATE/list/datum/language/language_cache
-	/// An associative list of cached say prefix datum singletons, indexed by their ID.
-	VAR_PRIVATE/list/datum/say_prefix/prefix_cache
+	/// An associative list of cached speech prefix module IDs, indexed by their prefix ID or IDs.
+	VAR_PRIVATE/list/prefix_id_cache
 
 	/// An associative list of cached preprocessing message modifier datum singletons, indexed by their bitflag.
 	VAR_PRIVATE/list/datum/message_modifier/preprocessing/preprocessing_message_modifier_cache
@@ -37,12 +39,12 @@ var/global/datum/speech_manager/SpeechManager = new()
 	. = ..()
 
 	// Populate the module caches.
-	src.output_cache = list()
+	src.speech_output_cache = list()
 	for (var/datum/speech_module/output/T as anything in concrete_typesof(/datum/speech_module/output))
 		var/module_id = initial(T.id)
-		if (src.output_cache[module_id])
+		if (src.speech_output_cache[module_id])
 			CRASH("Non unique output found: [module_id]. These MUST be unique.")
-		src.output_cache[module_id] = T
+		src.speech_output_cache[module_id] = T
 
 	src.speech_modifier_cache = list()
 	for (var/datum/speech_module/modifier/T as anything in concrete_typesof(/datum/speech_module/modifier))
@@ -51,12 +53,27 @@ var/global/datum/speech_manager/SpeechManager = new()
 			CRASH("Non unique modifier found: [module_id]. These MUST be unique.")
 		src.speech_modifier_cache[module_id] = T
 
-	src.input_cache = list()
+	src.speech_prefix_cache = list()
+	src.prefix_id_cache = list()
+	for (var/datum/speech_module/prefix/T as anything in concrete_typesof(/datum/speech_module/prefix))
+		var/module_id = initial(T.id)
+		if (src.speech_prefix_cache[module_id])
+			CRASH("Non unique prefix found: [module_id]. These MUST be unique.")
+		src.speech_prefix_cache[module_id] = T
+
+		var/datum/speech_module/prefix/prefix = new T
+		if (islist(prefix.prefix_id))
+			for (var/id in prefix.prefix_id)
+				src.prefix_id_cache[id] = prefix.id
+		else
+			src.prefix_id_cache[prefix.prefix_id] = prefix.id
+
+	src.listen_input_cache = list()
 	for (var/datum/listen_module/input/T as anything in concrete_typesof(/datum/listen_module/input))
 		var/module_id = initial(T.id)
-		if (src.input_cache[module_id])
+		if (src.listen_input_cache[module_id])
 			CRASH("Non unique input found: [module_id]. These MUST be unique.")
-		src.input_cache[module_id] = T
+		src.listen_input_cache[module_id] = T
 
 	src.listen_modifier_cache = list()
 	for (var/datum/listen_module/modifier/T as anything in concrete_typesof(/datum/listen_module/modifier))
@@ -83,16 +100,6 @@ var/global/datum/speech_manager/SpeechManager = new()
 		var/datum/language/language = new T()
 		src.language_cache[language.id] = language
 
-	// Populate the prefix cache.
-	src.prefix_cache = list()
-	for (var/T in concrete_typesof(/datum/say_prefix))
-		var/datum/say_prefix/prefix = new T()
-		if (islist(prefix.id))
-			for (var/id in prefix.id)
-				src.prefix_cache[id] = prefix
-		else
-			src.prefix_cache[prefix.id] = prefix
-
 	// Populate the preprocessing message modifier cache.
 	src.preprocessing_message_modifier_cache = list()
 	for (var/T in concrete_typesof(/datum/message_modifier/preprocessing))
@@ -114,7 +121,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 /// Returns a unique instance of the output speech module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetOutputInstance(output_id, list/arguments)
 	RETURN_TYPE(/datum/speech_module/output)
-	var/result = src.output_cache[output_id]
+	var/result = src.speech_output_cache[output_id]
 	if (result)
 		return new result(arglist(arguments))
 	else
@@ -129,10 +136,40 @@ var/global/datum/speech_manager/SpeechManager = new()
 	else
 		CRASH("Invalid modifier lookup: [modifier_id]")
 
+/// Returns a unique instance of the prefix speech module requested, or runtimes on bad ID.
+/datum/speech_manager/proc/GetSpeechPrefixInstance(prefix_id, list/arguments)
+	RETURN_TYPE(/datum/speech_module/prefix)
+	var/result = src.speech_prefix_cache[prefix_id]
+	if (result)
+		return new result(arglist(arguments))
+	else
+		CRASH("Invalid prefix lookup: [prefix_id]")
+
+/// Returns the longest prefix ID that corresponds to a prefix module from a specified prefix ID.
+/datum/speech_manager/proc/TruncatePrefix(prefix_id)
+	var/original_prefix = prefix_id
+	var/module_id
+
+	// Attempt to locate a speech prefix module ID that matches the prefix ID, with each iteration using a shorter prefix ID.
+	// This results in a prefix ID of ":3a" returning the module ID for ":3". Equally, ":g" -> ":", ";nonsense" -> ";", etc.
+	while (length(prefix_id))
+		module_id = src.prefix_id_cache[prefix_id]
+
+		if (module_id)
+			// If a speech prefix module is located, add its ID to the prefix cache as a shortcut for the initial prefix ID used.
+			if (!src.prefix_id_cache[original_prefix])
+				src.prefix_id_cache[original_prefix] = module_id
+
+			break
+
+		prefix_id = copytext(prefix_id, 1, length(prefix_id))
+
+	return prefix_id
+
 /// Returns a unique instance of the input listen module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetInputInstance(input_id, list/arguments)
 	RETURN_TYPE(/datum/listen_module/input)
-	var/result = src.input_cache[input_id]
+	var/result = src.listen_input_cache[input_id]
 	if (result)
 		return new result(arglist(arguments))
 	else
@@ -169,39 +206,6 @@ var/global/datum/speech_manager/SpeechManager = new()
 		return result
 	else
 		CRASH("Invalid language lookup: [lang_id]")
-
-/// Apply the processing effects of the applicable say prefix datum to a message.
-/datum/speech_manager/proc/ProcessMessagePrefix(datum/say_message/message, datum/speech_module_tree/say_tree)
-	if (!message.prefix || (message.flags & SAYFLAG_PREFIX_PROCESSED))
-		return
-
-	var/prefix_id = message.prefix
-	var/datum/say_prefix/prefix_datum
-
-	// Attempt to locate a say prefix datum that matches the prefix ID, with each iteration using a shorter ID.
-	// This results in a prefix of ":3a" returning the datum for ":3". Equally, ":g" -> ":", ";nonsense" -> ";", etc.
-	while (length(prefix_id))
-		prefix_datum = src.prefix_cache[prefix_id]
-
-		if (prefix_datum)
-			// If a say prefix datum is located, add it to the prefix cache as a shortcut for the initial ID used.
-			if (!src.prefix_cache[message.prefix])
-				src.prefix_cache[message.prefix] = prefix_datum
-
-			// Exit the loop is a say prefix datum is found and is compatible with the message.
-			if (prefix_datum.is_compatible_with(message, say_tree))
-				break
-
-		prefix_datum = null
-		prefix_id = copytext(prefix_id, 1, length(prefix_id))
-
-	if (!prefix_datum)
-		return
-
-	// Process the message.
-	message.flags |= SAYFLAG_PREFIX_PROCESSED
-	prefix_datum.process(message, say_tree)
-	message.flags |= SAYFLAG_WHISPER
 
 /// Apply the processing effects of any applicable preprocessing message modifier datums to a message.
 /datum/speech_manager/proc/ApplyMessageModifierPreprocessing(datum/say_message/message)

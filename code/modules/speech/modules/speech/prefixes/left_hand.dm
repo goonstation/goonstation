@@ -1,7 +1,8 @@
-/datum/say_prefix/left_hand
-	id = ":lh"
+/datum/speech_module/prefix/left_hand
+	id = SPEECH_PREFIX_LEFT_HAND
+	prefix_id = ":lh"
 
-/datum/say_prefix/left_hand/process(datum/say_message/message, datum/speech_module_tree/say_tree)
+/datum/speech_module/prefix/left_hand/process(datum/say_message/message)
 	. = message
 
 	var/mob/mob_speaker = message.message_origin
@@ -29,4 +30,6 @@
 
 	var/datum/say_message/radio_message = message.Copy()
 	radio_message.atom_listeners_override = list(listener)
-	say_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
+
+	message.flags |= SAYFLAG_WHISPER

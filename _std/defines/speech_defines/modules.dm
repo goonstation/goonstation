@@ -76,6 +76,19 @@
 #define SPEECH_MODIFIER_REVENANT "revenant"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
 
+//------------ Speech Prefixes ------------//
+#define SPEECH_PREFIX_AI_RADIO_1 "ai_radio_1"
+#define SPEECH_PREFIX_AI_RADIO_2 "ai_radio_2"
+#define SPEECH_PREFIX_AI_RADIO_3 "ai_radio_3"
+#define SPEECH_PREFIX_DEADCHAT "deadchat"
+#define SPEECH_PREFIX_INTERCOM "intercom"
+#define SPEECH_PREFIX_LEFT_HAND "left_hand"
+#define SPEECH_PREFIX_LOOC "looc"
+#define SPEECH_PREFIX_OOC "ooc"
+#define SPEECH_PREFIX_RADIO "radio"
+#define SPEECH_PREFIX_RIGHT_HAND "right_hand"
+#define SPEECH_PREFIX_SILICON "silicon"
+
 //------------ Listen Inputs ------------//
 #define LISTEN_INPUT_BLOBCHAT "blobchat"
 #define LISTEN_INPUT_DEADCHAT "deadchat"

@@ -178,12 +178,8 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 		src.content = trimtext(copytext(src.content, 2, MAX_MESSAGE_LEN))
 		src.say_verb = "sings"
 
-	// Attempt to assign a channel to this message.
-	if (!src.output_module_channel)
-		if (static_channel_prefixes[src.prefix])
-			src.output_module_channel = static_channel_prefixes[src.prefix]
-		else
-			src.output_module_channel = src.speaker.default_speech_output_channel
+	// Ensure that a channel is assigned to this message.
+	src.output_module_channel ||= src.speaker.default_speech_output_channel
 
 	if (ismob(src.speaker))
 		src.run_mob_and_client_checks()

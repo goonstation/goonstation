@@ -80,12 +80,3 @@
 #define SAY_CHANNEL_THRALL "thrall"
 #define SAY_CHANNEL_GLOBAL_THRALL "global_thrall"
 #define SAY_CHANNEL_KUDZU "kudzu"
-
-//------------ Static Channel Prefixes ------------//
-/// A list of channel prefixes that will always correspond to a specific say channel regardless of context.
-var/list/static_channel_prefixes = list(
-	":ooc" = SAY_CHANNEL_OOC,
-	":looc" = SAY_CHANNEL_LOOC,
-	":s" = SAY_CHANNEL_SILICON,
-)
-

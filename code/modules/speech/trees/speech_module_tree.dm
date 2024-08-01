@@ -27,7 +27,16 @@
 	/// An associative list of modifier speech modules that overide say channel modifier preferences, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/modifier/persistent_speech_modifiers_by_id
 
-/datum/speech_module_tree/New(atom/parent, list/modifiers = list(), list/outputs = list())
+	/// An associative list of prefix speech module subscription counts, indexed by the module ID.
+	VAR_PROTECTED/list/speech_prefix_ids_with_subcount
+	/// An associative list of prefix speech modules, indexed by the module ID.
+	VAR_PROTECTED/list/datum/speech_module/prefix/speech_prefixes_by_id
+	/// An associative list of prefix speech modules that should be processed before modifiers, indexed by the prefix ID or IDs.
+	VAR_PROTECTED/list/datum/speech_module/prefix/premodifier/premodifier_speech_prefixes_by_prefix_id
+	/// An associative list of prefix speech modules that should be processed after modifiers, indexed by the prefix ID or IDs.
+	VAR_PROTECTED/list/datum/speech_module/prefix/postmodifier/postmodifier_speech_prefixes_by_prefix_id
+
+/datum/speech_module_tree/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list())
 	. = ..()
 
 	src.speaker_parent = parent
@@ -47,18 +56,25 @@
 	for (var/modifier_id in modifiers)
 		src.AddSpeechModifier(modifier_id)
 
+	src.speech_prefix_ids_with_subcount = list()
+	src.speech_prefixes_by_id = list()
+	src.premodifier_speech_prefixes_by_prefix_id = list()
+	src.postmodifier_speech_prefixes_by_prefix_id = list()
+	for (var/prefix_id in prefixes)
+		src.AddSpeechPrefix(prefix_id)
+
 /datum/speech_module_tree/disposing()
 	for (var/datum/speech_module_tree/auxiliary/auxiliary_tree as anything in src.auxiliary_trees)
 		auxiliary_tree.update_target_speech_tree(null)
 
-	src.auxiliary_trees = null
-
 	for (var/output_id in src.output_modules_by_id)
 		qdel(src.output_modules_by_id[output_id])
 
-	src.persistent_speech_modifiers_by_id = null
 	for (var/modifier_id in src.speech_modifiers_by_id)
 		qdel(src.speech_modifiers_by_id[modifier_id])
+
+	for (var/prefix_id in src.speech_prefixes_by_id)
+		qdel(src.speech_modifiers_by_id[prefix_id])
 
 	for (var/atom/A as anything in src.secondary_parents)
 		A.say_tree = null
@@ -67,11 +83,16 @@
 		src.speaker_parent.say_tree = null
 		src.speaker_parent = null
 
-	src.secondary_parents = null
-	src.output_modules_by_id = null
-	src.speech_modifiers_by_id = null
-	src.output_modules_by_channel = null
 	src.speaker_origin = null
+	src.secondary_parents = null
+	src.auxiliary_trees = null
+	src.output_modules_by_id = null
+	src.output_modules_by_channel = null
+	src.speech_modifiers_by_id = null
+	src.persistent_speech_modifiers_by_id = null
+	src.speech_prefixes_by_id = null
+	src.premodifier_speech_prefixes_by_prefix_id = null
+	src.postmodifier_speech_prefixes_by_prefix_id = null
 
 	. = ..()
 
@@ -80,6 +101,11 @@
 	if (!istype(message))
 		CRASH("A non say_message thing was passed to a speech_module_tree. This should never happen.")
 
+	// Apply the effects of any applicable premodifier speech prefix.
+	if (message.prefix && !(message.flags & SAYFLAG_PREFIX_PROCESSED))
+		message = src.process_prefix(message, src.premodifier_speech_prefixes_by_prefix_id)
+
+	// Get the output modules that this message should be passed to.
 	var/list/datum/speech_module/output/output_modules
 	if (message.output_module_override)
 		var/datum/speech_module/output/output_override = src.GetOutputByID(message.output_module_override)
@@ -128,6 +154,10 @@
 
 	message.signal_recipient = message
 
+	// Apply the effects of any applicable postmodifier speech prefix.
+	if (message.prefix && !(message.flags & SAYFLAG_PREFIX_PROCESSED))
+		message = src.process_prefix(message, src.postmodifier_speech_prefixes_by_prefix_id)
+
 	// Attempt to use the highest priority module as an output, defaulting to the next highest priority on failure.
 	for (var/datum/speech_module/output/output_module as anything in output_modules)
 		if (!CAN_PASS_MESSAGE_TO_SAY_CHANNEL(output_module.say_channel, message))
@@ -147,6 +177,30 @@
 		break
 
 	SEND_SIGNAL(message, COMSIG_FLUSH_MESSAGE_BUFFER)
+
+/// Attempt to locate an applicable prefix module from the provided prefix module cache, and apply its affects to a say message.
+/datum/speech_module_tree/proc/process_prefix(datum/say_message/message, list/datum/speech_module/prefix/module_cache)
+	. = message
+
+	var/prefix_id = message.prefix
+	var/datum/speech_module/prefix/prefix_module
+
+	// Attempt to locate a speech prefix module ID on this tree that matches the prefix ID, with each iteration using a shorter prefix ID.
+	while (length(prefix_id))
+		prefix_id = global.SpeechManager.TruncatePrefix(prefix_id)
+		prefix_module = module_cache[prefix_id]
+
+		if (prefix_module)
+			break
+
+		prefix_id = copytext(prefix_id, 1, length(prefix_id))
+
+	if (!prefix_module)
+		return
+
+	// Process the message.
+	message.flags |= SAYFLAG_PREFIX_PROCESSED
+	message = prefix_module.process(message)
 
 /// Migrates this speech module tree to a new speaker parent and origin.
 /datum/speech_module_tree/proc/migrate_speech_tree(atom/new_parent, atom/new_origin, preserve_old_reference = FALSE)
@@ -259,3 +313,53 @@
 /datum/speech_module_tree/proc/GetModifierByID(modifier_id)
 	RETURN_TYPE(/datum/speech_module/modifier)
 	return src.speech_modifiers_by_id[modifier_id]
+
+/// Adds a new prefix module to the tree. Returns a reference to the new prefix module on success.
+/datum/speech_module_tree/proc/_AddSpeechPrefix(prefix_id, list/arguments = list(), count = 1)
+	RETURN_TYPE(/datum/speech_module/prefix)
+
+	src.speech_prefix_ids_with_subcount[prefix_id] += count
+	if (src.speech_prefixes_by_id[prefix_id])
+		return src.speech_prefixes_by_id[prefix_id]
+
+	arguments["parent"] = src
+	var/datum/speech_module/prefix/new_prefix = global.SpeechManager.GetSpeechPrefixInstance(prefix_id, arguments)
+	if (!istype(new_prefix))
+		return
+
+	src.speech_prefixes_by_id[prefix_id] = new_prefix
+
+	var/list/target_cache
+	if (istype(new_prefix, /datum/speech_module/prefix/premodifier))
+		target_cache = src.premodifier_speech_prefixes_by_prefix_id
+	else
+		target_cache = src.postmodifier_speech_prefixes_by_prefix_id
+
+	if (islist(new_prefix.prefix_id))
+		for (var/id in new_prefix.prefix_id)
+			target_cache[id] = new_prefix
+	else
+		target_cache[new_prefix.prefix_id] = new_prefix
+
+	return new_prefix
+
+/// Removes a prefix from the tree. Returns TRUE on success, FALSE on failure.
+/datum/speech_module_tree/proc/RemoveSpeechPrefix(prefix_id, count = 1)
+	if (!src.speech_prefixes_by_id[prefix_id])
+		return FALSE
+
+	src.speech_prefix_ids_with_subcount[prefix_id] -= count
+	if (!src.speech_prefix_ids_with_subcount[prefix_id])
+		var/datum/speech_module/prefix/prefix_module = src.speech_prefixes_by_id[prefix_id]
+		src.premodifier_speech_prefixes_by_prefix_id -= prefix_module.prefix_id
+		src.postmodifier_speech_prefixes_by_prefix_id -= prefix_module.prefix_id
+
+		qdel(prefix_module)
+		src.speech_prefixes_by_id -= prefix_id
+
+	return TRUE
+
+/// Returns the speech prefix module that matches the specified ID.
+/datum/speech_module_tree/proc/GetPrefixByID(prefix_id)
+	RETURN_TYPE(/datum/speech_module/prefix)
+	return src.speech_prefixes_by_id[prefix_id]

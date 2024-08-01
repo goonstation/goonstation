@@ -20,7 +20,6 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 /datum/speech_module/output/disposing()
 	src.say_channel.UnregisterOutput(src)
 	src.say_channel = null
-	src.parent_tree = null
 
 	. = ..()
 

@@ -1,11 +1,11 @@
 /// This atom's listen module tree. May be null if no input modules are registered.
 /atom/var/datum/listen_module_tree/listen_tree
 /// The listen modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
-/atom/var/list/start_listen_modifiers
+/atom/var/list/start_listen_modifiers = null
 /// The listen inputs that this atom *starts* with. It will not be updated nor used again after initialisation.
-/atom/var/list/start_listen_inputs
+/atom/var/list/start_listen_inputs = null
 /// The listen languages that this atom *starts* with. It will not be updated nor used again after initialisation. Note that this is the languages that the atom understands when heard.
-/atom/var/list/start_listen_languages
+/atom/var/list/start_listen_languages = null
 
 /atom/New()
 	if (length(src.start_listen_inputs))
@@ -26,8 +26,10 @@
 
 /// This atom's speech module tree. Lazy loaded on the first `say()` call.
 /atom/var/datum/speech_module_tree/say_tree
+/// The speech prefixes that this atom *starts* with. It will not be updated nor used again after initialisation.
+/atom/var/list/start_speech_prefixes = null
 /// The speech modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
-/atom/var/list/start_speech_modifiers
+/atom/var/list/start_speech_modifiers = null
 /// The speech outputs that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 /// The default speech output module that this atom will send unprefixed say messages to. A value of `null` will sent to all available outputs.
@@ -111,7 +113,7 @@
 /// Returns this atom's speech module tree. If this atom does not possess a speech module tree, instantiates one.
 /atom/proc/ensure_say_tree()
 	RETURN_TYPE(/datum/speech_module_tree)
-	src.say_tree ||= new(src, src.start_speech_modifiers, src.start_speech_outputs)
+	src.say_tree ||= new(src, src.start_speech_outputs, src.start_speech_modifiers, src.start_speech_prefixes)
 	return src.say_tree
 
 /// Returns this atom's listen module tree. If this atom does not possess a listen module tree, instantiates one.
@@ -148,6 +150,7 @@ Contributing:
 Cleanup:
 - Move say procs into this directory.
 - Tidy speech variables on types. Especially mobs. (search for speech_verb_)
+- Unification of terminology.
 
 Old Code To Remove:
 - `proc/speak`. `all_hearers` implementations may be good to look at too.
@@ -188,7 +191,7 @@ Follow-Up PRs:
 /client/New()
 	. = ..()
 
-	src.say_tree = new(null, null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), src.mob.say_tree)
+	src.say_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.say_tree)
 	src.listen_tree = new(null, null, null, null, src.mob.listen_tree)
 
 	src.preferences.listen_ooc = !src.preferences.listen_ooc

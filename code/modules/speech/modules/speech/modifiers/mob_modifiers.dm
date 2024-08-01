@@ -9,6 +9,11 @@
 
 	var/mob/living/speaker = message.speaker
 
+	// Prevent speech if the speaker is dead or unconscious.
+	if (speaker.stat != STAT_ALIVE)
+		qdel(message)
+		return null
+
 	// Handle breath modifiers.
 	if (iscarbon(speaker))
 		var/mob/living/carbon/C = speaker
