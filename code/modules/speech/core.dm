@@ -148,7 +148,6 @@ Contributing:
 	The use of `src` and `global` when accessing applicable variables.
 
 Cleanup:
-- Move say procs into this directory.
 - Tidy speech variables on types. Especially mobs. (search for speech_verb_)
 - Unification of terminology.
 

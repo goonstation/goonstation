@@ -1,141 +1,111 @@
-/client/proc/blobsay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "blobsay"
-	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
+//------------- Player Speech Verbs -------------//
+/mob/verb/ooc(message as text)
+	src.say(":ooc [message]")
 
-	if (!src.mob || src.player_mode)
+/mob/verb/looc(message as text)
+	src.say(":looc [message]")
+
+/mob/verb/say_verb(message as text)
+	set name = "say"
+
+	if (!src.can_use_say)
+		boutput(src, SPAN_ALERT("You can not speak!"))
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_BLOB))
-
-	logTheThing(LOG_ADMIN, src, "BLOBSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "BLOBSAY: [msg]", "admin")
-
-
-/client/proc/dronesay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "dronesay"
-	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (!src.mob || src.player_mode)
+	if (!message)
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_GHOSTDRONE))
+	src.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER)
 
-	logTheThing(LOG_ADMIN, src, "DRONESAY: [msg]")
-	logTheThing(LOG_DIARY, src, "DRONESAY: [msg]", "admin")
-
-
-/client/proc/dsay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "dsay"
+/mob/verb/sa_verb(message as text)
+	set name = "sa"
 	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
 
-	if (!src.mob || src.player_mode)
+	src.say_verb(message)
+
+/mob/verb/whisper_verb(message as text)
+	set name = "whisper"
+
+	if (!src.can_use_say)
+		boutput(src, SPAN_ALERT("You can not speak!"))
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_DEAD, "output_module_override" = SPEECH_OUTPUT_DEADCHAT))
-
-	logTheThing(LOG_ADMIN, src, "DSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "DSAY: [msg]", "admin")
-
-
-/client/proc/flocksay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "flocksay"
-	set hidden = TRUE
-	ADMIN_ONLY
-
-	if (!src.mob || src.player_mode)
+	if (!message)
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_GLOBAL_FLOCK))
+	src.say(message, flags = SAYFLAG_WHISPER | SAYFLAG_SPOKEN_BY_PLAYER)
 
-	logTheThing(LOG_ADMIN, src, "FLOCKSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "FLOCKSAY: [msg]", "admin")
-
-
-/client/proc/hivesay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "hivesay"
+/mob/verb/say_main_radio(message as text)
+	set name = "say_main_radio"
 	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
 
-	if (!src.mob || src.player_mode)
+/mob/living/say_main_radio(message as text)
+	set name = "say_main_radio"
+	set desc = "Speaking on the main radio frequency"
+	set hidden = TRUE
+
+	src.say_verb("; [message]")
+
+/mob/verb/say_radio()
+	set name = "say_radio"
+	set hidden = TRUE
+
+/mob/living/say_radio()
+	set name = "say_radio"
+	set hidden = TRUE
+
+	var/list/choices = list()
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_say_tree().GetAllPrefixes())
+		var/list/prefix_choice = prefix_module.get_prefix_choices()
+		if (!length(prefix_choice))
+			continue
+
+		choices += prefix_choice
+
+	if (!length(choices))
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_GLOBAL_HIVEMIND))
+	var/choice
+	if (length(choices) == 1)
+		choice = choices[1]
+	else
+		choice = input("", "Select Radio Channel") as null | anything in choices
 
-	logTheThing(LOG_ADMIN, src, "HIVESAY: [msg]")
-	logTheThing(LOG_DIARY, src, "HIVESAY: [msg]", "admin")
-
-
-/client/proc/kudzusay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "kudzusay"
-	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (!src.mob || src.player_mode)
+	if (!choice)
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_KUDZU))
-
-	logTheThing(LOG_ADMIN, src, "KUDZUSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "KUDZUSAY: [msg]", "admin")
-
-
-/client/proc/marsay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "marsay"
-	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (!src.mob || src.player_mode)
+	var/prefix = choices[choice]
+	var/message = input("", "Speaking to [choice] Frequency") as null | text
+	if (!message)
 		return
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_MARTIAN))
-
-	logTheThing(LOG_ADMIN, src, "MARSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "MARSAY: [msg]", "admin")
+	src.say_verb("[prefix] [message]")
 
 
-/client/proc/silisay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "silisay"
-	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
+//------------- Admin Speech Procs -------------//
+#define ADMIN_SAY_PROC(proc_name, channel, module) \
+/client/proc/##proc_name(message as text) { \
+	SET_ADMIN_CAT(ADMIN_CAT_NONE); \
+	set name = #proc_name; \
+	set hidden = TRUE; \
+	ADMIN_ONLY; \
+	SHOW_VERB_DESC; \
+	if (!src.mob || src.player_mode) { \
+		return; \
+	} \
+	src.mob.say(message, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = channel, "output_module_override" = module)); \
+	logTheThing(LOG_ADMIN, src, "[uppertext(#proc_name)]: [message]"); \
+	logTheThing(LOG_DIARY, src, "[uppertext(#proc_name)]: [message]", "admin"); \
+}
 
-	if (!src.mob || src.player_mode)
-		return
+ADMIN_SAY_PROC(blobsay, SAY_CHANNEL_BLOB, null)
+ADMIN_SAY_PROC(dronesay, SAY_CHANNEL_GHOSTDRONE, null)
+ADMIN_SAY_PROC(dsay, SAY_CHANNEL_DEAD, SPEECH_OUTPUT_DEADCHAT)
+ADMIN_SAY_PROC(flocksay, SAY_CHANNEL_GLOBAL_FLOCK, null)
+ADMIN_SAY_PROC(hivesay, SAY_CHANNEL_GLOBAL_HIVEMIND, null)
+ADMIN_SAY_PROC(kudzusay, SAY_CHANNEL_KUDZU, null)
+ADMIN_SAY_PROC(marsay, SAY_CHANNEL_MARTIAN, null)
+ADMIN_SAY_PROC(silisay, SAY_CHANNEL_SILICON, null)
+ADMIN_SAY_PROC(thrallsay, SAY_CHANNEL_GLOBAL_THRALL, null)
 
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_SILICON))
-
-	logTheThing(LOG_ADMIN, src, "SILISAY: [msg]")
-	logTheThing(LOG_DIARY, src, "SILISAY: [msg]", "admin")
-
-
-/client/proc/thrallsay(msg as text)
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-	set name = "thrallsay"
-	set hidden = TRUE
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (!src.mob || src.player_mode)
-		return
-
-	src.mob.say(msg, flags = SAYFLAG_ADMIN_MESSAGE | SAYFLAG_SPOKEN_BY_PLAYER, message_params = list("output_module_channel" = SAY_CHANNEL_GLOBAL_THRALL))
-
-	logTheThing(LOG_ADMIN, src, "THRALLSAY: [msg]")
-	logTheThing(LOG_DIARY, src, "THRALLSAY: [msg]", "admin")
+#undef ADMIN_SAY_PROC
