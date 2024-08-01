@@ -1389,7 +1389,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/vending/restock_cartridge/mechanics,
 					/obj/item/vending/restock_cartridge/computer3,
 					/obj/item/vending/restock_cartridge/floppy,
-					/obj/item/vending/restock_cartridge/pda)
+					/obj/item/vending/restock_cartridge/pda,
+					/obj/item/vending/restock_cartridge/circuit)
 	cost = PAY_DOCTORATE*4
 	containertype = /obj/storage/crate
 	containername = "Electronics Vending Machine Restocking Pack"

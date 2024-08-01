@@ -1707,7 +1707,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
 
-/obj/machinery/vending/circuitboards
+/obj/machinery/vending/circuit
 	name = "CircuitTech"
 	desc = "A computer circuit board vendor."
 	icon_state = "circuit"
