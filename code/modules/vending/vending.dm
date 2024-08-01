@@ -1707,6 +1707,71 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/diskbox, rand(2,3), cost=PAY_UNTRAINED/2)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy, rand(5,8), cost=PAY_UNTRAINED/5)
 
+/obj/machinery/vending/circuitboards
+	name = "CircuitTech"
+	desc = "A computer circuit board vendor."
+	icon_state = "circuit"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	pay = TRUE
+	acceptcard = TRUE
+
+	light_r =0.84
+	light_g = 0.21
+	light_b = 1
+
+	create_products(restocked)
+		..()
+		//Normally available circuits:
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/security_tv, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/small_tv, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/communications, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/teleporter, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/secure_data, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/atmospherealerts, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/atmospheresiphonswitch, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/air_management, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/air_management, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/injector_control, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/general_alert, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/atm, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/robot_module_rewriter, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/cloning, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/genetics, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/tetris, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/arcade, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/solar_control, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/powermonitor, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/powermonitor_smes, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/barcode, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/barcode_qm, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/operating, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/qmorder, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/qmsupply, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/stockexchange, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/transception, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/mining_magnet, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/telescope, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/announcement, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/siphon_control, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/chem_request, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/chem_request_receiver, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/sea_elevator, amount=2, cost=PAY_UNTRAINED/3)
+		//Hidden circuits available by hacking:
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/clown_announcement, amount=1, hidden=TRUE, cost=PAY_DUMBCLOWN)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/robotics, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/security, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/bank_data, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/card, amount=1, hidden=TRUE, cost=PAY_DONTBUYIT)
+		//not present because because deprecated/nonfunctional to build:
+		/*
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/pod, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/olddoor, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/syndicatedoor, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/swfdoor, amount=2, cost=PAY_UNTRAINED/3)
+		*/
 
 /obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
 	name = "CartyParty"
