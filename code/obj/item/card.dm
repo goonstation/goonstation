@@ -289,6 +289,8 @@ TYPEINFO(/obj/item/card/emag)
 	user.UpdateOverlays(id_overlay, "id_overlay")
 	user.UpdateOverlays(hand_overlay, "id_hand_overlay")
 
+	user.dir = SOUTH
+
 	SPAWN(ID_SHOWOFF_COOLDOWN)
 		user.UpdateOverlays(null, "id_overlay")
 		user.UpdateOverlays(null, "id_hand_overlay")
