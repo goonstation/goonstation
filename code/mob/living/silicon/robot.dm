@@ -278,7 +278,7 @@
 	death(gibbed)
 		setdead(src)
 		src.borg_death_alert()
-		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed [log_health(src)] at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		src.on_disassembly()
 

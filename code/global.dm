@@ -529,6 +529,8 @@ var/global
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
 	list/protected_frequencies = list(R_FREQ_SYNDICATE)
+	///base movedelay threshold for slipping
+	base_slip_delay = BASE_SPEED_SUSTAINED
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

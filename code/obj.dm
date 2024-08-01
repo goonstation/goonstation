@@ -196,8 +196,8 @@
 		else
 			return null
 
-	return_air()
-		if (loc)
+	return_air(direct = FALSE)
+		if (loc && !direct)
 			return loc.return_air()
 		else
 			return null

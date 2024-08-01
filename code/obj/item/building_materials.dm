@@ -226,6 +226,28 @@ MATERIAL
 			else
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
+
+		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
+			if(src.amount < 5)
+				boutput(user, SPAN_ALERT("You need at least five sheets to make a mask."))
+				return
+			if (!istype(src.loc,/turf/))
+				if (issilicon(user))
+					boutput(user, SPAN_ALERT("Hardcore as it sounds, smelting parts of yourself off isn't big or clever."))
+				else
+					boutput(user, SPAN_ALERT("You should probably put the sheets down first."))
+				return
+			if(!W:try_weld(user, 1))
+				return
+
+			var/obj/item/clothing/mask/steel/M = new /obj/item/clothing/mask/steel(user.loc)
+			if(src.material) M.setMaterial(src.material)
+			src.change_stack_amount(-5)
+
+			user.visible_message(SPAN_ALERT("<B>[user]</B> welds the sheets together into a mask."))
+			UpdateStackAppearance()
+			return
+
 		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
 			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
 			new /obj/item/stick(get_turf(src))

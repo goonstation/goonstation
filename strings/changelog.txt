@@ -1,4 +1,77 @@
 
+(t)thu aug 01 24
+(u)LeahTheTech
+(p)20159
+(e)🪲|C-Bug
+(+)Closing doors now properly stops fluid puddles flowing under them.
+(t)wed jul 31 24
+(u)LeahTheTech
+(+)Crayon drawings will no longer show up in the right click menu.
+(t)tue jul 30 24
+(u)Colossus
+(p)20131
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added metal masks to the game, which can be crafted by using a welder on a stack of 5 or more steel sheets. Masks offer protection in exchange for visibility.
+(t)mon jul 29 24
+(u)LeahTheTech
+(+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
+(t)sun jul 28 24
+(u)CalliopeSoups
+(+)Contraband lockers have been re-located to the back rooms of most security departments. This is sure to deter theft as nobody goes back there!
+(t)sat jul 27 24
+(u)Colossus
+(p)20086
+(e)🆕🔬|C-Feature, A-Science
+(+)Tetrodotoxin now may appear in eldritch artifacts and ??? pills.
+(u)glowbold & soleil
+(p)20096
+(e)🪲🗺📦💡|C-Bug, A-Mapping, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(u)LeahTheTech
+(p)20067
+(e)⚖💅⚗|C-Balance, C-QoL, A-Chemistry
+(*)Graphene now takes silicon, rather than silicon dioxide to make.
+(t)fri jul 26 24
+(u)cringe
+(p)19847
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nanotrasen has built better glass floors that are seamless. They also let through light.
+(u)LeahTheTech
+(+)Maneaters and skeleton commanders no longer bleed.
+(u)TDHooligan
+(p)19063
+(e)⚖💊|C-Balance, A-Medical
+(*)Sharp weapons cause bleeding more reliably.
+(*)Heavy bleeding (Artery nicks) cannot be naturally regenerated, and require bandages/sutures/cauterization/staunching.
+(*)As compensation, bleeding slows down as you lose blood. Coagulants (proconvertin) also limit incoming bleeds, like 'Bleed Armor'.
+(t)thu jul 25 24
+(u)Azrun
+(p)18570
+(e)🆕🔒⚖🔬🐁|C-Feature, A-Secret, C-Balance, A-Science, A-Critters
+(*)Expands Genetics to scan some small animals! Stick 'em in a carrier and see what is out there.
+(t)wed jul 24 24
+(u)JORJ949
+(p)19799
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Cargo can now order a crate full of departmental clothing vendor restock cartridges.
+(u)Smilg
+(p)20071
+(e)💅📦|C-QoL, A-Game-Objects
+(*)You can now hit the floor with MechComps to place them on a neat 2x2 grid.
+(t)tue jul 23 24
+(u)Sord
+(+)Tasers have a new sound when they hit a mob
+(t)mon jul 22 24
+(u)LeahTheTech
+(*)The arcfiend jolt ability is no longer interrupted by attacks and now shoots periodic arcs of electricity at nearby mobs.
+(u)Kakolookiyam
+(p)19982
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)PTL should no longer occasionally shut off when firing beyond its batteries capacity.
+(u)fr4meperfect
+(p)20053
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Adds a pint glass to bar glass recyclers.
 (t)fri jul 19 24
 (u)Kubius
 (p)19587

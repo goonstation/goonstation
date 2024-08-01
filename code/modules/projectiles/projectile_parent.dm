@@ -710,6 +710,30 @@ ABSTRACT_TYPE(/datum/projectile)
 			if (disrupt)
 				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
 
+		///copies the name, visuals, and sfx of another projectile datum - for varedit shenanigans
+		copy_appearance_of(datum/projectile/P)
+			src.name = P.name
+			src.sname = P.sname
+
+			src.icon = P.icon
+			src.icon_state = P.icon_state
+
+			src.invisibility = P.invisibility
+			src.brightness = P.brightness
+
+			src.color_red = P.color_red
+			src.color_green = P.color_green
+			src.color_blue = P.color_blue
+			src.color_icon = P.color_icon
+			src.override_color = P.override_color
+
+			src.shot_sound = P.shot_sound
+			src.shot_sound_extrarange = P.shot_sound_extrarange
+			src.shot_volume = P.shot_volume
+
+			src.ie_type = P.ie_type
+			src.impact_image_state = P.impact_image_state
+
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
 	if (!S || !T)

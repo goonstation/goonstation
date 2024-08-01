@@ -1767,3 +1767,25 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		src.inhand_image.color = src.inhand_color
 	src.inhand_image.pixel_x = 0
 	src.inhand_image.pixel_y = hand_offset
+
+/// Move item to turf, and snap its pixel offsets to a grid of the input size.
+/obj/item/proc/place_to_turf_by_grid(mob/user, params, turf/target, grid = 2, centered = 1, offsetx = 0, offsety = 0)
+	. = FALSE
+	if (src && !isghostdrone(user))
+		var/dirbuffer
+		dirbuffer = src.dir
+		if (user)
+			if (src.cant_drop)
+				return
+			user.drop_item()
+		if(src.dir != dirbuffer)
+			src.set_dir(dirbuffer)
+		src.set_loc(target)
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			var/grid32 = (32 / grid)
+			// the inner round is flooring, the outer round is rounding, yes that's right
+			var/gridx = round( round((text2num(params["icon-x"])) / grid32) * grid32 + grid32 / 2 * centered, 1)
+			var/gridy = round( round((text2num(params["icon-y"])) / grid32) * grid32 + grid32 / 2 * centered, 1)
+			src.pixel_x = gridx + offsetx - 16 // -16 to center the sprite
+			src.pixel_y = gridy + offsety - 16
+		. = TRUE

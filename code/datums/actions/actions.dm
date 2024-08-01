@@ -249,14 +249,16 @@
 		if (!obj_turf)
 			return FALSE
 		for (var/obj/O in obj_turf)
-			if (src.constructible_check(O))
+			if (src.should_ignore_dense_check(O))
 				continue
 			if (O.density)
 				boutput(owner, SPAN_ALERT("You try to build \the [obj_name], but there's \the [O] in the way!"))
 				return TRUE
 		return FALSE
 
-	proc/constructible_check(var/obj/O)
+	/// Check if the object is one of a dense object which is an exception to most others -- and should be allowed to have
+	/// several of its own instances on a tile. Girders, thin windows, and railings are all examples of this.
+	proc/should_ignore_dense_check(var/obj/O)
 		// girder for soul, window for thindow (fuck thindow) <- ((I have no idea what this means))
 		return istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing)
 

@@ -188,7 +188,7 @@
 	newmob.gender = src.gender
 	if (src.bioHolder)
 		var/datum/bioHolder/original = new/datum/bioHolder(newmob)
-		original.CopyOther(src.bioHolder)
+		original.CopyOther(src.bioHolder, copyPool=FALSE, copyActiveEffects=FALSE)
 		qdel(newmob.bioHolder)
 		newmob.bioHolder = original
 

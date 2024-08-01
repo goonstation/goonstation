@@ -90,7 +90,14 @@ TYPEINFO(/datum/random_event/major/white_hole)
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
 		message_ghosts("<b>\A [whitehole.source_location] white hole</b> is spawning at [log_loc(T, ghostjump=TRUE)].")
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
+		src.cleanup()
 
+	cleanup()
+		src.target_turf = initial(src.target_turf)
+		src.grow_duration = initial(src.grow_duration)
+		src.duration = initial(src.duration)
+		src.source_location = initial(src.source_location)
+		src.activity_modifier = initial(src.activity_modifier)
 
 
 ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)

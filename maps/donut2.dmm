@@ -2349,10 +2349,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "anF" = (
-/obj/machinery/computer/announcement{
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
+/obj/machinery/computer/announcement/station/cargo,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -7773,15 +7770,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aOt" = (
-/obj/machinery/computer/announcement{
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent,
+/obj/machinery/computer/announcement/station/medical,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "aOu" = (
@@ -9099,8 +9093,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -22376,7 +22369,7 @@
 /area/station/science/chemistry)
 "fGE" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -22724,10 +22717,9 @@
 /area/station/quartermaster/magnet)
 "fSk" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiHacking = 1
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "fTn" = (
@@ -23724,9 +23716,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "gzM" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
 /obj/storage/cart/forensic/bomb_disposal,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
@@ -26364,9 +26353,7 @@
 /obj/cable/blue{
 	icon_state = "0-6"
 	},
-/obj/machinery/computer/announcement{
-	name = "AI Announcement Computer"
-	},
+/obj/machinery/computer/announcement/station/ai,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "iss" = (
@@ -29528,6 +29515,9 @@
 /area/station/engine/inner)
 "kvs" = (
 /obj/storage/secure/closet/brig,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/security/equipment)
 "kvu" = (
@@ -43700,11 +43690,11 @@
 /obj/machinery/phone/wall{
 	pixel_y = 30
 	},
-/obj/machinery/computer/announcement,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/announcement/station/security,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fred2"
@@ -44996,6 +44986,7 @@
 	},
 /obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "tOK" = (

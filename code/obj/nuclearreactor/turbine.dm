@@ -261,7 +261,7 @@
 					user.TakeDamage("head", 200, 0, 0, DAMAGE_CRUSH)
 				return TRUE
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	ui_interact(mob/user, datum/tgui/ui)

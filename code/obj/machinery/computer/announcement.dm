@@ -197,6 +197,43 @@
 		logTheThing(LOG_STATION, src, "ANNOUNCES: [message]")
 		return TRUE
 
+/obj/machinery/computer/announcement/station
+	req_access = null
+	name = "Station Announcement Computer"
+
+	bridge
+		req_access = list(access_heads)
+		name = "Bridge Announcement Computer"
+		announces_arrivals = 1
+
+	captain
+		req_access = list(access_captain)
+		name = "Executive Announcement Computer"
+
+	security
+		req_access = list(access_maxsec)
+		name = "Security Announcement Computer"
+
+	research
+		req_access = list(access_research_director)
+		name = "Research Announcement Computer"
+
+	medical
+		req_access = list(access_medical_director)
+		name = "Medical Announcement Computer"
+
+	engineering
+		req_access = list(access_engineering_chief)
+		name = "Engineering Announcement Computer"
+
+	cargo
+		req_access = list(access_cargo)
+		name = "QM Announcement Computer"
+
+	ai
+		req_access = list(access_ai_upload)
+		name = "AI Announcement Computer"
+
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "announcement1"

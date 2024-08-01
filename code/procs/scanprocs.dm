@@ -332,7 +332,7 @@
 		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
 		animate_scanning(M, "#9eee80")
-	if (!ishuman(M))
+	if (!M.has_genetics())
 		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
 	var/mob/living/carbon/human/H = M
 	var/list/data = list()
@@ -363,11 +363,12 @@
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
 
-	if (length(H.cloner_defects.active_cloner_defects))
-		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
-		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
-			data += "<b class='alert'>[defect.name]</b>"
-			data += "<i class='alert'>[defect.desc]</i>"
+	if(istype(H))
+		if (length(H.cloner_defects.active_cloner_defects))
+			data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
+			for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
+				data += "<b class='alert'>[defect.name]</b>"
+				data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /// Returns the datacore general record, or null if none found
@@ -707,7 +708,7 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = A.return_air()
+	var/datum/gas_mixture/check_me = A.return_air(direct = TRUE)
 	var/pressure = null
 	var/total_moles = null
 

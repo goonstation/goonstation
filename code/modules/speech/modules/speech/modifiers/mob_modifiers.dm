@@ -23,7 +23,7 @@
 			message.loudness -= 1
 
 	// Handle stuttering modifiers.
-	if (speaker.stuttering)
+	if (speaker.stuttering && !isrobot(speaker))
 		message.say_verb = speaker.speech_verb_stammer
 		message.content = stutter(message.content)
 

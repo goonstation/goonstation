@@ -4972,7 +4972,7 @@
 	},
 /area/listeningpost)
 "clb" = (
-/obj/storage/secure/closet/brig,
+/obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "cle" = (
@@ -8133,10 +8133,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "dHz" = (
-/obj/machinery/computer/announcement{
-	name = "Research Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -8144,6 +8140,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 26
 	},
+/obj/machinery/computer/announcement/station/research,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "dHI" = (
@@ -8422,7 +8419,11 @@
 /turf/space/fluid/acid/clear,
 /area/shuttle/arrival/station)
 "dOM" = (
-/obj/storage/closet/wardrobe/orange,
+/obj/storage/secure/crate/gear{
+	desc = "A secure crate for transferring contraband, and definitely not people.";
+	name = "Secure Transfer Crate";
+	req_access_txt = "1"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -16198,11 +16199,6 @@
 	},
 /area/listeningpost/power)
 "haW" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Command Announcement Computer"
-	},
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
 	icon_state = "line1"
@@ -16214,6 +16210,9 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
@@ -17693,15 +17692,13 @@
 	name = "Cargo Primary Endpoint"
 	})
 "hDb" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -21601,7 +21598,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med/sea,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "jge" = (
@@ -21949,7 +21946,7 @@
 	pixel_y = 9
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen/freezer)
+/area/station/crew_quarters/kitchen)
 "jqn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cryogenics Chamber"
@@ -26125,6 +26122,10 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -28225,13 +28226,6 @@
 	},
 /area/station/security/brig)
 "lOT" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Executive Announcement Computer";
-	pixel_x = -3;
-	pixel_y = 4;
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -28241,6 +28235,11 @@
 	pixel_x = 7;
 	pixel_y = 32;
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/obj/machinery/computer/announcement/station/captain{
+	dir = 4;
+	pixel_x = -3;
+	pixel_y = 4
 	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
@@ -29266,6 +29265,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "mif" = (
@@ -38375,7 +38375,6 @@
 	})
 "qih" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
 	dir = 4
 	},
 /obj/cable{
@@ -38385,6 +38384,7 @@
 	dir = 8
 	},
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)
 "qip" = (
@@ -40960,13 +40960,9 @@
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
 "rwt" = (
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 8
+/obj/storage/secure/closet/brig,
+/obj/machinery/light{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -49352,11 +49348,6 @@
 "vef" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 2
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
 	},
 /obj/cable{
 	icon_state = "1-2"

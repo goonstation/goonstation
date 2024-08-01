@@ -7007,11 +7007,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
 "axB" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "Medical Announcement Computer";
-	req_access_txt = "19"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -7020,6 +7015,9 @@
 	tag = ""
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -20739,10 +20737,8 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bxE" = (
-/obj/machinery/computer/announcement{
-	dir = 8;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -22144,11 +22140,10 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bCr" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/computer/announcement/station/bridge{
 	dir = 8
 	},
-/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bCt" = (
@@ -24762,9 +24757,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/lab)
 "bLz" = (
-/obj/machinery/computer/announcement{
-	name = "Radio Station Announcement Computer";
-	req_access_txt = ""
+/obj/machinery/computer/announcement/station{
+	name = "Radio Lab Announcement Computer"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/lab)
@@ -26220,14 +26214,13 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQM" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "Security Announcement Computer"
-	},
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
 	name = "interrogation pipe"
+	},
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -27495,6 +27488,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
 "bVi" = (
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -34488,16 +34484,13 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "fGB" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access_txt = "37"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "fGJ" = (
@@ -37981,7 +37974,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med/sea,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "kXn" = (
@@ -42967,6 +42960,7 @@
 	req_access = null;
 	id = "quarters_hos"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "sdf" = (
