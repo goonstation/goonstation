@@ -15,6 +15,10 @@
 #define SPEECH_MODIFIER_PRIORITY_ACCENTS -10
 #define SPEECH_MODIFIER_PRIORITY_VERY_LOW -100
 
+//------------ Speech Prefixes ------------//
+#define SPEECH_PREFIX_PRIORITY_DEFAULT 0
+#define SPEECH_PREFIX_PRIORITY_LOW -10
+
 //------------ Listen Inputs ------------//
 #define LISTEN_INPUT_PRIORITY_DEFAULT 0
 #define LISTEN_INPUT_PRIORITY_DISTORTED -20

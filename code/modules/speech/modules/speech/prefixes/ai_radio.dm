@@ -45,6 +45,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/ai_radio)
 
 /datum/speech_module/prefix/ai_radio/one
 	id = SPEECH_PREFIX_AI_RADIO_1
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 3
 	prefix_id = ":1"
 
 /datum/speech_module/prefix/ai_radio/one/get_radio(mob/living/silicon/ai/AI)
@@ -53,6 +54,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/ai_radio)
 
 /datum/speech_module/prefix/ai_radio/two
 	id = SPEECH_PREFIX_AI_RADIO_2
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 2
 	prefix_id = ":2"
 
 /datum/speech_module/prefix/ai_radio/two/get_radio(mob/living/silicon/ai/AI)
@@ -61,6 +63,7 @@ ABSTRACT_TYPE(/datum/speech_module/prefix/ai_radio)
 
 /datum/speech_module/prefix/ai_radio/three
 	id = SPEECH_PREFIX_AI_RADIO_3
+	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
 	prefix_id = ":3"
 
 /datum/speech_module/prefix/ai_radio/three/get_radio(mob/living/silicon/ai/AI)

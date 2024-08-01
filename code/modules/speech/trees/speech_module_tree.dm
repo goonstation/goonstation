@@ -29,6 +29,8 @@
 
 	/// An associative list of prefix speech module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/speech_prefix_ids_with_subcount
+	/// A list of prefix speech modules, sorted by priority.
+	VAR_PROTECTED/list/datum/speech_module/prefix/speech_prefixes
 	/// An associative list of prefix speech modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/prefix/speech_prefixes_by_id
 	/// An associative list of prefix speech modules that should be processed before modifiers, indexed by the prefix ID or IDs.
@@ -57,6 +59,7 @@
 		src.AddSpeechModifier(modifier_id)
 
 	src.speech_prefix_ids_with_subcount = list()
+	src.speech_prefixes = list()
 	src.speech_prefixes_by_id = list()
 	src.premodifier_speech_prefixes_by_prefix_id = list()
 	src.postmodifier_speech_prefixes_by_prefix_id = list()
@@ -90,6 +93,7 @@
 	src.output_modules_by_channel = null
 	src.speech_modifiers_by_id = null
 	src.persistent_speech_modifiers_by_id = null
+	src.speech_prefixes = null
 	src.speech_prefixes_by_id = null
 	src.premodifier_speech_prefixes_by_prefix_id = null
 	src.postmodifier_speech_prefixes_by_prefix_id = null
@@ -327,7 +331,9 @@
 	if (!istype(new_prefix))
 		return
 
+	src.speech_prefixes += new_prefix
 	src.speech_prefixes_by_id[prefix_id] = new_prefix
+	sortList(src.speech_prefixes, GLOBAL_PROC_REF(cmp_say_modules))
 
 	var/list/target_cache
 	if (istype(new_prefix, /datum/speech_module/prefix/premodifier))
@@ -351,6 +357,7 @@
 	src.speech_prefix_ids_with_subcount[prefix_id] -= count
 	if (!src.speech_prefix_ids_with_subcount[prefix_id])
 		var/datum/speech_module/prefix/prefix_module = src.speech_prefixes_by_id[prefix_id]
+		src.speech_prefixes -= prefix_module
 		src.premodifier_speech_prefixes_by_prefix_id -= prefix_module.prefix_id
 		src.postmodifier_speech_prefixes_by_prefix_id -= prefix_module.prefix_id
 
@@ -367,7 +374,4 @@
 /// Returns all speech prefix modules on this speech tree.
 /datum/speech_module_tree/proc/GetAllPrefixes()
 	RETURN_TYPE(/list/datum/speech_module/prefix)
-
-	. = list()
-	for (var/prefix_id in src.speech_prefixes_by_id)
-		. += src.speech_prefixes_by_id[prefix_id]
+	return src.speech_prefixes
