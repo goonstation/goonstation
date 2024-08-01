@@ -2027,7 +2027,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		user.dir = SOUTH
 
 		var/image/badge_overlay = src.SafeGetOverlayImage("badge_overlay", src.icon, src.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
-		var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_hand_color())
+		var/image/hand_overlay = src.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
 
 		user.UpdateOverlays(badge_overlay, "badge_overlay")
 		user.UpdateOverlays(hand_overlay, "badge_hand_overlay")

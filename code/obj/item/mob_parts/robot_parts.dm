@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ROBOT)
+	fingertip_color = "#4e5263"
 
 	decomp_affected = FALSE
 	var/robot_movement_modifier

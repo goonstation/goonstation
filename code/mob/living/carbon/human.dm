@@ -3631,7 +3631,7 @@
 mob/living/carbon/human/has_genetics()
 	return TRUE
 
-/mob/living/carbon/human/get_hand_color()
+/mob/living/carbon/human/get_fingertip_color()
 	var/hand_color = null
 	if (istype(src.gloves))
 		var/obj/item/clothing/gloves/gloves = src.gloves
@@ -3645,7 +3645,7 @@ mob/living/carbon/human/has_genetics()
 	else
 		limb = src.limbs.r_arm
 	if (istype(limb))
-		hand_color = limb.fingertip_color()
+		hand_color = limb.get_fingertip_color()
 		if (!isnull(hand_color))
 			return hand_color
 

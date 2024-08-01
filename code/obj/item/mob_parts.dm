@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/no_icon = FALSE
 	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/skintoned = TRUE
+	/// fingertip_color
+	var/fingertip_color = null
 
 	// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
 	/// The icon of this overlay
@@ -379,29 +381,10 @@ ABSTRACT_TYPE(/obj/item/parts)
 		return
 
 	/// Fingertip color, used to tint overlays
-	proc/fingertip_color()
+	proc/get_fingertip_color()
 		if (src.skintoned)
 			return src.skin_tone
-		else
-			if (isplantlimb(src))
-				return "#3fb54f"
-			else if (isrobotlimb(src))
-				return "#4e5263"
-			else if (iswolflimb(src))
-				return "#895d37"
-			else if (isskeletonlimb(src))
-				return "#aa9987"
-			else if (istype(src, /obj/item/parts/human_parts/arm/mutant/monkey))
-				return "#745136"
-			else if (istype(src, /obj/item/parts/artifact_parts/arm))
-				var/obj/item/parts/artifact_parts/artifact_limb = src
-				switch(artifact_limb.artifact_type)
-					if("eldritch")
-						return "#803872"
-					if("martian")
-						return "#72924f"
-					if("precursor")
-						return "#A5BDC5"
+		return src.fingertip_color
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
