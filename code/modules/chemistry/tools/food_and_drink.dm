@@ -791,7 +791,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, SPAN_NOTICE("You dump [trans] units of the solution to [target]."))
 
 		else if (reagents.total_volume)
-
+			if (!in_interact_range(target, user))
+				return
 			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
 				return
 			boutput(user, SPAN_NOTICE("You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target]."))

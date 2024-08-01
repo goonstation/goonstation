@@ -353,6 +353,8 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, SPAN_NOTICE("You scoop some of the sand into [src]."))
 
 		else if (reagents.total_volume && src.is_open_container())
+			if (!in_interact_range(target, user))
+				return
 			if (isobj(target) && (target:flags & NOSPLASH))
 				return
 
