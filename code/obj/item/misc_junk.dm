@@ -210,12 +210,43 @@ TYPEINFO(/obj/item/disk)
 	stamina_damage = 40
 	stamina_cost = 20
 	stamina_crit_chance = 5
+	custom_suicide = TRUE
 
 	throw_impact(obj/window/window)
 		if (istype(window) && window.health <= (/obj/window/auto::health * /obj/window/auto::health_multiplier))
 			window.smash()
 			return
 		..()
+
+	suicide(var/mob/user as mob)
+		if (!src.user_can_suicide(user))
+			return 0
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
+		user.visible_message(SPAN_ALERT("<b>[user] throws [src] into the air!</b>"))
+
+		src.set_loc(get_turf(user))
+		src.pixel_x = 0
+		src.pixel_y = 0
+		src.anchored = ANCHORED_ALWAYS
+		src.layer += 4
+		animate(src, pixel_y = 80, easing = EASE_OUT | QUAD_EASING, time = 0.7 SECONDS)
+		playsound(get_turf(src), 'sound/effects/throw.ogg', 50, FALSE)
+		SPAWN(0.7 SECONDS)
+			animate(src, pixel_y = 15, easing = EASE_IN | QUAD_EASING, time = 0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
+				playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, FALSE)
+				user.take_brain_damage(999)
+				user.TakeDamage("Head", 999, 0, 0, DAMAGE_CRUSH, TRUE)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "brick_suicide")
+				SPAWN(0.2 SECONDS)
+					animate(src, pixel_y = 0, easing = EASE_OUT | BOUNCE_EASING, time = 0.5 SECOND)
+					SPAWN(0.5 SECONDS)
+						src.anchored = UNANCHORED
+						src.layer -= 4
+		SPAWN(50 SECONDS)
+			if (user && !isdead(user))
+				user.suiciding = 0
+		return 1
 
 /obj/item/emeter
 	name = "E-Meter"
