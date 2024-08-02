@@ -388,10 +388,10 @@
 			if (istype(target, /atom/movable))
 				if (isturf(target.loc))
 					pixelable = TRUE
-				else if (istype(target.loc, /obj/item/plate))
-					pixelable = TRUE
-				else if (istype(target.loc, /obj/item/reagent_containers/food/snacks/ingredient/pizza_base))
-					pixelable = TRUE
+				else if (istype(target.loc, /atom/movable))
+					var/atom/movable/location = target.loc
+					if (target in location.vis_contents)
+						pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
 				if (!QDELETED(W))
