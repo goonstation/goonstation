@@ -3382,3 +3382,8 @@
 
 /mob/proc/get_genetic_traits()
 	return list(0,0,0)
+
+/mob/proc/get_fingertip_color()
+	if (src.bioHolder?.mobAppearance)
+		return src.bioHolder.mobAppearance.s_tone
+	return "#042069"

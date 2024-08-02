@@ -1,3 +1,9 @@
+
+(t)thu aug 01 24
+(u)LeahTheTech
+(p)20159
+(e)🪲|C-Bug
+(+)Closing doors now properly stops fluid puddles flowing under them.
 (t)wed jul 31 24
 (u)LeahTheTech
 (+)Crayon drawings will no longer show up in the right click menu.
@@ -9,6 +15,9 @@
 (t)mon jul 29 24
 (u)LeahTheTech
 (+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
+(t)sun jul 28 24
+(u)CalliopeSoups
+(+)Contraband lockers have been re-located to the back rooms of most security departments. This is sure to deter theft as nobody goes back there!
 (t)sat jul 27 24
 (u)Colossus
 (p)20086
