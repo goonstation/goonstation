@@ -1,5 +1,7 @@
 
 (t)fri aug 02 24
+(u)glowbold
+(*)Using a badge, ID card, emag or dabbing license in-hand will now show it off with a neat little overlay.
 (u)LeahTheTech
 (p)20127
 (e)🚄⚖🧫|C-Performance, C-Balance, C-Experimental
