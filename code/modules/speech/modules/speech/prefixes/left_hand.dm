@@ -5,6 +5,9 @@
 /datum/speech_module/prefix/left_hand/process(datum/say_message/message)
 	. = message
 
+	if (message.output_module_channel != SAY_CHANNEL_OUTLOUD)
+		return
+
 	var/mob/mob_speaker = message.message_origin
 	var/atom/listener
 

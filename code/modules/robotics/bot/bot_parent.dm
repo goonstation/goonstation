@@ -93,7 +93,7 @@
 			var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
 			src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 
-		src.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_BOT_DECTALK)
+		src.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_DECTALK_BOT)
 
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)

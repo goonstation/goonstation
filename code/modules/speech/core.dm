@@ -152,7 +152,6 @@ Cleanup:
 - Unification of terminology.
 
 Old Code To Remove:
-- `proc/speak`. `all_hearers` implementations may be good to look at too.
 - Check span defines in `chat_output.dm`. Some may now be unused.
 
 Refactors:

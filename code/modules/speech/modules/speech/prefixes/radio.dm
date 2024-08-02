@@ -6,6 +6,9 @@
 /datum/speech_module/prefix/radio/process(datum/say_message/message)
 	. = message
 
+	if (message.output_module_channel != SAY_CHANNEL_OUTLOUD)
+		return
+
 	var/obj/item/device/radio/radio
 	if (ismob(message.message_origin))
 		var/mob/mob_speaker = message.message_origin

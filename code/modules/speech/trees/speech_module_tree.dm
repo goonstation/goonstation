@@ -149,7 +149,6 @@
 
 	// Apply sayflag message manipulation.
 	global.SpeechManager.ApplyMessageModifierPreprocessing(message)
-	message.output_module_channel = null
 
 	// If flagged with `SAYFLAG_DO_NOT_OUTPUT`, return the message to the caller without passing it to an output module.
 	. = message
@@ -163,6 +162,7 @@
 		message = src.process_prefix(message, src.postmodifier_speech_prefixes_by_prefix_id)
 
 	// Attempt to use the highest priority module as an output, defaulting to the next highest priority on failure.
+	message.output_module_channel = null
 	for (var/datum/speech_module/output/output_module as anything in output_modules)
 		if (!CAN_PASS_MESSAGE_TO_SAY_CHANNEL(output_module.say_channel, message))
 			boutput(src.speaker_parent, output_module.say_channel.disabled_message)

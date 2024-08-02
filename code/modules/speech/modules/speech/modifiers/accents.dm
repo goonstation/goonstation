@@ -398,6 +398,43 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 	processed_message.content = jointext(output, "")
 
 
+/datum/speech_module/modifier/accent/error
+	id = SPEECH_MODIFIER_ACCENT_ERROR
+	var/max_font_size = 110
+	var/min_font_size = 80
+	var/rate_of_change = 5
+
+/datum/speech_module/modifier/accent/error/process(datum/say_message/message)
+	. = message
+
+	var/font_size = 100
+	var/fontIncreasing = TRUE
+
+	var/list/characters = explode_string(message.content)
+	var/processed_content = ""
+
+	for (var/character as anything in characters)
+		processed_content += "<span style='font-size: [font_size]%;'>[character]</span>"
+
+		if (fontIncreasing)
+			font_size = min(font_size + src.rate_of_change, src.max_font_size)
+
+			if (font_size >= src.max_font_size)
+				fontIncreasing = FALSE
+
+		else
+			font_size = max(font_size - src.rate_of_change, src.min_font_size)
+
+			if (font_size <= src.min_font_size)
+				fontIncreasing = TRUE
+
+		if (prob(10))
+			processed_content += pick("%", "##A", "-", "- - -", "ERROR")
+
+	message.content = "<b>[processed_content]</b>"
+	. = message
+
+
 /datum/speech_module/modifier/accent/horse
 	id = SPEECH_MODIFIER_ACCENT_HORSE
 

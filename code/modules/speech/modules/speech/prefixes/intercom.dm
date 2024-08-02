@@ -5,6 +5,9 @@
 /datum/speech_module/prefix/intercom/process(datum/say_message/message)
 	. = message
 
+	if (message.output_module_channel != SAY_CHANNEL_OUTLOUD)
+		return
+
 	message.atom_listeners_to_be_excluded ||= list()
 	var/list/obj/item/device/radio/intercom/intercoms = list()
 	for (var/obj/item/device/radio/intercom/intercom in view(1, message.message_origin))
