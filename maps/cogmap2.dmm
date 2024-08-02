@@ -22388,8 +22388,7 @@
 /area/station/routing/security)
 "bqC" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/table/reinforced/auto,
-/obj/item/hand_labeler,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/grime,
 /area/station/routing/security)
 "bqD" = (
@@ -22397,8 +22396,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/vehicle/segway,
-/obj/decal/stripe_caution,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor,
 /area/station/routing/security)
 "bqE" = (
@@ -58045,7 +58043,8 @@
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/central)
 "giI" = (
-/obj/storage/secure/closet/brig,
+/obj/vehicle/segway,
+/obj/decal/stripe_caution,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "gke" = (
@@ -61413,6 +61412,8 @@
 	})
 "jwl" = (
 /obj/machinery/firealarm/west,
+/obj/table/reinforced/auto,
+/obj/item/hand_labeler,
 /turf/simulated/floor/caution/south,
 /area/station/routing/security)
 "jwG" = (
@@ -66499,9 +66500,7 @@
 /area/station/com_dish/auxdish)
 "owh" = (
 /obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Armory"
+	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
@@ -66509,6 +66508,7 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "owx" = (

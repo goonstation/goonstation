@@ -72,6 +72,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
+	has_genes = TRUE
 
 	var/aggressive = FALSE
 	var/random_name = FALSE
@@ -172,6 +173,7 @@ proc/filter_carrier_pets(var/type)
 		fur_color =	pick("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D","#D8C078", "#E3CC88", "#F2DA91", "#F21AE", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
 		eye_color = "#FFFFF"
 		setup_overlays()
+		src.bioHolder.AddNewPoolEffect("albinism", scramble=TRUE)
 
 	setup_overlays()
 		if (src.use_custom_color)
@@ -254,6 +256,7 @@ proc/filter_carrier_pets(var/type)
 		set_hand(2) // mouth hand
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
+
 
 /mob/living/critter/small_animal/mouse/dead
 	player_can_spawn_with_pet = FALSE
@@ -1061,6 +1064,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 		..()
 		if (nspecies)
 			src.apply_species(nspecies, 0)
+		src.bioHolder.AddNewPoolEffect("beak_peck", scramble=TRUE)
+
 
 	get_desc()
 		..()
@@ -1810,6 +1815,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		.=..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		src.bioHolder.AddNewPoolEffect("radioactive", scramble=TRUE)
 
 	setup_healths()
 		. = ..()
@@ -1903,6 +1909,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
+
+	New()
+		..()
+		src.bioHolder.AddNewPoolEffect("scorpion_sting", scramble=TRUE)
 
 	setup_hands()
 		..()
@@ -2028,6 +2038,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		src.event_handler_flags |= USE_PROXIMITY
+		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
 
 	setup_hands()
 		..()
@@ -2160,6 +2172,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "robot_roach-dead"
 	pull_w_class = W_CLASS_NORMAL
 	meat_type = /obj/item/reagent_containers/food/snacks/burger/roburger
+	has_genes = FALSE
 
 	base_move_delay = 1.6
 	base_walk_delay = 2.1
@@ -2293,6 +2306,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.icon_state = "frog[pick("-blue","-gold","-red","-straw","-tree","-glass")]"
 				src.icon_state_dead = "[src.icon_state]-dead"
 		..()
+		src.bioHolder.AddNewPoolEffect("jumpy", scramble=TRUE)
 
 	setup_hands()
 		..()
@@ -2348,6 +2362,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		. = ..()
 		START_TRACKING
+		src.bioHolder.AddNewPoolEffect("stinky", scramble=TRUE)
 
 	disposing()
 		. = ..()
@@ -2463,6 +2478,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		. = ..()
 		infected = prob(20)
 		START_TRACKING
+		src.bioHolder.AddNewPoolEffect("claws", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("carapace", scramble=TRUE)
 
 	disposing()
 		. = ..()
@@ -2805,7 +2822,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (!(is_incapacitated(seal) && seal.ai?.enabled))
 				seal.visible_message(SPAN_EMOTE("<b>[seal]</b> [pick("groans","yelps")]!"))
 				if(seal.is_npc)
-					seal.ai.move_away(src, 10)
+					seal.ai?.move_away(src, 10)
 
 		..()
 
@@ -2861,6 +2878,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	faction = list(FACTION_NEUTRAL)
 	isFlying = TRUE
+	has_genes = FALSE
 
 	setup_hands()
 		..()
@@ -3608,6 +3626,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "asks"
 	health_brute = 20
 	health_burn = 20
+	has_genes = FALSE
 	var/emagged = FALSE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -3723,6 +3742,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/pick_random_icon_state = 1
 	is_npc = FALSE
 	player_can_spawn_with_pet = TRUE
+	has_genes = FALSE
 
 	New()
 		..()
@@ -3787,6 +3807,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/datum/figure_info/info = 0
 	var/voice_gender = "male"
 	is_npc = FALSE
+	has_genes = FALSE
 
 	New()
 		..()
@@ -3900,6 +3921,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/allow_pickup_requests = TRUE
 	void_mindswappable = FALSE
 	player_can_spawn_with_pet = FALSE
+	has_genes = FALSE
 
 	New()
 		..()
@@ -4202,6 +4224,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	can_hat = FALSE
 	player_can_spawn_with_pet = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+	has_genes = FALSE
 
 /mob/living/critter/small_animal/crab/lava
 	name = "magma crab"
@@ -4497,7 +4520,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				G.AttackSelf(src)
 			else
 				src.emote("flip")
-				src.ai.move_away(target,1)
+				src.ai?.move_away(target,1)
 
 /* =============================================== */
 /* ----------------- living Tail ----------------- */
@@ -4514,6 +4537,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	generic = FALSE
 	butcherable = FALSE
 	no_stamina_stuns = TRUE
+	has_genes = FALSE
 
 	ai_retaliates = FALSE
 
@@ -4602,6 +4626,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		. = ..()
 		AddComponent(/datum/component/waddling, height=4, angle=8)
+		src.bioHolder.AddNewPoolEffect("jumpy", scramble=TRUE)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -4651,7 +4676,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
 		. = ..()
-		if (src.is_npc && !istype(src.ai?.current_task, /datum/aiTask/sequence/goalbased/critter/flight_range))
+		if (src.ai?.enabled && !istype(src.ai?.current_task, /datum/aiTask/sequence/goalbased/critter/flight_range))
 			src.ai.interrupt()
 
 	seek_food_target(var/range = 5)
@@ -4666,3 +4691,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "hare"
 	health_brute = 14
 	health_burn = 14
+
+	New()
+		..()
+		src.bioHolder.ActivatePoolEffect(src.bioHolder.GetEffectFromPool("jumpy"), overrideDNA=TRUE, grant_research=FALSE)
+

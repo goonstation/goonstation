@@ -1394,6 +1394,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Electronics Vending Machine Restocking Pack"
 
+/datum/supply_packs/clothing_vending_restock
+	name = "Clothing Vending Machine Restock Pack"
+	desc = "Various Vending Machine Restock Cartridges for departmental apparel vendors"
+	contains = list(/obj/item/vending/restock_cartridge/jobclothing/security,
+					/obj/item/vending/restock_cartridge/jobclothing/medical,
+					/obj/item/vending/restock_cartridge/jobclothing/engineering,
+					/obj/item/vending/restock_cartridge/jobclothing/catering,
+					/obj/item/vending/restock_cartridge/jobclothing/research,)
+	cost = PAY_TRADESMAN*5
+	containertype = /obj/storage/crate
+	containername = "Clothing Vending Machine Restocking Pack"
+
 /*
 	Umm, apparently the packs below never get added? What's up with that. Construction mode :S -ZeWaka
 */

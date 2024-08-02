@@ -27488,6 +27488,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
 "bVi" = (
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -34481,16 +34484,13 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "fGB" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access_txt = "37"
-	},
+/obj/machinery/door/airlock/pyro/security/alt,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "fGJ" = (
@@ -37974,7 +37974,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med/sea,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "kXn" = (
@@ -42960,6 +42960,7 @@
 	req_access = null;
 	id = "quarters_hos"
 	},
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "sdf" = (

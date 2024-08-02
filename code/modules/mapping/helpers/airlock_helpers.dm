@@ -86,3 +86,12 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			F.desc = D.desc
 			F.density = D.density
 			qdel(D)
+
+/obj/mapping_helper/airlock/aiDisabler
+	name = "airlock aiDisabler"
+	icon_state = "aiDisable"
+
+	setup()
+		. = ..()
+		for (var/obj/machinery/door/airlock/secure_airlock in src.loc)
+			secure_airlock.aiControlDisabled = TRUE
