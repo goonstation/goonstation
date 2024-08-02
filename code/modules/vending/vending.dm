@@ -1718,7 +1718,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	pay = TRUE
 	acceptcard = TRUE
 
-	light_r =0.84
+	light_r = 0.84
 	light_g = 0.21
 	light_b = 1
 
@@ -1732,7 +1732,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/secure_data, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/atmospherealerts, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/atmospheresiphonswitch, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/air_management, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/air_management, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/injector_control, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/general_alert, amount=2, cost=PAY_UNTRAINED/3)
@@ -1761,17 +1760,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/sea_elevator, amount=2, cost=PAY_UNTRAINED/3)
 		//Hidden circuits available by hacking:
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/clown_announcement, amount=1, hidden=TRUE, cost=PAY_DUMBCLOWN)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/robotics, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/security, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/bank_data, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/card, amount=1, hidden=TRUE, cost=PAY_DONTBUYIT)
-		//not present because because deprecated/nonfunctional to build:
-		/*
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/pod, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/olddoor, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/syndicatedoor, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/swfdoor, amount=2, cost=PAY_UNTRAINED/3)
-		*/
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/card, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
+		//maybe add if using mechcomp for free stuff from vendors gets removed
+		//product_list += new/datum/data/vending_product(/obj/item/circuitboard/robotics, amount=1, hidden=TRUE, cost=PAY_DONTBUYIT)
 
 /obj/machinery/vending/pda //cogwerks: vendor to clean up the pile of PDA carts a bit
 	name = "CartyParty"

@@ -160,7 +160,7 @@ TYPEINFO(/obj/item/circuitboard)
 	computertype = /obj/machinery/computer/announcement
 /obj/item/circuitboard/clown_announcement
 	name = "circuit board (clown announcement computer)"
-	computertype = "/obj/machinery/computer/announcement/clown"
+	computertype = /obj/machinery/computer/announcement/clown
 /obj/item/circuitboard/siphon_control
 	name = "circuit board (siphon control)"
 	computertype = /obj/machinery/computer/siphon_control
