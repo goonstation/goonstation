@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 	anchored = UNANCHORED
 	flags = FLUID_SUBMERGE | NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	interacts_with_wiring = FALSE
 
 	var/active = FALSE
 	var/packet_control = TRUE

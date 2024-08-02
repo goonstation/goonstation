@@ -10,20 +10,24 @@
 	/// by default, power machines are connected by a cable in a neighbouring turf
 	/// if set to 0, requires a 0-X cable on this turf
 	var/directwired = 1
+	// Dirty hack to fix issues created by subtypes that don't interact with wiring whatsoever. Can be removed when these are refactored to different types.
+	var/interacts_with_wiring = 1
 
 /obj/machinery/power/New(var/new_loc)
 	..()
-	if (current_state > GAME_STATE_PREGAME)
+	if (current_state > GAME_STATE_PREGAME && src.interacts_with_wiring)
 		SPAWN(0.1 SECONDS) // aaaaaaaaaaaaaaaa
 			recheck_powernet()
 
 /obj/machinery/power/set_loc(atom/target)
 	. = ..()
-	recheck_powernet()
+	if (src.interacts_with_wiring)
+		recheck_powernet()
 
 /obj/machinery/power/Move(atom/target)
 	. = ..()
-	recheck_powernet()
+	if (src.interacts_with_wiring)
+		recheck_powernet()
 
 /obj/machinery/power/proc/recheck_powernet()
 	src.netnum = 0

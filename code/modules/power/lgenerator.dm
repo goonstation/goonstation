@@ -12,6 +12,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	requires_power = FALSE
+	interacts_with_wiring = FALSE
 	var/chargeAPC = TRUE // TRUE = charge APC, FALSE = charge inserted power cell.
 	var/active = FALSE
 
