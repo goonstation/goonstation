@@ -171,7 +171,7 @@ var/makingpowernetssince = 0
 
 	if(!cables_only)
 		for(var/obj/machinery/power/P in T)
-			if(P.netnum < 0)	// exclude APCs
+			if(P.netnum < 0 || !P.interacts_with_wiring)	// exclude APCs and power devices that don't interact with wiring.
 				continue
 
 			if(P.directwired)	// true if this machine covers the whole turf (so can be joined to a cable on neighbour turf)
