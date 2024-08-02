@@ -282,7 +282,7 @@
 		return src.RemoveLanguageAllSubcount(count)
 
 	if (!src.known_languages_by_id[language_id])
-		return TRUE
+		return FALSE
 
 	src.known_language_ids_with_subcount[language_id] -= count
 	if (!src.known_language_ids_with_subcount[language_id])
@@ -299,7 +299,7 @@
 /// Removes a count from the `LANGUAGE_ALL` subcount, and disables `understands_all_languages` if no counts remain.
 /datum/listen_module_tree/proc/RemoveLanguageAllSubcount(count = 1)
 	if (!src.understands_all_languages)
-		return TRUE
+		return FALSE
 
 	src.known_language_ids_with_subcount[LANGUAGE_ALL] -= count
 	if (!src.known_language_ids_with_subcount[LANGUAGE_ALL])
