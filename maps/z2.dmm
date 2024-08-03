@@ -43161,14 +43161,14 @@
 /area/afterlife/bar)
 "daS" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 50
-	},
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "tile1"
 	},
 /obj/map/light/brightwhite,
+/obj/item_dispenser/icedispenser{
+	pixel_y = 12
+	},
 /turf/unsimulated/floor/carpet/red/standard/edge/north,
 /area/afterlife/bar)
 "daT" = (
@@ -43567,10 +43567,9 @@
 /area/afterlife/bar/sanctuary)
 "dcy" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
-/obj/item/storage/box/plates,
-/obj/item/storage/box/fruit_wedges,
-/obj/item/storage/box/glassbox,
+/obj/machinery/glass_recycler{
+	glass_amt = 50
+	},
 /turf/unsimulated/floor/black,
 /area/afterlife/bar)
 "dcz" = (
@@ -43934,9 +43933,6 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/espressocup{
-	pixel_y = 5
-	},
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
@@ -44536,7 +44532,6 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/item/device/light/candle/small,
-/obj/item/device/light/candle/small,
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -44818,11 +44813,11 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /obj/map/light/brightwhite,
+/obj/item/storage/box/glassbox,
+/obj/item/storage/box/fruit_wedges,
+/obj/item/storage/box/plates,
+/obj/item/storage/box/cutlery,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred1"
