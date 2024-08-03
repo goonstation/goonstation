@@ -210,6 +210,7 @@
 /obj/machinery/computer/announcement/station
 	req_access = null
 	name = "Station Announcement Computer"
+	circuit_type = /obj/item/circuitboard/announcement/station
 
 	bridge
 		req_access = list(access_heads)
@@ -219,30 +220,37 @@
 	captain
 		req_access = list(access_captain)
 		name = "Executive Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/captain
 
 	security
 		req_access = list(access_maxsec)
 		name = "Security Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/security
 
 	research
 		req_access = list(access_research_director)
 		name = "Research Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/research
 
 	medical
 		req_access = list(access_medical_director)
 		name = "Medical Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/medical
 
 	engineering
 		req_access = list(access_engineering_chief)
 		name = "Engineering Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/engineering
 
 	cargo
 		req_access = list(access_cargo)
 		name = "QM Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/cargo
 
 	ai
 		req_access = list(access_ai_upload)
 		name = "AI Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/ai
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
@@ -255,6 +263,7 @@
 	name = "Syndicate Announcement computer"
 	theme = "syndicate"
 	req_access = list(access_syndicate_shuttle)
+	circuit_type = /obj/item/circuitboard/announcement/syndicate
 
 	commander
 		req_access = list(access_syndicate_commander)
