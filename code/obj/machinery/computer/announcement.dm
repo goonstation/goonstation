@@ -277,7 +277,7 @@
 	req_access = null
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
-	circuit_type = /obj/item/circuitboard/clown_announcement
+	circuit_type = /obj/item/circuitboard/announcement/clown
 	var/emagged = FALSE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"
