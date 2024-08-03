@@ -1300,7 +1300,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		projectiles = list(
+			"detain" = current_projectile,
+			"execute" = new/datum/projectile/laser/blaster,
+			"smokeshot" = new/datum/projectile/bullet/smoke,
+			"knockout" = new/datum/projectile/bullet/tranq_dart/law_giver,
+			"hotshot" = new/datum/projectile/bullet/flare,
+			"assault" = new/datum/projectile/laser/asslaser,
+			"clownshot" = new/datum/projectile/bullet/clownshot,
+			"pulse" = new/datum/projectile/energy_bolt/pulse
+		)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
@@ -1399,7 +1408,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				item_state = "lawg-execute"
 				if (sound)
 					playsound(M, "sound/vox/[text == "cluwneshot" ? "cluwne" : "exterminate"].ogg", 50)
-				src.toggle_recoil(TRUE)
+				src.toggle_recoil(FALSE)
 			if ("smokeshot","fog")
 				set_current_projectile(projectiles["smokeshot"])
 				current_projectile.cost = 50
@@ -1493,9 +1502,9 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/bullet/revolver_38/lb)			//execute - cyan
+			else if (current_projectile.type == /datum/projectile/laser/blaster)			//execute - cyan
 				indicator_display.color = "#00FFFF"
-				muzzle_flash = "muzzle_flash"
+				muzzle_flash = "muzzle_flash_bluezap"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
 				indicator_display.color = "#0000FF"
 				muzzle_flash = "muzzle_flash"
