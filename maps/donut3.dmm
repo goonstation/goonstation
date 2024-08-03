@@ -8789,6 +8789,10 @@
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/bridge)
+"cwN" = (
+/obj/machinery/firealarm/west,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "cwW" = (
 /obj/machinery/vending/medical,
 /obj/disposalpipe/segment/mail,
@@ -9127,7 +9131,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw)
 "cBD" = (
-/obj/machinery/firealarm/east,
+/obj/machinery/phone/wall{
+	pixel_x = 24
+	},
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
 	},
@@ -24704,11 +24710,11 @@
 /obj/blind_switch/area/north{
 	pixel_x = 4
 	},
-/obj/machinery/phone/wall{
-	pixel_x = 24
-	},
 /obj/storage/secure/closet/fridge,
 /obj/random_item_spawner/snacks/six,
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 5
 	},
@@ -49785,6 +49791,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 5
@@ -137918,7 +137927,7 @@ uoe
 xLg
 sPz
 fpx
-spT
+cwN
 stt
 cWA
 cWA
