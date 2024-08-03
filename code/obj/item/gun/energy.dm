@@ -1384,7 +1384,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			src.change_mode(M, text)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
-				if ("detain","execute","knockout","hotshot","incendiary","assault","highpower","clownshot","clown", "pulse", "punch")
+				if ("detain","execute","knockout","hotshot","incendiary","bigshot","assault","highpower","clownshot","clown", "pulse", "punch")
 					random_burn_damage(M, 50)
 					M.changeStatus("knockdown", 4 SECONDS)
 					elecflash(src,power=2)
