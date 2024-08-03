@@ -49,20 +49,23 @@
 	src.output_module_ids_with_subcount = list()
 	src.output_modules_by_id = list()
 	src.output_modules_by_channel = list()
-	for (var/output_id in outputs)
-		src.AddSpeechOutput(output_id)
 
 	src.speech_modifier_ids_with_subcount = list()
 	src.speech_modifiers_by_id = list()
 	src.persistent_speech_modifiers_by_id = list()
-	for (var/modifier_id in modifiers)
-		src.AddSpeechModifier(modifier_id)
 
 	src.speech_prefix_ids_with_subcount = list()
 	src.speech_prefixes = list()
 	src.speech_prefixes_by_id = list()
 	src.premodifier_speech_prefixes_by_prefix_id = list()
 	src.postmodifier_speech_prefixes_by_prefix_id = list()
+
+	for (var/output_id in outputs)
+		src.AddSpeechOutput(output_id)
+
+	for (var/modifier_id in modifiers)
+		src.AddSpeechModifier(modifier_id)
+
 	for (var/prefix_id in prefixes)
 		src.AddSpeechPrefix(prefix_id)
 

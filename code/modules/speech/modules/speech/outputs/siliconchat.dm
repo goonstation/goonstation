@@ -5,8 +5,7 @@
 /datum/speech_module/output/siliconchat/New(datum/speech_module_tree/parent)
 	. = ..()
 
-	SPAWN(1)
-		src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_SILICON)
+	src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_SILICON)
 
 /datum/speech_module/output/siliconchat/disposing()
 	src.parent_tree.RemoveSpeechPrefix(SPEECH_PREFIX_SILICON)

@@ -7,8 +7,7 @@
 /datum/speech_module/output/deadchat/New(datum/speech_module_tree/parent)
 	. = ..()
 
-	SPAWN(1)
-		src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_DEADCHAT)
+	src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_DEADCHAT)
 
 /datum/speech_module/output/deadchat/disposing()
 	src.parent_tree.RemoveSpeechPrefix(SPEECH_PREFIX_DEADCHAT)

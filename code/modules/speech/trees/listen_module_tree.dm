@@ -51,17 +51,20 @@
 	src.input_module_ids_with_subcount = list()
 	src.input_modules_by_id = list()
 	src.input_modules_by_channel = list()
-	for (var/input_id in inputs)
-		src.AddListenInput(input_id)
 
 	src.listen_modifier_ids_with_subcount = list()
 	src.listen_modifiers_by_id = list()
 	src.persistent_listen_modifiers_by_id = list()
-	for (var/modifier_id in modifiers)
-		src.AddListenModifier(modifier_id)
 
 	src.known_language_ids_with_subcount = list()
 	src.known_languages_by_id = list()
+
+	for (var/input_id in inputs)
+		src.AddListenInput(input_id)
+
+	for (var/modifier_id in modifiers)
+		src.AddListenModifier(modifier_id)
+
 	for (var/language_id in languages)
 		src.AddKnownLanguage(language_id)
 

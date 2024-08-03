@@ -5,8 +5,7 @@
 /datum/speech_module/output/ooc/New(datum/speech_module_tree/parent)
 	. = ..()
 
-	SPAWN(1)
-		src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_OOC)
+	src.parent_tree.AddSpeechPrefix(SPEECH_PREFIX_OOC)
 
 /datum/speech_module/output/ooc/disposing()
 	src.parent_tree.RemoveSpeechPrefix(SPEECH_PREFIX_OOC)
