@@ -1351,8 +1351,7 @@
 /area/station/crew_quarters/market)
 "ams" = (
 /obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
+	pixel_y = 24
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -1361,6 +1360,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "amy" = (
@@ -33632,8 +33632,7 @@
 	pixel_y = -21
 	},
 /obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = "19"
+	pixel_x = 24
 	},
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -33644,6 +33643,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "rgl" = (
@@ -40579,9 +40579,9 @@
 	},
 /obj/machinery/turretid{
 	pixel_x = -24;
-	req_access_txt = "19";
 	turretArea = /area/station/turret_protected/Zeta
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},

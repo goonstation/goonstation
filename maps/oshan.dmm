@@ -3223,6 +3223,7 @@
 /obj/machinery/turretid{
 	pixel_y = 32
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "akP" = (
@@ -6833,6 +6834,7 @@
 	pixel_y = 24;
 	turretArea = /area/station/turret_protected/Zeta
 	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "awJ" = (
@@ -13301,6 +13303,7 @@
 	pixel_x = 24;
 	turretArea = /area/station/turret_protected/ai_upload
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -37427,6 +37430,7 @@
 	pixel_x = -24;
 	turretArea = /area/station/ai_monitored/armory
 	},
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "jZw" = (

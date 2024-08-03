@@ -1305,8 +1305,7 @@
 /area/listeningpost)
 "aBH" = (
 /obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
+	pixel_y = 24
 	},
 /obj/stool/chair/office/blue{
 	dir = 8
@@ -1317,6 +1316,7 @@
 	layer = 5
 	},
 /obj/machinery/light/small,
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "aCv" = (
@@ -10841,9 +10841,9 @@
 	})
 "eSU" = (
 /obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = "19"
+	pixel_x = 24
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/darkblue/checker,
 /area/station/turret_protected/ai)
 "eSW" = (
@@ -42465,9 +42465,9 @@
 	tag = ""
 	},
 /obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = "19"
+	pixel_x = 24
 	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},

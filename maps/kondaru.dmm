@@ -8386,9 +8386,9 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/turretid{
-	pixel_x = 24;
-	req_access_txt = "19"
+	pixel_x = 24
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "aFS" = (
@@ -30658,6 +30658,7 @@
 	turretArea = /area/station/turret_protected/armory_outside
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -45484,6 +45485,7 @@
 	pixel_x = 26
 	},
 /obj/machinery/light,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "nlI" = (

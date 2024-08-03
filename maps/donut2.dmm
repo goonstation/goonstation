@@ -19876,7 +19876,6 @@
 	req_access = null;
 	req_access_txt = null
 	},
-/obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/access/research_director,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)

@@ -356,7 +356,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	var/emagged = 0
 	var/turretArea = null
 
-	req_access = list(access_ai_upload)
+	req_access = null // because not all turrets are upload ones
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	New()

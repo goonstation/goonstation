@@ -20365,6 +20365,7 @@
 /obj/machinery/turretid{
 	pixel_x = -28
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "brr" = (

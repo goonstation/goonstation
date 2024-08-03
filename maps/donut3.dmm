@@ -34656,6 +34656,7 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "kwA" = (
@@ -36298,6 +36299,7 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/airless/plating/jen,
 /area/station/turret_protected/AIbaseoutside)
 "kWU" = (
@@ -51330,7 +51332,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "pzp" = (
