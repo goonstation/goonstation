@@ -37614,9 +37614,7 @@
 /obj/disposalpipe/trunk/south{
 	pixel_z = 1
 	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal,
 /turf/simulated/floor,
 /area/station/security/main)
 "ksg" = (
