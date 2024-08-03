@@ -20590,7 +20590,6 @@
 	pixel_x = 8;
 	pixel_y = 26
 	},
-/obj/mapping_helper/access/ai_upload,
 /obj/landmark/start/job/AI,
 /obj/machinery/turretid/ai_chamber{
 	pixel_y = 24;
