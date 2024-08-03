@@ -165,10 +165,12 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (station announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station
 
+TYPEINFO(/obj/item/circuitboard/announcement/bridge)
+	mats = 0 //no spamming arrival messages please
+
 /obj/item/circuitboard/announcement/bridge
 	name = "circuit board (bridge/arrival announcement computer)"
 	computertype = /obj/machinery/computer/announcement/station/bridge
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED //no spamming arrival messages please
 
 /obj/item/circuitboard/announcement/captain
 	name = "circuit board (executive announcement computer)"
