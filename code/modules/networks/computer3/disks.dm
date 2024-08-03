@@ -308,6 +308,8 @@
 		src.read_only = 1
 #endif
 
+#define DISK_SHOWOFF_COOLDOWN 2 SECONDS
+
 TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	mats = 15
 
@@ -336,6 +338,56 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
+
+	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "flash_disk", DISK_SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name].", "You show off the [name].")
+		actions.start(new /datum/action/show_disk(user, src), user)
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "flash_disk", DISK_SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name] at [target.name].", "You show off the [name] to [target.name]")
+		actions.start(new /datum/action/show_disk(user, src), user)
+
+/datum/action/show_disk
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = DISK_SHOWOFF_COOLDOWN
+	var/mob/user = null
+	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
+
+	New(mob/user, obj/item/disk/data/floppy/read_only/authentication/disk)
+		. = ..()
+		src.user = user
+		src.disk = disk
+
+	onStart()
+		. = ..()
+		var/pixel_x_offset = 0
+		var/pixel_y_offset = 2
+		var/hand_icon_state = ""
+		if(src.user.hand)
+			hand_icon_state = "disk_hold_l"
+			pixel_x_offset = 6
+		else
+			hand_icon_state = "disk_hold_r"
+			pixel_x_offset = -6
+
+		var/image/disk_overlay = src.disk.SafeGetOverlayImage("disk_overlay", src.disk.icon, src.disk.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
+		var/image/hand_overlay = src.disk.SafeGetOverlayImage("disk_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
+
+		src.user.UpdateOverlays(disk_overlay, "disk_overlay")
+		src.user.UpdateOverlays(hand_overlay, "disk_hand_overlay")
+
+		src.user.dir = SOUTH
+
+	onDelete()
+		. = ..()
+		src.user.UpdateOverlays(null, "disk_overlay")
+		src.user.UpdateOverlays(null, "disk_hand_overlay")
+
+#undef DISK_SHOWOFF_COOLDOWN
 
 /obj/item/disk/data/floppy/devkit
 	name = "data disk-'Development'"
