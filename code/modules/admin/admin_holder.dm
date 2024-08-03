@@ -92,13 +92,13 @@
 	var/slow_stat = FALSE
 
 	/// This admin holder's auxiliary speech module tree.
-	var/datum/speech_module_tree/auxiliary/admin_say_tree
+	var/datum/speech_module_tree/auxiliary/admin_speech_tree
 	/// This admin holder's auxiliary listen module tree.
 	var/datum/listen_module_tree/auxiliary/admin_listen_tree
 
 	New(client/C)
 		. = ..()
-		src.admin_say_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS)
+		src.admin_speech_tree = new(null, ADMIN_SPEECH_OUTPUTS, ADMIN_SPEECH_MODIFIERS)
 		src.admin_listen_tree = new(null, ADMIN_LISTEN_INPUTS, ADMIN_LISTEN_MODIFIERS, ADMIN_UNDERSTOOD_LANGUAGES)
 
 		src.owner = C

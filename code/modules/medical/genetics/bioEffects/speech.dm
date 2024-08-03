@@ -17,10 +17,10 @@
 	var/mixingdesk_allowed = TRUE
 
 	OnAdd()
-		src.owner.ensure_say_tree().AddSpeechModifier(src.id)
+		src.owner.ensure_speech_tree().AddSpeechModifier(src.id)
 
 	OnRemove()
-		src.owner.ensure_say_tree().RemoveSpeechModifier(src.id)
+		src.owner.ensure_speech_tree().RemoveSpeechModifier(src.id)
 
 
 /datum/bioEffect/speech/smile

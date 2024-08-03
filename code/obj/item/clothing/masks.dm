@@ -498,11 +498,11 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		if (slot != SLOT_WEAR_MASK)
 			return
 
-		user.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MUZZLE)
 
 	unequipped(mob/user)
 		if (src.equipped_in_slot == SLOT_WEAR_MASK)
-			user.ensure_say_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUZZLE)
 
 		. = ..()
 

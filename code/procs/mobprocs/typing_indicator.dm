@@ -14,9 +14,9 @@ var/mutable_appearance/dead_typing_bubble = mutable_appearance('icons/mob/mob.dm
 
 	src.has_typing_indicator = TRUE
 
-	src.ensure_say_tree()
-	src.RegisterSignal(src.say_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(update_typing_indicator))
-	src.say_tree.speaker_origin.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
+	src.ensure_speech_tree()
+	src.RegisterSignal(src.speech_tree, COMSIG_SPEAKER_ORIGIN_UPDATED, PROC_REF(update_typing_indicator))
+	src.speech_tree.speaker_origin.UpdateOverlays(global.living_typing_bubble, TYPING_OVERLAY_KEY)
 
 /mob/proc/remove_typing_indicator()
 	if (!src.has_typing_indicator)
@@ -24,9 +24,9 @@ var/mutable_appearance/dead_typing_bubble = mutable_appearance('icons/mob/mob.dm
 
 	src.has_typing_indicator = FALSE
 
-	src.ensure_say_tree()
-	src.UnregisterSignal(src.say_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
-	src.say_tree.speaker_origin.UpdateOverlays(null, TYPING_OVERLAY_KEY)
+	src.ensure_speech_tree()
+	src.UnregisterSignal(src.speech_tree, COMSIG_SPEAKER_ORIGIN_UPDATED)
+	src.speech_tree.speaker_origin.UpdateOverlays(null, TYPING_OVERLAY_KEY)
 
 /mob/proc/update_typing_indicator(tree, atom/old_parent, atom/new_parent)
 	old_parent.ClearSpecificOverlays(TYPING_OVERLAY_KEY)

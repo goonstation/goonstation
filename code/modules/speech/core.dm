@@ -15,7 +15,7 @@
 
 /atom/disposing()
 	qdel(src.listen_tree)
-	qdel(src.say_tree)
+	qdel(src.speech_tree)
 
 	. = ..()
 
@@ -25,7 +25,7 @@
 
 
 /// This atom's speech module tree. Lazy loaded on the first `say()` call.
-/atom/var/datum/speech_module_tree/say_tree
+/atom/var/datum/speech_module_tree/speech_tree
 /// The speech prefixes that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_speech_prefixes = null
 /// The speech modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
@@ -66,7 +66,7 @@
 		src.emote(copytext(message, 2), 1)
 		return
 
-	src.ensure_say_tree()
+	src.ensure_speech_tree()
 	var/datum/say_message/said = new(message, src, flags, message_params, atom_listeners_override)
 	if (QDELETED(said) || !length(said.content))
 		return
@@ -74,7 +74,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
 	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
 
-	return src.say_tree.process(said)
+	return src.speech_tree.process(said)
 
 /// The world time that this atom last played a voice sound effect.
 /atom/var/last_voice_sound = 0
@@ -111,10 +111,10 @@
 			src.ClearSpecificOverlays("speech_bubble")
 
 /// Returns this atom's speech module tree. If this atom does not possess a speech module tree, instantiates one.
-/atom/proc/ensure_say_tree()
+/atom/proc/ensure_speech_tree()
 	RETURN_TYPE(/datum/speech_module_tree)
-	src.say_tree ||= new(src, src.start_speech_outputs, src.start_speech_modifiers, src.start_speech_prefixes)
-	return src.say_tree
+	src.speech_tree ||= new(src, src.start_speech_outputs, src.start_speech_modifiers, src.start_speech_prefixes)
+	return src.speech_tree
 
 /// Returns this atom's listen module tree. If this atom does not possess a listen module tree, instantiates one.
 /atom/proc/ensure_listen_tree()
@@ -177,14 +177,14 @@ Follow-Up PRs:
 
 
 /// This client's auxiliary speech module tree.
-/client/var/datum/speech_module_tree/auxiliary/say_tree
+/client/var/datum/speech_module_tree/auxiliary/speech_tree
 /// This client's auxiliary listen module tree.
 /client/var/datum/listen_module_tree/auxiliary/listen_tree
 
 /client/New()
 	. = ..()
 
-	src.say_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.say_tree)
+	src.speech_tree = new(null, list(SPEECH_OUTPUT_OOC, SPEECH_OUTPUT_LOOC), null, null, src.mob.speech_tree)
 	src.listen_tree = new(null, null, null, null, src.mob.listen_tree)
 
 	src.preferences.listen_ooc = !src.preferences.listen_ooc
@@ -194,7 +194,7 @@ Follow-Up PRs:
 	src.toggle_looc(!src.preferences.listen_looc)
 
 	if (src.holder && !src.player_mode)
-		src.holder.admin_say_tree.update_target_speech_tree(src.say_tree)
+		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
 
 /client/proc/toggle_ooc(ooc_enabled)
@@ -242,8 +242,8 @@ Follow-Up PRs:
 /mob/Login()
 	. = ..()
 
-	src.ensure_say_tree()
+	src.ensure_speech_tree()
 	src.ensure_listen_tree()
 
-	src.client.say_tree?.update_target_speech_tree(src.say_tree)
+	src.client.speech_tree?.update_target_speech_tree(src.speech_tree)
 	src.client.listen_tree?.update_target_listen_tree(src.listen_tree)

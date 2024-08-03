@@ -8,7 +8,7 @@
 	var/atom/speaker_parent
 	/// The atom that should act as the origin point for sending messages from this speech module tree.
 	var/atom/speaker_origin
-	/// A list of all atoms that list this speech module tree as their say tree, despite not being the true parent.
+	/// A list of all atoms that list this speech module tree as their speech tree, despite not being the true parent.
 	VAR_PROTECTED/list/atom/secondary_parents
 	/// A list of all auxiliary speech module trees with this speech module tree registered as a target.
 	VAR_PROTECTED/list/datum/speech_module_tree/auxiliary/auxiliary_trees
@@ -83,10 +83,10 @@
 		qdel(src.speech_modifiers_by_id[prefix_id])
 
 	for (var/atom/A as anything in src.secondary_parents)
-		A.say_tree = null
+		A.speech_tree = null
 
 	if (src.speaker_parent)
-		src.speaker_parent.say_tree = null
+		src.speaker_parent.speech_tree = null
 		src.speaker_parent = null
 
 	src.speaker_origin = null
@@ -219,12 +219,12 @@
 	if (preserve_old_reference)
 		src.secondary_parents += old_parent
 	else
-		old_parent.say_tree = null
+		old_parent.speech_tree = null
 
-	if (new_parent.say_tree != src)
-		qdel(new_parent.say_tree)
+	if (new_parent.speech_tree != src)
+		qdel(new_parent.speech_tree)
 
-	new_parent.say_tree = src
+	new_parent.speech_tree = src
 	src.secondary_parents -= new_parent
 
 	if (old_origin != new_origin)

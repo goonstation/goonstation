@@ -112,7 +112,7 @@ TYPEINFO(/obj/machinery/phone)
 	message.speaker = src.handset
 	message.message_origin = src.handset
 
-	src.handset.ensure_say_tree().process(message)
+	src.handset.ensure_speech_tree().process(message)
 
 /obj/machinery/phone/attack_ai(mob/user)
 	return

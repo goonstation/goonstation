@@ -6,4 +6,4 @@
 /atom/movable/abstract_say_source/flock_system/New(loc, datum/flock/flock)
 	. = ..()
 
-	src.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_FLOCK_SYSTEM, subchannel = "\ref[flock]", flock = flock)
+	src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_FLOCK_SYSTEM, subchannel = "\ref[flock]", flock = flock)

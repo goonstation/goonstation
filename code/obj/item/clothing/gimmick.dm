@@ -428,7 +428,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
 	src.cant_self_remove = TRUE
 	src.cant_other_remove = TRUE
-	user.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_CLUWNE)
+	user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_CLUWNE)
 
 	if(src.infectious && user.reagents)
 		user.reagents.add_reagent("painbow fluid", 10)
@@ -436,7 +436,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 
 /obj/item/clothing/mask/cursedclown_hat/unequipped(mob/user)
 	if (src.equipped_in_slot == SLOT_WEAR_MASK)
-		user.ensure_say_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_CLUWNE)
+		user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_CLUWNE)
 
 	. = ..()
 
@@ -757,11 +757,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			if (slot != SLOT_WEAR_MASK)
 				return
 
-			user.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_HORSE)
+			user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_HORSE)
 
 		unequipped(mob/user)
 			if (src.equipped_in_slot == SLOT_WEAR_MASK)
-				user.ensure_say_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_HORSE)
+				user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_HORSE)
 
 			. = ..()
 

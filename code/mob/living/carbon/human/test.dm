@@ -7,7 +7,7 @@
 		. = ..()
 		src.stam_monitor = new /obj/machinery/maptext_monitor/stamina(src)
 		src.AddComponent(/datum/component/health_maptext)
-		src.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_TEST_DUMMY)
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_TEST_DUMMY)
 
 	disposing()
 		qdel(src.stam_monitor)

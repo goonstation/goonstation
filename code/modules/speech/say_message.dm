@@ -112,9 +112,9 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 	src.original_content = message
 	src.content = message
-	src.speaker = speaker.say_tree.speaker_parent
-	src.original_speaker = speaker.say_tree.speaker_parent
-	src.message_origin = speaker.say_tree.speaker_origin
+	src.speaker = speaker.speech_tree.speaker_parent
+	src.original_speaker = speaker.speech_tree.speaker_parent
+	src.message_origin = speaker.speech_tree.speaker_origin
 	src.id = "\ref[src]"
 	src.flags |= flags
 	src.atom_listeners_override = atom_listeners_override

@@ -309,7 +309,7 @@ client/proc/toggle_ghost_respawns()
 				src.listen_tree.AddListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 			src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC)
 
-		src.holder.admin_say_tree.update_target_speech_tree(src.say_tree)
+		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
 
 		boutput(usr, SPAN_NOTICE("Player mode now OFF."))
@@ -378,7 +378,7 @@ client/proc/toggle_ghost_respawns()
 			else
 				src.listen_tree.RemoveListenInput(LISTEN_INPUT_LOOC_ADMIN_GLOBAL)
 
-		src.holder.admin_say_tree.update_target_speech_tree()
+		src.holder.admin_speech_tree.update_target_speech_tree()
 		src.holder.admin_listen_tree.update_target_listen_tree()
 
 		if (remove_holder)

@@ -59,7 +59,7 @@
 			var/datum/say_message/loudspeaker_message = message.Copy()
 			loudspeaker_message.speaker = loudspeaker
 			loudspeaker_message.message_origin = loudspeaker
-			loudspeaker.ensure_say_tree().process(loudspeaker_message)
+			loudspeaker.ensure_speech_tree().process(loudspeaker_message)
 
 			if (feedback)
 				loudspeaker.visible_message(SPAN_ALERT("[loudspeaker] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!"))

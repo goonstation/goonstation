@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.say_language = src.override_language
 
 		if (src.mutantrace_speech_modifier)
-			M.ensure_say_tree().AddSpeechModifier(src.mutantrace_speech_modifier)
+			M.ensure_speech_tree().AddSpeechModifier(src.mutantrace_speech_modifier)
 
 		M.ensure_listen_tree()
 		for (var/language_id in src.understood_languages)
@@ -359,7 +359,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.mob.say_language = initial(src.mob.say_language)
 
 			if (src.mutantrace_speech_modifier)
-				src.mob.ensure_say_tree().RemoveSpeechModifier(src.mutantrace_speech_modifier)
+				src.mob.ensure_speech_tree().RemoveSpeechModifier(src.mutantrace_speech_modifier)
 
 			src.mob.ensure_listen_tree()
 			for (var/language_id in src.understood_languages)
@@ -1142,12 +1142,12 @@ TYPEINFO(/datum/mutantrace/skeleton)
 
 		if (removed)
 			src.mob.set_eye(src.head_tracker)
-			src.mob.ensure_say_tree().update_speaker_origin(src.head_tracker)
+			src.mob.ensure_speech_tree().update_speaker_origin(src.head_tracker)
 			src.mob.ensure_listen_tree().update_listener_origin(src.head_tracker)
 
 		else
 			src.mob.set_eye(null)
-			src.mob.ensure_say_tree().update_speaker_origin(src.mob)
+			src.mob.ensure_speech_tree().update_speaker_origin(src.mob)
 			src.mob.ensure_listen_tree().update_listener_origin(src.mob)
 
 	proc/set_head(obj/item/organ/head/head)
@@ -2054,7 +2054,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-				H.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
+				H.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 				H.ensure_listen_tree().AddListenInput(LISTEN_INPUT_KUDZUCHAT)
 
 				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
@@ -2067,7 +2067,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
 
-			H.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
+			H.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 			H.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_KUDZUCHAT)
 
 		return ..()

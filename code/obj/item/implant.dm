@@ -816,7 +816,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!istype(M))
 			return
 
-		M.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
 		M.ensure_listen_tree().AddListenInput(LISTEN_INPUT_SILICONCHAT)
 		M.listen_tree.AddKnownLanguage(LANGUAGE_SILICON)
 		M.listen_tree.AddKnownLanguage(LANGUAGE_BINARY)
@@ -827,7 +827,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (!istype(M))
 			return
 
-		M.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
+		M.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_SILICONCHAT)
 		M.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_SILICONCHAT)
 		M.listen_tree.RemoveKnownLanguage(LANGUAGE_SILICON)
 		M.listen_tree.RemoveKnownLanguage(LANGUAGE_BINARY)

@@ -8,11 +8,11 @@ var/atom/movable/abstract_say_source/random_accent/random_accent_source = new()
 /atom/movable/abstract_say_source/random_accent/proc/process_message(message)
 	RETURN_TYPE(/datum/say_message)
 
-	qdel(src.say_tree)
-	src.say_tree = null
-	src.ensure_say_tree()
+	qdel(src.speech_tree)
+	src.speech_tree = null
+	src.ensure_speech_tree()
 
 	while (prob(5))
-		src.say_tree.AddSpeechModifier(global.random_accent().id)
+		src.speech_tree.AddSpeechModifier(global.random_accent().id)
 
 	return src.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)

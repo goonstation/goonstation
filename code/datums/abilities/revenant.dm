@@ -87,7 +87,7 @@
 		owner.set_body_icon_dirty()
 		hud = new hud_path(owner)
 		owner.attach_hud(hud)
-		owner.ensure_say_tree().AddSpeechModifier(SPEECH_MODIFIER_REVENANT)
+		owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVENANT)
 
 		animate_levitate(owner)
 
@@ -103,7 +103,7 @@
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
 			owner.detach_hud(hud)
-			owner.ensure_say_tree().RemoveSpeechModifier(SPEECH_MODIFIER_REVENANT)
+			owner.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_REVENANT)
 		..()
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/def_zone)

@@ -55,7 +55,7 @@
 	set hidden = TRUE
 
 	var/list/choices = list()
-	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_say_tree().GetAllPrefixes())
+	for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
 		var/list/prefix_choice = prefix_module.get_prefix_choices()
 		if (!length(prefix_choice))
 			continue

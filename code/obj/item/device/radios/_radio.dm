@@ -170,24 +170,24 @@ TYPEINFO(/obj/item/device/radio)
 	src.last_transmission = world.time
 
 	if (SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, signal_frequency))
-		src.ensure_say_tree()
+		src.ensure_speech_tree()
 
 		// Send the message to the global radio channel.
 		var/datum/say_message/global_message = message.Copy()
 		global_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO
-		src.say_tree.process(global_message)
+		src.speech_tree.process(global_message)
 
 		// If the message has been sent on the default frequency, send it to the global radio default channel.
 		if (signal_frequency == R_FREQ_DEFAULT)
 			var/datum/say_message/radio_default_message = message.Copy()
 			radio_default_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
-			src.say_tree.process(radio_default_message)
+			src.speech_tree.process(radio_default_message)
 
 		// If the radio and frequency is unprotected, send it to the global radio unprotected channel.
 		if (!src.protected_radio && isnull(src.traitorradio) && !(signal_frequency in global.protected_frequencies))
 			var/datum/say_message/radio_unprotected_message = message.Copy()
 			radio_unprotected_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_UNPROTECTED_ONLY
-			src.say_tree.process(radio_unprotected_message)
+			src.speech_tree.process(radio_unprotected_message)
 
 /obj/item/device/radio/receive_signal(datum/signal/signal)
 	if (!src.speaker_enabled || src.bricked || !(src.wires & WIRE_RECEIVE) || !signal.data || !istype(signal.data["message"], /datum/say_message))
@@ -199,7 +199,7 @@ TYPEINFO(/obj/item/device/radio)
 	message.message_origin = src
 	message.heard_range = src.speaker_range
 
-	src.ensure_say_tree().process(message)
+	src.ensure_speech_tree().process(message)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
 	src.add_dialog(user)

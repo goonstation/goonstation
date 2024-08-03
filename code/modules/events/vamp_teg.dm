@@ -236,7 +236,7 @@ datum/teg_transformation/vampire
 		vampify(src.teg.circ2)
 		vampify(src.teg)
 
-		teg.ensure_say_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.abilityHolder]")
+		teg.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.abilityHolder]")
 		teg.default_speech_output_channel = SAY_CHANNEL_THRALL
 
 	proc/vampify(obj/O)
@@ -273,7 +273,7 @@ datum/teg_transformation/vampire
 		for(var/mob/M in abilityHolder.thralls)
 			M.mind?.remove_antagonist(ROLE_VAMPTHRALL)
 
-		teg.ensure_say_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.abilityHolder]")
+		teg.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_THRALLCHAT_VAMPIRE, subchannel = "\ref[src.abilityHolder]")
 		teg.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 		. = ..()
