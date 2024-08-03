@@ -32,7 +32,7 @@
 /atom/var/list/start_speech_modifiers = null
 /// The speech outputs that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
-/// The default speech output module that this atom will send unprefixed say messages to. A value of `null` will sent to all available outputs.
+/// The default channel that this atom will attempt to send unprefixed say messages to.
 /atom/var/default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 /// The default output language for say messages to be sent in.
 /atom/var/say_language = LANGUAGE_ENGLISH
@@ -149,7 +149,6 @@ Contributing:
 
 Cleanup:
 - Tidy speech variables on types. Especially mobs. (search for speech_verb_)
-- Unification of terminology.
 
 Old Code To Remove:
 - Check span defines in `chat_output.dm`. Some may now be unused.

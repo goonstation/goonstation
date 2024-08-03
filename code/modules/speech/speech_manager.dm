@@ -5,15 +5,15 @@ var/global/datum/speech_manager/SpeechManager = new()
  *	modifier processing.
  */
 /datum/speech_manager
-	/// An associative list of cached output speech module types, indexed by their ID.
+	/// An associative list of cached speech output module types, indexed by their ID.
 	VAR_PRIVATE/list/speech_output_cache
-	/// An associative list of cached modifier speech module types, indexed by their ID.
+	/// An associative list of cached speech modifier module types, indexed by their ID.
 	VAR_PRIVATE/list/speech_modifier_cache
-	/// An associative list of cached prefix speech module types, indexed by their ID.
+	/// An associative list of cached speech prefix module types, indexed by their ID.
 	VAR_PRIVATE/list/speech_prefix_cache
-	/// An associative list of cached input listen module types, indexed by their ID.
+	/// An associative list of cached listen input module types, indexed by their ID.
 	VAR_PRIVATE/list/listen_input_cache
-	/// An associative list of cached modifier listen module types, indexed by their ID.
+	/// An associative list of cached listen modifier module types, indexed by their ID.
 	VAR_PRIVATE/list/listen_modifier_cache
 
 	/// An associative list of cached shared input format module datum singletons, indexed by their ID.
@@ -112,7 +112,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 	sortList(src.postprocessing_message_modifier_cache, GLOBAL_PROC_REF(cmp_message_modifier), TRUE)
 
-/// Returns a unique instance of the output speech module requested, or runtimes on bad ID.
+/// Returns a unique instance of the speech output module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetOutputInstance(output_id, list/arguments)
 	RETURN_TYPE(/datum/speech_module/output)
 	var/result = src.speech_output_cache[output_id]
@@ -121,7 +121,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	else
 		CRASH("Invalid output lookup: [output_id]")
 
-/// Returns a unique instance of the modifier speech module requested, or runtimes on bad ID.
+/// Returns a unique instance of the speech modifier module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetSpeechModifierInstance(modifier_id, list/arguments)
 	RETURN_TYPE(/datum/speech_module/modifier)
 	var/result = src.speech_modifier_cache[modifier_id]
@@ -130,7 +130,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	else
 		CRASH("Invalid modifier lookup: [modifier_id]")
 
-/// Returns a unique instance of the prefix speech module requested, or runtimes on bad ID.
+/// Returns a unique instance of the speech prefix module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetSpeechPrefixInstance(prefix_id, list/arguments)
 	RETURN_TYPE(/datum/speech_module/prefix)
 	var/result = src.speech_prefix_cache[prefix_id]
@@ -160,7 +160,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 	return prefix_id
 
-/// Returns a unique instance of the input listen module requested, or runtimes on bad ID.
+/// Returns a unique instance of the listen input module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetInputInstance(input_id, list/arguments)
 	RETURN_TYPE(/datum/listen_module/input)
 	var/result = src.listen_input_cache[input_id]
@@ -169,7 +169,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 	else
 		CRASH("Invalid input lookup: [input_id]")
 
-/// Returns a unique instance of the modifier listen module requested, or runtimes on bad ID.
+/// Returns a unique instance of the listen modifier module requested, or runtimes on bad ID.
 /datum/speech_manager/proc/GetListenModifierInstance(modifier_id, list/arguments)
 	RETURN_TYPE(/datum/listen_module/modifier)
 	var/result = src.listen_modifier_cache[modifier_id]

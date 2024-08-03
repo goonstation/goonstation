@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/listen_module/input)
 /**
- *	Listen module input datums modify say message datums passed to them from the say channel that they are subscribed to, then
+ *	Listen input module datums modify say message datums passed to them from the say channel that they are subscribed to, then
  *	in turn pass the message to their parent listen module tree for further processing.
  */
 /datum/listen_module/input
@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 
 ABSTRACT_TYPE(/datum/listen_module/input/bundled)
 /**
- *	Bundled listen module input datums operate in a similar manner to ordinary listen inputs, however instead of receiving every
+ *	Bundled listen input module datums operate in a similar manner to ordinary listen inputs, however instead of receiving every
  *	message passed over an ordinary say channel, they are subscribed to specific subchannel of a bundled say channel.
  */
 /datum/listen_module/input/bundled

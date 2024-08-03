@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/datum/shared_input_format_module)
  *	shared input format module once, if it exists. This mitigates the need for input modules to perform redundant processing.
  */
 /datum/shared_input_format_module
-	/// ID string for cache lookups. This should correspond to the input listen module that shared processing and formatting should be performed for.
+	/// ID string for cache lookups. This should correspond to the listen input module that shared processing and formatting should be performed for.
 	var/id = "input_base"
 
 /// Applies shared processing and formatting to the message.

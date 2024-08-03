@@ -1,7 +1,7 @@
 /**
- *	Speech module tree datums handle applying the effects of accent, modifier, and output speech modules to say message
+ *	Speech module tree datums handle applying the effects of accent, modifier, and speech output modules to say message
  *	datums sent by the parent atom. All say message datums will be processed here prior to being passed to the speech
- *	manager to be disseminated to input listen modules.
+ *	manager to be disseminated to listen input modules.
  */
 /datum/speech_module_tree
 	/// The owner of this speech module tree.
@@ -13,29 +13,29 @@
 	/// A list of all auxiliary speech module trees with this speech module tree registered as a target.
 	VAR_PROTECTED/list/datum/speech_module_tree/auxiliary/auxiliary_trees
 
-	/// An associative list of output speech module subscription counts, indexed by the module ID.
+	/// An associative list of speech output module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/output_module_ids_with_subcount
-	/// An associative list of output speech modules, indexed by the module ID.
+	/// An associative list of speech output modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/output/output_modules_by_id
-	/// An associative list of output speech modules, indexed by the module channel. Additionally, each sublist of modules is sorted by priority.
+	/// An associative list of speech output modules, indexed by the module channel. Additionally, each sublist of modules is sorted by priority.
 	VAR_PROTECTED/list/datum/speech_module/output/output_modules_by_channel
 
-	/// An associative list of modifier speech module subscription counts, indexed by the module ID.
+	/// An associative list of speech modifier module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/speech_modifier_ids_with_subcount
-	/// An associative list of modifier speech modules, indexed by the module ID.
+	/// An associative list of speech modifier modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/modifier/speech_modifiers_by_id
-	/// An associative list of modifier speech modules that overide say channel modifier preferences, indexed by the module ID.
+	/// An associative list of speech modifier modules that overide say channel modifier preferences, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/modifier/persistent_speech_modifiers_by_id
 
-	/// An associative list of prefix speech module subscription counts, indexed by the module ID.
+	/// An associative list of speech prefix module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/speech_prefix_ids_with_subcount
-	/// A list of prefix speech modules, sorted by priority.
+	/// A list of speech prefix modules, sorted by priority.
 	VAR_PROTECTED/list/datum/speech_module/prefix/speech_prefixes
-	/// An associative list of prefix speech modules, indexed by the module ID.
+	/// An associative list of speech prefix modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/prefix/speech_prefixes_by_id
-	/// An associative list of prefix speech modules that should be processed before modifiers, indexed by the prefix ID or IDs.
+	/// An associative list of speech prefix modules that should be processed before modifiers, indexed by the prefix ID or IDs.
 	VAR_PROTECTED/list/datum/speech_module/prefix/premodifier/premodifier_speech_prefixes_by_prefix_id
-	/// An associative list of prefix speech modules that should be processed after modifiers, indexed by the prefix ID or IDs.
+	/// An associative list of speech prefix modules that should be processed after modifiers, indexed by the prefix ID or IDs.
 	VAR_PROTECTED/list/datum/speech_module/prefix/postmodifier/postmodifier_speech_prefixes_by_prefix_id
 
 /datum/speech_module_tree/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list())

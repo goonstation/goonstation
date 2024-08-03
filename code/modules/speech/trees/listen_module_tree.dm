@@ -1,6 +1,6 @@
 /**
- *	Listen module tree datums handle applying the effects of modifier listen modules to say message datums received by
- *	the parent atom from an input listen module. All say message datums will be processed here prior to being passed to
+ *	Listen module tree datums handle applying the effects of listen modifier modules to say message datums received by
+ *	the parent atom from an listen input module. All say message datums will be processed here prior to being passed to
  *	the `/atom/proc/hear()` proc.
  */
 /datum/listen_module_tree
@@ -17,18 +17,18 @@
 	/// An associative list of all signal recipients that may cause the message buffer to flush.
 	VAR_PROTECTED/list/datum/signal_recipients
 
-	/// An associative list of input listen module subscription counts, indexed by the module ID.
+	/// An associative list of listen input module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/input_module_ids_with_subcount
-	/// An associative list of input listen modules, indexed by the module ID.
+	/// An associative list of listen input modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/listen_module/input/input_modules_by_id
-	/// An associative list of input listen modules, indexed by the module channel.
+	/// An associative list of listen input modules, indexed by the module channel.
 	VAR_PROTECTED/list/list/datum/listen_module/input/input_modules_by_channel
 
-	/// An associative list of modifier listen module subscription counts, indexed by the module ID.
+	/// An associative list of listen modifier module subscription counts, indexed by the module ID.
 	VAR_PROTECTED/list/listen_modifier_ids_with_subcount
-	/// An associative list of modifier listen modules, indexed by the module ID.
+	/// An associative list of listen modifier modules, indexed by the module ID.
 	VAR_PROTECTED/list/datum/listen_module/modifier/listen_modifiers_by_id
-	/// An associative list of modifier listen modules that overide say channel modifier preferences, indexed by the module ID.
+	/// An associative list of listen modifier modules that overide say channel modifier preferences, indexed by the module ID.
 	VAR_PROTECTED/list/datum/speech_module/modifier/persistent_listen_modifiers_by_id
 
 	/// An associative list of language datum subscription counts, indexed by the language ID.

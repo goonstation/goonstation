@@ -1,6 +1,6 @@
 ABSTRACT_TYPE(/datum/speech_module/output)
 /**
- *	Speech module output datums modify say message datums passed to them from a speech module tree, then in turn pass the message
+ *	Speech output module datums modify say message datums passed to them from a speech module tree, then in turn pass the message
  *	to a say channel datum.
  */
 /datum/speech_module/output
@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 
 ABSTRACT_TYPE(/datum/speech_module/output/bundled)
 /**
- *	Bundled speech module output datums operate in a similar manner to ordinary speech outputs, however instead of sending a say
+ *	Bundled speech output module datums operate in a similar manner to ordinary speech outputs, however instead of sending a say
  *	message datum to an ordinary say channel, they pass it to a specific subchannel of a bundled say channel.
  */
 /datum/speech_module/output/bundled
