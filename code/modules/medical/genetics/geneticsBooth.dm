@@ -48,6 +48,12 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
 	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 
+	speech_verb_say = "beeps"
+
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
 	var/process_time = 20 SECONDS
@@ -118,13 +124,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				return
 
 			started++
-			if (started == 2)
-				if (!try_billing(occupant))
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
-					occupant.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"")), 2)
+			if ((started == 2) && !try_billing(occupant))
+				src.say("<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.", flags = SAYFLAG_IGNORE_HTML)
+				src.eject_occupant(0)
 
-					eject_occupant(0)
 		else if (started)
 			eject_occupant(0)
 

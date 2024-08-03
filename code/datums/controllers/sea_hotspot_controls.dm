@@ -862,6 +862,12 @@ TYPEINFO(/obj/machinery/power/stomper)
 	anchored = UNANCHORED
 	status = REQ_PHYSICAL_ACCESS
 
+	speech_verb_say = "beeps"
+
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
 
@@ -897,8 +903,8 @@ TYPEINFO(/obj/machinery/power/stomper)
 		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"")), 2)
+
+		src.say("Safety restrictions disabled.")
 		return TRUE
 
 	update_icon()
@@ -943,8 +949,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		mode_toggle = !mode_toggle
 
-		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"")), 2)
+		src.say("Stomp mode : [mode_toggle ? "automatic" : "single"].")
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -997,8 +1002,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+				src.say("Hotspot pinned.")
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1097,8 +1101,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 				if (BOUNDS_DIST(src, H.center.turf()) == 0)
 					playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
-					for (var/mob/O in hearers(jumper, null))
-						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
+					src.say("Hotspot pinned.")
 
 			for (var/mob/M in get_turf(src))
 				if (isliving(M) && M != jumper)

@@ -3007,10 +3007,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				if(target)
 					Gun.Shoot(get_turf(target), get_turf(src), src, called_target = target)
 			else
-				src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\""))
+				src.say("The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
-			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"No gun installed.\""))
+			src.say("No gun installed.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
@@ -3055,7 +3055,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
-			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"This gun cannot be recharged manually.\""))
+			src.say("This gun cannot be recharged manually.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
@@ -3277,7 +3277,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A - B
 			if("div")
 				if (B == 0)
-					src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Attempted division by zero!\""))
+					src.say("Attempted division by zero!")
 					return
 				. = A / B
 			if("mul")

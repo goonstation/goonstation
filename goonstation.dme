@@ -1773,6 +1773,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\speech\modules\speech\outputs\spoken\flockmind.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\local.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\radio.dm"
+#include "code\modules\speech\modules\speech\outputs\spoken\sound_card.dm"
 #include "code\modules\speech\modules\speech\outputs\spoken\subtle.dm"
 #include "code\modules\speech\modules\speech\prefixes\_speech_prefix_parent.dm"
 #include "code\modules\speech\modules\speech\prefixes\ai_radio.dm"

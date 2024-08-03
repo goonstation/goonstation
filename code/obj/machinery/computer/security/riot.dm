@@ -3,6 +3,13 @@
 	icon_state = "drawbr"
 	density = 0
 	glow_in_dark_screen = TRUE
+
+	speech_verb_say = "beeps"
+
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/auth_need = 3
 	var/list/authorized
 	var/list/authorized_registered = null
@@ -187,13 +194,11 @@
 
 				LAGCHECK(LAG_REALTIME)
 
-	proc/print_auth_needed(var/mob/author)
+	proc/print_auth_needed(mob/author)
 		if (author)
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
+			src.say("[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.")
 		else
-			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
+			src.say("[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.")
 
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user)
