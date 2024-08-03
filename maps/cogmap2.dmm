@@ -1018,13 +1018,11 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "adp" = (
-/obj/machinery/turretid{
-	layer = 9.1;
-	pixel_y = -5
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24
 	},
-/obj/mapping_helper/access/ai_upload,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai)
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "adr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/solar/small_backup2)
@@ -2916,15 +2914,14 @@
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai_upload_foyer)
 "ajs" = (
-/obj/machinery/turretid{
-	pixel_y = 24
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
 /turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
+/area/station/turret_protected/ai_upload_foyer)
 "ajt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2936,7 +2933,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
+/area/station/turret_protected/ai_upload_foyer)
 "aju" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -133335,8 +133332,8 @@ acn
 abT
 acu
 acV
+abf
 adp
-adW
 aeC
 afr
 ago

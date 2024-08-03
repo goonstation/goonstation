@@ -356,7 +356,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	var/emagged = 0
 	var/turretArea = null
 
-	req_access = null // because not all turrets are upload ones
+	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	New()
@@ -364,6 +364,36 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		if (!src.turretArea)
 			var/area/A = get_area(src)
 			src.turretArea = A.type
+
+/obj/machinery/turretid/ai_upload
+	name = "AI Upload Turret Control"
+	turretArea = /area/station/turret_protected/ai_upload
+	req_access = access_ai_upload
+
+/obj/machinery/turretid/ai_chamber
+	name = "AI Chamber Turret Control"
+	turretArea = /area/station/turret_protected/ai
+	req_access = access_ai_upload
+
+/obj/machinery/turretid/ai_perimeter
+	name = "AI Perimeter Turret Control"
+	turretArea = /area/station/turret_protected/AIbaseoutside
+	req_access = access_ai_upload
+
+/obj/machinery/turretid/computer_core
+	name = "Computer Core Turret Control"
+	turretArea = /area/station/turret_protected/Zeta
+	req_access = access_heads
+
+/obj/machinery/turretid/armory
+	name = "Armory Turret Control"
+	turretArea = /area/station/ai_monitored/armory
+	req_access = access_armory
+
+/obj/machinery/turretid/armory_perimeter
+	name = "Armory Perimeter Turret Control"
+	turretArea = /area/station/turret_protected/armory_outside
+	req_access = access_armory
 
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return

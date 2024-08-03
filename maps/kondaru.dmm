@@ -8385,10 +8385,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/turretid{
+/obj/machinery/turretid/ai_chamber{
 	pixel_x = 24
 	},
-/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "aFS" = (
@@ -8861,11 +8860,9 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/turretid{
-	pixel_y = 24;
-	turretArea = /area/station/turret_protected/ai_upload
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
 	},
-/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "aHS" = (
@@ -30651,14 +30648,10 @@
 /area/station/hallway/primary/north)
 "cJJ" = (
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
-	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/mapping_helper/access/armory,
+/obj/machinery/turretid/armory_perimeter{
+	pixel_x = -24
+	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -45481,11 +45474,10 @@
 /turf/simulated/floor/grey,
 /area/station/mining/magnet)
 "nkD" = (
-/obj/machinery/turretid{
-	pixel_x = 26
-	},
 /obj/machinery/light,
-/obj/mapping_helper/access/heads,
+/obj/machinery/turretid/computer_core{
+	pixel_x = 24
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "nlI" = (

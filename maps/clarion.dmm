@@ -1350,9 +1350,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
 "ams" = (
-/obj/machinery/turretid{
-	pixel_y = 24
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -1360,7 +1357,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "amy" = (
@@ -33631,9 +33630,6 @@
 	name = "AI Core Shield";
 	pixel_y = -21
 	},
-/obj/machinery/turretid{
-	pixel_x = 24
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},
@@ -33643,7 +33639,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = 24
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "rgl" = (
@@ -40577,11 +40575,9 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
-/obj/machinery/turretid{
-	pixel_x = -24;
-	turretArea = /area/station/turret_protected/Zeta
+/obj/machinery/turretid/computer_core{
+	pixel_x = -24
 	},
-/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -41458,12 +41454,9 @@
 	pixel_x = 4;
 	pixel_y = 8
 	},
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	turretArea = /area/station/turret_protected/armory_outside
+/obj/machinery/turretid/armory_perimeter{
+	pixel_x = -24
 	},
-/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},

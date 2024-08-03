@@ -1304,9 +1304,6 @@
 	},
 /area/listeningpost)
 "aBH" = (
-/obj/machinery/turretid{
-	pixel_y = 24
-	},
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
@@ -1316,7 +1313,9 @@
 	layer = 5
 	},
 /obj/machinery/light/small,
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "aCv" = (
@@ -10840,10 +10839,9 @@
 	name = "Nuclear Control Room"
 	})
 "eSU" = (
-/obj/machinery/turretid{
+/obj/machinery/turretid/ai_chamber{
 	pixel_x = 24
 	},
-/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/darkblue/checker,
 /area/station/turret_protected/ai)
 "eSW" = (
@@ -42464,10 +42462,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/turretid{
+/obj/machinery/turretid/computer_core{
 	pixel_x = 24
 	},
-/obj/mapping_helper/access/heads,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
