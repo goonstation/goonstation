@@ -15659,6 +15659,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"itU" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
+/turf/simulated/floor/blue,
+/area/station/engine/gas)
 "iui" = (
 /obj/storage/secure/closet/engineering/cargo,
 /obj/cable{
@@ -16062,13 +16070,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "jKM" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
+/obj/potted_plant{
+	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/orange,
-/area/station/engine/gas)
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "jLt" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -19168,6 +19176,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
+"sjW" = (
+/obj/stool/chair,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "snt" = (
 /obj/lattice{
 	dir = 1;
@@ -20501,6 +20515,13 @@
 	},
 /turf/simulated/floor/white/side,
 /area/station/crew_quarters/kitchen)
+"vFd" = (
+/obj/table/auto,
+/obj/item/paper_bin,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/hallway/primary/south)
 "vHU" = (
 /obj/decal/poster/wallsign/warning3{
 	pixel_x = -6;
@@ -58142,7 +58163,7 @@ ajZ
 vdS
 asm
 aUr
-aUr
+itU
 wgo
 oFg
 oFg
@@ -58746,7 +58767,7 @@ ajZ
 ajb
 asm
 wmz
-jKM
+ayS
 wgo
 dPR
 dPR
@@ -61165,19 +61186,19 @@ alH
 amD
 anl
 gZp
-aAB
-aAB
+sjW
+vFd
 aAB
 aoZ
-aAB
+jKM
 aAB
 aAB
 aqQ
 aqx
-aAB
+jKM
 tEs
 aAB
-aAB
+jKM
 aAB
 aRz
 aWI
