@@ -2002,54 +2002,16 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
 	attack_self(mob/user as mob)
-		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
 		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
-		actions.start(new /datum/action/show_badge(user, src), user)
+		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if(ON_COOLDOWN(user, "flash_badge", BADGE_SHOWOFF_COOLDOWN))
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 			return
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
-		actions.start(new /datum/action/show_badge(user, src), user)
-
-/datum/action/show_badge
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = BADGE_SHOWOFF_COOLDOWN
-	var/mob/user = null
-	var/obj/item/clothing/suit/security_badge/badge = null
-
-	New(mob/user, obj/item/clothing/suit/security_badge/badge)
-		. = ..()
-		src.user = user
-		src.badge = badge
-
-	onStart()
-		. = ..()
-		var/pixel_x_offset = 0
-		var/pixel_y_offset = 2
-		var/hand_icon_state = ""
-		if(src.user.hand)
-			hand_icon_state = "badge_hold_l"
-			pixel_x_offset = 6
-		else
-			hand_icon_state = "badge_hold_r"
-			pixel_x_offset = -6
-
-		var/image/badge_overlay = src.badge.SafeGetOverlayImage("badge_overlay", src.badge.icon, src.badge.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
-		var/image/hand_overlay = src.badge.SafeGetOverlayImage("hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
-
-		src.user.UpdateOverlays(badge_overlay, "badge_overlay")
-		src.user.UpdateOverlays(hand_overlay, "badge_hand_overlay")
-
-		src.user.dir = SOUTH
-
-	onDelete()
-		. = ..()
-		src.user.UpdateOverlays(null, "badge_overlay")
-		src.user.UpdateOverlays(null, "badge_hand_overlay")
-
-#undef BADGE_SHOWOFF_COOLDOWN
+		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 /obj/item/clothing/suit/security_badge/shielded
 	name = "NTSO Tactical Badge"

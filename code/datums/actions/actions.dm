@@ -1971,3 +1971,41 @@
 			playsound(target.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 0)
 			injector.inject(owner, target)
 
+
+/datum/action/show_item
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = SHOWOFF_COOLDOWN
+	var/mob/user = null
+	var/obj/item/item = null
+	var/hand_icon = ""
+
+	New(mob/user, obj/item/item, hand_icon)
+		. = ..()
+		src.user = user
+		src.item = item
+		src.hand_icon = hand_icon
+
+	onStart()
+		. = ..()
+		var/pixel_x_offset = 0
+		var/pixel_y_offset = 2
+		var/hand_icon_state = ""
+		if(src.user.hand)
+			hand_icon_state = "[hand_icon]_hold_l"
+			pixel_x_offset = 6
+		else
+			hand_icon_state = "[hand_icon]_hold_r"
+			pixel_x_offset = -6
+
+		var/image/overlay = src.item.SafeGetOverlayImage("showoff_overlay", src.item.icon, src.item.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
+		var/image/hand_overlay = src.item.SafeGetOverlayImage("showoff_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
+
+		src.user.UpdateOverlays(overlay, "showoff_overlay")
+		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
+
+		src.user.dir = SOUTH
+
+	onDelete()
+		. = ..()
+		src.user.UpdateOverlays(null, "showoff_overlay")
+		src.user.UpdateOverlays(null, "showoff_hand_overlay")
