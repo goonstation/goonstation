@@ -2044,6 +2044,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
+	fingertip_color = "#535353"
 	var/obj/item/mining_tool/tool = new /obj/item/mining_tool/concussive_gloves_internal
 
 	setupProperties()
