@@ -50,7 +50,7 @@ TYPEINFO(/obj/item/card/emag)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
 	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=1.1)
-	actions.start(new /datum/action/show_item(user, src, "id"), user)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/emag/fake
 //delicious fake emag
@@ -253,7 +253,7 @@ TYPEINFO(/obj/item/card/emag)
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
 	src.add_fingerprint(user)
 	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
-	actions.start(new /datum/action/show_item(user, src, "id"), user)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -276,7 +276,7 @@ TYPEINFO(/obj/item/card/emag)
 		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
-	actions.start(new /datum/action/show_item(user, src, "id"), user)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
