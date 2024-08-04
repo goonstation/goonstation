@@ -77,15 +77,91 @@
 	parallax_value = 0.03
 	tessellate = FALSE
 
-/atom/movable/screen/parallax_render_source/planet/mundus
-	parallax_icon_state = "mundus"
-	initial_x_coordinate = 300
-	initial_y_coordinate = -100
 
-/atom/movable/screen/parallax_render_source/planet/iustitia
+/// inner system - Diner debris belt
+
+/atom/movable/screen/parallax_render_source/planet/quadriga // the channel node is near here, an Io-like volcanic, a nasty place
+	parallax_icon_state = "quadriga"
+	initial_x_coordinate = 50
+	initial_y_coordinate = -50
+	parallax_value = 0.03
+
+/atom/movable/screen/parallax_render_source/planet/amantes // the space butt, haven of gangs, clown town, shanty colonies
+	parallax_icon_state = "amantes"
+	initial_x_coordinate = 160
+	initial_y_coordinate = 325
+	parallax_value = 0.040
+
+// donut 2 neighborhood
+
+/atom/movable/screen/parallax_render_source/planet/fatuus // the scary bog planet, home of Biodome and New Memphis
+	parallax_icon_state = "fatuus"
+	initial_x_coordinate = 0
+	initial_y_coordinate = 50
+	parallax_value = 0.03
+
+/*
+/atom/movable/screen/parallax_render_source/planet/domusdei // need to resprite this
+	parallax_icon_state = "domusDei"
+	initial_x_coordinate = 450
+	initial_y_coordinate = 450
+	parallax_value = 0.025
+*/
+
+// the Mundus Gap, a safer economic and administrative hub
+
+/atom/movable/screen/parallax_render_source/planet/mundus  //  tundra and glacier planet, home of Space Canada
+	parallax_icon_state = "mundus"
+	initial_x_coordinate = 200
+	initial_y_coordinate = 100
+	parallax_value = 0.03
+
+/atom/movable/screen/parallax_render_source/planet/iustitia // a moon with a major spaceport, diplomatic and cultural hub
 	parallax_icon_state = "iustitia"
-	initial_x_coordinate = 65
-	initial_y_coordinate = 0
+	initial_x_coordinate = 400
+	initial_y_coordinate = 100
+	parallax_value = 0.035
+
+/atom/movable/screen/parallax_render_source/planet/iudicium // a desolate moon with old military sites, bunkers, Ainley hospital
+	parallax_icon_state = "iudicium"
+	initial_x_coordinate = 0
+	initial_y_coordinate = 100
+	parallax_value = 0.045
+
+/// fortuna area
+
+/atom/movable/screen/parallax_render_source/planet/fortuna // a strategic layover point between the inner and outer rings
+	parallax_icon_state = "fortuna"
+	initial_x_coordinate = 0
+	initial_y_coordinate = 100
+	parallax_value = 0.04
+
+// outer rings
+
+/atom/movable/screen/parallax_render_source/planet/mors // worse than Mars. bad
+	parallax_icon_state = "mors"
+	initial_x_coordinate = 50
+	initial_y_coordinate = 100
+	parallax_value = 0.03
+
+/atom/movable/screen/parallax_render_source/planet/regis // possibly blob infested
+	parallax_icon_state = "regis"
+	initial_x_coordinate = 200
+	initial_y_coordinate = 100
+	parallax_value = 0.04
+
+/atom/movable/screen/parallax_render_source/planet/magus // acidic frigid horrible death-ocean planet, Nadir's home
+	parallax_icon_state = "magus"
+	initial_x_coordinate = 0
+	initial_y_coordinate = 100
+	parallax_value = 0.03
+
+/atom/movable/screen/parallax_render_source/planet/regina // a captive comet, hosts a flea market, ice-water mining
+	parallax_icon = 'icons/obj/large/320x320.dmi'
+	parallax_icon_state = "regina"
+	initial_x_coordinate = 120
+	initial_y_coordinate = 120
+	parallax_value = 0.045
 
 
 // Asteroid Layers
