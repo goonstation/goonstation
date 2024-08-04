@@ -1741,7 +1741,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/genetics, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/tetris, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/arcade, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/solar_control, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/powermonitor, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/powermonitor_smes, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/barcode, amount=2, cost=PAY_UNTRAINED/3)
@@ -1750,14 +1749,20 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/qmorder, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/qmsupply, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/stockexchange, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/transception, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/mining_magnet, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/telescope, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/announcement, amount=2, cost=PAY_UNTRAINED/3)
-		product_list += new/datum/data/vending_product(/obj/item/circuitboard/siphon_control, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/chem_request, amount=2, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/chem_request_receiver, amount=2, cost=PAY_UNTRAINED/3)
+		#ifdef UNDERWATER_MAP
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/sea_elevator, amount=2, cost=PAY_UNTRAINED/3)
+		#else
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/solar_control, amount=2, cost=PAY_UNTRAINED/3)
+		#endif
+		#ifdef MAP_OVERRIDE_NADIR
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/siphon_control, amount=2, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/circuitboard/transception, amount=2, cost=PAY_UNTRAINED/3)
+		#endif
 		//Hidden circuits available by hacking:
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/clown_announcement, amount=1, hidden=TRUE, cost=PAY_DUMBCLOWN)
 		product_list += new/datum/data/vending_product(/obj/item/circuitboard/security, amount=1, hidden=TRUE, cost=PAY_EXECUTIVE)
