@@ -1,6 +1,10 @@
 
 (t)sun aug 04 24
 (u)LeahTheTech
+(p)20178
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's EXTERMINATE mode with laser blaster projectiles. Keywords remain unchanged.
+(u)LeahTheTech
 (p)20176
 (e)⚖|C-Balance
 (*)Replaced the lawbringer's High Explosive mode with a High Power assault laser mode. Keywords are: BIG SHOT, HIGH POWER and ASSAULT.
