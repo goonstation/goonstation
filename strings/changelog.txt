@@ -1,5 +1,10 @@
 
 (t)sun aug 04 24
+(u)Jan.antilles and Mordent
+(p)20072
+(e)⚖💊💪|C-Balance, A-Medical, A-Traits
+(*)Mildly Mutated now reinforces the mutation (requiring scrambling or gene research to be removed) and grants 1 trait point.
+(*)Geneticists are able to scramble genes at roundstart instead of needing to research radiation emitters.
 (u)LeahTheTech
 (p)20178
 (e)⚖|C-Balance
