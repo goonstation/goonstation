@@ -1,5 +1,7 @@
 
 (t)sun aug 04 24
+(u)LeahTheTech
+(*)The ship alert button has been fitted with a tiny keyboard (you know, like those old blackberry phones) and now requires a reason to be entered in order to set off the alert.
 (u)Cherman0
 (p)20183
 (e)💅📦|C-QoL, A-Game-Objects
