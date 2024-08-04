@@ -24,6 +24,7 @@ TYPEINFO(/obj/machinery/shipalert)
 	var/working = FALSE //processing loops
 	var/cooldownPeriod = 5 MINUTES //5 minutes, change according to player abuse
 	var/deactivateCooldown = 30 SECONDS //no instantly taking it back
+	var/max_msg_length = 200 //half of a command alert
 
 	New()
 		..()
@@ -126,8 +127,13 @@ TYPEINFO(/obj/machinery/shipalert)
 		//alert and siren
 #ifdef MAP_OVERRIDE_MANTA
 		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
-#else
-		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
+#else //frick manta, no reason for you
+		var/reason = tgui_input_text(user, "Please describe the nature of the threat:", "Alert", max_length = src.max_msg_length)
+		if (!length(reason))
+			src.working = FALSE
+			return FALSE
+		reason = sanitize(adminscrub(reason, src.max_msg_length))
+		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: [reason]. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 #endif
 		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
 		//toggle on

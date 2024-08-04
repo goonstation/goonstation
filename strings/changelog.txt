@@ -1,4 +1,15 @@
 
+(t)sun aug 04 24
+(u)LeahTheTech
+(p)20176
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's High Explosive mode with a High Power assault laser mode. Keywords are: BIG SHOT, HIGH POWER and ASSAULT.
+(u)LeahTheTech
+(*)The ship alert button has been fitted with a tiny keyboard (you know, like those old blackberry phones) and now requires a reason to be entered in order to set off the alert.
+(u)Cherman0
+(p)20183
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The nuclear generator turbine now reports its stator load via mechcomp.
 (t)fri aug 02 24
 (u)glowbold + Rubicubie
 (*)Using a badge, ID card, emag or dabbing license in-hand will now show it off with a neat little overlay.
