@@ -1,4 +1,32 @@
 
+(t)sun aug 04 24
+(u)Jan.antilles and Mordent
+(p)20072
+(e)⚖💊💪|C-Balance, A-Medical, A-Traits
+(*)Mildly Mutated now reinforces the mutation (requiring scrambling or gene research to be removed) and grants 1 trait point.
+(*)Geneticists are able to scramble genes at roundstart instead of needing to research radiation emitters.
+(u)LeahTheTech
+(p)20178
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's EXTERMINATE mode with laser blaster projectiles. Keywords remain unchanged.
+(u)LeahTheTech
+(p)20176
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's High Explosive mode with a High Power assault laser mode. Keywords are: BIG SHOT, HIGH POWER and ASSAULT.
+(u)LeahTheTech
+(*)The ship alert button has been fitted with a tiny keyboard (you know, like those old blackberry phones) and now requires a reason to be entered in order to set off the alert.
+(u)Cherman0
+(p)20183
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The nuclear generator turbine now reports its stator load via mechcomp.
+(t)fri aug 02 24
+(u)glowbold + Rubicubie
+(*)Using a badge, ID card, emag or dabbing license in-hand will now show it off with a neat little overlay.
+(u)LeahTheTech
+(+)The "mutiny" status effect given to heads of staff on revolution rounds is now invisible.
+(p)20127
+(e)🚄⚖🧫|C-Performance, C-Balance, C-Experimental
+(*)Radioactive things are now more dangerous to stand next to, you will accumulate a significant dose a lot faster.
 (t)thu aug 01 24
 (u)LeahTheTech
 (p)20159

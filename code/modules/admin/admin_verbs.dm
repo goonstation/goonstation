@@ -402,6 +402,7 @@ var/list/admin_verbs = list(
 		/client/proc/special_fullbright,
 		/client/proc/replace_space_exclusive,
 		/client/proc/dereplace_space,
+		/client/proc/unterrainify,
 		/client/proc/ghostdroneAll,
 		/client/proc/showLoadingHint,
 		/client/proc/showPregameHTML,

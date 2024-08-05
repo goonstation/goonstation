@@ -245,6 +245,7 @@
 	name = "Syndicate Announcement computer"
 	computer_say_source_name = "Syndicate Announcement computer"
 	theme = "syndicate"
+	icon_state = "announcementsyndie"
 	req_access = list(access_syndicate_shuttle)
 
 	commander

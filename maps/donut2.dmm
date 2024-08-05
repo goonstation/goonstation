@@ -30617,9 +30617,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
-	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},

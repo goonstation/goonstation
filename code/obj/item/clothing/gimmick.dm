@@ -490,6 +490,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+	fingertip_color = "#f3f3f3"
 
 	setupProperties()
 		..()

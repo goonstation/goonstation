@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/parts)
 	var/no_icon = FALSE
 	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
 	var/skintoned = TRUE
+	/// fingertip_color
+	var/fingertip_color = null
 
 	// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
 	/// The icon of this overlay
@@ -377,6 +379,12 @@ ABSTRACT_TYPE(/obj/item/parts)
 	///Called every life tick when attached to a mob
 	proc/on_life(datum/controller/process/mobs/parent)
 		return
+
+	/// Fingertip color, used to tint overlays
+	proc/get_fingertip_color()
+		if (src.skintoned)
+			return src.skin_tone
+		return src.fingertip_color
 
 /obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
 	var/destination
