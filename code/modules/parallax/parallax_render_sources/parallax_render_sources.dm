@@ -83,13 +83,13 @@
 /atom/movable/screen/parallax_render_source/planet/quadriga // the channel node is near here, an Io-like volcanic, a nasty place
 	parallax_icon_state = "quadriga"
 	initial_x_coordinate = 50
-	initial_y_coordinate = -50
+	initial_y_coordinate = -100
 	parallax_value = 0.03
 
 /atom/movable/screen/parallax_render_source/planet/amantes // the space butt, haven of gangs, clown town, shanty colonies
 	parallax_icon_state = "amantes"
-	initial_x_coordinate = 160
-	initial_y_coordinate = 325
+	initial_x_coordinate = 200
+	initial_y_coordinate = 200
 	parallax_value = 0.040
 
 // donut 2 neighborhood
@@ -98,7 +98,7 @@
 	parallax_icon_state = "fatuus"
 	initial_x_coordinate = 0
 	initial_y_coordinate = 50
-	parallax_value = 0.03
+	parallax_value = 0.034
 
 /*
 /atom/movable/screen/parallax_render_source/planet/domusdei // need to resprite this
@@ -114,19 +114,19 @@
 	parallax_icon_state = "mundus"
 	initial_x_coordinate = 200
 	initial_y_coordinate = 100
-	parallax_value = 0.03
+	parallax_value = 0.02
 
 /atom/movable/screen/parallax_render_source/planet/iustitia // a moon with a major spaceport, diplomatic and cultural hub
 	parallax_icon_state = "iustitia"
-	initial_x_coordinate = 400
+	initial_x_coordinate = 380
 	initial_y_coordinate = 100
-	parallax_value = 0.035
+	parallax_value = 0.032
 
 /atom/movable/screen/parallax_render_source/planet/iudicium // a desolate moon with old military sites, bunkers, Ainley hospital
 	parallax_icon_state = "iudicium"
-	initial_x_coordinate = 0
-	initial_y_coordinate = 100
-	parallax_value = 0.045
+	initial_x_coordinate = -75
+	initial_y_coordinate = 185
+	parallax_value = 0.042
 
 /// fortuna area
 
@@ -146,13 +146,13 @@
 
 /atom/movable/screen/parallax_render_source/planet/regis // possibly blob infested
 	parallax_icon_state = "regis"
-	initial_x_coordinate = 200
+	initial_x_coordinate = 250
 	initial_y_coordinate = 100
 	parallax_value = 0.04
 
 /atom/movable/screen/parallax_render_source/planet/magus // acidic frigid horrible death-ocean planet, Nadir's home
 	parallax_icon_state = "magus"
-	initial_x_coordinate = 0
+	initial_x_coordinate = 50
 	initial_y_coordinate = 100
 	parallax_value = 0.03
 
@@ -161,7 +161,7 @@
 	parallax_icon_state = "regina"
 	initial_x_coordinate = 120
 	initial_y_coordinate = 120
-	parallax_value = 0.045
+	parallax_value = 0.04
 
 
 // Asteroid Layers
