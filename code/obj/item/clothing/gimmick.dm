@@ -460,6 +460,14 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	step_lots = 1
 	step_priority = 999
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+			if (istype(user, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = user
+				if (src == H.shoes)
+					return
+		. = ..()
+
 /obj/item/clothing/under/gimmick/cursedclown
 	name = "cursed clown suit"
 	desc = "It wasn't already?"
