@@ -2004,7 +2004,7 @@
 		src.user.UpdateOverlays(overlay, "showoff_overlay")
 		src.user.UpdateOverlays(hand_overlay, "showoff_hand_overlay")
 
-		src.user.dir = SOUTH
+		src.user.set_dir(SOUTH)
 
 	onDelete()
 		. = ..()
