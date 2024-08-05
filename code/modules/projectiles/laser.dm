@@ -437,6 +437,8 @@ toxic - poisons
 		SPAWN( 20 )
 			if (I && !I.disposed) qdel(I)*/
 
+	lawbringer
+		color_icon = "#00FFFF"
 
 	burst
 		damage = 15
