@@ -300,7 +300,7 @@
 		if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 			src.remove_pulling()
 			//hud.update_pulling() // FIXME
-		else
+		else if (length(chain) <= 1)
 			pulling += src.pulling
 	for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 		pulling += G.affecting
