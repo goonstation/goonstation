@@ -83,14 +83,14 @@
 /atom/movable/screen/parallax_render_source/planet/quadriga // the channel node is near here, an Io-like volcanic, a nasty place
 	parallax_icon_state = "quadriga"
 	initial_x_coordinate = 50
-	initial_y_coordinate = -100
+	initial_y_coordinate = -80
 	parallax_value = 0.03
 
 /atom/movable/screen/parallax_render_source/planet/amantes // the space butt, haven of gangs, clown town, shanty colonies
 	parallax_icon_state = "amantes"
-	initial_x_coordinate = 200
-	initial_y_coordinate = 200
-	parallax_value = 0.040
+	initial_x_coordinate = 250
+	initial_y_coordinate = 225
+	parallax_value = 0.04
 
 // donut 2 neighborhood
 
@@ -140,15 +140,17 @@
 
 /atom/movable/screen/parallax_render_source/planet/mors // worse than Mars. bad
 	parallax_icon_state = "mors"
-	initial_x_coordinate = 50
+	initial_x_coordinate = 200
 	initial_y_coordinate = 100
-	parallax_value = 0.03
+	parallax_value = 0.035
 
 /atom/movable/screen/parallax_render_source/planet/regis // possibly blob infested
 	parallax_icon_state = "regis"
-	initial_x_coordinate = 250
-	initial_y_coordinate = 100
-	parallax_value = 0.04
+	initial_x_coordinate = -150
+	initial_y_coordinate = -50
+	parallax_value = 0.025
+
+///////
 
 /atom/movable/screen/parallax_render_source/planet/magus // acidic frigid horrible death-ocean planet, Nadir's home
 	parallax_icon_state = "magus"
