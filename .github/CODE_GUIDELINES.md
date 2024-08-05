@@ -453,6 +453,16 @@ make sure it isn't being used as a verb somewhere else.
 ## VSCode Debugger
 You can check out a guide on using the debugger in the guide located in the [Developer Guide](https://hackmd.io/@goonstation/dev#How-to-use-the-VS-Code-Debugger).
 
+## Local `__build.dm` changes
+
+If you're tired of having to constantly add & remove `#define IM_REALLY_IN_A_FUCKING_HURRY_HERE` and similar from `__build.dm`, there's a solution!
+
+Create a file named `__build.local.dm` right next to it. Named exactly that.
+This file will not get picked up by Git, and will let you keep whatever defines you want in there.
+
+However, be sure that you remember you put your config in there! Please don't come to #imcoder asking why your local setup always compiles Nadir 😸
+
+
 ## Debugging Overlays
 
 The Debug-Overlays verb ingame is your friend. It offers many modes to debug many things, such as atmos air groups, writing, areas, and more.

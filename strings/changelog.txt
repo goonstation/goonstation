@@ -1,3 +1,50 @@
+
+(t)mon aug 05 24
+(u)Valtsu0
+(p)20179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can now also show off the authentication disk
+(u)Bork and Wrench
+(p)20121
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds two new food items to the game: Cheese Danish and Chocolate Covered Cherry. Sprites by Bork.
+(u)Cherman0
+(p)20181
+(e)🔎📦|C-Code-Quality, A-Game-Objects
+(+)"Wifi Signal Splitter Component" is now just called "Signal Splitter Component"
+(t)sun aug 04 24
+(u)Jan.antilles and Mordent
+(p)20072
+(e)⚖💊💪|C-Balance, A-Medical, A-Traits
+(*)Mildly Mutated now reinforces the mutation (requiring scrambling or gene research to be removed) and grants 1 trait point.
+(*)Geneticists are able to scramble genes at roundstart instead of needing to research radiation emitters.
+(u)LeahTheTech
+(p)20178
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's EXTERMINATE mode with laser blaster projectiles. Keywords remain unchanged.
+(u)LeahTheTech
+(p)20176
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's High Explosive mode with a High Power assault laser mode. Keywords are: BIG SHOT, HIGH POWER and ASSAULT.
+(u)LeahTheTech
+(*)The ship alert button has been fitted with a tiny keyboard (you know, like those old blackberry phones) and now requires a reason to be entered in order to set off the alert.
+(u)Cherman0
+(p)20183
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The nuclear generator turbine now reports its stator load via mechcomp.
+(t)fri aug 02 24
+(u)glowbold + Rubicubie
+(*)Using a badge, ID card, emag or dabbing license in-hand will now show it off with a neat little overlay.
+(u)LeahTheTech
+(+)The "mutiny" status effect given to heads of staff on revolution rounds is now invisible.
+(p)20127
+(e)🚄⚖🧫|C-Performance, C-Balance, C-Experimental
+(*)Radioactive things are now more dangerous to stand next to, you will accumulate a significant dose a lot faster.
+(t)thu aug 01 24
+(u)LeahTheTech
+(p)20159
+(e)🪲|C-Bug
+(+)Closing doors now properly stops fluid puddles flowing under them.
 (t)wed jul 31 24
 (u)LeahTheTech
 (+)Crayon drawings will no longer show up in the right click menu.
@@ -9,6 +56,9 @@
 (t)mon jul 29 24
 (u)LeahTheTech
 (+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
+(t)sun jul 28 24
+(u)CalliopeSoups
+(+)Contraband lockers have been re-located to the back rooms of most security departments. This is sure to deter theft as nobody goes back there!
 (t)sat jul 27 24
 (u)Colossus
 (p)20086

@@ -563,6 +563,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/damage_type = D_KINETIC  // What is our damage type
 	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
+	var/always_hits_structures = FALSE //always hits doors and girders
 	var/window_pass = 0          // Can we pass windows
 	var/obj/projectile/master = null // The projectile obj that we're associated with
 	var/silentshot = 0           // Standard hit message upon bullet_act.
