@@ -1302,7 +1302,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 		projectiles = list(
 			"detain" = current_projectile,
-			"execute" = new/datum/projectile/laser/blaster,
+			"execute" = new/datum/projectile/laser/blaster/lawbringer,
 			"smokeshot" = new/datum/projectile/bullet/smoke,
 			"knockout" = new/datum/projectile/bullet/tranq_dart/law_giver,
 			"hotshot" = new/datum/projectile/bullet/flare,
@@ -1502,7 +1502,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/laser/blaster)			//execute - cyan
+			else if (current_projectile.type == /datum/projectile/laser/blaster/lawbringer)			//execute - cyan
 				indicator_display.color = "#00FFFF"
 				muzzle_flash = "muzzle_flash_bluezap"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
