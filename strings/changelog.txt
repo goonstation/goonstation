@@ -1,5 +1,7 @@
 
 (t)mon aug 05 24
+(u)LeahTheTech
+(+)The lawbringer's blaster mode now has a different sound effect and slightly faster shot speed.
 (u)Valtsu0
 (p)20179
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
