@@ -16469,8 +16469,8 @@
 /area/station/maintenance/southwest)
 "jUF" = (
 /obj/machinery/firealarm/north,
-/obj/storage/cart/medcart,
 /obj/item/reagent_containers/syringe/haloperidol,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
