@@ -145,6 +145,19 @@ Contains:
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
 
+	/// Get all the effects to apply to this explosion
+	proc/get_explosion_effects()
+		for (var/i in 1 to 3) // DEBUG CODE
+			var/obj/item/rcd_ammo/big = new /obj/item/rcd_ammo/big() // DEBUG CODE
+			src.contents += big // DEBUG CODE
+			big.set_loc(src) // DEBUG CODE
+		. = list()
+		// for (var/obj/item/I as anything in src.storage.get_contents())
+		for (var/obj/item/I as anything in src.contents) // DEBUG CODE
+			for (var/modifier_key as anything in explosion_modifiers)
+				var/datum/explosion_modifier/M = explosion_modifiers[modifier_key]
+				. += M.get_effects(src, I, .)
+
 	proc/check_status()
 		//Handle exploding, leaking, and rupturing of the tank
 		if(!air_contents)
@@ -176,13 +189,13 @@ Contains:
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
+						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5, effects=src.get_explosion_effects())
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
-			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
+			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5, effects=src.get_explosion_effects())
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
@@ -594,7 +607,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
-					explosion(src, T, 0, strength, strength*2, strength*3)
+					explosion(src, T, 0, strength, strength*2, strength*3, effects=src.get_explosion_effects())
 			if(src.master)
 				qdel(src.master)
 			qdel(src)
@@ -605,12 +618,12 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		if(air_contents.temperature > (T0C + 400))
 			strength = fuel_moles/15
 
-			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5)
+			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5, effects=src.get_explosion_effects())
 
 		else if(air_contents.temperature > (T0C + 250))
 			strength = fuel_moles/20
 
-			explosion(src, ground_zero, -1, -1, strength*3, strength*4)
+			explosion(src, ground_zero, -1, -1, strength*3, strength*4, effects=src.get_explosion_effects())
 			ground_zero.assume_air(air_contents)
 			air_contents = null
 			ground_zero.hotspot_expose(1000, 125)
@@ -618,7 +631,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 		else if(air_contents.temperature > (T0C + 100))
 			strength = fuel_moles/25
 
-			explosion(src, ground_zero, -1, -1, strength*2, strength*3)
+			explosion(src, ground_zero, -1, -1, strength*2, strength*3, effects=src.get_explosion_effects())
 			ground_zero.assume_air(air_contents)
 			air_contents = null
 			ground_zero.hotspot_expose(1000, 125)

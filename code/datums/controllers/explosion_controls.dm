@@ -10,12 +10,12 @@ var/datum/explosion_controller/explosions
 	var/kaboom_ready = FALSE
 	var/next_turf_safe = FALSE
 
-	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1)
+	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE, range_cutoff_fraction=1, effects=null)
 		SEND_SIGNAL(source, COMSIG_ATOM_EXPLODE, args)
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction, effects)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -170,7 +170,7 @@ var/datum/explosion_controller/explosions
 	var/range_cutoff_fraction
 	var/last_touched = "*null*"
 
-	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1)
+	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE, range_cutoff_fraction=1, effects=null)
 		..()
 		src.source = source
 		src.epicenter = epicenter
@@ -181,6 +181,10 @@ var/datum/explosion_controller/explosions
 		src.user = user
 		src.turf_safe = turf_safe
 		src.range_cutoff_fraction = range_cutoff_fraction
+		// Apply effects if we have any
+		if (length(effects))
+			for (var/datum/explosion_effect/effect as anything in effects)
+				effect.apply_to(src)
 
 	proc/logMe(var/power)
 		if(istype(src.source))

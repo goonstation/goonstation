@@ -90,6 +90,8 @@
 		buildMaterialCache()			//^^
 		Z_LOG_DEBUG("Preload", "Building manufacturing requirement cache...")
 		buildManufacturingRequirementCache() // ^^
+		Z_LOG_DEBUG("Preload", "Building explosion requirement datum list...")
+		createExplosionModifierSingletons()
 
 		// no log because this is functionally instant
 		global_signal_holder = new
@@ -246,3 +248,14 @@
 			CRASH("ID conflict: [R.getID()] from [R]")
 		#endif
 		requirement_cache[R.getID()] = R
+
+/proc/createExplosionModifierSingletons()
+	explosion_modifiers = list()
+	var/modifier_list = concrete_typesof(/datum/explosion_modifier)
+	for (var/datum/explosion_modifier/M_path as anything in modifier_list)
+		var/datum/explosion_modifier/M = new M_path()
+		#ifdef CHECK_MORE_RUNTIMES
+		if (M.getID() in explosion_modifiers)
+			CRASH("ID conflict: [M.getID()] from [M]")
+		#endif
+		explosion_modifiers[M.getID()] = M
