@@ -385,13 +385,8 @@
 	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable))
-				if (isturf(target.loc))
-					pixelable = TRUE
-				else if (istype(target.loc, /atom/movable))
-					var/atom/movable/location = target.loc
-					if (target in location.vis_contents)
-						pixelable = TRUE
+			if (istype(target, /atom/movable) && (isturf(target.loc) || !reach))
+				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
 				if (!QDELETED(W))
