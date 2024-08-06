@@ -22,9 +22,6 @@
 		..()
 		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/massacre)
-	on_spin_emote(mob/user)
-		SEND_SIGNAL(src, COMSIG_ITEM_TWIRLED, user, src)
-		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 
 /obj/item/switchblade

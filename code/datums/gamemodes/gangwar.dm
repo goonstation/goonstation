@@ -1094,7 +1094,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/list/tags_single
 	var/list/tags_double
 	var/list/tags_triple
-	inventory_counter_enabled = TRUE
+
 	w_class = W_CLASS_TINY
 
 	update_icon()
@@ -1105,6 +1105,7 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 
 	New()
+		inventory_counter_enabled = TRUE
 		refresh_single_tags()
 		refresh_double_tags()
 		refresh_triple_tags()
@@ -1345,14 +1346,17 @@ proc/broadcast_to_all_gangs(var/message)
 		if(src.time_spent() > next_spray)
 			next_spray += rand(18,26) DECI SECONDS
 			playsound(owner.loc, 'sound/items/graffitispray3.ogg', 100, TRUE)
+		var/new_duration = duration
 		switch (length(spraycan.graffititargets))
 			if (1)
-				duration = 4 SECONDS
+				new_duration = 4 SECONDS
 			if (2)
-				duration = 6 SECONDS
+				new_duration = 6 SECONDS
 			if (3)
-				duration = 8 SECONDS
-
+				new_duration = 8 SECONDS
+		if (new_duration != duration)
+			duration = new_duration
+			updateBar()
 
 	onInterrupt(flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
@@ -2381,10 +2385,12 @@ proc/broadcast_to_all_gangs(var/message)
 	object_flags = NO_GHOSTCRITTER
 	throwforce = 1
 	force = 1
-	inventory_counter_enabled = 1
 	w_class = W_CLASS_TINY
 	var/max_charges = 5
 	var/charges = 5
+
+	New()
+		inventory_counter_enabled = TRUE
 
 	syndicate
 		max_charges = 10

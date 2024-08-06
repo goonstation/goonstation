@@ -147,9 +147,7 @@
 				damageMult = 5
 			else if (current_chain == 3)
 				sleep(0.2 SECONDS)
-				var/string ="[H] twirls the machete with a grin."
-				H.show_message(SPAN_ALERT(string), 1, assoc_maptext = make_chat_maptext(H, "<I>[string]</I>", "color: #C2BEBE;", alpha = 140))
-				master.on_spin_emote(user)
+				user.emote("twirl")
 				sleep(1.4 SECONDS)
 				damageMult = damage_mult_start+(current_chain*damage_mult_increment)
 			else if (current_chain < 3)
