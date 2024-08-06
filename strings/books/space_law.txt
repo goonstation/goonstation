@@ -9,9 +9,9 @@ As a Nanotrasen security officer you should be proud of your uniform. Regulation
 While they are not required to be worn, and might be considered "<span style="font-family:'Comic Sans MS';">dorky</span>" or "incredibly uncool," gear like your armored vest or helmet (which comes with a built-in flashlight) can save your life in a pinch.
 
 <h3>Chain of Command</h3>
-Security officers answer firstly to the <b><span style="color:red;">Head of Security.</span></b> Centcom might send an <b><span style="color:#2d35ce;">NT Security Consultant</span></b> if the station is particularly in need of shaping up, and they should be considered second in command under the HoS.<br>
+Firstly, the <b><span style="color:#a87101;">Captain</span></b> has ultimate authority on their station unless you have very good reason to believe they have been compromised.<br>
+Security officers answer directly to the <b><span style="color:red;">Head of Security</span></b> however, and Centcom might send an <b><span style="color:#2d35ce;">NT Security Consultant</span></b> if the station is particularly in need of shaping up, they should be considered second in command under the HoS.<br>
 Department Heads retain authority inside their department and can order you to leave unconditionally. <b><span style="color:red;">The Head of Security</span></b>, <b><span style="color:#0A6B00;">Head of Personnel</span></b>, or <b><span style="color:#a87101;">Captain</span></b> can override this.<br>
-Lastly, the <b><span style="color:#a87101;">Captain</span></b> has ultimate authority on their station unless you have very good reason to believe they have been compromised.
 
 <h3>Arrests</h3>
 As a Security Officer, you are expected to use restraint and good judgment when detaining, searching, and arresting people. Suspects still have rights, and treating people like scum will usually just increase tensions with the crew and invite more crime. Only arrest people when you have reason to believe they've committed a crime, and don't do strip searches in public. Never use lethal force when nonlethal force will do!<br>
