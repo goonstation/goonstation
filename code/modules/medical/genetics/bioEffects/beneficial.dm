@@ -814,11 +814,11 @@ var/list/radio_brains = list()
 	name = "Manusclavis felidunguus"
 	desc = "Subject arms change into a more animalistic form over time."
 	id = "claws"
-	probability = 20
+	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your arms start to feel strange and clumsy."
 	msgLose = "You once again feel comfortable with your arms."
-	stability_loss = 5
+	stability_loss = 15
 	icon_state  = "blood_od"
 	effect_group = "blood"
 	var/left_arm_path = /obj/item/parts/human_parts/arm/left/claw/critter
@@ -837,7 +837,7 @@ var/list/radio_brains = list()
 					M.limbs.replace_with("l_arm", left_arm_path, M, 0)
 
 /datum/bioEffect/claws/pincer
-	name = "Manuschela Crustaceaformis "
+	name = "Manuschela Crustaceaformis"
 	desc = "Subject's arm changes into a pincer."
 	id = "claws_pincer"
 	msgGain = "You feel like your arms are oddly firm."
@@ -848,11 +848,13 @@ var/list/radio_brains = list()
 
 /obj/item/parts/human_parts/arm/left/claw/critter
 	limb_type = /datum/limb/small_critter/strong
+
 /obj/item/parts/human_parts/arm/right/claw/critter
 	limb_type = /datum/limb/small_critter/strong
 
 /obj/item/parts/human_parts/arm/left/claw/critter/pincer
 	limb_type = /datum/limb/small_critter/pincers
+
 /obj/item/parts/human_parts/arm/right/claw/critter/pincer
 	limb_type = /datum/limb/small_critter/pincers
 
@@ -860,11 +862,11 @@ var/list/radio_brains = list()
 	name = "Chitinoarmis Durescutis "
 	desc = "Subject skin develops into a hardened carapace."
 	id = "carapace"
-	probability = 20
+	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel your skin harden."
 	msgLose = "You feel your skin become soft and supple."
-	stability_loss = 5
+	stability_loss = 10
 	icon_state  = "aura"
 	effect_group = "blood"
 
@@ -890,11 +892,11 @@ var/list/radio_brains = list()
 	name = "Lateral Undulation"
 	desc = "Subject muscles develop the ability to perform a serpentine locomation."
 	id = "slither"
-	probability = 20
+	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you could propel yourself on your belly with a good wiggle."
 	msgLose = "You feel like moving around on your belly is a silly thing to do."
-	stability_loss = 5
+	stability_loss = 15
 
 	OnAdd()
 		..()
@@ -912,11 +914,12 @@ var/list/radio_brains = list()
 	name = "Lipid Stores"
 	desc = "Subject gains the ability to improve the nourishment available from their lipid stores."
 	id = "camel_fat"
-	probability = 20
+	probability = 10
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you can store away some food and drink for later."
 	msgLose = "You feel a little more lean than you did before."
 	stability_loss = 5
+	mob_exclusion = list(/mob/living/carbon/human)
 	var/food_stored = 0
 	var/food_max = 50
 	var/store_above_perc = 80
