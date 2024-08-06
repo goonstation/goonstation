@@ -1081,7 +1081,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	item_state = "spraycan"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
@@ -1262,7 +1262,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(spraycan in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1276,8 +1276,9 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 
 	onEnd()
+		var/mob/M = owner
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(spraycan in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(!spraycan.check_tile_unclaimed(target_turf, owner))
@@ -1294,7 +1295,6 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.make_tag(target_turf)
 		spraycan.empty = TRUE
 		spraycan.icon_state = "spraycan_crushed_gang"
-		var/mob/M = owner
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
@@ -2390,6 +2390,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	New()
 		inventory_counter_enabled = TRUE
+		..()
 
 	syndicate
 		max_charges = 10

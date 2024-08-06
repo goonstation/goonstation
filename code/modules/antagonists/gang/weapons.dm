@@ -6,7 +6,7 @@
 	item_state = "welder_machete"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | USEDELAY
+	flags = USEDELAY
 	force = 25
 	click_delay = 16 DECI SECONDS //unbalanced blade
 	throwforce = 5
