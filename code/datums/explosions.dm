@@ -112,8 +112,8 @@ ABSTRACT_TYPE(/datum/explosion_effect)
 				var/turf/simulated/floor/F = T:ReplaceWithFloor()
 				F.setMaterial(material_used)
 
-			var/dist_from_origin = get_dist(T.loc, src.parent.loc)
-			if (prob(src.effect_strength/dist_from_origin))
+			var/dist_from_origin = get_dist(T, src.parent)
+			if (prob(src.effect_strength/(1 + dist_from_origin)))
 				var/obj/grille/G = new /obj/grille(T)
 				G.setMaterial(material_used)
 
