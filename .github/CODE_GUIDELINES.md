@@ -448,6 +448,19 @@ via `atom.verbs += /proc/x`.
 So, be careful when removing `as x` to
 make sure it isn't being used as a verb somewhere else.
 
+## round() sometimes pretends to be floor()
+
+According to the DM docs, using `round(A)` with only one argument is deprecated (not approved). The correct way to use `round()` is to do `round(A,B)`, where B is the nearest multiple. For most cases, this will be `1`, although sometimes you'll need it to the nearest 10 or 5.
+
+What happens if you do `round(A)` then? Guess what? It *floors* the value, and is equivalent to `floor(A)`. It **rounds it down**. Thanks BYOND.
+
+```csharp
+usr << round(1.7)    // outputs 1
+usr << round(1.7, 1) // outputs 2
+```
+
+So in general, use `round(A,1)` for your rounding needs.
+
 # Useful Things
 
 ## VSCode Debugger

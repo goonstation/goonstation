@@ -437,6 +437,11 @@ toxic - poisons
 		SPAWN( 20 )
 			if (I && !I.disposed) qdel(I)*/
 
+	lawbringer
+		color_icon = "#00FFFF"
+		shot_sound = 'sound/weapons/laser_b.ogg'
+		projectile_speed = 46 //it's not quite the carbine but let's make it a little faster to go with the ANGRY shot sound
+		shot_pitch = 0.8
 
 	burst
 		damage = 15

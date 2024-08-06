@@ -1,4 +1,19 @@
 
+(t)mon aug 05 24
+(u)LeahTheTech
+(+)The lawbringer's blaster mode now has a different sound effect and slightly faster shot speed.
+(u)Valtsu0
+(p)20179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can now also show off the authentication disk
+(u)Bork and Wrench
+(p)20121
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds two new food items to the game: Cheese Danish and Chocolate Covered Cherry. Sprites by Bork.
+(u)Cherman0
+(p)20181
+(e)🔎📦|C-Code-Quality, A-Game-Objects
+(+)"Wifi Signal Splitter Component" is now just called "Signal Splitter Component"
 (t)sun aug 04 24
 (u)Jan.antilles and Mordent
 (p)20072

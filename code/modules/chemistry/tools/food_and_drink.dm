@@ -114,7 +114,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				JOB_XP(user, "Clown", 2)
 				return
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
+			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", group = "slicing")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
