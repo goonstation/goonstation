@@ -10,19 +10,19 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
 
 	var/amount_per_transfer_from_this = 10
-	var/capacity
+	var/capacity = 4000
 
 	New()
 		..()
 		// TODO enable when I do leaking
 		// src.AddComponent(/datum/component/bullet_holes, 10, 5)
-		src.create_reagents(4000)
+		src.create_reagents(src.capacity)
 
 
 	get_desc(dist, mob/user)
@@ -84,7 +84,7 @@
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
 /obj/reagent_dispensers/cleanable
-	flags = FPRINT | FLUID_SUBMERGE
+	flags = FLUID_SUBMERGE
 
 /obj/reagent_dispensers/cleanable/ants
 	name = "space ants"
@@ -412,7 +412,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
-	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
 	var/image/fluid_image = null
@@ -779,33 +779,21 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 /obj/item/reagent_containers/food/drinks/coolerbottle
 	name = "water cooler bottle"
 	desc = "A water cooler bottle. Can hold up to 500 units."
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	icon_state = "itemtank"
+	icon_state = "cooler_bottle"
 	item_state = "flask"
 	initial_volume = 500
 	w_class = W_CLASS_BULKY
 	incompatible_with_chem_dispensers = 1
 	can_chug = 0
 
-	var/image/fluid_image
-
 	New()
-		..()
-		fluid_image = image(src.icon, "fluid-[src.icon_state]")
-
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
-
-	update_icon()
-		src.underlays = null
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
-			src.icon_state = "itemtank[fluid_state]"
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.fluid_image.icon_state = "fluid-itemtank[fluid_state]"
-			src.underlays += src.fluid_image
-		else
-			src.icon_state = initial(src.icon_state)
+		. = ..()
+		src.AddComponent( \
+			/datum/component/reagent_overlay, \
+			reagent_overlay_icon = src.icon, \
+			reagent_overlay_icon_state = src.icon_state, \
+			reagent_overlay_states = 15, \
+			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+		)

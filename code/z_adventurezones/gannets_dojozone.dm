@@ -167,7 +167,7 @@ Contents:
 	stamina_cost = 45
 	stamina_crit_chance = 10
 
-/obj/decal/fakeobjects/unfinished_katana
+/obj/fakeobject/unfinished_katana
 
 /obj/item/unfinished_katana
 	name = "unfinished blade"
@@ -337,7 +337,7 @@ Contents:
 
 // -Decoration
 
-/obj/decal/fakeobjects/arch
+/obj/fakeobject/arch
 	name = "torii"
 	desc = "A great gate marking sacred grounds."
 	icon = 'icons/obj/large/160x128.dmi'
@@ -360,31 +360,31 @@ Contents:
 * It's a pretty horrible mistranslation, so I'm 100% keeping it.
 */
 
-/obj/decal/fakeobjects/kanji_1
+/obj/fakeobject/kanji_1
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
 	anchored = ANCHORED_ALWAYS
 
-/obj/decal/fakeobjects/kanji_2
+/obj/fakeobject/kanji_2
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"
 	anchored = ANCHORED_ALWAYS
 
-/obj/decal/fakeobjects/dojohouse
+/obj/fakeobject/dojohouse
 	icon = 'icons/effects/224x160.dmi'
 	icon_state = "dojohouse"
 
-/obj/decal/fakeobjects/lotus
+/obj/fakeobject/lotus
 	name = "lotus"
 	desc = "A pretty water garden flower."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "lotus_1"
 
-/obj/decal/fakeobjects/birdhouse // i literally cannot find the correct name for this.
+/obj/fakeobject/birdhouse // i literally cannot find the correct name for this.
 	name = "small shrine"
 	density = 1
 	anchored = ANCHORED
@@ -407,7 +407,7 @@ Contents:
 		light.attach(src)
 		light.enable()
 
-/obj/decal/fakeobjects/plantpot
+/obj/fakeobject/plantpot
 	name = "plant pot"
 	density = 1
 	anchored = ANCHORED
@@ -426,7 +426,7 @@ Contents:
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "lamp1"
 
-/obj/decal/fakeobjects/bridge_rail
+/obj/fakeobject/bridge_rail
 	name = "railing"
 	icon = 'icons/obj/dojo_rail.dmi'
 	layer = EFFECTS_LAYER_BASE
@@ -538,7 +538,7 @@ Contents:
 				src.visible_message("\The [src] breathe life into \the [T] causing it erupt in flames.", blind_message="A loud roar of air causes a fire to erupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
 
-/obj/decal/fakeobjects/swordrack
+/obj/fakeobject/swordrack
 	name = "katana rack"
 	desc = "A wooden rack of swords."
 	icon = 'icons/obj/dojo.dmi'
@@ -546,22 +546,13 @@ Contents:
 	density = 1
 	anchored = ANCHORED_ALWAYS
 
-/obj/decal/fakeobjects/rake
+/obj/fakeobject/rake
 	name = "zen garden rake"
 	desc = "A little wooden tool for raking sand in to patterns."
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "rake"
 
-/obj/decal/fakeobjects/sealed_door
-	name = "laboratory door"
-	desc = "It appears to be sealed."
-	icon = 'icons/obj/dojo.dmi'
-	icon_state = "sealed_door"
-	density = 1
-	anchored = ANCHORED_ALWAYS
-	opacity = 1
-
-/obj/decal/fakeobjects/katana_fake
+/obj/fakeobject/katana_fake
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon = 'icons/obj/items/weapons.dmi'

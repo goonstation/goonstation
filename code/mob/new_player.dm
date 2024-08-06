@@ -336,9 +336,17 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					location = pick_landmark(JOB.special_spawn_location)
 				if (!isnull(location))
 					character.set_loc(location)
-			else if (character.traitHolder && character.traitHolder.hasTrait("stowaway"))
-				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
-				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
+			else if (istype(JOB, /datum/job/special/stowaway))
+				var/list/obj/storage/SL = get_random_station_storage_list(closed=TRUE, breathable=TRUE)
+				if(length(SL) > 0)
+					boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
+					character.set_loc(pick(SL))
+					logTheThing(LOG_STATION, src, "has the Stowaway job and spawns in storage at [log_loc(src)]")
+				else
+					var/starting_loc = null
+					starting_loc = pick_landmark(LANDMARK_LATEJOIN, locate(round(world.maxx / 2), round(world.maxy / 2), 1))
+					character.set_loc(starting_loc)
+					logTheThing(LOG_STATION, src, "has the Stowaway job but there were no valid containers to stow into!")
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
 				if (istype(character.loc, /obj/machinery/vehicle))
 					boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
@@ -476,13 +484,14 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 		var/limit = J.limit
 		var/c = J.assigned
+		var/allowed = TRUE
 		if (limit == 0 && c == 0)
 			// 0 slots, nobody in it, don't show it
 			return
 
 		if (!job_controls.check_job_eligibility(src, J, STAPLE_JOBS | SPECIAL_JOBS))
 			// Show unavailable jobs, but no joining them
-			limit = 0
+			allowed = FALSE
 
 		//If it's Revolution time, lets show all command jobs as filled to (try to) prevent metagaming.
 		if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
@@ -507,6 +516,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			// can you believe all these slot appendages were in one line before using nested ternaries? awful.
 			if (i <= c)
 				if (i == 1 && c > shown)
+					// display +X card
 					slots += {"
 					<div
 					class='latejoin-card latejoin-full'
@@ -516,6 +526,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					</div>
 					"}
 				else
+					// display crossed out card
 					slots += {"
 					<div
 					class='latejoin-card latejoin-full'
@@ -525,18 +536,30 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					</div>
 					"}
 			else
-				slots += {"
-				<a
-				href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
-				class='latejoin-card' style='border-color: [J.linkcolor];'
-				title='[hover_text]'
-				>&#x2713;&#xFE0E;
-				</a>
-				"}
+				if(allowed)
+					// display joinable slot
+					slots += {"
+					<a
+					href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
+					class='latejoin-card' style='border-color: [J.linkcolor];'
+					title='[hover_text]'
+					>&#x2713;&#xFE0E;
+					</a>
+					"}
+				else
+					// display faded empty slot
+					slots += {"
+					<div
+					class ='latejoin-card latejoin-full'
+					style='border-color: [J.linkcolor]; background-color: [J.linkcolor];'
+					title='Job unavailable.'
+					>&#xA0;
+					</div>
+					"}
 		return {"
 			<tr>
 				<td class='latejoin-link[J.is_highlighted() ? " highlighted" : ""]'>
-					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[((limit == -1 || c < limit) && allowed) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is unavailable.'>[J.name]</span>"]
 				</td>
 				<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 			</tr>
@@ -746,9 +769,10 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences)
+			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences, FALSE, src.mind?.assigned_role)
 		else
-			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
+			// fallback
+			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences, FALSE, src.mind?.assigned_role)
 		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
 		if (!J || J.uses_character_profile)//borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)

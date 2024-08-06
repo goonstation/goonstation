@@ -15,19 +15,19 @@
 /turf/simulated/floor/plating,
 /area/space)
 "d" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	icon_state = "gen1"
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "e" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	icon_state = "gen2"
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "f" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	icon_state = "gen3"
 	},
 /turf/simulated/floor/plating,
@@ -46,11 +46,11 @@
 /turf/simulated/floor/plating,
 /area/space)
 "h" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	icon_state = "utilbox0";
 	pixel_y = 32
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	icon_state = "2term"
 	},
 /obj/grille/catwalk{

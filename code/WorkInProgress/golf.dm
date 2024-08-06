@@ -5,7 +5,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "club"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
 	force = 9
 	throwforce = 15

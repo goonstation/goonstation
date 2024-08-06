@@ -7,7 +7,7 @@ TYPEINFO(/obj/item/lightbreaker)
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
 	var/active = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 2

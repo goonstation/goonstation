@@ -27,6 +27,7 @@
 	var/temperature = T20C
 	var/icon_old = null
 	var/name_old = null
+	var/path_old = null
 	var/tmp/pathweight = 1
 	var/tmp/pathable = TRUE
 	var/can_write_on = FALSE
@@ -46,6 +47,9 @@
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
 
+	/// Whether this turf is currently being evaluated for changing hands from the "unconnected zone" area (constructed) to a "real" area
+	var/tmp/transfer_evaluation = FALSE
+
 	// Vars used for breaking and burning turfs, only used for floors at the moment
 	var/can_burn = FALSE
 	var/can_break = FALSE
@@ -58,12 +62,12 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
-	flags = OPENCONTAINER | FPRINT
+	flags = OPENCONTAINER
 
 
 	New()
 		..()
-
+		src.path_old = src.type
 		if(global.dont_init_space)
 			return
 		src.init_lighting()
@@ -131,15 +135,8 @@
 
 	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
-		for(var/dir in (cardinal + 0))
-			var/turf/thing = get_step(src, dir)
-			var/area/fuck_everything = thing?.loc
-			if(fuck_everything?.expandable && (fuck_everything.type != /area/space))
-				fuck_everything.contents += src
-				return
-
-		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
-		zone.contents += src//get in the ZONE
+		unconnected_zone.contents += src
+		unconnected_zone.propagate_zone(src)
 
 	proc/break_tile(var/force)
 		if (!src.can_break && !force)
@@ -295,7 +292,7 @@
 	var/static/list/space_color = generate_space_color()
 	var/static/image/starlight
 
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
 	dense
@@ -449,6 +446,9 @@ proc/generate_space_color()
 	return
 
 /turf/proc/delay_space_conversion()
+	return
+
+/turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
 		air_master.tiles_to_space |= src
 		return TRUE
@@ -562,6 +562,11 @@ proc/generate_space_color()
 
 #ifdef NON_EUCLIDEAN
 	if(warptarget)
+	#ifdef MIDSUMMER
+		var/mob/ms_mob = M
+		if ((warptarget_modifier == LANDMARK_VM_ONLY_WITCHES) && (ms_mob.job != "Witch"))
+			return
+	#endif
 		if (warptarget_modifier == LANDMARK_VM_WARP_NONE) return
 		if(OldLoc)
 			if(warptarget_modifier == LANDMARK_VM_WARP_NON_ADMINS) //warp away nonadmin
@@ -709,6 +714,7 @@ var/global/in_replace_with = 0
 	//var/rloverlaystate = RL_OverlayState  //we actually want these cleared
 	var/list/rllights = RL_Lights
 
+	var/old_savedpath = src.path_old
 	var/old_opacity = src.opacity
 	var/old_opaque_atom_count = src.opaque_atom_count
 
@@ -767,6 +773,9 @@ var/global/in_replace_with = 0
 				new_turf = new map_settings.walls (src)
 			else
 				new_turf = new /turf/simulated/wall(src)
+		if ("Initial")
+			var/oldpath = old_savedpath
+			new_turf = new oldpath(src)
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
@@ -790,8 +799,9 @@ var/global/in_replace_with = 0
 
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
-	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
+	new_turf.icon_old = icon_old
 	new_turf.name_old = name_old
+	new_turf.path_old = old_savedpath
 
 	if (handle_dir)
 		new_turf.set_dir(old_dir)
@@ -994,6 +1004,25 @@ var/global/in_replace_with = 0
 				W.UpdateIcon()
 	return wall
 
+///Returns a turf to its initial path, if it is a simulated floor or wall. Returns FALSE if requested turf was not one of these initially.
+/turf/proc/ReplaceWithInitial()
+	var/oldpath = src.path_old
+	var/turf/simulated/theturf = ReplaceWith("Initial")
+	if(ispath(oldpath,/turf/simulated/floor) || ispath(oldpath,/turf/simulated/wall))
+		if(ispath(oldpath,/turf/simulated/floor))
+			for (var/obj/lattice/L in src.contents)
+				qdel(L)
+		else if(ispath(oldpath,/turf/simulated/wall))
+			if (map_settings.auto_walls)
+				for (var/turf/simulated/wall/auto/W in orange(1))
+					W.UpdateIcon()
+			if (map_settings.auto_windows)
+				for (var/obj/window/auto/W in orange(1))
+					W.UpdateIcon()
+		return theturf
+	else
+		return FALSE
+
 /turf/proc/is_sanctuary()
   var/area/AR = src.loc
   return AR.sanctuary
@@ -1111,7 +1140,7 @@ TYPEINFO(/turf/simulated)
 	density = 1
 	pathable = 0
 	explosion_resistance = 999999
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
@@ -1405,21 +1434,6 @@ TYPEINFO(/turf/simulated)
 	name = "concrete floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "concrete"
-
-/turf/unsimulated/wall/griffening
-	icon = 'icons/misc/griffening/area_wall.dmi'
-	icon_state = null
-	density = 1
-	opacity = 0
-	name = "wall"
-	desc = "A holographic projector wall."
-
-/turf/unsimulated/floor/griffening
-	icon = 'icons/misc/griffening/area_floor.dmi'
-	icon_state = null
-	opacity = 0
-	name = "floor"
-	desc = "A holographic projector floor."
 
 /turf/unsimulated/null_hole
 	name = "expedition chute"

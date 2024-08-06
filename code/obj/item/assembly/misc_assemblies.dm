@@ -48,7 +48,7 @@ Contains:
 	var/obj/item/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 /obj/item/assembly/time_ignite/New()
 	..()
@@ -284,7 +284,7 @@ Contains:
 	var/obj/item/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
@@ -542,7 +542,7 @@ Contains:
 	var/obj/item/pipebomb/bomb/part5 = null
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 
 /obj/item/assembly/rad_ignite/New()
 	..()
@@ -782,7 +782,7 @@ Contains:
 	var/obj/item/device/analyzer/healthanalyzer/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	item_state = "electronic"
 
 /obj/item/assembly/anal_ignite/New()
@@ -830,7 +830,7 @@ Contains:
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
 	status = 0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()
 	..()
@@ -851,15 +851,30 @@ Contains:
 	..()
 	return
 
-obj/item/assembly/radio_horn/attack_self(mob/user as mob)
+/obj/item/assembly/radio_horn/attack_self(mob/user as mob)
 	src.part1.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 
-obj/item/assembly/radio_horn/receive_signal()
+/obj/item/assembly/radio_horn/receive_signal()
 	var/num_notes = part2.sounds_instrument.len
 	part2.play_note(rand(1, num_notes), user = null)
 	return
+
+/obj/item/assembly/radio_horn/attackby(obj/item/W, mob/user)
+	if (iswrenchingtool(W))
+		var/turf/T = get_turf(src)
+		src.part1.set_loc(T)
+		src.part2.set_loc(T)
+		src.part1.master = null
+		src.part2.master = null
+		src.part1 = null
+		src.part2 = null
+
+		user.u_equip(src)
+		qdel(src)
+		return
+	. = ..()
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
 
@@ -870,7 +885,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/timer/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/rad_time/disposing()
 	qdel(part1)
@@ -927,7 +942,7 @@ obj/item/assembly/radio_horn/receive_signal()
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/prox_sensor/part2 = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/rad_prox/c_state(n)

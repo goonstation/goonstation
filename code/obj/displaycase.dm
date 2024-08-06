@@ -174,7 +174,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "capgun"
 	force = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/stability = 10
 

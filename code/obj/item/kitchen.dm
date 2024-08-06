@@ -44,7 +44,7 @@ TRAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 10
@@ -154,7 +154,7 @@ TRAYS
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -891,6 +891,8 @@ TRAYS
 	space_left = INFINITY
 	initial_foods = list(/obj/item/reagent_containers/food/snacks/scotch_egg = 6)
 
+TYPEINFO(/obj/item/plate/pizza_box)
+	mat_appearances_to_ignore = "cardboard"
 /obj/item/plate/pizza_box
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
@@ -904,6 +906,7 @@ TRAYS
 	max_space = 6
 	space_left = 6
 	can_headsmash = FALSE
+	default_material = "cardboard"
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -1017,6 +1020,16 @@ TRAYS
 		toggle_box(user)
 		return TRUE
 
+	attackby(obj/item/W, mob/user, params)
+		if (iswrenchingtool(W) && !length(src.contents))
+			var/obj/item/sheet/sheets = new(src.loc)
+			sheets.amount = 2
+			sheets.setMaterial(src.material)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			qdel(src)
+			return
+		. = ..()
+
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"
 	desc = "It's a big flat tray for serving food upon."
@@ -1100,7 +1113,6 @@ TRAYS
 	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "coolingrack"
-	flags = FPRINT | TABLEPASS
 	force = 3
 	throwforce = 5
 	throw_speed = 3

@@ -54,6 +54,7 @@ labelMappings:
     "[CONTEST]": e-contest
     "[ADMIN]": a-admin
     "[AI]": a-ai
+    "[API]": a-api
     "[ATMOS]": a-atmospherics
     "[ATMOSPHERICS]": a-atmospherics
     "[CATERING]": a-catering

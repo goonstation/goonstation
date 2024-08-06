@@ -565,13 +565,13 @@
 	A.created_icon_state = src.base_icon_state
 	A.set_dir(src.dir)
 	if (src.status & BROKEN)
-		boutput(user, SPAN_NOTICE("The broken glass falls out."))
+		user?.show_text("The broken glass falls out.", "blue")
 		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 		G.set_loc( src.loc )
 		A.state = 3
 		A.icon_state = "3"
 	else
-		boutput(user, SPAN_NOTICE("You disconnect the monitor."))
+		user?.show_text("You disconnect the monitor.", "blue")
 		A.state = 4
 		A.icon_state = "4"
 
@@ -631,6 +631,17 @@
 	if (prob(power * 2.5))
 		set_broken()
 		src.set_density(0)
+
+/obj/machinery/computer3/bullet_act(obj/projectile/P)
+	. = ..()
+	switch (P.proj_data.damage_type)
+		if (D_KINETIC, D_PIERCING, D_SLASHING)
+			if (prob(P.power))
+				if (status & BROKEN)
+					playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 50, TRUE)
+					src.unscrew_monitor()
+				else
+					src.set_broken()
 
 /obj/machinery/computer3/disposing()
 	if (hd)
@@ -842,7 +853,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	desc = "A common item to find in an office.  Is that an antenna?"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4

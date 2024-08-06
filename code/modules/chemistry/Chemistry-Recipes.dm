@@ -1022,10 +1022,10 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
-	cocktail_kalimoxto
-		name = "Kalimoxto"
-		id = "kalimoxto"
-		result = "kalimoxto"
+	cocktail_kalimotxo
+		name = "Kalimotxo"
+		id = "kalimotxo"
+		result = "kalimotxo"
 		required_reagents = list("cola" = 1, "wine" = 1)
 		result_amount = 2
 		mix_phrase = "The drink mixes together in an oddly Basque way."
@@ -2383,7 +2383,7 @@
 		name = "Graphene"
 		id = "graphene"
 		result = "graphene"
-		required_reagents = list("fuel" = 4, "iron" = 1, "silicon_dioxide" = 1)
+		required_reagents = list("fuel" = 4, "iron" = 1, "silicon" = 1) //silicon dioxide -> silicon because this whole chain is too damn long
 		min_temperature = T0C + 150
 		result_amount = 2
 		reaction_speed = 1

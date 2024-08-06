@@ -281,6 +281,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 10,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 10,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 5,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 5,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -297,6 +298,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 15,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -373,6 +375,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 15,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -460,6 +463,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -476,6 +480,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -638,7 +643,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 //ainsley
 /datum/fishing_spot/nuclear_core_decal
-	fishing_atom_type = /obj/decal/fakeobjects/core
+	fishing_atom_type = /obj/fakeobject/core
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
 	/obj/item/reagent_containers/food/fish/bass = 20,\
@@ -682,6 +687,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 20,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -773,6 +779,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/damselfish = 10,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 10,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 5,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 10,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 5,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -802,6 +809,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/damselfish = 30,\
 	/obj/item/reagent_containers/food/fish/green_chromis = 20,\
 	/obj/item/reagent_containers/food/fish/cardinalfish = 15,\
+	/obj/item/reagent_containers/food/fish/pufferfish = 15,\
 	/obj/item/reagent_containers/food/fish/royal_gramma = 10,\
 	/obj/item/reagent_containers/food/fish/bc_angelfish = 10,\
 	/obj/item/reagent_containers/food/fish/blue_tang = 15,\
@@ -908,3 +916,14 @@ datum/fishing_spot/golden_toilet
 	/obj/item/parts/human_parts/arm/mutant/monkey/right = 5,\
 	/obj/item/parts/human_parts/leg/mutant/monkey/left = 5,\
 	/obj/item/parts/human_parts/leg/mutant/monkey/right =5)
+
+//trench hole
+/datum/fishing_spot/deephole
+	fishing_atom_type = /turf/space/fluid/warp_z5
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 10,
+	/obj/item/seashell = 10,
+	/obj/item/clothing/shoes/flippers = 5, //like fishing up a boot (cartoonstyle)
+	/mob/living/critter/small_animal/pikaia = 5,
+	/mob/living/critter/small_animal/trilobite = 5,
+	/mob/living/critter/small_animal/hallucigenia = 5)

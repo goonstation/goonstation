@@ -357,6 +357,7 @@ var/list/removed_jobs = list(
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
+							return TRUE
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
@@ -442,9 +443,9 @@ var/list/removed_jobs = list(
 					return TRUE
 
 			if ("update-nameMiddle")
-				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
+				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle, allowEmpty = TRUE)
 				if (isnull(new_name))
-					return
+					new_name = ""
 				new_name = trimtext(new_name)
 				for (var/c in bad_name_characters)
 					new_name = replacetext(new_name, c, "")
@@ -452,8 +453,7 @@ var/list/removed_jobs = list(
 					tgui_alert(usr, "Your middle name is too long. It must be no more than [NAME_CHAR_MAX] characters long.", "Name too long")
 					return
 				else if (is_blank_string(new_name) && new_name != "")
-					tgui_alert(usr, "Your middle name cannot contain only spaces.", "Blank name")
-					return
+					new_name = ""
 				new_name = capitalize(new_name)
 				src.name_middle = new_name // don't need to check if there is one in case someone wants no middle name I guess
 				src.profile_modified = TRUE
@@ -558,10 +558,10 @@ var/list/removed_jobs = list(
 			if ("update-flavorText")
 				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", html_decode(src.flavor_text), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.flavor_text = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -569,10 +569,10 @@ var/list/removed_jobs = list(
 			if ("update-securityNote")
 				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", html_decode(src.security_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.security_note = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -580,10 +580,10 @@ var/list/removed_jobs = list(
 			if ("update-medicalNote")
 				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", html_decode(src.medical_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.medical_note = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -591,10 +591,10 @@ var/list/removed_jobs = list(
 			if ("update-syndintNote")
 				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", html_decode(src.synd_int_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
-					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [LONG_FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
+					new_text = html_encode(new_text)
 					src.synd_int_note = new_text || null
 					src.profile_modified = TRUE
 					return TRUE
@@ -822,7 +822,7 @@ var/list/removed_jobs = list(
 					src.font_size = initial(src.font_size)
 					return TRUE
 				else
-					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 100, 1)
+					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
 					if (!isnull(new_font_size))
 						src.font_size = new_font_size
 						src.profile_modified = TRUE
@@ -1378,7 +1378,7 @@ var/list/removed_jobs = list(
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				if (!J_Fav.has_rounds_needed(user.client.player))
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[J_Fav.rounds_needed_to_play].</b>"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1569,7 +1569,7 @@ var/list/removed_jobs = list(
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[temp_job.rounds_needed_to_play].</b>"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null
@@ -1840,12 +1840,13 @@ var/list/removed_jobs = list(
 			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
-	proc/apply_post_new_stuff(mob/living/character)
+	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
 		for (var/slot_id in src.custom_parts)
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
+			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 

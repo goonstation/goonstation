@@ -14,12 +14,6 @@ import { PingIndicator } from './ping';
 import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props, context) => {
-  // IE8-10: Needs special treatment due to missing Flex support
-  if (Byond.IS_LTE_IE10) {
-    return (
-      <HoboPanel />
-    );
-  }
   const audio = useAudio(context);
   const settings = useSettings(context);
   const game = useGame(context);
@@ -107,32 +101,6 @@ export const Panel = (props, context) => {
           </Section>
         </Stack.Item>
       </Stack>
-    </Pane>
-  );
-};
-
-const HoboPanel = (props, context) => {
-  const settings = useSettings(context);
-  return (
-    <Pane theme={settings.theme}>
-      <Pane.Content scrollable>
-        <Button
-          style={{
-            position: 'fixed',
-            top: '1em',
-            right: '2em',
-            'z-index': 1000,
-          }}
-          selected={settings.visible}
-          onClick={() => settings.toggle()}>
-          Settings
-        </Button>
-        {settings.visible && (
-          <SettingsPanel />
-        ) || (
-          <ChatPanel lineHeight={settings.lineHeight} />
-        )}
-      </Pane.Content>
     </Pane>
   );
 };

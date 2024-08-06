@@ -59,14 +59,26 @@
 		if (mapSwitcher)
 			stats["Map Vote Spacer"] = -1
 			if (mapSwitcher.current)
-				saveStat("Map:", mapSwitcher.current)
+				var/currentMap = mapSwitcher.current
+
+				if (mapSwitcher.locked && !mapSwitcher.next && isadmin(src))
+					currentMap += " (Compiling)"
+
+				saveStat("Map:", currentMap)
 
 			stats["Next Map:"] = 0
 			if (mapSwitcher.next)
 				var/nextMap = mapSwitcher.next
 
+				//if the players voted for the next map, show them compile status, otherwise limit that info to admins
+				if (mapSwitcher.locked && (mapSwitcher.nextMapIsVotedFor || isadmin(src)))
+					nextMap += " (Compiling)"
+
 				if (mapSwitcher.nextMapIsVotedFor && isadmin(src))
 					nextMap += " (Player Voted)"
+
+				if (mapSwitcher.queuedVoteCompile && mapSwitcher.voteChosenMap)
+					nextMap += " (Queued: [mapSwitcher.voteChosenMap])"
 
 				saveStat("Next Map:", nextMap)
 

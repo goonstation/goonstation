@@ -348,7 +348,7 @@
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)
 "vz" = (
-/obj/decal/fakeobjects/plantpot,
+/obj/fakeobject/plantpot,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "vO" = (
@@ -507,7 +507,7 @@
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)
 "KL" = (
-/obj/decal/fakeobjects/robot,
+/obj/fakeobject/robot,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/prefab/shooting_range)
@@ -533,7 +533,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/shooting_range)
 "MS" = (
-/obj/decal/fakeobjects/robot,
+/obj/fakeobject/robot,
 /turf/simulated/floor/dojo,
 /area/prefab/shooting_range)
 "Nk" = (
@@ -561,10 +561,10 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/prefab/shooting_range)
 "OV" = (
-/obj/decal/fakeobjects/airmonitor_broken{
+/obj/fakeobject/airmonitor_broken{
 	pixel_y = 28
 	},
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/orangeblack,
 /area/prefab/shooting_range)

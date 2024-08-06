@@ -11,7 +11,7 @@
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	pass_unstable = FALSE // Machines hopefully are stable.
 	var/status = 0
@@ -341,6 +341,10 @@
 /obj/machinery/proc/is_disabled()
 	return src.is_broken() || src.has_no_power()
 
+/// Called when contents are added to the machine so it can do any special things it needs to
+/obj/machinery/proc/on_add_contents(obj/item/I)
+	return
+
 /obj/machinery/sec_lock
 	name = "Security Pad"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -414,6 +418,10 @@
 		A2.machines += src
 		src.power_change()
 
+/// check if a mob is allowed to eject occupants from various machines
+/obj/machinery/proc/can_eject_occupant(mob/user)
+	return !(isintangible(user) || isghostcritter(user) || isghostdrone(user) || !can_act(user))
+
 /datum/action/bar/icon/rotate_machinery
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -446,3 +454,4 @@
 	onEnd()
 		..()
 		src.machine.set_dir(turn(src.machine.dir, -90))
+

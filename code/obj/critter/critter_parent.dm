@@ -14,7 +14,7 @@
 	layer = 5
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
+	flags = CONDUCT | USEDELAY | FLUID_SUBMERGE
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1

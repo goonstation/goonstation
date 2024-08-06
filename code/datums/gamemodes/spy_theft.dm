@@ -123,6 +123,9 @@
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
+			if (!hostpda.uplink.purchase_log[reward.type])
+				hostpda.uplink.purchase_log[reward.type] = 0
+			hostpda.uplink.purchase_log[reward.type]++
 			if (istype(antag_role))
 				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)
@@ -351,7 +354,7 @@
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
-	station_bounties[/obj/item/gun/kinetic/riotgun] = 3
+	station_bounties[/obj/item/gun/kinetic/pumpweapon/riotgun] = 3
 
 
 	station_bounties[/obj/item/kitchen/utensil] = 1
@@ -386,6 +389,7 @@
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
+	station_bounties[/obj/item/clothing/glasses/packetvision] = 2
 
 	#ifdef UNDERWATER_MAP
 	station_bounties[/obj/item/clothing/suit/space/diving/security] = 2
@@ -469,11 +473,12 @@
 
 	big_station_bounties[/obj/machinery/traymachine/morgue] = 1
 	big_station_bounties[/obj/machinery/optable] = 2
-	big_station_bounties[/obj/machinery/clonegrinder] = 1
+	big_station_bounties[/obj/machinery/clonegrinder] = 2
 	big_station_bounties[/obj/machinery/genetics_scanner] = 2
 	big_station_bounties[/obj/machinery/atmospherics/unary/cryo_cell] = 2
 	big_station_bounties[/obj/machinery/computer/cloning] = 2
 	big_station_bounties[/obj/machinery/clonepod] = 2
+	big_station_bounties[/obj/machinery/dialysis] = 2
 
 	big_station_bounties[/obj/machinery/flasher/portable] = 2
 	big_station_bounties[/obj/machinery/recharge_station] = 2

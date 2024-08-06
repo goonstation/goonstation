@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	qdel(src.buildmode)
 	src.buildmode = new(src)
 	src.player.buildmode = src.buildmode
-	src.player.cloudSaves.putData("buildmode", null)
+	src.player.cloudSaves.deleteData("buildmode")
 	src.togglebuildmode()
 
 /client/proc/togglebuildmode()
@@ -432,10 +432,16 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 
 var/image/buildmodeBlink = image('icons/effects/effects.dmi',"empdisable")//guH GUH GURGLE
+var/buildmodeBlinkCounter = 0
+var/buildmodeBlinkTick = 0
 /proc/blink(var/turf/T)
 	if (!T)
 		return
-
+	if(TIME != buildmodeBlinkTick)
+		if(buildmodeBlinkCounter++ > 100) return
+	else
+		buildmodeBlinkTick = TIME
+		buildmodeBlinkCounter = 0
 	SPAWN(0)//WHY DOUBLE SPAWN AND NEW IMAGE EVERY BLINK IT MAKES SOMEPOTATO SAD
 
 		T.overlays += buildmodeBlink

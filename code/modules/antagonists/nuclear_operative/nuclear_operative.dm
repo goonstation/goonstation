@@ -92,7 +92,17 @@
 		if (src.id == ROLE_NUKEOP_COMMANDER)
 			M.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
 		else
-			M.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			//copied from /mob/living/proc/Equip_Rank - try to find an unoccupied chair but not for too long.
+			var/tries = 8
+			var/turf/T
+			do
+				T = pick_landmark(LANDMARK_SYNDICATE)
+			while((locate(/mob) in T) && tries--)
+			M.set_loc(T)
+			//for completeness' sake, make em sit properly
+			var/obj/stool/an_chair = locate() in T
+			if(an_chair)
+				M.set_dir(an_chair.dir)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)

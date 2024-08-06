@@ -9,17 +9,16 @@ var/datum/job_controller/job_controls
 
 	var/loaded_save = 0
 	var/last_client = null
-	var/load_another_ckey = null
 
 	New()
 		..()
-		if (derelict_mode)
+		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode)
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
 			new /datum/job/security/security_officer/derelict {limit = 6; name = "NT-SO Officer";} (),
-			new /datum/job/research/medical_doctor/derelict {limit = 6; name = "Salvage Medic";} (),
-			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
+			new /datum/job/research/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
+			new /datum/job/engineering/engineer/derelict {limit = 10; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
 			new /datum/job/civilian/bartender (),
@@ -57,10 +56,8 @@ var/datum/job_controller/job_controls
 
 	proc/check_user_changed()//Since this is a 'public' window that everyone can get to, make sure we keep the user contained to their own savefile
 		if (last_client != usr.client)
-			src.savefile_unlock(usr)
 			src.last_client = usr.client
 			src.loaded_save = 0
-			src.load_another_ckey = null
 			return 1
 		return 0
 
@@ -212,6 +209,7 @@ var/datum/job_controller/job_controls
 		return fallback_job
 
 	proc/job_creator()
+		src.convert_to_cloudsave(usr.client)
 		src.check_user_changed()
 		var/list/dat = list("<html><body><title>Job Creation</title>")
 		dat += "<b><u>Job Creator</u></b><HR>"
@@ -276,24 +274,21 @@ var/datum/job_controller/job_controls
 
 		if (loaded_save)
 			dat += "<b>Saved Jobs:</b>"
-			if (src.load_another_ckey)
-				dat += "<b> (Showing [src.load_another_ckey]'s jobs)</b>"
 			dat += "<br><small>"
-			var/list/job_names = src.savefile_get_job_names(usr)
+			var/list/job_names = src.savefile_get_job_names(usr.client)
 			for (var/i in 1 to length(job_names))
-				dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i] || i]</a>"
+				if(job_names[i])
+					dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i]]</a>"
+				else
+					dat += " Empty slot ([i])"
 				dat += "&nbsp;"
-				if (!src.load_another_ckey)
-					dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
+				dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
 				dat += "<br>"
 			dat += "</small><br>"
-			if (src.load_another_ckey)
-				dat += "<A href='?src=\ref[src];SaveLoad=1'><b>Load your own jobs</b></A>"
-			else
-				dat += "<A href='?src=\ref[src];LoadDifKey=1'><b>Load another admin's jobs</b></A>"
 		else
 			dat += "<A href='?src=\ref[src];SaveLoad=1'>Save/Load</A>"
 
+		dat += "<br><A href='?src=\ref[src];Import=1'>Import</A> / <A href='?src=\ref[src];Export=1'>Export</A>"
 		dat += "</body></html>"
 
 		usr.Browse(dat.Join(),"window=jobcreator;size=500x650")
@@ -999,29 +994,30 @@ var/datum/job_controller/job_controls
 
 		if(href_list["Save"])
 			if (!src.check_user_changed())
-				src.savefile_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
+				src.cloudsave_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
 				boutput(usr, SPAN_NOTICE("<b>Job saved to Slot [text2num(href_list["Save"])].</b>"))
 			src.job_creator()
 
 		if(href_list["Load"])
 			if (!src.check_user_changed())
-				if (!src.savefile_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
-					alert(usr, "You do not have a job saved in this slot.")
+				if (!src.cloudsave_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
+					alert(usr, "Loading failed.")
 				else
 					boutput(usr, SPAN_NOTICE("<b>Job loaded from Slot [text2num(href_list["Load"])].</b>"))
 			src.job_creator()
 
 		if(href_list["SaveLoad"])
 			src.loaded_save = 1
-			src.load_another_ckey = null
 			src.job_creator()
 
-		if (href_list["LoadDifKey"])
-			var/key = input("Which admin's jobs? (Enter ckey)","Job Creator")
-			src.load_another_ckey = key
-			if (!src.savefile_path_exists(key))
-				src.load_another_ckey = null
-				alert(usr, "Could not find a savefile with that ckey!.")
+		if(href_list["Import"])
+			if(src.savefile_import(usr.client))
+				boutput(usr, SPAN_NOTICE("<b>Job imported from file.</b>"))
+			src.job_creator()
+
+		if(href_list["Export"])
+			src.savefile_export(usr.client)
+			boutput(usr, SPAN_NOTICE("<b>Job exporting.</b>"))
 			src.job_creator()
 
 ///create job datum from job-creator job datum. todo just add a clone method to jobs?
@@ -1069,7 +1065,7 @@ var/datum/job_controller/job_controls
 	logTheThing(LOG_DIARY, usr, "created special job [JOB.name]", "admin")
 	return JOB
 
-///Soft supresses crash on failing to find a job
+///Soft supresses logging on failing to find a job
 /proc/find_job_in_controller_by_string(var/string, var/staple_only = 0, var/soft = FALSE, var/case_sensitive = TRUE)
 	RETURN_TYPE(/datum/job)
 	if (!string || !istext(string))
@@ -1079,9 +1075,6 @@ var/datum/job_controller/job_controls
 	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
-	#endif
-	#ifndef CREATE_PATHOGENS
-	excluded_strings += "Pathologist"
 	#endif
 	if (string in excluded_strings)
 		return null
@@ -1102,7 +1095,7 @@ var/datum/job_controller/job_controls
 		stack_trace("Multiple jobs share the name '[string]'!")
 		return results[1]
 	if (!soft)
-		CRASH("No job found with name '[string]'!")
+		logTheThing(LOG_DEBUG, null, "No job found with name '[string]'!")
 
 /proc/find_job_in_controller_by_path(var/path)
 	if (!path || !ispath(path) || !istype(path,/datum/job/))

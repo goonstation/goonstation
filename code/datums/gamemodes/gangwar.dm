@@ -949,7 +949,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan_gang"
 	item_state = "spraycan"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER
 	var/in_use = FALSE
@@ -1262,7 +1262,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1277,7 +1277,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner)
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(!spraycan.check_tile_unclaimed(target_turf, owner))
@@ -1294,7 +1294,6 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.make_tag(target_turf)
 		spraycan.empty = TRUE
 		spraycan.icon_state = "spraycan_crushed_gang"
-		spraycan.setItemSpecial(/datum/item_special/simple)
 		var/mob/M = owner
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
@@ -1721,7 +1720,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.JobEquipSpawned("Gang Respawn")
 			target.transfer_to(H)
 			target.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
-			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
+			message_admins("[key_name(target)] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
 			boutput(H, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
 			if (src.gang.leader)
@@ -2078,7 +2077,7 @@ proc/broadcast_to_all_gangs(var/message)
 		leaderRole.transfer_to(user.mind)
 		boutput(user, "You're the leader of your gang now!")
 		logTheThing(LOG_ADMIN, user, "claims the role of leader for [src.gang.gang_name].")
-		message_admins("[user.key] has claimed the role of leader for their gang, [src.gang.gang_name].")
+		message_admins("[key_name(user)] has claimed the role of leader for their gang, [src.gang.gang_name].")
 
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
 		var/text = {"The going prices for drugs are as follows:<br>

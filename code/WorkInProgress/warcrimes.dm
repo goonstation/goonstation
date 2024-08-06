@@ -513,15 +513,15 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 
 
-/obj/decal/fakeobjects/thrust
+/obj/fakeobject/thrust
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	name = "ionized exhaust"
 	desc = "Thankfully harmless, to registered employees anyway."
 
-/obj/decal/fakeobjects/thrust/flames
+/obj/fakeobject/thrust/flames
 	icon_state = "engineshit"
-/obj/decal/fakeobjects/thrust/flames2
+/obj/fakeobject/thrust/flames2
 	icon_state = "engineshit2"
 
 /obj/item/paper/tug/invoice

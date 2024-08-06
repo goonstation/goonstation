@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/space_heater)
 	var/cooling_power = -300
 	var/canBeWrenched = TRUE
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	flags = FPRINT | TGUI_INTERACTIVE
+	flags = TGUI_INTERACTIVE
 
 	New()
 		..()

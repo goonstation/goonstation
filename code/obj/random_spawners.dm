@@ -1582,6 +1582,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd,
 						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/giraffehat,
 						/obj/item/clothing/head/mushroomcap/random)
 
 	one
@@ -1875,9 +1876,9 @@
 	/obj/item/gun/kinetic/pistol,
 	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,

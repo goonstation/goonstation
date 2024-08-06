@@ -51,7 +51,6 @@
 			var/datum/job/job = find_job_in_controller_by_string(params["job"])
 			// invoke the job creator through its accursed var edit proc call thing...
 			job_controls.job_creator = job
-			job_controls.savefile_fix(ui.user)
 			job_controls.job_creator()
 
 		if ("job_creator")

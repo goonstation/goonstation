@@ -89,7 +89,7 @@
 		UpdateIcon()
 
 	disposing()
-		new /obj/decal/fakeobjects/nuclear_reactor_destroyed(src.loc)
+		new /obj/fakeobject/nuclear_reactor_destroyed(src.loc)
 		src._light_turf?.remove_medium_light("reactor_light")
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
@@ -683,7 +683,7 @@
 			return
 		. = ..()
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /datum/neutron //this is literally just a tuple

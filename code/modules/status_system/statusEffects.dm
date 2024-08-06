@@ -1511,6 +1511,7 @@
 		name = "Mutiny"
 		desc = "You can sense the aura of revolutionary activity! Your bossy attitude grants you health and stamina bonuses."
 		icon_state = "mutiny"
+		visible = FALSE
 		unique = 1
 		maxDuration = 1 MINUTES
 		effect_quality = STATUS_QUALITY_POSITIVE
@@ -1590,79 +1591,12 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src, optional)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
-	onRemove()
-		. = ..()
-		if(ismob(owner))
-			var/mob/M = owner
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
-
-	patho_oxy_speed
-		id = "patho_oxy_speed"
-		name = "Oxygen Storage"
-		icon_state = "patho_oxy_speed"
-		unique = 1
-		movement_modifier = /datum/movement_modifier/patho_oxygen
-		effect_quality = STATUS_QUALITY_POSITIVE
-		var/oxygenAmount = 100
-		var/mob/living/carbon/human/H
-		var/endCount = 0
-
-		onAdd(optional)
+		onRemove()
 			. = ..()
-			src.oxygenAmount = optional
-			if(iscarbon(owner))
-				H = owner
-			else
-				owner.delStatus(src.id)
-
-		getTooltip()
-			. = "You are tapping your oxygen storage to breathe and move faster. Oxygen Storage at [oxygenAmount]% capacity!"
-
-		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.get_oxygen_deprivation(), oxygenAmount)
-			if(oxy_damage <= 0)											// If no oxy damage for 8 seconds, remove the status
-				endCount += timePassed
-			else
-				endCount = 0
-			if(endCount > 8 SECONDS)
-				owner.delStatus(src.id)
-			if (H.oxyloss)
-				H.take_oxygen_deprivation(-oxy_damage)
-				oxygenAmount -= oxy_damage
-				H.losebreath = 0
-
-	patho_oxy_speed/bad
-		id = "patho_oxy_speed_bad"
-		name = "Oxygen Conversion"
-		icon_state = "patho_oxy_speed_bad"
-		effect_quality = STATUS_QUALITY_NEGATIVE
-		var/efficiency = 1
-
-		onAdd(optional)
-			. = ..()
-			src.efficiency = optional
-			..()
-			if(H)
-				H.show_message(SPAN_ALERT("You feel your body deteriorating as you breathe on."))
-
-		onUpdate(timePassed)
-			var/oxy_damage = min(20, H.get_oxygen_deprivation())
-			if(oxy_damage <= 0)				// If no oxy damage for 8 seconds, remove the status
-				endCount += timePassed
-			else
-				endCount = 0
-			if(endCount > 8 SECONDS)
-				owner.delStatus(src.id)
-			if (H.oxyloss)
-				H.take_oxygen_deprivation(-oxy_damage)
-				H.TakeDamage("chest", oxy_damage/efficiency, 0)
-				H.losebreath = 0
-
-		getTooltip()
-			. = "Your flesh is being converted into oxygen! But you are moving slightly faster."
-
-
+			if(ismob(owner))
+				var/mob/M = owner
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
@@ -2291,9 +2225,8 @@
 
 	onUpdate(timePassed)
 		. = ..()
-		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_CLEAN)
+		if (H?.sims?.getValue("Hygiene") > SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.delStatus("filthy")
-
 
 	onRemove()
 		. = ..()
@@ -2894,6 +2827,8 @@
 	onUpdate(timePassed)
 		src.passed += timePassed
 		if (ON_COOLDOWN(src.owner, "active_ailments_tick", LIFE_PROCESS_TICK_SPACING))
+			return
+		if (istype(src.owner.loc, /obj/cryotron))
 			return
 		var/mult = max(LIFE_PROCESS_TICK_SPACING, src.passed) / LIFE_PROCESS_TICK_SPACING
 		src.passed = 0

@@ -200,16 +200,18 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 	//Now the seed it created and we can release it upon the world
 	return child
 
-proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype)
+proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype, var/force_new_datum = FALSE)
 	// this proc returns a copy of a planttype
 	// for basic plants, it just returns the planttype, since they are singletons.
 	// for spliced plants, since they run on instanced copies, it creates a new instance inside applied_object.
-	if (parent_planttype.hybrid)
+	// If we want to generate a new plant datum out one of our singletons, because we want to modify it (e.g. weed), set force_new_datum to TRUE
+	if (parent_planttype.hybrid || force_new_datum)
 		var/plantType = parent_planttype.type
 		var/datum/plant/hybrid = new plantType(applied_object)
 		for (var/transfered_variables in parent_planttype.vars)
 			if (issaved(parent_planttype.vars[transfered_variables]) && transfered_variables != "holder")
 				hybrid.vars[transfered_variables] = parent_planttype.vars[transfered_variables]
+		hybrid.hybrid = TRUE // That's cursed, but i'm here for it
 		return hybrid
 	else
 		return parent_planttype

@@ -8,7 +8,7 @@
 	var/cheesy = 0
 	var/image/sauce_image = null
 	var/image/cheese_image = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	w_class = W_CLASS_NORMAL
 

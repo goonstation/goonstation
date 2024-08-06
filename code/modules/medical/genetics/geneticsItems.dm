@@ -155,7 +155,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	hide_attack = ATTACK_FULLY_HIDDEN
@@ -254,6 +254,8 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 			src.bioHolder.CopyOther(target.bioHolder)
 			stored_name = target.real_name
 			randomize_look(target)
+			target.bioHolder.Uid = target.bioHolder.CreateUid() // forensics stuff, new blood dna and fingerprints
+			target.bioHolder.build_fingerprints()
 			UpdateIcon()
 
 	proc/paste_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)

@@ -147,7 +147,7 @@ TYPEINFO(/obj/item/gun/energy)
 	slowdown_time = 5
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	w_class = W_CLASS_BULKY
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 
 	New()
 		set_current_projectile(new/datum/projectile/heavyion)
@@ -543,7 +543,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
-	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -1300,7 +1300,16 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
-		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
+		projectiles = list(
+			"detain" = current_projectile,
+			"execute" = new/datum/projectile/laser/blaster/lawbringer,
+			"smokeshot" = new/datum/projectile/bullet/smoke,
+			"knockout" = new/datum/projectile/bullet/tranq_dart/law_giver,
+			"hotshot" = new/datum/projectile/bullet/flare,
+			"assault" = new/datum/projectile/laser/asslaser,
+			"clownshot" = new/datum/projectile/bullet/clownshot,
+			"pulse" = new/datum/projectile/energy_bolt/pulse
+		)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
 		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
@@ -1375,7 +1384,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			src.change_mode(M, text)
 		else		//if you're not the owner and try to change it, then fuck you
 			switch(text)
-				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
+				if ("detain","execute","knockout","hotshot","incendiary","bigshot","assault","highpower","clownshot","clown", "pulse", "punch")
 					random_burn_damage(M, 50)
 					M.changeStatus("knockdown", 4 SECONDS)
 					elecflash(src,power=2)
@@ -1393,13 +1402,13 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/detain.ogg', 50)
 				src.toggle_recoil(FALSE)
-			if ("execute", "exterminate")
+			if ("execute", "exterminate", "cluwneshot") //heh
 				set_current_projectile(projectiles["execute"])
 				current_projectile.cost = 30
 				item_state = "lawg-execute"
 				if (sound)
-					playsound(M, 'sound/vox/exterminate.ogg', 50)
-				src.toggle_recoil(TRUE)
+					playsound(M, "sound/vox/[text == "cluwneshot" ? "cluwne" : "exterminate"].ogg", 50)
+				src.toggle_recoil(FALSE)
 			if ("smokeshot","fog")
 				set_current_projectile(projectiles["smokeshot"])
 				current_projectile.cost = 50
@@ -1421,15 +1430,15 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				if (sound)
 					playsound(M, 'sound/vox/hot.ogg', 50)
 				src.toggle_recoil(TRUE)
-			if ("bigshot","highexplosive","he")
-				set_current_projectile(projectiles["bigshot"])
+			if ("assault","highpower", "bigshot")
+				set_current_projectile(projectiles["assault"])
 				current_projectile.cost = 170
 				item_state = "lawg-bigshot"
 				if (sound)
 					playsound(M, 'sound/vox/high.ogg', 50)
-					SPAWN(0.4 SECONDS)
-						playsound(M, 'sound/vox/explosive.ogg', 50)
-				src.toggle_recoil(TRUE)
+					SPAWN(0.6 SECONDS)
+						playsound(M, 'sound/vox/power.ogg', 50)
+				src.toggle_recoil(FALSE)
 			if ("clownshot","clown")
 				set_current_projectile(projectiles["clownshot"])
 				item_state = "lawg-clownshot"
@@ -1493,9 +1502,9 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/bullet/revolver_38/lb)			//execute - cyan
+			else if (current_projectile.type == /datum/projectile/laser/blaster/lawbringer)			//execute - cyan
 				indicator_display.color = "#00FFFF"
-				muzzle_flash = "muzzle_flash"
+				muzzle_flash = "muzzle_flash_bluezap"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
 				indicator_display.color = "#0000FF"
 				muzzle_flash = "muzzle_flash"
@@ -1553,6 +1562,11 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 			if (current_projectile.type == /datum/projectile/bullet/flare)
 				shoot_fire_hotspots(target, start, user)
+			else if (current_projectile.type == /datum/projectile/laser/asslaser)
+				for (var/mob/living/mob in viewers(1, user))
+					mob.flash(1.5 SECONDS)
+				user.changeStatus("disorient", 2 SECONDS)
+				playsound(get_turf(src), 'sound/weapons/ACgun1.ogg', 50, pitch = 1.2)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -1680,7 +1694,7 @@ TYPEINFO(/obj/item/gun/energy/optio1)
 				"electrum" = 25)
 /obj/item/gun/energy/optio1
 	name = "\improper Optio I"
-	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
+	desc = "It's a laser gun? Or a handgun? Yeah, you're pretty sure it's a handgun."
 	w_class = W_CLASS_SMALL
 	icon_state = "optio_1"
 	item_state = "protopistol"
@@ -1771,7 +1785,7 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 	icon_state = "cornicen_close"
 	item_state = "ntgun2"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL		//for clarity
 	two_handed = TRUE
@@ -1835,7 +1849,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	recoil_strength = 20
 
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0

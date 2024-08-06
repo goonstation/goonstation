@@ -88,23 +88,10 @@ TYPEINFO(/obj/player_piano)
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently."))
 
 		else if (isscrewingtool(W)) //unanchoring piano
-			if (anchored)
-				user.visible_message("[user] starts loosening the piano's castors...", "You start loosening the piano's castors...")
-				if (!do_after(user, 3 SECONDS) || anchored != 1)
-					return
-				playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
-				src.anchored = UNANCHORED
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
-				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
-				return
-			else
-				user.visible_message("[user] starts tightening the piano's castors...", "You start tightening the piano's castors...")
-				if (!do_after(user, 3 SECONDS) || anchored != 0)
-					return
-				playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
-				src.anchored = ANCHORED
-				user.visible_message("[user] tightens the piano's castors!", "You tighten the piano's castors!")
-				return
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
+			user.show_text("You begin to [src.anchored ? "loosen" : "tighten"] the piano's castors.", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(toggle_castors), list(user), W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			return
 
 		else if (ispryingtool(W)) //prying off panel
 			if (is_busy)
@@ -157,6 +144,12 @@ TYPEINFO(/obj/player_piano)
 			reset_piano()
 		else
 			..()
+
+	proc/toggle_castors(mob/user)
+		user.show_text("You [src.anchored ? "loosen" : "secure"] the piano's castors.", "blue")
+		if (src.anchored)
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		src.anchored = !src.anchored
 
 	attack_hand(var/mob/user)
 		if (is_busy || is_stored)

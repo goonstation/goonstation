@@ -1007,7 +1007,7 @@
 	},
 /area/shuttle/arrival/station)
 "MD" = (
-/obj/machinery/vending/cola,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "MN" = (

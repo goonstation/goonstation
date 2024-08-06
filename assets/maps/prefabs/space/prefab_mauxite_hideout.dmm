@@ -146,7 +146,7 @@
 /mob/living/critter/fermid{
 	dir = 8
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/raw_material/gemstone,
 /obj/item/raw_material/uqill{
 	pixel_y = 5;

@@ -347,8 +347,7 @@
 /obj/item/cocktail_stuff
 	name = "cocktail doodad"
 	desc = "Some kinda li'l thing to put in a cocktail. How are you seeing this?"
-	icon = 'icons/obj/foodNdrink/drinks.dmi'
-	flags = FPRINT | TABLEPASS
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
 	w_class = W_CLASS_TINY
 	rand_pos = 1
 
@@ -385,7 +384,7 @@
 	desc = "A straw, for drinking from."
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	icon_state = "straw"
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	w_class = W_CLASS_TINY
 	var/cooldown = 1 SECOND
 	var/slurp_size = 5

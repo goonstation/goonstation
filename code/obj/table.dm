@@ -630,6 +630,19 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 
 	auto
 		auto = TRUE
+
+TYPEINFO(/obj/table/sleek)
+TYPEINFO_NEW(/obj/table/sleek)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/sleek/auto)
+/obj/table/sleek
+	name = "sleek metal table"
+	desc = "A table with a reflective dark surface."
+	icon = 'icons/obj/furniture/table_sleek.dmi'
+	parts_type = /obj/item/furniture_parts/table/sleek
+
+	auto
+		auto = TRUE
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */

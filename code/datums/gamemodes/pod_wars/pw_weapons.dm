@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
+#if defined(MAP_OVERRIDE_POD_WARS)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (team_num)
@@ -41,6 +42,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 					return
 			else
 				return ..(target, user, second_shot)
+#endif
 
 	disposing()
 		indicator_display = null
@@ -124,7 +126,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 
 /obj/item/gun/energy/blaster_pod_wars/shotgun
-	name = "blaster smg"
+	name = "blaster shotgun"
 	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
 	icon_state = "pw_shotgun"
 	item_state = "pw_shotgun"
@@ -201,7 +203,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	burn_type = 1
 	stamina_damage = 25

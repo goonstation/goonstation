@@ -30,7 +30,7 @@ A Flamethrower in various states of assembly
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = null
 	force = 3
 	throwforce = 10
@@ -175,7 +175,7 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 
-/obj/item/gun/flamethrower/return_air()
+/obj/item/gun/flamethrower/return_air(direct = FALSE)
 	return src.gastank?.return_air()
 
 /obj/item/gun/flamethrower/assembled
@@ -183,7 +183,7 @@ A Flamethrower in various states of assembly
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 3
 	throwforce = 10
@@ -204,7 +204,7 @@ A Flamethrower in various states of assembly
 	icon_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
-	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBACK
 	var/obj/item/gun/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
@@ -403,7 +403,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	var/obj/item/weldingtool/welder = null
 	var/obj/item/rods/rod = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
@@ -424,7 +424,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	var/obj/item/rods/rod = null
 	var/obj/item/device/igniter/igniter = null
 	status = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 3
 	throwforce = 5
 	throw_speed = 1
