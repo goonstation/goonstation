@@ -222,14 +222,16 @@ var/datum/geneticsResearchManager/genResearch = new()
 // TIER ONE
 // researchTime = 600 is one minute, keep that in mind
 
-/datum/geneticsResearchEntry/rademitter
-	name = "Radiation Emitters"
-	desc = {"Installs Radiation Emitters in the scanner.<br>
-	This allows you to reroll the pool of potential mutations of a person.<br>
-	Obviously, this will cause severe radiation poisoning that will have to be treated."}
-	researchTime = 900
+/datum/geneticsResearchEntry/rad_dampers
+	name = "Radiation Dampeners"
+	desc = "Reduces the amount of harmful radiation caused by Radiation Emitters."
+	researchTime = 1800
 	researchCost = 80
 	tier = 1
+
+	onFinish()
+		genResearch.emitter_radiation -= 45
+		..()
 
 /datum/geneticsResearchEntry/checker
 	name = "Gene Sequence Checker"
@@ -352,26 +354,13 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 2
 	requiredResearch = list(/datum/geneticsResearchEntry/checker)
 
-
-/datum/geneticsResearchEntry/rad_dampers
-	name = "Radiation Dampeners"
-	desc = "Reduces the amount of harmful radiation caused by Radiation Emitters."
-	researchTime = 1800
-	researchCost = 80
-	tier = 2
-	requiredResearch = list(/datum/geneticsResearchEntry/rademitter)
-
-	onFinish()
-		genResearch.emitter_radiation -= 45
-		..()
-
 /datum/geneticsResearchEntry/rad_coolant
 	name = "Emitter Coolant System"
 	desc = "Reduces the amount of time required for Radiation Emitters to cool down."
 	researchTime = 1800
 	researchCost = 120
 	tier = 2
-	requiredResearch = list(/datum/geneticsResearchEntry/rademitter)
+	requiredResearch = list(/datum/geneticsResearchEntry/rad_dampers)
 
 /datum/geneticsResearchEntry/gene_booth_speedup
 	name = "Gene Booth Injection Speedup"

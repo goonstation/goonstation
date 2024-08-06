@@ -138,7 +138,7 @@
 		if("emitter")
 			if(!iscarbon(subject))
 				return 0
-			if(genResearch.isResearched(/datum/geneticsResearchEntry/rademitter) && world.time >= src.equipment[GENETICS_EMITTERS])
+			if(world.time >= src.equipment[GENETICS_EMITTERS])
 				return 1
 		if("precision_emitter")
 			if(!iscarbon(subject) || !E || !GBE || GBE.research_level < EFFECT_RESEARCH_DONE)
@@ -1058,16 +1058,18 @@
 		"label" = "Injectors",
 		"cooldown" = src.equipment[GENETICS_INJECTORS] - world.time,
 	))
+
+	.["equipmentCooldown"] += list(list(
+		"label" = "Emitter",
+		"cooldown" = src.equipment[GENETICS_EMITTERS] - world.time,
+	))
+
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/checker))
 		.["equipmentCooldown"] += list(list(
 			"label" = "Analyzer",
 			"cooldown" = src.equipment[GENETICS_ANALYZER] - world.time,
 		))
-	if (genResearch.isResearched(/datum/geneticsResearchEntry/rademitter))
-		.["equipmentCooldown"] += list(list(
-			"label" = "Emitter",
-			"cooldown" = src.equipment[GENETICS_EMITTERS] - world.time,
-		))
+
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer))
 		.["equipmentCooldown"] += list(list(
 			"label" = "Reclaimer",
