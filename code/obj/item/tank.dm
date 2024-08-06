@@ -9,6 +9,26 @@ Contains:
 -Plasma Tank
 */
 
+#define TANK_NOT_CUT_OPEN 0 //! Tank has not been cut open at any point.
+#define TANK_CUT_OPEN 1 //! Tank is currently cut open, and has a gaping hole in it.
+#define TANK_WAS_CUT_OPEN 2 //! Tank was at some point cut open, but is closed now.
+
+// Define some custom behavior to prevent access when the tank is closed
+/datum/storage/no_hud/tank
+	stealthy_storage = TRUE // You would not easily be able to tell that there's things in here, *especially* if it's welded shut
+
+	add_contents(obj/item/I, mob/user, visible)
+		var/obj/item/tank/tank = src.linked_item
+		if (!tank.blowingthefuckup && tank.get_tank_closed())
+			return
+		. = ..()
+
+	transfer_stored_item(obj/item/I, atom/location, add_to_storage, mob/user)
+		var/obj/item/tank/tank = src.linked_item
+		if (!tank.blowingthefuckup && tank.get_tank_closed())
+			return
+		. = ..()
+
 /obj/item/tank
 	name = "tank"
 	desc = "A portable tank for holding pressurized gas. It can be worn on the back, or hooked up to a compatible receptacle."
@@ -42,11 +62,21 @@ Contains:
 	var/compatible_with_TTV = TRUE
 	/// Tank's previous pressure. Used for tanks that are going to explode
 	var/previous_pressure = null
+	/// Whether or not it has a hole in it from being welded open.
+	var/cut_status = TANK_NOT_CUT_OPEN
+	/// The initial volume of the air in this tank.
+	var/initial_volume = 70 LITERS
+	/// The arbitrary size descriptor for this tank. Corresponds with the tank_open_[key] formatting in tank.dmi for open overlays
+	var/tank_size = "large"
+	/// Allow special handling for flinging items out while blowing the fuck up (otherwise it would remain inside a closed tank + runtime for null tank)
+	var/blowingthefuckup = FALSE
+
+	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to open the tank, and <b>grab intent</b> to insert and remove suitable items when open.")
 
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.volume = 70 //liters
+		src.air_contents.volume = src.initial_volume
 		src.air_contents.temperature = T20C
 		processing_items |= src
 		src.create_inventory_counter()
@@ -86,6 +116,39 @@ Contains:
 		air_contents.merge(giver)
 		check_status()
 		return TRUE
+
+	update_icon()
+		switch(src.cut_status)
+			if (TANK_NOT_CUT_OPEN)
+				// achievement unlocked: how did we get here?
+				src.ClearAllOverlays(TRUE)
+			if (TANK_CUT_OPEN)
+				src.AddOverlays(image(src.icon, icon_state="tank_open_[src.tank_size]"), "tank_open_[src.tank_size]")
+			if (TANK_WAS_CUT_OPEN)
+				src.ClearAllOverlays(TRUE)
+				// TODO - replace the nothing with shoddy welding job devart
+				// something like
+				// src.AddOverlays(image(src.icon, icon_state="tank_welded_shut_[src.tank_size]"))
+		..()
+
+	/// Get the sum of w_classes inside the tank
+	proc/get_internal_weight()
+		if (isnull(src.storage))
+			return 0 // no storage, no items
+		return src.storage.get_total_weight()
+
+	// Done whenever items are added/removed
+	/// Recalculate the volume of the tank, factoring in the internal weight if applicable.
+	proc/recalculate_volume()
+		var/internal_weight = src.get_internal_weight()
+		// this is absolutely not reflective of the real value of items
+		src.air_contents.volume = src.initial_volume - internal_weight
+
+	proc/get_tank_open()
+		return (src.cut_status == TANK_CUT_OPEN)
+
+	proc/get_tank_closed()
+		return (src.cut_status == TANK_NOT_CUT_OPEN) || (src.cut_status == TANK_WAS_CUT_OPEN)
 
 	proc/using_internal()
 		if (iscarbon(src.loc))
@@ -140,6 +203,26 @@ Contains:
 	process()
 		//Allow for reactions
 		if (air_contents)
+			// Exchange with the open air if the flap is open
+			if (src.get_tank_open())
+				// Ignore if unsimmed
+				var/turf/simulated/T = get_turf(src)
+				if (issimulatedturf(T))
+					// Borrows from transfer valve code
+					var/datum/gas_mixture/temp
+
+					if (!isnull(T) && !isnull(src.air_contents))
+						// Remove *some* of the gas from the tank at a time to 'leak' out
+						temp = src.air_contents.remove_ratio(0.25)
+						// Add the gas removed from the tank *all* into the turf
+						T.air.merge(temp)
+						// Determine what percentage of the turf's air contents should go back into the tank
+						var/transfer_ratio = src.air_contents.volume / (src.air_contents.volume + T.air.volume)
+						// Remove aformentioned amount from the turf, put it back into the temp
+						temp = T.air.remove_ratio(transfer_ratio)
+						// Lastly, put all that air removed from the combined mixture back into the tank.
+						src.air_contents.merge(temp)
+
 			src.previous_pressure = MIXTURE_PRESSURE(air_contents)
 			air_contents.react()
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
@@ -151,6 +234,7 @@ Contains:
 			return FALSE
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
+			src.blowingthefuckup = TRUE
 			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
 			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
 			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
@@ -164,10 +248,11 @@ Contains:
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
 			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
-			var/volume_scale = (air_contents.volume / 70) ** (1/4)
+			var/volume_scale = (air_contents.volume / 70 LITERS) ** (1/4)
 			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
+			src.release_contents(range)
 
 			if(src in bible_contents)
 				var/bible_count = length(by_type[/obj/item/bible])
@@ -211,6 +296,10 @@ Contains:
 		if (extra_desc)
 			extras += extra_desc
 		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
+		if (src.cut_status == TANK_CUT_OPEN)
+			extras += "It appears to have a hole welded open on the side, with a similarly sized sheet flailing about."
+		if (src.cut_status == TANK_WAS_CUT_OPEN)
+			extras += "The terrible welding job on the side suggests this tank was welded open at some point."
 		return extras.Join(" ")
 
 	examine(mob/user)
@@ -253,12 +342,77 @@ Contains:
 			. += "<br>[SPAN_ALERT("It's leaking air!")]"
 
 	attackby(obj/item/W, mob/user)
+		// Deal with adding objects into the tank when it's open. Even breath masks, as it must be on grab intent
+		if (user.a_intent == INTENT_GRAB)
+			// Try to pull an item out at random if the hand is empty, otherwise put the thing in
+			var/obj/item/equipped = user.equipped()
+			if (isnull(equipped))
+				src.retrieve_item(user)
+			else
+				src.try_add_item(equipped, user)
+			return
+
+		// Deal with cutting the tank open/closed
+		if (isweldingtool(W))
+			if(!W:try_weld(user, 1))
+				return
+			if (src.get_tank_closed())
+				src.cut_status = TANK_CUT_OPEN
+				boutput(user, SPAN_NOTICE("You cut open a hole into [src]!"))
+				UpdateIcon()
+			else
+				// Tank is currently open
+				src.cut_status = TANK_WAS_CUT_OPEN
+				boutput(user, SPAN_NOTICE("You weld [src] closed."))
+				UpdateIcon()
+			return
+
 		if (istype(W, /obj/item/clothing/mask/breath))
 			var/obj/item/clothing/mask/breath/B = W
 			boutput(user, SPAN_NOTICE("You hook up [B] to [src]."))
 			B.auto_setup(src, user)
 		else
 			..()
+
+	proc/retrieve_item(mob/user)
+		if (isnull(src.storage))
+			boutput(user, "There is nothing inside of [src] to remove!")
+			return
+		var/list/C = src.storage.get_all_contents()
+		if (length(C) == 0)
+			boutput(user, "There is nothing inside of [src] to remove!")
+			return
+		// Remove the first item
+		var/obj/item/I = C[0]
+		src.storage.transfer_stored_item(I = I, location=get_turf(user.loc), user=user)
+		user.put_in_hand_or_drop(I)
+		src.recalculate_volume()
+
+	/// Try to add an item to the storage. This assumes that it has already been checked that the tank is open.
+	proc/try_add_item(obj/item/I, mob/user)
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud/tank, check_wclass = TRUE, max_wclass = W_CLASS_SMALL, slots = 5)
+		// Only store one at a time, because how the hell are you planning to get 50 mauxite ores in there?
+		// Ignore for tiny items, though. I guess storing your dosh in here is fine
+		if (!src.storage.check_can_hold(I))
+			boutput(user, SPAN_ALERT("The [I] won't fit into \the [src]!"))
+			return
+		if (I.w_class > W_CLASS_TINY && I.amount > 1)
+			boutput(user, SPAN_ALERT("You can only manage to cram one of the [I]\s into \the [src]"))
+			I = I.split_stack(1)
+		src.storage.add_contents(I, user)
+		src.recalculate_volume()
+
+	/// Fling the contents (if any) inside of this around based off how powerful the explosion was.
+	proc/release_contents(range)
+		if (isnull(src.storage))
+			return
+		var/list/C = src.storage.get_contents()
+		if (length(C) == 0)
+			return
+		for (var/obj/item/I as anything in C)
+			src.storage.transfer_stored_item(I, get_turf(src))
+			ThrowRandom(I, floor(range), 2, thrown_from=src)
 
 /obj/item/tank/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -732,3 +886,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			..()
 			src.air_contents.toxins = null
 			return
+
+#undef TANK_NOT_CUT_OPEN
+#undef TANK_CUT_OPEN
+#undef TANK_WAS_CUT_OPEN
