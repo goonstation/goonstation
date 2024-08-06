@@ -1566,6 +1566,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				for (var/mob/living/mob in viewers(1, user))
 					mob.flash(1.5 SECONDS)
 				user.changeStatus("disorient", 2 SECONDS)
+				playsound(get_turf(src), 'sound/weapons/ACgun1.ogg', 50, pitch = 1.2)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)

@@ -1,5 +1,12 @@
 
+(t)tue aug 06 24
+(u)LeahTheTech + Jan.antilles
+(p)20199
+(e)📦|A-Game-Objects
+(*)Nanotrasen Space Law has been completely rewritten and updated to actually be something you should show sec assistants.
 (t)mon aug 05 24
+(u)LeahTheTech
+(+)The lawbringer's blaster mode now has a different sound effect and slightly faster shot speed.
 (u)Valtsu0
 (p)20179
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
