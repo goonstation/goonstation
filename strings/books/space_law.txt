@@ -19,6 +19,6 @@ Keep in touch with your fellow security members over the radio and support one a
 
 <h3>Punishments</h3>
 The variety of creative and awful ways crewmembers will find to break the law is infinite, so the variety of punishments and sentences should be too.<br>
-Standard penalties range from tickets, fines and brig sentences to exile and even execution for more severe crimes.<br>
+Standard penalties range from tickets, fines and brig sentences to exile and even execution for the most severe crimes.<br>
 Brig sentences should not exceed a maximum of 5 minutes jail time and all executions of captured prisoners <b>must</b> be signed off by a head of staff, preferably the <b><span style="color:#a87101;">Captain</span></b>.<br>
 Trials may be held at the discretion of the <b><span style="color:#a87101;">Captain</span></b>, but are not required under normal circumstances.
