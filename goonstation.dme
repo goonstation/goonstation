@@ -796,6 +796,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\floor_goblin\abilities\steal_shoes.dm"
 #include "code\modules\antagonists\gang\gang_leader.dm"
 #include "code\modules\antagonists\gang\gang_member.dm"
+#include "code\modules\antagonists\gang\item_specials.dm"
+#include "code\modules\antagonists\gang\weapons.dm"
 #include "code\modules\antagonists\gang\abilities\_gang_leader_ability_holder.dm"
 #include "code\modules\antagonists\grinch\grinch.dm"
 #include "code\modules\antagonists\grinch\abilities\_grinch_ability_holder.dm"
