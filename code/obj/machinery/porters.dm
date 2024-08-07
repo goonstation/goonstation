@@ -366,6 +366,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		var/req = unlock_timer_req - (world.timeofday - unlock_timer_start)
 		if (req <= 0)
 			locked = 0
+			playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
 			go_out()
 			.= 0
 		.= req
@@ -438,6 +439,10 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
+				if (src.locked)
+					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
+				else
+					playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
 				if (src.occupant)
 					logTheThing(LOG_STATION, user, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 			else
@@ -539,6 +544,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 /obj/machinery/port_a_brig/proc/pry_open()
 	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
 	src.locked = FALSE
+	playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
