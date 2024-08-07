@@ -1597,9 +1597,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
 
+	tranq
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
+
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/blow_dart)
+		set_current_projectile(src.ammo.ammo_type)
 		..()
 
 //0.41

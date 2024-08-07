@@ -732,6 +732,16 @@
 		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
 		color = "yellow"
 
+	ketamine
+		name = "sleep blowdarts"
+		desc = "These darts are loaded with a heavy dose of horse-tranquilizer."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ketamine
+		color = "#00c5e7"
+
+		single //I hate this
+			amount_left = 1
+			max_amount = 1
+
 //0.41
 /obj/item/ammo/bullets/derringer
 	sname = ".41 RF"
