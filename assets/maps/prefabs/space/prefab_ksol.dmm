@@ -249,7 +249,7 @@
 	dir = 8;
 	icon_state = "tracks"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_open";
@@ -420,7 +420,7 @@
 	dir = 4;
 	icon_state = "tracks"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "door_open";
@@ -1038,7 +1038,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cH" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -1049,7 +1049,7 @@
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "cI" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 2;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -1059,7 +1059,7 @@
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "cJ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 6;
 	icon = 'icons/obj/doors/blastdoor.dmi';

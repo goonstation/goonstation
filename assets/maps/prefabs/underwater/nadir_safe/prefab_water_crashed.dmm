@@ -356,7 +356,7 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "bs" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 10;
 	icon = 'icons/obj/doors/blastdoor.dmi';

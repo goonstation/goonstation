@@ -283,7 +283,8 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office";
 	pixel_x = 32;
-	pixel_y = 2
+	pixel_y = 2;
+	dir = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -894,6 +895,7 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/stamp/md,
+/obj/item/mdlicense,
 /turf/simulated/floor/white,
 /area/station/bridge/united_command)
 "adp" = (
@@ -3523,7 +3525,8 @@
 	name = "Brig persistent notice board";
 	persistent_id = "brig";
 	pixel_x = -32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -5206,6 +5209,7 @@
 /obj/machinery/light{
 	layer = 3
 	},
+/obj/item/rddiploma,
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
 "auY" = (
@@ -5831,7 +5835,8 @@
 	name = "Mechanics Workshop persistent notice board";
 	persistent_id = "mechanics";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -10834,7 +10839,8 @@
 	name = "Crew Quarters persistent notice board";
 	persistent_id = "crew quarters";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
@@ -11268,7 +11274,8 @@
 	name = "Botany persistent notice board";
 	persistent_id = "botany";
 	pixel_x = 32;
-	pixel_y = 0
+	pixel_y = 0;
+	dir = 4
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -13652,15 +13659,13 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bie" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -16464,8 +16469,8 @@
 /area/station/maintenance/southwest)
 "jUF" = (
 /obj/machinery/firealarm/north,
-/obj/storage/cart/medcart,
 /obj/item/reagent_containers/syringe/haloperidol,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -18273,6 +18278,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
+"pdS" = (
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 27
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "peD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20520,17 +20531,15 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "vvA" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -20681,11 +20690,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
+/obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "vXs" = (
@@ -81092,7 +81099,7 @@ aug
 auK
 avi
 aBK
-aYD
+pdS
 aYD
 ylz
 aCU

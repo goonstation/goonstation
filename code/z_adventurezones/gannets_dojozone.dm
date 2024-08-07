@@ -552,15 +552,6 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "rake"
 
-/obj/fakeobject/sealed_door
-	name = "laboratory door"
-	desc = "It appears to be sealed."
-	icon = 'icons/obj/dojo.dmi'
-	icon_state = "sealed_door"
-	density = 1
-	anchored = ANCHORED_ALWAYS
-	opacity = 1
-
 /obj/fakeobject/katana_fake
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
