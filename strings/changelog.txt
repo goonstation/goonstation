@@ -1,5 +1,9 @@
 
 (t)wed aug 07 24
+(u)LeahTheTech and Cogwerks
+(p)20216
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Added a blowgun complete with 8 knockout darts to the traitor and spy-thief purchase lists. It costs 4TC.
 (u)Chasu
 (p)20211
 (e)🆕💅🍝|C-Feature, C-QoL, A-Catering
