@@ -1255,7 +1255,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // sped this up a bit due to mob loop changes
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
-				switch(counter += 1)
+				switch(counter += 1 * mult)
 					if (1 to 5)
 						if (probmult(25)) M.emote("yawn")
 					if (6 to 9)
