@@ -581,6 +581,7 @@ toxic - poisons
 	silentshot = 1
 	casing = null
 	reagent_payload = "curare"
+	implanted = /obj/item/implant/projectile/body_visible/dart
 
 	madness
 		reagent_payload = "madness_toxin"

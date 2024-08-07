@@ -706,12 +706,11 @@
 	throwforce = 0
 
 //0.40
-/obj/item/ammo/bullets/blow_darts
+/obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
 	sname = "blowdart"
 	name = "poison blowdarts"
 	ammo_type = new/datum/projectile/bullet/blow_dart
 	desc = "These darts are loaded with a dangerous paralytic toxin."
-	icon_state = "tranq_clip"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_BLOWDART

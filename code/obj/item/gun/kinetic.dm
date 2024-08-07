@@ -1594,7 +1594,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/blow_darts/single
+	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
 
 	New()
