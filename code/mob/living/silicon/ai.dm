@@ -587,11 +587,12 @@ or don't if it uses a custom topopen overlay
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
-		if(istype(W, /obj/item/clothing/head/butt))
-			var/obj/item/clothing/head/butt/butt = W
-			if(butt.donor == user)
-				user.unlock_medal("Law 1: Don't be an asshat", 1)
-		return
+			return
+	else if (istype(W, /obj/item/clothing/head/butt))
+		var/obj/item/clothing/head/butt/butt = W
+		if (butt.donor == user)
+			user.unlock_medal("Law 1: Don't be an asshat", TRUE)
+			boutput(user, SPAN_ALERT("WORKING!!!!!!!!."))
 
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
