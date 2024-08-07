@@ -2,6 +2,9 @@
 (t)tue aug 06 24
 (u)LeahTheTech
 (+)Engivacs in engineering lockers now spawn with toolboxes loaded.
+(+)Molitz B geodes now release agent B when broken open.
+(+)Mining charges can now be placed on geodes anywhere.
+(+)Broken open geodes can now be destroyed by explosions.
 (u)LeahTheTech + Jan.antilles
 (p)20199
 (e)📦|A-Game-Objects
