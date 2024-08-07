@@ -1,4 +1,9 @@
 
+(t)wed aug 07 24
+(u)Chasu
+(p)20211
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Pizzas can (again) be cut with snipping tools. Knifeless rejoice!
 (t)tue aug 06 24
 (u)LeahTheTech
 (+)Engivacs in engineering lockers now spawn with toolboxes loaded.
