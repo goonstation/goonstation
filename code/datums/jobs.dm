@@ -1012,6 +1012,30 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	wiki_link = "https://wiki.ss13.co/Jobs#Gimmick_Jobs" // fallback for those without their own page
 
+#ifdef I_WANNA_BE_THE_JOB
+/datum/job/special/imcoder
+	name = "IMCODER"
+	// Used for debug testing. No need to define special landmark, this overrides job picks
+	access_string = "Captain"
+
+	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
+	slot_jump = list(/obj/item/clothing/under/rank/assistant)
+	slot_foot = list(/obj/item/clothing/shoes/magnetic)
+	slot_glov = list(/obj/item/clothing/gloves/yellow)
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_head = list(/obj/item/clothing/head/helmet/space/light/engineer)
+	slot_suit = list(/obj/item/clothing/suit/space/light/engineer)
+	slot_back = list(/obj/item/storage/backpack)
+	slot_mask = list(/obj/item/clothing/mask/gas)
+	items_in_backpack = list(
+		/obj/item/rcd/construction/safe/admin_crimes,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/sheet/steel/fullstack,
+		/obj/item/storage/box/cablesbox,
+		/obj/item/tank/oxygen,
+	)
+#endif
+
 /datum/job/special/station_builder
 	// Used for Construction game mode, where you build the station
 	name = "Station Builder"
