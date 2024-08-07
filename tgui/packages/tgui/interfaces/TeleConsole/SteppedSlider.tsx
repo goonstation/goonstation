@@ -50,7 +50,7 @@ export const SteppedSlider = (props: SteppedSliderProps) => {
     onChange(clamp(value + adjust, minValue, maxValue));
   };
   return (
-    <Stack inline width="100%">
+    <Stack width="100%">
       <Stack.Item>
         <Button
           icon="backward-fast"
