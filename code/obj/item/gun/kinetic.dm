@@ -1585,7 +1585,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "blowgun"
-	item_state = "cane-f"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "c_tube"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
 	ammo_cats = list(AMMO_DART_ALL)
