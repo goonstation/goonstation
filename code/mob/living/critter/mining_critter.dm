@@ -45,7 +45,7 @@
 	health_brute = 25
 	health_brute_vuln = 1
 	health_burn = 25
-	health_burn_vuln = 0.1
+	health_burn_vuln = 0.3
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE

@@ -103,9 +103,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
-		boutput(user, SPAN_ALERT("*click* *click*"))
-		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+		if (src.does_click)
+			boutput(user, SPAN_ALERT("*click* *click*"))
+			if (!src.silenced)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -1594,12 +1595,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/blow_darts/single
+	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
+	does_click = FALSE
+
+	tranq
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/blow_dart)
+		set_current_projectile(src.ammo.ammo_type)
 		..()
 
 //0.41

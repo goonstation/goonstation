@@ -128,9 +128,10 @@ TYPEINFO(/obj/item/gun/energy)
 			if(canshoot(user))
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
-			boutput(user, SPAN_ALERT("*click* *click*"))
-			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+			if (src.does_click)
+				boutput(user, SPAN_ALERT("*click* *click*"))
+				if (!src.silenced)
+					playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
@@ -1566,6 +1567,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				for (var/mob/living/mob in viewers(1, user))
 					mob.flash(1.5 SECONDS)
 				user.changeStatus("disorient", 2 SECONDS)
+				playsound(get_turf(src), 'sound/weapons/ACgun1.ogg', 50, pitch = 1.2)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)

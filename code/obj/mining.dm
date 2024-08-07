@@ -2104,7 +2104,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 					if (\
 						(\
 							istype(target, /turf/simulated/wall/auto/asteroid/) ||\
-							istype(target, /obj/geode) && istypes(get_turf(target), list(/turf/space, /turf/simulated/floor/plating/airless, /turf/simulated/floor/airless/plating))\
+							istype(target, /obj/geode)\
 						) && !src.hacked)
 						boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 						user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
