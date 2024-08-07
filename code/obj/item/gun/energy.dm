@@ -128,9 +128,10 @@ TYPEINFO(/obj/item/gun/energy)
 			if(canshoot(user))
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
-			boutput(user, SPAN_ALERT("*click* *click*"))
-			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+			if (src.does_click)
+				boutput(user, SPAN_ALERT("*click* *click*"))
+				if (!src.silenced)
+					playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
