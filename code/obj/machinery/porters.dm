@@ -477,6 +477,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if(src.occupant)
 			src.occupant.set_loc(src.loc)
 			src.occupant.changeStatus("knockdown", 2 SECONDS)
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
 	verb/move_eject()
@@ -532,6 +533,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		for(var/obj/O in src.brig)
 			O.set_loc(src.brig.loc)
 		src.brig.build_icon()
+		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		qdel(G)
 
 /obj/machinery/port_a_brig/proc/pry_open()
