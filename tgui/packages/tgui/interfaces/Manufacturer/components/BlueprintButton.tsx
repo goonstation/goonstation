@@ -16,7 +16,7 @@ import {
 import { round } from 'tgui-core/math';
 
 import { truncate } from '../../../format';
-import { BlueprintButtonStyle, BlueprintMiniButtonStyle, CSS_StyleDisplay } from '../constant';
+import { BlueprintButtonStyle, BlueprintMiniButtonStyle } from '../constant';
 import { ManufacturableData, RequirementData, ResourceData } from '../type';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
@@ -147,11 +147,8 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
     content_info = blueprintData?.item_descriptions?.[0] ?? '';
   }
   // For some reason, formatting errors show unless done as a separate var
-  const style = {align: CSS_StyleDisplay}
   return (
-    <Stack
-      style = {style}
-    >
+    <Stack style={{ display: BlueprintButtonStyle.Display }}>
       <Stack.Item
         ml={BlueprintButtonStyle.MarginX}
         my={BlueprintButtonStyle.MarginY}
