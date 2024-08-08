@@ -34,7 +34,6 @@ TYPEINFO(/obj/machinery/shipalert)
 /obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
-
 	src.add_fingerprint(user)
 
 	switch (usageState)
@@ -128,7 +127,12 @@ TYPEINFO(/obj/machinery/shipalert)
 #ifdef MAP_OVERRIDE_MANTA
 		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
 #else //frick manta, no reason for you
-		var/reason = tgui_input_text(user, "Please describe the nature of the threat:", "Alert", max_length = src.max_msg_length)
+		var/reason
+		// no flockdrones, critters, etc
+		if(!ishuman(user))
+			reason = "Unknown"
+		else
+			reason = tgui_input_text(user, "Please describe the nature of the threat:", "Alert", max_length = src.max_msg_length)
 		if (!length(reason))
 			src.working = FALSE
 			return FALSE

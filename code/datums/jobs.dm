@@ -2656,7 +2656,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	slot_lhan = list(/obj/item/storage/briefcase/instruments)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Musician"
 
