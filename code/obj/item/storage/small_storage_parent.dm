@@ -40,9 +40,39 @@
 	proc/make_my_stuff()
 		return
 
-	combust_ended()
+	combust()
+		..()
+
+		src.visible_message(SPAN_ALERT("The things inside <B>[src]</B> start burning up!"))
 		for (var/obj/item/I as anything in src.storage.get_contents())
-			src.storage.transfer_stored_item(I, get_turf(src))
+			I.temperature_expose(null, src.burn_output)
+			src.visible_message(SPAN_ALERT("<B>[I]</B> heats up!"))
+
+	process_burning()
+		src.visible_message(SPAN_ALERT("The things inside <B>[src]</B> continue to burn up!"))
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			/*
+			if (I.reagents)
+				logTheThing(LOG_DEBUG, src, "([I]) Heating the reagents by [src.burn_output]")
+				I.reagents.temperature_reagents(src.burn_output)
+				src.visible_message(SPAN_ALERT("The reagents inside <B>[I]</B> continue to heat up!"))
+			*/
+			I.temperature_expose(null, src.burn_output)
+			src.visible_message(SPAN_ALERT("<B>[I]</B> continues to heat up!"))
+
+		. = ..()
+
+	attack_hand(mob/user)
+		boutput(user, SPAN_NOTICE("hello im about to log"))
+		. = ..()
+
+	combust_ended()
+		if (src.health <= 0) // okay lets make sure it actually fully burned and not just got extinguished
+			logTheThing(LOG_DEBUG, src, "Finished burning and did fully burn")
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, get_turf(src))
+		else
+			src.visible_message(SPAN_ALERT("The <B>[src]</B> is extinguished!"))
 		. = ..()
 
 /obj/item/storage/box
