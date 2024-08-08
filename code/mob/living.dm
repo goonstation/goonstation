@@ -1183,6 +1183,10 @@
 			popup_style += megaphone.maptext_size >= 12 ? "font-family: 'PxPlus IBM VGA9'" : "font-family: 'Small Fonts'"
 			maptext_color = megaphone.maptext_color
 
+		if(megaphone.law_required)
+			messages[1] = "I AM THE LAW!"
+			megaphone.are_you_the_law(src, messages[1])
+
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
