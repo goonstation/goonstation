@@ -1049,7 +1049,6 @@
 					playsound(src, 'sound/machines/buzz-sigh.ogg', GRAVITON_CONTAINER_FAIL_SOUND_VOLUME, 0, 0)
 				return
 			throwstuff(container, 3)
-			if(APPROX_TICK_USE > GRAVITON_CONTAINER_COOLDOWN * 10) return // failsafe
 		else
 			var/count = 0
 			for(var/atom/movable/M in src.loc)
