@@ -105,8 +105,8 @@ export const Smes = () => {
                   'Not Charging'}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Input">
-              <Flex inline width="100%">
+            <LabeledList.Item label="Target Input" verticalAlign="middle">
+              <Flex width="100%">
                 <Flex.Item>
                   <Button
                     icon="fast-backward"
@@ -191,8 +191,8 @@ export const Smes = () => {
                   'No Charge'}
               </Box>
             </LabeledList.Item>
-            <LabeledList.Item label="Target Output">
-              <Flex inline width="100%">
+            <LabeledList.Item label="Target Output" verticalAlign="middle">
+              <Flex width="100%">
                 <Flex.Item>
                   <Button
                     icon="fast-backward"
