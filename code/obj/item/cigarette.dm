@@ -369,6 +369,7 @@
 	name = "nicotine-free cigarette"
 	desc = "Smoking without the crippling addiction and lung cancer! Now with 100% less capsaicin!"
 	nic_free = 1
+	flavor = "water" //they burn out instantly with no reagent
 
 /obj/item/clothing/mask/cigarette/menthol
 	name = "menthol cigarette"
