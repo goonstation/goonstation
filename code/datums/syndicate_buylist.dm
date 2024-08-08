@@ -1064,7 +1064,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Black Market Megaphone"
 	desc = "An illegal megaphone with the limiter taken off, and a loudener added. Not for the subtle."
 	item = /obj/item/megaphone/syndicate
-	cost = 5
+	cost = 3
 	vr_allowed = FALSE // no
 	job = list("Captain", "VIP", "Inspector", "Head of Personnel")
 
