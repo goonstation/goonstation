@@ -1,5 +1,9 @@
 
 (t)wed aug 07 24
+(u)LeahTheTech
+(p)20219
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Thinktronic™ Space GPS PDA program has been updated to include information on nearby visible celestial bodies (background parallax objects)
 (u)LeahTheTech and Cogwerks
 (p)20216
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
