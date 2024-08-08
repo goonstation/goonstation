@@ -159,8 +159,9 @@ export const Manufacturer = () => {
                       title={`${category} (${blueprints_by_category[category].length})`}
                     >
                       {(blueprints_by_category[category] ?? []).map(
-                        (blueprint) => (
+                        (blueprint, index) => (
                           <BlueprintButton
+                            key={index}
                             actionRemoveBlueprint={actionRemoveBlueprint}
                             actionVendProduct={actionVendProduct}
                             blueprintData={blueprint}
@@ -363,6 +364,7 @@ export const Manufacturer = () => {
                     (queued: ManufacturableData, index: number) =>
                       queued && (
                         <ProductionCard
+                          key={index}
                           index={index}
                           actionQueueRemove={actionQueueRemove}
                           mode={data.mode}
