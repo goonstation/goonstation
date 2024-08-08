@@ -146,7 +146,6 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
   } else {
     content_info = blueprintData?.item_descriptions?.[0] ?? '';
   }
-  // For some reason, formatting errors show unless done as a separate var
   return (
     <Stack style={{ display: BlueprintButtonStyle.Display }}>
       <Stack.Item
