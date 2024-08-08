@@ -17,10 +17,10 @@
 	var/maptext_outline_color = "#043606"
 	/// Amount this modifies your speech loudness by, ranging from -1 to 2
 	var/loudness_mod = 1
-	var/law_required = FALSE
+	var/emagged = FALSE
 
 	emag_act(var/mob/user)
-		if(src.loudness_mod > 0)
+		if(!src.emagged)
 			if (user)
 				user.show_text("You swipe the card against [src], and you feel a mechanism within click into place.", "red")
 			src.loudness_mod = -1
@@ -72,8 +72,8 @@
 	maptext_outline_color = "#250606"
 
 	emag_act()
-		if(src.loudness_mod > 0)
+		if(!src.emagged)
 			if (user)
 				user.show_text("You swipe the card against [src], and you feel a mechanism within click into place.", "red")
-			src.law_required = TRUE
+			src.emagged = TRUE
 			src.maptext_size = 18
