@@ -71,7 +71,7 @@
 	maptext_color = "#8d1422"
 	maptext_outline_color = "#250606"
 
-	emag_act()
+	emag_act(var/mob/user)
 		if(!src.emagged)
 			if (user)
 				user.show_text("You swipe the card against [src], and you feel a mechanism within click into place.", "red")

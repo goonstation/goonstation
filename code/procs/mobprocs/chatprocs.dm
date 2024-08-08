@@ -483,8 +483,7 @@
 
 	if(src.find_type_in_hand(/obj/item/megaphone))
 		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
-		if (!megaphone.law_required)
-			loudness += megaphone.loudness_mod
+		loudness += megaphone.loudness_mod
 
 	if (src.speech_void)
 		text = voidSpeak(text)
