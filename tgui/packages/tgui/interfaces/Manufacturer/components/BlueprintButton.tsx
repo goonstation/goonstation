@@ -147,7 +147,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
     content_info = blueprintData?.item_descriptions?.[0] ?? '';
   }
   return (
-    <Stack inline>
+    <Stack style={{ display: BlueprintButtonStyle.Display }}>
       <Stack.Item
         ml={BlueprintButtonStyle.MarginX}
         my={BlueprintButtonStyle.MarginY}
@@ -167,7 +167,7 @@ export const BlueprintButton = (props: BlueprintButtonProps) => {
         </ButtonWithBadge>
       </Stack.Item>
       <Stack.Item mr={BlueprintButtonStyle.MarginX}>
-        <Stack vertical my={BlueprintButtonStyle.MarginY}>
+        <Stack inline vertical my={BlueprintButtonStyle.MarginY}>
           <Stack.Item mb={BlueprintMiniButtonStyle.Spacing}>
             <Tooltip content={content_info}>
               <Button

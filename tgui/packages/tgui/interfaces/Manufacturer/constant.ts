@@ -32,6 +32,7 @@ export enum BlueprintButtonStyle {
   Height = 5,
   MarginX = 0.5,
   MarginY = 0.5,
+  Display = 'inline-flex',
 }
 
 // Controls the smaller 'settings' and 'info' buttons on the side of each larger button.
