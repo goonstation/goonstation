@@ -503,18 +503,22 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the public market" = list(/area/station/crew_quarters/market),
+	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/cargobay),
+		"the aviary" = list(/area/station/garden/aviary),
+		"the arcade, by the central bar" = list(/area/station/crew_quarters/arcade),
 		"the recreation center" = list(/area/station/crewquarters/reccenter),
 		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the bridge" = list(/area/station/bridge),
-		"the crew lounge" = list(/area/station/crew_quarters/quarters),
-		"the brig" = list(/area/station/security/brig),
+		"the stock exchange" = list(/area/station/crew_quarters/stockex),
+		"the crew lounge" = list(/area/station/crew_quarters/quarters_south),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the main station pod bay" = list(/area/station/hangar/main))
 
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
 		/datum/job/civilian/chef = 2,
+		/datum/job/research/geneticist = 3,
+		/datum/job/research/roboticist = 3,
 		/datum/job/civilian/bartender = 2,
 		/datum/job/civilian/clown = 2,
 		/datum/job/civilian/janitor = 4,

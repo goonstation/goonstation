@@ -22,6 +22,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "aav" = (
@@ -169,6 +172,8 @@
 /area/station/hallway/primary/south)
 "acN" = (
 /obj/disposalpipe/segment/brig,
+/obj/stool/bench/red,
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -247,6 +252,7 @@
 /obj/railing{
 	dir = 8
 	},
+/obj/grille/steel,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/north)
 "adt" = (
@@ -329,7 +335,6 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -427,14 +432,12 @@
 /turf/simulated/wall/auto/reinforced/walp/blue,
 /area/station/medical/medbay/restroom)
 "afE" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null;
-	icon_state = "maint2_locked";
-	locked = 1
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/bolter,
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
 	},
 /turf/simulated/floor/industrial,
 /area/station/summoningchamber)
@@ -824,7 +827,7 @@
 "akj" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "akk" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -1250,6 +1253,10 @@
 	pixel_x = -3;
 	pixel_y = -5
 	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/darkblue,
 /area/station/maintenance/outer/north)
 "apV" = (
@@ -1636,6 +1643,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/space)
+"avq" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/inner/se)
 "avw" = (
 /obj/decal/stage_edge/alt,
 /obj/table/wood/round/auto,
@@ -1818,18 +1831,24 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "axq" = (
-/obj/blind_switch/area/north{
-	pixel_x = -5
-	},
-/obj/machinery/light_switch/auto{
-	pixel_x = 5;
-	pixel_y = 24
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
 	icon_state = "line2"
 	},
 /obj/disposalpipe/trunk/produce,
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
+	},
+/obj/railing/orange/reinforced,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "axw" = (
@@ -2305,6 +2324,12 @@
 	},
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/recharger{
+	pixel_y = 8
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
 "aDB" = (
@@ -2430,10 +2455,6 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/medical/breakroom)
-"aFo" = (
-/obj/item/decoration/flower_vase,
-/turf/simulated/wall/auto/reinforced/walp/purple,
-/area/research_outpost)
 "aFq" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 8
@@ -2917,7 +2938,7 @@
 /area/station/mining/staff_room)
 "aLh" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "aLj" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -3402,14 +3423,8 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "aRL" = (
-/obj/item/device/ticket_writer{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/table/reinforced/industrial/auto,
-/obj/machinery/alarm{
-	dir = 4;
-	pixel_x = -20
+/obj/disposalpipe/segment/brig{
+	dir = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 10
@@ -3839,9 +3854,6 @@
 /area/station/turret_protected/AIbasecore1)
 "aYg" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
 /obj/mapping_helper/wingrille_spawn/auto/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/security/main)
@@ -4173,6 +4185,9 @@
 /obj/shrub{
 	dir = 6
 	},
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/grass/random/walp,
 /area/station/security/main)
 "bcK" = (
@@ -4248,8 +4263,11 @@
 /turf/simulated/floor/glassblock/transparent/purple,
 /area/station/science/lobby)
 "bdP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "bdR" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -4322,10 +4340,6 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag{
 	rand_pos = 1;
 	pixel_y = 17;
@@ -4340,6 +4354,13 @@
 	rand_pos = 1;
 	pixel_y = 6;
 	pixel_x = 3
+	},
+/obj/blind_switch/area/north{
+	pixel_x = -5
+	},
+/obj/machinery/light_switch/auto{
+	pixel_x = 5;
+	pixel_y = 24
 	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
@@ -4746,9 +4767,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
-"biS" = (
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/listeningpost)
 "bja" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -4770,6 +4788,9 @@
 "bjk" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/red/side{
 	dir = 6
@@ -4840,7 +4861,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/arrival{
 	dir = 6
 	},
@@ -5797,7 +5818,7 @@
 	},
 /obj/item/clothing/shoes/fuzzy,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "btT" = (
 /obj/disposalpipe/switch_junction/left/north{
 	name = "security mail junction";
@@ -6991,11 +7012,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
-"bHl" = (
-/obj/table/wood/auto,
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/grass/random/walp,
-/area/station/garden/aviary)
 "bHm" = (
 /obj/submachine/chef_oven,
 /obj/machinery/light/incandescent,
@@ -7099,13 +7115,15 @@
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/west)
 "bIB" = (
-/obj/storage/secure/closet/command/chief_engineer,
 /obj/machinery/light/incandescent,
+/obj/rack,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "bIJ" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/grime,
@@ -7806,6 +7824,10 @@
 	},
 /obj/machinery/light/small/floor/netural,
 /obj/table/reinforced/industrial/auto,
+/obj/item/remote/porter/port_a_brig{
+	pixel_y = 6;
+	pixel_x = -11
+	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/station/security/main)
 "bRE" = (
@@ -8409,14 +8431,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/research_outpost/chamber)
-"bYu" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/item/clothing/suit/scarfcape/truerandom,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/outer/se)
 "bYv" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -8852,7 +8866,7 @@
 "cek" = (
 /obj/potted_plant/potted_plant2,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "cep" = (
 /obj/decal/cleanable/blood/drip/high,
 /turf/simulated/floor/black/grime,
@@ -9203,7 +9217,7 @@
 	icon_state = "8-9"
 	},
 /obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/industrial,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/se)
 "cjt" = (
 /turf/simulated/floor/glassblock/transparent/cyan,
@@ -9490,6 +9504,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
+"cmF" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/darkblue,
+/area/station/maintenance/outer/north)
 "cmG" = (
 /obj/disposalpipe/segment/ejection,
 /obj/decal/tile_edge/line/black{
@@ -9713,10 +9731,13 @@
 /area/station/maintenance/outer/south)
 "coI" = (
 /obj/machinery/door/unpowered/wood/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/medical/head)
+/area/station/medical/head/private)
 "coK" = (
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -10075,12 +10096,12 @@
 	},
 /area/station/maintenance/outer/ne)
 "csR" = (
-/obj/storage/crate,
-/obj/item/clothing/glasses/spectro,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/blindfold{
-	name = "For Krimpus"
+/obj/stool/chair/couch/green{
+	dir = 4;
+	icon_state = "chair_couch-green";
+	name = "ratty green couch"
 	},
+/obj/landmark/start/job/botanist,
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
 "csS" = (
@@ -10196,6 +10217,9 @@
 "cum" = (
 /obj/machinery/space_heater,
 /obj/decal/stripe_caution,
+/obj/railing/purple{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/se)
 "cup" = (
@@ -10291,9 +10315,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/stool/chair/comfy/green{
-	dir = 4
-	},
 /obj/blind_switch/area/north{
 	pixel_x = -5
 	},
@@ -10301,7 +10322,6 @@
 	pixel_x = 5;
 	pixel_y = 24
 	},
-/obj/landmark/start/job/botanist,
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
 "cvs" = (
@@ -10642,7 +10662,7 @@
 	icon_state = "fgreen2";
 	dir = 6
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "cyx" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -10958,6 +10978,11 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -11825,14 +11850,14 @@
 	},
 /area/station/crew_quarters/kitchen)
 "cMq" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = -11
-	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/equipment)
@@ -12084,7 +12109,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "cPJ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -12445,7 +12470,7 @@
 /turf/simulated/floor/stairs/wood2/wide{
 	dir = 10
 	},
-/area/station/crew_quarters/stockex)
+/area/station/library)
 "cTE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12521,6 +12546,9 @@
 /area/station/medical/robotics)
 "cUL" = (
 /obj/disposalpipe/segment/ejection,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "cUN" = (
@@ -12768,7 +12796,6 @@
 /turf/space,
 /area/research_outpost/toxins)
 "cXG" = (
-/obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/bot_storage)
@@ -12834,6 +12861,9 @@
 /area/station/hallway/primary/north)
 "cYh" = (
 /obj/machinery/vending/snack,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -13222,10 +13252,6 @@
 	},
 /turf/simulated/floor/carpet/office,
 /area/station/crew_quarters/info)
-"dce" = (
-/obj/grille/steel,
-/turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
 "dcf" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -13235,6 +13261,7 @@
 	},
 /obj/mapping_helper/access/rancher,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/cashreg,
 /turf/simulated/floor/twotone/green,
 /area/station/ranch)
 "dck" = (
@@ -14366,6 +14393,9 @@
 /area/station/engine/elect)
 "dof" = (
 /obj/machinery/vending/security,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "dop" = (
@@ -14384,7 +14414,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "dot" = (
 /obj/machinery/light/small/floor/netural,
 /obj/disposalpipe/segment/mail/vertical,
@@ -14794,6 +14824,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -15005,6 +15036,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/disposalpipe/segment/brig{
+	dir = 4
 	},
 /turf/simulated/floor/grass/random/walp,
 /area/station/security/main)
@@ -15440,7 +15474,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/loudspeaker,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -16671,9 +16704,7 @@
 /turf/space,
 /area/space)
 "dNI" = (
-/obj/machinery/networked/mainframe/zeta{
-	tag = "OTHER_MAINFRAME"
-	},
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/techfloor/red,
 /area/listeningpost)
 "dNM" = (
@@ -16804,7 +16835,8 @@
 "dPg" = (
 /obj/submachine/chem_extractor{
 	dir = 8;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 7
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -16881,10 +16913,6 @@
 /area/station/bridge)
 "dQC" = (
 /obj/grille/steel,
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = 3;
-	pixel_y = 30
-	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
 "dQH" = (
@@ -18080,6 +18108,14 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/gen_storage)
+"eef" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 9
+	},
+/area/station/hallway/primary/north)
 "eeg" = (
 /obj/shrub{
 	dir = 4;
@@ -18596,7 +18632,6 @@
 /area/station/hangar/arrivals)
 "eiI" = (
 /obj/landmark/gps_waypoint,
-/obj/item/device/radio/beacon,
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "eiO" = (
@@ -18951,7 +18986,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "eoU" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/power/apc/autoname_west,
@@ -19027,7 +19062,7 @@
 /area/station/mining/refinery)
 "epo" = (
 /obj/stool/chair/couch/green{
-	dir = 4;
+	dir = 8;
 	icon_state = "chair_couch-green";
 	name = "ratty green couch"
 	},
@@ -19513,6 +19548,9 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/emergency,
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/grass/random/walp,
 /area/station/hangar/arrivals)
 "eun" = (
@@ -19656,6 +19694,15 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
+"evA" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/twotone/yellow,
+/area/station/engine/monitoring)
 "evE" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/twotone/purple,
@@ -20109,12 +20156,7 @@
 	},
 /area/station/hangar/arrivals)
 "eAy" = (
-/obj/item/hand_labeler{
-	pixel_x = 1;
-	pixel_y = 6
-	},
-/obj/table/reinforced/industrial/auto,
-/obj/disposalpipe/segment/brig,
+/obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "eAz" = (
@@ -20332,6 +20374,11 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	enter_id = "inner";
+	name = "Security"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "eCk" = (
@@ -20817,6 +20864,9 @@
 	},
 /area/station/crew_quarters/jazz)
 "eJn" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red/fancy/narrow/ne,
 /area/station/crew_quarters/courtroom)
 "eJq" = (
@@ -21028,6 +21078,7 @@
 	dir = 8
 	},
 /obj/storage/secure/closet/medical/medkit,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -21351,6 +21402,9 @@
 "ePk" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/darkblue,
 /area/station/maintenance/outer/north)
@@ -21778,6 +21832,11 @@
 /obj/disposalpipe/segment,
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	enter_id = "inner";
+	name = "Security"
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "eSx" = (
@@ -22325,6 +22384,9 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasslush/border{
 	dir = 1
 	},
@@ -22773,7 +22835,7 @@
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "ffN" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
@@ -22937,6 +22999,9 @@
 "fhD" = (
 /obj/railing/orange/reinforced{
 	dir = 8
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasslush/border{
 	dir = 1
@@ -23419,6 +23484,9 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasslush/border{
 	dir = 9
 	},
@@ -23538,7 +23606,7 @@
 	dir = 1;
 	icon_state = "fgreen1"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "fnR" = (
 /obj/decal/poster/wallsign/framed_award/rddiploma{
 	pixel_x = -32;
@@ -23625,6 +23693,11 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/research_outpost/lobby)
+"foT" = (
+/obj/decal/cleanable/rust/jen,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/darkblue,
+/area/station/maintenance/outer/north)
 "foZ" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -24729,10 +24802,8 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/nw)
 "fBC" = (
-/obj/machinery/door/airlock/pyro/glass{
-	icon_state = "glass_locked";
-	locked = 1
-	},
+/obj/mapping_helper/airlock/bolter,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/plating/airless,
 /area/research_outpost/toxins)
 "fBD" = (
@@ -24810,7 +24881,6 @@
 	},
 /area/station/security/beepsky)
 "fCU" = (
-/obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black/grime,
 /area/station/hangar/sec)
@@ -25269,7 +25339,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
@@ -25316,13 +25385,23 @@
 	dir = 1;
 	icon_state = "fgreen1"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "fHZ" = (
 /obj/shrub{
 	dir = 6
 	},
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery)
+"fId" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/east)
 "fIp" = (
 /obj/machinery/light/incandescent,
 /obj/table/wood,
@@ -25541,6 +25620,10 @@
 /obj/disposalpipe/junction/middle/south,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"fLR" = (
+/obj/grille/steel,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/outer/north)
 "fMf" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 10;
@@ -25584,6 +25667,9 @@
 /area/station/crew_quarters/pool)
 "fNp" = (
 /obj/machinery/ghostdrone_factory,
+/obj/machinery/conveyor/EW{
+	move_lag = 15
+	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "fNs" = (
@@ -26419,6 +26505,7 @@
 /obj/machinery/light/incandescent,
 /obj/machinery/disposal,
 /obj/decal/stripe_caution,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "fXF" = (
@@ -26500,7 +26587,7 @@
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "fYj" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -26542,7 +26629,7 @@
 	icon_state = "fgreen2";
 	dir = 9
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "fYy" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -26679,6 +26766,9 @@
 /area/station/crew_quarters/arcade/dungeon)
 "fZC" = (
 /obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/courtroom)
 "fZH" = (
@@ -26859,6 +26949,11 @@
 	},
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	enter_id = "outer";
+	name = "Security"
+	},
 /turf/simulated/floor/longtile/black,
 /area/station/security/secwing)
 "gbi" = (
@@ -27113,7 +27208,7 @@
 /area/station/security/hos)
 "ges" = (
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "geM" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -27190,13 +27285,11 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "gfY" = (
-/obj/rack,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/shoes/fuzzy,
+/obj/storage/secure/closet/command/chief_engineer,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "gfZ" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -27734,7 +27827,6 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/item/device/radio/beacon,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig)
@@ -28900,16 +28992,16 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)
 "gAE" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = -11
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/equipment)
@@ -30787,6 +30879,9 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/red/fancy/narrow/nw,
 /area/station/crew_quarters/courtroom)
 "gVp" = (
@@ -31044,10 +31139,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/inner/sw)
-"gYv" = (
-/obj/mapping_helper/wingrille_spawn/auto/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/stockex)
 "gYC" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -31261,9 +31352,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"hal" = (
-/turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
 "har" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -31559,6 +31647,17 @@
 	dir = 4
 	},
 /area/space)
+"hdF" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "hdJ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -31665,13 +31764,14 @@
 /turf/simulated/floor/twotone,
 /area/station/storage/tools)
 "heu" = (
-/obj/stool/chair/couch/green{
-	dir = 8;
-	icon_state = "chair_couch-green";
-	name = "ratty green couch"
-	},
 /obj/machinery/firealarm{
 	pixel_y = 25
+	},
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
@@ -32243,7 +32343,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/east,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "hlW" = (
 /obj/machinery/light/small/floor/netural,
 /obj/disposalpipe/segment/mail/bent/north,
@@ -33569,7 +33669,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
+/area/station/maintenance/outer/south)
 "hAv" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -34359,7 +34459,6 @@
 /turf/simulated/floor/minitiles/white,
 /area/station/medical/medbay/restroom)
 "hJY" = (
-/obj/storage/secure/closet/medical/chemical,
 /obj/machinery/firealarm{
 	dir = 1;
 	layer = 3.5;
@@ -35436,6 +35535,9 @@
 	pixel_y = 3;
 	pixel_x = 4
 	},
+/obj/item/decoration/flower_vase{
+	pixel_x = -6
+	},
 /turf/simulated/floor/greenwhite{
 	dir = 1
 	},
@@ -35499,7 +35601,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/storage/secure/closet/civilian/chaplain,
+/obj/machinery/vending/chapel,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "hZl" = (
@@ -35586,7 +35688,7 @@
 /obj/disposalpipe/trunk/brig,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "ial" = (
 /obj/machinery/light/incandescent,
 /obj/decal/tile_edge/line/green{
@@ -35926,6 +36028,15 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
+"idT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
+	},
+/turf/simulated/floor/darkblue,
+/area/station/maintenance/outer/north)
 "idU" = (
 /obj/machinery/drone_recharger,
 /obj/decal/stripe_caution,
@@ -36109,7 +36220,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/twotone/yellow,
 /area/station/quartermaster/office)
@@ -36118,12 +36228,6 @@
 /obj/machinery/power/solar/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
-"ifQ" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/walp/red,
-/area/station/security/main)
 "ifR" = (
 /obj/decal/tile_edge/flowers,
 /obj/cable{
@@ -37597,7 +37701,6 @@
 	mailgroup = "botany";
 	name = "Ranch"
 	},
-/obj/railing/orange/reinforced,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
 	icon_state = "xtra_bigstripe-edge2"
@@ -38295,6 +38398,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
+"iGV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/maintenance/outer/north)
 "iGZ" = (
 /obj/decal/nav_danger,
 /turf/simulated/floor/grime{
@@ -38381,7 +38494,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "iIj" = (
 /obj/machinery/light/small/floor/netural,
 /obj/cable{
@@ -38760,6 +38873,9 @@
 /area/station/turret_protected/armory_outside)
 "iLD" = (
 /obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_y = 6
+	},
 /turf/simulated/floor/twotone/purple,
 /area/station/conveniencestore)
 "iLF" = (
@@ -39740,6 +39856,9 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/maint,
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/quarters_north)
 "iXR" = (
@@ -40126,6 +40245,15 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/south)
+"jcc" = (
+/obj/stool/bench/purple,
+/obj/decal/poster/wallsign/statistics1{
+	pixel_y = 29
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/research_outpost/lobby)
 "jcl" = (
 /turf/simulated/floor/carpet/red/standard/edge{
 	dir = 8
@@ -40170,7 +40298,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "jcM" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -42143,6 +42271,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -42903,7 +43034,7 @@
 /obj/mapping_helper/access/engineering_chief,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "jKF" = (
 /obj/stool/chair/comfy/yellow,
 /obj/machinery/light/emergency{
@@ -43280,12 +43411,6 @@
 /obj/cable,
 /turf/simulated/floor/black/grime,
 /area/station/engine/core/nuclear)
-"jOQ" = (
-/obj/vehicle/segway,
-/obj/machinery/light/small,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/outer/se)
 "jOV" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -43302,10 +43427,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/vending/security{
-	dir = 8;
-	pixel_x = 7
-	},
+/obj/machinery/vending/security,
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
 "jPh" = (
@@ -43564,8 +43686,12 @@
 /area/station/security/secwing)
 "jTs" = (
 /obj/machinery/vending/standard{
-	pixel_y = 6
+	pixel_y = 2
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/techfloor/red,
 /area/listeningpost/power)
 "jTw" = (
@@ -43636,7 +43762,7 @@
 /area/station/mining/magnet)
 "jUB" = (
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "jUN" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -43884,6 +44010,7 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "jXj" = (
@@ -44320,6 +44447,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/north)
 "kcz" = (
@@ -44353,7 +44483,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
-/area/station/maintenance/solar/south)
+/area/station/solar/south)
 "kdc" = (
 /obj/storage/crate/freezer,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -44498,7 +44628,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/ne,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "kes" = (
 /obj/table/auto/desk,
 /obj/machinery/phone{
@@ -44722,6 +44852,9 @@
 	tag = "icon-line1 (NORTH)"
 	},
 /obj/machinery/light_switch/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/courtroom)
 "kgQ" = (
@@ -44756,8 +44889,8 @@
 /area/station/maintenance/outer/south)
 "khp" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
 /obj/landmark/start/job/bartender,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "khE" = (
@@ -45000,6 +45133,14 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "kkL" = (
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/hand_labeler{
+	pixel_x = 1;
+	pixel_y = 6
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "kkM" = (
@@ -45083,7 +45224,7 @@
 	pixel_x = -4
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "klN" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	id = "cloning_door"
@@ -45537,8 +45678,7 @@
 /area/station/crew_quarters/catering)
 "kqF" = (
 /obj/decal/tile_edge/floorguide/arrow_w{
-	dir = 1;
-	pixel_x = -8
+	dir = 1
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -45658,13 +45798,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/east)
-"krP" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/station/maintenance/solar/south)
 "krW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45681,7 +45814,7 @@
 /area/station/crew_quarters/fitness)
 "ksg" = (
 /turf/simulated/wall/auto/reinforced/walp/red,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "ksh" = (
 /turf/simulated/wall/auto/walp,
 /area/station/crewquarters/clothingstore)
@@ -46504,7 +46637,7 @@
 	dir = 1;
 	icon_state = "fgreen1"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "kCr" = (
 /obj/cable,
 /obj/cable{
@@ -46798,6 +46931,7 @@
 /area/station/crew_quarters/sauna)
 "kGb" = (
 /obj/rack,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/black,
@@ -46846,10 +46980,6 @@
 /turf/simulated/floor/engine/glow,
 /area/listeningpost)
 "kGv" = (
-/obj/item/storage/secure/ssafe/loot{
-	pixel_x = 3;
-	pixel_y = 30
-	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
@@ -46905,7 +47035,7 @@
 "kHb" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "kHn" = (
 /obj/machinery/vending/pizza{
 	dir = 8;
@@ -46943,6 +47073,9 @@
 /area/station/mining/staff_room)
 "kHD" = (
 /obj/machinery/ghostdrone_factory/part3,
+/obj/machinery/conveyor/NS{
+	move_lag = 15
+	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "kHE" = (
@@ -47719,7 +47852,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
@@ -47823,15 +47955,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
-"kRZ" = (
-/obj/decal/cleanable/rust/jen,
-/obj/random_item_spawner/junk/two,
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor/black/grime,
-/area/station/maintenance/outer/se)
 "kSc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48021,11 +48144,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/disposalpipe/segment/brig{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "kVn" = (
@@ -48299,6 +48421,7 @@
 	},
 /obj/machinery/disposal,
 /obj/decal/stripe_caution,
+/obj/disposalpipe/trunk/south,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/crew_quarters/quarters_north)
 "kYA" = (
@@ -48942,7 +49065,7 @@
 /area/station/crew_quarters/garden)
 "lfB" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/west,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "lfC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49696,6 +49819,7 @@
 	pixel_y = 8
 	},
 /obj/decal/stripe_caution,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "lnl" = (
@@ -49767,9 +49891,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "lnW" = (
 /obj/railing/purple,
@@ -50195,6 +50317,7 @@
 	icon_state = "line2"
 	},
 /obj/random_item_spawner/armory_breaching_supplies,
+/obj/mapping_helper/access/armory,
 /turf/simulated/floor/minitiles/black,
 /area/station/ai_monitored/armory)
 "lso" = (
@@ -50418,7 +50541,7 @@
 	pixel_y = 19
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "luq" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -50563,6 +50686,9 @@
 "lvh" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/red/side,
 /area/station/hangar/arrivals)
@@ -51104,7 +51230,13 @@
 	dir = 8
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
+"lAL" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 10
+	},
+/area/station/hallway/primary/north)
 "lAP" = (
 /obj/window_blinds/cog2{
 	dir = 8
@@ -51704,7 +51836,16 @@
 	name = "Genetic Research"
 	})
 "lIw" = (
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/table/wood/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/cigbutt{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
 "lIH" = (
@@ -52204,6 +52345,9 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -52376,7 +52520,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "lPF" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -52578,6 +52722,14 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/nw)
+"lRe" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasslush/border{
+	dir = 1
+	},
+/area/station/ranch)
 "lRo" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -52768,7 +52920,7 @@
 	dir = 4;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "lTw" = (
 /turf/simulated/floor/stairs{
 	dir = 8
@@ -53035,7 +53187,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbooth)
 "lXk" = (
-/obj/item/device/radio/beacon,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -53277,10 +53428,6 @@
 /turf/simulated/floor/wood,
 /area/station/garden/aviary)
 "map" = (
-/obj/table/wood/auto,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/three{
-	pixel_y = 10
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -53288,7 +53435,12 @@
 	pixel_x = 10
 	},
 /obj/machinery/light/incandescent,
-/obj/item/clothing/head/basecap/green,
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
 "maq" = (
@@ -53822,6 +53974,7 @@
 /obj/machinery/light/incandescent,
 /obj/rack,
 /obj/item/storage/belt/medical,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/cable{
 	icon_state = "2-4"
@@ -53905,7 +54058,6 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
 "mhp" = (
-/obj/railing/orange/reinforced,
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
@@ -53971,8 +54123,17 @@
 /area/station/hallway/secondary/exit)
 "miw" = (
 /obj/machinery/light/incandescent,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	layer = 3;
+	pixel_y = 2;
+	pixel_x = 3
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/sw,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "mix" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/plating/random,
@@ -54480,6 +54641,13 @@
 "mon" = (
 /turf/simulated/wall/auto/reinforced/walp/purple,
 /area/station/science/testchamber)
+"moo" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal/walp,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "mop" = (
 /obj/stool/chair/moveable{
 	dir = 1
@@ -54676,8 +54844,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/twotone/green{
 	dir = 1
 	},
@@ -55329,6 +55497,7 @@
 	dir = 1;
 	interesting = "There are traces of styptic powder and adhesive residue on some of the leaves."
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grass/random/walp,
 /area/station/hallway/primary/west)
 "mxG" = (
@@ -55649,13 +55818,13 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "mBM" = (
-/obj/machinery/floorflusher/industrial{
-	desc = "For flushing unwanted artifacts.";
-	name = "Emergency Artifact Flusher";
-	id = "decartflush"
-	},
 /obj/disposalpipe/trunk/transport{
 	dir = 8
+	},
+/obj/machinery/floorflusher{
+	desc = "For flushing unwanted artifacts.";
+	id = "decartflush";
+	name = "Emergency Artifact Flusher"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -55668,18 +55837,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/ne)
-"mBW" = (
-/obj/stool/chair/office/yellow{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/twotone/yellow,
-/area/station/engine/monitoring)
 "mCc" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -55741,7 +55898,9 @@
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "mCz" = (
 /obj/machinery/light/incandescent,
-/obj/table/reinforced/industrial/auto,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "mCB" = (
@@ -56507,6 +56666,12 @@
 	},
 /turf/simulated/floor/twotone/yellow,
 /area/station/quartermaster/office)
+"mNt" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
+/area/station/medical/head/private)
 "mNw" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -56894,6 +57059,9 @@
 /obj/decal/tile_edge/floorguide/arrow_w{
 	dir = 1;
 	pixel_x = -8
+	},
+/obj/decal/tile_edge/floorguide/arrow_w{
+	dir = 1
 	},
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -57405,6 +57573,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/crew_quarters/quarters_north)
 "mXI" = (
@@ -57683,6 +57855,13 @@
 	},
 /turf/simulated/floor/grass/random/walp,
 /area/station/hallway/secondary/west)
+"nbk" = (
+/obj/stool/chair/comfy/green{
+	dir = 1
+	},
+/obj/landmark/start/job/botanist,
+/turf/simulated/floor/carpet/grime,
+/area/station/hydroponics/staff)
 "nbp" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -57736,7 +57915,7 @@
 "ncm" = (
 /obj/machinery/bathtub,
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "ncv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/plating,
@@ -57826,9 +58005,6 @@
 "ndR" = (
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/disposalpipe/segment/brig{
-	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
@@ -58252,6 +58428,10 @@
 	pixel_y = 5
 	},
 /obj/table/reinforced/industrial/auto,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -20
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -58627,10 +58807,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/disposalpipe/segment/brig{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
@@ -58770,11 +58946,11 @@
 "npi" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/bot/guardbot/bad{
+	on = 0
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -59203,10 +59379,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/northsouth,
 /area/station/maintenance/outer/sw)
-"ntJ" = (
-/obj/decal/poster/wallsign/statistics1,
-/turf/simulated/wall/auto/reinforced/walp/purple,
-/area/research_outpost/chamber)
 "nud" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/plating,
@@ -59362,13 +59534,6 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/twotone/purple,
 /area/station/science/chemistry)
-"nwH" = (
-/obj/decal/cleanable/generic,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/inner/se)
 "nwM" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/coffee{
@@ -59455,7 +59620,7 @@
 	dir = 8;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "nxx" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -59533,7 +59698,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/generic/engine,
 /obj/decal/poster/wallsign/hazard_electrical{
 	pixel_y = 32
 	},
@@ -60414,7 +60578,10 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt,
-/obj/disposalpipe/segment/brig,
+/obj/disposalpipe/segment/brig{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se)
 "nKK" = (
@@ -60485,12 +60652,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"nLM" = (
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
-/turf/simulated/floor/glassblock/transparent/purple,
-/area/station/turret_protected/ai)
 "nLN" = (
 /obj/table/wood/auto{
 	dir = 6
@@ -60794,7 +60955,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "nOV" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -60944,7 +61105,7 @@
 	pixel_x = 3
 	},
 /turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
+/area/station/maintenance/outer/south)
 "nRn" = (
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -61080,18 +61241,16 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/lobby)
 "nTk" = (
-/obj/item/paper/book/from_file/space_law{
-	pixel_y = 10;
-	pixel_x = 11;
-	name = "Space Law - Turtle Edition";
-	desc = "It's a little bit gnawed-on, but still readable!"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	pixel_y = 15
+	},
+/obj/item/paper/book/from_file/space_law/first{
+	pixel_x = 9;
+	pixel_y = 9
 	},
 /turf/simulated/floor/grasslush/border{
 	dir = 8
@@ -61654,13 +61813,7 @@
 /turf/simulated/floor/minitiles,
 /area/station/quartermaster/office)
 "nZy" = (
-/obj/item_dispenser/latex_gloves{
-	pixel_x = -5
-	},
-/obj/machinery/light_switch/north{
-	pixel_x = 7;
-	pixel_y = 29
-	},
+/obj/item_dispenser/latex_gloves,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/reagentscanner{
 	pixel_y = 6;
@@ -62101,7 +62254,7 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/wood,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "odJ" = (
 /turf/simulated/floor/carpet/blue/standard/edge{
 	dir = 8
@@ -62453,7 +62606,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "ogZ" = (
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/plating/random,
@@ -62698,7 +62851,7 @@
 /obj/machinery/activation_button/flusher_button{
 	id = "decartflush";
 	name = "Chute Activator";
-	pixel_y = 4;
+	pixel_y = 6;
 	dir = 4;
 	pixel_x = -23
 	},
@@ -63058,7 +63211,7 @@
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "ooH" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -63449,7 +63602,6 @@
 /area/station/hallway/primary/west)
 "osd" = (
 /obj/landmark/gps_waypoint,
-/obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
 	},
@@ -63927,9 +64079,6 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
@@ -64433,6 +64582,9 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/maint,
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/darkblue,
 /area/station/maintenance/outer/north)
 "oFK" = (
@@ -65139,6 +65291,11 @@
 /obj/mapping_helper/access/engineering_power,
 /turf/simulated/floor,
 /area/station/maintenance/solar/south)
+"oOc" = (
+/obj/grille/steel,
+/obj/grille/steel,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/north)
 "oOm" = (
 /obj/disposalpipe/junction/left/south,
 /obj/machinery/light/emergency{
@@ -65456,7 +65613,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "oRL" = (
 /obj/machinery/computer/supplycomp{
 	dir = 8
@@ -65773,7 +65930,7 @@
 	pixel_y = 33
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "oVD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65815,7 +65972,7 @@
 /area/station/quartermaster/office)
 "oVZ" = (
 /obj/machinery/atmospherics/binary/pump/active{
-	dir = 1;
+	dir = 2;
 	frequency = 1225;
 	id = "Reactor Gas Supply 1";
 	name = "reactor gas supply pump 1";
@@ -65909,7 +66066,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/structure/woodwall,
+/obj/storage/crate/wooden,
+/obj/random_item_spawner/junk/one,
+/obj/item/clothing/suit/scarfcape/truerandom,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/se)
 "oXi" = (
@@ -65954,6 +66113,10 @@
 	pixel_y = 4
 	},
 /obj/map/light/dimred,
+/obj/machinery/light_switch/west{
+	dir = 4;
+	pixel_y = 17
+	},
 /turf/simulated/floor/redblack/corner,
 /area/listeningpost)
 "oXw" = (
@@ -66235,6 +66398,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/red/side,
 /area/station/hangar/arrivals)
 "pbm" = (
@@ -66364,7 +66530,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "pdR" = (
 /turf/simulated/wall/auto/walp/yellow,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "pea" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -66428,6 +66594,7 @@
 	icon_state = "line1"
 	},
 /obj/landmark/gps_waypoint,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/wood,
 /area/station/garden/aviary)
 "peU" = (
@@ -66492,6 +66659,10 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/random_item_spawner/junk/two,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "pgb" = (
@@ -66612,6 +66783,9 @@
 	dir = 1;
 	pixel_y = 32
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -66692,6 +66866,11 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "sec";
+	enter_id = "outer";
+	name = "Security"
+	},
 /turf/simulated/floor/longtile/black,
 /area/station/security/secwing)
 "piT" = (
@@ -68047,7 +68226,7 @@
 	pixel_y = 28
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "pzc" = (
 /obj/cable,
 /obj/cable{
@@ -68681,9 +68860,11 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
-/obj/landmark/start/job/botanist,
+/obj/table/wood/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/three{
+	pixel_y = 10
+	},
+/obj/item/clothing/head/basecap/green,
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
 "pHp" = (
@@ -69254,7 +69435,7 @@
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "pNq" = (
 /obj/machinery/light/incandescent,
 /obj/decal/stripe_caution,
@@ -69855,7 +70036,7 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "pVu" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -71042,6 +71223,9 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
+"qiB" = (
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/outer/sw)
 "qiD" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -71571,7 +71755,7 @@
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "qpY" = (
 /turf/simulated/floor/black/grime,
 /area/space)
@@ -71625,10 +71809,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "qry" = (
-/obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet/black,
+/obj/stool/bed,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "qrz" = (
 /obj/stool/chair/comfy{
 	dir = 1
@@ -71700,7 +71884,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "qsb" = (
 /obj/decal/tile_edge/line/black{
 	dir = 6;
@@ -72385,7 +72569,6 @@
 	dir = 4;
 	level = -1
 	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/twotone/green{
 	dir = 1
 	},
@@ -72847,13 +73030,6 @@
 	dir = 9
 	},
 /area/station/crew_quarters/fitness)
-"qEU" = (
-/obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 5
-	},
-/turf/space,
-/area/station/maintenance/solar/south)
 "qEV" = (
 /obj/stool/bench,
 /turf/simulated/floor/escape{
@@ -72893,8 +73069,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
 "qFl" = (
-/obj/disposalpipe/segment,
 /obj/stool/chair/black,
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "qFm" = (
@@ -73227,6 +73403,9 @@
 	icon_state = "wooden"
 	},
 /area/station/quartermaster/office)
+"qKa" = (
+/turf/simulated/wall/auto/reinforced/walp/blue,
+/area/station/medical/head/private)
 "qKc" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood{
@@ -73476,6 +73655,9 @@
 /area/station/hydroponics/bay)
 "qNd" = (
 /obj/item/storage/wall/office,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -73703,7 +73885,6 @@
 /obj/machinery/plantpot{
 	anchored = 1
 	},
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "qPQ" = (
@@ -74368,6 +74549,10 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
+"qYp" = (
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/outer/sw)
 "qYu" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -74584,6 +74769,14 @@
 "rbz" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/ticket_writer{
+	pixel_x = -1;
+	pixel_y = 8
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "rbE" = (
@@ -74849,6 +75042,10 @@
 /area/station/quartermaster/office)
 "rfh" = (
 /obj/stool/chair/black,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "rfj" = (
@@ -74863,7 +75060,7 @@
 	dir = 8;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "rfq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -75603,7 +75800,7 @@
 	},
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
+/area/station/maintenance/outer/south)
 "roc" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail{
@@ -75807,15 +76004,9 @@
 /area/station/hallway/primary/northwest)
 "rpN" = (
 /obj/machinery/light/incandescent,
-/obj/shrub{
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	layer = 3;
-	pixel_y = 2;
-	pixel_x = 11
-	},
+/obj/storage/secure/closet/command/medical_director,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "rpX" = (
 /obj/item/device/radio,
 /turf/simulated/floor/black/grime,
@@ -76057,7 +76248,6 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "rrS" = (
-/obj/machinery/light/incandescent,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
@@ -76185,15 +76375,11 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/outer/north)
 "rsG" = (
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/machinery/cashreg,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/mapping_helper/access/rancher,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/twotone/green,
 /area/station/ranch)
@@ -76295,9 +76481,7 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
 "rtW" = (
 /obj/table/reinforced/bar/auto{
@@ -76342,14 +76526,14 @@
 /area/station/bridge)
 "rtY" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/chem_heater{
-	pixel_y = 8
-	},
 /obj/decal/poster/wallsign/fire{
 	pixel_x = 25;
 	pixel_y = 6
 	},
 /obj/table/reinforced/chemistry/auto/beakers,
+/obj/machinery/chem_heater/chemistry{
+	pixel_y = 10
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -76358,6 +76542,9 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/twotone,
 /area/research_outpost/toxins)
+"ruj" = (
+/turf/simulated/wall/auto/reinforced/walp/yellow,
+/area/station/engine/engineering/ce/private)
 "rup" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -76581,6 +76768,7 @@
 /area/station/maintenance/solar/south)
 "rvL" = (
 /obj/rack,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/cable{
@@ -76730,12 +76918,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/east)
-"rxQ" = (
-/obj/loudspeaker,
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/station/crew_quarters/courtroom)
 "rxT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -76788,7 +76970,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/twotone/red,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "ryu" = (
 /obj/window_blinds/cog2/middle{
 	dir = 4
@@ -77308,7 +77490,8 @@
 "rDW" = (
 /obj/machinery/chem_master{
 	dir = 8;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -77659,16 +77842,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"rHJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/brig{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/inner/se)
 "rHL" = (
 /turf/simulated/floor/minitiles/black,
 /area/station/crewquarters/reccenter)
@@ -77694,8 +77867,12 @@
 	},
 /area/station/hallway/primary/southeast)
 "rId" = (
-/obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/machinery/chem_dispenser/chemical{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_y = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -77713,6 +77890,7 @@
 	tag = "";
 	pixel_x = 9
 	},
+/obj/table/reinforced/industrial/auto,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -77837,9 +78015,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "rIF" = (
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "tile1"
@@ -78329,6 +78504,9 @@
 /obj/machinery/chem_master{
 	dir = 4;
 	pixel_x = -4
+	},
+/obj/machinery/light_switch/west{
+	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
@@ -79463,18 +79641,6 @@
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
 "sbc" = (
-/obj/storage/closet{
-	name = "rancher supply closet"
-	},
-/obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
-/obj/item/chicken_carrier,
-/obj/item/device/camera_viewer/ranch,
-/obj/item/storage/box/syringes,
-/obj/item/satchel/hydro,
-/obj/item/clothing/mask/chicken,
-/obj/item/storage/box/clothing/rancher,
-/obj/railing/orange/reinforced,
 /obj/decal/tile_edge/line/yellow{
 	dir = 6;
 	icon_state = "line2"
@@ -79485,6 +79651,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/storage/secure/closet/civilian/ranch,
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "sbt" = (
@@ -79529,7 +79696,7 @@
 	pixel_x = 4
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "scb" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/wood{
@@ -79782,6 +79949,12 @@
 	},
 /turf/simulated/floor/carpet/office/other,
 /area/station/crew_quarters/quarters_north)
+"set" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
+/area/station/crew_quarters/courtroom)
 "sew" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -79836,6 +80009,22 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"seU" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/table/wood/auto,
+/obj/item/device/light/lava_lamp{
+	pixel_x = 6;
+	pixel_y = 18
+	},
+/obj/item/bee_egg_carton,
+/obj/item/reagent_containers/glass/bottle/eyedrops{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/hydroponics/staff)
 "seW" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -80164,7 +80353,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	dir = 4
+	},
 /turf/simulated/floor/twotone/yellow,
 /area/station/engine/elect)
 "sjW" = (
@@ -80272,7 +80463,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/beacon,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/minitiles,
@@ -80569,16 +80759,46 @@
 /area/station/quartermaster/office)
 "spF" = (
 /obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/gas{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 11;
+	pixel_y = -1
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_y = 3;
+	pixel_x = -4
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 3;
+	pixel_y = -2
+	},
 /obj/decal/tile_edge/line/black{
 	dir = 10;
 	icon_state = "line2"
@@ -80657,6 +80877,12 @@
 	dir = 6
 	},
 /area/station/ranch)
+"sqq" = (
+/obj/loudspeaker,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/courtroom)
 "sqv" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -80976,7 +81202,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/device/radio/beacon,
 /turf/simulated/floor/glassblock/transparent/purple,
 /area/station/crewquarters/clothingstore)
 "suc" = (
@@ -81801,9 +82026,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/east)
-"sEN" = (
-/turf/simulated/wall/auto/reinforced/walp,
-/area/station/bridge/customs)
 "sER" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
@@ -82429,6 +82651,14 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"sKS" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasslush/border{
+	dir = 5
+	},
+/area/station/ranch)
 "sKX" = (
 /obj/machinery/computer/security,
 /obj/machinery/power/data_terminal,
@@ -82470,19 +82700,11 @@
 /area/station/chapel/sanctuary)
 "sLr" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
 /area/research_outpost/chamber)
-"sLv" = (
-/obj/item/device/radio/beacon,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/gps_waypoint,
-/turf/simulated/floor/glassblock/transparent/indigo,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "sLy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -83660,7 +83882,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
+/area/station/maintenance/outer/south)
 "sYD" = (
 /obj/lattice{
 	dir = 4;
@@ -83686,14 +83908,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge/research)
-"sYG" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/storage/crate/wooden,
-/obj/random_item_spawner/junk/one,
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/se)
 "sYJ" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -83825,7 +84039,7 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_south,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "taB" = (
 /obj/machinery/turret,
 /obj/lattice{
@@ -84487,6 +84701,15 @@
 	dir = 4
 	},
 /area/research_outpost)
+"thb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/glassblock/transparent/grey,
+/area/station/engine/engineering/ce)
 "thl" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -84797,10 +85020,6 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/medbay)
-"tki" = (
-/obj/disposalpipe/junction/right/east,
-/turf/simulated/wall/auto/reinforced/walp/red,
-/area/station/security/main)
 "tkk" = (
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating/random,
@@ -85381,17 +85600,13 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/item/remote/porter/port_a_brig{
-	pixel_y = 11;
-	pixel_x = -2
-	},
 /obj/item/item_box/no{
 	pixel_y = 4;
 	pixel_x = -5
 	},
 /obj/item/toy/plush/small/bee/cute{
 	pixel_y = 5;
-	pixel_x = 6;
+	pixel_x = 11;
 	name = "Securi-bee";
 	desc = "Shh. It's on duty."
 	},
@@ -86270,6 +86485,9 @@
 "tAe" = (
 /obj/vehicle/segway,
 /obj/decal/stripe_caution,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "tAh" = (
@@ -86408,8 +86626,9 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/mapping_helper/access/medical_director,
 /turf/simulated/floor/carpet/blue/fancy/narrow/north,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "tBP" = (
 /obj/stool/chair{
 	dir = 1;
@@ -86767,6 +86986,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "tFD" = (
@@ -86965,14 +87185,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/ne)
-"tIv" = (
-/obj/railing/orange/reinforced,
-/obj/decal/tile_edge/line/yellow{
-	icon_state = "line1"
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/wood,
-/area/station/ranch)
 "tIy" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -87942,10 +88154,10 @@
 /turf/simulated/floor/techfloor/purple,
 /area/station/turret_protected/ai_upload)
 "tUL" = (
-/obj/storage/secure/closet/command/research_director,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/storage/secure/closet/command/research_director,
 /turf/simulated/floor/carpet/purple/fancy/edge{
 	dir = 8
 	},
@@ -88028,6 +88240,7 @@
 	name = "Armory Turret deactivation control"
 	},
 /obj/stool/bench/red,
+/obj/mapping_helper/access/hos,
 /turf/simulated/floor/glassblock/transparent/red,
 /area/station/security/main)
 "tVM" = (
@@ -88205,7 +88418,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/device/radio/beacon,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -88749,7 +88961,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/station/maintenance/solar/south)
+/area/station/solar/south)
 "udE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
@@ -88836,7 +89048,7 @@
 	name = "really real golden skull"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/se,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "ueH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -89438,6 +89650,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment{
+	dir = 8
+	},
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/crew_quarters/quarters_north)
 "ukc" = (
@@ -89674,10 +89889,10 @@
 	},
 /area/station/maintenance/outer/south)
 "unl" = (
-/obj/machinery/chem_heater{
-	pixel_y = 8
-	},
 /obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/chem_heater/chemistry{
+	pixel_y = 10
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "unm" = (
@@ -89752,9 +89967,6 @@
 "unQ" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/disposalpipe/segment/ejection,
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
 /obj/mapping_helper/access/security,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
@@ -89872,7 +90084,7 @@
 	pixel_x = -1
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "uoY" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -90035,7 +90247,7 @@
 	pixel_x = -8
 	},
 /turf/simulated/floor/sanitary/white,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "uqS" = (
 /obj/machinery/light/incandescent,
 /obj/item/storage/toilet{
@@ -90122,7 +90334,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "urE" = (
 /obj/machinery/phone,
 /obj/table/reinforced/industrial/auto,
@@ -90332,7 +90544,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "uuP" = (
 /obj/machinery/door/poddoor/pyro{
 	id = "cargobay_out";
@@ -91442,7 +91654,7 @@
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "uIG" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/yellow,
@@ -91492,6 +91704,12 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/outer/se)
+"uIY" = (
+/obj/stool/chair{
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/se)
@@ -91789,7 +92007,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/red/checker,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "uNR" = (
 /turf/simulated/wall/auto/walp/purple,
 /area/station/hangar/science)
@@ -92105,6 +92323,7 @@
 	pixel_x = -20
 	},
 /obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/purplewhite/corner,
 /area/station/science/chemistry)
 "uRB" = (
@@ -92246,6 +92465,10 @@
 /obj/storage/closet/law,
 /obj/item/storage/wall/fire{
 	pixel_y = 32
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -92594,7 +92817,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/industrial,
-/area/station/crew_quarters/sauna)
+/area/station/maintenance/outer/south)
 "uXg" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -92674,6 +92897,15 @@
 "uXP" = (
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
+"uXT" = (
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/courtroom)
 "uXU" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -92869,6 +93101,7 @@
 /area/station/crewquarters/reccenter)
 "uZZ" = (
 /obj/decal/stripe_caution,
+/obj/vehicle/segway,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/se)
 "vah" = (
@@ -92974,6 +93207,9 @@
 "vbr" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/north)
@@ -93267,7 +93503,6 @@
 /turf/simulated/floor/twotone,
 /area/station/storage/warehouse)
 "veN" = (
-/obj/landmark/start/job/rancher,
 /obj/stool/chair/green,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -93541,7 +93776,7 @@
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
-/area/station/medical/head)
+/area/station/medical/head/private)
 "vht" = (
 /obj/machinery/centrifuge_nuclear,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -94648,11 +94883,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
+/obj/storage/secure/closet/civilian/chaplain,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "vvs" = (
@@ -94853,19 +95084,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/industrial,
 /area/station/crew_quarters/catering)
-"vya" = (
-/obj/table/wood/auto,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/decoration/ashtray{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/obj/item/cigbutt{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/hydroponics/staff)
 "vyg" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
@@ -94874,13 +95092,6 @@
 	name = "reinforced plating"
 	},
 /area/station/engine/ptl)
-"vyz" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/minitiles/black,
-/area/station/security/main)
 "vyA" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -95126,13 +95337,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
-"vBK" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
-/turf/simulated/floor/grass/random/walp,
-/area/station/crew_quarters/observatory)
 "vBY" = (
 /obj/machinery/light/small/floor/netural,
 /obj/cable{
@@ -95530,7 +95734,6 @@
 /area/station/ai_monitored/storage/eva)
 "vGd" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
 /obj/item/item_box/swedish_bag,
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
@@ -95539,6 +95742,7 @@
 	icon_state = "1-8"
 	},
 /obj/landmark/start/job/chef,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/station/crew_quarters/catering)
 "vGf" = (
@@ -95757,7 +95961,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "vKY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -96422,13 +96626,13 @@
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/south)
 "vTj" = (
-/obj/machinery/chem_heater{
-	pixel_y = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/table/reinforced/chemistry/auto/beakers,
+/obj/machinery/chem_heater/chemistry{
+	pixel_y = 10
+	},
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "vTo" = (
@@ -96631,6 +96835,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/power)
@@ -96926,16 +97133,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/se)
 "vYV" = (
-/obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
 	pixel_x = 6;
 	pixel_y = 8
 	},
+/obj/table/endtable_classic,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
 	},
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/ce/private)
 "vYX" = (
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/east)
@@ -97082,7 +97289,6 @@
 	},
 /obj/disposalpipe/trunk/north,
 /obj/machinery/disposal,
-/obj/railing/orange/reinforced,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -97189,7 +97395,6 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/northwest)
 "wcX" = (
-/obj/railing/orange/reinforced,
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
@@ -97380,7 +97585,6 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "wfh" = (
-/obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/twotone/purple,
 /area/station/science/chemistry)
@@ -98124,7 +98328,7 @@
 /turf/simulated/floor/stairs/wood2/wide{
 	dir = 1
 	},
-/area/station/crew_quarters/stockex)
+/area/station/library)
 "wmw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -98481,6 +98685,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 8
 	},
 /turf/simulated/floor/red/side,
 /area/station/hangar/arrivals)
@@ -98973,6 +99180,7 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/chicken_disposal_pipe/horizontal,
+/obj/machinery/drainage,
 /turf/simulated/floor/twotone/white,
 /area/station/crew_quarters/kitchen)
 "wvp" = (
@@ -99075,7 +99283,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "wxi" = (
 /obj/item/reagent_containers/food/drinks/cola/random{
 	pixel_x = 8;
@@ -99261,6 +99469,9 @@
 /area/station/security/detectives_office)
 "wyN" = (
 /obj/machinery/ghostdrone_factory/part2,
+/obj/machinery/conveyor/EW{
+	move_lag = 15
+	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "wyO" = (
@@ -99873,14 +100084,6 @@
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/teleporter)
-"wDI" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
-	},
-/area/station/medical/head)
 "wDJ" = (
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/southeast)
@@ -100342,7 +100545,7 @@
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 1
 	},
-/turf/simulated/floor/carpet/blue/decal/outercross,
+/turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/restroom)
 "wIK" = (
 /obj/cable{
@@ -100357,13 +100560,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"wIL" = (
-/obj/disposalpipe/segment/brig{
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/walp,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "wIW" = (
 /obj/decal/tile_edge/line/green{
 	dir = 6;
@@ -100493,6 +100689,14 @@
 	pixel_y = 3
 	},
 /obj/machinery/light/emergency,
+/obj/item/clothing/suit/hazard/paramedic{
+	pixel_y = 10;
+	pixel_x = -4
+	},
+/obj/item/clothing/suit/hazard/paramedic{
+	pixel_y = 5;
+	pixel_x = 3
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
 "wJR" = (
@@ -100870,6 +101074,13 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/security/hos)
+"wOJ" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/glassblock/transparent/grey,
+/area/station/engine/engineering/ce)
 "wOK" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/brig,
@@ -101699,6 +101910,9 @@
 	},
 /obj/decal/stripe_caution,
 /obj/storage/secure/closet/medical/anesthetic,
+/obj/machinery/light_switch/west{
+	dir = 4
+	},
 /turf/simulated/floor/redwhite/corner{
 	dir = 8
 	},
@@ -101797,10 +102011,9 @@
 /area/station/ranch)
 "xag" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	icon_state = "glass_locked";
-	locked = 1
+	dir = 4
 	},
+/obj/mapping_helper/airlock/bolter,
 /turf/simulated/floor/plating/airless,
 /area/research_outpost/toxins)
 "xai" = (
@@ -101894,6 +102107,10 @@
 /area/station/medical/medbay/lobby)
 "xbe" = (
 /obj/voting_box,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "xbu" = (
@@ -101945,6 +102162,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/item/device/microphone,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "xbY" = (
@@ -102527,8 +102745,11 @@
 /turf/simulated/floor/twotone,
 /area/station/hallway/secondary/west)
 "xjG" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "xjP" = (
 /turf/simulated/floor/carpet/darkcarpet/border{
 	dir = 10
@@ -102578,7 +102799,7 @@
 /obj/disposalpipe/segment/brig,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
-/area/station/security/checkpoint/podbay)
+/area/station/security/checkpoint/escape)
 "xkk" = (
 /obj/machinery/light/small/floor/netural,
 /obj/machinery/conveyor/SN{
@@ -102622,6 +102843,9 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/access/maint,
 /obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/industrial,
 /area/station/crew_quarters/courtroom)
 "xkz" = (
@@ -102850,6 +103074,10 @@
 	},
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"xnE" = (
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/black/grime,
+/area/station/security/checkpoint/arrivals)
 "xnK" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
@@ -103362,6 +103590,15 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig)
+"xva" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/outer/east)
 "xvm" = (
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/black,
@@ -103389,6 +103626,9 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
+"xvA" = (
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/station/medical/head/private)
 "xvB" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -104460,15 +104700,12 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent,
-/obj/table/wood/auto,
-/obj/item/bee_egg_carton,
-/obj/item/device/light/lava_lamp{
-	pixel_x = 6;
-	pixel_y = 18
-	},
-/obj/item/reagent_containers/glass/bottle/eyedrops{
-	pixel_x = -8;
-	pixel_y = 12
+/obj/storage/crate,
+/obj/item/device/reagentscanner,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/item/clothing/glasses/spectro,
+/obj/item/clothing/glasses/blindfold{
+	name = "For Krimpus"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
@@ -104557,8 +104794,11 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "xLT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
-/area/station/medical/head)
+/area/station/medical/head/private)
 "xLX" = (
 /obj/table/syndicate/auto,
 /obj/item/cigpacket{
@@ -104729,7 +104969,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/binary/pump/active{
-	dir = 1;
+	dir = 2;
 	frequency = 1225;
 	id = "Reactor Gas Supply 2";
 	name = "reactor gas supply pump 2";
@@ -104809,7 +105049,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/maintenance/solar/south)
+/area/station/solar/south)
 "xOe" = (
 /turf/simulated/wall/auto/walp,
 /area/station/garden/aviary)
@@ -105017,7 +105257,6 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/loudspeaker,
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 12
@@ -105226,12 +105465,6 @@
 	dir = 4
 	},
 /area/station/medical/robotics)
-"xSC" = (
-/obj/stool/bench/red,
-/obj/disposalpipe/segment/brig,
-/obj/landmark/start/job/security_officer,
-/turf/simulated/floor/black,
-/area/station/security/main)
 "xSD" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/morgue{
@@ -105458,7 +105691,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
@@ -105721,6 +105953,10 @@
 	pixel_y = 30
 	},
 /obj/machinery/vending/coffee,
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "xZa" = (
@@ -105866,7 +106102,7 @@
 /area/station/hallway/primary/southeast)
 "yaa" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/command/medical_director,
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -113838,7 +114074,7 @@ xzO
 mAf
 qZn
 ufP
-aFo
+gED
 gED
 gED
 gED
@@ -121693,8 +121929,8 @@ jmF
 ymf
 eBN
 eBN
-ntJ
-wkj
+eBN
+jcc
 ycH
 rKV
 wym
@@ -125535,7 +125771,7 @@ xJC
 xJC
 xJC
 xJC
-xJC
+bDi
 xJC
 xJC
 xJC
@@ -126137,10 +126373,10 @@ xJC
 xJC
 xJC
 xJC
+fsP
 xJC
-xJC
-xJC
-xJC
+fsP
+fsP
 xJC
 xJC
 xJC
@@ -126330,11 +126566,11 @@ xJC
 xJC
 xJC
 ect
-dIV
-dIV
-dIV
-dIV
-dIV
+qKa
+qKa
+qKa
+qKa
+qKa
 dqP
 rKR
 kNI
@@ -126439,10 +126675,10 @@ xJC
 xJC
 xJC
 xJC
-xJC
-xJC
-xJC
-xJC
+bDi
+bDi
+fsP
+fsP
 xJC
 xJC
 xJC
@@ -126632,11 +126868,11 @@ vzM
 vzM
 vzM
 bJB
-dIV
+qKa
 ncm
-bmk
+xvA
 iIf
-dIV
+qKa
 jHz
 eJr
 eJr
@@ -126741,9 +126977,9 @@ xJC
 xJC
 xJC
 xJC
-xJC
-xJC
-xJC
+bDi
+fsP
+bDi
 xJC
 xJC
 xJC
@@ -126934,11 +127170,11 @@ ryu
 aJm
 bSB
 dIV
-dIV
+qKa
 btQ
 aLh
 akj
-dIV
+qKa
 tQk
 eJr
 kNI
@@ -127043,10 +127279,10 @@ xJC
 xJC
 xJC
 xJC
-xJC
-xJC
-xJC
-xJC
+bDi
+bDi
+bDi
+bDi
 xJC
 xJC
 xJC
@@ -127236,11 +127472,11 @@ gAO
 kQC
 uaA
 aWN
-dIV
+qKa
 kHb
 ges
 klD
-dIV
+qKa
 owY
 eJr
 eJr
@@ -127347,8 +127583,8 @@ xJC
 xJC
 xJC
 xJC
-xJC
-xJC
+bDi
+bDi
 xJC
 xJC
 xJC
@@ -127538,11 +127774,11 @@ rZm
 pmr
 bmk
 tYZ
-dIV
+qKa
 oVA
 sbR
 ges
-dIV
+qKa
 mNV
 eJr
 kNI
@@ -127646,7 +127882,7 @@ xJC
 xJC
 xJC
 xJC
-bDi
+xJC
 xJC
 xJC
 xJC
@@ -127840,12 +128076,12 @@ eTX
 rDl
 iUc
 yaa
-dIV
-dIV
-dIV
+qKa
+qKa
+qKa
 vhs
-dIV
-dIV
+qKa
+qKa
 pLa
 kNI
 kNI
@@ -128142,12 +128378,12 @@ cBU
 pGo
 ohX
 hJY
-dIV
+qKa
 tBF
 lPy
 xjG
 miw
-dIV
+qKa
 vZi
 eJr
 eJr
@@ -128248,10 +128484,10 @@ xJC
 xJC
 xJC
 xJC
-fsP
 xJC
-fsP
-fsP
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -128444,12 +128680,12 @@ tlu
 iLk
 ohX
 qGW
-dIV
-dIV
+qKa
+qKa
 ffG
 xLT
 cek
-dIV
+qKa
 riD
 eJr
 iFF
@@ -128473,8 +128709,8 @@ aET
 aET
 aET
 aET
-toO
-jAy
+nKj
+rgu
 xJC
 xJC
 xJC
@@ -128550,10 +128786,10 @@ xJC
 xJC
 xJC
 xJC
-bDi
-bDi
-fsP
-fsP
+xJC
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -128747,11 +128983,11 @@ jOL
 kYx
 sOk
 jWu
-dIV
+qKa
 lun
 xLT
 qry
-dIV
+qKa
 gaE
 dIT
 tNF
@@ -128774,7 +129010,12 @@ jWK
 jWK
 nJd
 ilV
-aET
+cJV
+nKj
+nKj
+dWL
+dWL
+uFz
 xJC
 xJC
 xJC
@@ -128850,11 +129091,6 @@ xJC
 xJC
 xJC
 xJC
-xJC
-xJC
-bDi
-fsP
-bDi
 xJC
 xJC
 xJC
@@ -129048,12 +129284,12 @@ nYJ
 bEX
 bSx
 jDI
-wDI
+jDI
 coI
 bdP
-xLT
+mNt
 tay
-dIV
+qKa
 eJr
 dJr
 wKf
@@ -129076,12 +129312,12 @@ ilV
 bzX
 dbD
 ilV
-aET
-dWL
-dWL
-dWL
-dWL
-uFz
+cJV
+qYp
+qiB
+qYp
+ylt
+qSX
 xJC
 xJC
 xJC
@@ -129154,10 +129390,10 @@ xJC
 xJC
 xJC
 xJC
-bDi
-bDi
-bDi
-bDi
+xJC
+xJC
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -129351,11 +129587,11 @@ jkQ
 sLe
 rwz
 cjK
-dIV
+qKa
 ker
 rpN
 ueC
-dIV
+qKa
 eJr
 nsr
 eJr
@@ -129382,8 +129618,8 @@ aET
 aET
 cJV
 aET
-ylt
-qSX
+usS
+vAC
 xJC
 xJC
 xJC
@@ -129458,8 +129694,8 @@ xJC
 xJC
 xJC
 xJC
-bDi
-bDi
+xJC
+xJC
 xJC
 xJC
 xJC
@@ -129653,11 +129889,11 @@ hmo
 tzu
 dIV
 dIV
-dIV
-dIV
-dIV
-dIV
-dIV
+qKa
+qKa
+qKa
+qKa
+qKa
 ycb
 nxR
 uNR
@@ -129685,7 +129921,7 @@ jzM
 ilV
 lyJ
 usS
-vAC
+xJC
 xJC
 xJC
 xJC
@@ -131246,7 +131482,7 @@ uLF
 uLF
 uLF
 uLF
-krP
+pxS
 xJC
 xJC
 xJC
@@ -132454,7 +132690,7 @@ uLF
 uLF
 uLF
 uLF
-qEU
+mCM
 xJC
 hmi
 hek
@@ -143006,9 +143242,9 @@ aPY
 wYY
 jId
 vgk
+edY
+edY
 jId
-jId
-vgk
 atc
 atc
 jId
@@ -143311,7 +143547,7 @@ jId
 jId
 jId
 jId
-jId
+sNv
 jId
 jId
 boy
@@ -143848,7 +144084,7 @@ gsk
 kWW
 jZf
 eKh
-gxN
+jgc
 mxD
 wXR
 kuP
@@ -144217,7 +144453,7 @@ jId
 jId
 jId
 jId
-jId
+sNv
 jId
 jId
 boy
@@ -144516,9 +144752,9 @@ lnW
 fDC
 jId
 slY
+edY
+edY
 jId
-jId
-vgk
 atc
 atc
 jId
@@ -145616,7 +145852,7 @@ nrn
 ncv
 eAk
 lQZ
-vBK
+eAk
 dYf
 qMh
 pUz
@@ -148073,7 +148309,7 @@ bOv
 gnL
 oJN
 wbc
-oyF
+lRe
 wYS
 wYS
 wYS
@@ -148138,7 +148374,7 @@ lLQ
 lLQ
 lLQ
 lLQ
-hal
+jmW
 jpb
 jmW
 jnn
@@ -148940,7 +149176,7 @@ pbe
 lxy
 lxy
 iBH
-wqp
+xnE
 aIU
 ewi
 ewi
@@ -148978,7 +149214,7 @@ pHw
 sNh
 lOQ
 rmC
-tIv
+pHw
 fhD
 jEi
 jEi
@@ -149280,8 +149516,8 @@ vAr
 tbP
 smG
 rXi
-tIv
-oyF
+pHw
+lRe
 pMg
 wYS
 dVR
@@ -149346,7 +149582,7 @@ kFS
 nVu
 vnu
 lLQ
-dce
+rgM
 wdY
 ozL
 iGB
@@ -149583,7 +149819,7 @@ bnY
 ego
 sOm
 wcX
-oyF
+lRe
 dVR
 cLr
 tum
@@ -149648,7 +149884,7 @@ mCN
 iwh
 llh
 lLQ
-dce
+rgM
 jpb
 gmS
 jmW
@@ -149842,7 +150078,7 @@ hfI
 luz
 mLh
 qwN
-uxM
+idT
 lxy
 yaV
 eEu
@@ -149885,7 +150121,7 @@ gQq
 die
 syY
 qPJ
-fBQ
+sKS
 djZ
 rzZ
 rzZ
@@ -150144,7 +150380,7 @@ mLh
 mLh
 mLh
 qwN
-uxM
+idT
 lxy
 lxy
 lxy
@@ -150446,7 +150682,7 @@ gGT
 dYL
 ugG
 qwN
-uxM
+idT
 rTq
 www
 qXv
@@ -150487,7 +150723,7 @@ wYS
 hCb
 oRo
 mhp
-oyF
+lRe
 wYS
 wYS
 nvb
@@ -150789,7 +151025,7 @@ wYS
 hCb
 kPS
 mhp
-oyF
+lRe
 wYS
 wYS
 aGe
@@ -151046,10 +151282,10 @@ qwN
 qwN
 qwN
 qwN
-uxM
-rrY
-qwN
-qwN
+iGV
+foT
+cmF
+cmF
 apQ
 rxU
 tZZ
@@ -151091,7 +151327,7 @@ mEa
 qIR
 lbP
 sbc
-oyF
+lRe
 wYS
 wYS
 aGe
@@ -151651,7 +151887,7 @@ lrQ
 iWg
 iWg
 vbr
-iWg
+fLR
 axP
 uyN
 oxU
@@ -152897,8 +153133,8 @@ hQd
 wyd
 dJn
 heu
-czJ
-kiI
+kki
+kki
 kki
 ncM
 jqv
@@ -153199,8 +153435,8 @@ saJ
 ugc
 eFg
 epo
-vya
-kiI
+czJ
+nbk
 kki
 ncM
 gWI
@@ -153502,7 +153738,7 @@ ugc
 lyC
 csR
 lIw
-kki
+kiI
 kki
 xJD
 dJn
@@ -153806,7 +154042,7 @@ map
 kki
 kki
 kki
-ncM
+seU
 dJn
 mdm
 dzx
@@ -154047,7 +154283,7 @@ rPJ
 gXB
 cKC
 ogq
-nLM
+mOI
 sms
 hmZ
 upu
@@ -154445,7 +154681,7 @@ mIo
 buK
 jtd
 jtd
-bHl
+jtd
 eap
 exy
 ahy
@@ -154651,7 +154887,7 @@ rPJ
 nyp
 cKC
 yfg
-nLM
+mOI
 sms
 hmZ
 upu
@@ -156798,7 +157034,7 @@ uVF
 diJ
 piT
 scn
-sEN
+eSm
 huD
 vXL
 xhy
@@ -157141,7 +157377,7 @@ ebn
 utY
 odF
 ntC
-sLv
+gzQ
 ntC
 uEp
 gIE
@@ -157685,8 +157921,8 @@ vbk
 pUV
 qXv
 pUV
-pUV
-qXv
+oOc
+rsu
 euF
 pUV
 fsq
@@ -162550,8 +162786,8 @@ gQy
 dtS
 bWs
 oOy
-cnt
-cOF
+eef
+lAL
 wUI
 jMt
 koO
@@ -163212,7 +163448,7 @@ sgd
 sgd
 fJV
 sgd
-gYv
+sgd
 vgS
 vwq
 fYk
@@ -163792,7 +164028,7 @@ ire
 veo
 xlB
 nKJ
-rHJ
+rnf
 rnf
 jDE
 rnf
@@ -164093,8 +164329,8 @@ csw
 niE
 xhp
 vay
-hLH
-nwH
+avq
+lcD
 tex
 hLH
 eVR
@@ -164395,8 +164631,8 @@ clv
 srN
 srN
 srN
+hdF
 srN
-ifQ
 lbS
 lbS
 lbS
@@ -164698,7 +164934,7 @@ srN
 tvo
 niX
 aRL
-ifQ
+srN
 pDv
 vBe
 sTE
@@ -164998,9 +165234,9 @@ srN
 srN
 iOc
 acN
-xSC
+hjz
 eAy
-tki
+srN
 cxp
 qGE
 bKY
@@ -165302,7 +165538,7 @@ sOz
 fuc
 fuc
 mCz
-ifQ
+srN
 eMJ
 rva
 nwm
@@ -165604,7 +165840,7 @@ fIw
 xuM
 wVI
 dof
-ifQ
+srN
 pFM
 rva
 vZZ
@@ -165906,7 +166142,7 @@ bEd
 gRR
 rhb
 tAe
-ifQ
+srN
 cGe
 rva
 ssU
@@ -166208,7 +166444,7 @@ aGb
 evu
 rhb
 tAe
-ifQ
+srN
 jLH
 aav
 jLH
@@ -166510,7 +166746,7 @@ jdR
 uZT
 oXw
 duz
-ifQ
+srN
 bXG
 qKx
 vCC
@@ -166811,8 +167047,8 @@ bkP
 nYh
 ddN
 evv
-bkP
-ifQ
+moo
+srN
 uIN
 rzX
 fbf
@@ -167114,7 +167350,7 @@ bwH
 udh
 epX
 cYh
-wIL
+bkP
 gDB
 cSA
 fuc
@@ -167718,7 +167954,7 @@ voR
 eTV
 kuC
 kkL
-wIL
+bkP
 hrY
 ldn
 lXk
@@ -168376,7 +168612,7 @@ itN
 kQz
 okB
 xlD
-okB
+thb
 gSn
 laP
 dGe
@@ -168678,7 +168914,7 @@ mwF
 duh
 hww
 iHD
-krh
+wOJ
 ubr
 vzn
 tKS
@@ -168972,9 +169208,9 @@ saK
 tMN
 esL
 udM
-ejZ
-ejZ
-ejZ
+ruj
+ruj
+ruj
 pdR
 pdR
 pdR
@@ -168983,7 +169219,7 @@ odH
 pdR
 ubr
 nyH
-xiW
+evA
 vJb
 gNY
 aIQ
@@ -169274,7 +169510,7 @@ iWk
 uuA
 gVW
 uuA
-ejZ
+ruj
 ooF
 uqR
 jUB
@@ -169285,7 +169521,7 @@ nxr
 bIB
 ubr
 rBi
-mBW
+xiW
 oLC
 iby
 ePy
@@ -169536,7 +169772,7 @@ jYB
 bXx
 eDl
 evR
-vyz
+fbf
 evR
 fbf
 imV
@@ -169576,7 +169812,7 @@ lCA
 cwO
 rkS
 ujK
-ejZ
+ruj
 pyZ
 jUB
 lfB
@@ -169878,7 +170114,7 @@ icZ
 iBb
 qls
 nrU
-ejZ
+ruj
 nOJ
 pVl
 hlK
@@ -170180,11 +170416,11 @@ wPp
 dVh
 gVW
 rIt
-ejZ
-ejZ
-ejZ
-ejZ
-ejZ
+ruj
+ruj
+ruj
+ruj
+ruj
 vKW
 lTs
 vYV
@@ -170486,11 +170722,11 @@ euw
 eQm
 nrU
 vwM
-ejZ
-ejZ
-ejZ
-ejZ
-ejZ
+ruj
+ruj
+ruj
+ruj
+ruj
 ubr
 ubr
 ubr
@@ -171085,7 +171321,7 @@ oTG
 nKj
 aPH
 aPH
-nrU
+uIY
 kBy
 lvc
 rzk
@@ -171690,7 +171926,7 @@ oTG
 nKj
 aPH
 pfZ
-sYG
+drI
 qSw
 rzk
 mgq
@@ -171925,7 +172161,7 @@ duc
 hCh
 awx
 jLt
-pQt
+uXT
 xkv
 gFX
 uSz
@@ -172317,8 +172553,8 @@ qQZ
 wTk
 saK
 oqm
-bYu
 qQZ
+xJC
 xJC
 xJC
 xJC
@@ -172619,8 +172855,8 @@ qQZ
 nNM
 saK
 nNM
-jOQ
 qQZ
+xJC
 xJC
 xJC
 xJC
@@ -172921,8 +173157,8 @@ oEj
 saK
 saK
 saK
-kRZ
 qQZ
+xJC
 xJC
 xJC
 xJC
@@ -173133,7 +173369,7 @@ duc
 xHC
 jLt
 iDA
-jjF
+set
 jjF
 etj
 xcv
@@ -173224,7 +173460,7 @@ saK
 saK
 saK
 qQZ
-qQZ
+xJC
 xJC
 xJC
 xJC
@@ -173435,7 +173671,7 @@ xoz
 xHC
 jLt
 ugQ
-jjF
+set
 ebD
 cWE
 pvY
@@ -173737,7 +173973,7 @@ xoz
 tek
 jLt
 mjj
-jjF
+set
 jjF
 bjo
 xkv
@@ -174348,7 +174584,7 @@ xkv
 xkv
 xkv
 xkv
-xkv
+sqq
 rYf
 nNP
 sjt
@@ -174942,8 +175178,8 @@ duc
 uvG
 duc
 xoz
-hFT
-awx
+xva
+fId
 xky
 fZC
 sUh
@@ -174953,7 +175189,7 @@ aYu
 hUW
 jLt
 jLt
-rxQ
+sjt
 kYW
 nIP
 nIP
@@ -181182,7 +181418,7 @@ uGd
 uGd
 dZy
 ill
-biS
+fje
 jAv
 lln
 sGA
