@@ -34,7 +34,6 @@ TYPEINFO(/obj/machinery/shipalert)
 /obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
-		
 	src.add_fingerprint(user)
 
 	switch (usageState)
