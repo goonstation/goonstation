@@ -12,7 +12,7 @@
 	throw_range = 10
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
-	var/maptext_size = 12 //how big in px it makes your text. lower numbers can make your text smaller
+	var/maptext_size = 18 //how big in px it makes your text. lower numbers can make your text smaller
 	var/maptext_color = "#b0e8b3"
 	var/maptext_outline_color = "#043606"
 	/// Amount this modifies your speech loudness by, ranging from -1 to 2
@@ -67,12 +67,13 @@
 	desc = "Inform the crew of how you ARE the law. May contain explosives."
 	icon_state = "megaphone_hos"
 	item_state = "megaphone_hos"
-	is_syndicate = TRUE
-	maptext_size = 18
+	maptext_size = 12
 	maptext_color = "#8d1422"
 	maptext_outline_color = "#250606"
-	law_required = TRUE
 
 	emag_act()
-		. = ..()
-		law_required = FALSE
+		if(src.loudness_mod > 0)
+			if (user)
+				user.show_text("You swipe the card against [src], and you feel a mechanism within click into place.", "red")
+			src.law_required = TRUE
+			src.maptext_size = 18

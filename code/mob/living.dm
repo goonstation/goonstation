@@ -1185,7 +1185,8 @@
 
 		if(megaphone.law_required)
 			messages[1] = "I AM THE LAW!"
-			megaphone.are_you_the_law(src, messages[1])
+
+		megaphone.are_you_the_law(src, messages[1])
 
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
