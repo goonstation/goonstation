@@ -3645,6 +3645,10 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "Research Outpost Hangar"
 		icon_state = "hangar"
 
+/area/research_outpost/lobby
+		name = "Research Outpost Lobby"
+		icon_state = "blue"
+
 /area/research_outpost/chamber
 		name = "Research Outpost Test Chamber"
 		icon_state = "yellow"
