@@ -183,7 +183,7 @@ change the direction of created objects.<br>
 				if ("Fling")
 					if (ispath(objpath, /atom/movable))
 						var/atom/movable/AM = new objpath(get_turf(usr))
-						AM.throw_at(T, 1000, 1)
+						AM.throw_at(T, 1000, 1, allow_anchored = TRUE)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
