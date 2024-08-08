@@ -1476,6 +1476,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			desc = "a sharp little dart with a little poison reservoir."
 			icon_state = "blowdart"
 			leaves_wound = FALSE
+			barbed = TRUE
 
 			New()
 				..()
