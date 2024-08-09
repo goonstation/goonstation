@@ -4740,24 +4740,6 @@
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
-"aqf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/fakeobject{
-	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "skeleton_stand";
-	name = "Jim"
-	},
-/obj/decal/poster/wallsign/framed_award/mdlicense{
-	pixel_y = 27
-	},
-/turf/simulated/floor/carpet{
-	dir = 1;
-	icon_state = "fblue2"
-	},
-/area/station/medical/head)
 "aqg" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -5971,16 +5953,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"atZ" = (
-/obj/stool/bee_bed/heisenbee,
-/obj/critter/domestic_bee/heisenbee,
-/obj/machinery/light/incandescent/warm,
-/obj/decal/poster/wallsign/framed_award/rddiploma{
-	pixel_y = -3;
-	pixel_x = -32
-	},
-/turf/simulated/floor/wood,
-/area/station/science/research_director)
 "aua" = (
 /turf/simulated/floor/wood,
 /area/station/science/research_director)
@@ -10589,16 +10561,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"aJg" = (
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/purple{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "aJi" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/machinery/power/apc/autoname_east,
@@ -11103,12 +11065,6 @@
 /area/station/hallway/primary/east)
 "aKO" = (
 /obj/storage/closet/port_a_sci,
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
-"aKP" = (
-/obj/stool/chair/office/purple{
-	dir = 4
-	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKR" = (
@@ -17286,15 +17242,6 @@
 "blH" = (
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
-"blI" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "blK" = (
 /obj/computerframe{
 	anchored = 1;
@@ -18454,12 +18401,6 @@
 "bpT" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
-/area/station/engine/elect)
-"bpU" = (
-/obj/stool/chair/yellow,
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
 /area/station/engine/elect)
 "bpV" = (
 /obj/shrub{
@@ -20558,21 +20499,6 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
-	},
-/area/station/bridge/hos)
-"bxd" = (
-/obj/table/wood/round/auto,
-/obj/item/stamp/hop,
-/obj/item/device/gps,
-/obj/item/storage/secure/ssafe{
-	pixel_x = 26
-	},
-/obj/decal/poster/wallsign/framed_award/firstbill{
-	pixel_y = 26
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fgreen3"
 	},
 /area/station/bridge/hos)
 "bxe" = (
@@ -34213,6 +34139,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/diner/dining)
+"flf" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
 "flB" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/yellow/side{
@@ -34230,15 +34163,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"fnG" = (
-/obj/stool/chair/blue{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/blue/corner{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery/storage)
 "fnS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -38272,6 +38196,21 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"lvA" = (
+/obj/table/wood/round/auto,
+/obj/item/stamp/hop,
+/obj/item/device/gps,
+/obj/item/storage/secure/ssafe{
+	pixel_x = 26
+	},
+/obj/decal/poster/wallsign/framed_award/firstbill{
+	pixel_y = 26
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fgreen3"
+	},
+/area/station/bridge/hos)
 "lvP" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -39557,6 +39496,11 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor,
 /area/station/security/processing)
+"mXI" = (
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "mXZ" = (
 /obj/item/a_gift,
 /turf/simulated/floor/plating/random,
@@ -40098,6 +40042,16 @@
 /obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"nIg" = (
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/obj/machinery/light/incandescent/warm,
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_y = -3;
+	pixel_x = -32
+	},
+/turf/simulated/floor/wood,
+/area/station/science/research_director)
 "nIs" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
@@ -40547,6 +40501,16 @@
 /obj/item/furniture_parts/table,
 /turf/simulated/floor/martian,
 /area/martian_trader)
+"ori" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/cool,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/blue/corner{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery/storage)
 "osv" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -42769,6 +42733,17 @@
 	name = "reinforced plating"
 	},
 /area/station/maintenance/disposal)
+"rAw" = (
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "rAZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -42910,6 +42885,24 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
+"rSo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/fakeobject{
+	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "skeleton_stand";
+	name = "Jim"
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fblue2"
+	},
+/area/station/medical/head)
 "rSv" = (
 /turf/simulated/wall/auto/asteroid,
 /area/sunken_asteroid)
@@ -43249,6 +43242,16 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"szc" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "szF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/purple,
@@ -46662,6 +46665,13 @@
 "xNc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"xNO" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "xOk" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/creamer{
@@ -93070,7 +93080,7 @@ akR
 anm
 anY
 fha
-apN
+mXI
 ard
 gNA
 ovi
@@ -96755,7 +96765,7 @@ aUp
 cks
 cku
 bvL
-bxd
+lvA
 dFS
 bvL
 bzM
@@ -97891,7 +97901,7 @@ afq
 afq
 afq
 ajQ
-fnG
+ori
 lok
 uEW
 fQL
@@ -97901,7 +97911,7 @@ fbA
 lYt
 aoh
 aog
-aqf
+rSo
 apA
 apA
 asB
@@ -103086,7 +103096,7 @@ wKy
 xnV
 boF
 aeA
-bpU
+flf
 sHl
 brs
 bse
@@ -104549,7 +104559,7 @@ apd
 acz
 arI
 cZv
-atZ
+nIg
 apd
 awI
 axL
@@ -104568,10 +104578,10 @@ aHr
 aHM
 aIq
 ayO
-aJg
+rAw
 aJG
 aJG
-aKP
+xNO
 xOk
 ayO
 aet
@@ -105799,7 +105809,7 @@ aer
 bhs
 cgA
 afk
-blI
+szc
 ceB
 aAy
 boJ
