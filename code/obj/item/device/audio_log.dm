@@ -83,6 +83,11 @@ TYPEINFO(/obj/item/device/audio_log)
 	icon_state = "audiolog_newSmall"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
+
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_AUDIO_LOG)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	var/obj/item/audio_tape/tape = null
 	var/mode = MODE_OFF
 	var/max_lines = 60
@@ -106,8 +111,6 @@ TYPEINFO(/obj/item/device/audio_log)
 
 	New()
 		..()
-		if (!src.chat_text)
-			src.chat_text = new(null, src)
 		SPAWN(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
@@ -218,33 +221,18 @@ TYPEINFO(/obj/item/device/audio_log)
 			return src.Attackby(W, user)
 		return ..()
 
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
+	hear(datum/say_message/message)
 		if (src.mode != MODE_RECORDING || !src.tape)
 			return
 
-		if (speaker.mind && speaker.mind.assigned_role == "Captain")
-			speaker.unlock_medal("Captain's Log", 1)
+		var/mob/M = message.speaker
+		if (istype(M) && (M.mind?.assigned_role == "Captain"))
+			M.unlock_medal("Captain's Log", TRUE)
 
-		var/speaker_name = speaker.real_name
-		if (real_name)
-			speaker_name = real_name
-
-		if (speaker.vdisfigured)
-			speaker_name = "Unknown"
-
-		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)
-			if (speaker:wear_id)
-				speaker_name = speaker:wear_id:registered
-			else
-				speaker_name = "Unknown"
-
-		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
-		if (src.tape.add_message(speaker_name, message, continuous) == 0)
-			src.speak(null, "Memory full. Have a nice day.", TRUE)
+		if (!src.tape.add_message(message.speaker_to_display, message.content, src.continuous))
+			src.say("Memory full. Have a nice day.", flags = 0, message_params = list("speaker_to_display" = ""))
 			src.mode = MODE_OFF
 			src.updateSelfDialog()
-
-		return
 
 	proc/play()
 		if (!src.tape)
@@ -264,10 +252,10 @@ TYPEINFO(/obj/item/device/audio_log)
 					stop()
 					return
 
-				var/speaker = copytext(speak_message, 1, separator)
+				var/speaker = copytext(speak_message, 1, separator) || "Unknown"
 				speak_message = copytext(speak_message, separator+1)
 
-				speak(speaker, speak_message)
+				src.say("[speak_message]", flags = 0, message_params = list("speaker_to_display" = "[speaker]"))
 				sleep(5 SECONDS)
 				if (!tape || !tape.next(continuous))
 					stop()
@@ -279,35 +267,16 @@ TYPEINFO(/obj/item/device/audio_log)
 			SPAWN(2 SECONDS)
 				src.explode()
 
-	proc/speak(speaker, message, show_no_speaker, text_colour_override)
-		if (!message)
-			return
-		var/speaker_colour
-		if (!text_colour_override)
-			speaker_colour = src.text_colour
-			if (speaker && !show_no_speaker && name_colours[speaker])
-				speaker_colour = name_colours[speaker]
-		else
-			speaker_colour = text_colour_override
-		if (!speaker && !show_no_speaker)
-			speaker = "Unknown"
-
-		var/image/chat_maptext/audio_log_text
-		if (istype(src.loc, /turf))
-			audio_log_text = make_chat_maptext(src, message, "color: [speaker_colour];")
-			if (audio_log_text && src.chat_text && length(src.chat_text.lines))
-				audio_log_text.measure(src)
-				for (var/image/chat_maptext/I in src.chat_text.lines)
-					if (I != audio_log_text)
-						I.bump_up(audio_log_text.measured_height)
-		src.audible_message("<span class='radio' style='color: [speaker_colour]'>[SPAN_NAME("[speaker]")]<b> [bicon(src)]\[Log\]</b> [SPAN_MESSAGE("\"[message]\"")]</span>", assoc_maptext = audio_log_text)
-		return
-
 	proc/explode()
-		speak(null, "This message will self-destruct in 5 seconds...", TRUE, "#E00000")
+		var/message_params = list(
+			"speaker_to_display" = "",
+			"maptext_css_values" = list("color" = "#E00000")
+		)
+
+		src.say("This message will self-destruct in 5 seconds...", flags = 0, message_params = message_params)
 		sleep(1 SECOND)
 		for (var/i in 1 to 4)
-			speak(null, "[5 - i]", TRUE, "#E00000")
+			src.say("[5 - i]", flags = 0, message_params = message_params)
 			sleep(1 SECOND)
 
 		src.blowthefuckup(2)

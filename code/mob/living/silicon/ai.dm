@@ -88,6 +88,16 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS_AI, LISTEN_INPUT_SILICONCHAT, LISTEN_INPUT_FLOCK_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_speech_prefixes = list(SPEECH_PREFIX_AI_RADIO_1, SPEECH_PREFIX_AI_RADIO_2, SPEECH_PREFIX_AI_RADIO_3)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_SILICONCHAT, SPEECH_OUTPUT_EQUIPPED)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+	say_language = LANGUAGE_ENGLISH
+
 	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
@@ -101,7 +111,6 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
-	var/glitchy_speak = 0
 	//Comm over powernet stuff
 	var/net_id = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -353,12 +362,15 @@ or don't if it uses a custom topopen overlay
 		src.botcard.assignment = "AI"
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
+		src.radio1.toggle_microphone(FALSE)
+		src.radio1.toggle_speaker(FALSE)
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.device_color = "#7F7FE2"
-		src.radio3.name = "Secure Channels Monitor"
-		src.radio1.broadcasting = FALSE
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
-		src.radio3.broadcasting = FALSE
+		src.radio2.toggle_microphone(FALSE)
+		src.radio2.toggle_speaker(FALSE)
+		src.radio3.name = "Secure Channels Monitor"
+		src.radio3.toggle_microphone(FALSE)
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)
@@ -391,7 +403,7 @@ or don't if it uses a custom topopen overlay
 		return src.eyecam
 	return src
 
-/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
+/mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "")
 	..()
 	if (deployed_to_eyecam && src.eyecam)
 		src.eyecam.show_message(msg, 1, 0, 0, group)
@@ -1344,39 +1356,40 @@ or don't if it uses a custom topopen overlay
 
 	if (!isalive(src))
 		return
-	if (maptext_out)
-		var/image/chat_maptext/chat_text = null
-		SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-			if (speechpopups && src.chat_text)
-				chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-				if(chat_text)
-					chat_text.measure(src.client)
-					for(var/image/chat_maptext/I in src.chat_text.lines)
-						if(I != chat_text)
-							I.bump_up(chat_text.measured_height)
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				act = lowertext(act)
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (m_type & 2)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-				else if (!isturf(src.loc))
-					var/atom/A = src.loc
-					for (var/mob/O in A.contents)
-						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-	else
-		if (message)
-			logTheThing(LOG_SAY, src, "EMOTE: [message]")
-			if (m_type & 1)
-				for (var/mob/O in viewers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-			else
-				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_EMOTE("[message]"), m_type)
-	return
+
+	if (!message)
+		return
+
+	var/list/client/recipients = list()
+	if (m_type & 1)
+		for (var/mob/M as anything in viewers(src, null))
+			if (!M.client)
+				continue
+
+			recipients += M.client
+
+	else if (m_type & 2)
+		for (var/mob/M in hearers(src, null))
+			if (!M.client)
+				continue
+
+			recipients += M.client
+
+	else if (!isturf(src.loc))
+		var/atom/A = src.loc
+		for (var/mob/M in A.contents)
+			if (!M.client)
+				continue
+
+			recipients += M.client
+
+	logTheThing(LOG_SAY, src, "EMOTE: [message]")
+	act = lowertext(act)
+	for (var/client/client as anything in recipients)
+		client.mob.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+		global.display_emote_maptext(src, recipients, maptext_out)
 
 
 /mob/living/silicon/ai/clamp_values()
@@ -1520,34 +1533,6 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
 	..()
-
-/mob/living/silicon/ai/say_understands(var/other)
-	if (ishuman(other))
-		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace.exclusive_language)
-			return 1
-	if (isrobot(other))
-		return 1
-	if (isshell(other))
-		return 1
-	if (ismainframe(other))
-		return 1
-	return ..()
-
-/mob/living/silicon/ai/say_quote(var/text)
-	if (src.glitchy_speak)
-		text = voidSpeak(text)
-	var/ending = copytext(text, length(text))
-
-	if (singing)
-		return singify_text(text)
-
-	if (ending == "?")
-		return "queries, \"[text]\"";
-	else if (ending == "!")
-		return "declares, \"[text]\"";
-
-	return "states, \"[text]\"";
 
 /mob/living/silicon/ai/set_eye(atom/new_eye)
 	var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
@@ -1870,6 +1855,8 @@ or don't if it uses a custom topopen overlay
 		src.eyecam.name = src.name
 		src.eyecam.real_name = src.real_name
 		src.deployed_to_eyecam = 1
+		src.ensure_speech_tree().migrate_speech_tree(src.eyecam, src, TRUE)
+		src.ensure_listen_tree().migrate_listen_tree(src.eyecam, src, TRUE)
 		src.mind.transfer_to(src.eyecam)
 
 /mob/living/silicon/ai/proc/notify_attacked()
@@ -1885,6 +1872,8 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/proc/return_to(var/mob/user)
 	if (user.mind)
+		src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
+		src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
 		user.mind.transfer_to(src)
 		src.deployed_shell = null
 		src.deployed_to_eyecam = 0

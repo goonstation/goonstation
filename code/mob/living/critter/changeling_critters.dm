@@ -19,6 +19,14 @@
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
 	var/obj/item/original_bodypart
 
+	//new speech vars
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+	default_speech_output_channel = null
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
@@ -32,26 +40,6 @@
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
 		src.original_bodypart?.set_loc(src)
-
-	say(message, involuntary = 0)
-		if (hivemind_owner)
-			message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
-
-			if (!message)
-				return
-
-			if (dd_hasprefix(message, "*"))
-				return src.emote(copytext(message, 2),1)
-
-			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
-
-			if (src.client && src.client.ismuted())
-				boutput(src, "You are currently muted and may not speak.")
-				return
-
-			. = src.say_hive(message, hivemind_owner)
-		else
-			..()
 
 	canRideMailchutes()
 		return 1

@@ -12,12 +12,13 @@
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
-	speechverb_say = "materializes"
-	speechverb_ask = "emits"
-	speechverb_exclaim = "forces"
-	speechverb_stammer = "creates"
-	speechverb_gasp = "rasps"
-	speech_void = TRUE
+	speech_verb_say = "materializes"
+	speech_verb_ask = "emits"
+	speech_verb_exclaim = "forces"
+	speech_verb_stammer = "creates"
+	speech_verb_gasp = "rasps"
+
+	start_speech_modifiers = list("accent_void")
 
 	can_burn = FALSE
 	can_implant = FALSE
