@@ -826,12 +826,6 @@
 
 /obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
-		if (src.storage.is_full())
-			return
-		if (S.w_class >= W_CLASS_SMALL || S.storage)
-			if (!istype(S,/obj/item/storage/pill_bottle))
-				boutput(user, SPAN_ALERT("[S] won't fit into [src]!"))
-				return
 		..()
 		return
 

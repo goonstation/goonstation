@@ -34,7 +34,7 @@
 	opacity = 1
 	density = 1
 	var/stabilized = 0
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
+	plane = PLANE_ABOVE_LIGHTING
 
 	New(var/loc,var/duration)
 		..()

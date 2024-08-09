@@ -40,6 +40,11 @@
 	proc/make_my_stuff()
 		return
 
+	combust_ended()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			src.storage.transfer_stored_item(I, get_turf(src))
+		. = ..()
+
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"

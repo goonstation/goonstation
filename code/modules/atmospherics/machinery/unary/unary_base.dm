@@ -73,7 +73,7 @@
 
 	return results
 
-/obj/machinery/atmospherics/unary/return_air()
+/obj/machinery/atmospherics/unary/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/atmospherics/unary/disconnect(obj/machinery/atmospherics/reference)

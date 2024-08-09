@@ -170,7 +170,7 @@
 	SPAWN(1 SECOND)
 		prox_check()
 
-/obj/item/assembly/proximity_bomb/return_air()
+/obj/item/assembly/proximity_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()
 
 
@@ -262,7 +262,7 @@
 			src.part3.release()
 	return
 
-/obj/item/assembly/time_bomb/return_air()
+/obj/item/assembly/time_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()
 
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
@@ -350,5 +350,5 @@
 			src.part3.release()
 	return
 
-/obj/item/assembly/radio_bomb/return_air()
+/obj/item/assembly/radio_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()

@@ -865,6 +865,7 @@
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -885,6 +886,7 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1626,6 +1628,7 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+	fingertip_color = "#895d37"
 
 	sever(mob/user)
 		. = ..()
@@ -1749,6 +1752,7 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	fingertip_color = "#aa9987"
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
@@ -1800,6 +1804,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
 	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	fingertip_color = "#745136"
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
