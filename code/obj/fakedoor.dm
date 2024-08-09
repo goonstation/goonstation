@@ -28,3 +28,5 @@
 		desc = "Rust has rendered this firelock useless."
 		icon = 'icons/obj/doors/door_fire2.dmi'
 		icon_state = "door0"
+		density = FALSE
+		opacity = FALSE

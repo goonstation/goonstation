@@ -487,7 +487,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					launch_with_missile(M.loc)
 				else
 					launch_with_missile(M)
-			return ..()
+			..()
+			return TRUE
 
 	critter_respawn
 		name = "Alt Ghost Critter"

@@ -365,12 +365,19 @@
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
 
 
-/obj/item/storage/box/blowgun
+/obj/item/storage/briefcase/instruments
 	name = "instrument case"
 	desc = "A hardshell case for musical instruments."
 	icon_state = "briefcase_black"
+	item_state = "sec-case"
+	spawn_contents = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+
+/obj/item/storage/briefcase/instruments/blowgun
 	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
 	/obj/item/storage/pouch/poison_dart = 2)
+
+/obj/item/storage/briefcase/instruments/blowgun/tranq
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine = 2)
 
 /obj/item/storage/box/chameleonbomb
 	name = "chameleon bomb case"
