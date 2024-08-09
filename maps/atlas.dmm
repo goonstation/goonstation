@@ -15382,6 +15382,15 @@
 	dir = 1
 	},
 /area/station/mining/refinery)
+"ghZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "gmG" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -20686,15 +20695,6 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"vUS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/security,
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "vXs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -75043,7 +75043,7 @@ afE
 gTj
 upB
 puj
-vUS
+ghZ
 plm
 ajI
 nER

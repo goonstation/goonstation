@@ -754,7 +754,7 @@ var/global/list/cycling_airlocks = list()
 
 		return
 	else if (isscrewingtool(C))
-		if (src.hardened)
+		if (src.hardened || src.cant_hack)
 			boutput(user, SPAN_ALERT("Your tool can't pierce this airlock! Huh."))
 			return
 		if (!src.has_panel)
