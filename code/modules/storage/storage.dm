@@ -479,6 +479,13 @@
 
 	return STORAGE_CAN_HOLD_SOME
 
+/// return the sum of all w_classes.
+/datum/storage/proc/get_total_weight()
+	var/total_weight = 0
+	for (var/obj/item/I as anything in src.get_contents())
+		total_weight += I.w_class
+	return total_weight
+
 /// return stored contents
 /datum/storage/proc/get_contents()
 	return src.stored_items

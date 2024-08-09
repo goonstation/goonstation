@@ -4,6 +4,11 @@
 
 #define TICKS *world.tick_lag
 
+// Not QUITE a SI unit, but used frequently nonetheless
+#define LITERS *1
+
+#define LITER LITERS
+
 // SI UNIT DEFINES
 
 //ex:  var/time = 10 SECONDS
