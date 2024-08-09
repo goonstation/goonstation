@@ -200,28 +200,43 @@ Contains:
 		var/moles_needed = min(distribute_pressure, tank_pressure) *volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 		return remove_air(moles_needed)
 
+#define MIN_PRESSURE_FOR_TRANSFER 1 //! Don't transfer gas between turf and tank if we're barely moving anything in the first place.
+
+	// Separate proc so I can do early returns instead of 10th layer nested if-checks
+	/// Exchange air in tank with the turf.
+	proc/exchange_air_with_turf(pct_exposed=0.25)
+		var/turf/simulated/T = get_turf(src)
+		// Edge case: Vent pct_exposed for space tiles
+		if (istype(T, /turf/space))
+			src.air_contents.remove_ratio(pct_exposed)
+			return
+		if (!issimulatedturf(T))
+			return
+		if (isnull(T) || isnull(src.air_contents) || isnull(T.air))
+			return
+		var/tank_pressure = MIXTURE_PRESSURE(src.air_contents)
+		var/delta_transfer = tank_pressure - MIXTURE_PRESSURE(T.air)
+		if (abs(delta_transfer) < MIN_PRESSURE_FOR_TRANSFER)
+			return
+		var/datum/gas_mixture/temp
+		var/new_pressure_tank = tank_pressure - (delta_transfer * pct_exposed)
+		// First, remove however much air should be exposed to turf
+		temp = src.air_contents.remove_ratio(pct_exposed)
+		T.air.merge(temp)
+		// Then, return however much pressure should return to tank. This is whatever pressure is missing still between current and new pressure.
+		tank_pressure = MIXTURE_PRESSURE(src.air_contents)
+		var/moles_needed_tank = ((new_pressure_tank - tank_pressure) * src.air_contents.volume) / (R_IDEAL_GAS_EQUATION * src.air_contents.temperature)
+		temp = T.air.remove(moles_needed_tank)
+		src.air_contents.merge(temp)
+
+#undef MIN_PRESSURE_FOR_TRANSFER
+
 	process()
 		//Allow for reactions
 		if (air_contents)
 			// Exchange with the open air if the flap is open
 			if (src.get_tank_open())
-				// Ignore if unsimmed
-				var/turf/simulated/T = get_turf(src)
-				if (issimulatedturf(T))
-					// Borrows from transfer valve code
-					var/datum/gas_mixture/temp
-
-					if (!isnull(T) && !isnull(src.air_contents))
-						// Remove *some* of the gas from the tank at a time to 'leak' out
-						temp = src.air_contents.remove_ratio(0.25)
-						// Add the gas removed from the tank *all* into the turf
-						T.air.merge(temp)
-						// Determine what percentage of the turf's air contents should go back into the tank
-						var/transfer_ratio = src.air_contents.volume / (src.air_contents.volume + T.air.volume)
-						// Remove aformentioned amount from the turf, put it back into the temp
-						temp = T.air.remove_ratio(transfer_ratio)
-						// Lastly, put all that air removed from the combined mixture back into the tank.
-						src.air_contents.merge(temp)
+				src.exchange_air_with_turf()
 
 			src.previous_pressure = MIXTURE_PRESSURE(air_contents)
 			air_contents.react()
