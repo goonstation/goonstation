@@ -132,10 +132,10 @@ proc/Create_Tommyname()
 		if(src.bioHolder.mobAppearance)
 			var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
 			AH.gender = "male"
-			AH.customization_first = new /datum/customization_style/hair/long/dreads
-			AH.customization_first_color = "#101010"
-			AH.customization_second = new /datum/customization_style/none
-			AH.customization_third = new /datum/customization_style/none
+			AH.customizations[1].style =  new /datum/customization_style/hair/long/dreads
+			AH.customizations[1].color = "#101010"
+			AH.customizations[2].style =  new /datum/customization_style/none
+			AH.customizations[3].style =  new /datum/customization_style/none
 			AH.s_tone = "#FAD7D0"
 			src.bioHolder.AddEffect("accent_tommy")
 
@@ -393,7 +393,7 @@ proc/Create_Tommyname()
 			var/mob/living/carbon/human/H = hit
 			if(!istype(H.head, /obj/item/clothing/head/wig))
 				var/obj/item/clothing/head/wig/W = H.create_wig()
-				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+				H.bioHolder.mobAppearance.customizations[1].style =  new /datum/customization_style/none
 				H.drop_from_slot(H.head)
 				H.force_equip(W, SLOT_HEAD)
 				H.update_colorful_parts()

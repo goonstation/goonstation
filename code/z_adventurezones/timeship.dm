@@ -273,8 +273,8 @@ Turfs and decal for the space rift
 		src.equip_new_if_possible(/obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/beard/longbeard
+		bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/beard/tramp
+		bioHolder.mobAppearance.customizations[3].style =  new /datum/customization_style/beard/longbeard
 		bioHolder.mobAppearance.underwear = "briefs"
 		bioHolder.age = 3500
 		. = ..()
