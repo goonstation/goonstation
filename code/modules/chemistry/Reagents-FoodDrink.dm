@@ -2077,6 +2077,24 @@ datum
 					M.bodytemperature += 5 * mult
 				..()
 
+		fooddrink/alcoholic/ironbrew
+			name = "Iron Brew" //They changed the name back after altering to recipe to make it 'literally true', incidentally rendering it alcoholic
+			id = "ironbrew"
+			fluid_r = 255
+			fluid_g = 75
+			fluid_b = 1
+			transparency = 190
+			description = "A fizzy and bright orange beverage that's made from girders."
+			reagent_state = LIQUID
+			taste = list("like battery acid", "rust")
+
+			// decays into ethanol and iron
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				M.reagents.add_reagent("iron", src.calculate_depletion_rate(M, mult))
+				..()
+				return
+
 		fooddrink/alcoholic/spacemas_spirit
 			name = "Spacemas Spirit"
 			id = "spacemas_spirit"

@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "steelwheat"
 	desc = "Never eat iron filings."
 	icon_state = "metalwheat"
-	brew_result = list("beer"=20, "iron"=20)
+	brew_result = list("ironbrew"=20)
 
 	make_reagents()
 		..()
