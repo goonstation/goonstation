@@ -383,15 +383,13 @@
 	},
 /area/station/medical/head)
 "abW" = (
-/obj/blind_switch/area{
-	pixel_x = 23;
-	pixel_y = 9
-	},
-/obj/machinery/light_switch{
-	pixel_x = 23;
-	pixel_y = -5
-	},
 /obj/disposalpipe/segment/morgue,
+/obj/blind_switch/area/east{
+	pixel_y = 10
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = -1
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue3"
@@ -15272,7 +15270,6 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office"
 	},
-/obj/machinery/light_switch/east,
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "ezc" = (
@@ -21375,17 +21372,13 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "gqO" = (
-/obj/machinery/light_switch/east{
-	dir = 4;
-	pixel_x = -28;
-	pixel_y = -4
-	},
-/obj/blind_switch/east{
-	dir = 4;
-	pixel_x = -28;
+/obj/storage/secure/closet/civilian/ranch,
+/obj/blind_switch/area/west{
 	pixel_y = 4
 	},
-/obj/storage/secure/closet/civilian/ranch,
+/obj/machinery/light_switch/west{
+	pixel_y = -7
+	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "gqX" = (
@@ -28750,15 +28743,13 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/blind_switch/area{
-	pixel_x = 22;
-	pixel_y = 7
-	},
-/obj/machinery/light_switch{
-	pixel_x = 22;
-	pixel_y = -5
-	},
 /obj/landmark/start/job/detective,
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "red2"
@@ -36868,7 +36859,6 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
 /obj/blind_switch/area/east,
-/obj/machinery/light_switch/auto,
 /turf/simulated/floor/specialroom/bar,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -58102,10 +58092,7 @@
 	pixel_y = 1
 	},
 /obj/random_item_spawner/desk_stuff,
-/obj/blind_switch/area{
-	pixel_x = -20;
-	pixel_y = 10
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "rAR" = (
@@ -66314,13 +66301,13 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/machinery/light_switch/west{
-	dir = 4;
-	pixel_y = -5
-	},
 /obj/blind_switch/area/west{
-	dir = 4;
-	pixel_y = 5
+	pixel_y = 5;
+	pixel_x = -27
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -6;
+	pixel_x = -27
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
