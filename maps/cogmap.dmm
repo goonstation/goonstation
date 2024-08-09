@@ -462,10 +462,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/entry)
 "acM" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "acN" = (
@@ -485,10 +482,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "acR" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "acT" = (
@@ -1072,9 +1066,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aeN" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
+/obj/machinery/light_switch/west{
+	pixel_y = 6
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
@@ -1176,10 +1169,6 @@
 "afk" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/decal/cleanable/desk_clutter{
 	pixel_y = -1
 	},
@@ -1195,6 +1184,7 @@
 	pixel_x = -4;
 	pixel_y = 9
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "afl" = (
@@ -4514,13 +4504,10 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "ase" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "asg" = (
@@ -5454,10 +5441,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "avy" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "avz" = (
@@ -5486,10 +5470,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "avE" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -6010,14 +5991,11 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "axm" = (
@@ -6351,10 +6329,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ayG" = (
@@ -7338,10 +7313,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "aBW" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -8690,10 +8662,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aGc" = (
@@ -10528,10 +10497,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aLU" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aLV" = (
@@ -12948,14 +12914,11 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/hallway/primary/east)
 "aTh" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "aTi" = (
@@ -14850,10 +14813,7 @@
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYE" = (
@@ -15721,10 +15681,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bbn" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "bbp" = (
@@ -17313,10 +17270,6 @@
 "bgj" = (
 /obj/item/tile/steel,
 /obj/item/cable_coil/cut,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/item/paper_bin{
 	pixel_x = -7;
 	pixel_y = 6
@@ -17325,6 +17278,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/storage/crate,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/disposal)
 "bgl" = (
@@ -17592,10 +17546,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bhd" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bhf" = (
@@ -17783,11 +17734,7 @@
 /area/station/maintenance/central)
 "bhG" = (
 /obj/machinery/computer/ordercomp,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/routing/eva)
 "bhJ" = (
@@ -18333,14 +18280,11 @@
 /area/station/janitor/office)
 "bjs" = (
 /obj/stool/bed,
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -19088,10 +19032,6 @@
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "bmz" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/table/auto{
 	icon_state = "2"
 	},
@@ -19115,6 +19055,7 @@
 	pixel_x = 10;
 	pixel_y = -9
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/orangeblack,
 /area/station/ai_monitored/storage/eva)
 "bmA" = (
@@ -19172,10 +19113,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bmS" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -21579,11 +21517,8 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bxv" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -25064,11 +24999,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "bNh" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -26106,25 +26038,18 @@
 /area/station/engine/inner)
 "bQG" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/machinery/computer/supplycomp{
 	dir = 8
 	},
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
 "bQH" = (
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
 	},
 /obj/table/reinforced/auto,
 /obj/item/clothing/under/rank/mechanic{
@@ -26143,6 +26068,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bQI" = (
@@ -28078,14 +28004,11 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bXz" = (
@@ -30972,13 +30895,11 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/hallway/secondary/exit)
 "chj" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
-	},
 /obj/stool/chair{
 	dir = 4
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = 5
 	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 9
@@ -31176,10 +31097,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "chQ" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "chR" = (
@@ -31410,12 +31328,11 @@
 	},
 /area/station/hallway/secondary/exit)
 "ciC" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/stool/chair{
 	dir = 8
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = 5
 	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 5
@@ -31605,16 +31522,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/machinery/power/apc{
 	areastring = "Research Storage";
 	dir = 1;
 	name = "Research Storage APC";
 	pixel_y = 24
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "cji" = (
@@ -32154,7 +32068,8 @@
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24;
-	pixel_y = -6
+	pixel_y = -6;
+	dir = 4
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
@@ -32657,10 +32572,6 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cmu" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/machinery/computer/secure_data/detective_computer{
 	pixel_x = 6
 	},
@@ -32668,6 +32579,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cmv" = (
@@ -38850,10 +38762,7 @@
 	},
 /area/station/crew_quarters/bar)
 "dHV" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "dIr" = (
@@ -39039,13 +38948,10 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "dPe" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/security/main)
 "dPh" = (
@@ -39640,11 +39546,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/blind_switch/area/north{
-	id = "baroffice";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/blind_switch/area/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "ejG" = (
@@ -42736,9 +42638,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
+/obj/machinery/light_switch/west{
+	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -43399,16 +43300,13 @@
 /turf/space,
 /area/space)
 "gXu" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
 	dir = 1
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "gXx" = (
@@ -44739,11 +44637,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/laser_sink/mirror,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "hZq" = (
@@ -46507,10 +46402,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "jAI" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/machinery/optable,
 /obj/item/suture{
 	pixel_x = 6;
@@ -46532,6 +46423,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -47440,10 +47332,7 @@
 "khd" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/decal/stripe_caution,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "khL" = (
@@ -49791,12 +49680,9 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/machinery/firealarm/north,
 /obj/reagent_dispensers/beerkeg,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "mlq" = (
@@ -50199,15 +50085,12 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "mzL" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	id = "Hot Loop Sauna Pump";
 	target_pressure = 2000
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
 "mAp" = (
@@ -50471,10 +50354,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "mJe" = (
@@ -55522,10 +55402,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "qzs" = (
@@ -55609,7 +55486,8 @@
 "qBG" = (
 /obj/machinery/light_switch{
 	name = "E light switch";
-	pixel_x = 24
+	pixel_x = 24;
+	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -56118,9 +55996,7 @@
 /obj/machinery/chem_master{
 	dir = 8
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24;
+/obj/machinery/light_switch/east{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -56820,10 +56696,7 @@
 /area/station/engine/hotloop)
 "rDH" = (
 /obj/disposalpipe/segment,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/security/main)
 "rDU" = (
@@ -59246,11 +59119,8 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/storage/secure/closet/medical/cloning,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -61898,10 +61768,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "vmQ" = (
@@ -63566,7 +63433,8 @@
 	icon_state = "0-4"
 	},
 /obj/blind_switch{
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 8
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
@@ -64951,7 +64819,8 @@
 	layer = 9;
 	name = "W light switch";
 	on = 0;
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 8
 	},
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
