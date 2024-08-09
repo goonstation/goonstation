@@ -779,9 +779,11 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
-			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || !ishuman(M.current) || (M.assigned_role in security_jobs))
+			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || !ishuman(M.current) || (M.assigned_role in security_jobs) || M.assigned_role == "Captain")
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
+				continue
+			if (is_dead_or_ghost_role(M.current)) //stop sending PDA messages to the afterlife
 				continue
 			if (!(M in deferred_minds))
 				mindList.Add(M)
