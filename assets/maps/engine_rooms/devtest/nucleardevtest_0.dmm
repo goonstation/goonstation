@@ -1,0 +1,884 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aB" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"aZ" = (
+/obj/rack,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/material_piece/bohrum{
+	amount = 50
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"bp" = (
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"bR" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"de" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"dF" = (
+/turf/simulated/floor,
+/area/station/devzone)
+"em" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_east"
+	},
+/area/station/devzone)
+"fo" = (
+/obj/cable/brown{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"fM" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"gR" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"ip" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_east"
+	},
+/area/station/devzone)
+"jE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"kj" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"kn" = (
+/obj/machinery/atmospherics/unary/vent{
+	dir = 4
+	},
+/obj/lattice,
+/turf/space,
+/area/station/devzone)
+"kC" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/item/storage/belt/utility/prepared/ceshielded,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"kN" = (
+/obj/window/crystal/reinforced/north,
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
+/area/station/devzone)
+"ma" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
+"my" = (
+/obj/cable/brown{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"mT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"nX" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"oJ" = (
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
+/area/station/devzone)
+"pe" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"qd" = (
+/obj/machinery/centrifuge_nuclear,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"qw" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"un" = (
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"up" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
+/area/station/devzone)
+"uW" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"vi" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"vn" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 1
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
+/area/station/devzone)
+"wE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_west"
+	},
+/area/station/devzone)
+"wH" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency{
+	dir = 1
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"wX" = (
+/obj/machinery/centrifuge_nuclear,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"xu" = (
+/obj/window/crystal/reinforced/east,
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"yI" = (
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"zB" = (
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 8;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"AZ" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"Bk" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"BJ" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4;
+	layer = 2.9
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_corners"
+	},
+/area/station/devzone)
+"BT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"DE" = (
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 4;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"FN" = (
+/obj/machinery/atmospherics/binary/reactor_turbine,
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"GR" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"GW" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/station/devzone)
+"Jk" = (
+/obj/cable/brown{
+	icon_state = "2-8"
+	},
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"JT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"JU" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4;
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"Kk" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8;
+	volume = 0.001
+	},
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Kw" = (
+/obj/cable/brown{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Mp" = (
+/obj/window/crystal/reinforced/south,
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"Nt" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"OI" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/window/crystal/reinforced/west,
+/turf/simulated/floor/engine{
+	dir = 8;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/devzone)
+"OJ" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine{
+	dir = 4;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/devzone)
+"Pg" = (
+/obj/cable/brown,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"Ri" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency{
+	dir = 1
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	dir = 1;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/devzone)
+"Sh" = (
+/obj/machinery/atmospherics/binary/nuclear_reactor,
+/obj/cable/brown{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Su" = (
+/obj/storage/closet/radiation,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"Tp" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"TV" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Uf" = (
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Vc" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "dump valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Wp" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"WG" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/station/devzone)
+"Yq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Zo" = (
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_east"
+	},
+/area/station/devzone)
+
+(1,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+"}
+(2,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+xu
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+"}
+(3,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+Mp
+kn
+kN
+oJ
+up
+vn
+wE
+BJ
+bp
+"}
+(4,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+OI
+Uf
+Uf
+Uf
+Uf
+mT
+JU
+bp
+"}
+(5,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+jE
+Uf
+Uf
+Uf
+Uf
+mT
+DE
+bp
+"}
+(6,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+jE
+Uf
+Sh
+Uf
+Uf
+TV
+JT
+bp
+"}
+(7,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+jE
+Uf
+uW
+Uf
+Uf
+TV
+WG
+bp
+"}
+(8,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+jE
+Uf
+uW
+Uf
+Uf
+mT
+zB
+bp
+"}
+(9,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+qd
+kj
+Kk
+Vc
+Nt
+mT
+aB
+bp
+"}
+(10,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+wX
+Vc
+Wp
+Bk
+aZ
+Yq
+AZ
+bp
+"}
+(11,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+un
+Uf
+uW
+Uf
+Uf
+mT
+Su
+bp
+"}
+(12,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+un
+Uf
+Kw
+FN
+vi
+BT
+Pg
+my
+"}
+(13,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+un
+Uf
+Uf
+Uf
+Uf
+mT
+Tp
+Jk
+"}
+(14,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+qw
+gR
+gR
+pe
+nX
+de
+ma
+fo
+"}
+(15,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+GW
+fM
+fM
+fM
+Uf
+kC
+yI
+bp
+"}
+(16,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+bR
+GR
+GR
+GR
+Uf
+TV
+wH
+bp
+"}
+(17,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+OJ
+ip
+ip
+ip
+Zo
+em
+Ri
+bp
+"}
+(18,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+bp
+"}
+(19,1,1) = {"
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+dF
+"}
