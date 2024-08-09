@@ -18419,15 +18419,13 @@
 	c_tag = "AI Upload Entrance";
 	dir = 4
 	},
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access = null
-	},
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/mapping_helper/access/ai_upload,
 /obj/landmark/start/job/cyborg,
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "ddM" = (
@@ -19871,13 +19869,9 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "dZh" = (
-/obj/machinery/turretid{
-	pixel_x = -24;
-	req_access = null;
-	req_access_txt = null
+/obj/machinery/turretid/computer_core{
+	pixel_x = -24
 	},
-/obj/mapping_helper/access/ai_upload,
-/obj/mapping_helper/access/research_director,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "dZI" = (
@@ -20596,13 +20590,11 @@
 	pixel_x = 8;
 	pixel_y = 26
 	},
-/obj/machinery/turretid{
-	pixel_x = -8;
-	pixel_y = 24;
-	req_access = null
-	},
-/obj/mapping_helper/access/ai_upload,
 /obj/landmark/start/job/AI,
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24;
+	pixel_x = -8
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "euP" = (
@@ -21724,10 +21716,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "fgk" = (
-/obj/machinery/turretid{
-	req_access = null
-	},
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_perimeter,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbaseoutside)
 "fhn" = (
@@ -27505,13 +27494,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/turretid{
-	pixel_x = 24;
-	pixel_y = 1;
-	req_access = null
-	},
 /obj/machinery/light/incandescent,
-/obj/mapping_helper/access/armory,
+/obj/machinery/turretid/armory{
+	pixel_x = 24
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -31559,14 +31545,9 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lFR" = (
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	pixel_y = 1;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
+/obj/machinery/turretid/armory_perimeter{
+	pixel_x = -24
 	},
-/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
