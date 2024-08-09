@@ -2802,6 +2802,9 @@
 			ret += A
 	return ret
 
+/mob/living/carbon/human/proc/is_bald()
+	return istype(src.bioHolder.mobAppearance.customization_first,/datum/customization_style/none) && istype(src.bioHolder.mobAppearance.customization_second,/datum/customization_style/none) && istype(src.bioHolder.mobAppearance.customization_third,/datum/customization_style/none)
+
 /mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null

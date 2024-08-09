@@ -134,7 +134,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
+	if(H.is_bald())
 		boutput(user, SPAN_ALERT("There is nothing to cut!"))
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -167,7 +167,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
-	var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
@@ -197,7 +196,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
-	if(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none))
+	if(H.is_bald())
 		boutput(user, SPAN_ALERT("There is nothing to cut!"))
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -583,9 +582,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			if (!barber || !barbee) // If either don't exist anymore, it's safe to say we have been disposed of.
 				return
 
-			if(istype(barbee.bioHolder.mobAppearance.customization_first,/datum/customization_style/none) && \
-			istype(barbee.bioHolder.mobAppearance.customization_second,/datum/customization_style/none) && \
-			istype(barbee.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
+			if(barbee.is_bald())
 				src.ui_close(src.barber) // There is nothing more to cut.
 
 			if (!barber || !barbee)
