@@ -205,28 +205,21 @@ Contains:
 	// Separate proc so I can do early returns instead of 10th layer nested if-checks
 	/// Exchange air in tank with the turf.
 	proc/exchange_air_with_turf(pct_exposed=0.25)
-		var/turf/simulated/T = get_turf(src)
-		// Edge case: Vent pct_exposed for space tiles
-		if (istype(T, /turf/space))
-			src.air_contents.remove_ratio(pct_exposed)
-			return
-		if (!issimulatedturf(T))
-			return
-		if (isnull(T) || isnull(src.air_contents) || isnull(T.air))
-			return
+		var/turf/T = get_turf(src)
+		var/datum/gas_mixture/turf_air = T.return_air()
 		var/tank_pressure = MIXTURE_PRESSURE(src.air_contents)
-		var/delta_transfer = tank_pressure - MIXTURE_PRESSURE(T.air)
+		var/delta_transfer = tank_pressure - MIXTURE_PRESSURE(turf_air)
 		if (abs(delta_transfer) < MIN_PRESSURE_FOR_TRANSFER)
 			return
 		var/datum/gas_mixture/temp
 		var/new_pressure_tank = tank_pressure - (delta_transfer * pct_exposed)
 		// First, remove however much air should be exposed to turf
 		temp = src.air_contents.remove_ratio(pct_exposed)
-		T.air.merge(temp)
+		turf_air.merge(temp)
 		// Then, return however much pressure should return to tank. This is whatever pressure is missing still between current and new pressure.
 		tank_pressure = MIXTURE_PRESSURE(src.air_contents)
 		var/moles_needed_tank = ((new_pressure_tank - tank_pressure) * src.air_contents.volume) / (R_IDEAL_GAS_EQUATION * src.air_contents.temperature)
-		temp = T.air.remove(moles_needed_tank)
+		temp = turf_air.remove(moles_needed_tank)
 		src.air_contents.merge(temp)
 
 #undef MIN_PRESSURE_FOR_TRANSFER
