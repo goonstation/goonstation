@@ -2784,7 +2784,7 @@
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
 		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
-			var/obj/item/clothing/head/wig/W = create_wig()
+			var/obj/item/clothing/head/wig/W = create_wig(keep_hair = TRUE)
 			if (W)
 				processed += W
 				ret += W
@@ -2802,7 +2802,7 @@
 			ret += A
 	return ret
 
-/mob/living/carbon/human/proc/create_wig()
+/mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
@@ -2818,6 +2818,11 @@
 
 	W.setup_wig(hair_list)
 
+	if (!keep_hair)
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.update_colorful_parts()
 	return W
 
 

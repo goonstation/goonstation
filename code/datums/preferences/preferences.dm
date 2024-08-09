@@ -1150,7 +1150,7 @@ var/list/removed_jobs = list(
 			qdel(ourWig)
 
 		if (src.traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+			H.equip_if_possible(H.create_wig(keep_hair = TRUE), SLOT_HEAD)
 
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])

@@ -202,10 +202,6 @@
 	H.reagents.del_reagent("unstable_omega_hairgrownium")
 	var/obj/item/I = H.create_wig()
 	I.set_loc(H.loc)
-	H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-	H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-	H.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-	H.update_colorful_parts()
 
 /proc/flashpowder_reaction(turf/center, amount)
 	elecflash(center)

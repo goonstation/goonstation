@@ -707,9 +707,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 					SPAN_ALERT("You [cut] all of [M]'s hair off!"))
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
-				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
@@ -737,9 +735,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						SPAN_NOTICE("You [cut] all of [M]'s hair off and make it into a wig."))
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
-					M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-					M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-					M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				else
 					logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
 					M.tri_message(user, "[user] [cuts] [M]'s hair.",\

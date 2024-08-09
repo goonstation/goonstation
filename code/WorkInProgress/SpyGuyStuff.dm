@@ -393,7 +393,6 @@ proc/Create_Tommyname()
 			var/mob/living/carbon/human/H = hit
 			if(!istype(H.head, /obj/item/clothing/head/wig))
 				var/obj/item/clothing/head/wig/W = H.create_wig()
-				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
 				H.force_equip(W, SLOT_HEAD)
 				H.update_colorful_parts()
