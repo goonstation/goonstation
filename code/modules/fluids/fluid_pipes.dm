@@ -1,337 +1,259 @@
 /*
 	Pipes. That move fluids. Probably.
-	By Firebarrage
+	By Firebarrage //nuh uh, its my turn to make fluid pipes now -cringe
 */
-
+ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe
 	name = "fluid pipe"
 	desc = "A pipe. For fluids."
-	icon = 'icons/obj/disposal.dmi'
+	icon = 'icons/obj/fluid_pipe.dmi'
 	anchored = ANCHORED
-	density = 0
-	var/pipe_shape = ""
+	plane = PLANE_NOSHADOW_BELOW
+	layer = FLUID_PIPE_LAYER
+	density = FALSE
+	level = UNDERFLOOR
 	var/capacity = DEFAULT_FLUID_CAPACITY
-	var/used_capacity = 0
-	var/pipe_type = FLUIDPIPE_NORMAL
-	var/list/obj/fluid_pipe/edges = list()
-	var/visited = 0 // Used by DFS when creating networks
-	var/datum/flow_network/network = null // Which network is mine?
+	/// What directions are valid for connections.
+	var/initialize_directions
+	/// The network we belong to.
+	var/datum/flow_network/network
 
-	New()
-		START_TRACKING
-		..()
+/obj/fluid_pipe/New()
+	..()
+	var/turf/T = get_turf(src)
+	src.hide(T.intact)
+	src.refresh_connections()
 
-	disposing()
-		STOP_TRACKING
-		..()
+/obj/fluid_pipe/onDestroy()
+	src.network.remove_pipe(src)
 
-	// NOTE: Don't call this during construction. The other pipes might not be there yet.
-	// This needs to be called during network generation
-	proc/populate_edges()
-		edges = list()
-		DEBUG_MESSAGE("Populating edges of pipe [log_loc(src)].")
-		DEBUG_MESSAGE("This is a [pipe_type] facing [dir].")
-		switch(pipe_shape)
-			if("straight")
-				// welcome to a way-too-long switch statement
-				// I might compress this. I might not. Leave me alone.
-				switch(src.dir)
-					if(NORTH,SOUTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-					if(EAST, WEST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-			if("Y")
-				switch(src.dir)
-					if(NORTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-					if(SOUTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-					if(EAST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-					if(WEST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-			if("elbow")
-				switch(src.dir)
-					if(NORTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-					if(SOUTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-					if(EAST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-					if(WEST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-			if("source","sink")
-				switch(src.dir)
-					if(NORTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y + 1, src.z))
-							edges.Add(pipe)
-							break
-					if(SOUTH)
-						for(var/obj/fluid_pipe/pipe in locate(src.x, src.y - 1, src.z))
-							edges.Add(pipe)
-							break
-					if(EAST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x + 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-					if(WEST)
-						for(var/obj/fluid_pipe/pipe in locate(src.x - 1, src.y, src.z))
-							edges.Add(pipe)
-							break
-		DEBUG_MESSAGE("[edges.len] adjacent nodes found.")
+/obj/fluid_pipe/disposing()
+	src.network.pipes -= src
+	src.network = null
+	..()
 
-	straight
-		icon_state = "pipe-s"
-		pipe_shape = "straight"
-	t_junction
-		icon_state = "pipe-y" // Ignore the arrow for now
-		pipe_shape = "Y"
+/// Accepts a reagents datum to start with.
+/// Replaces our network with a new one and relooks for pipes to connect to.
+/obj/fluid_pipe/proc/refresh_connections(var/datum/reagents/flow_network/leftover)
+	src.network = new(src)
+	leftover?.trans_to_direct(src.network.reagents, leftover.total_volume)
+	var/connect_directions = src.initialize_directions
+	for(var/direction in cardinal) // Look for pipes to connect to.
+		if(HAS_ANY_FLAGS(direction, connect_directions))
+			for(var/obj/fluid_pipe/target in get_step(src,direction))
+				if(target.initialize_directions & get_dir(target,src))
+					if(target.network != src.network)
+						src.network.merge_network(target.network)
+					connect_directions &= ~direction
+					break
+	if(connect_directions) ///If we have any remaining directions, look for machines.
+		for(var/direction in cardinal)
+			if(HAS_ANY_FLAGS(direction, connect_directions))
+				for(var/obj/machinery/fluid_pipe_machinery/target in get_step(src,direction))
+					if(target.initialize_directions & get_dir(target,src))
+						target.refresh_network()
+						break
 
-	elbow
-		icon_state = "pipe-c"
-		pipe_shape = "elbow"
-	source
-		icon_state = "pipe-t"
-		pipe_shape = "source"
-		pipe_type = FLUIDPIPE_SOURCE
+/obj/fluid_pipe/hide(var/intact)
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
 
-	sink
-		icon_state = "pipe-t"
-		pipe_shape = "sink"
-		pipe_type = FLUIDPIPE_SINK
 
-proc/make_fluid_networks()
-	DEBUG_MESSAGE("Setting up fluid pipe networks.")
+/obj/fluid_pipe/straight
+	icon_state = "straight"
 
-	// Populate all edges
-	// TODO in future: We dont need to do this every time we remake the fluid networks, only update the moved pipes.
-	for_by_tcl(node, /obj/fluid_pipe)
-		node.populate_edges()
+/obj/fluid_pipe/straight/overfloor
+	level = OVERFLOOR
 
-	var/obj/fluid_pipe/root = find_unvisited_node()
-	if(!root)
-		DEBUG_MESSAGE("No fluid pipes detected.")
+/obj/fluid_pipe/straight/New()
+	switch(dir)
+		if(NORTH, SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST, WEST)
+			initialize_directions = EAST|WEST
+	..()
+
+/obj/fluid_pipe/straight/see_fluid
+	icon_state = "straight-viewable"
+
+/obj/fluid_pipe/straight/see_fluid/overfloor
+	level = OVERFLOOR
+
+/obj/fluid_pipe/straight/see_fluid/New()
+	..()
+	src.AddComponent( \
+		/datum/component/reagent_overlay/fluid_pipe, \
+		reagent_overlay_icon = src.icon, \
+		reagent_overlay_icon_state = src.icon_state, \
+		reagent_overlay_states = 1)
+
+/obj/fluid_pipe/straight/see_fluid/get_desc(dist, mob/user)
+	if (dist > 2)
 		return
-	do
-		DEBUG_MESSAGE("Creating fluid network. Root node is at [log_loc(root)].")
-		new /datum/flow_network(root)
-		root = find_unvisited_node()
-	while(root)
+	. = "<br>[SPAN_NOTICE("[src.network.reagents.get_description(user, RC_FULLNESS | RC_VISIBLE | RC_SPECTRO)]")]"
 
-proc/find_unvisited_node()
-	for_by_tcl(pipe, /obj/fluid_pipe)
-		if(!pipe.network)
-			return pipe
-	return 0
+/obj/fluid_pipe/t_junction
+	icon_state = "junction"
+
+/obj/fluid_pipe/t_junction/overfloor
+	level = OVERFLOOR
+
+/obj/fluid_pipe/t_junction/New()
+	switch(dir)
+		if(NORTH)
+			initialize_directions = NORTH|EAST|WEST
+		if(SOUTH)
+			initialize_directions = SOUTH|EAST|WEST
+		if(EAST)
+			initialize_directions = EAST|NORTH|SOUTH
+		if(WEST)
+			initialize_directions = WEST|NORTH|SOUTH
+	..()
+
+/obj/fluid_pipe/elbow
+	icon_state = "elbow"
+
+/obj/fluid_pipe/elbow/overfloor
+	level = OVERFLOOR
+
+/obj/fluid_pipe/elbow/New()
+	switch(dir)
+		if(NORTH)
+			initialize_directions = NORTH|WEST
+		if(SOUTH)
+			initialize_directions = SOUTH|EAST
+		if(EAST)
+			initialize_directions = EAST|NORTH
+		if(WEST)
+			initialize_directions = WEST|SOUTH
+	..()
+
+/obj/fluid_pipe/quad
+	icon_state = "quad"
+	initialize_directions = NORTH|SOUTH|EAST|WEST
+
+/obj/fluid_pipe/quad/overfloor
+	level = OVERFLOOR
+
+/obj/fluid_pipe/fluid_tank
+	name = "fluid tank"
+	desc = "A big ol' tank of fluid."
+	icon_state = "tank"
+	plane = PLANE_DEFAULT
+	layer = OBJ_LAYER
+	level = OVERFLOOR
+	capacity = LARGE_FLUID_CAPACITY
+
+/obj/fluid_pipe/fluid_tank/New()
+	switch(dir)
+		if(NORTH, SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST, WEST)
+			initialize_directions = EAST|WEST
+	..()
+
+/obj/fluid_pipe/fluid_tank/see_fluid
+	icon_state = "tank-viewable"
+
+/obj/fluid_pipe/fluid_tank/see_fluid/New()
+	..()
+	src.AddComponent( \
+		/datum/component/reagent_overlay/fluid_pipe, \
+		reagent_overlay_icon = src.icon, \
+		reagent_overlay_icon_state = src.icon_state, \
+		reagent_overlay_states = 10)
+
+/obj/fluid_pipe/fluid_tank/see_fluid/get_desc(dist, mob/user)
+	if (dist > 2)
+		return
+	. = "<br>[SPAN_NOTICE("[src.network.reagents.get_description(user, RC_FULLNESS | RC_VISIBLE | RC_SPECTRO)]")]"
 
 // Represents a single connected set of fluid pipes
 /datum/flow_network
-	var/list/obj/fluid_pipe/nodes = list()
-	var/list/obj/fluid_pipe/sources = list()
-	var/list/obj/fluid_pipe/sinks = list()
-	var/datum/reagents/fp_holder/pipe_cont = new /datum/reagents/fp_holder()
-	#define REACTOR 1
-	#define TURBINE 2
-	var/last = 0
+	/// Our shared reagents.
+	var/datum/reagents/flow_network/reagents
+	/// A list of every pipe we own.
+	var/list/obj/fluid_pipe/pipes
+	/// Connected machines to update whenever our network is merged or destroyed.
+	var/list/obj/machinery/fluid_pipe_machinery/machines
+	/// We're gonna destroy ourselves, discard further attempts to destroy. Currently used to prevent network deletion and creation spam during booms.
+	var/awaiting_removal = FALSE
+	/// Delaying reagent overlay updates. Tries to prevent multiple unseeable updates during a reaction.
+	var/delaying_reagent_overlay = FALSE
 
-	New(var/obj/fluid_pipe/root)
-		..()
-		pipe_cont.net = src
-		START_TRACKING
-		DEBUG_MESSAGE("Constructing fluid pipe network")
-		nodes = DFS(root)
-		for(var/obj/fluid_pipe/N in nodes)
-			N.network = src
-			if(N.pipe_type == FLUIDPIPE_SINK)
-				sinks.Add(N)
-			else if(N.pipe_type == FLUIDPIPE_SOURCE)
-				sources.Add(N)
-		ford_fulkerson(src)
+/datum/flow_network/New(var/obj/fluid_pipe/startpipe)
+	..()
+	src.reagents = new(startpipe.capacity)
+	src.reagents.fluid_network = src
+	src.pipes = list(startpipe)
+	src.machines = list()
 
+/datum/flow_network/disposing()
+	src.reagents.fluid_network = null
+	qdel(src.reagents)
+	src.reagents = null
+	..()
 
-		// Remove for full release
-		DEBUG_MESSAGE("Fluid network created. Listing structure.")
-		for(var/obj/fluid_pipe/node in nodes)
-			var/edges = "([node.loc.x], [node.loc.y]): \["
-			for(var/obj/fluid_pipe/adj in node.edges)
-				edges += "([adj.loc.x], [adj.loc.y]), "
-			edges += "\]"
-			DEBUG_MESSAGE(edges)
-
-	disposing()
-		STOP_TRACKING
-		..()
-
-	proc/clear_DFS_flags()
-		for(var/obj/fluid_pipe/FN in nodes)
-			FN.visited = 0
-
-// Look at me! I paid attention in my algorithms class!
-// Warning: For efficiency flow is pre-calculated based on an assumption
-// that the full capacity is used every tick. This may not actually be the case.
-// So there are some weird cases where you could theoretically turn off one source
-// and allow a second source to increase its intake but this wont allow that to happen
-// The only solution to this is recalculating flows every tick but we're not going to do that.
-proc/ford_fulkerson(var/datum/flow_network/FN)
-	var/list/obj/fluid_pipe/path = list()
-	FN.clear_DFS_flags()
-	path = find_augmenting_path(FN)
-	DEBUG_MESSAGE("Augmenting path: [print_pipe_list(path)]")
-	while(length(path))
-		flow_through(path, DEFAULT_FLUID_CAPACITY / FN.sources.len)
-		path = find_augmenting_path(FN)
-		DEBUG_MESSAGE("Augmenting path: [print_pipe_list(path)]")
-
-proc/find_augmenting_path(var/datum/flow_network/FN)
-	// Try to find one from each source
-	var/list/obj/fluid_pipe/stack = list()
-	for(var/obj/fluid_pipe/source in FN.sources)
-		FN.clear_DFS_flags()
-		find_source_sink_path(source,stack)
-		if(length(stack) > 0)
-			return stack
-	return null
-
-proc/find_source_sink_path(var/obj/fluid_pipe/source, var/list/obj/fluid_pipe/stack)
-	// Push self
-	stack.Add(source)
-	if(source.pipe_type == FLUIDPIPE_SINK)
+/// Accepts a network to merge into us.
+/// Merges all machines and pipes in network into us then deletes network.
+/datum/flow_network/proc/merge_network(var/datum/flow_network/network)
+	if(src == network)
 		return
-	DEBUG_MESSAGE("Pushing pipe [showCoords(source.x,source.y,source.z)]")
-	source.visited = 1
-	for(var/obj/fluid_pipe/adj in source.edges)
-		if(adj.visited || adj.used_capacity == adj.capacity)
-			continue
-		find_source_sink_path(adj,stack)
-		// Did the DFS succeed?
-		if(stack[stack.len].pipe_type == FLUIDPIPE_SINK)
-			return // We did it!
-	//Well shit. Dead end.
-	stack.Remove(source)
-	DEBUG_MESSAGE("Popping pipe [showCoords(source.x,source.y,source.z)]")
-	return
+	for(var/obj/fluid_pipe/pipe as anything in network.pipes)
+		var/datum/component/reagent_overlay/fluid_pipe/fluid_component = pipe.GetComponent(/datum/component/reagent_overlay)
+		if(fluid_component)
+			fluid_component.unregister_signals()
+			pipe.network = src
+			fluid_component.register_signals()
+		else
+			pipe.network = src
 
+	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in network.machines)
+		machine.refresh_network(src)
+	src.pipes += network.pipes
+	network.pipes.len = 0
+	src.reagents.maximum_volume += network.reagents.maximum_volume
+	network.reagents.trans_to_direct(src.reagents, network.reagents.total_volume)
+	qdel(network)
 
-proc/print_pipe_list(var/obj/fluid_pipe/pipes)
-	. = "\["
-	for(var/obj/fluid_pipe/pipe in pipes)
-		. += "[showCoords(pipe.x,pipe.y,pipe.z)], "
-	. += "]"
-
-
-proc/flow_through(var/list/obj/fluid_pipe/path, max_allowed_flow)
-	var/min_capacity = path[1].capacity - path[1].used_capacity
-	// How much can we send?
-	for(var/obj/fluid_pipe/pipe in path)
-		if(pipe.capacity - pipe.used_capacity < min_capacity)
-			min_capacity = pipe.capacity - pipe.used_capacity
-	min_capacity = clamp(min_capacity,0,max_allowed_flow)
-	DEBUG_MESSAGE("Pushing [min_capacity] through this path.")
-	for(var/obj/fluid_pipe/pipe in path)
-		pipe.used_capacity += min_capacity
-	return
-
-
-proc/DFS(var/obj/fluid_pipe/root)
-	root.visited = 1
-	var/list/obj/fluid_pipe/nodes = list()
-	nodes.Add(root)
-	if(!root.edges)
+/// Refreshes all machines and pipes and removes ourself. Delays during explosions.
+/datum/flow_network/proc/rebuild_network()
+	if(src.awaiting_removal == TRUE)
 		return
-	for(var/obj/fluid_pipe/adj in root.edges)
-		if(!adj.visited)
-			adj.visited = 1
-			nodes += DFS(adj)
-	return nodes
+	src.awaiting_removal = TRUE
+	UNTIL(!explosions.exploding) //not best but fine for explosions
+	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
+		pipe.network = null
+	var/datum/reagents/fluid
+	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
+		fluid = src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume))
+		src.reagents.maximum_volume -= pipe.capacity
+		pipe.refresh_connections(fluid)
+	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in src.machines)
+		machine.refresh_network(src)
+	src.awaiting_removal = FALSE
+	qdel(src)
 
-// Its like the normal DFS but its loud. As in it yells pipe locations at you. For testing.
-// AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-proc/DFS_LOUD(var/obj/fluid_pipe/root)
-	DEBUG_MESSAGE("DFS Start - Arrived at node [showCoords(root.x,root.y,root.z)]")
-	var/listret = "\["
-	for(var/i = 1; i <= root.edges.len; i++)
-		listret += "([root.edges[i].x],[root.edges[i].y],[root.edges[i].z]) "
-	listret += "]"
-	DEBUG_MESSAGE("Adjacent nodes: [listret]")
-	root.visited = 1
-	var/list/obj/fluid_pipe/nodes = list()
-	nodes.Add(root)
-	if(!root.edges)
+/// Removes a pipe from our network. Spills its contents on its turf. Refreshes network afterwards.
+/datum/flow_network/proc/remove_pipe(var/obj/fluid_pipe/node)
+	var/turf/T = get_turf(node)
+	var/datum/reagents/fluid = src.reagents.remove_any_to(src.reagents.total_volume * (node.capacity/src.reagents.maximum_volume))
+	fluid.trans_to(T, fluid.total_volume)
+	src.reagents.maximum_volume -= node.capacity
+	qdel(node)
+	src.rebuild_network()
+
+/datum/flow_network/proc/on_reagent_changed()
+	if(src.delaying_reagent_overlay)
 		return
-	for(var/obj/fluid_pipe/adj in root.edges)
-		if(!adj.visited)
-			adj.visited = 1
-			nodes += DFS(adj)
-	listret = "\["
-	for(var/i = 1; i <= nodes.len; i++)
-		listret += "([nodes[i].x],[nodes[i].y],[nodes[i].z]) "
-	listret += "]"
-	DEBUG_MESSAGE("DFS end - returning [listret].")
-	return nodes
+	src.delaying_reagent_overlay = TRUE
+	SPAWN(0)
+		SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
+		delaying_reagent_overlay = FALSE
 
-/datum/reagents/fp_holder
-	var/datum/flow_network/net
-	New()
-		..()
+// Whenever I put the flow network in reagents/var/my_atom, it disappears for some reason and therefore it cant update, so i made this instead -cringe
+/datum/reagents/flow_network
+	var/datum/flow_network/fluid_network
+
+/datum/reagents/flow_network/reagents_changed(var/add = 0)
+	fluid_network.on_reagent_changed()
