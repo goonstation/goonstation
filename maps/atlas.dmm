@@ -12053,6 +12053,12 @@
 	name = "AI Upload";
 	enter_id = "inner"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "byc" = (
@@ -17239,6 +17245,7 @@
 /area/station/solar/north)
 "oiH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "omc" = (
@@ -18057,6 +18064,13 @@
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"qeH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "qfp" = (
 /obj/machinery/light{
 	dir = 4;
@@ -19286,7 +19300,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/access/ai_upload,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	dir = 4;
@@ -19300,6 +19313,7 @@
 	name = "AI Upload";
 	enter_id = "outer"
 	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "tix" = (
@@ -63597,7 +63611,7 @@ aTE
 akl
 igd
 igd
-oiH
+qeH
 bwv
 oiH
 igd
