@@ -7758,7 +7758,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
-/obj/item/wrestlingbell,
+/obj/machinery/wrestlingbell,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-2"
 	},

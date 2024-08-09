@@ -54564,7 +54564,7 @@
 /area/afterlife/bar)
 "dTA" = (
 /obj/decal/stage_edge,
-/obj/item/wrestlingbell{
+/obj/machinery/wrestlingbell{
 	density = 0;
 	pixel_y = 7
 	},

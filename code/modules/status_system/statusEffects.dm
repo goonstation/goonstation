@@ -1592,11 +1592,56 @@
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src, optional)
 
 		onRemove()
+
 			. = ..()
 			if(ismob(owner))
 				var/mob/M = owner
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_BODY, src)
 				REMOVE_ATOM_PROPERTY(M, PROP_MOB_MELEEPROT_HEAD, src)
+
+	wrestler
+		id = "wrestler"
+		name = "Wrestling!"
+		desc = "You're in the ring, break a leg!"
+		icon_state = "wrestling"
+		unique = TRUE
+		effect_quality = STATUS_QUALITY_NEUTRAL
+		var/play_KO_fx = FALSE
+		var/remove_all = FALSE /// We want to remove all nearby people's wrestling status if one goes down by getting KO'd
+
+		onUpdate(timePassed)
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+			else
+				return ..(timePassed)
+
+			if (M.health < 0)
+				play_KO_fx = TRUE
+				remove_all = TRUE
+				M.delStatus("wrestler")
+
+		onRemove()
+			. = ..()
+			var/mob/M = null
+			if(ismob(owner))
+				M = owner
+
+			if (play_KO_fx)
+				playsound(M.loc, 'sound/misc/Boxingbell.ogg', 50,1)
+				M.make_dizzy(140)
+				M.UpdateOverlays(image('icons/mob/critter/overlays.dmi', "dizzy"), "dizzy")
+				M.setStatus("resting", INFINITE_STATUS)
+				SPAWN(10 SECONDS)
+					M.UpdateOverlays(null, "dizzy")
+				play_KO_fx = FALSE
+
+			if (remove_all)
+				for (var/mob/living/carbon/human/human in view(10, M))
+					if (human.hasStatus("wrestler"))
+						human.delStatus("wrestler")
+			remove_all = FALSE
+
 
 /datum/statusEffect/bloodcurse
 	id = "bloodcurse"
