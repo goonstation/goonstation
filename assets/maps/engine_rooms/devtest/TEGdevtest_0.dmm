@@ -26,16 +26,8 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "dD" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/devzone)
-"eW" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	level = 2
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
@@ -58,6 +50,13 @@
 "gw" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"hM" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
@@ -99,6 +98,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "kI" = (
@@ -113,11 +115,30 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
+"lc" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "lE" = (
 /obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /turf/space,
+/area/station/devzone)
+"mb" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
 /area/station/devzone)
 "nt" = (
 /obj/window/crystal/reinforced/north,
@@ -165,6 +186,12 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
+"pK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "qr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -201,6 +228,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"uo" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "ur" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
@@ -221,6 +258,11 @@
 	level = 2
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"vb" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/obj/machinery/meter,
+/turf/simulated/floor/engine,
 /area/station/devzone)
 "vT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -284,9 +326,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"Ad" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "AC" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"AM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
 /area/station/devzone)
 "Bv" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -295,7 +347,7 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "Bw" = (
-/obj/machinery/atmospherics/pipe/quadway,
+/obj/machinery/atmospherics/pipe/quadway/overfloor,
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "BK" = (
@@ -309,7 +361,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "Cn" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
@@ -345,7 +397,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "FE" = (
-/obj/machinery/atmospherics/pipe/manifold,
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "Gr" = (
@@ -361,6 +416,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"Hf" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Hk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
 "Hn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/engine,
@@ -372,9 +439,8 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "Iu" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
@@ -405,6 +471,13 @@
 /obj/machinery/atmospherics/binary/pump/active{
 	id = "Cold Loop Gas Supply 2";
 	target_pressure = 1000
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
+"Nu" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
@@ -440,6 +513,13 @@
 	can_rupture = 0
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/station/devzone)
+"Re" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
 /area/station/devzone)
 "RB" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
@@ -481,8 +561,17 @@
 /obj/window/crystal/reinforced/south,
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"Vb" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "Ve" = (
 /obj/machinery/atmospherics/binary/circulatorTemp/right,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "VA" = (
@@ -507,6 +596,9 @@
 "WV" = (
 /obj/machinery/atmospherics/unary/tank{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
@@ -555,9 +647,11 @@
 /area/station/devzone)
 "Zu" = (
 /obj/machinery/power/generatorTemp,
-/obj/cable/orange,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
+	},
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/devzone)
@@ -701,7 +795,7 @@ yQ
 Yf
 NE
 Gr
-gw
+Ad
 SM
 SM
 zD
@@ -722,10 +816,10 @@ yQ
 Yf
 NE
 Gr
-gw
+Ad
 XS
 sP
-DT
+vb
 Iu
 PL
 EE
@@ -743,7 +837,7 @@ yQ
 Yf
 NE
 Gr
-gw
+Ad
 qy
 DZ
 wb
@@ -764,11 +858,11 @@ yQ
 Yf
 NE
 Gr
-eW
+Cn
 Hn
 Zu
 Hn
-DT
+vb
 Lo
 kZ
 AC
@@ -808,8 +902,8 @@ NE
 SM
 zD
 Zz
-ur
-DT
+Re
+vb
 SM
 CG
 CG
@@ -829,7 +923,7 @@ NE
 sT
 SM
 VD
-NE
+AM
 SM
 sP
 Ul
@@ -838,8 +932,8 @@ nt
 NE
 NE
 NE
-NE
-BM
+Hf
+Hk
 "}
 (14,1,1) = {"
 BM
@@ -859,8 +953,8 @@ ur
 uz
 NE
 NE
-NE
-BM
+mb
+Hk
 "}
 (15,1,1) = {"
 BM
@@ -872,15 +966,15 @@ NE
 Iu
 ur
 kG
-Iu
-ur
+uo
+hM
 FE
-NE
-NE
-NE
-NE
-NE
-NE
+pK
+pK
+pK
+pK
+pK
+lc
 BM
 "}
 (16,1,1) = {"
@@ -901,7 +995,7 @@ ur
 GE
 NE
 NE
-NE
+Nu
 BM
 "}
 (17,1,1) = {"
@@ -922,7 +1016,7 @@ NE
 NE
 NE
 NE
-NE
+Vb
 BM
 "}
 (18,1,1) = {"
