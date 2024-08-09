@@ -82,6 +82,12 @@
 	desc = "A cartridge that restocks pda vending machines."
 	vendingType = "pda"
 
+/obj/item/vending/restock_cartridge/circuit
+	name = "circuit board restock cartridge"
+	icon_state = "vendcart_base"
+	desc = "A cartridge that restocks circuit board vending machines."
+	vendingType = "circuit"
+
 /obj/item/vending/restock_cartridge/book
 	name = "book restock cartridge"
 	icon_state = "book"
