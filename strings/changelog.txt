@@ -1,4 +1,9 @@
 
+(t)fri aug 09 24
+(u)JORJ949
+(p)20226
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The gang gamemode now requires a minimum of 15 players.
 (t)wed aug 07 24
 (u)LeahTheTech
 (p)20219
