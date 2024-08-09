@@ -30,8 +30,10 @@
 // Having 10% of the top heat is level '1'
 // Having less than 10% is level '0'
 
+/// Amount of points a gang member starts with
+#define GANG_STARTING_POINTS 1500
 
-/// /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
+/// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
 /// time in seconds between gangs gaining spray bottles
 #define GANG_SPRAYPAINT_REGEN 7.5 MINUTES
@@ -133,11 +135,31 @@
 #define GANG_TAG_HEAT_DECAY_MUL 0.9
 
 
+// GANG VANDALISM DEFINES:
+// Occasionally, gangs are told to do vandalism instead of duffle bags.
+// They must deface departments enough to recieve a duffle bag on their location.
+
+/// The total vandalism 'score' required to complete the objective.
+#define GANG_VANDALISM_REQUIRED_SCORE 500
+/// How much graffiti is worth, per tile
+#define GANG_VANDALISM_PER_GRAFFITI_TILE 20
+/// How many tiles of graffiti spawns in graffiti bottles
+#define GANG_VANDALISM_GRAFFITI_MAX 20
+/// How many points light breaks are worth
+#define GANG_VANDALISM_LIGHT_BREAK_POINTS 10
+/// How many points throwing a person into a vending machine is worth
+#define GANG_VANDALISM_VENDOR_KO 10
+/// How many points throwing a person into a glass table
+#define GANG_VANDALISM_TABLING 10
+/// How many points ripped up floor tiles are worth
+#define GANG_VANDALISM_FLOORTILE_POINTS 2
+/// How many points each point of damage is worth, for violence
+#define GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER 0.5
+/// How many points each point of damage is worth, for violence
+#define GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER 0
+
 
 // GANG TAG SIZES:
-
-
-
 
 /// Radius of the circle that tags claim
 #define GANG_TAG_INFLUENCE_LOCKER 4
