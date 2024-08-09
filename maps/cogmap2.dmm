@@ -15394,7 +15394,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/light_switch/east,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -20547,11 +20546,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/item/device/radio/intercom/brig,
 /obj/machinery/phone,
-/obj/blind_switch/area{
-	dir = 4;
-	pixel_x = -22;
-	pixel_y = 4
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bkI" = (
@@ -23669,9 +23664,7 @@
 /area/station/routing/security)
 "buh" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/light_switch/east{
-	dir = 8
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/caution/south,
 /area/station/routing/security)
 "bui" = (
@@ -24335,11 +24328,14 @@
 	icon_state = "plant";
 	level = 1.9
 	},
-/obj/machinery/light_switch/east,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -10;
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/main)
@@ -24474,10 +24470,6 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/landmark/start/job/head_of_security,
-/obj/machinery/light_switch/east{
-	dir = 8;
-	pixel_x = 22
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -24488,6 +24480,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bwn" = (
@@ -34685,9 +34678,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/light_switch/west{
-	dir = 4
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -57280,6 +57271,17 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
+"fjM" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = 6
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/primary/northwest)
 "fjS" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -110117,7 +110119,7 @@ aPP
 aOD
 aOD
 aTI
-aOD
+fjM
 aWt
 aXT
 aZz
