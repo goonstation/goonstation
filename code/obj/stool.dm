@@ -857,6 +857,7 @@ TYPEINFO(/obj/stool/chair)
 			qdel(src)
 
 	disposing()
+		unbuckle()
 		for (var/mob/M in src.loc)
 			if (M.buckled == src)
 				M.buckled = null
