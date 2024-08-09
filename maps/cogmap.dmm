@@ -5062,10 +5062,6 @@
 	},
 /area/station/hydroponics/bay)
 "aue" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5081,6 +5077,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 4
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "aum" = (
@@ -6708,10 +6705,6 @@
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
-	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -30870,10 +30863,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chf" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "2-8"
@@ -39546,7 +39535,9 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/area/east{
+	id = "baroffice"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "ejG" = (
@@ -51768,16 +51759,13 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "nOu" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
 /obj/machinery/atmospherics/binary/valve{
 	name = "gas mix supply valve"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -55891,10 +55879,7 @@
 	},
 /area/space)
 "qNS" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "qNX" = (
@@ -58691,6 +58676,10 @@
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"tct" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "tcE" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/emergency{
@@ -106981,7 +106970,7 @@ cca
 cca
 lSR
 cca
-ceB
+tct
 ceB
 ceB
 ceB
