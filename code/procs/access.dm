@@ -244,7 +244,7 @@
 		if("Security Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_securitylockers, access_brig, access_maint_tunnels,
 			access_medical, access_morgue, access_research, access_cargo, access_engineering, access_engineering_control,
-			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining, access_tox
+			access_chemistry, access_bar, access_kitchen, access_hydro, access_pathology, access_researchfoyer, access_mining
 			)
 		if("Vice Officer")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_maint_tunnels,access_hydro, access_bar, access_kitchen, access_ranch)
