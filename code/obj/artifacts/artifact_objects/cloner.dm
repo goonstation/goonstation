@@ -1,4 +1,4 @@
-/obj/artifact/cloner
+/obj/machinery/artifact/cloner
 	name = "artifact cloner"
 	associated_datum = /datum/artifact/cloner
 
@@ -13,7 +13,7 @@
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
 
 /datum/artifact/cloner
-	associated_object = /obj/artifact/cloner
+	associated_object = /obj/machinery/artifact/cloner
 	type_name = "Cloner"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 90

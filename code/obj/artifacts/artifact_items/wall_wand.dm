@@ -59,9 +59,9 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shieldsparkles"
 	desc = "Some kind of strange energy barrier. You can't get past it."
-	var/obj/artifact/forcefield_generator/source = null
+	var/obj/machinery/artifact/forcefield_generator/source = null
 
-	New(var/loc,var/duration,var/wallsprite,var/obj/artifact/forcefield_generator/S = null)
+	New(var/loc,var/duration,var/wallsprite,var/obj/machinery/artifact/forcefield_generator/S = null)
 		..()
 		icon_state = wallsprite
 		source = S

@@ -1,15 +1,15 @@
-/obj/artifact/healer_bio
+/obj/machinery/artifact/healer_bio
 	name = "artifact carbon healer"
 	associated_datum = /datum/artifact/healer_bio
 
 /datum/artifact/healer_bio
-	associated_object = /obj/artifact/healer_bio
+	associated_object = /obj/machinery/artifact/healer_bio
 	type_name = "Single Target Healer"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/lighting)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "begins to pulse softly."

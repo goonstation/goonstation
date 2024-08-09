@@ -142,7 +142,7 @@
 	var/list/acceptable = list(/obj/storage/crate,
 	/obj/storage/secure/crate,
 	/obj/machinery/artifact,
-	/obj/artifact,
+	/obj/machinery/artifact,
 	/obj/mopbucket,
 	/obj/beacon_deployer,
 	/obj/machinery/portable_atmospherics,

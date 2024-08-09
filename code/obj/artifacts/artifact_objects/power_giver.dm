@@ -1,16 +1,16 @@
-/obj/artifact/power_giver
+/obj/machinery/artifact/power_giver
 	name = "artifact power giver"
 	associated_datum = /datum/artifact/power_giver
 
 /datum/artifact/power_giver
-	associated_object = /obj/artifact/power_giver
+	associated_object = /obj/machinery/artifact/power_giver
 	type_name = "Mutator"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
 	validtypes = list("martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/lighting, /datum/artifact_trigger/darkness)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "begins glowing with an eerie light!"
 	deact_text = "falls dark and quiet."

@@ -1,4 +1,4 @@
-/*/obj/artifact/curser
+/*/obj/machinery/artifact/curser
 	name = "artifact curser"
 	associated_datum = /datum/artifact/curser
 
@@ -15,7 +15,7 @@
 		src.visible_message("<b>[src] seems like it has something inside it...</b>") //Left on purpose, I want to make people thing its the container artifact.
 
 /datum/artifact/curser
-	associated_object = /obj/artifact/curser
+	associated_object = /obj/machinery/artifact/curser
 	type_name = "Curser"
 	rarity_weight = 0
 	validtypes = list("eldritch")

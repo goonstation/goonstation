@@ -1,15 +1,15 @@
-/obj/artifact/implanter
+/obj/machinery/artifact/implanter
 	name = "artifact implanter"
 	associated_datum = /datum/artifact/implanter
 
 /datum/artifact/implanter
-	associated_object = /obj/artifact/implanter
+	associated_object = /obj/machinery/artifact/implanter
 	type_name = "Implanter"
 	rarity_weight = 250
 	validtypes = list("eldritch", "ancient", "wizard")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
-	/datum/artifact_trigger/cold)
+	/datum/artifact_trigger/cold, /datum/artifact_trigger/lighting, /datum/artifact_trigger/darkness)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing a complex array of thin tubes!"
 	deact_text = "closes itself up."

@@ -1,9 +1,9 @@
-/obj/artifact/darkness_field
+/obj/machinery/artifact/darkness_field
 	name = "artifact darkness field"
 	associated_datum = /datum/artifact/darkness_field
 
 /datum/artifact/darkness_field
-	associated_object = /obj/artifact/darkness_field
+	associated_object = /obj/machinery/artifact/darkness_field
 	type_name = "Darkness Generator"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350

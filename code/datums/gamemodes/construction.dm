@@ -124,7 +124,7 @@
 					new object(T)
 				else
 					if (prob(5))
-						var/obj/artifact/lamp/L = new /obj/artifact/lamp(T)
+						var/obj/machinery/artifact/lamp/L = new /obj/machinery/artifact/lamp(T)
 						SPAWN(1 SECOND)
 							L.ArtifactActivated()
 					if (prob(100 / (picks + 1)))

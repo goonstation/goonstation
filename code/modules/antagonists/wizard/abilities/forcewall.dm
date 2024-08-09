@@ -101,9 +101,9 @@
 		user.lastattacked = src
 
 /obj/forcefield/artifact
-	var/obj/artifact/forcefield_generator/source = null
+	var/obj/machinery/artifact/forcefield_generator/source = null
 
-	New(var/obj/artifact/forcefield_generator/S)
+	New(var/obj/machinery/artifact/forcefield_generator/S)
 		. = ..()
 		source = S
 
