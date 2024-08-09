@@ -6,8 +6,8 @@
 @use 'sass:meta';
 
 .theme-ntos.mode-light {
-  @include meta.load-css('./base-light.scss', $with: (
-    'bg-color': #d9eaff,
-    'component-bg-color': #d9eaff,
-  ));
+  @include meta.load-css(
+    './base-light.scss',
+    $with: ('bg-color': #d9eaff, 'component-bg-color': #d9eaff)
+  );
 }

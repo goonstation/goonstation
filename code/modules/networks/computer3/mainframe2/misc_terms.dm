@@ -794,6 +794,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 			boutput(user, "You insert \the [I].")
 
 	ui_act(action, params)
+		. = ..()
 		switch(action)
 			if ("add_item")
 				src.add_tank(usr, usr.equipped(), params["tank"])

@@ -5,8 +5,10 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'tgui-core/react';
+
 export interface AnnouncementCompData {
-  announces_arrivals: boolean;
+  announces_arrivals: BooleanLike;
   arrivalalert: string;
   theme: string;
   card_name: string;

@@ -35,7 +35,7 @@ export type PowerMonitorApcItemData = [
   environment: number,
   load: number,
   cellCharge?: number,
-  cellCharging?: number
+  cellCharging?: number,
 ];
 
 export interface PowerMonitorSmesData extends PowerMonitorData {
@@ -57,13 +57,16 @@ export type PowerMonitorSmesItemData = [
   input: number,
   output: number,
   online: BooleanLike,
-  load?: number
+  load?: number,
 ];
 
 export interface PowerMonitorSmesStaticItemData {
   name: string;
 }
 
-export const isDataForApc = (data: PowerMonitorData): data is PowerMonitorApcData => data.type === PowerMonitorType.Apc;
-export const isDataForSmes = (data: PowerMonitorData): data is PowerMonitorSmesData =>
-  data.type === PowerMonitorType.Smes;
+export const isDataForApc = (
+  data: PowerMonitorData,
+): data is PowerMonitorApcData => data.type === PowerMonitorType.Apc;
+export const isDataForSmes = (
+  data: PowerMonitorData,
+): data is PowerMonitorSmesData => data.type === PowerMonitorType.Smes;

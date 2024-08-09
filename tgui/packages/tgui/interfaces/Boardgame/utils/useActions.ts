@@ -18,7 +18,10 @@ export const useActions = (act) => {
         ckey,
       });
     },
-    pieceSelect: (ckey: string | UserDataType, piece: string | PieceDataType) => {
+    pieceSelect: (
+      ckey: string | UserDataType,
+      piece: string | PieceDataType,
+    ) => {
       act('pieceSelect', { ckey, piece });
     },
     pieceDeselect: (ckey: string | UserDataType) => {

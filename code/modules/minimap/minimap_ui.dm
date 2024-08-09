@@ -149,6 +149,7 @@
 			src.minimap_controller.selected_y = null
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		var/mob/user = ui.user
 
 		if(is_incapacitated(user))

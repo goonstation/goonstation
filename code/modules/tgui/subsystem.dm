@@ -7,6 +7,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+/// Open uis owned by this datum
+/// Lazy, since this case is semi rare
+/datum/var/list/datum/tgui/open_uis
+
 /**
  * public
  *
@@ -29,7 +33,7 @@
 		window = windows[window_id]
 		// As we are looping, create missing window datums
 		if(!window)
-			window = new(user.client, window_id, tgui_pooled = TRUE)
+			window = new(user.client, window_id, pooled = TRUE)
 		// Skip windows with acquired locks
 		if(window.locked)
 			continue
@@ -42,7 +46,7 @@
 	if(!window_found)
 		log_tgui(user, "Error: Pool exhausted",
 			context = "tgui_process/request_pooled_window")
-		alert(user, "TGUI Message: You have too many windows open! Pool has been exhausted.", "TGUI Hard Window Limit")
+		alert(user, "TGUI Message: You have too many windows open!", "TGUI Hard Window Limit")
 		return null
 	return window
 
@@ -117,11 +121,10 @@
  * return datum/tgui The found UI.
  */
 /datum/controller/process/tgui/proc/get_open_ui(mob/user, datum/src_object)
-	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	// No UIs opened for this src_object
-	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
+	if(!length(src_object?.open_uis))
 		return null
-	for(var/datum/tgui/ui in open_uis_by_src[key])
+	for(var/datum/tgui/ui in src_object.open_uis)
 		// Make sure we have the right user
 		if(ui.user == user)
 			return ui
@@ -137,12 +140,11 @@
  * return int The number of UIs updated.
  */
 /datum/controller/process/tgui/proc/update_uis(datum/src_object)
-	var/count = 0
-	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	// No UIs opened for this src_object
-	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
-		return count
-	for(var/datum/tgui/ui in open_uis_by_src[key])
+	if(!length(src_object?.open_uis))
+		return 0
+	var/count = 0
+	for(var/datum/tgui/ui in src_object.open_uis)
 		// Check if UI is valid.
 		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.process(force = 1)
@@ -159,33 +161,16 @@
  * return int The number of UIs closed.
  */
 /datum/controller/process/tgui/proc/close_uis(datum/src_object)
-	var/count = 0
-	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
 	// No UIs opened for this src_object
-	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
-		return count
-	for(var/datum/tgui/ui in open_uis_by_src[key])
+	if(!length(src_object?.open_uis))
+		return 0
+	var/count = 0
+	for(var/datum/tgui/ui in src_object.open_uis)
 		// Check if UI is valid.
 		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 			ui.close()
 			count++
 	return count
-
-/**
- * public
- *
- * return a list of all tgui UI datums attached to a src_object.
- */
-/datum/controller/process/tgui/proc/get_uis(datum/src_object)
-	. = list()
-	var/key = "\ref[src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
-	// No UIs opened for this src_object
-	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
-		return
-	for(var/datum/tgui/ui in open_uis_by_src[key])
-		// Check if UI is valid.
-		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-			. += ui
 
 /**
  * public
@@ -196,12 +181,11 @@
  */
 /datum/controller/process/tgui/proc/close_all_uis()
 	var/count = 0
-	for(var/key in open_uis_by_src)
-		for(var/datum/tgui/ui in open_uis_by_src[key])
-			// Check if UI is valid.
-			if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-				ui.close()
-				count++
+	for(var/datum/tgui/ui in all_uis)
+		// Check if UI is valid.
+		if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
+			ui.close()
+			count++
 	return count
 
 /**
@@ -252,13 +236,9 @@
  * required ui datum/tgui The UI to be added.
  */
 /datum/controller/process/tgui/proc/on_open(datum/tgui/ui)
-	var/key = "\ref[ui.src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
-	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
-		open_uis_by_src[key] = list()
-	ui.user.tgui_open_uis |= ui
-	var/list/uis = open_uis_by_src[key]
-	uis |= ui
-	open_uis |= ui
+	ui.user?.tgui_open_uis |= ui
+	LAZYLISTOR(ui.src_object.open_uis, ui)
+	all_uis |= ui
 
 /**
  * private
@@ -270,17 +250,14 @@
  * return bool If the UI was removed or not.
  */
 /datum/controller/process/tgui/proc/on_close(datum/tgui/ui)
-	var/key = "\ref[ui.src_object]" // |GOONSTATION-CHANGE| (REF->\ref)
-	if(isnull(open_uis_by_src[key]) || !istype(open_uis_by_src[key], /list))
-		return FALSE
 	// Remove it from the list of processing UIs.
-	open_uis.Remove(ui)
+	all_uis -= ui
+	current_run -= ui
 	// If the user exists, remove it from them too.
-	ui.user?.tgui_open_uis.Remove(ui)
-	var/list/uis = open_uis_by_src[key]
-	uis.Remove(ui)
-	if(length(uis) == 0)
-		open_uis_by_src.Remove(key)
+	if(ui.user)
+		ui.user.tgui_open_uis -= ui
+	if(ui.src_object)
+		LAZYLISTREMOVE(ui.src_object.open_uis, ui)
 	return TRUE
 
 /**

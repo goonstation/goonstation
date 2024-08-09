@@ -6,8 +6,9 @@
  * @license ISC
  */
 
+import { Button } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button } from '../../components';
 import type { CyborgDockingStationData } from './type';
 
 // type to handle pass-through of non-TS Button props
@@ -17,8 +18,8 @@ type MockButtonProps = Record<string, any> & {
 
 interface DockingAllowedButtonProps extends MockButtonProps {}
 
-export const DockingAllowedButton = (props: DockingAllowedButtonProps, context) => {
+export const DockingAllowedButton = (props: DockingAllowedButtonProps) => {
   const { disabled, ...rest } = props;
-  const { data } = useBackend<CyborgDockingStationData>(context);
+  const { data } = useBackend<CyborgDockingStationData>();
   return <Button disabled={disabled || data.disabled} {...rest} />;
 };

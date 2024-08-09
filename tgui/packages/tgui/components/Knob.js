@@ -4,12 +4,13 @@
  * @license MIT
  */
 
-import { keyOfMatchingRange, scale } from 'common/math';
 import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
-import { DraggableControl } from './DraggableControl';
+import { DraggableControl } from 'tgui-core/components';
+import { keyOfMatchingRange, scale } from 'tgui-core/math';
 
-export const Knob = props => {
+import { computeBoxClassName, computeBoxProps } from './Box';
+
+export const Knob = (props) => {
   const {
     // Draggable props (passthrough)
     animated,
@@ -51,8 +52,9 @@ export const Knob = props => {
         suppressFlicker,
         unit,
         value,
-      }}>
-      {control => {
+      }}
+    >
+      {(control) => {
         const {
           dragging,
           editing,
@@ -65,14 +67,11 @@ export const Knob = props => {
         const scaledFillValue = scale(
           fillValue ?? displayValue,
           minValue,
-          maxValue);
-        const scaledDisplayValue = scale(
-          displayValue,
-          minValue,
-          maxValue);
-        const effectiveColor = color
-          || keyOfMatchingRange(fillValue ?? value, ranges)
-          || 'default';
+          maxValue,
+        );
+        const scaledDisplayValue = scale(displayValue, minValue, maxValue);
+        const effectiveColor =
+          color || keyOfMatchingRange(fillValue ?? value, ranges) || 'default';
         const rotation = Math.min((scaledDisplayValue - 0.5) * 270, 225);
         return (
           <div
@@ -90,44 +89,45 @@ export const Knob = props => {
               },
               ...rest,
             })}
-            onMouseDown={handleDragStart}>
+            onMouseDown={handleDragStart}
+          >
             <div className="Knob__circle">
               <div
                 className="Knob__cursorBox"
                 style={{
                   transform: `rotate(${rotation}deg)`,
-                }}>
+                }}
+              >
                 <div className="Knob__cursor" />
               </div>
             </div>
             {dragging && (
-              <div className="Knob__popupValue">
-                {displayElement}
-              </div>
+              <div className="Knob__popupValue">{displayElement}</div>
             )}
             <svg
               className="Knob__ring Knob__ringTrackPivot"
-              viewBox="0 0 100 100">
-              <circle
-                className="Knob__ringTrack"
-                cx="50"
-                cy="50"
-                r="50" />
+              viewBox="0 0 100 100"
+            >
+              <circle className="Knob__ringTrack" cx="50" cy="50" r="50" />
             </svg>
             <svg
               className="Knob__ring Knob__ringFillPivot"
-              viewBox="0 0 100 100">
+              viewBox="0 0 100 100"
+            >
               <circle
                 className="Knob__ringFill"
                 style={{
-                  'stroke-dashoffset': (
-                    Math.max(((bipolar ? 2.75 : 2.00) - scaledFillValue * 1.5)
-                      * Math.PI * 50, 0)
+                  'stroke-dashoffset': Math.max(
+                    ((bipolar ? 2.75 : 2.0) - scaledFillValue * 1.5) *
+                      Math.PI *
+                      50,
+                    0,
                   ),
                 }}
                 cx="50"
                 cy="50"
-                r="50" />
+                r="50"
+              />
             </svg>
             {inputElement}
           </div>

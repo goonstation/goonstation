@@ -534,6 +534,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		ui_interact(C.mob)
 
 	ui_act(action, list/params)
+		. = ..()
 		switch (action)
 			if("toggle_vote")
 				toggle_vote(params["map_name"], usr)

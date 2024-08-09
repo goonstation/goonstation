@@ -5,21 +5,23 @@
  * @license ISC
  */
 
+import { Button, Section, Stack, Tabs } from 'tgui-core/components';
+
 import { useBackend } from '../../../../backend';
-import { Button, Section, Stack, Tabs } from '../../../../components';
-import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import * as actions from '../../action';
-import type { CyborgModuleRewriterData } from '../../type/data';
+import { EmptyPlaceholder } from '../../EmptyPlaceholder';
 import { Direction } from '../../type/action';
+import type { CyborgModuleRewriterData } from '../../type/data';
 import { ModuleDetail } from './ModuleDetail';
 
 // width hard-coded to allow display of widest current module name without resizing when ejected/reset
 const SIDEBAR_WIDTH = 20;
 
-export const ModuleView = (_props: unknown, context: unknown) => {
-  const { act, data } = useBackend<CyborgModuleRewriterData>(context);
+export const ModuleView = () => {
+  const { act, data } = useBackend<CyborgModuleRewriterData>();
   const { modules: { available = [], selected } = {} } = data;
-  const handleEjectModule = (itemRef: string) => actions.ejectModule(act, { itemRef });
+  const handleEjectModule = (itemRef: string) =>
+    actions.ejectModule(act, { itemRef });
   const handleMoveToolDown = (itemRef: string) =>
     actions.moveTool(act, {
       dir: Direction.Down,
@@ -30,9 +32,12 @@ export const ModuleView = (_props: unknown, context: unknown) => {
       dir: Direction.Up,
       itemRef,
     });
-  const handleRemoveTool = (itemRef: string) => actions.removeTool(act, { itemRef });
-  const handleResetModule = (moduleId: string) => actions.resetModule(act, { moduleId });
-  const handleSelectModule = (itemRef: string) => actions.selectModule(act, { itemRef });
+  const handleRemoveTool = (itemRef: string) =>
+    actions.removeTool(act, { itemRef });
+  const handleResetModule = (moduleId: string) =>
+    actions.resetModule(act, { moduleId });
+  const handleSelectModule = (itemRef: string) =>
+    actions.selectModule(act, { itemRef });
   const { item_ref: selectedModuleRef, tools = [] } = selected || {};
 
   if (available.length === 0) {
@@ -54,7 +59,7 @@ export const ModuleView = (_props: unknown, context: unknown) => {
                   icon="eject"
                   color="transparent"
                   onClick={() => handleEjectModule(itemRef)}
-                  title={`Eject ${name}`}
+                  tooltip={`Eject ${name}`}
                 />
               );
               return (
@@ -62,7 +67,8 @@ export const ModuleView = (_props: unknown, context: unknown) => {
                   key={itemRef}
                   onClick={() => handleSelectModule(itemRef)}
                   rightSlot={ejectButton}
-                  selected={itemRef === selectedModuleRef}>
+                  selected={itemRef === selectedModuleRef}
+                >
                   {name}
                 </Tabs.Tab>
               );

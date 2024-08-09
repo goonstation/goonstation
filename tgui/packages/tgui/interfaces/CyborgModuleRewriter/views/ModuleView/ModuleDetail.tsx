@@ -5,10 +5,11 @@
  * @license ISC
  */
 
-import { useLocalState } from '../../../../backend';
-import { Button, Section, Stack } from '../../../../components';
-import { Tools } from './Tools';
+import { useState } from 'react';
+import { Button, Section, Stack } from 'tgui-core/components';
+
 import type { ToolData } from '../../type/data';
+import { Tools } from './Tools';
 
 const resetOptions = [
   {
@@ -46,18 +47,19 @@ interface ModuleProps {
 }
 
 export const ModuleDetail = (props: ModuleProps, context: unknown) => {
-  const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } = props;
-  const [selectedToolRef, setSelectedToolRef] = useLocalState<string | undefined>(
-    context,
-    'selectedToolRef',
-    undefined
+  const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } =
+    props;
+  const [selectedToolRef, setSelectedToolRef] = useState<string | undefined>(
+    undefined,
   );
   const handleRemoveTool = (itemRef: string) => {
     const toolIndex = tools.findIndex((tool) => tool.item_ref === itemRef);
     setSelectedToolRef(tools[toolIndex + 1]?.item_ref);
     onRemoveTool(itemRef);
   };
-  const resolvedSelectedToolRef = selectedToolRef && tools.find((tool) => tool.item_ref === selectedToolRef)?.item_ref;
+  const resolvedSelectedToolRef =
+    selectedToolRef &&
+    tools.find((tool) => tool.item_ref === selectedToolRef)?.item_ref;
   if (selectedToolRef && !resolvedSelectedToolRef) {
     setSelectedToolRef(undefined);
   }
@@ -76,7 +78,7 @@ export const ModuleDetail = (props: ModuleProps, context: unknown) => {
           {resetOptions.map((resetOption) => {
             const { id, name } = resetOption;
             return (
-              <Button key={id} onClick={() => onResetModule(id)} title={name}>
+              <Button key={id} onClick={() => onResetModule(id)} tooltip={name}>
                 {name}
               </Button>
             );
@@ -85,7 +87,11 @@ export const ModuleDetail = (props: ModuleProps, context: unknown) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable title="Tools" buttons={toolsButtons}>
-          <Tools tools={tools} selectedToolRef={resolvedSelectedToolRef} onSelectTool={setSelectedToolRef} />
+          <Tools
+            tools={tools}
+            selectedToolRef={resolvedSelectedToolRef}
+            onSelectTool={setSelectedToolRef}
+          />
         </Section>
       </Stack.Item>
     </Stack>
@@ -107,9 +113,24 @@ const OrganizeButtons = (props: OrganizeButtonsProps) => {
   const handleRemoveClick = () => itemRef && onRemove(itemRef);
   return (
     <>
-      <Button icon="arrow-up" disabled={!isItemSelected} onClick={handleMoveUpClick} title="Move Up" />
-      <Button icon="arrow-down" disabled={!isItemSelected} onClick={handleMoveDownClick} title="Move Down" />
-      <Button icon="trash" disabled={!isItemSelected} onClick={handleRemoveClick} title="Remove" />
+      <Button
+        icon="arrow-up"
+        disabled={!isItemSelected}
+        onClick={handleMoveUpClick}
+        tooltip="Move Up"
+      />
+      <Button
+        icon="arrow-down"
+        disabled={!isItemSelected}
+        onClick={handleMoveDownClick}
+        tooltip="Move Down"
+      />
+      <Button
+        icon="trash"
+        disabled={!isItemSelected}
+        onClick={handleRemoveClick}
+        tooltip="Remove"
+      />
     </>
   );
 };

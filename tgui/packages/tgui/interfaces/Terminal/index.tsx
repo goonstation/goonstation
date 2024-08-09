@@ -6,20 +6,18 @@
  * @license MIT
  */
 
+import { Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { TerminalData } from './types';
-import { TerminalOutputSection } from './TerminalOutputSection';
 import { InputAndButtonsSection } from './InputAndButtonsSection';
 import { PheripheralsSection } from './PheripheralsSection';
-import { Stack } from '../../components';
+import { TerminalOutputSection } from './TerminalOutputSection';
+import { TerminalData } from './types';
 
-export const Terminal = (_props, context) => {
-  const { data } = useBackend<TerminalData>(context);
-  const {
-    windowName,
-    displayHTML,
-  } = data;
+export const Terminal = () => {
+  const { data } = useBackend<TerminalData>();
+  const { windowName, displayHTML } = data;
 
   const handleTerminalOutputComponentDidUpdate = (lastProps, nextProps) => {
     if (lastProps.displayHTML === nextProps.displayHTML) {
@@ -28,7 +26,9 @@ export const Terminal = (_props, context) => {
     scrollToBottom();
   };
   const scrollToBottom = () => {
-    const terminalOutputScroll = document.querySelector('#terminalOutput .Section__content');
+    const terminalOutputScroll = document.querySelector(
+      '#terminalOutput .Section__content',
+    );
     if (!terminalOutputScroll) {
       return;
     }
@@ -36,19 +36,16 @@ export const Terminal = (_props, context) => {
   };
 
   return (
-    <Window
-      theme="retro-dark"
-      title={windowName}
-      fontFamily="Consolas"
-      width="380"
-      height="350">
-      <Window.Content>
+    <Window theme="retro-dark" title={windowName} width={380} height={350}>
+      <Window.Content fontFamily="Consolas">
         <Stack vertical fill>
           <Stack.Item grow>
             <TerminalOutputSection
               displayHTML={displayHTML}
+              // @ts-ignore - TODO-REACT
               onComponentDidMount={scrollToBottom}
-              onComponentDidUpdate={handleTerminalOutputComponentDidUpdate} />
+              onComponentDidUpdate={handleTerminalOutputComponentDidUpdate}
+            />
           </Stack.Item>
           <Stack.Item>
             <InputAndButtonsSection />

@@ -1,16 +1,25 @@
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Image, Section, Stack } from '../../components';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Image,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { ClothingBoothData } from './type';
-
 import { capitalize } from '../common/stringUtils';
+import type { ClothingBoothData } from './type';
 
-export const ClothingBooth = (_, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
+export const ClothingBooth = () => {
+  const { data } = useBackend<ClothingBoothData>();
   const categories = data.clothingBoothCategories || [];
 
-  const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
+  const [selectedCategory, selectCategory] = useState(categories[0]);
   const { items } = selectedCategory;
 
   return (
@@ -27,9 +36,15 @@ export const ClothingBooth = (_, context) => {
                     className="clothingbooth__dropdown"
                     options={categories.map((category) => category.category)}
                     selected={selectedCategory.category}
-                    onSelected={(value) => (
-                      selectCategory(categories[categories.findIndex((category) => category.category === value)])
-                    )}
+                    onSelected={(value) =>
+                      selectCategory(
+                        categories[
+                          categories.findIndex(
+                            (category) => category.category === value,
+                          )
+                        ],
+                      )
+                    }
                   />
                 </Stack.Item>
               </Stack>
@@ -72,8 +87,12 @@ export const ClothingBooth = (_, context) => {
   );
 };
 
-const ClothingBoothItem = (props, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+interface ClothingBoothItemProps {
+  item;
+}
+
+const ClothingBoothItem = (props: ClothingBoothItemProps) => {
+  const { act, data } = useBackend<ClothingBoothData>();
   const { item } = props;
 
   return (
@@ -82,9 +101,11 @@ const ClothingBoothItem = (props, context) => {
         align="center"
         className={classes([
           'clothingbooth__boothitem',
-          item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
+          item.name === data.selectedItemName &&
+            'clothingbooth__boothitem-selected',
         ])}
-        onClick={() => act('select', { path: item.path })}>
+        onClick={() => act('select', { path: item.path })}
+      >
         <Stack.Item>
           <img src={`data:image/png;base64,${item.img}`} />
         </Stack.Item>
@@ -98,15 +119,23 @@ const ClothingBoothItem = (props, context) => {
   );
 };
 
-const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+const CharacterPreview = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
-        <Image height={data.previewHeight * 2 + "px"} src={`data:image/png;base64,${data.previewIcon}`} />
+        <Image
+          height={data.previewHeight * 2 + 'px'}
+          src={`data:image/png;base64,${data.previewIcon}`}
+        />
       </Stack.Item>
       <Stack.Item>
-        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
+        <Button
+          icon="chevron-left"
+          tooltip="Clockwise"
+          tooltipPosition="right"
+          onClick={() => act('rotate-cw')}
+        />
         <Button
           icon="chevron-right"
           tooltip="Counter-clockwise"
@@ -118,8 +147,8 @@ const CharacterPreview = (_, context) => {
   );
 };
 
-const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+const PurchaseInfo = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   return (
     <Stack bold vertical textAlign="center">
       {data.selectedItemName ? (
@@ -130,8 +159,11 @@ const PurchaseInfo = (_, context) => {
             <Button
               color="green"
               disabled={data.selectedItemCost > data.money}
-              onClick={() => act('purchase')}>
-              {(data.selectedItemCost <= data.money) ? `Purchase` : `Insufficient Cash`}
+              onClick={() => act('purchase')}
+            >
+              {data.selectedItemCost <= data.money
+                ? `Purchase`
+                : `Insufficient Cash`}
             </Button>
           </Stack.Item>
         </>

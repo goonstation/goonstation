@@ -2,8 +2,17 @@
 /**/node_modules
 /**/*.bundle.*
 /**/*.chunk.*
-/**/*.min.*
 /**/*.hot-update.*
-/packages/inferno/**
-/**/browserassets/**/*.css
-/**/browserassets/**/*.js
+**.lock
+**.log
+**.json
+**.svg
+**.scss
+**.md
+**.css
+**.txt
+**.woff2
+**.eot
+**.ttf
+/**/browserassets/**/*.*
+# TODO-REACT uhh above

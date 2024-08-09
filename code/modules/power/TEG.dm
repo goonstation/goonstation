@@ -1769,6 +1769,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	return list("area_list" = src.pump_infoset)
 
 /obj/machinery/computer/atmosphere/pumpcontrol/ui_act(action, params)
+	. = ..()
 	switch (action)
 		if ("togglePump")
 			playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)

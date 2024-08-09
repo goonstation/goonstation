@@ -437,6 +437,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				src.bottle = bottle
 
 	ui_act(action, params)
+		. = ..()
 		if(status & BROKEN)
 			return
 		if(usr.stat || usr.restrained())
