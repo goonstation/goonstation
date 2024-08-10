@@ -11,13 +11,13 @@
   display: flex;
   justify-content: center;
 
-  .Button {
+  .PINInput__button {
     display: flex;
     justify-content: center;
     font-size: 1.7rem;
 
     // Center icon buttons
-    .Icon {
+    i {
       margin-left: -0.1em;
     }
   }

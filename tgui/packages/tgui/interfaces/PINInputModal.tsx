@@ -129,7 +129,10 @@ export const PINInputModal = () => {
                     const number = index * 3 + subIndex + 1;
                     return (
                       <Stack.Item key={subIndex} grow>
-                        <Button onClick={() => onClick(number)}>
+                        <Button
+                          className="PINInput__button"
+                          onClick={() => onClick(number)}
+                        >
                           {number}
                         </Button>
                       </Stack.Item>
@@ -143,16 +146,24 @@ export const PINInputModal = () => {
                 <Stack.Item grow>
                   <Button
                     icon="circle-xmark"
+                    className="PINInput__button"
                     color="red"
                     onClick={() => setPin([])}
                   />
                 </Stack.Item>
                 <Stack.Item grow>
-                  <Button onClick={() => onClick(0)}>0</Button>
+                  <Button
+                    className="PINInput__button"
+                    onClick={() => onClick(0)}
+                  >
+                    0
+                  </Button>
                 </Stack.Item>
                 <Stack.Item grow>
                   <Button
                     icon="circle-right"
+                    iconPosition="center"
+                    className="PINInput__button"
                     color="green"
                     onClick={handleSubmission}
                   />

@@ -94,7 +94,7 @@
 	window.acquire_lock(src)
 	if(!window.is_ready())
 		window.initialize(
-			strict_mode = TRUE,
+			strict_mode = FALSE, // TODO-REACT :/
 			fancy = user.client.preferences.tgui_fancy,
 			assets = list(
 				get_assets(/datum/asset/group/base_tgui),
