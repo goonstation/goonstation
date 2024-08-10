@@ -719,7 +719,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
+		//if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
+		if (W && W.brew_result)
 			var/load = 0
 			if (src.brew(W))
 				load = 1
