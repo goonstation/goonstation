@@ -126,10 +126,12 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
 "acA" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/machinery/weapon_stand/phaser_rack,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/engine/glow,
+/turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "acI" = (
 /obj/disposalpipe/segment/ejection{
@@ -881,11 +883,9 @@
 	name = "Nuclear Control Room"
 	})
 "aso" = (
-/obj/machinery/turret{
-	name = "armory turret"
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/engine/glow,
+/obj/machinery/firealarm/east,
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "ass" = (
 /obj/rack,
@@ -1919,6 +1919,12 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"aUA" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/hangar/sec)
 "aUS" = (
 /obj/shrub{
 	dir = 4;
@@ -2932,29 +2938,6 @@
 	do_not_irradiate = 1;
 	name = "Hydroponics Storage"
 	})
-"bpP" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_y = 6;
-	pixel_x = -5
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_x = 8;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_x = 7;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_x = -2;
-	pixel_y = 17
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/ai_monitored/armory)
 "bpV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6922,17 +6905,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"dfs" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/storage/secure/crate/plasma/armory/anti_biological,
-/turf/simulated/floor/engine/caution/west,
-/area/station/ai_monitored/armory)
 "dft" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/transport{
@@ -11999,25 +11971,6 @@
 	dir = 6
 	},
 /area/station/hallway/secondary/exit)
-"ftw" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/table/reinforced/bar/auto,
-/obj/item_dispenser/icedispenser{
-	pixel_x = -6;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 10
-	},
-/area/station/ai_monitored/armory)
 "ftE" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -24143,15 +24096,15 @@
 	},
 /area/station/crew_quarters/quarters_east)
 "kiS" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "armory";
-	layer = 6;
-	name = "Armory Window";
-	dir = 4
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/engine/caution/westeast,
+/obj/machinery/vending/security_ammo,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
 /area/station/ai_monitored/armory)
 "kiY" = (
 /obj/decal/tile_edge/floorguide/evac,
@@ -27526,8 +27479,8 @@
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "lBs" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/machinery/light_switch/east,
+/obj/storage/secure/crate/gear/armory/alcohol,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "lBt" = (
@@ -34375,13 +34328,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"ouQ" = (
-/obj/table/wood/round,
-/obj/machinery/phone,
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/security/main)
 "ovr" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -34395,21 +34341,24 @@
 	name = "North Catalytic Substation"
 	})
 "ovy" = (
-/obj/machinery/light,
-/obj/table/reinforced/auto,
-/obj/item/device/prisoner_scanner{
-	pixel_x = 8
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
-/obj/item/stamp{
-	pixel_y = -6;
-	pixel_x = -3
+/obj/table/reinforced/bar/auto,
+/obj/item_dispenser/icedispenser{
+	pixel_x = -6;
+	pixel_y = 11
 	},
-/obj/item/instrument/whistle{
-	pixel_y = 3;
-	pixel_x = -7
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = 6;
+	pixel_y = 9
 	},
-/turf/simulated/floor/red,
-/area/station/security/checkpoint/escape)
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 10
+	},
+/area/station/ai_monitored/armory)
 "ovW" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
@@ -35670,17 +35619,6 @@
 "oWN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
-"oWV" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/vending/security_ammo,
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 9
-	},
-/area/station/ai_monitored/armory)
 "oXK" = (
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
@@ -38517,6 +38455,17 @@
 	},
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"qkr" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "armory";
+	layer = 6;
+	name = "Armory Window";
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/ai_monitored/armory)
 "qkS" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -40737,8 +40686,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rnQ" = (
-/obj/machinery/firealarm/east,
-/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "rnV" = (
@@ -40895,6 +40850,11 @@
 /obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/machinery/ai_status_display{
 	pixel_y = 28
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
 	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
@@ -43351,11 +43311,12 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "sAg" = (
-/obj/storage/closet/welding_supply,
-/turf/simulated/floor/redblack{
-	dir = 4
+/obj/machinery/turret{
+	name = "armory turret"
 	},
-/area/station/hangar/sec)
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/engine/glow,
+/area/station/ai_monitored/armory)
 "sAh" = (
 /obj/machinery/light{
 	dir = 8;
@@ -47152,6 +47113,13 @@
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
 	})
+"ubM" = (
+/obj/table/wood/round,
+/obj/machinery/phone,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/main)
 "ubT" = (
 /obj/landmark/start/job/scientist,
 /obj/stool/chair/purple{
@@ -52530,8 +52498,26 @@
 	name = "Warrens Hall"
 	})
 "wxF" = (
-/obj/machinery/light_switch/east,
-/obj/storage/secure/crate/gear/armory/alcohol,
+/obj/table/reinforced/bar/auto,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -2;
+	pixel_y = 17
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "wxN" = (
@@ -54720,6 +54706,22 @@
 	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/cargooffice)
+"xyP" = (
+/obj/machinery/light,
+/obj/table/reinforced/auto,
+/obj/item/device/prisoner_scanner{
+	pixel_x = 8
+	},
+/obj/item/stamp{
+	pixel_y = -6;
+	pixel_x = -3
+	},
+/obj/item/instrument/whistle{
+	pixel_y = 3;
+	pixel_x = -7
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
 "xyR" = (
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/blueblack{
@@ -91249,7 +91251,7 @@ ufa
 uBF
 wgR
 vlv
-sAg
+aUA
 ujg
 uBF
 pUv
@@ -91547,7 +91549,7 @@ bKB
 qLh
 qLh
 qih
-kiS
+qkr
 qLh
 qLh
 qLh
@@ -92454,7 +92456,7 @@ qLh
 btg
 llS
 llS
-aso
+sAg
 llS
 llS
 tkp
@@ -92746,7 +92748,7 @@ aHd
 qbN
 iZb
 vBg
-ouQ
+ubM
 jSs
 jfT
 rGp
@@ -92759,7 +92761,7 @@ llS
 llS
 llS
 llS
-acA
+tkp
 qJo
 qLh
 qLh
@@ -93055,14 +93057,14 @@ mXi
 plN
 mXi
 qLh
-ftw
-bpP
+ovy
 wxF
-dfs
-xDM
-rnQ
 lBs
-oWV
+rnQ
+xDM
+aso
+acA
+kiS
 qLh
 qLh
 acI
@@ -114758,7 +114760,7 @@ aLH
 lvU
 tHt
 chF
-ovy
+xyP
 bcx
 eIK
 oZp
