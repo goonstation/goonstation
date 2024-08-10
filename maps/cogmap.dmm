@@ -20293,8 +20293,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/storage/eva)
 "brn" = (
-/obj/machinery/turretid{
-	pixel_x = -28
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = -24
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -38188,13 +38188,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "dpZ" = (
-/obj/machinery/turretid{
-	pixel_x = -24
-	},
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/mapping_helper/access/heads,
+/obj/machinery/turretid/computer_core{
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "dqA" = (
@@ -45061,13 +45060,9 @@
 /area/station/medical/robotics)
 "iqh" = (
 /obj/deployable_turret/riot/active,
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_y = 28;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
+/obj/machinery/turretid/armory_perimeter{
+	pixel_y = 28
 	},
-/obj/mapping_helper/access/armory,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "iqk" = (
@@ -53519,11 +53514,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/turretid{
-	pixel_y = 24;
-	turretArea = /area/station/turret_protected/ai_upload
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
 	},
-/obj/mapping_helper/access/heads,
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
