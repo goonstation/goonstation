@@ -6,7 +6,7 @@
     "tgui-polyfill:build": "terser 1-misc.js -f ascii_only,comments=false -o ../../../browserassets/tgui/tgui-polyfill.min.js"
   },
   "dependencies": {
-    "core-js": "^3.36.1",
+    "core-js": "^3.38.0",
     "regenerator-runtime": "^0.14.1",
     "unfetch": "^5.0.0"
   },
