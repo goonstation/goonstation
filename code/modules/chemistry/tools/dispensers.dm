@@ -733,6 +733,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				qdel(W)
 				return
 			else  ..()
+		else if (W && (W.flags & SUPPRESSATTACK))
+			user.show_text("Can't brew anything from [W].", "red")
 		else ..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
