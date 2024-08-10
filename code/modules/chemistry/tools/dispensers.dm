@@ -763,7 +763,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.show_text("[amtload] items loaded from [O]!", "blue")
 			else
 				user.show_text("Nothing was loaded!", "red")
-		else if (istype(O, /obj/item/reagent_containers/food) || istype(O, /obj/item/plant))
+		else if (istype(O, /obj/item))
+			var/obj/item/item = O //is there a better way to perform this check?
+			if (!item.brew_result)
+				return ..()
 			user.visible_message(SPAN_NOTICE("<b>[user]</b> begins quickly stuffing items into [src]!"),\
 			SPAN_NOTICE("You begin quickly stuffing items into [src]!"))
 			var/staystill = user.loc
