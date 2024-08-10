@@ -173,6 +173,11 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"dE" = (
+/turf/unsimulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/devzone)
 "dG" = (
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor,
@@ -1206,7 +1211,7 @@
 /area/station/devzone)
 "yj" = (
 /obj/landmark/engine_room/devtest,
-/turf/space,
+/turf/unsimulated/floor/engine/caution/corner,
 /area/station/devzone)
 "yq" = (
 /obj/table,
@@ -1423,6 +1428,11 @@
 "Be" = (
 /obj/cryotron,
 /turf/unsimulated/floor/blue,
+/area/station/devzone)
+"Bh" = (
+/turf/unsimulated/floor/engine/caution/corner{
+	dir = 4
+	},
 /area/station/devzone)
 "Bq" = (
 /obj/window/auto/reinforced/indestructible/extreme,
@@ -1693,6 +1703,9 @@
 "GG" = (
 /obj/machinery/navbeacon/mule/mining_north/west,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"GH" = (
+/turf/unsimulated/floor/engine/caution/west,
 /area/station/devzone)
 "GS" = (
 /obj/machinery/disposal_pipedispenser/mobile,
@@ -2020,6 +2033,9 @@
 /obj/machinery/traymachine/locking/crematorium,
 /turf/simulated/floor,
 /area/station/devzone)
+"LY" = (
+/turf/unsimulated/floor/engine/caution/north,
+/area/station/devzone)
 "Mo" = (
 /obj/submachine/chef_sink,
 /obj/cable{
@@ -2082,6 +2098,9 @@
 	tag = "icon-pdoor1 (EAST)"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"NE" = (
+/turf/unsimulated/floor/engine/caution/south,
 /area/station/devzone)
 "NG" = (
 /obj/table/reinforced/bar/auto,
@@ -2193,6 +2212,11 @@
 "Pd" = (
 /obj/machinery/atmospherics/binary/volume_pump,
 /turf/simulated/floor,
+/area/station/devzone)
+"Pe" = (
+/turf/unsimulated/floor/engine/caution/corner{
+	dir = 8
+	},
 /area/station/devzone)
 "Pf" = (
 /obj/railing/red{
@@ -2413,6 +2437,9 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"Tu" = (
+/turf/unsimulated/floor/engine/caution/east,
 /area/station/devzone)
 "Tw" = (
 /obj/machinery/ghost_catcher,
@@ -2838,24 +2865,24 @@ im
 rz
 rz
 kI
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
+Pe
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
 yj
 Yx
 Yx
@@ -2881,6 +2908,7 @@ IJ
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -2898,8 +2926,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -2924,6 +2951,7 @@ qV
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -2941,8 +2969,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -2967,6 +2994,7 @@ MD
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -2984,8 +3012,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3010,6 +3037,7 @@ kR
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3027,8 +3055,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3053,6 +3080,7 @@ eY
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3070,8 +3098,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3096,6 +3123,7 @@ po
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3113,8 +3141,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3139,6 +3166,7 @@ Wy
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3156,8 +3184,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 XI
@@ -3182,6 +3209,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3199,8 +3227,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3225,6 +3252,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3242,8 +3270,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3268,6 +3295,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3285,8 +3313,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3311,6 +3338,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3328,8 +3356,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3354,6 +3381,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3371,8 +3399,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Pt
 Yx
 ng
@@ -3397,6 +3424,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3414,8 +3442,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 qX
 Yx
 ng
@@ -3440,6 +3467,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3457,8 +3485,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3483,6 +3510,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3500,8 +3528,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3526,6 +3553,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3543,8 +3571,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3569,6 +3596,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3586,8 +3614,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3612,25 +3639,25 @@ rz
 rz
 rS
 kI
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
+Bh
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+dE
 Yx
 Yx
 ng
