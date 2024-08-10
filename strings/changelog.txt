@@ -1,5 +1,18 @@
 
+(t)sat aug 10 24
+(u)Tyrant
+(p)20209
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Due to budget cuts, Port-a-Brigs are no longer equipped with soundproofing.
+(u)Mr. Moriarty
+(p)20228
+(e)🆕🔎⚙|C-Feature, C-Code-Quality, A-Internal
+(+)Minimaps now depict walls and doors.
 (t)fri aug 09 24
+(u)Egregorious
+(p)20236
+(e)🆕🍝|C-Feature, A-Catering
+(*)Added Iron Brew, a drink which can be distilled from steel wheat.
 (u)JORJ949
 (p)20226
 (e)⚖🧛|C-Balance, A-Gamemodes
