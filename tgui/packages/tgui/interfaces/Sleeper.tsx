@@ -235,7 +235,7 @@ export const Sleeper = () => {
               >
                 <TimeDisplay
                   value={curTime}
-                  timing={!!isTiming}
+                  auto={isTiming}
                   format={(value) => formatTime(value)}
                 />
               </Box>

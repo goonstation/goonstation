@@ -152,11 +152,7 @@ export const GeneTek = () => {
                   mb={1}
                 >
                   <Box position="absolute">{r.name}</Box>
-                  <TimeDisplay
-                    timing
-                    value={r.current}
-                    format={formatSeconds}
-                  />
+                  <TimeDisplay auto value={r.current} format={formatSeconds} />
                 </ProgressBar>
               ))}
             </Flex.Item>
@@ -171,7 +167,7 @@ export const GeneTek = () => {
                     'Ready'
                   ) : (
                     <TimeDisplay
-                      timing
+                      auto
                       value={e.cooldown}
                       format={formatSeconds}
                     />

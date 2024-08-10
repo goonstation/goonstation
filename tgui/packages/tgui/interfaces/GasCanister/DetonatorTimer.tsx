@@ -30,7 +30,7 @@ export const DetonatorTimer = (props) => {
     >
       <TimeDisplay
         value={time}
-        timing={isPrimed}
+        auto={isPrimed ? 'down' : undefined}
         format={(value: number) => formatTime(value, explosionMessage)}
       />
     </Box>

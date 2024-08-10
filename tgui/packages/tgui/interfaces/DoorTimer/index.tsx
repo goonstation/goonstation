@@ -49,7 +49,7 @@ export const DoorTimer = () => {
                     <Stack.Item>
                       <TimeDisplay
                         value={data.time * 10}
-                        timing={data.timing}
+                        auto={data.timing ? 'down' : undefined}
                         format={formatTime}
                       />
                     </Stack.Item>
