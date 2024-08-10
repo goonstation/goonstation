@@ -37,7 +37,11 @@ export const Radio = () => {
   };
 
   return (
-    <Window width={280} height={400} title={data.name}>
+    <Window
+      width={280}
+      height={data.secureFrequencies.length > 0 ? 400 : 268}
+      title={data.name}
+    >
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
