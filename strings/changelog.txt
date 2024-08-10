@@ -1,5 +1,9 @@
 
 (t)sat aug 10 24
+(u)Tyrant
+(p)20209
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Due to budget cuts, Port-a-Brigs are no longer equipped with soundproofing.
 (u)Mr. Moriarty
 (p)20228
 (e)🆕🔎⚙|C-Feature, C-Code-Quality, A-Internal
