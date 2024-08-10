@@ -18419,15 +18419,13 @@
 	c_tag = "AI Upload Entrance";
 	dir = 4
 	},
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access = null
-	},
 /obj/machinery/light/emergency{
 	dir = 8
 	},
-/obj/mapping_helper/access/ai_upload,
 /obj/landmark/start/job/cyborg,
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "ddM" = (
@@ -19871,13 +19869,9 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "dZh" = (
-/obj/machinery/turretid{
-	pixel_x = -24;
-	req_access = null;
-	req_access_txt = null
+/obj/machinery/turretid/computer_core{
+	pixel_x = -24
 	},
-/obj/mapping_helper/access/ai_upload,
-/obj/mapping_helper/access/research_director,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "dZI" = (
@@ -20596,13 +20590,11 @@
 	pixel_x = 8;
 	pixel_y = 26
 	},
-/obj/machinery/turretid{
-	pixel_x = -8;
-	pixel_y = 24;
-	req_access = null
-	},
-/obj/mapping_helper/access/ai_upload,
 /obj/landmark/start/job/AI,
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24;
+	pixel_x = -8
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "euP" = (
@@ -21724,10 +21716,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "fgk" = (
-/obj/machinery/turretid{
-	req_access = null
-	},
-/obj/mapping_helper/access/ai_upload,
+/obj/machinery/turretid/ai_perimeter,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/AIbaseoutside)
 "fhn" = (
@@ -27505,13 +27494,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/turretid{
-	pixel_x = 24;
-	pixel_y = 1;
-	req_access = null
-	},
 /obj/machinery/light/incandescent,
-/obj/mapping_helper/access/armory,
+/obj/machinery/turretid/armory{
+	pixel_x = 24
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -31559,14 +31545,9 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lFR" = (
-/obj/machinery/turretid{
-	name = "External perimeter turret deactivation control";
-	pixel_x = -24;
-	pixel_y = 1;
-	req_access = null;
-	turretArea = /area/station/turret_protected/armory_outside
+/obj/machinery/turretid/armory_perimeter{
+	pixel_x = -24
 	},
-/obj/mapping_helper/access/armory,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -37560,6 +37541,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"piO" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/garden/owlery)
 "pje" = (
 /obj/submachine/ATM{
 	pixel_x = 32
@@ -40015,6 +39999,9 @@
 /obj/loudspeaker,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"qII" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/jazz)
 "qIT" = (
 /obj/disposalpipe/junction{
 	dir = 1;
@@ -75107,7 +75094,7 @@ vzk
 hPX
 vzk
 aaa
-hou
+piO
 nzf
 nzf
 qWA
@@ -75409,8 +75396,8 @@ vzk
 hPX
 vzk
 aaa
-hou
-hou
+piO
+piO
 nzf
 nzf
 nzf
@@ -75712,10 +75699,10 @@ hPX
 vzk
 aaa
 aaa
-hou
-hou
-hou
-hou
+piO
+piO
+piO
+piO
 hou
 hou
 hou
@@ -76017,7 +76004,7 @@ aaa
 aaa
 abZ
 acK
-aCy
+aBQ
 azU
 azU
 azU
@@ -76319,7 +76306,7 @@ aaa
 aaa
 aaa
 aaA
-aCy
+aBQ
 azU
 azU
 azU
@@ -76621,7 +76608,7 @@ aaa
 aaa
 aaa
 aaA
-aCy
+aBQ
 azU
 azU
 azU
@@ -76923,11 +76910,11 @@ aaa
 aaa
 aaa
 aaA
-aCy
-aCy
-aCy
-aCy
-aCy
+aBQ
+aBQ
+aBQ
+aBQ
+aBQ
 aCy
 aCy
 aCy
@@ -86888,11 +86875,11 @@ aaa
 aaa
 aaa
 aaa
-kqS
+qII
 jes
 jes
 jes
-kqS
+qII
 aaa
 aaa
 aaa
@@ -87189,13 +87176,13 @@ vzk
 ajz
 ajz
 ajz
-kqS
-kqS
+qII
+qII
 kAQ
 uVZ
 uoW
-kqS
-kqS
+qII
+qII
 ajz
 aCy
 aCy
