@@ -1,4 +1,9 @@
 
+(t)sat aug 10 24
+(u)Mr. Moriarty
+(p)20228
+(e)🆕🔎⚙|C-Feature, C-Code-Quality, A-Internal
+(+)Minimaps now depict walls and doors.
 (t)fri aug 09 24
 (u)Egregorious
 (p)20236
