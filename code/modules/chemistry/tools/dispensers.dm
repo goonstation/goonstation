@@ -84,7 +84,7 @@
 		if(!src.anchored)
 			var/turf/T = get_turf(src)
 			if (istype(T, /turf/space))
-				boutput(user, SPAN_ALERT("What exactly are you gunna secure [src] to?"))
+				boutput(user, SPAN_ALERT("What exactly are you gonna secure [src] to?"))
 				return
 			user.visible_message("<b>[user]</b> secures the [src] to the floor!")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
