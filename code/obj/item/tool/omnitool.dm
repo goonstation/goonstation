@@ -1,3 +1,9 @@
+TYPEINFO(/obj/item/tool/omnitool)
+	mats = list("metal_dense" = 80,
+				"conductive_high" = 50,
+				"energy_property_high" = 50,
+				"crystal" = 30,)
+
 /obj/item/tool/omnitool
 	name = "omnitool"
 	desc = "Multiple tools in one, like an old-fashioned Swiss army knife. Truly, we are living in the future."
@@ -221,6 +227,11 @@
 		else
 			return null
 
+TYPEINFO (/obj/item/tool/omnitool/syndicate)
+	mats = list("metal_dense" = 80,
+				"conductive_high" = 50,
+				"energy_property_high" = 50,
+				"crystal" = 30,)
 
 /obj/item/tool/omnitool/syndicate
 	icon_state = "syndicate-omnitool-prying"
@@ -262,6 +273,9 @@
 		..()
 
 
+
+TYPEINFO(/obj/item/tool/omnitool/silicon)
+	mats = null // no stealing cyborgs arms
 
 /obj/item/tool/omnitool/silicon
 	prefix = "silicon-omnitool"
