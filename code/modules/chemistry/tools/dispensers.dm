@@ -80,6 +80,20 @@
 			return TRUE
 		return ..()
 
+	proc/bolt_unbolt(mob/user)
+		if(!src.anchored)
+			var/turf/T = get_turf(src)
+			if (istype(T, /turf/space))
+				boutput(user, SPAN_ALERT("What exactly are you gunna secure [src] to?"))
+				return
+			user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = ANCHORED
+		else
+			user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = UNANCHORED
+
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
@@ -614,14 +628,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
-			if(!src.anchored)
-				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = ANCHORED
-			else
-				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.anchored = UNANCHORED
+			bolt_unbolt(user)
 			return
 		var/load = 1
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
@@ -697,13 +704,13 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		var/list/brew_result = W.brew_result
 		var/list/brew_amount = 20 // how much brew could a brewstill brew if a brewstill still brewed brew?
 
+		if (!brew_result)
+			return FALSE
+
 		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
 			var/obj/item/reagent_containers/food/snacks/plant/P = W
 			var/datum/plantgenes/DNA = P.plantgenes
 			brew_amount = max(HYPfull_potency_calculation(DNA), 5) //always produce SOMETHING
-
-		if (!brew_result)
-			return FALSE
 
 		if (islist(brew_result))
 			for(var/I in brew_result)
@@ -719,8 +726,12 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		return TRUE
 
 	attackby(obj/item/W, mob/user)
-		//if (istype(W,/obj/item/reagent_containers/food) || istype(W, /obj/item/plant))
-		if (W && W.brew_result)
+		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			bolt_unbolt(user)
+			return
+
+		var/isfull = src.reagents.is_full()
+		if (W && W.brew_result && !isfull)
 			var/load = 0
 			if (src.brew(W))
 				load = 1
@@ -731,60 +742,72 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.u_equip(W)
 				W.dropped(user)
 				qdel(W)
+				playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
 				return
 			else  ..()
-		else if (W && (W.flags & SUPPRESSATTACK))
-			user.show_text("Can't brew anything from [W].", "red")
-		else ..()
+		// create feedback for items which don't produce attack messages
+		if (W && (W.flags & SUPPRESSATTACK))
+			if (isfull)
+				boutput(user, SPAN_ALERT("[src] is already full."))
+			else
+				boutput(user, SPAN_ALERT("Can't brew anything from [W]."))
+		..()
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			user.show_text("It's probably a bit too late for you to drink your problems away.", "red")
+			boutput(user, SPAN_ALERT("It's probably a bit too late for you to drink your problems away!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
-			user.show_text("You need to move closer to [src] to do that.", "red")
+			// You have to be adjacent to the still
+			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
-			user.show_text("[O] is too far away to load into [src]!", "red")
+		if (BOUNDS_DIST(O, user) > 0)
+			// You have to be adjacent to the brewables also
+			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
-
+		// loading from crate
 		if (istype(O, /obj/storage/crate/))
-			user.visible_message(SPAN_NOTICE("[user] loads [O]'s contents into [src]!"),\
-			SPAN_NOTICE("You load [O]'s contents into [src]!"))
+			user.visible_message(SPAN_NOTICE("[user] begins to charge [src] with [O]'s contents!"))
 			var/amtload = 0
+			var/staystill = user.loc
 			for (var/obj/item/P in O.contents)
+				if (user.loc != staystill) break
 				if (src.reagents.is_full())
-					user.show_text("[src] is full!", "red")
+					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (src.brew(P))
 					amtload++
 					qdel(P)
+					playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
+					sleep(0.2 SECONDS) // faster than from the floor because you organised your crate well
 				else
 					continue
 			if (amtload)
-				user.show_text("[amtload] items loaded from [O]!", "blue")
+				boutput(user, SPAN_NOTICE("Charged [src] with [amtload] items from [O]!"))
 			else
-				user.show_text("Nothing was loaded!", "red")
+				boutput(user, SPAN_ALERT("Nothing was put into [src]!"))
+		// loading from the ground
 		else if (istype(O, /obj/item))
-			var/obj/item/item = O //is there a better way to perform this check?
+			var/obj/item/item = O
 			if (!item.brew_result)
 				return ..()
-			user.visible_message(SPAN_NOTICE("<b>[user]</b> begins quickly stuffing items into [src]!"),\
-			SPAN_NOTICE("You begin quickly stuffing items into [src]!"))
+			// "charging" is for sure correct terminology, I'm an expert because I asked chatgpt AND read the first result on google. Mhm mhm.
+			user.visible_message(SPAN_NOTICE("[user] begins quickly charging [src] with [O]!"))
+
 			var/staystill = user.loc
-			for (O in view(1,user))
-				if (src.reagents.is_full())
-					user.show_text("[src] is full!", "red")
+			var/itemtype = O.type
+			for(var/obj/item/P in view(1,user))
+				if (src.reagents.total_volume >= src.reagents.maximum_volume)
+					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
-				if (user.loc != staystill)
-					user.show_text("You were interrupted!", "red")
-					break
-				if (src.brew(O))
-					qdel(O)
-				else
-					continue
-			user.visible_message(SPAN_NOTICE("<b>[user]</b> finishes stuffing items into [src]."),\
-			SPAN_NOTICE("You finish stuffing items into [src]."))
+				if (user.loc != staystill) break
+				if (P.type != itemtype) continue
+				if (src.brew(P))
+					qdel(P)
+					playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
+					sleep(0.3 SECONDS)
+			boutput(user, SPAN_NOTICE("You finish charging [src] with [O]!"))
+
 		else
 			return ..()
 
