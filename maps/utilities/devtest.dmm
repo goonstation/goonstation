@@ -173,6 +173,11 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"dE" = (
+/turf/unsimulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/devzone)
 "dG" = (
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor,
@@ -550,13 +555,11 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "kr" = (
-/obj/railing/red{
-	dir = 1
-	},
 /obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/north,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "kv" = (
 /obj/machinery/chem_heater/chemistry,
@@ -713,9 +716,9 @@
 	},
 /area/station/devzone)
 "nY" = (
-/obj/railing/red,
 /obj/machinery/atmospherics/pipe/simple/junction,
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/south,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "nZ" = (
 /obj/landmark/start/job/bartender,
@@ -767,11 +770,9 @@
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "oR" = (
-/obj/railing/red{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/north,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "oY" = (
 /obj/submachine/seed_vendor,
@@ -819,6 +820,9 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
+/area/station/devzone)
+"pO" = (
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "pR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -1078,6 +1082,14 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"vK" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
+/obj/window/crystal/reinforced/east,
+/obj/window/crystal/reinforced/east,
+/turf/simulated/floor,
+/area/station/devzone)
 "vQ" = (
 /turf/simulated/floor/engine{
 	dir = 8;
@@ -1182,10 +1194,8 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/obj/railing/red{
-	dir = 8
-	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/west,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "xR" = (
 /obj/machinery/light{
@@ -1196,14 +1206,12 @@
 /turf/simulated/floor/engine/glow,
 /area/space)
 "yc" = (
-/obj/railing/red{
-	dir = 8
-	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/west,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "yj" = (
 /obj/landmark/engine_room/devtest,
-/turf/space,
+/turf/unsimulated/floor/engine/caution/corner,
 /area/station/devzone)
 "yq" = (
 /obj/table,
@@ -1291,7 +1299,8 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "zQ" = (
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/north,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "zT" = (
 /obj/cable{
@@ -1420,6 +1429,11 @@
 /obj/cryotron,
 /turf/unsimulated/floor/blue,
 /area/station/devzone)
+"Bh" = (
+/turf/unsimulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/devzone)
 "Bq" = (
 /obj/window/auto/reinforced/indestructible/extreme,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -1456,7 +1470,7 @@
 /area/station/devzone)
 "Cx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/unsimulated/floor/engine/vacuum,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "CB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -1690,6 +1704,9 @@
 /obj/machinery/navbeacon/mule/mining_north/west,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"GH" = (
+/turf/unsimulated/floor/engine/caution/west,
+/area/station/devzone)
 "GS" = (
 /obj/machinery/disposal_pipedispenser/mobile,
 /turf/simulated/floor/plating/jen,
@@ -1840,14 +1857,6 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /obj/landmark/magnet_shield,
-/turf/simulated/floor,
-/area/station/devzone)
-"JB" = (
-/obj/machinery/sparker{
-	dir = 2;
-	id = "burn";
-	pixel_y = 20
-	},
 /turf/simulated/floor,
 /area/station/devzone)
 "JE" = (
@@ -2013,10 +2022,8 @@
 	id = "Chamber One Inlet";
 	target_pressure = 1000
 	},
-/obj/railing/red{
-	dir = 8
-	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/west,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "LM" = (
 /obj/machinery/manufacturer/mechanic,
@@ -2025,6 +2032,9 @@
 "LN" = (
 /obj/machinery/traymachine/locking/crematorium,
 /turf/simulated/floor,
+/area/station/devzone)
+"LY" = (
+/turf/unsimulated/floor/engine/caution/north,
 /area/station/devzone)
 "Mo" = (
 /obj/submachine/chef_sink,
@@ -2088,6 +2098,9 @@
 	tag = "icon-pdoor1 (EAST)"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"NE" = (
+/turf/unsimulated/floor/engine/caution/south,
 /area/station/devzone)
 "NG" = (
 /obj/table/reinforced/bar/auto,
@@ -2200,6 +2213,11 @@
 /obj/machinery/atmospherics/binary/volume_pump,
 /turf/simulated/floor,
 /area/station/devzone)
+"Pe" = (
+/turf/unsimulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/devzone)
 "Pf" = (
 /obj/railing/red{
 	dir = 4
@@ -2207,7 +2225,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Pl" = (
-/obj/machinery/atmospherics/unary/outlet_injector/active{
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{
 	dir = 4
 	},
 /obj/machinery/sparker{
@@ -2224,10 +2242,8 @@
 	id = "Chamber Two Inlet";
 	target_pressure = 1000
 	},
-/obj/railing/red{
-	dir = 8
-	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/west,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "Pt" = (
 /obj/landmark/engine_computer/one,
@@ -2376,14 +2392,12 @@
 /turf/space/fluid,
 /area/space)
 "Sz" = (
-/obj/railing/red{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8;
 	volume = 0.001
 	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/north,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "SG" = (
 /obj/table/auto,
@@ -2423,6 +2437,9 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
+/area/station/devzone)
+"Tu" = (
+/turf/unsimulated/floor/engine/caution/east,
 /area/station/devzone)
 "Tw" = (
 /obj/machinery/ghost_catcher,
@@ -2517,11 +2534,15 @@
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "VJ" = (
-/obj/railing/red,
 /obj/machinery/atmospherics/unary/tank{
 	dir = 1
 	},
-/turf/unsimulated/floor/engine/vacuum,
+/obj/window/crystal/reinforced/south,
+/turf/unsimulated/floor/engine,
+/area/station/devzone)
+"VM" = (
+/obj/window/crystal/reinforced/south,
+/turf/unsimulated/floor/engine,
 /area/station/devzone)
 "VO" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -2844,24 +2865,24 @@ im
 rz
 rz
 kI
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
+Pe
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
+GH
 yj
 Yx
 Yx
@@ -2887,6 +2908,7 @@ IJ
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -2904,8 +2926,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -2930,6 +2951,7 @@ qV
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -2947,8 +2969,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -2973,6 +2994,7 @@ MD
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -2990,8 +3012,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3016,6 +3037,7 @@ kR
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3033,8 +3055,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3059,6 +3080,7 @@ eY
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3076,8 +3098,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3102,6 +3123,7 @@ po
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3119,8 +3141,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3145,6 +3166,7 @@ Wy
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3162,8 +3184,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 XI
@@ -3188,6 +3209,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3205,8 +3227,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3231,6 +3252,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3248,8 +3270,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3274,6 +3295,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3291,8 +3313,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3317,6 +3338,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3334,8 +3356,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3360,6 +3381,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3377,8 +3399,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Pt
 Yx
 ng
@@ -3403,6 +3424,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3420,8 +3442,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 qX
 Yx
 ng
@@ -3446,6 +3467,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3463,8 +3485,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3489,6 +3510,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3506,8 +3528,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3532,6 +3553,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3549,8 +3571,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3575,6 +3596,7 @@ rz
 rz
 rS
 kI
+LY
 hR
 hR
 hR
@@ -3592,8 +3614,7 @@ hR
 hR
 hR
 hR
-hR
-hR
+NE
 Yx
 Yx
 ng
@@ -3618,25 +3639,25 @@ rz
 rz
 rS
 kI
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
-hR
+Bh
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+Tu
+dE
 Yx
 Yx
 ng
@@ -3940,7 +3961,7 @@ ng
 JP
 KB
 mB
-Zz
+vK
 mB
 mB
 mB
@@ -4024,7 +4045,7 @@ lP
 SQ
 ng
 zd
-zQ
+VM
 YM
 YM
 YM
@@ -4196,7 +4217,7 @@ Yx
 Yx
 ng
 cx
-zQ
+pO
 xK
 yc
 Pm
@@ -4204,7 +4225,7 @@ yc
 LJ
 yc
 xK
-zQ
+pO
 UW
 ng
 ct
@@ -4331,7 +4352,7 @@ xf
 CI
 uE
 Yx
-JB
+Yx
 Yx
 Yx
 Yx
