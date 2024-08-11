@@ -1820,6 +1820,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "wintercoat-security"
 	coat_style = "wintercoat-security"
 
+/obj/item/clothing/suit/wintercoat/nt
+	name = "nanotrasen winter coat"
+	icon_state = "wintercoat-nt"
+	item_state = "wintercoat-nt"
+	coat_style = "wintercoat-nt"
+
 /obj/item/clothing/suit/wintercoat/command
 	name = "command winter coat"
 	icon_state = "wintercoat-command"
