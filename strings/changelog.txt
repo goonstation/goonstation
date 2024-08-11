@@ -1,5 +1,9 @@
 
 (t)sun aug 11 24
+(u)Glamurio (Ryou)
+(p)20261
+(e)💅🍝|C-QoL, A-Catering
+(+)Soy sauce and gravy can now be created via mixer.
 (u)DecodeQwertyPls
 (p)20245
 (e)🆕📦⚗|C-Feature, A-Game-Objects, A-Chemistry
