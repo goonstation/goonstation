@@ -1,8 +1,8 @@
 TYPEINFO(/obj/item/tool/omnitool)
-	mats = list("metal_dense" = 80,
-				"conductive_high" = 50,
-				"energy_property_high" = 50,
-				"crystal" = 30,)
+	mats = list("dense_super" = 20,
+				"conductive_high" = 20,
+				"insulated_property" = 15,
+				"miracle" = 10,)
 
 /obj/item/tool/omnitool
 	name = "omnitool"
@@ -228,10 +228,10 @@ TYPEINFO(/obj/item/tool/omnitool)
 			return null
 
 TYPEINFO (/obj/item/tool/omnitool/syndicate)
-	mats = list("metal_dense" = 80,
-				"conductive_high" = 50,
-				"energy_property_high" = 50,
-				"crystal" = 30,)
+	mats = list("dense_property_ultra" = 20,
+				"conductive_high" = 20,
+				"insulated_property" = 15,
+				"miracle" = 20,)
 
 /obj/item/tool/omnitool/syndicate
 	icon_state = "syndicate-omnitool-prying"
