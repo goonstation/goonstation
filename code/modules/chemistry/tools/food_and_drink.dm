@@ -17,7 +17,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
 	var/tmp/made_ants = FALSE 					//! Has this food already spawned ants
 	var/ant_amnt = 5 							//! How many ants are added to food / how much reagents removed?
-	var/sliceable = FALSE 						//! Can this food be sliced with a knife
+	var/sliceable = FALSE						//! Can this food be sliced
+	var/slice_tools = TOOL_CUTTING | TOOL_SAWING	//! Which tools can be used to slice this food
 	var/slice_product = null 					//! Type to spawn when we slice this food
 	var/slice_amount = 1						//! How many slices to spawn after slicing
 	var/slice_inert = FALSE						//! If the food is inert while slicing (ie chemical reactions won't occur)
@@ -104,9 +105,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			M.HealDamage("All", healing, healing)
 
-	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
+	//slicing food can be done here using sliceable == TRUE, slice_amount and slice_product; slice_tools can be overridden if needed (e.g. snipping food)
 	attackby(obj/item/W, mob/user)
-		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (src.sliceable && istool(W, slice_tools))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)

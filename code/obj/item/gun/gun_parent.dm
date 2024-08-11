@@ -29,6 +29,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/list/projectiles = null
 	var/current_projectile_num = 1
 	var/silenced = 0
+	///Does this gun do the "out of ammo oh no" click
+	var/does_click = TRUE
 	var/can_dual_wield = 1
 
 	var/slowdown = 0 //Movement delay attack after attack
@@ -273,11 +275,12 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			return
 
 	if (!canshoot(user))
-		if (!silenced)
-			target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
-		else
-			user.show_text("*click* *click*", "red")
+		if (src.does_click)
+			if (!silenced)
+				target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+			else
+				user.show_text("*click* *click*", "red")
 		return FALSE
 
 	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
@@ -360,7 +363,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
 	if (!canshoot(user))
-		if (ismob(user))
+		if (ismob(user) && src.does_click)
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
 				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
@@ -446,9 +449,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return ..()
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
-	boutput(user, SPAN_ALERT("*click* *click*"))
-	if (!src.silenced)
-		playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+	if (src.does_click)
+		boutput(user, SPAN_ALERT("*click* *click*"))
+		if (!src.silenced)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 	return 0
 
 // Could be useful in certain situations (Convair880).

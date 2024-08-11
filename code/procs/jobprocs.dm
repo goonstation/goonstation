@@ -69,6 +69,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			player.mind.assigned_role = "Construction Worker"
 		return
 
+	#ifdef I_WANNA_BE_THE_JOB
+	for (var/mob/new_player/player in unassigned)
+		player.mind.assigned_role = I_WANNA_BE_THE_JOB
+	return
+	#endif
+
 	var/list/pick1 = list()
 	var/list/pick2 = list()
 	var/list/pick3 = list()
