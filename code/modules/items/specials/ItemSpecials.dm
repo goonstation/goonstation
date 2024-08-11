@@ -1874,7 +1874,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
 			direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
-		var/turf/T1 = get_turf(user)
 		var/turf/T2 = null
 		user.next_move = world.time + 6 DECI SECONDS
 		T2 = get_step(master, direction)
