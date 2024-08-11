@@ -1,4 +1,13 @@
 
+(t)sun aug 11 24
+(u)Glamurio (Ryou)
+(p)20261
+(e)💅🍝|C-QoL, A-Catering
+(+)Soy sauce and gravy can now be created via mixer.
+(u)DecodeQwertyPls
+(p)20245
+(e)🆕📦⚗|C-Feature, A-Game-Objects, A-Chemistry
+(+)Things inside a container (satchel, backpack, not lockers or crates) will heat up if the container starts burning
 (t)sat aug 10 24
 (u)Tyrant
 (p)20209
