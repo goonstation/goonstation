@@ -366,11 +366,10 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
 
-/atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
+/atom/proc/ProximityLeave(atom/movable/AM)
 	return
 
-//atom.event_handler_flags & USE_PROXIMITY MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/HasProximity(atom/movable/AM as mob|obj)
+/atom/proc/HasProximity(atom/movable/AM)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
@@ -563,7 +562,7 @@ TYPEINFO(/atom/movable)
 
 /atom/movable/Move(atom/NewLoc, direct)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct))
 		return
 	#ifdef CHECK_MORE_RUNTIMES
 	if(!istype(src.loc, /turf) || !istype(NewLoc, /turf))
@@ -1066,6 +1065,8 @@ TYPEINFO(/atom/movable)
 	SHOULD_CALL_PARENT(TRUE)
 	if(QDELETED(src) && !isnull(newloc))
 		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_SET_LOC, loc))
+		return
 
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
