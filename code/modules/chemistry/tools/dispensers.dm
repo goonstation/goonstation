@@ -779,7 +779,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 					amtload++
 					qdel(P)
 					playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
-					sleep(0.2 SECONDS) // faster than from the floor because you organised your crate well
+					sleep(0.3 SECONDS)
 				else
 					continue
 			if (amtload)
