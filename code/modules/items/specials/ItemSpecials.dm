@@ -1862,9 +1862,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 	damageMult = 0.85
 
-	image = "dagger"
-	name = "heavy swing"
-	desc = "Step forward and do a wide swing."
+	image = "heavyswing"
+	name = "Heavy swing"
+	desc = "Step forward and do a wide swing. Interrupted if you step into something."
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
