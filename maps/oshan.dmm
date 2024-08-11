@@ -1024,6 +1024,11 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/item/storage/wall/office{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "adi" = (
@@ -34005,11 +34010,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/item/storage/wall/office{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 0
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
