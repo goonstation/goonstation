@@ -48447,7 +48447,7 @@
 /turf/unsimulated/floor/white/checker,
 /area/centcom/offices/gerhazo)
 "dye" = (
-/obj/item/clothing/head/devil{
+/obj/item/clothing/head/headband/devil{
 	pixel_y = 10
 	},
 /obj/item/dice/d100/satan,
