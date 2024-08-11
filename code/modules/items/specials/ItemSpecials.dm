@@ -1855,7 +1855,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 
 /datum/item_special/heavy_swing
-	cooldown = 50
+	cooldown = 55 // slightly slower than the time to get up from a wallstun
 	staminaCost = 90
 	moveDelay = 10
 	moveDelayDuration = 5
@@ -1881,14 +1881,19 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		for(var/atom/A in T2)
 			if(isTarget(A) && ismob(A))
 				var/mob/M = A
-				M.throw_at(get_edge_cheap(T2, direction), 1, 20, thrown_by=user)
+				M.throw_at(get_edge_cheap(T2, direction), 3, 20, thrown_by=user)
 				var/obj/itemspecialeffect/heavybump/bumpeffect = new /obj/itemspecialeffect/heavybump
 				bumpeffect.set_dir(direction)
 				bumpeffect.setup(T2)
 				playsound(master,"sound/impact_sounds/metal_thump.ogg", 50, FALSE)
 				return
 		if (!step(user, direction)) return
+
+		var/obj/itemspecialeffect/heavystep/stepeffect = new /obj/itemspecialeffect/heavystep
+		stepeffect.set_dir(direction)
+		stepeffect.setup(T2)
 		playsound(master,"sound/misc/step/step_heavyboots_[pick(1,2,3)].ogg", 50, FALSE)
+
 		SPAWN(3 DECI SECONDS)
 			var/turf/one = get_step(T2, turn(direction, 90))
 			var/turf/three = get_step(T2, direction) // front middle tile
@@ -2027,6 +2032,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	heavybump
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "heavybump"
+		pixel_x = 0
+		pixel_y = 0
+	heavystep
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "heavystep"
 		pixel_x = 0
 		pixel_y = 0
 
