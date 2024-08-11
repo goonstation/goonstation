@@ -1053,7 +1053,6 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(current_projectile)
 		..()
 
-
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
 	name = "glitch gun"
@@ -1957,6 +1956,43 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 				user.do_disorient(stamina_damage = 20, disorient = 3 SECONDS)
 				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
 		return ..(target, start, user)
+
+// twirl ray
+/obj/item/gun/energy/twirlgun
+	name = "very experimental ray gun"
+	desc = "A weapon that looks vaguely like a cheap twirly toy and is definitely unsafe. It is currently 0% powerful."
+	icon = 'icons/obj/items/guns/gimmick.dmi'
+	icon_state = "raygun"
+	item_state = "raygun"
+	force = 5
+	can_dual_wield = 0
+	muzzle_flash = "muzzle_flash_laser"
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/twirlbeam)
+		projectiles = list(current_projectile)
+		..()
+
+	on_spin_emote(mob/living/carbon/human/user)
+		src.current_projectile.power += 20
+		. = ..(user)
+		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(5)) || (user.bioHolder && !user.bioHolder.HasEffect("clumsy")))
+			user.visible_message(SPAN_ALERT("<b>[user] accidentally shoots [him_or_her(user)]self with [src], trying to charge it up!</b>"))
+			src.ShootPointBlank(user, user)
+			JOB_XP(user, "Clown", 3)
+		else
+			user.visible_message("<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, charging it up.")
+		desc = "A weapon that looks vaguely like a cheap twirly toy and is definitely unsafe. It is currently [src.current_projectile.power / 200]% powerful."
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
+			if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(src.current_projectile.power/2)) || (prob(src.current_projectile.power) && user.bioHolder && !user.bioHolder.HasEffect("clumsy"))))
+				user.visible_message(SPAN_ALERT("<b>[user] tries to twirl the gun to fire it, but accidentally shoots [him_or_her(user)]self with [src]!</b>"))
+				src.ShootPointBlank(user, user)
+				JOB_XP(user, "Clown", 7)
+				return
+		return ..(target, start, user)
+
 
 /obj/item/gun/energy/dazzler
 	name = "dazzler"

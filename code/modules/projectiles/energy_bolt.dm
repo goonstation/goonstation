@@ -453,7 +453,23 @@ toxic - poisons
 	shot_number = 1
 	damage_type = D_ENERGY
 	fullauto_valid = 1
+	disruption = 2
 
+/datum/projectile/energy_bolt/twirlbeam
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "green_spark"
+	stun = 0
+	power = 0
+	damage = 5
+	cost = 25
+	max_range = 10
+	sname = "burst"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 3
+	shot_number = 1
+	damage_type = D_ENERGY
+	fullauto_valid = 1
 	disruption = 2
 
 /datum/projectile/energy_bolt/dazzler

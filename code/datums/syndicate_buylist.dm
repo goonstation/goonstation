@@ -1084,6 +1084,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/twirlgun
+	name = "Twirl gun"
+	item = /obj/item/gun/energy/twirlgun
+	cost = 5
+	desc = "<b>Spin me right round...</b>"
+	job = list("Clown")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
