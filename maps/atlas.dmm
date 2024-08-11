@@ -15235,13 +15235,6 @@
 	icon_state = "nt_logo"
 	},
 /area/station/hallway/primary/north)
-"fFp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/black,
-/area/listeningpost)
 "fFF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -98976,7 +98969,7 @@ aOa
 aFQ
 aOa
 aNL
-fFp
+aUH
 aNY
 aNe
 aaa
