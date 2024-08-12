@@ -1,5 +1,9 @@
 
 (t)mon aug 12 24
+(u)Egregorious
+(p)20213
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)'Jumbo' quality produce names are now displayed in all caps.
 (u)Soleil
 (p)20029
 (e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
