@@ -118,7 +118,7 @@ export const MineralMagnet = () => {
                 <TimeDisplay
                   value={Math.max(magnetLastUsed - time, 0)}
                   auto
-                  format={(value) => formatTime(value)}
+                  format={formatTime}
                 />
               </>
             ) : (

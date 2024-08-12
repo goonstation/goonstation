@@ -236,7 +236,7 @@ export const Sleeper = () => {
                 <TimeDisplay
                   value={curTime}
                   auto={isTiming}
-                  format={(value) => formatTime(value)}
+                  format={formatTime}
                 />
               </Box>
             </Flex.Item>
