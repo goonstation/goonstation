@@ -1,5 +1,9 @@
 
 (t)mon aug 12 24
+(u)TDHooligan
+(p)20254
+(e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
+(+)The airlock breaching sledgehammer now has a unique special attack.
 (u)Cogwerks
 (e)📦|A-Game-Objects
 (+)Renamed the Gwydion tranq pistol to Ceridwen
