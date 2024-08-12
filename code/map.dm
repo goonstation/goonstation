@@ -248,6 +248,7 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/fortuna,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -428,7 +429,6 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/cogmap2,
-		/atom/movable/screen/parallax_render_source/planet/mundus,
 		/atom/movable/screen/parallax_render_source/planet/iustitia,
 		/atom/movable/screen/parallax_render_source/planet/iudicium,
 		)

@@ -128,9 +128,10 @@ TYPEINFO(/obj/item/gun/energy)
 			if(canshoot(user))
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
-			boutput(user, SPAN_ALERT("*click* *click*"))
-			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+			if (src.does_click)
+				boutput(user, SPAN_ALERT("*click* *click*"))
+				if (!src.silenced)
+					playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
@@ -1393,7 +1394,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 		projectiles = list(
 			"detain" = current_projectile,
-			"execute" = new/datum/projectile/laser/blaster,
+			"execute" = new/datum/projectile/laser/blaster/lawbringer,
 			"smokeshot" = new/datum/projectile/bullet/smoke,
 			"knockout" = new/datum/projectile/bullet/tranq_dart/law_giver,
 			"hotshot" = new/datum/projectile/bullet/flare,
@@ -1593,7 +1594,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			if(current_projectile.type == /datum/projectile/energy_bolt/aoe)			//detain - yellow
 				indicator_display.color = "#FFFF00"
 				muzzle_flash = "muzzle_flash_elec"
-			else if (current_projectile.type == /datum/projectile/laser/blaster)			//execute - cyan
+			else if (current_projectile.type == /datum/projectile/laser/blaster/lawbringer)			//execute - cyan
 				indicator_display.color = "#00FFFF"
 				muzzle_flash = "muzzle_flash_bluezap"
 			else if (current_projectile.type == /datum/projectile/bullet/smoke)			//smokeshot - dark-blue
@@ -1657,6 +1658,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				for (var/mob/living/mob in viewers(1, user))
 					mob.flash(1.5 SECONDS)
 				user.changeStatus("disorient", 2 SECONDS)
+				playsound(get_turf(src), 'sound/weapons/ACgun1.ogg', 50, pitch = 1.2)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
