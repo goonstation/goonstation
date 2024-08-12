@@ -15,9 +15,9 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
 
 import { useBackend, useSharedState } from '../../backend';
-import { pluralize } from '../common/stringUtils';
 import type { EnvironmentProps, SpellData, WizardSpellbookData } from './type';
 
 const THUMBNAIL_SIZE = '32px';

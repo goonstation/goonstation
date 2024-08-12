@@ -15,11 +15,10 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
-import { toTitleCase } from 'tgui-core/string';
+import { pluralize, toTitleCase } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { pluralize } from '../common/stringUtils';
 import { WeaponVendorData, WeaponVendorStockData } from './type';
 
 export const WeaponVendor = () => {

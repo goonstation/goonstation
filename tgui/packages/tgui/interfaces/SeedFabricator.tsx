@@ -18,10 +18,10 @@ import {
   ProgressBar,
   Section,
 } from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { pluralize } from './common/stringUtils';
 
 const DefaultSort = {
   Fruit: 1,

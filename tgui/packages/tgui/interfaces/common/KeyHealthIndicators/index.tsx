@@ -1,6 +1,6 @@
 import { Box, Table } from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
 
-import { pluralize } from '../stringUtils';
 import {
   BrainDamageData,
   DisplayBloodPressureProps,

@@ -20,11 +20,11 @@ import {
   Stack,
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
+import { pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { is_set } from '../common/bitflag';
-import { pluralize } from '../common/stringUtils';
 import { BlueprintButton } from './components/BlueprintButton';
 import { CardInfo } from './components/CardInfo';
 import { CollapsibleWireMenu } from './components/CollapsibleWireMenu';

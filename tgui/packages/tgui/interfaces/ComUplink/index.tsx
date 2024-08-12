@@ -14,10 +14,10 @@ import {
   Stack,
   Table,
 } from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { pluralize } from '../common/stringUtils';
 import { ComUplinkData, ComUplinkStockData } from './type';
 
 export const ComUplink = () => {

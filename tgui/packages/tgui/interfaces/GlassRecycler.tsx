@@ -7,10 +7,11 @@ import {
   Section,
   Stack,
 } from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { capitalize, pluralize } from './common/stringUtils';
+import { capitalize } from './common/stringUtils';
 
 const GlassRecyclerProductEntry = (props: {
   product: Product;
