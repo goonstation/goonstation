@@ -767,23 +767,18 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 		// loading from crate
 		if (istype(O, /obj/storage/crate/))
-			user.visible_message(SPAN_NOTICE("[user] begins to charge [src] with [O]'s contents!"))
+			user.visible_message(SPAN_NOTICE("[user] charges [src] with [O]'s contents!"))
 			var/amtload = 0
-			var/staystill = user.loc
 			for (var/obj/item/P in O.contents)
-				if (user.loc != staystill) break
 				if (src.reagents.is_full())
 					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (src.brew(P))
 					amtload++
 					qdel(P)
-					playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
-					sleep(0.3 SECONDS)
-				else
-					continue
 			if (amtload)
 				boutput(user, SPAN_NOTICE("Charged [src] with [amtload] items from [O]!"))
+				playsound(src.loc, 'sound/effects/bubbles_short.ogg', 40, 1)
 			else
 				boutput(user, SPAN_ALERT("Nothing was put into [src]!"))
 		// loading from the ground
