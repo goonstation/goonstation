@@ -216,7 +216,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 
 ////////////////////////////////////// Antique laser gun
-TYPEINFO(/obj/item/gun/energy/anqtique)
+TYPEINFO(/obj/item/gun/energy/antique)
 	mats = 0
 /obj/item/gun/energy/antique
 	HELP_MESSAGE_OVERRIDE("You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon.")
