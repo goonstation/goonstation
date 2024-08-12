@@ -215,25 +215,98 @@ TYPEINFO(/obj/item/gun/energy)
 
 
 ////////////////////////////////////// Antique laser gun
-// Part of a mini-quest thing (see displaycase.dm). Typically, the gun's properties (cell, projectile)
-// won't be the default ones specified here, it's here to make it admin-spawnable (Convair880).
-/obj/item/gun/energy/laser_gun/antique
+TYPEINFO(/obj/item/gun/energy/anqtique)
+	mats = 0
+/obj/item/gun/energy/anqtique
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "capgun"
-	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
+	cell_type = /obj/item/ammo/power_cell/tiny
+	force = 7
+	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display!"
 	muzzle_flash = "muzzle_flash_laser"
-	cell_type = null
 	uses_charge_overlay = TRUE
 	charge_icon_state = "caplaser"
 
+	var/obj/item/coil/small/myCoil = null
+	var/obj/item/lens/myLens = null
+	//a quantification of how good the repair was.
+	//0 = nonfunctional
+	//1 or 2 = 25 damage laser
+	//3 or 4 = 45 damage laser
+	//5 or 6 = 45 damage laser with alt-fire 3-round burst of 25 damage lasers
+	var/qualityScore = 0
+	var/panelOpen = FALSE
+
 	New()
-		if (!src.current_projectile)
+		if(!src.current_projectile)
 			src.set_current_projectile(new /datum/projectile/laser/glitter)
-		if (isnull(src.projectiles))
+		if(isnull(src.projectiles))
 			src.projectiles = list(src.current_projectile)
 		..()
 		src.UpdateIcon()
+
+	attackby(obj/item/item, mob/user)
+		. = ..()
+		if(isscrewingtool(item))
+			user.show_text("You [src.panelOpen ? "close" : "open"] the maintenance panel.", "blue")
+			src.panelOpen = !src.panelOpen
+		if(istype(item, /obj/item/coil/small))
+			if(panelOpen)
+				user.show_text("You insert [item]", "blue")
+				user.drop_item(item)
+				if(src.myCoil)
+					user.put_in_hand_or_drop(src.myCoil)
+				src.myCoil = item
+				item.set_loc(src)
+			else
+				user.show_text("You need to unscrew the maintenance panel first!", "red")
+		if (istype(item, /obj/item/lens))
+			if(panelOpen)
+				user.show_text("You insert [item]", "blue")
+				user.drop_item(item)
+				if(src.myLens)
+					user.put_in_hand_or_drop(src.myLens)
+				src.myLens = item
+				item.set_loc(src)
+			else
+				user.show_text("You need to unscrew the maintenance panel first!", "red")
+
+	canshoot(mob/user)
+		if(src.evaluateQuality == 0)
+			return FALSE
+		. = ..()
+
+	proc/evaluateQuality()
+		var/evaluationScore = 0
+		if(!src.myCoil || !src.myLens || !src.myCoil.material || !src.myLens.material)
+			//not all components present
+			return 0
+		switch(src.myLens.material.getAlpha())
+			if(-INFINITY to 80)
+				evaluationScore += 3
+			if(80 to 130)
+				evaluationScore += 2
+			if(130 to 180)
+				evaluationScore += 1
+			if(180 to INFINITY)
+				//not good enough to be functional
+				return 0
+		switch(src.myCoil.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
+			if(INFINITY to 10)
+				evaluationScore += 3
+			if(10 to 8)
+				evaluationScore += 2
+			if(8 to 6)
+				evaluationScore += 1
+			if(6 to -INFINITY)
+				//not good enough to be functional
+				return 0
+		//grading finished, return score
+		return evaluationScore
+
+	proc/determineProjectiles(quality)
+
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun

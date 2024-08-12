@@ -1561,6 +1561,16 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	charge = 400
 	max_charge = 400
 
+/obj/item/ammo/power_cell/tiny
+	name = "Power Cell - 50"
+	desc = "A power cell that holds a max of 50PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 5000
+	g_amt = 10000
+	charge = 50
+	max_charge = 50
+
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 60PU."
