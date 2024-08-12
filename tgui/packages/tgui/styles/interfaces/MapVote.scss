@@ -7,10 +7,10 @@
 
 .MapPanel {
   &--voted {
-    background-color: #023301;
+    background-color: #023301 !important;
   }
   &--won {
-    background-color: #8e6f19;
+    background-color: #8e6f19 !important;
   }
 
   .mode-light & {
