@@ -1,5 +1,8 @@
 
 (t)mon aug 12 24
+(u)Cogwerks
+(e)📦|A-Game-Objects
+(+)Renamed the Gwydion tranq pistol to Ceridwen
 (u)Egregorious
 (p)20213
 (e)💅🌱|C-QoL, A-Hydroponics
