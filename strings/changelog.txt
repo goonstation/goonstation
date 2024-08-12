@@ -1,5 +1,9 @@
 
 (t)mon aug 12 24
+(u)Soleil
+(p)20029
+(e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
+(+)XIANG|GIESEL have finally added MechComp integration to their SMES units.
 (u)LeahTheTech
 (p)20253
 (e)🆕🎨💅|C-Feature, C-Sprites, C-QoL
