@@ -102,6 +102,11 @@
 		src.Scale(scale, scale)
 		src.set_dir(pick(NORTH, SOUTH, EAST, WEST))
 		reagents.add_reagent("ants",20)
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	get_desc(dist, mob/user)
 		return null
@@ -133,6 +138,11 @@
 		src.pixel_x = rand(-8,8)
 		src.pixel_y = rand(-8,8)
 		reagents.add_reagent("spiders", 5)
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	get_desc(dist, mob/user)
 		return null

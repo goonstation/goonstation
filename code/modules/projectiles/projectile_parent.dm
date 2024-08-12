@@ -558,11 +558,13 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
 	var/shot_sound_extrarange = 0 //should the sound have extra range?
 	var/shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
+	var/shot_pitch = 1
 	var/shot_number = 0          // How many projectiles should be fired, each will cost the full cost
 	var/shot_delay = 0.1 SECONDS          // Time between shots in a burst.
 	var/damage_type = D_KINETIC  // What is our damage type
 	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
+	var/always_hits_structures = FALSE //always hits doors and girders
 	var/window_pass = 0          // Can we pass windows
 	var/obj/projectile/master = null // The projectile obj that we're associated with
 	var/silentshot = 0           // Standard hit message upon bullet_act.
@@ -875,7 +877,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(sound_source, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
-			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
+			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))

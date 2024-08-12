@@ -123,10 +123,11 @@ toxic - poisons
 	color_red = 0
 	color_green = 0
 	color_blue = 1
+	always_hits_structures = TRUE
 
 	on_hit(atom/hit, dir, obj/projectile/P)
 		fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_BLUE)
-		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
+		if(!ismob(hit))
 			hit.ex_act(2)
 		else
 			hit.ex_act(3, src, 1.5) //don't stun humans nearly as much
@@ -436,6 +437,11 @@ toxic - poisons
 		SPAWN( 20 )
 			if (I && !I.disposed) qdel(I)*/
 
+	lawbringer
+		color_icon = "#00FFFF"
+		shot_sound = 'sound/weapons/laser_b.ogg'
+		projectile_speed = 46 //it's not quite the carbine but let's make it a little faster to go with the ANGRY shot sound
+		shot_pitch = 0.8
 
 	burst
 		damage = 15

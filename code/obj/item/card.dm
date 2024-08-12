@@ -6,8 +6,6 @@ ID CARD
 GAUNTLET CARDS
 */
 
-#define ID_SHOWOFF_COOLDOWN 2 SECONDS
-
 /obj/item/card
 	name = "card"
 	icon = 'icons/obj/items/card.dmi'
@@ -49,10 +47,10 @@ TYPEINFO(/obj/item/card/emag)
 		return
 
 /obj/item/card/emag/attack_self(mob/user as mob)
-	if(ON_COOLDOWN(user, "flash_card", ID_SHOWOFF_COOLDOWN))
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
 	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=1.1)
-	actions.start(new /datum/action/show_card(user, src), user)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/emag/fake
 //delicious fake emag
@@ -250,12 +248,12 @@ TYPEINFO(/obj/item/card/emag)
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
-	if(ON_COOLDOWN(user, "flash_card", ID_SHOWOFF_COOLDOWN))
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
 	src.add_fingerprint(user)
 	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
-	actions.start(new /datum/action/show_card(user, src), user)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -274,11 +272,11 @@ TYPEINFO(/obj/item/card/emag)
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
-	if(ON_COOLDOWN(user, "flash_card", ID_SHOWOFF_COOLDOWN))
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
 		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
 	src.add_fingerprint(user)
-	actions.start(new /datum/action/show_card(user, src), user)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)
@@ -522,41 +520,3 @@ TYPEINFO(/obj/item/card/emag)
 					owner.vis_contents -= indicator
 			owner = user
 		..()
-
-/datum/action/show_card
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = ID_SHOWOFF_COOLDOWN
-	var/mob/user = null
-	var/obj/item/card/id_card = null
-
-	New(mob/user, obj/item/card/card)
-		. = ..()
-		src.user = user
-		src.id_card = card
-
-	onStart()
-		. = ..()
-		var/pixel_x_offset = 0
-		var/pixel_y_offset = 3
-		var/hand_icon_state = ""
-		if(src.user.hand)
-			hand_icon_state = "id_hold_l"
-			pixel_x_offset = 5
-		else
-			hand_icon_state = "id_hold_r"
-			pixel_x_offset = -5
-
-		var/image/id_overlay = src.id_card.SafeGetOverlayImage("id_overlay", src.id_card.icon, src.id_card.icon_state, MOB_LAYER + 0.1, pixel_x_offset, pixel_y_offset)
-		var/image/hand_overlay = src.id_card.SafeGetOverlayImage("id_hand_overlay", 'icons/effects/effects.dmi', hand_icon_state, MOB_LAYER + 0.11, pixel_x_offset, pixel_y_offset, color=user.get_fingertip_color())
-
-		src.user.UpdateOverlays(id_overlay, "id_overlay")
-		src.user.UpdateOverlays(hand_overlay, "id_hand_overlay")
-
-		src.user.dir = SOUTH
-
-	onDelete()
-		. = ..()
-		src.user.UpdateOverlays(null, "id_overlay")
-		src.user.UpdateOverlays(null, "id_hand_overlay")
-
-#undef ID_SHOWOFF_COOLDOWN
