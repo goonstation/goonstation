@@ -350,7 +350,7 @@
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
 	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
 	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
-	station_bounties[/obj/item/captaingun] = 3
+	station_bounties[/obj/item/gun/energy/anqtique] = 3
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3

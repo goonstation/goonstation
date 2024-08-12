@@ -218,6 +218,7 @@ TYPEINFO(/obj/item/gun/energy)
 TYPEINFO(/obj/item/gun/energy/anqtique)
 	mats = 0
 /obj/item/gun/energy/anqtique
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon."})
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "capgun"
@@ -230,27 +231,20 @@ TYPEINFO(/obj/item/gun/energy/anqtique)
 
 	var/obj/item/coil/small/myCoil = null
 	var/obj/item/lens/myLens = null
-	//a quantification of how good the repair was.
-	//0 = nonfunctional
-	//1 or 2 = 25 damage laser
-	//3 or 4 = 45 damage laser
-	//5 or 6 = 45 damage laser with alt-fire 3-round burst of 25 damage lasers
-	var/qualityScore = 0
 	var/panelOpen = FALSE
 
-	New()
-		if(!src.current_projectile)
-			src.set_current_projectile(new /datum/projectile/laser/glitter)
-		if(isnull(src.projectiles))
-			src.projectiles = list(src.current_projectile)
-		..()
-		src.UpdateIcon()
+	examine(mob/user)
+		if(src.panelOpen)
+			. += "The maintenance panel is open."
 
 	attackby(obj/item/item, mob/user)
 		. = ..()
 		if(isscrewingtool(item))
 			user.show_text("You [src.panelOpen ? "close" : "open"] the maintenance panel.", "blue")
 			src.panelOpen = !src.panelOpen
+			if(!src.panelOpen)
+				if(src.determineProjectiles() >= 3)//highest tier
+					user.unlock_medal("Tinkerer", 1)
 		if(istype(item, /obj/item/coil/small))
 			if(panelOpen)
 				user.show_text("You insert [item]", "blue")
@@ -273,11 +267,17 @@ TYPEINFO(/obj/item/gun/energy/anqtique)
 				user.show_text("You need to unscrew the maintenance panel first!", "red")
 
 	canshoot(mob/user)
-		if(src.evaluateQuality == 0)
+		//configures the projectiles and makes sure it can actually shoot
+		if(src.determineProjectiles() < 1)
 			return FALSE
 		. = ..()
 
 	proc/evaluateQuality()
+		//a quantification of how good the build was.
+		//0 = nonfunctional
+		//1 or 2 = 25 damage laser
+		//3 or 4 = 45 damage laser
+		//5 or 6 = 45 damage laser with alt-fire 3-round burst of 25 damage lasers
 		var/evaluationScore = 0
 		if(!src.myCoil || !src.myLens || !src.myCoil.material || !src.myLens.material)
 			//not all components present
@@ -305,8 +305,22 @@ TYPEINFO(/obj/item/gun/energy/anqtique)
 		//grading finished, return score
 		return evaluationScore
 
-	proc/determineProjectiles(quality)
-
+	proc/determineProjectiles()
+		//returns a number for each tier
+		switch(src.evaluateQuality())
+			if(INFINITY to 5)
+				src.projectiles = list(new/datum/projectile/laser/glitter)
+				return 3
+			if(5 to 3)
+				src.projectiles = list(new/datum/projectile/laser)
+				return 2
+			if(3 to 1)
+				src.projectiles = list(new/datum/projectile/laser, new/datum/projectile/laser/glitter/burst)
+				return 1
+			if(1 to -INFINITY)
+				src.current_projectile = null
+				src.projectiles = null
+				return 0
 
 //////////////////////////////////////// Phaser
 /obj/item/gun/energy/phaser_gun
