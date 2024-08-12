@@ -1,4 +1,9 @@
 
+(t)mon aug 12 24
+(u)LeahTheTech
+(p)20253
+(e)🆕🎨💅|C-Feature, C-Sprites, C-QoL
+(*)Wearing meson goggles now allows you to see mechcomp connections.
 (t)sun aug 11 24
 (u)Glamurio (Ryou)
 (p)20261
