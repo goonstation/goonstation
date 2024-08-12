@@ -10281,10 +10281,6 @@
 	req_access_txt = "52"
 	},
 /obj/item/cell/cerenkite/charged,
-/obj/item/cell/cerenkite/charged,
-/obj/item/cell/cerenkite/charged,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black,
 /area/listeningpost/power)
@@ -10368,10 +10364,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicate_teleporter)
 "aNM" = (
-/turf/simulated/floor/stairs/dark{
-	name = "evil stairs";
-	desc = "it doesn't make sense that there are this many stairs down but so few back up, someone call a physicist"
-	},
+/turf/simulated/floor/black,
 /area/listeningpost/power)
 "aNN" = (
 /obj/lattice{
@@ -14986,6 +14979,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "eST" = (
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/white/checker,
 /area/listeningpost)
 "eTg" = (
@@ -15769,7 +15763,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/optable,
+/obj/item/storage/toilet{
+	dir = 4;
+	tag = ""
+	},
 /turf/simulated/floor/white/checker,
 /area/listeningpost)
 "hqm" = (
@@ -17937,8 +17934,10 @@
 /obj/storage/crate/medical{
 	name = "medical supplies crate"
 	},
-/obj/item/reagent_containers/mender/burn,
-/obj/item/reagent_containers/mender_refill_cartridge/burn,
+/obj/item/storage/firstaid/brain,
+/obj/item/storage/firstaid/brute,
+/obj/item/storage/firstaid/fire,
+/obj/item/storage/firstaid/oxygen,
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "nBy" = (
@@ -17984,7 +17983,7 @@
 /area/station/science/teleporter)
 "nLD" = (
 /obj/machinery/bot/medbot/no_camera,
-/turf/simulated/floor/white/checker,
+/turf/simulated/floor/black,
 /area/listeningpost)
 "nMc" = (
 /obj/machinery/power/apc/autoname_east,
@@ -18084,6 +18083,28 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
+"nZF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/machinery/drainage,
+/obj/item/reagent_containers/food/snacks/pizzaslice/standard/cheese{
+	pixel_x = 6;
+	pixel_y = 12;
+	name = "slice of soggy cheese pizza";
+	desc = "A cheesy pizza slice with thick tomato sauce. It looks quite soggy."
+	},
+/obj/item/sponge{
+	name = "loofah";
+	pixel_x = -11;
+	pixel_y = -8
+	},
+/turf/simulated/floor/white/checker,
+/area/listeningpost)
 "nZX" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -18147,10 +18168,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/turf/simulated/floor/black,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "ohq" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
@@ -18264,10 +18282,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/sleeper/compact{
-	dir = 8
-	},
-/turf/simulated/floor/white/checker,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "oIn" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -19946,7 +19961,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "tsa" = (
-/obj/machinery/computer/operating/small,
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 15
 	},
@@ -21268,21 +21282,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "xce" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/cable{
+	icon_state = "4-8"
 	},
-/obj/item/scalpel,
-/obj/item/staple_gun{
-	pixel_x = 5
-	},
-/obj/item/weldingtool,
-/obj/item/hemostat,
-/obj/item/surgical_spoon,
-/obj/item/suture,
-/obj/item/scissors/surgical_scissors,
-/turf/simulated/floor/white/checker,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "xcB" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -97455,7 +97458,7 @@ aNf
 aOI
 aUH
 aNW
-aNW
+nLD
 aUH
 aOw
 aNW
@@ -98056,9 +98059,9 @@ bWg
 aRI
 aRI
 aNe
+aNe
 xce
-fPW
-nLD
+aNe
 aOB
 aUH
 hYO
@@ -98661,7 +98664,7 @@ aRI
 aZF
 aNe
 tsa
-fPW
+nZF
 oHA
 aNQ
 aHr
@@ -99869,7 +99872,7 @@ aNZ
 aMP
 aMP
 aMP
-aZH
+aXH
 aNL
 aOd
 aOt
@@ -100171,7 +100174,7 @@ aMP
 aMZ
 aNi
 aNs
-aXH
+aZH
 aNL
 aNL
 aNL
