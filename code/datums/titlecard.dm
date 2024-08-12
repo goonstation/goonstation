@@ -38,6 +38,14 @@
 		is_game_mode = TRUE
 
 /datum/titlecard/proc/set_pregame_html()
+#if defined(BANISH_PREGAME_HTML)
+	var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+	if(T)
+		T = locate(T.x + 3, T.y, T.z)
+		if (locate(/obj/titlecard) in T) return
+		new /obj/titlecard(T)
+	return
+#else
 	last_pregame_html = {"<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'><style>@font-face{font-family:'PxPlus IBM VGA9';src:url([resource("misc/ibmvga9.ttf")]);}body,#overlay{margin:0;padding:0;background:url([resource(src.image_url)]) black;background-size:contain;background-repeat:no-repeat;overflow:hidden;background-position:center center;background-attachment:fixed;image-rendering:pixelated;}"}
 	if (isnull(src.overlay_image_url))
 		last_pregame_html += {"#overlay{display:none;}"}
@@ -52,6 +60,7 @@
 				var/mob/new_player/new_player = C.mob
 				new_player.pregameBrowserLoaded = TRUE
 	pregameHTML = last_pregame_html
+#endif
 
 /datum/titlecard/proc/set_maptext(id, text)
 	maptext_areas[id] = text

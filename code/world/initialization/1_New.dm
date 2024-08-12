@@ -29,6 +29,9 @@
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
 	makepowernets()
 
+	Z_LOG_DEBUG("World/New", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	Z_LOG_DEBUG("World/New", "Setting up changelogs...")
 	changelog = new /datum/changelog()

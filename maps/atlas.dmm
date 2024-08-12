@@ -4417,14 +4417,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/turretid{
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = 24
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
@@ -16469,8 +16469,8 @@
 /area/station/maintenance/southwest)
 "jUF" = (
 /obj/machinery/firealarm/north,
-/obj/storage/cart/medcart,
 /obj/item/reagent_containers/syringe/haloperidol,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},

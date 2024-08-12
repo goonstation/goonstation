@@ -71289,9 +71289,8 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "rBI" = (
-/obj/table/wood/auto/desk,
-/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
-	pixel_y = 10
+/obj/machinery/bug_reporter{
+	dir = 4
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
@@ -78308,6 +78307,10 @@
 	},
 /obj/item/clothing/mask/mime{
 	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
+	pixel_y = 11;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
