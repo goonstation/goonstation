@@ -66,7 +66,6 @@
 	/datum/commodity/contraband/ntso_uniform,
 	/datum/commodity/contraband/ntso_vest,
 	/datum/commodity/contraband/ntso_beret,
-	/datum/commodity/contraband/nt_coat,
 	/datum/commodity/drugs/methamphetamine,
 	/datum/commodity/drugs/crank,
 	/datum/commodity/drugs/catdrugs,

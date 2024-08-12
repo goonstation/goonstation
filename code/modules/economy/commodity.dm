@@ -745,12 +745,6 @@
 	desc = "Fancy. Possibly salvaged, possibly stolen, what's it to you?"
 	price = PAY_IMPORTANT
 
-/datum/commodity/contraband/nt_coat
-	comname = "Nanotrasen Winter Coat"
-	comtype = /obj/item/clothing/head/NTberet
-	desc = "A comfy coat in NT operative colouring, presumably stolen."
-	price = PAY_IMPORTANT
-
 /datum/commodity/contraband/ntso_vest
 	comname = "Surplus armored vest"
 	comtype = /obj/item/clothing/suit/armor/NT_alt
