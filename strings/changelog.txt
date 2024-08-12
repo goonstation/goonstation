@@ -4,6 +4,10 @@
 (e)📦|A-Game-Objects
 (+)Renamed the Gwydion tranq pistol to Ceridwen
 (u)Egregorious
+(p)20271
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The still is a little nicer to use.
+(u)Egregorious
 (p)20213
 (e)💅🌱|C-QoL, A-Hydroponics
 (+)'Jumbo' quality produce names are now displayed in all caps.
