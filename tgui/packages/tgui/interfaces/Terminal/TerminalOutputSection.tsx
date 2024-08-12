@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { useEffect } from 'react';
 import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -16,8 +17,23 @@ export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
   const { fontColor, bgColor } = data;
   const { displayHTML } = props;
 
+  useEffect(() => {
+    const terminalOutputScroll = document.querySelector(
+      "#terminalOutput div[class^='_content']",
+    );
+    if (!terminalOutputScroll) {
+      return;
+    }
+    terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
+  }, [displayHTML]);
+
   return (
-    <Section backgroundColor={bgColor} scrollable fill>
+    <Section
+      backgroundColor={bgColor}
+      scrollable
+      fill
+      container_id="terminalOutput"
+    >
       <Box
         fontFamily="Consolas"
         fill
