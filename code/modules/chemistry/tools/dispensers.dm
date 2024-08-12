@@ -203,11 +203,11 @@
 	attackby(obj/item/W, mob/user)
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			if(!src.anchored)
-				user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+				user.visible_message("<b>[user]</b> secures [src] to the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = ANCHORED
 			else
-				user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+				user.visible_message("<b>[user]</b> unbolts [src] from the floor!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.anchored = UNANCHORED
 			return
@@ -504,7 +504,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				boutput(user, SPAN_ALERT("[src] is full."))
 				return
 
-			boutput(user, SPAN_NOTICE("You squeeze the [W] into the [src]. Gross."))
+			boutput(user, SPAN_NOTICE("You squeeze the [W] into [src]. Gross."))
 			playsound(src.loc, pick('sound/effects/splort.ogg'), 100, 1)
 
 			W.reagents.trans_to(src, W.reagents.total_volume)
@@ -513,9 +513,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
-				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
+				user.visible_message("<b>[user]</b> wrenches [src]'s lid closed!")
 			else
-				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
+				user.visible_message("<b>[user]</b> wrenches [src]'s lid open!")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.set_open_container(!src.is_open_container())
 			UpdateIcon()
