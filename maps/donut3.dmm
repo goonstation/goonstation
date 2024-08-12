@@ -21749,9 +21749,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "gwP" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /obj/machinery/light/incandescent/greenish{
 	dir = 1
 	},

@@ -20837,9 +20837,7 @@
 	},
 /area/station/hallway/primary/north)
 "wlm" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "wnp" = (

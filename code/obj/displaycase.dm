@@ -164,3 +164,7 @@
 		src.healthcheck()
 	..()
 	return
+
+//lets have an actual subtype instead of just varediting this
+/obj/displaycase/captain
+	displayed = /obj/item/gun/energy/anqtique
