@@ -1883,6 +1883,17 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 
+/datum/cookingrecipe/mixer/soysauce
+	item1 =  /obj/item/reagent_containers/food/snacks/plant/soy
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+
+/datum/cookingrecipe/mixer/gravy
+	item1 =  /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/flour
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
+
 /datum/cookingrecipe/mixer/fishpaste
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 4
