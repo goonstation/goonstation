@@ -167,4 +167,4 @@
 
 //lets have an actual subtype instead of just varediting this
 /obj/displaycase/captain
-	displayed = /obj/item/gun/energy/anqtique
+	displayed = /obj/item/gun/energy/antique
