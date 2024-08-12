@@ -1856,11 +1856,15 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 /datum/item_special/heavy_swing
 	cooldown = 55 // slightly slower than the time to get up from a wallstun
-	staminaCost = 90
+	staminaCost = 50
 	moveDelay = 10
 	moveDelayDuration = 5
 
-	damageMult = 0.85
+	requiresStaminaToFire = 1
+	staminaReqAmt = 90
+
+	var/damageMultHit = 0.85
+	var/damageMultShove = 0.2
 
 	image = "heavyswing"
 	name = "Heavy swing"
@@ -1884,6 +1888,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				var/obj/itemspecialeffect/heavybump/bumpeffect = new /obj/itemspecialeffect/heavybump
 				bumpeffect.set_dir(direction)
 				bumpeffect.setup(T2)
+				damageMult = damageMultShove
+				master.attack_verbs = list("shoves", "barges")
+				M.Attackby(master, user, params, 1)
+				master.attack_verbs = initial(master.attack_verbs)
 				playsound(master,"sound/impact_sounds/metal_thump.ogg", 50, FALSE)
 				return
 		if (!step(user, direction)) return
@@ -1899,6 +1907,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/turf/two = get_step(three, turn(direction, 90))
 			var/turf/four = get_step(three, turn(direction, -90))
 			var/turf/five = get_step(T2, turn(direction, -90))
+			damageMult = damageMultHit
 
 			var/obj/itemspecialeffect/wide_swipe/swipe = new /obj/itemspecialeffect/wide_swipe
 			swipe.set_dir(direction)
