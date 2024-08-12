@@ -86,11 +86,11 @@
 			if (istype(T, /turf/space))
 				boutput(user, SPAN_ALERT("What exactly are you gonna secure [src] to?"))
 				return
-			user.visible_message("<b>[user]</b> secures the [src] to the floor!")
+			user.visible_message("<b>[user]</b> secures [src] to the floor!")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.anchored = ANCHORED
 		else
-			user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
+			user.visible_message("<b>[user]</b> unbolts [src] from the floor!")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.anchored = UNANCHORED
 
@@ -769,13 +769,13 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (istype(O, /obj/storage/crate/))
 			user.visible_message(SPAN_NOTICE("[user] charges [src] with [O]'s contents!"))
 			var/amtload = 0
-			for (var/obj/item/P in O.contents)
+			for (var/obj/item/Produce in O.contents)
 				if (src.reagents.is_full())
 					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
-				if (src.brew(P))
+				if (src.brew(Produce))
 					amtload++
-					qdel(P)
+					qdel(Produce)
 			if (amtload)
 				boutput(user, SPAN_NOTICE("Charged [src] with [amtload] items from [O]!"))
 				playsound(src.loc, 'sound/effects/bubbles_short.ogg', 40, 1)
@@ -791,14 +791,14 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 			var/staystill = user.loc
 			var/itemtype = O.type
-			for(var/obj/item/P in view(1,user))
+			for(var/obj/item/Produce in view(1,user))
 				if (src.reagents.total_volume >= src.reagents.maximum_volume)
 					boutput(user, SPAN_ALERT("[src] is full!"))
 					break
 				if (user.loc != staystill) break
-				if (P.type != itemtype) continue
-				if (src.brew(P))
-					qdel(P)
+				if (Produce.type != itemtype) continue
+				if (src.brew(Produce))
+					qdel(Produce)
 					playsound(src.loc, 'sound/effects/bubbles_short.ogg', 30, 1)
 					sleep(0.3 SECONDS)
 			boutput(user, SPAN_NOTICE("You finish charging [src] with [O]!"))
