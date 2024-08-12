@@ -218,7 +218,7 @@ TYPEINFO(/obj/item/gun/energy)
 TYPEINFO(/obj/item/gun/energy/anqtique)
 	mats = 0
 /obj/item/gun/energy/anqtique
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon."})
+	HELP_MESSAGE_OVERRIDE("You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon.")
 	name = "antique laser gun"
 	icon_state = "caplaser"
 	item_state = "capgun"
@@ -234,6 +234,7 @@ TYPEINFO(/obj/item/gun/energy/anqtique)
 	var/panelOpen = FALSE
 
 	examine(mob/user)
+		. = ..()
 		if(src.panelOpen)
 			. += "The maintenance panel is open."
 
@@ -292,14 +293,14 @@ TYPEINFO(/obj/item/gun/energy/anqtique)
 			if(180 to INFINITY)
 				//not good enough to be functional
 				return 0
-		switch(src.myCoil.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
-			if(INFINITY to 10)
+		switch(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
+			if(10 to INFINITY)
 				evaluationScore += 3
-			if(10 to 8)
+			if(8 to 10)
 				evaluationScore += 2
-			if(8 to 6)
+			if(6 to 8)
 				evaluationScore += 1
-			if(6 to -INFINITY)
+			if(-INFINITY to 6)
 				//not good enough to be functional
 				return 0
 		//grading finished, return score
@@ -308,16 +309,19 @@ TYPEINFO(/obj/item/gun/energy/anqtique)
 	proc/determineProjectiles()
 		//returns a number for each tier
 		switch(src.evaluateQuality())
-			if(INFINITY to 5)
-				src.projectiles = list(new/datum/projectile/laser/glitter)
-				return 3
-			if(5 to 3)
-				src.projectiles = list(new/datum/projectile/laser)
-				return 2
-			if(3 to 1)
+			if(5 to INFINITY)
+				// dont set the current projectile here because it gets re-evaluated per shot
 				src.projectiles = list(new/datum/projectile/laser, new/datum/projectile/laser/glitter/burst)
+				return 3
+			if(3 to 5)
+				src.current_projectile = new/datum/projectile/laser
+				src.projectiles = list(current_projectile)
+				return 2
+			if(1 to 3)
+				src.current_projectile = new/datum/projectile/laser/glitter
+				src.projectiles = list(current_projectile)
 				return 1
-			if(1 to -INFINITY)
+			if(-INFINITY to 1)
 				src.current_projectile = null
 				src.projectiles = null
 				return 0
