@@ -883,10 +883,11 @@
 	name = "Nuclear Control Room"
 	})
 "aso" = (
-/obj/machinery/firealarm/east,
-/obj/machinery/weapon_stand/rifle_rack/recharger,
-/turf/simulated/floor/engine/caution/west,
-/area/station/ai_monitored/armory)
+/obj/stool/bench/red/auto,
+/obj/landmark/start/job/security_officer,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/redblack/corner,
+/area/station/security/equipment)
 "ass" = (
 /obj/rack,
 /obj/item/bballbasket,
@@ -3171,9 +3172,16 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
 "btg" = (
-/obj/storage/secure/crate/gear/armory/grenades,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/machinery/recharger/wall/sticky,
-/turf/simulated/floor/engine/caution/south,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
 /area/station/ai_monitored/armory)
 "btk" = (
 /obj/disposalpipe/segment/produce{
@@ -5010,16 +5018,20 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cmO" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
-	},
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black,
-/area/station/security/equipment)
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution,
+/area/station/ai_monitored/armory)
 "cna" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -8955,8 +8967,10 @@
 	name = "Nuclear Control Room"
 	})
 "eby" = (
-/turf/simulated/floor/redblack/corner,
-/area/station/security/equipment)
+/obj/machinery/firealarm/east,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/engine/caution/west,
+/area/station/ai_monitored/armory)
 "ebB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/beepsky)
@@ -10699,16 +10713,10 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "eQo" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = 2;
-	pixel_y = -3
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/redblack{
+	dir = 6
 	},
-/obj/item/crowbar{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/turf/simulated/floor/redblack,
 /area/station/hangar/sec)
 "eQs" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -13885,6 +13893,14 @@
 /obj/item/shipcomponent/secondary_system/tractor_beam{
 	pixel_x = 6
 	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 2;
+	pixel_y = -3
+	},
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 5
+	},
 /turf/simulated/floor/redblack,
 /area/station/hangar/sec)
 "giz" = (
@@ -14311,13 +14327,14 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/baroffice)
 "gqT" = (
-/obj/item/device/radio/intercom/security{
-	dir = 8
+/obj/cable{
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/redblack{
-	dir = 4
+/obj/cable{
+	icon_state = "2-8"
 	},
-/area/station/security/equipment)
+/turf/simulated/floor/engine/glow,
+/area/station/ai_monitored/armory)
 "grf" = (
 /obj/landmark/start/job/scientist,
 /obj/stool/chair/purple{
@@ -14807,12 +14824,7 @@
 	},
 /area/station/crew_quarters/quarters_east)
 "gzE" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/machinery/vending/jobclothing/security,
+/obj/machinery/light,
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
 "gzG" = (
@@ -14827,6 +14839,10 @@
 /obj/machinery/light,
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = 9
+	},
+/obj/item/device/multitool{
+	pixel_x = -23;
+	pixel_y = 7
 	},
 /turf/simulated/floor/redblack,
 /area/station/hangar/sec)
@@ -14999,7 +15015,12 @@
 /obj/stool/bench/red/auto,
 /obj/landmark/start/job/security_officer,
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black,
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
 /area/station/security/equipment)
 "gDO" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
@@ -20439,12 +20460,9 @@
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "iFJ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/hangar/sec)
+/obj/machinery/vending/jobclothing/security,
+/turf/simulated/floor/redblack,
+/area/station/security/equipment)
 "iGc" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20587,8 +20605,10 @@
 	},
 /area/station/science/hall)
 "iKJ" = (
-/obj/machinery/recharger/wall/sticky,
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/obj/storage/secure/crate/gear/armory/grenades,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/ai_monitored/armory)
 "iKW" = (
@@ -22643,13 +22663,20 @@
 /area/listeningpost)
 "jDb" = (
 /obj/stool/bench/red/auto,
-/obj/machinery/computer/riotgear{
-	pixel_y = 28
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
-/turf/simulated/floor/redblack{
-	dir = 1
+/obj/machinery/door_control{
+	id = "armory";
+	name = "Armory Window";
+	pixel_x = -24
 	},
-/area/station/security/equipment)
+/turf/simulated/floor/engine/caution,
+/area/station/ai_monitored/armory)
 "jDy" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
@@ -23815,7 +23842,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/redblack{
-	dir = 1
+	dir = 5
 	},
 /area/station/hangar/sec)
 "kcQ" = (
@@ -24292,9 +24319,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/redblack/corner{
-	dir = 1
-	},
+/turf/simulated/floor/black,
 /area/station/hangar/sec)
 "klz" = (
 /obj/machinery/light/small{
@@ -29424,10 +29449,10 @@
 	})
 "mlg" = (
 /obj/stool/chair/red{
-	dir = 4
+	dir = 8
 	},
-/turf/simulated/floor/redblack,
-/area/station/security/equipment)
+/turf/simulated/floor/engine/caution,
+/area/station/ai_monitored/armory)
 "mlm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tech)
@@ -30664,22 +30689,9 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "mOd" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/station/security/equipment)
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/armory)
 "mOt" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal,
@@ -32616,8 +32628,11 @@
 	name = "Southeast Breach Hull"
 	})
 "nGg" = (
-/turf/simulated/floor/redblack/corner{
-	dir = 8
+/obj/machinery/computer/riotgear{
+	pixel_y = 28
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
 	},
 /area/station/security/equipment)
 "nGi" = (
@@ -33753,11 +33768,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "oip" = (
-/obj/stool/chair/red{
-	dir = 8
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
 	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/ai_monitored/armory)
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw{
+	name = "Southwest Breach Hull"
+	})
 "oiD" = (
 /obj/machinery/door/poddoor/blast/pyro{
 	density = 0;
@@ -36935,13 +36957,8 @@
 	name = "Extraction Nexus"
 	})
 "pAs" = (
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/machinery/door_control{
-	id = "armory";
-	name = "Armory Window";
-	pixel_x = -24
-	},
-/turf/simulated/floor/engine/caution/east,
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "pAx" = (
 /turf/simulated/floor/carpet/arcade,
@@ -37764,18 +37781,12 @@
 /turf/simulated/floor/yellowblack,
 /area/pasiphae/sys)
 "pUv" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
+/obj/random_item_spawner/armory_breaching_supplies,
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/decal/tile_edge/line/red{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/industrial,
-/area/station/maintenance/outer/sw{
-	name = "Southwest Breach Hull"
-	})
+/turf/simulated/floor/engine/caution/north,
+/area/station/ai_monitored/armory)
 "pUw" = (
 /obj/machinery/traymachine/morgue{
 	dir = 8
@@ -38392,18 +38403,10 @@
 	name = "Nuclear Control Room"
 	})
 "qih" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/engine/caution/westeast,
+/turf/simulated/floor/engine/caution,
 /area/station/ai_monitored/armory)
 "qip" = (
 /obj/item/rods/steel{
@@ -38420,9 +38423,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "qiW" = (
-/turf/simulated/floor/redblack/corner{
-	dir = 4
-	},
+/turf/simulated/floor/black,
 /area/station/hangar/sec)
 "qjx" = (
 /obj/machinery/light/incandescent/netural,
@@ -38456,15 +38457,7 @@
 /turf/simulated/shuttle/wall/flock,
 /area/space)
 "qkr" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "armory";
-	layer = 6;
-	name = "Armory Window";
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/engine/caution/westeast,
+/turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "qkS" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
@@ -39557,8 +39550,15 @@
 	name = "The Warrens"
 	})
 "qJo" = (
-/obj/random_item_spawner/armory_breaching_supplies,
-/turf/simulated/floor/engine/caution/north,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "armory";
+	layer = 6;
+	name = "Armory Window";
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)
 "qJu" = (
 /obj/table/reinforced/auto,
@@ -40847,18 +40847,9 @@
 	name = "The Warrens"
 	})
 "rrM" = (
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
-/obj/machinery/ai_status_display{
-	pixel_y = 28
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 6
-	},
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/obj/machinery/recharger/wall/sticky,
+/turf/simulated/floor/engine/caution/south,
 /area/station/ai_monitored/armory)
 "rse" = (
 /obj/landmark/shuttle_subwoofer,
@@ -47446,15 +47437,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ujg" = (
-/obj/item/device/multitool{
-	pixel_x = -23;
-	pixel_y = 7
-	},
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/redblack{
-	dir = 6
-	},
-/area/station/hangar/sec)
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/engine/caution/east,
+/area/station/ai_monitored/armory)
 "ujv" = (
 /obj/item/sheet/steel/fullstack{
 	pixel_x = -6
@@ -49626,10 +49611,9 @@
 	name = "Transception Array Control"
 	})
 "vlv" = (
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/hangar/sec)
+/obj/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/armory)
 "vlE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51252,8 +51236,9 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
 "vVS" = (
-/turf/simulated/floor/redblack/corner{
-	dir = 8
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/redblack{
+	dir = 4
 	},
 /area/station/hangar/sec)
 "vWb" = (
@@ -51805,11 +51790,13 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/arcade/dungeon)
 "wgR" = (
-/obj/machinery/manufacturer/hangar,
-/turf/simulated/floor/redblack{
-	dir = 5
+/obj/stool/bench/red/auto,
+/obj/landmark/start/job/security_officer,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/redblack/corner{
+	dir = 8
 	},
-/area/station/hangar/sec)
+/area/station/security/equipment)
 "whb" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -55001,8 +54988,15 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "xDM" = (
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor/engine/caution/west,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/access/armory,
+/turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)
 "xEe" = (
 /obj/landmark/spawner/artifact,
@@ -89737,7 +89731,7 @@ keZ
 cTM
 wpc
 gqe
-vuc
+iFJ
 hWc
 lHq
 poP
@@ -90035,9 +90029,9 @@ rma
 mKo
 fZD
 hlQ
+aso
 gDI
-gDI
-gDI
+wgR
 poW
 phq
 iGw
@@ -90337,12 +90331,12 @@ qxh
 mKo
 lmc
 kTS
-eby
-gqT
+ufa
+mKo
 nGg
 qov
 gzE
-iFJ
+uBF
 oZQ
 klx
 qiW
@@ -90640,11 +90634,11 @@ mKo
 laM
 lOj
 laM
-mKo
-laM
+qLh
+qLh
 cmO
-laM
-uBF
+qJo
+qLh
 ipb
 wpf
 dPx
@@ -90942,17 +90936,17 @@ nEm
 hXN
 nDC
 tYQ
-mKo
+qLh
 jDb
-qov
+qih
 mlg
-uBF
+qLh
 kcM
 vVS
-dPx
+aUA
 eQo
 uBF
-lHr
+oip
 wuT
 tWS
 jjE
@@ -91244,17 +91238,17 @@ atk
 nEE
 nnZ
 gUq
-mKo
+qLh
 mOd
-qov
-ufa
-uBF
-wgR
-vlv
-aUA
-ujg
-uBF
-pUv
+xDM
+mOd
+qLh
+qLh
+qLh
+qLh
+qLh
+qLh
+qLh
 uqC
 tWS
 jjE
@@ -91547,14 +91541,14 @@ uXO
 wdh
 bKB
 qLh
-qLh
-qih
+btg
+lXp
 qkr
-qLh
-qLh
-qLh
-qLh
-qLh
+ujg
+orC
+vfp
+ons
+hHe
 qLh
 qLh
 uqC
@@ -91850,13 +91844,13 @@ nDC
 vsc
 qLh
 rrM
-lXp
-oip
-pAs
-orC
-vfp
-ons
-hHe
+opv
+nxg
+nxg
+nxg
+nxg
+xvW
+huh
 qLh
 qLh
 uqC
@@ -92152,13 +92146,13 @@ okh
 gZU
 qLh
 iKJ
-opv
-nxg
-nxg
-nxg
-nxg
-xvW
-huh
+llS
+llS
+sAg
+llS
+llS
+tkp
+tzj
 qLh
 qLh
 qLh
@@ -92453,14 +92447,14 @@ glR
 dAa
 clb
 qLh
-btg
+fYI
 llS
 llS
-sAg
 llS
 llS
-tkp
-tzj
+llS
+gqT
+pUv
 rRY
 rhC
 rvx
@@ -92755,14 +92749,14 @@ rGp
 bZk
 fFG
 qLh
-fYI
-llS
-llS
-llS
-llS
-llS
-tkp
-qJo
+ovy
+wxF
+lBs
+rnQ
+pAs
+eby
+acA
+kiS
 qLh
 qLh
 qLh
@@ -93057,14 +93051,14 @@ mXi
 plN
 mXi
 qLh
-ovy
-wxF
-lBs
-rnQ
-xDM
-aso
-acA
-kiS
+qLh
+qLh
+qLh
+qLh
+qLh
+qLh
+qLh
+qLh
 qLh
 qLh
 acI
@@ -93359,15 +93353,15 @@ nzj
 lZo
 jsm
 qLh
-qLh
-qLh
-qLh
-qLh
-qLh
-qLh
-qLh
-qLh
-qLh
+vlv
+vlv
+vlv
+vlv
+vlv
+vlv
+vlv
+vlv
+vlv
 qLh
 wpI
 wGw
