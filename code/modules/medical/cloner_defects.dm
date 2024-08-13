@@ -489,33 +489,33 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 	on_add()
 		. = ..()
-		if (data["trait_id"] && trait && !src.owner.traitHolder?.hasTrait(trait))
+		if (data["trait_id"] && !src.owner.traitHolder?.hasTrait(data["trait_id"]))
 			src.owner.traitHolder.addTrait(data["trait_id"])
 		else if (src.owner.bioHolder.HasEffect(data["bioeffect_id"]))
 			src.owner.bioHolder.AddEffect(data["bioeffect_id"])
 			var/datum/bioEffect/effect = src.owner.bioHolder.GetEffect(data["bioeffect_id"]) // this suuuucks
 			effect.curable_by_mutadone = FALSE
 
-/datum/cloner_defect/trait/plasmalungs
+/datum/cloner_defect/biotrait/plasmalungs
 	name = "Plasma Lung Infection"
 	desc = "Subject's lungs have become infected and are now only capable of breathing plasma."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	weight = 50
 	effect_type_pool = list(/datum/trait/plasmalungs)
 
-/datum/cloner_defect/trait/blindness
+/datum/cloner_defect/biotrait/blindness
 	name = "Permanent Retina Damage"
 	desc = "Subject's eyes have become damaged and the subject is now blind."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	effect_type_pool = list(/datum/bioEffect/blind)
 
-/datum/cloner_defect/trait/deafness
+/datum/cloner_defect/biotrait/deafness
 	name = "Permanent Cochlea Damage"
 	desc = "Subject's ears have become damaged and the subject is now deaf."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	effect_type_pool = list(/datum/bioEffect/deaf)
 
-/datum/cloner_defect/trait/sleepy
+/datum/cloner_defect/biotrait/sleepy
 	name = "Spontaneous Sleep Deprivation"
 	desc = "Subject's sleep center was scrambled and as a result, subject randomly falls asleep."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
