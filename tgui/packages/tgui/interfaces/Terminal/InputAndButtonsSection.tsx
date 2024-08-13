@@ -20,7 +20,7 @@ export const InputAndButtonsSection = () => {
   const handleEnterClick = () => {
     // Still a tiny bit hacky but it's a manual click on the enter button which already caused me too much grief
     const domInput = document.querySelector(
-      '#terminalInput .Input__input',
+      ".terminalInput input[class^='_inner']",
     ) as HTMLInputElement;
     act('text', { value: domInput.value });
     domInput.value = '';
@@ -32,14 +32,13 @@ export const InputAndButtonsSection = () => {
       <Flex align="center">
         <Flex.Item grow>
           <Input
-            // @ts-ignore - TODO-REACT
-            id="terminalInput"
+            className="terminalInput"
             placeholder="Type Here"
             selfClear
             fluid
             mr="0.5rem"
             onEnter={handleInputEnter}
-            history
+            // TODO-REACT: re-implement up/down arrow `history` functionallity
           />
         </Flex.Item>
         <Flex.Item>
