@@ -270,7 +270,11 @@ TYPEINFO(/obj/item/gun/energy/antique)
 
 	canshoot(mob/user)
 		//configures the projectiles and makes sure it can actually shoot
-		if(src.determineProjectiles() < 1)
+		if(!src.myCoil || !src.myLens || !src.myCoil.material || !src.myLens.material)
+			user.show_text("It's just a display model!", "red")
+			return FALSE
+		if(src.panelOpen)
+			user.show_text("You need to secure the maintenance panel first!", "red")
 			return FALSE
 		. = ..()
 
