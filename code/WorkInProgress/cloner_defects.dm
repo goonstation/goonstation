@@ -1,5 +1,3 @@
-// WIP cloner defects
-
 /// Concept: cloning you gives you wacky defects, which can be genetic, sci-fi, or just dumb space magic. If you're scanned while you have some cloner defects,
 /// Those are also included in the scan, meaning after another cloning you'll be even more screwed up. However, curing defects before scanning (the curable ones, at least)
 /// will mean they don't carry over.
@@ -9,26 +7,14 @@
 /// Properties set in on_add() will be ran/applied on every further cloning, if not removed.
 ///
 /// Applied when leaving the pod (via signal jank) rather than when starting the clone (to prevent us instantly botching the clone)
-///
-///
-/// - This replaces the max health debuff, so the 'Quit Cloning Around' medal will need a new method. Maybe hitting a certain threshold of instability/defect score?
-
 
 // OVERALL TODO
 
-// --- CRUCIAL ---
-// Actually tie this in to cloner code so people get cloner defects
-// DONE - Implement random defect rolling (33% major 66% minor?)
-// DONE - NO REMOVAL FOR NOW - Figure out where/how on_remove() will be called/how the conditions will be checked. Ton of new signals?
-// DONE? - finish up cloner_defect_holder
-
 // --- MINOR ---
 // CURRENTLY UNNECESSARY Maybe add an on_life proc? Just using signals for now
-// DONE Figure out how to make defects persist between clones; also, should it take defects at time of clone or at time of scan?
 // PROBABLY NOT DOING THIS ACTUALLY - Add geometric dist for cloner defect add count with p=0.5
 
-// --- BACKLOG ---
-
+// Unsure if these TODOs are still relevant? - Ryou
 
 /mob/living/carbon/human/New()
 	. = ..()
@@ -175,7 +161,7 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 	proc/init()
 		return
 
-/// Some random brute/burn damage after cloning.
+/// Some random damage after cloning.
 /datum/cloner_defect/ouch
 	name = "Minor Flesh Abnormality"
 	desc = "Subject's skin was not reconstructed exactly as planned; some superficial damage has resulted."
@@ -186,24 +172,59 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 
 	on_add()
 		..()
-		var/brute = rand(src.data["damage_amount"])
-		owner.TakeDamage("All", brute + rand(-data["extra_variance"], data["extra_variance"]), data["damage_amount"] - brute + rand(-data["extra_variance"], data["extra_variance"]))
+		src.do_damage()
 
+	proc/do_damage()
+		var/damage = rand(src.data["damage_amount"])
+		owner.TakeDamage("All", damage + rand(-data["extra_variance"], data["extra_variance"]), data["damage_amount"] - damage + rand(-data["extra_variance"], data["extra_variance"]))
 
 /datum/cloner_defect/ouch/big
+	weight = 80
 	name = "Significant Flesh Abnormality"
 	desc = "Subject's skin condition has deviated from the expectation; significant damage has resulted."
-	severity = CLONER_DEFECT_SEVERITY_MAJOR
+
+	init()
+		src.data = list("extra_variance" = 10, "damage_amount" = 120)
+
+// Burn damage
+/datum/cloner_defect/ouch/burn
+	name = "Minor Burn Abnormality"
+	desc = "Subject's skin was not reconstructed exactly as planned; some superficial burns have appeared."
+
+	do_damage()
+		var/damage = rand(src.data["damage_amount"])
+		owner.TakeDamage("All", 0, damage + rand(-data["extra_variance"], data["extra_variance"]))
+
+/datum/cloner_defect/ouch/burn/big
+	weight = 80
+	name = "Significant Burn Abnormality"
+	desc = "Subject's skin condition has deviated from the expectation; significant burns have appeared."
+
+	init()
+		src.data = list("extra_variance" = 10, "damage_amount" = 120)
+
+// Tox damage
+/datum/cloner_defect/ouch/tox
+	name = "Minor Toxic Abnormality"
+	desc = "Subject's blood was not reconstructed exactly as planned; some superficial toxins are present."
+
+	do_damage()
+		var/damage = rand(src.data["damage_amount"])
+		owner.TakeDamage("All", 0, 0, damage + rand(-data["extra_variance"], data["extra_variance"]))
+
+/datum/cloner_defect/ouch/tox/big
+	weight = 80
+	name = "Significant Toxic Abnormality"
+	desc = "Subject's blood has deviated from the expectation; significant toxins are present."
 
 	init()
 		src.data = list("extra_variance" = 10, "damage_amount" = 120)
 
 /// Lose a random limb after cloning
 /datum/cloner_defect/missing_limb
-	weight = 80
 	name = "Failed Limb Reconstruction"
 	desc = "One of the subject's limbs was not properly reconstructed, leaving them without it."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
 		src.data = list("lost_limb_string" = pick("l_arm", "r_arm", "l_leg", "r_leg"))
@@ -229,7 +250,6 @@ ABSTRACT_TYPE(/datum/cloner_defect)
 /// Lose a random organ after cloning
 ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 /datum/cloner_defect/missing_organ
-	weight = 80
 	name = "Failed Organ Reconstruction"
 	desc = "One of the subject's organs was not properly reconstructed, leaving them without it."
 
@@ -238,36 +258,56 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 		qdel(src.owner.organHolder.organ_list[data["organ_string"]])
 
 /datum/cloner_defect/missing_organ/minor
-	severity = CLONER_DEFECT_SEVERITY_MINOR
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
-		src.data = list("organ_string" = pick("tail", "left_kidney", "right_kidney", "stomach", "intestines", "appendix"))
+		src.data = list("organ_string" = pick("tail", "left_kidney", "right_kidney", "stomach", "intestines", "appendix", "liver",))
 
 /datum/cloner_defect/missing_organ/major
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
-		src.data = list("organ_string" = pick("liver", "left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks. also removed heart
+		src.data = list("organ_string" = pick("left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks. also removed heart
+
+/datum/cloner_defect/missing_organ/heart
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	weight = 10
+
+	init()
+		src.data = list("organ_string" = pick("heart")) // this happens rarely, and allows some chance to still be saved
+
+proc/filter_muteraces(var/type)
+	var/datum/mutantrace/muteman = type
+	return !initial(muteman.dna_mutagen_banned)
+
+proc/filter_rare_muteraces(var/type)
+	var/datum/mutantrace/muteman = type
+	return initial(muteman.allow_rare_defect) && !initial(muteman.dna_mutagen_banned)
 
 /// Set to a random (safe) mutantrace after cloning
 /datum/cloner_defect/random_mutantrace
 	name = "Unexpected Genetic Development"
 	desc = "Subject's DNA has mutated into that of a different species."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	stackable = FALSE
 	var/orig_mutantrace_type = null //! Holds their original mutantrace type so we can change them back if the defect is removed
 
 	init()
 		src.data = list("new_mutantrace_type" = null)
-		while (!data["new_mutantrace_type"] || initial(data["new_mutantrace_type"]:dna_mutagen_banned))
-			data["new_mutantrace_type"] = pick(concrete_typesof(/datum/mutantrace))
+		data["new_mutantrace_type"] = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/filter_muteraces))
 
 	on_add()
 		. = ..()
 		src.orig_mutantrace_type = src.owner.mutantrace?.type
 		src.owner.set_mutantrace(data["new_mutantrace_type"])
 
-// TODO abstract status effect defects more
+	rare
+		severity = CLONER_DEFECT_SEVERITY_MAJOR
+		weight = 30
+
+		init()
+			src.data = list("new_mutantrace_type" = null)
+			data["new_mutantrace_type"] = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/filter_rare_muteraces))
 
 /// Max health decrease
 ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
@@ -371,6 +411,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 /// You become a puritan- no more clonings for you! (unless the docs are really solid)
 /datum/cloner_defect/puritan
+	weight = 30
 	name = "Rapid-Onset Puritanism"
 	desc = "Subject has developed an incompatibility to cloning methods."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
@@ -385,7 +426,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	desc = "Subject's legs have been grown where their arms are supposed to be. Location of their arms is unknown."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR // could be minor I guess. Takes a lot of surgery to fix though
 	stackable = FALSE
-	weight = 15
+	weight = 50
 
 	on_add()
 		. = ..()
@@ -430,14 +471,12 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 	// TODO if I add a way out- remove defect after SPAWN so the desc doesn't persist (falsely)
 
-
-/// Add some kind of 'clumsy' mutation/trait
-/datum/cloner_defect/clumsy
-	name = "Motor Control Impairment"
-	desc = "Subject has sustained nerve damage, resulting in some impairments to motor control."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
-	stackable = FALSE // can be TRUE if I make it so it can't give you the same thing multiple times.
-	var/static/list/effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
+/// Defects that essentially give you negative traits or bioeffects if you don't have them
+/// Personally I would prefer to do a filter check of all EFFECT_TYPE_DISABILITY, but there's some nasty ones
+/// Instead I opted to cherrypick a couple interesting ones for now - Ryou
+/datum/cloner_defect/biotrait
+	name = "Traitimus Maximus"
+	var/static/list/effect_type_pool = list() // Pool of effects to pick from (traits and bioeffects)
 
 	init()
 		src.data = list("trait_id" = null,
@@ -450,24 +489,54 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 
 	on_add()
 		. = ..()
-		if (data["trait_id"])
+		if (data["trait_id"] && trait && !src.owner.traitHolder?.hasTrait(trait))
 			src.owner.traitHolder.addTrait(data["trait_id"])
-		else
+		else if (src.owner.bioHolder.HasEffect(data["bioeffect_id"]))
 			src.owner.bioHolder.AddEffect(data["bioeffect_id"])
 			var/datum/bioEffect/effect = src.owner.bioHolder.GetEffect(data["bioeffect_id"]) // this suuuucks
 			effect.curable_by_mutadone = FALSE
 
+/datum/cloner_defect/trait/plasmalungs
+	name = "Plasma Lung Infection"
+	desc = "Subject's lungs have become infected and are now only capable of breathing plasma."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	weight = 50
+	effect_type_pool = list(/datum/trait/plasmalungs)
+
+/datum/cloner_defect/trait/blindness
+	name = "Permanent Retina Damage"
+	desc = "Subject's eyes have become damaged and the subject is now blind."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	effect_type_pool = list(/datum/bioEffect/blind)
+
+/datum/cloner_defect/trait/deafness
+	name = "Permanent Cochlea Damage"
+	desc = "Subject's ears have become damaged and the subject is now deaf."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	effect_type_pool = list(/datum/bioEffect/deaf)
+
+/datum/cloner_defect/trait/sleepy
+	name = "Spontaneous Sleep Deprivation"
+	desc = "Subject's sleep center was scrambled and as a result, subject randomly falls asleep."
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	effect_type_pool = list(/datum/bioEffect/narcolepsy)
 
 /// Sets seen name to 'unknown' (until repaired with synthflesh)
 /datum/cloner_defect/face_disfigured
 	name = "Facial Disfiguration"
 	desc = "Subject's face has been disfigured during the cloning process, rendering them unrecognizable."
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	var/orig_mutantrace_type = null //! Holds their original mutantrace type so we can change them back if the defect is removed
+
+	init()
+		src.data = list("new_mutantrace_type" = /datum/mutantrace/faceless) // This makes sense I think
 
 	on_add()
 		. = ..()
 		src.owner.disfigured = TRUE
 		src.owner.UpdateName()
+		src.orig_mutantrace_type = src.owner.mutantrace?.type
+		src.owner.set_mutantrace(data["new_mutantrace_type"])
 
 /// Sets heard voice to 'unknown' (until repaired with synthflesh)
 /datum/cloner_defect/voice_disfigured
@@ -478,6 +547,18 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		src.owner.vdisfigured = TRUE
+
+/// Basically makes you bald. Truly the worst of the defects.
+/datum/cloner_defect/baldness
+	name = "Hair Follicle Malfunction"
+	desc = "Subject's hair follicles are no longer functioning, making them bald."
+	severity = CLONER_DEFECT_SEVERITY_MINOR
+
+	on_add()
+		. = ..()
+		src.owner.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.owner.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.owner.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 
 /// Makes you fall over when you sprint too hard (pug thing)
 /datum/cloner_defect/sprint_flop

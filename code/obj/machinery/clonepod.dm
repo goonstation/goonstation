@@ -273,12 +273,10 @@ TYPEINFO(/obj/machinery/clonepod)
 			 * (Clone generation is the number of times a person has been cloned)
 			 */
 			var/generation = src.occupant.bioHolder.clone_generation
-			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
-				if (generation)
-					defects.add_random_cloner_defect()
-				else
-					// First cloning can't get major defects
-					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
+			var/defect_count = rand(max(2, round(generation * 0.75)) * (src.emagged ? 2 : 1), max(3, generation * 1.5 * (src.emagged ? 2 : 1)))
+
+			for (var/i in 1 to defect_count)
+				defects.add_random_cloner_defect()
 
 		src.mess = FALSE
 		var/is_puritan = FALSE
@@ -307,7 +305,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				// out of deep critical health before they turn into chunky salsa
 				// This should be really rare to have happen, but I want to leave it in
 				// just in case someone manages to pull off a miracle save
-				defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
+				defects.add_cloner_defect(CLONER_DEFECT_SEVERITY_MAJOR)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
@@ -320,7 +318,7 @@ TYPEINFO(/obj/machinery/clonepod)
 								P.limbs.sever(limb)
 			#endif
 
-		if (length(defects.active_cloner_defects) > 7)
+		if (length(defects.active_cloner_defects) > 10)
 			src.occupant.unlock_medal("Quit Cloning Around")
 
 		if (src.mess)
