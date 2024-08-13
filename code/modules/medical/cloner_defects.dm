@@ -476,7 +476,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 /// Instead I opted to cherrypick a couple interesting ones for now - Ryou
 /datum/cloner_defect/biotrait
 	name = "Traitimus Maximus"
-	var/static/list/effect_type_pool = list() // Pool of effects to pick from (traits and bioeffects)
+	var/list/effect_type_pool = list() // Pool of effects to pick from (traits and bioeffects)
 
 	init()
 		src.data = list("trait_id" = null,
