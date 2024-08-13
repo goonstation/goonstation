@@ -623,6 +623,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
 		icon_state = "combat_knife_gang"
 		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+		item_state = "knife"
 		setupProperties()
 			..()
 			setProperty("movespeed", -0.5)
