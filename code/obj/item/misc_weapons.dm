@@ -541,6 +541,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
+		setItemSpecial(/datum/item_special/jab)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
@@ -594,6 +595,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
+
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -610,6 +612,10 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	item_state = "knife"
+	New()
+		..()
+		setItemSpecial(/datum/item_special/simple)
 	gang
 		name = "familiar fighting knife"
 		force = 17
@@ -617,7 +623,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		desc = "A light but robust combat knife that allows you to move faster in fights. It looks really familiar..."
 		icon_state = "combat_knife_gang"
 		inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-		item_state = "knife"
 		setupProperties()
 			..()
 			setProperty("movespeed", -0.5)

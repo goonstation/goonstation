@@ -499,6 +499,54 @@
 			blood_slash(target,1,null, turn(user.dir,180), 3)
 		return msgs
 
+/datum/item_special/jab
+	cooldown = 2 SECONDS
+	staminaCost = 10
+	moveDelay = 5
+	moveDelayDuration = 4
+	damageMult = 0.8
+	overrideCrit = 0 // no crits, prevent insane bleeds
+	overrideStaminaDamage = 10
+
+	image = "simple"
+	name = "Jab"
+	desc = "Quickly jab in a direction. Lowers cooldown massively on a successful hit."
+
+	//cooldown on successful hit
+	//with an 80% damage mult this is ~2x bonus, but will be massively bumped down by even a little bit of armor
+	var/success_cooldown = 4 DECI SECONDS
+
+	onAdd()
+		if(master)
+			overrideStaminaDamage = master.stamina_damage * 0.4
+		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+			var/turf/turf = get_step(master, direction)
+
+			var/obj/itemspecialeffect/jab/effect = new /obj/itemspecialeffect/jab
+			effect.set_dir(direction)
+			effect.setup(turf)
+
+			var/hit = FALSE
+			for(var/atom/A in turf)
+				if(isTarget(A))
+					A.Attackby(master, user, params, 1)
+					hit = TRUE
+					last_use = world.time - (cooldown - success_cooldown)
+					break
+
+			afterUse(user)
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
+		return
+
+
 /datum/item_special/rangestab
 	cooldown = 0 //10
 	staminaCost = 5
@@ -1994,6 +2042,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = 0
 		pixel_y = 0
 
+	jab
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "quickjab"
+		pixel_x = 0
+		pixel_y = 0
+
+		New()
+			pixel_x = rand(-5,5)
+			pixel_y = rand(-5,5)
+			..()
 	barrier
 		name = "energy barrier"
 		icon = 'icons/effects/effects.dmi'
