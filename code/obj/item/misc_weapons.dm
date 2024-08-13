@@ -1979,6 +1979,8 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+		src.setItemSpecial(/datum/item_special/heavy_swing)
+
 
 //Machete for The Slasher
 /obj/item/slasher_machete

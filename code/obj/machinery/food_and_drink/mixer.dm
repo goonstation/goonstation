@@ -48,6 +48,8 @@ TYPEINFO(/obj/machinery/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/meatpaste(src)
 			src.recipes += new /datum/cookingrecipe/mixer/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/mixer/butters(src)
+			src.recipes += new /datum/cookingrecipe/mixer/soysauce(src)
+			src.recipes += new /datum/cookingrecipe/mixer/gravy(src)
 
 		src.blender_off = image(src.icon, "blender_off")
 		src.blender_powered = image(src.icon, "blender_powered")

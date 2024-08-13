@@ -32,6 +32,11 @@ var/datum/preMapLoad/preMapLoad = new
 #endif
 #include "code\__secret_public.dme"
 
+// Local development file handling
+#if fexists("code/WorkInProgress/__development.local.dm") && !defined(DISABLE_DEVFILE)
+#include "code\WorkInProgress\__development.local.dm"
+#endif
+
 // BEGIN_INCLUDE
 #include "code\area.dm"
 #include "code\atom.dm"
@@ -191,6 +196,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\_loctargeting.dm"
 #include "code\datums\components\_wearertargeting.dm"
 #include "code\datums\components\afterimage.dm"
+#include "code\datums\components\afterimage_image_based.dm"
 #include "code\datums\components\alpha_clothing.dm"
 #include "code\datums\components\analyzable.dm"
 #include "code\datums\components\angle_watcher.dm"
