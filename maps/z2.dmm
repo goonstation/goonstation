@@ -5769,6 +5769,14 @@
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
+"aCn" = (
+/obj/admin_plaque{
+	name = "Wander's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "aCo" = (
 /obj/fakeobject/airlock_broken/firelock{
 	dir = 4;
@@ -24525,6 +24533,30 @@
 	icon_state = "fred2"
 	},
 /area/crypt/sigma/mainhall)
+"bSZ" = (
+/obj/table/wood/auto/desk{
+	icon_state = "8"
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_y = 5;
+	pixel_x = -18
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/stamp/chap{
+	name = "Worn stamp"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 17;
+	pixel_x = -8
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "bTb" = (
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
@@ -49726,6 +49758,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"dDI" = (
+/obj/stool/chair/office/syndie,
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "dDK" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -60935,6 +60971,19 @@
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
+"jej" = (
+/obj/storage/crate/bin,
+/obj/item/paper/folded/ball{
+	pixel_x = -5
+	},
+/obj/item/paper/folded/ball{
+	pixel_y = -8
+	},
+/obj/item/paper/folded/ball{
+	pixel_x = 3
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "jey" = (
 /obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
@@ -63670,6 +63719,25 @@
 /obj/effects/precipitation/rain/dense/tile,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
+"lpt" = (
+/obj/table/wood/auto{
+	icon_state = "12"
+	},
+/obj/item/feather{
+	pixel_y = -2;
+	pixel_x = -8;
+	layer = 4
+	},
+/obj/item/paper/reinforcement_info,
+/obj/item/reagent_containers/glass/bottle/antirad{
+	pixel_y = 12;
+	pixel_x = -13
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 27
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "lpO" = (
 /obj/machinery/conveyor/WE{
 	id = "owlery_trash";
@@ -64308,6 +64376,25 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/crunch)
+"lTT" = (
+/obj/table/wood/auto/desk{
+	icon_state = "1"
+	},
+/obj/item/scripture/reddarkhb{
+	pixel_y = 6;
+	pixel_x = -3;
+	name = "Odd tome";
+	desc = "A book filled with numerous odd procedures involving paranormal entities."
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_y = 1;
+	pixel_x = 9;
+	icon_state = "HoSMug";
+	name = "Number one paperwork processor mug";
+	desc = "A mug given to the winner of the ticket processing tournament champion after 2456 rounds of intense bureaucratic procedure."
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "lUk" = (
 /obj/decal/icefloor,
 /mob/living/critter/spider/ice,
@@ -65296,6 +65383,14 @@
 	icon_state = "white"
 	},
 /area/sim/racing_track)
+"mRE" = (
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -12;
+	pixel_y = 16;
+	layer = 4
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "mSn" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -70037,6 +70132,29 @@
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
+"qDP" = (
+/obj/item/paper_booklet,
+/obj/item/paper_booklet{
+	pixel_y = -7;
+	pixel_x = -5
+	},
+/obj/item/paper_booklet{
+	pixel_y = -7;
+	pixel_x = -5
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 27
+	},
+/obj/table/wood/auto/desk{
+	icon_state = "6"
+	},
+/obj/item/decoration/photoframe/black{
+	pixel_y = 4;
+	pixel_x = -28;
+	desc = "Framed photo of some jolly bald man speaking with a blond haired woman on the verge of laughing."
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "qEK" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -74477,6 +74595,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"uyI" = (
+/obj/item/paper/folded/ball,
+/obj/item/paper/folded/ball,
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "uzz" = (
 /obj/table/nanotrasen/auto,
 /obj/item/gimmickbomb/grenyanda/inert{
@@ -74576,6 +74699,16 @@
 	explosion_resistance = 999999
 	},
 /area/sim/gunsim/arena)
+"uCF" = (
+/obj/filing_cabinet{
+	pixel_x = 12
+	},
+/obj/filing_cabinet{
+	pixel_x = -12
+	},
+/obj/storage/secure/filing_cabinet,
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "uCO" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
@@ -75101,6 +75234,21 @@
 	icon_state = "shore-45"
 	},
 /area/titlescreen)
+"vaq" = (
+/obj/item/paper_booklet{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/obj/item/paper_booklet,
+/obj/item/paper_booklet{
+	pixel_y = -7;
+	pixel_x = -5
+	},
+/obj/table/wood/auto{
+	icon_state = "3"
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "vaG" = (
 /obj/landmark/chess{
 	name = "b_pawn"
@@ -77636,6 +77784,18 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"wUb" = (
+/obj/machinery/weapon_stand/shotgun_rack{
+	pixel_y = 27
+	},
+/obj/decal/poster/wallsign/escape_sign{
+	pixel_y = 16
+	},
+/obj/fakeobject/falseladder{
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "wVh" = (
 /obj/grille/catwalk,
 /obj/machinery/camera{
@@ -77809,6 +77969,35 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"xdE" = (
+/obj/stool/chair/comfy/sleek{
+	icon_state = "arm-fpewL"
+	},
+/obj/item/paper/folded/ball{
+	pixel_x = 8;
+	pixel_y = 41
+	},
+/obj/storage/secure/closet/brig{
+	pixel_x = 4;
+	_health = 999999;
+	anchored = 1;
+	name = "Arms locker";
+	desc = "A card-locked safe for storage of firearms.";
+	req_access = list(37)
+	},
+/obj/item/clothing/under/misc/turds,
+/obj/item/clothing/shoes/swat/heavy,
+/obj/item/clothing/head/NTberet/commander,
+/obj/item/card/id/nt_specialist{
+	pixel_y = 7;
+	desc = "It seems by punctually completing paperwork someone has gained recognition as a paperwork specialist.";
+	name = "Paperwork Specialist's ID"
+	},
+/obj/machinery/light/incandescent/warm/very{
+	on = 1
+	},
+/turf/unsimulated/floor/carpet/red/decal,
+/area/centcom/offices/wander)
 "xem" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -78159,10 +78348,8 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/turf/unsimulated/floor/minitiles/white,
+/area/centcom/offices/wander)
 "xqY" = (
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
@@ -150828,9 +151015,9 @@ nte
 njo
 mmF
 wel
-dvW
-dvW
-dvW
+qDP
+vaq
+lTT
 wel
 aES
 aES
@@ -151130,9 +151317,9 @@ dYf
 jSc
 vbL
 wel
-lRO
-dvW
-dvW
+lpt
+dDI
+uCF
 wel
 aES
 aES
@@ -151432,9 +151619,9 @@ vEe
 wAT
 vbL
 wel
-dvW
-dvW
-dvW
+bSZ
+uyI
+xdE
 wel
 aES
 aES
@@ -151734,9 +151921,9 @@ iPz
 jSc
 vbL
 wel
-dvW
-dvW
-dvW
+wUb
+mRE
+jej
 wel
 aES
 aES
@@ -152036,7 +152223,7 @@ nrk
 wGj
 wel
 wel
-wel
+aCn
 xqJ
 wel
 wel
