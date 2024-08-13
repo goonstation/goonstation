@@ -1346,10 +1346,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			if (H.bioHolder)
 				boutput(M, SPAN_ALERT("[src] has accepted the DNA string. You are now the owner!"))
 				owner_prints = H.bioHolder.Uid
-				if (M.job == "Head of Security")
-					src.name = "HoS [H.real_name]'s Lawbringer"
-				else
-					src.name = "[H.real_name]'s Lawbringer"
+				src.name = "[H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
 	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
