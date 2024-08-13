@@ -19,33 +19,12 @@ export const Terminal = () => {
   const { data } = useBackend<TerminalData>();
   const { windowName, displayHTML } = data;
 
-  const handleTerminalOutputComponentDidUpdate = (lastProps, nextProps) => {
-    if (lastProps.displayHTML === nextProps.displayHTML) {
-      return;
-    }
-    scrollToBottom();
-  };
-  const scrollToBottom = () => {
-    const terminalOutputScroll = document.querySelector(
-      '#terminalOutput .Section__content',
-    );
-    if (!terminalOutputScroll) {
-      return;
-    }
-    terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
-  };
-
   return (
     <Window theme="retro-dark" title={windowName} width={380} height={350}>
       <Window.Content fontFamily="Consolas">
         <Stack vertical fill>
           <Stack.Item grow>
-            <TerminalOutputSection
-              displayHTML={displayHTML}
-              // @ts-ignore - TODO-REACT
-              onComponentDidMount={scrollToBottom}
-              onComponentDidUpdate={handleTerminalOutputComponentDidUpdate}
-            />
+            <TerminalOutputSection displayHTML={displayHTML} />
           </Stack.Item>
           <Stack.Item>
             <InputAndButtonsSection />
