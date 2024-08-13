@@ -506,9 +506,8 @@
 	moveDelayDuration = 4
 	damageMult = 0.8
 	overrideCrit = 0 // no crits, prevent insane bleeds
-	overrideStaminaDamage = 10
 
-	image = "simple"
+	image = "jab"
 	name = "Jab"
 	desc = "Quickly jab in a direction. Lowers cooldown massively on a successful hit."
 
