@@ -449,6 +449,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		SPAWN(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				if (res.status & BROKEN) continue
+				var/turf/T = get_turf(res)
+				if (ON_COOLDOWN(T, "resonator_anti_stack", 1 DECI SECOND)) continue
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?

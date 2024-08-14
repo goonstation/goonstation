@@ -2917,7 +2917,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "\improper Gwydion tranquilizer pistol"
+	name = "\improper Ceridwen tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"

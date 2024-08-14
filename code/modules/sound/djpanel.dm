@@ -69,7 +69,7 @@ client/proc/open_dj_panel()
 	switch(action)
 
 		if("set-file")
-			var/foundsound = input(usr, "Upload a file:", "File Uploader - No 50MB songs!", null) as null|sound
+			var/foundsound = input(usr, "Upload a file:", "File Uploader - Do not use for full songs, use ]remotemusic in discord instead!!!", null) as null|sound
 			loaded_sound = foundsound
 			. = TRUE
 
