@@ -84,8 +84,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/jerk = FALSE
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
-	/// Should clone defects be able to roll this mutant race?
-	var/allow_rare_defect = FALSE
 	/// Should a genetics terminal be able to remove this mutantrace?
 	var/genetics_removable = TRUE
 	/// Should they be able to walk on shards barefoot
@@ -693,7 +691,6 @@ TYPEINFO(/datum/mutantrace/blob)
 	voice_override = "bloop"
 	firevuln = 1.5
 	typevulns = list("cut" = 1.25, "stab" = 0.5, "blunt" = 0.75)
-	allow_rare_defect = TRUE
 
 	say_verb()
 		return pick("burbles", "gurgles", "blurbs", "gloops")
@@ -707,7 +704,6 @@ TYPEINFO(/datum/mutantrace/flubber)
 	uses_human_clothes = 0
 	head_offset = -7
 	voice_override = "bloop"
-	allow_rare_defect = TRUE
 
 	movement_modifier = /datum/movement_modifier/flubber
 
@@ -1712,7 +1708,6 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/seamonkey/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/seamonkey/left
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey/seamonkey)
-	allow_rare_defect = TRUE
 
 /datum/mutantrace/martian
 	name = "martian"
@@ -1723,7 +1718,6 @@ TYPEINFO(/datum/mutantrace/seamonkey)
 	human_compatible = 0
 	uses_human_clothes = 0
 	override_language = "martian"
-	allow_rare_defect = TRUE
 
 /datum/mutantrace/stupidbaby
 	name = "stupid alien baby"
@@ -1805,7 +1799,6 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 	name = "cyclops"
 	icon_state = "cyclops"
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | WEARS_UNDERPANTS | USES_STATIC_ICON)
-	allow_rare_defect = TRUE
 
 TYPEINFO(/datum/mutantrace/roach)
 	icon = 'icons/mob/roach.dmi'
@@ -1929,7 +1922,6 @@ TYPEINFO(/datum/mutantrace/amphibian)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/amphibian/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	blood_color = "#22EE99"
-	allow_rare_defect = TRUE
 
 	say_verb()
 		return "croaks"
@@ -2459,7 +2451,6 @@ TYPEINFO(/datum/mutantrace/pug)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/chicken/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_PARTIAL_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
-	allow_rare_defect = TRUE
 
 	emote(var/act, var/voluntary)
 		switch(act)

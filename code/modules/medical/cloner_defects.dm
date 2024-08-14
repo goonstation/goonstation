@@ -258,16 +258,16 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 		qdel(src.owner.organHolder.organ_list[data["organ_string"]])
 
 /datum/cloner_defect/missing_organ/minor
-	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	severity = CLONER_DEFECT_SEVERITY_MINOR
 
 	init()
-		src.data = list("organ_string" = pick("tail", "left_kidney", "right_kidney", "stomach", "intestines", "appendix", "liver",))
+		src.data = list("organ_string" = pick("tail", "left_kidney", "right_kidney", "stomach", "intestines", "appendix"))
 
 /datum/cloner_defect/missing_organ/major
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 
 	init()
-		src.data = list("organ_string" = pick("left_eye", "right_eye", "left_lung", "right_lung")) // no skull, head, brain; instant death sucks. also removed heart
+		src.data = list("organ_string" = pick("left_eye", "right_eye", "left_lung", "right_lung", "liver")) // no skull, head, brain; instant death sucks. also removed heart
 
 /datum/cloner_defect/missing_organ/heart
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
@@ -279,10 +279,6 @@ ABSTRACT_TYPE(/datum/cloner_defect/missing_organ)
 proc/filter_muteraces(var/type)
 	var/datum/mutantrace/muteman = type
 	return !initial(muteman.dna_mutagen_banned)
-
-proc/filter_rare_muteraces(var/type)
-	var/datum/mutantrace/muteman = type
-	return initial(muteman.allow_rare_defect) && !initial(muteman.dna_mutagen_banned)
 
 /// Set to a random (safe) mutantrace after cloning
 /datum/cloner_defect/random_mutantrace
@@ -300,14 +296,6 @@ proc/filter_rare_muteraces(var/type)
 		. = ..()
 		src.orig_mutantrace_type = src.owner.mutantrace?.type
 		src.owner.set_mutantrace(data["new_mutantrace_type"])
-
-	rare
-		severity = CLONER_DEFECT_SEVERITY_MAJOR
-		weight = 30
-
-		init()
-			src.data = list("new_mutantrace_type" = null)
-			data["new_mutantrace_type"] = pick(filtered_concrete_typesof(/datum/mutantrace, /proc/filter_rare_muteraces))
 
 /// Max health decrease
 ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
