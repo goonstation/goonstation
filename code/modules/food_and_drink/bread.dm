@@ -120,7 +120,7 @@
 			initial_reagents = list("bread"=30,"cornsyrup"=30,"honey"=60)
 			slice_product = /obj/item/reagent_containers/food/snacks/breadslice/corn/sweet/honey
 
-//#ifdef XMAS
+#ifdef XMAS
 
 /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	name = "fruitcake"
@@ -139,7 +139,7 @@
 		eater.show_text("It's so hard it breaks one of your teeth by the end AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
 
-//#endif
+#endif
 
 /obj/item/reagent_containers/food/snacks/breadloaf/toast
 	name = "loaf of toast"
@@ -249,7 +249,7 @@
 		real_name = "french bread"
 		food_color = "#C78000"
 
-//#ifdef XMAS
+#ifdef XMAS
 
 	fruit_cake
 		name = "slice of fruit cake"
@@ -267,7 +267,7 @@
 			eater.show_text("It's so hard it chips one of your teeth AND it tastes revolting! Why would you cut six slices of this?","red")
 			random_brute_damage(eater, 1)
 
-//#endif
+#endif
 
 	New()
 		..()
