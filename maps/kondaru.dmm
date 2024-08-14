@@ -6500,8 +6500,7 @@
 /area/station/maintenance/northeast)
 "aym" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/arcade,

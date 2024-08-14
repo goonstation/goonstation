@@ -34020,9 +34020,7 @@
 /obj/machinery/light_switch/west{
 	pixel_y = 6
 	},
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /obj/blind_switch/area/west{
 	pixel_y = -6
 	},

@@ -57287,9 +57287,7 @@
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
 "rYO" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /obj/window/reinforced{
 	dir = 2
 	},

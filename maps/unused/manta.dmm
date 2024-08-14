@@ -35706,8 +35706,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "isu" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /obj/table/wood/auto,

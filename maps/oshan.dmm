@@ -40642,8 +40642,7 @@
 /area/station/security/processing)
 "oyv" = (
 /obj/table/wood/round/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,

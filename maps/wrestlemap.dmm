@@ -9323,9 +9323,7 @@
 /obj/window/reinforced/west{
 	dir = 2
 	},
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "edG" = (

@@ -33729,8 +33729,7 @@
 /area/station/engine/core/nuclear)
 "ocC" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 6
 	},
 /obj/machinery/power/apc/autoname_north,
