@@ -268,10 +268,11 @@ TYPEINFO(/obj/machinery/clonepod)
 		defects.apply_to_on_move(src.occupant)
 
 		if (!src.clonehack && !src.perfect_clone) // syndies and pod wars people get good clones
-			/* Apply clone defects, number picked from a uniform distribution on
-			 * [floor(clone_generation/2), clone generation], or [floor(clone_generation), clone generation * 2] if emagged.
-			 * (Clone generation is the number of times a person has been cloned)
-			 */
+		/* Apply clone defects, number picked from a uniform distribution on
+		* [max(2, round(clone_generation * 0.75)), clone generation * 1.5], or [max(2, round(clone_generation * 1.5)), clone generation * 3] if emagged.
+		* This means there's a minimum of 2, and a bias to skew towards 2-3 defects, doubled for emag.
+		*/
+
 			var/generation = src.occupant.bioHolder.clone_generation
 			var/defect_count = rand(max(2, round(generation * 0.75)) * (src.emagged ? 2 : 1), max(3, generation * 1.5 * (src.emagged ? 2 : 1)))
 
