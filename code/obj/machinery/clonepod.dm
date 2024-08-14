@@ -274,7 +274,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		*/
 
 			var/generation = src.occupant.bioHolder.clone_generation
-			var/defect_count = rand(max(2, round(generation * 0.75)) * (src.emagged ? 2 : 1), max(3, generation * 1.5 * (src.emagged ? 2 : 1)))
+			var/defect_count = randfloat(max(2, round(generation * 0.75)) * (src.emagged ? 2 : 1), max(3, generation * 1.5 * (src.emagged ? 2 : 1)))
 
 			for (var/i in 1 to defect_count)
 				defects.add_random_cloner_defect()
