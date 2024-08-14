@@ -53,15 +53,6 @@
 	dir = 1
 	},
 /area/mining/hangar)
-"aF" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
-	},
-/obj/cable/yellow{
-	icon_state = "1-2"
-	},
-/turf/space,
-/area/space)
 "aK" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -301,6 +292,29 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
+"cQ" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"cR" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "cT" = (
 /obj/effects/background_objects/star_blue{
 	pixel_x = -64;
@@ -323,14 +337,21 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
-"dv" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
+"dC" = (
+/obj/grille/catwalk{
+	dir = 4
 	},
-/area/space)
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
 "dF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/quarters)
@@ -381,6 +402,14 @@
 "ep" = (
 /turf/space/asteroid,
 /area/noGenerate)
+"ew" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/grime,
+/area/space)
 "ex" = (
 /obj/lattice{
 	dir = 6;
@@ -398,6 +427,16 @@
 /area/noGenerate)
 "eG" = (
 /obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"eQ" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -467,6 +506,16 @@
 	},
 /turf/space,
 /area/noGenerate)
+"fR" = (
+/turf/space,
+/area/mining/magnet)
+"fY" = (
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
+/turf/space,
+/area/mining/magnet)
 "gb" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
@@ -526,6 +575,25 @@
 	name = "organic floor"
 	},
 /area/evilreaver/bridge)
+"gU" = (
+/obj/machinery/magnet_chassis{
+	dir = 1
+	},
+/obj/machinery/mining_magnet{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"gV" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "gW" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -545,6 +613,38 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"hp" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 5;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/mining/magnet)
 "hv" = (
 /obj/lattice,
 /obj/fakeobject/lighttube_broken{
@@ -567,6 +667,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
+"hI" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/mining/magnet)
 "hK" = (
 /obj/computerframe{
 	anchored = 1;
@@ -621,6 +736,43 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
+"iN" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 10;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/mining/magnet)
+"iW" = (
+/obj/machinery/ore_cloud_storage_container,
+/turf/simulated/floor/grime,
+/area/space)
 "jn" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -631,9 +783,19 @@
 /area/evilreaver/bridge)
 "jp" = (
 /obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar/small_backup4,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
+/area/space)
+"ju" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/simulated/floor/shuttlebay,
 /area/space)
 "jS" = (
 /obj/lattice,
@@ -694,8 +856,37 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"kS" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
+"kU" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "ln" = (
 /obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/space)
+"lo" = (
+/obj/item/storage/toilet{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -718,6 +909,25 @@
 	name = "organic floor"
 	},
 /area/noGenerate)
+"lE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"lG" = (
+/obj/grille/catwalk,
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "lM" = (
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib7"
@@ -768,6 +978,15 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
+"mj" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "ms" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -858,6 +1077,17 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/mining/hangar)
+"nv" = (
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
 "nz" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -865,6 +1095,12 @@
 "nA" = (
 /turf/simulated/floor,
 /area/mining/quarters)
+"nE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "nG" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
@@ -956,6 +1192,12 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
+"oh" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "oi" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
@@ -1586,6 +1828,9 @@
 /area/evilreaver/storage/tools)
 "rv" = (
 /obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "rw" = (
@@ -1850,6 +2095,17 @@
 	name = "reinforced plating"
 	},
 /area/mining/refinery)
+"sT" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "sU" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/airless,
@@ -1866,6 +2122,16 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
+"sY" = (
+/obj/grille/catwalk,
+/obj/machinery/computer/magnet{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "td" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -2246,21 +2512,6 @@
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
-"vE" = (
-/obj/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/cable/yellow{
-	icon_state = "2-4"
-	},
-/obj/cable/yellow{
-	icon_state = "1-4"
-	},
-/obj/cable/yellow{
-	icon_state = "1-8"
-	},
-/turf/space,
-/area/space)
 "vH" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -2815,6 +3066,13 @@
 "yB" = (
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
+"yD" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "yE" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -3124,6 +3382,10 @@
 /obj/storage/closet/coffin,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
+"Ay" = (
+/obj/lattice,
+/turf/space,
+/area/space)
 "Az" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Shuttle Dock"
@@ -3156,6 +3418,23 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"AE" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "AI" = (
 /obj/machinery/power/smes{
 	charge = 200000;
@@ -3222,6 +3501,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/noGenerate)
+"AZ" = (
+/obj/grille/catwalk,
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "Ba" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/robot_debris{
@@ -3235,6 +3523,16 @@
 /obj/item/clothing/under/gimmick/mario,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
+"Bc" = (
+/obj/grille/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
 "Bd" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor,
@@ -3511,6 +3809,12 @@
 	icon_state = "carpetNE"
 	},
 /area/tech_outpost)
+"CD" = (
+/obj/machinery/door/unpowered/wood/stall{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "CJ" = (
 /turf/simulated/floor/grime,
 /area/tech_outpost)
@@ -3711,6 +4015,12 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
+"El" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "En" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -3754,6 +4064,17 @@
 "Ey" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
+"EF" = (
+/obj/grille/catwalk,
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/tracker/small_backup4,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "EG" = (
 /obj/fakeobject/pipe{
 	dir = 4;
@@ -3810,15 +4131,6 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
-"EP" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/space,
-/area/space)
 "ER" = (
 /obj/machinery/door/poddoor{
 	dir = 4;
@@ -3852,6 +4164,21 @@
 "EU" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/dock)
+"EW" = (
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/mining/magnet)
 "EX" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -3873,21 +4200,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/space)
-"Fd" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/space,
-/area/space)
 "Fe" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -3895,6 +4207,16 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
+"Ff" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/space)
 "Fg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/yellow{
@@ -3952,6 +4274,13 @@
 /obj/storage/crate,
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
+"Fw" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "Fx" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/grime,
@@ -4025,6 +4354,21 @@
 	icon_state = "catwalk_cross"
 	},
 /area/mining/mainasteroid)
+"FS" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "FT" = (
 /obj/decal/cleanable/rust,
 /obj/decal/cleanable/fungus,
@@ -4101,6 +4445,10 @@
 	dir = 8
 	},
 /area/mining/miningoutpost)
+"Gl" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "Gq" = (
 /obj/machinery/computer/transit_shuttle/mining{
 	dir = 4
@@ -4299,6 +4647,10 @@
 "Hx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/magnet_control)
+"Hy" = (
+/obj/storage/secure/closet/engineering/mining,
+/turf/simulated/floor/grime,
+/area/space)
 "HA" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 4
@@ -4420,6 +4772,18 @@
 	},
 /turf/simulated/floor,
 /area/mining/manufacturing)
+"Ik" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "Il" = (
 /obj/machinery/power/terminal,
 /obj/cable/yellow{
@@ -4471,6 +4835,39 @@
 /obj/random_item_spawner/snacks/one_or_zero,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
+"Iw" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 9;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/mining/magnet)
 "Ix" = (
 /obj/rail{
 	dir = 8;
@@ -4665,19 +5062,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/mining/refinery)
-"JE" = (
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/turf/space,
-/area/space)
 "JG" = (
 /obj/rack,
 /obj/item/mining_tool/powered/pickaxe,
@@ -4712,6 +5096,12 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
+"JQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "JR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -5295,14 +5685,6 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
-"Ng" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "Nk" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -5412,6 +5794,12 @@
 	dir = 9
 	},
 /area/mining/mainasteroid)
+"NV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "NX" = (
 /obj/machinery/light/small/sticky{
 	dir = 8
@@ -5509,31 +5897,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/noGenerate)
-"Oy" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-10"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-5"
-	},
-/obj/cable{
-	icon_state = "0-6"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-9"
-	},
-/turf/space,
-/area/space)
 "OA" = (
 /obj/item/cable_coil/cut,
 /turf/simulated/floor/plating/damaged3,
@@ -5580,6 +5943,19 @@
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"OO" = (
+/obj/grille/catwalk,
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/solar_control/small_backup4{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
 "OR" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/storage/box/mousetraps,
@@ -5623,6 +5999,38 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
+"Pq" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 6;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/mining/magnet)
 "Pu" = (
 /turf/simulated/floor/damaged2,
 /area/mining/magnet_control)
@@ -5842,6 +6250,10 @@
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"QZ" = (
+/obj/warp_beacon/miningoutpost,
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "Ra" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/refinery)
@@ -5861,6 +6273,17 @@
 /obj/item/reagent_containers/food/snacks/breakfast,
 /turf/simulated/floor/caution/west,
 /area/mining/quarters)
+"Rg" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "Rh" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -6480,6 +6903,22 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
+"UY" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "UZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6641,6 +7080,16 @@
 "Wc" = (
 /turf/space,
 /area/shuttle/mining/outpost)
+"Wd" = (
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/solar/small_backup4,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "Wg" = (
 /obj/machinery/power/smes{
 	charge = 200000;
@@ -6728,6 +7177,17 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/mining/hangar)
+"WH" = (
+/obj/grille/catwalk,
+/obj/landmark/magnet_shield,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/mining/magnet)
 "WI" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -7190,10 +7650,20 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/mining/quarters)
+"Zz" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "ZA" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/yellow,
 /area/tech_outpost)
+"ZB" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/grime,
+/area/space)
 "ZD" = (
 /turf/simulated/floor/damaged2,
 /area/mining/quarters)
@@ -12930,8 +13400,8 @@ aa
 aa
 aO
 yX
-KW
-yL
+OO
+EF
 yX
 Bk
 aa
@@ -13232,8 +13702,8 @@ aa
 aa
 Ks
 aa
-eG
-tK
+kU
+Ik
 aa
 Ks
 aa
@@ -13528,20 +13998,20 @@ aa
 aa
 aa
 aa
-KW
-Ho
-Ho
-Ho
-yL
+kS
+Rg
+Rg
+Rg
+Wd
 aa
-eG
-tK
+eQ
+mj
 aa
-KW
-Ho
-Ho
-Ho
-yL
+kS
+Rg
+Rg
+Rg
+Wd
 aa
 aa
 aa
@@ -13830,20 +14300,20 @@ aa
 aa
 aa
 aa
-eG
-bV
-bV
-bV
-bV
+cR
+AE
+AE
+AE
+AE
 rv
-eG
-tK
+UY
+FS
 rv
-bV
-bV
-bV
-bV
-tK
+AE
+AE
+AE
+AE
+lG
 aa
 aa
 aa
@@ -14132,19 +14602,19 @@ aa
 aa
 aa
 aa
-aL
-ci
-ci
-ci
+Ff
+sT
+sT
+sT
 jp
 aa
-eG
-tK
+eQ
+mj
 aa
-aL
-ci
-ci
-ci
+Ff
+sT
+sT
+sT
 jp
 aa
 aa
@@ -14440,8 +14910,8 @@ aa
 aa
 Ks
 aa
-eG
-tK
+eQ
+mj
 aa
 Ks
 aa
@@ -14736,20 +15206,20 @@ aa
 aa
 aa
 aa
-KW
-Ho
-Ho
-Ho
-yL
+kS
+Rg
+Rg
+Rg
+Wd
 aa
-eG
-tK
+eQ
+mj
 aa
-KW
-Ho
-Ho
-Ho
-yL
+kS
+Rg
+Rg
+Rg
+Wd
 aa
 aa
 aa
@@ -15038,20 +15508,20 @@ aa
 aa
 aa
 aa
-Ng
-dv
-dv
-dv
-dv
+cR
+AE
+AE
+AE
+AE
 rv
-eG
-tK
+UY
+FS
 rv
-bV
-bV
-bV
-bV
-tK
+AE
+AE
+AE
+AE
+lG
 aa
 aa
 aa
@@ -15340,19 +15810,19 @@ aa
 aa
 aa
 aa
-aL
-ci
-ci
-ci
+Ff
+sT
+sT
+sT
 jp
 aa
-eG
-tK
+eQ
+mj
 aa
-aL
-ci
-ci
-ci
+Ff
+sT
+sT
+sT
 jp
 aa
 aa
@@ -15648,8 +16118,8 @@ aa
 aa
 Ks
 aa
-eG
-tK
+eQ
+mj
 aa
 Ks
 aa
@@ -16244,8 +16714,8 @@ aa
 aa
 aa
 aa
-Oy
-JE
+aa
+aa
 aa
 gw
 gw
@@ -16546,8 +17016,8 @@ aa
 aa
 aa
 aa
-EP
-aF
+aa
+aa
 aa
 gw
 Ct
@@ -16848,8 +17318,8 @@ aa
 aa
 aa
 aa
-Fd
-vE
+aa
+aa
 aa
 gw
 Ct
@@ -17166,20 +17636,20 @@ Yu
 Ct
 gw
 Yi
-Yi
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+yD
+yX
+yX
+yX
+yX
+yX
+yX
+yX
+yX
+yX
+yX
+yX
+yX
 gw
 Sl
 Sl
@@ -17469,7 +17939,7 @@ Ct
 gw
 Yi
 Yi
-Yi
+gw
 aa
 aa
 aa
@@ -20801,7 +21271,7 @@ Yi
 Yi
 Yi
 Yi
-Yi
+aa
 aa
 aa
 gw
@@ -21408,10 +21878,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 Wc
@@ -21710,10 +22180,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 Wc
@@ -22012,10 +22482,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 Wc
@@ -22314,10 +22784,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 Wc
@@ -22616,10 +23086,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 Wc
@@ -22914,14 +23384,14 @@ Pw
 Pw
 Pw
 WQ
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+yX
+yX
+yX
+yX
+Ay
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -23220,10 +23690,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -23522,10 +23992,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -23824,10 +24294,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -24126,10 +24596,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -24368,27 +24838,27 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-Yi
+Iw
+WH
+WH
+WH
+WH
+WH
+nv
+nv
+WH
+WH
+WH
+WH
+WH
+WH
+iN
+yX
+yX
+yX
+yX
+yX
+gw
 Yi
 Yi
 Yi
@@ -24428,10 +24898,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -24670,21 +25140,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
 aa
@@ -24730,10 +25200,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -24972,21 +25442,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
 aa
@@ -25028,14 +25498,14 @@ IK
 IK
 IK
 WQ
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+yX
+yX
+yX
+yX
+Ay
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -25274,21 +25744,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
 aa
@@ -25334,10 +25804,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+aO
+eG
+tK
+Bk
 aa
 aa
 aa
@@ -25576,25 +26046,25 @@ aa
 aa
 aa
 aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+sY
+AZ
 aa
 Yi
 Yi
@@ -25636,10 +26106,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+ju
+NV
+NV
+lE
 aa
 aa
 aa
@@ -25878,25 +26348,25 @@ aa
 aa
 aa
 aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bV
+tK
 gw
 gw
 gw
@@ -25928,7 +26398,9 @@ Yi
 Yi
 Yi
 Yi
-Yi
+aa
+aa
+Ks
 aa
 aa
 aa
@@ -25936,12 +26408,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+nE
+gK
+QZ
+Gl
 aa
 aa
 aa
@@ -26180,25 +26650,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
+Ho
+Ho
+bV
+tK
 Sl
 Ct
 Ct
@@ -26213,10 +26683,10 @@ Yi
 Yi
 Yi
 Yi
-Yi
-Yi
-Yi
-Yi
+gw
+gw
+gw
+gw
 gw
 Ct
 Ct
@@ -26232,6 +26702,7 @@ Yi
 aa
 aa
 aa
+Ks
 aa
 aa
 aa
@@ -26239,11 +26710,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+nE
+gK
+gK
+Gl
 aa
 aa
 aa
@@ -26482,25 +26952,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fY
+fR
+fR
+fR
+fR
+fR
+fR
+hI
+gU
+gw
+eG
+tK
 Sl
 Ct
 Ct
@@ -26515,10 +26985,10 @@ Yi
 Yi
 Yi
 Yi
-Yi
-Yi
-Yi
-Yi
+gw
+ew
+gw
+lo
 gw
 Ct
 Ct
@@ -26534,6 +27004,7 @@ Yi
 aa
 aa
 aa
+Ks
 aa
 aa
 aa
@@ -26541,11 +27012,10 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
+El
+Zz
+Zz
+JQ
 aa
 aa
 aa
@@ -26784,31 +27254,31 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
+El
+gw
+eG
+tK
 Sl
 Ct
 Ct
 Ct
 Ct
-Ct
+iW
 Ct
 Ct
 gw
@@ -26817,10 +27287,10 @@ Yi
 Yi
 Yi
 Yi
-Yi
-Yi
-Yi
-Yi
+gw
+CD
+gw
+CD
 gw
 Ct
 Ct
@@ -27086,28 +27556,28 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
+ci
+ci
+bV
+tK
 Sl
-Ct
-Ct
+Hy
+Hy
 Ct
 Ct
 Ct
@@ -27119,10 +27589,10 @@ Yi
 Yi
 Yi
 Yi
-Yi
-Yi
-Yi
-Yi
+gw
+Ct
+Ct
+Ct
 gw
 Ct
 Ct
@@ -27388,25 +27858,25 @@ aa
 aa
 aa
 aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+eG
+tK
 gw
 gw
 gw
@@ -27421,10 +27891,10 @@ Yi
 Yi
 Yi
 Yi
-Yi
-Yi
-Yi
-Yi
+gw
+ZB
+Ct
+Fw
 gw
 Ct
 Ct
@@ -27690,25 +28160,25 @@ aa
 aa
 aa
 aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+eG
+bV
 dT
 Ct
 Ct
@@ -27725,7 +28195,7 @@ Yi
 Yi
 gw
 gw
-gw
+oh
 gw
 gw
 ln
@@ -27992,25 +28462,25 @@ aa
 aa
 aa
 aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aL
+ci
 dT
 Ct
 Ct
@@ -28294,21 +28764,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dC
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+fR
+hI
 aa
 aa
 aa
@@ -28596,29 +29066,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+hp
+Bc
+Bc
+Bc
+Bc
+EW
+Bc
+Bc
+Bc
+Bc
+Bc
+Bc
+EW
+Bc
+Pq
+yX
+yX
+yX
+yX
+gV
+gV
+gV
+cQ
 aa
 aa
 Yi
