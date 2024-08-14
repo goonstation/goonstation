@@ -41,8 +41,7 @@ interface SpellItemProps extends EnvironmentProps {
 
 // needed to standardize a button within the `title` prop of a `Section` component
 const titleButtonResetProps = {
-  fontSize: 1,
-  style: { fontWeight: 'normal' },
+  style: { fontSize: 1, fontWeight: 'normal' },
 };
 
 export const SpellItem = (props: SpellItemProps) => {

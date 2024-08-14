@@ -19,7 +19,7 @@ export const VendorCashTable = (props: VendorCashTableProps) => {
   const { cardname, onCardClick, bankMoney, cash, onCashClick } = props;
 
   return (
-    <Table font-size="9pt" style={{ maxWidth: '100%', tableLayout: 'fixed' }}>
+    <Table style={{ fontSize: '9pt', maxWidth: '100%', tableLayout: 'fixed' }}>
       <Table.Row>
         <Table.Cell bold>
           {cardname && (

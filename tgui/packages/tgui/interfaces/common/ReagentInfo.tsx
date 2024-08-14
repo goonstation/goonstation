@@ -268,7 +268,7 @@ export const ReagentList = React.memo(
                         : 'circle'
                     }
                     style={{
-                      textShadow: '0 0 3px #000;',
+                      textShadow: '0 0 3px #000',
                     }}
                     color={`rgb(${reagent.colorR}, ${reagent.colorG}, ${reagent.colorB})`}
                   />
@@ -285,7 +285,7 @@ export const ReagentList = React.memo(
                 pr={0.9}
                 name="circle-o"
                 style={{
-                  textShadow: '0 0 3px #000;',
+                  textShadow: '0 0 3px #000',
                 }}
               />
               Empty

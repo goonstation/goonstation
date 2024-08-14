@@ -62,8 +62,8 @@ export const Vendors = () => {
   const getCost = (a) => (a.cost && requiresMoney ? `${a.cost}⪽` : 'Vend');
 
   return (
-    <Window title={windowName} width={500} height={600} font-size="10pt">
-      <Window.Content>
+    <Window title={windowName} width={500} height={600}>
+      <Window.Content style={{ fontSize: '10pt' }}>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
           {wiresOpen && (
             <Stack.Item>
@@ -157,7 +157,7 @@ export const Vendors = () => {
                       key={product.name}
                       justify="space-between"
                       align="stretch"
-                      style={{ 'border-bottom': '1px #555 solid' }}
+                      style={{ borderBottom: '1px #555 solid' }}
                     >
                       <Flex.Item direction="row">
                         {product.img && (
@@ -176,8 +176,8 @@ export const Vendors = () => {
                         grow
                         style={{
                           display: 'flex',
-                          'justify-content': 'center',
-                          'flex-direction': 'column',
+                          justifyContent: 'center',
+                          flexDirection: 'column',
                         }}
                       >
                         <Box>
@@ -204,10 +204,10 @@ export const Vendors = () => {
                         bold
                         direction="row"
                         style={{
-                          'margin-left': '5px',
+                          marginLeft: '5px',
                           display: 'flex',
-                          'justify-content': 'center',
-                          'flex-direction': 'column',
+                          justifyContent: 'center',
+                          flexDirection: 'column',
                         }}
                       >
                         {playerBuilt && unlocked ? (

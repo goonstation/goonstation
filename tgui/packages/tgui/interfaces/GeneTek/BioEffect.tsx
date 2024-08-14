@@ -336,9 +336,9 @@ export const BioEffect = (props) => {
 };
 
 export const Description = (props, context) => {
-  const lines = props.text.split(/<br ?\/?>/g);
+  const lines = props.text?.split(/<br ?\/?>/g);
 
-  return lines.map((line, i) => <p key={i}>{line}</p>);
+  return lines?.map((line, i) => <p key={i}>{line}</p>);
 };
 
 export const GeneList = (props) => {

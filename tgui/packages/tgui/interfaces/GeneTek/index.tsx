@@ -63,8 +63,8 @@ export const GeneTek = () => {
   return (
     <Window
       theme={allowed ? 'genetek' : 'genetek-disabled'}
-      width={730}
-      height={415}
+      width={750}
+      height={570}
     >
       <Flex height="100%">
         <Flex.Item

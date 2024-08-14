@@ -79,7 +79,7 @@ export const ResearchTab = (props) => {
               ? ar.map((r) => (
                   <Section
                     key={r.ref}
-                    title={research[r.ref].name}
+                    title={research[r.ref]?.name}
                     buttons={
                       <Button
                         icon="flask"
@@ -91,7 +91,7 @@ export const ResearchTab = (props) => {
                       </Button>
                     }
                   >
-                    <Description text={research[r.ref].desc} />
+                    <Description text={research[r.ref]?.desc} />
                   </Section>
                 ))
               : 'No research is currently available at this tier.'}

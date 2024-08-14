@@ -29,7 +29,7 @@ export const ChemChute = () => {
                 key={product.name}
                 justify="space-between"
                 align="stretch"
-                style={{ 'border-bottom': '1px #555 solid' }}
+                style={{ borderBottom: '1px #555 solid' }}
               >
                 <Flex.Item direction="row">
                   {product.img && (
@@ -48,8 +48,8 @@ export const ChemChute = () => {
                   grow
                   style={{
                     display: 'flex',
-                    'justify-content': 'center',
-                    'flex-direction': 'column',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
                   }}
                 >
                   <Box>
@@ -63,10 +63,10 @@ export const ChemChute = () => {
                   bold
                   direction="row"
                   style={{
-                    'margin-left': '5px',
+                    marginLeft: '5px',
                     display: 'flex',
-                    'justify-content': 'center',
-                    'flex-direction': 'column',
+                    justifyContent: 'center',
+                    flexDirection: 'column',
                   }}
                 />
               </Flex>
