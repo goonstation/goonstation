@@ -381,7 +381,7 @@ const DisplayGeneticAnalysis = (props: DisplayGeneticAnalysisProps) => {
                   Blood Color:
                 </Table.Cell>
                 <Table.Cell>
-                  <ColorBox backgroundColor={blood_color_value} />{' '}
+                  <ColorBox color={blood_color_value} content=" " />{' '}
                   <span>{blood_color_name}</span>
                 </Table.Cell>
               </Table.Row>

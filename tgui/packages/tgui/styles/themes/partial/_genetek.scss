@@ -49,7 +49,7 @@ $genetek: #1b676b !default;
 
   .Layout__content {
     background-position-x: -60%;
-    background-image: url('../../assets/bg-genetek.svg');
+    background-image: url('../../assets/bg-genetek.svg') !important;
   }
 
   .color-label {
