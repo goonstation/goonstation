@@ -1,6 +1,10 @@
 
 (t)wed aug 14 24
 (u)JORJ949
+(p)18622
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(*)Armory doors are now immune to wire hacking.
+(u)JORJ949
 (p)20248
 (e)🗺💅|A-Mapping, C-QoL
 (+)Nadir security has received a few minor changes. HoSes should take particular note of the armory.
