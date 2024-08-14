@@ -1,5 +1,9 @@
 
 (t)wed aug 14 24
+(u)Cherman0
+(p)20278
+(e)🗺🔎🔄🏅📦|A-Mapping, C-Code-Quality, C-Rework, A-Medal, A-Game-Objects
+(+)The captain's antique now requires certain material statistics to make a more powerful gun instead of "quality".
 (u)JORJ949
 (p)20100
 (e)⚖📦💡|C-Balance, A-Game-Objects, A-Station-Systems
