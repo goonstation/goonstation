@@ -587,12 +587,7 @@ or don't if it uses a custom topopen overlay
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
-		if(istype(W, /obj/item/clothing/head/butt))
-			var/obj/item/clothing/head/butt/butt = W
-			if(butt.donor == user)
-				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
-
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
 			user.show_message(SPAN_ALERT("[src] already has a plating kit installed!"))
@@ -1816,11 +1811,11 @@ or don't if it uses a custom topopen overlay
 	var/list/bodies = new/list()
 
 	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H))
+		if (H.shell && !H.dependent && !isdead(H) && !H.mind)
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
-		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
+		if (R.shell && !R.dependent && !isdead(R) && !R.mind && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
@@ -1830,12 +1825,15 @@ or don't if it uses a custom topopen overlay
 
 	if (src.deployed_to_eyecam)
 		src.eyecam.return_mainframe()
-	if (src.mind)
-		target_shell.mainframe = src
-		target_shell.dependent = 1
-		src.deployed_shell = target_shell
-		src.mind.transfer_to(target_shell)
+	if (!src.mind)
 		return
+	if (target_shell.mind)
+		boutput(src, SPAN_ALERT(SPAN_BOLD("That shell is already occupied!")))
+		return
+	target_shell.mainframe = src
+	target_shell.dependent = 1
+	src.deployed_shell = target_shell
+	src.mind.transfer_to(target_shell)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"

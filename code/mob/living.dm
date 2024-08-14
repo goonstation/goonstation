@@ -127,7 +127,7 @@
 	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
-/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
@@ -156,7 +156,7 @@
 	SPAWN(0)
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
-			init_preferences?.apply_post_new_stuff(src)
+			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 
 /mob/living/flash(duration)
@@ -385,7 +385,7 @@
 	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target.loc))
+			if (istype(target, /atom/movable) && (isturf(target.loc) || !reach))
 				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
@@ -1988,15 +1988,8 @@
 
 
 		var/list/shield_amt = list()
-		var/shield_multiplier = 1
 
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC, D_SLASHING, D_TOXIC)
-				shield_multiplier = 0.5
-			if(D_ENERGY, D_RADIOACTIVE)
-				shield_multiplier = 2
-
-		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power * shield_multiplier, shield_amt)
+		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power, shield_amt)
 		damage *= max(0, (1-shield_amt["shield_strength"]))
 		stun *= max(0, (1-shield_amt["shield_strength"]))
 
@@ -2344,3 +2337,18 @@
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
 
+/mob/living/proc/meson(atom/source)
+	if (!source)
+		CRASH("meson proc called without a source!!")
+	src.vision.set_scan(1)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+
+/mob/living/proc/unmeson(atom/source)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
+			return
+	src.vision.set_scan(0)

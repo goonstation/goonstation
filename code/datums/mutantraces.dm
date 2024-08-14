@@ -1830,6 +1830,7 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
 
 	say_verb()
 		return "clicks"
@@ -1843,6 +1844,7 @@ TYPEINFO(/datum/mutantrace/roach)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
+			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
 
 TYPEINFO(/datum/mutantrace/cat)

@@ -1018,12 +1018,11 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "adp" = (
-/obj/machinery/turretid{
-	layer = 9.1;
-	pixel_y = -5
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai)
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "adr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/solar/small_backup2)
@@ -2915,15 +2914,14 @@
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/ai_upload_foyer)
 "ajs" = (
-/obj/machinery/turretid{
-	pixel_y = 24;
-	req_access_txt = "19"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/turretid/ai_upload{
+	pixel_y = 24
+	},
 /turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
+/area/station/turret_protected/ai_upload_foyer)
 "ajt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2935,7 +2933,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
+/area/station/turret_protected/ai_upload_foyer)
 "aju" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15394,7 +15392,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/light_switch/east,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -20547,11 +20544,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/item/device/radio/intercom/brig,
 /obj/machinery/phone,
-/obj/blind_switch/area{
-	dir = 4;
-	pixel_x = -22;
-	pixel_y = 4
-	},
+/obj/blind_switch/area/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bkI" = (
@@ -23656,9 +23649,7 @@
 /area/station/routing/security)
 "buh" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/machinery/light_switch/east{
-	dir = 8
-	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/caution/south,
 /area/station/routing/security)
 "bui" = (
@@ -24322,11 +24313,14 @@
 	icon_state = "plant";
 	level = 1.9
 	},
-/obj/machinery/light_switch/east,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -10;
+	pixel_y = 28
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/main)
@@ -24461,10 +24455,6 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/landmark/start/job/head_of_security,
-/obj/machinery/light_switch/east{
-	dir = 8;
-	pixel_x = 22
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -24475,6 +24465,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bwn" = (
@@ -34672,9 +34663,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/light_switch/west{
-	dir = 4
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -57267,6 +57256,17 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
+"fjM" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = 6
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/primary/northwest)
 "fjS" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
@@ -110117,7 +110117,7 @@ aPP
 aOD
 aOD
 aTI
-aOD
+fjM
 aWt
 aXT
 aZz
@@ -133334,8 +133334,8 @@ acn
 abT
 acu
 acV
+abf
 adp
-adW
 aeC
 afr
 ago

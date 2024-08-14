@@ -952,6 +952,7 @@
 	sealed = TRUE
 	two_handed = TRUE
 	info = ""
+	hitsound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	var/headline = ""
 	var/publisher = ""
 

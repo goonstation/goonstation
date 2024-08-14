@@ -123,7 +123,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 /obj/machinery/door/Cross(atom/movable/mover)
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
-		if(P.proj_data.window_pass)
+		if(P.proj_data.window_pass && !P.proj_data.always_hits_structures)
 			return !opacity
 	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 		if (ismob(mover))
@@ -399,7 +399,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(1)
 			qdel(src)
 		if(2)
-			if(prob(25))
+			if(prob(66))
 				qdel(src)
 			else
 				take_damage(health_max/2)
