@@ -1,6 +1,10 @@
 
 (t)wed aug 14 24
 (u)JORJ949
+(p)20100
+(e)⚖📦💡|C-Balance, A-Game-Objects, A-Station-Systems
+(*)Armory deauthorization cooldown now starts upon authorization.
+(u)JORJ949
 (p)18622
 (e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
 (*)Armory doors are now immune to wire hacking.
