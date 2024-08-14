@@ -298,7 +298,7 @@ TYPEINFO(/obj/item/gun/energy/antique)
 			if(180 to INFINITY)
 				//not good enough to be functional
 				return 0
-		switch(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
+		switch(src.myCoil.material.getProperty("\"electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
 			if(10 to INFINITY)
 				evaluationScore += 3
 			if(8 to 10)
@@ -315,8 +315,8 @@ TYPEINFO(/obj/item/gun/energy/antique)
 		//returns a number for each tier
 		switch(src.evaluateQuality())
 			if(5 to INFINITY)
-				// dont set the current projectile here because it gets re-evaluated per shot
-				src.projectiles = list(new/datum/projectile/laser, new/datum/projectile/laser/glitter/burst)
+				src.current_projectile = new/datum/projectile/laser
+				src.projectiles = list(current_projectile, new/datum/projectile/laser/glitter/burst)
 				return 3
 			if(3 to 5)
 				src.current_projectile = new/datum/projectile/laser
