@@ -10383,18 +10383,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/corner,
 /area/station/security/main)
-"aLA" = (
-/obj/machinery/light/emergency,
-/turf/simulated/floor/red/side,
-/area/station/security/main)
-"aLB" = (
-/obj/machinery/light,
-/obj/disposalpipe/segment/brig{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/red/side,
-/area/station/security/main)
 "aLD" = (
 /obj/machinery/disposal/brig,
 /obj/disposalpipe/trunk/brig{
@@ -39871,26 +39859,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"evc" = (
-/obj/storage/crate{
-	desc = "A crate of confiscated items.";
-	name = "Contraband"
-	},
-/obj/item/item_box/no{
-	pixel_x = 8;
-	pixel_y = -5
-	},
-/obj/item/instrument/vuvuzela{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/bananapeel{
-	pixel_x = 4
-	},
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/station/security/main)
 "evi" = (
 /obj/machinery/door/window/southleft,
 /obj/machinery/light_switch{
@@ -40863,16 +40831,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/medsci)
-"ffc" = (
-/obj/machinery/door/airlock/pyro/security,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "ffe" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
@@ -46270,6 +46228,26 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/sortingRoom)
+"jtr" = (
+/obj/storage/crate{
+	desc = "A crate of confiscated items.";
+	name = "Contraband"
+	},
+/obj/item/item_box/no{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/instrument/vuvuzela{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/bananapeel{
+	pixel_x = 4
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/main)
 "jtV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -48637,6 +48615,10 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
+"lmP" = (
+/obj/machinery/light/emergency,
+/turf/simulated/floor/red/side,
+/area/station/security/main)
 "lnZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/yellow,
@@ -49618,6 +49600,14 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"mje" = (
+/obj/machinery/light,
+/obj/disposalpipe/segment/brig{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/main)
 "mjS" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -57460,6 +57450,16 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/science/lobby)
+"sec" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "sem" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -95689,7 +95689,7 @@ adE
 adE
 adE
 ajj
-ffc
+sec
 dPe
 sfv
 xnp
@@ -96595,7 +96595,7 @@ adE
 adE
 adE
 aji
-ffc
+sec
 iqt
 dSf
 aHB
@@ -97224,7 +97224,7 @@ aho
 kwp
 aJf
 aHB
-aLA
+lmP
 awM
 rwX
 awM
@@ -97504,7 +97504,7 @@ afS
 agD
 wfU
 awK
-evc
+jtr
 avd
 ofy
 aho
@@ -97526,7 +97526,7 @@ ubA
 omr
 aJh
 aKo
-aLB
+mje
 awM
 aOa
 aOh

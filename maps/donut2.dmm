@@ -21454,6 +21454,13 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"fai" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "fal" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -22668,13 +22675,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/quartermaster/magnet)
-"fSk" = (
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "fTn" = (
 /obj/machinery/computer/solar_control/zeta{
 	dir = 8
@@ -22759,6 +22759,18 @@
 "fVw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
+"fVJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "fWz" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -23668,10 +23680,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
-"gzM" = (
-/obj/storage/cart/forensic/bomb_disposal,
-/turf/simulated/floor/grime,
-/area/station/security/equipment)
 "gBm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -29453,13 +29461,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
-"kvs" = (
-/obj/storage/secure/closet/brig,
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/security/equipment)
 "kvu" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -30843,6 +30844,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/research)
+"lnW" = (
+/obj/storage/cart/forensic/bomb_disposal,
+/turf/simulated/floor/grime,
+/area/station/security/equipment)
 "lol" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44912,18 +44917,6 @@
 	dir = 1
 	},
 /area/station/science/lobby)
-"tOl" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/command/alt{
-	dir = 4
-	},
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/security/hos)
 "tOK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -45483,6 +45476,13 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"ujG" = (
+/obj/storage/secure/closet/brig,
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/security/equipment)
 "ujJ" = (
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
@@ -94081,7 +94081,7 @@ bnv
 bop
 uWC
 moJ
-gzM
+lnW
 piD
 rLp
 ldr
@@ -94384,7 +94384,7 @@ tCu
 omO
 moJ
 dCE
-kvs
+ujG
 ugD
 ldr
 bCX
@@ -96789,7 +96789,7 @@ beM
 beO
 bgN
 bgN
-tOl
+fVJ
 bgN
 bgN
 wFJ
@@ -97395,7 +97395,7 @@ bgP
 vKF
 bry
 bzC
-fSk
+fai
 wFJ
 tMz
 lus
