@@ -499,6 +499,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/brain
 	category = "Bread"
 
+/datum/cookingrecipe/oven/toast_bread
+	item1 = /obj/item/reagent_containers/food/snacks/breadloaf
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/breadloaf/toast
+	category = "Bread"
+
 /datum/cookingrecipe/oven/toast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	cookbonus = 5
