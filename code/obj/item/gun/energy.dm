@@ -298,7 +298,7 @@ TYPEINFO(/obj/item/gun/energy/antique)
 			if(180 to INFINITY)
 				//not good enough to be functional
 				return 0
-		switch(src.myCoil.material.getProperty("\"electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
+		switch(src.myCoil.material.getProperty("electrical") + ((src.myCoil.material.getMaterialFlags() & MATERIAL_ENERGY) ? 2 : 0))
 			if(10 to INFINITY)
 				evaluationScore += 3
 			if(8 to 10)
