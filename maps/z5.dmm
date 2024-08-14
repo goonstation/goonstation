@@ -53,6 +53,30 @@
 	dir = 1
 	},
 /area/mining/hangar)
+"aF" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"aK" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"aL" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/space)
 "aM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -70,6 +94,13 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
+"aO" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "aT" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side{
@@ -129,6 +160,13 @@
 /obj/item/cigbutt,
 /turf/simulated/floor/martian,
 /area/evilreaver/bar)
+"bo" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "bt" = (
 /obj/lattice{
 	dir = 6;
@@ -148,6 +186,34 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/security)
+"bF" = (
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bP" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bS" = (
+/obj/machinery/power/furnace,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"bV" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "cc" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/scrap,
@@ -171,6 +237,13 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
+"ci" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "cm" = (
 /obj/crevice{
 	pixel_x = -28
@@ -207,6 +280,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/manufacturing)
+"cC" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "cN" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -223,11 +308,29 @@
 	},
 /turf/space,
 /area/noGenerate)
+"cY" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "du" = (
 /obj/lattice,
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"dv" = (
+/obj/grille/catwalk,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "dF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/quarters)
@@ -239,6 +342,10 @@
 	},
 /turf/space,
 /area/noGenerate)
+"dT" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/grime,
+/area/space)
 "ea" = (
 /obj/lattice{
 	dir = 5;
@@ -246,12 +353,31 @@
 	},
 /turf/space,
 /area/noGenerate)
+"ee" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "ek" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
 /area/noGenerate)
+"em" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "ep" = (
 /turf/space/asteroid,
 /area/noGenerate)
@@ -270,6 +396,13 @@
 	},
 /turf/space,
 /area/noGenerate)
+"eG" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "eS" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -285,6 +418,22 @@
 /obj/effects/background_objects/regina,
 /turf/space,
 /area/noGenerate)
+"fn" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/grille/steel,
+/turf/space,
+/area/space)
+"fu" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/grille/steel,
+/turf/space,
+/area/space)
 "fz" = (
 /obj/crevice{
 	pixel_y = 30
@@ -298,6 +447,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
+"fD" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "fI" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
@@ -334,6 +489,9 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/caution/east,
 /area/mining/miningoutpost)
+"gw" = (
+/turf/simulated/wall/auto/supernorn,
+/area/space)
 "gz" = (
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
@@ -345,6 +503,9 @@
 	},
 /turf/space,
 /area/noGenerate)
+"gK" = (
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "gM" = (
 /obj/fakeobject/pipe{
 	dir = 4;
@@ -377,6 +538,13 @@
 "gX" = (
 /turf/simulated/floor/plating,
 /area/spyshack)
+"hg" = (
+/obj/machinery/power/terminal,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "hv" = (
 /obj/lattice,
 /obj/fakeobject/lighttube_broken{
@@ -440,6 +608,19 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
+"iB" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/grille/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "jn" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -448,6 +629,12 @@
 /mob/living/critter/martian/mutant,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"jp" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
 "jS" = (
 /obj/lattice,
 /mob/living/critter/martian/warrior,
@@ -507,6 +694,12 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"ln" = (
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "lp" = (
 /obj/machinery/conveyor/NS{
 	id = "MINSouth"
@@ -535,6 +728,42 @@
 	name = "organic floor"
 	},
 /area/noGenerate)
+"lQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"lZ" = (
+/obj/machinery/communications_dish{
+	pixel_y = 7
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/cable{
+	icon_state = "0-6"
+	},
+/obj/cable{
+	icon_state = "0-9"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mi" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
@@ -544,10 +773,31 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"mA" = (
+/obj/machinery/computer/communications,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grime,
+/area/space)
+"mE" = (
+/obj/cable{
+	icon_state = "0-6"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mO" = (
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
+"mU" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "nk" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -789,6 +1039,13 @@
 	},
 /turf/simulated/floor/martian,
 /area/noGenerate)
+"oE" = (
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "oH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent,
@@ -889,6 +1146,16 @@
 "pi" = (
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
+"pj" = (
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "pk" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
@@ -1135,6 +1402,15 @@
 	},
 /turf/space/asteroid,
 /area/noGenerate)
+"qu" = (
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "qv" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "rusty airlock"
@@ -1214,6 +1490,12 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"qX" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "qZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -1302,6 +1584,10 @@
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"rv" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "rw" = (
 /obj/submachine/cargopad/miningoutpost,
 /obj/disposalpipe/segment/transport,
@@ -1434,6 +1720,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/quarters)
+"si" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "sj" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -1660,6 +1952,12 @@
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
+"tK" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "tM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1739,11 +2037,28 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/power)
+"ug" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	dir = 4;
+	id = "hangar_miningoutpost";
+	layer = 4;
+	name = "mining pod bay door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "um" = (
 /obj/item/clothing/suit/space/old,
 /obj/item/clothing/head/helmet/space/old,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"uq" = (
+/obj/cable{
+	icon_state = "0-9"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "ut" = (
 /turf/simulated/floor/caution/south,
 /area/mining/hangar)
@@ -1863,6 +2178,17 @@
 	dir = 4
 	},
 /area/mining/hangar)
+"vg" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoorleft1";
+	id = "hangar_miningoutpost";
+	layer = 4;
+	name = "mining pod bay door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "vm" = (
 /turf/simulated/floor/plating/scorched,
 /area/spyshack)
@@ -1920,6 +2246,21 @@
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"vE" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/space,
+/area/space)
 "vH" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -1932,6 +2273,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/power)
+"vJ" = (
+/obj/machinery/door/airlock/pyro/glass/mining,
+/turf/simulated/floor/grime,
+/area/space)
 "vK" = (
 /obj/machinery/door/unpowered/martian,
 /obj/lattice,
@@ -2128,6 +2473,12 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
+"wP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "wQ" = (
 /obj/machinery/computer/solar_control/small_backup4{
 	dir = 8
@@ -2150,6 +2501,11 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"wW" = (
+/obj/cable,
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "wY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/manufacturing)
@@ -2459,6 +2815,13 @@
 "yB" = (
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
+"yE" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/grille/steel,
+/turf/space,
+/area/space)
 "yH" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -2468,6 +2831,12 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
+"yL" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
 "yS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2483,10 +2852,25 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/south,
 /area/mining/hangar)
+"yX" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "yY" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
+"yZ" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "za" = (
 /obj/machinery/light_switch{
 	icon_state = "light0";
@@ -2619,6 +3003,12 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
+"zN" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "zP" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -2819,6 +3209,13 @@
 	},
 /turf/space,
 /area/noGenerate)
+"AX" = (
+/obj/machinery/power/furnace,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "AY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2855,6 +3252,13 @@
 	dir = 4
 	},
 /area/mining/hangar)
+"Bk" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "Bn" = (
 /obj/lattice,
 /obj/cable{
@@ -3058,6 +3462,18 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
+"Ck" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/grime,
+/area/space)
+"Cl" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Cn" = (
 /obj/rail{
 	dir = 8;
@@ -3066,6 +3482,9 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/mining/refinery)
+"Ct" = (
+/turf/simulated/floor/grime,
+/area/space)
 "Cu" = (
 /turf/simulated/floor/caution/north,
 /area/mining/refinery)
@@ -3112,6 +3531,10 @@
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"CY" = (
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "Da" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -3224,6 +3647,12 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
 /area/mining/comms)
+"DV" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "DW" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 9
@@ -3381,6 +3810,15 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"EP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/space)
 "ER" = (
 /obj/machinery/door/poddoor{
 	dir = 4;
@@ -3429,6 +3867,27 @@
 	dir = 1
 	},
 /area/mining/hangar)
+"Fa" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor/grime,
+/area/space)
+"Fd" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/space,
+/area/space)
 "Fe" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -3436,6 +3895,13 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
+"Fg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Fk" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -3719,6 +4185,18 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/power)
+"GS" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	dir = 4;
+	doordir = "right";
+	icon_state = "bdoorright1";
+	id = "hangar_miningoutpost";
+	layer = 4;
+	name = "mining pod bay door"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "GU" = (
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -3776,6 +4254,13 @@
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"Ho" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "Hp" = (
 /obj/grille/catwalk,
 /obj/disposalpipe/segment/transport,
@@ -3799,6 +4284,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/power)
+"Ht" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/grille/steel,
+/turf/space,
+/area/space)
 "Hu" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/north,
@@ -3927,6 +4420,13 @@
 	},
 /turf/simulated/floor,
 /area/mining/manufacturing)
+"Il" = (
+/obj/machinery/power/terminal,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Im" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -3936,6 +4436,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"In" = (
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Ir" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4017,6 +4526,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
+"IK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "IL" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -4069,6 +4584,15 @@
 	},
 /turf/simulated/floor,
 /area/mining/miningoutpost)
+"IZ" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "Jd" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/stairs{
@@ -4141,6 +4665,19 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/mining/refinery)
+"JE" = (
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/space,
+/area/space)
 "JG" = (
 /obj/rack,
 /obj/item/mining_tool/powered/pickaxe,
@@ -4222,6 +4759,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
+"Ki" = (
+/obj/machinery/computer/solar_control/small_backup4{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "Kk" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -4248,6 +4795,13 @@
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"Ks" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "Kt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -4259,6 +4813,15 @@
 "Kv" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/magnet_control)
+"Kx" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Kz" = (
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -4267,6 +4830,13 @@
 "KA" = (
 /turf/space,
 /area/station/solar/small_backup3)
+"KD" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "KF" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -4336,6 +4906,12 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
+"KW" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
 "La" = (
 /obj/storage/crate,
 /obj/random_item_spawner/medicine/one_or_zero,
@@ -4673,6 +5249,12 @@
 /obj/item/paper/magnetconstruction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"MR" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "MT" = (
 /turf/space/asteroid,
 /area/space)
@@ -4713,6 +5295,14 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
+"Ng" = (
+/obj/grille/catwalk,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "Nk" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -4744,6 +5334,13 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
+"NA" = (
+/obj/decal/tile_edge/stripe,
+/obj/machinery/vehicle/pod_smooth/industrial{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "NC" = (
 /obj/disposalpipe/trunk/transport{
 	dir = 1
@@ -4912,6 +5509,31 @@
 	},
 /turf/simulated/floor/plating,
 /area/noGenerate)
+"Oy" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/cable{
+	icon_state = "0-6"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-9"
+	},
+/turf/space,
+/area/space)
 "OA" = (
 /obj/item/cable_coil/cut,
 /turf/simulated/floor/plating/damaged3,
@@ -4929,6 +5551,16 @@
 "OG" = (
 /turf/simulated/floor/caution/east,
 /area/mining/hangar)
+"OH" = (
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "OI" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/machine_debris,
@@ -4994,6 +5626,12 @@
 "Pu" = (
 /turf/simulated/floor/damaged2,
 /area/mining/magnet_control)
+"Pw" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "Px" = (
 /obj/machinery/light_switch/west,
 /obj/decal/cleanable/dirt,
@@ -5108,6 +5746,12 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/mining/quarters)
+"Qq" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/grime,
+/area/space)
 "Qv" = (
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
@@ -5350,6 +5994,15 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/caution/east,
 /area/tech_outpost)
+"RT" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "RY" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
@@ -5380,6 +6033,10 @@
 	},
 /turf/space,
 /area/noGenerate)
+"Sl" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Sq" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/glass/compostbag,
@@ -5437,6 +6094,10 @@
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"SJ" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/grime,
+/area/space)
 "SK" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -5564,6 +6225,13 @@
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/manufacturing)
+"TG" = (
+/obj/decal/tile_edge/stripe,
+/obj/machinery/vehicle/miniputt/indyputt{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
 "TH" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/riceandbeans,
@@ -5661,6 +6329,17 @@
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/noGenerate)
+"Uh" = (
+/obj/machinery/power/smes{
+	charge = 200000;
+	chargelevel = 10000;
+	output = 2500
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Uk" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -5962,6 +6641,17 @@
 "Wc" = (
 /turf/space,
 /area/shuttle/mining/outpost)
+"Wg" = (
+/obj/machinery/power/smes{
+	charge = 200000;
+	chargelevel = 10000;
+	output = 2500
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Wi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6055,6 +6745,10 @@
 /obj/item/tile/steel,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"WQ" = (
+/obj/machinery/r_door_control/podbay/miningoutpost,
+/turf/simulated/wall/auto/supernorn,
+/area/space)
 "WR" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -6277,6 +6971,9 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"Yi" = (
+/turf/simulated/wall/auto/asteroid,
+/area/space)
 "Yk" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -6318,6 +7015,12 @@
 	},
 /turf/space,
 /area/noGenerate)
+"Yu" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "Yy" = (
 /obj/fakeobject/oven{
 	name = "broken oven"
@@ -11621,12 +12324,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+fu
+yE
+yE
+yE
+yE
+fn
 aa
 aa
 aa
@@ -11923,12 +12626,12 @@ aa
 aa
 aa
 aa
+Ht
 aa
 aa
 aa
 aa
-aa
-aa
+Ht
 aa
 aa
 aa
@@ -12225,12 +12928,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+aO
+yX
+KW
+yL
+yX
+Bk
 aa
 aa
 aa
@@ -12527,12 +13230,12 @@ aa
 aa
 aa
 aa
+Ks
 aa
+eG
+tK
 aa
-aa
-aa
-aa
-aa
+Ks
 aa
 aa
 aa
@@ -12825,20 +13528,20 @@ aa
 aa
 aa
 aa
+KW
+Ho
+Ho
+Ho
+yL
 aa
+eG
+tK
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+KW
+Ho
+Ho
+Ho
+yL
 aa
 aa
 aa
@@ -13127,20 +13830,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+eG
+bV
+bV
+bV
+bV
+rv
+eG
+tK
+rv
+bV
+bV
+bV
+bV
+tK
 aa
 aa
 aa
@@ -13429,20 +14132,20 @@ aa
 aa
 aa
 aa
+aL
+ci
+ci
+ci
+jp
 aa
+eG
+tK
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aL
+ci
+ci
+ci
+jp
 aa
 aa
 aa
@@ -13731,20 +14434,20 @@ aa
 aa
 aa
 aa
+Ks
 aa
 aa
 aa
+Ks
+aa
+eG
+tK
+aa
+Ks
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ks
 aa
 aa
 aa
@@ -14033,20 +14736,20 @@ aa
 aa
 aa
 aa
+KW
+Ho
+Ho
+Ho
+yL
 aa
+eG
+tK
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+KW
+Ho
+Ho
+Ho
+yL
 aa
 aa
 aa
@@ -14335,20 +15038,20 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ng
+dv
+dv
+dv
+dv
+rv
+eG
+tK
+rv
+bV
+bV
+bV
+bV
+tK
 aa
 aa
 aa
@@ -14637,20 +15340,20 @@ aa
 aa
 aa
 aa
+aL
+ci
+ci
+ci
+jp
 aa
+eG
+tK
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+aL
+ci
+ci
+ci
+jp
 aa
 aa
 aa
@@ -14943,12 +15646,12 @@ aa
 aa
 aa
 aa
+Ks
 aa
+eG
+tK
 aa
-aa
-aa
-aa
-aa
+Ks
 aa
 aa
 aa
@@ -15245,12 +15948,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
+KW
+OH
+iB
+ee
+pj
+yL
 aa
 aa
 aa
@@ -15541,6 +16244,21 @@ aa
 aa
 aa
 aa
+Oy
+JE
+aa
+gw
+gw
+Sl
+Sl
+Fg
+gw
+gw
+Fg
+Sl
+Sl
+gw
+gw
 aa
 aa
 aa
@@ -15562,27 +16280,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -15843,6 +16546,22 @@ aa
 aa
 aa
 aa
+EP
+aF
+aa
+gw
+Ct
+Ct
+Ct
+qX
+Ct
+Ki
+qX
+Ct
+Ct
+Ct
+gw
+Yi
 aa
 aa
 aa
@@ -15863,33 +16582,17 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -16145,6 +16848,22 @@ aa
 aa
 aa
 aa
+Fd
+vE
+aa
+gw
+Ct
+AX
+AX
+qX
+Ct
+qX
+qX
+Il
+Wg
+Ct
+gw
+Yi
 aa
 aa
 aa
@@ -16165,34 +16884,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -16450,6 +17153,20 @@ aa
 aa
 aa
 aa
+gw
+SJ
+Kx
+cC
+IZ
+mU
+cY
+qu
+In
+Yu
+Ct
+gw
+Yi
+Yi
 aa
 aa
 aa
@@ -16463,39 +17180,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+Sl
+Sl
+gw
+gw
+gw
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -16751,6 +17454,22 @@ aa
 aa
 aa
 aa
+Yi
+gw
+SJ
+zN
+zN
+Ct
+DV
+si
+si
+RT
+aK
+Ct
+gw
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -16763,42 +17482,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+Ct
+Ct
+Ct
+Ct
+dT
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -17053,6 +17756,22 @@ aa
 aa
 aa
 aa
+Yi
+gw
+Ct
+bS
+bS
+Ct
+MR
+Ct
+Ct
+hg
+Uh
+Ct
+gw
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -17065,42 +17784,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+Ct
+Ct
+Ct
+Ct
+gw
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -17355,6 +18058,23 @@ aa
 aa
 aa
 aa
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -17366,43 +18086,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+Ct
+Ct
+Ct
+Ct
+dT
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -17656,6 +18359,26 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+gw
+gw
+gw
+gw
+gw
+ln
+ln
+gw
+gw
+gw
+gw
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -17665,45 +18388,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+Ct
+Ct
+gw
+gw
+gw
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -17957,6 +18660,28 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -17965,46 +18690,24 @@ aa
 aa
 aa
 aa
+gw
+Ct
+Ct
+gw
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -18257,6 +18960,31 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -18264,48 +18992,23 @@ aa
 aa
 aa
 aa
+gw
+Ct
+Ct
+gw
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -18557,52 +19260,52 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
 aa
 aa
+gw
+Ct
+Ct
+gw
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
@@ -18853,58 +19556,58 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
 aa
 aa
 aa
@@ -19155,58 +19858,58 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Sl
 aa
 aa
 aa
@@ -19457,58 +20160,58 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Sl
 aa
 aa
 aa
@@ -19759,58 +20462,58 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+em
+em
+gw
+gw
+gw
+gw
+gw
+em
+em
+gw
+gw
 aa
 aa
 aa
@@ -20061,58 +20764,58 @@ aa
 aa
 aa
 aa
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
+gw
+Ct
+Ct
+gw
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -20363,59 +21066,59 @@ aa
 aa
 aa
 aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
+gw
+em
+em
+gw
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -20665,6 +21368,42 @@ aa
 aa
 aa
 aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -20675,50 +21414,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -20967,6 +21670,42 @@ aa
 aa
 aa
 aa
+gw
+gw
+gw
+gw
+gw
+ln
+ln
+gw
+gw
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -20977,50 +21716,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -21270,6 +21973,41 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -21280,49 +22018,14 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -21572,6 +22275,41 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+gw
+fD
+fD
+gw
+gw
+gw
+gw
 aa
 aa
 aa
@@ -21582,48 +22320,13 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -21874,6 +22577,41 @@ aa
 aa
 aa
 aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -21884,47 +22622,12 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Wc
+Wc
+Wc
+Wc
+Wc
+Wc
 aa
 aa
 aa
@@ -22176,41 +22879,41 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Qq
+Pw
+Pw
+Pw
+Pw
+WQ
 aa
 aa
 aa
@@ -22478,41 +23181,41 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+gw
+Ct
+Ct
+gw
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ck
+TG
+TG
+CY
+CY
+vg
 aa
 aa
 aa
@@ -22780,41 +23483,41 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Ct
+Ct
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Ct
+Ck
+gK
+gK
+gK
+gK
+ug
 aa
 aa
 aa
@@ -23082,41 +23785,41 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+vJ
+Ct
+Ck
+gK
+gK
+gK
+gK
+ug
 aa
 aa
 aa
@@ -23384,41 +24087,41 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+vJ
+Ct
+Ck
+gK
+gK
+gK
+gK
+ug
 aa
 aa
 aa
@@ -23685,42 +24388,42 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Ct
+Ct
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Ct
+Ck
+gK
+NA
+gK
+CY
+ug
 aa
 aa
 aa
@@ -23987,42 +24690,42 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+gw
+Ct
+Ct
+gw
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ck
+gK
+CY
+gK
+CY
+GS
 aa
 aa
 aa
@@ -24289,42 +24992,42 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Fa
+IK
+IK
+IK
+IK
+WQ
 aa
 aa
 aa
@@ -24591,42 +25294,42 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -24893,42 +25596,42 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+Yi
+Yi
+Yi
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
 aa
 aa
 aa
@@ -25194,38 +25897,38 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+gw
+gw
+gw
+gw
+gw
+ln
+ln
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Sl
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
 aa
@@ -25496,36 +26199,36 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+vJ
+Ct
+Ct
+mA
+lQ
+wP
+bo
+Yi
+Yi
 aa
 aa
 aa
@@ -25798,36 +26501,36 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+gw
+gw
+gw
+gw
+Yi
+Yu
+Yi
+Yi
 aa
 aa
 aa
@@ -26100,40 +26803,40 @@ aa
 aa
 aa
 aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yu
+Yi
+Yi
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+mE
+KD
+oE
 aa
 aa
 aa
@@ -26402,40 +27105,40 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Sl
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+yZ
+Cl
+wP
+wP
+Cl
+lZ
+wW
 aa
 aa
 aa
@@ -26704,40 +27407,40 @@ aa
 aa
 aa
 aa
+gw
+gw
+gw
+gw
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+bF
+bP
+uq
 aa
 aa
 aa
@@ -27006,34 +27709,34 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dT
+Ct
+Ct
+dT
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+gw
+gw
+gw
+gw
+ln
+ln
+gw
+gw
+gw
+gw
+gw
+Yi
+Yi
 aa
 aa
 aa
@@ -27308,33 +28011,33 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+dT
+Ct
+Ct
+dT
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
+Yi
 aa
 aa
 aa
@@ -27610,32 +28313,32 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+gw
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -27918,26 +28621,26 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -28223,23 +28926,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -28527,21 +29230,21 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+Yi
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -28831,19 +29534,19 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Yi
+gw
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+Ct
+gw
 aa
 aa
 aa
@@ -29134,18 +29837,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+gw
+gw
+Sl
+Sl
+Sl
+gw
+gw
+Sl
+Sl
+Sl
+gw
+gw
 aa
 aa
 aa
