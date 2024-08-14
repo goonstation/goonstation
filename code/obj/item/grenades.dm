@@ -920,6 +920,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
+	var/icon_state_armed = null
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -934,7 +935,10 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/beep(i)
 		var/k = i/2
 		sleep(k*k)
-		flick(icon_state+"_beep", src)
+		if (src.icon_state_armed)
+			src.icon_state = icon_state_armed
+		if (istype(src, /obj/item/gimmickbomb/gold))
+			src.setMaterial(getMaterial("gold"))
 		src.playbeep(src.loc, i, src.sound_beep)
 		if(i>=0)
 			src.beep(i-1)
@@ -990,6 +994,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Owls. Owls everywhere"
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
+	icon_state_armed = "owlbomb_beep"
 
 	detonate()
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
@@ -1003,6 +1008,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Owls. Owls everywhere"
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
+	icon_state_armed = "owlbomb_beep"
 
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
@@ -1043,6 +1049,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	name = "hotdog bomb"
 	desc = "A hotdog bomb? What the heck does that even mean?!"
 	icon_state = "hotdog"
+	icon_state_armed = "hotdog_beep"
 
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
@@ -1080,13 +1087,15 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "What a crappy grenade."
 	icon_state = "fartbomb"
 	sound_beep = 'sound/voice/farts/poo2.ogg'
+	icon_state_armed = "fartbomb_beep"
 	sound_explode = 'sound/voice/farts/superfart.ogg'
 	is_dangerous = FALSE
 
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
 	desc = "Why explode when you can gold!"
-	icon_state = "banana"
+	icon_state = "goldbomb"
+	icon_state_armed = "goldbomb1"
 	sound_beep = 'sound/machines/twobeep.ogg'
 
 	detonate()
