@@ -7816,6 +7816,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"dAj" = (
+/obj/stool/bed/moveable,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/listeningpost)
 "dAB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/outer/se{
@@ -16028,12 +16034,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
-"gYk" = (
-/obj/machinery/optable,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/listeningpost)
 "gYn" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
@@ -17838,12 +17838,6 @@
 /obj/item/pen,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
-"hFX" = (
-/obj/machinery/computer/operating/small,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/listeningpost)
 "hGK" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/fork{
@@ -30339,13 +30333,6 @@
 "mFI" = (
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
-"mFQ" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/saline,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/listeningpost)
 "mGa" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -34383,7 +34370,7 @@
 /area/station/ai_monitored/armory)
 "ovW" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular,
+/obj/random_item_spawner/med_kit/two,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -49682,22 +49669,14 @@
 	},
 /area/station/hydroponics/bay)
 "vpe" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/staple_gun{
-	pixel_x = 5
-	},
-/obj/item/weldingtool,
-/obj/item/hemostat,
-/obj/item/surgical_spoon,
-/obj/item/suture,
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/storage/crate/medical,
+/obj/random_item_spawner/med_tool/few,
+/obj/random_item_spawner/medicine/some,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -50588,17 +50567,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"vGt" = (
-/obj/table/auto,
-/obj/item/reagent_containers/mender_refill_cartridge/burn{
-	pixel_x = 4;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/mender/burn,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/area/listeningpost)
 "vGu" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/yellowblack/corner{
@@ -85698,8 +85666,8 @@ ptt
 xzc
 sKF
 aBB
-mFQ
-gYk
+nqG
+arl
 vpe
 wsS
 pki
@@ -86000,8 +85968,8 @@ tdf
 xzc
 iOs
 pki
-nqG
-hFX
+arl
+arl
 arl
 maz
 pki
@@ -86607,7 +86575,7 @@ pki
 mnV
 arl
 arl
-maz
+dAj
 pki
 bzS
 bzS
@@ -86907,7 +86875,7 @@ xzc
 sKF
 aBB
 ovW
-vGt
+arl
 owK
 lQq
 pki

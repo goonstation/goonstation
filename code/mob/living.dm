@@ -2337,3 +2337,18 @@
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
 
+/mob/living/proc/meson(atom/source)
+	if (!source)
+		CRASH("meson proc called without a source!!")
+	src.vision.set_scan(1)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+
+/mob/living/proc/unmeson(atom/source)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
+			return
+	src.vision.set_scan(0)
