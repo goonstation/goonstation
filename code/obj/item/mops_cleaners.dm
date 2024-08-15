@@ -1267,15 +1267,12 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		var/dir = angle2dir(O.angle)
 		for (var/i in -size to size)
 			var/turf/side_turf
-			if (i == 0) //dumb stupid bad wegh
-				side_turf = T
-			else
-				side_turf = get_steps(O, turn(dir, 90), i)
+			side_turf = get_steps(T, turn(dir, 90), i)
 			..(O, side_turf)
 			src.push_stuff(O, side_turf, dir)
 		if (!(dir in cardinal) && size > 0) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
 			for (var/side_dir in cardinal)
-				var/turf/side_turf = get_step(O, side_dir)
+				var/turf/side_turf = get_step(T, side_dir)
 				..(O, side_turf)
 				src.push_stuff(O, side_turf, dir)
 
