@@ -94,168 +94,6 @@ TRASH BAG
 	initial_volume = 25
 	refill_speed = 0.75
 
-/datum/projectile/special/shotchem/wave
-	name = "chemicals"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "tsunami"
-	cost = 20
-	sname = "wave"
-	projectile_speed = 16
-	shot_sound = 'sound/effects/bigwave.ogg'
-	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
-	var/size = 1
-	var/chem_pct_app_tile = 1/12
-
-	cross_turf(obj/projectile/O, turf/T)
-		var/dir = angle2dir(O.angle)
-		for (var/i in -size to size)
-			var/turf/side_turf = get_steps(O, turn(dir, 90), i)
-			..(O, side_turf)
-		if (!(dir in cardinal) && size > 0) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
-			for (var/side_dir in cardinal)
-				var/turf/side_turf = get_step(O, side_dir)
-				..(O, side_turf)
-
-	on_launch(obj/projectile/O)
-		. = ..()
-		O.alpha = 175
-		O.special_data["chem_pct_app_tile"] = src.chem_pct_app_tile
-
-	single
-		sname = "narrow"
-		cost = 10
-		size = 0
-		scale = 1/3
-		chem_pct_app_tile = 0.1
-		projectile_speed = 24
-
-	wide
-		sname = "wide"
-		cost = 30
-		size = 2
-		scale = 5/3
-		chem_pct_app_tile = 0.05
-		projectile_speed = 8
-
-/obj/janitorTsunamiWave
-	name = "chemicals"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "tsunami"
-	alpha = 175
-	anchored = ANCHORED
-
-	New(var/_loc, var/atom/target)
-		..()
-		set_loc(_loc)
-		create_reagents(10)
-		reagents.add_reagent("cleaner", 10)
-		var/direction = src.dir
-		if(target)
-			direction = get_dir_alt(src, target)
-		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
-			direction = turn(direction, 45)
-		switch(direction)
-			if(NORTH)
-				pixel_x = -32
-			if(EAST)
-				pixel_y = -32
-			if(SOUTH)
-				pixel_x = -32
-				pixel_y = -64
-			if(WEST)
-				pixel_x = -64
-				pixel_y = -32
-		var/matrix/M = matrix()
-		M = M.Scale(0,0)
-		src.transform = M
-		animate(src, transform=matrix(), time = 25, easing = ELASTIC_EASING)
-		SPAWN(0)
-			go(direction)
-
-	proc/go(var/direction)
-		src.set_dir(direction)
-		clean(direction)
-		for(var/i=0, i<10, i++)
-			var/turf/T = get_step(src.loc, direction)
-			if(!isnull(T))
-				var/blocked = 0
-				for(var/atom/movable/A in T)
-					if(A.density && A.anchored && !ismob(A))
-						blocked = 1
-						break
-				if(T.density || blocked)
-					return vanish()
-				else
-					src.set_loc(T)
-					clean(direction)
-					src.set_dir(direction)
-			sleep(0.2 SECONDS)
-		vanish()
-		return
-
-	proc/vanish()
-		animate(src, alpha = 0, time = 5)
-		SPAWN(0.5 SECONDS)
-			src.invisibility = INVIS_ALWAYS
-			src.set_loc(null)
-			qdel(src)
-		return
-
-	proc/clean(var/direction)
-		var/turf/left
-		var/turf/right
-		switch(direction)
-			if(NORTH)
-				left = locate(x-1,y,z)
-				right = locate(x+1,y,z)
-			if(EAST)
-				left = locate(x,y+1,z)
-				right = locate(x,y-1,z)
-			if(SOUTH)
-				left = locate(x+1,y,z)
-				right = locate(x-1,y,z)
-			if(WEST)
-				left = locate(x,y-1,z)
-				right = locate(x,y+1,z)
-
-		var/list/affected = list(src.loc, left, right)
-		for(var/turf/B in affected)
-			reagents.reaction(B)
-			for (var/atom/A in B)
-				if (istype(A, /obj/overlay/tile_effect) || A.invisibility >= INVIS_ALWAYS_ISH)
-					continue
-				reagents.reaction(A)
-		return
-
-/obj/item/spraybottle/cleaner/tsunami
-	name = "Tsunami-P3 spray bottle"
-	desc = "A highly over-engineered spray bottle with all kinds of actuators, pumps and matter-generators. Never runs out of cleaner and has a remarkable range."
-	icon_state = "tsunami"
-	item_state = "tsunami"
-	var/lastUse = null
-
-	afterattack(atom/A as mob|obj, mob/user as mob)
-		if (A.storage)
-			return
-		if (!isturf(user.loc))
-			return
-
-		if(lastUse)
-			var/actual = (world.timeofday - lastUse)
-			if(actual < 0) actual += 864000
-			if(actual < 40) return
-
-		lastUse = world.timeofday
-
-		reagents.clear_reagents()
-		reagents.add_reagent("cleaner", 100)
-
-		if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
-			JOB_XP(user, "Janitor", 2)
-
-		new/obj/janitorTsunamiWave(get_turf(src), A)
-		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
-
 /obj/item/spraybottle/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
@@ -1408,3 +1246,48 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		if (src.reagents.has_any(global.extinguisher_blacklist_melt) && !src.hasStatus("acid"))
 			src.setStatus("acid", 5 SECONDS)
 
+/datum/projectile/special/shotchem/wave
+	name = "chemicals"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "tsunami"
+	cost = 20
+	sname = "wave"
+	projectile_speed = 16
+	shot_sound = 'sound/effects/bigwave.ogg'
+	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
+	var/size = 1
+	var/chem_pct_app_tile = 1/12
+
+	cross_turf(obj/projectile/O, turf/T)
+		var/dir = angle2dir(O.angle)
+		for (var/i in -size to size)
+			var/turf/side_turf = get_steps(O, turn(dir, 90), i)
+			..(O, side_turf)
+		if (!(dir in cardinal) && size > 0) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
+			for (var/side_dir in cardinal)
+				var/turf/side_turf = get_step(O, side_dir)
+				..(O, side_turf)
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.alpha = 175
+		O.special_data["chem_pct_app_tile"] = src.chem_pct_app_tile
+
+	single
+		sname = "narrow"
+		cost = 10
+		size = 0
+		scale = 1/3
+		chem_pct_app_tile = 0.1
+		projectile_speed = 24
+
+	wide
+		sname = "wide"
+		cost = 30
+		size = 2
+		scale = 5/3
+		chem_pct_app_tile = 0.05
+		projectile_speed = 8
+
+//dumb placeholder here until I finish deciding what to do with the old tsunami stuff
+/obj/item/spraybottle/cleaner/tsunami
