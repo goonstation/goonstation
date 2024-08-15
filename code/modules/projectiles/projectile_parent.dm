@@ -137,11 +137,12 @@
 	proc/setDirection(x,y, do_turn = 1, angle_override = 0)
 		xo = x
 		yo = y
+		var/matrix/scale_matrix = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
+			src.transform = turn(scale_matrix,(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
-			src.transform = null
+			src.transform = scale_matrix
 			facing_dir = angle2dir(angle_override)
 
 	proc/launch(do_delay = FALSE)
@@ -331,7 +332,7 @@
 			var/anglecheck = arcsin(src.xo / r)
 			if (anglecheck < 0)
 				src.angle = -src.angle
-		transform = null
+		transform = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		Turn(angle)
 		if (!proj_data.precalculated)
 			src.was_setup = 1
@@ -535,6 +536,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
 	var/x_offset = 0 //! absolute pixel offset of the projectile, set automatically based on the icon size
 	var/y_offset = 0
+	var/scale = 1
 	var/invisibility = INVIS_NONE
 	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
 	var/brightness = 0
