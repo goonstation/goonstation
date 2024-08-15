@@ -398,7 +398,6 @@
 /turf/simulated/floor/scorched2,
 /area/prefab/sea_sketch)
 "bK" = (
-/obj/item/implant/robotalk,
 /turf/simulated/floor/plating/scorched,
 /area/prefab/sea_sketch)
 "bL" = (
