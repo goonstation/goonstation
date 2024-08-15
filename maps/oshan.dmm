@@ -27487,14 +27487,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
-"bVi" = (
-/obj/machinery/light_switch/east{
-	pixel_y = -4
-	},
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/station/security/main)
 "bVj" = (
 /obj/table/reinforced/auto,
 /obj/item/device/audio_log,
@@ -34486,16 +34478,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
-"fGB" = (
-/obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "fGJ" = (
 /obj/stool/chair/office/purple,
 /obj/stool/chair/office/purple,
@@ -35957,6 +35939,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
+"hMq" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "hNb" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -38988,6 +38982,16 @@
 /obj/item/pen,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"mpV" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "mqo" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
@@ -39102,6 +39106,14 @@
 /obj/item/currency/spacecash/fifty,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"mAC" = (
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/main)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -40630,8 +40642,7 @@
 /area/station/security/processing)
 "oyv" = (
 /obj/table/wood/round/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
@@ -42960,20 +42971,6 @@
 /obj/forcefield/energyshield/perma/vehicle,
 /turf/simulated/floor/martian,
 /area/evilreaver)
-"scd" = (
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	req_access = null;
-	id = "quarters_hos"
-	},
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "sdf" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -91050,7 +91047,7 @@ bJR
 kxQ
 bRG
 bSM
-fGB
+mpV
 bVX
 bVX
 bWH
@@ -92563,7 +92560,7 @@ bSO
 bTT
 bVc
 bVc
-scd
+hMq
 bVc
 bVc
 bVc
@@ -95883,7 +95880,7 @@ bQR
 aCG
 bSV
 bTW
-bVi
+mAC
 bWg
 bWT
 aql
