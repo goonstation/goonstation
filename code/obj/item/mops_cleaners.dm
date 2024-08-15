@@ -1316,16 +1316,16 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 /obj/item/gun/sprayer
 	name = "spray cleaner test" //I put test in the name so I'm forced to change it before release :)
 	desc = "TODO"
-	icon_state = "tsunami"
+	icon_state = "sprayer"
 	item_state = "tsunami"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	color = "blue"
 
 	New()
 		. = ..()
 		src.set_current_projectile(new /datum/projectile/special/shotchem/wave)
 		src.projectiles = list(src.current_projectile, new /datum/projectile/special/shotchem/wave/wide, new /datum/projectile/special/shotchem/wave/single)
+		src.UpdateIcon()
 
 	proc/get_tank()
 		RETURN_TYPE(/obj/item/reagent_containers/backtank)
@@ -1335,6 +1335,19 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		if (istype(M.back, /obj/item/reagent_containers/backtank))
 			return M.back
 		return null
+
+	update_icon(...)
+		switch(src.current_projectile_num)
+			if (1)
+				src.icon_state = "[initial(src.icon_state)]-normal"
+			if (2)
+				src.icon_state = "[initial(src.icon_state)]-wide"
+			if (3)
+				src.icon_state = "[initial(src.icon_state)]-narrow"
+
+	set_current_projectile(datum/projectile/newProj)
+		. = ..()
+		src.UpdateIcon()
 
 	canshoot(mob/user)
 		return src.get_tank()?.reagents.total_volume > src.current_projectile.cost
@@ -1354,14 +1367,17 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 /obj/item/reagent_containers/backtank
 	name = "pressurized back tank"
 	desc = "TODO"
-	icon = 'icons/obj/items/tank.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	icon_state = "jetpack_mag0"
+	icon_state = "backtank"
 	item_state = "jetpack_mag"
-	color = "yellow"
 	initial_volume = 200
 	initial_reagents = list("cleaner" = 200)
 	incompatible_with_chem_dispensers = TRUE
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
+
+	New(loc, new_initial_reagents)
+		..()
+		src.AddComponent(/datum/component/reagent_overlay, src.icon, "backtank", 4)
