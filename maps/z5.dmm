@@ -377,6 +377,7 @@
 /area/evilreaver/chapel)
 "dB" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "dC" = (
@@ -745,6 +746,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/quarters)
 "hp" = (
@@ -1012,6 +1014,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/refinery)
+"jR" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/grime,
+/area/mining/miningoutpost)
 "jS" = (
 /obj/lattice,
 /mob/living/critter/martian/warrior,
@@ -1074,6 +1080,11 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"kP" = (
+/obj/disposalpipe/segment,
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/mining/mainasteroid)
 "kS" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -1105,6 +1116,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/power)
 "lo" = (
@@ -1224,6 +1236,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/quarters)
 "my" = (
@@ -1234,7 +1247,9 @@
 /turf/simulated/floor/grime,
 /area/mining/quarters)
 "mA" = (
-/obj/machinery/computer/communications,
+/obj/machinery/computer/communications{
+	dir = 8
+	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -1829,6 +1844,10 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/caution/east,
 /area/tech_outpost)
+"pZ" = (
+/obj/machinery/computer/transit_shuttle/johnbus,
+/turf/simulated/floor/grime,
+/area/mining/dock)
 "qc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2634,6 +2653,7 @@
 /area/evilreaver/storage/tools)
 "un" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "uq" = (
@@ -2866,6 +2886,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "vK" = (
@@ -3283,6 +3304,10 @@
 "xJ" = (
 /turf/simulated/floor/caution/west,
 /area/mining/manufacturing)
+"xK" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/grime,
+/area/mining/miningoutpost)
 "xL" = (
 /obj/disposalpipe/segment/transport,
 /obj/decal/stripe_delivery,
@@ -4024,6 +4049,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "Bt" = (
@@ -4275,6 +4301,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/power)
 "CJ" = (
@@ -4573,6 +4600,11 @@
 "Ey" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
+"ED" = (
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/table/auto,
+/turf/simulated/floor/grime,
+/area/mining/comms)
 "EF" = (
 /obj/grille/catwalk,
 /obj/machinery/power/data_terminal,
@@ -5321,6 +5353,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Ij" = (
@@ -6300,6 +6333,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/mining/quarters)
+"No" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "Np" = (
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
@@ -7031,6 +7073,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
+"Rv" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/grime,
+/area/mining/miningoutpost)
 "Rx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7988,6 +8034,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "WN" = (
@@ -8005,6 +8052,12 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/noGenerate)
+"WT" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/mining/comms)
 "WW" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -8054,6 +8107,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"Xb" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/grime,
+/area/mining/miningoutpost)
 "Xd" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -8166,6 +8223,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/refinery)
+"XQ" = (
+/obj/machinery/vending/medical_public,
+/turf/simulated/floor/grime,
+/area/mining/miningoutpost)
 "XR" = (
 /obj/lattice{
 	dir = 4;
@@ -8369,6 +8430,7 @@
 /area/evilreaver/storage/tools)
 "YX" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "YZ" = (
@@ -8378,6 +8440,18 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
+"Za" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/grime,
+/area/mining/dock)
 "Zb" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/bar,
@@ -8503,6 +8577,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
+/obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "ZR" = (
@@ -17566,18 +17641,18 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
 Cx
 Cx
 Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -17868,23 +17943,23 @@ aa
 aa
 aa
 aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
 aa
 aa
 aa
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
 aa
 aa
 aa
@@ -18170,24 +18245,24 @@ aa
 aa
 aa
 aa
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
+Cx
 aa
 aa
 aa
 aa
 aa
 aa
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
-Cx
 aa
 aa
 aa
@@ -18465,13 +18540,7 @@ yX
 yX
 yX
 yX
-yX
-yX
-yX
-yX
-yX
-yX
-yX
+yD
 EU
 Sl
 Sl
@@ -18491,6 +18560,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -18767,13 +18842,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+EU
 EU
 eT
 eT
@@ -18794,6 +18863,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -19069,14 +19144,8 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 EU
+pZ
 eT
 eT
 eT
@@ -19096,6 +19165,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -19371,13 +19446,7 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+EU
 EU
 eT
 eT
@@ -19398,6 +19467,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -19650,7 +19725,7 @@ aa
 Nf
 us
 fB
-fB
+kP
 fB
 eA
 Tn
@@ -19674,12 +19749,6 @@ Yi
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
 EU
 eT
 eT
@@ -19699,6 +19768,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -19976,12 +20051,6 @@ Yi
 Yi
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
 EU
 eT
 eT
@@ -20000,6 +20069,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -20278,12 +20353,6 @@ Yi
 Yi
 Yi
 aa
-aa
-aa
-aa
-aa
-aa
-aa
 EU
 eT
 eT
@@ -20301,6 +20370,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -20580,12 +20655,6 @@ Yi
 Yi
 Yi
 Yi
-Yi
-aa
-aa
-aa
-aa
-aa
 EU
 eT
 eT
@@ -20598,6 +20667,12 @@ Cx
 Cx
 Cx
 Cx
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -20883,14 +20958,14 @@ EU
 EU
 EU
 EU
-EU
-EU
-EU
-EU
-EU
-EU
 eT
 eT
+EU
+EU
+EU
+EU
+EU
+EU
 EU
 EU
 EU
@@ -21200,7 +21275,7 @@ eT
 eT
 eT
 eT
-eT
+Gq
 Sl
 aa
 aa
@@ -22399,8 +22474,8 @@ aa
 aa
 aa
 EU
-em
-em
+Za
+Za
 EU
 aa
 aa
@@ -24777,7 +24852,7 @@ aa
 aa
 Yi
 Yi
-Yi
+oX
 oX
 pd
 Ex
@@ -25079,8 +25154,8 @@ aa
 aa
 Yi
 Yi
-Yi
 oX
+Xb
 eu
 AR
 VP
@@ -25381,8 +25456,8 @@ aa
 aa
 Yi
 Yi
-Yi
 oX
+XQ
 jJ
 SG
 Ex
@@ -25683,7 +25758,7 @@ yX
 gw
 Yi
 Yi
-Yi
+oX
 oX
 pd
 Ex
@@ -26300,8 +26375,8 @@ Yi
 Yi
 Yi
 Yi
-Yi
 oX
+xK
 pd
 Ex
 oX
@@ -26602,8 +26677,8 @@ Yi
 Yi
 Yi
 Yi
-Yi
 oX
+jR
 pd
 Ex
 oX
@@ -26904,8 +26979,8 @@ Yi
 Yi
 Yi
 Yi
-Yi
 oX
+Rv
 pd
 Ex
 oX
@@ -27206,14 +27281,14 @@ Yi
 Yi
 Yi
 Yi
-Yi
+oX
 oX
 dh
 VP
 OZ
 bN
 bX
-bX
+WT
 Ri
 Yi
 Yi
@@ -27514,7 +27589,7 @@ pd
 Ex
 dB
 bX
-bX
+ED
 mA
 lQ
 Vn
@@ -29001,7 +29076,7 @@ aa
 aa
 fv
 Hj
-YX
+No
 vn
 vn
 YX
@@ -29303,7 +29378,7 @@ aa
 aa
 fv
 Hj
-YX
+No
 vn
 vn
 YX
