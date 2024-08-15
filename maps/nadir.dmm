@@ -14531,9 +14531,6 @@
 /obj/stool/bench/red/auto,
 /obj/landmark/start/job/security_officer,
 /obj/disposalpipe/segment/vertical,
-/obj/item/device/radio/intercom/security{
-	dir = 8
-	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -17779,6 +17776,9 @@
 	},
 /obj/table/reinforced/auto,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/ai_monitored/armory)
 "hAU" = (
@@ -21077,6 +21077,9 @@
 "iSE" = (
 /obj/machinery/computer/riotgear{
 	pixel_y = 28
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 8
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
