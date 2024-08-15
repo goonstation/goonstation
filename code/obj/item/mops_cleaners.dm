@@ -98,7 +98,7 @@ TRASH BAG
 	name = "chemicals"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "tsunami"
-	cost = 10
+	cost = 20
 	sname = "wave"
 	projectile_speed = 16
 	shot_sound = 'sound/effects/bigwave.ogg'
@@ -123,7 +123,7 @@ TRASH BAG
 
 	single
 		sname = "narrow"
-		cost = 5
+		cost = 10
 		size = 0
 		scale = 1/3
 		chem_pct_app_tile = 0.1
@@ -131,7 +131,7 @@ TRASH BAG
 
 	wide
 		sname = "wide"
-		cost = 20
+		cost = 30
 		size = 2
 		scale = 5/3
 		chem_pct_app_tile = 0.05
@@ -1383,7 +1383,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "backtank"
 	item_state = "jetpack_mag"
-	initial_volume = 200
+	initial_volume = 500
 	initial_reagents = list("cleaner" = 200)
 	incompatible_with_chem_dispensers = TRUE
 	w_class = W_CLASS_BULKY
