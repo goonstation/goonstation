@@ -896,7 +896,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/weakened = 0
 	var/amount = 2
 	var/invincible = 0
-	var/quality = 0
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
@@ -993,7 +992,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#2070CC"
 			default_ore = /obj/item/raw_material/ice
 			hardness = 5
-			quality = 15
 			amount = 6
 
 		ice_char

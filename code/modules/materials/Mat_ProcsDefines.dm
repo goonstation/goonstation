@@ -367,58 +367,6 @@ var/global/list/material_cache
 		else
 			return "Unknown"
 
-/// Simply returns a string for a given quality. Used as prefix for objects.
-/proc/getQualityName(var/quality)
-	switch(quality)
-		if(-INFINITY to -101)
-			return "useless"
-		if(-100 to -91)
-			return "atrocious"
-		if(-90 to -81)
-			return "wretched"
-		if(-80 to -71)
-			return "crap"
-		if(-70 to -61)
-			return "awful"
-		if(-60 to -51)
-			return "terrible"
-		if(-50 to -41)
-			return "bad"
-		if(-40 to -31)
-			return "shabby"
-		if(-30 to -21)
-			return "mediocre"
-		if(-20 to -11)
-			return "low-quality"
-		if(-10 to -1)
-			return "poor"
-		if(0)
-			return ""
-		if(1 to 10)
-			return "decent"
-		if(11 to 20)
-			return "fine"
-		if(21 to 30)
-			return "good"
-		if(31 to 40)
-			return "great"
-		if(41 to 50)
-			return "high-quality"
-		if(51 to 60)
-			return "excellent"
-		if(61 to 70)
-			return "superb"
-		if(71 to 80)
-			return "incredible"
-		if(81 to 90)
-			return "amazing"
-		if(91 to 100)
-			return "supreme"
-		if(101 to INFINITY)
-			return "perfect"
-		else
-			return "odd"
-
 /// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/M)
 	for(var/datum/material_recipe/R in materialRecipes)
