@@ -50,6 +50,7 @@
 		if (air_contents)
 			qdel(air_contents)
 			air_contents = null
+		disconnect()
 
 		..()
 
