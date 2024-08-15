@@ -105,8 +105,9 @@ TRASH BAG
 	var/size = 1
 
 	cross_turf(obj/projectile/O, turf/T)
+		var/dir = angle2dir(O.angle)
 		for (var/i in -size to size)
-			var/turf/side_turf = get_steps(O, turn(O.dir, 90), i)
+			var/turf/side_turf = get_steps(O, turn(dir, 90), i)
 			..(O, side_turf)
 
 	on_launch(obj/projectile/O)
