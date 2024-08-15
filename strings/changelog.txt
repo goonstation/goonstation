@@ -1,5 +1,13 @@
 
 (t)wed aug 14 24
+(u)LeahTheTech
+(p)20302
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(*)Removed the machine translator implant recipe from the robotics fabricator. Silicons may now communicate freely without fear of being overheard.
+(u)TDHooligan
+(p)20287
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Screwdrivers, daggers and forks now have a new special attack.
 (u)Cherman0
 (p)20278
 (e)🗺🔎🔄🏅📦|A-Mapping, C-Code-Quality, C-Rework, A-Medal, A-Game-Objects
