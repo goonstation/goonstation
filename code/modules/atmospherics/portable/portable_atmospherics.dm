@@ -47,10 +47,10 @@
 			air_contents?.react() //ZeWaka: Fix for null.react()
 
 	disposing()
+		disconnect()
 		if (air_contents)
 			qdel(air_contents)
 			air_contents = null
-		disconnect()
 
 		..()
 
