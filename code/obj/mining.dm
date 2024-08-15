@@ -1363,24 +1363,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create(src)
-
-				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
-				if(ore_to_create ==  /obj/item/raw_material/rock)
-					continue
-
-				if(MAT.material)
-					//If we don't use quality anymore, remove this
-					MAT.material = MAT.material.getMutable()
-					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.getQuality(), src.quality)
-						MAT.material.setQuality(newQual)
-						MAT.quality = newQual
-					else
-						MAT.material.setQuality(src.quality)
-						MAT.quality = src.quality
-
-				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
+				new ore_to_create(src)
 		if(!icon_old)
 			icon_old = icon_state
 

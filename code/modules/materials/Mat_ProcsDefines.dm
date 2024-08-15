@@ -101,7 +101,6 @@ var/global/list/material_cache
 					strPrefix += " [X]"
 				strPrefix = trimtext(strPrefix)
 				src.name_prefix(strPrefix ? strPrefix : "")
-				src.name_prefix(length(getQualityName(mat1.getQuality())) ? getQualityName(mat1.getQuality()) : "")
 			src.name_prefix(mat1.getName() ? mat1.getName() : "")
 			if(use_descriptors)
 				var/strSuffix = jointext(mat1.getSuffixes(), " ")
