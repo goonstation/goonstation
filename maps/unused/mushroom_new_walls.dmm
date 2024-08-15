@@ -14646,9 +14646,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/blueblack,
 /area/station/crew_quarters/captain)
 "bNO" = (

@@ -86,8 +86,8 @@
 
 /atom/movable/screen/parallax_render_source/planet/quadriga // the channel node is near here, an Io-like volcanic, a nasty place
 	parallax_icon_state = "quadriga"
-	initial_x_coordinate = 50
-	initial_y_coordinate = -80
+	initial_x_coordinate = 35
+	initial_y_coordinate = 0
 	parallax_value = 0.03
 	visible_to_gps = TRUE
 	name = "Quadriga"
@@ -95,10 +95,21 @@
 		Surface Outposts: PIEDRA DE ORO, NT-Δ<br>\
 		The crust has been shattered off of a silicate planet, leaving a partially exposed inner core and a thin volcanic mantle. The Frontier's access point to the Channel is found above this wrecked world. Crustal ejecta fills the surrounding region."
 
+/atom/movable/screen/parallax_render_source/planet/channel
+	parallax_icon_state = "channel"
+	initial_x_coordinate = 35
+	initial_y_coordinate = 1
+	parallax_value = 0.031
+	visible_to_gps = TRUE
+	name = "The Channel"
+	desc = "Quadriga Flux Channel<br>\
+		A corroded region of spacetime where electromagnetic fields from Typhon interact with Quadriga's ion plumes and aurora. PTL convergence pulses help stabilize this transient phenomenon."
+
+
 /atom/movable/screen/parallax_render_source/planet/amantes // the space butt, haven of gangs, clown town, shanty colonies
 	parallax_icon_state = "amantes"
-	initial_x_coordinate = 250
-	initial_y_coordinate = 225
+	initial_x_coordinate = 300
+	initial_y_coordinate = 300
 	parallax_value = 0.04
 	visible_to_gps = TRUE
 	name = "Amantes"
@@ -133,9 +144,9 @@
 
 /atom/movable/screen/parallax_render_source/planet/mundus  //  tundra and glacier planet, home of Space Canada
 	parallax_icon_state = "mundus"
-	initial_x_coordinate = 200
+	initial_x_coordinate = 500
 	initial_y_coordinate = 100
-	parallax_value = 0.02
+	parallax_value = 0.025
 	visible_to_gps = TRUE
 	name = "Mundus"
 	desc = "MINI-TERRAN PLANET<br>\
@@ -144,9 +155,9 @@
 
 /atom/movable/screen/parallax_render_source/planet/iustitia // a moon with a major spaceport, diplomatic and cultural hub
 	parallax_icon_state = "iustitia"
-	initial_x_coordinate = 380
+	initial_x_coordinate = 100
 	initial_y_coordinate = 100
-	parallax_value = 0.032
+	parallax_value = 0.035
 	visible_to_gps = TRUE
 	name = "Iustitia"
 	desc = "SILICATE MOON<br>\
@@ -156,9 +167,9 @@
 
 /atom/movable/screen/parallax_render_source/planet/iudicium // a desolate moon with old military sites, bunkers, Ainley hospital
 	parallax_icon_state = "iudicium"
-	initial_x_coordinate = -75
-	initial_y_coordinate = 185
-	parallax_value = 0.042
+	initial_x_coordinate = -150
+	initial_y_coordinate = 100
+	parallax_value = 0.040
 	visible_to_gps = TRUE
 	desc = "SILICATE MOON<br>\
 		SECURE AREA<br>\
@@ -185,9 +196,9 @@
 
 /atom/movable/screen/parallax_render_source/planet/mors // worse than Mars. bad
 	parallax_icon_state = "mors"
-	initial_x_coordinate = 200
+	initial_x_coordinate = -50
 	initial_y_coordinate = 100
-	parallax_value = 0.035
+	parallax_value = 0.030
 	visible_to_gps = TRUE
 	name = "Mors"
 	desc = "CORELESS PLANET<br>\
@@ -196,9 +207,9 @@
 
 /atom/movable/screen/parallax_render_source/planet/regis // possibly blob infested
 	parallax_icon_state = "regis"
-	initial_x_coordinate = -150
+	initial_x_coordinate = 250
 	initial_y_coordinate = -50
-	parallax_value = 0.025
+	parallax_value = 0.04
 	visible_to_gps = TRUE
 	name = "Regis"
 	desc = "SILICATE MOONLET<br>\
