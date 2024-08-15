@@ -133,6 +133,10 @@ TRAYS
 	dir = NORTH
 	throwforce = 7
 
+	New()
+		..()
+		setItemSpecial(/datum/item_special/jab)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
