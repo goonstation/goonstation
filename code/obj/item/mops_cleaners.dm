@@ -1255,18 +1255,40 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	projectile_speed = 16
 	shot_sound = 'sound/effects/bigwave.ogg'
 	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
+	goes_through_mobs = TRUE
+	/// How far to either side of the central path does the projectile extend
 	var/size = 1
+	/// Percentage of total reagents applied to each turf affected
 	var/chem_pct_app_tile = 1/12
+	/// What type of things can we push around?
+	var/push_type = /obj/item
 
 	cross_turf(obj/projectile/O, turf/T)
 		var/dir = angle2dir(O.angle)
 		for (var/i in -size to size)
-			var/turf/side_turf = get_steps(O, turn(dir, 90), i)
+			var/turf/side_turf
+			if (i == 0) //dumb stupid bad wegh
+				side_turf = T
+			else
+				side_turf = get_steps(O, turn(dir, 90), i)
 			..(O, side_turf)
+			src.push_stuff(O, side_turf, dir)
 		if (!(dir in cardinal) && size > 0) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
 			for (var/side_dir in cardinal)
 				var/turf/side_turf = get_step(O, side_dir)
 				..(O, side_turf)
+				src.push_stuff(O, side_turf, dir)
+
+	proc/push_stuff(obj/projectile/O, turf/T, dir)
+		var/count = 0
+		for (var/atom/movable/AM in T)
+			if (!istype(AM, src.push_type) || AM == O.shooter)
+				continue
+			if (!AM.anchored)
+				step(AM, dir)
+			count++
+			if (count > 50) //panic clause for TOO MUCH STUFF
+				return
 
 	on_launch(obj/projectile/O)
 		. = ..()
@@ -1288,6 +1310,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		scale = 5/3
 		chem_pct_app_tile = 0.05
 		projectile_speed = 8
+		push_type = /atom/movable //hehehe
 
 //dumb placeholder here until I finish deciding what to do with the old tsunami stuff
 /obj/item/spraybottle/cleaner/tsunami
