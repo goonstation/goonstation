@@ -24534,28 +24534,28 @@
 	},
 /area/crypt/sigma/mainhall)
 "bSZ" = (
-/obj/table/wood/auto/desk{
-	icon_state = "8"
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_y = 5;
-	pixel_x = -18
-	},
 /obj/item/paper_bin{
 	pixel_x = 6;
-	pixel_y = 9
+	pixel_y = 8
 	},
-/obj/item/stamp/chap{
-	name = "Worn stamp"
+/obj/item/decoration/ashtray{
+	pixel_x = -7;
+	pixel_y = 5;
+	butts = 2;
+	layer = 3.6
 	},
-/obj/item/reagent_containers/food/drinks/bottle/wine{
-	pixel_y = 17;
-	pixel_x = -8
+/obj/table/monodesk/auto/candystash{
+	icon_state = "8"
 	},
-/obj/fakeobject/bookcase{
-	pixel_y = 27
+/obj/item/reagent_containers/food/drinks/bottle/wine/spicy{
+	pixel_x = -11;
+	pixel_y = 23
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/decoration/wineholder{
+	pixel_y = 26;
+	layer = 2
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "bTb" = (
 /turf/unsimulated/floor/caution/corner/nw{
@@ -49759,8 +49759,10 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
 "dDI" = (
-/obj/stool/chair/office/syndie,
-/turf/unsimulated/floor/minitiles/white,
+/obj/stool/chair/office/syndie{
+	dir = 4
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "dDK" = (
 /obj/landmark/viscontents_spawn{
@@ -58918,6 +58920,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"hvd" = (
+/obj/decoration/ritual,
+/obj/map/light/dimred,
+/obj/map/light/dimred,
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "hvA" = (
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
@@ -60972,17 +60980,25 @@
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
 "jej" = (
-/obj/storage/crate/bin,
-/obj/item/paper/folded/ball{
-	pixel_x = -5
+/obj/storage/crate/bin{
+	pixel_x = 5
 	},
 /obj/item/paper/folded/ball{
-	pixel_y = -8
+	pixel_x = 1
 	},
 /obj/item/paper/folded/ball{
-	pixel_x = 3
+	pixel_y = -8;
+	pixel_x = 5
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/item/paper/folded/ball{
+	pixel_x = 10
+	},
+/obj/decoration/paperstack/small{
+	pixel_x = -11;
+	pixel_y = 3;
+	layer = 2.4
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "jey" = (
 /obj/fakeobject/pipe{
@@ -63720,23 +63736,37 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
 "lpt" = (
-/obj/table/wood/auto{
-	icon_state = "12"
-	},
-/obj/item/feather{
-	pixel_y = -2;
-	pixel_x = -8;
-	layer = 4
-	},
-/obj/item/paper/reinforcement_info,
-/obj/item/reagent_containers/glass/bottle/antirad{
-	pixel_y = 12;
-	pixel_x = -13
+/obj/item/paper/reinforcement_info{
+	pixel_y = 4;
+	pixel_x = 2
 	},
 /obj/fakeobject/bookcase{
-	pixel_y = 27
+	pixel_y = 27;
+	icon = 'icons/misc/wander_stuff.dmi';
+	icon_state = "bookshelf_long-L-M";
+	pixel_x = -9
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/item/decoration/quill{
+	pixel_x = -4;
+	pixel_y = 16
+	},
+/obj/fakeobject/bookcase{
+	pixel_y = 27;
+	icon = 'icons/misc/wander_stuff.dmi';
+	icon_state = "bookshelf_long-L-M";
+	pixel_x = 8;
+	layer = 2.3
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal{
+	pixel_y = 17;
+	pixel_x = 15;
+	initial_reagents = list("wine"=5,"dbreath"=25);
+	layer = 4
+	},
+/obj/table/monodesk/auto{
+	icon_state = "12"
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "lpO" = (
 /obj/machinery/conveyor/WE{
@@ -64377,23 +64407,26 @@
 /turf/unsimulated/floor/martian,
 /area/crunch)
 "lTT" = (
-/obj/table/wood/auto/desk{
+/obj/decoration/paperstack/small{
+	pixel_x = -8;
+	pixel_y = 25;
+	layer = 4.1
+	},
+/obj/item/spookbook{
+	pixel_x = -6;
+	pixel_y = 8;
+	layer = 6
+	},
+/obj/item/stamp/centcom{
+	pixel_y = 22;
+	pixel_x = 6;
+	icon_state = "stamp-chap";
+	layer = 5
+	},
+/obj/table/monodesk/auto/files{
 	icon_state = "1"
 	},
-/obj/item/scripture/reddarkhb{
-	pixel_y = 6;
-	pixel_x = -3;
-	name = "Odd tome";
-	desc = "A book filled with numerous odd procedures involving paranormal entities."
-	},
-/obj/item/reagent_containers/food/drinks/mug{
-	pixel_y = 1;
-	pixel_x = 9;
-	icon_state = "HoSMug";
-	name = "Number one paperwork processor mug";
-	desc = "A mug given to the winner of the ticket processing tournament champion after 2456 rounds of intense bureaucratic procedure."
-	},
-/turf/unsimulated/floor/minitiles/white,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "lUk" = (
 /obj/decal/icefloor,
@@ -65384,12 +65417,7 @@
 	},
 /area/sim/racing_track)
 "mRE" = (
-/obj/item/reagent_containers/food/drinks/bottle/wine{
-	pixel_x = -12;
-	pixel_y = 16;
-	layer = 4
-	},
-/turf/unsimulated/floor/minitiles/white,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "mSn" = (
 /obj/fakeobject/pipe{
@@ -70133,27 +70161,25 @@
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "qDP" = (
-/obj/item/paper_booklet,
-/obj/item/paper_booklet{
-	pixel_y = -7;
-	pixel_x = -5
-	},
-/obj/item/paper_booklet{
-	pixel_y = -7;
-	pixel_x = -5
-	},
 /obj/fakeobject/bookcase{
-	pixel_y = 27
-	},
-/obj/table/wood/auto/desk{
-	icon_state = "6"
+	pixel_y = 27;
+	icon = 'icons/misc/wander_stuff.dmi';
+	icon_state = "bookshelf_long-R-M";
+	pixel_x = -8;
+	layer = 2.1
 	},
 /obj/item/decoration/photoframe/black{
 	pixel_y = 4;
 	pixel_x = -28;
 	desc = "Framed photo of some jolly bald man speaking with a blond haired woman on the verge of laughing."
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/decoration/paperstack/massive{
+	pixel_x = -6
+	},
+/obj/table/monodesk/auto{
+	icon_state = "6"
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "qEK" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -74596,9 +74622,18 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "uyI" = (
-/obj/item/paper/folded/ball,
-/obj/item/paper/folded/ball,
-/turf/unsimulated/floor/minitiles/white,
+/obj/item/paper/folded/ball{
+	pixel_y = 11
+	},
+/obj/item/paper/folded/ball{
+	pixel_y = 15;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/spicy{
+	pixel_x = 16;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "uzz" = (
 /obj/table/nanotrasen/auto,
@@ -74701,13 +74736,20 @@
 /area/sim/gunsim/arena)
 "uCF" = (
 /obj/filing_cabinet{
-	pixel_x = 12
+	pixel_x = 13
 	},
 /obj/filing_cabinet{
-	pixel_x = -12
+	pixel_x = -7
 	},
-/obj/storage/secure/filing_cabinet,
-/turf/unsimulated/floor/minitiles/white,
+/obj/storage/secure/filing_cabinet{
+	pixel_x = 3
+	},
+/obj/decoration/paperstack/small{
+	pixel_x = -11;
+	pixel_y = 10;
+	layer = 2.4
+	},
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "uCO" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -75235,19 +75277,29 @@
 	},
 /area/titlescreen)
 "vaq" = (
-/obj/item/paper_booklet{
-	pixel_x = -2;
-	pixel_y = 12
+/obj/decoration/paperstack/large{
+	pixel_y = 19;
+	layer = 3.9
 	},
-/obj/item/paper_booklet,
-/obj/item/paper_booklet{
-	pixel_y = -7;
-	pixel_x = -5
+/obj/decoration/paperstack/large{
+	pixel_y = 11
 	},
-/obj/table/wood/auto{
+/obj/decoration/paperstack/mid{
+	layer = 4
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_y = 21;
+	pixel_x = 9;
+	icon_state = "HoSMug";
+	name = "Number one paperwork processor mug";
+	desc = "A mug given to the winner of the ticket processing tournament champion after 2456 rounds of intense bureaucratic procedure.";
+	layer = 4.5
+	},
+/obj/machinery/light/small/floor/warm/very,
+/obj/table/monodesk/auto{
 	icon_state = "3"
 	},
-/turf/unsimulated/floor/minitiles/white,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "vaG" = (
 /obj/landmark/chess{
@@ -75305,6 +75357,17 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"vbS" = (
+/obj/map/light/brighterwhite,
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_2";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "vcq" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -77785,16 +77848,24 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "wUb" = (
-/obj/machinery/weapon_stand/shotgun_rack{
-	pixel_y = 27
-	},
 /obj/decal/poster/wallsign/escape_sign{
-	pixel_y = 16
+	pixel_y = 16;
+	layer = 4.5
 	},
 /obj/fakeobject/falseladder{
-	pixel_y = -10
+	pixel_y = -8;
+	desc = "It goes down until it is cut off by a closed steel airlock."
 	},
-/turf/unsimulated/floor/minitiles/white,
+/obj/fakeobject/bookcase{
+	pixel_y = 27;
+	icon = 'icons/misc/wander_stuff.dmi';
+	icon_state = "shotgun_rack";
+	name = "shotgun rack";
+	desc = "A rack for holding 3 shotguns."
+	},
+/obj/map/light/dimred,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "wVh" = (
 /obj/grille/catwalk,
@@ -77970,33 +78041,25 @@
 	},
 /area/iomoon/base)
 "xdE" = (
-/obj/stool/chair/comfy/sleek{
-	icon_state = "arm-fpewL"
-	},
-/obj/item/paper/folded/ball{
-	pixel_x = 8;
-	pixel_y = 41
-	},
 /obj/storage/secure/closet/brig{
-	pixel_x = 4;
+	pixel_x = 7;
 	_health = 999999;
 	anchored = 1;
 	name = "Arms locker";
 	desc = "A card-locked safe for storage of firearms.";
-	req_access = list(37)
+	req_access = list(37);
+	admin_access_override = 1
 	},
-/obj/item/clothing/under/misc/turds,
-/obj/item/clothing/shoes/swat/heavy,
-/obj/item/clothing/head/NTberet/commander,
 /obj/item/card/id/nt_specialist{
 	pixel_y = 7;
 	desc = "It seems by punctually completing paperwork someone has gained recognition as a paperwork specialist.";
 	name = "Paperwork Specialist's ID"
 	},
-/obj/machinery/light/incandescent/warm/very{
-	on = 1
-	},
-/turf/unsimulated/floor/carpet/red/decal,
+/obj/item/decoration/knightbook,
+/obj/item/clothing/shoes/swat/heavy,
+/obj/item/clothing/head/NTberet/commander,
+/obj/item/clothing/under/misc/turds,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "xem" = (
 /obj/indestructible/shuttle_corner{
@@ -78348,7 +78411,7 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 8
 	},
-/turf/unsimulated/floor/minitiles/white,
+/turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "xqY" = (
 /obj/map/light/brightwhite,
@@ -150412,7 +150475,7 @@ aES
 aES
 aES
 aES
-aES
+hvd
 aES
 aES
 aES
@@ -150714,7 +150777,7 @@ xax
 wel
 wel
 wel
-xax
+vbS
 wel
 wel
 aES
