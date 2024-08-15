@@ -1732,9 +1732,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return
 
 	proc/dispense_product(product, datum/manufacture/M, var/list/materials_used)
+		var/atom/movable/A
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
-				var/atom/movable/A = new product(src)
+				A = new product(src)
 				if (isitem(A))
 					var/obj/item/I = A
 					M.modify_output(src, I, materials_used)
@@ -1742,7 +1743,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				else
 					A.set_loc(src.get_output_location(A))
 			else
-				new product(get_output_location())
+				A = new product(get_output_location())
 
 		else if (istext(product) || isnum(product))
 			if (istext(product) && copytext(product,1,8) == "reagent")
@@ -1757,23 +1758,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (welp.Width() > 32 || welp.Height() > 32)
 				welp.Scale(32, 32)
 				product = welp
-			var/obj/dummy = new /obj/item(get_turf(src))
-			dummy.name = "strange thing"
-			dummy.desc = "The fuck is this?"
-			dummy.icon = welp
-
+			A = new /obj/item(get_turf(src))
+			A.name = "strange thing"
+			A.desc = "The fuck is this?"
+			A.icon = welp
 		else if (isfile(product)) // adapted from vending machine code
 			var/S = sound(product)
 			if (S)
 				playsound(src.loc, S, 50, 0)
 
-		else if (isobj(product))
-			var/obj/X = product
-			X.set_loc(get_output_location())
+		else if (isobj(product) || ismob(product))
+			A = product
+			A.set_loc(get_output_location())
 
-		else if (ismob(product))
-			var/mob/X = product
-			X.set_loc(get_output_location())
+		return A
 
 	proc/flip_out()
 		if (status & BROKEN || status & NOPOWER || !src.malfunction)

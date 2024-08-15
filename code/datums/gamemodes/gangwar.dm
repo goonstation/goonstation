@@ -14,6 +14,8 @@
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
+	var/minimum_players = 15 // Minimum ready players for the mode
+
 	var/slow_process = 0			//number of ticks to skip the extra gang process loops
 	var/shuttle_called = FALSE
 
@@ -29,6 +31,13 @@
 #endif
 /datum/game_mode/gang/pre_setup()
 	var/num_players = src.roundstart_player_count()
+
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (num_players < minimum_players)
+		message_admins("<b>ERROR: Minimum player count of [minimum_players] required for Gang game mode, aborting gang round pre-setup.</b>")
+		logTheThing(LOG_GAMEMODE, src, "Failed to start gang mode. [num_players] players were ready but a minimum of [minimum_players] players is required. ")
+		return 0
+#endif
 
 	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
 	logTheThing(LOG_GAMEMODE, src, "Counted [num_players] available, with [PLAYERS_PER_GANG_GENERATED] per gang that means [num_teams] gangs.")
@@ -779,9 +788,11 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
-			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || !ishuman(M.current) || (M.assigned_role in security_jobs))
+			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || !ishuman(M.current) || (M.assigned_role in security_jobs) || M.assigned_role == "Captain")
 				continue
 			if (isnull(M.current.loc)) //deleted or an admin who has removeself'd
+				continue
+			if (is_dead_or_ghost_role(M.current)) //stop sending PDA messages to the afterlife
 				continue
 			if (!(M in deferred_minds))
 				mindList.Add(M)

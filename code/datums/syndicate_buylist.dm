@@ -465,6 +465,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A tool which allows you to scan and plant fingerprints."
 	cost = 1
 
+/datum/syndicate_buylist/traitor/blowgun
+	name = "Blowgun"
+	item = /obj/item/storage/briefcase/instruments/blowgun/tranq
+	desc = "A blowgun with a set of 8 knockout darts. \"Cunningly\" disguised as a flute."
+	cost = 4
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/idtracker

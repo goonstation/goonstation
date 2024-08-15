@@ -129,12 +129,11 @@ A Flamethrower in various states of assembly
 		var/datum/gas_mixture/gastank_aircontents = src.gastank.air_contents
 
 		var/chem_amount = min(src.fueltank?.reagents.total_volume, src.amt_chem/chem_divisor)
-		var/datum/reagents/chems = new(chem_amount)
 		if(!P.reagents)
 			P.create_reagents(chem_amount)
 		fueltank_reagents.trans_to_direct(P.reagents, chem_amount)
 
-		P_special_data["proj_color"] = chems.get_average_color()
+		P_special_data["proj_color"] = P.reagents.get_average_color().to_rgb()
 		P_special_data["IS_LIT"] = src.lit //100
 		P_special_data["burn_temp"] = src.base_temperature
 

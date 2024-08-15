@@ -218,6 +218,10 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_g = 0.8
 	color_b = 0.8
 
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
+
 	syndicate
 		name = "syndicate field protective mask"
 		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
@@ -628,6 +632,46 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	icon_state = "anime"
 	item_state = "anime"
 	see_face = FALSE
+
+/obj/item/clothing/mask/steel
+	name = "sheet welded mask"
+	desc = "A crudely welded mask made by attaching bent sheets. Highly protective at the cost of visibility"
+	icon_state = "steel"
+	item_state = "steel"
+	see_face = FALSE
+	allow_staple = 0
+	var/low_visibility = TRUE
+
+	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
+		if (isweldingtool(W) && low_visibility)
+			if(!W:try_weld(user, 1))
+				return
+			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
+			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+			setProperty("meleeprot_head", 3)
+			delProperty("disorient_resist_eye")
+			src.low_visibility = FALSE
+			src.desc = "A crudely welded mask made by attaching bent sheets. It's had it's eye slits widened for better visibility."
+		else
+			..()
+
+	setupProperties()
+		..() // Has some level of protection, at the cost of visibility
+		setProperty("meleeprot_head", 5)
+		setProperty("disorient_resist_eye", 35)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (low_visibility)
+			user.addOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+
+	unequipped(mob/user)
+		. = ..()
+		if (low_visibility)
+			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
 
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"

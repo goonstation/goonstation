@@ -82,7 +82,6 @@
 					newname = randomname
 
 				if (newname)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 					newname = strip_html(newname)
 					H.real_name = newname
 					H.on_realname_change()

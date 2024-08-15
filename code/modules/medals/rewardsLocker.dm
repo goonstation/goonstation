@@ -805,7 +805,7 @@
 					succ = TRUE
 
 			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
+				var/obj/item/clothing/gloves/M = H.gloves
 				if (istype(M, /obj/item/clothing/gloves/black))
 					var/prev = M.name
 					M.icon_state = "inspector"
@@ -813,6 +813,7 @@
 					M.name = "inspector's gloves"
 					M.real_name = "inspector's gloves"
 					M.desc = "A pair of gloves for the modern detective. (Base Item: [prev])"
+					M.fingertip_color = "#2d3c52"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -905,6 +906,7 @@
 					M.name = "commander's gloves"
 					M.real_name = "commander's gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#3c6dc3"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1076,6 +1078,7 @@
 					M.name = "CentCom gloves"
 					M.real_name = "CentCom gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#d73715"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
