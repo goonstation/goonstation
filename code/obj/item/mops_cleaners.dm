@@ -1361,7 +1361,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.UpdateIcon()
 
 	canshoot(mob/user)
-		return src.get_tank()?.reagents.total_volume > src.current_projectile.cost
+		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost
 
 	process_ammo(mob/user)
 		if (!src.canshoot(user))
@@ -1391,4 +1391,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	New(loc, new_initial_reagents)
 		..()
 		src.AddComponent(/datum/component/reagent_overlay, src.icon, "backtank", 4)
-		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL)
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
+
+	is_open_container(input)
+		return input

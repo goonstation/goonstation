@@ -67,8 +67,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			src.reagents.add_reagent(src.initial_reagents, initial_volume)
 		src.initial_reagents = null // no mo, no mooooo
 
-	attack_self(mob/user as mob)
-		return
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 	attackby(obj/item/I, mob/user)
@@ -76,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			try_to_apply_lid(I, user)
 		if (reagents)
 			reagents.physical_shock(I.force)
-		return
+		return ..()
 	afterattack(obj/target, mob/user , flag)
 		return
 
@@ -95,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if(over_object == src)
 			return
 		if (!src.is_open_container(FALSE))
-			return
+			return ..()
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
