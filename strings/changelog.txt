@@ -1,4 +1,21 @@
 
+(t)wed aug 14 24
+(u)Cherman0
+(p)20278
+(e)🗺🔎🔄🏅📦|A-Mapping, C-Code-Quality, C-Rework, A-Medal, A-Game-Objects
+(+)The captain's antique now requires certain material statistics to make a more powerful gun instead of "quality".
+(u)JORJ949
+(p)20100
+(e)⚖📦💡|C-Balance, A-Game-Objects, A-Station-Systems
+(*)Armory deauthorization cooldown now starts upon authorization.
+(u)JORJ949
+(p)18622
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(*)Armory doors are now immune to wire hacking.
+(u)JORJ949
+(p)20248
+(e)🗺💅|A-Mapping, C-QoL
+(+)Nadir security has received a few minor changes. HoSes should take particular note of the armory.
 (t)mon aug 12 24
 (u)TDHooligan
 (p)20254
