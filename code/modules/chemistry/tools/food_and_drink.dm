@@ -1640,7 +1640,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal //wander office item
 	name = "crystal wine glass"
-	desc = "What is a man? A miserable little pile of secrets"
+	desc = "What is a man? A miserable little pile of secrets."
 	icon = 'icons/misc/wander_stuff.dmi'
 	icon_state = "crystal-wine"
 	shard_amt = 3
