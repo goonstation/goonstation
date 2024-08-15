@@ -1024,11 +1024,10 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
+/obj/item/storage/wall/office{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -1040,15 +1039,16 @@
 	},
 /area/station/chapel/sanctuary)
 "adj" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/stool/chair/red,
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red,
 /area/station/security/main)
 "adl" = (
 /obj/stool/chair/red,
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "adn" = (
@@ -4573,8 +4573,14 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ai_monitored/armory)
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
 "apD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -4823,10 +4829,6 @@
 /obj/item/reagent_containers/syringe,
 /obj/machinery/light/incandescent/cool,
 /obj/item/storage/firstaid/regular,
-/obj/item/chem_grenade/pepper{
-	pixel_x = 11;
-	pixel_y = 3
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aqm" = (
@@ -12741,6 +12743,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
 /turf/simulated/floor,
 /area/station/security/main)
 "aRp" = (
@@ -13110,8 +13114,10 @@
 "aSA" = (
 /obj/stool/chair/red,
 /obj/disposalpipe/segment{
-	dir = 4
+	dir = 1;
+	icon_state = "pipe-c"
 	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSB" = (
@@ -13206,6 +13212,8 @@
 	name = "Security persistent notice board";
 	persistent_id = "security"
 	},
+/obj/stool/chair/red,
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSU" = (
@@ -13235,6 +13243,10 @@
 	name = "interrogation pipe"
 	},
 /obj/disposalpipe/segment,
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSX" = (
@@ -20368,21 +20380,14 @@
 /area/station/bridge/hos)
 "bwr" = (
 /obj/table/reinforced/auto,
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/hand_labeler{
-	pixel_x = 8;
-	pixel_y = 10
-	},
 /obj/disposalpipe/junction/right/west,
-/obj/cable{
-	icon_state = "4-8"
+/obj/machinery/networked/printer{
+	pixel_y = 4;
+	print_id = "Security"
 	},
-/obj/machinery/phone{
-	pixel_x = 9;
-	pixel_y = -3
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -26179,8 +26184,6 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQK" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
 /obj/item/storage/box/handcuff_kit{
 	pixel_x = -6
 	},
@@ -26196,11 +26199,10 @@
 /obj/item/device/ticket_writer{
 	pixel_y = 12
 	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQL" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
 /obj/item/clothing/head/helmet/camera/security{
 	pixel_y = 10
 	},
@@ -26208,6 +26210,10 @@
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
 	name = "interrogation pipe"
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/prisoner_scanner{
+	pixel_x = -11
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -26217,8 +26223,9 @@
 	dir = 4;
 	name = "interrogation pipe"
 	},
-/obj/machinery/computer/announcement/station/security{
-	dir = 4
+/obj/table/reinforced/auto,
+/obj/item/hand_labeler{
+	pixel_y = 7
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -26558,28 +26565,26 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bRM" = (
-/obj/table/reinforced/auto,
-/obj/machinery/networked/printer{
-	pixel_y = 4;
-	print_id = "Security"
-	},
-/obj/item/device/prisoner_scanner,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "0-8"
+/obj/table/reinforced/auto,
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -7;
+	pixel_y = 6
 	},
-/obj/machinery/power/data_terminal,
+/obj/item/chem_grenade/pepper{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bRN" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/donut_box,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bRS" = (
@@ -26820,6 +26825,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bSR" = (
@@ -27459,17 +27465,13 @@
 	},
 /area/station/ai_monitored/armory)
 "bVa" = (
-/obj/storage/secure/crate/plasma/armory/anti_biological{
-	req_access = null
-	},
-/obj/item/gun/flamethrower/assembled/loaded,
-/obj/item/ammo/bullets/flare,
-/obj/item/ammo/bullets/flare,
-/obj/item/gun/kinetic/flaregun,
 /obj/machinery/recharger/wall{
 	pixel_y = 28
 	},
-/turf/simulated/floor/redblack,
+/obj/machinery/vending/security_ammo,
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
 /area/station/ai_monitored/armory)
 "bVc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -27485,14 +27487,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos)
-"bVi" = (
-/obj/machinery/light_switch/east{
-	pixel_y = -4
-	},
-/turf/simulated/floor/red/side{
-	dir = 9
-	},
-/area/station/security/main)
 "bVj" = (
 /obj/table/reinforced/auto,
 /obj/item/device/audio_log,
@@ -27757,6 +27751,10 @@
 	dir = 8;
 	pixel_y = -7
 	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_x = 12;
+	pixel_y = 3
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bWf" = (
@@ -27941,10 +27939,16 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bWJ" = (
-/obj/stool/chair/red{
-	dir = 4
+/obj/storage/secure/crate/plasma/armory/anti_biological{
+	req_access = null
 	},
-/turf/simulated/floor/black,
+/obj/item/gun/kinetic/flaregun,
+/obj/item/ammo/bullets/flare,
+/obj/item/ammo/bullets/flare,
+/obj/item/gun/flamethrower/assembled/loaded,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
 /area/station/ai_monitored/armory)
 "bWK" = (
 /obj/cable{
@@ -28198,13 +28202,11 @@
 /area/station/ai_monitored/armory)
 "bXw" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/communications{
-	dir = 8
-	},
+/obj/machinery/computer3/generic/communications,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "bXx" = (
 /obj/cable{
@@ -28212,6 +28214,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/stool/chair/red{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -28264,7 +28269,6 @@
 /obj/item/kitchen/food_box/donut_box{
 	pixel_y = 7
 	},
-/obj/item/kitchen/food_box/donut_box,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -32655,7 +32659,6 @@
 /area/station/ai_monitored/storage/eva)
 "dth" = (
 /obj/stool/bench/red,
-/obj/landmark/start/job/security_assistant,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
@@ -33096,9 +33099,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
 "dTS" = (
-/obj/machinery/computer/card/department/security{
-	dir = 8
-	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "dWz" = (
@@ -33606,7 +33608,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/red,
-/obj/landmark/start/job/security_officer,
+/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "eHa" = (
@@ -33998,11 +34000,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/item/storage/wall/office{
-	dir = 4;
-	pixel_x = -32;
-	pixel_y = 0
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -34481,16 +34478,6 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
-"fGB" = (
-/obj/machinery/door/airlock/pyro/security/alt,
-/obj/mapping_helper/firedoor_spawn,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/mapping_helper/access/armory,
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/red,
-/area/station/ai_monitored/armory)
 "fGJ" = (
 /obj/stool/chair/office/purple,
 /obj/stool/chair/office/purple,
@@ -35490,10 +35477,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/security_officer,
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/main)
 "gXA" = (
@@ -35952,6 +35939,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
+"hMq" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/hos,
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "hNb" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -36213,16 +36212,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "ili" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south{
-	pixel_z = 1
-	},
 /obj/machinery/light_switch/north{
 	pixel_x = -4
 	},
 /obj/blind_switch/area/north{
 	pixel_x = 4
 	},
+/obj/machinery/computer/security,
 /turf/simulated/floor,
 /area/station/security/main)
 "iln" = (
@@ -37424,6 +37420,9 @@
 /obj/machinery/turretid/armory{
 	pixel_x = -24
 	},
+/obj/machinery/computer/card/department/security{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "jZw" = (
@@ -37603,9 +37602,12 @@
 	name = "Genetic Research"
 	})
 "krS" = (
-/obj/machinery/vending/security_ammo,
-/turf/simulated/floor/redblack,
-/area/station/ai_monitored/armory)
+/obj/disposalpipe/trunk/south{
+	pixel_z = 1
+	},
+/obj/machinery/disposal,
+/turf/simulated/floor,
+/area/station/security/main)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -38980,6 +38982,16 @@
 /obj/item/pen,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
+"mpV" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
 "mqo" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
@@ -39094,6 +39106,14 @@
 /obj/item/currency/spacecash/fifty,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"mAC" = (
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/main)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -40422,7 +40442,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/landmark/start/job/security_officer,
+/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/processing)
 "ofS" = (
@@ -40622,8 +40642,7 @@
 /area/station/security/processing)
 "oyv" = (
 /obj/table/wood/round/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_south,
@@ -40745,6 +40764,13 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/firealarm/west,
+/obj/machinery/recharger{
+	pixel_x = -7
+	},
+/obj/machinery/recharger{
+	pixel_x = 7
+	},
+/obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/security/main)
 "oEw" = (
@@ -41602,7 +41628,6 @@
 /area/station/crew_quarters/courtroom)
 "pLB" = (
 /obj/stool/bench/red,
-/obj/landmark/start/job/security_assistant,
 /turf/simulated/floor,
 /area/station/security/checkpoint/sec_foyer)
 "pMh" = (
@@ -42946,20 +42971,6 @@
 /obj/forcefield/energyshield/perma/vehicle,
 /turf/simulated/floor/martian,
 /area/evilreaver)
-"scd" = (
-/obj/mapping_helper/access/hos,
-/obj/mapping_helper/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	req_access = null;
-	id = "quarters_hos"
-	},
-/obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "sdf" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
@@ -45231,9 +45242,9 @@
 	},
 /area/station/science/teleporter)
 "vVf" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "vVQ" = (
@@ -45931,10 +45942,10 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment,
-/obj/landmark/start/job/security_officer,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "wNG" = (
@@ -91036,7 +91047,7 @@ bJR
 kxQ
 bRG
 bSM
-fGB
+mpV
 bVX
 bVX
 bWH
@@ -91943,7 +91954,7 @@ kbS
 hmK
 bJR
 bTR
-krS
+bTR
 bXw
 bXx
 bVX
@@ -92549,7 +92560,7 @@ bSO
 bTT
 bVc
 bVc
-scd
+hMq
 bVc
 bVc
 bVc
@@ -92841,9 +92852,9 @@ adF
 bIX
 bJR
 ili
-adj
-adj
-adj
+aNx
+aNx
+aNx
 adl
 bQK
 bwr
@@ -93145,7 +93156,7 @@ bJR
 bKX
 bMm
 bMm
-aNx
+krS
 aSA
 bQL
 bRM
@@ -93451,7 +93462,7 @@ bJR
 aST
 bQM
 bRN
-aqk
+adj
 bCP
 jWa
 bWc
@@ -95869,7 +95880,7 @@ bQR
 aCG
 bSV
 bTW
-bVi
+mAC
 bWg
 bWT
 aql
