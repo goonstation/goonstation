@@ -301,7 +301,8 @@
 		if (src.proj_data == null)
 			die()
 			return
-
+		src.pixel_z = src.proj_data.x_offset
+		src.pixel_w = src.proj_data.y_offset
 		name = src.proj_data.name
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
@@ -532,6 +533,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/name = "projectile"
 	var/icon = 'icons/obj/projectiles.dmi'
 	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
+	var/x_offset = 0 //! absolute pixel offset of the projectile, set automatically based on the icon size
+	var/y_offset = 0
 	var/invisibility = INVIS_NONE
 	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
 	var/brightness = 0
@@ -618,6 +621,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	New()
 		. = ..()
 		generate_stats()
+		var/icon/fuck_you_byond = icon(src.icon)
+		src.x_offset = -(fuck_you_byond.Width() - 32)/2
+		src.y_offset = -(fuck_you_byond.Height() - 32)/2
 
 	onVarChanged(variable, oldval, newval)
 		. = ..()
