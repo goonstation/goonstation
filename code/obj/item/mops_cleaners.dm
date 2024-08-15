@@ -110,7 +110,7 @@ TRASH BAG
 		for (var/i in -size to size)
 			var/turf/side_turf = get_steps(O, turn(dir, 90), i)
 			..(O, side_turf)
-		if (!(dir in cardinal)) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
+		if (!(dir in cardinal) && size > 0) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
 			for (var/side_dir in cardinal)
 				var/turf/side_turf = get_step(O, side_dir)
 				..(O, side_turf)
@@ -126,13 +126,15 @@ TRASH BAG
 		size = 0
 		scale = 1/3
 		chem_pct_app_tile = 0.1
+		projectile_speed = 24
 
 	wide
 		sname = "wide"
 		cost = 20
 		size = 2
 		scale = 5/3
-		chem_pct_app_tile = 0.1
+		chem_pct_app_tile = 0.05
+		projectile_speed = 8
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
