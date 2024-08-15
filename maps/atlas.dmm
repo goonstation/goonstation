@@ -14686,6 +14686,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"eyH" = (
+/obj/decal/poster/wallsign/warning3,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ranch)
 "eyO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
@@ -17879,6 +17883,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"olo" = (
+/obj/decal/poster/wallsign/warning3,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
 "oph" = (
 /obj/decal/mule/beacon,
 /obj/machinery/navbeacon/mule/chapel_north/east,
@@ -66732,7 +66740,7 @@ aGZ
 aCM
 rOO
 mYw
-axg
+olo
 aIz
 aaa
 aax
@@ -67336,7 +67344,7 @@ aFr
 aGk
 aGk
 aGk
-aGk
+eyH
 aIz
 aaa
 aaa
