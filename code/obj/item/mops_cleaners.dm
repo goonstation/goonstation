@@ -1180,11 +1180,11 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.UpdateIcon()
 
 	proc/get_tank()
-		RETURN_TYPE(/obj/item/reagent_containers/backtank)
+		RETURN_TYPE(/obj/item/reagent_containers/glass/backtank)
 		if (!ismob(src.loc))
 			return null
 		var/mob/M = src.loc
-		if (istype(M.back, /obj/item/reagent_containers/backtank))
+		if (istype(M.back, /obj/item/reagent_containers/glass/backtank))
 			return M.back
 		return null
 
@@ -1219,7 +1219,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			P.create_reagents(src.current_projectile.cost)
 		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
 
-/obj/item/reagent_containers/backtank
+//Why are is all the sane reagent container behaviour on /glass?!!!?
+/obj/item/reagent_containers/glass/backtank
 	name = "pressurized back tank"
 	desc = "TODO"
 	icon = 'icons/obj/janitor.dmi'
@@ -1230,6 +1231,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	initial_volume = 500
 	initial_reagents = list("cleaner" = 200)
 	incompatible_with_chem_dispensers = TRUE
+	shatter_immune = TRUE
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
 
