@@ -44,7 +44,8 @@
 	poison_dart
 		name = "poison dart pouch"
 		icon_state = "ammopouch-double"
-		spawn_contents = list(/obj/item/ammo/bullets/blow_darts = 2, /obj/item/ammo/bullets/blow_darts/madness = 1, /obj/item/ammo/bullets/blow_darts/ls_bee = 1)
+		can_hold = list(/obj/item/gun/kinetic/blowgun, /obj/item/ammo/bullets/tranq_darts)
+		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/blow_darts = 2, /obj/item/ammo/bullets/tranq_darts/blow_darts/madness = 1, /obj/item/ammo/bullets/tranq_darts/blow_darts/ls_bee = 1)
 
 	det_38
 		name = ".38 rounds pouch"

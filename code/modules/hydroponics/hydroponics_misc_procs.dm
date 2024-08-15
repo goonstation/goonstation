@@ -116,7 +116,7 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 	switch(quality_status)
 		if("jumbo")
-			completed_name = "jumbo [completed_name]"
+			completed_name = "JUMBO [uppertext(completed_name)]"
 		if("rotten")
 			switch(quality_score)
 				if(-14 to -11)

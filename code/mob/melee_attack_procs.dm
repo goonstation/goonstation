@@ -222,7 +222,7 @@
 		else
 			qdel(G)
 
-		src.next_click = world.time + (COMBAT_CLICK_DELAY)
+		src.next_click = world.time + src.combat_click_delay
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && length(src.grabbed_by) > 0)
@@ -245,7 +245,7 @@
 		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
-		src.next_click = world.time + (COMBAT_CLICK_DELAY)
+		src.next_click = world.time + src.combat_click_delay
 
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)

@@ -1362,17 +1362,19 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/x = -1
 	var/y = -1
 	var/z = -1
+	///Fully rendered text data about nearby celestial objects, cached here to line up with the coordinates
+	var/parallax_data = null
 
 	return_text()
 		if(..())
 			return
 
 		var/dat = src.return_text_header()
-		dat += "<h4>Space GPS: Pocket Edition</h4>"
+		dat += "<h3>Space GPS: Pocket Edition</h3>"
 
 		dat += "<a href='byond://?src=\ref[src];getloc=1'>Get Coordinates</a>"
-		if (x >= 0)
 
+		if (x >= 0)
 			var/landmark = "Unknown"
 			switch (src.z)
 				if (1)
@@ -1388,7 +1390,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					landmark = "Asteroid Field"
 					#endif
 
-			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
+			dat += "<BR><b>\[</b>X = [src.x], Y = [src.y], Landmark: [landmark]<b>\]</b>"
+			dat += "<br>------------------------------------------------------------------------------"
+			dat += "<br><h4>Currently visible celestial bodies:</h4>"
+			dat += src.parallax_data
 
 		return dat
 
@@ -1401,6 +1406,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.x = T.x
 			src.y = T.y
 			src.z = T.z
+			src.parallax_data = ""
+			var/list/render_sources = usr.client?.parallax_controller?.parallax_render_sources
+			for (var/atom/movable/screen/parallax_render_source/source in render_sources)
+				if (source.visible_to_gps)
+					src.parallax_data += "<br><b>[source.name]</b> - [source.desc]<br>"
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()

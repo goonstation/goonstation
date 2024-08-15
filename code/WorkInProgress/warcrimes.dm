@@ -28,7 +28,6 @@ TYPEINFO(/area/diner/juicer_trader)
 
 /obj/item/clothing/shoes/thong
 	name = "garbage flip-flops"
-	desc = "These cheap sandals don't even look legal."
 	icon_state = "thong"
 	protective_temperature = 0
 	var/possible_names = list("sandals", "flip-flops", "thongs", "rubber slippers", "jandals", "slops", "chanclas")
@@ -37,7 +36,7 @@ TYPEINFO(/area/diner/juicer_trader)
 	examine()
 		. = ..()
 		if(stapled)
-			. += "Two thongs stapled together, to make a MEGA VELOCITY boomarang."
+			. += "Two thongs stapled together, to make a MEGA VELOCITY boomerang."
 		else
 			. += "These cheap [pick(possible_names)] don't even look legal."
 
@@ -47,7 +46,7 @@ TYPEINFO(/area/diner/juicer_trader)
 			boutput(user, "You staple the [src] together to create a mighty thongarang.")
 			name = "thongarang"
 			icon_state = "thongarang"
-			throwforce = 5
+			throwforce = 0
 			throw_range = 10
 			throw_return = 1
 		else

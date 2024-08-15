@@ -1,4 +1,146 @@
 
+(t)wed aug 14 24
+(u)LeahTheTech
+(p)20302
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(*)Removed the machine translator implant recipe from the robotics fabricator. Silicons may now communicate freely without fear of being overheard.
+(u)TDHooligan
+(p)20287
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Screwdrivers, daggers and forks now have a new special attack.
+(u)Cherman0
+(p)20278
+(e)🗺🔎🔄🏅📦|A-Mapping, C-Code-Quality, C-Rework, A-Medal, A-Game-Objects
+(+)The captain's antique now requires certain material statistics to make a more powerful gun instead of "quality".
+(u)JORJ949
+(p)20100
+(e)⚖📦💡|C-Balance, A-Game-Objects, A-Station-Systems
+(*)Armory deauthorization cooldown now starts upon authorization.
+(u)JORJ949
+(p)18622
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(*)Armory doors are now immune to wire hacking.
+(u)JORJ949
+(p)20248
+(e)🗺💅|A-Mapping, C-QoL
+(+)Nadir security has received a few minor changes. HoSes should take particular note of the armory.
+(t)mon aug 12 24
+(u)TDHooligan
+(p)20254
+(e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
+(+)The airlock breaching sledgehammer now has a unique special attack.
+(u)Cogwerks
+(e)📦|A-Game-Objects
+(+)Renamed the Gwydion tranq pistol to Ceridwen
+(u)Egregorious
+(p)20271
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The still is a little nicer to use.
+(u)Egregorious
+(p)20213
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)'Jumbo' quality produce names are now displayed in all caps.
+(u)Soleil
+(p)20029
+(e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
+(+)XIANG|GIESEL have finally added MechComp integration to their SMES units.
+(u)LeahTheTech
+(p)20253
+(e)🆕🎨💅|C-Feature, C-Sprites, C-QoL
+(*)Wearing meson goggles now allows you to see mechcomp connections.
+(t)sun aug 11 24
+(u)Glamurio (Ryou)
+(p)20261
+(e)💅🍝|C-QoL, A-Catering
+(+)Soy sauce and gravy can now be created via mixer.
+(u)DecodeQwertyPls
+(p)20245
+(e)🆕📦⚗|C-Feature, A-Game-Objects, A-Chemistry
+(+)Things inside a container (satchel, backpack, not lockers or crates) will heat up if the container starts burning
+(t)sat aug 10 24
+(u)Tyrant
+(p)20209
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Due to budget cuts, Port-a-Brigs are no longer equipped with soundproofing.
+(u)Mr. Moriarty
+(p)20228
+(e)🆕🔎⚙|C-Feature, C-Code-Quality, A-Internal
+(+)Minimaps now depict walls and doors.
+(t)fri aug 09 24
+(u)Egregorious
+(p)20236
+(e)🆕🍝|C-Feature, A-Catering
+(*)Added Iron Brew, a drink which can be distilled from steel wheat.
+(u)JORJ949
+(p)20226
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The gang gamemode now requires a minimum of 15 players.
+(t)wed aug 07 24
+(u)LeahTheTech
+(p)20219
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Thinktronic™ Space GPS PDA program has been updated to include information on nearby visible celestial bodies (background parallax objects)
+(u)LeahTheTech and Cogwerks
+(p)20216
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Added a blowgun complete with 8 knockout darts to the traitor and spy-thief purchase lists. It costs 4TC.
+(u)Chasu
+(p)20211
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Pizzas can (again) be cut with snipping tools. Knifeless rejoice!
+(t)tue aug 06 24
+(u)LeahTheTech
+(+)Engivacs in engineering lockers now spawn with toolboxes loaded.
+(+)Molitz B geodes now release agent B when broken open.
+(+)Mining charges can now be placed on geodes anywhere.
+(+)Broken open geodes can now be destroyed by explosions.
+(u)LeahTheTech + Jan.antilles
+(p)20199
+(e)📦|A-Game-Objects
+(*)Nanotrasen Space Law has been completely rewritten and updated to actually be something you should show sec assistants.
+(t)mon aug 05 24
+(u)LeahTheTech
+(+)The lawbringer's blaster mode now has a different sound effect and slightly faster shot speed.
+(u)Valtsu0
+(p)20179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can now also show off the authentication disk
+(u)Bork and Wrench
+(p)20121
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds two new food items to the game: Cheese Danish and Chocolate Covered Cherry. Sprites by Bork.
+(u)Cherman0
+(p)20181
+(e)🔎📦|C-Code-Quality, A-Game-Objects
+(+)"Wifi Signal Splitter Component" is now just called "Signal Splitter Component"
+(t)sun aug 04 24
+(u)Jan.antilles and Mordent
+(p)20072
+(e)⚖💊💪|C-Balance, A-Medical, A-Traits
+(*)Mildly Mutated now reinforces the mutation (requiring scrambling or gene research to be removed) and grants 1 trait point.
+(*)Geneticists are able to scramble genes at roundstart instead of needing to research radiation emitters.
+(u)LeahTheTech
+(p)20178
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's EXTERMINATE mode with laser blaster projectiles. Keywords remain unchanged.
+(u)LeahTheTech
+(p)20176
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's High Explosive mode with a High Power assault laser mode. Keywords are: BIG SHOT, HIGH POWER and ASSAULT.
+(u)LeahTheTech
+(*)The ship alert button has been fitted with a tiny keyboard (you know, like those old blackberry phones) and now requires a reason to be entered in order to set off the alert.
+(u)Cherman0
+(p)20183
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The nuclear generator turbine now reports its stator load via mechcomp.
+(t)fri aug 02 24
+(u)glowbold + Rubicubie
+(*)Using a badge, ID card, emag or dabbing license in-hand will now show it off with a neat little overlay.
+(u)LeahTheTech
+(+)The "mutiny" status effect given to heads of staff on revolution rounds is now invisible.
+(p)20127
+(e)🚄⚖🧫|C-Performance, C-Balance, C-Experimental
+(*)Radioactive things are now more dangerous to stand next to, you will accumulate a significant dose a lot faster.
 (t)thu aug 01 24
 (u)LeahTheTech
 (p)20159
