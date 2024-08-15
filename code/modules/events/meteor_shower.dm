@@ -488,7 +488,7 @@ var/global/meteor_shower_active = 0
 	exp_hvy = 1
 	exp_lit = 2
 	exp_fsh = 3
-	oredrops = list(/obj/item/raw_material/char, /obj/item/raw_material/molitz, /obj/item/raw_material/rock)
+	oredrops = list(/obj/item/raw_material/char, /obj/item/raw_material/mauxite, /obj/item/raw_material/rock)
 	oredrops_rare = list(/obj/item/raw_material/starstone, /obj/item/raw_material/syreline)
 	transmute_range = 10
 	///Do we spawn a solid lump of rock on impact?

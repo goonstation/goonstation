@@ -318,7 +318,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 						bdna = H.bioHolder.Uid
 						btype = H.bioHolder.bloodType
 					gibs(src.loc, null, bdna, btype)
-					if (isnpcmonkey(H) || jobban_isbanned(H, "Cyborg"))
+					if (isnpcmonkey(H))
 						H.ghostize()
 						var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,
 						/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,
