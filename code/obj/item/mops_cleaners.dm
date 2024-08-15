@@ -98,7 +98,6 @@ TRASH BAG
 	name = "chemicals"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "tsunami"
-	// alpha = 175
 	cost = 10
 	sname = "wave"
 	projectile_speed = 16
@@ -110,15 +109,21 @@ TRASH BAG
 			var/turf/side_turf = get_steps(O, turn(O.dir, 90), i)
 			..(O, side_turf)
 
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.alpha = 175
+
 	single
 		sname = "narrow"
 		cost = 5
 		size = 0
+		scale = 1/3
 
 	wide
 		sname = "wide"
 		cost = 20
 		size = 2
+		scale = 5/3
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
