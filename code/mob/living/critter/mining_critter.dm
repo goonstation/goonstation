@@ -58,9 +58,15 @@
 	New()
 		..()
 		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
+
 
 	is_spacefaring()
 		return TRUE

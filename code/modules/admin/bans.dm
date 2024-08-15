@@ -37,7 +37,7 @@
 
 	/// Add a ban
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE, added_externally = FALSE)
-		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
+		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 
 		var/datum/apiModel/Tracked/BanResource/ban
 		if (!added_externally)
@@ -163,7 +163,7 @@
 
 	/// Update an existing ban
 	proc/update(banId, admin_ckey, server_id, ckey, comp_id, ip, reason, duration, requires_appeal)
-		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
+		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 		var/datum/apiRoute/bans/update/updateBan = new
 		updateBan.routeParams = list("[banId]")
 		updateBan.buildBody(
