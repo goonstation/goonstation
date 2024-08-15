@@ -227,7 +227,7 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "bX" = (
 /turf/simulated/floor/grime,
 /area/mining/comms)
@@ -370,6 +370,17 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
+"dn" = (
+/obj/table/auto,
+/obj/machinery/recharger{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/cargotele{
+	pixel_x = -3
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "du" = (
 /obj/lattice,
 /mob/living/critter/martian/soldier,
@@ -412,6 +423,11 @@
 /area/noGenerate)
 "dT" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/grime,
 /area/mining/dock)
 "dY" = (
@@ -533,12 +549,6 @@
 "eT" = (
 /turf/simulated/floor/grime,
 /area/mining/dock)
-"fb" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/mining/magnet)
 "fc" = (
 /obj/effects/background_objects/regina,
 /turf/space,
@@ -561,11 +571,15 @@
 /area/station/solar/small_backup3)
 "fv" = (
 /obj/grille/catwalk,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "fz" = (
 /obj/crevice{
 	pixel_y = 30
@@ -603,6 +617,20 @@
 	},
 /turf/space,
 /area/noGenerate)
+"fQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/magnet_control)
 "fR" = (
 /turf/space,
 /area/mining/magnet)
@@ -700,7 +728,7 @@
 	dir = 9
 	},
 /turf/simulated/floor/shuttlebay,
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "gV" = (
 /obj/lattice{
 	dir = 1;
@@ -906,6 +934,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
+"iJ" = (
+/obj/machinery/manufacturer/mining,
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "iN" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -951,6 +983,9 @@
 /area/mining/refinery)
 "jl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating/airless,
 /area/mining/magnet_control)
 "jn" = (
@@ -1040,7 +1075,7 @@
 /area/mining/manufacturing)
 "kb" = (
 /turf/simulated/wall/auto/supernorn,
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "kf" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/caution/east,
@@ -1053,6 +1088,10 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"kr" = (
+/mob/living/critter/fermid/grub,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "kz" = (
 /obj/decal/cleanable/molten_item,
 /obj/item/tile/steel,
@@ -1080,6 +1119,12 @@
 /mob/living/critter/martian/soldier,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
+"kO" = (
+/obj/machinery/dispenser{
+	pltanks = 0
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "kP" = (
 /obj/disposalpipe/segment,
 /obj/grille/steel,
@@ -1185,6 +1230,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/comms)
+"lX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/magnet_control)
 "lZ" = (
 /obj/machinery/communications_dish{
 	pixel_y = 7
@@ -1642,7 +1694,7 @@
 	dir = 8;
 	icon_state = "catwalk_cross"
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "oZ" = (
 /obj/shrub{
 	dir = 1;
@@ -1699,6 +1751,16 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"po" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "pq" = (
 /turf/simulated/floor/stairs{
 	dir = 1
@@ -1996,6 +2058,10 @@
 "qE" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/genetics)
+"qF" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "qH" = (
 /obj/machinery/power/data_terminal,
 /obj/computer3frame,
@@ -2040,6 +2106,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
+"qU" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "qX" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -2101,6 +2171,10 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/spyshack)
+"rg" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "rh" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -2279,6 +2353,10 @@
 /obj/mapping_helper/access/mining_outpost,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
+"sb" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "se" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/industrial,
@@ -2460,7 +2538,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "tc" = (
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/grime,
@@ -3194,6 +3272,13 @@
 /area/mining/miningoutpost)
 "xl" = (
 /turf/simulated/floor/stairs/wide/other,
+/area/mining/hangar)
+"xn" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "xp" = (
 /obj/decal/cleanable/blood/gibs{
@@ -3969,7 +4054,7 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "Ba" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/robot_debris{
@@ -4038,6 +4123,10 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
+/area/mining/hangar)
+"Bq" = (
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "Br" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -4131,6 +4220,10 @@
 /obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/damaged3,
 /area/mining/miningoutpost)
+"BM" = (
+/obj/item/raw_material/gold,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "BO" = (
 /obj/rail{
 	dir = 8;
@@ -4454,12 +4547,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/quarters)
-"DK" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/grime,
-/area/mining/hangar)
 "DN" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/east,
@@ -4544,6 +4631,10 @@
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor,
 /area/mining/quarters)
+"Ei" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "Ej" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
@@ -4600,6 +4691,26 @@
 "Ey" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
+"EA" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/tank/jetpack/micro{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/tank/jetpack/micro{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/tank/jetpack/micro{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "ED" = (
 /obj/item/disk/data/floppy/read_only/communications,
 /obj/table/auto,
@@ -4971,6 +5082,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/quarters)
+"Ge" = (
+/obj/machinery/sheet_extruder,
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "Gh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5162,10 +5277,13 @@
 /area/mining/quarters)
 "Hj" = (
 /obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "Hk" = (
 /obj/item/storage/toilet,
 /obj/item/sponge,
@@ -5683,7 +5801,7 @@
 /area/noGenerate)
 "JH" = (
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grime,
 /area/mining/hangar)
@@ -5861,6 +5979,21 @@
 	},
 /turf/simulated/floor/black,
 /area/mining/quarters)
+"KI" = (
+/obj/rack,
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_y = 13
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "KJ" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -6134,6 +6267,10 @@
 	dir = 8
 	},
 /area/tech_outpost)
+"LZ" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "Mb" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -6148,6 +6285,12 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/mining/manufacturing)
+"Ml" = (
+/obj/submachine/cargopad{
+	name = "Outpost Mineral Magnet Pad"
+	},
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "Mn" = (
 /obj/lattice{
 	dir = 6;
@@ -6210,12 +6353,9 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "My" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/grime,
 /area/mining/hangar)
@@ -6340,6 +6480,11 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining_outpost";
+	enter_id = "outer";
+	name = "Mining Outpost"
+	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Np" = (
@@ -6361,6 +6506,13 @@
 /obj/machinery/light/incandescent,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
+/area/mining/hangar)
+"Nu" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grime,
 /area/mining/hangar)
 "Nw" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -6883,6 +7035,9 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grime,
 /area/mining/hangar)
 "Qu" = (
@@ -6891,7 +7046,7 @@
 	dir = 4;
 	icon_state = "catwalk_cross"
 	},
-/area/mining/magnet)
+/area/mining/mainasteroid)
 "Qv" = (
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
@@ -7179,6 +7334,14 @@
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/grime,
 /area/mining/quarters)
+"Sb" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/oreaccumulator,
+/turf/simulated/floor/grime,
+/area/mining/magnet_control)
 "Sd" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating/airless,
@@ -7186,12 +7349,6 @@
 "Se" = (
 /turf/simulated/floor,
 /area/tech_outpost)
-"Sh" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor/shuttlebay,
-/area/mining/magnet)
 "Si" = (
 /obj/machinery/manufacturer/general,
 /obj/decal/stripe_delivery,
@@ -7234,6 +7391,16 @@
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
+"Sv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/magnet_control)
 "Sw" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -7783,6 +7950,17 @@
 /obj/item/reagent_containers/dropper,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
+"Vr" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "Vs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
@@ -8431,8 +8609,17 @@
 "YX" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining_outpost,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "mining_outpost";
+	enter_id = "inner";
+	name = "Mining Outpost"
+	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"YY" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/grime,
+/area/mining/miningoutpost)
 "YZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21877,8 +22064,8 @@ EU
 EU
 EU
 EU
-em
-em
+Za
+Za
 EU
 EU
 aa
@@ -23970,10 +24157,10 @@ Yi
 jN
 jN
 jN
-Yi
 Dy
-DK
-JH
+Dy
+pK
+wy
 pK
 pK
 pK
@@ -24272,9 +24459,9 @@ Yi
 Yi
 Yi
 Yi
-Yi
 Dy
-wy
+Ei
+pK
 Qq
 Pw
 Pw
@@ -24557,11 +24744,11 @@ Ex
 oX
 Yi
 Yi
-Yi
-Yi
-Yi
-Yi
-Yi
+oX
+oX
+oX
+oX
+oX
 Yi
 oX
 oX
@@ -24574,10 +24761,10 @@ Yi
 Yi
 Yi
 Yi
-Yi
 Dy
-wy
-Ck
+qU
+pK
+xn
 TG
 TG
 CY
@@ -24860,9 +25047,9 @@ oX
 oX
 oX
 oX
+YY
 oX
-oX
-oX
+YY
 oX
 oX
 oX
@@ -24879,7 +25066,7 @@ oX
 oX
 Dy
 My
-Ck
+Vr
 ya
 ya
 ya
@@ -25181,7 +25368,7 @@ VP
 VP
 vJ
 JH
-Ck
+Nu
 ya
 ya
 ya
@@ -26084,8 +26271,8 @@ Yi
 Yi
 Yi
 Yi
-Yi
 Dy
+Bq
 pK
 Ck
 ya
@@ -26370,9 +26557,9 @@ oX
 Yi
 Yi
 Yi
-Yi
-Yi
-Yi
+kr
+jN
+rg
 Yi
 Yi
 oX
@@ -26386,8 +26573,8 @@ Yi
 Yi
 Yi
 Yi
-Yi
 Dy
+LZ
 pK
 Fa
 IK
@@ -26670,11 +26857,11 @@ pd
 Ex
 oX
 Yi
-Yi
-Yi
-Yi
-Yi
-Yi
+jN
+jN
+jN
+BM
+jN
 Yi
 Yi
 oX
@@ -26688,14 +26875,14 @@ Yi
 Yi
 Yi
 Yi
-Yi
 Dy
-pK
-pK
-pK
-pK
-pK
-pK
+Dy
+qF
+qF
+qF
+qF
+qF
+qF
 Dy
 aa
 aa
@@ -26972,10 +27159,10 @@ pd
 Ex
 oX
 Yi
-Yi
-Yi
-Yi
-Yi
+jN
+rg
+BM
+jN
 Yi
 Yi
 Yi
@@ -27263,7 +27450,7 @@ hI
 oY
 oY
 bV
-Hj
+tK
 Kv
 Kv
 Kv
@@ -27275,8 +27462,8 @@ ZQ
 Kv
 Yi
 Yi
-Yi
-Yi
+jN
+jN
 Yi
 Yi
 Yi
@@ -27565,14 +27752,14 @@ hI
 Qu
 Qu
 bV
-Hj
+tK
 jl
-vn
-vn
-vn
-vn
-Xf
-dY
+dn
+dn
+iJ
+Ge
+Sb
+BJ
 vn
 Kv
 Yi
@@ -27868,13 +28055,13 @@ gU
 kb
 fv
 Hj
-jl
-vn
-vn
-vn
-vn
-vn
-vn
+fQ
+MX
+MX
+MX
+MX
+po
+dY
 vn
 Kv
 Yi
@@ -28166,18 +28353,18 @@ fR
 fR
 fR
 hI
-Sh
+El
 kb
-fv
-Hj
-jl
+eG
+tK
+Sv
 vn
 vn
 vn
 vn
-iW
 vn
 vn
+sb
 Kv
 Yi
 Yi
@@ -28471,15 +28658,15 @@ hI
 oY
 oY
 bV
-Hj
-jl
+tK
+lX
 Fx
 Fx
+iW
 vn
 vn
 vn
-vn
-vn
+kO
 Kv
 Yi
 Yi
@@ -28772,16 +28959,16 @@ fR
 hI
 Qu
 Qu
-fv
-Hj
+eG
+tK
 Kv
 Kv
 Kv
 Kv
 vn
+Ml
 vn
-vn
-vn
+KI
 Kv
 Yi
 Yi
@@ -29074,8 +29261,8 @@ fR
 hI
 aa
 aa
-fv
-Hj
+eG
+tK
 No
 vn
 vn
@@ -29083,7 +29270,7 @@ YX
 vn
 vn
 vn
-vn
+KI
 Kv
 Yi
 Yi
@@ -29376,8 +29563,8 @@ fR
 hI
 aa
 aa
-fv
-Hj
+eG
+tK
 No
 vn
 vn
@@ -29385,7 +29572,7 @@ YX
 vn
 vn
 vn
-vn
+EA
 Kv
 Yi
 Yi
@@ -29678,7 +29865,7 @@ fR
 hI
 aa
 aa
-fb
+Sw
 Qu
 Kv
 Kv
