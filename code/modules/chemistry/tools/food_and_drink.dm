@@ -1638,6 +1638,16 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_x_offset = -1
 	wedge_y_offset = 3
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal //wander office item
+	name = "crystal wine glass"
+	desc = "What is a man? A miserable little pile of secrets."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "crystal-wine"
+	shard_amt = 3
+	reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	reagent_overlay_icon_state = "wine"
+	reagent_overlay_states = 6
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail
 	name = "cocktail glass"
 	icon_state = "cocktail"
