@@ -1197,14 +1197,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for (var/i = 1, i < cross2.len, i++)
 			var/turf/T = cross2[i]
 			if (cross2[T] < O.curr_t)
-				src.emit_chems(T, O)
-				src.emit_gas(T, 0)
-				if(O.reagents?.total_volume < 0.01)
-					O.die()
+				src.cross_turf(O, T)
 				cross2.Cut(1,2)
 				i--
 			else
 				break
+
+	proc/cross_turf(obj/projectile/O, turf/T)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 0)
+		if(O.reagents?.total_volume < 0.01)
+			O.die()
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		var/turf/T = get_turf(O)

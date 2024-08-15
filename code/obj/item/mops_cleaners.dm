@@ -94,6 +94,29 @@ TRASH BAG
 	initial_volume = 25
 	refill_speed = 0.75
 
+/datum/projectile/special/shotchem/wave
+	name = "chemicals"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "tsunami"
+	// alpha = 175
+	cost = 50
+	projectile_speed = 5
+	shot_sound = 'sound/effects/bigwave.ogg'
+	var/size = 1
+
+	cross_turf(obj/projectile/O, turf/T)
+		for (var/i in -size to size)
+			var/turf/side_turf = get_steps(O, turn(O.dir, 90), i)
+			..(O, side_turf)
+
+	single
+		cost = 5
+		size = 0
+
+	wide
+		cost = 20
+		size = 2
+
 /obj/janitorTsunamiWave
 	name = "chemicals"
 	icon = 'icons/effects/96x96.dmi'
@@ -1281,3 +1304,56 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "biobag"
 	base_state = "biobag"
 	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard
+
+/obj/item/gun/sprayer
+	name = "spray cleaner test" //I put test in the name so I'm forced to change it before release :)
+	desc = "TODO"
+	icon_state = "tsunami"
+	item_state = "tsunami"
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	color = "blue"
+
+	New()
+		. = ..()
+		src.set_current_projectile(new /datum/projectile/special/shotchem/wave)
+		src.projectiles = list(src.current_projectile, new /datum/projectile/special/shotchem/wave/wide, new /datum/projectile/special/shotchem/wave/single)
+
+	proc/get_tank()
+		RETURN_TYPE(/obj/item/reagent_containers/backtank)
+		if (!ismob(src.loc))
+			return null
+		var/mob/M = src.loc
+		if (istype(M.back, /obj/item/reagent_containers/backtank))
+			return M.back
+		return null
+
+	canshoot(mob/user)
+		return src.get_tank()?.reagents.total_volume > src.current_projectile.cost
+
+	process_ammo(mob/user)
+		if (!src.canshoot(user))
+			boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
+			return FALSE
+		return TRUE
+
+	alter_projectile(obj/projectile/P)
+		if(!P.reagents)
+			P.create_reagents(src.current_projectile.cost)
+		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
+		P.special_data["chem_pct_app_tile"] = 0.1 //akjlfskdfjskdfjsdf
+
+/obj/item/reagent_containers/backtank
+	name = "pressurized back tank"
+	desc = "TODO"
+	icon = 'icons/obj/items/tank.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "jetpack_mag0"
+	item_state = "jetpack_mag"
+	color = "yellow"
+	initial_volume = 200
+	initial_reagents = list("cleaner" = 200)
+	incompatible_with_chem_dispensers = TRUE
+	w_class = W_CLASS_BULKY
+	c_flags = ONBACK
