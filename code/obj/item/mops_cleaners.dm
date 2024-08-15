@@ -102,6 +102,7 @@ TRASH BAG
 	sname = "wave"
 	projectile_speed = 16
 	shot_sound = 'sound/effects/bigwave.ogg'
+	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
 	var/size = 1
 	var/chem_pct_app_tile = 1/12
 

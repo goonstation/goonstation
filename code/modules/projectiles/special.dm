@@ -1130,6 +1130,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
 	fullauto_valid = 0
+	var/can_spawn_fluid = FALSE
 
 
 	/// Releases some of the projectile's gas into the turf
@@ -1160,13 +1161,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(!T.reagents) // first get the turf
 			T.create_reagents(100)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
-		copied.reaction(T, TOUCH, 0, 0)
+		copied.reaction(T, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Heat if needed
 			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
-			copied.reaction(A, TOUCH, 0, 0)
+			copied.reaction(A, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Reduce the temperature per turf crossed
 			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
 			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
