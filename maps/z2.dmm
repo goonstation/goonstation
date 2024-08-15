@@ -63736,10 +63736,6 @@
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
 "lpt" = (
-/obj/item/paper/reinforcement_info{
-	pixel_y = 4;
-	pixel_x = 2
-	},
 /obj/fakeobject/bookcase{
 	pixel_y = 27;
 	icon = 'icons/misc/wander_stuff.dmi';
@@ -63765,6 +63761,10 @@
 	},
 /obj/table/monodesk/auto{
 	icon_state = "12"
+	},
+/obj/item/paper/wanderpoem{
+	layer = 2.9;
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
@@ -78059,6 +78059,15 @@
 /obj/item/clothing/shoes/swat/heavy,
 /obj/item/clothing/head/NTberet/commander,
 /obj/item/clothing/under/misc/turds,
+/obj/item/device/light/zippo{
+	desc = "A well used lighter, memento ignis is inscribed on the side.";
+	name = "Well used zippo lighter"
+	},
+/obj/item/clothing/gloves/swat/NT,
+/obj/item/gun/kinetic/lopoint,
+/obj/item/storage/belt/security/shoulder_holster/inspector,
+/obj/item/clothing/shoes/swat,
+/obj/item/clothing/glasses/sunglasses,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/offices/wander)
 "xem" = (
