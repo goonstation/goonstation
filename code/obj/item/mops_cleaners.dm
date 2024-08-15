@@ -103,28 +103,36 @@ TRASH BAG
 	projectile_speed = 16
 	shot_sound = 'sound/effects/bigwave.ogg'
 	var/size = 1
+	var/chem_pct_app_tile = 1/12
 
 	cross_turf(obj/projectile/O, turf/T)
 		var/dir = angle2dir(O.angle)
 		for (var/i in -size to size)
 			var/turf/side_turf = get_steps(O, turn(dir, 90), i)
 			..(O, side_turf)
+		if (!(dir in cardinal)) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
+			for (var/side_dir in cardinal)
+				var/turf/side_turf = get_step(O, side_dir)
+				..(O, side_turf)
 
 	on_launch(obj/projectile/O)
 		. = ..()
 		O.alpha = 175
+		O.special_data["chem_pct_app_tile"] = src.chem_pct_app_tile
 
 	single
 		sname = "narrow"
 		cost = 5
 		size = 0
 		scale = 1/3
+		chem_pct_app_tile = 0.1
 
 	wide
 		sname = "wide"
 		cost = 20
 		size = 2
 		scale = 5/3
+		chem_pct_app_tile = 0.1
 
 /obj/janitorTsunamiWave
 	name = "chemicals"
@@ -1363,7 +1371,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		if(!P.reagents)
 			P.create_reagents(src.current_projectile.cost)
 		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
-		P.special_data["chem_pct_app_tile"] = 0.1 //akjlfskdfjskdfjsdf
 
 /obj/item/reagent_containers/backtank
 	name = "pressurized back tank"
