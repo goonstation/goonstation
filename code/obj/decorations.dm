@@ -723,7 +723,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "blind switch"
 	desc = "A switch for opening the blinds."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light1"
+	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
 	var/on = 0
@@ -757,7 +757,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 	proc/toggle(var/new_state)
 		src.on = new_state
-		src.icon_state = "light[!(src.on)]"
+		src.icon_state = "blind[!(src.on)]"
 		src.UpdateIcon()
 
 	proc/toggle_group()
@@ -777,18 +777,22 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 /obj/blind_switch/north
 	name = "N blind switch"
+	dir = NORTH
 	pixel_y = 24
 
 /obj/blind_switch/east
 	name = "E blind switch"
+	dir = EAST
 	pixel_x = 24
 
 /obj/blind_switch/south
 	name = "S blind switch"
+	dir = SOUTH
 	pixel_y = -24
 
 /obj/blind_switch/west
 	name = "W blind switch"
+	dir = WEST
 	pixel_x = -24
 
 // left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
@@ -796,18 +800,22 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 /obj/blind_switch/area/north
 	name = "N blind switch"
+	dir = NORTH
 	pixel_y = 24
 
 /obj/blind_switch/area/east
 	name = "E blind switch"
+	dir = EAST
 	pixel_x = 24
 
 /obj/blind_switch/area/south
 	name = "S blind switch"
+	dir = SOUTH
 	pixel_y = -24
 
 /obj/blind_switch/area/west
 	name = "W blind switch"
+	dir = WEST
 	pixel_x = -24
 
 /obj/sign_switch
