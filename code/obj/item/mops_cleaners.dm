@@ -1333,6 +1333,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	shoot_delay = 2 SECONDS
+	var/clogged = FALSE
 
 	New()
 		. = ..()
@@ -1363,11 +1364,15 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.UpdateIcon()
 
 	canshoot(mob/user)
-		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost
+		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost && !src.clogged
 
 	process_ammo(mob/user)
 		if (!src.canshoot(user))
 			boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
+			return FALSE
+		if (src.get_tank().reagents.has_any(global.extinguisher_blacklist_clog))
+			boutput(user, SPAN_ALERT("[src] sputters and clogs up!"))
+			src.clogged = TRUE
 			return FALSE
 		return TRUE
 
@@ -1397,3 +1402,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	is_open_container(input)
 		return input
+
+	on_reagent_change(add)
+		..()
+		if (src.reagents.has_any(global.extinguisher_blacklist_melt) && !src.hasStatus("acid"))
+			src.setStatus("acid", 5 SECONDS)
+
