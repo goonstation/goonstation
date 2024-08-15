@@ -36,7 +36,7 @@
 	id = "disposals"
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "aw" = (
 /turf/simulated/wall/auto/martian,
 /area/noGenerate)
@@ -814,7 +814,7 @@
 /area/mining/refinery)
 "ii" = (
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "ip" = (
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
@@ -945,7 +945,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "jP" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -1085,7 +1085,7 @@
 /area/noGenerate)
 "lB" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "lG" = (
 /obj/grille/catwalk,
 /obj/cable/yellow,
@@ -1899,7 +1899,7 @@
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "tE" = (
 /obj/machinery/door/airlock/pyro/classic,
 /obj/cable{
@@ -1909,7 +1909,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
-/area/mining/refinery)
+/area/mining/disposals)
 "tJ" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -2038,7 +2038,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "vj" = (
 /obj/table/auto,
 /turf/simulated/floor/grime,
@@ -2113,7 +2113,7 @@
 "ww" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "wy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2127,7 +2127,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "wJ" = (
 /obj/fakeobject/pipe{
 	dir = 4;
@@ -2359,7 +2359,7 @@
 	},
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "yY" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
@@ -2394,7 +2394,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "zw" = (
 /obj/storage/closet/coffin,
 /obj/item/aiboss_tape/martian,
@@ -2472,7 +2472,7 @@
 	name = "crusher door"
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "Au" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -3083,7 +3083,10 @@
 /area/evilreaver/bar)
 "Gx" = (
 /turf/simulated/wall/false_wall,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
+"Gz" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/mining/disposals)
 "GA" = (
 /turf/simulated/wall/auto/supernorn,
 /area/noGenerate)
@@ -3324,7 +3327,7 @@
 	},
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "IS" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
@@ -4510,7 +4513,7 @@
 "Vs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/airless,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "VC" = (
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
@@ -4605,7 +4608,7 @@
 	},
 /obj/machinery/crusher,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "WE" = (
 /obj/machinery/conveyor/EW{
 	id = "disposals";
@@ -4613,7 +4616,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "WH" = (
 /obj/grille/catwalk,
 /obj/landmark/magnet_shield,
@@ -4904,7 +4907,7 @@
 	},
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 "ZG" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib4"
@@ -4933,7 +4936,7 @@
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grime,
-/area/station/maintenance/disposal)
+/area/mining/disposals)
 
 (1,1,1) = {"
 aa
@@ -50373,7 +50376,7 @@ Ss
 Ss
 ca
 ZR
-nw
+Gz
 lB
 lB
 Vs
@@ -50977,7 +50980,7 @@ Rx
 eK
 ca
 Pc
-nw
+Gz
 lB
 lB
 ii
