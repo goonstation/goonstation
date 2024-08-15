@@ -1,4 +1,9 @@
 
+(t)thu aug 15 24
+(u)Munien
+(p)20262
+(e)🗺|A-Mapping
+(+)Headsets can now be inserted into Devil Horns the same as other headbands.
 (t)wed aug 14 24
 (u)LeahTheTech
 (p)20302
