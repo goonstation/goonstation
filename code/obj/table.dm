@@ -649,7 +649,7 @@ TYPEINFO_NEW(/obj/table/monodesk)
 	smooth_list = typecacheof(/obj/table/monodesk/auto)
 /obj/table/monodesk
 	name = "monochrome desk"
-	desc = "A strudy desk with a little drawer to store things in!"
+	desc = "A sturdy desk with a little drawer to store things in!"
 	icon = 'icons/obj/furniture/table_monochrome_desk.dmi'
 	parts_type = /obj/item/furniture_parts/table/monodesk
 	has_drawer = TRUE
