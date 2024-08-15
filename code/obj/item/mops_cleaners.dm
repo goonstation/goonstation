@@ -99,8 +99,9 @@ TRASH BAG
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "tsunami"
 	// alpha = 175
-	cost = 50
-	projectile_speed = 5
+	cost = 10
+	sname = "wave"
+	projectile_speed = 16
 	shot_sound = 'sound/effects/bigwave.ogg'
 	var/size = 1
 
@@ -110,10 +111,12 @@ TRASH BAG
 			..(O, side_turf)
 
 	single
+		sname = "narrow"
 		cost = 5
 		size = 0
 
 	wide
+		sname = "wide"
 		cost = 20
 		size = 2
 
