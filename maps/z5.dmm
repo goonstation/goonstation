@@ -148,6 +148,9 @@
 "bN" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "bP" = (
@@ -648,6 +651,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/shuttlebay,
 /area/mining/mainasteroid)
 "gZ" = (
@@ -3962,7 +3966,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer3/generic{
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/communications{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -4118,13 +4125,13 @@
 /turf/simulated/floor/martian,
 /area/noGenerate)
 "Uh" = (
-/obj/machinery/power/smes{
-	charge = 200000;
-	chargelevel = 10000;
-	output = 2500
-	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/power/smes{
+	output = 10000;
+	chargelevel = 5000;
+	charge = 1e7
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/power)
@@ -4210,6 +4217,9 @@
 /obj/machinery/light/small{
 	dir = 8;
 	status = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/grime,
 /area/mining/comms)
@@ -4361,13 +4371,13 @@
 	},
 /area/station/solar/small_backup3)
 "Wg" = (
-/obj/machinery/power/smes{
-	charge = 200000;
-	chargelevel = 10000;
-	output = 2500
-	},
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/power/smes{
+	output = 10000;
+	chargelevel = 5000;
+	charge = 1e7
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/power)
@@ -4413,6 +4423,10 @@
 "WT" = (
 /obj/stool/chair/yellow{
 	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/grime,
 /area/mining/comms)
@@ -4494,6 +4508,13 @@
 /obj/map/light/screen,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
+"Xz" = (
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
+	},
+/turf/simulated/floor/grime,
+/area/mining/dock)
 "XE" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/industrial,
@@ -50770,7 +50791,7 @@ ab
 ab
 ab
 EU
-eT
+Xz
 eT
 EU
 ab
