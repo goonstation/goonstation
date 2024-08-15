@@ -63,6 +63,12 @@ TYPEINFO(/datum/component/hattable) // Take a walk through my TWISTED mind.... I
 		RegisterSignal(src.parent, COMSIG_MOB_DEATH, PROC_REF(die), override = TRUE)
 	RegisterSignal(src.hat, COMSIG_ITEM_PICKUP, PROC_REF(take_hat_off), override = TRUE)
 	UnregisterSignal(src.parent, COMSIG_ATTACKBY)
+
+	if (istype(item, /obj/item/clothing/head/butt) && isAI(target))
+		var/obj/item/clothing/head/butt/butt = item
+		if (butt.donor == attacker)
+			attacker.unlock_medal("Law 1: Don't be an asshat", TRUE)
+
 	return TRUE
 
 /datum/component/hattable/proc/take_hat_off(mob/target, mob/user)

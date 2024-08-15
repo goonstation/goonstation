@@ -399,6 +399,14 @@
 	var/list/signals = list()
 	var/list/transmitters = list()
 
+/obj/machinery/bug_reporter
+	name = "bug reporter"
+	desc = "Creates bug reports."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "moduler-on"
+	density = TRUE
+	anchored = ANCHORED
+
 /obj/machinery/set_loc(atom/target)
 	var/area/A1 = get_area(src)
 	. = ..()
