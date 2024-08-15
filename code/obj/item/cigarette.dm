@@ -367,9 +367,9 @@
 
 /obj/item/clothing/mask/cigarette/nicofree
 	name = "nicotine-free cigarette"
-	desc = "Smoking without the crippling addiction and lung cancer! Warning: side effects may include loss of breath and inability to relax."
+	desc = "Smoking without the crippling addiction and lung cancer! Now with 100% less capsaicin!"
 	nic_free = 1
-	flavor = "capsaicin"
+	flavor = "water" //they burn out instantly with no reagent
 
 /obj/item/clothing/mask/cigarette/menthol
 	name = "menthol cigarette"
