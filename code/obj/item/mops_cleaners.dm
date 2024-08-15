@@ -1332,6 +1332,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "tsunami"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	shoot_delay = 2 SECONDS
 
 	New()
 		. = ..()
