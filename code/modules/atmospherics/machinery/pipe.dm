@@ -83,7 +83,7 @@
 	/// How well we share temperature.
 	var/thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	/// Pressure needed before the pipe gets a chance to burst, see proc/effective_fatigue_pressure for the value that takes into account material stats too
-	var/fatigue_pressure = 150*ONE_ATMOSPHERE
+	var/fatigue_pressure = 500*ONE_ATMOSPHERE
 	/// Can this pipe rupture?
 	var/can_rupture = FALSE // Currently only used for red pipes (insulated).
 	/// How broken is our pipe.
@@ -96,7 +96,7 @@
 	alpha = 128
 
 /obj/machinery/atmospherics/pipe/simple/proc/effective_fatigue_pressure()
-	return src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+	return src.fatigue_pressure * (src.material?.getProperty("density") || 1)
 
 /// Returns list of coordinates to start and stop welding animation.
 /obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()
