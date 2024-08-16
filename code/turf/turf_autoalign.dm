@@ -1080,6 +1080,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
 	icon = 'icons/turf/walls/ice.dmi'
 	mod = "ice-"
 	icon_state = "ice-0"
+	plane = PLANE_NOSHADOW_BELOW
 
 /turf/unsimulated/wall/auto/adventure/icemooninterior
 	name = "blue wall"
