@@ -4010,7 +4010,7 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 12
 
 /area/mining/east_hall
-	name = "Mining Outpost West Hall"
+	name = "Mining Outpost East Hall"
 	icon_state = "hallE"
 	sound_environment = 12
 
