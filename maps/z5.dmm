@@ -746,6 +746,13 @@
 /obj/machinery/light,
 /turf/simulated/floor/grime,
 /area/mining/dock)
+"jE" = (
+/obj/machinery/light/small{
+	dir = 8;
+	status = 2
+	},
+/turf/simulated/floor/grime,
+/area/mining/refinery)
 "jM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -900,7 +907,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "lZ" = (
 /obj/cable{
@@ -1027,7 +1034,7 @@
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "nR" = (
 /obj/machinery/door/unpowered/martian,
@@ -1387,7 +1394,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "ru" = (
 /obj/decal/cleanable/machine_debris,
@@ -1420,7 +1427,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "rN" = (
 /obj/indestructible/shuttle_corner{
@@ -2095,7 +2102,7 @@
 	chargelevel = 5000;
 	charge = 1e7
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "zw" = (
 /obj/storage/closet/coffin,
@@ -2263,7 +2270,7 @@
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "Bo" = (
 /obj/portrait_sneaky,
@@ -2446,7 +2453,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "DG" = (
 /obj/grille/catwalk,
@@ -2526,7 +2533,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "Ey" = (
 /turf/simulated/wall/auto/martian,
@@ -2592,7 +2599,7 @@
 /obj/cable/yellow{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "ES" = (
 /obj/item/raw_material/shard/glass,
@@ -3071,6 +3078,16 @@
 /obj/map/light/dimred,
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
+"IT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "hangar_miningoutpost";
+	pixel_y = -25
+	},
+/turf/simulated/floor/grime,
+/area/mining/hangar)
 "IU" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -3231,7 +3248,7 @@
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "Ky" = (
 /obj/stool/chair/comfy/blue{
@@ -3630,7 +3647,7 @@
 	chargelevel = 5000;
 	charge = 1e7
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "PM" = (
 /obj/lattice,
@@ -3811,16 +3828,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grime,
 /area/mining/quarters)
-"Sn" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/machinery/door_control{
-	id = "hangar_miningoutpost";
-	pixel_y = -25
-	},
-/turf/simulated/floor/grime,
-/area/mining/hangar)
 "St" = (
 /obj/table/auto,
 /obj/item/storage/box/donkpocket_kit,
@@ -4057,7 +4064,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "Vf" = (
 /turf/simulated/floor/plating/damaged2,
@@ -4179,7 +4186,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/plating/jen,
 /area/mining/power)
 "Wi" = (
 /obj/grille/catwalk,
@@ -50627,8 +50634,8 @@ Xw
 Pw
 Pw
 Pw
-Pw
-Qk
+IT
+hc
 ab
 ab
 ab
@@ -51813,7 +51820,7 @@ ab
 eG
 tK
 qo
-Nw
+jE
 Nw
 OJ
 Nw
@@ -52741,8 +52748,8 @@ Fa
 IK
 IK
 IK
-Sn
-hc
+IK
+Qk
 ab
 ab
 ab
