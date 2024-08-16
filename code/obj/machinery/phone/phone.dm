@@ -13,6 +13,7 @@ TYPEINFO(/obj/machinery/phone)
 	color = null
 	var/obj/item/phone_handset/handset = null
 	var/obj/machinery/phone/linked = null
+	var/obj/dummy/cord = null
 	var/answered_icon = "phone_answered"
 	var/dialicon = "phone_dial"
 	var/phone_icon = "phone"
@@ -144,7 +145,7 @@ TYPEINFO(/obj/machinery/phone)
 			src.gib(src.loc)
 			qdel(src)
 
-	proc/draw_cord()
+	proc/draw_cord(datum/component/complexsignal/outermost_movable/component)
 		if(!src.handset)
 			return
 		var/handset_offset_x = -7
@@ -181,9 +182,22 @@ TYPEINFO(/obj/machinery/phone)
 						handset_offset_x = -4
 						handset_offset_y = -4
 						handset_offset_x = -4
-		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
+		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH_NO_CLIP, applyTransform = FALSE)
 		result.lineImage.layer = src.layer+0.01
-		src.UpdateOverlays(result.lineImage, "phone_line_\ref[src]")
+		if (src.cord)
+			var/animate_time = 0.2 SECONDS //just default to something sane if we don't know the glide size
+			if (istype(component?.get_outermost_movable(), /atom/movable))
+				var/atom/movable/mover = component.get_outermost_movable()
+				animate_time = 32/(mover.glide_size / world.tick_lag)
+			animate(src.cord, transform = result.transform, time = animate_time)
+		else
+			src.cord = new /obj/dummy(src)
+			src.cord.mouse_opacity = 0
+			src.cord.pixel_x = -src.pixel_x
+			src.cord.pixel_y = -src.pixel_y
+			src.cord.UpdateOverlays(result.lineImage, "cord_image")
+			src.cord.transform = result.transform
+			src.vis_contents += src.cord
 
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user)
@@ -346,7 +360,9 @@ TYPEINFO(/obj/machinery/phone)
 		src.handset = null
 		src.icon_state = "[phone_icon]"
 		tgui_process.close_uis(src)
-		src.ClearSpecificOverlays("phone_line_\ref[src]")
+		src.vis_contents -= src.cord
+		qdel(src.cord)
+		src.cord = null
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
