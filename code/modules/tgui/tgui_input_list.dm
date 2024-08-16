@@ -112,7 +112,7 @@
 /datum/tgui_modal/list_input/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "ListInputModal")
+		ui = new(user, src, "ListInputWindow")
 		ui.set_autoupdate(FALSE)
 		ui.open()
 

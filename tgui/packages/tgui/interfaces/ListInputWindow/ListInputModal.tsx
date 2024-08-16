@@ -210,7 +210,7 @@ const ListDisplay = (props) => {
               transition: 'none',
             }}
           >
-            {item.replace(/^\w/, (c) => c.toUpperCase())}
+            {item} {/* |goonstation-change| */}
           </Button>
         );
       })}
