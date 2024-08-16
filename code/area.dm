@@ -4004,6 +4004,16 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "maintcentral"
 	sound_environment = 12
 
+/area/mining/west_hall
+	name = "Mining Outpost West Hall"
+	icon_state = "hallW"
+	sound_environment = 12
+
+/area/mining/east_hall
+	name = "Mining Outpost West Hall"
+	icon_state = "hallE"
+	sound_environment = 12
+
 /area/mining/magnet_control
 	name = "Mining Outpost Magnet Control"
 	icon_state = "miningp"
