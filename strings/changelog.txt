@@ -1,4 +1,6 @@
-
+(t)fri aug 16 24
+(u)LeahTheTech
+(+)Vampire blood steal is now much quieter.
 (t)thu aug 15 24
 (u)Munien
 (p)20262
