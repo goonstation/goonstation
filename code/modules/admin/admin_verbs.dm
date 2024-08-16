@@ -428,6 +428,7 @@ var/list/admin_verbs = list(
 		/client/proc/region_allocator_panel,
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
+		/client/proc/test_discord_command,
 		),
 
 	7 = list(
@@ -2673,3 +2674,12 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else
 		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))
+
+/client/proc/test_discord_command(command as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Test discord command"
+	set desc = "Run a discord/IRC bot command on the current server, omit the ;;. Local servers are considered server 0 for server targeted commands."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	spacebee_extension_system.process_raw_command(command, usr.key)

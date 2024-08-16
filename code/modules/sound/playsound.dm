@@ -257,21 +257,22 @@ proc/is_music_playing()
 		return
 	play_youtube_remote_url(src.mob, video)
 
-
-/proc/play_youtube_remote_url(mob/M, video_url)
-	message_admins(SPAN_NOTICE("[key_name(M)] started loading remote music: [video_url]"))
+///user can be a mob or a ckey
+/proc/play_youtube_remote_url(mob/user, video_url)
+	message_admins(SPAN_NOTICE("[ismob(user) ? key_name(user) : user] started loading remote music: [video_url]"))
 	try
 		var/datum/apiRoute/remoteMusic/playRemoteMusic = new
-		playRemoteMusic.buildBody(video_url, roundId, M.ckey)
+		playRemoteMusic.buildBody(video_url, roundId, ismob(user) ? user.ckey : user)
 		apiHandler.queryAPI(playRemoteMusic)
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
 		message_admins(SPAN_NOTICE("Error returned from youtube server thing: [error.message]."))
-		boutput(M, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
+		if (ismob(user))
+			boutput(user, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
 		return
 
 	// prevent radio station from interrupting us
 	// Wire note: This essentially means "extend the duration by the time we think it will take the API to download the song and get back to us"
 	EXTEND_COOLDOWN(global, "music", 60 SECONDS)
-
-	boutput(M, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
+	if (ismob(user))
+		boutput(user, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")

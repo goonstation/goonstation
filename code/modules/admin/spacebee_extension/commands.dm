@@ -978,3 +978,11 @@
 		logTheThing(LOG_DIARY, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
 		message_admins("[user] (Discord) [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
 		system.reply("[enabled ? "Enabled" : "Disabled"] Tracy profiling for the next round.", user)
+
+/datum/spacebee_extension_command/remotemusic
+	name = "remotemusic"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	argument_types = list(/datum/command_argument/string)
+
+	execute(user, url)
+		play_youtube_remote_url(user, url)
