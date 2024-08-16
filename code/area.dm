@@ -2740,14 +2740,6 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/core/nuclear
 	name = "Nuclear reactor room"
 
-/area/mining/miningoutpost
-	name = "Mining Outpost"
-	icon_state = "engine"
-
-/area/mining/disposals
-	name = "Mining Outpost Disposals"
-	icon_state = "disposal"
-
 /area/station/engine/storage
 	name = "Engineering Storage"
 	icon_state = "engine_hallway"
@@ -3938,69 +3930,91 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 	requires_power = FALSE
 	minimaps_to_render_on = null
 
-// // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
-
-/// old mining outpost
+/// Mining Outpost
 ABSTRACT_TYPE(/area/mining)
 /area/mining
 	name = "Mining Outpost"
-	icon_state = "engine"
+	icon_state = "mining"
 	workplace = 1
 	station_map_colour = MAPC_MINING
-
-/area/mining/power
-	name = "Outpost Power Room"
-	icon_state = "showers"
-	sound_environment = 3
-
-/area/mining/manufacturing
-	name = "Outpost Manufacturing Room"
-	icon_state = "storage"
-	sound_environment = 12
-
-/area/mining/quarters
-	name = "Outpost Miner's Quarters"
-	icon_state = "locker"
 	sound_environment = 2
 
+/area/mining/miningoutpost
+	name = "Mining Outpost"
+	icon_state = "mining"
+	sound_environment = 2
+
+/area/mining/power
+	name = "Mining Outpost Power Room"
+	icon_state = "engine_control"
+	sound_environment = 2
+
+/area/mining/solars
+	name = "Mining Outpost Solar Panels"
+	icon_state = "panelsW"
+	sound_environment = 0
+
+/area/mining/disposals
+	name = "Mining Outpost Disposals"
+	icon_state = "disposal"
+	sound_environment = 14
+
+/area/mining/manufacturing
+	name = "Mining Outpost Manufacturing Room"
+	icon_state = "mining"
+	sound_environment = 2
+
+/area/mining/refinery
+	name = "Mining Outpost Refinery"
+	icon_state = "miningg"
+	sound_environment = 2
+
+/area/mining/quarters
+	name = "Mining Outpost Quarters"
+	icon_state = "crew_quarters"
+	sound_environment = 4
+
+/area/mining/toilets
+	name = "Mining Outpost Toilets"
+	icon_state = "toilets"
+	sound_environment = 3
+
 /area/mining/comms
-	name = "Outpost Comms Room"
-	icon_state = "yellow"
+	name = "Mining Outpost Comms Room"
+	icon_state = "conference"
 	sound_environment = 2
 
 /area/mining/dock
-	name = "Outpost Shuttle Dock"
-	icon_state = "storage"
-	sound_environment = 10
+	name = "Mining Outpost Shuttle Dock"
+	icon_state = "shuttle_transit"
+	sound_environment = 12
 
 /area/mining/exit_west
-	name = "Outpost West Airlock"
+	name = "Mining Outpost West Airlock"
 	icon_state = "maintcentral"
 	sound_environment = 12
 
 /area/mining/exit_east
-	name = "Outpost East Airlock"
+	name = "Mining Outpost East Airlock"
 	icon_state = "maintcentral"
 	sound_environment = 12
 
 /area/mining/exit_south
-	name = "Outpost South Airlock"
+	name = "Mining Outpost South Airlock"
 	icon_state = "maintcentral"
 	sound_environment = 12
 
 /area/mining/magnet_control
 	name = "Mining Outpost Magnet Control"
 	icon_state = "miningp"
-
-/area/mining/refinery
-	name = "Mining Outpost Refinery"
-	icon_state = "yellow"
+	sound_environment = 0
 
 /area/mining/hangar
-	name = "Mining Dock"
-	icon_state = "storage"
+	name = "Mining Outpost Hangar"
+	icon_state = "hangar"
 	sound_environment = 10
-	workplace = 1
+
+/// Tunnel Snake
 
 /area/mining/mainasteroid
 	name = "Main Asteroid"
