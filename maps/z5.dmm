@@ -24,6 +24,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/light,
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "aF" = (
@@ -188,7 +189,7 @@
 /area/mining/disposals)
 "dg" = (
 /turf/space,
-/area/shuttle/john/diner)
+/area/shuttle/john/mining)
 "dk" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -1525,6 +1526,9 @@
 /area/mining/hangar)
 "sT" = (
 /obj/machinery/vending/air_vendor,
+/obj/machinery/light{
+	dir = 8
+	},
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "sU" = (
@@ -1573,6 +1577,20 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/atmospherics)
+"tu" = (
+/obj/table/auto,
+/obj/machinery/recharger{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/cargotele{
+	pixel_x = -3
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/mining/refinery)
 "tJ" = (
 /obj/lattice,
 /obj/fakeobject/pipe{
@@ -2002,9 +2020,6 @@
 /area/evilreaver/atmospherics)
 "yF" = (
 /obj/machinery/disposal,
-/obj/machinery/light{
-	dir = 8
-	},
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
@@ -2585,7 +2600,7 @@
 /area/evilreaver/chapel)
 "EU" = (
 /turf/space,
-/area/shuttle/mining/station)
+/area/shuttle/mining/outpost)
 "EV" = (
 /obj/machinery/conveyor/NW{
 	id = "disposals";
@@ -3622,6 +3637,14 @@
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
+"PO" = (
+/obj/grille/catwalk,
+/obj/machinery/light,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	icon_state = "catwalk_cross"
+	},
+/area/mining/magnet_control)
 "Qc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -50281,7 +50304,7 @@ bV
 tK
 lI
 GE
-GE
+tu
 Pf
 yJ
 yF
@@ -52392,7 +52415,7 @@ hI
 ab
 ab
 Sw
-Qu
+PO
 Ls
 TL
 Fj
