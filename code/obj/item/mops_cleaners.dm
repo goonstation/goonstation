@@ -728,7 +728,6 @@ TRASH BAG
 		. = ..()
 
 /obj/item/caution/traitor
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/obj/item/reagent_containers/payload
 
 	New()
@@ -736,6 +735,7 @@ TRASH BAG
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
 		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
+		src.AddComponent(/datum/component/proximity)
 
 	attackby(obj/item/W, mob/user, params)
 		var/mob/living/carbon/human/H = user
@@ -754,7 +754,7 @@ TRASH BAG
 			return
 		. = ..()
 
-	HasProximity(atom/movable/AM)
+	EnteredProximity(atom/movable/AM)
 		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM

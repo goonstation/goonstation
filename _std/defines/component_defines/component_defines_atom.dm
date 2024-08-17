@@ -69,7 +69,9 @@
 	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM is about to change its loc, return true to prevent (thing, previous_loc)
-	#define COMSIG_MOVABLE_PRE_SET_LOC "mov_set_loc"
+	#define COMSIG_MOVABLE_PRE_SET_LOC "mov_pre_set_loc"
+	/// When an AM's movement is blocked, whether that be set_loc or pre_move
+	#define COMSIG_MOVABLE_LOC_CHANGE_CANCELED "mov_change_canceled"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_THROW_END "mov_throw_end"
 	/// when an AM receives a packet (datum/signal/signal, receive_method, receive_param / range, connection_id)
