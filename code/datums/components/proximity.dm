@@ -42,7 +42,7 @@ TYPEINFO(/datum/component/proximity)
 		UnregisterSignal(T, COMSIG_ATOM_CROSSED)
 
 /datum/component/proximity/proc/pre_parent_move()
-	var/atom/A = src.parentA.
+	var/atom/A = src.parent
 	var/turf/center = get_turf(A)
 	for(var/turf/T as anything in block(center.x-range, center.y-range, center.z, center.x+range, center.y+range, center.z))
 		UnregisterSignal(T, COMSIG_ATOM_CROSSED)
