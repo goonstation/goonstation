@@ -710,6 +710,12 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
 
+/obj/item/gluebag
+	name = "crumpled glue pouch"
+	desc = "A bunch of lint has stuck to the pouch. You should throw this away."
+	icon_state = "glueBag"
+	w_class = W_CLASS_TINY
+
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"
 	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."

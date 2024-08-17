@@ -638,6 +638,14 @@
 	points = 0
 	category = list("trinkets", "nopug")
 
+/datum/trait/wigGlue
+	name = "Superglue enthusiast"
+	desc = "Start your shift with an empty bottle of glue, and a wig glued to your head. Hats and wigs!"
+	id = "wigGlue"
+	icon_state = "placeholder"
+	points = -3
+	category = list("trinkets", "nopug")
+
 
 // Skill - White Border
 

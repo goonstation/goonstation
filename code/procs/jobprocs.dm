@@ -605,6 +605,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 		src.update_colorful_parts()
+	else if (src.traitHolder && src.traitHolder.hasTrait("wigGlue"))
+		var/hair_override = TRUE
+		src.hair_override = hair_override
+		trinket = new/obj/item/gluebag
+		src.bioHolder.mobAppearance.UpdateMob()
+		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
