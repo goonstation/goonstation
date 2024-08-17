@@ -2804,7 +2804,9 @@
 
 /mob/living/carbon/human/proc/is_bald()
 	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
-	return istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none)
+	return istype(AH.customization_first,/datum/customization_style/none) \
+	&& istype(AH.customization_second,/datum/customization_style/none) \
+	&& istype(AH.customization_third,/datum/customization_style/none)
 
 /mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
