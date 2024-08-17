@@ -694,7 +694,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					if (!src.allowed(usr))
-						src.grump_message(usr, "ERROR: Could not re-validate authenticaion credentials. Aborting.", sound = TRUE)
+						src.grump_message(usr, "ERROR: Could not re-validate authentication credentials. Aborting.", sound = TRUE)
 						return
 					if (!src.can_use_ranged(src) && !src.check_physical_proximity(usr))
 						return

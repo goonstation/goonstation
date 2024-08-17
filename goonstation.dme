@@ -215,6 +215,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\contraband.dm"
 #include "code\datums\components\controlled_by_mob.dm"
 #include "code\datums\components\conveyor_lay.dm"
+#include "code\datums\components\cord.dm"
 #include "code\datums\components\crayonwalk.dm"
 #include "code\datums\components\death_confetti.dm"
 #include "code\datums\components\disposing_confetti.dm"
