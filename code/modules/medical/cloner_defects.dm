@@ -75,6 +75,16 @@
 												CLONER_DEFECT_SEVERITY_MAJOR=CLONER_DEFECT_PROB_MAJOR)
 		src.add_cloner_defect(severity_override || weighted_pick(severity_weights))
 
+	/// Remove a cloner defect, pick random if none given
+	proc/remove_cloner_defect(var/datum/cloner_defect/defect)
+		if (!istype(defect))
+			var/datum/cloner_defect/picked = pick(src.active_cloner_defects)
+			picked.on_remove()
+			src.active_cloner_defects.Remove(picked)
+		if (defect in src.active_cloner_defects)
+			defect.on_remove()
+			src.active_cloner_defects.Remove(defect)
+
 	/// Debug proc- add a cloner defect of a specific type.
 	proc/add_specific_cloner_defect(type)
 		if (!ispath(type, /datum/cloner_defect))
@@ -310,6 +320,12 @@ ABSTRACT_TYPE(/datum/cloner_defect/maxhealth_down)
 		else
 			src.owner.setStatus("maxhealth-", INFINITE_STATUS, -data["penalty"])
 
+	on_remove()
+		var/datum/statusEffect/maxhealth/decreased/existing_status = src.owner.hasStatus("maxhealth-")
+		if (existing_status)
+			existing_status.change += data["penalty"]
+		..()
+
 /datum/cloner_defect/maxhealth_down/small
 	name = "Minor Fortitude Decrease"
 	desc = "Subject's endurance has been weakened by the cloning process."
@@ -409,6 +425,11 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 		. = ..()
 		owner.traitHolder.addTrait("puritan")
 
+	on_remove()
+		owner.traitHolder.removeTrait("puritan")
+		. = ..()
+
+
 /datum/cloner_defect/arm_swap //! Left and right arms are swapped, making them both initially useless TODO actually implement
 	name = "Limb Discombobulation"
 	desc = "Subject's legs have been grown where their arms are supposed to be. Location of their arms is unknown."
@@ -464,6 +485,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 /// Instead I opted to cherrypick a couple interesting ones for now - Ryou
 /datum/cloner_defect/biotrait
 	name = "Traitimus Maximus"
+	stackable = FALSE
 	var/list/effect_type_pool = list() // Pool of effects to pick from (traits and bioeffects)
 
 	init()
@@ -484,6 +506,13 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 			var/datum/bioEffect/effect = src.owner.bioHolder.GetEffect(data["bioeffect_id"]) // this suuuucks
 			effect.curable_by_mutadone = FALSE
 
+	on_remove()
+		if (data["trait_id"] && !src.owner.traitHolder?.hasTrait(data["trait_id"]))
+			src.owner.traitHolder.removeTrait(data["trait_id"])
+		else if (src.owner.bioHolder.HasEffect(data["bioeffect_id"]))
+			src.owner.bioHolder.RemoveEffect(data["bioeffect_id"])
+		..()
+
 /datum/cloner_defect/biotrait/plasmalungs
 	name = "Plasma Lung Infection"
 	desc = "Subject's lungs have become infected and are now only capable of breathing plasma."
@@ -503,18 +532,11 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	effect_type_pool = list(/datum/bioEffect/deaf)
 
-/datum/cloner_defect/biotrait/sleepy
-	name = "Spontaneous Sleep Deprivation"
-	desc = "Subject's sleep center was scrambled and as a result, subject randomly falls asleep."
-	severity = CLONER_DEFECT_SEVERITY_MAJOR
-	effect_type_pool = list(/datum/bioEffect/narcolepsy)
-
 /datum/cloner_defect/biotrait/clumsy
 	name = "Motor Control Impairment"
 	desc = "Subject has sustained nerve damage, resulting in some impairments to motor control."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
-	stackable = FALSE // can be TRUE if I make it so it can't give you the same thing multiple times.
-	effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/clumsy) // Pool of effects to pick from (traits and bioeffects)
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
+	effect_type_pool = list(/datum/trait/leftfeet, /datum/trait/clutz, /datum/bioEffect/clumsy)
 
 /// Sets seen name to 'unknown' (until repaired with synthflesh)
 /datum/cloner_defect/face_disfigured
@@ -542,18 +564,6 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		src.owner.vdisfigured = TRUE
-
-/// Basically makes you bald. Truly the worst of the defects.
-/datum/cloner_defect/baldness
-	name = "Hair Follicle Malfunction"
-	desc = "Subject's hair follicles are no longer functioning, making them bald."
-	severity = CLONER_DEFECT_SEVERITY_MINOR
-
-	on_add()
-		. = ..()
-		src.owner.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		src.owner.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.owner.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 
 /// Makes you fall over when you sprint too hard (pug thing)
 /datum/cloner_defect/sprint_flop
