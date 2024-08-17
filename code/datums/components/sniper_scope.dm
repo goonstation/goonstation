@@ -22,8 +22,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 			var/obj/item/I = parent
 			src.scope_overlay = scope_overlay
 			src.scope_sound = scope_sound
-			src.movement_controller = new(speed, max_range)
-
+			create_movement_controller(speed, max_range)
 			RegisterSignal(I, COMSIG_ITEM_SWAP_TO, PROC_REF(init_scope_mode))
 			RegisterSignal(I, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_scope_mode))
 			if(ismob(I.loc))
@@ -37,6 +36,9 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 	on_dropped(datum/source, mob/user)
 		end_scope_mode(source, user)
 		. = ..()
+
+/datum/component/holdertargeting/sniper_scope/proc/create_movement_controller(speed, max_range)
+	src.movement_controller = new/datum/movement_controller/sniper_scope(speed, max_range)
 
 /datum/component/holdertargeting/sniper_scope/proc/init_scope_mode(datum/source, mob/user) // they are holding the gun
 	RegisterSignal(user, COMSIG_MOB_SPRINT, PROC_REF(toggle_scope))
@@ -54,6 +56,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 
 /datum/component/holdertargeting/sniper_scope/proc/begin_sniping(mob/user)
 	user.override_movement_controller = src.movement_controller
+	src.movement_controller.start()
 	user.keys_changed(0,0xFFFF)
 	SEND_SIGNAL(parent, COMSIG_SCOPE_TOGGLED, TRUE)
 	if(src.scope_overlay)
@@ -65,6 +68,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 
 /datum/component/holdertargeting/sniper_scope/proc/stop_sniping(mob/user)
 	user.override_movement_controller = null
+	src.movement_controller.stop()
 	SEND_SIGNAL(parent, COMSIG_SCOPE_TOGGLED, FALSE)
 	user.keys_changed(0,0xFFFF)
 	if (user.client)
@@ -73,3 +77,7 @@ TYPEINFO(/datum/component/holdertargeting/sniper_scope)
 	if(src.scope_overlay)
 		user.removeOverlayComposition(src.scope_overlay)
 		user.updateOverlaysClient(user.client)
+
+/datum/component/holdertargeting/sniper_scope/light
+	create_movement_controller(speed, max_range)
+		src.movement_controller = new/datum/movement_controller/sniper_scope/light(speed, max_range)

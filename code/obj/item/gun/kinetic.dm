@@ -743,7 +743,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"
-	desc = "A powerful antique hunting rifle."
+	desc = "A powerful antique hunting rifle, equipped with a short-range scope."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
@@ -769,6 +769,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_3006)
+		AddComponent(/datum/component/holdertargeting/sniper_scope/light, 12, 192, /datum/overlayComposition/ironsight_vignette_scope, 'sound/weapons/scope.ogg')
 		..()
 
 /obj/item/gun/kinetic/dart_rifle
