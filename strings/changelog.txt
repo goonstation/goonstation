@@ -1,3 +1,9 @@
+
+(t)sat aug 17 24
+(u)Bork and Wrench
+(p)20343
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)Resprites the Garden Trowel, and gives it a new In-Hand and Sound Effect when digging and planting. Sprites by Bork
 (t)fri aug 16 24
 (u)LeahTheTech
 (+)Vampire blood steal is now much quieter.
