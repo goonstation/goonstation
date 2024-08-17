@@ -333,16 +333,17 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
-					var/hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_first = new hair_type
-					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_second = new hair_type
-					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_third = new hair_type
-					H.update_colorful_parts()
-					boutput(H, SPAN_NOTICE("Your scalp feels itchy!"))
-				..()
+					if(istype(H.mutantrace,"human"))
+						var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
+						var/hair_type = pick(hair_styles)
+						H.bioHolder.mobAppearance.customization_first = new hair_type
+						hair_type = pick(hair_styles)
+						H.bioHolder.mobAppearance.customization_second = new hair_type
+						hair_type = pick(hair_styles)
+						H.bioHolder.mobAppearance.customization_third = new hair_type
+						H.update_colorful_parts()
+						boutput(H, SPAN_NOTICE("Your scalp feels itchy!"))
+					..()
 				return
 
 		super_hairgrownium //moustache madness
@@ -363,29 +364,30 @@ datum
 				if (ishuman(M))
 					var/somethingchanged = 0
 					var/mob/living/carbon/human/H = M
-					if (H.bioHolder.mobAppearance.customization_first.id != "80s")
-						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/eighties
-						somethingchanged = 1
-					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
-						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
-						somethingchanged = 1
-					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
-						somethingchanged = 1
-						for (var/obj/item/clothing/O in H)
-							if (istype(O,/obj/item/clothing/mask))
-								H.u_equip(O)
-								if (O)
-									O.set_loc(H.loc)
-									O.dropped(H)
-									O.layer = initial(O.layer)
+					if(istype(H.mutantrace,"human"))
+						if (H.bioHolder.mobAppearance.customization_first.id != "80s")
+							H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/eighties
+							somethingchanged = 1
+						if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
+							H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
+							somethingchanged = 1
+						if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
+							somethingchanged = 1
+							for (var/obj/item/clothing/O in H)
+								if (istype(O,/obj/item/clothing/mask))
+									H.u_equip(O)
+									if (O)
+										O.set_loc(H.loc)
+										O.dropped(H)
+										O.layer = initial(O.layer)
 
-						var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
-						H.equip_if_possible(moustache, SLOT_WEAR_MASK)
-						H.set_clothing_icon_dirty()
-						holder?.remove_reagent(src.id, 3)
-					if (somethingchanged) boutput(H, SPAN_ALERT("Hair bursts forth from every follicle on your head!"))
-					H.update_colorful_parts()
-				..()
+							var/obj/item/clothing/mask/moustache/moustache = new /obj/item/clothing/mask/moustache(H)
+							H.equip_if_possible(moustache, SLOT_WEAR_MASK)
+							H.set_clothing_icon_dirty()
+							holder?.remove_reagent(src.id, 3)
+						if (somethingchanged) boutput(H, SPAN_ALERT("Hair bursts forth from every follicle on your head!"))
+						H.update_colorful_parts()
+					..()
 				return
 
 		unstable_omega_hairgrownium
