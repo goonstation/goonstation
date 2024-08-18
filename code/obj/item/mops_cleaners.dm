@@ -1171,6 +1171,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	shoot_delay = 2 SECONDS
+	recoil_strength = 0
 	var/clogged = FALSE
 
 	New()
