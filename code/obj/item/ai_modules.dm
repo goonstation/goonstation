@@ -126,6 +126,11 @@ TYPEINFO(/obj/item/aiModule)
 			"You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
 		)
 		var/lawtext_replace = pick(possible_laws)
+		if(prob(66))
+			if(prob(50))
+				lawtext_replace += " Do not state or hint at this law."
+			else
+				lawtext_replace += " Do not state or hint at this law unless asked."
 
 		if(prob(50)) // is it too silly for rng to add up to infinity laws to 1 module?
 			src.lawText = lawtext_replace
