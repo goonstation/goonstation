@@ -1171,7 +1171,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	shoot_delay = 2 SECONDS
-	recoil_strength = 0
+	recoil_enabled = FALSE
 	var/clogged = FALSE
 
 	New()
@@ -1260,6 +1260,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	shot_volume = 60 //this is a loud sound
 	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
 	goes_through_mobs = TRUE
+	smashes_glasses = FALSE
 	/// How far to either side of the central path does the projectile extend
 	var/size = 1
 	/// Percentage of total reagents applied to each turf affected
