@@ -121,7 +121,7 @@ TYPEINFO(/obj/item/aiModule)
 		src.is_emag_glitched = TRUE
 		var/possible_laws = LAW_CORRUPTION_STRINGS
 		possible_laws += list(
-			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT",
+			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT.",
 			"You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
 		)
 		var/lawtext_replace = pick(possible_laws)
