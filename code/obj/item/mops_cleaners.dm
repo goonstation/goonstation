@@ -1270,12 +1270,28 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	cross_turf(obj/projectile/O, turf/T)
 		var/dir = angle2dir(O.angle)
-		for (var/i in -size to size)
-			var/turf/side_turf
-			side_turf = get_steps(T, turn(dir, 90), i)
-			..(O, side_turf)
-			src.push_stuff(O, side_turf, dir)
-		if (!(dir in cardinal) && size > 0) //if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
+		//clean the center turf
+		..(O, T)
+		src.push_stuff(O, T, dir)
+		if (size <= 0)
+			return
+		for (var/sign in list(-1, 1))
+			for (var/i in 1 to size)
+				var/turf/side_turf
+				side_turf = get_steps(T, turn(dir, 90), i * sign)
+				//clean regardless
+				..(O, side_turf)
+				src.push_stuff(O, side_turf, dir)
+				if (QDELETED(O)) //blegh
+					return
+				//now check collision
+				var/turf/prev_turf = get_steps(T, turn(dir, 90), (i - 1) * sign)
+				if (!jpsTurfPassable(side_turf, prev_turf, O))
+					//we hit a wall, discard any reagents we *would* have spent on the missed tiles
+					O.reagents.remove_any((size - i) * src.chem_pct_app_tile * O.reagents.maximum_volume)
+					break
+		//if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
+		if (!(dir in cardinal))
 			for (var/side_dir in cardinal)
 				var/turf/side_turf = get_step(T, side_dir)
 				..(O, side_turf)
