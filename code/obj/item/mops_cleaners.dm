@@ -1226,8 +1226,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	icon_state = "backtank"
-	item_state = "jetpack_mag"
+	icon_state = "janitor_tank"
+	item_state = "janitor_tank"
 	initial_volume = 500
 	initial_reagents = list("cleaner" = 200)
 	incompatible_with_chem_dispensers = TRUE
