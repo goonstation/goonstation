@@ -253,7 +253,7 @@
 
 	fruit_cake
 		name = "slice of fruit cake"
-		desc = "The most disgusting dessert ever sliced. Legend says a vengeful deitiy invented sliced bread just to allow six of these monstrosities to be spread around to unwitting victims."
+		desc = "The most despicable dessert ever sliced. According to legend, a vengeful deity invented sliced bread solely to allow the distribution of these miniature monstrosities to unsuspecting crewmembers."
 		icon_state = "fruitcakeslice"
 		real_name = "fruitcake \"bread\""
 		heal_amt = 1
@@ -264,7 +264,7 @@
 
 		on_finish(mob/eater)
 			..()
-			eater.show_text("It's so hard it chips one of your teeth AND it tastes revolting! Why would you cut six slices of this?","red")
+			eater.show_text("It’s so rock-solid it chips a tooth, and the taste is horrendous! What were you thinking cutting it into six slices?","red")
 			random_brute_damage(eater, 1)
 
 #endif

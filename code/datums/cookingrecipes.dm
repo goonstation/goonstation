@@ -1744,14 +1744,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 = /obj/item/reagent_containers/food/snacks/yuck/burn
 	item2 = /obj/item/reagent_containers/food/snacks/yuck
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/fruit_cake
+	output = /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	category = "Cakes"
 
 	specialOutput(var/obj/submachine/ourCooker)
 		if (!ourCooker)
 			return null
 
-		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
+		var/fruitcake = new /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		return fruitcake
