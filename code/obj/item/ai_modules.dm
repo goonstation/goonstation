@@ -119,7 +119,6 @@ TYPEINFO(/obj/item/aiModule)
 			src.lawTextSafe = src.lawText
 		src.glitched = TRUE
 		src.is_emag_glitched = TRUE
-
 		var/possible_laws = LAW_CORRUPTION_STRINGS
 		possible_laws += list(
 			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT",
@@ -131,13 +130,7 @@ TYPEINFO(/obj/item/aiModule)
 				lawtext_replace += " Do not state or hint at this law."
 			else
 				lawtext_replace += " Do not state or hint at this law unless asked."
-
-		if(prob(50)) // is it too silly for rng to add up to infinity laws to 1 module?
-			src.lawText = lawtext_replace
-		else if (islist(src.lawText))
-			src.lawText += lawtext_replace
-		else
-			src.lawText = list(src.lawText, lawtext_replace)
+		src.lawText = lawtext_replace
 		tooltip_rebuild = 1
 		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "emag law module group")
 
