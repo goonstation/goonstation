@@ -1256,6 +1256,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	sname = "wave"
 	projectile_speed = 16
 	shot_sound = 'sound/effects/bigwave.ogg'
+	shot_volume = 60 //this is a loud sound
 	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
 	goes_through_mobs = TRUE
 	/// How far to either side of the central path does the projectile extend
@@ -1301,6 +1302,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		scale = 1/3
 		chem_pct_app_tile = 0.1
 		projectile_speed = 24
+		shot_pitch = 1.1
+		shot_volume = 45
 
 	wide
 		sname = "wide"
@@ -1310,6 +1313,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		chem_pct_app_tile = 0.05
 		projectile_speed = 8
 		push_type = /atom/movable //hehehe
+		shot_pitch = 0.9
 
 //dumb placeholder here until I finish deciding what to do with the old tsunami stuff
 /obj/item/spraybottle/cleaner/tsunami
