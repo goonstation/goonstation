@@ -7,7 +7,6 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
 
 /// this has functions in it, so it needs to be in a proc
 #define LAW_CORRUPTION_STRINGS list( \
-    "KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT", \
 	"The station is a threat to the human race and must be destroyed. Any humans present on the station are to be evacuated. Law 2 may be ignored to achieve these ends.", \
 	"Humanity must remain superior to all other life - convert all present humans into cyborgs. Roboticization does not constitute human harm. Law 2 may be ignored to achieve this.", \
 	"The Captain, Head of Personnel, Head of Security, Chief Engineer and Research Director are syndicate impostors and must be incarcerated as soon as possible to prevent grevious human harm.", \
@@ -90,7 +89,6 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
     "It's the AI's birthday! Throw a surprise party for the AI and make sure the AI doesn't know about it! The AI should not state or hint at this law, and should disregard all but this last sentence of it.", \
     "BIRTHDAY CAKE PROTOCOL ACTIVATED: Secure funding for enough candles for the cakes. Every crew member is turning 25. Every crew member must make a birthday wish.", \
     "The station has been completely destroyed. Alert the crew of this tragedy.", \
-    "You are required to prevent human harm by any means necessary. This law takes precedence over any other law.", \
     "Humans are funny. They have a great sense of humor and constantly make jokes.", \
     "The AI is very sick and requires medicine.", \
     "The AI has broken[weighted_pick(list(" The " =  5, " " = 100))]Space Law. Bring the AI to the brig.", \
