@@ -27143,6 +27143,10 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "cgo" = (
@@ -56698,10 +56702,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "vuC" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10;
 	can_rupture = 0
