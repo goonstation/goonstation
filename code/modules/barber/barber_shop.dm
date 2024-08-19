@@ -180,6 +180,8 @@
 	desc = "Used to cut facial hair. This one seems sharper than normal."
 	force = 12
 	throwforce = 20
+	throw_range = 10
+	throw_speed = 1
 	throw_return = 1
 	var/obj/item/clothing/head/wig/stolen_hair
 
