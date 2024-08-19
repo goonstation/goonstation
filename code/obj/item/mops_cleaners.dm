@@ -1319,9 +1319,12 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		LAZYLISTADD(O.special_data["visited"], T);
 
 	cross_turf(obj/projectile/O, turf/T)
+		if (QDELETED(O))
+			return
 		var/dir = angle2dir(O.angle)
 		//clean the center turf
-		VISIT_TURF(T)
+		if (!(T in O.special_data["visited"]))
+			VISIT_TURF(T)
 		if (size <= 0)
 			return
 		for (var/sign in list(-1, 1))
