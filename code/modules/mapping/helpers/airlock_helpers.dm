@@ -70,7 +70,7 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			if (D.welded)
 				src.weld = TRUE
 			// now we know it is bolted/welded; create the door
-			var/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken
+			var/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken(D.loc)
 			// make sure it's using the right icon state
 			if (src.bolt)
 				D.locked = TRUE
@@ -85,7 +85,6 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			F.name = D.name
 			F.desc = D.desc
 			F.density = D.density
-			F.set_loc(D.loc)
 			qdel(D)
 
 /obj/mapping_helper/airlock/aiDisabler
