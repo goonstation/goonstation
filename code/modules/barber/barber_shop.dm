@@ -187,12 +187,14 @@
 		if( ishuman(thr.user))
 			var/mob/living/carbon/human/user = thr.user
 			if(hit_atom == user)
+				user.put_in_hand_or_drop(src)
 				if(stolen_hair)
 					var/obj/item/clothing/head/wig/I = stolen_hair
 					user.put_in_hand_or_drop(I)
 					stolen_hair = null
 				else if(prob(50))
 					//you cut yourself
+
 				return
 			else if (ishuman(hit_atom))
 				var/mob/living/carbon/human/victim = hit_atom
