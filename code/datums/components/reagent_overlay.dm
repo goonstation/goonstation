@@ -3,6 +3,8 @@
 	var/reagent_overlay_icon_state
 	var/reagent_overlay_states
 	var/reagent_overlay_scaling
+	var/queue_updates = FALSE
+	VAR_PRIVATE/queued = FALSE
 
 TYPEINFO(/datum/component/reagent_overlay)
 	initialization_args = list(
@@ -10,13 +12,15 @@ TYPEINFO(/datum/component/reagent_overlay)
 		ARG_INFO("reagent_overlay_icon_state", DATA_INPUT_TEXT, "The icon state that this container should for reagent overlays.", null),
 		ARG_INFO("reagent_overlay_states", DATA_INPUT_NUM, "The number of reagent overlay states that this container has.", 0),
 		ARG_INFO("reagent_overlay_scaling", DATA_INPUT_TEXT, "The scaling that this container's reagent overlays should use.", RC_REAGENT_OVERLAY_SCALING_LINEAR),
+		ARG_INFO("queue_updates", DATA_INPUT_BOOL, "Set to only run the icon updates at the end of each tick, for reagent containers that update a LOT.", FALSE)
 	)
 
-/datum/component/reagent_overlay/Initialize(reagent_overlay_icon, reagent_overlay_icon_state, reagent_overlay_states = 0, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR)
+/datum/component/reagent_overlay/Initialize(reagent_overlay_icon, reagent_overlay_icon_state, reagent_overlay_states = 0, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = FALSE)
 	. = ..()
 	if (!istype(src.parent, /atom))
 		return COMPONENT_INCOMPATIBLE
 
+	src.queue_updates = queue_updates
 	src.reagent_overlay_icon = reagent_overlay_icon
 	src.reagent_overlay_icon_state = reagent_overlay_icon_state
 	src.reagent_overlay_states = reagent_overlay_states
@@ -32,11 +36,21 @@ TYPEINFO(/datum/component/reagent_overlay)
 
 	. = ..()
 
+/datum/component/reagent_overlay/proc/handle_reagent_change()
+	if (src.queue_updates)
+		if (src.queued)
+			return
+		src.queued = TRUE
+		SPAWN(0)
+			src.update_reagent_overlay()
+	else
+		src.update_reagent_overlay()
+
 /// Updates the reagent overlay of the parent container.
 /datum/component/reagent_overlay/proc/update_reagent_overlay()
 	if (!src.reagent_overlay_states)
 		return
-
+	src.queued = FALSE
 	var/atom/container = src.parent
 	var/reagent_state = src.get_reagent_state()
 

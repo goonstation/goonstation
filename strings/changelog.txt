@@ -1,4 +1,19 @@
-
+(t)sun aug 18 24
+(u)LeahTheTech
+(+)Roboticist PDAs get the silicon PDA group.
+(t)sat aug 17 24
+(u)Bork and Wrench
+(p)20343
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)Resprites the Garden Trowel, and gives it a new In-Hand and Sound Effect when digging and planting. Sprites by Bork
+(t)fri aug 16 24
+(u)LeahTheTech
+(+)Vampire blood steal is now much quieter.
+(t)thu aug 15 24
+(u)Munien
+(p)20262
+(e)🗺|A-Mapping
+(+)Headsets can now be inserted into Devil Horns the same as other headbands.
 (t)wed aug 14 24
 (u)LeahTheTech
 (p)20302

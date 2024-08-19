@@ -220,7 +220,7 @@
 
 		robotics
 			name = "Robotics PDA"
-			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
+			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY, MGO_SILICON)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
 
