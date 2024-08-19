@@ -1235,10 +1235,12 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	shatter_immune = TRUE
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
+	container_icon = 'icons/obj/janitor.dmi'
+	container_style = "janitor_tank"
+	fluid_overlay_states = 6
 
 	New(loc, new_initial_reagents)
 		..()
-		src.AddComponent(/datum/component/reagent_overlay, src.icon, "backtank", 4)
 		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
 
 	is_open_container(input)
