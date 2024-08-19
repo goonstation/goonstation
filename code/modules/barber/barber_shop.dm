@@ -186,7 +186,7 @@
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if( ishuman(thr.user))
 			var/mob/living/carbon/human/user = thr.user
-			if(hit_atom = user)
+			if(hit_atom == user)
 				if(stolen_hair)
 					var/obj/item/clothing/head/wig/I = stolen_hair
 					user.put_in_hand_or_drop(I)
@@ -197,16 +197,14 @@
 			else if (ishuman(hit_atom))
 				var/mob/living/carbon/human/victim = hit_atom
 				if(!stolen_hair)
-					if(istype(victim.head, obj/item/clothing/head/wig))
+					if(istype(victim.head, /obj/item/clothing/head/wig))
 						//they are wearing a wig
 						stolen_hair = victim.head
 						victim.u_equip(stolen_hair)
-					else if(!(istype(AH.customization_first,/datum/customization_style/none) && istype(AH.customization_second,/datum/customization_style/none) && istype(AH.customization_third,/datum/customization_style/none)))
+					else if(!victim.is_bald())
 						//they have hair to yoink
-						stolen_hair = create_wig(victim)
-						victim.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-						victim.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-						victim.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+						stolen_hair = victim.create_wig()
+
 		. = ..()
 
 
