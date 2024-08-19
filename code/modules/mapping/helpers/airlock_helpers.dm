@@ -60,32 +60,32 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 
 	setup()
 		// use the bolt and weld vars to determine how the fake door should look.
-		if (/obj/mapping_helper/airlock/bolter in range(0,src))
-			src.bolt = TRUE
-		if (/obj/mapping_helper/airlock/welder in range(0,src))
-			src.weld = TRUE
-		for (var/obj/machinery/door/airlock/D in range(0,src))
-			if (D.locked)
+		for (var/atom/A in src.loc)
+			if (istype(A, /obj/mapping_helper/airlock/bolter))
 				src.bolt = TRUE
-			if (D.welded)
+				qdel(A)
+				continue
+			if (istype(A, /obj/mapping_helper/airlock/welder))
 				src.weld = TRUE
-			// now we know it is bolted/welded; create the door
+				qdel(A)
+				continue
+		var/counter = 0
+		for (var/obj/machinery/door/airlock/D in src.loc)
+			counter++
 			var/obj/fakeobject/airlock_broken/F = new /obj/fakeobject/airlock_broken(D.loc)
-			// make sure it's using the right icon state
-			if (src.bolt)
-				D.locked = TRUE
-				D.UpdateIcon()
-			// apply the welded effect if there is one
-			if (src.weld)
+			if (!src.bolt && D.locked) // it's possible for a bolter to activate first
+				src.bolt = TRUE
+			if (src.weld || D.welded)
 				F.UpdateOverlays(image(D.icon, D.welded_icon_state), "weld")
 			// set icon on the fake image
 			F.icon = D.icon
-			F.icon_state = D.icon_state
-			// final touches
+			F.icon_state = (src.bolt ? "[D.icon_base]_locked" : D.icon_state)
 			F.name = D.name
 			F.desc = D.desc
 			F.density = D.density
 			qdel(D)
+		if (counter > 1)
+			CRASH("[counter] airlocks on tile [src.x], [src.y], [src.x]")
 
 /obj/mapping_helper/airlock/aiDisabler
 	name = "airlock aiDisabler"
