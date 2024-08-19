@@ -85,6 +85,7 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 			F.name = D.name
 			F.desc = D.desc
 			F.density = D.density
+			F.set_loc(D.loc)
 			qdel(D)
 
 /obj/mapping_helper/airlock/aiDisabler
