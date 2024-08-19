@@ -639,11 +639,11 @@
 	category = list("trinkets", "nopug")
 
 /datum/trait/wigGlue
-	name = "Superglue enthusiast"
-	desc = "Start your shift with an empty bottle of glue, and a wig glued to your head. Hats and wigs!"
+	name = "Wig adhesive"
+	desc = "Start your shift with an empty bottle of glue, and a wig permanently glued to your head."
 	id = "wigGlue"
 	icon_state = "glue"
-	points = -3
+	points = -2
 	category = list("trinkets", "nopug")
 
 
