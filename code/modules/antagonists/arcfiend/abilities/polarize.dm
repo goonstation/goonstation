@@ -16,4 +16,4 @@
 		for (var/mob/living/carbon/human/H in range(src.range, get_turf(src.holder.owner)))
 			if (H == src.holder.owner)
 				continue
-			H.changeStatus("magnetized", src.duration, charge)
+			H.changeStatus("magnetized_arcfiend", src.duration, charge)

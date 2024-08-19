@@ -833,13 +833,18 @@ proc/random_accent()
 	S = lowertext(S)
 	switch(S)
 
-		if("w") //germans pronounce W like V
-			new_string = "v"
-			used = 1
-		if("t") //unlinke the stereotypical zat- it's more like dat, because both the t and the h are pronounced in german
+		if("w") //germans pronounce W like V, but generally keep the "ow" sound at the end of words and such.
+			if (!is_null_or_space(lowertext(R.next_char)))
+				new_string = "v"
+				used = 1
+		if("t") //unlinke the stereotypical zat- it's more like dat, because both the t and the h are pronounced in german. Of course, the Z still does happen quite often.
 			if(lowertext(R.next_char) == "h")
-				new_string = "d"
-				used = 2
+				if(prob(50))
+					new_string = "d"
+					used = 2
+				else
+					new_string = "z"
+					used = 2
 		if("z")//z acts like an english ts
 			new_string = "ts"
 			used = 1
@@ -870,10 +875,6 @@ proc/random_accent()
 			if(lowertext(R.next_char) == "u")
 				new_string = "oi"
 				used = 2
-		if("d")
-			if(prob(50))
-				new_string = "t"
-				used = 1
 
 		if("v")
 			new_string = "f"
@@ -939,7 +940,7 @@ proc/random_accent()
 		"too bad" = "schade",
 		"no problem" = "kein problem"
 	) //this list is seperate from the text document, as the current accent system does not support multi word phrases. This could use reworking.
-	
+
 	var/substitute = null
 	for(var/i=1,i <= length(phrase),i++)
 		substitute = phrase[i]

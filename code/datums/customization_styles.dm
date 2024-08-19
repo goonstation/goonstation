@@ -342,6 +342,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			curly_bob
 				name = "Curly Bob"
 				id = "curly_bob"
+			curly_bob_fade
+				name = "Curly Bob: Faded"
+				id = "curly_bob_fade"
+				random_allowed = FALSE
 			charming
 				name = "Charming"
 				id = "charming"
@@ -362,6 +366,7 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			blunt_bob
 				name = "Blunt Bob"
 				id = "blunt_bob"
+
 			jelly
 				name = "Jelly"
 				id = "jelly"
@@ -818,6 +823,12 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		chin
 			name = "Chinstrap"
 			id = "chin"
+		dwarfbeard
+			name = "Dwarven Beard"
+			id = "dwarfbeard"
+		dwarfbraided
+			name = "Dwarven Braided Beard"
+			id = "dwarfbraided"
 		fullbeard
 			name = "Full Beard"
 			id = "fullbeard"

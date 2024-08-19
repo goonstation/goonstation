@@ -626,8 +626,9 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 #define INTERLINK_RANGE 100
 
 TYPEINFO(/obj/machinery/transception_pad)
-	mats = list("MET-2"=5,"CON-2"=2,"CON-1"=5)
-
+	mats = list("metal_dense" = 5,
+				"conductive_high" = 2,
+				"conductive" = 5)
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
@@ -887,7 +888,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 				src.is_transceiving = FALSE
 
 /obj/machinery/computer/transception
-	name = "\improper Transception Interlink"
+	name = "transception interlink"
 	desc = "A console capable of remotely connecting to and operating cargo transception pads."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMpad"

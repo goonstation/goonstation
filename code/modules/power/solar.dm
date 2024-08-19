@@ -10,8 +10,8 @@
 //As long as this is working, solar panels on same powernet will track automatically
 
 TYPEINFO(/obj/machinery/power/tracker)
-	mats = list("CRY-1"=15, "CON-1"=20)
-
+	mats = list("crystal" = 15,
+				"conductive" = 20)
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
 	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
@@ -84,8 +84,8 @@ TYPEINFO(/obj/machinery/power/tracker)
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/power/solar)
-	mats = list("MET-2"=15, "CON-1"=15)
-
+	mats = list("metal_dense" = 15,
+				"conductive" = 15)
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"
 	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."
@@ -319,7 +319,7 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	lastgen = gen
 	gen = 0
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(lastgen), 50)]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
 
 	if(status & (NOPOWER | BROKEN))
 		return

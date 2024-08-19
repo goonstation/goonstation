@@ -3,6 +3,7 @@
 	name = "Malady"
 	scantype = "Medical Malady"
 	cure_flags = CURE_UNKNOWN
+	strain_type = /datum/ailment_data/malady
 
 /datum/ailment_data/malady
 	var/robo_restart = 0 // used for cyberheart stuff

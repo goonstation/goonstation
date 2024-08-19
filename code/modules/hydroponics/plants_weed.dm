@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> violently retaliates against [user.name]!"))
 		random_brute_damage(user, 10, 1)//see above
-		if (W && prob(50))
+		if (W && !W.cant_drop && prob(50))
 			boutput(user, SPAN_ALERT("The lasher grabs and smashes your [W]!"))
 			W.dropped(user)
 			qdel(W)

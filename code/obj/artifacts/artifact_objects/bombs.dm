@@ -264,7 +264,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				"phlogiston","thermite","infernite","foof","fuel","blackpowder","acid","amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pacid","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","cytotoxin","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","saxitoxin","hemotoxin","ricin")
+				"toxic_slurry","histamine","saxitoxin","hemotoxin","ricin","tetrodotoxin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
@@ -279,7 +279,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 						continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -378,7 +378,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					100;"silver",
 					100;"cobryl",
 					50;"miracle",
-					50;"soulsteel",
 					50;"hauntium",
 					50;"ectoplasm",
 					10;"ectofibre",

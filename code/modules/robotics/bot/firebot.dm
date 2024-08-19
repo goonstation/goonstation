@@ -14,7 +14,7 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
+	flags =  FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED

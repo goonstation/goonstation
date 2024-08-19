@@ -89,6 +89,7 @@ export const KEY_F9 = 120;
 export const KEY_F10 = 121;
 export const KEY_F11 = 122;
 export const KEY_F12 = 123;
+export const KEY_F24 = 135;
 export const KEY_SEMICOLON = 186;
 export const KEY_EQUAL = 187;
 export const KEY_COMMA = 188;

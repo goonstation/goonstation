@@ -4,7 +4,7 @@
 	icon_state = "std_module"
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
-	flags = FPRINT|TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/list/tools = list()
 
 /obj/item/hive_module/standard

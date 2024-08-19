@@ -14,7 +14,6 @@
 	var/use_bloodoverlay = 1
 	var/stapled = 0
 	var/allow_staple = 1
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 
 	New()
 		..()
@@ -109,7 +108,6 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -219,6 +217,10 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_r = 1
 	color_g = 0.8
 	color_b = 0.8
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 
 	syndicate
 		name = "syndicate field protective mask"
@@ -493,7 +495,6 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -632,6 +633,46 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	item_state = "anime"
 	see_face = FALSE
 
+/obj/item/clothing/mask/steel
+	name = "sheet welded mask"
+	desc = "A crudely welded mask made by attaching bent sheets. Highly protective at the cost of visibility"
+	icon_state = "steel"
+	item_state = "steel"
+	see_face = FALSE
+	allow_staple = 0
+	var/low_visibility = TRUE
+
+	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
+		if (isweldingtool(W) && low_visibility)
+			if(!W:try_weld(user, 1))
+				return
+			user.visible_message(SPAN_ALERT("<B>[user]</B> melts the mask's eye slits to be larger."))
+			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+			setProperty("meleeprot_head", 3)
+			delProperty("disorient_resist_eye")
+			src.low_visibility = FALSE
+			src.desc = "A crudely welded mask made by attaching bent sheets. It's had it's eye slits widened for better visibility."
+		else
+			..()
+
+	setupProperties()
+		..() // Has some level of protection, at the cost of visibility
+		setProperty("meleeprot_head", 5)
+		setProperty("disorient_resist_eye", 35)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (low_visibility)
+			user.addOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+
+	unequipped(mob/user)
+		. = ..()
+		if (low_visibility)
+			user.removeOverlayComposition(/datum/overlayComposition/steelmask)
+			user.updateOverlaysClient(user.client)
+
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"
 	desc = "A beak-shaped mask filled with pleasant-smelling herbs to help protect you from miasma, the leading cause of the spread of disease*.<br><small><i>*This information may be slightly outdated, please use caution if using mask later than the 17th century.</i></small>"
@@ -640,7 +681,6 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	color_r = 0.95 // darken just a little
 	color_g = 0.95
 	color_b = 0.95
-	path_prot = 0
 
 /obj/item/clothing/mask/chicken
 	name = "chicken mask"

@@ -24,7 +24,7 @@
 	},
 /area/space)
 "ag" = (
-/obj/decal/fakeobjects/flock/wing{
+/obj/fakeobject/flock/wing{
 	icon_state = "wing";
 	dir = 5
 	},
@@ -43,7 +43,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "aj" = (
-/obj/decal/fakeobjects/flock/wing{
+/obj/fakeobject/flock/wing{
 	icon_state = "wing";
 	dir = 6
 	},
@@ -199,42 +199,42 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "aE" = (
-/obj/decal/fakeobjects/flock/antenna{
+/obj/fakeobject/flock/antenna{
 	icon_state = "antenna";
 	dir = 8
 	},
 /turf/space,
 /area/space)
 "aF" = (
-/obj/decal/fakeobjects/flock/antenna/end{
+/obj/fakeobject/flock/antenna/end{
 	icon_state = "antenna-end";
 	dir = 4
 	},
 /turf/space,
 /area/space)
 "aG" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
+/obj/fakeobject/flock/wing/destroyed{
 	icon_state = "wing-destroyed";
 	dir = 9
 	},
 /turf/space,
 /area/space)
 "aH" = (
-/obj/decal/fakeobjects/flock/wing{
+/obj/fakeobject/flock/wing{
 	icon_state = "wing";
 	dir = 8
 	},
 /turf/space,
 /area/space)
 "aI" = (
-/obj/decal/fakeobjects/flock/antenna/end{
+/obj/fakeobject/flock/antenna/end{
 	icon_state = "antenna-end";
 	dir = 1
 	},
 /turf/space,
 /area/space)
 "aJ" = (
-/obj/decal/fakeobjects/flock/antenna,
+/obj/fakeobject/flock/antenna,
 /turf/space,
 /area/space)
 "aK" = (
@@ -245,14 +245,14 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "aL" = (
-/obj/decal/fakeobjects/flock/wing/broken{
+/obj/fakeobject/flock/wing/broken{
 	icon_state = "wing-broken";
 	dir = 5
 	},
 /turf/space,
 /area/space)
 "aM" = (
-/obj/decal/fakeobjects/flock/telepad,
+/obj/fakeobject/flock/telepad,
 /obj/map/light/cyan,
 /obj/marker/supplymarker,
 /turf/simulated/floor/shuttle/flock,
@@ -352,7 +352,7 @@
 	},
 /area/flock_trader)
 "ba" = (
-/obj/decal/fakeobjects/flock/wing/destroyed{
+/obj/fakeobject/flock/wing/destroyed{
 	icon_state = "wing-destroyed";
 	dir = 6
 	},
@@ -371,21 +371,21 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bd" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	icon_state = "antenna-broken-2";
 	dir = 1
 	},
 /turf/space,
 /area/space)
 "be" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	icon_state = "antenna-broken-2";
 	dir = 4
 	},
 /turf/space,
 /area/space)
 "bf" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	icon_state = "atenna-broken-1"
 	},
 /turf/space,
@@ -428,7 +428,7 @@
 	},
 /area/flock_trader)
 "bm" = (
-/obj/decal/fakeobjects/flock/antenna{
+/obj/fakeobject/flock/antenna{
 	icon_state = "antenna";
 	dir = 8
 	},
@@ -436,7 +436,7 @@
 /turf/space,
 /area/space)
 "bn" = (
-/obj/decal/fakeobjects/flock/antenna/end{
+/obj/fakeobject/flock/antenna/end{
 	icon_state = "antenna-end";
 	dir = 4
 	},
@@ -444,7 +444,7 @@
 /turf/space,
 /area/space)
 "bo" = (
-/obj/decal/fakeobjects/flock/antenna/broken{
+/obj/fakeobject/flock/antenna/broken{
 	icon_state = "antenna-broken-2";
 	dir = 4
 	},

@@ -11,7 +11,6 @@
 	wear_layer = MOB_HEAD_LAYER2
 	var/seal_hair = 0 // best variable name I could come up with, if 1 it forms a seal with a suit so no hair can stick out
 	block_vision = 0
-	var/path_prot = 1 // protection from airborne pathogens, multiplier for chance to be infected
 	var/team_num
 	var/blocked_from_petasusaphilic = FALSE //Replacing the global blacklist
 	duration_remove = 1.5 SECONDS
@@ -53,7 +52,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "ogloves"
 
 /obj/item/clothing/head/purple
-	desc = "A knit cap in orange."
+	desc = "A knit cap in purple."
 	icon_state = "purple"
 	item_state = "jgloves"
 
@@ -96,7 +95,6 @@ proc/filter_trait_hats(var/type)
 
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -129,7 +127,6 @@ proc/filter_trait_hats(var/type)
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
-	path_prot = 0
 	acid_survival_time = 3 MINUTES
 
 	setupProperties()
@@ -306,15 +303,28 @@ proc/filter_trait_hats(var/type)
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
+	var/inspector = FALSE
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
-	attack_self(mob/user)
-		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
-		new /mob/living/critter/robotic/scuttlebot(get_turf(src))
-		qdel(src)
+	attack_self (mob/user as mob)
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		var/mob/living/critter/robotic/scuttlebot/S = new /mob/living/critter/robotic/scuttlebot(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
+		S.linked_hat = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
+
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 5)
+
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
@@ -518,6 +528,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "chef"
 	item_state = "chefhat"
 
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chefhat-alt"
+
 /obj/item/clothing/head/chefhatpuffy
 	name = "Puffy Chef's Hat"
 	desc = "A chef's toque blanche, pleasantly puffy on top."
@@ -546,6 +560,10 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The hat of a postmaster."
 	icon_state = "mailcap"
 	item_state = "mailcap"
+
+	april_fools
+		icon_state = "mailcap-alt"
+		item_state = "mailcap-alt"
 
 /obj/item/clothing/head/chefhattall
     name = "Tall Chef's Hat"
@@ -1058,9 +1076,12 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 		// Guess what? you wear the hat, you go to jail. Easy Peasy.
 		var/datum/db_record/S = data_core.security.find_record("id", user.datacore_id)
-		S?["criminal"] = "*Arrest*"
+		S?["criminal"] = ARREST_STATE_ARREST
 		S?["ma_crim"] = pick("Being unstoppable","Swagging out so hard","Stylin on \'em","Puttin\' in work")
 		S?["ma_crim_d"] = pick("Convicted Badass, to the bone.","Certified Turbonerd, home-grown.","Absolute Salad.","King of crimes, Queen of Flexxin\'")
+		var/mob/living/carbon/human/H = user
+		if (istype(H))
+			H.update_arrest_icon()
 
 	custom_suicide = 1
 	suicide_in_hand = 0
@@ -1431,6 +1452,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
 			H.wear_image = src.wear_image
+			H.wear_layer = MOB_FULL_SUIT_LAYER
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
@@ -1440,7 +1462,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	desc = "Aww, cute and fuzzy."
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
-
 	random
 		New()
 			..()
@@ -1497,6 +1518,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		name = "tiger ears"
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/devil
+	name = "devil horns"
+	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "devil"
+	item_state = "devil"
 
 /obj/item/clothing/head/headband/antlers
 	name = "antlers"
@@ -1860,8 +1889,8 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 //Lesbian Hat
 
 TYPEINFO(/obj/item/clothing/head/lesbian_hat)
-	mats = list("FAB-1"=5, "honey"=5)
-
+	mats = list("fabric" = 5,
+				"honey" = 5)
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."

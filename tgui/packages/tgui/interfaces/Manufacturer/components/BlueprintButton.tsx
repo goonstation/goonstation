@@ -6,7 +6,7 @@
  */
 
 import { Button, Icon, LabeledList, Section, Stack, Tooltip } from '../../../components';
-import { ManufacturableData, ResourceData } from '../type';
+import { ManufacturableData, RequirementData, ResourceData } from '../type';
 import { round } from 'common/math';
 import { ButtonWithBadge } from './ButtonWithBadge';
 import { CenteredText } from './CenteredText';
@@ -38,29 +38,30 @@ Only the DM checks matter for actually making the item though, this just enables
 shows what materials are missing.
 */
 const getProductionSatisfaction = (
-  pattern_requirements:string[],
-  amount_requirements:number[],
+  requirement_data:RequirementData[],
   materials_stored:ResourceData[]) =>
 {
+  if (!requirement_data || !materials_stored) {
+    return false;
+  }
   // Copy values of mats stored to edit in case we need to try the same material twice
   let material_amts_predicted:Record<string, number> = {};
   materials_stored.forEach((value:ResourceData) => (
     material_amts_predicted[value.byondRef] = value.amount
   ));
   let patterns_satisfied:boolean[] = [];
-  for (let i in pattern_requirements) {
-    const target_pattern = pattern_requirements[i];
-    const target_amount = amount_requirements[i];
+  for (let i in requirement_data) {
+    const target_pattern = requirement_data[i].id;
+    const target_amount = requirement_data[i].amount / 10;
     const matchingMaterial = materials_stored.find((material:ResourceData) => (
-      (material.amount >= target_amount/10) && (target_pattern === "ALL" || material.satisfies?.includes(target_pattern) || material.id === target_pattern)
+      (material_amts_predicted[material.byondRef] >= target_amount) && material.satisfies?.includes(target_pattern)
     ));
-    if (matchingMaterial !== undefined) {
-      material_amts_predicted[i] -= target_amount/10;
-      patterns_satisfied.push(true);
-    }
-    else {
+    if (matchingMaterial === undefined) {
       patterns_satisfied.push(false);
+      continue;
     }
+    material_amts_predicted[matchingMaterial.byondRef] -= target_amount;
+    patterns_satisfied.push(true);
   }
   return patterns_satisfied;
 };
@@ -77,20 +78,22 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     hasPower,
   } = props;
   const blueprintSatisfaction = getProductionSatisfaction(
-    blueprintData.item_paths,
-    blueprintData.item_amounts,
+    blueprintData.requirement_data,
     materialData,
   );
+  if (!blueprintSatisfaction) {
+    return null;
+  }
   // Condense producability
   const notProduceable = blueprintSatisfaction.includes(false);
   // Don't include this flavor if we only output one item, because if so, then we know what we're making
-  const outputs = (blueprintData.item_names.length < 2
-    && blueprintData.create < 2
-    && !blueprintData.apply_material) ? null : (
+  const outputs = ((blueprintData?.item_names?.length ?? 0) < 2
+    && (blueprintData?.create ?? 0) < 2
+    && !blueprintData?.apply_material) ? null : (
       <>
         <br />
         Outputs: <br />
-        {blueprintData.item_names.map((value:string, index:number) => (
+        {blueprintData?.item_names?.map((value:string, index:number) => (
           <b key={index}>
             {blueprintData.create}x {value}<br />
           </b>
@@ -103,14 +106,14 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
       buttons={<Button icon="hourglass" backgroundColor="rgba(0,0,0,0)">{getBlueprintTime(blueprintData.time, manufacturerSpeed)}s</Button>}
     >
       <LabeledList>
-        {blueprintData.material_names.map((value:string, index:number) => (
+        {Object.keys(blueprintData.requirement_data).map((value:string, index:number) => (
           <LabeledList.Item
             key={index}
             labelColor={(blueprintSatisfaction[index]) ? undefined : "bad"}
-            label={value}
+            label={blueprintData?.requirement_data?.[value].name}
             textAlign="right"
           >
-            {blueprintData.item_amounts[index]/10}
+            {blueprintData?.requirement_data?.[value].amount/10}
           </LabeledList.Item>
         ))}
       </LabeledList>
@@ -125,7 +128,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
     content_info = "Click this to remove the blueprint from the fabricator.";
   }
   else {
-    content_info = blueprintData.item_descriptions[0];
+    content_info = (blueprintData?.item_descriptions?.[0] ?? "");
   }
   return (
     <Stack inline>
@@ -143,7 +146,7 @@ export const BlueprintButton = (props:BlueprintButtonProps) => {
         >
           <CenteredText
             height={BlueprintButtonStyle.Height}
-            text={truncate(blueprintData.name, 40)}
+            text={truncate(blueprintData?.name ?? "", 40)}
           />
         </ButtonWithBadge>
       </Stack.Item>

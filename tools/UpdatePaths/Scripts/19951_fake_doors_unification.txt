@@ -1,0 +1,5 @@
+/obj/fakeobject/sealed_door : /obj/fakeobject/airlock_broken/sealed{@OLD}
+/obj/fakeobject/sealed_door/owlery : /obj/fakeobject/airlock_broken/sealed/owlery{@OLD}
+/obj/fakeobject/firelock_broken : /obj/fakeobject/airlock_broken/firelock{@OLD}
+/obj/fakeobjects : /obj/fakeobject{@OLD}
+/obj/fakeobjects/sec_tv : /obj/fakeobject/sec_tv{@OLD}

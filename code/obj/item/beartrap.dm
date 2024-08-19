@@ -4,7 +4,6 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "bear_trap-close"
 	item_state = "bear_trap"
-	flags = FPRINT
 	w_class = W_CLASS_SMALL
 	force = 5
 	throwforce = 5

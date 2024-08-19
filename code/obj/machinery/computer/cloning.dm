@@ -7,7 +7,7 @@
 var/global/cloning_with_records = TRUE
 ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
-	name = "Cloning Console"
+	name = "cloning console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
@@ -447,6 +447,9 @@ proc/eligible_to_clone(var/datum/mind/mind)
 	if (!M.client)
 		return null
 
+	if (istype(M, /mob/new_player))
+		return null
+
 	if(istype(M, /mob/dead/target_observer))
 		var/mob/dead/target_observer/tobserver = M
 		if(!tobserver.is_respawnable)
@@ -615,7 +618,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user) || isintangible(user))
+		if (!src.can_eject_occupant(user))
 			return
 		src.go_out()
 		add_fingerprint(user)

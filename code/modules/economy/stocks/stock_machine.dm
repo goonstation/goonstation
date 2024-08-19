@@ -1,5 +1,5 @@
 /obj/machinery/computer/stockexchange
-	name = "Stock Exchange"
+	name = "stock exchange"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMreq"
 	var/logged_in = null

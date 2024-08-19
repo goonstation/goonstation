@@ -1,8 +1,10 @@
 ///
 
 TYPEINFO(/obj/item/rcd)
-	mats = list("MET-3"=20, "CRY-2" = 10, "CON-2" = 10, "POW-2" = 10)
-
+	mats = list("metal_superdense" = 20,
+				"crystal_dense" = 10,
+				"conductive_high" = 10,
+				"energy_high" = 10)
 /// Base RCD this is the variant actually used in most scenarios
 /obj/item/rcd
 	name = "rapid construction device"
@@ -16,7 +18,7 @@ TYPEINFO(/obj/item/rcd)
 	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -291,6 +293,7 @@ TYPEINFO(/obj/item/rcd)
 	proc/do_deconstruct_wall(turf/simulated/wall/target, mob/user)
 		PROTECTED_PROC(TRUE)
 
+		log_construction(user, "deconstructs a wall ([target])")
 		var/turf/simulated/floor/T = target.ReplaceWithFloor()
 		if (!restricted_materials || !safe_deconstruct)
 			T.setMaterial(getMaterial(material_name))
@@ -298,7 +301,6 @@ TYPEINFO(/obj/item/rcd)
 			T.setMaterial(getMaterial("steel"))
 		else
 			T.setMaterial(getMaterial("negativematter"))
-		log_construction(user, "deconstructs a wall ([target])")
 		return
 
 	proc/do_deconstruction(atom/target, mob/user, thing)
@@ -479,7 +481,7 @@ TYPEINFO(/obj/item/rcd)
 					user_limb_is_missing = TRUE
 
 			if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
-				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
+				user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims [himself_or_herself(user)]! </b> "))
 				random_brute_damage(user, 35)
 				Huser.changeStatus("knockdown", 3 SECONDS)
 				take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
@@ -491,7 +493,7 @@ TYPEINFO(/obj/item/rcd)
 					surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 					surgery_target.remove()
 					qdel(surgery_target)
-				user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> "))
+				user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes [his_or_her(user)] own [surgery_target]! </b> "))
 				random_brute_damage(user, 25)
 				take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 			playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)

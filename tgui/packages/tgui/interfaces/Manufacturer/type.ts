@@ -26,7 +26,7 @@ export type ManufacturerData = {
   panel_open:BooleanLike;
   repeat:BooleanLike;
 
-  card_balance:number;
+  banking_info:BankAccount
   progress_pct:number;
   speed:number;
   manudrive_uses_left:number;
@@ -44,6 +44,11 @@ export type ManufacturerData = {
   wires:number[];
 }
 
+export type BankAccount = {
+  name: string;
+  current_money: number;
+}
+
 export type Manudrive = {
   name:string;
   limit:number;
@@ -53,10 +58,8 @@ export type Manudrive = {
 export type ManufacturableData = {
   name:string
 
-  material_names:string[];
-  item_paths:string[];
+  requirement_data:RequirementData[];
   item_names:string[];
-  item_amounts:number[];
   item_descriptions:string[];
 
   create:number;
@@ -69,6 +72,12 @@ export type ManufacturableData = {
   apply_material:BooleanLike;
   show_cost:BooleanLike;
   isMechBlueprint:BooleanLike;
+}
+
+export type RequirementData = {
+  name: string;
+  id: string;
+  amount: number;
 }
 
 export type RockboxData = {

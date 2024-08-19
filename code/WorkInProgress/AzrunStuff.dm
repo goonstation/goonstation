@@ -43,20 +43,20 @@
 
 /datum/manufacture/sub/treads
 	name = "Vehicle Treads"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 
@@ -314,7 +314,7 @@
 /obj/gimmick_obj
 	var/list/gimmick_events
 	var/active_stage
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	New()
 		..()
@@ -993,7 +993,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	inventory_counter_enabled = 1
 

@@ -8,10 +8,10 @@
 	var/duration_human									= null // string
 	var/expires_at										= null // date-time | null
 	var/deleted_at										= null // date-time | null
-	var/game_admin										= null // { id: integer, ckey: string, name: string } - not required
-	var/datum/apiModel/Tracked/GameRound/game_round		= null // /datum/apiModel/GameRound - not required
-	var/original_ban_detail								= null // { id: integer, ban_id: integer, ckey: string, comp_id: string, ip: string }
-	var/list/datum/apiModel/Tracked/BanDetail/details	= null // [/datum/apiModel/BanDetail] - not required
+	var/datum/apiModel/GameAdminResource/game_admin	  = null // Model - not required
+	var/datum/apiModel/Tracked/GameRound/game_round		= null // Model - not required
+	var/datum/apiModel/Tracked/BanDetail/original_ban_detail = null // Model - not required
+	var/list/datum/apiModel/Tracked/BanDetail/details	= null // [Model] - not required
 	var/requires_appeal								= null // boolean
 
 /datum/apiModel/Tracked/BanResource/SetupFromResponse(response)
@@ -23,14 +23,19 @@
 	src.duration_human = response["duration_human"]
 	src.expires_at = response["expires_at"]
 	src.deleted_at = response["deleted_at"]
-	src.game_admin = response["game_admin"]
+	src.requires_appeal = response["requires_appeal"]
 
-	if (response["game_round"])
+	if (("game_admin" in response) && islist(response["game_admin"]))
+		src.game_admin = new
+		src.game_admin.SetupFromResponse(response["game_admin"])
+
+	if (("game_round" in response) && islist(response["game_round"]))
 		src.game_round = new
 		src.game_round.SetupFromResponse(response["game_round"])
 
-	src.original_ban_detail = response["original_ban_detail"]
-	src.requires_appeal = response["requires_appeal"]
+	if (("original_ban_detail" in response) && islist(response["original_ban_detail"]))
+		src.original_ban_detail = new
+		src.original_ban_detail.SetupFromResponse(response["original_ban_detail"])
 
 	src.details = list()
 	for (var/item in response["details"])
@@ -43,8 +48,7 @@
 	if (
 		isnull(src.game_admin_id) \
 		|| isnull(src.reason) \
-		|| isnull(src.game_admin) \
-		|| isnull(src.original_ban_detail)
+		|| isnull(src.game_admin)
 	)
 		return FALSE
 
@@ -61,10 +65,14 @@
 	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
 	.["game_admin"] = src.game_admin
+	if (src.game_admin)
+		.["game_admin"] = src.game_admin.ToList()
 	.["game_round"] = src.game_round
 	if (src.game_round)
 		.["game_round"] = src.game_round.ToList()
 	.["original_ban_detail"] = src.original_ban_detail
+	if (src.original_ban_detail)
+		.["original_ban_detail"] = src.original_ban_detail.ToList()
 	.["details"] = list()
 	for (var/datum/apiModel/Tracked/BanDetail/detail in src.details)
 		.["details"] += list(detail.ToList())

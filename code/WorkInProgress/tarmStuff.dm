@@ -1,4 +1,100 @@
 //GUNS GUNS GUNS
+/datum/projectile/bullet/homing/glatisant
+	name = "\improper Glatisant cluster warhead"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_rate = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bullethole-large"
+	damage = 15
+	icon_state = "mininuke"
+	shot_delay = 1 SECONDS
+	min_speed = 24
+	max_speed = 36
+	start_speed = 24
+	max_rotation_rate = 7
+	auto_find_targets = FALSE
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		explosion_new(null, get_turf(hit), 10)
+		for (var/i in -4 to 4)
+			var/obj/projectile/P = initialize_projectile(get_turf(O), new/datum/projectile/bullet/homing/glatisant_submuntitions, O.xo, O.yo, O.shooter)
+			P.rotateDirection(180 + 8*i)
+			P.launch()
+
+/datum/projectile/bullet/homing/glatisant_submuntitions
+	name = "\improper Glatisant submuntition seeker"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_rate = 0
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bullethole-small"
+	damage = 20
+	icon_state = "40mm_lethal"
+	shot_volume = 33
+	min_speed = 12
+	max_speed = 24
+	start_speed = 12
+	max_rotation_rate = 16
+	hit_ground_chance = 100
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		explosion_new(null, get_turf(hit), 16)
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
+
+//much of this shamelessly copy-pasted from the pod-seeker
+/obj/item/gun/kinetic/glatisant
+	name = "\improper Glatisant cluster missile launcher"
+	desc = "A platform for launching high-tech cluster munitions. \"Anderson Para-Munitions\" is printed on the sighting module."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon_state = "missile_launcher" //could use a bespoke sprite but a recolor will do for now rip
+	item_state = "missile_launcher"
+	color = list(1.09141,-0.886668,-0.991788,0.139438,-0.352545,-1.5129,-0.110001,1.06701,2.19351)
+	has_empty_state = TRUE
+	w_class = W_CLASS_BULKY
+	throw_speed = 2
+	throw_range = 4
+	force = MELEE_DMG_LARGE
+	contraband = 8
+	ammo_cats = list(AMMO_ROCKET_ALL)
+	max_ammo_capacity = 1
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/pod_seeking_missile
+	recoil_strength = 13
+
+	New()
+		ammo = new default_magazine
+		ammo.amount_left = 1
+		set_current_projectile(new /datum/projectile/bullet/homing/glatisant)
+		AddComponent(/datum/component/holdertargeting/smartgun/homing, 1)
+		..()
+
+/obj/item/ammo/bullets/glatisant
+	sname = "\improper Glatisant cluster missile"
+	name = "\improper Glatisant cluster missile"
+	desc = "A high-explosive missile, equipped active seekers and filled with homing submunitions. \"Anderson Para-Munitions\" is stenciled on the side."
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "mininuke"
+	ammo_type = new /datum/projectile/bullet/homing/glatisant
+	ammo_cat = AMMO_ROCKET_RPG
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 /datum/projectile/energy_bolt/taser_beam
 	cost = 0
 	max_range = PROJ_INFINITE_RANGE
@@ -166,12 +262,12 @@
 
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
-	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
+	desc = "An assault rifle capable of firing single precise bursts. The magazine holders are embossed with \"Anderson Para-Munitions\""
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
@@ -475,7 +571,7 @@
 	name = "Scroll of Enchantment"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -534,7 +630,6 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
@@ -642,7 +737,7 @@ TYPEINFO(/obj/item/device/geiger)
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY

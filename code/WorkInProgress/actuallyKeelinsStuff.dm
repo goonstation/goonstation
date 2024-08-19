@@ -30,7 +30,7 @@ Returns:
 		By default the image is attached to source. You can change this by setting the image's loc to something else.
 		crossed contains a list of crossed turfs if getCrossed was set to 1.
 */
-/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1)
+/proc/drawLine(var/atom/source, var/atom/target, var/render_source_line = null, var/render_source_cap = null, var/src_off_x=0, var/src_off_y=0, var/trg_off_x=0, var/trg_off_y=0, var/mode = LINEMODE_STRETCH, var/getCrossed = 1, var/adjustTiles=1, var/applyTransform = TRUE)
 	if(render_source_line == null) return
 	var/datum/lineResult/result = new()
 
@@ -95,7 +95,10 @@ Returns:
 		if(render_source_cap != null)
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		var/matrix/final_matrix = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.transform = final_matrix
+		if (applyTransform)
+			I.transform = final_matrix
 		result.lineImage = I
 
 	else if(mode == LINEMODE_STRETCH_NO_CLIP)
@@ -105,6 +108,7 @@ Returns:
 
 		//Matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
+		result.transform = M
 		var/image/I = image(null,source)
 		I.appearance_flags = KEEP_APART  //Required for some odd reason.
 		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
@@ -113,21 +117,26 @@ Returns:
 			//This probably breaks dual-ended caps.
 			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
-		I.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(dist/2,0).Turn(angle).Translate(src_off_x - iconWidth / 4,src_off_y))
-		I.transform = M
+		result.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE_REVERSED)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
 		I.icon_state = islist(render_source_line) ? pick(render_source_line) : render_source_line
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate(-dist/2,0).Turn(180 + angle).Translate(src_off_x - iconWidth / 4,src_off_y))
-		I.transform = M
+		result.transform = M
+		if (applyTransform)
+			I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SEGMENT)
 		var/image/composite = image(null,source)
@@ -158,6 +167,8 @@ Returns:
 /datum/lineResult
 	var/image/lineImage = null
 	var/list/crossed = null
+	/// The resulting transform applied to the line, null in the case of LINEMODE_SEGMENT because there's no single transform there.
+	var/matrix/transform = null
 
 //Gets a line of turfs between the two atoms. Doesn't miss tiles, like bresenham.
 //Adapted from http://playtechs.blogspot.com/2007/03/raytracing-on-grid.html
@@ -1000,7 +1011,7 @@ Returns:
 			qdel(src)
 		..()
 
-/obj/meleeeffect
+/obj/effect/melee
 	name = ""
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
@@ -1045,7 +1056,7 @@ Returns:
 		icon = 'icons/effects/effects.dmi'
 		icon_state = "glowyline"
 
-/obj/meleeeffect/spearimage
+/obj/effect/melee/spearimage
 	name = ""
 	desc = ""
 	icon = null
@@ -1067,7 +1078,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	var/obj/beam_dummy/beam
 	var/turf/last = null
 
@@ -1122,7 +1133,7 @@ Returns:
 	icon_state = "sword1-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword1-W"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, var/reach)
 		return doAttack(user, target, reach ? target : null)
@@ -1235,7 +1246,7 @@ Returns:
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "dagger"
 	hitsound = null
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	force = 1
 	var/datum/action/bar/private/icon/daggerStab/stabAction
 
@@ -1311,8 +1322,8 @@ Returns:
 		return
 
 	showEffect(var/mob/user, var/atom/target, var/direction, var/stabStrength = 0)
-		var/obj/meleeeffect/dagger/M
-		M = new/obj/meleeeffect/dagger(target)
+		var/obj/effect/melee/dagger/M
+		M = new/obj/effect/melee/dagger(target)
 		M.set_dir(direction)
 		M.color = (stabStrength < 1 ? "#FFFFFF" : "#FF4444")
 
@@ -1460,8 +1471,8 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.30,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/spear/M
-		//var/obj/meleeeffect/spearimage/I
+		var/obj/effect/melee/spear/M
+
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
@@ -1470,7 +1481,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1482,7 +1493,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = 96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1494,7 +1505,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_y = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1506,7 +1517,7 @@ Returns:
 				I.set_dir(direction)
 				animate(I, pixel_x = -96, time = 6, alpha= 0)
 				*/
-				M = new/obj/meleeeffect/spear(effectLoc)
+				M = new/obj/effect/melee/spear(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1547,29 +1558,29 @@ Returns:
 
 		var/color_new = list(partred*2.5,0.30,0.30, 0.30,partgreen*2.5,0.30, 0.30,0.3,partblue*2.5, 0,0,0)
 		var/atom/effectLoc = null
-		var/obj/meleeeffect/M
+		var/obj/effect/melee/M
 		switch(direction)
 			if(NORTH)
 				effectLoc = locate(user.x, user.y + 1, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(EAST)
 				effectLoc = locate(user.x + 1, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(SOUTH)
 				effectLoc = locate(user.x, user.y - 3, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_x = -32
 				M.set_dir(direction)
 				M.color = color_new
 			if(WEST)
 				effectLoc = locate(user.x - 3, user.y, user.z)
-				M = new/obj/meleeeffect(effectLoc)
+				M = new/obj/effect/melee(effectLoc)
 				M.pixel_y = -32
 				M.set_dir(direction)
 				M.color = color_new
@@ -1996,7 +2007,7 @@ Returns:
 	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/firing = 0
 
@@ -2183,7 +2194,7 @@ Returns:
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -2262,6 +2273,7 @@ Returns:
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	mouse_opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
@@ -2270,6 +2282,7 @@ Returns:
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
+	mouse_opacity = 0
 /*
 /obj/item/rpg_rocket_shuttle
 	name = "MPRT rocket"
@@ -2281,7 +2294,7 @@ Returns:
 	throw_speed = 2
 	throw_range = 10
 	force = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/state = 0
 	var/yo = null
 	var/xo = null
@@ -3262,7 +3275,7 @@ var/list/lag_list = new/list()
 	var/datum/engibox_mode/active_mode = null
 	var/ckey_lock = null
 	var/z_level_lock = 0
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)

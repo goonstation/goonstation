@@ -10,7 +10,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	var/last_tick = null
 	var/const/max_time = 600 SECONDS
 	var/const/min_time = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	event_handler_flags = USE_FLUID_ENTER
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"

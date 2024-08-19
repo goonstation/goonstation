@@ -28,7 +28,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	item_state = "banana"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
 	is_syndicate = FALSE
 	stamina_damage = 0
@@ -691,8 +691,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		return
 
 TYPEINFO(/obj/item/old_grenade/oxygen)
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
-
+	mats = list("metal_dense" = 2,
+				"conductive" = 2,
+				"molitz" = 10,
+				"char" = 1)
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -1315,7 +1317,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/expl_devas = 0
 	var/expl_heavy = 0

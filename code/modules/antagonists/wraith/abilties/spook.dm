@@ -37,9 +37,8 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
-	cast()
-		if (..())
-			return 1
+	allowcast() // Spooking can be done even while force-manifested
+		return TRUE
 
 	proc/do_spook_ability(var/effect as text)
 		if (effect == 8)

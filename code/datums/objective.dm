@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/objective)
 			return TRUE
 		if(isVRghost(M.current))
 			return TRUE
-		if(!iscarbon(M.current))
+		if(isghostcritter(M.current) || isghostdrone(M.current) || issilicon(M.current))
 			return TRUE
 		return FALSE
 
@@ -300,7 +300,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 	riot_shotguns
 		text = "riot shotguns"
-		path = /obj/item/gun/kinetic/riotgun
+		path = /obj/item/gun/kinetic/pumpweapon/riotgun
 		amt_high = 3
 	cards
 		text = "ID cards"
@@ -688,26 +688,6 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 				return 1
 		return 0
 
-/datum/objective/specialist/conspiracy
-	explanation_text = "Identify and eliminate any competing syndicate operatives on the station. Be careful not to be too obvious yourself, or they'll come after you!"
-
-	check_completion()
-		if (!owner.current || isdead(owner.current))
-			return 0
-
-		if (!istype(ticker.mode, /datum/game_mode/spy))
-			return 0
-
-		var/datum/game_mode/spy/spymode = ticker.mode
-		for (var/datum/mind/mindCheck in spymode.leaders)
-			if (mindCheck == owner)
-				continue
-
-			if (mindCheck?.current && !isdead(mindCheck.current))
-				return 0
-
-		return 1
-
 /datum/objective/specialist/absorb
 	medal_name = "Many names, many faces"
 	var/absorb_count
@@ -748,10 +728,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [bloodcount] units of blood in total."
 
 	check_completion()
-		if (owner.current && owner.current.get_vampire_blood(1) >= bloodcount)
-			return 1
-		else
-			return 0
+		var/datum/antagonist/vampire/antag_datum = owner.get_antagonist(ROLE_VAMPIRE)
+		return (antag_datum?.ability_holder?.get_vampire_blood(TRUE) >= bloodcount)
 
 /datum/objective/specialist/hunter/trophy
 	medal_name = "Dangerous Game"
@@ -1479,8 +1457,8 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		explanation_text = "Accumulate at least [powergoal] units of charge in total."
 
 	check_completion()
-		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
-		return (AH?.lifetime_energy >= powergoal)
+		var/datum/antagonist/arcfiend/antag_datum = owner.get_antagonist(ROLE_ARCFIEND)
+		return (antag_datum?.ability_holder?.lifetime_energy >= powergoal)
 
 /////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //

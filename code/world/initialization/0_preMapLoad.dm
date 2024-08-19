@@ -52,6 +52,10 @@
 			roundLog << "<br>"
 			logLength += 4
 
+		// Global handlers that should be highly available
+		apiHandler = new()
+		eventRecorder = new()
+
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
 		abandon_allowed = config.respawn
@@ -84,6 +88,8 @@
 		buildMaterialPropertyCache()	//Order is important.
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
+		Z_LOG_DEBUG("Preload", "Building manufacturing requirement cache...")
+		buildManufacturingRequirementCache() // ^^
 
 		// no log because this is functionally instant
 		global_signal_holder = new
@@ -127,9 +133,6 @@
 		cargo_pad_manager = new /datum/cargo_pad_manager()
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
-
-		Z_LOG_DEBUG("Preload", "Generating minimaps...")
-		minimap_renderer = new
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -203,7 +206,6 @@
 		fluid_turf_setup(first_time=TRUE)
 
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
-		station_name() // generate station name and set it
 		..()
 		global.current_state = GAME_STATE_MAP_LOAD
 
@@ -223,3 +225,21 @@
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
+
+/proc/buildManufacturingRequirementCache()
+	requirement_cache = list()
+	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material
+	for (var/datum/manufacturing_requirement/R_path as anything in requirementList)
+		var/datum/manufacturing_requirement/R = new R_path()
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.getID() in requirement_cache)
+			CRASH("ID conflict: [R.getID()] from [R]")
+		#endif
+		requirement_cache[R.getID()] = R
+	for (var/datum/material/mat as anything in material_cache)
+		var/datum/manufacturing_requirement/match_material/R = new /datum/manufacturing_requirement/match_material(mat)
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.getID() in requirement_cache)
+			CRASH("ID conflict: [R.getID()] from [R]")
+		#endif
+		requirement_cache[R.getID()] = R

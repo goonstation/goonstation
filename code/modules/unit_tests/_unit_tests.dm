@@ -34,6 +34,7 @@
 #include "metadata_type_typos.dm"
 #include "rand.dm"
 #include "deletions.dm"
+#include "explosions.dm"
 #include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"

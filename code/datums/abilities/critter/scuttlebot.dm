@@ -137,6 +137,7 @@
 				holder.owner.ghostize()
 				return 1
 			E.mind.transfer_to(E.controller)
+			E.controller.network_device = null
 			E.controller = null
 		else //In case this ability is put on another mob
 			boutput(holder.owner, SPAN_ALERT("You don't have a body to go back to!"))

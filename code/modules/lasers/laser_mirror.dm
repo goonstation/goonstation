@@ -2,7 +2,9 @@
 #define SW_NE 1
 
 TYPEINFO(/obj/laser_sink/mirror)
-	mats = list("MET-1"=10, "CRY-1"=10, "REF-1"=30)
+	mats = list("metal" = 10,
+				"crystal" = 10,
+				"reflective" = 30)
 /obj/laser_sink/mirror
 	name = "laser mirror"
 	desc = "A highly reflective mirror designed to redirect extremely high energy laser beams."
@@ -61,6 +63,10 @@ TYPEINFO(/obj/laser_sink/mirror)
 	laser.next = src.out_laser
 	src.out_laser.try_propagate()
 	src.out_laser.icon_state = out_laser.get_corner_icon_state(src.facing)
+	//perspective occlusion check, should the mirror be rendered "in front" of the laser
+	if (src.in_laser.dir == SOUTH || src.facing == NW_SE && src.in_laser.dir == EAST || src.facing == SW_NE && src.in_laser.dir == WEST)
+		//fake perspective with an inverted alpha filter of our own sprite
+		src.out_laser.add_filter("mirror_occlusion", 0, alpha_mask_filter(icon=icon(src.icon, src.icon_state), flags = MASK_INVERSE))
 	return TRUE
 
 /obj/laser_sink/mirror/exident(obj/linked_laser/laser)

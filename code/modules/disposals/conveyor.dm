@@ -4,7 +4,9 @@
 
 // moves items/mobs/movables in set direction every ptick
 TYPEINFO(/obj/machinery/conveyor) {
-	mats = list("MET-1" = 1, "CON-1" = 1, "CRY-1" = 1)
+	mats = list("metal" = 1,
+				"conductive" = 1,
+				"crystal" = 1)
 }
 
 /obj/machinery/conveyor
@@ -879,14 +881,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 
 
-ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
-
-TYPEINFO(/obj/machinery/conveyor_switch) {
-	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
-}
 
 
 #define CALC_DELAY(C) max(initial(C.move_lag) - src.speedup + src.slowdown, 0.1)
+
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
+TYPEINFO(/obj/machinery/conveyor_switch) {
+	mats = list("metal" = 10,
+				"conductive" = 10,
+				"crystal" = 10)
+}
+
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
 	name = "conveyor switch"

@@ -533,6 +533,9 @@
 		var/obj/blob/B = T.get_blob_on_this_turf()
 
 		if (B)
+			if (B.health >= B.health_max)
+				boutput(owner, SPAN_ALERT("That blob tile is already at full health."))
+				return
 			if(ON_COOLDOWN(B, "manual_blob_heal", 6 SECONDS))
 				boutput(owner, SPAN_ALERT("That blob tile needs time before it can be repaired again."))
 				return

@@ -81,8 +81,10 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		..()
 
 TYPEINFO(/obj/item/turret_deployer/riot)
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
-
+	mats = list("insulated" = 10,
+				"conductive" = 10,
+				"crystal" = 3,
+				"metal_dense" = 2)
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
@@ -535,7 +537,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && (FACTION_SYNDICATE in C.faction)) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (FACTION_SYNDICATE in C.faction) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED

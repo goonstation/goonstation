@@ -15,7 +15,7 @@
 	density = 0
 	canmove = 1
 	use_stamina = FALSE
-	flags = FPRINT | NO_MOUSEDROP_QOL
+	flags = NO_MOUSEDROP_QOL
 	gender = NEUTER
 
 	blinded = FALSE
@@ -25,6 +25,8 @@
 	var/name_prefix = "living "
 
 	faction = list(FACTION_WRAITH)
+
+	ailment_immune = TRUE
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc)
@@ -91,7 +93,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
@@ -183,7 +184,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	blob_act(var/power)
 		logTheThing(LOG_COMBAT, src, "is hit by a blob")
@@ -305,8 +306,9 @@
 		else
 			return SPAN_ALERT("<B>[src] attacks [T]!</B>")
 
-	return_air()
-		return loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return loc?.return_air()
 
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)

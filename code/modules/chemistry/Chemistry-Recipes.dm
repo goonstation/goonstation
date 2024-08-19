@@ -609,6 +609,33 @@
 		required_reagents = list("phlogiston" = 1, "thermite" = 1, "fuel" = 1)
 		result_amount = 1 */
 
+	fishoil_pyrolysis
+		name = "fish oil pyrolysis"
+		id = "fishoil_pyrolysis"
+		result = "potash"
+		required_reagents = list("fishoil" = 1)
+		min_temperature = T0C + 150
+		result_amount = 0.2
+		instant = 0
+		reaction_speed = 0.4
+		mix_phrase = "The oil starts to bubble and turn into a back tar."
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if(holder?.my_atom?.is_open_container())
+				//there goes your precious oil
+				reaction_icon_state = list("reaction_fire-1", "reaction_fire-2")
+				holder.add_reagent("ash", 0.8 * created_volume * 5,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
+			else
+				reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+				//the reaction creates 0,8u of oil for 1u of fish oil at 165°C, linarly declining in the area of 150°C to 180°C down to 0,2u
+				var/amount_of_oil_produced = round(0.2 + 0.6 * max(0, 1 - (abs(holder.total_temperature - (T0C + 165)) / 15)), 0.01)
+				holder.add_reagent("oil", amount_of_oil_produced * created_volume * 5,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
+				if(amount_of_oil_produced < 0.8)
+					// the rest chars into ash
+					holder.add_reagent("ash", (0.8 - amount_of_oil_produced) * created_volume * 5,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 3)
+
+
+
 	ash
 		name = "Ash"
 		id = "ash"
@@ -923,6 +950,15 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	shirley_temple
+		name = "shirley temple"
+		id = "shirley_temple"
+		result = "shirley_temple"
+		required_reagents = list("juice_lime" = 1, "juice_lemon" = 1, "ginger_ale" = 1, "grenadine" = 1)
+		result_amount = 4
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	vermont_breeze
 		name = "vermont breeze"
 		id = "vermont_breeze"
@@ -986,10 +1022,10 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
-	cocktail_kalimoxto
-		name = "Kalimoxto"
-		id = "kalimoxto"
-		result = "kalimoxto"
+	cocktail_kalimotxo
+		name = "Kalimotxo"
+		id = "kalimotxo"
+		result = "kalimotxo"
 		required_reagents = list("cola" = 1, "wine" = 1)
 		result_amount = 2
 		mix_phrase = "The drink mixes together in an oddly Basque way."
@@ -2347,7 +2383,7 @@
 		name = "Graphene"
 		id = "graphene"
 		result = "graphene"
-		required_reagents = list("fuel" = 4, "iron" = 1, "silicon_dioxide" = 1)
+		required_reagents = list("fuel" = 4, "iron" = 1, "silicon" = 1) //silicon dioxide -> silicon because this whole chain is too damn long
 		min_temperature = T0C + 150
 		result_amount = 2
 		reaction_speed = 1

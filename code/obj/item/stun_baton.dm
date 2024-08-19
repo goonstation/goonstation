@@ -5,8 +5,8 @@
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
 TYPEINFO(/obj/item/baton)
-	mats = list("MET-3"=10, "CON-2"=10)
-
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10)
 /obj/item/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
@@ -14,7 +14,6 @@ TYPEINFO(/obj/item/baton)
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton-A"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 10
 	throwforce = 7
@@ -352,8 +351,10 @@ TYPEINFO(/obj/item/baton/beepsky)
 	cell_type = /obj/item/ammo/power_cell
 
 TYPEINFO(/obj/item/baton/cane)
-	mats = list("MET-3"=10, "CON-2"=10, "GEM-1"=10, "gold"=1)
-
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10,
+				"gemstone" = 10,
+				"gold" = 1)
 /obj/item/baton/cane
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
@@ -401,8 +402,9 @@ TYPEINFO(/obj/item/baton/classic)
 
 
 TYPEINFO(/obj/item/baton/ntso)
-	mats = list("MET-3"=10, "CON-2"=10, "POW-1"=5)
-
+	mats = list("metal_superdense" = 10,
+				"conductive_high" = 10,
+				"energy" = 5)
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."

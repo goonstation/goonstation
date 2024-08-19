@@ -7,7 +7,7 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER
+	flags = USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
@@ -86,7 +86,7 @@
 	New()
 		..()
 		if(src.is_reinforced)
-			src.flags |= ALWAYS_SOLID_FLUID
+			src.flags |= FLUID_DENSE
 		layerify()
 
 	Turn()
@@ -128,7 +128,7 @@
 				user.show_text("You cut off the reinforcement on [src].", "blue")
 				src.icon_state = "railing"
 				src.is_reinforced = 0
-				src.flags &= !ALWAYS_SOLID_FLUID
+				src.flags &= !FLUID_DENSE
 				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
 				R.amount = 1
 				if(src.material)
@@ -145,7 +145,7 @@
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
-					src.flags |= ALWAYS_SOLID_FLUID
+					src.flags |= FLUID_DENSE
 			else
 				user.show_text("[src] is already reinforced!", "red")
 
@@ -219,6 +219,14 @@
 		icon = 'icons/obj/velvetrope.dmi'
 		icon_state = "velvetrope"
 		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
+
+	guard // I'm yoinking this from window.dm and there's nothing you can do to stop me
+		name = "guard railing"
+		desc = "Doesn't look very sturdy, but it's better than nothing?"
+		icon = 'icons/obj/structures.dmi'
+		is_reinforced = TRUE
+		icon_state = "safetyrail"
 		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump

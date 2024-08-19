@@ -243,6 +243,16 @@ client/proc/toggle_ghost_respawns()
 	src.holder.buildmode_view = !src.holder.buildmode_view
 	boutput(usr, SPAN_NOTICE("Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!"))
 
+/client/proc/toggle_hide_offline()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Offline Indicators"
+	set desc = "Toggles if your offline indicators are hidden when mob jumping"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	src.holder.hide_offline_indicators = !src.holder.hide_offline_indicators
+	boutput(usr, SPAN_NOTICE("Toggled hiding offline indicators [src.holder.hide_offline_indicators ? "on":"off"]!"))
+
 /client/proc/toggle_spawn_in_loc()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Spawn in Loc"

@@ -100,10 +100,6 @@ export class ByondUi extends Component {
   }
 
   componentDidMount() {
-    // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('scroll', this.handleScroll, true);
     this.componentDidUpdate();
@@ -111,10 +107,6 @@ export class ByondUi extends Component {
   }
 
   componentDidUpdate() {
-    // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     const { params = {}, hideOnScroll } = this.props;
 
     if (this.containerRef.current) {
@@ -134,10 +126,6 @@ export class ByondUi extends Component {
   }
 
   componentWillUnmount() {
-    // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('scroll', this.handleScroll, true);
     this.byondUiElement.unmount();
@@ -145,9 +133,8 @@ export class ByondUi extends Component {
 
   render() {
     const { params, ...rest } = this.props;
-    const boxProps = computeBoxProps(rest);
     return (
-      <div ref={this.containerRef} {...boxProps}>
+      <div ref={this.containerRef} {...computeBoxProps(rest)}>
         {/* Filler */}
         <div style={{ 'min-height': '22px' }} />
       </div>

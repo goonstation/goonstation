@@ -224,7 +224,7 @@
 		density=1
 		anchored = UNANCHORED
 		icon_state="housing_cabinet"
-		flags = FPRINT | EXTRADELAY | CONDUCT
+		flags = EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
 		default_hat_y = 14
 
@@ -268,7 +268,7 @@
 		anchored=0
 		num_f_icons=1
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+		flags = EXTRADELAY | TABLEPASS | CONDUCT
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
@@ -354,7 +354,7 @@
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
@@ -493,6 +493,13 @@
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
 		return ..()
+
+	pixelaction(atom/target, params, mob/user)
+		var/turf/hit_turf = target
+		if (!istype(hit_turf) || !hit_turf || hit_turf.density || !can_reach(user, hit_turf))
+			..()
+			return FALSE
+		src.place_to_turf_by_grid(user, params, hit_turf, grid = 2, centered = 1, offsetx = 0, offsety = 2)
 
 	pick_up_by(var/mob/M)
 		if(level == OVERFLOOR) return ..()
@@ -772,7 +779,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/item/mechanics/thprint
@@ -1280,7 +1287,7 @@
 		return
 
 /obj/item/mechanics/wifisplit
-	name = "Wifi Signal Splitter Component"
+	name = "Signal Splitter Component"
 	desc = ""
 	icon_state = "comp_split"
 	var/triggerSignal = "1"
@@ -3221,10 +3228,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoFloor: [floorResults ? "ON" : "OFF"]")]"
-	secure()
-		icon_state = "comp_arith1"
-	loosen()
-		icon_state = "comp_arith"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", PROC_REF(setA))
@@ -3333,6 +3336,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = round(.)
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_arith"
 
 
 /obj/item/mechanics/counter
@@ -3346,10 +3351,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current value: [currentValue] | Changes by [(change >= 0 ? "+" : "-")][change] | Starting value: [startingValue]")]"
-	secure()
-		icon_state = "comp_counter1"
-	loosen()
-		icon_state = "comp_counter"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", PROC_REF(doCounting))
@@ -3429,6 +3430,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = currentValue
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]")
 
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_counter"
+
 
 /obj/item/mechanics/clock
 	name = "Clock Component"
@@ -3441,10 +3445,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current stored time: [startTime] | Current time: [round(TIME)] | Time units: [divisor / 10] seconds")]"
 
-	secure()
-		icon_state = "comp_clock1"
-	loosen()
-		icon_state = "comp_clock"
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Time", PROC_REF(sendTime))
@@ -3495,6 +3495,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		tooltip_rebuild = 1
 		return 1
 
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_clock"
+
+
 /obj/item/mechanics/interval_timer
 	name = "Automatic Signaller Component"
 	desc = "Outputs a signal on regular, configurable intervals."
@@ -3518,12 +3522,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
 		. += "<br>[SPAN_NOTICE("Current interval length: [intervalLength / 10] sec.")]"
-
-	secure()
-		icon_state = "comp_clock1"
 	loosen()
-		// when someone detaches this we want it to stop.
-		icon_state = "comp_clock"
 		wantActive = FALSE
 	// if we're leaving then yeah stop this shit, just in case
 	disposing()
@@ -3642,6 +3641,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			// I don't care about checking for values below -1 here,
 			// because anything below 0 is effectively infinite
 			repeatCount = input_num
+
+	update_icon()
+		icon_state = "[under_floor ? "u":""]comp_clock"
 
 
 /obj/item/mechanics/association

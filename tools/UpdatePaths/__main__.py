@@ -28,7 +28,6 @@ Old paths properties:
 """
 
 default_map_directory = "../.."
-#default_map_directory = "../../+secret/maps" # uncomment for secrets
 
 default_map_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), default_map_directory)
 

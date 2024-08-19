@@ -954,6 +954,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 /mob/living/carbon/human/spacer
 	is_npc = TRUE
 	uses_mobai = 1
+	ailment_immune = TRUE
 	New()
 		..()
 		src.say("Hey there [JOHN_PICK("insults")]")//debug
@@ -964,7 +965,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		src.ai.disable()
 
 	initializeBioholder()
@@ -993,6 +993,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	gender = MALE
 	is_npc = TRUE
 	uses_mobai = 1
+	ailment_immune = TRUE
 
 	New()
 		..()
@@ -1002,7 +1003,6 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		src.ai.disable()
 
 	initializeBioholder()

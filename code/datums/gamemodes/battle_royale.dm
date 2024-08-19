@@ -330,7 +330,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/revolver)
 	weapon_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
 	weapon_supplies.Add(/obj/item/gun/kinetic/single_action/colt_saa)
-	weapon_supplies.Add(/obj/item/gun/kinetic/riotgun)
+	weapon_supplies.Add(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
@@ -545,7 +545,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
-	I.access |= access_maxsec
+	I.access |= list(access_maxsec, access_armory)
 	battler.equip_if_possible(I, SLOT_WEAR_ID)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()

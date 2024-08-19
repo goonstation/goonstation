@@ -49,7 +49,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
@@ -170,7 +170,7 @@
 	SPAWN(1 SECOND)
 		prox_check()
 
-/obj/item/assembly/proximity_bomb/return_air()
+/obj/item/assembly/proximity_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()
 
 
@@ -184,7 +184,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/time_bomb/c_state(n)
 
@@ -262,7 +262,7 @@
 			src.part3.release()
 	return
 
-/obj/item/assembly/time_bomb/return_air()
+/obj/item/assembly/time_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()
 
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
@@ -275,7 +275,7 @@
 	var/obj/item/device/igniter/part2 = null
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_bomb/examine()
 	. = ..()
@@ -350,5 +350,5 @@
 			src.part3.release()
 	return
 
-/obj/item/assembly/radio_bomb/return_air()
+/obj/item/assembly/radio_bomb/return_air(direct = FALSE)
 	return src.part3?.return_air()

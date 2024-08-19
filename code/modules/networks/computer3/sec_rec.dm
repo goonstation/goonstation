@@ -40,7 +40,7 @@
 	var/datum/db_record/active_secure = null //Security record
 	var/log_string = null //Log usage of record system, can be dumped to a text file.
 	var/obj/item/peripheral/network/radio/radiocard = null
-	var/tmp/last_arrest_report = 0 //When did we last report an arrest?
+	var/tmp/last_status_report = 0 //When did we last report a status change? (Detain, Arrest)
 	var/list/datum/db_record/possible_active = null
 
 	var/tmp/connected = 0
@@ -286,7 +286,7 @@
 						R["name"] = src.active_general["name"]
 						R["full_name"] = src.active_general["full_name"]
 						R["id"] = src.active_general["id"]
-						R["criminal"] = "None"
+						R["criminal"] = ARREST_STATE_NONE
 						R["sec_flag"] = "None"
 						R["mi_crim"] = "None"
 						R["mi_crim_d"] = "No minor crime convictions."
@@ -336,7 +336,7 @@
 						return
 
 					if (FIELDNUM_CRIMSTAT)
-						src.print_text("Please select: (1) Arrest (2) None (3) Incarcerated<br>(4) Parolled (5) Released (0) Back")
+						src.print_text("Please select: (1) Arrest (2) Detain (3) None <br>(4) Suspect (5) Incarcerated (6) Parolled (7) Released (0) Back")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -446,28 +446,46 @@
 							return
 
 						if (lowertext(command) == "clown")
-							src.active_secure["criminal"] = "Clown"
+							src.active_secure["criminal"] = ARREST_STATE_CLOWN
+
+							var/target_name = src.active_general["name"]
+
+							for (var/mob/living/carbon/human/H in mobs)
+								if (H.real_name == target_name || H.name == target_name)
+									H.update_arrest_icon()
 							return
 
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								if (src.active_secure["criminal"] != "*Arrest*")
-									src.report_arrest(src.active_general["name"])
-								src.active_secure["criminal"] = "*Arrest*"
+								if (src.active_secure["criminal"] != ARREST_STATE_ARREST)
+									src.report_status(src.active_general["name"], "*Arrest*")
+								src.active_secure["criminal"] = ARREST_STATE_ARREST
 							if (2)
-								src.active_secure["criminal"] = "None"
-								src.active_secure["sec_flag"] = "None"
+								if (src.active_secure["criminal"] != ARREST_STATE_DETAIN)
+									src.report_status(src.active_general["name"], "*Detain*")
+								src.active_secure["criminal"] = ARREST_STATE_DETAIN
 							if (3)
-								src.active_secure["criminal"] = "Incarcerated"
+								src.active_secure["criminal"] = ARREST_STATE_NONE
+								src.active_secure["sec_flag"] = "None"
 							if (4)
-								src.active_secure["criminal"] = "Parolled"
+								src.active_secure["criminal"] = ARREST_STATE_SUSPECT
 							if (5)
-								src.active_secure["criminal"] = "Released"
+								src.active_secure["criminal"] = ARREST_STATE_INCARCERATED
+							if (6)
+								src.active_secure["criminal"] = ARREST_STATE_PAROLE
+							if (7)
+								src.active_secure["criminal"] = ARREST_STATE_RELEASED
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
 							else
 								return
+
+						var/target_name = src.active_general["name"]
+
+						for (var/mob/living/carbon/human/H in mobs)
+							if (H.real_name == target_name || H.name == target_name)
+								H.update_arrest_icon()
 
 					if (FIELDNUM_SECFLAG)
 						if (!src.active_secure)
@@ -787,15 +805,18 @@
 			src.print_text(dat)
 			return 1
 
-		report_arrest(var/perp_name)
-			if(!perp_name || !src.radiocard)
+		report_status(var/perp_name, var/new_status)
+			if(!perp_name || !src.radiocard || !new_status)
+				return
+
+			if(new_status != "*Arrest*" && new_status != "*Detain*")
 				return
 
 			if (usr)
-				logTheThing(LOG_STATION, usr, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
+				logTheThing(LOG_STATION, usr, "[perp_name] is set to [new_status] by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
 
 			//Unlikely that this would be a problem but OH WELL
-			if(last_arrest_report && world.time < (last_arrest_report + 10))
+			if(last_status_report && world.time < (last_status_report + 10))
 				return
 
 			//Set card frequency if it isn't already.
@@ -807,15 +828,13 @@
 
 			var/datum/signal/signal = get_free_signal()
 			//signal.encryption = "\ref[src.radiocard]"
-
 			//Create a PDA mass-message string.
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = "SEC-MAILBOT"
 			signal.data["group"] = list(src.setup_mailgroup, MGA_ARREST) //Only security PDAs should be informed.
-			signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
-
-			src.log_string += "<br>Arrest notification sent."
-			last_arrest_report = world.time
+			signal.data["message"] = "Alert! Crew member \"[perp_name]\" has been flagged to [new_status] by [src.authenticated]!"
+			src.log_string += "<br>[new_status] notification sent."
+			last_status_report = world.time
 			peripheral_command("transmit", signal, "\ref[src.radiocard]")
 			return
 

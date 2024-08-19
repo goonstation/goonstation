@@ -29,7 +29,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -43,7 +43,7 @@
 
 		shotgun
 			name = "shotgun crate"
-			spawn_contents = list(/obj/item/gun/kinetic/riotgun = 4,\
+			spawn_contents = list(/obj/item/gun/kinetic/pumpweapon/riotgun = 4,\
 			/obj/item/ammo/bullets/abg = 4)
 
 		pod_weapons
@@ -62,7 +62,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		anti_biological
 			name = "anti-biological crate"
@@ -85,7 +85,7 @@
 
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 
 /obj/storage/secure/crate/gear/armory/grenades
 	name = "special grenades crate"
@@ -179,6 +179,11 @@
 				var/obj/item/paper/book/from_file/interdictor_guide/B5 = new(src)
 				B5.pixel_y = 1
 				return 1
+
+	nuclearfuel
+		name = "Fissile Materials Crate"
+		desc = "Contains the resources required to construct nuclear fuel rods."
+		spawn_contents = list(/obj/item/raw_material/cerenkite = 6)
 
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."

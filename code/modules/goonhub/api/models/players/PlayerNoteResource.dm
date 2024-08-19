@@ -5,7 +5,7 @@
 	var/datum/apiModel/Tracked/PlayerResource/player = null // Model
 	var/ckey			= null // string
 	var/game_admin_id	= null // integer
-	var/datum/apiModel/Tracked/GameAdminResource/game_admin = null // Model
+	var/datum/apiModel/GameAdminResource/game_admin = null // Model
 	var/server_id		= null // string
 	var/round_id		= null // integer
 	var/note			= null // string

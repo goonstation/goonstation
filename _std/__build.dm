@@ -42,12 +42,15 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
+//#define DISABLE_DEVFILE // Don't load things defined in '__local.development.dm'. Use if you have some breaking changes in there or whatnot
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 //#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
+//#define I_WANNA_BE_THE_JOB "IMCODER" // Spawn as a 'imcoder' job. Gives CE belt, captain ID, etc. Change string to different job ID as needed
+//#define BANISH_PREGAME_HTML // Prevents the HTML titlescreen from loading. Useful if you experience debilitating lag due to it.
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -149,9 +152,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
 //#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
 //#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
-//#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
-//#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
-
 
 //------------ Unit Test Framework ------------//
 

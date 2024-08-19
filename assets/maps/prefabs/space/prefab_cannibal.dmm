@@ -17,7 +17,7 @@
 "e" = (
 /obj/decal/cleanable/blood/gibs,
 /obj/decal/cleanable/blood/drip/high,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple1"
@@ -26,7 +26,7 @@
 "f" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/cleanable/blood/gibs/core,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple1"

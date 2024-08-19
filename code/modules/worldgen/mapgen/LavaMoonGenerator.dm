@@ -168,6 +168,8 @@
 		var/datum/biome/selected_biome
 		if(length(near_station?.get_nearby(gen_turf, range=6)))
 			selected_biome = /datum/biome/lavamoon
+		else if(flags & MAPGEN_FLOOR_ONLY)
+			selected_biome = /datum/biome/lavamoon
 		else if(lava_value)
 			selected_biome = /datum/biome/lavamoon/lava
 		else if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.

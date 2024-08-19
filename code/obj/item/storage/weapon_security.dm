@@ -261,7 +261,6 @@
 	sneaky = 1
 	stealthy_storage = TRUE
 	var/cloaked = 0
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
 
@@ -366,28 +365,25 @@
 	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
 
 
-/obj/item/storage/box/blowgun
+/obj/item/storage/briefcase/instruments
 	name = "instrument case"
 	desc = "A hardshell case for musical instruments."
 	icon_state = "briefcase_black"
+	item_state = "sec-case"
+	spawn_contents = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+
+/obj/item/storage/briefcase/instruments/blowgun
 	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
 	/obj/item/storage/pouch/poison_dart = 2)
+
+/obj/item/storage/briefcase/instruments/blowgun/tranq
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine = 2)
 
 /obj/item/storage/box/chameleonbomb
 	name = "chameleon bomb case"
 	desc = "A case that contains 2 syndicate chameleon bombs"
 	icon_state = "hard_case"
 	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
-
-// Starter kit used in the conspiracy/spy game mode.
-/obj/item/storage/box/spykit
-	name = "spy starter kit"
-	icon_state = "implant"
-	spawn_contents = list(/obj/item/dagger/syndicate,\
-	/obj/item/gun/kinetic/silenced_22,\
-	/obj/item/ammo/bullets/bullet_22,\
-	/obj/item/card/id/syndicate,\
-	/obj/item/device/spy_implanter)
 
 // Boxes for Nuke Ops Class Crates
 

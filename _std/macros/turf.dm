@@ -18,6 +18,9 @@
 /// Returns true if x is a floor type
 #define isfloor(x) (istype(x, /turf/simulated/floor) || istype(x, /turf/unsimulated/floor))
 
+/// Returns true if x is a any kind of wall
+#define iswall(x) (istype(x,/turf/simulated/wall)||istype(x,/turf/unsimulated/wall))
+
 /// Returns true if x is a reinforced wall
 #define isrwall(x) (istype(x,/turf/simulated/wall/r_wall)||istype(x,/turf/simulated/wall/auto/reinforced)||istype(x,/turf/unsimulated/wall/auto/reinforced)||istype(x,/turf/simulated/wall/false_wall/reinforced))
 

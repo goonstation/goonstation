@@ -98,6 +98,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		food_color = "#FFECB7"
 		real_name = "small fish"
 		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
+	pufferfish
+		name = "pufferfish fillet"
+		icon_state = "fillet-pufferfish"
+		food_color = "#eeedec"
+		real_name = "pufferfish"
+		slice_amount = 2 // Divides the 40u of poison into still lethal slices
+		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/pufferfish
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	name = "slice of fish fillet"
@@ -120,6 +127,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		icon_state = "filletslice-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
+	pufferfish
+		name = "slice of pufferfish fillet"
+		icon_state = "filletslice-pufferfish"
+		food_color = "#e0dbce"
+		real_name = "pufferfish"
+
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver
+	name = "pufferfish liver"
+	desc = "The most toxic part of pufferfish."
+	icon_state = "pufferfish-liver"
+	food_color = "#693576"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
 	name = "raw shrimp meat"

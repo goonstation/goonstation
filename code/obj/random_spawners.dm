@@ -1542,7 +1542,7 @@
 						/obj/item/clothing/head/odlawhat,
 						/obj/item/clothing/head/fake_waldohat,
 						/obj/item/clothing/head/flatcap,
-						/obj/item/clothing/head/devil,
+						/obj/item/clothing/head/headband/devil,
 						/obj/item/clothing/head/biker_cap,
 						/obj/item/clothing/head/mj_hat,
 						/obj/item/clothing/head/genki,
@@ -1582,6 +1582,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd,
 						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/giraffehat,
 						/obj/item/clothing/head/mushroomcap/random)
 
 	one
@@ -1875,9 +1876,9 @@
 	/obj/item/gun/kinetic/pistol,
 	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,

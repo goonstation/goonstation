@@ -52,6 +52,8 @@
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
+	/// sent to the parent object when its handset retracts, see /datum/component/cord
+	#define COMSIG_CORD_RETRACT "cord_retract"
 
 // ---- minimap ----
 
@@ -258,3 +260,7 @@
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----
+
+// ---- cross server message signals
+	/// Sent when a server sync response is received
+	#define COMSIG_SERVER_DATA_SYNCED "server_data_synced"

@@ -213,6 +213,9 @@
 					break
 
 			src.botcard.access = get_all_accesses()
+			if (src.syndicate)
+				src.botcard.access += access_syndicate_shuttle
+
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio/headset(src)
@@ -273,7 +276,7 @@
 	death(gibbed)
 		setdead(src)
 		src.borg_death_alert()
-		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed [log_health(src)] at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		src.on_disassembly()
 
@@ -1632,6 +1635,8 @@
 								if (isturf(T))
 									src.visible_message(SPAN_ALERT("<B>[user] savagely punches [src], sending them flying!</B>"))
 									src.throw_at(T, 10, 2)
+						else if (user.equipped_limb()?.can_beat_up_robots)
+							user.equipped_limb().harm(src, user)
 						else
 							user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 							random_brute_damage(user, rand(2,5))

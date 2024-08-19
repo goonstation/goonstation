@@ -7,7 +7,7 @@ TYPEINFO(/obj/item/cloaking_device)
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
 	var/active = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
+	flags = TABLEPASS | CONDUCT | NOSHIELD
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 2

@@ -122,10 +122,10 @@ TYPEINFO(/datum/component/radioactive)
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
 			if(!ON_COOLDOWN(M, "radiation_exposure", 0.5 SECONDS))
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1) * 0.8)
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.4 SIEVERTS) * (radStrength/100) * (src.effect_range - GET_DIST(M, PA) + 1) / (max(src.effect_range, 1)) * 0.8) //lnear, not inverse square because it plays nicer in game
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 			src.do_filters()

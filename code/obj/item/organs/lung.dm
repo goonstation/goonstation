@@ -248,10 +248,18 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	desc = "Surprisingly, doesn't produce its own oxygen. Luckily, it works just as well at moving oxygen to the bloodstream."
 	synthetic = 1
 	failure_disease = /datum/ailment/disease/respiratory_failure
+	safe_co2_max = INFINITY
 
 	New()
 		..()
 		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
+
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
+		breath.carbon_dioxide /= 2
+		breath.oxygen += breath.carbon_dioxide
+		. = ..()
+		breath.oxygen += breath.carbon_dioxide
+		breath.carbon_dioxide = 0
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"

@@ -73,7 +73,7 @@
 "cX" = (
 /obj/item/clothing/suit/bedsheet/green,
 /obj/stool/bed,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. At least whoever it was died while snuggled into a warm and fuzzy bed.";
 	name = "Cozy skeleton";
 	pixel_x = 4;

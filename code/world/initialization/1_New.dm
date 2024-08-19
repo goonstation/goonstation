@@ -18,17 +18,20 @@
 	logDiary("\n----------------------\nStarting up. [time2text(world.timeofday, "hh:mm.ss")]\n----------------------\n")
 
 	// Global handlers that should be highly available
-	apiHandler = new()
-	eventRecorder = new()
 	roundManagement = new()
 	participationRecorder = new()
 	antagWeighter = new()
 	if (!chui) chui = new()
 
+	station_name() // generate station name and set it
+
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
 	makepowernets()
 
+	Z_LOG_DEBUG("World/New", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	Z_LOG_DEBUG("World/New", "Setting up changelogs...")
 	changelog = new /datum/changelog()

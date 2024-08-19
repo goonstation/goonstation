@@ -93,8 +93,6 @@ var/global
 			var/list/chatResources = list(
 				"browserassets/vendor/js/jquery.min.js",
 				"browserassets/js/errorHandler.js",
-				//"browserassets/vendor/js/array.generics.min.js",
-				//"browserassets/vendor/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
@@ -209,7 +207,7 @@ var/global
 				//Add evasion ban details
 				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
 				bansHandler.addDetails(
-					ban,
+					ban.id,
 					TRUE,
 					"bot",
 					src.owner.ckey,

@@ -1090,6 +1090,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/danish_weed
 	category = "Pastries and bread-likes"
 
+/datum/cookingrecipe/oven/danish_cheese
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/danish_cheese
+	category = "Pastries and bread-likes"
+
 /datum/cookingrecipe/oven/fairybread
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
@@ -1097,6 +1105,21 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/fairybread
 	category = "Pastries and bread-likes"
+
+/datum/cookingrecipe/oven/cinnamonbun
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item3 = /obj/item/reagent_containers/food/snacks/plant/cinnamon
+	cookbonus = 12
+	output = /obj/item/reagent_containers/food/snacks/cinnamonbun
+	category = "Pastries and bread-likes"
+
+/datum/cookingrecipe/oven/chocolate_cherry
+	item1 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+	item2 = /obj/item/reagent_containers/food/snacks/plant/cherry
+	item3 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 3
+	output = /obj/item/reagent_containers/food/snacks/chocolate_cherry
 
 //Cookies
 /datum/cookingrecipe/oven/stroopwafel
@@ -1262,6 +1285,20 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	cookbonus = 7
 	output = /obj/item/reagent_containers/food/snacks/chilifries
+
+/datum/cookingrecipe/oven/poutine
+	item1 = /obj/item/reagent_containers/food/snacks/fries
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 3
+	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
+
+/datum/cookingrecipe/oven/poutine_alt
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/chips
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 7
+	output = /obj/item/reagent_containers/food/snacks/chilifries/poutine
 
 /datum/cookingrecipe/oven/bakedpotato
 	item1 = /obj/item/reagent_containers/food/snacks/plant/potato
@@ -1845,6 +1882,17 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 =  /obj/item/reagent_containers/food/snacks/ingredient/meat
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+
+/datum/cookingrecipe/mixer/soysauce
+	item1 =  /obj/item/reagent_containers/food/snacks/plant/soy
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/condiment/soysauce
+
+/datum/cookingrecipe/mixer/gravy
+	item1 =  /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/flour
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/condiment/gravyboat
 
 /datum/cookingrecipe/mixer/fishpaste
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet

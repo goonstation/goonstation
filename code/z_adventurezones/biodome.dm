@@ -776,7 +776,7 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "whip"
 	item_state = "c_tube"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	New()
@@ -977,7 +977,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "death"
 	item_state = "death"
 	// stole some shit from the welder's apron
-	flags = FPRINT | TABLEPASS | SPACEWEAR
+	flags = TABLEPASS | SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	fire_resist = T0C+5200
 	protective_temperature = 1000
@@ -1137,7 +1137,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "pstone"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 	var/datum/light/light
 
@@ -1166,7 +1166,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "powder"
 	item_state = "injector"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_TINY
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -1509,7 +1509,7 @@ var/satellite_crash_event_status = -1
 
 		var/area/drone/zone/drone_zone = locate()
 		if (istype(drone_zone))
-			var/obj/decal/fakeobjects/teleport_pad/pad = locate() in drone_zone.contents
+			var/obj/fakeobject/teleport_pad/pad = locate() in drone_zone.contents
 			if (istype(pad))
 				portal.target = get_turf(pad)
 			else

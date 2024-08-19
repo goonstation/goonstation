@@ -19,6 +19,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
+	ailment_immune = TRUE
 	/// defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "1"
 	var/icon_state_base = null
 	var/brute_hp = 25
@@ -28,7 +29,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	New()
 		. = ..()
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		new /obj/item/implant/access/infinite/assistant(src)

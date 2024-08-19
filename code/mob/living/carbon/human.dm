@@ -142,9 +142,6 @@
 	var/list/sound_list_laugh = null
 	var/list/sound_list_flap = null
 
-	var/list/pathogens = list()
-	var/list/immunities = list()
-
 	var/datum/simsHolder/sims = null
 
 	/// forces the mob to wear underpants, even if their flags tell them not to
@@ -172,7 +169,7 @@
 
 	var/default_mutantrace = /datum/mutantrace/human
 
-/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	. = ..()
 
 	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -205,10 +202,11 @@
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	prodoc_icons = list()
-	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	// 0.01 layering increases to guarantee layering over the health monitor icon
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4 + 0.01)
 	for (var/implant in prodoc_icons)
 		var/image/image = prodoc_icons[implant]
 		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
@@ -246,7 +244,7 @@
 	src.set_mutantrace(src.default_mutantrace)
 	src.update_colorful_parts()
 
-	init_preferences?.apply_post_new_stuff(src)
+	init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 	inventory = new(src)
 
@@ -617,10 +615,6 @@
 
 	for (var/obj/item/implant/H in src.implant)
 		H.on_death()
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		P.ondeath()
 
 	src.drop_juggle()
 
@@ -1070,16 +1064,17 @@
 		attack_twitch(src)
 		I.layer = initial(I.layer)
 		var/yeet = 0 // what the fuck am I doing
+		var/yeet_change_mod = yeet_chance
 		var/throw_dir = get_dir(src, target)
 		if(src.mind)
 			if(src.mind.karma >= 50) //karma karma karma karma karma khamelion
-				yeet_chance = 1
+				yeet_change_mod *= 1
 			if(src.mind.karma < 0) //you come and go, you come and go.
-				yeet_chance = 0
+				yeet_change_mod *= 0
 			if(src.mind.karma < 50 && src.mind.karma >= 0)
-				yeet_chance = 0.1
+				yeet_change_mod *= 0.1
 
-		if(prob(yeet_chance))
+		if(prob(yeet_change_mod))
 			src.visible_message(SPAN_ALERT("[src] yeets [I]."))
 			src.say("YEET")
 			yeet = 1 // I hate this
@@ -1100,7 +1095,7 @@
 
 		playsound(src.loc, 'sound/effects/throw.ogg', 40, 1, 0.1)
 
-		I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+		adjust_throw(I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src))
 		if(yeet)
 			new/obj/effect/supplyexplosion(I.loc)
 
@@ -1256,6 +1251,8 @@
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
+
+	src.update_arrest_icon()
 
 
 /mob/living/carbon/human/admin_visible_name()
@@ -1467,10 +1464,6 @@
 				return
 
 	message = process_accents(src,message)
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		message = P.onsay(message)
 
 	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
@@ -2443,79 +2436,6 @@
 	else
 		return null
 
-/mob/living/carbon/human/infected(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (ischangeling(src) || isvampire(src)) // Vampires were missing here. They're immune to old-style diseases too (Convair880).
-		return 0
-	if (P.pathogen_uid in src.immunities)
-		return 0
-	if (!(P.pathogen_uid in src.pathogens))
-		var/maxTierExisting = 0
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/PA = src.pathogens[uid]
-			maxTierExisting = max(maxTierExisting, PA.getHighestTier())
-		var/maxTierNew = P.getHighestTier()
-
-		// thanks, we already got strong pathogen, go away
-		if(maxTierNew <= maxTierExisting)
-			return 0
-
-		// wow, strong pathogen, let's kick out all the other ones
-		for (var/uid in src.pathogens)
-			var/datum/pathogen/PA = src.pathogens[uid]
-			src.cured(PA)
-
-		// and get the new one instead
-		var/datum/pathogen/Q = new /datum/pathogen
-		Q.setup(0, P, 1)
-		pathogen_controller.mob_infected(Q, src)
-		src.pathogens += Q.pathogen_uid
-		src.pathogens[Q.pathogen_uid] = Q
-		Q.infected = src
-		logTheThing(LOG_PATHOLOGY, src, "is infected by [Q].")
-		return 1
-	else
-		var/datum/pathogen/C = src.pathogens[P.pathogen_uid]
-		if (C.generation < P.generation)
-			var/datum/pathogen/Q = new /datum/pathogen
-			Q.setup(0, P, 1)
-			logTheThing(LOG_PATHOLOGY, src, "'s pathogen mutation [C] is replaced by mutation [Q] due to a higher generation number.")
-			pathogen_controller.mob_infected(Q, src)
-			Q.stage = min(C.stage, Q.stages)
-			qdel(C)
-			src.pathogens[Q.pathogen_uid] = Q
-			Q.infected = src
-			return 1
-	return 0
-
-/mob/living/carbon/human/cured(var/datum/pathogen/P)
-	if (P.pathogen_uid in src.pathogens)
-		pathogen_controller.mob_cured(src.pathogens[P.pathogen_uid], src)
-		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-		var/pname = Q.name
-		src.pathogens -= P.pathogen_uid
-		var/datum/microbody/M = P.body_type
-		if (M.auto_immunize)
-			immunity(P)
-		qdel(Q)
-		logTheThing(LOG_PATHOLOGY, src, "is cured of [pname].")
-
-/mob/living/carbon/human/remission(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (P.pathogen_uid in src.pathogens)
-		var/datum/pathogen/Q = src.pathogens[P.pathogen_uid]
-		Q.remission()
-		logTheThing(LOG_PATHOLOGY, src, "'s pathogen [Q] enters remission.")
-
-/mob/living/carbon/human/immunity(var/datum/pathogen/P)
-	if (isdead(src))
-		return
-	if (!(P.pathogen_uid in src.immunities))
-		src.immunities += P.pathogen_uid
-		logTheThing(LOG_PATHOLOGY, src, "gains immunity to pathogen [P].")
-
 /mob/living/carbon/human/emag_act(mob/user, obj/item/card/emag/E)
 
 	if (prob(1)) //Magnet healing!
@@ -2667,7 +2587,7 @@
 	SPAWN(1.5 SECONDS)
 		qdel(src)
 
-/mob/living/carbon/human/get_equipped_items()
+/mob/living/carbon/human/get_equipped_items(include_pockets = FALSE)
 	. = ..()
 	if (src.belt) . += src.belt
 	if (src.glasses) . += src.glasses
@@ -2677,6 +2597,10 @@
 	if (src.wear_id) . += src.wear_id
 	if (src.wear_suit) . += src.wear_suit
 	if (src.w_uniform) . += src.w_uniform
+	if(include_pockets)
+		if (src.l_store) . += src.l_store
+		if (src.r_store) . += src.r_store
+
 
 /mob/living/carbon/human/protected_from_space()
 	var/space_suit = 0
@@ -2784,7 +2708,7 @@
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
 		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
-			var/obj/item/clothing/head/wig/W = create_wig()
+			var/obj/item/clothing/head/wig/W = create_wig(keep_hair = TRUE)
 			if (W)
 				processed += W
 				ret += W
@@ -2802,7 +2726,13 @@
 			ret += A
 	return ret
 
-/mob/living/carbon/human/proc/create_wig()
+/mob/living/carbon/human/proc/is_bald()
+	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
+	return istype(AH.customization_first,/datum/customization_style/none) \
+	&& istype(AH.customization_second,/datum/customization_style/none) \
+	&& istype(AH.customization_third,/datum/customization_style/none)
+
+/mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
 		return null
 	var/obj/item/clothing/head/wig/W = new(src)
@@ -2818,6 +2748,11 @@
 
 	W.setup_wig(hair_list)
 
+	if (!keep_hair)
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.update_colorful_parts()
 	return W
 
 
@@ -2975,12 +2910,12 @@
 
 	if (!src.juggling())
 		return
-	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
+	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
 	for (var/atom/movable/A in src.juggling)
 		src.remove_juggle(A)
 		if(istype(A, /obj/item/device/light)) //i hate this
 			var/obj/item/device/light/L = A
-			L.light.attach(L)
+			L.light?.attach(L)
 		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
@@ -3029,7 +2964,7 @@
 				continue
 			items += ", [juggled]"
 		items = copytext(items, 3)
-		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)]'s already juggling!")
+		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
@@ -3060,8 +2995,9 @@
 			src.remove_juggle(user)
 			user.set_loc(src.loc)
 
-/mob/living/carbon/human/return_air()
-	return src.loc?.return_air()
+/mob/living/carbon/human/return_air(direct = FALSE)
+	if (!direct)
+		return src.loc?.return_air()
 
 /mob/living/carbon/human/does_it_metabolize()
 	return 1
@@ -3414,7 +3350,7 @@
 	else if (src.shoes && src.shoes.chained)
 		missing_legs = 2
 
-	if (missing_legs == 2)
+	if (missing_legs == 2 && !(locate(/datum/movement_modifier/slither) in src.movement_modifiers))
 		. += 14 - ((2-missing_arms) * 2) // each missing leg adds 7 of movement delay. Each functional arm reduces this by 2.
 	else
 		. += 7*missing_legs
@@ -3555,6 +3491,16 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
 
+/mob/living/carbon/human/get_chem_depletion_multiplier()
+	. = ..()
+	if (src.traitHolder.hasTrait("slowmetabolism"))
+		. /= 2
+	if (src.organHolder && !ischangeling(src))
+		if (!src.organHolder.liver || src.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+			. /= 2
+		if (src.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+			. /= 2
+
 /mob/living/carbon/human/get_blood_absorption_rate()
 	. = ..()
 	var/blood_metabolism_multiplier = 1
@@ -3623,3 +3569,95 @@
 	src.hud.update_resting()
 	src.set_loc(get_turf(table))
 	table.victim = src
+
+/mob/living/carbon/human/proc/update_health_monitor_icon()
+	if (!src.health_mon)
+		return
+	if (src.bioHolder.HasEffect("dead_scan") || isdead(src))
+		src.health_mon.icon_state = "-1"
+		return
+	// Handle possible division by zero
+	var/health_prc = (src.health / (src.max_health != 0 ? src.max_health : 1)) * 100
+	switch (health_prc)
+		if (98 to INFINITY)
+			src.health_mon.icon_state = "100"
+		if (80 to 98)
+			src.health_mon.icon_state = "80"
+		if (60 to 80)
+			src.health_mon.icon_state = "75"
+		if (40 to 60)
+			src.health_mon.icon_state = "50"
+		if (20 to 40)
+			src.health_mon.icon_state = "25"
+		if (0 to 20)
+			src.health_mon.icon_state = "10"
+		if (-INFINITY to 0)
+			src.health_mon.icon_state = "0"
+
+/mob/living/carbon/human/proc/update_arrest_icon()
+	if (!src.arrestIcon)
+		return
+
+	var/arrestState = ""
+	var/visibleName = src.face_visible() ? src.real_name : src.name
+	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
+	if(record)
+		var/criminal = record["criminal"]
+		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_DETAIN || criminal == ARREST_STATE_SUSPECT || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
+				criminal == ARREST_STATE_CLOWN)
+			arrestState = criminal
+	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
+		arrestState = ARREST_STATE_ARREST
+	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
+		if (locate(/obj/item/implant/counterrev) in src.implant)
+			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
+			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				arrestState = ARREST_STATE_REVHEAD
+			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+				arrestState = ARREST_STATE_LOYAL_IN_PROGRESS
+			else
+				arrestState = ARREST_STATE_LOYAL
+		else
+			var/obj/item/card/id/myID = 0
+			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
+			//this does mean that if an ID has no registered owner + carry permit enabled it will blink off as contraband. however i dont care!
+			if (src.l_hand?.registered_owner())
+				myID = src.l_hand
+			else if (src.r_hand?.registered_owner())
+				myID = src.r_hand
+			if (!myID)
+				myID = src.wear_id
+			var/has_contraband_permit = 0
+			var/has_carry_permit = 0
+			if (myID)
+				has_contraband_permit = (access_contrabandpermit in myID.access)
+				has_carry_permit = (access_carrypermit in myID.access)
+			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
+				arrestState = ARREST_STATE_CONTRABAND
+	src.arrestIcon.icon_state = arrestState
+
+/mob/living/carbon/human/get_genetic_traits()
+	return list(5,5,1)
+
+mob/living/carbon/human/has_genetics()
+	return TRUE
+
+/mob/living/carbon/human/get_fingertip_color()
+	var/hand_color = null
+	if (istype(src.gloves))
+		var/obj/item/clothing/gloves/gloves = src.gloves
+		hand_color = gloves.get_fingertip_color()
+		if (!isnull(hand_color))
+			return hand_color
+
+	var/obj/item/parts/limb = null
+	if(src.hand)
+		limb = src.limbs.l_arm
+	else
+		limb = src.limbs.r_arm
+	if (istype(limb))
+		hand_color = limb.get_fingertip_color()
+		if (!isnull(hand_color))
+			return hand_color
+
+	. = ..()

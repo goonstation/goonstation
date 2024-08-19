@@ -40,7 +40,7 @@ export const CollapsibleWireMenu = (props:MaintenanceProps) => {
       title="Maintenance Panel"
     >
       <LabeledList>
-        {wires.map((_, i: number) => (
+        {wires?.map((_, i: number) => (
           <LabeledList.Item
             key={i}
             label={ManufacturerWireData[i].name}
@@ -71,22 +71,22 @@ export const CollapsibleWireMenu = (props:MaintenanceProps) => {
         <LabeledList.Item
           label="Electrification Risk"
         >
-          {indicators.electrified ? "High" : "None"}
+          {indicators?.electrified ? "High" : "None"}
         </LabeledList.Item>
         <LabeledList.Item
           label="System Stability"
         >
-          {indicators.malfunctioning ? "Unstable" : "Stable"}
+          {indicators?.malfunctioning ? "Unstable" : "Stable"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Inventory"
         >
-          {indicators.hacked ? "Expanded" : "Standard"}
+          {indicators?.hacked ? "Expanded" : "Standard"}
         </LabeledList.Item>
         <LabeledList.Item
           label="Power"
         >
-          {indicators.hasPower ? "Sufficient" : "Insufficient"}
+          {indicators?.hasPower ? "Sufficient" : "Insufficient"}
         </LabeledList.Item>
       </LabeledList>
     </Section>

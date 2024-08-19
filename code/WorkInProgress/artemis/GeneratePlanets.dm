@@ -266,6 +266,15 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
 	generator.generate_terrain(turfs, reuse_seed=TRUE, flags=mapgen_flags)
 
+	var/list/turf/secondary_turfs = list()
+	for(var/turf/space/missed in turfs)
+		secondary_turfs += missed
+
+	if(length(secondary_turfs))
+		logTheThing(LOG_DEBUG, null, "Planet Generation required second pass!")
+		message_admins("Planet region required second pass with [generator]. (WHY??!?)")
+		generator.generate_terrain(secondary_turfs, reuse_seed=TRUE, flags=mapgen_flags)
+
 	//Force Outer Edge to be Cordon Area
 	var/area/border_area = new /area/cordon(null)
 	for(var/x in 1 to region.width)
@@ -474,6 +483,6 @@ obj/decal/teleport_mark
 		..()
 		for(var/obj/O in location)
 			if(O == src) continue
-			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
+			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/fakeobject/teleport_pad) )
 				qdel(src)
 				return

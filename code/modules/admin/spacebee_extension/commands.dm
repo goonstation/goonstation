@@ -80,7 +80,8 @@
 			var/datum/apiRoute/players/notes/get/getPlayerNotes = new
 			getPlayerNotes.queryParams = list(
 				"filters" = list(
-					"ckey" = key_to_check
+					"ckey" = key_to_check,
+					"exact" = TRUE
 				),
 				"page" = page,
 				"per_page" = 10
@@ -100,12 +101,19 @@
 		var/header
 		var/len = 0
 		for (var/datum/apiModel/Tracked/PlayerNoteResource/playerNote in playerNotes.data)
+			var/list/legacyData
+			if (length(playerNote.legacy_data))
+				legacyData = json_decode(playerNote.legacy_data)
+
 			var/id = playerNote.server_id
-			if(!id && length(playerNote.legacy_data))
-				var/lData = json_decode(playerNote.legacy_data)
-				if(islist(lData) && lData["oldserver"])
-					id = lData["oldserver"]
-			header = "**\[[id]\] [playerNote.game_admin?.name || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
+			if (!id && ("oldserver" in legacyData))
+				id = legacyData["oldserver"]
+
+			var/gameAdminCkey = playerNote.game_admin?.name || playerNote.game_admin?.ckey
+			if (!gameAdminCkey && ("game_admin_ckey" in legacyData))
+				gameAdminCkey = legacyData["game_admin_ckey"]
+
+			header = "**[id ? "\[[id]\] " : ""][gameAdminCkey || "UNKNOWN"]** on **<t:[num2text(fromIso8601(playerNote.created_at, TRUE), 12)]:F>**"
 			len += length(header) + length(playerNote.note)
 			if(len >= 4000)
 				message = jointext(message, "\n")
@@ -163,6 +171,7 @@
 		if (!(ckey && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
+		var/requires_appeal = FALSE
 		var/data[] = new()
 		data["ckey"] = ckey
 		var/mob/M = ckey_to_mob(ckey)
@@ -200,6 +209,7 @@
 			data["text_ban_length"] = "Permanent"
 		else if (ckey(length) == "untilappeal")
 			length = -1
+			requires_appeal = TRUE
 			data["text_ban_length"] = "Until Appeal"
 		else
 			length = text2num(length)
@@ -215,17 +225,19 @@
 			data["compID"],
 			data["ip"],
 			data["reason"],
-			data["mins"] * 60 * 10
+			data["mins"] * 60 * 10,
+			requires_appeal
 		)
 
 /datum/spacebee_extension_command/serverban
 	name = "serverban"
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
-	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. serverban shelterfrog goon1 perma Lol rip."
+	help_message = "Bans a given ckey from a specified server. Arguments in the order of ckey, server ID (for example: main1/1/goon1/rp), length (number of minutes, or put \"hour\", \"day\", \"halfweek\", \"week\", \"twoweeks\", \"month\", \"perma\" or \"untilappeal\"), and ban reason, e.g. serverban shelterfrog goon1 perma Lol rip."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/string/optional="server", /datum/command_argument/string="length",
 	/datum/command_argument/the_rest="reason")
 	execute(user, ckey, server, length, reason)
 		var/rpban = FALSE
+		var/requires_appeal = FALSE
 		if (!(ckey && server && length && reason))
 			system.reply("Insufficient arguments.", user)
 			return
@@ -284,6 +296,7 @@
 		else if (ckey(length) == "untilappeal")
 			length = -1
 			data["text_ban_length"] = "Until Appeal"
+			requires_appeal = TRUE
 		else
 			length = text2num(length)
 		if (!isnum(length))
@@ -299,7 +312,8 @@
 				data["compID"],
 				data["ip"],
 				data["reason"],
-				data["mins"] * 60 * 10
+				data["mins"] * 60 * 10,
+				requires_appeal
 			)
 			bansHandler.add(
 				ckey(user),
@@ -308,7 +322,8 @@
 				data["compID"],
 				data["ip"],
 				data["reason"],
-				data["mins"] * 60 * 10
+				data["mins"] * 60 * 10,
+				requires_appeal
 			)
 		else
 			bansHandler.add(
@@ -318,7 +333,8 @@
 				data["compID"],
 				data["ip"],
 				data["reason"],
-				data["mins"] * 60 * 10
+				data["mins"] * 60 * 10,
+				requires_appeal
 			)
 
 /datum/spacebee_extension_command/boot
@@ -706,7 +722,7 @@
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
 		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: https://goonhub.com/admin/logs/[roundId]"
+		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: [goonhub_href("/admin/logs/[roundId]")]"
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename
@@ -941,6 +957,7 @@
 		var/message = "**Profile name**: [prefs.profile_name]\n"
 		message += "**Character name:** [prefs.name_first] [prefs.name_last]\n"
 		message += "**Gender:** [prefs.gender]\n"
+		message += "**Age:** [prefs.age]\n"
 		message += "**Random name:** [prefs.be_random_name ? "true" : "false"]\n"
 		message += "**Random appearance:** [prefs.be_random_look ? "true" : "false"]\n"
 		message += "**Flavor text:** [prefs.flavor_text]\n"

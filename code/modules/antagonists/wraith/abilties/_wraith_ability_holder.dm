@@ -16,8 +16,17 @@
 		.= list()
 		.["Points:"] = round(src.points)
 		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
-		if(istype(owner, /mob/living/intangible/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
-			.["Possess:"] = round(src.possession_points)
+		var/mob/living/intangible/wraith/wraith_trickster/W
+		if (istype(owner, /mob/living/intangible/wraith/wraith_trickster))
+			W = owner
+		else if (istype(owner, /mob/living/critter/wraith/trickster_puppet))
+			var/mob/living/critter/wraith/trickster_puppet/TP = owner
+			W = TP.master
+		if (W != null)
+			if (src.possession_points >= W.points_to_possess)
+				.["Possess:"] = "<font color=#88ff88>READY</font>"
+			else
+				.["Possess:"] = "[round(src.possession_points)]/[W.points_to_possess]"
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
@@ -60,21 +69,25 @@
 		B.desc = src.desc
 		src.object = B
 
+	allowcast()
+		var/mob/living/intangible/wraith/W = holder.owner
+		if (istype(W) && W.forced_manifest)
+			return
+		return ..()
+
 	cast(atom/target)
-		if (!holder || !holder.owner)
-			return 1
 		. = ..()
-		if (ispoltergeist(holder.owner))
-			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
+		if (ispoltergeist(src.holder.owner))
+			var/mob/living/intangible/wraith/poltergeist/P = src.holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
-				boutput(holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
-				return 1
-		if (istype(holder.owner, /mob/living/intangible/wraith))
-			var/mob/living/intangible/wraith/W = holder.owner
+				boutput(src.holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		if (iswraith(src.holder.owner))
+			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (W.forced_manifest == TRUE)
 				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
-				return 1
-		return 0
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		return CAST_ATTEMPT_SUCCESS
 
 	doCooldown()
 		if (!holder)
