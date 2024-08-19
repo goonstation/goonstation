@@ -1172,6 +1172,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	shoot_delay = 2 SECONDS
 	recoil_enabled = FALSE
+	click_sound = 'sound/effects/tinyhiss.ogg'
+	click_msg = "*hisss*"
 	var/clogged = FALSE
 
 	New()
