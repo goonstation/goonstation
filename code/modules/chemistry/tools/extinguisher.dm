@@ -13,7 +13,9 @@ var/global/list/extinguisher_blacklist_melt = list("acid",
 	"big_bang",
 	"clacid",
 	"nitric_acid",
-	"firedust")
+	"firedust",
+	"foof",
+	"infernite")
 
 /obj/item/extinguisher
 	name = "fire extinguisher"
