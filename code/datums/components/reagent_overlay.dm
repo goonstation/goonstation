@@ -61,7 +61,6 @@ TYPEINFO(/datum/component/reagent_overlay)
 		average.a = max(average.a, src.min_alpha)
 		reagent_image.color = average.to_rgba()
 		container.AddOverlays(reagent_image, "reagent_overlay")
-		return average
 	else
 		container.ClearSpecificOverlays("reagent_overlay")
 
@@ -118,15 +117,17 @@ TYPEINFO(/datum/component/reagent_overlay)
 	user.ClearSpecificOverlays("worn_reagent_overlay\ref[src.parent]")
 
 /datum/component/reagent_overlay/worn_overlay/update_reagent_overlay()
-	var/datum/color/average_color = ..()
-	if (!average_color)
-		return
+	. = ..()
 
 	var/obj/item/container = src.parent
 	if (!isitem(container) || !ishuman(container.loc) || !container.equipped_in_slot)
 		return
 
+	var/datum/color/average_color = container.reagents.get_average_color()
+	average_color.a = max(average_color.a, src.min_alpha)
+
 	var/reagent_state = src.get_reagent_state(src.worn_overlay_states)
+
 	var/image/reagent_image = image(src.worn_overlay_icon, "f-worn-[src.worn_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1)
 	reagent_image.color = average_color.to_rgba()
 	container.loc.AddOverlays(reagent_image, "worn_reagent_overlay\ref[src.parent]")
