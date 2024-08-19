@@ -1164,8 +1164,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard
 
 /obj/item/gun/sprayer
-	name = "spray cleaner test" //I put test in the name so I'm forced to change it before release :)
-	desc = "TODO"
+	name = "\improper WA-V3 Cleaning Device" //name and desc suggested by tekotheteapot
+	desc = "The Wide Area V3 Cleaning Device, holy grail of space janitorial hardware.<br>\
+		Must ONLY be used with licensed WA-V3 back tanks."
 	icon_state = "sprayer"
 	item_state = "janitor_sprayer"
 	icon = 'icons/obj/janitor.dmi'
@@ -1220,6 +1221,10 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		. = ..()
 		src.UpdateIcon()
 
+	attack_self(mob/user)
+		. = ..()
+		playsound(src.loc, 'sound/machines/button.ogg', 40, 1, -10, 1.3)
+
 	canshoot(mob/user)
 		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost && !src.clogged
 
@@ -1238,17 +1243,17 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			P.create_reagents(src.current_projectile.cost)
 		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
 
-//Why are is all the sane reagent container behaviour on /glass?!!!?
+//Why are all the sane reagent container behaviour on /glass?!!!?
 /obj/item/reagent_containers/glass/backtank
-	name = "pressurized back tank"
-	desc = "TODO"
+	name = "\improper WA-V3 back tank"
+	desc = "A little label on the side reads \"not for use with corrosive substances\"."
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "janitor_tank"
 	item_state = "janitor_tank"
 	initial_volume = 500
-	initial_reagents = list("cleaner" = 200)
+	initial_reagents = list("cleaner" = 500)
 	incompatible_with_chem_dispensers = TRUE
 	shatter_immune = TRUE
 	w_class = W_CLASS_BULKY
