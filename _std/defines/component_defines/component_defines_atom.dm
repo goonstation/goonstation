@@ -52,6 +52,8 @@
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
+	/// sent to the parent object when its handset retracts, see /datum/component/cord
+	#define COMSIG_CORD_RETRACT "cord_retract"
 
 // ---- minimap ----
 
