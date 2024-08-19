@@ -18,6 +18,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/team_num
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
+	/// Used for hoodies (and anything that uses the toggle_hood component)
+	var/hooded = FALSE
 
 
 	setupProperties()
