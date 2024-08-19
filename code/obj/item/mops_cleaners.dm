@@ -1282,6 +1282,13 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
 		sprayer?.disconnect(user)
 
+	//stupid hack to make reagents transfer before storage datums yoink the item
+	//blame the entirety of reagent transfer code being stuffed into two copy-pasted afterattack stacks
+	attackby(obj/item/W, mob/user, params)
+		if (W.is_open_container(FALSE) && W.reagents?.total_volume > 0)
+			return
+		. = ..()
+
 /datum/projectile/special/shotchem/wave
 	name = "chemicals"
 	icon = 'icons/effects/96x96.dmi'
