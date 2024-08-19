@@ -1198,9 +1198,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.RemoveComponentsOfType(/datum/component/reagent_overlay/other_target)
 
 	proc/get_tank(mob/user)
+		RETURN_TYPE(/obj/item/reagent_containers/glass/backtank)
 		if (!user)
 			user = src.loc
-		RETURN_TYPE(/obj/item/reagent_containers/glass/backtank)
 		if (!ismob(user))
 			return null
 		if (istype(user.back, /obj/item/reagent_containers/glass/backtank))
