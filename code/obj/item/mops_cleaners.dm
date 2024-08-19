@@ -1182,13 +1182,29 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.projectiles = list(src.current_projectile, new /datum/projectile/special/shotchem/wave/wide, new /datum/projectile/special/shotchem/wave/single)
 		src.UpdateIcon()
 
-	proc/get_tank()
+	pickup(mob/user)
+		..()
+		src.connect(user)
+
+	proc/connect(user)
+		if (src.get_tank(user) && !src.GetComponent(/datum/component/reagent_overlay/other_target))
+			src.AddComponent(/datum/component/reagent_overlay/other_target, src.icon, "sprayer", reagent_overlay_states = 4, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = TRUE, target = src.get_tank(user))
+
+	dropped(mob/user)
+		..()
+		src.disconnect()
+
+	proc/disconnect()
+		src.RemoveComponentsOfType(/datum/component/reagent_overlay/other_target)
+
+	proc/get_tank(mob/user)
+		if (!user)
+			user = src.loc
 		RETURN_TYPE(/obj/item/reagent_containers/glass/backtank)
-		if (!ismob(src.loc))
+		if (!ismob(user))
 			return null
-		var/mob/M = src.loc
-		if (istype(M.back, /obj/item/reagent_containers/glass/backtank))
-			return M.back
+		if (istype(user.back, /obj/item/reagent_containers/glass/backtank))
+			return user.back
 		return null
 
 	update_icon(...)
@@ -1255,6 +1271,16 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		..()
 		if (src.reagents.has_any(global.extinguisher_blacklist_melt) && !src.hasStatus("acid"))
 			src.setStatus("acid", 5 SECONDS)
+
+	equipped(mob/user, slot)
+		. = ..()
+		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
+		sprayer?.connect(user)
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
+		sprayer?.disconnect(user)
 
 /datum/projectile/special/shotchem/wave
 	name = "chemicals"

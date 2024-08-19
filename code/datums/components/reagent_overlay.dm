@@ -6,6 +6,7 @@
 	var/queue_updates = FALSE
 	var/min_alpha = 100
 	VAR_PRIVATE/queued = FALSE
+	VAR_PROTECTED/atom/container = null
 
 TYPEINFO(/datum/component/reagent_overlay)
 	initialization_args = list(
@@ -20,20 +21,20 @@ TYPEINFO(/datum/component/reagent_overlay)
 	. = ..()
 	if (!istype(src.parent, /atom))
 		return COMPONENT_INCOMPATIBLE
-
+	src.container = src.container || src.parent //children can override
 	src.queue_updates = queue_updates
 	src.reagent_overlay_icon = reagent_overlay_icon
 	src.reagent_overlay_icon_state = reagent_overlay_icon_state
 	src.reagent_overlay_states = reagent_overlay_states
 	src.reagent_overlay_scaling = reagent_overlay_scaling
 
-	src.RegisterSignal(src.parent, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(update_reagent_overlay))
+	src.RegisterSignal(src.container, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(update_reagent_overlay))
 	src.update_reagent_overlay()
 
 /datum/component/reagent_overlay/UnregisterFromParent()
-	src.UnregisterSignal(src.parent, COMSIG_ATOM_REAGENT_CHANGE)
-	var/atom/container = src.parent
-	container.ClearSpecificOverlays("reagent_overlay")
+	src.UnregisterSignal(src.container, COMSIG_ATOM_REAGENT_CHANGE)
+	var/atom/parent = src.parent //if only DM had generics :waa:
+	parent.ClearSpecificOverlays("reagent_overlay")
 
 	. = ..()
 
@@ -52,22 +53,20 @@ TYPEINFO(/datum/component/reagent_overlay)
 	if (!src.reagent_overlay_states)
 		return
 	src.queued = FALSE
-	var/atom/container = src.parent
 	var/reagent_state = src.get_reagent_state(src.reagent_overlay_states)
-
+	var/atom/parent = src.parent
 	if (reagent_state)
 		var/image/reagent_image = image(src.reagent_overlay_icon, "f-[src.reagent_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1)
-		var/datum/color/average = container.reagents.get_average_color()
+		var/datum/color/average = src.container.reagents.get_average_color()
 		average.a = max(average.a, src.min_alpha)
 		reagent_image.color = average.to_rgba()
-		container.AddOverlays(reagent_image, "reagent_overlay")
+		parent.AddOverlays(reagent_image, "reagent_overlay")
 	else
-		container.ClearSpecificOverlays("reagent_overlay")
+		parent.ClearSpecificOverlays("reagent_overlay")
 
 /// Returns the numerical reagent state of the parent container.
 /datum/component/reagent_overlay/proc/get_reagent_state(states)
-	var/atom/container = src.parent
-	var/datum/reagents/reagents = container.reagents
+	var/datum/reagents/reagents = src.container.reagents
 
 	// Show no reagent state only if the container is completely empty.
 	if (reagents.total_volume <= 0)
@@ -110,8 +109,8 @@ TYPEINFO(/datum/component/reagent_overlay)
 	src.worn_overlay_icon_state = worn_overlay_icon_state
 	src.worn_overlay_states = worn_overlay_states
 
-	src.RegisterSignal(src.parent, COMSIG_ITEM_EQUIPPED, PROC_REF(update_reagent_overlay))
-	src.RegisterSignal(src.parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequipped))
+	src.RegisterSignal(src.container, COMSIG_ITEM_EQUIPPED, PROC_REF(update_reagent_overlay))
+	src.RegisterSignal(src.container, COMSIG_ITEM_UNEQUIPPED, PROC_REF(unequipped))
 
 /datum/component/reagent_overlay/worn_overlay/proc/unequipped(_, mob/user)
 	user.ClearSpecificOverlays("worn_reagent_overlay\ref[src.parent]")
@@ -119,7 +118,7 @@ TYPEINFO(/datum/component/reagent_overlay)
 /datum/component/reagent_overlay/worn_overlay/update_reagent_overlay()
 	. = ..()
 
-	var/obj/item/container = src.parent
+	var/obj/item/container = src.container
 	if (!isitem(container) || !ishuman(container.loc) || !container.equipped_in_slot)
 		return
 
@@ -130,8 +129,18 @@ TYPEINFO(/datum/component/reagent_overlay)
 
 	var/image/reagent_image = image(src.worn_overlay_icon, "f-worn-[src.worn_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1)
 	reagent_image.color = average_color.to_rgba()
-	container.loc.AddOverlays(reagent_image, "worn_reagent_overlay\ref[src.parent]")
+	var/atom/parent = src.parent
+	parent.loc.AddOverlays(reagent_image, "worn_reagent_overlay\ref[src.parent]")
 
 //shut up
 /datum/component/reagent_overlay/worn_overlay/janitor_tank
 	min_alpha = 200
+
+
+/datum/component/reagent_overlay/other_target
+
+/datum/component/reagent_overlay/other_target/Initialize(reagent_overlay_icon, reagent_overlay_icon_state, reagent_overlay_states = 0, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = FALSE, target = null)
+	if (target == null)
+		CRASH("Component [src.type] initialized without target")
+	src.container = target
+	. = ..()
