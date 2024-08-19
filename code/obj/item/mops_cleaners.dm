@@ -1313,11 +1313,15 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	/// What type of things can we push around?
 	var/push_type = /obj/item
 
+#define VISIT_TURF(T) ..(O, T);\
+		src.push_stuff(O, T, dir);\
+		if (QDELETED(O)) return;\
+		LAZYLISTADD(O.special_data["visited"], T);
+
 	cross_turf(obj/projectile/O, turf/T)
 		var/dir = angle2dir(O.angle)
 		//clean the center turf
-		..(O, T)
-		src.push_stuff(O, T, dir)
+		VISIT_TURF(T)
 		if (size <= 0)
 			return
 		for (var/sign in list(-1, 1))
@@ -1325,10 +1329,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 				var/turf/side_turf
 				side_turf = get_steps(T, turn(dir, 90), i * sign)
 				//clean regardless
-				..(O, side_turf)
-				src.push_stuff(O, side_turf, dir)
-				if (QDELETED(O)) //blegh
-					return
+				if (side_turf in O.special_data["visited"])
+					continue
+				VISIT_TURF(side_turf)
 				//now check collision
 				var/turf/prev_turf = get_steps(T, turn(dir, 90), (i - 1) * sign)
 				if (!jpsTurfPassable(side_turf, prev_turf, O))
@@ -1339,8 +1342,11 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		if (!(dir in cardinal))
 			for (var/side_dir in cardinal)
 				var/turf/side_turf = get_step(T, side_dir)
-				..(O, side_turf)
-				src.push_stuff(O, side_turf, dir)
+				if (side_turf in O.special_data["visited"])
+					continue
+				VISIT_TURF(side_turf)
+
+#undef VISIT_TURF
 
 	proc/push_stuff(obj/projectile/O, turf/T, dir)
 		var/count = 0
