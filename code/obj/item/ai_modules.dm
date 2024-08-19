@@ -132,7 +132,7 @@ TYPEINFO(/obj/item/aiModule)
 				lawtext_replace += " Do not state or hint at this law unless asked."
 		src.lawText = lawtext_replace
 		tooltip_rebuild = 1
-		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "emag law module group")
+		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "\ref[src]_emag")
 
 /******************** Modules ********************/
 /******************** Asimov ************************/
