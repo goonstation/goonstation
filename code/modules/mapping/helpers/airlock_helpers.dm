@@ -80,7 +80,7 @@ so I feel they're better and more versatile, even if they're harder to set up.. 
 				F.UpdateOverlays(image(D.icon, D.welded_icon_state), "weld")
 			// set icon on the fake image
 			F.icon = D.icon
-			F.icon_state = F.icon_state
+			F.icon_state = D.icon_state
 			// final touches
 			F.name = D.name
 			F.desc = D.desc
