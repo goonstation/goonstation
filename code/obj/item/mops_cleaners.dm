@@ -1167,9 +1167,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	name = "spray cleaner test" //I put test in the name so I'm forced to change it before release :)
 	desc = "TODO"
 	icon_state = "sprayer"
-	item_state = "tsunami"
+	item_state = "janitor_sprayer"
 	icon = 'icons/obj/janitor.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	shoot_delay = 2 SECONDS
 	recoil_enabled = FALSE
 	var/clogged = FALSE
