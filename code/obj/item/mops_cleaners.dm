@@ -1166,7 +1166,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 /obj/item/gun/sprayer
 	name = "\improper WA-V3 Cleaning Device" //name and desc suggested by tekotheteapot
 	desc = "The Wide Area V3 Cleaning Device, holy grail of space janitorial hardware.<br>\
-		Must ONLY be used with licensed WA-V3 back tanks."
+		Must ONLY be used with Nanotrasen™ licensed WA-V3 back tanks."
 	icon_state = "sprayer"
 	item_state = "janitor_sprayer"
 	icon = 'icons/obj/janitor.dmi'
