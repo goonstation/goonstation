@@ -1511,6 +1511,7 @@
 		name = "Mutiny"
 		desc = "You can sense the aura of revolutionary activity! Your bossy attitude grants you health and stamina bonuses."
 		icon_state = "mutiny"
+		visible = FALSE
 		unique = 1
 		maxDuration = 1 MINUTES
 		effect_quality = STATUS_QUALITY_POSITIVE

@@ -40,6 +40,22 @@
 	proc/make_my_stuff()
 		return
 
+	combust()
+		..()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			I.temperature_expose(null, src.burn_output)
+
+	process_burning()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			I.temperature_expose(null, src.burn_output)
+		. = ..()
+
+	combust_ended()
+		if (src.health <= 0) // okay lets make sure it actually fully burned and not just got extinguished
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, get_turf(src))
+		. = ..()
+
 /obj/item/storage/box
 	name = "box"
 	icon_state = "box"

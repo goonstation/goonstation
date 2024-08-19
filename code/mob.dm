@@ -8,7 +8,7 @@
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
-	var/datum/mind/mind
+	var/tmp/datum/mind/mind
 	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
