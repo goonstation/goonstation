@@ -75,9 +75,10 @@ export const NoContainer: ReagentContainer = {
   fake: true,
 };
 
-const reagentCheck = (a: Reagent, b: Reagent): boolean => {
-  if (a === b) return false;
-  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
+const reagentsEqual = (a: Reagent, b: Reagent): boolean => {
+  if (a === b) {
+    return true;
+  }
   if (
     !a ||
     !b ||
@@ -88,31 +89,40 @@ const reagentCheck = (a: Reagent, b: Reagent): boolean => {
     a.colorG !== b.colorG ||
     a.colorB !== b.colorB
   ) {
-    return true;
-  } // a property used by ReagentGraph/List has changed, update
-  return false;
+    // a property used by ReagentGraph/List has changed, update
+    return false;
+  }
+  return true;
 };
 
-const containerCheck = (
+const containersEqual = (
   a: ReagentContainer | null,
   b: ReagentContainer | null,
 ): boolean => {
-  if (a === b) return false; // same object or both null, no update
-  if (a === null || b === null) return true; // only one object is null, update
+  if (a === b) {
+    return true; // same object or both null, no update
+  }
+  if (a === null || b === null) {
+    return false; // only one object is null, update
+  }
   if (
     a.totalVolume !== b.totalVolume ||
     a.finalColor !== b.finalColor ||
     a.maxVolume !== b.maxVolume
   ) {
-    return true;
+    return false;
   } // a property used by ReagentGraph/List has changed, update
-  if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
+  if (a.contents?.length !== b.contents?.length) {
+    return false; // different number of reagents, update
+  }
   if (a.contents && b.contents) {
     for (let i = 0; i < a.contents.length; i++) {
-      if (reagentCheck(a.contents[i], b.contents[i])) return true; // one of the reagents has changed, update
+      if (!reagentsEqual(a.contents[i], b.contents[i])) {
+        return false; // one of the reagents has changed, update
+      }
     }
   }
-  return false;
+  return true;
 };
 
 interface ReagentInfoProps extends BoxProps {
@@ -205,16 +215,16 @@ export const ReagentGraph = React.memo(
     for (const i in a) {
       if (i === 'container') continue;
       if (!(i in b)) {
-        return true;
+        return false;
       }
     }
     for (const i in b) {
       if (i === 'container') continue;
       if (a[i] !== b[i]) {
-        return true;
+        return false;
       }
     }
-    return containerCheck(a.container, b.container);
+    return containersEqual(a.container, b.container);
   },
 );
 
@@ -299,7 +309,7 @@ export const ReagentList = React.memo(
     for (const i in a) {
       if (i === 'container' || i === 'renderButtons') continue;
       if (!(i in b)) {
-        return true;
+        return false;
       }
     }
     for (const i in b) {
@@ -313,22 +323,22 @@ export const ReagentList = React.memo(
         const aDeps = a.renderButtonsDeps;
         const bDeps = b.renderButtonsDeps;
         if (aDeps.length !== bDeps.length) {
-          return true;
+          return false;
         }
         let j;
         for (j in aDeps) {
           if (aDeps[j] !== bDeps[j]) {
-            return true;
+            return false;
           }
         }
         // There is no difference between the deps
         continue;
       }
       if (a[i] !== b[i]) {
-        return true;
+        return false;
       }
     }
-    return containerCheck(a.container, b.container);
+    return containersEqual(a.container, b.container);
   },
 );
 
