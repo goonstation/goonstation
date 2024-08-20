@@ -475,7 +475,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 			generate_reserved_door_ids()
 		// Allow user to set a new ID, but check against blacklist first
 		var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.original_id, 50)
-		if (!new_id || door_id_on_blacklist(new_id))
+		if ((new_id != src.original_id) && !new_id || door_id_on_blacklist(new_id))
 			boutput(user, SPAN_ALERT("You can't set the ID to '[new_id]'!"))
 			return
 		boutput(user, SPAN_NOTICE("You set the ID to '[new_id]'."))
