@@ -8,22 +8,18 @@ var/global/list/reserved_door_ids = list() //! All the door IDs from concrete ty
 // If it was to go pre-round it would need to be after everything is setup to for_by_tcl all the buttons
 /// Generate all the reserved IDs
 proc/generate_reserved_door_ids()
-	//var/list/subtypes_of_door_control = concrete_typesof(/obj/machinery/door_control)
-	//for (var/subtype_path in subtypes_of_door_control)
-	for (var/subtype_path in by_cat[TR_CAT_DOOR_BUTTONS])
-		var/obj/machinery/door_control/button_path = subtype_path
-		var/initial_id = initial(button_path.id)
-		if (isnull(initial_id))
+	for (var/obj/machinery/door_control/door_control_button as anything in by_cat[TR_CAT_DOOR_BUTTONS])
+		if (isnull(door_control_button.id))
 			continue
 		// Kind of expensive but otherwise every directional generates its id again
 		var/is_duplicate = FALSE
 		for (var/id in reserved_door_ids)
-			if (id == initial_id)
+			if (id == door_control_button.id)
 				is_duplicate = TRUE
 				break
 		if (is_duplicate)
 			continue
-		reserved_door_ids += initial_id
+		reserved_door_ids += door_control_button.id
 
 /// Check if a given ID is on the door ID blacklist, returns TRUE if it is and FALSE otherwise.
 proc/door_id_on_blacklist(id)
@@ -444,7 +440,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	UnsubscribeProcess()
 
 /obj/machinery/door_control/disposing()
-	STOP_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
+	// STOP_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
 	..()
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
