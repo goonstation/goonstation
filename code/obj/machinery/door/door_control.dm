@@ -67,7 +67,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/inuse = FALSE //! Relays whether the button is currently in use
 	var/controlmode = MODE_TOGGLE_OPEN //! Dictates modes for airlock control. Does not change behavior for poddoors or conveyors
 
-	HELP_MESSAGE_OVERRIDE("You can open the panel with a <b>screwdriver</b>. The tamper lock on the button can also be toggled with an <b>access pro</b>.")
+	HELP_MESSAGE_OVERRIDE("You can open the panel with a <b>screwdriver</b>. The tamper lock on the button can also be toggled with an <b>Access Pro</b>.")
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
