@@ -129,7 +129,7 @@ TYPEINFO(/obj/item/gun/energy)
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
 			if (src.click_sound)
-				boutput(user, SPAN_ALERT("*click* *click*"))
+				boutput(user, SPAN_ALERT(src.click_msg))
 				if (!src.silenced)
 					playsound(user, src.click_sound, 60, TRUE)
 			return 0

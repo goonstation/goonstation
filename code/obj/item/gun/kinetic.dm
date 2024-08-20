@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
 		if (src.click_sound)
-			boutput(user, SPAN_ALERT("*click* *click*"))
+			boutput(user, SPAN_ALERT(src.click_msg))
 			if (!src.silenced)
 				playsound(user, click_sound, 60, TRUE)
 		return 0

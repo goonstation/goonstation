@@ -58,7 +58,11 @@ TYPEINFO(/obj/submachine/chef_sink)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
 					GRAB.affecting.lastgasp() // --BLUH
-
+		else if (istype(W, /obj/item/gun/sprayer))
+			var/obj/item/gun/sprayer/sprayer = W
+			sprayer.clogged = FALSE
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+			boutput(user, SPAN_NOTICE("You clean out the clogged nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else
