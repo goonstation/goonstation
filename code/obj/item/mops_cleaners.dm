@@ -1259,6 +1259,13 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			P.create_reagents(src.current_projectile.cost)
 		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.projectiles) //we're already emagged
+			return
+		boutput(user, SPAN_ALERT("You short out the pressure lock on [src]!"))
+		src.set_current_projectile(new /datum/projectile/special/shotchem/wave/wide/emagged)
+		src.projectiles = null
+
 //Why are all the sane reagent container behaviour on /glass?!!!?
 /obj/item/reagent_containers/glass/backtank
 	name = "\improper WA-V3 back tank"
@@ -1329,18 +1336,14 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	/// What type of things can we push around?
 	var/push_type = /obj/item
 
-#define VISIT_TURF(T) ..(O, T);\
-		src.push_stuff(O, T, dir);\
-		if (QDELETED(O)) return;\
-		LAZYLISTADD(O.special_data["visited"], T);
-
 	cross_turf(obj/projectile/O, turf/T)
 		if (QDELETED(O))
 			return
 		var/dir = angle2dir(O.angle)
 		//clean the center turf
-		if (!(T in O.special_data["visited"]))
-			VISIT_TURF(T)
+		src.turf_effect(O, T, dir)
+		if (QDELETED(O))
+			return
 		if (size <= 0)
 			return
 		for (var/sign in list(-1, 1))
@@ -1348,9 +1351,9 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 				var/turf/side_turf
 				side_turf = get_steps(T, turn(dir, 90), i * sign)
 				//clean regardless
-				if (side_turf in O.special_data["visited"])
-					continue
-				VISIT_TURF(side_turf)
+				src.turf_effect(O, side_turf, dir)
+				if (QDELETED(O))
+					return
 				//now check collision
 				var/turf/prev_turf = get_steps(T, turn(dir, 90), (i - 1) * sign)
 				if (!jpsTurfPassable(side_turf, prev_turf, O))
@@ -1361,11 +1364,18 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		if (!(dir in cardinal))
 			for (var/side_dir in cardinal)
 				var/turf/side_turf = get_step(T, side_dir)
-				if (side_turf in O.special_data["visited"])
-					continue
-				VISIT_TURF(side_turf)
+				src.turf_effect(O, side_turf, dir)
+				if (QDELETED(O))
+					return
 
-#undef VISIT_TURF
+	turf_effect(obj/projectile/O, turf/T, dir)
+		if (T in O.special_data["visited"])
+			return
+		..(O, T)
+		src.push_stuff(O, T, dir)
+		if (QDELETED(O))
+			return
+		LAZYLISTADD(O.special_data["visited"], T)
 
 	proc/push_stuff(obj/projectile/O, turf/T, dir)
 		var/count = 0
@@ -1390,25 +1400,46 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		O.alpha = 175
 		O.special_data["chem_pct_app_tile"] = src.chem_pct_app_tile
 
-	single
-		sname = "narrow"
-		cost = 10
-		size = 0
-		scale = 1/3
-		chem_pct_app_tile = 0.1
-		projectile_speed = 24
-		shot_pitch = 1.1
-		shot_volume = 45
+/datum/projectile/special/shotchem/wave/single
+	sname = "narrow"
+	cost = 10
+	size = 0
+	scale = 1/3
+	chem_pct_app_tile = 0.1
+	projectile_speed = 24
+	shot_pitch = 1.1
+	shot_volume = 45
 
-	wide
-		sname = "wide"
-		cost = 30
-		size = 2
-		scale = 5/3
-		chem_pct_app_tile = 0.05
-		projectile_speed = 8
-		push_type = /atom/movable //hehehe
-		shot_pitch = 0.9
+/datum/projectile/special/shotchem/wave/wide
+	sname = "wide"
+	cost = 30
+	size = 2
+	scale = 5/3
+	chem_pct_app_tile = 0.05
+	projectile_speed = 8
+	push_type = /atom/movable //hehehe
+	shot_pitch = 0.9
+
+/datum/projectile/special/shotchem/wave/wide/emagged
+	projectile_speed = 24
+	shot_pitch = 0.7
+
+	post_setup(obj/projectile/O)
+		. = ..()
+		var/turf/throw_target = get_steps(O.shooter, turn(angle2dir(O.angle), 180), 10)
+		var/atom/movable/shooter = O.shooter
+		if (!istype(shooter)) //yeah just in case an area fired the projectile (????)
+			return
+		shooter.throw_at(throw_target, 4, 2, thrown_from = get_turf(O))
+
+	turf_effect(obj/projectile/O, turf/simulated/floor/T, dir)
+		if (istype(T))
+			if (prob(30))
+				T.pry_tile()
+			else if (prob(30))
+				T.burn_tile()
+		..()
+
 
 /obj/item/spraybottle/cleaner/tsunami
 	name = "Tsunami-P3 spray bottle"

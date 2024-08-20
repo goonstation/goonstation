@@ -1206,6 +1206,9 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				break
 
 	proc/cross_turf(obj/projectile/O, turf/T)
+		src.turf_effect(O, T)
+
+	proc/turf_effect(obj/projectile/O, turf/T)
 		src.emit_chems(T, O)
 		src.emit_gas(T, 0)
 		T.active_liquid?.try_connect_to_adjacent()
