@@ -45,7 +45,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_CROWBAR | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS
-
+	req_access = list(access_change_ids) // This in particular is being used to determine if the access pro should be allowed to do stuff
 	// Icon state variables
 	// following 3 variables should be adjusted in a subtype with different icons
 	var/unpressed_icon = "doorctrl0"
@@ -59,6 +59,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	// Door button specific variables
 	var/id = null //! Match to a door to have it be controlled.
+	var/original_id = null //! Remembers the ID this was originally assigned, so it can be assigned back if needed.
 	var/tamper_lock = TRUE //! Forbids deconstruction/tampering with ID. Removed (set false) with an access-pro or when constructed from frame.
 	var/panel_open = FALSE //! Whether or not the panel is open on the button. Allows changing the ID when open
 	var/timer = 0 SECONDS //! If this is greater than 0, enforces an artificial delay on toggling machinery
@@ -446,10 +447,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control/New()
 	..()
 	START_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
+	src.original_id = src.id
 	UnsubscribeProcess()
 
 /obj/machinery/door_control/disposing()
-	// STOP_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
+	STOP_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
 	..()
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
@@ -472,7 +474,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		if (!length(reserved_door_ids))
 			generate_reserved_door_ids()
 		// Allow user to set a new ID, but check against blacklist first
-		var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.id, 50)
+		var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.original_id, 50)
 		if (!new_id || door_id_on_blacklist(new_id))
 			boutput(user, SPAN_ALERT("You can't set the ID to '[new_id]'!"))
 			return
