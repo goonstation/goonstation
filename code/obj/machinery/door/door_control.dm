@@ -5,10 +5,12 @@
 var/global/list/reserved_door_ids = list() //! All the door IDs from concrete types of /obj/machinery/door_control to forbid setting existing ones weirdly
 
 // This list is generated when someone starts trying to name a button ID, as this is predicted to be used so infrequently that it might never be worth loading at all
+// If it was to go pre-round it would need to be after everything is setup to for_by_tcl all the buttons
 /// Generate all the reserved IDs
 proc/generate_reserved_door_ids()
-	var/list/subtypes_of_door_control = concrete_typesof(/obj/machinery/door_control)
-	for (var/subtype_path in subtypes_of_door_control)
+	//var/list/subtypes_of_door_control = concrete_typesof(/obj/machinery/door_control)
+	//for (var/subtype_path in subtypes_of_door_control)
+	for (var/subtype_path in by_cat[TR_CAT_DOOR_BUTTONS])
 		var/obj/machinery/door_control/button_path = subtype_path
 		var/initial_id = initial(button_path.id)
 		if (isnull(initial_id))
@@ -438,7 +440,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 /obj/machinery/door_control/New()
 	..()
+	START_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
 	UnsubscribeProcess()
+
+/obj/machinery/door_control/disposing()
+	STOP_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
+	..()
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
