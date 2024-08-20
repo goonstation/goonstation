@@ -1,29 +1,34 @@
+
+#define MODE_TOGGLE_OPEN 1 //! Open/close doors on button press
+#define MODE_TOGGLE_BOLTS 2 //! Bolt/unbolt doors on button press
+
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	desc = "A remote control switch for a door."
-	/// Match to a door to have it be controlled.
-	var/id = null
-	var/timer = 0
-	var/cooldown = 0 SECONDS
-	var/inuse = FALSE
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
+
+	// Icon state variables
 	// following 3 variables should be adjusted in a subtype with different icons
 	var/unpressed_icon = "doorctrl0"
 	var/pressed_icon = "doorctrl1"
 	var/unpowered_icon = "doorctrl-p"
-	/// for the speak proc, relays the message to speak.
-	var/image/chat_maptext/welcome_text
-	///alpha value for speak proc
-	var/welcome_text_alpha = 140
-	///colour value for speak proc
-	var/welcome_text_color = "#FF0100"
-	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
 
+	// Welcome text variables
+	var/image/chat_maptext/welcome_text //! for the speak proc, relays the message to speak.
+	var/welcome_text_alpha = 140 //! alpha value for speak proc
+	var/welcome_text_color = "#FF0100" //! colour value for speak proc
+
+	// Door button specific variables
+	var/id = null //! Match to a door to have it be controlled.
+	var/timer = 0 SECONDS //! If this is greater than 0, enforces an artificial delay on toggling machinery
+	var/cooldown = 0 SECONDS //! If this is greater than 0, a cooldown is enforced on pressing the button (delays resetting inuse)
+	var/inuse = FALSE //! Relays whether the button is currently in use
+	var/controlmode = MODE_TOGGLE_OPEN //! Dictates modes for airlock control. Does not change behavior for poddoors or conveyors
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
@@ -446,7 +451,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 					SPAWN(src.timer)
 						M.open()
 
-	if(src.controlmode == 1)
+	if(src.controlmode == MODE_TOGGLE_OPEN)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.density)
@@ -454,7 +459,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 				else
 					M.close()
 
-	if(src.controlmode == 2)
+	if(src.controlmode == MODE_TOGGLE_BOLTS)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.locked)
@@ -1166,7 +1171,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 /obj/machinery/door_control/bolter
 	name = "Remote Door Bolt Control"
 	desc = "A remote control switch for a door's locking bolts."
-	controlmode = 2
+	controlmode = MODE_TOGGLE_BOLTS
 
 	new_walls
 		north
@@ -1177,3 +1182,6 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			pixel_y = -19
 		west
 			pixel_x = -22
+
+#undef MODE_TOGGLE_OPEN
+#undef MODE_TOGGLE_BOLTS
