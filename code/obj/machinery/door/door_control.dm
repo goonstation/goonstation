@@ -2,28 +2,40 @@
 #define MODE_TOGGLE_OPEN 1 //! Open/close doors on button press
 #define MODE_TOGGLE_BOLTS 2 //! Bolt/unbolt doors on button press
 
-var/global/list/reserved_door_ids = list() //! All the door IDs from concrete types of /obj/machinery/door_control to forbid setting existing ones weirdly
+var/global/list/reserved_machinery_control_ids = list() //! All the door IDs from concrete types of /obj/machinery/door_control to forbid setting existing ones weirdly
 
 // This list is generated when someone starts trying to name a button ID, as this is predicted to be used so infrequently that it might never be worth loading at all
 // If it was to go pre-round it would need to be after everything is setup to for_by_tcl all the buttons
 /// Generate all the reserved IDs
-proc/generate_reserved_door_ids()
-	for (var/obj/machinery/door_control/door_control_button as anything in by_cat[TR_CAT_DOOR_BUTTONS])
-		if (isnull(door_control_button.id))
+proc/generate_reserved_machinery_control_ids()
+	// Every ID for a button and every machine that may have an id to recieve
+	var/ids_to_blacklist = machine_registry[MACHINES_CONVEYORS] + by_cat[TR_CAT_DOOR_BUTTONS] + by_type[/obj/machinery/door]
+	for (var/obj/machinery/machinery_object as anything in ids_to_blacklist)
+		var/id = null
+		if (istype(machinery_object, /obj/machinery/door/airlock))
+			var/obj/machinery/door/airlock/AL = machinery_object
+			id = AL.id
+		else if (istype(machinery_object, /obj/machinery/door_control))
+			var/obj/machinery/door_control/DC = machinery_object
+			id = DC.id
+		else if (istype(machinery_object, /obj/machinery/conveyor))
+			var/obj/machinery/conveyor/CV = machinery_object
+			id = CV.id
+		if (isnull(id))
 			continue
 		// Kind of expensive but otherwise every directional generates its id again
 		var/is_duplicate = FALSE
-		for (var/id in reserved_door_ids)
-			if (id == door_control_button.id)
+		for (var/reserved_id in reserved_machinery_control_ids)
+			if (reserved_id == id)
 				is_duplicate = TRUE
 				break
 		if (is_duplicate)
 			continue
-		reserved_door_ids += door_control_button.id
+		reserved_machinery_control_ids += id
 
 /// Check if a given ID is on the door ID blacklist, returns TRUE if it is and FALSE otherwise.
-proc/door_id_on_blacklist(id)
-	for (var/blacklisted_id in reserved_door_ids)
+proc/id_on_reserved_list(id)
+	for (var/blacklisted_id in reserved_machinery_control_ids)
 		if (blacklisted_id == id)
 			return TRUE
 	return FALSE
@@ -513,11 +525,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		boutput(user, SPAN_ALERT("You can't do that with the tamper lock on!"))
 		return
 	// Generate blacklist if it doesnt exist yet
-	if (!length(reserved_door_ids))
-		generate_reserved_door_ids()
+	if (!length(reserved_machinery_control_ids))
+		generate_reserved_machinery_control_ids()
 	// Allow user to set a new ID, but check against blacklist first
 	var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.original_id, 50)
-	if ((new_id != src.original_id) && (!new_id || door_id_on_blacklist(new_id)))
+	if ((new_id != src.original_id) && (!new_id || id_on_reserved_list(new_id)))
 		boutput(user, SPAN_ALERT("You can't set the ID to '[new_id]'!"))
 		return
 	boutput(user, SPAN_NOTICE("You set the ID to '[new_id]'."))
