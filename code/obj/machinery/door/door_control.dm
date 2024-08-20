@@ -37,6 +37,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
+	deconstruct_flags = DECON_WIRECUTTERS | DECON_CROWBAR | DECON_MULTITOOL
 
 	// Icon state variables
 	// following 3 variables should be adjusted in a subtype with different icons
@@ -459,6 +460,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		// Generate blacklist if it doesnt exist yet
 		if (!length(reserved_door_ids))
 			generate_reserved_door_ids()
+		// Forbid changing IDs of existing buttons
+		if (door_id_on_blacklist(src.id))
+			boutput(user, SPAN_ALERT("These specially installed buttons contain various anti-tamper mechanisms. You can't change the ID!"))
 		// Allow user to set a new ID, but check against blacklist first
 		var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.id, 50)
 		if (!new_id || door_id_on_blacklist(new_id))
@@ -467,8 +471,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		boutput(user, SPAN_NOTICE("You set the ID to '[new_id]'."))
 		src.id = new_id
 		return
-
 	return src.Attackhand(user)
+
+/obj/machinery/door_control/can_deconstruct()
+	// Forbid deconstructing 'special' pre-existing buttons
+	if (door_id_on_blacklist(src.id))
+		return FALSE
+	if (!src.panel_open)
+		return FALSE
+	. = ..()
 
 /obj/machinery/door_control/attack_hand(mob/user)
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat)
