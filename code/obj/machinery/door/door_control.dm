@@ -15,6 +15,9 @@ proc/generate_reserved_machinery_control_ids()
 		if (istype(machinery_object, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/AL = machinery_object
 			id = AL.id
+		else if (istype(machinery_object, /obj/machinery/door/poddoor))
+			var/obj/machinery/door/poddoor/PD = machinery_object
+			id = PD.id
 		else if (istype(machinery_object, /obj/machinery/door_control))
 			var/obj/machinery/door_control/DC = machinery_object
 			id = DC.id
