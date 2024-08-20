@@ -5,9 +5,9 @@
 	locked = TRUE
 
 	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_GLOBAL, LISTEN_INPUT_MENTOR_MOUSE)
+	start_listen_languages = list(LANGUAGE_ALL)
 	default_speech_output_channel = SPEECH_OUTPUT_MENTOR_MOUSE
 	start_speech_outputs = list(SPEECH_OUTPUT_MENTOR_MOUSE)
-	start_listen_languages = list(LANGUAGE_ALL)
 	emote_allowed = FALSE
 
 	var/image/ping

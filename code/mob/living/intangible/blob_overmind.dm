@@ -15,10 +15,10 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_BLOBCHAT)
+	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_BLOBCHAT)
 	default_speech_output_channel = SAY_CHANNEL_BLOB
-	start_listen_languages = list(LANGUAGE_ALL)
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1

@@ -6,9 +6,9 @@
 
 	start_listen_modifiers = list(LISTEN_MODIFIER_PHONE)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
+	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
-	start_listen_languages = list(LANGUAGE_ALL)
 	say_language = LANGUAGE_ENGLISH
 
 	var/obj/machinery/phone/parent = null

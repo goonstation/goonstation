@@ -1394,8 +1394,8 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	muzzle_flash = "muzzle_flash_elec"
 	var/emagged = FALSE
 
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
 	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 	New(var/mob/M)

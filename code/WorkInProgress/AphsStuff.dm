@@ -126,10 +126,10 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = list(SPEECH_MODIFIER_BRADBURY)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-	start_listen_languages = list(LANGUAGE_ALL)
 	say_language = LANGUAGE_ENGLISH
 
 	var/datum/light/light

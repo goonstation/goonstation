@@ -27,10 +27,10 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_MARTIAN, LISTEN_INPUT_EARS, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_MARTIAN)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_MARTIAN)
 	default_speech_output_channel = SAY_CHANNEL_MARTIAN
-	start_listen_languages = list(LANGUAGE_MARTIAN)
 	say_language = LANGUAGE_MARTIAN
 
 	ai_type = /datum/aiHolder/aggressive

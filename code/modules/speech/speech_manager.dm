@@ -1,8 +1,7 @@
 var/global/datum/speech_manager/SpeechManager = new()
 
 /**
- *	Global manager for speech systems. Used for module lookup, language lookup, and the handling of prefix and sayflag message
- *	modifier processing.
+ *	Global manager for speech systems. Used for module lookup, language lookup, and sayflag message modifier processing.
  */
 /datum/speech_manager
 	/// An associative list of cached speech output module types, indexed by their ID.

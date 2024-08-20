@@ -22,12 +22,9 @@ TYPEINFO(/obj/flock_structure)
 	mat_changedesc = FALSE
 	default_material = "gnesis"
 
-	start_listen_modifiers = null
-	start_listen_inputs = null
 	start_speech_modifiers = null
 	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
-	start_listen_languages = list(LANGUAGE_ALL)
 	say_language = LANGUAGE_FEATHER
 
 	/// when did we get created?

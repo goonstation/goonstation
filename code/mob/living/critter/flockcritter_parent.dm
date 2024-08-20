@@ -20,10 +20,10 @@ TYPEINFO(/mob/living/critter/flock)
 
 	start_listen_modifiers = null
 	start_listen_inputs = null
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
 	start_speech_modifiers = null
 	start_speech_outputs = null
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
-	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_FEATHER)
 	say_language = LANGUAGE_FEATHER
 
 	// HEALTHS

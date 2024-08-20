@@ -147,9 +147,6 @@ Contributing:
 	Thorough documentation,
 	The use of `src` and `global` when accessing applicable variables.
 
-Cleanup:
-- Tidy speech variables on types. Especially mobs. (search for speech_verb_)
-
 Old Code To Remove:
 - Check span defines in `chat_output.dm`. Some may now be unused.
 

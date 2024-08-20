@@ -14,10 +14,10 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = null
+	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = null
 	default_speech_output_channel = null
-	start_listen_languages = list(LANGUAGE_ALL)
 	can_use_say = FALSE
 
 	var/autofree = 0

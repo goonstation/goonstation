@@ -85,8 +85,8 @@ TYPEINFO(/obj/item/device/audio_log)
 	w_class = W_CLASS_SMALL
 
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_AUDIO_LOG)
 	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_AUDIO_LOG)
 
 	var/obj/item/audio_tape/tape = null
 	var/mode = MODE_OFF

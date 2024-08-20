@@ -16,10 +16,10 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_DISTORTED, LISTEN_INPUT_SILICONCHAT_DISTORTED, LISTEN_INPUT_GHOSTLY_WHISPER)
+	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_FLOCKMIND, SPEECH_OUTPUT_EQUIPPED)
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
-	start_listen_languages = list(LANGUAGE_ALL)
 	say_language = LANGUAGE_FEATHER
 
 

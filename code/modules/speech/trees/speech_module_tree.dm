@@ -1,5 +1,5 @@
 /**
- *	Speech module tree datums handle applying the effects of accent, modifier, and speech output modules to say message
+ *	Speech module tree datums handle applying the effects of prefix, modifier, and speech output modules to say message
  *	datums sent by the parent atom. All say message datums will be processed here prior to being passed to the speech
  *	manager to be disseminated to listen input modules.
  */

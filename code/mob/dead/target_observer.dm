@@ -142,10 +142,10 @@
 
 	start_listen_modifiers = null
 	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
 	start_speech_modifiers = null
 	start_speech_outputs = null
 	default_speech_output_channel = null
-	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 	var/start_time
 

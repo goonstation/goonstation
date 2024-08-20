@@ -63,12 +63,9 @@
 
 	speech_verb_say = list("beeps", "boops")
 
-	start_listen_modifiers = null
-	start_listen_inputs = null
 	start_speech_modifiers = list(SPEECH_MODIFIER_BOT)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
-	start_listen_languages = list(LANGUAGE_ENGLISH)
 
 	power_change()
 		return
