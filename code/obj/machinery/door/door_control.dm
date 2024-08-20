@@ -44,6 +44,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_CROWBAR | DECON_MULTITOOL
+	object_flags = CAN_REPROGRAM_ACCESS
 
 	// Icon state variables
 	// following 3 variables should be adjusted in a subtype with different icons
@@ -479,16 +480,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		src.id = new_id
 		return
 	if (istype(W, /obj/item/device/accessgun))
-		// We don't have access restrictions ourself (ok) so just trust whoever has this is powerful enough
-		var/obj/item/card/id/id_card = null
-		if (isnull(id_card))
-			var/obj/item/device/accessgun/W_gun = W
-			id_card = W_gun.ID_card
-		if (!isnull(id_card) && id_card.has_access(access_change_ids))
-			boutput(user, SPAN_NOTICE("You begin to [src.tamper_lock ? "remove" : "reinstate"] the tamper lock on \the [src]."))
-			var/success_message = SPAN_NOTICE("You finish [src.tamper_lock ? "removing" : "reinstating"] the tamper lock on \the [src].")
-			var/custom_interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-			SETUP_GENERIC_ACTIONBAR(user, src, 9 SECONDS, PROC_REF(toggle_tamper_lock), list(), 'icons/ui/actions.dmi', "reprog", success_message, custom_interrupt_flags)
 		return
 	if (istype(W, /obj/item/deconstructor))
 		return // it does its thing, just shouldnt be toggling it while doing aforementioned thing

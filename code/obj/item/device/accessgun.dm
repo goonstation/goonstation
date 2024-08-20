@@ -132,6 +132,13 @@ TYPEINFO(/obj/item/device/accessgun)
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
+		if (istype(O, /obj/machinery/door_control))
+			var/obj/machinery/door_control/C = O
+			boutput(user, SPAN_NOTICE("You [C.tamper_lock ? "disable" : "enable"] the tamper lock on \the [C]."))
+			logTheThing(LOG_STATION, user, "disables the tamper lock on [constructName(O)] [log_loc(O)]")
+			C.toggle_tamper_lock()
+			playsound(src, 'sound/machines/reprog.ogg', 70, TRUE)
+			return
 		var/str_contents = list2text(ID_card.access, ", ")
 		if (!mode)
 			O.set_access_list(list(ID_card.access))
