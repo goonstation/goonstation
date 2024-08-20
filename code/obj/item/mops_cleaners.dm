@@ -1232,10 +1232,13 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		if (!src.canshoot(user))
 			boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
 			return FALSE
-		if (src.get_tank().reagents.has_any(global.extinguisher_blacklist_clog))
+		var/obj/item/reagent_containers/glass/backtank/tank = src.get_tank()
+		if (tank.reagents.has_any(global.extinguisher_blacklist_clog))
 			boutput(user, SPAN_ALERT("[src] sputters and clogs up!"))
 			src.clogged = TRUE
 			return FALSE
+		if(tank.reagents.has_reagent("water") || tank.reagents.has_reagent("cleaner"))
+			JOB_XP(user, "Janitor", 2)
 		return TRUE
 
 	alter_projectile(obj/projectile/P)
@@ -1387,5 +1390,36 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		push_type = /atom/movable //hehehe
 		shot_pitch = 0.9
 
-//dumb placeholder here until I finish deciding what to do with the old tsunami stuff
 /obj/item/spraybottle/cleaner/tsunami
+	name = "Tsunami-P3 spray bottle"
+	desc = "A highly over-engineered spray bottle with all kinds of actuators, pumps and matter-generators. Never runs out of cleaner and has a remarkable range."
+	icon_state = "tsunami"
+	item_state = "tsunami"
+	var/lastUse = null
+
+	afterattack(atom/A as mob|obj, mob/user as mob)
+		if (A.storage)
+			return
+		if (!isturf(user.loc))
+			return
+
+		if(lastUse)
+			var/actual = (world.timeofday - lastUse)
+			if(actual < 0) actual += 864000
+			if(actual < 40) return
+
+		lastUse = world.timeofday
+
+		reagents.clear_reagents()
+		reagents.add_reagent("cleaner", 100)
+
+		if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
+			JOB_XP(user, "Janitor", 2)
+
+		var/datum/projectile/proj_data = new /datum/projectile/special/shotchem/wave
+
+		var/obj/projectile/projectile = shoot_projectile_ST_pixel_spread(user, proj_data, A)
+		if(!projectile.reagents)
+			projectile.create_reagents(100)
+		src.reagents.trans_to_direct(projectile.reagents, 100)
+		playsound(src.loc, 'sound/effects/bigwave.ogg', 50, 1)
