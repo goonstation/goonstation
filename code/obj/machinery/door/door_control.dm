@@ -58,6 +58,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	// Door button specific variables
 	var/id = null //! Match to a door to have it be controlled.
+	var/tamper_lock = TRUE //! Forbids deconstruction/tampering with ID. Removed (set false) with an access-pro or when constructed from frame.
 	var/panel_open = FALSE //! Whether or not the panel is open on the button. Allows changing the ID when open
 	var/timer = 0 SECONDS //! If this is greater than 0, enforces an artificial delay on toggling machinery
 	var/cooldown = 0 SECONDS //! If this is greater than 0, a cooldown is enforced on pressing the button (delays resetting inuse)
@@ -463,12 +464,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ispulsingtool(W))
 		if (!src.panel_open)
 			return
+		// Forbid changing IDs of existing buttons (so easily, at least)
+		if (src.tamper_lock)
+			boutput(user, SPAN_ALERT("These specially installed buttons contain various anti-tamper mechanisms. You can't change the ID!"))
 		// Generate blacklist if it doesnt exist yet
 		if (!length(reserved_door_ids))
 			generate_reserved_door_ids()
-		// Forbid changing IDs of existing buttons
-		if (door_id_on_blacklist(src.id))
-			boutput(user, SPAN_ALERT("These specially installed buttons contain various anti-tamper mechanisms. You can't change the ID!"))
 		// Allow user to set a new ID, but check against blacklist first
 		var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.id, 50)
 		if (!new_id || door_id_on_blacklist(new_id))
@@ -477,16 +478,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		boutput(user, SPAN_NOTICE("You set the ID to '[new_id]'."))
 		src.id = new_id
 		return
+	if (istype(W, /obj/item/device/accessgun))
+		if (user.has_access(access_change_ids)) // We don't have access restrictions ourself (ok) so just trust whoever has this is powerful enough
+			var/success_message = SPAN_NOTICE("You [src.tamper_lock ? "remove" : "reinstate"] the tamper lock on \the [src].")
+			var/custom_interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+			SETUP_GENERIC_ACTIONBAR(user, src, 9 SECONDS, src.toggle_tamper_lock, list(), 'icons/ui/actions.dmi', "reprog", success_message, custom_interrupt_flags)
+		return
 	if (istype(W, /obj/item/deconstructor))
 		return // it does its thing, just shouldnt be toggling it while doing aforementioned thing
 	return src.Attackhand(user)
 
+/obj/machinery/door_control/toggle_tamper_lock()
+	src.tamper_lock = !src.tamper_lock
+
 /obj/machinery/door_control/can_deconstruct()
-	// Generate blacklist if it doesnt exist yet
-	if (!length(reserved_door_ids))
-		generate_reserved_door_ids()
 	// Forbid deconstructing 'special' pre-existing buttons
-	if (door_id_on_blacklist(src.id))
+	if (src.tamper_lock)
 		return FALSE
 	if (!src.panel_open)
 		return FALSE
