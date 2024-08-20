@@ -643,10 +643,6 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	if (newbody.traitHolder && newbody.traitHolder.hasTrait("bald"))
 		newbody.stow_in_available(newbody.create_wig())
-		newbody.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		newbody.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		newbody.update_colorful_parts()
 
 	// No contact between the living and the dead.
 	var/obj/to_del = newbody.ears

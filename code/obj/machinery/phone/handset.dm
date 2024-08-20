@@ -36,14 +36,6 @@
 	processing_items.Remove(src)
 	. = ..()
 
-/obj/item/phone_handset/attack_hand(mob/user)
-	. = ..()
-	src.parent?.draw_cord()
-
-/obj/item/phone_handset/dropped(mob/user)
-	. = ..()
-	src.parent?.draw_cord()
-
 /obj/item/phone_handset/process()
 	if (!src.parent)
 		qdel(src)
@@ -56,10 +48,8 @@
 	if (holder)
 		boutput(holder, SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
 
-	src.force_drop(sever = TRUE)
 	src.parent.hang_up()
 	processing_items.Remove(src)
-	qdel(src)
 
 /obj/item/phone_handset/update_icon()
 	. = ..()

@@ -619,13 +619,14 @@
 		if(..()) return
 		var/mob/living/carbon/human/H = owner
 
-		if (ishuman(owner) && src.visible)
+		if (ishuman(owner) && src.visible && prob(33)) //whatever
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
 				HAH.customization_first_color = "#4F7942" // a pleasant fern green
 				HAH.customization_second_color = "#3F704D" // a bold hunter green
 				HAH.customization_third_color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
+				HAH.UpdateMob()
 
 		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1

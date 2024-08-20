@@ -593,19 +593,9 @@ TYPEINFO(/obj/item/robodefibrillator)
 		newcell.set_loc(src)
 
 
-
-
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
-
-	attack_hand(mob/user)
-		. = ..()
-		src.parent.draw_cord()
-
-	dropped(mob/user)
-		. = ..()
-		src.parent.draw_cord()
 
 	disposing()
 		parent?.defib = null
@@ -630,7 +620,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
-		RegisterSignal(src.defib, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(handle_move), TRUE)
+		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(put_back_defib))
 
 	emag_act()
 		..()
@@ -644,7 +634,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	process()
 		if(!QDELETED(src.defib))
-			handle_move()
+			if (BOUNDS_DIST(src.defib, src) > 0)
+				src.put_back_defib()
 		else
 			src.defib = null
 		..()
@@ -664,10 +655,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 			return //maybe a bird ate it
 		if(defib.loc != src)
 			return //if someone else has it, don't put it in user's hand
+		src.AddComponent(/datum/component/cord, src.defib, base_offset_x = 0, base_offset_y = -2)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-		src.draw_cord()
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
@@ -675,68 +666,16 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (W == src.defib)
 			src.put_back_defib()
 
-	/// Check to see if the defib is too far away from the mount.
-	proc/handle_move()
-		if (src.defib && src.defib.loc != src)
-			if (BOUNDS_DIST(src.defib, src) > 0)
-				src.put_back_defib()
-				return
-			src.draw_cord()
-
 	/// Put the defib back in the mount, by force if necessary.
 	proc/put_back_defib()
 		if (src.defib)
+			src.RemoveComponentsOfType(/datum/component/cord)
 			src.defib.force_drop(sever=TRUE)
 			src.defib.set_loc(src)
 			src.defib.parent = null
 			src.ClearSpecificOverlays("cord_\ref[src]")
-
 			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
 			UpdateIcon()
-
-	proc/draw_cord()
-		if(!src.defib)
-			return
-		src.ClearSpecificOverlays("cord_\ref[src]")
-		var/paddle_offset_x = -2
-		var/paddle_offset_y = -3
-		var/atom/movable/target = src.defib
-		if (ismob(src.defib.loc))
-			var/mob/living/M = src.defib.loc
-			target = M
-
-			switch (M.dir)
-				if (NORTH)
-					paddle_offset_y = -1
-					if (M.hand == LEFT_HAND)
-						paddle_offset_x = -6
-					else
-						paddle_offset_x = 6
-				if (SOUTH)
-					paddle_offset_y = -1
-					if (M.hand == LEFT_HAND)
-						paddle_offset_x = 6
-					else
-						paddle_offset_x = -6
-				if (EAST)
-					if(M.hand == LEFT_HAND)
-						paddle_offset_x = 4
-						paddle_offset_y = -4
-					else
-						paddle_offset_x = -4
-						paddle_offset_y = -2
-
-				if(WEST)
-					if(M.hand == LEFT_HAND)
-						paddle_offset_x = 4
-						paddle_offset_y = -2
-					else
-						paddle_offset_x = -4
-						paddle_offset_y = -4
-
-		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x, src.pixel_y - 2, target.pixel_x + paddle_offset_x, target.pixel_y + paddle_offset_y, LINEMODE_STRETCH)
-		result.lineImage.layer = src.layer+0.01
-		src.UpdateOverlays(result.lineImage, "cord_\ref[src]")
 
 /* ================================================ */
 /* -------------------- Suture -------------------- */

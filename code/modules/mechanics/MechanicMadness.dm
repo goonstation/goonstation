@@ -1273,7 +1273,7 @@
 		return
 
 /obj/item/mechanics/wifisplit
-	name = "Wifi Signal Splitter Component"
+	name = "Signal Splitter Component"
 	desc = ""
 	icon_state = "comp_split"
 	var/triggerSignal = "1"

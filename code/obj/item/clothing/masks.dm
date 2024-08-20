@@ -218,6 +218,10 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_g = 0.8
 	color_b = 0.8
 
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
+
 	syndicate
 		name = "syndicate field protective mask"
 		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."

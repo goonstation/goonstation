@@ -88,6 +88,7 @@ TYPEINFO(/obj/machinery/phone)
 	src.net_id = global.format_net_id("\ref[src]")
 	MAKE_DEVICE_RADIO_PACKET_COMPONENT(src.net_id, "phone", src.frequency)
 
+	RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
 	START_TRACKING
 
 /obj/machinery/phone/disposing()
@@ -96,6 +97,7 @@ TYPEINFO(/obj/machinery/phone)
 		src.linked = null
 
 	qdel(src.handset)
+	UnregisterSignal(src, COMSIG_CORD_RETRACT)
 	STOP_TRACKING
 	. = ..()
 
@@ -121,8 +123,6 @@ TYPEINFO(/obj/machinery/phone)
 	if (istype(P, /obj/item/phone_handset))
 		var/obj/item/phone_handset/PH = P
 		if (PH.parent == src)
-			user.drop_item(PH)
-			qdel(PH)
 			src.hang_up()
 		return
 
@@ -176,9 +176,8 @@ TYPEINFO(/obj/machinery/phone)
 		return
 
 	src.handset = new /obj/item/phone_handset(src,user)
-	RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
+	src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
 	user.put_in_hand_or_drop(src.handset)
-	src.draw_cord()
 	src.answered = TRUE
 
 	src.icon_state = "[answered_icon]"
@@ -349,11 +348,13 @@ TYPEINFO(/obj/machinery/phone)
 		src.linked.linked = null
 		src.linked = null
 
+	src.RemoveComponentsOfType(/datum/component/cord)
 	src.ringing = FALSE
+	src.handset?.force_drop(sever = TRUE)
+	qdel(src.handset)
 	src.handset = null
 	src.icon_state = "[phone_icon]"
 	tgui_process.close_uis(src)
-	src.ClearSpecificOverlays("phone_line_\ref[src]")
 	src.UpdateIcon()
 	playsound(src.loc, 'sound/machines/phones/hang_up.ogg', 50, 0)
 
@@ -385,50 +386,6 @@ TYPEINFO(/obj/machinery/phone)
 		src.linked.ringing = TRUE
 		src.dialing = FALSE
 		src.linked.last_called = src.unlisted ? "Undisclosed" : "[src.phone_id]"
-
-
-/obj/machinery/phone/proc/draw_cord()
-	if (!src.handset)
-		return
-
-	var/handset_offset_x = -7
-	var/handset_offset_y = -7
-	var/atom/movable/target = src.handset
-	if (ismob(src.handset.loc))
-		var/mob/living/M = src.handset.loc
-		target = M
-		switch (M.dir)
-			if (NORTH)
-				handset_offset_y = -1
-				if (M.hand == LEFT_HAND)
-					handset_offset_x = -6
-				else
-					handset_offset_x = 6
-			if (SOUTH)
-				handset_offset_y = -1
-				if (M.hand == LEFT_HAND)
-					handset_offset_x = 6
-				else
-					handset_offset_x = -6
-			if (EAST)
-				if (M.hand == LEFT_HAND)
-					handset_offset_x = 4
-					handset_offset_y = -4
-				else
-					handset_offset_x = -4
-					handset_offset_y = -2
-			if (WEST)
-				if (M.hand == LEFT_HAND)
-					handset_offset_x = 4
-					handset_offset_y = -2
-				else
-					handset_offset_x = -4
-					handset_offset_y = -4
-					handset_offset_x = -4
-
-	var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
-	result.lineImage.layer = src.layer+0.01
-	src.UpdateOverlays(result.lineImage, "phone_line_\ref[src]")
 
 
 TYPEINFO(/obj/machinery/phone/wall)

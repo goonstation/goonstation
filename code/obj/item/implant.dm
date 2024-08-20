@@ -1482,6 +1482,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (src.reagents?.total_volume)
 				src.reagents.trans_to(owner, 1 * mult)
 
+		blowdart
+			name = "blowdart"
+			desc = "a sharp little dart with a little poison reservoir."
+			icon_state = "blowdart"
+			leaves_wound = FALSE
+			barbed = TRUE
+
+			New()
+				..()
+				implant_overlay = null
+
 		dart
 			name = "dart"
 			pull_out_name = "dart"
@@ -1582,19 +1593,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					syringe.do_heal(src.owner)
 			proc/set_owner(obj/item/tool/janktanktwo/injector)
 				src.syringe = injector
-
-
-
-
-	blowdart
-		name = "blowdart"
-		desc = "a sharp little dart with a little poison reservoir."
-		icon_state = "blowdart"
-		leaves_wound = FALSE
-
-		New()
-			..()
-			implant_overlay = null
 
 	flintlock
 		name= "flintlock round"

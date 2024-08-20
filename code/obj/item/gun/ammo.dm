@@ -706,12 +706,11 @@
 	throwforce = 0
 
 //0.40
-/obj/item/ammo/bullets/blow_darts
+/obj/item/ammo/bullets/tranq_darts/blow_darts //kind of cursed pathing because we need the dynamic icon behaviour
 	sname = "blowdart"
 	name = "poison blowdarts"
 	ammo_type = new/datum/projectile/bullet/blow_dart
 	desc = "These darts are loaded with a dangerous paralytic toxin."
-	icon_state = "tranq_clip"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_BLOWDART
@@ -732,6 +731,16 @@
 		desc = "These darts are loaded with a potent mind-altering drug. They smell like honey."
 		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
 		color = "yellow"
+
+	ketamine
+		name = "sleep blowdarts"
+		desc = "These darts are loaded with a heavy dose of horse-tranquilizer."
+		ammo_type = new/datum/projectile/bullet/blow_dart/ketamine
+		color = "#00c5e7"
+
+		single //I hate this
+			amount_left = 1
+			max_amount = 1
 
 //0.41
 /obj/item/ammo/bullets/derringer
@@ -1560,6 +1569,16 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	g_amt = 40000
 	charge = 400
 	max_charge = 400
+
+/obj/item/ammo/power_cell/tiny
+	name = "Power Cell - 50"
+	desc = "A power cell that holds a max of 50PU"
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "power_cell"
+	m_amt = 5000
+	g_amt = 10000
+	charge = 50
+	max_charge = 50
 
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"

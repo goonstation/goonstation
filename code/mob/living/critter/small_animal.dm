@@ -1807,7 +1807,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		.=..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("radioactive", scramble=TRUE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	setup_healths()
 		. = ..()
@@ -1904,7 +1909,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("scorpion_sting", scramble=TRUE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	setup_hands()
 		..()
@@ -3344,6 +3354,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		butterflytype = rand(1,5)
 		src.icon_state = "butterfly[butterflytype]"
 		src.icon_state_dead = "butterfly[butterflytype]-dead"
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	setup_hands()
 		..()
@@ -3435,6 +3450,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	isFlying = TRUE
 	add_abilities = list(/datum/targetable/critter/vomit)
 
+	New(loc)
+		..()
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
+
 	Move()
 		. = ..()
 		misstep_chance = 23
@@ -3492,6 +3515,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	isFlying = TRUE
 	add_abilities = list(/datum/targetable/critter/blood_bite)
+
+	New(loc)
+		..()
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	Move()
 		. = ..()

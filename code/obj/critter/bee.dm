@@ -1015,7 +1015,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if (time2text(world.realtime, "MM DD") == "10 31")
 				name = "Beezlebubs"
 				desc = "Oh no, a terrifying demon!!  Oh, wait, no, nevermind, it's just the fat and sassy space-bee.  Wow, really had me fooled for a moment...guess that's a Halloween trick...."
-				src.hat = new /obj/item/clothing/head/devil (src)
+				src.hat = new /obj/item/clothing/head/headband/devil (src)
 				src.hat_that_bee(src.hat)
 				src.UpdateIcon()
 
