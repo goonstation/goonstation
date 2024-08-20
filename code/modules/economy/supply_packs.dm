@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/janitor_sprayer
 	name = "WA-V3 Janitorial Sprayer"
-	desc = "x1 Brand new WA-V3 Spray gun, x1 Matching back-tank"
+	desc = "x1 Brand new Wide Area V3 Cleaning Device, x1 Matching back-tank"
 	category = "Civilian Department"
 	containertype = /obj/storage/crate
 	containername = "WA-V3 Crate"
