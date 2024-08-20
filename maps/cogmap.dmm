@@ -54011,7 +54011,7 @@
 	},
 /obj/machinery/firealarm/east,
 /obj/machinery/partyalarm{
-	dir = 8;
+	dir = 2;
 	pixel_y = -26
 	},
 /turf/simulated/floor/black,
