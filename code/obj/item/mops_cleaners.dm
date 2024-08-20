@@ -1183,6 +1183,10 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		src.projectiles = list(src.current_projectile, new /datum/projectile/special/shotchem/wave/wide, new /datum/projectile/special/shotchem/wave/single)
 		src.UpdateIcon()
 
+	get_help_message(dist, mob/user)
+		if (src.clogged)
+			return "Can be unclogged in a <b>sink</b>."
+
 	pickup(mob/user)
 		..()
 		src.connect(user)
