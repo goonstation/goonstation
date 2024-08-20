@@ -457,11 +457,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	..()
 
 /obj/machinery/door_control/get_desc()
-	. += "The panel is [src.panel_open ? "open" : "closed"]."
+	. += "The panel is [src.panel_open ? "open" : "closed"]. "
 	if (src.panel_open)
 		if (src.tamper_lock)
-			. += "The tamper lock is currently [src.tamper_lock ? "enabled" : "disabled"]."
-		. += "The display inside currently shows \the [src]'s ID as '[src.id]'."
+			. += "The tamper lock is currently [src.tamper_lock ? "enabled" : "disabled"]. "
+		. += "The display inside currently shows \the [src]'s ID as '[src.id]'. "
 
 /obj/machinery/door_control/was_built_from_frame(mob/user, newly_built)
 	. = ..()
