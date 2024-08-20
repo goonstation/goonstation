@@ -1370,7 +1370,14 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	proc/push_stuff(obj/projectile/O, turf/T, dir)
 		var/count = 0
 		for (var/atom/movable/AM in T)
-			if (!istype(AM, src.push_type) || AM == O.shooter)
+			if (AM == O.shooter)
+				continue
+			if (ismob(AM))
+				var/mob/M = AM
+				M.lastgasp() //heeheehoohoo
+				if (M.get_oxygen_deprivation() == 0)
+					M.take_oxygen_deprivation(5)
+			if (!istype(AM, src.push_type))
 				continue
 			if (!AM.anchored)
 				step(AM, dir)
