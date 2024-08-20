@@ -510,7 +510,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	// Forbid changing IDs of existing buttons (so easily, at least)
 	if (src.tamper_lock)
-		boutput(user, SPAN_ALERT("These specially installed buttons contain various anti-tamper mechanisms. You can't change the ID!"))
+		boutput(user, SPAN_ALERT("You can't do that with the tamper lock on!"))
 		return
 	// Generate blacklist if it doesnt exist yet
 	if (!length(reserved_door_ids))
