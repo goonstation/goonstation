@@ -1,5 +1,7 @@
 
 (t)tue aug 20 24
+(u)LeahTheTech
+(+)The WA-V3 is no longer illegal.
 (u)LeahTheTech + Flaborized
 (p)20317
 (e)🗺🎨🧫🔊📦|A-Mapping, C-Sprites, C-Experimental, C-Sound, A-Game-Objects

@@ -1175,6 +1175,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	recoil_enabled = FALSE
 	click_sound = 'sound/effects/tinyhiss.ogg'
 	click_msg = "*hisss*"
+	contraband = 0 //lol
 	var/clogged = FALSE
 
 	New()
