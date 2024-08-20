@@ -439,7 +439,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	if(isscrewingtool(W))
 		src.panel_open = !src.panel_open
-		boutput(user, SPAN_NOTICE("You [src.panel_open ? "close" : "open"] the panel on \the [src]."))
+		boutput(user, SPAN_NOTICE("You [src.panel_open ? "open" : "close"] the panel on \the [src]."))
 	if (ispulsingtool(W))
 		if (!src.panel_open)
 			return
