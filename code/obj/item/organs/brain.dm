@@ -140,7 +140,7 @@
 
 /obj/item/organ/brain/ai
 	name = "neural net processor"
-	desc = "A heavily augmented human brain, upgraded to deal with the large amount of information an AI unit must process."
+	desc = "A digital mind modeled after human neurology and enhanced to deal with the large amount of information an AI unit must process."
 	icon_state = "ai_brain"
 	item_state = "ai_brain"
 	created_decal = /obj/decal/cleanable/oil
