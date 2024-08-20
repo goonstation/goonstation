@@ -28,6 +28,12 @@ proc/door_id_on_blacklist(id)
 			return TRUE
 	return FALSE
 
+TYPEINFO(/obj/machinery/door_control)
+	mats = list("metal_dense" = 4,
+				"crystal" = 2,
+				"conductive" = 6
+				)
+
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
@@ -471,9 +477,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		boutput(user, SPAN_NOTICE("You set the ID to '[new_id]'."))
 		src.id = new_id
 		return
+	if (istype(W, /obj/item/deconstructor))
+		return // it does its thing, just shouldnt be toggling it while doing aforementioned thing
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/can_deconstruct()
+	// Generate blacklist if it doesnt exist yet
+	if (!length(reserved_door_ids))
+		generate_reserved_door_ids()
 	// Forbid deconstructing 'special' pre-existing buttons
 	if (door_id_on_blacklist(src.id))
 		return FALSE
