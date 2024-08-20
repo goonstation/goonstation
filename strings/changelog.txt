@@ -1,3 +1,9 @@
+
+(t)mon aug 19 24
+(u)JORJ949
+(p)20370
+(e)|
+(+)Classic SecTechs now get Space Law. Also increased available quantity from 1->3
 (t)sun aug 18 24
 (u)LeahTheTech
 (+)Roboticist PDAs get the silicon PDA group.
