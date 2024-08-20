@@ -505,7 +505,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return // it does its thing, just shouldnt be toggling it while doing aforementioned thing
 	return src.Attackhand(user)
 
-/obj/machinery/door_control/change_id(mob/user as mob)
+/obj/machinery/door_control/proc/change_id(mob/user as mob)
 	if (!src.panel_open)
 		return
 	// Forbid changing IDs of existing buttons (so easily, at least)
