@@ -1,5 +1,5 @@
 /obj/machinery/computer/robotics
-	name = "robotics control"
+	name = "robotics control console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "robotics"
 	req_access = list(access_ai_upload)
@@ -23,9 +23,14 @@
 		STOP_TRACKING
 
 
-/obj/machinery/computer/robotics/attackby(obj/item/I, user)
+/obj/machinery/computer/robotics/attackby(obj/item/I, mob/user)
 	if (perma && isscrewingtool(I))
 		boutput(user, SPAN_ALERT("The screws are all weird safety-bit types! You can't turn them!"))
+		return
+	else if (issilicon(user) && isscrewingtool(I))
+		boutput(user, SPAN_ALERT("[src]'s anti-intrusion countermeasures activate and flash you!"))
+		user.apply_flash(30,5,5,5)
+		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
 		return
 	..()
 	return

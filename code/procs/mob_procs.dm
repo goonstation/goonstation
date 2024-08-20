@@ -257,7 +257,7 @@
 		return 0
 	return 0
 
-/mob/proc/apply_flash(var/animation_duration, var/knockdown, var/stnu, var/misstep, var/eyes_blurry, var/eyes_damage, var/eye_tempblind, var/burn, var/uncloak_prob, var/stamina_damage,var/disorient_time)
+/mob/proc/apply_flash(var/animation_duration, var/knockdown, var/stun, var/misstep, var/eyes_blurry, var/eyes_damage, var/eye_tempblind, var/burn, var/uncloak_prob, var/stamina_damage,var/disorient_time)
 	return
 
 // We've had like 10+ code snippets for a variation of the same thing, now it's just one mob proc (Convair880).
