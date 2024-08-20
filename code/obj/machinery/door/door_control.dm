@@ -480,13 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		return
 	if (istype(W, /obj/item/device/accessgun))
 		// We don't have access restrictions ourself (ok) so just trust whoever has this is powerful enough
-		// Kind of weird code because we need to check equipped id / object
 		var/obj/item/card/id/id_card = null
-		// Check ID slot
-		if (ishuman(user))
-			var/mob/living/carbon/human/M
-			id_card = get_id_card(M.wear_id)
-		// Check object
 		if (isnull(id_card))
 			var/obj/item/device/accessgun/W_gun = W
 			id_card = W_gun.ID_card
