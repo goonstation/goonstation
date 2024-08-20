@@ -67,6 +67,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/inuse = FALSE //! Relays whether the button is currently in use
 	var/controlmode = MODE_TOGGLE_OPEN //! Dictates modes for airlock control. Does not change behavior for poddoors or conveyors
 
+	HELP_MESSAGE_OVERRIDE("You can open the panel with a <b>screwdriver</b>. The tamper lock on the button can also be toggled with an <b>access pro</b>.")
+
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/r_door_control (door_control.dm)
 	// /obj/machinery/door/poddoor/pyro (poddoor.dm)
@@ -453,6 +455,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control/disposing()
 	STOP_TRACKING_CAT(TR_CAT_DOOR_BUTTONS)
 	..()
+
+/obj/machinery/door_control/get_desc()
+	. += "The panel is [src.panel_open ? "open" : "closed"]."
+	if (src.panel_open)
+		if (src.tamper_lock)
+			. += "The tamper lock is currently [src.tamper_lock ? "enabled" : "disabled"]."
+		. += "The display inside currently shows \the [src]'s ID as '[src.id]'."
+
+/obj/machinery/door_control/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	if (newly_built)
+		src.tamper_lock = FALSE
 
 /obj/machinery/door_control/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
