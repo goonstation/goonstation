@@ -479,16 +479,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 		src.id = new_id
 		return
 	if (istype(W, /obj/item/device/accessgun))
-		if (user.has_access(access_change_ids)) // We don't have access restrictions ourself (ok) so just trust whoever has this is powerful enough
-			var/success_message = SPAN_NOTICE("You [src.tamper_lock ? "remove" : "reinstate"] the tamper lock on \the [src].")
+		// We don't have access restrictions ourself (ok) so just trust whoever has this is powerful enough
+		// Kind of weird code because we need to check equipped id / object
+		var/obj/item/card/id/id_card = null
+		// Check ID slot
+		if (ishuman(user))
+			var/mob/living/carbon/human/M
+			id_card = get_id_card(M.wear_id)
+		// Check object
+		if (isnull(id_card))
+			var/obj/item/device/accessgun/W_gun = W
+			id_card = W_gun.ID_card
+		if (!isnull(id_card) && id_card.has_access(access_change_ids))
+			boutput(user, SPAN_NOTICE("You begin to [src.tamper_lock ? "remove" : "reinstate"] the tamper lock on \the [src]."))
+			var/success_message = SPAN_NOTICE("You finish [src.tamper_lock ? "removing" : "reinstating"] the tamper lock on \the [src].")
 			var/custom_interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-			SETUP_GENERIC_ACTIONBAR(user, src, 9 SECONDS, src.toggle_tamper_lock, list(), 'icons/ui/actions.dmi', "reprog", success_message, custom_interrupt_flags)
+			SETUP_GENERIC_ACTIONBAR(user, src, 9 SECONDS, PROC_REF(toggle_tamper_lock), list(), 'icons/ui/actions.dmi', "reprog", success_message, custom_interrupt_flags)
 		return
 	if (istype(W, /obj/item/deconstructor))
 		return // it does its thing, just shouldnt be toggling it while doing aforementioned thing
 	return src.Attackhand(user)
 
-/obj/machinery/door_control/toggle_tamper_lock()
+/obj/machinery/door_control/proc/toggle_tamper_lock()
 	src.tamper_lock = !src.tamper_lock
 
 /obj/machinery/door_control/can_deconstruct()
