@@ -2,6 +2,25 @@
 #define MODE_TOGGLE_OPEN 1 //! Open/close doors on button press
 #define MODE_TOGGLE_BOLTS 2 //! Bolt/unbolt doors on button press
 
+var/global/list/reserved_door_ids = list() //! All the door IDs from concrete types of /obj/machinery/door_control to forbid setting existing ones weirdly
+
+// This list is generated when someone starts trying to name a button ID, as this is predicted to be used so infrequently that it might never be worth loading at all
+/// Generate all the reserved IDs. Ignores duplicates, though there shouldn't be many if any at all
+proc/generate_reserved_door_ids()
+	var/list/subtypes_of_door_control = concrete_typesof(/obj/machinery/door_control)
+	for (var/subtype_path in subtypes_of_door_control)
+		var/obj/machinery/door_control/button_path = subtype_path
+		var/initial_id = initial(button_path.id)
+		if (!isnull(initial_id))
+			reserved_door_ids += initial_id
+
+/// Check if a given ID is on the door ID blacklist, returns TRUE if it is and FALSE otherwise.
+proc/door_id_on_blacklist(id)
+	for (var/blacklisted_id in reserved_door_ids)
+		if (blacklisted_id == id)
+			return TRUE
+	return FALSE
+
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
@@ -25,6 +44,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 	// Door button specific variables
 	var/id = null //! Match to a door to have it be controlled.
+	var/panel_open = FALSE //! Whether or not the panel is open on the button. Allows changing the ID when open
 	var/timer = 0 SECONDS //! If this is greater than 0, enforces an artificial delay on toggling machinery
 	var/cooldown = 0 SECONDS //! If this is greater than 0, a cooldown is enforced on pressing the button (delays resetting inuse)
 	var/inuse = FALSE //! Relays whether the button is currently in use
@@ -417,6 +437,24 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control/attackby(obj/item/W, mob/user as mob)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
+	if(isscrewingtool(W))
+		src.panel_open = !src.panel_open
+		boutput(user, SPAN_NOTICE("You [src.panel_open ? "close" : "open"] the panel on \the [src]."))
+	if (ispulsingtool(W))
+		if (!src.panel_open)
+			return
+		// Generate blacklist if it doesnt exist yet
+		if (!length(reserved_door_ids))
+			generate_reserved_door_ids()
+		// Allow user to set a new ID, but check against blacklist first
+		var/new_id = tgui_input_text(user, "What would you like the new ID to be?", "Change target ID", src.id, 50)
+		if (!new_id || door_id_on_blacklist(new_id))
+			boutput(user, SPAN_ALERT("You can't set the ID to '[new_id]'!"))
+			return
+		boutput(user, SPAN_NOTICE("You set the ID to '[new_id]'."))
+		src.id = new_id
+		return
+
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
