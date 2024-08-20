@@ -1241,6 +1241,15 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			JOB_XP(user, "Janitor", 2)
 		return TRUE
 
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
+		if(!..())
+			return
+		SPAWN(1.3 SECONDS)
+			playsound(start, 'sound/machines/windup.ogg', 80, FALSE, -10)
+			eat_twitch(src)
+			sleep(0.4 SECONDS)
+			eat_twitch(src)
+
 	alter_projectile(obj/projectile/P)
 		if(!P.reagents)
 			P.create_reagents(src.current_projectile.cost)
