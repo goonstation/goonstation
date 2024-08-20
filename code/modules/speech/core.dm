@@ -53,8 +53,8 @@
 
 /**
  *	The primary entry point for all say code; messages sent will be mutated by the speech tree, passed to a say channel, disseminated to listeners, mutated by listen trees, then finally heard by recipients.
- *	- `message`: The plain text that should be used as the content of the say message datum. See `_std/defines/speech_defines/sayflags.dm`.
- *	- `flags`: The flags that should be applied to the say message datum, which determine how it should be formatted and displayed.
+ *	- `message`: The plain text that should be used as the content of the say message datum.
+ *	- `flags`: The flags that should be applied to the say message datum, which determine how it should be formatted and displayed. See `_std/defines/speech_defines/sayflags.dm`.
  *	- `message_params`: Use this to override the default variables of the say message datum. Use explitly only where a speech module would not be appropriate.
  *	- `atom_listeners_override`: In lieu of being sent over a say channel, messages will instead attempt to be passed to the listen trees of these atoms directly.
  */
