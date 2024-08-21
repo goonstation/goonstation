@@ -858,14 +858,15 @@ var/global/in_replace_with = 0
 				air_master.tiles_to_update |= N
 		else if (air_master)
 			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons -= src
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
+			oldparent.borders?.Remove(src)
 
 
-	if (istype(new_turf, /turf/simulated))
-		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
-		new_turf.update_nearby_tiles(1)
+	new_turf.update_nearby_tiles(1)
 
 	#ifdef CHECK_MORE_RUNTIMES
 	in_replace_with--

@@ -1,3 +1,26 @@
+
+(t)tue aug 20 24
+(u)LeahTheTech
+(+)The WA-V3 is no longer illegal.
+(u)LeahTheTech + Flaborized
+(p)20317
+(e)🗺🎨🧫🔊📦|A-Mapping, C-Sprites, C-Experimental, C-Sound, A-Game-Objects
+(*)Added the WA-V3 (get it?) janitorial sprayer, available in a crate from cargo for 4500 credits. See minor changes for details.
+(+)The WA-V3 pulls from a 500u back-mounted tank and has three different modes with different reagent costs: narrow (10u), wave (20u) and w i d e (30u). The tank itself also has 3 "small" capacity inventory slots.
+(+)Replaced the Tsunami spray bottle spawn with a cybernetic spray bottle spawn.
+(t)mon aug 19 24
+(u)JORJ949
+(p)20370
+(e)|
+(+)Classic SecTechs now get Space Law. Also increased available quantity from 1->3
+(t)sun aug 18 24
+(u)LeahTheTech
+(+)Roboticist PDAs get the silicon PDA group.
+(t)sat aug 17 24
+(u)Bork and Wrench
+(p)20343
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)Resprites the Garden Trowel, and gives it a new In-Hand and Sound Effect when digging and planting. Sprites by Bork
 (t)fri aug 16 24
 (u)LeahTheTech
 (+)Vampire blood steal is now much quieter.
