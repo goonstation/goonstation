@@ -4,26 +4,19 @@
 
 var/global/list/reserved_machinery_control_ids = list() //! All the door IDs from concrete types of /obj/machinery/door_control to forbid setting existing ones weirdly
 
+/// Machinery types to check. These are the bits in the list which will have IDs
+#define VALID_MACHINERY_TYPES list(/obj/machinery/door/airlock, /obj/machinery/door/poddoor, /obj/machinery/door_control, /obj/machinery/conveyor)
+
 // This list is generated when someone starts trying to name a button ID, as this is predicted to be used so infrequently that it might never be worth loading at all
 // If it was to go pre-round it would need to be after everything is setup to for_by_tcl all the buttons
 /// Generate all the reserved IDs
 proc/generate_reserved_machinery_control_ids()
 	// Every ID for a button and every machine that may have an id to recieve
 	var/ids_to_blacklist = machine_registry[MACHINES_CONVEYORS] + by_cat[TR_CAT_DOOR_BUTTONS] + by_type[/obj/machinery/door]
-	for (var/obj/machinery/machinery_object as anything in ids_to_blacklist)
+	for (var/machinery_object as anything in ids_to_blacklist)
 		var/id = null
-		if (istype(machinery_object, /obj/machinery/door/airlock))
-			var/obj/machinery/door/airlock/AL = machinery_object
-			id = AL.id
-		else if (istype(machinery_object, /obj/machinery/door/poddoor))
-			var/obj/machinery/door/poddoor/PD = machinery_object
-			id = PD.id
-		else if (istype(machinery_object, /obj/machinery/door_control))
-			var/obj/machinery/door_control/DC = machinery_object
-			id = DC.id
-		else if (istype(machinery_object, /obj/machinery/conveyor))
-			var/obj/machinery/conveyor/CV = machinery_object
-			id = CV.id
+		if (istypes(machinery_object, VALID_MACHINERY_TYPES))
+			id = machinery_object:id
 		if (isnull(id))
 			continue
 		// Kind of expensive but otherwise every directional generates its id again
@@ -35,6 +28,8 @@ proc/generate_reserved_machinery_control_ids()
 		if (is_duplicate)
 			continue
 		reserved_machinery_control_ids += id
+
+#undef VALID_MACHINERY_TYPES
 
 /// Check if a given ID is on the door ID blacklist, returns TRUE if it is and FALSE otherwise.
 proc/id_on_reserved_list(id)
