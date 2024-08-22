@@ -471,6 +471,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Half-Shaved: Right"
 				id = "halfshavedL"
 				gender = MASCULINE | FEMININE
+			streakbang
+				name = "Bang: Streak"
+				id = "streakbang"
+				random_allowed = FALSE
 			kingofrockandroll
 				name = "Kingmetal"
 				id = "king-of-rock-and-roll"
