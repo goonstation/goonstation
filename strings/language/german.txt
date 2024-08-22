@@ -163,4 +163,4 @@ sweet@=suess
 grass@=glas
 ice@=eis
 chair@=stuhl
-time@=zeit
+
