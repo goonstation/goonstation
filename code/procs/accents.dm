@@ -857,7 +857,7 @@ proc/random_accent()
 				used = 1
 
 		if("e")
-			if(lowertext(R.next_char) == "" || lowertext(R.next_char) == " " && prob(50))
+			if(lowertext(R.next_char) == "" || lowertext(R.next_char) == " " && prob(10))
 				new_string = "eh"
 			if(lowertext(R.prev_char) == "u")
 				new_string = "ee"
