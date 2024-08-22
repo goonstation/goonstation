@@ -1,4 +1,9 @@
 
+(t)thu aug 22 24
+(u)Iamgoofball
+(p)20390
+(e)🔄📄|C-Rework, A-UI
+(+)Replaces instance of "lynched" with "gibbed" in the critter compendium.
 (t)tue aug 20 24
 (u)LeahTheTech
 (+)The WA-V3 is no longer illegal.
