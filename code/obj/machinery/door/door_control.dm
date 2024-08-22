@@ -16,7 +16,11 @@ proc/generate_reserved_machinery_control_ids()
 	for (var/machinery_object as anything in ids_to_blacklist)
 		var/id = null
 		if (istypes(machinery_object, VALID_MACHINERY_TYPES))
-			id = machinery_object:id
+			// The : syntax would be appropriate here but that's a different kind of code crime(tm)
+			// so instead we just use one of the various types which all implement ID differently (WAA)
+			// but uhh TODO: reimplement the ID system to make some semblance of sense
+			var/obj/machinery/door_control/some_valid_machinery = machinery_object
+			id = some_valid_machinery.id
 		if (isnull(id))
 			continue
 		// Kind of expensive but otherwise every directional generates its id again
