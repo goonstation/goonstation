@@ -64,7 +64,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 			src.time = 0
 			src.timing = FALSE
 			src.last_tick = 0
-			src.GetComponent(/datum/component/proximity).enabled = TRUE
+			src.GetComponent(/datum/component/proximity).set_detection(TRUE)
 			src.UpdateIcon()
 
 		src.last_tick = TIME
@@ -131,9 +131,9 @@ TYPEINFO(/obj/item/device/prox_sensor)
 		if ("toggle-armed")
 			src.armed = !src.armed
 			if (src.armed)
-				src.GetComponent(/datum/component/proximity).enabled = TRUE
+				src.GetComponent(/datum/component/proximity).set_detection(TRUE)
 			else
-				src.GetComponent(/datum/component/proximity).enabled = FALSE
+				src.GetComponent(/datum/component/proximity).set_detection(FALSE)
 			src.UpdateIcon()
 			if(timing || armed) processing_items |= src
 
