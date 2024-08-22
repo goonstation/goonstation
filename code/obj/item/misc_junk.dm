@@ -319,6 +319,14 @@ TYPEINFO(/obj/item/disk)
 TYPEINFO(/obj/item/reagent_containers/vape)
 	mats = 6
 
+/obj/item/reagent_containers/gluebag
+	name = "crumpled glue pouch"
+	desc = "A bunch of lint has clung to the pouch, and it sticks to your finger when you touch it."
+	icon_state = "glueBag"
+	initial_volume = 5
+	initial_reagents = "spaceglue"
+	w_class = W_CLASS_TINY
+
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
@@ -710,11 +718,6 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
 
-/obj/item/gluebag
-	name = "crumpled glue pouch"
-	desc = "A bunch of lint has stuck to the pouch. You should throw this away."
-	icon_state = "glueBag"
-	w_class = W_CLASS_TINY
 
 /obj/item/yoyo
 	name = "Atomic Yo-Yo"
