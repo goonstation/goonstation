@@ -608,7 +608,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	else if (src.traitHolder && src.traitHolder.hasTrait("wigGlue"))
 		var/hair_override = TRUE
 		src.hair_override = hair_override
-		trinket = new/obj/item/reagent_containers/gluebag
+		trinket = new/obj/item/gluebag
 		src.bioHolder.mobAppearance.UpdateMob()
 		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
