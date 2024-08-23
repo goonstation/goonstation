@@ -319,11 +319,7 @@ TYPEINFO(/obj/item/disk)
 TYPEINFO(/obj/item/reagent_containers/vape)
 	mats = 6
 
-/obj/item/gluebag
-	name = "crumpled glue pouch"
-	desc = "A bunch of lint has clung to the pouch, and it sticks to your finger when you touch it."
-	icon_state = "glueBag"
-	w_class = W_CLASS_TINY
+
 
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
@@ -699,6 +695,12 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			gas.radgas = 10 * 2 ** (3 - severity)
 			floor.assume_air(gas)
 			break // only the first floor we found
+
+/obj/item/gluebag
+	name = "crumpled glue pouch"
+	desc = "A bunch of lint has clung to the pouch, and it sticks to your finger when you touch it."
+	icon_state = "glueBag"
+	w_class = W_CLASS_TINY
 
 /obj/item/boarvessel
 	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
