@@ -25,7 +25,7 @@
 
 	speech_verb_say = list("farts", "toots", "honks", "parps")
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, "accent_butt")
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_BUTT)
 
 	/// Can this wretched thing *move*?
 	var/buttmobile = TRUE

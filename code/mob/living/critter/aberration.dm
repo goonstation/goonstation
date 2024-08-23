@@ -18,7 +18,7 @@
 	speech_verb_stammer = "creates"
 	speech_verb_gasp = "rasps"
 
-	start_speech_modifiers = list("accent_void")
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 
 	can_burn = FALSE
 	can_implant = FALSE

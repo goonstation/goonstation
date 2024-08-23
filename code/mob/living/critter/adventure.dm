@@ -24,7 +24,7 @@
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1
-	start_speech_modifiers = list("accent_void")
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
@@ -133,7 +133,7 @@
 	is_npc = TRUE
 
 	voice_sound_override = list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')
-	start_speech_modifiers = list("accent_void")
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
 
 	setup_hands()
 		..()

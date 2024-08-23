@@ -25,7 +25,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 
 	speech_verb_say = "buzzes"
 
-	start_speech_modifiers = list("accent_comic")
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_COMIC)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 	var/honey_production_amount = 50

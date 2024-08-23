@@ -441,7 +441,7 @@
 	beacon_freq = 1440
 	control_freq = FREQ_AINLEY_BUDDY
 
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SOVIET, "accent_russian")
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT_SOVIET, SPEECH_MODIFIER_ACCENT_RUSSIAN)
 
 	New()
 		..()

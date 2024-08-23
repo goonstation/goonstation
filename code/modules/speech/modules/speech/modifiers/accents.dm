@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 // Dialects:
 /datum/speech_module/modifier/accent/bingus
-	id = "accent_bingus"
+	id = SPEECH_MODIFIER_ACCENT_BINGUS
 
 /datum/speech_module/modifier/accent/bingus/process(datum/say_message/message)
 	message.content = bingus_parse(message.content)
@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/chav
-	id = "accent_chav"
+	id = SPEECH_MODIFIER_ACCENT_CHAV
 
 /datum/speech_module/modifier/accent/chav/process(datum/say_message/message)
 	message.content = chavify(message.content)
@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/elvis
-	id = "accent_elvis"
+	id = SPEECH_MODIFIER_ACCENT_ELVIS
 
 /datum/speech_module/modifier/accent/elvis/process(datum/say_message/message)
 	message.content = elvisfy(message.content)
@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/finnish
-	id = "accent_finnish"
+	id = SPEECH_MODIFIER_ACCENT_FINNISH
 
 /datum/speech_module/modifier/accent/finnish/process(datum/say_message/message)
 	message.content = finnishify(message.content)
@@ -39,7 +39,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/french
-	id = "accent_french"
+	id = SPEECH_MODIFIER_ACCENT_FRENCH
 
 /datum/speech_module/modifier/accent/french/process(datum/say_message/message)
 	message.content = tabarnak(message.content)
@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/german
-	id = "accent_german"
+	id = SPEECH_MODIFIER_ACCENT_GERMAN
 
 /datum/speech_module/modifier/accent/german/process(datum/say_message/message)
 	message.content = germify(message.content)
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/hacker
-	id = "accent_hacker"
+	id = SPEECH_MODIFIER_ACCENT_HACKER
 
 /datum/speech_module/modifier/accent/hacker/process(datum/say_message/message)
 	message.content = accent_hacker(message.content)
@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/piglatin
-	id = "accent_piglatin"
+	id = SPEECH_MODIFIER_ACCENT_PIGLATIN
 
 /datum/speech_module/modifier/accent/piglatin/process(datum/say_message/message)
 	message.content = accent_piglatin(message.content)
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/pirate
-	id = "accent_pirate"
+	id = SPEECH_MODIFIER_ACCENT_PIRATE
 
 /datum/speech_module/modifier/accent/pirate/process(datum/say_message/message)
 	message.content = pirateify(message.content)
@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/russian
-	id = "accent_russian"
+	id = SPEECH_MODIFIER_ACCENT_RUSSIAN
 
 /datum/speech_module/modifier/accent/russian/process(datum/say_message/message)
 	message.content = russify(message.content)
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/scots
-	id = "accent_scots"
+	id = SPEECH_MODIFIER_ACCENT_SCOTS
 	var/danny_index = 1
 
 /datum/speech_module/modifier/accent/scots/process(datum/say_message/message)
@@ -102,7 +102,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/scoob
-	id = "accent_scoob"
+	id = SPEECH_MODIFIER_ACCENT_SCOOB
 
 /datum/speech_module/modifier/accent/scoob/process(datum/say_message/message)
 	message.content = scoobify(message.content)
@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/scoob_nerf
-	id = "accent_scoob_nerf"
+	id = SPEECH_MODIFIER_ACCENT_SCOOB_NERF
 
 /datum/speech_module/modifier/accent/scoob_nerf/process(datum/say_message/message)
 	message.content = scoobify(message.content, TRUE)
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/swedish
-	id = "accent_swedish"
+	id = SPEECH_MODIFIER_ACCENT_SWEDISH
 
 /datum/speech_module/modifier/accent/swedish/process(datum/say_message/message)
 	message.content = borkborkbork(message.content)
@@ -126,7 +126,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/thrall
-	id = "accent_thrall"
+	id = SPEECH_MODIFIER_ACCENT_THRALL
 
 /datum/speech_module/modifier/accent/thrall/process(datum/say_message/message)
 	. = message
@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/tommy
-	id = "accent_tommy"
+	id = SPEECH_MODIFIER_ACCENT_TOMMY
 
 /datum/speech_module/modifier/accent/tommy/process(datum/say_message/message)
 	message.content = tommify(message.content)
@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/tyke
-	id = "accent_tyke"
+	id = SPEECH_MODIFIER_ACCENT_TYKE
 
 /datum/speech_module/modifier/accent/tyke/process(datum/say_message/message)
 	message.content = yorkify(message.content)
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/uwu
-	id = "accent_uwu"
+	id = SPEECH_MODIFIER_ACCENT_UWU
 
 /datum/speech_module/modifier/accent/uwu/process(datum/say_message/message)
 	message.content = uwutalk(message.content)
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 // Speech Effects:
 /datum/speech_module/modifier/accent/loud
-	id = "loud_voice"
+	id = SPEECH_MODIFIER_ACCENT_LOUD
 
 /datum/speech_module/modifier/accent/loud/process(datum/say_message/message)
 	. = message
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/quiet
-	id = "quiet_voice"
+	id = SPEECH_MODIFIER_ACCENT_QUIET
 
 /datum/speech_module/modifier/accent/quiet/process(datum/say_message/message)
 	. = message
@@ -195,7 +195,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/slurring
-	id = "slurring"
+	id = SPEECH_MODIFIER_ACCENT_SLURRING
 
 /datum/speech_module/modifier/accent/slurring/process(datum/say_message/message)
 	message.content = say_drunk(message.content)
@@ -203,17 +203,17 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/stutter
-	id = "stutter"
+	id = SPEECH_MODIFIER_ACCENT_STUTTER
 
 /datum/speech_module/modifier/accent/stutter/process(datum/say_message/message)
 	message.content = stutter(message.content)
 	. = message
 
 
-/datum/speech_module/modifier/accent/unintelligable
-	id = "unintelligable"
+/datum/speech_module/modifier/accent/unintelligible
+	id = SPEECH_MODIFIER_ACCENT_UNINTELLIGIBLE
 
-/datum/speech_module/modifier/accent/unintelligable/process(datum/say_message/message)
+/datum/speech_module/modifier/accent/unintelligible/process(datum/say_message/message)
 	. = message
 
 	message.content = say_superdrunk(message.content)
@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/butt
-	id = "accent_butt"
+	id = SPEECH_MODIFIER_ACCENT_BUTT
 
 /datum/speech_module/modifier/accent/butt/process(datum/say_message/message)
 	. = message
@@ -303,7 +303,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/clack
-	id = "accent_clack"
+	id = SPEECH_MODIFIER_ACCENT_CLACK
 
 /datum/speech_module/modifier/accent/clack/process(datum/say_message/message)
 	. = message
@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/comic
-	id = "accent_comic"
+	id = SPEECH_MODIFIER_ACCENT_COMIC
 
 /datum/speech_module/modifier/accent/comic/process(datum/say_message/message)
 	message.format_content_style_prefix = "<font face='Comic Sans MS'>"
@@ -343,7 +343,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/emoji
-	id = "emoji"
+	id = SPEECH_MODIFIER_ACCENT_EMOJI
 	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
 	var/static/list/word_to_emoji
 	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
@@ -380,7 +380,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/emoji/only
-	id = "emojionly"
+	id = SPEECH_MODIFIER_ACCENT_EMOJI_ONLY
 
 /datum/speech_module/modifier/accent/emoji/only/process(datum/say_message/message)
 	var/datum/say_message/processed_message = ..(message)
@@ -447,7 +447,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/literal_owo
-	id = "accent_literalowo"
+	id = SPEECH_MODIFIER_ACCENT_LITERAL_OWO
 
 /datum/speech_module/modifier/accent/literal_owo/process(datum/say_message/message)
 	. = message
@@ -479,7 +479,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/lol
-	id = "accent_lolcat"
+	id = SPEECH_MODIFIER_ACCENT_LOLCAT
 
 /datum/speech_module/modifier/accent/lol/process(datum/say_message/message)
 	message.content = lolcat(message.content)
@@ -487,7 +487,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/mocking
-	id = "accent_mocking"
+	id = SPEECH_MODIFIER_ACCENT_MOCKING
 
 /datum/speech_module/modifier/accent/mocking/process(datum/say_message/message)
 	message.content = accent_mocking(message.content)
@@ -495,7 +495,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/reversed_speech
-	id = "reversed_speech"
+	id = SPEECH_MODIFIER_ACCENT_REVERSED
 
 /datum/speech_module/modifier/accent/reversed_speech/process(datum/say_message/message)
 	message.content = reverse_text(message.content)
@@ -503,7 +503,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/scrambled
-	id = "accent_scrambled"
+	id = SPEECH_MODIFIER_ACCENT_SCRAMBLED
 
 /datum/speech_module/modifier/accent/scrambled/process(datum/say_message/message)
 	message.content = accent_scramble(message.content)
@@ -511,7 +511,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/smile
-	id = "accent_smiling"
+	id = SPEECH_MODIFIER_ACCENT_SMILING
 
 /datum/speech_module/modifier/accent/smile/process(datum/say_message/message)
 	message.content = smilify(message.content)
@@ -519,7 +519,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/transposed
-	id = "accent_transposed"
+	id = SPEECH_MODIFIER_ACCENT_TRANSPOSED
 	var/max_font_size = 130
 	var/min_font_size = 70
 	var/rate_of_change = 5
@@ -551,7 +551,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/void
-	id = "accent_void"
+	id = SPEECH_MODIFIER_ACCENT_VOID
 
 /datum/speech_module/modifier/accent/void/process(datum/say_message/message)
 	message.content = voidSpeak(message.content)
@@ -559,7 +559,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/vowelitis
-	id = "vowelitis"
+	id = SPEECH_MODIFIER_ACCENT_VOWELITIS
 	var/vowel_lower
 	var/vowel_upper
 
@@ -585,7 +585,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/word_scrambled
-	id = "accent_word_scrambled"
+	id = SPEECH_MODIFIER_ACCENT_WORD_SCRAMBLED
 
 /datum/speech_module/modifier/accent/word_scrambled/process(datum/say_message/message)
 	message.content = accent_shuffle_words(message.content)
@@ -593,7 +593,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/yee
-	id = "accent_yee"
+	id = SPEECH_MODIFIER_ACCENT_YEE
 
 /datum/speech_module/modifier/accent/yee/process(datum/say_message/message)
 	message.content = yee_text(message.content)
@@ -601,7 +601,7 @@ ABSTRACT_TYPE(/datum/speech_module/modifier/accent)
 
 
 /datum/speech_module/modifier/accent/zalgo
-	id = "accent_zalgo"
+	id = SPEECH_MODIFIER_ACCENT_ZALGO
 
 /datum/speech_module/modifier/accent/zalgo/process(datum/say_message/message)
 	message.content = zalgoify(message.content, rand(0,2), rand(0, 1), rand(0, 2))

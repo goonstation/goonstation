@@ -719,7 +719,7 @@
 
 
 /obj/machinery/bot/medbot/terrifying
-	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, "accent_transposed")
+	start_speech_modifiers = list(SPEECH_MODIFIER_BOT, SPEECH_MODIFIER_ACCENT_TRANSPOSED)
 
 /obj/machinery/bot/medbot/bullet_act(var/obj/projectile/P)
 	..()

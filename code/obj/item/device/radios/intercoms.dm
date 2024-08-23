@@ -335,13 +335,13 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/fish/combust()
 	if (!src.burning)
-		src.ensure_speech_tree().AddSpeechModifier("stutter")
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_ACCENT_STUTTER)
 
 	. = ..()
 
 /obj/item/device/radio/intercom/fish/combust_ended()
 	if (!src.burning)
-		src.ensure_speech_tree().RemoveSpeechModifier("stutter")
+		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_ACCENT_STUTTER)
 	. = ..()
 
 /obj/item/device/radio/intercom/fish/update_pixel_offset_dir()

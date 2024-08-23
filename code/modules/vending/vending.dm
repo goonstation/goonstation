@@ -2794,7 +2794,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 	icon_fallen = "standard-fallen"
 	pay = 1
 	acceptcard = 1
-	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, "accent_void")
+	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
 	slogan_list = list("Hello!",
 	"Please state the item you wish to purchase.",
 	"Many goods at reasonable prices.",
