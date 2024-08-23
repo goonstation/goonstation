@@ -1233,6 +1233,11 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	canshoot(mob/user)
 		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost && !src.clogged
 
+	shoot_point_blank(atom/target, mob/user, second_shot) //point blanking this doesn't really make sense
+		if (target == user)
+			return
+		shoot(target, get_turf(user), user, 0, 0)
+
 	process_ammo(mob/user)
 		if (!src.canshoot(user))
 			boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
