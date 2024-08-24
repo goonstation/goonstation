@@ -1,4 +1,10 @@
 
+(t)sat aug 24 24
+(u)KakoLookiyam
+(p)20112
+(e)🆕|C-Feature
+(*)Mechcomp cabinets are now capable with of equipping internal gravitons.
+(+)Mechcomp cabinets can now attach internal graviton components. When attached, a graviton is only able to fling its enclosing cabinet itself a shorter distance than a floor mounted graviton.
 (t)fri aug 23 24
 (u)Klushy225
 (p)20388
