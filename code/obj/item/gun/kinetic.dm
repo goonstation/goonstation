@@ -103,9 +103,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
-		boutput(user, SPAN_ALERT("*click* *click*"))
-		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+		if (src.click_sound)
+			boutput(user, SPAN_ALERT(src.click_msg))
+			if (!src.silenced)
+				playsound(user, click_sound, 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -1584,7 +1585,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "blowgun"
-	item_state = "cane-f"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "c_tube"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
 	ammo_cats = list(AMMO_DART_ALL)
@@ -1594,12 +1596,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/blow_darts/single
+	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
+	click_sound = null
+
+	tranq
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/blow_dart)
+		set_current_projectile(src.ammo.ammo_type)
 		..()
 
 //0.41
@@ -2911,7 +2917,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "\improper Gwydion tranquilizer pistol"
+	name = "\improper Ceridwen tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"

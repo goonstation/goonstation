@@ -99,29 +99,22 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/toggleable/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
-					H.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					H.meson(src)
 				else
-					H.vision.set_scan(0)
-					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					H.unmeson(src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
 		if(!isliving(user))
 			return
 		if (slot == SLOT_GLASSES && on)
-			user.vision.set_scan(1)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+			user.meson(src)
 
 	unequipped(var/mob/living/user)
 		..()
 		if(!isliving(user))
 			return
-		user.vision.set_scan(0)
-
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+		user.unmeson(src)
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
@@ -471,6 +464,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					if (S.is_inspector)
 						newscuttle.make_inspector()
 			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			S.drop_item()
 			qdel(S)
 			qdel(src)
 		else

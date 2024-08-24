@@ -58,7 +58,11 @@ TYPEINFO(/obj/submachine/chef_sink)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
 					GRAB.affecting.lastgasp() // --BLUH
-
+		else if (istype(W, /obj/item/gun/sprayer))
+			var/obj/item/gun/sprayer/sprayer = W
+			sprayer.clogged = FALSE
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+			boutput(user, SPAN_NOTICE("You clean out the clogged nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else
@@ -86,12 +90,12 @@ TYPEINFO(/obj/submachine/chef_sink)
 			if (H.gloves)
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message(SPAN_NOTICE("[user] cleans [his_or_her(user)] gloves."))
-				if (H.sims)
+				if (H.sims?.getValue("Hygiene"))
 					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				if(H.sims)
+				if(H.sims?.getValue("Hygiene"))
 					if (H.sims.getValue("Hygiene") >= SIMS_HYGIENE_THRESHOLD_MESSY)
 						user.visible_message(SPAN_NOTICE("[user] starts washing [his_or_her(user)] hands."))
 						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
@@ -698,10 +702,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread(src)
 			src.recipes += new /datum/cookingrecipe/oven/cinnamonbun(src)
 			src.recipes += new /datum/cookingrecipe/oven/fairybread(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_apple(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_blueb(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_weed(src)
+			src.recipes += new /datum/cookingrecipe/oven/danish_cheese(src)
 			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
 

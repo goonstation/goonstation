@@ -618,7 +618,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		return
 
 	verb/eject_occupant(var/mob/user)
-		if (!isalive(user) || iswraith(user) || isintangible(user))
+		if (!src.can_eject_occupant(user))
 			return
 		src.go_out()
 		add_fingerprint(user)

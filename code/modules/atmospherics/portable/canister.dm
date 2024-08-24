@@ -194,6 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
 		air_contents = null
+		disconnect()
 
 		if (src.det)
 			processing_items.Remove(src.det)
@@ -306,7 +307,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	src.UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/canister/return_air()
+/obj/machinery/portable_atmospherics/canister/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/canister/blob_act(var/power)

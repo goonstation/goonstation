@@ -27,7 +27,7 @@
 		parent.dispose()
 		parent = null
 
-/obj/machinery/atmospherics/pipe/return_air()
+/obj/machinery/atmospherics/pipe/return_air(direct = FALSE)
 	if(!parent)
 		parent = new /datum/pipeline()
 		parent.build_pipeline(src)

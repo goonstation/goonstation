@@ -313,12 +313,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			return
 		. = ..()
 
-/obj/item/clothing/head/devil
-	name = "devil horns"
-	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
-	icon_state = "devil"
-	item_state = "devil"
-
 // Donk clothes
 
 /obj/item/clothing/head/helmet/space/donk
@@ -480,6 +474,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+	fingertip_color = "#f3f3f3"
 
 	setupProperties()
 		..()

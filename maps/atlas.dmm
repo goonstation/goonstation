@@ -4417,14 +4417,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/turretid{
-	pixel_x = 24
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = 24
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
@@ -15382,6 +15382,15 @@
 	dir = 1
 	},
 /area/station/mining/refinery)
+"ghZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "gmG" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -16469,8 +16478,8 @@
 /area/station/maintenance/southwest)
 "jUF" = (
 /obj/machinery/firealarm/north,
-/obj/storage/cart/medcart,
 /obj/item/reagent_containers/syringe/haloperidol,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -20686,17 +20695,6 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"vUS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "vXs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -20839,9 +20837,7 @@
 	},
 /area/station/hallway/primary/north)
 "wlm" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
 "wnp" = (
@@ -75045,7 +75041,7 @@ afE
 gTj
 upB
 puj
-vUS
+ghZ
 plm
 ajI
 nER

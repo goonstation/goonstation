@@ -119,11 +119,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		. = list()
 		if (src.armed)
 			. += "It is currently counting down to detonation. Ohhhh shit."
-			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
+			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authentication disk has been inserted." : ""]"
 		else
 			. += "It is not armed. That's a relief."
 			if (src.disk && istype(src.disk))
-				. += "The authenticaion disk has been inserted."
+				. += "The authentication disk has been inserted."
 
 		if (!src.anchored)
 			. += "The floor bolts are unsecure. The bomb can be moved around."

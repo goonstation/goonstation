@@ -8,7 +8,7 @@
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
-	var/datum/mind/mind
+	var/tmp/datum/mind/mind
 	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
@@ -2926,7 +2926,7 @@
 
 /mob/proc/is_hulk()
 	. = FALSE
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
+	if (src.bioHolder && src.bioHolder.HasAnyEffect(list("hulk", "hulk_hidden")))
 		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
@@ -3376,3 +3376,14 @@
 	src.delStatus("knockdown")
 	src.delStatus("unconscious")
 	src.delStatus("paralysis")
+
+/mob/proc/has_genetics()
+	return FALSE
+
+/mob/proc/get_genetic_traits()
+	return list(0,0,0)
+
+/mob/proc/get_fingertip_color()
+	if (src.bioHolder?.mobAppearance)
+		return src.bioHolder.mobAppearance.s_tone
+	return "#042069"

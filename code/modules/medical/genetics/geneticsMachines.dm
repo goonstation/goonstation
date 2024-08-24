@@ -92,11 +92,14 @@
 		src.saved_chromosomes += C
 
 /obj/machinery/computer/genetics/proc/bioEffect_sanity_check(datum/bioEffect/E, occupant_check = 1)
-	var/mob/living/carbon/human/H = src.get_scan_subject()
+	var/mob/living/H = src.get_scan_subject()
 	. = 0
 	if(occupant_check)
 		if (!istype(H))
 			scanner_alert(usr, "Invalid subject.", error = TRUE)
+			return 1
+		else if(ismobcritter(H) && !equipment_available("critter_scan"))
+			scanner_alert(usr, "Invalid subject.  Unable to scan non-humanoid.", error = TRUE)
 			return 1
 		else if(!H.bioHolder)
 			scanner_alert(usr, "Invalid genetic structure.", error = TRUE)
@@ -129,10 +132,13 @@
 		if("analyser")
 			if(genResearch.isResearched(/datum/geneticsResearchEntry/checker) && world.time >= src.equipment[GENETICS_ANALYZER])
 				return 1
+		if("critter_scan")
+			if(genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
+				return 1
 		if("emitter")
 			if(!iscarbon(subject))
 				return 0
-			if(genResearch.isResearched(/datum/geneticsResearchEntry/rademitter) && world.time >= src.equipment[GENETICS_EMITTERS])
+			if(world.time >= src.equipment[GENETICS_EMITTERS])
 				return 1
 		if("precision_emitter")
 			if(!iscarbon(subject) || !E || !GBE || GBE.research_level < EFFECT_RESEARCH_DONE)
@@ -1051,16 +1057,18 @@
 		"label" = "Injectors",
 		"cooldown" = src.equipment[GENETICS_INJECTORS] - world.time,
 	))
+
+	.["equipmentCooldown"] += list(list(
+		"label" = "Emitter",
+		"cooldown" = src.equipment[GENETICS_EMITTERS] - world.time,
+	))
+
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/checker))
 		.["equipmentCooldown"] += list(list(
 			"label" = "Analyzer",
 			"cooldown" = src.equipment[GENETICS_ANALYZER] - world.time,
 		))
-	if (genResearch.isResearched(/datum/geneticsResearchEntry/rademitter))
-		.["equipmentCooldown"] += list(list(
-			"label" = "Emitter",
-			"cooldown" = src.equipment[GENETICS_EMITTERS] - world.time,
-		))
+
 	if (genResearch.isResearched(/datum/geneticsResearchEntry/reclaimer))
 		.["equipmentCooldown"] += list(list(
 			"label" = "Reclaimer",

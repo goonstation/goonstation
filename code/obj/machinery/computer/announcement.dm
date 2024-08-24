@@ -254,6 +254,7 @@
 /obj/machinery/computer/announcement/syndicate
 	name = "Syndicate Announcement computer"
 	theme = "syndicate"
+	icon_state = "announcementsyndie"
 	req_access = list(access_syndicate_shuttle)
 
 	commander

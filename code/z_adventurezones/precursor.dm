@@ -895,7 +895,6 @@
 	interesting = "Scans detect: BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER *** ELECTROMAGNETIC HAZARD"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
-	event_handler_flags = USE_PROXIMITY
 	anchored = ANCHORED
 	density = 1
 	opacity = 0
@@ -909,8 +908,9 @@
 		light.attach(src)
 		light.set_color(0.8,0.9,1)
 		light.set_brightness(0.9)
+		src.AddComponent(/datum/component/proximity)
 
-	HasProximity(atom/movable/AM as mob|obj)
+	EnteredProximity(atom/movable/AM)
 		if(iscarbon(AM) && prob(20))
 			var/mob/living/carbon/user = AM
 			src.shock(user)

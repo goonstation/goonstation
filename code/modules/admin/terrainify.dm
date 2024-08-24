@@ -24,6 +24,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	var/overlay_delay
 	var/datum/gas_mixture/default_air
 	var/allows_vehicles = FALSE
+	var/list/turf/preconvert_turfs = list()
 
 	New()
 		..()
@@ -250,6 +251,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 				station_repair.ambient_light = new /image/ambient
 				station_repair.ambient_light.color = src.ambient_color
 
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			station_repair.preconvert_turfs += S
 
 		if(current_state >= GAME_STATE_PLAYING && params["Re-Entry"])
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
@@ -549,6 +552,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into the Outpost Theta... CO2 + Ice. Ice Spiders, Seal Pups, Brullbar, and the occasional Yeti."
 	additional_options = list("Snowing"=list("Yes","No","Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Pitch Black"=FALSE)
+	ambient_color = "#222222"
 
 	convert_station_level(params, mob/user)
 		if(..())
@@ -590,11 +594,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 				space += S
 			convert_turfs(space, params)
 			for (var/turf/S in space)
-				if(snow)
-					if(snow == "Yes")
-						S.AddOverlays(station_repair.weather_img, "rain")
-					else
-						new station_repair.weather_effect(S)
 				if(station_repair.ambient_light)
 					ambient_value = lerp(10,50,min(1-S.x/300,0.8))
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
@@ -1065,3 +1064,63 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 #undef TERRAINIFY_VEHICLE_FABS
 #undef TERRAINIFY_VEHICLE_CARS
+
+
+client/proc/unterrainify()
+	set name = "Unterrainify"
+	set desc = "Get off the planet"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	logTheThing(LOG_ADMIN, src, "began to convert all terrain tiles into space.")
+	message_admins("[key_name(src)] began to convert all terrain tiles into space.")
+
+	var/list/types_to_remove = list(/obj/stone, /obj/fakeobject/smallrocks, /obj/shrub, /obj/tree, /obj/machinery/plantpot/bareplant, /obj/decal/cleanable, /mob/living/critter)
+
+	var/response = tgui_alert(src, "Do you want to shake and cover the ground?", "Enter Atmosphere?", list("Yes","No"))
+
+	SPAWN(0)
+		station_repair.station_generator = null
+
+		if(response == "Yes")
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			var/list/parallax_layers = list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry)
+			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, parallax_layers, 2 SECONDS)
+
+			for (var/client/C in clients)
+				var/mob/player_mob = C.mob
+				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
+					SPAWN(0)
+						shake_camera(player_mob, 20 SECONDS, rand(20,40))
+					player_mob.changeStatus("knockdown", 2 SECONDS)
+
+		for(var/turf/T in station_repair.preconvert_turfs)
+			var/turf/orig = locate(T.x, T.y, T.z)
+			orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+
+			if(station_repair.weather_effect)
+				var/obj/effects/E = locate(station_repair.weather_effect) in T
+				qdel(E)
+
+			for(var/type in types_to_remove)
+				var/atom/movable/AM = locate(type) in T
+				if(ismob(AM))
+					var/mob/M = AM
+					if(M.client)
+						continue
+					else
+						qdel(AM)
+				else
+					qdel(AM)
+
+			LAGCHECK(LAG_REALTIME)
+
+		var/list/turf/preconvert_turfs = station_repair.preconvert_turfs
+		station_repair = new
+		station_repair.preconvert_turfs = preconvert_turfs
+
+		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+
+		message_admins("Finished returning the station to space!")
+
