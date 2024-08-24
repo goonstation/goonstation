@@ -411,6 +411,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Bangs: Mysterious"
 				id = "mysterybangs"
 				random_allowed = FALSE
+			vbangs
+				name = "V Bangs"
+				id = "v_bangs"
+				random_allowed = FALSE
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"
