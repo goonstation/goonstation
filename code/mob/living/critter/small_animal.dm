@@ -2047,9 +2047,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		src.event_handler_flags |= USE_PROXIMITY
 		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
 		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
+		src.AddComponent(/datum/component/proximity)
 
 	setup_hands()
 		..()
@@ -2149,7 +2149,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
-	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
+	EnteredProximity(atom/movable/AM) //the part where it bites you if you pass by
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 			if (!sting.disabled && sting.cooldowncheck())
