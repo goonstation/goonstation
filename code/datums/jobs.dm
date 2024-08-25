@@ -25,7 +25,7 @@
 	var/cant_spawn_as_rev = FALSE // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = FALSE // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = FALSE
-	var/mentor_only = FALSE
+	var/trusted_only = FALSE // Do we require mentor/HoS status to be played
 	var/requires_supervisor_job = null //! String name of another job. The current job will only be available if the supervisor job is filled.
 	var/needs_college = 0
 	var/assigned = 0
@@ -2131,7 +2131,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
-	mentor_only = TRUE
+	trusted_only = TRUE
 	allow_traitors = FALSE
 	slot_ears = list()
 	slot_card = null
@@ -2147,7 +2147,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
-	mentor_only = FALSE
+	trusted_only = FALSE
 	limit = 2
 
 	special_setup(var/mob/living/carbon/human/M)
