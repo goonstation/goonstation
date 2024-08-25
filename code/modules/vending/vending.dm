@@ -1311,6 +1311,50 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
 
+TYPEINFO(/obj/machinery/vending/chemistry)
+	mats = 10
+
+/obj/machinery/vending/chemistry
+	name = "IgniChem"
+	desc = "An ID-selective dispenser for chemical equippment and intermediates"
+	icon_state = "ignichem"
+	icon_panel = "standard-panel"
+	icon_deny = "ignichem-deny"
+	req_access = list(access_chemistry)
+	acceptcard = 0
+	light_r = 0.9
+	light_g = 0.6
+	light_b = 0.9
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper/mechanical, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/large, 10)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/beakerbox, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser/fractional, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bunsen_burner, 2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/box/beaker_lids, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/oil, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/phenol, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/acetone, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/ammonia, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/diethylamine, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/acid, 3)
+		product_list += new/datum/data/vending_product(/obj/item/device/reagentscanner, 5)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cyanide, amount=rand(1, 2), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pill_bottle/cyberpunk, amount= 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pill_bottle/bathsalts, amount=rand(0, 2), hidden=1)
+
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		return
+
+
 TYPEINFO(/obj/machinery/vending/medical)
 	mats = 10
 
