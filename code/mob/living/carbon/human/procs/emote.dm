@@ -303,12 +303,12 @@
 					G.throw_at(target,5,1)
 					src.visible_message("<b>[src]</B> farts out a...glowstick?")
 
-			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug","fingerguns")
+			if ("salute","saluteto","bow","hug","wave","waveto","blowkiss","sidehug","fingerguns","headpat")
 				// visible targeted emotes
 				if (!src.restrained())
 					var/M = null
 					var/range = 5
-					if (act == "hug" || act == "sidehug")
+					if (act == "hug" || act == "sidehug" || act == "headpat")
 						range = 1
 					if (param)
 						for (var/atom/movable/A in view(range, src))
@@ -330,6 +330,8 @@
 									action_phrase = "to whom you'll blow a [prob(1) ? "smooch" : "kiss"]"
 								if("fingerguns")
 									action_phrase = "point finger guns at"
+								if("headpat")
+									action_phrase = "pat the head of"
 							M = tgui_input_list(src, "Pick something to [action_phrase]!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && (range > 1 && !IN_RANGE(get_turf(src), get_turf(M), range)) || (range == 1 && !in_interact_range(src, M)) )
 								var/inaction_phrase = "emote upon"
@@ -344,6 +346,8 @@
 										inaction_phrase = "waving"
 									if("blowkiss")
 										inaction_phrase = "[prob(1) ? "smooching" : "kissing"]"
+									if("headpat")
+										inaction_phrase = "headpatting"
 								boutput(src, SPAN_EMOTE("<B>[M]</B> is not in [inaction_phrase] distance!"))
 								return
 
@@ -370,6 +374,34 @@
 							if ("fingerguns")
 								message = "<B>[src]</B> points finger guns at [M]!"
 								maptext_out = "<I>points finger guns at [M]!</I>"
+							if ("headpat")
+								var/mob/living/carbon/human/H = M
+								if (istype(H))
+									var/obj/item/clothing/head/sunhat/hat = H.head
+									if(istype(hat) && hat.uses)
+										src.visible_message(SPAN_ALERT("[src] tries to pat [H] on the head, but gets shocked by [H]'s hat!"))
+										elecflash(H)
+
+										hat.uses = max(0, hat.uses - 1)
+										if (hat.uses < 1)
+											H.head.icon_state = splittext(hat.icon_state,"-")[1]
+											H.head.item_state = splittext(hat.item_state,"-")[1]
+											H.update_clothing()
+
+										if (hat.uses <= 0)
+											H.show_text("The sunhat is no longer electrically charged.", "red")
+										else
+											H.show_text("The stunhat has [hat.uses] charges left!", "red")
+
+
+										src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
+										src.stuttering = max(target.stuttering,30)
+									else
+										message = "<B>[src]</B> [act]s [M]."
+										maptext_out = "<I>[act]s [M]</I>"
+								else
+									message = "<B>[src]</B> [act]s [M]."
+									maptext_out = "<I>[act]s [M]</I>"
 							else
 								message = "<B>[src]</B> [act]s [M]."
 								maptext_out = "<I>[act]s [M]</I>"
@@ -547,7 +579,7 @@
 				burp, fart, monologue, contemplate, custom")
 
 			if ("listtarget")
-				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns")
+				src.show_text("salute, bow, hug, wave, glare, stare, look, nod, flipoff, doubleflip, shakefist, handshake, daps, slap, boggle, highfive, fingerguns, headpat")
 			if ("list")
 				src.emote("listbasic")
 				src.emote("listtarget")

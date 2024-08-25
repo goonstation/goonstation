@@ -140,7 +140,7 @@
 				if (Z.zone_sel && Z.zone_sel.selecting == "head")
 					var/obj/item/clothing/head/sunhat/hat = X.head
 					if(istype(hat) && hat.uses)
-						src.visible_message(SPAN_ALERT("[src] tries to pat [target] on the head, but gets shocked by [target]'s hat!"))
+						src.visible_message(SPAN_ALERT("[src] tries to tap [target] on the shoulder, but gets shocked by [target]'s hat!"))
 						elecflash(target)
 
 						hat.uses = max(0, hat.uses - 1)
@@ -158,7 +158,7 @@
 						src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
 						src.stuttering = max(target.stuttering,30)
 					else
-						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
+						src.visible_message(SPAN_NOTICE("[src] taps [target] on the shoulder, trying to grab [his_or_her(target)] attention!"))
 					return
 
 			if (ismobcritter(target))
