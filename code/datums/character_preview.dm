@@ -146,7 +146,7 @@
 			preview_mob.set_mutantrace(MR)
 		preview_mob.mutantrace.AppearanceSetter(preview_mob, "preview")
 		if (preview_mob.mutantrace.special_head)
-			preview_mob.organHolder?.head?.MakeMutantHead(preview_mob.mutantrace.special_head, preview_mob.mutantrace.mutant_folder, preview_mob.mutantrace.special_head_state, skip_update = TRUE)
+			preview_mob.organHolder?.head?.MakeMutantHead(preview_mob.mutantrace.special_head, preview_mob.mutantrace.mutant_folder, preview_mob.mutantrace.special_head_state)
 		preview_mob.update_colorful_parts()
 		preview_mob.organHolder.left_eye?.update_color(AH, "L")
 		preview_mob.organHolder.right_eye?.update_color(AH, "R")
