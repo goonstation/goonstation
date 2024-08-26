@@ -11742,6 +11742,10 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/landmark/start/job/head_of_security,
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 23
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
 	},
@@ -12226,10 +12230,6 @@
 	},
 /obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 27
-	},
-/obj/machinery/recharger/wall/sticky{
-	dir = 4;
-	pixel_x = 23
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
