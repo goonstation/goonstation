@@ -2466,6 +2466,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
 /turf/simulated/floor,
 /area/station/security/main)
 "ajC" = (
@@ -2605,10 +2606,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "akg" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon18,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/mule/dropoff,
 /turf/simulated/floor,
-/area/station/hallway/primary/north)
+/area/station/security/equipment)
 "akh" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -3426,12 +3429,13 @@
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "anY" = (
-/obj/machinery/navbeacon/mule/security_north/east,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon/mule/security_north/east,
+/obj/decal/mule/beacon,
 /turf/simulated/floor,
-/area/station/security/main)
+/area/station/security/equipment)
 "anZ" = (
 /obj/machinery/computer/teleporter,
 /turf/simulated/floor/purple,
@@ -20386,6 +20390,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon18,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "uPd" = (
@@ -73357,7 +73362,7 @@ aez
 agG
 rQw
 qnY
-eqB
+anY
 avu
 alp
 alr
@@ -73659,7 +73664,7 @@ aez
 amq
 qnY
 qnY
-eqB
+akg
 avu
 alr
 alr
@@ -75173,7 +75178,7 @@ xvJ
 akC
 kpf
 hiF
-anY
+hiF
 aHI
 ahl
 ary
@@ -76078,7 +76083,7 @@ ahU
 uMR
 akD
 alX
-akg
+aat
 aat
 aat
 aat
