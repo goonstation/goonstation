@@ -27,7 +27,7 @@
 
 	if (ismob(suit.loc))
 		var/mob/M = suit.loc
-		if (!isliving(M))
+		if (!ishuman(M))
 			suit.body_parts_covered ^= HEAD
 			suit.over_hair = !suit.over_hair
 		M.set_clothing_icon_dirty()

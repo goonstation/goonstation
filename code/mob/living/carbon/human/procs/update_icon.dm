@@ -591,6 +591,7 @@
 		else
 			ClearSpecificOverlays(TRUE, "eyes_R")
 
+		// Add hoodie alpha mask for showing hair
 		if(hooded)
 			var/image/overlay_mask = image('icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi', "hoodie-mask")
 			overlay_mask.render_target = "*hoody[\ref(src)]"
