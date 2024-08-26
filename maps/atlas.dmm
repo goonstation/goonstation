@@ -2463,6 +2463,9 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "ajC" = (
@@ -3576,6 +3579,12 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/brig,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "aoC" = (
@@ -3590,6 +3599,9 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aoF" = (
@@ -3598,6 +3610,9 @@
 /area/station/hallway/primary/south)
 "aoG" = (
 /obj/machinery/port_a_brig,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -3774,6 +3789,7 @@
 /area/station/engine/engineering)
 "apz" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig/solitary)
 "apB" = (
@@ -6433,6 +6449,12 @@
 "ayU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -10797,6 +10819,7 @@
 /area/station/hangar/main)
 "aPk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aPm" = (
@@ -14011,6 +14034,9 @@
 /area/station/mining/staff_room)
 "cmB" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "cmO" = (
@@ -15979,6 +16005,9 @@
 /obj/machinery/floorflusher/genpop,
 /obj/disposalpipe/trunk/brig{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -18052,6 +18081,9 @@
 /area/station/crew_quarters/kitchen)
 "ogd" = (
 /obj/storage/secure/closet/brig_automatic/genpop,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "ogX" = (
@@ -18392,6 +18424,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
+"phL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "pii" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/activation_button/ignition_switch{
@@ -20112,6 +20151,9 @@
 /area/station/crew_quarters/cafeteria)
 "uvf" = (
 /obj/disposalpipe/junction/left/east,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "uyb" = (
@@ -20647,6 +20689,17 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
+"vCE" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/brig)
 "vCI" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "hot loop bypass valve"
@@ -21474,6 +21527,12 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
+"ybM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig)
 "yeC" = (
 /obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment/bent/east,
@@ -73001,11 +73060,11 @@ avu
 alo
 alr
 ogd
-apx
-apx
-apx
-apx
-cmB
+ybM
+ybM
+ybM
+ybM
+vCE
 afl
 iLG
 jSe
@@ -73307,7 +73366,7 @@ apx
 anD
 cWq
 arL
-cmB
+phL
 afl
 xyg
 ick
