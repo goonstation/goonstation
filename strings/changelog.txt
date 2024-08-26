@@ -1,5 +1,9 @@
 
 (t)mon aug 26 24
+(u)ithebinman
+(p)20420
+(e)|
+(+)Fixed incorrect reagent in Bath Salts recipe - You now require El Diablo Chili instead of Ghost Chili Juice.
 (u)gus
 (p)20311
 (e)🗺|A-Mapping
