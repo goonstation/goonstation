@@ -169,6 +169,29 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/generic/marionette_implant
+	name = "Marionette Implant"
+	item = /obj/item/implanter/marionette
+	cost = 1
+	desc = "Receives data signals and converts them into synaptic impulses, for remote-control puppeting! Packet compatible.<br><br>\
+		The first purchase of this item will be contained in a box that also includes instructions and a remote. Subsequent purchases will only \
+		provide additional implanters."
+	vr_allowed = FALSE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		if (!uplink?.purchase_log[src.type])
+			var/obj/item/storage/box/marionetteimp_kit/MI = new(item.loc, TRUE)
+			// Spief uplinks put the spawned item in the player's hands after this proc,
+			// so we need to account for that and make sure we don't spit the box out onto the ground
+			if (uplink.purchase_flags & UPLINK_SPY_THIEF || uplink.purchase_flags & UPLINK_SPY)
+				SPAWN(0)
+					owner.drop_item(item)
+					MI.storage.add_contents(item)
+					owner.put_in_hand_or_drop(MI)
+			else
+				MI.storage.add_contents(item)
+
 /datum/syndicate_buylist/generic/spen
 	name = "Sleepy Pen"
 	item = /obj/item/pen/sleepypen
@@ -442,6 +465,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A tool which allows you to scan and plant fingerprints."
 	cost = 1
 
+/datum/syndicate_buylist/traitor/blowgun
+	name = "Blowgun"
+	item = /obj/item/storage/briefcase/instruments/blowgun/tranq
+	desc = "A blowgun with a set of 8 knockout darts. \"Cunningly\" disguised as a flute."
+	cost = 4
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 //////////////////////////////////////////////// Objective-specific items //////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/idtracker
@@ -527,7 +557,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = FALSE
 	desc = "2 questionable mixtures of a chameleon projector and a bomb. Scan an object to take on its appearance, arm the bomb, and then explode the face(s) of whoever tries to touch it."
 	br_allowed = TRUE
-	job = list("Clown")
+	job = list("Clown", "Mail Courier")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/sinjector

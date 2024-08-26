@@ -188,7 +188,8 @@
 				message = "<B>[src]</B> [act]s."
 
 		else
-			src.show_text("Unusable emote '[act]'.", "blue")
+			if (voluntary)
+				src.show_text("Unusable emote '[act]'.", "blue")
 			return
 
 	if (message)

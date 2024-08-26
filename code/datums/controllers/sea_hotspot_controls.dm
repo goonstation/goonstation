@@ -828,7 +828,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(last_gen), 50)]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
@@ -873,7 +873,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
-	flags = FPRINT
+	flags = 0 // override FLUID_SUBMERGE and TGUI_INTERACTIVE
 
 	var/mode_toggle = 0
 	var/set_anchor = 1

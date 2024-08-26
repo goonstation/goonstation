@@ -245,7 +245,7 @@ proc/is_weak_rollable_contract(type)
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	color = "#FF0000"
 	force = 15
 	throwforce = 15
@@ -364,7 +364,7 @@ END GUIDE
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	var/uses = 4
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"

@@ -920,6 +920,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 	default_material = "glass"
 
 	New()
+		..()
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -936,11 +937,12 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 				direction = pick(cardinal)
 		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
 		#else
-		I = image('icons/turf/space.dmi', "[rand(1, 25)]")
+		src.underlays += /turf/space::starlight
+		I = mutable_appearance('icons/turf/space.dmi', "[rand(1, 25)]")
+		I.color = /turf/space::space_color
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
-		..()
 
 /turf/simulated/floor/glassblock/transparent/cyan
 	icon_state = "glasstr_cyan"
@@ -956,6 +958,24 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 /turf/simulated/floor/glassblock/transparent/purple
 	icon_state = "glasstr_purple"
+
+/turf/simulated/floor/glassblock/transparent/large
+	icon_state = "glasstr_large_cyan"
+
+/turf/simulated/floor/glassblock/transparent/large/cyan
+	icon_state = "glasstr_large_cyan"
+
+/turf/simulated/floor/glassblock/transparent/large/indigo
+	icon_state = "glasstr_large_indigo"
+
+/turf/simulated/floor/glassblock/transparent/large/red
+	icon_state = "glasstr_large_red"
+
+/turf/simulated/floor/glassblock/transparent/large/grey
+	icon_state = "glasstr_large_grey"
+
+/turf/simulated/floor/glassblock/transparent/large/purple
+	icon_state = "glasstr_large_purple"
 
 /////////////////////////////////////////
 
@@ -1940,7 +1960,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			var/datum/material/M = getMaterial("steel")
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
-		user.unlock_medal("Misclick", 1)
+		user?.unlock_medal("Misclick", 1)
 
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
@@ -2098,6 +2118,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"readster's very own girder",
 				"just a girder",
 				"a gourder",//60
+				"an owl?",
 				"a herd of girders",
 				"an A.D.G.S",
 				"the... thing",
@@ -2108,7 +2129,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				"nice",
 				"the girder egg")
 				msg = insert_girder[min(count+1, insert_girder.len)]
-				if(count >= 69) //nice
+				if(count >= 70) //nice
 					girder_egg = 1
 					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
 				else
@@ -2676,6 +2697,109 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock)
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
+	connect_diagonal = 1
+
+//dont use please
+/turf/simulated/floor/auto/glassblock
+	name = "glass block tiling"
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+	mat_changename = FALSE
+	can_burn = FALSE
+	can_break = FALSE
+	icon_state = "glass-0"
+	mod = "glass-"
+	default_material = "glass"
+	var/static/image/starlight
+
+	New()
+		..()
+		var/image/I
+		#ifdef UNDERWATER_MAP
+		var/sand_icon
+		var/direction
+		switch(rand(1, 3))
+			if(1)
+				sand_icon = "sand_other_texture"
+				direction = pick(alldirs)
+			if(2)
+				sand_icon = "sand_other_texture2"
+				direction = pick(alldirs)
+			if(3)
+				sand_icon = "sand_other_texture3"
+				direction = pick(cardinal)
+		I = image('icons/turf/outdoors.dmi', sand_icon, dir = direction)
+		#else
+		src.underlays += /turf/space::starlight
+		I = mutable_appearance('icons/turf/space.dmi', "[rand(1, 25)]")
+		I.color = /turf/space::space_color
+		#endif
+		I.plane = PLANE_SPACE
+		src.underlays += I
+
+	pry_tile(obj/item/C as obj, mob/user as mob, params)
+		boutput(user, SPAN_ALERT("This is glass flooring, you can't pry this up!"))
+
+	to_plating()
+		return
+
+	break_tile_to_plating()
+		return
+
+	break_tile()
+		return
+
+	// unburnable, otherwise floorbots use steel sheets for repair which doesn't make sense
+	burn_tile()
+		return
+
+	attackby(obj/item/C, mob/user, params)
+		if (istype(C, /obj/item/rods))
+			boutput(user, SPAN_ALERT("You can't reinforce this tile."))
+			return
+		if(istype(C, /obj/item/cable_coil))
+			boutput(user, SPAN_ALERT("You can't put cable over this tile, it would be too exposed."))
+			return
+		..()
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock/grey)
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/grey)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/grey)
+/turf/simulated/floor/auto/glassblock/grey
+	icon = 'icons/turf/glass_floors/grey_glass_floor_auto.dmi'
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock/cyan)
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/cyan)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/cyan)
+/turf/simulated/floor/auto/glassblock/cyan
+	icon = 'icons/turf/glass_floors/cyan_glass_floor_auto.dmi'
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock/indigo)
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/indigo)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/indigo)
+/turf/simulated/floor/auto/glassblock/indigo
+	icon = 'icons/turf/glass_floors/indigo_glass_floor_auto.dmi'
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock/red)
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/red)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/red)
+/turf/simulated/floor/auto/glassblock/red
+	icon = 'icons/turf/glass_floors/red_glass_floor_auto.dmi'
+
+TYPEINFO(/turf/simulated/floor/auto/glassblock/purple)
+TYPEINFO_NEW(/turf/simulated/floor/auto/glassblock/purple)
+	. = ..()
+	connects_to = typecacheof(/turf/simulated/floor/auto/glassblock/purple)
+/turf/simulated/floor/auto/glassblock/purple
+	icon = 'icons/turf/glass_floors/purple_glass_floor_auto.dmi'
+
 
 /turf/unsimulated/floor/pool
 	mat_changename = FALSE

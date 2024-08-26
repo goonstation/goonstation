@@ -24,11 +24,6 @@
 
 	act = lowertext(act)
 
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act, voluntary, param))
-			return
-
 	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
 	var/custom = 0 //Sorry, gotta make this for chat groupings.
@@ -627,7 +622,8 @@
 					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+					if (voluntary)
+						src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 					return
 
 			if ("uguu")
@@ -2263,7 +2259,8 @@
 					message = "<b>[src]</b> woofs!"
 					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
-				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+				if (voluntary)
+					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 
 	showmessage:

@@ -51,6 +51,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/ultravision = 0
 	var/tranquilizer_resistance = 0
 	explosion_resistance = 0
+	var/has_genes = FALSE
 
 	var/list/inhands = list()
 	var/list/healthlist = list()
@@ -156,6 +157,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		for (var/abil in src.add_abilities)
 			if (ispath(abil))
 				abilityHolder.addAbility(abil)
+
+	if(src.bioHolder)
+		src.bioHolder.genetic_stability = 50
 
 	SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 		if (abilityHolder)
@@ -729,29 +733,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			hand_range_attack(target, params)
 			return
 	if (HH.can_attack)
-		if (ismob(target))
-			if (a_intent != INTENT_HELP)
-				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
-
-			switch (a_intent)
-				if (INTENT_HELP)
-					if (can_help)
-						L.help(target, src)
-				if (INTENT_DISARM)
-					if (can_disarm)
-						L.disarm(target, src)
-				if (INTENT_HARM)
-					if (HH.can_attack)
-						L.harm(target, src)
-				if (INTENT_GRAB)
-					if (HH.can_hold_items && can_grab)
-						L.grab(target, src)
-			HH.set_cooldown_overlay()
-			src.lastattacked = target
-
-		else
-			L.attack_hand(target, src)
-			HH.set_cooldown_overlay()
+		L.attack_hand(target, src)
+		HH.set_cooldown_overlay()
 	else
 		boutput(src, SPAN_ALERT("You cannot attack with your [HH.name]!"))
 
@@ -1326,7 +1309,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/is_heat_resistant()
 	if (!get_health_holder("burn"))
 		return TRUE
-	return FALSE
+	return ..()
 
 /mob/living/critter/ex_act(var/severity)
 	..() // Logs.
@@ -1651,6 +1634,23 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 /mob/living/critter/can_hold_two_handed()
 	return TRUE // critters can hold two handed items in one hand
+
+/mob/living/critter/get_genetic_traits()
+	if(has_genes)
+		switch(rand(1,10))
+			if(1)
+				. = list(2,0,0)
+			if(2)
+				. = list(1,1,0)
+			if(3 to 4)
+				. = list(0,2,0)
+			if(5 to 7)
+				. = list(0,1,0)
+			else
+				. = list()
+
+/mob/living/critter/has_genetics()
+	return has_genes
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

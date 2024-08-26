@@ -523,7 +523,7 @@
 	pixel_y = 11
 	},
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "cf" = (
@@ -544,7 +544,7 @@
 /turf/simulated/floor/wood/two,
 /area/prefab/ghost_house)
 "ci" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/fakeobject/skeleton/decomposed_corpse,
 /obj/item/gun/energy/ghost,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)

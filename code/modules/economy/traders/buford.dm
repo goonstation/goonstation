@@ -26,7 +26,8 @@
 	/datum/commodity/trader/buford/groboost,
 	/datum/commodity/trader/buford/fruitful,
 	/datum/commodity/trader/buford/topcrop,
-	/datum/commodity/trader/buford/weedkiller)// 8
+	/datum/commodity/trader/buford/weedkiller,
+	/datum/commodity/trader/buford/methane)
 
 	dialogue_greet = list("Hey man. Got the good shit for sale, yeah.",
 	"Sup brother, what's goin' on. Got the damn fresh shit for you here.",

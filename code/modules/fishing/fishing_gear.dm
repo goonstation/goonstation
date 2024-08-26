@@ -460,7 +460,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "syndie_fishing_rod-inactive"
 	hit_type = DAMAGE_STAB
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	w_class = W_CLASS_NORMAL
 	force = 10
 	throwforce = 5

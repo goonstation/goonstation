@@ -273,7 +273,6 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	flags = FPRINT | TABLEPASS
 	force = 8
 	throw_speed = 1
 	throw_range = 4
@@ -291,7 +290,6 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	icon_open = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	flags = FPRINT | TABLEPASS
 	force = 8
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED

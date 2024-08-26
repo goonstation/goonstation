@@ -1,5 +1,9 @@
 // This file is for premade paper/pamphlet things
 
+//the size of the paper includes the 32px wide bar at the top, so we need to account for that here if we want the image to fit exactly
+#define IMAGE_OFFSET_X 0 //x one kept just in case and because I like symmetry :)
+#define IMAGE_OFFSET_Y 32
+
 /obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
@@ -91,6 +95,13 @@
 /obj/item/paper/cargo_instructions
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
+
+/obj/item/paper/efif_disclaimer
+	name = "'EFIF-1 Operational Disclaimer'"
+	info = {"Congratulations on your new EFIF-1 Construction System!<BR>\n<BR>\n
+	Operational modes and EZ Sheet Loading may be accessed from the "EFIF-1 Construction System" entry in your pod's computer console.<BR>\n<BR>\n
+	Please be aware that non-repair assembly of walls and standard floors may be restricted within your workplace's vicinity for safety reasons.<BR>\n<BR>\n
+	<B>LOAD ONLY STANDARD, NON-REINFORCED NT-SPEC STEEL SHEETS. EFIF-1 IS CALIBRATED FOR NT-SPEC STEEL. EFIF-1 DOES NOT AND SHOULD NOT ACCEPT OTHER METALS.</B>"}
 
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
@@ -641,7 +652,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<tr>
 	<td><b>"Execute" / "Exterminate"</b></td>
 	<td>30 PU</td>
-	<td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+	<td>Turn your Lawbringer™ into your favourite sidearm with these only slightly radioactive blaster rounds!</td>
 	</tr>
 	<tr>
 	<td><b>"Hotshot" / "Incendiary"</b></td>
@@ -659,9 +670,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 	</tr>
 	<tr>
-	<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
+	<td><b>"Bigshot" / "High Power" / "Assault"</b></td>
 	<td>170 PU</td>
-	<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+	<td>You'll be the talk of the station when you bust down a wall with one of these high power assault lasers! May cause small fires and molten metal puddles.</td>
 	</tr>
 	<tr>
 	<td><b>"Clownshot" / "Clown"</b></td>
@@ -688,27 +699,29 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Mushroom Station postcard"
 	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
 	icon_state = "postcard-mushroom"
-	sizex = 1066
-	sizey = 735
+	sizex = 174 + IMAGE_OFFSET_X
+	sizey = 247 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/mushroom_station.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
 
 /obj/item/paper/botany_guide
 	name = "Botany Field Guide"
 	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
 	icon_state = "botany_guide"
-	sizex = 970
-	sizey = 690
+	sizex = 965 + IMAGE_OFFSET_X
+	sizey = 682 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
-		info = "<html><body style='margin:2px'><img src='[resource("images/pocket_guides/botanyguide.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/pocket_guides/botanyguide.png")
 
 /obj/item/paper/ranch_guide
 	name = "Ranch Field Guide"
@@ -716,23 +729,26 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "ranch_guide"
 	sizex = 1100
 	sizey = 800
+	scrollbar = FALSE
 
 	New()
 		..()
 		pixel_x = rand(-8, 8)
 		pixel_y = rand(-8, 8)
+		//ranch guide actually needs to be scaled down, so we just let it do its own styling here
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
 
 /obj/item/paper/siphon_guide
 	name = "Harmonic Siphon Brief"
 	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
 	icon_state = "postcard-owlery"
-	sizex = 1229 //pls
-	sizey = 650
+	sizex = 1192 + IMAGE_OFFSET_X
+	sizey = 600 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 	New()
 		..()
-		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/siphonguide.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/pocket_guides/siphonguide.png")
 
 /obj/item/paper/iou
 	name = "IOU"
@@ -917,13 +933,15 @@ proc/spawn_kitchen_note()
 	icon_state = "businesscard"
 	desc = "A generic looking business card, offering printing services for more business cards."
 
-	sizex = 640
-	sizey = 400
+	sizex = 600 + IMAGE_OFFSET_X
+	sizey = 346 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
 
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+		//note that the margin styling here does not work, I'm just leaving it here to indicate that there is indeed a problem with the margins that someone smarter than me should fix
+		info = PAPER_IMAGE_RENDER("images/arts/business_blank.png")
 
 
 /obj/item/paper/businesscard/banjo
@@ -933,7 +951,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_banjo.png")
 
 
 /obj/item/paper/businesscard/biteylou
@@ -944,7 +962,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_biteylou.png")
 
 
 /obj/item/paper/businesscard/bonktek
@@ -954,17 +972,17 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_bonktek.png")
 
 /obj/item/paper/businesscard/clowntown
 	name = "business card - Clown Town"
-	icon_state = "businesscard"
-	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
-	color = "blue"
+	icon_state = "businesscard-clowntown"
+	desc = "A business card for the Clown Town Autonomous Collective."
+	sizey = 341 + IMAGE_OFFSET_Y
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_clowntown.png")
 
 /obj/item/paper/businesscard/cosmicacres
 	name = "business card - Cosmic Acres"
@@ -973,7 +991,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_cosmicacres.png")
 
 /obj/item/paper/businesscard/ezekian
 	name = "business card - Ezekian Veterinary Clinic"
@@ -983,7 +1001,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_ezekian.png")
 
 /obj/item/paper/businesscard/gragg1
 	name = "business card - Amantes Mini Golf"
@@ -992,7 +1010,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_gragg1.png")
 
 /obj/item/paper/businesscard/gragg2
 	name = "business card - Amantes Rock Shop"
@@ -1001,17 +1019,16 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_gragg2.png")
 
 /obj/item/paper/businesscard/josh
 	name = "business card - Josh"
-	icon_state = "businesscard"
+	icon_state = "businesscard-josh"
 	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-	color = "green"
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_josh.png")
 
 /obj/item/paper/businesscard/lawyers
 	name = "business card - Hogge & Wylde"
@@ -1020,16 +1037,16 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_law.png")
 
 /obj/item/paper/businesscard/hemera_rcd
 	name = "info card - Rapid Construction Device"
-	icon_state = "businesscard-alt"
+	icon_state = "businesscard-hemera"
 	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_RCD.png")
 
 
 /obj/item/paper/businesscard/skulls
@@ -1039,7 +1056,7 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_skulls.png")
 
 /obj/item/paper/businesscard/taxi
 	name = "business card - Old Fortuna Taxi Company"
@@ -1049,17 +1066,48 @@ proc/spawn_kitchen_note()
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_taxi.png")
 
 /obj/item/paper/businesscard/vurdulak
 	name = "business card - Emporium Vurdulak"
-	icon_state = "businesscard"
+	icon_state = "businesscard-vurdulak"
 	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-	color = "purple"
 
 	New()
 		..()
-		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+		info = PAPER_IMAGE_RENDER("images/arts/business_vurdulak.png")
+
+/obj/item/paper/businesscard/seneca
+	name = "business card - Seneca Falls"
+	desc = "A dog-eared blue and gold business card from a staff recruitment agency."
+	icon_state = "businesscard-seneca"
+	//slightly smaller because a staffie left it in their pocket and it shrunk in the wash and also cog can't get the original resolution right now
+	sizex = 408 + IMAGE_OFFSET_X
+	sizey = 233 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_seneca.png")
+
+/obj/item/paper/businesscard/cans
+	name = "business card - Dented Cans"
+	desc = "A dodgy looking flyer for what you hope is a scrap metal business."
+	sizey = 345 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
+
+/obj/item/paper/businesscard/mabinogi
+	name = "business card - Mabinogi"
+	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
+	icon_state = "businesscard-mabinogi"
+	sizey = 343 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
+
 
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
@@ -1217,4 +1265,170 @@ proc/spawn_kitchen_note()
 	melting holes in the floor because you tried to grab a
 	handle with the same hand that holds your beloved
 	napalm-phlogiston-thermite """hell mix."""
+	"}
+
+/obj/item/paper/watchful_eye
+	name = "MEMO: Deployment Notice"
+	icon_state = "paper_caution_bloody"
+	info ={"
+	TO: WATCHFUL-EYE SENSOR ARRAY MAINTENANCE <br>
+	FROM: OUTPOST OMICRON, NANOTRASEN-THINKTRONIC JOINT PROJECT <br>
+	SUBJECT: SCHEDULED MAINTAINENCE <br>
+	MESSAGE: <br>
+	Reports show that one of the satellites in the array is acting up.
+	The eye clusters there are allegedly behaving oddly, reporting
+	false events, and there are rumours that someone has recalibrated
+	them to track individuals instead of Typhon. Please investigate the
+	source of the anomalous readings and let us know whether to decommission
+	that satellite. The previous team didn't return, so proceed with caution.
+	<br>
+
+	We can still operate the array with only 15 out of the 30 satellites,
+	due to safety (redundancy) policy. Still, we'd rather keep as many
+	satellites in operation as we can. If the problem can be repaired, do so.
+
+	<br> <br>
+	Signed, <br>
+	The office of Commodore Roland Yee
+	"}
+
+/obj/item/paper/watchful_eye/rev
+	name = "Plan of attack."
+	icon_state = "paper_singed"
+	info ={"
+	Steps: <br>
+	1. assume control of eye sat 13. murder optional but probably required. implant <br>
+	the maintainence crew tooo so we can ask them how it works.<br>
+	2. hack the sensors to track non revs. figure it out when we get there with maint crew.<br>
+	3. await further instuctions <br> <br>
+
+	PS: turns out the eyes are ACTUAL eyes. Like weird space eyes?? no one told us that!!<br>
+	How do you hack an eye?? <br> <br>
+
+	PSS: we hacked the eye. hell yeah. okay technically we just hacked the satellite and <br>
+	made the eye point at certain things but that's good enough for me. management can <br>
+	do it themselves if they want it done properly. Fight me.<br>
+	"}
+
+/obj/item/paper/marionette_implant_readme
+	name = "marionette implant readme"
+	icon_state = "paper"
+	info ={"
+	<i>Once you're done reading these instructions, you may activate the provided self-destruct function by using them in your hand.</i>
+
+	<h3>Summary</h3>
+	<p>Congratulations on your purchase of our proprietary synaptic marionette implant!
+	With these simple instructions, you'll be having the competition dancing to your tune in no time.</p>
+
+	<h3>Control Remote</h3>
+	<p>You should have received a control remote for easy convenience of using this implant.
+	Using it will bring up a convenient interface capable of sending and receiving data from any linked implants.
+	<u>You must use the implanter on the remote (or vice-versa) to link the two together.</u></p>
+
+	<p>Once implanted into a target, simply use the remote to your heart's content! There is a short cooldown period between activations.</p>
+
+	<p>The remote is programmed to interpret response signals sent by activated implants. If the activation triggered an effect successfully, the
+	remote will bloop; if it failed -- whether due to the implantee being dead or the conditions for the effect not being met -- then the remote will
+	rumble. Only the person holding the remote (hopefully you) and anyone sharing a space with them can hear these bloops and grumbles,
+	although the button presses that come from actually using it are audible to anyone within a few tiles!</p>
+
+	<p>When using a remote, the implant's passkey is not required. You don't need this value unless you plan to use packet control, detailed below.</p>
+
+	<h3>Heat</h3>
+	<p>Be wary that <u>each activation of an implant will cause heat buildup that may destroy it.</u> The components are delicate and are not built for
+	repeated short-term stress. Heat will dissipate slowly over time. Heat will build up upon activation even if the conditions for the provided
+	action are not met.</p>
+
+	<h3>Packets</h3>
+	<p>The provided remote should allow for easy and convenient use of any number of marionette implants. For power users, however, the implants are
+	<b>fully compatible with wireless packets.</b> The implanter should list the frequency and network address of the contained implant,
+	as well as a unique <b>passkey</b> that must be provided in the signal under the <code>passkey</code> parameter to authorize most signals.</p>
+
+	<p>Packet functions are as follows. Commands marked with an asterisk function in dead bodies, so long as they're still fresh.</p>
+	<ul>
+	<li><b>ping</b> - Prompts the implant to send a signal containing information about its status. Passkey not required.
+	<li><b>say</b> or <b>speak</b> - The implantee will say a provided phrase out loud, as provided in the <code>data</code> field. Max 45 characters.</li>
+	<li><b>emote</b> - As <b>say</b>, but with an emote instead. Many emotes can't be replicated with this function, including but not limited to deathgasps,
+	fainting, and tripping.</li>
+	<li><b>move, step,</b> or <b>bump</b>* - The implantee will move one tile, with direction provided in the <code>data</code> field.
+	These must be cardinals. You can use the full word, or just an abbreviation: <code>EAST</code> and <code>E</code> both work, for instance. Notably,
+	this command will function even if the implantee is dead, as long as they haven't decomposed.</li>
+	<li><b>shock</b> or <b>zap</b> - Shocks the implantee, disorienting them and draining stamina. This generates high heat.</li>
+	<li><b>drop</b> or <b>release</b> - The implantee will release a held item from their hands.
+	<li><b>use</b> or <b>activate</b> - The implantee will activate any item held in their hands.
+	</ul>
+	<p>To reiterate: when using packets to control an implant, you <b>must</b> provide the implant's unique passkey with the <code>passkey</code>
+	parameter. An implant's passkey can be found by examining the implanter it comes in; make sure you write it down before using it, because there's
+	no way to retrieve it once the implant is applied.</p>
+
+	<p>Each time the implant is triggered, it will send a signal with the <code>activate</code> command to the device that activated it. If the activation was a success,
+	the <code>stack</code> parameter will be empty; on a failure, it will provide an error code, detailed below.</p>
+
+	<h4>Error Codes</h4>
+	<ul>
+	<li><code>TARG_DEAD</code> means that the implantee is deceased.</li>
+	<li><code>TARG_NULL</code> means that the implant isn't inside a creature.</li>
+	<li><code>INVALID</code> means that the command is invalid, or that the conditions for triggering the provided command were not met.</li>
+	<li><code>BADPASS</code> means that the provided passkey is incorrect.</li>
+	</ul></p>
+	"}
+
+	attack_self(mob/user)
+		var/choice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Read", "Self-Destruct"))
+		if (choice == "Read")
+			src.examine(user)
+		else
+			var/turf/T = get_turf(src)
+			new /obj/effect/supplyexplosion (T)
+			playsound(T, 'sound/effects/ExplosionFirey.ogg', 50, TRUE)
+			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
+			qdel(src)
+
+/obj/item/paper/xg_tapes
+	name = "XIANG|GIESEL Onboarding Course"
+	desc = "A cover sheet meant to accompany a set of corporate training materials."
+	icon_state = "paper_burned"
+	sizex = 718 + IMAGE_OFFSET_X
+	sizey = 1023 + IMAGE_OFFSET_Y
+	scrollbar = FALSE
+
+	New()
+		..()
+		pixel_x = rand(-8, 8)
+		pixel_y = rand(-8, 8)
+		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
+
+#undef IMAGE_OFFSET_X
+#undef IMAGE_OFFSET_Y
+
+/obj/item/paper/wanderpoem
+	name = "A freshly written poem"
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "paper-red"
+	info = {"
+	<span style="color:red;font-family:Lucida Handwriting;">
+	<p> Winter arrived. <p> <br>
+	<p>Winter arrived years ago, <p> <br>
+	<p>its frost creeping into that well churned soil. <p> <br>
+	<p>My world grew silent as the crystalline cold silenced the birds, <p> <br>
+	<p>made fallow the fields. <p> <br>
+	<p>Is winter not what one would wish for when aggrieved by that summer of sweltering hysteria. <p> <br>
+	<p>Those that bound me to then had wilted into the soil, their flowers turning to drifting dust. <p> <br>
+	<p>The fields of chance further grew only that which could harm me, <p> <br>
+	<p>the cacophonous cries surrounding served only to create doubt where none could be left. <p> <br>
+	<p>Quietus came and offered its hand to me, <p> <br>
+	<p>I took it. <p> <br> <br>
+
+	<p>Its hand froze all in perfect peace, <p> <br>
+	<p>I looked out into a world of pure white. <p> <br>
+	<p>In contradiction, I embraced this death with one hand, <p> <br>
+	<p>yet could not tear another from the only warmth that remained. <p> <br>
+	<p>That dithering flame wandered among the kindling I had set for it, <p> <br>
+	<p>it leaped to and fro from precious branch to branch. <p> <br>
+	<p>I came to understand more of myself then, <p> <br>
+	<p>I understood that this part of myself could not be excised. <p> <br>
+	<p>Peace was more than an end, <p> <br>
+	<p>more than the winter of a soul. <p> <br>
+	<p>Spring came, <p> <br>
+	<p>spring came at last. <p> <br>
 	"}

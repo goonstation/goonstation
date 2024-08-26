@@ -25,7 +25,6 @@
 			P.rotateDirection(180 + 8*i)
 			P.launch()
 
-
 /datum/projectile/bullet/homing/glatisant_submuntitions
 	name = "\improper Glatisant submuntition seeker"
 	window_pass = 0
@@ -47,6 +46,10 @@
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
 		explosion_new(null, get_turf(hit), 16)
+
+	is_valid_target(mob/M, obj/projectile/P)
+		. = ..()
+		return . && isliving(M) && !isintangible(M)
 
 //much of this shamelessly copy-pasted from the pod-seeker
 /obj/item/gun/kinetic/glatisant
@@ -264,7 +267,7 @@
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
@@ -568,7 +571,7 @@
 	name = "Scroll of Enchantment"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -627,7 +630,6 @@
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "voting_box"
 	density = 1
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
@@ -735,7 +737,7 @@ TYPEINFO(/obj/item/device/geiger)
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY

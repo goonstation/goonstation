@@ -5,7 +5,7 @@
 	var/obj/item/device/radio/electropack/part2 = null
 	status = 0
 	w_class = W_CLASS_HUGE
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/assembly/shock_kit/New(atom/newLoc, obj/item/clothing/head/helmet/helmet, obj/item/device/radio/electropack/electropack)
 	..()

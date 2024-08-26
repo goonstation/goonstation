@@ -25,7 +25,6 @@
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
-	path_prot = 0
 
 	setupProperties()
 		..()
@@ -117,6 +116,7 @@
 	name = "bespoke space helmet"
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
+	blocked_from_petasusaphilic = TRUE
 
 	var/image/fabrItemImg = null
 	var/image/fabrWornImg = null
@@ -271,7 +271,6 @@
 	item_state = "s_helmet"
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
 	seal_hair = 1
-	path_prot = 0
 	acid_survival_time = 5 MINUTES
 
 	setupProperties()
@@ -402,26 +401,22 @@
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
 						if (src.on)
-							H.vision.set_scan(1)
-							APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+							H.meson(src)
 						else
-							H.vision.set_scan(0)
-							REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+							H.unmeson(src)
 
 			equipped(var/mob/living/user, var/slot)
 				..()
 				if(!isliving(user))
 					return
 				if (slot == SLOT_HEAD && on)
-					user.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+					user.meson(src)
 
 			unequipped(var/mob/living/user)
 				..()
 				if(!isliving(user))
 					return
-				user.vision.set_scan(0)
-				REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+				user.unmeson(src)
 
 		medic
 			name = "specialist health monitor"

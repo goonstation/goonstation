@@ -936,6 +936,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			M.is_zombie = 1
 			M.max_health += 100
 			M.health = max(M.max_health, M.health)
+			M.can_bleed = FALSE
 
 			if (strain == 1)
 				make_bubs(M)
@@ -991,6 +992,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	disposing()
 		if (ishuman(src.mob))
+			src.mob.can_bleed = TRUE
 			src.mob.remove_stam_mod_max("zombie")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
 		..()
@@ -1162,51 +1164,36 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(src.mob.loc)
 			var/obj/item/I
-			//this should be done in like, a loop but by god the only way to do that is with vars[]
-			I = src.mob.limbs.l_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_arm?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.l_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.limbs.r_leg?.remove(FALSE)
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
-			I = src.mob.organHolder.drop_organ("head")
-			I?.pixel_x += rand(-8, 8)
-			I?.pixel_y += rand(-8, 8)
+			I = src.mob.organHolder.drop_organ("head", src.mob)
+			I.loc = get_turf(src.mob)
+			var/list/limbs = list()
+			limbs += src.mob.limbs.l_arm?.remove(FALSE)
+			limbs += src.mob.limbs.r_arm?.remove(FALSE)
+			limbs += src.mob.limbs.l_leg?.remove(FALSE)
+			limbs += src.mob.limbs.r_leg?.remove(FALSE)
+
+			for (var/obj/limb in limbs) // You do not know my pain.
+				limb.throw_return = FALSE
+				ThrowRandom(limb, rand(2,3), 1)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
 			if(H)
 				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+				ThrowRandom(H, 1)
 			else
 				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
-				I?.pixel_x += rand(-8, 8)
-				I?.pixel_y += rand(-8, 8)
+				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
-			var/list/organlist = list()
-			for(var/idx in src.mob.organHolder.organ_list)
-				organlist += src.mob.organHolder.organ_list[idx]
-			for(var/obj/item/C in src.mob.list_ejectables())
-				if(!(C in organlist))
-					C.set_loc(src.mob.loc)
-					C.pixel_x += rand(-8, 8)
-					C.pixel_y += rand(-8, 8)
 
 			playsound(src.mob, 'sound/effects/skeleton_break.ogg', 66, 1)
 			src.mob.visible_message("<span 'class=alert'>[src.mob] falls apart into a pile of bones!</span>", "<span 'class=alert'>You fall apart into a pile of bones!</span>", "<span 'class=notice'>You hear a clattering noise.</span>")
-			var/mob/dead/observer/newmob = src.mob.ghostize()
-			newmob?.corpse = null
 
-			return MUTRACE_ONDEATH_DEFER_DELETE
+			return MUTRACE_ONDEATH_NOTHING
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1843,6 +1830,7 @@ TYPEINFO(/datum/mutantrace/roach)
 		if(ishuman(M))
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		OTHER_START_TRACKING_CAT(M, TR_CAT_BUGS)
 
 	say_verb()
 		return "clicks"
@@ -1856,6 +1844,7 @@ TYPEINFO(/datum/mutantrace/roach)
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		if(src.mob)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
+			OTHER_STOP_TRACKING_CAT(src.mob, TR_CAT_BUGS)
 		. = ..()
 
 TYPEINFO(/datum/mutantrace/cat)
@@ -2068,7 +2057,9 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
 				H.bioHolder.AddEffect("xray", power = 2, magical=1)
-
+				if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/ch = H.abilityHolder
+					ch.addHolder(/datum/abilityHolder/kudzu)
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2084,30 +2075,38 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		src.mob.sight |= SEE_OBJS
 		src.mob.see_in_dark = SEE_DARK_FULL
 */
+	sight_modifier()
+		if (src.mob.client)
+			src.mob.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+			// src.mob
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
-		if (!src.mob.abilityHolder)
-			src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		// if (!src.mob.abilityHolder)
+		// 	src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		var/datum/abilityHolder/kudzu/KAH = src.mob.get_ability_holder(/datum/abilityHolder/kudzu)
+		if (!istype(KAH))
+			KAH = src.mob.abilityHolder
 
-		var/datum/abilityHolder/kudzu/KAH = src.mob.abilityHolder
-		var/round_mult = max(1, round((mult)))
+		var/round_mult = max(2, round((mult)))
 		var/turf/T = get_turf(src.mob)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
 		if (T && T.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
-				KAH.points += round_mult
-			else
-				//at max points, so heal
-				src.mob.take_toxin_damage(-round_mult)
-				src.mob.HealDamage("All", round_mult, round_mult)
-				if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
-					src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
-					src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+				// KAH.points += round_mult
+				KAH.addPoints(round_mult, /datum/abilityHolder/kudzu)
+
+			//ALWAYS HEAL ON KUDZU TILES
+			src.mob.take_toxin_damage(-round_mult)
+			src.mob.HealDamage("All", round_mult, round_mult)
+			if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
+				src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+				src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
 
 		else
 			//nutrients for a bit of grace period
 			if (KAH.points > 0)
-				KAH.points -= 10
+				// KAH.points -= 10
+				KAH.addPoints(-10, /datum/abilityHolder/kudzu)
 			else
 				//do effects from not being on kudzu here.
 				src.mob.take_toxin_damage(2 * round_mult)
@@ -2115,7 +2114,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				// random_brute_damage(src.mob, 2 * mult)
 				if (prob(30))
 					src.mob.changeStatus("knockdown", 3 SECONDS)
-
 		return
 
 /obj/effect/rt/cow_distorts

@@ -1097,7 +1097,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 		/obj/item/radio_tape/audio_book/heisenbee)*/
 
 //Fake objects
-/obj/decal/fakeobjects/cpucontroller
+/obj/fakeobject/cpucontroller
 	name = "central processing unit"
 	desc = "The computing core of the mainframe."
 	icon = 'icons/obj/large/64x64.dmi'
@@ -1107,7 +1107,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/vacuumtape
+/obj/fakeobject/vacuumtape
 	name = "vacuum column tape drive"
 	desc = "A large 9 track magnetic tape storage unit."
 	icon = 'icons/obj/large/32x64.dmi'
@@ -1117,7 +1117,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/operatorconsole
+/obj/fakeobject/operatorconsole
 	name = "operator's console"
 	desc = "The computer operating console, covered in fancy toggle switches and register value lamps."
 	icon = 'icons/obj/large/32x64.dmi'
@@ -1127,14 +1127,14 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/broadcastcomputer
+/obj/fakeobject/broadcastcomputer
 	name = "broadcast server"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine11"
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/tapedeck
+/obj/fakeobject/tapedeck
 	name = "reel to reel tape deck"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine20"

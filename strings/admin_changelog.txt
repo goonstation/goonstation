@@ -1,3 +1,12 @@
+(t)wed aug 08 24
+(u)LeahTheTech
+(*)New buildmode "Spawn Object" effect: "Fling" - spawns the object on you and immediately throws it at the target location.
+(t)tue jul 09 24
+(u)Azrun
+(*)Some seasonal content can be enabled via Terrainify! Season setting added to Winter and Forest Station.
+(t)mon jul 01 24
+(u)Zamujasa
+(*)"Check Reagents" window is a little more modern. Removing reagents doesn't refresh but now you can actually empty reagents from things!
 (t)wed may 07 24
 (u)Sovexe
 (*)Added the Region Allocator admin panel. Easily manage regions of space for prefabs and custom map loading on demand. Accessible by both its verb and the game panel.

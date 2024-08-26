@@ -10,7 +10,6 @@
 	icon_state = "uplink" //replace later
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
-	flags = TABLEPASS | FPRINT
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'

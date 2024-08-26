@@ -16,7 +16,7 @@
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/dmm_suite/clear_area)
 "J" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1;
 	pixel_y = -29
 	},
@@ -27,7 +27,7 @@
 /turf/simulated/floor/airless/plating,
 /area/dmm_suite/clear_area)
 "M" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1;
 	pixel_y = 21
 	},
@@ -79,7 +79,7 @@
 	pixel_x = -9;
 	pixel_y = 4
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	dir = 1;
 	pixel_y = -29
 	},

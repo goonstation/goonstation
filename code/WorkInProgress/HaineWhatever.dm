@@ -1017,6 +1017,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	fingertip_color = "#f3f3f3"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
@@ -1062,7 +1063,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	icon_state = "moonstick"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 2
 	w_class = W_CLASS_SMALL
@@ -1150,7 +1151,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	icon_state = "null_scalpel"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
@@ -1409,7 +1410,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 
@@ -1573,7 +1574,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "Some kinda thing, from space. In space. A space thing."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7

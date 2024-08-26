@@ -27,7 +27,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	density = 1
 	event_handler_flags = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
-	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS|FPRINT
+	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	return output
 
 
-/obj/machinery/plantpot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/plantpot/EnteredProximity(atom/movable/AM)
 	if(!src.current || src.dead)
 		return
 	src.current?.ProximityProc(src, AM)
@@ -436,7 +436,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(growing.HYPattacked_proc(src,user,W)) return
 
 			if(src.dead)
-				src.visible_message(SPAN_ALERT("[src] is is destroyed by [user.name]'s [W]!"))
+				src.visible_message(SPAN_ALERT("[src] is destroyed by [user.name]'s [W.name]!"))
 				src.HYPdestroyplant()
 				return
 			else
@@ -1233,7 +1233,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
-		setup_use_proximity()
+		src.AddComponent(/datum/component/proximity)
 
 	src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 	// Add the plant's total endurance score to the health.
@@ -1298,7 +1298,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.health_warning = 0
 	src.harvest_warning = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()// If there's no plant here, there doesn't need to be a check
+	src.RemoveComponentsOfType(/datum/component/proximity) // If there's no plant here, there doesn't need to be a check
 	src.update_name()
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
 	qdel(src.current_tick)
@@ -1321,7 +1321,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	src.generation = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()
+	src.RemoveComponentsOfType(/datum/component/proximity)
 	src.update_name()
 	src.post_alert(list("event" = "cleared"))
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it

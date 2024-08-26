@@ -361,19 +361,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		reagents_transferred()
 		return amount
 
-	proc/aggregate_pathogens()
-		var/list/ret = list()
-		for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
-			if (src.has_reagent(reagent_id))
-				var/datum/reagent/blood/B = src.get_reagent(reagent_id)
-				if (!istype(B))
-					continue
-				for (var/uid in B.pathogens)
-					if (!(uid in ret))
-						ret += uid
-						ret[uid] = B.pathogens[uid]
-		return ret
-
 	/// multiplier is used to handle realtime metabolizations over byond time
 	proc/metabolize(var/mob/target, var/multiplier = 1)
 		if (islist(src.addiction_tally) && length(src.addiction_tally)) // if we got some addictions to process
@@ -885,6 +872,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/has_reagent(var/reagent, var/amount=0)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
+
+	proc/has_any(list/reagents, amount)
+		for (var/reagent_id in reagents)
+			if (src.has_reagent(reagent_id, amount))
+				return TRUE
+		return FALSE
 
 	proc/has_active_reaction(var/reaction_id, var/amount=0)
 		for(var/datum/chemical_reaction/C in src.active_reactions)

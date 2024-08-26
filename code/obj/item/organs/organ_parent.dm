@@ -12,7 +12,6 @@
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
-	flags = TABLEPASS | FPRINT
 	force = 1
 	health = 4
 	w_class = W_CLASS_TINY

@@ -3,14 +3,14 @@
 
 /datum/biome/icemoon/snow
 	turf_type = /turf/unsimulated/floor/arctic/snow/autocliff
-	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/stone/random = 10, /obj/fakeobject/smallrocks = 10)
 	flora_density = 1
 
 	fauna_types = list(/mob/living/critter/small_animal/seal = 15, /mob/living/critter/brullbar = 5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
-	flora_types = list(/obj/tree{dir=NORTH} = 10,/obj/tree{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree{dir=NORTH} = 10,/obj/tree{dir=EAST} = 10, /obj/stone/random = 10, /obj/fakeobject/smallrocks = 10)
 	flora_density = 3
 
 /datum/biome/icemoon/ice

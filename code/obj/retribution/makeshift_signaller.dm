@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 	name = "makeshift signaller frame"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
 	icon_state = "frame"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
@@ -69,7 +69,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 	name = "makeshift syndicate signaller"
 	icon = 'icons/misc/retribution/makeshift_signaller.dmi'
 	icon_state = "metadata_0"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	throw_speed = 4

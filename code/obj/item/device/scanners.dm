@@ -19,7 +19,6 @@ TYPEINFO(/obj/item/device/t_scanner)
 	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = FALSE
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
@@ -41,6 +40,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 		for(var/actionType in childrentypesof(/datum/contextAction/t_scanner)) //see context_actions.dm
 			var/datum/contextAction/t_scanner/action = new actionType(src)
 			actions += action
+
+	dropped(mob/user)
+		. = ..()
+		user.closeContextActions()
 
 	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
@@ -198,7 +201,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	flags = TABLEPASS | CONDUCT | SUPPRESSATTACK
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
@@ -339,7 +342,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "healthanalyzer-no_up" // someone made this sprite and then this was never changed to it for some reason???
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
@@ -465,7 +468,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer_upgrade)
 	name = "health analyzer upgrade"
 	desc = "A small upgrade card that allows standard health analyzers to detect reagents present in the patient, and ProDoc Healthgoggles to scan patients' health from a distance."
 	icon_state = "health_upgr"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -478,7 +481,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer_organ_upgrade)
 	name = "health analyzer organ scan upgrade"
 	desc = "A small upgrade card that allows standard health analyzers to detect the health of induvidual organs in the patient."
 	icon_state = "organ_health_upgr"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -495,7 +498,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "reagentscan"
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
@@ -551,7 +554,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
@@ -681,7 +684,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 	name = "atmospherics analyzer upgrade"
 	desc = "A small upgrade card that allows standard atmospherics analyzers to detect environmental information at a distance."
 	icon_state = "atmos_upgr" // add this
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -721,7 +724,6 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 			var/obj/item/device/analyzer/atmospheric/a = src
 			a.analyzer_upgrade = 1
 			a.icon_state = "atmos"
-			a.item_state = "atmosphericnalyzer"
 
 		else
 			boutput(user, SPAN_ALERT("That cartridge won't fit in there!"))
@@ -744,7 +746,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
 	item_state = "recordtrak"
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
 
 	#define PRISONER_MODE_NONE 1
@@ -986,7 +988,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 
 	attack_self(mob/user)
@@ -1053,7 +1055,6 @@ TYPEINFO(/obj/item/device/appraisal)
 /obj/item/device/appraisal
 	name = "cargo appraiser"
 	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150

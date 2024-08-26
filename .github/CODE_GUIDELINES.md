@@ -2,8 +2,6 @@
 
 [ToC]
 
-{%hackmd @ZeWaka/dark-theme %}
-
 # General
 
 ## Operators
@@ -450,10 +448,42 @@ via `atom.verbs += /proc/x`.
 So, be careful when removing `as x` to
 make sure it isn't being used as a verb somewhere else.
 
+## round() sometimes pretends to be floor()
+
+According to the DM docs, using `round(A)` with only one argument is deprecated (not approved). The correct way to use `round()` is to do `round(A,B)`, where B is the nearest multiple. For most cases, this will be `1`, although sometimes you'll need it to the nearest 10 or 5.
+
+What happens if you do `round(A)` then? Guess what? It *floors* the value, and is equivalent to `floor(A)`. It **rounds it down**. Thanks BYOND.
+
+```csharp
+usr << round(1.7)    // outputs 1
+usr << round(1.7, 1) // outputs 2
+```
+
+So in general, use `round(A,1)` for your rounding needs.
+
 # Useful Things
+
+## `.git-blame-ignore-revs`
+
+Run `git config blame.ignoreRevsFile .git-blame-ignore-revs` in the root goonstation folder to ignore commits that touched a lot of files for big formatting reasons. This helps deal with `git blame` a bit easier, and you only need to run this once.
+
 
 ## VSCode Debugger
 You can check out a guide on using the debugger in the guide located in the [Developer Guide](https://hackmd.io/@goonstation/dev#How-to-use-the-VS-Code-Debugger).
+
+## Local `__build.dm`, and other local code changes
+ 
+If you're tired of having to constantly add & remove `#define IM_REALLY_IN_A_FUCKING_HURRY_HERE` and similar from `__build.dm`, along with stashing and re-stashing your own development tools, there's a solution!
+ 
+Create a file named `__build.local.dm` right next to it. Named exactly that.
+This file will not get picked up by Git, and will let you keep whatever defines you want in there.
+ 
+There is additional support for a file called `__development.local.dm`, which is included in `goonstation.dme` after the build defines so that you can add new testing tools for yourself there. *Be sure to create this file in the right directory!*
+ 
+Specifically, it needs to be created under `code/WorkInProgress/__development.local.dm`. Additionally, there is a build flag, `DISABLE_DEVFILE`, which will stop this from loading. Use this before asking for help if your local development environment is breaking! And on the flip side, if your code changes are *not* showing up from this file, make sure this flag is **disabled**.
+ 
+Most importantly of all, be sure that you remember you put your configs and/or code into those locations! Please don't come to #imcoder asking why your local setup always compiles Nadir 😸, or why your map is full of capybaras.
+
 
 ## Debugging Overlays
 

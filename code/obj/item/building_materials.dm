@@ -47,7 +47,6 @@ MATERIAL
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
-	flags = FPRINT | TABLEPASS
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
@@ -227,6 +226,28 @@ MATERIAL
 			else
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
+
+		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
+			if(src.amount < 5)
+				boutput(user, SPAN_ALERT("You need at least five sheets to make a mask."))
+				return
+			if (!istype(src.loc,/turf/))
+				if (issilicon(user))
+					boutput(user, SPAN_ALERT("Hardcore as it sounds, smelting parts of yourself off isn't big or clever."))
+				else
+					boutput(user, SPAN_ALERT("You should probably put the sheets down first."))
+				return
+			if(!W:try_weld(user, 1))
+				return
+
+			var/obj/item/clothing/mask/steel/M = new /obj/item/clothing/mask/steel(user.loc)
+			if(src.material) M.setMaterial(src.material)
+			src.change_stack_amount(-5)
+
+			user.visible_message(SPAN_ALERT("<B>[user]</B> welds the sheets together into a mask."))
+			UpdateStackAppearance()
+			return
+
 		else if (iscuttingtool(W) && (src.material?.isSameMaterial(getMaterial("wood")) || src.material.isSameMaterial(getMaterial("bamboo"))))
 			boutput(user, SPAN_NOTICE("You whittle [src] down to make a useful stick."))
 			new /obj/item/stick(get_turf(src))
@@ -557,7 +578,7 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods_5"
 	item_state = "rods"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_NORMAL
 	force = 4
 	throwforce = 8

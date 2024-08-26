@@ -526,6 +526,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/entrance_scanner = 0
 	name = "Dubious Hand Scanner"
 	id = "Sleeper_Access"
+	flags = FLUID_SUBMERGE | NOFPRINT
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "antagscanner"
 	unpressed_icon = "antagscanner"

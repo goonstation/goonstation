@@ -98,6 +98,22 @@
 	name = "beaker (silver sulfadiazine)"
 	initial_reagents = "silver_sulfadiazine"
 
+/obj/item/reagent_containers/glass/beaker/egg
+	name = "Beaker of Eggs"
+	desc = "Eggs; fertile ground for some microbes."
+
+	New()
+		..()
+		src.reagents.add_reagent("egg", 50)
+
+/obj/item/reagent_containers/glass/beaker/stablemut
+	name = "Beaker of Stable Mutagen"
+	desc = "Stable Mutagen; fertile ground for some microbes."
+
+	New()
+		..()
+		src.reagents.add_reagent("dna_mutagen", 50)
+
 /* ======================================================= */
 /* -------------------- Large Beakers -------------------- */
 /* ======================================================= */
@@ -148,7 +164,7 @@
 	initial_volume = 400
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = TABLEPASS | OPENCONTAINER
 	rc_flags = RC_SCALE
 
 /obj/item/reagent_containers/food/drinks/reserve/brute

@@ -78,6 +78,8 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
+		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
+
 		START_TRACKING
 
 	disposing()
@@ -91,6 +93,7 @@ TYPEINFO(/obj/machinery/phone)
 		handset = null
 
 		STOP_TRACKING
+		UnregisterSignal(src, COMSIG_CORD_RETRACT)
 		..()
 
 	get_desc()
@@ -104,8 +107,6 @@ TYPEINFO(/obj/machinery/phone)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
-				user.drop_item(PH)
-				qdel(PH)
 				hang_up()
 			return
 		if(issnippingtool(P))
@@ -155,6 +156,7 @@ TYPEINFO(/obj/machinery/phone)
 			return
 
 		src.handset = new /obj/item/phone_handset(src,user)
+		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
 		user.put_in_hand_or_drop(src.handset)
 		src.answered = TRUE
 
@@ -299,7 +301,10 @@ TYPEINFO(/obj/machinery/phone)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
 			src.linked = null
+		src.RemoveComponentsOfType(/datum/component/cord)
 		src.ringing = FALSE
+		src.handset?.force_drop(sever=TRUE)
+		qdel(src.handset)
 		src.handset = null
 		src.icon_state = "[phone_icon]"
 		tgui_process.close_uis(src)
@@ -388,10 +393,8 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
 			if(src.get_holder())
 				boutput(src.get_holder(),SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
-			src.force_drop(sever=TRUE)
 			src.parent.hang_up()
 			processing_items.Remove(src)
-			qdel(src)
 
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
@@ -428,6 +431,14 @@ TYPEINFO(/obj/machinery/phone)
 			// intercoms overhear phone conversations
 			for (var/obj/item/device/radio/intercom/I in range(3, listener))
 				I.talk_into(M, text, null, M.get_heard_name(just_name_itself=TRUE), lang_id)
+
+	// attack_hand(mob/user)
+	// 	. = ..()
+	// 	src.parent?.draw_cord()
+
+	// dropped(mob/user)
+	// 	. = ..()
+	// 	src.parent?.draw_cord()
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25

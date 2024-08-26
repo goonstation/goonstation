@@ -245,7 +245,7 @@ TYPEINFO(/obj/vehicle/tug)
 				rider.throw_at(target, 5, 1)
 				rider.buckled = null
 				rider = null
-				overlays = null
+				src.ClearSpecificOverlays("rider")
 				return
 			if (selfdismount)
 				boutput(rider, SPAN_NOTICE("You dismount from [src]."))
@@ -256,7 +256,7 @@ TYPEINFO(/obj/vehicle/tug)
 			if (rider)
 				rider.buckled = null
 			rider = null
-			overlays = null
+			src.ClearSpecificOverlays("rider")
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
@@ -301,7 +301,7 @@ TYPEINFO(/obj/vehicle/tug)
 		target.set_loc(src)
 		rider = target
 		rider.pixel_y = 6
-		overlays += rider
+		src.UpdateOverlays(rider, "rider")
 		if (rider.restrained() || rider.stat)
 			rider.buckled = src
 

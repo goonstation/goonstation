@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "table_parts"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	stamina_damage = 35
 	stamina_cost = 22
 	stamina_crit_chance = 10
@@ -213,6 +213,13 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	desc = "A collection of parts that can be used to make a sleek table."
 	icon = 'icons/obj/furniture/table_sleek.dmi'
 	furniture_type = /obj/table/sleek/auto
+
+/obj/item/furniture_parts/table/monodesk
+	name = "monochrome desk parts"
+	desc = "A collection of parts that can be used to make a monochrome desk."
+	icon = 'icons/obj/furniture/table_monochrome_desk.dmi'
+	furniture_type = /obj/table/monodesk/auto
+
 /* ---------- Glass Table Parts ---------- */
 TYPEINFO(/obj/item/furniture_parts/table/glass)
 	mat_appearances_to_ignore = list("glass")

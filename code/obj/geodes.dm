@@ -20,8 +20,12 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			AM.set_loc(src.loc)
 
 	ex_act(severity, last_touched, power, datum/explosion/explosion)
-		if (explosion.power >= src.break_power)
+		if (!src.broken && ((explosion?.power || power) >= src.break_power))
 			src.break_open()
+		else if (src.broken && severity < 3) //prevent spamming concussive charges
+			for (var/i in 1 to rand(2,3))
+				new /obj/item/raw_material/rock(src.loc)
+			qdel(src)
 
 /obj/geode/crystal
 	icon_state = "pale"
@@ -88,6 +92,15 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 
 	molitz_b
 		crystal_path = /obj/item/raw_material/molitz_beta
+		break_open()
+			..()
+			var/turf/simulated/T = get_turf(src)
+			if (!istype(T))
+				return
+			var/datum/gas_mixture/release_gas = new
+			release_gas.oxygen_agent_b = 400
+			release_gas.temperature = T20C
+			T.assume_air(release_gas)
 
 	starstone
 		icon_state = "dark"

@@ -4,7 +4,7 @@ TYPEINFO(/obj/item/device/borg_linker)
 /obj/item/device/borg_linker
 	name = "cyborg law linker"
 	icon_state = "cyborg_linker"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 5
 	w_class = W_CLASS_SMALL

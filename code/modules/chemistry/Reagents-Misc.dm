@@ -1192,7 +1192,7 @@ datum
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
 					var/check_amount = holder.get_reagent_amount(booster_enzyme_reagents_to_check[i])
 					if (check_amount && check_amount < 18)
-						var/amt = min(1 * mult, 20-check_amount)
+						var/amt = min(1 * src.calculate_depletion_rate(M, mult), 20-check_amount)
 						holder.add_reagent(booster_enzyme_reagents_to_check[i], amt, temp_new = holder.total_temperature + 20)
 						holder.add_reagent("enzymatic_leftovers", amt/2, temp_new = holder.total_temperature + 20)
 				..()
@@ -1530,7 +1530,7 @@ datum
 
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(25, 50) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
@@ -1572,7 +1572,7 @@ datum
 					M = holder.my_atom
 				var/our_amt = holder.get_reagent_amount(src.id)
 				if (prob(25))
-					M.reagents.add_reagent("histamine", rand(5,10) * mult)
+					M.reagents.add_reagent("histamine", rand(25, 50) * src.calculate_depletion_rate(M, mult))
 				if (our_amt < 5)
 					M.take_toxin_damage(1 * mult)
 					random_brute_damage(M, 1 * mult)
@@ -2639,7 +2639,7 @@ datum
 				..()
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
-				M.reagents.add_reagent("water", severity * mult)
+				M.reagents.add_reagent("water", severity * 2.5 * src.calculate_depletion_rate(M, mult))
 
 		transparium
 			name = "transparium"
@@ -2854,7 +2854,7 @@ datum
 					boutput(M, SPAN_ALERT("<b>So itchy!</b>"))
 					random_brute_damage(M, 2 * mult)
 				if (prob(1))
-					M.reagents.add_reagent("histamine", 1 * mult)
+					M.reagents.add_reagent("histamine", 10 * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 
@@ -3193,7 +3193,6 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.growth_rate += 2.4
-				growth_tick.growth_rate += 2.4
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
@@ -3213,8 +3212,6 @@ datum
 			fluid_g = 0
 			transparency = 255
 			value = 2
-			var/list/pathogens = list()
-			var/pathogens_processed = 0
 			var/congealed = FALSE //! if this blood came from a pill, stops vampires getting points from it
 			hygiene_value = -2
 			hunger_value = 0.068
@@ -3277,24 +3274,6 @@ datum
 
 			// fluid todo : Hey we should have a reaction_obj that applies blood overlay
 
-			on_mob_life(var/mob/M, var/mult = 1)
-				// Let's assume that blood immediately mixes with the bloodstream of the mob.
-				if (!pathogens_processed) //Only process pathogens once
-					pathogens_processed = 1
-					for (var/uid in src.pathogens)
-						var/datum/pathogen/P = src.pathogens[uid]
-						logTheThing(LOG_PATHOLOGY, M, "metabolizing [src] containing pathogen [P].")
-						M.infected(P)
-				..()
-
-/* this begs the question how bloodbags worked at all if this was a thing
-				if (holder.has_reagent("dna_mutagen")) //If there's stable mutagen in the mix and it doesn't have data we gotta give it a chance to get some
-					var/datum/reagent/SM = holder.get_reagent("dna_mutagen")
-					if (SM.data) holder.del_reagent(src.id)
-				else
-					holder.del_reagent(src.id)
-				return
-*/
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				var/datum/plant/growing = P.current
 				if (growing.growthmode == "carnivore")
@@ -3305,21 +3284,6 @@ datum
 				if (istype(target.my_atom, /obj/item/reagent_containers/pill))
 					var/datum/reagent/blood/blood = target.get_reagent("blood")
 					blood.congealed = TRUE
-				var/list/source_pathogens = source.aggregate_pathogens()
-				var/list/target_pathogens = target.aggregate_pathogens()
-				var/target_changed = 0
-				for (var/uid in source_pathogens)
-					if (!(uid in target_pathogens))
-						target_pathogens += uid
-						target_pathogens[uid] = source_pathogens[uid]
-						target_changed = 1
-				if (target_changed)
-					for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
-						if (target.has_reagent(reagent_id))
-							var/datum/reagent/blood/B = target.get_reagent(reagent_id)
-							if (!istype(B))
-								continue
-							B.pathogens = target_pathogens
 
 		blood/bloodc
 			id = "bloodc"
@@ -3596,7 +3560,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				M.reagents.add_reagent("cholesterol", 1 * mult)
+				M.reagents.add_reagent("cholesterol", 2.5 * src.calculate_depletion_rate(M, mult))
 				..()
 				return
 

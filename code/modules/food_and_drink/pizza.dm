@@ -8,7 +8,7 @@
 	var/cheesy = 0
 	var/image/sauce_image = null
 	var/image/cheese_image = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 	w_class = W_CLASS_NORMAL
 
@@ -309,6 +309,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pizza)
 	slice_amount = 6
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/pizzaslice
+	slice_tools = TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING
 	initial_volume = 60 // 40 units will be available to stuff the crust
 	custom_food = FALSE
 	initial_reagents = list("bread" = 20)

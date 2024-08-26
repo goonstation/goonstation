@@ -41,7 +41,7 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit.ogg'
 
 
 //Any special things when it hits shit?
@@ -321,7 +321,6 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	var/strong = FALSE
 
@@ -363,8 +362,6 @@ toxic - poisons
 
 	disruption = 25
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		var/turf/T = get_turf(hit)
 		for(var/turf/tile in range(1, T))
@@ -396,7 +393,7 @@ toxic - poisons
 	disruption = 2
 	ie_type = "T"
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
@@ -419,8 +416,6 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
 /datum/projectile/energy_bolt/smgauto
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -437,7 +432,7 @@ toxic - poisons
 
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
+	hit_mob_sound = 'sound/impact_sounds/taser_hit02.ogg'
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()
@@ -461,8 +456,6 @@ toxic - poisons
 
 	disruption = 2
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
-
 /datum/projectile/energy_bolt/dazzler
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -482,7 +475,6 @@ toxic - poisons
 	color_blue = 1
 	disruption = 8
 
-	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
 		M.changeStatus("disorient", 4 SECOND)

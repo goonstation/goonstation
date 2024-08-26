@@ -117,8 +117,14 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if ((source in bible_contents) && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
-		return TRUE
+	else if (source in bible_contents)
+		for_by_tcl(B, /obj/item/bible) // o coder past, quieten your rage
+			if(IN_RANGE(user,B,1))
+				return TRUE
+	else if (source in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				return TRUE
 	else
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -199,7 +205,18 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if(user.client?.holder?.ghost_interaction)
 		return TRUE
 	if (target in bible_contents)
-		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
+		target = null
+		for_by_tcl(B, /obj/item/bible)
+			if(IN_RANGE(user,B,1))
+				target = B
+				break
+		if (!target)
+			return 0
+	if (target in terminus_storage)
+		for_by_tcl(TR, /obj/item/terminus_drive)
+			if(IN_RANGE(user,TR,1))
+				target = TR
+				break
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)

@@ -314,7 +314,7 @@
 /obj/gimmick_obj
 	var/list/gimmick_events
 	var/active_stage
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	New()
 		..()
@@ -993,7 +993,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	inventory_counter_enabled = 1
 

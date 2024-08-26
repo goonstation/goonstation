@@ -13,14 +13,14 @@
 
 			owner.see_in_dark = SEE_DARK_HUMAN
 			owner.see_invisible = INVIS_NONE
-			if (human_owner?.mutantrace)
-				human_owner.mutantrace.sight_modifier()
 
 			if (owner.client)
 				if((owner.traitHolder && owner.traitHolder.hasTrait("cateyes")) || (owner.getStatusDuration("food_cateyes")))
 					owner.render_special.set_centerlight_icon("cateyes")
 				else
 					owner.render_special.set_centerlight_icon("default")
+			if (human_owner?.mutantrace)
+				human_owner.mutantrace.sight_modifier()
 
 			if (human_owner && isvampire(human_owner))
 				if (human_owner.check_vampire_power(1) == 1 && !isrestrictedz(human_owner.z))

@@ -18,7 +18,7 @@ TYPEINFO(/obj/item/rcd)
 	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10

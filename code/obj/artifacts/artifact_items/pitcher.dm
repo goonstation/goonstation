@@ -15,6 +15,8 @@
 		SPAWN(0)
 			src.ArtifactSetup()
 
+		src.RemoveComponentsOfType(/datum/component/reagent_overlay)
+
 		if (prob(15))
 			src.reagents.inert = TRUE
 

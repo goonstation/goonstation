@@ -1150,7 +1150,7 @@ var/list/removed_jobs = list(
 			qdel(ourWig)
 
 		if (src.traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+			H.equip_if_possible(H.create_wig(keep_hair = TRUE), SLOT_HEAD)
 
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
@@ -1378,7 +1378,7 @@ var/list/removed_jobs = list(
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				if (!J_Fav.has_rounds_needed(user.client.player))
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[J_Fav.rounds_needed_to_play].</b>"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1569,7 +1569,7 @@ var/list/removed_jobs = list(
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[temp_job.rounds_needed_to_play].</b>"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null
@@ -1840,12 +1840,13 @@ var/list/removed_jobs = list(
 			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
-	proc/apply_post_new_stuff(mob/living/character)
+	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
 		for (var/slot_id in src.custom_parts)
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
+			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 

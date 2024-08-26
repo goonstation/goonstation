@@ -59,7 +59,7 @@ Contents:
 
 	New()
 		..()
-		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
+		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6","ice7","ice8","ice9","ice10")]"
 
 /turf/unsimulated/floor/arctic/snow/lake
 	name = "frozen lake"

@@ -53,6 +53,14 @@ function task-dev-server {
   yarn node --experimental-modules "packages/tgui-dev-server/index.js" @Args
 }
 
+## Runs benchmarking tests
+function task-bench {
+  yarn run webpack-cli --env TGUI_BENCH=1
+  yarn node "packages/tgui-bench/index.js"
+  Stop-Process -processname "iexplore"
+  Stop-Process -processname "ielowutil"
+}
+
 ## Run a linter through all packages
 function task-lint {
   yarn run tsc
@@ -140,6 +148,13 @@ if ($Args.Length -gt 0) {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-dev-server @Rest
+    exit 0
+  }
+
+    if ($Args[0] -eq "--bench") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-bench @Rest
     exit 0
   }
 

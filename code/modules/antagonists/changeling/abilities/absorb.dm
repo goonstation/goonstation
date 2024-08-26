@@ -36,7 +36,7 @@
 			H.TakeDamage("All", 15, 0, 0)
 			take_bleeding_damage(H, null, 8, DAMAGE_STAB, TRUE)
 			for (var/L in valid_limbs)
-				var/obj/item/parts/possible_limb = H.limbs?[L]
+				var/obj/item/parts/possible_limb = H.limbs.vars?[L]
 				if (possible_limb)
 					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously devours [H]'s [possible_limb]!</span>")
 					possible_limb.remove(FALSE)

@@ -939,7 +939,7 @@
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
 	boutput(usr, SPAN_NOTICE("[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat."))
 
-/mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
+/mob/proc/show_message(msg, type, alt, alt_type, group = "", just_maptext, image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
 	if(isnull(msg) && isnull(assoc_maptext))
@@ -1001,7 +1001,7 @@
 // self_message (optional) is what the src mob sees  e.g. "You do something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
 
-/mob/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
+/mob/visible_message(message, self_message, blind_message, group = "")
 	for (var/mob/M in AIviewers(src))
 		if (!M.client && !isAI(M))
 			continue
@@ -1015,7 +1015,7 @@
 // Use for objects performing visible actions
 // message is output to anyone who can see, e.g. "The [src] does something!"
 // blind_message (optional) is what blind people will hear e.g. "You hear something!"
-/atom/proc/visible_message(var/message, var/blind_message, var/group = "")
+/atom/proc/visible_message(message, blind_message, group = "")
 	for (var/mob/M in AIviewers(src))
 		if (!M.client)
 			continue

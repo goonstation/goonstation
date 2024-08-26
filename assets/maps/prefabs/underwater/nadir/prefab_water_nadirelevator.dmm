@@ -16,7 +16,7 @@
 	},
 /area/noGenerate)
 "aN" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
@@ -512,7 +512,7 @@
 	})
 "to" = (
 /obj/marker/supplymarker,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -982,7 +982,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/diner/dining)
 "II" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
@@ -1487,7 +1487,7 @@
 	})
 "WZ" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/raw_material/shard/glass{
 	pixel_x = -5;
 	pixel_y = 9
@@ -1511,7 +1511,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)

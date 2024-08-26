@@ -103,9 +103,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
-		boutput(user, SPAN_ALERT("*click* *click*"))
-		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+		if (src.click_sound)
+			boutput(user, SPAN_ALERT(src.click_msg))
+			if (!src.silenced)
+				playsound(user, click_sound, 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -692,7 +693,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 	recoil_strength = 12
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD
 
 	w_class = W_CLASS_BULKY
@@ -727,7 +728,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
@@ -748,7 +749,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "ohr"
 	wear_state = "ohr" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -777,7 +778,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "tranq"
 	item_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
@@ -1056,7 +1057,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm/draco
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	w_class = W_CLASS_BULKY
 	recoil_strength = 7
 	recoil_stacking_enabled = TRUE
@@ -1319,7 +1320,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 30
 	auto_eject = 0
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	object_flags = NO_ARM_ATTACH
 	c_flags = ONBELT
 
@@ -1584,7 +1585,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "blowgun"
-	item_state = "cane-f"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "c_tube"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
 	ammo_cats = list(AMMO_DART_ALL)
@@ -1594,12 +1596,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/blow_darts/single
+	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
+	click_sound = null
+
+	tranq
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/blow_dart)
+		set_current_projectile(src.ammo.ammo_type)
 		..()
 
 //0.41
@@ -1872,7 +1878,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_state = "shotty" // prevent empty state from breaking the worn image
 	base_icon_state = "shotty"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
@@ -1902,7 +1908,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_state = "ks23" // prevent empty state from breaking the worn image
 	base_icon_state = "ks23"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 6
@@ -1939,7 +1945,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "mts255"
 	item_state = "mts255"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
@@ -1968,7 +1974,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "striker12"
 	item_state = "striker"
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 7
@@ -2060,7 +2066,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = W_CLASS_BULKY
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	default_magazine = /obj/item/ammo/bullets/a12
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 	recoil_strength = 14
@@ -2144,6 +2150,213 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else
 			boutput(user, SPAN_ALERT("You can't fire \the [src] when it is open!"))
 
+#define ONE_BARREL 1
+#define TWO_BARRELS 2
+#define ALL_BARRELS 4
+#define MAX_USES 9
+
+/obj/item/gun/kinetic/sawnoff/quadbarrel //for salvagers
+
+	name = "\improper Four Letter Word"
+	desc = "For when you REALLY need to get the point across."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "quadb"
+	item_state = "quadbarrel" //custom inhands, though.
+	default_magazine = /obj/item/ammo/bullets/a12/bird/four
+
+	camera_recoil_sway_min = 10 //VIOLENCE!
+	recoil_strength = 15
+	recoil_max = 60
+
+	var/guaranteed_uses = MAX_USES	// allows for just over two volleys before it starts breaking
+	var/firemode = ONE_BARREL
+	var/priorammo
+
+	force = MELEE_DMG_RIFLE
+	max_ammo_capacity = 4
+	two_handed = TRUE
+
+	New()
+		..()
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/bird12)
+		name = initial(name) //I kinda like the fact that it'll pull from the DB name pool buuut I kinda don't.
+		UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		.+= "You can use a <b>welding tool</b> to repair its state. \n You can also use a <b>screwdriver</b> to cycle firing modes."
+
+	examine()
+		. = ..()
+		. += "\n \n It is set to fire " //differentiate the FLW examine text from the default gun examine text
+		switch(firemode)
+			if(ONE_BARREL)
+				. += "one barrel."
+			if(TWO_BARRELS)
+				. += "two barrels."
+			if(ALL_BARRELS)
+				. += "all four barrels!"
+		if (guaranteed_uses == MAX_USES)
+			. += "It's in perfect condition!"
+		else if (guaranteed_uses <= 0) //negative damage
+			. += " It seems severely damaged!"
+		else if (guaranteed_uses < 4) //0-4
+			. += " It seems pretty damaged."
+		else if(guaranteed_uses < 7) //4-7
+			. += " It's damaged."
+		else  //7+
+			. += " It's barely damaged."
+
+
+	update_icon()
+		. = ..()
+		src.icon_state = "quadb" + (!src.broke_open ? "" : "-empty" )
+
+	shoot(var/target, var/start, var/mob/user)
+
+		priorammo = src.ammo.amount_left
+
+		//Go up to the limit defined by the firing mode, but don't exceed however many bullets are in the gun BEFORE we started firing
+		for(var/i=1, ((i <= priorammo) && (i <= firemode)), i++)
+			..() //shoot an additional ith time (just goes once if it's in single shot)
+			guaranteed_uses-- //damage the gun an additional ith time
+
+		//check the gun's condition, break as needed
+		if((priorammo > 0) && !(src.broke_open)) //make sure the gun isn't empty and also closed (shooting conditions) before we roll to break
+			//you're shooting multiple shotgun shells out of a garbage gun at the same time. don't think there won't be consequences
+			if((firemode != ONE_BARREL) && (priorammo == 2)) // two shells are shot, can be in 2 or 4 mode
+				boutput(user, SPAN_ALERT("The [src] jumps in your hands!"))
+				user.do_disorient(stamina_damage = 20, knockdown = 0, stunned = 0, disorient = 5, remove_stamina_below_zero = 0)
+			else if((firemode == ALL_BARRELS) && (priorammo >= 3)) //3 or more shells, can only be in all barrel mode
+				SPAWN(0.3 DECI SECONDS) //give it a micro-delay
+				if (src.canshoot(user))
+					boutput(user, SPAN_ALERT("The [src] kicks like a damn mule!"))
+					//this might seem punishing but keep in mind it's FOUR whole shotgun shells at once.
+					user.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+
+			if(guaranteed_uses < 0)
+				//warn the user that they're in the danger zone
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				user.visible_message(SPAN_COMBAT("The [src] [pick(list("rattles!", "bulges!", "pops!", "thunks!", "jolts!", "makes a concerning click...", "cracks!"))]"))
+				if (prob(guaranteed_uses*-5)) //roll for failure. Since [uses] is now negative, we need another minus sign to cancel out
+
+					user.visible_message(SPAN_ALERT("[user]'s [src] makes a severe-sounding bang!"), SPAN_ALERT("The [src] gives out!"))
+
+					if((firemode == ALL_BARRELS) && (priorammo == 4)) //ohhh, you REALLY fucked up now.
+						explosion(src, get_turf(src), 0, 0.5, 1.5, 4)
+
+					//replace the gun with broken version
+					var/obj/item/brokenquadbarrel/broken = new /obj/item/brokenquadbarrel
+					user.drop_item(src)
+					user.put_in_hand_or_drop(broken)
+					qdel(src)
+
+	proc/repairdamage(obj/item/gun/kinetic/sawnoff/quadbarrel/Q, mob/user)
+		if(guaranteed_uses < MAX_USES)
+			Q.guaranteed_uses ++
+
+		if(guaranteed_uses == MAX_USES)
+			boutput(user, SPAN_NOTICE("You fully repair the [src]!"))
+			actions.interrupt(user, INTERRUPT_ACT) //break the loop
+		else if(guaranteed_uses <= 0) //negative
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still severely damaged..."))
+		else if(guaranteed_uses < 5) //0-4
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's still pretty damaged..."))
+		else //5+
+			boutput(user, SPAN_NOTICE("You patch up some of the cracks and bulges on the [src]. It's starting to look better..."))
+
+	proc/get_welding_positions()
+
+		var/startpos = list(rand(7, 16), rand(4, -4))
+		var/stoppos = list(rand(7, 16), rand(4, -4))
+		return list(startpos, stoppos)
+
+	attackby(obj/item/I, mob/user)
+
+		//are we repairing?
+		if (isweldingtool(I))
+			var/obj/item/weldingtool/welder = I
+			if(guaranteed_uses == MAX_USES)
+				boutput(user, SPAN_NOTICE("The [src] doesn't seem to be all that damaged."))
+			else //We are good to repair!
+				var/datum/action/bar/icon/callback/action_bar
+				boutput(user, SPAN_NOTICE("You start to repair the [src]..."))
+
+				//create the action bar
+				var/positions = src.get_welding_positions()
+				action_bar = new /datum/action/bar/private/welding/loop(user, src, 1.5 SECONDS, \
+				proc_path = /obj/item/gun/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
+				proc_args=list(src, user), \
+				start = positions[1], \
+				stop = positions[2], \
+				tool = welder, \
+				cost = 2)
+
+				//begin repairing!
+				actions.start(action_bar, user)
+		//are we cycling through firing modes?
+		else if(isscrewingtool(I))
+			if(firemode == ONE_BARREL)
+				firemode = TWO_BARRELS
+				boutput(user, SPAN_NOTICE("You set [src] to fire two barrels at a time."))
+			else if(firemode == TWO_BARRELS)
+				firemode = ALL_BARRELS
+				boutput(user, SPAN_NOTICE("You set [src] to fire all four barrels! You're not so sure about this..."))
+			else
+				firemode = ONE_BARREL
+				boutput(user, SPAN_NOTICE("You set [src] to fire one barrel at a time."))
+		else //no special interactions, so default to whatever
+			..()
+
+/obj/item/brokenquadbarrel
+	two_handed = TRUE
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "quadb-broken"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi' //gotta make it use gun inhands
+	item_state = "quadbarrel"
+	name = "Broken Four Letter Word"
+	desc = "This thing is TOTALED well beyond repair. You feel like you can recover a slamgun from it, though."
+	force = MELEE_DMG_RIFLE
+
+	attack_self(mob/user as mob)
+
+		user.drop_item(src) //clear hands
+		boutput(user, SPAN_NOTICE("You rip apart the the [src]!"))
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
+
+		// give an OPEN slamgun
+		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
+		user.put_in_hand_or_drop(newgun)
+		newgun.AttackSelf(user)
+
+		//give some other random junk that'd reasonably be pulled off, for flavor
+		var/turf/T = get_turf(src)
+
+		var/obj/item/raw_material/scrap_metal/W = new /obj/item/raw_material/scrap_metal
+		W.setMaterial(getMaterial("wood"))
+		W.name = "mangled chunk of wood"
+		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."
+		W.icon = 'icons/obj/materials.dmi'
+		W.icon_state = "scrap4"
+
+		var/obj/decal/cleanable/machine_debris/G = new /obj/decal/cleanable/machine_debris
+		G.icon_state = "gib1"
+
+		var/obj/item/rods/steel/R = new /obj/item/rods/steel
+		var/obj/item/scrap/S1 = new /obj/item/scrap
+		S1.icon_state = "2metal0"
+
+		var/flavordebris = list(W, G, R, S1)
+		var/obj/item/currentitem
+		var/i
+		for(i=1, i<=4, i++)
+			currentitem = flavordebris[i]
+			currentitem.set_loc(T)
+			currentitem.pixel_x = rand(-8,8)
+			currentitem.pixel_y = rand(-8,8)
+
+		qdel(src)
+
 //0.75
 /obj/item/gun/kinetic/single_action/flintlock/rifle
 	name = "flintlock rifle"
@@ -2152,7 +2365,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "flintlock_rifle"
 	item_state = "flintlock_rifle"
 	ammo_cats = list(AMMO_FLINTLOCK_RIFLE)
-	flags =  FPRINT | TABLEPASS | CONDUCT
+	flags =  TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	two_handed = TRUE
@@ -2189,7 +2402,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "four_bore"
 	item_state = "four_bore"
 	w_class = W_CLASS_BULKY
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	slowdown = 10
 	slowdown_time = 8
@@ -2476,7 +2689,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
@@ -2564,7 +2777,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 0
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	spread_angle = 0
 	can_dual_wield = 0
 	slowdown = 0
@@ -2704,7 +2917,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "\improper Gwydion tranquilizer pistol"
+	name = "\improper Ceridwen tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
@@ -2760,7 +2973,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -2827,7 +3040,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "m16"
 	item_state = "m16"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 8
@@ -2899,7 +3112,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = 0
 	shoot_delay = 7
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	spread_angle = 6
@@ -2955,7 +3168,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	recoil_strength = 20
 	recoil_max = 25 //seriously how are you going to fire this more than once
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
@@ -2998,7 +3211,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
@@ -3038,7 +3251,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 7
@@ -3099,7 +3312,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammo_cats = list(AMMO_RIFLE_308)
 	max_ammo_capacity = 6
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	slowdown = 7
 	slowdown_time = 5
@@ -3143,7 +3356,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 5
 	auto_eject = 1
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	flags =  TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0

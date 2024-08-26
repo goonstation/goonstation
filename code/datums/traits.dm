@@ -144,6 +144,8 @@
 	var/list/traits = list()
 	var/list/moveTraits = list() // differentiate movement traits for Move()
 	var/mob/owner = null
+	/// Role used to prevent addition of specific traits, in case of owner not (yet?) having a mind
+	var/mind_role_fallback = null
 
 	New(var/mob/ownerMob)
 		owner = ownerMob
@@ -161,7 +163,7 @@
 		for(var/id in traits)
 			other.addTrait(id, traits[id])
 
-	proc/addTrait(id, datum/trait/trait_instance=null)
+	proc/addTrait(id, datum/trait/trait_instance=null, force_trait=FALSE)
 		if(!(id in traits))
 			var/datum/trait/T = null
 			if(isnull(trait_instance))
@@ -170,6 +172,9 @@
 			else
 				T = trait_instance
 			if(T.afterlife_blacklisted && inafterlifebar(owner))
+				return
+			var/resolved_role = owner?.mind?.assigned_role || src.mind_role_fallback
+			if (T.preventAddTrait(owner, resolved_role) && force_trait==FALSE)
 				return
 			traits[id] = T
 			if(!isnull(owner))
@@ -231,6 +236,9 @@
 	New()
 		ASSERT(src.name)
 		..()
+
+	proc/preventAddTrait(mob/owner, var/resolved_role)
+		. = FALSE
 
 	proc/onAdd(var/mob/owner)
 		if(mutantRace && ishuman(owner))
@@ -526,18 +534,34 @@
 
 /datum/trait/mildly_mutated
 	name = "Mildly Mutated"
-	desc = "A random mutation in your gene pool starts activated."
+	desc = "A random mutation in your gene pool starts activated and immune to mutadone."
 	id = "mildly_mutated"
 	icon_state = "mildly_mutatedB"
-	points = 0
+	points = 1
 	category = list("genetics")
 	afterlife_blacklisted = TRUE
+	disability_type = TRAIT_DISABILITY_MINOR
+	disability_name = "Genetic Deviation"
+	disability_desc = "Minor reinforced alteration from baseline genetic sequence"
+
+	preventAddTrait(mob/owner, resolved_role)
+		. = ..()
+		if (.)
+			return
+		if (resolved_role == "MODE")
+			logTheThing(LOG_COMBAT, owner, "prevented from being mildly mutated from the trait [name]: not for game mode roles.")
+			return TRUE
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
-		var/datum/bioEffect/E = pick(B.effectPool)
-		B.ActivatePoolEffect(B.effectPool[E], 1, 0)
+		var/bioEffectId = pick(B.effectPool)
+		var/datum/bioEffect/E = B.effectPool[bioEffectId]
+		B.ActivatePoolEffect(E, 1, 0)
 		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
+			if (E)
+				E.curable_by_mutadone = FALSE
+				E.name = "Reinforced " + E.name
+				E.altered = 1 //don't let them combine the reinforced gene with another one
 			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
 /datum/trait/stablegenes
@@ -976,14 +1000,13 @@ TYPEINFO(/datum/trait/partyanimal)
 					if(A.associated_reagent == selected_reagent) return
 			addAddiction(owner)
 
-	proc/addAddiction(var/mob/owner)
-		var/mob/living/M = owner
-		var/datum/ailment_data/addiction/AD = new
+	proc/addAddiction(var/mob/living/owner)
+		var/datum/ailment_data/addiction/AD = get_disease_from_path(/datum/ailment/addiction).setup_strain()
 		AD.associated_reagent = selected_reagent
 		AD.last_reagent_dose = world.timeofday
 		AD.name = "[selected_reagent] addiction"
-		AD.affected_mob = M
-		M.ailments += AD
+		AD.affected_mob = owner
+		owner.contract_disease(/datum/ailment/addiction, null, AD, TRUE)
 
 	onRemove(mob/owner)
 		for(var/datum/ailment_data/addiction/AD in owner.ailments)
@@ -1130,6 +1153,14 @@ TYPEINFO(/datum/trait/partyanimal)
 
 	onLife(var/mob/owner, var/mult)
 		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
+			if(istype(owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = owner
+				if (H.hand == LEFT_HAND)
+					if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+						return
+				else
+					if (H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+						return
 			for(var/obj/item/I in oview(1, owner))
 				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
 					I.Attackhand(owner)

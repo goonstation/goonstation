@@ -125,12 +125,16 @@ var/global/datum/apiHandler/apiHandler
 		request.begin_async()
 		if (src.debug) src.debugLog(route.method, req_route, req_body)
 		var/time_started = TIME
+		var/time_started_unix = rustg_unix_timestamp()
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
 		if (!request.is_complete())
 			src.trackRecentError()
 			var/msg = "Request timed out during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
+
+			// Temp logging for timeouts
+			world.log << "(TEMP) API Error: Request timed out for: [req_route]. Time diff: [TIME - time_started]. Unix start: [time_started_unix]. Unix end: [rustg_unix_timestamp()]"
 
 			// This one is over so we can clear it now
 			src.lazy_concurrent_counter--
@@ -170,9 +174,6 @@ var/global/datum/apiHandler/apiHandler
 			var/msg = "JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
 			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
-
-			// Temp logging for bad responses
-			world.log << "(TEMP) API Error: JSON decode error for response: [response.body]. Headers: [json_encode(response.headers)]. Status: [response.status_code]"
 
 			if (route.allow_retry && attempt < src.maxApiRetries)
 				return src.retryApiQuery(route, attempt)

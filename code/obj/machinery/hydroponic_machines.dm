@@ -33,6 +33,13 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 
 /obj/machinery/hydro_growlamp/process(mult)
 	..()
+	for(var/obj/machinery/hydro_growlamp/hg in get_turf(src))
+		if(hg.active && hg != src)
+			hg.visible_message(SPAN_ALERT("[hg] overheats and shuts down!"), "", "hydro_lamp_shutdown")
+			hg.active = FALSE
+			hg.light.disable()
+			hg.icon_state = "growlamp[hg.active]"
+
 	if(!src.active || !powered())
 		return
 	for (var/atom/A in view(4,src))
@@ -92,7 +99,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydro_mister0"
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
 	anchored = UNANCHORED
 	var/active = 0

@@ -19,7 +19,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon_state = "disposal"
 	anchored = ANCHORED
 	density = 1
-	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -523,8 +523,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.suiciding = 0
 		return 1
 
-	return_air()
-		return src.loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc?.return_air()
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
@@ -670,11 +671,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attackby(var/obj/item/I, var/mob/user)
 		return
 
+	Entered()
+		. = ..()
+		flush = 1
+
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
-		flush = 1
 
 		if (!is_processing)
 			SubscribeToProcess()

@@ -24,6 +24,7 @@ TYPEINFO(/obj/machinery/shipalert)
 	var/working = FALSE //processing loops
 	var/cooldownPeriod = 5 MINUTES //5 minutes, change according to player abuse
 	var/deactivateCooldown = 30 SECONDS //no instantly taking it back
+	var/max_msg_length = 200 //half of a command alert
 
 	New()
 		..()
@@ -33,7 +34,6 @@ TYPEINFO(/obj/machinery/shipalert)
 /obj/machinery/shipalert/attack_hand(mob/user)
 	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
-
 	src.add_fingerprint(user)
 
 	switch (usageState)
@@ -105,6 +105,13 @@ TYPEINFO(/obj/machinery/shipalert)
 			//toggle off
 			shipAlertState = SHIP_ALERT_GOOD
 
+			// set status displays to default
+			var/datum/signal/status_signal = get_free_signal()
+			status_signal.data["sender"] = "00000000"
+			status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_DEFAULT
+			status_signal.data["address_tag"] = "STATDISPLAY"
+			radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
+
 			src.update_lights()
 
 			ON_COOLDOWN(src, "alert_cooldown", src.cooldownPeriod)
@@ -119,12 +126,31 @@ TYPEINFO(/obj/machinery/shipalert)
 		//alert and siren
 #ifdef MAP_OVERRIDE_MANTA
 		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
-#else
-		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
+#else //frick manta, no reason for you
+		var/reason
+		// no flockdrones, critters, etc
+		if(!ishuman(user))
+			reason = "Unknown"
+		else
+			reason = tgui_input_text(user, "Please describe the nature of the threat:", "Alert", max_length = src.max_msg_length)
+		if (!length(reason))
+			src.working = FALSE
+			return FALSE
+		reason = sanitize(adminscrub(reason, src.max_msg_length))
+		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station: [reason]. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 #endif
 		playsound_global(world, soundGeneralQuarters, 100, pitch = 0.9) //lower pitch = more serious or something idk
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
+
+		// status display red alert
+		var/datum/signal/status_signal = get_free_signal()
+		status_signal.data["sender"] = "00000000"
+		status_signal.data["command"] = STATUS_DISPLAY_PACKET_MODE_DISPLAY_ALERT
+		status_signal.data["address_tag"] = "STATDISPLAY"
+		status_signal.data["picture_state"] = STATUS_DISPLAY_PACKET_ALERT_REDALERT
+		radio_controller.get_frequency(FREQ_STATUS_DISPLAY).post_packet_without_source(status_signal)
+
 		ON_COOLDOWN(src, "deactivate_cooldown", src.deactivateCooldown)
 		src.update_lights()
 		src.do_lockdown(user)
@@ -150,7 +176,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			continue
 		if (shutter.z != Z_LEVEL_STATION)
 			continue
-		if (shutter.id != "lockdown" && shutter.id != "ai_core" && shutter.id == "armory")
+		if ((shutter.id != "lockdown") && (shutter.id != "ai_core") && (shutter.id != "armory"))
 			continue
 		shutter.close()
 
@@ -171,7 +197,7 @@ TYPEINFO(/obj/machinery/shipalert)
 	icon_state = "tinyhammer"
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	force = 5
 	throwforce = 5

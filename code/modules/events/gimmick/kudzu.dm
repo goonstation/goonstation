@@ -407,6 +407,7 @@
 	var/destroyed = 0
 	add_underlay = 0
 	health = 20
+	melttemp = 1000 //arbitrarily big number
 
 	New(loc, mob/M as mob)
 		..()

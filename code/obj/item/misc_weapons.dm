@@ -40,7 +40,7 @@ TYPEINFO(/obj/item/sword)
 	throw_range = 5
 	health = 7
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
 	contraband = 5
@@ -528,19 +528,20 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
 	burn_type = 1
 	stamina_damage = 15
 	stamina_cost = 5
 	stamina_crit_chance = 50
-	pickup_sfx = 'sound/items/blade_pull.ogg'
+	equip_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 	New()
 		..()
+		setItemSpecial(/datum/item_special/jab)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
@@ -594,6 +595,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
+
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -607,9 +609,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	force = 8
 	throwforce = 18
 	throw_range = 10
-	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
+	flags = TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	item_state = "knife"
+	New()
+		..()
+		setItemSpecial(/datum/item_special/simple)
 	gang
 		name = "familiar fighting knife"
 		force = 17
@@ -638,6 +644,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
+	throwforce = 10
+	throw_speed = 0.5
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -658,7 +666,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	w_class = W_CLASS_BULKY
 	throwforce = 8
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 3
 	stamina_damage = 30
@@ -726,7 +734,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 7
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	desc = "An ancient and questionably effective weapon."
 	burn_type = 0
 	stamina_damage = 45
@@ -751,7 +759,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
 	object_flags = NO_ARM_ATTACH
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
@@ -816,7 +824,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_speed = 4
 	throw_range = 8
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -934,7 +942,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	contraband = 80
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | USEDELAY
+	flags = CONDUCT | NOSHIELD | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING
 	stamina_damage = 50
 	stamina_cost = 45
@@ -990,7 +998,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	hitsound = null
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	flags = CONDUCT | TABLEPASS | USEDELAY
 	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
@@ -1214,7 +1222,7 @@ TYPEINFO(/obj/item/bat)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_BULKY
 	force = 10
@@ -1524,7 +1532,7 @@ TYPEINFO(/obj/item/swords/captain)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = ONBELT
 	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
@@ -1555,7 +1563,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, SPAN_ALERT("The [W] can't fit into [src]."))
+			boutput(user, SPAN_ALERT("[W] can't fit into [src]."))
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
@@ -1829,7 +1837,6 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2_low"
 	item_state = "hadar_sword2"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
@@ -1973,6 +1980,8 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+		src.setItemSpecial(/datum/item_special/heavy_swing)
+
 
 //Machete for The Slasher
 /obj/item/slasher_machete
@@ -1985,7 +1994,7 @@ obj/item/whetstone
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 15.0 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	c_flags = ONBELT
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
@@ -2084,7 +2093,7 @@ obj/item/whetstone
 	var/guard = null //! used to keep track of what melee properties we're using
 
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 	leaves_slash_wound = TRUE
@@ -2192,7 +2201,7 @@ obj/item/whetstone
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	color = "#4a996c"
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	force = 10
 	throwforce = 5
 	throw_speed = 1
