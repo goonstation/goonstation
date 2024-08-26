@@ -202,7 +202,7 @@
 /area/noGenerate)
 "He" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt4,
@@ -368,7 +368,7 @@
 /area/noGenerate)
 "YM" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "b4b4b4";
 	dir = 4
 	},
