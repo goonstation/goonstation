@@ -2486,6 +2486,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/firealarm/east,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -2658,6 +2659,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 10
 	},
@@ -3471,6 +3473,7 @@
 /area/station/bridge/captain)
 "aod" = (
 /obj/submachine/weapon_vendor/security,
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "aoe" = (
@@ -4247,6 +4250,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -5964,6 +5968,7 @@
 /area/station/ai_monitored/armory)
 "axm" = (
 /obj/machinery/vending/jobclothing/security,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "axo" = (
@@ -14854,6 +14859,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "eFq" = (
@@ -14874,6 +14880,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "eGO" = (
@@ -15152,13 +15159,12 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "fvg" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	name = "Meeting Room"
-	},
 /obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "fvy" = (
@@ -15849,6 +15855,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "inner";
+	name = "Security"
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -16067,6 +16078,12 @@
 "iqS" = (
 /obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/security/alt,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "security";
+	enter_id = "outer";
+	name = "Security"
+	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "irx" = (
@@ -18507,6 +18524,7 @@
 /obj/machinery/defib_mount{
 	pixel_y = 2
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
