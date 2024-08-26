@@ -1,5 +1,8 @@
 
 (t)sat aug 24 24
+(u)Zamujasa
+(+)Daggers now open mail. They're knives, after all.
+(+)Syndicate daggers are particularly adept at opening mail.
 (u)KakoLookiyam
 (p)20112
 (e)🆕|C-Feature
