@@ -1,4 +1,10 @@
 
+(t)mon aug 26 24
+(u)gus
+(p)20311
+(e)🗺|A-Mapping
+(+)Added a valve to Kondaru toxins
+(+)added an exterior shutters button to kondaru telesci
 (t)sat aug 24 24
 (u)Zamujasa
 (+)Daggers now open mail. They're knives, after all.
