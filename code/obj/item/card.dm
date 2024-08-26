@@ -46,6 +46,12 @@ TYPEINFO(/obj/item/card/emag)
 	attack()	//Fucking attack messages up in this joint.
 		return
 
+/obj/item/card/emag/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=1.1)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
+
 /obj/item/card/emag/fake
 //delicious fake emag
 	attack_hand(mob/user)
@@ -218,6 +224,7 @@ TYPEINFO(/obj/item/card/emag)
 			assignment = "Syndicate Commander"
 			access = list(access_syndicate_shuttle, access_syndicate_commander)
 
+
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"
@@ -241,10 +248,12 @@ TYPEINFO(/obj/item/card/emag)
 		People dabbed on: [dabbed_on_count]<br/>"}
 
 /obj/item/card/id/dabbing_license/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: [get_desc(0, user)]")
-
 	src.add_fingerprint(user)
-	return
+	playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=0.9)
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/captains_spare/explosive
 	pickup(mob/user)
@@ -263,10 +272,11 @@ TYPEINFO(/obj/item/card/emag)
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
+	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+		return
 	user.visible_message("[user] shows you: [bicon(src)] [src.name]: assignment: [src.assignment]", "You show off your card: [bicon(src)] [src.name]: assignment: [src.assignment]")
-
 	src.add_fingerprint(user)
-	return
+	actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
 
 /obj/item/card/id/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.emagged)

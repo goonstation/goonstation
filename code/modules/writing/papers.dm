@@ -605,7 +605,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<tr>
 	<td><b>"Execute" / "Exterminate"</b></td>
 	<td>30 PU</td>
-	<td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+	<td>Turn your Lawbringer™ into your favourite sidearm with these only slightly radioactive blaster rounds!</td>
 	</tr>
 	<tr>
 	<td><b>"Hotshot" / "Incendiary"</b></td>
@@ -623,9 +623,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 	</tr>
 	<tr>
-	<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
+	<td><b>"Bigshot" / "High Power" / "Assault"</b></td>
 	<td>170 PU</td>
-	<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+	<td>You'll be the talk of the station when you bust down a wall with one of these high power assault lasers! May cause small fires and molten metal puddles.</td>
 	</tr>
 	<tr>
 	<td><b>"Clownshot" / "Clown"</b></td>
@@ -1353,3 +1353,35 @@ proc/spawn_kitchen_note()
 
 #undef IMAGE_OFFSET_X
 #undef IMAGE_OFFSET_Y
+
+/obj/item/paper/wanderpoem
+	name = "A freshly written poem"
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "paper-red"
+	info = {"
+	<span style="color:red;font-family:Lucida Handwriting;">
+	<p> Winter arrived. <p> <br>
+	<p>Winter arrived years ago, <p> <br>
+	<p>its frost creeping into that well churned soil. <p> <br>
+	<p>My world grew silent as the crystalline cold silenced the birds, <p> <br>
+	<p>made fallow the fields. <p> <br>
+	<p>Is winter not what one would wish for when aggrieved by that summer of sweltering hysteria. <p> <br>
+	<p>Those that bound me to then had wilted into the soil, their flowers turning to drifting dust. <p> <br>
+	<p>The fields of chance further grew only that which could harm me, <p> <br>
+	<p>the cacophonous cries surrounding served only to create doubt where none could be left. <p> <br>
+	<p>Quietus came and offered its hand to me, <p> <br>
+	<p>I took it. <p> <br> <br>
+
+	<p>Its hand froze all in perfect peace, <p> <br>
+	<p>I looked out into a world of pure white. <p> <br>
+	<p>In contradiction, I embraced this death with one hand, <p> <br>
+	<p>yet could not tear another from the only warmth that remained. <p> <br>
+	<p>That dithering flame wandered among the kindling I had set for it, <p> <br>
+	<p>it leaped to and fro from precious branch to branch. <p> <br>
+	<p>I came to understand more of myself then, <p> <br>
+	<p>I understood that this part of myself could not be excised. <p> <br>
+	<p>Peace was more than an end, <p> <br>
+	<p>more than the winter of a soul. <p> <br>
+	<p>Spring came, <p> <br>
+	<p>spring came at last. <p> <br>
+	"}

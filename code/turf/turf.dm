@@ -33,8 +33,6 @@
 	var/can_write_on = FALSE
 	///value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/messy = 0
-	var/tmp/checkinghasproximity = 0
-	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
@@ -544,19 +542,6 @@ proc/generate_space_color()
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
 
-	var/i = 0
-	i = 0
-	if (src.neighcheckinghasproximity > 0)
-		for (var/turf/T in range(1,src))
-			if (T.checkinghasproximity > 0)
-				for(var/thing in T)
-					var/atom/A = thing
-					// I Said No sanity check
-					if(i++ >= 50)
-						break
-					if (A.event_handler_flags & USE_PROXIMITY)
-						A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
-
 	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
 
@@ -719,8 +704,6 @@ var/global/in_replace_with = 0
 	var/old_opaque_atom_count = src.opaque_atom_count
 
 	var/old_blocked_dirs = src.blocked_dirs
-	var/old_checkinghasproximity = src.checkinghasproximity
-	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
@@ -827,8 +810,6 @@ var/global/in_replace_with = 0
 	new_turf.pass_unstable += old_pass_unstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
-	new_turf.checkinghasproximity = old_checkinghasproximity
-	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
@@ -877,14 +858,15 @@ var/global/in_replace_with = 0
 				air_master.tiles_to_update |= N
 		else if (air_master)
 			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons -= src
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
+			oldparent.borders?.Remove(src)
 
 
-	if (istype(new_turf, /turf/simulated))
-		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
-		new_turf.update_nearby_tiles(1)
+	new_turf.update_nearby_tiles(1)
 
 	#ifdef CHECK_MORE_RUNTIMES
 	in_replace_with--

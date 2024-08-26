@@ -1,4 +1,268 @@
 
+(t)sat aug 24 24
+(u)Zamujasa
+(+)Daggers now open mail. They're knives, after all.
+(+)Syndicate daggers are particularly adept at opening mail.
+(u)KakoLookiyam
+(p)20112
+(e)🆕|C-Feature
+(*)Mechcomp cabinets are now capable with of equipping internal gravitons.
+(+)Mechcomp cabinets can now attach internal graviton components. When attached, a graviton is only able to fling its enclosing cabinet itself a shorter distance than a floor mounted graviton.
+(t)fri aug 23 24
+(u)Klushy225
+(p)20388
+(e)💅💪|C-QoL, A-Traits
+(+)The German accent is now able to be understood.
+(t)thu aug 22 24
+(u)Iamgoofball
+(p)20390
+(e)🔄📄|C-Rework, A-UI
+(+)Replaces instance of "lynched" with "gibbed" in the critter compendium.
+(t)tue aug 20 24
+(u)LeahTheTech
+(+)The WA-V3 is no longer illegal.
+(u)LeahTheTech + Flaborized
+(p)20317
+(e)🗺🎨🧫🔊📦|A-Mapping, C-Sprites, C-Experimental, C-Sound, A-Game-Objects
+(*)Added the WA-V3 (get it?) janitorial sprayer, available in a crate from cargo for 4500 credits. See minor changes for details.
+(+)The WA-V3 pulls from a 500u back-mounted tank and has three different modes with different reagent costs: narrow (10u), wave (20u) and w i d e (30u). The tank itself also has 3 "small" capacity inventory slots.
+(+)Replaced the Tsunami spray bottle spawn with a cybernetic spray bottle spawn.
+(t)mon aug 19 24
+(u)JORJ949
+(p)20370
+(e)|
+(+)Classic SecTechs now get Space Law. Also increased available quantity from 1->3
+(t)sun aug 18 24
+(u)LeahTheTech
+(+)Roboticist PDAs get the silicon PDA group.
+(t)sat aug 17 24
+(u)Bork and Wrench
+(p)20343
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)Resprites the Garden Trowel, and gives it a new In-Hand and Sound Effect when digging and planting. Sprites by Bork
+(t)fri aug 16 24
+(u)LeahTheTech
+(+)Vampire blood steal is now much quieter.
+(t)thu aug 15 24
+(u)Munien
+(p)20262
+(e)🗺|A-Mapping
+(+)Headsets can now be inserted into Devil Horns the same as other headbands.
+(t)wed aug 14 24
+(u)LeahTheTech
+(p)20302
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(*)Removed the machine translator implant recipe from the robotics fabricator. Silicons may now communicate freely without fear of being overheard.
+(u)TDHooligan
+(p)20287
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Screwdrivers, daggers and forks now have a new special attack.
+(u)Cherman0
+(p)20278
+(e)🗺🔎🔄🏅📦|A-Mapping, C-Code-Quality, C-Rework, A-Medal, A-Game-Objects
+(+)The captain's antique now requires certain material statistics to make a more powerful gun instead of "quality".
+(u)JORJ949
+(p)20100
+(e)⚖📦💡|C-Balance, A-Game-Objects, A-Station-Systems
+(*)Armory deauthorization cooldown now starts upon authorization.
+(u)JORJ949
+(p)18622
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(*)Armory doors are now immune to wire hacking.
+(u)JORJ949
+(p)20248
+(e)🗺💅|A-Mapping, C-QoL
+(+)Nadir security has received a few minor changes. HoSes should take particular note of the armory.
+(t)mon aug 12 24
+(u)TDHooligan
+(p)20254
+(e)🆕🎨🔊📦|C-Feature, C-Sprites, C-Sound, A-Game-Objects
+(+)The airlock breaching sledgehammer now has a unique special attack.
+(u)Cogwerks
+(e)📦|A-Game-Objects
+(+)Renamed the Gwydion tranq pistol to Ceridwen
+(u)Egregorious
+(p)20271
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The still is a little nicer to use.
+(u)Egregorious
+(p)20213
+(e)💅🌱|C-QoL, A-Hydroponics
+(+)'Jumbo' quality produce names are now displayed in all caps.
+(u)Soleil
+(p)20029
+(e)🆕📦💡|C-Feature, A-Game-Objects, A-Station-Systems
+(+)XIANG|GIESEL have finally added MechComp integration to their SMES units.
+(u)LeahTheTech
+(p)20253
+(e)🆕🎨💅|C-Feature, C-Sprites, C-QoL
+(*)Wearing meson goggles now allows you to see mechcomp connections.
+(t)sun aug 11 24
+(u)Glamurio (Ryou)
+(p)20261
+(e)💅🍝|C-QoL, A-Catering
+(+)Soy sauce and gravy can now be created via mixer.
+(u)DecodeQwertyPls
+(p)20245
+(e)🆕📦⚗|C-Feature, A-Game-Objects, A-Chemistry
+(+)Things inside a container (satchel, backpack, not lockers or crates) will heat up if the container starts burning
+(t)sat aug 10 24
+(u)Tyrant
+(p)20209
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Due to budget cuts, Port-a-Brigs are no longer equipped with soundproofing.
+(u)Mr. Moriarty
+(p)20228
+(e)🆕🔎⚙|C-Feature, C-Code-Quality, A-Internal
+(+)Minimaps now depict walls and doors.
+(t)fri aug 09 24
+(u)Egregorious
+(p)20236
+(e)🆕🍝|C-Feature, A-Catering
+(*)Added Iron Brew, a drink which can be distilled from steel wheat.
+(u)JORJ949
+(p)20226
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The gang gamemode now requires a minimum of 15 players.
+(t)wed aug 07 24
+(u)LeahTheTech
+(p)20219
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The Thinktronic™ Space GPS PDA program has been updated to include information on nearby visible celestial bodies (background parallax objects)
+(u)LeahTheTech and Cogwerks
+(p)20216
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Added a blowgun complete with 8 knockout darts to the traitor and spy-thief purchase lists. It costs 4TC.
+(u)Chasu
+(p)20211
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Pizzas can (again) be cut with snipping tools. Knifeless rejoice!
+(t)tue aug 06 24
+(u)LeahTheTech
+(+)Engivacs in engineering lockers now spawn with toolboxes loaded.
+(+)Molitz B geodes now release agent B when broken open.
+(+)Mining charges can now be placed on geodes anywhere.
+(+)Broken open geodes can now be destroyed by explosions.
+(u)LeahTheTech + Jan.antilles
+(p)20199
+(e)📦|A-Game-Objects
+(*)Nanotrasen Space Law has been completely rewritten and updated to actually be something you should show sec assistants.
+(t)mon aug 05 24
+(u)LeahTheTech
+(+)The lawbringer's blaster mode now has a different sound effect and slightly faster shot speed.
+(u)Valtsu0
+(p)20179
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)You can now also show off the authentication disk
+(u)Bork and Wrench
+(p)20121
+(e)🎨🍝|C-Sprites, A-Catering
+(*)Adds two new food items to the game: Cheese Danish and Chocolate Covered Cherry. Sprites by Bork.
+(u)Cherman0
+(p)20181
+(e)🔎📦|C-Code-Quality, A-Game-Objects
+(+)"Wifi Signal Splitter Component" is now just called "Signal Splitter Component"
+(t)sun aug 04 24
+(u)Jan.antilles and Mordent
+(p)20072
+(e)⚖💊💪|C-Balance, A-Medical, A-Traits
+(*)Mildly Mutated now reinforces the mutation (requiring scrambling or gene research to be removed) and grants 1 trait point.
+(*)Geneticists are able to scramble genes at roundstart instead of needing to research radiation emitters.
+(u)LeahTheTech
+(p)20178
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's EXTERMINATE mode with laser blaster projectiles. Keywords remain unchanged.
+(u)LeahTheTech
+(p)20176
+(e)⚖|C-Balance
+(*)Replaced the lawbringer's High Explosive mode with a High Power assault laser mode. Keywords are: BIG SHOT, HIGH POWER and ASSAULT.
+(u)LeahTheTech
+(*)The ship alert button has been fitted with a tiny keyboard (you know, like those old blackberry phones) and now requires a reason to be entered in order to set off the alert.
+(u)Cherman0
+(p)20183
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The nuclear generator turbine now reports its stator load via mechcomp.
+(t)fri aug 02 24
+(u)glowbold + Rubicubie
+(*)Using a badge, ID card, emag or dabbing license in-hand will now show it off with a neat little overlay.
+(u)LeahTheTech
+(+)The "mutiny" status effect given to heads of staff on revolution rounds is now invisible.
+(p)20127
+(e)🚄⚖🧫|C-Performance, C-Balance, C-Experimental
+(*)Radioactive things are now more dangerous to stand next to, you will accumulate a significant dose a lot faster.
+(t)thu aug 01 24
+(u)LeahTheTech
+(p)20159
+(e)🪲|C-Bug
+(+)Closing doors now properly stops fluid puddles flowing under them.
+(t)wed jul 31 24
+(u)LeahTheTech
+(+)Crayon drawings will no longer show up in the right click menu.
+(t)tue jul 30 24
+(u)Colossus
+(p)20131
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added metal masks to the game, which can be crafted by using a welder on a stack of 5 or more steel sheets. Masks offer protection in exchange for visibility.
+(t)mon jul 29 24
+(u)LeahTheTech
+(+)Atmospheric scanners will now correctly display the gas contents of objects rather than sometimes reporting the contents of the turf they are sitting on.
+(t)sun jul 28 24
+(u)CalliopeSoups
+(+)Contraband lockers have been re-located to the back rooms of most security departments. This is sure to deter theft as nobody goes back there!
+(t)sat jul 27 24
+(u)Colossus
+(p)20086
+(e)🆕🔬|C-Feature, A-Science
+(+)Tetrodotoxin now may appear in eldritch artifacts and ??? pills.
+(u)glowbold & soleil
+(p)20096
+(e)🪲🗺📦💡|C-Bug, A-Mapping, A-Game-Objects, A-Station-Systems
+(+)NanoTrasen has supplied Nadir and Oshan with a backup sea elevator control board.
+(u)LeahTheTech
+(p)20067
+(e)⚖💅⚗|C-Balance, C-QoL, A-Chemistry
+(*)Graphene now takes silicon, rather than silicon dioxide to make.
+(t)fri jul 26 24
+(u)cringe
+(p)19847
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nanotrasen has built better glass floors that are seamless. They also let through light.
+(u)LeahTheTech
+(+)Maneaters and skeleton commanders no longer bleed.
+(u)TDHooligan
+(p)19063
+(e)⚖💊|C-Balance, A-Medical
+(*)Sharp weapons cause bleeding more reliably.
+(*)Heavy bleeding (Artery nicks) cannot be naturally regenerated, and require bandages/sutures/cauterization/staunching.
+(*)As compensation, bleeding slows down as you lose blood. Coagulants (proconvertin) also limit incoming bleeds, like 'Bleed Armor'.
+(t)thu jul 25 24
+(u)Azrun
+(p)18570
+(e)🆕🔒⚖🔬🐁|C-Feature, A-Secret, C-Balance, A-Science, A-Critters
+(*)Expands Genetics to scan some small animals! Stick 'em in a carrier and see what is out there.
+(t)wed jul 24 24
+(u)JORJ949
+(p)19799
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Cargo can now order a crate full of departmental clothing vendor restock cartridges.
+(u)Smilg
+(p)20071
+(e)💅📦|C-QoL, A-Game-Objects
+(*)You can now hit the floor with MechComps to place them on a neat 2x2 grid.
+(t)tue jul 23 24
+(u)Sord
+(+)Tasers have a new sound when they hit a mob
+(t)mon jul 22 24
+(u)LeahTheTech
+(*)The arcfiend jolt ability is no longer interrupted by attacks and now shoots periodic arcs of electricity at nearby mobs.
+(u)Kakolookiyam
+(p)19982
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)PTL should no longer occasionally shut off when firing beyond its batteries capacity.
+(u)fr4meperfect
+(p)20053
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Adds a pint glass to bar glass recyclers.
 (t)fri jul 19 24
 (u)Kubius
 (p)19587

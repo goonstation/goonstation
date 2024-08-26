@@ -795,7 +795,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 #ifdef MAP_OVERRIDE_OSHAN
 	/obj/item/clothing/shoes/stomp_boots,
 #endif
-	/obj/item/engivac,
+	/obj/item/engivac/complete,
 	/obj/item/old_grenade/oxygen,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/clothing/glasses/toggleable/atmos,

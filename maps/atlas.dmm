@@ -277,6 +277,17 @@
 "abp" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"abq" = (
+/obj/machinery/computer/secure_data/detective_computer,
+/obj/noticeboard/persistent{
+	name = "Detective's Office persistent notice board";
+	persistent_id = "detectives office";
+	pixel_x = 32;
+	pixel_y = 2;
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "abr" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/exit)
@@ -879,6 +890,14 @@
 "adn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
+"ado" = (
+/obj/storage/secure/closet/command/medical_director,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/stamp/md,
+/obj/item/mdlicense,
+/turf/simulated/floor/white,
+/area/station/bridge/united_command)
 "adp" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -3491,6 +3510,25 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/storage/eva)
+"aoE" = (
+/obj/disposalpipe/segment/brig{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_x = -32;
+	pixel_y = 0;
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/main)
 "aoF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -4368,22 +4406,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"ass" = (
-/obj/landmark/start/job/cyborg,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/turretid{
-	pixel_x = 24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "ast" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5154,6 +5176,20 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"auX" = (
+/obj/storage/secure/closet/command/research_director,
+/obj/item/storage/briefcase/toxins,
+/obj/item/remote/porter/port_a_sci,
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -2
+	},
+/obj/item/stamp/rd,
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/item/rddiploma,
+/turf/simulated/floor/purple,
+/area/station/bridge/united_command)
 "auY" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -5759,6 +5795,31 @@
 /obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
+"awY" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/disposal/small{
+	dir = 8
+	},
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/noticeboard/persistent{
+	name = "Mechanics Workshop persistent notice board";
+	persistent_id = "mechanics";
+	pixel_x = 32;
+	pixel_y = 0;
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/engine/elect)
 "awZ" = (
 /obj/table/auto,
 /obj/item/clothing/under/gimmick/owl,
@@ -10740,6 +10801,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"aPz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/noticeboard/persistent{
+	name = "Crew Quarters persistent notice board";
+	persistent_id = "crew quarters";
+	pixel_x = 32;
+	pixel_y = 0;
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hangar/arrivals)
 "aPE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -11164,6 +11238,17 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
+"aRv" = (
+/obj/machinery/plantpot,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany";
+	pixel_x = 32;
+	pixel_y = 0;
+	dir = 4
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "aRw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Research Wing"
@@ -13543,20 +13628,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bie" = (
-/obj/machinery/computer/announcement{
-	dir = 4;
-	name = "QM Announcement Computer";
-	req_access_txt = "31"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/yellow/side{
-	dir = 9
-	},
-/area/station/quartermaster/office)
 "blb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum{
@@ -14007,6 +14078,18 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
+"cGg" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/cargo{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/quartermaster/office)
 "cJH" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
@@ -14331,31 +14414,6 @@
 	desc = "The Regional Director wouldn't stop raving about the great price they got for this carpet. Looking at it makes you uneasy."
 	},
 /area/station/crew_quarters/cafeteria)
-"dzX" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
-/obj/noticeboard/persistent{
-	name = "Mechanics Workshop persistent notice board";
-	persistent_id = "mechanics";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 5
-	},
-/area/station/engine/elect)
 "dAs" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/machinery/light/incandescent,
@@ -15294,6 +15352,15 @@
 	dir = 1
 	},
 /area/station/mining/refinery)
+"ghZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "gmG" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -15316,25 +15383,6 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
-"gpX" = (
-/obj/disposalpipe/segment/brig{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = "brig";
-	pixel_x = -32;
-	pixel_y = 0;
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red/side{
-	dir = 10
-	},
-/area/station/security/main)
 "gqF" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15437,6 +15485,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"gGA" = (
+/obj/machinery/firealarm/north,
+/obj/item/reagent_containers/syringe/haloperidol,
+/obj/storage/cart/medcart/crash,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "gJY" = (
 /obj/machinery/atmospherics/unary/furnace_connector,
 /obj/machinery/firealarm/north,
@@ -16339,20 +16395,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
-"jKx" = (
-/obj/storage/secure/closet/command/research_director,
-/obj/item/storage/briefcase/toxins,
-/obj/item/remote/porter/port_a_sci,
-/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
-	pixel_x = -2
-	},
-/obj/item/stamp/rd,
-/obj/machinery/light{
-	layer = 3
-	},
-/obj/item/rddiploma,
-/turf/simulated/floor/purple,
-/area/station/bridge/united_command)
 "jLt" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -16419,14 +16461,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
-"jUF" = (
-/obj/machinery/firealarm/north,
-/obj/storage/cart/medcart,
-/obj/item/reagent_containers/syringe/haloperidol,
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "jUG" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -17913,6 +17947,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"ocu" = (
+/obj/displaycase/captain,
+/turf/simulated/floor/blue,
+/area/station/bridge/captain)
 "odD" = (
 /obj/machinery/status_display/market,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -18441,6 +18479,22 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"pHI" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/announcement/station/bridge{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 4;
+	icon_state = "fblue2"
+	},
+/area/station/bridge)
 "pKg" = (
 /obj/machinery/light/incandescent,
 /obj/cable{
@@ -18666,6 +18720,22 @@
 	desc = "The Regional Director wouldn't stop raving about the great price they got for this carpet. Looking at it makes you uneasy."
 	},
 /area/station/crew_quarters/cafeteria)
+"qrW" = (
+/obj/landmark/start/job/cyborg,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = 24
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "quP" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -19396,17 +19466,6 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"sFJ" = (
-/obj/machinery/plantpot,
-/obj/noticeboard/persistent{
-	name = "Botany persistent notice board";
-	persistent_id = "botany";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "sHZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -19427,19 +19486,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"sKP" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/noticeboard/persistent{
-	name = "Crew Quarters persistent notice board";
-	persistent_id = "crew quarters";
-	pixel_x = 32;
-	pixel_y = 0;
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hangar/arrivals)
 "sNj" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
@@ -20516,24 +20562,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"vvA" = (
-/obj/machinery/computer/announcement{
-	announces_arrivals = 1;
-	dir = 8;
-	name = "Bridge Announcement Computer"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/carpet{
-	dir = 4;
-	icon_state = "fblue2"
-	},
-/area/station/bridge)
 "vvG" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -20674,17 +20702,6 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"vUS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory"
-	},
-/obj/mapping_helper/access/armory,
-/turf/simulated/floor/black,
-/area/station/ai_monitored/armory)
 "vXs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -20826,23 +20843,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"wlm" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
-/turf/simulated/floor/blue,
-/area/station/bridge/captain)
-"wmp" = (
-/obj/machinery/computer/secure_data/detective_computer,
-/obj/noticeboard/persistent{
-	name = "Detective's Office persistent notice board";
-	persistent_id = "detectives office";
-	pixel_x = 32;
-	pixel_y = 2;
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/security/detectives_office)
 "wnp" = (
 /obj/machinery/firealarm/north,
 /obj/storage/cart/mechcart,
@@ -20855,14 +20855,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"woF" = (
-/obj/storage/secure/closet/command/medical_director,
-/obj/item/device/analyzer/healthanalyzer/upgraded,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/stamp/md,
-/obj/item/mdlicense,
-/turf/simulated/floor/white,
-/area/station/bridge/united_command)
 "wra" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62666,7 +62658,7 @@ asP
 acp
 tEj
 awP
-dzX
+awY
 axd
 axf
 aht
@@ -63267,7 +63259,7 @@ abD
 abN
 abD
 odD
-bie
+cGg
 adX
 aeI
 adX
@@ -63587,7 +63579,7 @@ aTE
 aGr
 aqD
 beX
-ass
+qrW
 atE
 auM
 avH
@@ -67817,7 +67809,7 @@ aDE
 aYv
 aUO
 ack
-sFJ
+aRv
 aqp
 aqp
 avP
@@ -71115,7 +71107,7 @@ aaa
 aaa
 abb
 abf
-wmp
+abq
 tce
 acA
 bcW
@@ -71756,7 +71748,7 @@ aDG
 aDm
 aEc
 aBx
-jUF
+gGA
 azy
 abA
 adU
@@ -73548,7 +73540,7 @@ akx
 alr
 amq
 aPk
-gpX
+aoE
 fvg
 enb
 iat
@@ -75052,7 +75044,7 @@ afE
 gTj
 upB
 puj
-vUS
+ghZ
 plm
 ajI
 nER
@@ -76282,7 +76274,7 @@ fIQ
 awG
 awf
 aSB
-sKP
+aPz
 aJt
 aJt
 aJt
@@ -78699,7 +78691,7 @@ aEn
 aPE
 aCq
 aTh
-woF
+ado
 azf
 aEY
 xGP
@@ -79001,7 +78993,7 @@ aWK
 aWP
 aUW
 aZW
-jKx
+auX
 azf
 aEZ
 xGP
@@ -81402,7 +81394,7 @@ axG
 aIW
 axu
 axE
-wlm
+ocu
 amu
 uzK
 asX
@@ -81709,7 +81701,7 @@ amu
 aAT
 keS
 qgH
-vvA
+pHI
 aSK
 aBK
 aBK

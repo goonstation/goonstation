@@ -106,7 +106,6 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.getQuality()
 			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
@@ -196,8 +195,8 @@
 		else
 			return null
 
-	return_air()
-		if (loc)
+	return_air(direct = FALSE)
+		if (loc && !direct)
 			return loc.return_air()
 		else
 			return null

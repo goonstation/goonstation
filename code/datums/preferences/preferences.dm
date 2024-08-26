@@ -1150,7 +1150,7 @@ var/list/removed_jobs = list(
 			qdel(ourWig)
 
 		if (src.traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+			H.equip_if_possible(H.create_wig(keep_hair = TRUE), SLOT_HEAD)
 
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
@@ -1840,12 +1840,13 @@ var/list/removed_jobs = list(
 			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
-	proc/apply_post_new_stuff(mob/living/character)
+	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
 		for (var/slot_id in src.custom_parts)
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
+			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 

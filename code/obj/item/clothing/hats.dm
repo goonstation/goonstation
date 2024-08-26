@@ -303,15 +303,28 @@ proc/filter_trait_hats(var/type)
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
 	blocked_from_petasusaphilic = TRUE
+	var/inspector = FALSE
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
-	attack_self(mob/user)
-		boutput(user, "You reach inside the hat and pull out a pair of goggles. The scuttlebot wakes up! Use the goggles on the bot to make it dormant again.")
-		new /mob/living/critter/robotic/scuttlebot(get_turf(src))
-		qdel(src)
+	attack_self (mob/user as mob)
+		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
+		var/mob/living/critter/robotic/scuttlebot/S = new /mob/living/critter/robotic/scuttlebot(get_turf(src))
+		if (src.inspector == TRUE)
+			S.make_inspector()
+		S.linked_hat = src
+		user.drop_item()
+		src.set_loc(S)
+		user.update_inhands()
+		return
+
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 5)
+
+
+	proc/make_inspector()
+		src.inspector = TRUE
+		src.icon_state = "inspector"
 
 //THE ONE AND ONLY.... GO GO GADGET DETECTIVE HAT!!!
 /obj/item/clothing/head/det_hat/gadget
@@ -1505,6 +1518,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		name = "tiger ears"
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/devil
+	name = "devil horns"
+	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "devil"
+	item_state = "devil"
 
 /obj/item/clothing/head/headband/antlers
 	name = "antlers"

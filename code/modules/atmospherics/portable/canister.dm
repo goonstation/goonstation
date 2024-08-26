@@ -22,7 +22,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
-	desc = "A container which holds a large amount of the labelled gas. It's possible to transfer the gas to a pipe system, the air, or to a tank that you attach to it."
 	var/overpressure = 0 // for canister explosions
 	var/rupturing = 0
 	var/obj/item/assembly/detonator/det = null
@@ -31,9 +30,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	var/image/atmos_dmi
 	var/image/bomb_dmi
+	var/full_gas_name = "the labelled gas"
+	HELP_MESSAGE_OVERRIDE("Use a <b>wrench</b> to attach or detach from an atmospherics port.")
 
 	New()
 		..()
+		desc = "A container which holds a large amount of [src.full_gas_name]."
 		src.AddComponent(/datum/component/bullet_holes, 5, 0)
 		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
 		bomb_dmi = image('icons/obj/canisterbomb.dmi')
@@ -74,31 +76,37 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent
 	name = "Canister: \[N2O\]"
+	full_gas_name = "nitrous oxide"
 	icon_state = "redws"
 	casecolor = "redws"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
+	full_gas_name = "nitrogen"
 	icon_state = "red"
 	casecolor = "red"
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
+	full_gas_name = "oxygen"
 	icon_state = "blue"
 	casecolor = "blue"
 
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
+	full_gas_name = "Faddeev-Popov Anhydrous Anomalous Evaporate (FAAE, commonly called plasma)"
 	icon_state = "orange"
 	casecolor = "orange"
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
+	full_gas_name = "carbon dioxide"
 	icon_state = "black"
 	casecolor = "black"
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
+	full_gas_name = "air mix"
 	icon_state = "grey"
 	casecolor = "grey"
 	filled = 2
@@ -111,6 +119,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
+	full_gas_name = "nothing"
 	icon_state = "empty"
 	casecolor = "empty"
 
@@ -121,6 +130,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/methane
 	name = "Canister \[Methane\]"
+	full_gas_name = "methane"
 	icon_state = "darkgreen"
 	casecolor = "darkgreen"
 
@@ -184,6 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
 		air_contents = null
+		disconnect()
 
 		if (src.det)
 			processing_items.Remove(src.det)
@@ -296,7 +307,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	src.UpdateIcon()
 	return
 
-/obj/machinery/portable_atmospherics/canister/return_air()
+/obj/machinery/portable_atmospherics/canister/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/canister/blob_act(var/power)

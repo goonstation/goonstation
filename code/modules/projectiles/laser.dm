@@ -123,14 +123,44 @@ toxic - poisons
 	color_red = 0
 	color_green = 0
 	color_blue = 1
+	always_hits_structures = TRUE
 
 	on_hit(atom/hit, dir, obj/projectile/P)
 		fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_BLUE)
-		if((istype(hit, /turf/simulated) || istype(hit, /obj/structure/girder)))
+		if(!ismob(hit))
 			hit.ex_act(2)
 		else
 			hit.ex_act(3, src, 1.5) //don't stun humans nearly as much
 		P.die() //explicitly kill projectile - not a mining laser
+
+/datum/projectile/laser/cruiser
+	name = "obsidio beam"
+	icon_state = "elecorb"
+	damage = 100
+	cost = 65
+	dissipation_delay = 100
+	dissipation_rate = 0
+	max_range = 300
+	projectile_speed = 32
+	sname = "pulsed gigawatt beam"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+	brightness = 4
+	shot_number = 5
+	window_pass = 0
+
+	tick(var/obj/projectile/P)
+		var/T1 = get_turf(P)
+		if(!istype(T1,/turf/space))
+			fireflash_melting(T1, 0, rand(50000, 100000), 0, TRUE, CHEM_FIRE_BLUE, TRUE, FALSE)
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		elecflash(T,radius=2, power=500000, exclude_center = 0)
+		fireflash_melting(T, 1, rand(50000, 100000), 0, TRUE, CHEM_FIRE_BLUE, FALSE, TRUE)
+		hit.meteorhit()
 
 /datum/projectile/laser/light // for the drones
 	name = "phaser bolt"
@@ -407,6 +437,11 @@ toxic - poisons
 		SPAWN( 20 )
 			if (I && !I.disposed) qdel(I)*/
 
+	lawbringer
+		color_icon = "#00FFFF"
+		shot_sound = 'sound/weapons/laser_b.ogg'
+		projectile_speed = 46 //it's not quite the carbine but let's make it a little faster to go with the ANGRY shot sound
+		shot_pitch = 0.8
 
 	burst
 		damage = 15
@@ -711,9 +746,10 @@ toxic - poisons
 	color_blue = 1
 
 	on_hit(atom/hit, dir, obj/projectile/P)
-		fireflash(get_turf(hit), 0)
+		elecflash(get_turf(hit),radius=0, power=10, exclude_center = 0)
 		hit.ex_act(2)
 		P.die() //explicitly kill projectile - not a mining laser
+
 
 /datum/projectile/laser/makeshift
 	cost = 1250

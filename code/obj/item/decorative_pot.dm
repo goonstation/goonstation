@@ -28,6 +28,7 @@ TYPEINFO(/obj/decorative_pot)
 						t.plantyboi = null
 						t.plantyboi_plantoverlay = null
 						t.icon_state = "trowel"
+						playsound(src, 'sound/effects/shovel2.ogg', 50, TRUE, 0.3)
 						t.genes.mutation?.HYPpotted_proc_M(src, t.grow_level)
 						qdel(t.genes)
 						t.genes = null
