@@ -247,7 +247,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
 	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
-		for(var/datum/customizationHolder/holder in src.customizations)
+		for(var/holder in src.customizations)
 			var/datum/customizationHolder/custom = src.customizations[holder]
 			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
 			custom.color_original = customCopy.color_original
@@ -282,7 +282,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if (progress >= 9 || prob(progress * 10))
 
-			for(var/datum/customizationHolder/holder in src.customizations)
+			for(var/holder in src.customizations)
 				if (!src.CanCopyCustomization(toCopy))
 					continue
 				var/datum/customizationHolder/custom = src.customizations[holder]
