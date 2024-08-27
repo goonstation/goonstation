@@ -294,7 +294,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(!target) return
 
 		if (isnull(target.reagents))
-			target.reagents = new
+			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
 		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
@@ -360,19 +360,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		reagents_transferred()
 		return amount
-
-	proc/aggregate_pathogens()
-		var/list/ret = list()
-		for (var/reagent_id in pathogen_controller.pathogen_affected_reagents)
-			if (src.has_reagent(reagent_id))
-				var/datum/reagent/blood/B = src.get_reagent(reagent_id)
-				if (!istype(B))
-					continue
-				for (var/uid in B.pathogens)
-					if (!(uid in ret))
-						ret += uid
-						ret[uid] = B.pathogens[uid]
-		return ret
 
 	/// multiplier is used to handle realtime metabolizations over byond time
 	proc/metabolize(var/mob/target, var/multiplier = 1)
@@ -886,6 +873,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
 
+	proc/has_any(list/reagents, amount)
+		for (var/reagent_id in reagents)
+			if (src.has_reagent(reagent_id, amount))
+				return TRUE
+		return FALSE
+
 	proc/has_active_reaction(var/reaction_id, var/amount=0)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if(C.id == reaction_id)
@@ -1223,6 +1216,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 /// Convenience proc to create a reagents holder for an atom
 /// Max vol is maximum volume of holder
-atom/proc/create_reagents(var/max_vol)
+atom/proc/create_reagents(var/max_vol = 100)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src

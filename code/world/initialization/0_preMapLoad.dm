@@ -52,6 +52,10 @@
 			roundLog << "<br>"
 			logLength += 4
 
+		// Global handlers that should be highly available
+		apiHandler = new()
+		eventRecorder = new()
+
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
 		abandon_allowed = config.respawn
@@ -130,9 +134,6 @@
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
 
-		Z_LOG_DEBUG("Preload", "Generating minimaps...")
-		minimap_renderer = new
-
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
 		Z_LOG_DEBUG("Preload", "manuf_controls set_up")
@@ -205,7 +206,6 @@
 		fluid_turf_setup(first_time=TRUE)
 
 		Z_LOG_DEBUG("Preload", "Preload stage complete")
-		station_name() // generate station name and set it
 		..()
 		global.current_state = GAME_STATE_MAP_LOAD
 

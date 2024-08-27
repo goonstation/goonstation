@@ -317,6 +317,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 			H.update_body()
 			H.update_clothing()
 
+			H.sound_scream = screamsounds[screamsound || "male"] || screamsounds["male"]
+			H.sound_fart = fartsounds[fartsound || "default"] || fartsounds["default"]
 			H.voice_type = voicetype || RANDOM_HUMAN_VOICE
 
 			if (H.mutantrace.voice_override)
@@ -500,14 +502,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.UpdateMob()
 		return E
 
-	proc/AddNewPoolEffect(var/idToAdd)
+	proc/AddNewPoolEffect(var/idToAdd, var/scramble=FALSE)
 		if(HasEffect(idToAdd) || HasEffectInPool(idToAdd))
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
 		newEffect = newEffect.GetCopy()
+
 		if (istype(newEffect))
 			effectPool[newEffect.id] = newEffect
+			if(scramble) newEffect.dnaBlocks.ModBlocks()
 			newEffect.holder = src
 			newEffect.owner = src.owner
 			return 1
@@ -552,6 +556,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/filteredGood = new/list()
 		var/list/filteredBad = new/list()
 		var/list/filteredSecret = new/list()
+		var/datum/bioEffect/selectedNew
 
 		for(var/datum/bioEffect/BE in effectPool)
 			qdel(BE)
@@ -560,6 +565,21 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (!bioEffectList || !length(bioEffectList))
 			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
+
+		var/mob/living/L = owner
+		if(!istype(L))
+			return
+		var/good_genes = 0
+		var/bad_genes = 0
+		var/secret_genes = 0
+		var/genetic_counts = L.get_genetic_traits()
+		if(length(genetic_counts) == 3)
+			good_genes = genetic_counts[1]
+			bad_genes = genetic_counts[2]
+			secret_genes = genetic_counts[3]
+
+		if(!good_genes && !bad_genes && !secret_genes)
+			return
 
 		for(var/T in bioEffectList)
 			var/datum/bioEffect/instance = bioEffectList[T]
@@ -577,16 +597,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					filteredGood[instance] = instance.probability
 
-		if(!filteredGood.len || !length(filteredBad))
+		if(!length(filteredGood) || !length(filteredBad))
 			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
 			return
 
-		for(var/g=0, g<5, g++)
+		for(var/g=0, g<good_genes, g++)
 			var/datum/bioEffect/selectedG = weighted_pick(filteredGood)
 			if(selectedG)
-				var/datum/bioEffect/selectedNew = selectedG.GetCopy()
+				selectedNew = selectedG.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 				selectedNew.holder = src
 				selectedNew.owner = src.owner
@@ -595,10 +615,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				break
 
-		for(var/b=0, b<5, b++)
+		for(var/b=0, b<bad_genes, b++)
 			var/datum/bioEffect/selectedB = weighted_pick(filteredBad)
 			if(selectedB)
-				var/datum/bioEffect/selectedNew = selectedB.GetCopy()
+				selectedNew = selectedB.GetCopy()
 				selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
 				selectedNew.holder = src
 				selectedNew.owner = src.owner
@@ -608,13 +628,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 				break
 
 		if (filteredSecret.len)
-			var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
-			var/datum/bioEffect/selectedNew = selectedS.GetCopy()
-			selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
-			selectedNew.holder = src
-			selectedNew.owner = src.owner
-			effectPool[selectedNew.id] = selectedNew
-			filteredBad.Remove(selectedS)
+			for(var/s=0, s<secret_genes, s++)
+				var/datum/bioEffect/selectedS = weighted_pick(filteredSecret)
+				if(selectedS)
+					selectedNew = selectedS.GetCopy()
+					selectedNew.dnaBlocks.ModBlocks() //Corrupt the local copy
+					selectedNew.holder = src
+					selectedNew.owner = src.owner
+					effectPool[selectedNew.id] = selectedNew
+					filteredSecret.Remove(selectedS)
+				else
+					break
 
 		shuffle_list(effectPool)
 
@@ -709,7 +733,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0, var/for_scanning=0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 		if(issilicon(src.owner))
 			return 0

@@ -21,7 +21,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	item_state = "syringe_0"
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	flags = TABLEPASS | OPENCONTAINER | NOSPLASH
 	c_flags = ONBELT
 	var/list/whitelist = list()
 	var/inj_amount = 5

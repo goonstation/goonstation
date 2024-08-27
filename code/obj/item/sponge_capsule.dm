@@ -4,7 +4,7 @@
 	icon_state = "sponge"
 	w_class = W_CLASS_TINY
 	throwforce = 1
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	throw_speed = 4
 	throw_range = 7
 	stamina_damage = 0
@@ -77,13 +77,16 @@
 				boutput(human_idiot, SPAN_ALERT("You feel your stomach suddenly bloat horribly!"))
 				human_idiot.organHolder.stomach.eject(src)
 				human_idiot.organHolder.stomach.take_damage(30)
+				human_idiot.TakeDamage("all", 10)
+				human_idiot.changeStatus("knockdown", 3 SECONDS)
+				hit_twitch(human_idiot)
 	playsound(src.loc, 'sound/effects/cheridan_pop.ogg', 100, 1)
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
 	var/atom/C = new animal_to_spawn(T)
 	if (ismobcritter(C))
 		var/mob/living/critter/M = C
-		M.faction |= FACTION_SPONGE
+		LAZYLISTADDUNIQUE(M.faction, FACTION_SPONGE)
 	T.visible_message(SPAN_NOTICE("What was once [src] has become [C.name]!"))
 	qdel(src)
 
@@ -113,7 +116,7 @@
 	icon_state = "spongecaps"
 	w_class = W_CLASS_TINY
 	throwforce = 2
-	flags = TABLEPASS | FPRINT | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1

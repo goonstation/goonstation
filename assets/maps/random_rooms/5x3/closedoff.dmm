@@ -62,7 +62,7 @@
 /area/dmm_suite/clear_area)
 "X" = (
 /obj/machinery/computer/security/wooden_tv,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 1;
 	pixel_y = 17
 	},

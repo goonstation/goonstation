@@ -99,29 +99,22 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/toggleable/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
-					H.vision.set_scan(1)
-					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					H.meson(src)
 				else
-					H.vision.set_scan(0)
-					REMOVE_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
+					H.unmeson(src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()
 		if(!isliving(user))
 			return
 		if (slot == SLOT_GLASSES && on)
-			user.vision.set_scan(1)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+			user.meson(src)
 
 	unequipped(var/mob/living/user)
 		..()
 		if(!isliving(user))
 			return
-		user.vision.set_scan(0)
-
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
+		user.unmeson(src)
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
@@ -459,24 +452,21 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			if (connected_scuttlebot != S)
 				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
 				return 1
-
-			if (istype(target, /mob/living/critter/robotic/scuttlebot/weak))
-				var/mob/living/critter/robotic/scuttlebot/weak/O = S
-				if (O.linked_hat != null)
-					O.linked_hat.set_loc(get_turf(O))
-				else
-					var/obj/item/clothing/head/det_hat/gadget/gadgethat = new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
-					if (O.is_inspector)
-						gadgethat.make_inspector()
-				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
-				qdel(O)
-				qdel(src)
+			if (S.linked_hat != null)
+				S.linked_hat.set_loc(get_turf(S))
 			else
-				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
-				boutput(user, "You stuff the goggles back into the hat. It powers down with a low whirr.")
-				S.drop_item()
-				qdel(S)
-				qdel(src)
+				if (istype(S, /mob/living/critter/robotic/scuttlebot/weak))
+					var/obj/item/clothing/head/det_hat/gadget/newgadget = new /obj/item/clothing/head/det_hat/gadget(get_turf(S))
+					if (S.is_inspector)
+						newgadget.make_inspector()
+				else
+					var/obj/item/clothing/head/det_hat/folded_scuttlebot/newscuttle = new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
+					if (S.is_inspector)
+						newscuttle.make_inspector()
+			boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+			S.drop_item()
+			qdel(S)
+			qdel(src)
 		else
 			..()
 

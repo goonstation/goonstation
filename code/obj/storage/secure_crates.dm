@@ -29,7 +29,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -62,7 +62,7 @@
 
 	armory
 		name = "secure weapons crate"
-		req_access = list(access_maxsec)
+		req_access = list(access_armory)
 
 		anti_biological
 			name = "anti-biological crate"
@@ -85,7 +85,7 @@
 
 /obj/storage/secure/crate/gear/armory
 	name = "secure weapons crate"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 
 /obj/storage/secure/crate/gear/armory/grenades
 	name = "special grenades crate"

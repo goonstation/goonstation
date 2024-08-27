@@ -272,6 +272,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
+		if (QDELETED(src))
+			return
 		if(src.is_broken())
 			src.build_icon()
 		else
@@ -311,7 +313,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P]"]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -692,7 +694,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					if (!src.allowed(usr))
-						src.grump_message(usr, "ERROR: Could not re-validate authenticaion credentials. Aborting.", sound = TRUE)
+						src.grump_message(usr, "ERROR: Could not re-validate authentication credentials. Aborting.", sound = TRUE)
 						return
 					if (!src.can_use_ranged(src) && !src.check_physical_proximity(usr))
 						return
@@ -760,10 +762,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 							var/amount_per_account = divisible_amount/length(accounts)
 							for(var/datum/db_record/t as anything in accounts)
 								t["current_money"] += amount_per_account
-							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
@@ -785,15 +787,38 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
+	/*
+	Handling for shocking the user
+	Handling for getting the satchel of an ore scoop
+	Handling for getting the blueprint into a fabricator
+	Handling for loading material bars from a satchel
+	Handling for tools (screwdriver, open maint panel)
+	Handling for tools (welding, repair/load)
+	Handling for cable coils (repair, load)
+	Handling for tools (crowbar, dismantle)
+	Handling for tools (snipping, dismantle)
+	Handling for reconstruction (sheets, reconstruct)
+	Handling for cable coils (reconstruct)
+	Handling for inserting manudrives
+	Grumping for trying to insert sheets/coils/raw mats
+	Handling for inserting material pieces
+	Handling for.. snipping/pulsing calling Attackhand when the panel is open?
+	Handling for early return if a card is scanned successfully
+	Handling for calling parent proc + hitting the machine
+	*/
+
 	attackby(obj/item/W, mob/user)
+		// Handling for shocking the user
 		if (src.is_electrified())
 			if (src.shock(user, 33))
 				return
 
+		// Handling for getting the satchel of an ore scoop
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
 
+		// Handling for getting the blueprint into a fabricator
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
 				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
@@ -832,18 +857,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 			return
 
+		// Handling for loading material bars from a satchel
 		else if (istype(W, /obj/item/satchel))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [W]!"), SPAN_NOTICE("You use [src]'s automatic loader on [W]."))
 			var/amtload = 0
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M)
+				src.add_contents(M, user)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
 			else boutput(user, SPAN_ALERT("No materials loaded!"))
 
+		// Handling for tools (screwdriver, open maint panel)
 		else if (isscrewingtool(W))
 			if (!src.panel_open)
 				src.panel_open = TRUE
@@ -853,6 +880,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 			tgui_process.try_update_ui(user, src)
 
+		// Handling for tools (welding, repair/load)
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -863,7 +891,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.add_contents(W, user)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -873,6 +901,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health == 100)
 						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
+		// Handling for cable coils (repair, load, reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.panel_open)
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
@@ -884,7 +913,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.change_contents(mat_piece = C, user = user)
+				src.add_contents(C, user)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -896,6 +925,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health >= 50)
 						boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
+		// Handling for tools (wrench, dismantle/reconstruct/load)
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -906,7 +936,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.add_contents(W, user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == DISMANTLE_NONE)
@@ -922,6 +952,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				src.build_icon()
 
+		// Handling for tools (crowbar, dismantle)
 		else if (ispryingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -929,6 +960,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
 
+		// Handling for tools (snipping, dismantle)
 		else if (issnippingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			if (!(status & NOPOWER))
 				if (src.shock(user,100))
@@ -942,12 +974,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			C.UpdateIcon()
 			src.build_icon()
 
+		// Handling for reconstruction (sheets, reconstruct)
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_BOLTS
 			qdel(W)
 			src.build_icon()
 
+		// Handling for cable coils (reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
@@ -957,6 +991,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.shock(user,100)
 			src.build_icon()
 
+		// Handling for inserting manudrives
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
@@ -979,21 +1014,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 
 
-		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+		else if (istype(W, /obj/item/sheet/) || istype(W, /obj/item/cable_coil/) || istype(W, /obj/item/raw_material/))
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
+		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.change_contents(mat_piece = W, user = user)
+			src.add_contents(W, user)
 
+		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
 			return
 
+		// Handling for early return if a card is scanned successfully
 		else if(scan_card(W))
 			return
 
+		// Handling for calling parent proc + hitting the machine
 		else
 			..()
 			user.lastattacked = src
@@ -1172,7 +1211,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.get_contents() // Ensure contents exist first
+				src.add_contents(M, user)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1189,7 +1229,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.add_contents(M, user)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
@@ -1556,9 +1596,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/remove_materials(datum/manufacture/M)
 		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
-			var/piece_ref = mats_used[R]
-			var/amount_to_remove = M.item_requirements[R]
-			src.change_contents(-amount_to_remove/10, mat_piece = locate(piece_ref))
+			var/required_amount = M.item_requirements[R]
+			for (var/obj/item/material_piece/P as anything in src.get_contents())
+				if ("\ref[P]" != mats_used[R])
+					continue
+				P.amount = round( (P.amount - (required_amount/10)), 0.1)
+				if (P.amount <= 0)
+					qdel(P)
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1688,9 +1732,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return
 
 	proc/dispense_product(product, datum/manufacture/M, var/list/materials_used)
+		var/atom/movable/A
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
-				var/atom/movable/A = new product(src)
+				A = new product(src)
 				if (isitem(A))
 					var/obj/item/I = A
 					M.modify_output(src, I, materials_used)
@@ -1698,7 +1743,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				else
 					A.set_loc(src.get_output_location(A))
 			else
-				new product(get_output_location())
+				A = new product(get_output_location())
 
 		else if (istext(product) || isnum(product))
 			if (istext(product) && copytext(product,1,8) == "reagent")
@@ -1713,23 +1758,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (welp.Width() > 32 || welp.Height() > 32)
 				welp.Scale(32, 32)
 				product = welp
-			var/obj/dummy = new /obj/item(get_turf(src))
-			dummy.name = "strange thing"
-			dummy.desc = "The fuck is this?"
-			dummy.icon = welp
-
+			A = new /obj/item(get_turf(src))
+			A.name = "strange thing"
+			A.desc = "The fuck is this?"
+			A.icon = welp
 		else if (isfile(product)) // adapted from vending machine code
 			var/S = sound(product)
 			if (S)
 				playsound(src.loc, S, 50, 0)
 
-		else if (isobj(product))
-			var/obj/X = product
-			X.set_loc(get_output_location())
+		else if (isobj(product) || ismob(product))
+			A = product
+			A.set_loc(get_output_location())
 
-		else if (ismob(product))
-			var/mob/X = product
-			X.set_loc(get_output_location())
+		return A
 
 	proc/flip_out()
 		if (status & BROKEN || status & NOPOWER || !src.malfunction)
@@ -1817,11 +1859,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.manudrive = null
 		should_update_static = TRUE
 
+	proc/ensure_contents()
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece), slots = INFINITY)
+
+	proc/add_contents(obj/item/W, mob/user = null)
+		src.ensure_contents()
+		src.storage.add_contents(W, user, visible=FALSE)
+
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
 	proc/get_contents()
-		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud, can_hold=list(/obj/item/material_piece))
+		src.ensure_contents()
 		var/list/storage_contents = src.storage.get_contents()
 		for (var/obj/item/I as anything in storage_contents)
 			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
@@ -1829,69 +1878,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.storage.transfer_stored_item(I, src.loc)
 		return storage_contents
 
-	/*
-	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
-	Parameters for selection of material (requires at least one non-null):
-	mat_id = material id to set. creates a new material if none of that id exists
-	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	mat_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
-	material = material datum to add. acts as/overrides mat_id if provided
-	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
-	user = (optional) any mob that may be loading this
-	*/
-	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
-		if (!isnull(mat_path))
-			mat_piece = new mat_path
-			if (amount)
-				mat_piece.amount = amount
-
-		if (!amount)
-			if (isnull(mat_piece))
-				return
-			else
-				amount = mat_piece.amount
-
-		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum) && isnull(mat_path))
-			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
-
-		// Try stacking with existing same material in storage
-		var/list/C = src.get_contents()
-		if (!isnull(mat_datum))
-			mat_id = mat_datum.getID()
-		for (var/obj/item/material_piece/P as anything in C)
-			if (!P.material)
-				continue
-			// Match by material piece or id
-			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
-				mat_id && mat_id == P.material.getID())
-				P.change_stack_amount(amount)
-				// Handle inserting pieces into the machine
-				if (user)
-					user.u_equip(mat_piece)
-					mat_piece.dropped(user)
-					qdel(mat_piece)
-				if (P.amount <= 0)
-					qdel(P)
-				return
-
-		// No same material in storage, create/add the one we have and update the requirements index accordingly
-		if (!isnull(mat_piece))
-			if (isnull(mat_piece.material))
-				return
-			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(mat_piece.material)
-			return
-
-		if (isnull(mat_datum))
-			// we gave an ID but no M, so override 'M' for this
-			mat_datum = getMaterial(mat_id)
-
-		var/T = getProcessedMaterialForm(mat_datum)
-		var/obj/item/material_piece/P = new T
-		P.amount = max(0, amount)
-		src.storage.add_contents(P, user = user, visible = FALSE)
-
-		material_patterns_by_ref["\ref[mat_piece]"] = src.get_requirements_material_satisfies(P.material)
+	on_add_contents(obj/item/I)
+		if (!("\ref[I.material]" in src.material_patterns_by_ref))
+			src.material_patterns_by_ref["\ref[I.material]"] = src.get_requirements_material_satisfies(I.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -1927,8 +1916,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			free_resources = list()
 			return
 
+		src.get_contents() // potentially load storage datum if it doesnt exist yet
 		for (var/mat_path in src.free_resources)
-			src.change_contents(amount = src.free_resources[mat_path], mat_path = mat_path)
+			var/obj/item/material_piece/P = new mat_path
+			P.amount = src.free_resources[mat_path]
+			src.add_contents(P)
 
 		free_resources = list()
 

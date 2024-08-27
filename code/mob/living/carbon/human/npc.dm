@@ -350,6 +350,7 @@
 			if(stop_fight)
 				ai_target = null
 				ai_set_state(AI_PASSIVE)
+				walk(src, null)
 				return
 
 

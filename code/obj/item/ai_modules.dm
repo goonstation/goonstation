@@ -18,7 +18,7 @@ TYPEINFO(/obj/item/aiModule)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 5
 	w_class = W_CLASS_SMALL
 	throwforce = 5

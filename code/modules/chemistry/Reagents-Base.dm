@@ -289,7 +289,6 @@
 	fluid_b = 135
 	transparency = 255
 	overdose = 20
-	pathogen_nutrition = list("iron")
 
 	on_mob_life(var/mob/living/H, var/mult = 1)
 		..()
@@ -388,7 +387,6 @@
 	fluid_g = 254
 	fluid_b = 252
 	transparency = 20
-	pathogen_nutrition = list("nitrogen")
 
 /datum/reagent/oxygen
 	name = "oxygen"
@@ -550,7 +548,6 @@
 	overdose = 200
 	hunger_value = 0.098
 	thirst_value = -0.098
-	pathogen_nutrition = list("sugar")
 	taste = "sweet"
 	stun_resist = 6
 	threshold = THRESHOLD_INIT
@@ -572,7 +569,7 @@
 		M.make_jittery(2 )
 		M.changeStatus("drowsy", -10 SECONDS)
 		if(prob(4))
-			M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
+			M.reagents.add_reagent("epinephrine", 3 * src.calculate_depletion_rate(M, mult)) // let's not metabolize into meth anymore
 		//if(prob(2))
 			//M.reagents.add_reagent("cholesterol", rand(1,3))
 		..()
@@ -702,7 +699,6 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
-	pathogen_nutrition = list("sodium")
 	fluid_flags = FLUID_STACKING_BANNED
 
 /datum/reagent/uranium
@@ -733,7 +729,6 @@
 	fluid_g = 165
 	fluid_b = 254
 	transparency = 80
-	pathogen_nutrition = list("water")
 	thirst_value = 0.8909
 	hygiene_value = 1.33
 	bladder_value = -0.2
@@ -819,7 +814,7 @@
 				for(var/mob/O in AIviewers(M, null))
 					O.show_message(SPAN_ALERT("<b>[M] begins to crisp and burn!</b>"), 1)
 				boutput(M, SPAN_ALERT("Holy Water! It burns!"))
-				var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
+				var/burndmg = raw_volume * 1.25 / (length(covered) || 1) //the sanctification inflicts the pain, not the water that carries it.
 				burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 				M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 				M.change_vampire_blood(-burndmg)

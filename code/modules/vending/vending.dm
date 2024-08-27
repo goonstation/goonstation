@@ -64,7 +64,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	flags = TGUI_INTERACTIVE | FPRINT
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
@@ -170,16 +169,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			src.product_list = new()
 
 	proc/vendinput(var/datum/mechanicsMessage/inp)
-		if( world.time < lastvend ) return//aaaaaaa
-		lastvend = world.time + 2
+		if (!src.vend_ready)
+			return
 		var/datum/data/vending_product/R = throw_item()
 		if(R?.logged_on_vend)
 			logTheThing(LOG_STATION, usr, "randomly vended a logged product ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
 
 	proc/vendname(var/datum/mechanicsMessage/inp)
-		if( world.time < lastvend || !inp) return//aaaaaaa
-		if(!length(inp.signal)) return//aaaaaaa
-		lastvend = world.time + 5 //Make it slower to vend by name?
+		if (!src.vend_ready)
+			return
+		if(!length(inp.signal))
+			return//aaaaaaa
 		var/datum/data/vending_product/R = throw_item(inp.signal)
 		if(R?.logged_on_vend)
 			logTheThing(LOG_STATION, usr, "vended a logged product by name ([R.product_name]) using mechcomp from [src] at [log_loc(src)].")
@@ -700,7 +700,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
 		if (src.vend_inhand)
-			usr.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
+			user?.put_in_hand_or_eject(vended) // try to eject it into the users hand, if we can
 		src.postvend_effect()
 	return vended
 
@@ -1059,34 +1059,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			return vending_product
 
 /obj/machinery/vending/proc/throw_item_act(var/datum/data/vending_product/R, var/mob/living/target)
-	var/obj/throw_item = null
-	//Big if/else trying to create the object properly
-	if (ispath(R.product_path))
-		var/dump_path = R.product_path
-		throw_item = new dump_path(src.loc)
-	else if (istext(R.product_path))
-		var/dump_path = text2path(R.product_path)
-		if (dump_path)
-			throw_item = new dump_path(src.loc)
-	else if (isicon(R.product_path))
-		var/icon/welp = icon(R.product_path)
-		if (welp.Width() > 32 || welp.Height() > 32)
-			welp.Scale(32, 32)
-			R.product_path = welp // if scaling is required reset the product_path so it only happens the first time
-		var/obj/dummy = new /obj/item(src.get_output_location())
-		dummy.name = R.product_name
-		dummy.desc = "?!"
-		dummy.icon = welp
-		throw_item = dummy
-	else if (isfile(R.product_path))
-		var/sound/S = sound(R.product_path)
-		if (S)
-			if (!R.infinite)
-				R.product_amount--
-			SPAWN(0)
-				playsound(src.loc, S, 50, 0)
-				src.visible_message(SPAN_ALERT("<b>[src] launches [R.product_name] at [target.name]!</b>"))
-			return 1
+	set waitfor = FALSE
+
+	src.vend_ready = FALSE
+	src.currently_vending = R
+	src.prevend_effect()
+	sleep(src.vend_delay)
+
+	var/obj/throw_item = src.vend_product(R)
 
 	if (throw_item)
 		if(!R.infinite)
@@ -1098,9 +1078,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
 		throw_item.throw_at(target, 16, 3)
 		src.visible_message(SPAN_ALERT("<b>[src] launches [throw_item.name] at [target.name]!</b>"))
-		postvend_effect()
-		return 1
-	return 0
+
+	src.vend_ready = TRUE
+	src.currently_vending = null
 
 
 /obj/machinery/vending/proc/isWireColorCut(var/wireColor)
@@ -1470,9 +1450,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
-#ifdef RP_MODE
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 1)
-#endif
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 3)
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
@@ -1483,7 +1461,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access = list(access_maxsec)
+	req_access = list(access_armory)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.8
@@ -1867,6 +1845,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/ketchup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/soysauce, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/gravyboat, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/tomato, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/apple, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/plant/lettuce, 10)
@@ -2570,6 +2549,21 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/device/light/flashlight, rand(1, 6), hidden=1)
 		//product_list += new/datum/data/vending_product(/obj/item/device/timer, rand(1, 6), hidden=1)
 
+
+/obj/machinery/vending/standard/toxins
+	desc = "A vending machine machine full of various useful tools and devices that plasma researchers can use to make bombs."
+	icon_state = "toxins"
+
+	create_products(restocked)
+		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 10)
+		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 10)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/signaler, 10)
+		product_list += new/datum/data/vending_product(/obj/item/wirecutters, 1)
+		product_list += new/datum/data/vending_product(/obj/item/device/timer, 10)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmospheric, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/atmosanalyzer_upgrade, 3)
+		product_list += new/datum/data/vending_product(/obj/item/pressure_crystal, 8)
+		product_list += new/datum/data/vending_product(/obj/item/device/pressure_sensor, 2)
 
 
 /obj/machinery/vending/hydroponics

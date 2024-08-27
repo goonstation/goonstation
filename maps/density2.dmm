@@ -2904,7 +2904,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -6882,6 +6882,10 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"Tq" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/auto/dirt,
+/area/station/crew_quarters/garden/sunlight)
 "Tt" = (
 /obj/machinery/gibber{
 	dir = 4
@@ -23594,7 +23598,7 @@ Rf
 Rf
 Rf
 Rf
-XB
+Rf
 Rf
 Rf
 Rf
@@ -57000,7 +57004,7 @@ mM
 Pf
 sv
 qG
-qG
+Tq
 qG
 qG
 qG

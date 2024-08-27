@@ -167,15 +167,15 @@ datum
 				var/radius = clamp(volume*0.15, 0, 8)
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
+				radius = clamp((volume/covered.len)*0.15, 0, 8)
+				holder?.del_reagent(id)
 				for(var/turf/t in covered)
-					radius = clamp((volume/covered.len)*0.15, 0, 8)
 					affected += fireflash_melting(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
 						O.visible_message(SPAN_ALERT("[O] melts!"))
 						qdel(O)
-				holder?.del_reagent(id)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!holder)

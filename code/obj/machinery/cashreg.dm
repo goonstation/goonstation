@@ -9,7 +9,6 @@ TYPEINFO(/obj/machinery/cashreg)
 	req_access = list(access_heads) // Allows heads of staff to deregister owners from a cashreg.
 	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
-	flags = FPRINT | TGUI_INTERACTIVE
 
 	var/datum/db_record/owner_account = null
 	var/obj/item/card/id/owner_card = null

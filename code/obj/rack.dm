@@ -4,7 +4,7 @@
 	icon_state = "rack_base"
 	density = 1
 	layer = STORAGE_LAYER
-	flags = FPRINT | NOSPLASH
+	flags = NOSPLASH
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
@@ -251,3 +251,8 @@
 		/obj/item/circuitboard/chem_request,
 		/obj/item/circuitboard/chem_request_receiver,
 	)
+
+/obj/rack/organized/techstorage_med/sea
+	New()
+		src.items_to_spawn += /obj/item/circuitboard/sea_elevator
+		. = ..()

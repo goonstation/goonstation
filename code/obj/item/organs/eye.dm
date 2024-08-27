@@ -263,26 +263,19 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 		if (ishuman(M))
 			src.assigned = M
 			if (src.on)
-				src.assigned.vision.set_scan(1)
-				APPLY_ATOM_PROPERTY(M, PROP_MOB_MESONVISION, src)
+				src.assigned.meson(src)
 
 	on_removal()
-		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
-		if (istype(assigned.glasses, /obj/item/clothing/glasses/visor))
-			return
-		else
-			src.assigned.vision.set_scan(0)
+		src.assigned.unmeson(src)
 		..()
 
 	proc/toggle()
 		src.on = !src.on
 		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (src.on)
-			assigned.vision.set_scan(1)
-			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+			src.assigned.meson(src)
 		else
-			assigned.vision.set_scan(0)
-			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
+			src.assigned.unmeson(src)
 
 TYPEINFO(/obj/item/organ/eye/cyber/spectro)
 	mats = 7

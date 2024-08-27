@@ -220,11 +220,12 @@
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
 		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
+		throwforce = 10
 		num_f_icons=3
 		density=1
 		anchored = UNANCHORED
 		icon_state="housing_cabinet"
-		flags = FPRINT | EXTRADELAY | CONDUCT
+		flags = EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
 		default_hat_y = 14
 
@@ -268,7 +269,7 @@
 		anchored=0
 		num_f_icons=1
 		icon_state="housing_handheld"
-		flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+		flags = EXTRADELAY | TABLEPASS | CONDUCT
 		c_flags = ONBELT
 		light_color = list(51, 0, 0, 0)
 		spawn_contents=list(/obj/item/mechanics/trigger/trigger)
@@ -354,7 +355,7 @@
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
@@ -493,6 +494,13 @@
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 			return 1
 		return ..()
+
+	pixelaction(atom/target, params, mob/user)
+		var/turf/hit_turf = target
+		if (!istype(hit_turf) || !hit_turf || hit_turf.density || !can_reach(user, hit_turf))
+			..()
+			return FALSE
+		src.place_to_turf_by_grid(user, params, hit_turf, grid = 2, centered = 1, offsetx = 0, offsety = 2)
 
 	pick_up_by(var/mob/M)
 		if(level == OVERFLOOR) return ..()
@@ -772,7 +780,7 @@
 		H.vent_gas(loc)
 		qdel(H)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/item/mechanics/thprint
@@ -1012,12 +1020,18 @@
 				src.set_loc(target)
 		return
 
+
+#define GRAVITON_ITEM_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN 35
+#define GRAVITON_CONTAINER_FAIL_SOUND_VOLUME 30
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN_ID "Graviton container cooldown"
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID "Graviton container fail sound cooldown"
 /obj/item/mechanics/accelerator
 	name = "Graviton accelerator"
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = TRUE // non-functional
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -1025,39 +1039,51 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activateproc))
 
-	proc/drivecurrent()
+	proc/drivecurrent(var/obj/item/storage/mechanics/container = null)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/count = 0
-		for(var/atom/movable/M in src.loc)
-			if(M.anchored) continue
-			count++
-			if(M == src) continue
-			throwstuff(M)
-			if(count > 50) return
-			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
+
+		if(container)
+			if(ON_COOLDOWN(container, GRAVITON_CONTAINER_COOLDOWN_ID, GRAVITON_CONTAINER_COOLDOWN) || container.anchored) // Cooldown is shared between all gravitons in locker
+				if(ON_COOLDOWN(container, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN)) // cooldown in a cooldown
+					playsound(src, 'sound/machines/buzz-sigh.ogg', GRAVITON_CONTAINER_FAIL_SOUND_VOLUME, 0, 0)
+				return
+			throwstuff(container, 3)
+		else
+			var/count = 0
+			for(var/atom/movable/M in src.loc)
+				if(M.anchored) continue
+				count++
+				if(M == src) continue
+				throwstuff(M)
+				if(count > 50) return
+				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN * 10) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
+
+			var/obj/item/storage/mechanics/container  = src.stored?.linked_item
+			var/in_container = istype(container,/obj/item/storage/mechanics)
 			SPAWN(0)
 				icon_state = "[under_floor ? "u":""]comp_accel1"
 				active = 1
-				drivecurrent()
+				drivecurrent(container)
 				sleep(0.5 SECONDS)
-				drivecurrent()
+				if (!in_container)
+					drivecurrent() // Gravitons in lockers only bonk once
 				sleep(2.5 SECONDS)
 				icon_state = "[under_floor ? "u":""]comp_accel"
 				active = 0
 		return
 
-	proc/throwstuff(atom/movable/AM as mob|obj)
+	proc/throwstuff(atom/movable/AM as mob|obj, range = 50)
 		if(level == OVERFLOOR || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
+		var/datum/thrown_thing/thr = AM.throw_at(target, range, 1)
 		thr?.user = (owner)
 		return
 
@@ -1071,6 +1097,12 @@
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+#undef GRAVITON_ITEM_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN
+#undef GRAVITON_CONTAINER_FAIL_SOUND_VOLUME
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN_ID
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID
 
 /// Tesla Coil mechanics component - zaps people
 /obj/item/mechanics/zapper
@@ -1280,7 +1312,7 @@
 		return
 
 /obj/item/mechanics/wifisplit
-	name = "Wifi Signal Splitter Component"
+	name = "Signal Splitter Component"
 	desc = ""
 	icon_state = "comp_split"
 	var/triggerSignal = "1"

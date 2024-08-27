@@ -52,7 +52,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	icon_off = "flight0"
 	var/icon_broken = "flightbroken"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	m_amt = 50
 	g_amt = 20
@@ -360,7 +360,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > (T0C + 430))
-				src.visible_message(SPAN_ALERT(" [src] ignites!"), group = "candle_ignite")
+				src.visible_message(SPAN_ALERT("[src] ignites!"), group = "candle_ignite")
 				src.light()
 
 	process()
@@ -525,7 +525,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "floodlight_item"
 	w_class = W_CLASS_BULKY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	rand_pos = FALSE
 	m_amt = 50
 	g_amt = 20
@@ -752,7 +752,6 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	icon_state = "roadflare"
 	w_class = W_CLASS_SMALL
 	throwforce = 1
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1

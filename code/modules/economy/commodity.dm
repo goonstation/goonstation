@@ -97,7 +97,6 @@
 	linked_commodities = list(
 		/datum/commodity/mat_bar = 10,
 	)
-/// pathology
 
 /datum/commodity/mat_bar
 	comname = "Material Bar"
@@ -573,6 +572,12 @@
 ///// syndicate trader /////////
 ////////////////////////////////
 
+/datum/commodity/clothing_restock
+	comname = "Syndicate Clothing Vendor Restock Cartridge"
+	desc = "A restock cartridge for restocking syndicate clothing vending machines."
+	comtype = /obj/item/vending/restock_cartridge/jobclothing/syndicate
+	price = PAY_IMPORTANT
+
 /datum/commodity/contraband
 	comname = "Contraband"
 	desc = "Stolen gear and syndicate products."
@@ -760,12 +765,6 @@
 	comtype = /obj/item/scrap
 	price = PAY_UNTRAINED/10
 	desc_buy = "We are interested in recycling ground metal scrap."
-
-/datum/commodity/salvage/electronic_debris
-	comname = "Electronic Debris"
-	comtype = /obj/item/electronics
-	price = PAY_UNTRAINED/10
-	desc_buy = "We will recover metals from resistors, fuses, and other electronic debris."
 
 /datum/commodity/salvage/robot_upgrades
 	comname = "Cyborg Upgrade"
@@ -1608,61 +1607,6 @@
 	upperfluc = 150
 	lowerfluc = -20
 */
-
-/// pathology
-/datum/commodity/synthmodule
-	comname = "Synth-O-Matic module"
-	comtype = /obj/item/synthmodule
-	desc = "A synth-o-matic module."
-	onmarket = 0
-	price = PAY_DOCTORATE*5
-
-/datum/commodity/synthmodule/vaccine
-	comname = "Synth-O-Matic vaccine module"
-	comtype = /obj/item/synthmodule/vaccine
-
-/datum/commodity/synthmodule/upgrader
-	comname = "Synth-O-Matic efficiency module"
-	comtype = /obj/item/synthmodule/upgrader
-
-/datum/commodity/synthmodule/assistant
-	comname = "Synth-O-Matic assistant module"
-	comtype = /obj/item/synthmodule/assistant
-
-/datum/commodity/synthmodule/synthesizer
-	comname = "Synth-O-Matic synthesizer module"
-	comtype = /obj/item/synthmodule/synthesizer
-
-/datum/commodity/synthmodule/virii
-	comname = "Synth-O-Matic virus module"
-	comtype = /obj/item/synthmodule/virii
-
-/datum/commodity/synthmodule/bacteria
-	comname = "Synth-O-Matic bacterium module"
-	comtype = /obj/item/synthmodule/bacteria
-
-/datum/commodity/synthmodule/fungi
-	comname = "Synth-O-Matic fungus module"
-	comtype = /obj/item/synthmodule/fungi
-
-/datum/commodity/synthmodule/parasite
-	comname = "Synth-O-Matic parasite module"
-	comtype = /obj/item/synthmodule/parasite
-
-/datum/commodity/synthmodule/gmcell
-	comname = "Synth-O-Matic great mutatis cell module"
-	comtype = /obj/item/synthmodule/gmcell
-
-/datum/commodity/synthmodule/radiation
-	comname = "Synth-O-Matic irradiation module"
-	comtype = /obj/item/synthmodule/radiation
-
-/datum/commodity/pathogensample
-	comname = "Pathogen sample"
-	comtype = /obj/item/reagent_containers/glass/vial/prepared
-	desc = "A sample of pathogen. Probably stolen from a lab somewhere. Handle with care."
-	onmarket = 0
-	price = PAY_DOCTORATE
 
 /datum/commodity/largeartifact
 	comname = "Large Artifact"

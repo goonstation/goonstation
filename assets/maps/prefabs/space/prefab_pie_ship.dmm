@@ -3,7 +3,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "b" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	real_name = "propulsion unit";
 	true_name = "propulsion unit"
 	},

@@ -234,7 +234,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "cyborg"
 	item_state = "cyborg"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	hides_from_examine = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/under/gimmick/johnny
@@ -251,7 +251,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "johnny"
 	item_state = "johnny"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 
 // UNUSED COLORS
 
@@ -312,12 +312,6 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			src.blade = null
 			return
 		. = ..()
-
-/obj/item/clothing/head/devil
-	name = "devil horns"
-	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
-	icon_state = "devil"
-	item_state = "devil"
 
 // Donk clothes
 
@@ -480,6 +474,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+	fingertip_color = "#f3f3f3"
 
 	setupProperties()
 		..()
@@ -648,7 +643,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS| CONDUCT
 	c_flags = ONBELT
 	item_state = "vshield"
 	throwforce = 7
@@ -1968,7 +1963,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 

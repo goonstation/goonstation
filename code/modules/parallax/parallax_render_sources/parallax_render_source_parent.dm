@@ -8,6 +8,12 @@
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	screen_loc = "CENTER,CENTER"
 
+	name = null
+	desc = null
+
+	///Is this a celestial feature that shows up on PDA space GPS programs
+	var/visible_to_gps = FALSE
+
 	/// The icon file that the icon for each tile of the parallax layer will draw from.
 	var/parallax_icon = 'icons/misc/parallax.dmi'
 	/// The icon state that the icon for each tile of the parallax layer will use.

@@ -780,7 +780,7 @@
 
 	src.hide_attack = initial(src.hide_attack)
 
-ABSTRACT_TYPE(/obj/item/grab/threat)
+//this should be abstract but abstract type markers propagate to the parent
 /obj/item/grab/threat
 	var/activated = FALSE
 
@@ -948,6 +948,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
 						for (var/mob/O in AIviewers(user))
 							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
@@ -981,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 							if (throw_target)
 								item_num_to_throw--
 								playsound(itm, "swing_hit", 50, 1)
-								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8, thrown_by=user) // Range: 1-4, Speed: 1-2
 
 							if (!item_num_to_throw)
 								break

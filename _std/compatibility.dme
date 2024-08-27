@@ -19,9 +19,7 @@
 #endif
 
 // So we want to have compile time guarantees these procs exist on local type, unfortunately 515 killed the .proc/procname syntax so we have to use nameof()
-// UPDATE: On current 515 it seems to work fine without nameof(). The issue with using nameof() is that everything is a string so isproc() breaks.
-// If it turns out that we need to enable the nameof() variant then we need to modify isproc() to also do some awful substring operations as a check.
-#if 1 //DM_VERSION < 515
+#if DM_VERSION < 515
 /// Call by name proc reference, checks if the proc exists on this type or as a global proc
 #define PROC_REF(X) (.proc/##X)
 /// Call by name verb references, checks if the verb exists on either this type or as a global verb.

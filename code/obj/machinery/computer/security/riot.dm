@@ -31,7 +31,7 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, control_frequency)
 
 		/*for (var/obj/machinery/door/airlock/D in armory_area)
-			if (D.has_access(access_maxsec))
+			if (D.has_access(access_armory))
 				D.no_access = 1
 		*/
 		..()
@@ -136,13 +136,15 @@
 		src.icon_state = "drawbr-alert"
 		src.UpdateIcon()
 
+		ON_COOLDOWN(src, "unauth", 5 MINUTES)
+
 		src.authorized = null
 		src.authorized_registered = null
 
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_AUTH)
 
 		for (var/obj/machinery/door/airlock/D in armory_area)
-			if (D.has_access(access_maxsec))
+			if (D.has_access(access_armory))
 				D.req_access = list(access_security)
 				//D.no_access = 0
 			LAGCHECK(LAG_REALTIME)
@@ -175,15 +177,15 @@
 
 			for (var/obj/machinery/door/airlock/D in armory_area)
 				if (D.has_access(access_security))
-					D.req_access = list(access_maxsec)
+					D.req_access = list(access_armory)
 				LAGCHECK(LAG_REALTIME)
 
 			if (armory_area)
 				for(var/obj/O in armory_area)
 					if (istype(O,/obj/storage/secure/crate))
-						O.req_access = list(access_maxsec)
+						O.req_access = list(access_armory)
 					else if (istype(O,/obj/machinery/vending))
-						O.req_access = list(access_maxsec)
+						O.req_access = list(access_armory)
 
 				LAGCHECK(LAG_REALTIME)
 
@@ -245,11 +247,11 @@
 		boutput(user, "The access level of [W] is not high enough.")
 		return
 
-	if(authed && (!(access_maxsec in W:access)))
+	if(authed && (!(access_armory in W:access)))
 		boutput(user, "Armory has already been authorized!")
 		return
 
-	if(authed && (access_maxsec in W:access))
+	if(authed && (access_armory in W:access))
 		src.manual_unauthorize(user)
 		return
 
@@ -271,7 +273,7 @@
 			if (W:registered in src.authorized_registered)
 				boutput(user, "This ID has already issued an authorization! [src.auth_need - src.authorized.len] authorizations from others are still needed.")
 				return
-			if (access_maxsec in W:access)
+			if (access_armory in W:access)
 				authorize()
 				return
 
@@ -312,7 +314,6 @@
 			boutput(user, SPAN_ALERT(" The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!"))
 			playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
 			return
-		if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
-			unauthorize()
-			playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
-			boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))
+		unauthorize()
+		playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
+		boutput(user,SPAN_NOTICE(" The armory's equipments have returned to having their default access!"))

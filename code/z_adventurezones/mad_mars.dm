@@ -147,7 +147,7 @@
 
 // Kingsway Systems
 
-/obj/decal/fakeobjects/robot/servotron
+/obj/fakeobject/robot/servotron
 	name = "servotron statue"
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
@@ -155,7 +155,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/robot/servotron/old
+/obj/fakeobject/robot/servotron/old
 	name = "servotron statue"
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
@@ -163,7 +163,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/robot/servotron/older
+/obj/fakeobject/robot/servotron/older
 	name = "servotron statue"
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
@@ -172,7 +172,7 @@
 	density = 1
 
 
-/obj/decal/fakeobjects/robotpedestal
+/obj/fakeobject/robotpedestal
 	name = "pedestal"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_pedestal"
@@ -180,7 +180,7 @@
 	density = 1
 
 
-/obj/decal/fakeobjects/robotarm
+/obj/fakeobject/robotarm
 	name = "robot arm"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
@@ -250,14 +250,14 @@
 	fullbright = 0
 
 
-/obj/decal/fakeobjects/mule_xl
+/obj/fakeobject/mule_xl
 	name = "Mulebot XL"
 	desc = "If you thought getting run over by a mulebot was bad, get a load of his big brother! No pun intended."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "mule-xl"
 	pixel_x = -16
 
-/obj/decal/fakeobjects/mars_billboard
+/obj/fakeobject/mars_billboard
 	name = "Billboard"
 	desc = "A billboard for some backwater planetary outpost. How old is this?"
 	icon = 'icons/effects/96x96.dmi'

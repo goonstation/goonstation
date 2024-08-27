@@ -56,7 +56,7 @@
 	},
 /area/shuttle/arrival/station)
 "aak" = (
-/obj/decal/fakeobjects/shuttlethruster{
+/obj/fakeobject/shuttlethruster{
 	dir = 4
 	},
 /turf/space,
@@ -1295,7 +1295,7 @@
 /area/station/maintenance/northeast)
 "acG" = (
 /obj/machinery/portableowl{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf";
@@ -31692,7 +31692,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = 24
 	},
 /turf/simulated/floor,
@@ -31821,7 +31821,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = -24
 	},
 /turf/simulated/floor/plating,
@@ -31963,7 +31963,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = -24
 	},
 /turf/simulated/floor/white,
@@ -32598,7 +32598,7 @@
 	},
 /obj/cable,
 /obj/table,
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = -24
 	},
 /turf/simulated/floor/white,
@@ -33004,7 +33004,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
 /turf/simulated/floor/white,
@@ -33080,7 +33080,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
 /turf/simulated/floor/airless/white,
@@ -33247,7 +33247,7 @@
 	icon_state = "0-4";
 	
 	},
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_x = -24
 	},
 /turf/simulated/floor,
@@ -35271,7 +35271,7 @@
 	name = "Mixing Room"
 	})
 "tBe" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/item/clothing/suit/chef,
 /obj/item/clothing/head/chefhat,
 /obj/decal/cleanable/cobweb,

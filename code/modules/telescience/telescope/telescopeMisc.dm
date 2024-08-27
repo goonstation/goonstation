@@ -12,7 +12,7 @@ TYPEINFO(/obj/machinery/lrteleporter)
 	icon_state = "lrport"
 	density = 0
 	anchored = ANCHORED
-	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
+	flags = CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER

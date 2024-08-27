@@ -352,19 +352,19 @@
 				else
 					our_ghost.last_words = living_src.last_words
 
-		var/turf/T = get_turf(src)
-		if (can_ghost_be_here(src, T))
-			our_ghost.set_loc(T)
-		else
-			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-
 		// step 2: make sure they actually make it to the ghost
 		if (src.mind)
 			src.mind.transfer_to(our_ghost)
 		else
 			our_ghost.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
 
-		if(istype(get_area(src),/area/afterlife))
+		var/turf/T = get_turf(src)
+		if (can_ghost_be_here(our_ghost, T))
+			our_ghost.set_loc(T)
+		else
+			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+
+		if(istype(get_area(src), /area/afterlife))
 			qdel(src)
 
 		if(!mind?.get_player()?.dnr)
@@ -560,8 +560,7 @@
 	. = ..()
 
 /mob/dead/observer/set_loc(atom/new_loc, new_pixel_x, new_pixel_y)
-	var/turf/NewTurf = get_turf(new_loc)
-	if (!can_ghost_be_here(src, NewTurf))
+	if (isturf(new_loc) && !can_ghost_be_here(src, new_loc) && (isnull(src.corpse) || !can_ghost_be_here(src.corpse, new_loc)))
 		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
 		src.set_loc(OS)
 		return

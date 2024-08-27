@@ -6,7 +6,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 	name = "tank transfer valve" // because that's what it is exadv1 and don't you dare change it
 	icon_state = "valve_1"
 	desc = "Regulates the transfer of air between two tanks."
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi' //TODO: as of 02/02/2020 only single general plasma+oxygen ttv sprites, no functionality or sprites to change the icon depending on tanks used
 	item_state = "newbomb"
@@ -464,14 +463,6 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			var/obj/item/device/prox_sensor/A = attached_device
 			A.sense()
 
-	HasProximity(atom/movable/AM as mob|obj)
-		if(istype(attached_device,/obj/item/device/prox_sensor))
-			if (istype(AM, /obj/projectile))
-				return
-			if (AM.move_speed < 12)
-				var/obj/item/device/prox_sensor/A = attached_device
-				A.sense()
-
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
@@ -628,6 +619,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
 	w_class = W_CLASS_SMALL
+	c_flags = ONBELT
 
 	var/obj/item/pressure_crystal/crystal
 

@@ -277,6 +277,7 @@
 	icon_redlight = null
 	icon_greenlight = null
 	secure = 2
+	can_leghole = FALSE
 
 	close()
 		..()

@@ -1120,13 +1120,15 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	icon_state = "machine1"
 	icon_panel = "machine-panel"
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
+	var/base_icon_state = "machine1"
 	var/image/capsule_image = null
 
 	create_products(restocked)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
-		src.icon_state = "machine[rand(1,6)]"
+		src.base_icon_state = "machine[rand(1,6)]"
+		src.icon_state = src.base_icon_state
 		src.capsule_image = image(src.icon, "m_caps26")
 		src.UpdateOverlays(src.capsule_image, "capsules")
 
@@ -1136,6 +1138,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			var/datum/data/vending_product/R = src.product_list[1]
 			src.capsule_image.icon_state = "m_caps[R.product_amount]"
 			src.UpdateOverlays(src.capsule_image, "capsules")
+
+	fall()
+		..()
+		src.icon_state = "[src.base_icon_state]-fallen"
+
+	right()
+		..()
+		src.icon_state = src.base_icon_state
 
 	powered()
 		return

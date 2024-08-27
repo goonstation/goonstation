@@ -138,6 +138,7 @@
 			return
 		src.digest_food(mult)
 		src.digest_mobs(mult)
+		src.digest_organs()
 
 	proc/digest_food(mult = 1)
 		var/count_to_process = min(length(src.stomach_contents), 10)
@@ -145,6 +146,14 @@
 		for(var/obj/item/reagent_containers/food/food in src.stomach_contents)
 			food.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
 			if(count_left-- <= 0)
+				break
+
+	proc/digest_organs()
+		for(var/obj/item/organ/selectedorgan in src.stomach_contents)
+			var/obj/item/organ/organtodelete = selectedorgan
+			if (!organtodelete.robotic)
+				src.eject(organtodelete)
+				qdel(organtodelete)
 				break
 
 	///LOOK I'M ONLY REORGANISING THIS CODE OKAY, I AM NOT RESPONSIBLE FOR THIS DO NOT @ ME
@@ -187,6 +196,7 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	capacity = 12
+	digestion_per_tick = 10
 
 	on_transplant(mob/M)
 		. = ..()
