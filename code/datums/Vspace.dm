@@ -228,13 +228,13 @@ datum/v_space
 		character.pin = user.pin
 		character.bioHolder.bloodType = user.bioHolder.bloodType
 		character.bioHolder.mobAppearance.e_color = user.bioHolder.mobAppearance.e_color
-		character.bioHolder.mobAppearance.customizations[1].color = user.bioHolder.mobAppearance.customizations[1].color
-		character.bioHolder.mobAppearance.customizations[2].color = user.bioHolder.mobAppearance.customizations[2].color
-		character.bioHolder.mobAppearance.customizations[3].color = user.bioHolder.mobAppearance.customizations[3].color
+		character.bioHolder.mobAppearance.customizations["hair_top"].color = user.bioHolder.mobAppearance.customizations["hair_top"].color
+		character.bioHolder.mobAppearance.customizations["hair_middle"].color = user.bioHolder.mobAppearance.customizations["hair_middle"].color
+		character.bioHolder.mobAppearance.customizations["hair_bottom"].color = user.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		character.bioHolder.mobAppearance.s_tone = user.bioHolder.mobAppearance.s_tone
-		character.bioHolder.mobAppearance.customizations[1].style =  user.bioHolder.mobAppearance.customizations[1].style
-		character.bioHolder.mobAppearance.customizations[2].style =  user.bioHolder.mobAppearance.customizations[2].style
-		character.bioHolder.mobAppearance.customizations[3].style =  user.bioHolder.mobAppearance.customizations[3].style
+		character.bioHolder.mobAppearance.customizations["hair_top"].style =  user.bioHolder.mobAppearance.customizations["hair_top"].style
+		character.bioHolder.mobAppearance.customizations["hair_middle"].style =  user.bioHolder.mobAppearance.customizations["hair_middle"].style
+		character.bioHolder.mobAppearance.customizations["hair_bottom"].style =  user.bioHolder.mobAppearance.customizations["hair_bottom"].style
 
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color

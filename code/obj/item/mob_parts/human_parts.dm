@@ -241,11 +241,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customizations[1].color
+						colorheck = AH_piece.customizations["hair_top"].color
 					if(CUST_2)
-						colorheck = AH_piece.customizations[2].color
+						colorheck = AH_piece.customizations["hair_middle"].color
 					if(CUST_3)
-						colorheck = AH_piece.customizations[3].color
+						colorheck = AH_piece.customizations["hair_bottom"].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -269,11 +269,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customizations[1].color
+					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customizations[2].color
+					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customizations[3].color
+					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -282,11 +282,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customizations[1].color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customizations[2].color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customizations[3].color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else

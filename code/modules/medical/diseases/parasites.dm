@@ -120,8 +120,8 @@
 				var/obj/critter/domestic_bee_larva/larva = new /obj/critter/domestic_bee_larva (get_turf(affected_mob))
 				larva.name = "li'l [affected_mob:real_name]"
 				if (affected_mob.bioHolder && affected_mob.bioHolder.mobAppearance)
-					larva.color = "[affected_mob.bioHolder.mobAppearance.customizations[1].color]"
-					if (!affected_mob.bioHolder.mobAppearance.customizations[1].color)
+					larva.color = "[affected_mob.bioHolder.mobAppearance.customizations["hair_top"].color]"
+					if (!affected_mob.bioHolder.mobAppearance.customizations["hair_top"].color)
 						larva.color = "#FFFFFF"
 
 				larva.beeMom = affected_mob

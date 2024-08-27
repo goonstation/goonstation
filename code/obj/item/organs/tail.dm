@@ -45,7 +45,7 @@
 		if(src.colorful)
 			if (AHL && istype(AHL, /datum/appearanceHolder))
 				src.organ_color_1 = AHL.s_tone
-				src.organ_color_2 = AHL.customizations[2].color
+				src.organ_color_2 = AHL.customizations["hair_middle"].color
 				src.donor_AH = AHL
 			else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
 				src.organ_color_1 = fix_colors(src.donor_AH.customizations["hair_top"].color)

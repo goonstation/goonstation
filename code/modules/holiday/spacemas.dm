@@ -792,12 +792,12 @@ proc/compare_ornament_score(list/a, list/b)
 		HS.addAbility(/datum/targetable/santa/banish)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customizations[1].style =  new /datum/customization_style/hair/short/balding
-		bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/beard/fullbeard
-		bioHolder.mobAppearance.customizations[3].style =  new /datum/customization_style/eyebrows/eyebrows
-		bioHolder.mobAppearance.customizations[1].color = "#FFFFFF"
-		bioHolder.mobAppearance.customizations[2].color = "#FFFFFF"
-		bioHolder.mobAppearance.customizations[3].color = "#FFFFFF"
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/eyebrows/eyebrows
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#FFFFFF"
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#FFFFFF"
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#FFFFFF"
 		. = ..()
 
 
@@ -841,9 +841,9 @@ proc/compare_ornament_score(list/a, list/b)
 		bioHolder.AddEffect("cold_resist")
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customizations[1].style =  new /datum/customization_style/none
-		bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/none
-		bioHolder.mobAppearance.customizations[3].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/none
 		. = ..()
 
 

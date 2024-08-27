@@ -376,14 +376,14 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 			src.s_tone = H.bioHolder.mobAppearance.s_tone
 
-			src.customization_first_style = H.bioHolder.mobAppearance.customizations[1].style
-			src.customization_first_color = H.bioHolder.mobAppearance.customizations[1].color
+			src.customization_first_style = H.bioHolder.mobAppearance.customizations["hair_top"].style
+			src.customization_first_color = H.bioHolder.mobAppearance.customizations["hair_top"].color
 
-			src.customization_second_style = H.bioHolder.mobAppearance.customizations[2].style
-			src.customization_second_color = H.bioHolder.mobAppearance.customizations[2].color
+			src.customization_second_style = H.bioHolder.mobAppearance.customizations["hair_middle"].style
+			src.customization_second_color = H.bioHolder.mobAppearance.customizations["hair_middle"].color
 
-			src.customization_third_style = H.bioHolder.mobAppearance.customizations[3].style
-			src.customization_third_color = H.bioHolder.mobAppearance.customizations[3].color
+			src.customization_third_style = H.bioHolder.mobAppearance.customizations["hair_bottom"].style
+			src.customization_third_color = H.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 			if(!istype(src.customization_first_style, /datum/customization_style))
 				src.customization_first_style = new /datum/customization_style/none
@@ -405,24 +405,24 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			sanitize_null_values()
 			target_mob.bioHolder.mobAppearance.e_color = e_color
 			target_mob.bioHolder.mobAppearance.e_color_original = e_color
-			target_mob.bioHolder.mobAppearance.customizations[1].color = customization_first_color
-			target_mob.bioHolder.mobAppearance.customizations[1].color_original = customization_first_color
-			target_mob.bioHolder.mobAppearance.customizations[2].color = customization_second_color
-			target_mob.bioHolder.mobAppearance.customizations[2].color_original = customization_second_color
-			target_mob.bioHolder.mobAppearance.customizations[3].color = customization_third_color
-			target_mob.bioHolder.mobAppearance.customizations[3].color_original = customization_third_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].color = customization_first_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].color_original = customization_first_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].color = customization_second_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].color_original = customization_second_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].color = customization_third_color
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].color_original = customization_third_color
 
 			target_mob.bioHolder.mobAppearance.s_tone = s_tone
 			target_mob.bioHolder.mobAppearance.s_tone_original = s_tone
 			if (target_mob.limbs)
 				target_mob.limbs.reset_stone()
 
-			target_mob.bioHolder.mobAppearance.customizations[1].style = customization_first_style
-			target_mob.bioHolder.mobAppearance.customizations[1].style_original = customization_first_style
-			target_mob.bioHolder.mobAppearance.customizations[2].style = customization_second_style
-			target_mob.bioHolder.mobAppearance.customizations[2].style_original = customization_second_style
-			target_mob.bioHolder.mobAppearance.customizations[3].style = customization_third_style
-			target_mob.bioHolder.mobAppearance.customizations[3].style_original = customization_third_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].style = customization_first_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_top"].style_original = customization_first_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].style = customization_second_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].style_original = customization_second_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].style = customization_third_style
+			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].style_original = customization_third_style
 
 			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()

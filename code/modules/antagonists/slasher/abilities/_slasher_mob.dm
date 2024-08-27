@@ -42,9 +42,9 @@
 					L.broken()
 
 	initializeBioholder()
-		src.bioHolder.mobAppearance.customizations[1].style = new /datum/customization_style/none //pesky hair
-		src.bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customizations[3].style =  new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none //pesky hair
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/none
 		. = ..()
 
 	disposing()

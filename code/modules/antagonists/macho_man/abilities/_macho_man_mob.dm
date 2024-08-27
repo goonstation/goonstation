@@ -68,8 +68,8 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			src.clean_up_arena_turfs(src.macho_arena_turfs) // cleans up the macho_arena_turfs reference while animating the arena disappearing
 
 	initializeBioholder()
-		src.bioHolder.mobAppearance.customizations[1].style = new /datum/customization_style/hair/long/dreads
-		src.bioHolder.mobAppearance.customizations[2].style =  new /datum/customization_style/beard/fullbeard
+		src.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/hair/long/dreads
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
 		. = ..()
 
 	Life(datum/controller/process/mobs/parent)

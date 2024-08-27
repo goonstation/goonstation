@@ -100,14 +100,14 @@
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
 
-			var/col1 = AHs.customizations[1].color
-			var/col2 = AHs.customizations[2].color
-			var/col3 = AHs.customizations[3].color
+			var/col1 = AHs.customizations["hair_top"].color
+			var/col2 = AHs.customizations["hair_middle"].color
+			var/col3 = AHs.customizations["hair_bottom"].color
 
-			AHs.customizations[1].color = col3
-			AHs.customizations[2].color = col1
-			AHs.customizations[3].color = col2
-			AHs.s_tone = AHs.customizations[1].color
+			AHs.customizations["hair_top"].color = col3
+			AHs.customizations["hair_middle"].color = col1
+			AHs.customizations["hair_bottom"].color = col2
+			AHs.s_tone = AHs.customizations["hair_top"].color
 
 			L.visible_message(SPAN_NOTICE("<b>[L.name]</b> changes colors!"))
 			L.update_lizard_parts()
@@ -172,14 +172,14 @@
 		var/spot
 		switch(region)
 			if (1)
-				AHliz.customizations[1].color = color
+				AHliz.customizations["hair_top"].color = color
 				AHliz.s_tone = color
 				spot = "skin"
 			if (2)
-				AHliz.customizations[2].color = color
+				AHliz.customizations["hair_middle"].color = color
 				spot = "belly splotch"
 			if (3)
-				AHliz.customizations[3].color = color
+				AHliz.customizations["hair_bottom"].color = color
 				spot = "head thing"
 		L.visible_message("[L]'s [spot] changes color!", SPAN_NOTICE("Your [region_name] changes color!"))
 		L.update_lizard_parts()

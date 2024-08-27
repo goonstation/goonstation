@@ -51,7 +51,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
 
-	// It's probably smarter to have customizations in a list to iterate over for later - Glamurio
+	// It's probably smarter to have customizations in an associative list for later - Glamurio
 	var/list/datum/customizationHolder/customizations = list(
 		"hair_top" = new /datum/customizationHolder/first,
 		"hair_middle" = new /datum/customizationHolder/second,
@@ -247,9 +247,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
 	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
-		for(var/key src.customizations)
-			var/datum/customizationHolder/custom = src.customizations[key]
-			var/datum/customizationHolder/customCopy = toCopy.customizations[key]
+		for(var/datum/customizationHolder/holder in src.customizations)
+			var/datum/customizationHolder/custom = src.customizations[holder]
+			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
 			custom.color_original = customCopy.color_original
 			custom.color = customCopy.color
 			custom.style_original = customCopy.style_original
@@ -282,11 +282,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if (progress >= 9 || prob(progress * 10))
 
-			for(var/key in src.customizations)
+			for(var/datum/customizationHolder/holder in src.customizations)
 				if (!src.CanCopyCustomization(toCopy))
 					continue
-				var/datum/customizationHolder/custom = src.customizations[key]
-				var/datum/customizationHolder/customCopy = toCopy.customizations[key]
+				var/datum/customizationHolder/custom = src.customizations[holder]
+				var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
 
 				custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
 				custom.style = customCopy.style

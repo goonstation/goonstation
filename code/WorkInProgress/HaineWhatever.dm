@@ -1794,7 +1794,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2 //add
-		zero.customizations[3].color = "#08BFC2"
+		zero.customizations["hair_bottom"].color = "#08BFC2"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1808,7 +1808,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customizations[3].color = "#FFFFFF"
+		zero.customizations["hair_bottom"].color = "#FFFFFF"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
@@ -1822,7 +1822,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		var/datum/overlayDefinition/zero = new()
 		zero.d_icon_state = "beamout"
 		zero.d_blend_mode = 2
-		zero.customizations[3].color = "#C20B08"
+		zero.customizations["hair_bottom"].color = "#C20B08"
 		zero.d_alpha = 50
 		definitions.Add(zero)
 /*		var/datum/overlayDefinition/spot = new()
