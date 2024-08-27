@@ -235,12 +235,12 @@ var/list/removed_jobs = list(
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
-			"customColor1" = src.AH.customizations[1].color,
-			"customStyle1" = src.AH.customizations[1].style.name,
-			"customColor2" = src.AH.customizations[2].color,
-			"customStyle2" = src.AH.customizations[2].style.name,
-			"customColor3" = src.AH.customizations[3].color,
-			"customStyle3" = src.AH.customizations[3].style.name,
+			"customColor1" = src.AH.customizations["hair_top"].color,
+			"customStyle1" = src.AH.customizations["hair_top"].style.name,
+			"customColor2" = src.AH.customizations["hair_middle"].color,
+			"customStyle2" = src.AH.customizations["hair_middle"].style.name,
+			"customColor3" = src.AH.customizations["hair_bottom"].color,
+			"customStyle3" = src.AH.customizations["hair_bottom"].style.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
 			"randomAppearance" = src.be_random_look,
@@ -699,22 +699,22 @@ var/list/removed_jobs = list(
 				var/current_color
 				switch (params["id"])
 					if ("custom1")
-						current_color = src.AH.customizations[1].color
+						current_color = src.AH.customizations["hair_top"].color
 					if ("custom2")
-						current_color = src.AH.customizations[2].color
+						current_color = src.AH.customizations["hair_middle"].color
 					if ("custom3")
-						current_color = src.AH.customizations[3].color
+						current_color = src.AH.customizations["hair_bottom"].color
 					if ("underwear")
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customizations[1].color = new_color
+							src.AH.customizations["hair_top"].color = new_color
 						if ("custom2")
-							src.AH.customizations[2].color = new_color
+							src.AH.customizations["hair_middle"].color = new_color
 						if ("custom3")
-							src.AH.customizations[3].color = new_color
+							src.AH.customizations["hair_bottom"].color = new_color
 						if ("underwear")
 							src.AH.u_color = new_color
 					src.update_preview_icon()
@@ -731,11 +731,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customizations[1].style = new_style
+							src.AH.customizations["hair_top"].style = new_style
 						if ("custom2")
-							src.AH.customizations[2].style = new_style
+							src.AH.customizations["hair_middle"].style = new_style
 						if ("custom3")
-							src.AH.customizations[3].style = new_style
+							src.AH.customizations["hair_bottom"].style = new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -750,11 +750,11 @@ var/list/removed_jobs = list(
 
 				switch (params["id"])
 					if ("custom1")
-						current_style = src.AH.customizations[1].style.type
+						current_style = src.AH.customizations["hair_top"].style.type
 					if ("custom2")
-						current_style = src.AH.customizations[2].style.type
+						current_style = src.AH.customizations["hair_middle"].style.type
 					if ("custom3")
-						current_style = src.AH.customizations[3].style.type
+						current_style = src.AH.customizations["hair_bottom"].style.type
 					if ("underwear")
 						current_style = src.AH.underwear
 
@@ -779,11 +779,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customizations[1].style = new new_style
+							src.AH.customizations["hair_top"].style = new new_style
 						if ("custom2")
-							src.AH.customizations[2].style = new new_style
+							src.AH.customizations["hair_middle"].style = new new_style
 						if ("custom3")
-							src.AH.customizations[3].style = new new_style
+							src.AH.customizations["hair_bottom"].style = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -982,14 +982,14 @@ var/list/removed_jobs = list(
 				src.AH.gender = MALE
 				src.randomize_name()
 
-				src.AH.customizations[1].style = new /datum/customization_style/hair/short/short
-				src.AH.customizations[2].style = new /datum/customization_style/none
-				src.AH.customizations[3].style = new /datum/customization_style/none
+				src.AH.customizations["hair_top"].style = new /datum/customization_style/hair/short/short
+				src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
+				src.AH.customizations["hair_bottom"].style = new /datum/customization_style/none
 				src.AH.underwear = "No Underwear"
 
-				src.AH.customizations[1].color = initial(src.AH.customizations[1].color)
-				src.AH.customizations[2].color = initial(src.AH.customizations[2].color)
-				src.AH.customizations[3].color = initial(src.AH.customizations[3].color)
+				src.AH.customizations["hair_top"].color = initial(src.AH.customizations["hair_top"].color)
+				src.AH.customizations["hair_middle"].color = initial(src.AH.customizations["hair_middle"].color)
+				src.AH.customizations["hair_bottom"].color = initial(src.AH.customizations["hair_bottom"].color)
 				src.AH.e_color = "#101010"
 				src.AH.u_color = "#FEFEFE"
 
@@ -1857,18 +1857,18 @@ var/list/removed_jobs = list(
 			src.AH = new
 		if (src.AH.gender != src.gender)
 			src.AH.gender = src.gender
-		if (src.AH.customizations[1].color == null)
-			src.AH.customizations[1].color = "#101010"
-		if (src.AH.customizations[1].style == null)
-			src.AH.customizations[1].style = new  /datum/customization_style/none
-		if (src.AH.customizations[2].color == null)
-			src.AH.customizations[2].color = "#101010"
-		if (src.AH.customizations[2].style == null)
-			src.AH.customizations[2].style = new /datum/customization_style/none
-		if (src.AH.customizations[3].color == null)
-			src.AH.customizations[3].color = "#101010"
-		if (src.AH.customizations[3].style == null)
-			src.AH.customizations[3].style = new /datum/customization_style/none
+		if (src.AH.customizations["hair_top"].color == null)
+			src.AH.customizations["hair_top"].color = "#101010"
+		if (src.AH.customizations["hair_top"].style == null)
+			src.AH.customizations["hair_top"].style = new  /datum/customization_style/none
+		if (src.AH.customizations["hair_middle"].color == null)
+			src.AH.customizations["hair_middle"].color = "#101010"
+		if (src.AH.customizations["hair_middle"].style == null)
+			src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
+		if (src.AH.customizations["hair_bottom"].color == null)
+			src.AH.customizations["hair_bottom"].color = "#101010"
+		if (src.AH.customizations["hair_bottom"].style == null)
+			src.AH.customizations["hair_bottom"].style = new /datum/customization_style/none
 		if (src.AH.e_color == null)
 			src.AH.e_color = "#101010"
 		if (src.AH.u_color == null)

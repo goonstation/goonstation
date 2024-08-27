@@ -134,7 +134,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 		non_murderous_failure = BARBERY_FAILURE
 
-	if(istype(AH.customizations[1].style, /datum/customization_style/none) && istype(AH.customizations[2].style, /datum/customization_style/none) && istype(AH.customizations[3].style, /datum/customization_style/none))
+	if(istype(AH.customizations["hair_top"].style, /datum/customization_style/none) && istype(AH.customizations["hair_middle"].style, /datum/customization_style/none) && istype(AH.customizations["hair_bottom"].style, /datum/customization_style/none))
 		boutput(user, SPAN_ALERT("There is nothing to cut!"))
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -197,7 +197,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			M.organHolder.head.UpdateIcon()
 		return ATTACK_PRE_DONT_ATTACK // gottem
 
-	if(istype(AH.customizations[1].style, /datum/customization_style/none) && istype(AH.customizations[2].style, /datum/customization_style/none) && istype(AH.customizations[3].style, /datum/customization_style/none))
+	if(istype(AH.customizations["hair_top"].style, /datum/customization_style/none) && istype(AH.customizations["hair_middle"].style, /datum/customization_style/none) && istype(AH.customizations["hair_bottom"].style, /datum/customization_style/none))
 		boutput(user, SPAN_ALERT("There is nothing to cut!"))
 		non_murderous_failure = BARBERY_FAILURE
 
@@ -493,7 +493,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
 
-	var/list/current_hair_style = list("bottom" = new_AH.customizations[1].style.name, "middle" = new_AH.customizations[2].style.name, "top" = new_AH.customizations[3].style.name)
+	var/list/current_hair_style = list("bottom" = new_AH.customizations["hair_top"].style.name, "middle" = new_AH.customizations["hair_middle"].style.name, "top" = new_AH.customizations["hair_bottom"].style.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
 /datum/component/barber/ui_static_data(mob/user)
@@ -528,11 +528,11 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 					switch (src.hair_portion)
 						if ("bottom")
-							src.new_AH.customizations[1].style = new_hairstyle
+							src.new_AH.customizations["hair_top"].style = new_hairstyle
 						if ("middle")
-							src.new_AH.customizations[2].style = new_hairstyle
+							src.new_AH.customizations["hair_middle"].style = new_hairstyle
 						if ("top")
-							src.new_AH.customizations[3].style = new_hairstyle
+							src.new_AH.customizations["hair_bottom"].style = new_hairstyle
 					src.reference_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
 

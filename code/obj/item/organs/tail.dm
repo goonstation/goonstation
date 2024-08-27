@@ -48,8 +48,8 @@
 				src.organ_color_2 = AHL.customizations[2].color
 				src.donor_AH = AHL
 			else if (src.donor && ishuman(src.donor))	// Get the colors here so they dont change later, ie reattached on someone else
-				src.organ_color_1 = fix_colors(src.donor_AH.customizations[1].color)
-				src.organ_color_2 = fix_colors(src.donor_AH.customizations[2].color)
+				src.organ_color_1 = fix_colors(src.donor_AH.customizations["hair_top"].color)
+				src.organ_color_2 = fix_colors(src.donor_AH.customizations["hair_middle"].color)
 			else	// Just throw some colors in there or something
 				src.organ_color_1 = rgb(rand(50,190), rand(50,190), rand(50,190))
 				src.organ_color_2 = rgb(rand(50,190), rand(50,190), rand(50,190))

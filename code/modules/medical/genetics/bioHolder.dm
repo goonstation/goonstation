@@ -53,9 +53,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	// It's probably smarter to have customizations in a list to iterate over for later - Glamurio
 	var/list/datum/customizationHolder/customizations = list(
-		new /datum/customizationHolder/first,
-		new /datum/customizationHolder/second,
-		new /datum/customizationHolder/third,
+		"hair_top" = new /datum/customizationHolder/first,
+		"hair_middle" = new /datum/customizationHolder/second,
+		"hair_bottom" = new /datum/customizationHolder/third,
 	)
 
 	/// Currently changes which sprite sheet is used
@@ -247,12 +247,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
 	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
-		if (!src.CanCopyCustomization(toCopy))
-			return
-
-		for(var/i in 1 to length(src.customizations))
-			var/datum/customizationHolder/custom = src.customizations[i]
-			var/datum/customizationHolder/customCopy = toCopy.customizations[i]
+		for(var/key src.customizations)
+			var/datum/customizationHolder/custom = src.customizations[key]
+			var/datum/customizationHolder/customCopy = toCopy.customizations[key]
 			custom.color_original = customCopy.color_original
 			custom.color = customCopy.color
 			custom.style_original = customCopy.style_original
@@ -285,11 +282,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if (progress >= 9 || prob(progress * 10))
 
-			for(var/i in 1 to length(src.customizations))
+			for(var/key in src.customizations)
 				if (!src.CanCopyCustomization(toCopy))
 					continue
-				var/datum/customizationHolder/custom = src.customizations[i]
-				var/datum/customizationHolder/customCopy = toCopy.customizations[i]
+				var/datum/customizationHolder/custom = src.customizations[key]
+				var/datum/customizationHolder/customCopy = toCopy.customizations[key]
 
 				custom.color = StaggeredCopyHex(custom.color, customCopy.color, adjust_denominator)
 				custom.style = customCopy.style

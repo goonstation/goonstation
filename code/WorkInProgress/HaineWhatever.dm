@@ -1113,8 +1113,8 @@ TYPEINFO(/obj/submachine/blackjack)
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customizations[1].style =  new /datum/customization_style/hair/gimmick/sailor_moon
-	AH.customizations[1].color = "#FFD700"
+	AH.customizations["hair_top"].style =  new /datum/customization_style/hair/gimmick/sailor_moon
+	AH.customizations["hair_top"].color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
 

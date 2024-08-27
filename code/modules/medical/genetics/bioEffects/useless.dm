@@ -123,9 +123,9 @@
 			return
 		AH.s_tone = holder_skin
 		if(AH.mob_appearance_flags & FIX_COLORS) // human -> achrom -> lizard -> notachrom is *bright*
-			AH.customizations[1].color = fix_colors(AH.customizations[1].color)
-			AH.customizations[2].color = fix_colors(AH.customizations[2].color)
-			AH.customizations[3].color = fix_colors(AH.customizations[3].color)
+			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
+			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
 		H.update_colorful_parts()
 		H.update_body()
 
@@ -149,16 +149,16 @@
 					H.bioHolder.RemoveEffect(ID)
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color_original = AH.e_color
-			AH.customizations[1].color_original = AH.customizations[1].color
-			AH.customizations[2].color_original = AH.customizations[2].color
-			AH.customizations[3].color_original = AH.customizations[3].color
+			AH.customizations["hair_top"].color_original = AH.customizations["hair_top"].color
+			AH.customizations["hair_middle"].color_original = AH.customizations["hair_middle"].color
+			AH.customizations["hair_bottom"].color_original = AH.customizations["hair_bottom"].color
 			AH.s_tone_original = AH.s_tone
 
 			AH.e_color = eye_color_to_use
 			AH.s_tone = skintone_to_use
-			AH.customizations[1].color = color_to_use
-			AH.customizations[2].color = color_to_use
-			AH.customizations[3].color = color_to_use
+			AH.customizations["hair_top"].color = color_to_use
+			AH.customizations["hair_middle"].color = color_to_use
+			AH.customizations["hair_bottom"].color = color_to_use
 			H.update_colorful_parts()
 
 	OnRemove()
@@ -167,13 +167,13 @@
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color = AH.e_color_original
 			AH.s_tone = AH.s_tone_original
-			AH.customizations[1].color = AH.customizations[1].color_original
-			AH.customizations[2].color = AH.customizations[2].color_original
-			AH.customizations[3].color = AH.customizations[3].color_original
+			AH.customizations["hair_top"].color = AH.customizations["hair_top"].color_original
+			AH.customizations["hair_middle"].color = AH.customizations["hair_middle"].color_original
+			AH.customizations["hair_bottom"].color = AH.customizations["hair_bottom"].color_original
 			if(AH.mob_appearance_flags & FIX_COLORS) // human -> blank -> lizard -> unblank is *bright*
-				AH.customizations[1].color = fix_colors(AH.customizations[1].color)
-				AH.customizations[2].color = fix_colors(AH.customizations[2].color)
-				AH.customizations[3].color = fix_colors(AH.customizations[3].color)
+				AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
+				AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+				AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
 			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black

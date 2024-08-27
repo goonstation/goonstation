@@ -406,9 +406,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return // please dont call set_mutantrace on a non-human non-appearanceholder
 
 		AH.mob_appearance_flags = src.mutant_appearance_flags
-		AH.customizations[1].offset_y = src.head_offset
-		AH.customizations[2].offset_y = src.head_offset
-		AH.customizations[3].offset_y = src.head_offset
+		AH.customizations["hair_top"].offset_y = src.head_offset
+		AH.customizations["hair_middle"].offset_y = src.head_offset
+		AH.customizations["hair_bottom"].offset_y = src.head_offset
 
 		var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
 		if(typeinfo.special_styles)
@@ -452,17 +452,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.mob_arm_offset = src.arm_offset
 
 		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-			AH.customizations[1].color = fix_colors(AH.customizations[1].color)
-			AH.customizations[2].color = fix_colors(AH.customizations[2].color)
-			AH.customizations[3].color = fix_colors(AH.customizations[3].color)
+			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
+			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
+			AH.customizations["hair_bottom"].color = fix_colors(AH.customizations["hair_bottom"].color)
 
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
-			AH.s_tone = AH.customizations[1].color
+			AH.s_tone = AH.customizations["hair_top"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
-			AH.s_tone = AH.customizations[2].color
+			AH.s_tone = AH.customizations["hair_middle"].color
 		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
-			AH.s_tone = AH.customizations[3].color
+			AH.s_tone = AH.customizations["hair_bottom"].color
 		else
 			AH.s_tone = AH.s_tone_original
 

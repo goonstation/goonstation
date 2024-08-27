@@ -249,18 +249,18 @@ datum/v_space
 		var/datum/appearanceHolder/AH = character.bioHolder.mobAppearance
 		if (!AH)
 			AH = new
-		if (AH.customizations[1].color == null)
-			AH.customizations[1].color = "#101010"
-		if (AH.customizations[1].style == null)
-			AH.customizations[1].style =  new /datum/customization_style/none
-		if (AH.customizations[2].color == null)
-			AH.customizations[2].color = "#101010"
-		if (AH.customizations[2].style == null)
-			AH.customizations[2].style =  new /datum/customization_style/none
-		if (AH.customizations[3].color == null)
-			AH.customizations[3].color = "#101010"
-		if (AH.customizations[3].style == null)
-			AH.customizations[3].style =  new /datum/customization_style/none
+		if (AH.customizations["hair_top"].color == null)
+			AH.customizations["hair_top"].color = "#101010"
+		if (AH.customizations["hair_top"].style == null)
+			AH.customizations["hair_top"].style =  new /datum/customization_style/none
+		if (AH.customizations["hair_middle"].color == null)
+			AH.customizations["hair_middle"].color = "#101010"
+		if (AH.customizations["hair_middle"].style == null)
+			AH.customizations["hair_middle"].style =  new /datum/customization_style/none
+		if (AH.customizations["hair_bottom"].color == null)
+			AH.customizations["hair_bottom"].color = "#101010"
+		if (AH.customizations["hair_bottom"].style == null)
+			AH.customizations["hair_bottom"].style =  new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)

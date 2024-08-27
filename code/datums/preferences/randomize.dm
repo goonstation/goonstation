@@ -157,9 +157,9 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		H.on_realname_change()
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
-	var/datum/customizationHolder/customization_first = AH.customizations[1]
-	var/datum/customizationHolder/customization_second = AH.customizations[2]
-	var/datum/customizationHolder/customization_third = AH.customizations[3]
+	var/datum/customizationHolder/customization_first = AH.customizations["hair_top"]
+	var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
+	var/datum/customizationHolder/customization_third = AH.customizations["hair_bottom"]
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
 	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
