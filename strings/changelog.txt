@@ -1,4 +1,9 @@
 
+(t)tue aug 27 24
+(u)Sovexe
+(p)20439
+(e)🪲🏅|C-Bug, A-Medal
+(+)Players with the "40K" medal can now redeem the (AI Core Skin) Salvaged reward as expected.
 (t)mon aug 26 24
 (u)ithebinman
 (p)20420
