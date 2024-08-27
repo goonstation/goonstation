@@ -1,5 +1,9 @@
 
 (t)tue aug 27 24
+(u)tarmunora
+(p)20431
+(e)📄|A-UI
+(*)Changed tooltip HTML handling. Please report any oddities.
 (u)OmegaShoots
 (p)20441
 (e)🪲|C-Bug
