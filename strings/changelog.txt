@@ -1,5 +1,9 @@
 
 (t)tue aug 27 24
+(u)OmegaShoots
+(p)20441
+(e)🪲|C-Bug
+(+)Using the "set button list" on Button Panels can now work properly with inputs containing multiple equal signs.
 (u)Glamurio (Ryou)
 (p)20366
 (e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
