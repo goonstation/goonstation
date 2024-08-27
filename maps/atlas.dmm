@@ -15972,7 +15972,6 @@
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
 "hQO" = (
-/obj/decal/mule/dropoff,
 /obj/machinery/computer3/generic/secure_data{
 	dir = 1
 	},
