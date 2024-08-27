@@ -1,5 +1,9 @@
 
 (t)tue aug 27 24
+(u)Glamurio (Ryou)
+(p)20366
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Hair will now be visible under the hood when wearing hoods from hoodies.
 (u)Sovexe
 (p)20439
 (e)🪲🏅|C-Bug, A-Medal
