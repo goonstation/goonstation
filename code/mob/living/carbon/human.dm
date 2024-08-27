@@ -2728,9 +2728,9 @@
 
 /mob/living/carbon/human/proc/is_bald()
 	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
-	return istype(AH.customizations["hair_top"], /datum/customization_style/none) \
+	return istype(AH.customizations["hair_bottom"], /datum/customization_style/none) \
 	&& istype(AH.customizations["hair_middle"], /datum/customization_style/none) \
-	&& istype(AH.customizations["hair_bottom"], /datum/customization_style/none)
+	&& istype(AH.customizations["hair_top"], /datum/customization_style/none)
 
 /mob/living/carbon/human/proc/create_wig(var/keep_hair = FALSE)
 	if (!src.bioHolder || !src.bioHolder.mobAppearance)
@@ -2742,16 +2742,16 @@
 	W.icon_state = "bald" // Let's give the actual hair a chance to shine
 
 	var/hair_list = list()
-	hair_list[src.bioHolder.mobAppearance.customizations["hair_top"].style.id] = src.bioHolder.mobAppearance.customizations["hair_top"].color
-	hair_list[src.bioHolder.mobAppearance.customizations["hair_middle"].style.id] = src.bioHolder.mobAppearance.customizations["hair_middle"].color
 	hair_list[src.bioHolder.mobAppearance.customizations["hair_bottom"].style.id] = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_middle"].style.id] = src.bioHolder.mobAppearance.customizations["hair_middle"].color
+	hair_list[src.bioHolder.mobAppearance.customizations["hair_top"].style.id] = src.bioHolder.mobAppearance.customizations["hair_top"].color
 
 	W.setup_wig(hair_list)
 
 	if (!keep_hair)
-		src.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
 		src.update_colorful_parts()
 	return W
 

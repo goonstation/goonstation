@@ -805,9 +805,9 @@ datum
 						logTheThing(LOG_COMBAT, H, "was gibbed by the reagent [name].")
 						H.gib()
 						return
-					if(H.bioHolder.mobAppearance.customizations["hair_top"].style.id != "dreads" || H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard")
+					if(H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "dreads" || H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						H.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/hair/long/dreads
+						H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")

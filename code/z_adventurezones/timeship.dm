@@ -274,7 +274,7 @@ Turfs and decal for the space rift
 
 	initializeBioholder()
 		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/tramp
-		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/beard/longbeard
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/beard/longbeard
 		bioHolder.mobAppearance.underwear = "briefs"
 		bioHolder.age = 3500
 		. = ..()

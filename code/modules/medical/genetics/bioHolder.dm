@@ -53,9 +53,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	// It's probably smarter to have customizations in an associative list for later - Glamurio
 	var/list/datum/customizationHolder/customizations = list(
-		"hair_top" = new /datum/customizationHolder/first,
+		"hair_bottom" = new /datum/customizationHolder/first,
 		"hair_middle" = new /datum/customizationHolder/second,
-		"hair_bottom" = new /datum/customizationHolder/third,
+		"hair_top" = new /datum/customizationHolder/third,
 	)
 
 	/// Currently changes which sprite sheet is used

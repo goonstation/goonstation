@@ -110,12 +110,12 @@
 			is_mutantrace = TRUE
 			break
 
-	var/cust_one_state = P.AH.customizations["hair_top"].style.id
+	var/cust_one_state = P.AH.customizations["hair_bottom"].style.id
 	var/cust_two_state = P.AH.customizations["hair_middle"].style.id
-	var/cust_three_state = P.AH.customizations["hair_bottom"].style.id
+	var/cust_three_state = P.AH.customizations["hair_top"].style.id
 
-	var/image/hair = image(P.AH.customizations["hair_top"].style.icon, cust_one_state)
-	hair.color = P.AH.customizations["hair_top"].color
+	var/image/hair = image(P.AH.customizations["hair_bottom"].style.icon, cust_one_state)
+	hair.color = P.AH.customizations["hair_bottom"].color
 	hair.alpha = GHOST_HAIR_ALPHA
 
 	var/force_hair = FALSE
@@ -132,7 +132,7 @@
 		src.AddOverlays(beard, "beard")
 
 		var/image/detail = image(P.AH.customizations["hair_middle"].style.icon, cust_three_state)
-		detail.color = P.AH.customizations["hair_bottom"].color
+		detail.color = P.AH.customizations["hair_top"].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		src.AddOverlays(detail, "detail")
 
@@ -141,19 +141,19 @@
 		wig.mat_changename = 0
 		var/datum/material/wigmat = getMaterial("ectofibre")
 		wigmat = wigmat.getMutable()
-		wigmat.setColor(P.AH.customizations["hair_top"].color)
+		wigmat.setColor(P.AH.customizations["hair_bottom"].color)
 		wig.setMaterial(wigmat)
 		wig.name = "ectofibre [name]'s hair"
 		wig.icon = 'icons/mob/human_hair.dmi'
 		wig.icon_state = cust_one_state
-		wig.color = P.AH.customizations["hair_top"].color
+		wig.color = P.AH.customizations["hair_bottom"].color
 		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
-		wig.wear_image.color = P.AH.customizations["hair_top"].color
+		wig.wear_image.color = P.AH.customizations["hair_bottom"].color
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
-		newbio.mobAppearance.customizations["hair_top"].color = hair.color
+		newbio.mobAppearance.customizations["hair_bottom"].color = hair.color
 		newbio.mobAppearance.e_color = P.AH.e_color
 		src.bioHolder = newbio
 
@@ -439,8 +439,8 @@
 		return O
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
-		var/image/hair = image(src.AH_we_spawned_with.customizations["hair_top"].style.icon, src.AH_we_spawned_with.customizations["hair_top"].style.id)
-		hair.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
+		var/image/hair = image(src.AH_we_spawned_with.customizations["hair_bottom"].style.icon, src.AH_we_spawned_with.customizations["hair_bottom"].style.id)
+		hair.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		hair.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(hair, "hair")
 
@@ -449,26 +449,26 @@
 		beard.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(beard, "beard")
 
-		var/image/detail = image(src.AH_we_spawned_with.customizations["hair_bottom"].style.icon, src.AH_we_spawned_with.customizations["hair_bottom"].style.id)
-		detail.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+		var/image/detail = image(src.AH_we_spawned_with.customizations["hair_top"].style.icon, src.AH_we_spawned_with.customizations["hair_top"].style.id)
+		detail.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")
 
-		var/cust_one = src.bioHolder.mobAppearance.customizations["hair_top"].style.id
+		var/cust_one = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.id
 		if(cust_one && cust_one != "none")
 			O.wig = new
 			O.wig.mat_changename = 0
 			var/datum/material/wigmat = getMaterial("ectofibre")
 			wigmat = wigmat.getMutable()
-			wigmat.setColor(src.bioHolder.mobAppearance.customizations["hair_top"].color)
+			wigmat.setColor(src.bioHolder.mobAppearance.customizations["hair_bottom"].color)
 			O.wig.setMaterial(wigmat)
 			O.wig.name = "[O.name]'s hair"
 			O.wig.icon = 'icons/mob/human_hair.dmi'
 			O.wig.icon_state = cust_one
-			O.wig.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
+			O.wig.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 			O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 			O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
-			O.wig.wear_image.color = src.bioHolder.mobAppearance.customizations["hair_top"].color
+			O.wig.wear_image.color = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 
 	return O

@@ -567,7 +567,7 @@
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
-		var/y_to_offset = AHH.customizations["hair_top"].offset_y
+		var/y_to_offset = AHH.customizations["hair_bottom"].offset_y
 
 		if(my_head.head_image_nose)
 			AddOverlays(my_head.head_image_nose, "nose", TRUE)
@@ -729,9 +729,9 @@
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations["hair_top"].style.default_layer
+		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.default_layer
 		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customizations["hair_middle"].style.default_layer
-		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.default_layer
+		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations["hair_top"].style.default_layer
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
@@ -816,11 +816,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
 					switch(AHOLD.mob_detail_1_color_ref)
 						if(CUST_1)
-							human_image.color = AHOLD.customizations["hair_top"].color
+							human_image.color = AHOLD.customizations["hair_bottom"].color
 						if(CUST_2)
 							human_image.color = AHOLD.customizations["hair_middle"].color
 						if(CUST_3)
-							human_image.color = AHOLD.customizations["hair_bottom"].color
+							human_image.color = AHOLD.customizations["hair_top"].color
 						else
 							human_image.color = "#FFFFFF"
 					src.body_standing.overlays += human_image
@@ -829,11 +829,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
 					switch(AHOLD.mob_oversuit_1_color_ref)
 						if(CUST_1)
-							human_detail_image.color = AHOLD.customizations["hair_top"].color
+							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
 						if(CUST_2)
 							human_detail_image.color = AHOLD.customizations["hair_middle"].color
 						if(CUST_3)
-							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
+							human_detail_image.color = AHOLD.customizations["hair_top"].color
 						else
 							human_detail_image.color = "#FFFFFF"
 					src.detail_standing_oversuit.overlays += human_detail_image

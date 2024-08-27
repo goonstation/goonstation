@@ -335,11 +335,11 @@ datum
 					var/mob/living/carbon/human/H = M
 					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
 					hair_type = pick(hair_styles)
 					H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new hair_type
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
 					H.update_colorful_parts()
 					boutput(H, SPAN_NOTICE("Your scalp feels itchy!"))
 				..()
@@ -363,8 +363,8 @@ datum
 				if (ishuman(M))
 					var/somethingchanged = 0
 					var/mob/living/carbon/human/H = M
-					if (H.bioHolder.mobAppearance.customizations["hair_top"].style.id != "80s")
-						H.bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/long/eighties
+					if (H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "80s")
+						H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/eighties
 						somethingchanged = 1
 					if (H.gender == MALE && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
 						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/longbeard
