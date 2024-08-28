@@ -2035,8 +2035,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "ahJ" = (
-/obj/storage/secure/closet/security/equipment,
 /obj/machinery/recharger/wall/sticky,
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "ahL" = (
@@ -3619,7 +3619,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/west)
 "aoJ" = (
-/obj/storage/secure/closet/brig,
+/obj/machinery/vending/security,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -5962,8 +5962,8 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "axm" = (
-/obj/machinery/vending/jobclothing/security,
 /obj/machinery/light_switch/west,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "axo" = (
@@ -18165,7 +18165,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "oCY" = (
-/obj/machinery/vending/security,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "oCZ" = (
@@ -20270,12 +20270,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "uBZ" = (
-/obj/storage/secure/closet/security/equipment,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "uCO" = (
@@ -20766,11 +20766,11 @@
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "vKB" = (
-/obj/storage/secure/closet/security/equipment,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "vLl" = (
