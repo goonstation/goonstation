@@ -89,8 +89,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		// I demand satisfaction!
 		if (ismob(target))
 			target.visible_message(
-				"<span><b>[challenger]</b> slaps [target] in the face with the the [src]!</span>",
-				SPAN_ALERT("<b>[challenger] slaps you in the face with the [src]! [capitalize(he_or_she(challenger))] has offended your honour!")
+				"<span><b>[challenger]</b> slaps [target] in the face with [src]!</span>",
+				SPAN_ALERT("<b>[challenger] slaps you in the face with [src]! [capitalize(he_or_she(challenger))] has offended your honour!")
 			)
 			logTheThing(LOG_COMBAT, challenger, "glove-slapped [constructTarget(target,"combat")]")
 		else
