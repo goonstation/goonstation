@@ -178,7 +178,7 @@ proc/filter_carrier_pets(var/type)
 	setup_overlays()
 		if (src.use_custom_color)
 			if (src.client)
-				fur_color = src.client.preferences.AH.customization_first_color
+				fur_color = src.client.preferences.AH.customizations["hair_bottom"].color
 				eye_color = src.client.preferences.AH.e_color
 			var/image/overlay = image(src.icon, "mouse_colorkey")
 			overlay.color = fur_color
@@ -1689,7 +1689,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		eye_color = "#000000"
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
 		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "sparrow_colorkey")
 		overlay.color = fur_color
@@ -1768,7 +1768,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		eye_color = "#000000"
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
 		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey")
 		overlay.color = fur_color
@@ -1828,7 +1828,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.healthlist -= "toxin"
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
 		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey")
