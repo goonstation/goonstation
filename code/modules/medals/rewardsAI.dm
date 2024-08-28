@@ -22,7 +22,7 @@
 /datum/achievementReward/aicase/ai_ailes
 	title = "(AI Core Skin) Bulky"
 	desc = "Replaces your core with a bulky older model."
-	required_medal = "I'm In"
+	required_medal = "I'm in"
 	aiskin = "ailes"
 
 datum/achievementReward/aicase/ai_crt
