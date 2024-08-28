@@ -25573,7 +25573,6 @@
 /turf/simulated/floor/black,
 /area/station/crewquarters/fuq3)
 "hFA" = (
-/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"
@@ -80022,6 +80021,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
