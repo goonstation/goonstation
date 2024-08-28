@@ -95,7 +95,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			logTheThing(LOG_COMBAT, challenger, "glove-slapped [constructTarget(target,"combat")]")
 		else
 			target.visible_message(
-				SPAN_ALERT("<b>[challenger]</b> slaps [target] in the face with the [src]!")
+				SPAN_ALERT("<b>[challenger]</b> slaps [target] in the face with [src]!")
 			)
 		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, TRUE)
 
