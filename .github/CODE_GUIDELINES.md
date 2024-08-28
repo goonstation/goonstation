@@ -463,6 +463,11 @@ So in general, use `round(A,1)` for your rounding needs.
 
 # Useful Things
 
+## `.git-blame-ignore-revs`
+
+Run `git config blame.ignoreRevsFile .git-blame-ignore-revs` in the root goonstation folder to ignore commits that touched a lot of files for big formatting reasons. This helps deal with `git blame` a bit easier, and you only need to run this once.
+
+
 ## VSCode Debugger
 You can check out a guide on using the debugger in the guide located in the [Developer Guide](https://hackmd.io/@goonstation/dev#How-to-use-the-VS-Code-Debugger).
 

@@ -194,6 +194,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		var/atom/location = src.loc
 		location.assume_air(air_contents)
 		air_contents = null
+		disconnect()
 
 		if (src.det)
 			processing_items.Remove(src.det)

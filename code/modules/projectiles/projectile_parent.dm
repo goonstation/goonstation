@@ -137,11 +137,12 @@
 	proc/setDirection(x,y, do_turn = 1, angle_override = 0)
 		xo = x
 		yo = y
+		var/matrix/scale_matrix = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
+			src.transform = turn(scale_matrix,(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
-			src.transform = null
+			src.transform = scale_matrix
 			facing_dir = angle2dir(angle_override)
 
 	proc/launch(do_delay = FALSE)
@@ -301,7 +302,8 @@
 		if (src.proj_data == null)
 			die()
 			return
-
+		src.pixel_z = src.proj_data.x_offset
+		src.pixel_w = src.proj_data.y_offset
 		name = src.proj_data.name
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
@@ -330,7 +332,7 @@
 			var/anglecheck = arcsin(src.xo / r)
 			if (anglecheck < 0)
 				src.angle = -src.angle
-		transform = null
+		transform = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		Turn(angle)
 		if (!proj_data.precalculated)
 			src.was_setup = 1
@@ -532,6 +534,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/name = "projectile"
 	var/icon = 'icons/obj/projectiles.dmi'
 	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
+	var/x_offset = 0 //! absolute pixel offset of the projectile, set automatically based on the icon size
+	var/y_offset = 0
+	var/scale = 1
 	var/invisibility = INVIS_NONE
 	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
 	var/brightness = 0
@@ -606,6 +611,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
+	var/smashes_glasses = TRUE
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
@@ -618,6 +624,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	New()
 		. = ..()
 		generate_stats()
+		var/icon/fuck_you_byond = icon(src.icon)
+		src.x_offset = -(fuck_you_byond.Width() - 32)/2
+		src.y_offset = -(fuck_you_byond.Height() - 32)/2
 
 	onVarChanged(variable, oldval, newval)
 		. = ..()

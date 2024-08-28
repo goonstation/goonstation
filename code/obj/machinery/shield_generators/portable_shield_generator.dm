@@ -478,43 +478,42 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	New(Loc, var/obj/machinery/shieldgenerator/deployer)
 		..()
 		src.deployer = deployer
+		if (src.deployer)
+			src.powerlevel = src.deployer.power_level
 		update_nearby_tiles()
-
-		if((deployer != null && deployer.power_level == 4) || src.powerlevel == 4)
-			src.name = "Liquid Forcefield"
-			src.desc = "A force field that prevents liquids from passing through it."
-			src.icon_state = "shieldw"
-			src.color = "#FF33FF" //change colour for different power levels
-			src.powerlevel = 4
-			src.mouse_opacity = 0
-			flags = FLUID_DENSE | FLUID_DENSE_ALWAYS
-		else if(deployer != null && deployer.power_level == 1)
-			src.name = "Atmospheric Forcefield"
-			src.desc = "A force field that prevents gas from passing through it."
-			src.icon_state = "shieldw"
-			src.color = "#3333FF" //change colour for different power levels
-			src.powerlevel = 1
-			src.mouse_opacity = 0
-			flags = 0
-			gas_impermeable = TRUE
-		else if(deployer != null && deployer.power_level == 2)
-			src.name = "Atmospheric/Liquid Forcefield"
-			src.desc = "A force field that prevents gas and liquids from passing through it."
-			src.icon_state = "shieldw"
-			src.color = "#33FF33"
-			src.powerlevel = 2
-			src.mouse_opacity = 0
-			flags = FLUID_DENSE | FLUID_DENSE_ALWAYS
-			gas_impermeable = TRUE
-		else if(deployer != null)
-			src.name = "Energy Forcefield"
-			src.desc = "A force field that prevents matter from passing through it."
-			src.icon_state = "shieldw"
-			src.color = "#FF3333"
-			src.powerlevel = 3
-			src.mouse_opacity = 1
-			flags = FLUID_DENSE | USEDELAY | FLUID_DENSE_ALWAYS
-			density = 1
+		switch (src.powerlevel)
+			if(4)
+				src.name = "Liquid Forcefield"
+				src.desc = "A force field that prevents liquids from passing through it."
+				src.icon_state = "shieldw"
+				src.color = "#FF33FF" //change colour for different power levels
+				src.mouse_opacity = 0
+				flags = FLUID_DENSE | FLUID_DENSE_ALWAYS
+			if(1)
+				src.name = "Atmospheric Forcefield"
+				src.desc = "A force field that prevents gas from passing through it."
+				src.icon_state = "shieldw"
+				src.color = "#3333FF" //change colour for different power levels
+				src.mouse_opacity = 0
+				flags = 0
+				gas_impermeable = TRUE
+			if(2)
+				src.name = "Atmospheric/Liquid Forcefield"
+				src.desc = "A force field that prevents gas and liquids from passing through it."
+				src.icon_state = "shieldw"
+				src.color = "#33FF33"
+				src.mouse_opacity = 0
+				flags = FLUID_DENSE | FLUID_DENSE_ALWAYS
+				gas_impermeable = TRUE
+			else
+				src.name = "Energy Forcefield"
+				src.desc = "A force field that prevents matter from passing through it."
+				src.icon_state = "shieldw"
+				src.color = "#FF3333"
+				src.powerlevel = 3
+				src.mouse_opacity = 1
+				flags = FLUID_DENSE | USEDELAY | FLUID_DENSE_ALWAYS
+				density = 1
 
 	disposing()
 		if(linked_door)
