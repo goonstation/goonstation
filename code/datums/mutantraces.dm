@@ -1113,7 +1113,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 	voice_override = "skelly"
 	mutant_organs = list("left_eye" = /obj/item/organ/eye/skeleton,
 	"right_eye" = /obj/item/organ/eye/skeleton)
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS | HAS_HUMAN_HAIR)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/skeleton/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/skeleton/right
@@ -2321,7 +2321,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/pug/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/pug/left
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | HAS_HUMAN_HAIR)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_EYES | WEARS_UNDERPANTS | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	eye_state = "eyes-pug"
 	dna_mutagen_banned = FALSE
 	var/static/image/snore_bubble = image('icons/mob/mob.dmi', "bubble")
