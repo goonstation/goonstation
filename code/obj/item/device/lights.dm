@@ -619,11 +619,11 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (!src.anchored)
-				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
+				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(anchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes wrenching \the [src]."), null)
 			else if(movable)
-				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
+				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(unanchor), list(user), src.icon, src.icon_state,\
 					SPAN_NOTICE("[user] finishes unwrenching \the [src]."), null)
 		else if (ispryingtool(W))
@@ -671,7 +671,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 			. += " It has no APC-sized cell installed."
 		else
 			. += " [cell] is charged to [cell.charge]/[cell.maxcharge]."
-		if (src.anchored)
+		if (src.anchored || !src.movable)
 			. += " It is wrenched to the ground."
 			if (src.light.enabled)
 				. += " It is currently on."
