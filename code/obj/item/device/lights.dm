@@ -520,7 +520,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				"metal" = 4)
 /obj/item/device/light/floodlight
 	name = "floodlight"
-	desc = "A floodlight that can illuminate a large area. It can be wrenched to activate it."
+	desc = "A floodlight that can illuminate a large area."
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "floodlight_item"
@@ -667,6 +667,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	get_desc()
 		. = ..() + "\n"
+		if (src.movable)
+			 +=  " It can be wrenched to activate it."
 		if (isnull(cell))
 			. += " It has no APC-sized cell installed."
 		else
@@ -738,9 +740,6 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	rotatable = FALSE
 	infinite_power = TRUE
 	power_usage = 0 WATTS
-
-	get_desc()
-		return "A floodlight that can illuminate a large area."
 
 #define FLARE_UNLIT 1
 #define FLARE_LIT 2
