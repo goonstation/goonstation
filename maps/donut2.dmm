@@ -11565,14 +11565,16 @@
 /obj/machinery/turret{
 	dir = 1
 	},
-/turf/simulated/floor/circuit,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "biC" = (
 /obj/machinery/turret{
 	dir = 1
 	},
 /obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/circuit,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "biI" = (
 /obj/cable{
@@ -19685,10 +19687,6 @@
 	dir = 4
 	},
 /area/station/engine/inner)
-"dWn" = (
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
 "dWz" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -28010,7 +28008,8 @@
 /obj/machinery/turret{
 	dir = 1
 	},
-/turf/simulated/floor/circuit,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
 "jxv" = (
 /obj/landmark/random_room/size3x3,
@@ -42516,13 +42515,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"sqZ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload)
 "srh" = (
 /obj/stool/chair{
 	dir = 4
@@ -84408,7 +84400,7 @@ ohG
 biz
 tqM
 bjw
-sqZ
+bRQ
 jxq
 bjw
 ohG
@@ -85616,7 +85608,7 @@ ohG
 biC
 byg
 bjw
-dWn
+bjw
 jxq
 bYJ
 ohG
