@@ -563,6 +563,7 @@
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
 	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
 						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
+	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
@@ -590,21 +591,36 @@
 		else
 			ClearSpecificOverlays(TRUE, "eyes_R")
 
+		// Add hoodie alpha mask for showing hair
+		if(hooded)
+			var/image/overlay_mask = image('icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi', "hoodie-mask")
+			overlay_mask.render_target = "*hoody[\ref(src)]"
+			my_head.add_filter("hoodie-mask", 0, alpha_mask_filter(y=-8, render_source="*hoody[\ref(src)]"))
+			src.AddOverlays(overlay_mask, "hoodie-mask-overlay", TRUE)
+		else
+			my_head.remove_filter("hoodie-mask")
+
 		//Previously we shoved all the hair images into the overlays of two images (one for normal hair and one for special) 'cause of identical vars
 		//But now we need hairstyle-specific layering so RIP to that approach and time to do things manually
 		src.image_cust_one = my_head.head_image_cust_one
 		src.image_cust_one?.pixel_y = y_to_offset
+		src.image_cust_one.filters = my_head.filters.Copy()
 		src.image_cust_two = my_head.head_image_cust_two
 		src.image_cust_two?.pixel_y = y_to_offset
+		src.image_cust_two.filters = my_head.filters.Copy()
 		src.image_cust_three = my_head.head_image_cust_three
 		src.image_cust_three?.pixel_y = y_to_offset
+		src.image_cust_three.filters = my_head.filters.Copy()
 
 		src.image_special_one = my_head.head_image_special_one
 		src.image_special_one?.pixel_y = y_to_offset
+		src.image_special_one.filters = my_head.filters.Copy()
 		src.image_special_two = my_head.head_image_special_two
 		src.image_special_two?.pixel_y = y_to_offset
+		src.image_special_two.filters = my_head.filters.Copy()
 		src.image_special_three = my_head.head_image_special_three
 		src.image_special_three?.pixel_y = y_to_offset
+		src.image_special_three.filters = my_head.filters.Copy()
 
 		if(!seal_hair)
 			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)

@@ -1,5 +1,22 @@
 
+(t)wed aug 28 24
+(u)gus
+(p)20451
+(e)|
+(+)fixed manudrive duping
 (t)tue aug 27 24
+(u)tarmunora
+(p)20431
+(e)📄|A-UI
+(*)Changed tooltip HTML handling. Please report any oddities.
+(u)OmegaShoots
+(p)20441
+(e)🪲|C-Bug
+(+)Using the "set button list" on Button Panels can now work properly with inputs containing multiple equal signs.
+(u)Glamurio (Ryou)
+(p)20366
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Hair will now be visible under the hood when wearing hoods from hoodies.
 (u)Sovexe
 (p)20439
 (e)🪲🏅|C-Bug, A-Medal

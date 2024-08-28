@@ -2915,9 +2915,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		var/list/work_list = list()
 		var/button_count = 0
 		for (var/index in splittext(inputted_text, ";"))
-			var/list/split = splittext(index, "=")
-			if (length(split) != 2) continue
-			work_list[split[1]] = split[2]
+			var/first_equal_pos = findtext(index, "=")
+			if (!first_equal_pos) continue
+			var/button_name = copytext(index, 1, first_equal_pos)
+			var/signal = copytext(index, first_equal_pos + 1)
+			if (!button_name || !signal) continue
+			work_list[button_name] = signal
 			button_count++
 			if (button_count >= 10) break
 		if (!length(work_list)) return FALSE
