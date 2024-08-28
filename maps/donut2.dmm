@@ -16506,6 +16506,12 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"bRQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "bRR" = (
 /obj/lattice{
 	dir = 9;
@@ -16674,6 +16680,9 @@
 /area/station/ranch)
 "bYJ" = (
 /obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bYO" = (
@@ -24249,6 +24258,15 @@
 	dir = 5
 	},
 /area/station/quartermaster/magnet)
+"gUr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai_upload)
 "gUt" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -84996,7 +85014,7 @@ blw
 blw
 xIa
 dLC
-blw
+gUr
 blw
 blw
 cSJ
@@ -85298,7 +85316,7 @@ bjw
 epp
 epp
 epp
-bjw
+bRQ
 bjw
 bna
 gQA
