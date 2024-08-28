@@ -1101,7 +1101,19 @@ var/list/removed_jobs = list(
 		if (!src.AH)
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
-		randomize_look(src.AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
+		var/is_mutantrace = FALSE
+		var/is_bald = FALSE
+		var/set_hair
+		for (var/trait_id in src.traitPreferences.traits_selected)
+			var/datum/trait/T = getTraitById(trait_id)
+			if (T?.mutantRace)
+				is_mutantrace = TRUE
+			else if(istype(T.id, "bald"))
+				is_bald = TRUE
+				break
+		if(!is_mutantrace || is_bald)
+			set_hair = TRUE
+		randomize_look(src.AH, 0, 0, 0, 0, 0, 0, null, set_hair) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
 			blType = "Zesty Ranch"
 		src.update_preview_icon()

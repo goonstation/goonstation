@@ -106,7 +106,7 @@ var/global/list/masculine_ustyles = list("No Underwear" = "none",\
 var/global/list/male_screams = list("male", "malescream4", "malescream5", "malescream6", "malescream7")
 var/global/list/female_screams = list("female", "femalescream1", "femalescream2", "femalescream3", "femalescream4")
 
-/proc/randomize_look(to_randomize, change_gender = 1, change_blood = 1, change_age = 1, change_name = 1, change_underwear = 1, remove_effects = 1, optional_donor)
+/proc/randomize_look(to_randomize, change_gender = 1, change_blood = 1, change_age = 1, change_name = 1, change_underwear = 1, remove_effects = 1, optional_donor, set_hair)
 	if (!to_randomize)
 		return
 
@@ -193,27 +193,28 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	var/has_second = 0
 	var/type_first
-	if (AH.gender == MALE)
-		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
-			AH.customization_first = new type_first
-		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
-			AH.customization_first = new type_first
+	if(set_hair)
+		if (AH.gender == MALE)
+			if (prob(5)) // small chance to have a hairstyle more geared to the other gender
+				type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+				AH.customization_first = new type_first
+			else // otherwise just use one standard to the current gender
+				type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+				AH.customization_first = new type_first
 
-		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
-								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
-			AH.customization_second = new type_second
-			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
+			if (prob(33)) // since we're a guy, a chance for facial hair
+				var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
+									+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
+				AH.customization_second = new type_second
+				has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
-	else // if FEMALE
-		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
-			AH.customization_first = new type_first
-		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
-			AH.customization_first = new type_first
+		else // if FEMALE
+			if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
+				type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+				AH.customization_first = new type_first
+			else // ss13 is coded with gender stereotypes IN ITS VERY CORE
+				type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+				AH.customization_first = new type_first
 
 	if (!has_second)
 		var/hair_detail = hair_details[AH.customization_first.name] // check for detail styles for our chosen style
