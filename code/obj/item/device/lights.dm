@@ -739,6 +739,9 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	infinite_power = TRUE
 	power_usage = 0 WATTS
 
+	get_desc()
+		return "A floodlight that can illuminate a large area."
+
 #define FLARE_UNLIT 1
 #define FLARE_LIT 2
 #define FLARE_BURNT 3
