@@ -12802,10 +12802,6 @@
 	},
 /area/station/medical/medbay)
 "aYz" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/machinery/ai_status_display,
 /obj/table/reinforced/auto,
 /obj/item/clothing/glasses/toggleable/meson{
@@ -12816,7 +12812,7 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aYA" = (
 /obj/stool/chair/couch{
@@ -31346,12 +31342,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/interrogation)
 "dht" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -33108,6 +33104,10 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "etd" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "etk" = (
@@ -37212,13 +37212,9 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "hfa" = (
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
 /obj/table/reinforced/auto,
 /obj/item/aiModule/protectStation,
-/turf/simulated/floor/black,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "hfZ" = (
 /obj/storage/crate/furnacefuel,
@@ -45010,10 +45006,6 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mVD" = (
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -45026,7 +45018,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/aiModule/conservePower,
-/turf/simulated/floor/black,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "mVR" = (
 /obj/machinery/disposal/morgue{
@@ -54331,6 +54323,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
+"tKP" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "tKY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -114276,7 +114275,7 @@ aND
 aSO
 hms
 hfa
-rFj
+tKP
 rFj
 rFj
 axk
