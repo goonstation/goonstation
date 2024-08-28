@@ -413,7 +413,7 @@
 	if (visible)
 		animate_storage_rustle(src.linked_item)
 		if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
-			user.visible_message(SPAN_NOTICE("[user] has added [I] to [src.linked_item]!"),
+			user.visible_message(SPAN_NOTICE("[user] has added [I.w_class == W_CLASS_TINY ? "something" : I] to [src.linked_item]!"),
 				SPAN_NOTICE("You have added [I] to [src.linked_item]."))
 		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
