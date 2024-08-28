@@ -6703,17 +6703,13 @@
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "azp" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/oneHuman{
-	pixel_y = 8
-	},
-/obj/item/aiModule/notHuman{
-	pixel_y = -6
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/machinery/turret{
+	dir = 4
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "azr" = (
@@ -12806,6 +12802,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/ai_status_display,
+/obj/machinery/turret{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "aYA" = (
@@ -33113,11 +33112,6 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "etd" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "etk" = (
@@ -39883,8 +39877,12 @@
 	},
 /area/station/science/lab)
 "jfO" = (
-/obj/machinery/turret{
-	dir = 4
+/obj/table/reinforced/auto,
+/obj/item/aiModule/oneHuman{
+	pixel_y = 8
+	},
+/obj/item/aiModule/notHuman{
+	pixel_y = -6
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -42970,11 +42968,15 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lut" = (
-/obj/machinery/turret{
-	dir = 8
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 8
+	},
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform{
+	pixel_y = 8
+	},
+/obj/item/aiModule/makeCaptain{
+	pixel_y = -6
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -43577,11 +43579,13 @@
 /area/station/teleporter)
 "lKu" = (
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/lawrack,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "lLw" = (
@@ -44800,7 +44804,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "mLE" = (
-/obj/table/reinforced/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -44808,11 +44811,8 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/aiModule/freeform{
-	pixel_y = 8
-	},
-/obj/item/aiModule/makeCaptain{
-	pixel_y = -6
+/obj/machinery/turret{
+	dir = 8
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)

@@ -11562,19 +11562,15 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "biz" = (
-/obj/table/auto,
-/obj/item/circuitboard/robotics{
-	pixel_y = 10
+/obj/machinery/turret{
+	dir = 1
 	},
-/obj/item/aiModule/emergency,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "biC" = (
-/obj/table/auto,
-/obj/item/aiModule/notHuman{
-	pixel_y = 10
+/obj/machinery/turret{
+	dir = 1
 	},
-/obj/item/aiModule/oneHuman,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -14127,11 +14123,12 @@
 	},
 /area/station/hangar/sec)
 "byg" = (
-/obj/machinery/light/incandescent,
-/obj/machinery/camera/motion{
-	c_tag = "AI Upload";
-	dir = 8
+/obj/table/auto,
+/obj/item/aiModule/notHuman{
+	pixel_y = 10
 	},
+/obj/item/aiModule/oneHuman,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "byq" = (
@@ -16676,13 +16673,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "bYJ" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/apc/autoname_south,
-/obj/machinery/sim/transmitter{
-	network = "prison"
-	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bYO" = (
@@ -18925,7 +18916,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/mob/living/silicon/hivebot/eyebot,
+/obj/machinery/computer/robotics,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "duW" = (
@@ -19392,6 +19383,13 @@
 	},
 /turf/space,
 /area/shuttle/arrival/station)
+"dLC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/mob/living/silicon/hivebot/eyebot,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai_upload)
 "dLS" = (
 /obj/cable/orange{
 	icon_state = "1-4"
@@ -19679,9 +19677,6 @@
 	},
 /area/station/engine/inner)
 "dWn" = (
-/obj/machinery/turret{
-	dir = 1
-	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
@@ -22744,15 +22739,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"fUr" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai_upload)
 "fUw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/stockex)
@@ -28003,6 +27989,9 @@
 /area/station/maintenance/west)
 "jxq" = (
 /obj/machinery/light/incandescent,
+/obj/machinery/turret{
+	dir = 1
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "jxv" = (
@@ -42513,9 +42502,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/turret{
-	dir = 1
-	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
@@ -44142,6 +44128,15 @@
 /obj/item/light/bulb,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"tqM" = (
+/obj/table/auto,
+/obj/item/circuitboard/robotics{
+	pixel_y = 10
+	},
+/obj/item/aiModule/emergency,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "tra" = (
 /obj/disposalpipe/segment/ejection,
 /obj/disposalpipe/segment/horizontal,
@@ -47002,12 +46997,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
-"vmy" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "vmR" = (
 /obj/cable,
 /obj/cable{
@@ -50381,12 +50370,6 @@
 	icon = 'icons/turf/shuttle.dmi'
 	},
 /area/shuttle/arrival/station)
-"xun" = (
-/obj/machinery/computer/robotics{
-	dir = 4
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "xuC" = (
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
@@ -84405,11 +84388,11 @@ aaa
 cMe
 ohG
 biz
-jxq
+tqM
 bjw
 sqZ
 jxq
-xun
+bjw
 ohG
 ohG
 ohG
@@ -85012,8 +84995,8 @@ duU
 blw
 blw
 xIa
+dLC
 blw
-fUr
 blw
 blw
 cSJ
@@ -85315,7 +85298,7 @@ bjw
 epp
 epp
 epp
-vmy
+bjw
 bjw
 bna
 gQA
