@@ -671,7 +671,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 			. += " It has no APC-sized cell installed."
 		else
 			. += " [cell] is charged to [cell.charge]/[cell.maxcharge]."
-		if (src.anchored || !src.movable)
+		if (src.anchored)
 			. += " It is wrenched to the ground."
 			if (src.light.enabled)
 				. += " It is currently on."
