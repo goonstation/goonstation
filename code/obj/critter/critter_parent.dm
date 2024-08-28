@@ -15,7 +15,6 @@
 	density = 1
 	anchored = UNANCHORED
 	flags = CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
@@ -195,7 +194,7 @@
 			//critters -= src //Stop processing this critter
 
 
-	HasProximity(atom/movable/AM as mob|obj)
+	EnteredProximity(atom/movable/AM)
 		if(task == "hibernating" && ismob(AM))
 			var/mob/living/M = AM
 			if(M.client) wake_from_hibernation()
@@ -793,6 +792,7 @@
 			if(nickname)
 				src.quality_name = nickname
 				src.name = "[nickname] [src.name]"
+		src.AddComponent(/datum/component/proximity)
 		..()
 
 	disposing()
