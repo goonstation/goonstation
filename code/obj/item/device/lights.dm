@@ -668,7 +668,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	get_desc()
 		. = ..() + "\n"
 		if (src.movable)
-			 +=  " It can be wrenched to activate it."
+			. +=  " It can be wrenched to activate it."
 		if (isnull(cell))
 			. += " It has no APC-sized cell installed."
 		else
