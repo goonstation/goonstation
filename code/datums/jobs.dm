@@ -506,9 +506,6 @@ ABSTRACT_TYPE(/datum/job/security)
 	limit = 5
 	lower_limit = 3
 	variable_limit = TRUE
-	high_priority_job = TRUE
-	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
-	order_priority = 2 //fill secoffs after captain and AI
 	wages = PAY_TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Security Officer"
