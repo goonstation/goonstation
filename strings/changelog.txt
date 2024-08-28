@@ -1,5 +1,9 @@
 
 (t)wed aug 28 24
+(u)Colossus
+(p)20452
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether now depletes at a 0.3 to 0.6 rate(50% faster), but takes slightly less time to KO and start drowsiness (from 40/20 cycles to 30/15 cycles depending on volume).
 (u)gus
 (p)20451
 (e)|
