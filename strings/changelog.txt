@@ -1,5 +1,9 @@
 
 (t)wed aug 28 24
+(u)Cherman0
+(p)20446
+(e)🪲🏅📡|C-Bug, A-Medal, A-AI
+(+)"I'm in" medal now properly awards the ailes AI skin.
 (u)Colossus
 (p)20452
 (e)⚖⚗|C-Balance, A-Chemistry
