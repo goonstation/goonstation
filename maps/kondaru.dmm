@@ -22202,7 +22202,7 @@
 "bLM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
-	id = "scienceteleporter";
+	id = "outerscienceteleporter";
 	name = "Pad Shutters";
 	panel_open = 1
 	},
@@ -22513,13 +22513,13 @@
 	},
 /obj/machinery/door_control{
 	id = "scienceteleporter";
-	name = "Pad Shutters";
+	name = "Interior Shutters";
 	pixel_x = 6;
 	pixel_y = 26
 	},
 /obj/machinery/door_control{
-	id = "scienceteleporter2";
-	name = "Pad Access Door";
+	id = "outerscienceteleporter";
+	name = "Exterior Shutters";
 	pixel_x = -8;
 	pixel_y = 26
 	},
@@ -22534,7 +22534,7 @@
 "bMM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
-	id = "scienceteleporter";
+	id = "outerscienceteleporter";
 	name = "Pad Shutters";
 	panel_open = 1
 	},
@@ -27142,6 +27142,10 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -35160,6 +35164,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"fOK" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
 "fPI" = (
 /obj/lattice{
 	dir = 4;
@@ -48040,11 +48050,10 @@
 /area/station/crew_quarters/courtroom)
 "pkX" = (
 /obj/machinery/door/airlock/pyro/glass{
-	id = "scienceteleporter2";
 	name = "Teleporter Pad"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
-	id = "scienceteleporter";
+	id = "outerscienceteleporter";
 	name = "Pad Shutters";
 	panel_open = 1
 	},
@@ -56710,10 +56719,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "vuC" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10;
 	can_rupture = 0
@@ -93248,7 +93253,7 @@ bYG
 ceN
 cce
 haB
-vgR
+fOK
 cfD
 txz
 wnV
