@@ -7,7 +7,8 @@
 
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
-#define MAX_NOTE_INPUT 15360
+// #define MAX_NOTE_INPUT 15360
+#define MAX_NOTE_INPUT 999999
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
@@ -33,6 +34,7 @@ TYPEINFO(/obj/player_piano)
 	var/list/note_octaves = list() //list of octaves as nums (3-5)
 	var/list/note_names = list() //a,b,c,d,e,f,g,r
 	var/list/note_accidentals = list() //(s)harp,b(flat),N(none)
+	var/list/note_delays = list()
 	var/list/compiled_notes = list() //holds our compiled filenames for the note
 	var/list/linked_pianos = list() //list that stores our linked pianos, including the main one
 
@@ -239,7 +241,8 @@ TYPEINFO(/obj/player_piano)
 
 		for (var/string in piano_notes)
 			var/list/curr_notes = splittext("[string]", ",")
-			if (length(curr_notes) < 4) // Music syntax not followed
+			var/curr_notes_length = length(curr_notes)
+			if (curr_notes_length < 4 || curr_notes_length != 5) // Music syntax not followed
 				break
 			if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
 				if (lowertext(curr_notes[1]) == "a")
@@ -273,6 +276,10 @@ TYPEINFO(/obj/player_piano)
 				if ("r")
 					curr_notes[3] = 0
 			note_volumes += curr_notes[3]
+			if (curr_notes_length == 5)
+				src.note_delays += text2num_safe(curr_notes[5])
+			else
+				src.note_delays += 1
 		is_busy = 0
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
@@ -321,11 +328,18 @@ TYPEINFO(/obj/player_piano)
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
 				UpdateIcon(0)
 				return
-			sleep((timing * 10)) //to get delay into 10ths of a second
 			if (!curr_note) // else we get runtimes when the piano is reset while playing
 				return
 			var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
+
+			var/delays_left = src.note_delays[curr_note]
+			if (delays_left == 0)
+				continue
+
+			while (delays_left > 0)
+				delays_left--
+				sleep((timing * 10)) //to get delay into 10ths of a second
 
 	proc/set_notes(var/given_notes)
 		if (is_busy || is_stored)
