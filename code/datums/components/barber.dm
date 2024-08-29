@@ -187,7 +187,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			non_murderous_failure = BARBERY_FAILURE
 		thing.visible_message(SPAN_ALERT("<b>[user]</b> quickly shaves off [M]'s beard!"))
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
-		M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
@@ -491,7 +491,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
 
-	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
+	var/list/current_hair_style = list("bottom" = new_AH.customizations["hair_bottom"].style.name, "middle" = new_AH.customizations["hair_middle"].style.name, "top" = new_AH.customizations["hair_top"].style.name)
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
 
 /datum/component/barber/ui_static_data(mob/user)
@@ -526,11 +526,11 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 					switch (src.hair_portion)
 						if ("bottom")
-							src.new_AH.customization_first = new_hairstyle
+							src.new_AH.customizations["hair_bottom"].style = new_hairstyle
 						if ("middle")
-							src.new_AH.customization_second = new_hairstyle
+							src.new_AH.customizations["hair_middle"].style = new_hairstyle
 						if ("top")
-							src.new_AH.customization_third = new_hairstyle
+							src.new_AH.customizations["hair_top"].style = new_hairstyle
 					src.reference_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
 
@@ -689,9 +689,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				M.tri_message(user, SPAN_ALERT("[user] mangles the absolute fuck out of [M]'s head!."),\
 					SPAN_ALERT("[user] mangles the absolute fuck out of your head!"),\
 					SPAN_ALERT("You mangle the absolute fuck out of [M]'s head!"))
-				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
 				M.TakeDamage("head", rand(10,20), 0)
 				take_bleeding_damage(M, user, 2, DAMAGE_CUT, 1)
 				M.emote("scream")
@@ -703,7 +703,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 					SPAN_ALERT("You [cut] all of [M]'s hair off!"))
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
-
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+				M.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
@@ -714,11 +716,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				new_style = new hair_type
 				switch(rand(1,3))
 					if(1)
-						M.bioHolder.mobAppearance.customization_first = new_style
+						M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
 					if(2)
-						M.bioHolder.mobAppearance.customization_second = new_style
+						M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
 					if(3)
-						M.bioHolder.mobAppearance.customization_third = new_style
+						M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
 				M.tri_message(user, "[user] [cuts] [M]'s hair.",\
 											SPAN_NOTICE("[user] [cuts] your hair."),\
 																					SPAN_NOTICE("You [cut] [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?"))
@@ -731,6 +733,9 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						SPAN_NOTICE("You [cut] all of [M]'s hair off and make it into a wig."))
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
+					M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
+					M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
+					M.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
 				else
 					logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
 					M.tri_message(user, "[user] [cuts] [M]'s hair.",\
@@ -738,11 +743,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						SPAN_NOTICE("You [cut] [M]'s hair."))
 					switch(which_part)
 						if (BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customization_first = new_style
+							M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
 						if (MIDDLE_DETAIL)
-							M.bioHolder.mobAppearance.customization_second = new_style
+							M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
 						if (TOP_DETAIL)
-							M.bioHolder.mobAppearance.customization_third = new_style
+							M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
 
 		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		M.update_colorful_parts()

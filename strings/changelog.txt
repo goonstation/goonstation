@@ -1,4 +1,53 @@
 
+(t)thu aug 29 24
+(u)Cherman0
+(p)20175
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut3 engineering redesigned with OSHA radiation protection standards in mind.
+(u)LeahTheTech
+(p)20443
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Standardized AI upload turret placements. Generally this means more turrets on maps that lacked them.
+(t)wed aug 28 24
+(u)Cherman0
+(p)20446
+(e)🪲🏅📡|C-Bug, A-Medal, A-AI
+(+)"I'm in" medal now properly awards the ailes AI skin.
+(u)Colossus
+(p)20452
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether now depletes at a 0.3 to 0.6 rate(50% faster), but takes slightly less time to KO and start drowsiness (from 40/20 cycles to 30/15 cycles depending on volume).
+(u)gus
+(p)20451
+(e)|
+(+)fixed manudrive duping
+(t)tue aug 27 24
+(u)tarmunora
+(p)20431
+(e)📄|A-UI
+(*)Changed tooltip HTML handling. Please report any oddities.
+(u)OmegaShoots
+(p)20441
+(e)🪲|C-Bug
+(+)Using the "set button list" on Button Panels can now work properly with inputs containing multiple equal signs.
+(u)Glamurio (Ryou)
+(p)20366
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Hair will now be visible under the hood when wearing hoods from hoodies.
+(u)Sovexe
+(p)20439
+(e)🪲🏅|C-Bug, A-Medal
+(+)Players with the "40K" medal can now redeem the (AI Core Skin) Salvaged reward as expected.
+(t)mon aug 26 24
+(u)ithebinman
+(p)20420
+(e)|
+(+)Fixed incorrect reagent in Bath Salts recipe - You now require El Diablo Chili instead of Ghost Chili Juice.
+(u)gus
+(p)20311
+(e)🗺|A-Mapping
+(+)Added a valve to Kondaru toxins
+(+)added an exterior shutters button to kondaru telesci
 (t)sat aug 24 24
 (u)Zamujasa
 (+)Daggers now open mail. They're knives, after all.

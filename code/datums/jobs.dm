@@ -1366,7 +1366,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/scissors/surgical_scissors = 1)
 
 	items_in_backpack = list(\
-	/obj/item/currency/spacecash/buttcoin,
+	/obj/item/currency/buttcoin,
 	/obj/item/currency/spacecash/fivehundred)
 
 /datum/job/special/souschef
