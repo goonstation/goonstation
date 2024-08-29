@@ -153,9 +153,6 @@ Contains:
 			return FALSE
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
-			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
-			// Without this, you could get 2.99 to 3.99 reacts, which created inaccuracies.
-			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
 			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
 			var/pressure_delta = max(1, pressure - src.previous_pressure)
 			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / pressure_delta)
