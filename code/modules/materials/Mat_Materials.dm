@@ -261,14 +261,6 @@ ABSTRACT_TYPE(/datum/material)
 					string = P.desc
 		return string
 
-	proc/getMaterialPrefixList()
-		. = list()
-		for(var/datum/material_property/P as anything in src.properties)
-			if(src.properties[P] >= P.prefix_high_min)
-				. |= P.getAdjective(src)
-			else if(src.properties[P] <= P.prefix_low_max)
-				. |= P.getAdjective(src)
-
 	//material procs
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)

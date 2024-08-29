@@ -72,7 +72,7 @@ var/global/list/material_cache
 
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
-/atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, mutable = FALSE, use_descriptors = FALSE)
+/atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, mutable = FALSE)
 	if(istext(mat1))
 		CRASH("setMaterial() called with a string instead of a material datum.")
 	if(!mat1 ||!istype(mat1, /datum/material))
@@ -95,16 +95,7 @@ var/global/list/material_cache
 			src.UpdateName()
 			src.name = mat1.specialNaming(src)
 		else
-			if(use_descriptors)
-				var/strPrefix = jointext(mat1.getPrefixes(), " ")
-				for(var/X in mat1.getMaterialPrefixList())
-					strPrefix += " [X]"
-				strPrefix = trimtext(strPrefix)
-				src.name_prefix(strPrefix ? strPrefix : "")
 			src.name_prefix(mat1.getName() ? mat1.getName() : "")
-			if(use_descriptors)
-				var/strSuffix = jointext(mat1.getSuffixes(), " ")
-				src.name_suffix(strSuffix ? "of [strSuffix]" : "")
 			src.UpdateName()
 
 	if (src.mat_changedesc && setname)
