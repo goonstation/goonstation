@@ -27,8 +27,8 @@ ABSTRACT_TYPE(/datum/material_property)
 	proc/onRemoved(var/datum/material/M)
 		return
 
-	proc/getBriefStat(var/datum/material/M)
-		return "[src.name]: "
+	proc/getBriefStatString(var/datum/material/M)
+		return "[src.name]: [round(M.getProperty(id, VALUE_CURRENT) / M.getProperty(id, VALUE_MAX), 1)]%"
 
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"

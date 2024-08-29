@@ -291,10 +291,9 @@
 	proc/human_readable_ore_properties(var/datum/material/mat)
 		if (!mat)
 			return "no properties"
-		if (istype(mat, /datum/material/crystal/gemstone)) return "varied levels of hardness and density"
 		var/list/stat_list = list()
 		for(var/datum/material_property/stat in mat.getMaterialProperties())
-			stat_list += stat.getAdjective(mat)
+			stat_list += stat.getBriefStatString(mat)
 		if (!stat_list.len) return "no properties"
 		return stat_list.Join(", ")
 

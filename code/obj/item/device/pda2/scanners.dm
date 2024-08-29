@@ -183,7 +183,7 @@
 			if (length(A.material.getMaterialProperties()))
 				for(var/datum/material_property/mat in A.material.getMaterialProperties())
 					var/value = A.material.getProperty(mat.id)
-					. += "• [mat.getAdjective(A.material)] ([value])<br>"
+					. += "• [mat.getBriefStatString(A.material)]<br>"
 			else
 				. += "The material is completely unremarkable."
 
