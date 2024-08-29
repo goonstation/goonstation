@@ -156,6 +156,11 @@ Contains:
 			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
 			// Without this, you could get 2.99 to 3.99 reacts, which created inaccuracies.
 			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
+			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
+			var/pressure_delta = max(1, pressure - src.previous_pressure)
+			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / pressure_delta)
+			// Prevent some absurd compensation value from existing. This can happen during varedits or cold bombs (one tank of cold fallout and one of hot agent b mix together)
+			react_compensation = clamp(react_compensation, 0, 1)
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()

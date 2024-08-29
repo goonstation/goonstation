@@ -352,7 +352,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -364,7 +364,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -376,7 +376,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)

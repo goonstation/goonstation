@@ -207,6 +207,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			O.ArtifactDestroyed()
 
 // chemical bombs
+// different types of bombs for "payload_type"
+#define CHEMBOMB_FOAMY 0
+#define CHEMBOMB_SMOKEY 1
+#define CHEMBOMB_CLASSICAL_GAS 2
+#define CHEMBOMB_FLUIDY 3
+
 
 /obj/machinery/artifact/bomb/chemical
 	name = "artifact chemical bomb"
@@ -236,13 +242,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		payload_type = rand(0,3)
 		var/payload_type_name = "unknown"
 		switch (payload_type)
-			if (0)
-				payload_type_name = "smoke"
-			if (1)
+			if (CHEMBOMB_FOAMY)
 				payload_type_name = "foam"
-			if (2)
+			if (CHEMBOMB_SMOKEY)
+				payload_type_name = "smoke"
+			if (CHEMBOMB_CLASSICAL_GAS)
 				payload_type_name = "propellant"
-			if (3)
+			if (CHEMBOMB_FLUIDY)
 				payload_type_name = "fluid"
 
 		var/list/potential_reagents = list()
@@ -303,15 +309,17 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		var/turf/location = get_turf(O)
 		switch(payload_type)
-			if(0)
+			if(CHEMBOMB_FOAMY)
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(O.reagents.total_volume, location, O.reagents, 0)
 				s.start()
-			if(1)
+			if(CHEMBOMB_SMOKEY)
+				// normal smoke
 				O.reagents.smoke_start(50)
-			if(2)
+			if(CHEMBOMB_CLASSICAL_GAS)
+				// "classic" smoke
 				O.reagents.smoke_start(50,1)
-			if(3)
+			if(CHEMBOMB_FLUIDY)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
 				var/datum/fluid_group/FG = location.active_liquid?.group
 				if(FG)
@@ -325,6 +333,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		SPAWN(recharge_delay)
 			if (O)
 				O.ArtifactDeactivated()
+
+// undef chembomb payload_type types
+#undef CHEMBOMB_FOAMY
+#undef CHEMBOMB_SMOKEY
+#undef CHEMBOMB_CLASSICAL_GAS
+#undef CHEMBOMB_FLUIDY
 
 // matter transmutation bomb
 
@@ -378,7 +392,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					100;"silver",
 					100;"cobryl",
 					50;"miracle",
-					50;"soulsteel",
 					50;"hauntium",
 					50;"ectoplasm",
 					10;"ectofibre",
