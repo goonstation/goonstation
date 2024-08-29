@@ -448,11 +448,7 @@
 	var/list/datum/simsHolder/simsHolders = list()
 	var/list/datum/simsMotive/simsMotives = list()
 
-#ifdef RP_MODE
 	var/provide_plumbobs = 0
-#else
-	var/provide_plumbobs = 1
-#endif
 
 	New()
 		..()

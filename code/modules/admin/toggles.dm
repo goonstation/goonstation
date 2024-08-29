@@ -1004,14 +1004,17 @@ client/proc/toggle_ghost_respawns()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (global_sims_mode && !H.sims)
-#ifdef RP_MODE
-				H.sims = new /datum/simsHolder/rp(H)
-#else
-				H.sims = new /datum/simsHolder/human(H)
-#endif
+				switch(tgui_alert(usr, "What sims mode do you want to enable?", "Sims Mode", list("RP/Standard", "ALL THE SIMS")))
+					if("RP/Standard")
+						H.sims = new /datum/simsHolder/rp(H)
+						logTheThing(LOG_ADMIN, usr, "enabled Sims mode with RP/Standard motives.")
+					if("ALL THE SIMS")
+						H.sims = new /datum/simsHolder/human(H)
+						logTheThing(LOG_ADMIN, usr, "enabled Sims mode with ALL the motives.")
 			else if (!global_sims_mode && H.sims)
 				qdel(H.sims)
 				H.sims = null
+				logTheThing(LOG_ADMIN, usr, "disabled sims mode/motives.")
 
 /datum/admins/proc/toggle_pull_slowing()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

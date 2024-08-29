@@ -191,11 +191,7 @@
 
 
 	if (global_sims_mode) // IF YOU ARE HERE TO DISABLE SIMS MODE, DO NOT TOUCH THIS. LOOK IN GLOBAL.DM
-#ifdef RP_MODE
 		sims = new /datum/simsHolder/rp(src)
-#else
-		sims = new /datum/simsHolder/human(src)
-#endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	health_mon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
