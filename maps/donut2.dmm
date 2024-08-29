@@ -9339,7 +9339,7 @@
 /area/station/medical/medbay/psychiatrist)
 "aWx" = (
 /turf/simulated/floor/circuit,
-/area/space)
+/area/station/engine/singcore)
 "aWz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11461,7 +11461,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "bhY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -17711,6 +17711,12 @@
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"cHn" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/singcore)
 "cIh" = (
 /obj/machinery/hydro_growlamp,
 /obj/cable{
@@ -18217,7 +18223,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
-/area/station/engine/inner)
+/area/station/engine/singcore)
 "cWz" = (
 /obj/cable/blue{
 	icon_state = "4-8"
@@ -18502,7 +18508,7 @@
 "dfS" = (
 /obj/machinery/the_singularitygen,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "dgc" = (
 /obj/machinery/door_control{
 	id = "pubscienceteleporter";
@@ -19586,6 +19592,13 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"dRX" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/singcore)
 "dSI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/blue,
@@ -19906,7 +19919,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "eav" = (
 /obj/storage/crate{
 	name = "Discount Dan's Liquidation Clothes Crate"
@@ -20105,6 +20118,13 @@
 	dir = 10
 	},
 /area/station/crew_quarters/stockex)
+"ehi" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/singcore)
 "ehN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -21568,6 +21588,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"fcT" = (
+/obj/machinery/light/incandescent,
+/turf/space,
+/area/station/engine/singcore)
 "fds" = (
 /obj/machinery/secscanner{
 	dir = 4;
@@ -23898,7 +23922,7 @@
 	icon_state = "2-4"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "gKz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24832,6 +24856,13 @@
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"hsV" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/singcore)
 "htm" = (
 /obj/machinery/firealarm/west,
 /obj/cable{
@@ -25183,6 +25214,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"hDS" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/singcore)
 "hDV" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -25384,6 +25422,9 @@
 /obj/machinery/firealarm/west,
 /turf/unsimulated/floor,
 /area/station/hangar/arrivals)
+"hLB" = (
+/turf/space,
+/area/station/engine/singcore)
 "hLH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -25610,7 +25651,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "hRU" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4;
@@ -26225,7 +26266,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "inW" = (
 /obj/machinery/computer/tetris,
 /obj/machinery/light_switch/east,
@@ -27562,7 +27603,7 @@
 	name = "autoname - SS13"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "jis" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -27824,7 +27865,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "jsg" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -28430,7 +28471,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "jIt" = (
 /obj/machinery/light/small/sticky/frostedred,
 /obj/machinery/portable_atmospherics/pump,
@@ -28505,6 +28546,9 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"jKU" = (
+/turf/simulated/floor/plating/airless,
+/area/station/engine/singcore)
 "jKV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -28865,7 +28909,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
-/area/station/engine/inner)
+/area/station/engine/singcore)
 "kaC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28895,6 +28939,13 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/south)
+"kbI" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/singcore)
 "kbT" = (
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -29055,7 +29106,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "kio" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29121,7 +29172,7 @@
 	icon_state = "1-8"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "kkp" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -29955,7 +30006,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "kMZ" = (
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/supernorn,
@@ -30574,7 +30625,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "leK" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -31685,7 +31736,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "lKg" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -32030,7 +32081,7 @@
 "lVO" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "lVX" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "toxins";
@@ -33955,7 +34006,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "nfc" = (
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 30
@@ -34480,7 +34531,7 @@
 	icon_state = "1-4"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "nxa" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -34885,7 +34936,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "nKw" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
@@ -35184,7 +35235,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "nUH" = (
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -35706,7 +35757,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "okU" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -35893,7 +35944,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "ore" = (
 /obj/decal/cleanable/oil/streak,
 /obj/cable{
@@ -37918,7 +37969,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "pvz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37986,7 +38037,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "pwG" = (
 /obj/table/auto,
 /obj/bedsheetbin,
@@ -38236,7 +38287,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "pDg" = (
 /obj/disposalpipe/segment,
 /obj/machinery/camera{
@@ -39141,7 +39192,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "qiC" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /obj/machinery/light/incandescent,
@@ -39247,7 +39298,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "qkY" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -39396,6 +39447,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"qpc" = (
+/obj/lattice,
+/turf/space,
+/area/station/engine/singcore)
 "qpC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -40172,6 +40227,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"qPe" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/singcore)
 "qPC" = (
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
@@ -40303,7 +40364,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "qSL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40782,7 +40843,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "rlf" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -41497,7 +41558,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "rLP" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -41820,7 +41881,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "rVC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating{
@@ -42941,7 +43002,7 @@
 	},
 /obj/machinery/field_generator,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "sEx" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 8;
@@ -43011,7 +43072,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "sGt" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -43370,7 +43431,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "sPL" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
@@ -44710,7 +44771,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "tGm" = (
 /obj/storage/crate{
 	name = "Silent Crate"
@@ -46659,7 +46720,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "vaR" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -47526,6 +47587,12 @@
 	dir = 4
 	},
 /area/station/medical/medbay/cloner)
+"vBh" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/singcore)
 "vBR" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -48107,7 +48174,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "vTU" = (
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 8;
@@ -48548,7 +48615,7 @@
 	},
 /obj/machinery/field_generator,
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "wkL" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -48869,7 +48936,7 @@
 	icon_state = "2-8"
 	},
 /turf/space,
-/area/space)
+/area/station/engine/singcore)
 "wtq" = (
 /obj/cable/yellow{
 	icon_state = "1-8"
@@ -51550,7 +51617,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/space)
+/area/station/engine/singcore)
 "ykF" = (
 /obj/machinery/camera{
 	c_tag = "Bridge";
@@ -79245,9 +79312,9 @@ hRr
 sFQ
 tGg
 qkP
-aai
-acK
-aai
+dRX
+jKU
+dRX
 kie
 tGg
 sFQ
@@ -79542,18 +79609,18 @@ aaa
 aaa
 aaa
 neM
-aaa
-aaa
-aaA
-acK
-apU
-aaa
-adQ
-aaa
-aaA
-acK
-aas
-aas
+hLB
+hLB
+ehi
+jKU
+hDS
+hLB
+hsV
+hLB
+ehi
+jKU
+qpc
+qpc
 okI
 bcG
 bck
@@ -79844,17 +79911,17 @@ aaa
 aaa
 aaa
 neM
-aaa
+hLB
 rVr
-vSb
+vBh
 yjV
-vSb
-vSb
-vSb
-vSb
-vSb
+vBh
+vBh
+vBh
+vBh
+vBh
 jHV
-vSb
+vBh
 vam
 qSI
 cWt
@@ -80146,19 +80213,19 @@ aaa
 aaa
 aaa
 rLD
-aaa
-bca
+hLB
+cHn
 lVO
-bca
-apU
-aaa
-aaa
-aaa
-aaA
-bca
+cHn
+hDS
+hLB
+hLB
+hLB
+ehi
+cHn
 lVO
-bca
-bbS
+cHn
+fcT
 bco
 uft
 ppU
@@ -80448,9 +80515,9 @@ aaa
 aaa
 aaa
 pvt
-vSb
+vBh
 qhO
-acK
+jKU
 wkn
 aWx
 aWx
@@ -80458,9 +80525,9 @@ aWx
 aWx
 aWx
 wkn
-acK
+jKU
 oqQ
-acK
+jKU
 bco
 sWj
 ppU
@@ -80750,19 +80817,19 @@ aaa
 aaa
 uzN
 pwl
-aaa
-aaA
-aai
+hLB
+ehi
+dRX
 aWx
-acK
-apU
-aaa
-aaA
-acK
+jKU
+hDS
+hLB
+ehi
+jKU
 aWx
-aai
-apU
-aaa
+dRX
+hDS
+hLB
 bco
 uft
 ppU
@@ -81051,20 +81118,20 @@ eZW
 eZW
 lJH
 wAc
-apU
-aaa
-adQ
-aaa
+hDS
+hLB
+hsV
+hLB
 aWx
-aai
-aas
-aag
-aas
-aai
+dRX
+qpc
+kbI
+qpc
+dRX
 aWx
-aaa
-adQ
-aaa
+hLB
+hsV
+hLB
 bco
 uft
 ppU
@@ -81354,18 +81421,18 @@ nTr
 uAS
 anM
 jif
-ajz
-aas
-ajz
+qPe
+qpc
+qPe
 aWx
-aaa
-aaA
+hLB
+ehi
 dfS
-apU
-aaa
+hDS
+hLB
 aWx
-ajz
-aas
+qPe
+qpc
 lJU
 bco
 csd
@@ -81655,20 +81722,20 @@ eZW
 eZW
 xsS
 dkD
-apU
-aaa
-adQ
-aaa
+hDS
+hLB
+hsV
+hLB
 aWx
-aag
-aas
-aai
-aas
-aag
+kbI
+qpc
+dRX
+qpc
+kbI
 aWx
-aaa
-adQ
-aaa
+hLB
+hsV
+hLB
 bco
 uft
 eDd
@@ -81958,19 +82025,19 @@ aaa
 aaa
 jQH
 inL
-aaa
-aaA
-aag
+hLB
+ehi
+kbI
 aWx
-acK
-apU
-aaa
-aaA
-acK
+jKU
+hDS
+hLB
+ehi
+jKU
 aWx
-aag
-apU
-aaa
+kbI
+hDS
+hLB
 bco
 uft
 qoZ
@@ -82260,9 +82327,9 @@ aaa
 aaa
 aaa
 ear
-vSb
+vBh
 nKt
-acK
+jKU
 sEg
 aWx
 aWx
@@ -82270,9 +82337,9 @@ aWx
 aWx
 aWx
 sEg
-acK
+jKU
 leC
-acK
+jKU
 bco
 sWj
 qoZ
@@ -82562,19 +82629,19 @@ aaa
 aaa
 aaa
 rLD
-aaa
-bca
+hLB
+cHn
 lVO
-bca
-apU
-aaa
-aaa
-aaa
-aaA
-bca
+cHn
+hDS
+hLB
+hLB
+hLB
+ehi
+cHn
 lVO
-bca
-bbS
+cHn
+fcT
 bco
 uft
 qoZ
@@ -82864,17 +82931,17 @@ aaa
 aaa
 aaa
 neM
-aaa
+hLB
 nTO
-vSb
+vBh
 pCY
-vSb
-vSb
-vSb
-vSb
-vSb
+vBh
+vBh
+vBh
+vBh
+vBh
 bhX
-vSb
+vBh
 qSI
 vam
 jZS
@@ -83166,18 +83233,18 @@ aaa
 aaa
 aaa
 neM
-aaa
-aaa
-aaA
-acK
-apU
-aaa
-adQ
-aaa
-aaA
-acK
-aas
-aas
+hLB
+hLB
+ehi
+jKU
+hDS
+hLB
+hsV
+hLB
+ehi
+jKU
+qpc
+qpc
 okI
 bcG
 bck
@@ -83473,9 +83540,9 @@ hRr
 sPF
 rjN
 vTQ
-aag
-acK
-aag
+kbI
+jKU
+kbI
 jsb
 rjN
 kMS
