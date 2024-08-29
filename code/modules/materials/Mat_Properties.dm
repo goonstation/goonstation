@@ -27,6 +27,9 @@ ABSTRACT_TYPE(/datum/material_property)
 	proc/onRemoved(var/datum/material/M)
 		return
 
+	proc/getBriefStat(var/datum/material/M)
+		return "[src.name]: "
+
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"
 	id = "electrical"
