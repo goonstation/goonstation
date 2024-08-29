@@ -40172,7 +40172,6 @@
 /area/station/hangar/science)
 "eDy" = (
 /obj/machinery/atmospherics/binary/valve{
-	desc = "freezer bypass valve";
 	name = "cold radiator bypass valve"
 	},
 /obj/cable{
