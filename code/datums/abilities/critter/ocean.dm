@@ -22,9 +22,12 @@
 /obj/overlay/tile_effect/cracks
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "cracks"
-	event_handler_flags = USE_PROXIMITY
 
-	HasProximity(atom/movable/AM)
+	New()
+		..()
+		src.AddComponent(/datum/component/proximity)
+
+	EnteredProximity(atom/movable/AM)
 		..()
 		if (isliving(AM))
 			src.relaymove(AM,pick(cardinal))
@@ -42,7 +45,7 @@
 		var/spawntype = null
 
 
-		HasProximity(atom/movable/AM)
+		EnteredProximity(atom/movable/AM)
 			if (spawntype)
 				new spawntype(src)
 				spawntype = null
