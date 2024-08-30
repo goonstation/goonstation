@@ -744,6 +744,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/mob/user = usr
 
 	params = params2list(params)
+	// If params ever had drag and drop info it doesn't seem to make it this far
+	// add it here so any subsequent procs can use the information.
+	params["dragged"] = TRUE
 
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object
@@ -770,7 +773,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 						//src.pixel_y = text2num(params["icon-y"]) - 16
 						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
 					return
-			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite.
+																				// Consider replacing the storage check with should_place_on() for flexibility.
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
 				return
@@ -1792,3 +1796,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.pixel_x = gridx + offsetx - 16 // -16 to center the sprite
 			src.pixel_y = gridy + offsety - 16
 		. = TRUE
+
+/// Override to implement custom logic for determining whether the item should be placed onto a target object
+/obj/item/proc/should_place_on(obj/target, params)
+	return TRUE
