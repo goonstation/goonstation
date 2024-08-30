@@ -523,7 +523,7 @@ TRASH BAG
 			var/turf/simulated/T = target
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
-			T.wet = 0
+			T.dryify()
 
 		if (SPONGE_WIPE)
 			if (src.reagents.has_reagent("water"))

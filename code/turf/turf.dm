@@ -716,6 +716,8 @@ var/global/in_replace_with = 0
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
 
+	var/old_comp_lookup = src.comp_lookup
+
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
@@ -820,6 +822,8 @@ var/global/in_replace_with = 0
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
 #endif
+
+	new_turf.comp_lookup = old_comp_lookup
 
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
