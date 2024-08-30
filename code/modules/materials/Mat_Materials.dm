@@ -829,11 +829,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
+
 	New()
 		..()
 		setProperty("density", 18)
 		setProperty("hard", 27)
-
 
 /datum/material/crystal/molitz
 	mat_id = "molitz"
@@ -846,32 +846,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 27)
 		setProperty("hard", 36)
-		setProperty("molitz_bubbles", 36)
-		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
-		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
-	beta
-		mat_id = "molitz_b"
-		name = "molitz beta"
-		color = "#ff2288"
-		desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
-
-		New()
-			..()
-			// no need to remove molitz_on_hit, all it does is call molitz_temp
-			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
-			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
-			return
-
-	expended
-		mat_id = "molitz_expended"
-		name = "depleted molitz"
-		color = "#808080"
-		New()
-			..()
-			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
-			removeTrigger(TRIGGERS_ON_EXPLOSION, /datum/materialProc/molitz_exp)
-
+/datum/material/crystal/molitz/beta
+	mat_id = "molitz_b"
+	name = "molitz beta"
+	color = "#ff2288"
+	desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
 /datum/material/crystal/claretine
 	mat_id = "claretine"

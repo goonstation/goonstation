@@ -80,11 +80,6 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/n_radioactive_remove)
 		return
 
-/datum/material_property/molitz_bubbles
-	name = "Gas Pockets"
-	id = "molitz_bubbles"
-	default_value = 0
-
 /datum/material_property/plasma_offgas
 	name = "Active Plasma"
 	id = "plasma_offgas"

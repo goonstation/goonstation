@@ -237,6 +237,37 @@
 	default_material = "molitz"
 	crystal = 1
 
+	var/molitzBubbles = 4
+	var/doAgentB = FALSE
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		if(exposed_temperature < 500 KELVIN)
+			return
+		if(src.molitzBubbles < 1)
+			return
+		if(ON_COOLDOWN(src, "molitz_gas_generate", 30 SECONDS))
+			return
+		src.doGasReaction(air, exposed_temperature)
+		..()
+
+	proc/doGasReaction(datum/gas_mixture/air, var/temperature)
+		var/datum/gas_mixture/payload = new /datum/gas_mixture
+		if(src.doAgentB && air.toxins > MINIMUM_REACT_QUANTITY)
+			payload.oxygen_agent_b = 0.18
+			payload.oxygen = 15
+			payload.temperature = T0C
+			animate_flash_color_fill_inherit(owner,"#ff0000", 4, 2 SECONDS)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
+		else //not molitz B or doesnt meet the requirements to make agent B
+			payload.oxygen = 80
+			payload.temperature = temperature
+			animate_flash_color_fill_inherit(owner,"#0000FF", 4, 2 SECONDS)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
+		air.merge(payload)
+		src.molitzBubbles--
+
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
