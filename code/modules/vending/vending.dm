@@ -671,7 +671,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 							account["current_money"] -= product.product_cost
 						else
 							src.credit -= product.product_cost
-						if (!player_list || vMachine.owner)
+						if (!player_list || !vMachine.owner)
 							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 						else
 							//Players get 90% of profit from player vending machines QMs get 10%
