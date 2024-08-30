@@ -55240,7 +55240,7 @@
 	dir = 8;
 	tag = "icon-toilet (WEST)"
 	},
-/obj/item/currency/spacecash/buttcoin,
+/obj/item/currency/buttcoin,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "elx" = (

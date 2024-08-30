@@ -1415,15 +1415,6 @@
 /obj/disposalpipe/segment/produce,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
-"anU" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/aiModule/emergency,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "aof" = (
 /obj/cable/yellow{
 	icon_state = "1-8"
@@ -9669,7 +9660,11 @@
 	},
 /area/station/hallway/primary/southeast)
 "bmF" = (
-/obj/machinery/turret,
+/obj/table/reinforced/auto,
+/obj/item/aiModule/notHuman{
+	pixel_y = 10
+	},
+/obj/item/aiModule/oneHuman,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "bmG" = (
@@ -18167,10 +18162,12 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "fCY" = (
-/obj/machinery/turret,
 /obj/machinery/alarm{
 	pixel_y = 23
 	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/ai_experimental,
+/obj/item/device/infra_sensor,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "fDe" = (
@@ -18387,12 +18384,11 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "fJV" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/notHuman,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "fKc" = (
@@ -33347,13 +33343,12 @@
 	},
 /area/station/hallway/primary/southwest)
 "rce" = (
-/obj/table/reinforced/auto,
 /obj/machinery/firealarm/north,
-/obj/random_item_spawner/ai_experimental,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "rcs" = (
@@ -34140,12 +34135,11 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
 "rGC" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "rGD" = (
@@ -37218,11 +37212,10 @@
 /area/station/medical/head)
 "tOd" = (
 /obj/table/reinforced/auto,
-/obj/item/device/infra_sensor,
-/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/item/aiModule/emergency,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "tOo" = (
@@ -42311,8 +42304,8 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "xNR" = (
-/obj/item/aiModule/oneHuman,
 /obj/table/reinforced/auto,
+/obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "xNT" = (
@@ -83575,7 +83568,7 @@ fJV
 aZh
 dwE
 bgE
-anU
+fJV
 aqp
 iMV
 jQK
