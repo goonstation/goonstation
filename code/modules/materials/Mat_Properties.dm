@@ -80,12 +80,6 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/n_radioactive_remove)
 		return
 
-/// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
-/datum/material_property/spent_fuel
-	name = "Fissile Isotopes"
-	id = "spent_fuel"
-	default_value = 0
-
 /datum/material_property/molitz_bubbles
 	name = "Gas Pockets"
 	id = "molitz_bubbles"
