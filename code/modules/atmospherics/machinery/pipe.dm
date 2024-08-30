@@ -69,7 +69,7 @@
 	desc = "A one meter section of regular pipe."
 
 	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
-	#ifdef IN_MAP_EDITOR
+#ifdef IN_MAP_EDITOR
 	icon_state = "intact-map"
 #else
 	icon_state = "intact"
