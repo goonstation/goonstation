@@ -366,11 +366,10 @@ TYPEINFO(/atom)
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
 
-/atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
+/atom/proc/ProximityLeave(atom/movable/AM)
 	return
 
-//atom.event_handler_flags & USE_PROXIMITY MUST EVALUATE AS TRUE OR THIS PROC WONT BE CALLED
-/atom/proc/HasProximity(atom/movable/AM as mob|obj)
+/atom/proc/EnteredProximity(atom/movable/AM)
 	return
 
 /atom/proc/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
@@ -524,10 +523,6 @@ TYPEINFO(/atom/movable)
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
 		var/turf/T = src.loc
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-			for (var/turf/T2 in range(1, T))
-				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
 		if(src.pass_unstable || src.density)
@@ -563,7 +558,7 @@ TYPEINFO(/atom/movable)
 
 /atom/movable/Move(atom/NewLoc, direct)
 	SHOULD_CALL_PARENT(TRUE)
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_BLOCK_MOVE, NewLoc, direct))
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_MOVE, NewLoc, direct))
 		return
 	#ifdef CHECK_MORE_RUNTIMES
 	if(!istype(src.loc, /turf) || !istype(NewLoc, /turf))
@@ -655,20 +650,11 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in old_locs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
-		var/turf/T = src.loc
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
-		if (src.event_handler_flags & USE_PROXIMITY)
-			T.checkinghasproximity++
-			for (var/turf/T2 in range(1, T))
-				T2.neighcheckinghasproximity++
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -1126,18 +1112,6 @@ TYPEINFO(/atom/movable)
 	if (islist(src.attached_objs) && length(attached_objs))
 		for (var/atom/movable/M in src.attached_objs)
 			M.set_loc(src.loc)
-
-	if (isturf(last_turf) && (src.event_handler_flags & USE_PROXIMITY))
-		last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
-		for (var/turf/T2 in range(1, last_turf))
-			T2.neighcheckinghasproximity--
-
-	if (isturf(src.loc))
-		last_turf = src.loc
-		if (src.event_handler_flags & USE_PROXIMITY)
-			last_turf.checkinghasproximity++
-			for (var/turf/T2 in range(1, last_turf))
-				T2.neighcheckinghasproximity++
 	else
 		last_turf = null
 
@@ -1252,24 +1226,6 @@ TYPEINFO(/atom/movable)
 /// Does x cold damage to the atom
 /atom/proc/damage_cold(amount)
 
-// Setup USE_PROXIMITY turfs
-/atom/proc/setup_use_proximity()
-	src.event_handler_flags |= USE_PROXIMITY
-	if (isturf(src.loc))
-		var/turf/T = src.loc
-		T.checkinghasproximity++
-		for (var/turf/T2 in range(1, T))
-			T2.neighcheckinghasproximity++
-
-/atom/proc/remove_use_proximity()
-	src.event_handler_flags = src.event_handler_flags & ~USE_PROXIMITY
-	if (isturf(src.loc))
-		var/turf/T = src.loc
-		if (T.checkinghasproximity > 0)
-			T.checkinghasproximity--
-		for (var/turf/T2 in range(1, T))
-			if (T2.neighcheckinghasproximity > 0)
-				T2.neighcheckinghasproximity--
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target

@@ -20811,6 +20811,9 @@
 /obj/window/reinforced{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
@@ -20838,15 +20841,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/table/reinforced/auto,
-/obj/item/device/infra_sensor{
-	pixel_x = 1;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = 1;
-	pixel_y = -7
-	},
+/obj/machinery/turret,
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "buj" = (
@@ -21175,21 +21170,9 @@
 /obj/item/c_tube,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
-"bvQ" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/blue/side{
-	dir = 8
-	},
-/area/station/turret_protected/ai_upload)
 "bvR" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
@@ -37040,19 +37023,14 @@
 	},
 /area/station/hallway/primary/south)
 "cCq" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/oneHuman{
-	pixel_x = 3;
-	pixel_y = -2
-	},
-/obj/item/aiModule/makeCaptain{
-	pixel_x = -1;
-	pixel_y = 8
-	},
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/random_item_spawner/ai_experimental,
+/obj/machinery/turret,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "cCA" = (
@@ -47858,6 +47836,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
+"kCU" = (
+/obj/machinery/turret,
+/obj/machinery/turret,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "kEr" = (
 /mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
@@ -57730,6 +57713,10 @@
 /obj/landmark/start/job/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"spz" = (
+/obj/machinery/turret,
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "sqG" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 4
@@ -57798,7 +57785,15 @@
 /obj/item/device/radio/intercom/AI{
 	dir = 8
 	},
-/obj/machinery/turret,
+/obj/table/reinforced/auto,
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/device/infra_sensor{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
 "ssn" = (
@@ -59566,6 +59561,20 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/primary)
+"tNS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/window/reinforced{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/turret_protected/ai_upload)
 "tOb" = (
 /obj/table/auto,
 /obj/item/wrench{
@@ -63590,10 +63599,19 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "wPr" = (
-/obj/machinery/turret,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -15
+	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/ai_experimental,
+/obj/item/aiModule/oneHuman{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/aiModule/makeCaptain{
+	pixel_x = -1;
+	pixel_y = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
@@ -106021,8 +106039,8 @@ bqK
 bqK
 bue
 buS
-bvQ
-buc
+buS
+kCU
 bxx
 bxx
 bzz
@@ -106321,7 +106339,7 @@ uZE
 kPB
 mLp
 brr
-buf
+tNS
 buT
 bvR
 bwG
@@ -107230,7 +107248,7 @@ bqK
 buh
 buV
 bvU
-buc
+spz
 bxx
 bxx
 fff

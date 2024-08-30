@@ -920,7 +920,7 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/buttcoin,
 		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
@@ -1542,7 +1542,7 @@
 						/obj/item/clothing/head/odlawhat,
 						/obj/item/clothing/head/fake_waldohat,
 						/obj/item/clothing/head/flatcap,
-						/obj/item/clothing/head/devil,
+						/obj/item/clothing/head/headband/devil,
 						/obj/item/clothing/head/biker_cap,
 						/obj/item/clothing/head/mj_hat,
 						/obj/item/clothing/head/genki,
