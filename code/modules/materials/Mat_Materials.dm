@@ -263,17 +263,21 @@ ABSTRACT_TYPE(/datum/material)
 
 	//material procs
 
-	proc/getProperty(var/property, var/type = VALUE_CURRENT)
+	proc/getProperty(var/property)
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
-				switch(type)
-					if(VALUE_CURRENT)
-						return properties[P]
-					if(VALUE_MIN)
-						return P.min_value
-					if(VALUE_MAX)
-						return P.max_value
+				return properties[P]
 		return 0
+
+	proc/getPropertyMin(var/property)
+		for(var/datum/material_property/P in properties)
+			if(P.id == property)
+				return P.min_value
+
+	proc/getPropertyMax(var/property)
+		for(var/datum/material_property/P in properties)
+			if(P.id == property)
+				return P.max_value
 
 	proc/removeProperty(var/property)
 		if(!src.mutable)
