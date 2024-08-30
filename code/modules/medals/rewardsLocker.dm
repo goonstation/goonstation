@@ -1412,7 +1412,7 @@
 /datum/achievementReward/beefriend
 	title = "(Reagent) Bee"
 	desc = "You're gonna burp one up, probably."
-	required_medal = "Bombini is missing!"
+	required_medal = "Bombini is Missing!"
 
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return

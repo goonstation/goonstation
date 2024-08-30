@@ -1379,7 +1379,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 	/obj/item/currency/spacecash/small,
 	/obj/item/currency/spacecash/tourist,
-	/obj/item/currency/spacecash/buttcoin)
+	/obj/item/currency/buttcoin)
 
 	New()
 		..()
