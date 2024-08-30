@@ -282,7 +282,7 @@ TYPEINFO_NEW(/obj/table)
 		else if (istype(W) && src.place_on(W, user, params))
 			return
 		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
-		else if (istype(W, /obj/item/satchel) && (usr.get_brain_damage() >= 40 || rand(1, 10) < 10))
+		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= 40 || rand(1, 10) < 10))
 			return
 
 		else
