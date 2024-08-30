@@ -22624,7 +22624,7 @@
 /turf/unsimulated/floor/black,
 /area/space_hive)
 "uNg" = (
-/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/head/helmet/space/fishbowl,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "uNi" = (

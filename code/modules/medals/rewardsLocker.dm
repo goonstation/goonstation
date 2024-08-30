@@ -1455,6 +1455,7 @@
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
+
 /datum/achievementReward/HotrodHelmet
 	title = "(Skin) Hotrod Welding Helmet"
 	desc = "Requires you to hold a welding helmet."
