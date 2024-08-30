@@ -25,9 +25,6 @@
 #define RC_FULLNESS 4		// can estimate fullness of container
 #define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
 
-/// The minimum alpha value that a reagent's fluid overlay can display.
-#define RC_MINIMUM_REAGENT_ALPHA 100
-
 #define RC_REAGENT_OVERLAY_SCALING_LINEAR "linear"
 #define RC_REAGENT_OVERLAY_SCALING_SPHERICAL "spherical"
 

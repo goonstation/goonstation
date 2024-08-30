@@ -103,10 +103,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
-		if (src.does_click)
-			boutput(user, SPAN_ALERT("*click* *click*"))
+		if (src.click_sound)
+			boutput(user, SPAN_ALERT(src.click_msg))
 			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+				playsound(user, click_sound, 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -1598,7 +1598,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
-	does_click = FALSE
+	click_sound = null
 
 	tranq
 		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
@@ -2917,7 +2917,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "\improper Gwydion tranquilizer pistol"
+	name = "\improper Ceridwen tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"

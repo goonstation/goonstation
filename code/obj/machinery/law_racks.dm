@@ -668,7 +668,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))

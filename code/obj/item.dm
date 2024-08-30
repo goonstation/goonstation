@@ -1023,10 +1023,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	SHOULD_CALL_PARENT(TRUE)
+	src.equipped_in_slot = slot
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
-	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop], slot)
 	user.update_equipped_modifiers()

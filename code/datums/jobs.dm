@@ -1353,7 +1353,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/scissors/surgical_scissors = 1)
 
 	items_in_backpack = list(\
-	/obj/item/currency/spacecash/buttcoin,
+	/obj/item/currency/buttcoin,
 	/obj/item/currency/spacecash/fivehundred)
 
 /datum/job/special/souschef
@@ -2039,7 +2039,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Chaplain"
 	limit = 0
 	change_name_on_spawn = TRUE
-	slot_head = list(/obj/item/clothing/head/devil)
+	slot_head = list(/obj/item/clothing/head/headband/devil)
 	slot_mask = list(/obj/item/clothing/mask/moustache/safe)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/red/demonic)

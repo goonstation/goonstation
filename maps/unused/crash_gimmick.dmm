@@ -39205,7 +39205,7 @@
 "fHr" = (
 /obj/machinery/light_switch/north,
 /obj/table/wood/auto,
-/obj/item/currency/spacecash/buttcoin,
+/obj/item/currency/buttcoin,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -63997,9 +63997,7 @@
 /area/russian/radiation)
 "rsT" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south{
 	desc = " It is made of temp."
 	},

@@ -536,6 +536,7 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+	smashes_glasses = FALSE //foam
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
