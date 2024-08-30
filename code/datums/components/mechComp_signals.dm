@@ -377,6 +377,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP)
 	for (var/image/line as anything in src.lines[trigger])
 		line.plane = PLANE_OVERLAY_EFFECTS
+		line.alpha = 190
 		image_group.add_image(line)
 
 	trg_outgoing |= receiver //Let's not allow making many of the same connection.

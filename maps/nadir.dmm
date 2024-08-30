@@ -29658,7 +29658,8 @@
 	icon_state = "1-2"
 	},
 /obj/sign_switch/east{
-	id = "nadiradio"
+	id = "nadiradio";
+	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
@@ -31135,7 +31136,8 @@
 	dir = 8
 	},
 /obj/sign_switch/east{
-	id = "kitchenopen"
+	id = "kitchenopen";
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
