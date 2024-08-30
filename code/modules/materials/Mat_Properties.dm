@@ -12,11 +12,6 @@ ABSTRACT_TYPE(/datum/material_property)
 	/// What should be considered the "default" value of this property?
 	var/default_value = 41
 
-	/// Min value for high-prefix. Minimum for the prefix to show up on the object names.
-	var/prefix_high_min = 27
-	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
-	var/prefix_low_max = 63
-
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -41,27 +36,17 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/hardness
 	name = "Hardness"
 	id = "hard"
-
-	default_value = 3
-	prefix_low_max = 2
-	prefix_high_min = 6
+	default_value = 27
 
 /datum/material_property/density
 	name = "Density"
 	id = "density"
-
-	default_value = 3
-	prefix_low_max = 2
-	prefix_high_min = 6
+	default_value = 27
 
 /datum/material_property/reflectivity
 	name = "Reflectivity"
 	id = "reflective"
-
-
 	default_value = 0
-	prefix_low_max = 1
-	prefix_high_min = 5
 
 	onValueChanged(var/datum/material/M, var/new_value)
 		if(new_value >= 7)
@@ -70,27 +55,15 @@ ABSTRACT_TYPE(/datum/material_property)
 			M.removeTrigger(TRIGGERS_ON_BULLET, /datum/materialProc/reflective_onbullet)
 		return
 
-/datum/material_property/flammability
-	name = "Flammability"
-	id = "flammable"
-	default_value = 1
-
 /datum/material_property/chemical
 	name = "Chemical resistance"
 	id = "chemical"
-	default_value = 3
-
-	prefix_high_min = 5
-	prefix_low_max = 0
+	default_value = 27
 
 /datum/material_property/radioactivity
 	name = "Radioactivity"
 	id = "radioactive"
-
-	prefix_high_min = 1
-	prefix_low_max = 9
 	default_value = 0
-	min_value = 0
 
 	onAdded(var/datum/material/M, var/new_value)
 		M.addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/radioactive_add())
@@ -107,11 +80,7 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/neutron_radioactivity
 	name = "Neutron Radioactivity"
 	id = "n_radioactive"
-
-	prefix_high_min = 1
-	prefix_low_max = 9
 	default_value = 0
-	min_value = 0
 
 	onAdded(var/datum/material/M, var/new_value)
 		M.addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/n_radioactive_add())
@@ -127,26 +96,14 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/spent_fuel
 	name = "Fissile Isotopes"
 	id = "spent_fuel"
-
-	min_value = 0
-	prefix_high_min = 0.1
-	prefix_low_max = 9
 	default_value = 0
 
 /datum/material_property/molitz_bubbles
 	name = "Gas Pockets"
 	id = "molitz_bubbles"
-
-	min_value = 0
-	prefix_high_min = 0.1
-	prefix_low_max = 9
 	default_value = 0
 
 /datum/material_property/plasma_offgas
 	name = "Active Plasma"
 	id = "plasma_offgas"
-
-	min_value = 0
-	prefix_high_min = 0.1
-	prefix_low_max = 9
 	default_value = 0
