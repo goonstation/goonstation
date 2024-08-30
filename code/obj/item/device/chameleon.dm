@@ -176,8 +176,8 @@ TYPEINFO(/obj/item/device/chameleon)
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
 			cham.master = src
 			cham.set_loc(get_turf(src))
-			usr.set_loc(cham)
 			src.active = 1
+			usr.set_loc(cham)
 
 			boutput(usr, SPAN_NOTICE("You activate the [src]."))
 			anim.set_loc(get_turf(src))

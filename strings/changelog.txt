@@ -1,4 +1,26 @@
 
+(t)thu aug 29 24
+(u)Cherman0
+(p)20175
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut3 engineering redesigned with OSHA radiation protection standards in mind.
+(u)LeahTheTech
+(p)20443
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Standardized AI upload turret placements. Generally this means more turrets on maps that lacked them.
+(t)wed aug 28 24
+(u)Cherman0
+(p)20446
+(e)🪲🏅📡|C-Bug, A-Medal, A-AI
+(+)"I'm in" medal now properly awards the ailes AI skin.
+(u)Colossus
+(p)20452
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether now depletes at a 0.3 to 0.6 rate(50% faster), but takes slightly less time to KO and start drowsiness (from 40/20 cycles to 30/15 cycles depending on volume).
+(u)gus
+(p)20451
+(e)|
+(+)fixed manudrive duping
 (t)tue aug 27 24
 (u)tarmunora
 (p)20431

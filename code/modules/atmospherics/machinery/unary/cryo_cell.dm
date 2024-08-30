@@ -276,6 +276,10 @@
 			if (I.cant_drop)
 				boutput(user, SPAN_ALERT("You can't put that in [src] while it's attached to you!"))
 				return
+			var/obj/item/robodefibrillator/defibrillator = I
+			if(defibrillator.mounted)
+				boutput(user, SPAN_ALERT("You can't install a mounted Defibrillator!"))
+				return
 			src.defib = I
 			boutput(user, SPAN_NOTICE("Defibrillator installed into [src]."))
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 80, 0)

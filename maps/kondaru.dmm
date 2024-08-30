@@ -6703,27 +6703,28 @@
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "azp" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/oneHuman{
-	pixel_y = 8
-	},
-/obj/item/aiModule/notHuman{
-	pixel_y = -6
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/table/reinforced/auto,
+/obj/item/aiModule/removeCrew{
+	pixel_y = 13
+	},
+/obj/item/aiModule/emergency{
+	pixel_y = -1
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "azr" = (
-/obj/table/reinforced/auto,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/random_item_spawner/ai_experimental/one,
+/obj/machinery/turret{
+	dir = 4
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "azv" = (
@@ -12801,12 +12802,17 @@
 	},
 /area/station/medical/medbay)
 "aYz" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/machinery/ai_status_display,
-/turf/simulated/floor/black,
+/obj/table/reinforced/auto,
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/device/infra_sensor{
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aYA" = (
 /obj/stool/chair/couch{
@@ -31336,12 +31342,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/interrogation)
 "dht" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
@@ -31870,21 +31876,6 @@
 "dCc" = (
 /turf/simulated/floor/caution/north,
 /area/station/engine/gas)
-"dCF" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/item/aiModule/protectStation{
-	pixel_y = -5
-	},
-/obj/item/aiModule/conservePower{
-	pixel_y = 8
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "dCH" = (
 /obj/table/reinforced/auto,
 /obj/disposaloutlet/west,
@@ -32787,7 +32778,9 @@
 "efc" = (
 /obj/machinery/firealarm/west,
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname,
+/obj/machinery/disposal/mail/autoname{
+	mail_tag = "psychiatry"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -33113,11 +33106,10 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/cargobay)
 "etd" = (
-/obj/machinery/lawrack,
-/obj/cable{
-	icon_state = "0-2"
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
 	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "etk" = (
@@ -37222,11 +37214,9 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "hfa" = (
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/black,
+/obj/table/reinforced/auto,
+/obj/item/aiModule/protectStation,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "hfZ" = (
 /obj/storage/crate/furnacefuel,
@@ -39883,8 +39873,12 @@
 	},
 /area/station/science/lab)
 "jfO" = (
-/obj/machinery/turret{
-	dir = 4
+/obj/table/reinforced/auto,
+/obj/item/aiModule/oneHuman{
+	pixel_y = 8
+	},
+/obj/item/aiModule/notHuman{
+	pixel_y = -6
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -42970,11 +42964,15 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lut" = (
-/obj/machinery/turret{
-	dir = 8
-	},
 /obj/item/device/radio/intercom/AI{
 	dir = 8
+	},
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform{
+	pixel_y = 8
+	},
+/obj/item/aiModule/makeCaptain{
+	pixel_y = -6
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -43577,11 +43575,13 @@
 /area/station/teleporter)
 "lKu" = (
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/lawrack,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
 "lLw" = (
@@ -44800,7 +44800,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "mLE" = (
-/obj/table/reinforced/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -44808,12 +44807,8 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/aiModule/freeform{
-	pixel_y = 8
-	},
-/obj/item/aiModule/makeCaptain{
-	pixel_y = -6
-	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/ai_experimental/one,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "mLH" = (
@@ -45013,10 +45008,6 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mVD" = (
-/obj/decal/tile_edge/line/black{
-	dir = 9;
-	icon_state = "line2"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -45027,7 +45018,9 @@
 	pixel_y = 11;
 	tag = ""
 	},
-/turf/simulated/floor/black,
+/obj/table/reinforced/auto,
+/obj/item/aiModule/conservePower,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "mVR" = (
 /obj/machinery/disposal/morgue{
@@ -49975,8 +49968,8 @@
 /area/station/crew_quarters/quarters_south)
 "qAY" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "pathology";
-	name = "pathology mail junction"
+	mail_tag = "psychiatry";
+	name = "psychiatry mail junction"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 8
@@ -54332,6 +54325,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
+"tKP" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai_upload)
 "tKY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -60046,17 +60046,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "xPJ" = (
-/obj/table/reinforced/auto,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/aiModule/removeCrew{
-	pixel_y = 13
-	},
-/obj/item/aiModule/emergency{
-	pixel_y = -1
+/obj/machinery/turret{
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -60530,23 +60526,6 @@
 	dir = 8
 	},
 /area/station/security/secwing)
-"yfv" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/item/clothing/glasses/toggleable/meson{
-	pixel_x = 1;
-	pixel_y = -7
-	},
-/obj/item/device/infra_sensor{
-	pixel_x = 1;
-	pixel_y = 3
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "yfW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -113391,7 +113370,7 @@ bgu
 adp
 aSO
 voO
-yfv
+xPJ
 jfO
 azp
 xPJ
@@ -114298,7 +114277,7 @@ aND
 aSO
 hms
 hfa
-rFj
+tKP
 rFj
 rFj
 axk
@@ -114599,7 +114578,7 @@ aiS
 fIt
 aSO
 amB
-dCF
+azr
 lut
 mLE
 azr
