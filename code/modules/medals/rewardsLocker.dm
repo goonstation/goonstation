@@ -1455,32 +1455,7 @@
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
-///datum/achievementReward/FishbowlHelmet
-	title = "(Skin) Fishbowl Space Helmet"
-	desc = "Requires you to hold some form of space helmet. Fishy!"
-	required_medal = "Jimi Heselden"
-	once_per_round = 0
 
-	rewardActivate(var/mob/activator)
-		if(!istype(activator))
-			return
-
-		var/obj/item/clothing/head/helmet/space/skin_target = activator.find_type_in_hand((/obj/item/clothing/head/helmet/space))
-		if (skin_target)
-			var/obj/item/clothing/head/helmet/space/fishbowl/new_helmet = new /obj/item/clothing/head/helmet/space/fishbowl(get_turf(activator))
-			new_helmet.fingerprints = skin_target.fingerprints
-			new_helmet.fingerprints_full = skin_target.fingerprints_full
-			new_helmet.fingerprintslast = skin_target.fingerprintslast
-			skin_target.fingerprints = null
-			skin_target.fingerprints_full = null
-			skin_target.fingerprintslast = null
-			qdel(skin_target)
-			activator.put_in_hand_or_drop(new_helmet)
-			return 1
-		else
-			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a space helmet. Sorry!"))
-			return
-//yell at gibusgame if this doesn't work - this is my first time making a PR!
 /datum/achievementReward/HotrodHelmet
 	title = "(Skin) Hotrod Welding Helmet"
 	desc = "Requires you to hold a welding helmet."
