@@ -42,6 +42,13 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
 	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
+	//tracking these on the item instead of mutating the material
+	/// How much plutonium we have built-up from nuclear reactions
+	var/spent_fuel = 0
+	/// How much radiation have we lost from reactions
+	var/radLost = 0
+	/// How much neutron radiation have we lost from reactions
+	var/nRadLost = 0
 
 	New(material="steel")
 		..()
@@ -58,7 +65,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.ui_image = icon2base64(dummy_icon)
 			ui_image_base64_cache[src.type] = src.ui_image
 
-	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = TRUE, var/use_descriptors = FALSE) //mutable is the default here, for obvious reasons
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE) //mutable is the default here, for obvious reasons
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
@@ -92,6 +99,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					src.cap_icon.MapColors(arglist(setcolor))
 				else
 					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
+
+	proc/getEffectiveRad()
+		return src.material.getProperty("radioactive") - src.radLost
+
+	proc/getEffectiveNRad()
+		return src.material.getProperty("n_radioactive") - src.nRadLost
 
 	proc/melt()
 		if(melted)
@@ -155,17 +168,19 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		for(var/datum/neutron/N as anything in inNeutrons)
 			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
-				if(N.velocity <= 1 & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
-					src.material.adjustProperty("n_radioactive", -0.01)
-					src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
+				if(N.velocity <= 1 & prob(src.getEffectiveNRad/9*10)) //neutron stimulated emission
+					//become less nradioactive and more radioactive
+					src.nRadLost += 0.01*9
+					src.radLost += -0.005*9
 					for(var/i in 1 to 5)
 						inNeutrons += new /datum/neutron(pick(alldirs), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 50
-				else if(N.velocity <= 1 & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
-					src.material.adjustProperty("radioactive", -0.01)
-					src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
+				else if(N.velocity <= 1 & prob(src.getEffectiveRad/9*10)) //stimulated emission
+					//become less radioactive and more spent fuel
+					src.radLost += 0.01*9
+					src.spent_fuel += 0.005
 					for(var/i in 1 to 5)
 						inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
 					inNeutrons -= N
@@ -183,17 +198,19 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						qdel(N)
 					src.temperature += 1
 
-		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
+		if(prob(src.getEffectiveNRad/9*10*src.neutron_cross_section)) //fast spontaneous emission
 			for(var/i in 1 to 3)
 				inNeutrons += new /datum/neutron(pick(alldirs), 3) //neutron radiation gets you fast neutrons
-			src.material.adjustProperty("n_radioactive", -0.01)
-			src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
+			//become less nradioactive and more radioactive
+			src.nRadLost += 0.01*9
+			src.radLost += -0.005*9
 			src.temperature += 20
-		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
+		if(prob(src.getEffectiveRad/9*10*src.neutron_cross_section)) //spontaneous emission
 			for(var/i in 1 to 3)
 				inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
-			src.material.adjustProperty("radioactive", -0.01)
-			src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
+			//become less radioactive and more spent fuel
+			src.radLost += 0.01*9
+			src.spent_fuel += 0.005
 			src.temperature += 10
 		return inNeutrons
 
@@ -242,7 +259,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	extra_info()
 		. = ..()
-		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
+		. += "Radioactivity: [src.getEffectiveRad/9*10 + src.getEffectiveNRad/9*20]%"
 
 /obj/item/reactor_component/fuel_rod/glowsticks
 	name = "makeshift fuel rod"

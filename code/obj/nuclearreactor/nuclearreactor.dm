@@ -397,7 +397,7 @@
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					//more radioactive material = higher score. Doubled if the component is already melted.
-					meltdown_badness += (comp.material.getProperty("radioactive")*2 + comp.material.getProperty("n_radioactive")*5 + comp.material.getProperty("spent_fuel")*10) * (1 + comp.melted)
+					meltdown_badness += (comp.getEffectiveRad()/9*2 + comp.getEffectiveNRad()/9*5 + comp.spent_fuel*10) * (1 + comp.melted)
 					if(istype(comp, /obj/item/reactor_component/gas_channel))
 						var/obj/item/reactor_component/gas_channel/gascomp = comp
 						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering

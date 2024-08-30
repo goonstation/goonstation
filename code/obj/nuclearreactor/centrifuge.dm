@@ -35,33 +35,38 @@
 			else
 				//we done here, spit out results
 				var/obj/item/nuclear_waste/waste = new(get_turf(src))
-				if(round(extracted_fuel) >= 1)
+				if(floor(extracted_fuel) >= 1)
 					var/obj/item/material_piece/plutonium/goodstuff = new(get_turf(src))
-					goodstuff.amount = round(extracted_fuel)
+					goodstuff.amount = floor(extracted_fuel)
 					goodstuff.UpdateStackAppearance()
 					extracted_fuel -= goodstuff.amount
 					playsound(src, sound_process, 40, TRUE)
 				else
 					playsound(src, sound_grump, 40, TRUE)
-				waste.setMaterial(getMaterial(waste.default_material), FALSE, FALSE, TRUE, FALSE)
-				waste.material.setProperty("spent_fuel", extracted_fuel)
+				waste.spent_fuel = extracted_fuel
 				extracted_fuel = 0
 				doing_stuff = FALSE
 
 
 	attackby(obj/item/W, mob/user)
-		if(!istype(W, /obj/item/reactor_component) && !istype(W, /obj/item/nuclear_waste))
-			boutput(user, "You can't put [W] in here, it doesn't fit!")
+		if(istype(W, /obj/item/reactor_component))
+			var/obj/item/reactor_component/thingToProcess = W
+			src.insertItem(thingToProcess, thingToProcess.spent_fuel, user)
 			return
-
-		if (W.material && W.material.hasProperty("spent_fuel"))
-			boutput(user, "You load [W] into [src].")
-			playsound(src, sound_load, 40, TRUE)
-			W.set_loc(src)
-			user?.u_equip(W)
-			W.dropped(user)
-			fuel_to_extract += W.material.getProperty("spent_fuel")
-			doing_stuff = TRUE
-			qdel(W)
+		if(istype(W, /obj/item/nuclear_waste))
+			var/obj/item/nuclear_waste/thingToProcess = W
+			src.insertItem(thingToProcess, thingToProcess.spent_fuel, user)
+			return
 		else
-			boutput(user, "[W] isn't ready for reprocessing!")
+			boutput(user, "[src] can't process [W]!")
+
+	proc/insertItem(obj/item/itemToInsert, var/wasteContained, mob/user)
+		boutput(user, "You load [itemToInsert] into [src].")
+		playsound(src, sound_load, 40, TRUE)
+		itemToInsert.set_loc(src)
+		user?.u_equip(itemToInsert)
+		itemToInsert.dropped(user)
+		fuel_to_extract += wasteContained
+		doing_stuff = TRUE
+		qdel(itemToInsert)
+

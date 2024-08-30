@@ -652,6 +652,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
 	default_material = "slag"
+	var/spent_fuel = 0
 	var/datum/gas_mixture/leak_gas = new
 
 	New()
