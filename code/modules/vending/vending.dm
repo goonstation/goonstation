@@ -146,8 +146,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 		AddComponent(/datum/component/mechanics_holder)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
+		if (!istype(src,/obj/machinery/vending/player))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
