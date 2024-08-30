@@ -730,7 +730,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 #define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 
-/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -744,9 +744,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/mob/user = usr
 
 	params = params2list(params)
-	// If params ever had drag and drop info it doesn't seem to make it this far
-	// add it here so any subsequent procs can use the information.
-	params["dragged"] = TRUE
 
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object
