@@ -1821,3 +1821,59 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 
 	proc/off()
 		return
+/obj/decoration/paperstack/massive
+	name = "Pile of papers"
+	desc = "The pile of papers is so overwhelming it crush you."
+	icon = 'icons/obj/large/48x48.dmi'
+	icon_state = "paperstack-massive"
+	anchored = ANCHORED
+	density = 1
+
+/obj/decoration/paperstack/large
+	name = "Pile of papers"
+	desc = "The pile towers over you, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-large"
+	anchored = ANCHORED
+	density = 1
+
+/obj/decoration/paperstack/tall
+	name = "Pile of papers"
+	desc = "The pile towers over you, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-tall"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/paperstack/mid
+	name = "Pile of papers"
+	desc = "The pile looks impressive, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-mid"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/paperstack/small
+	name = "Pile of papers"
+	desc = "A small pile of papers neatly stacked."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-small"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/ritual
+	name = "Strange drawing"
+	desc = "Looks like someone made a fancy design here, how cool! Wonder what the candles are for."
+	icon_state = "ritual"
+	icon = 'icons/misc/wander_stuff.dmi'
+	anchored = ANCHORED_ALWAYS
+	density = 0
+	plane = PLANE_NOSHADOW_BELOW
+
+/obj/decoration/wineholder
+	name = "Wall mounted wine holder"
+	desc = "A shelf attached to the wall holding several bottles of wine."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "wineholder"
+	anchored = ANCHORED
+	density = 0

@@ -161,3 +161,4 @@ Click yourself with help intent if you're cold; you'll shake yourself to warm up
 Different items do different types of damage in different amounts, both to your health and your stamina. A weapon that does low physical damage may do high stamina damage, which can keep a person locked in "stam crit", preventing them from fighting back.
 The cloning console displays a red flashing icon when someone can be cloned.
 Shuttle votes aren't in the rules, if you have access and the station's in bad shape you can call the shuttle!
+Want to express yourself, but can't put things into words? Press M to make your own, custom emote! You can also press CTRL + M to emote audibly - chortle and snort at your own, bad jokes!

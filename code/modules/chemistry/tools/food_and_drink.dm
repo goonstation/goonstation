@@ -1427,7 +1427,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 
 	Crossed(obj/projectile/mover) //Makes barfights cooler
-		if(istype(mover) && !istype(mover.proj_data, /datum/projectile/bullet/foamdart))
+		if(istype(mover) && mover.proj_data?.smashes_glasses)
 			if(prob(30))
 				src.smash()
 		. = ..()
@@ -1637,6 +1637,16 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	decoration_y_offset = 4
 	wedge_x_offset = -1
 	wedge_y_offset = 3
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal //wander office item
+	name = "crystal wine glass"
+	desc = "What is a man? A miserable little pile of secrets."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "crystal-wine"
+	shard_amt = 3
+	reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	reagent_overlay_icon_state = "wine"
+	reagent_overlay_states = 6
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail
 	name = "cocktail glass"

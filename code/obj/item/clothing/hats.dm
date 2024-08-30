@@ -1519,6 +1519,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
 
+/obj/item/clothing/head/headband/devil
+	name = "devil horns"
+	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "devil"
+	item_state = "devil"
+
 /obj/item/clothing/head/headband/antlers
 	name = "antlers"
 	desc = "Be a deer and wear these, won't you?"
