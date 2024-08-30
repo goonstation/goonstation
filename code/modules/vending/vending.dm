@@ -564,7 +564,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("togglechute")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					P.loading = !P.loading
 		if("togglelock")
 			if(istype(src,/obj/machinery/vending/player))
@@ -576,7 +576,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
@@ -585,12 +585,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					P.name = params["name"]
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(ref(R) == params["target"])
 							P.promoimage = R.icon
