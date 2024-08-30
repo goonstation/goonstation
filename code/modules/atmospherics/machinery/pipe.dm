@@ -434,7 +434,7 @@
 			src.node2 = target
 			break
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = src.loc // hide if turf is not intact
 	hide(T.intact)
 
 /obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
