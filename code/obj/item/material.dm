@@ -241,6 +241,7 @@
 	var/doAgentB = FALSE
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		..()
 		if(exposed_temperature < 500 KELVIN)
 			return
 		if(src.molitzBubbles < 1)
@@ -248,7 +249,6 @@
 		if(ON_COOLDOWN(src, "molitz_gas_generate", 30 SECONDS))
 			return
 		src.doGasReaction(air, exposed_temperature)
-		..()
 
 	proc/doGasReaction(datum/gas_mixture/air, var/temperature)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
@@ -256,25 +256,26 @@
 			payload.oxygen_agent_b = 0.18
 			payload.oxygen = 15
 			payload.temperature = T0C
-			animate_flash_color_fill_inherit(owner,"#ff0000", 4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
-			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
-				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
+			animate_flash_color_fill_inherit(src,"#ff0000", 4, 2 SECONDS)
+			playsound(src, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
+			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, src))
+				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(src))
 		else //not molitz B or doesnt meet the requirements to make agent B
 			payload.oxygen = 80
 			payload.temperature = temperature
-			animate_flash_color_fill_inherit(owner,"#0000FF", 4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
+			animate_flash_color_fill_inherit(src,"#0000FF", 4, 2 SECONDS)
+			playsound(src, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 		air.merge(payload)
 		src.molitzBubbles--
 
-/obj/item/raw_material/molitz_beta
-	name = "molitz crystal"
+/obj/item/raw_material/molitz/beta
+	name = "molitz β crystal"
 	desc = "An unusual crystal of Molitz."
 	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
 	default_material = "molitz_b"
 	crystal = 1
+	doAgentB = TRUE
 
 	setup_material()
 		. = ..()
@@ -404,6 +405,36 @@
 	powersource = 1
 	crystal = 1
 
+	var/plasmaBubbles = 10
+
+	material_trigger_when_attacked(atom/attackatom, mob/attacker, meleeorthrow, situation_modifier)
+		..()
+		var/turf/simulated/floor/T = get_turf(src)
+		if(!istype(T))
+			return
+		src.tryGasReaction(T.air)
+
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+		..()
+		if(exposed_temperature < 500 KELVIN)
+			return
+		src.tryGasReaction(air)
+
+	proc/tryGasReaction(datum/gas_mixture/air)
+		if(src.plasmaBubbles < 1)
+			return
+		if(ON_COOLDOWN(src, "plasmastone_plasma_generate", 5 SECONDS))
+			return
+		src.doGasReaction(air)
+
+	proc/doGasReaction(datum/gas_mixture/air)
+		var/datum/gas_mixture/payload = new /datum/gas_mixture
+		payload.toxins = 25
+		payload.temperature = T20C
+		animate_flash_color_fill_inherit(src,"#ff00ff", 4, 2 SECONDS)
+		playsound(src, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
+		air.merge(payload)
+		src.plasmaBubbles--
 
 /obj/item/raw_material/gemstone
 	name = "gem"

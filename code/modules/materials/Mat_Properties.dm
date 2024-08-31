@@ -79,8 +79,3 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/n_radioactive_add)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/n_radioactive_remove)
 		return
-
-/datum/material_property/plasma_offgas
-	name = "Active Plasma"
-	id = "plasma_offgas"
-	default_value = 0

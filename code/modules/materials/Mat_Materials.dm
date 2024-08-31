@@ -902,7 +902,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 45)
 		setProperty("radioactive", 18)
 		setProperty("flammable", 72)
-		setProperty("plasma_offgas", 10)
 
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())

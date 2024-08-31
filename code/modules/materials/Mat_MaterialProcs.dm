@@ -341,42 +341,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			M.set_loc(.)
 		return
 
-/datum/materialProc/plasmastone
-	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
-		var/turf/T = get_turf(location)
-		if(!T || T.density || !istype(location))
-			return
-		if(!location.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
-			location.material = location.material.getMutable()
-			return location.material.triggerTemp(location, 0)
-		var/total_plasma = location.material.getProperty("plasma_offgas")
-		if(total_plasma <= 0)
-			if(prob(2) && location)
-				location.visible_message("<span class='alert>[location] dissipates.</span>")
-				qdel(location)
-			return
-		if(ON_COOLDOWN(location, "plasmastone_plasma_generate", 5 SECONDS)) return
-		var/list/turf/simulated/floor/valid_turfs = list()
-		for (var/turf/simulated/floor/target in range(1,location))
-			if(target.gas_cross(target) && target.air)
-				valid_turfs += target
-		if(length(valid_turfs))
-			var/turf/simulated/floor/target = pick(valid_turfs)
-			if(target.parent?.group_processing)
-				target.parent.suspend_group_processing()
-
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.toxins = 25 * location.material_amt
-			total_plasma -= 1
-			payload.temperature = T20C
-			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
-			target.air.merge(payload)
-			location.material.setProperty("plasma_offgas", total_plasma)
-
-/datum/materialProc/plasmastone_on_hit
-	execute(var/atom/owner)
-		owner.material.triggerTemp(locate(owner))
-
 /datum/materialProc/miracle_add
 	execute(var/location)
 		animate_rainbow_glow(location)
