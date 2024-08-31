@@ -26,15 +26,42 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/// the type of the atom that is the "fishing spot"
 	var/fishing_atom_type = null
 	/// associative list with the format (fish_type = probability), doesnt need to be ordered in descending probability
+	/// these are the fishing results that are ALWAYS avaiable at the spot. These won't get modified by conditionals like fishing loottables are.
 	var/list/fish_available = null
 	/// for wip fishing spots that shouldnt be automatically added to the global list of fishing spots
 	var/do_not_generate = 0
 	/// what tier of rod do you need to fish here? current rods are tier 1,2 & 3
 	var/rod_tier_required = 0
+	/// this list contains all fishing loottables of this spot. Add and modify these in new()
+	var/list/fishing_lootpools = null
+
+/datum/fishing_spot/New()
+	..()
+	src.fishing_lootpools = list()
+
+/datum/fishing_spot/disposing()
+	. = ..()
+	if(length(src.fishing_lootpools))
+		for (var/loottable in src.fishing_lootpools)
+			qdel(loottable)
+
 
 /datum/fishing_spot/proc/generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
-	if (length(src.fish_available))
-		var/fish_path = weighted_pick(src.fish_available)
+	//we're generating the loottable of this fishing spot now
+	var/list/current_loottable = list()
+	current_loottable += src.fish_available
+	//we iterate through each fishing_lootpool and check it's conditionals and change the loottable accordingly
+	if(length(src.fishing_lootpools))
+		for (var/datum/fishing_lootpool/loottable in src.fishing_lootpools)
+			if(loottable.check_conditionals(user, fishing_rod))
+				current_loottable = loottable.generate_loot(current_loottable, user, fishing_rod)
+	//last but not least, because some loottables could modify results (e.g. through baits if added later), we remove invalid (negative) entries
+	for (var/checked_object in current_loottable)
+		if(current_loottable[checked_object] < 0)
+			current_loottable -= checked_object
+	// now we do a weighted pick out of our fresh loottable
+	if (length(current_loottable))
+		var/fish_path = weighted_pick(current_loottable)
 		return new fish_path()
 	return null
 
@@ -134,6 +161,18 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/reagent_containers/food/fish/red_herring = 1)
 
+/datum/fishing_spot/clown_shoes
+	fishing_atom_type = /obj/item/clothing/shoes/clown_shoes
+	rod_tier_required = 2 //make them play a bit into the thing
+	fish_available = list(/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/coin = 25, \
+	/mob/living/critter/small_animal/cockroach = 1, \
+	/obj/item/currency/buttcoin = 20)
+
+/datum/fishing_spot/clown_shoes/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/clown_shoes_loot(src)
+
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
 	rod_tier_required = 3
@@ -231,48 +270,32 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/fishing_pool
 	fishing_atom_type = /obj/fishing_pool
 	rod_tier_required = 1
-	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
-	/obj/item/reagent_containers/food/fish/bass = 20,\
-	/obj/item/reagent_containers/food/fish/salmon = 20,\
-	/obj/item/reagent_containers/food/fish/carp = 15,\
-	/obj/item/reagent_containers/food/fish/rainbow_trout = 10,\
-	/obj/item/reagent_containers/food/fish/chub = 10,\
-	/obj/item/reagent_containers/food/fish/pike = 10,\
-	/obj/item/reagent_containers/food/fish/eel = 15,\
-	/obj/item/reagent_containers/food/fish/catfish = 20,\
-	/obj/item/reagent_containers/food/fish/bass = 30,\
-	/obj/item/reagent_containers/food/fish/salmon = 20,\
-	/obj/item/reagent_containers/food/fish/herring = 15,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+
+/datum/fishing_spot/fishing_pool/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/standard(src)
+
 
 	// test pools
-	basic
-		fishing_atom_type = /obj/fishing_pool/basic
-		rod_tier_required = 1
+/datum/fishing_spot/fishing_pool/basic
+	fishing_atom_type = /obj/fishing_pool/basic
+	rod_tier_required = 1
 
-	upgraded
-		fishing_atom_type = /obj/fishing_pool/upgraded
-		rod_tier_required = 2
+/datum/fishing_spot/fishing_pool/upgraded
+	fishing_atom_type = /obj/fishing_pool/upgraded
+	rod_tier_required = 2
 
-	master
-		fishing_atom_type = /obj/fishing_pool/master
-		rod_tier_required = 3
+/datum/fishing_spot/fishing_pool/master
+	fishing_atom_type = /obj/fishing_pool/master
+	rod_tier_required = 3
 
 /datum/fishing_spot/fishing_pool_portable
 	fishing_atom_type = /obj/fishing_pool/portable
 	rod_tier_required = 1
-	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
-	/obj/item/reagent_containers/food/fish/bass = 20,\
-	/obj/item/reagent_containers/food/fish/salmon = 20,\
-	/obj/item/reagent_containers/food/fish/carp = 15,\
-	/obj/item/reagent_containers/food/fish/rainbow_trout = 10,\
-	/obj/item/reagent_containers/food/fish/chub = 10,\
-	/obj/item/reagent_containers/food/fish/pike = 10,\
-	/obj/item/reagent_containers/food/fish/eel = 15,\
-	/obj/item/reagent_containers/food/fish/bass = 30,\
-	/obj/item/reagent_containers/food/fish/salmon = 20,\
-	/obj/item/reagent_containers/food/fish/herring = 15,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+
+/datum/fishing_spot/fishing_pool_portable/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/standard(src)
 
 /datum/fishing_spot/fluid // covers pool, aquariums and uh all other standing pools of fluid.
 	fishing_atom_type = /obj/fluid
@@ -524,13 +547,16 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/lava_moon
 	fishing_atom_type = /turf/unsimulated/floor/lava
-	rod_tier_required = 3
-	fish_available = list(/obj/item/reagent_containers/food/fish/lava_fish = 25,\
-	/obj/item/reagent_containers/food/fish/igneous_fish = 10,\
+	rod_tier_required = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10,\
 	/obj/item/material_piece/slag = 20,\
 	/obj/decal/cleanable/ash = 20,\
 	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
 	/obj/item/raw_material/char =20)
+
+/datum/fishing_spot/lava_moon/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
 
 /datum/fishing_spot/cryo
 	fishing_atom_type = /obj/machinery/atmospherics/unary/cryo_cell
@@ -719,8 +745,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/furnace
 	fishing_atom_type = /obj/machinery/power/furnace/thermo
 	rod_tier_required = 2
-	fish_available = list(/obj/item/reagent_containers/food/fish/lava_fish = 25, \
-	/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+
+/datum/fishing_spot/furnace/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
 
 //#1 HOS mug
 /datum/fishing_spot/hosmug
@@ -739,9 +768,12 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 //Arc electroplater
 /datum/fishing_spot/arc_electroplater
 	fishing_atom_type = /obj/machinery/arc_electroplater
-	rod_tier_required = 3
-	fish_available = list(/obj/item/reagent_containers/food/fish/lava_fish = 25, \
-	/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+	rod_tier_required = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+
+/datum/fishing_spot/arc_electroplater/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
 
 //golden toilet
 datum/fishing_spot/golden_toilet
