@@ -14925,7 +14925,7 @@
 /obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/space)
 "iLG" = (
 /obj/shrub{
@@ -15259,7 +15259,7 @@
 /area/station/engine/core)
 "jyt" = (
 /obj/machinery/atmospherics/unary/vent,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/space)
 "jzZ" = (
 /obj/machinery/vending/air_vendor/plasma,
