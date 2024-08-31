@@ -20586,9 +20586,12 @@
 	pixel_y = 26
 	},
 /obj/landmark/start/job/AI,
-/obj/machinery/turretid/ai_chamber{
-	pixel_y = 24;
-	pixel_x = -8
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -24193,8 +24196,8 @@
 	icon_state = "0-4"
 	},
 /obj/cable/blue,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "gTi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -26024,8 +26027,8 @@
 /obj/cable/blue{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "ifN" = (
 /obj/machinery/firealarm/north,
@@ -33780,8 +33783,8 @@
 /obj/cable/blue{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "mXH" = (
 /obj/machinery/shipalert{
@@ -35401,8 +35404,8 @@
 /obj/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "nZJ" = (
 /obj/table/auto,
@@ -36950,6 +36953,9 @@
 	dir = 6;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -39396,8 +39402,12 @@
 /obj/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/bolter,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "qov" = (
 /obj/machinery/camera{
@@ -49484,8 +49494,8 @@
 /obj/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "wMD" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -51260,8 +51270,8 @@
 /obj/cable/blue{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "xYh" = (
 /obj/machinery/camera{

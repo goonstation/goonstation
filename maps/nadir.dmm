@@ -5080,13 +5080,17 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cnv" = (
-/obj/machinery/door/poddoor{
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 6;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cnx" = (
 /obj/disposalpipe/segment/bent/east,
@@ -5525,13 +5529,17 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "cyE" = (
-/obj/machinery/door/poddoor{
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 10;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cyG" = (
 /obj/cable,
@@ -6493,9 +6501,9 @@
 /obj/machinery/door_control{
 	id = "ai_core";
 	name = "AI Core Shield";
-	pixel_y = -21
+	pixel_y = -26
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cUx" = (
 /obj/rack,
@@ -18459,13 +18467,22 @@
 	name = "Southeast Breach Hull"
 	})
 "hOB" = (
-/obj/machinery/door/poddoor{
-	dir = 9;
-	id = "ai_core";
-	name = "AI Core Shield"
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "hOK" = (
 /obj/landmark/gps_waypoint,
@@ -21479,13 +21496,22 @@
 	},
 /area/station/medical/head)
 "jbc" = (
-/obj/machinery/door/poddoor{
-	dir = 5;
-	id = "ai_core";
-	name = "AI Core Shield"
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jbf" = (
 /obj/storage/closet/radiation,
@@ -29453,13 +29479,20 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "mjl" = (
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "ai_core";
-	name = "AI Core Shield"
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "mjp" = (
 /obj/machinery/firealarm/west,
@@ -48970,18 +49003,29 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "uSd" = (
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
+/obj/mapping_helper/access/ai_upload,
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "AI Core"
 	},
-/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/bolter,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/engine,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "uSe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,

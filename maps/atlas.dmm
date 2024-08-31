@@ -4432,8 +4432,14 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "asx" = (
 /turf/simulated/floor/blueblack{
@@ -4565,8 +4571,18 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "AI Core"
+	},
+/obj/mapping_helper/access/ai_upload,
+/obj/mapping_helper/airlock/bolter,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "asW" = (
 /obj/cable{
@@ -4612,8 +4628,14 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "atg" = (
 /obj/lattice{
@@ -5150,8 +5172,12 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "auQ" = (
 /obj/machinery/camera{
@@ -5345,8 +5371,12 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "avu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -5361,8 +5391,12 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "avw" = (
 /obj/machinery/computer/genetics{
@@ -5467,7 +5501,8 @@
 	dir = 6;
 	name = "autoname - SS13";
 	pixel_y = 20;
-	tag = ""
+	tag = "";
+	pixel_x = -18
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -10664,11 +10699,18 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "aPb" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -17368,6 +17410,13 @@
 /obj/item/device/radio/intercom/AI{
 	broadcasting = 0
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "mSa" = (
@@ -20741,6 +20790,23 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
+"wCi" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "wFl" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/portable_reclaimer,
@@ -64605,10 +64671,10 @@ akl
 aqD
 aBc
 rDv
-asV
+wCi
 mRp
 asV
-avK
+avJ
 awI
 aqD
 xEr
@@ -64910,7 +64976,7 @@ rDv
 atc
 auP
 avv
-avJ
+avK
 awJ
 aqD
 aWe

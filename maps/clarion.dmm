@@ -1428,14 +1428,17 @@
 	},
 /area/station/solar/east)
 "aoh" = (
-/obj/machinery/door/poddoor{
-	dir = 6;
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "aoE" = (
 /turf/simulated/wall/auto/supernorn,
@@ -16325,6 +16328,9 @@
 /obj/item/device/radio/intercom/AI{
 	dir = 4
 	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_x = 24
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "ega" = (
@@ -22792,13 +22798,6 @@
 	},
 /area/station/engine/substation/east)
 "iXr" = (
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	name = "AI Core"
-	},
 /obj/mapping_helper/access/ai_upload,
 /obj/cable{
 	icon_state = "1-2"
@@ -22809,7 +22808,18 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/circuit,
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "AI Core"
+	},
+/obj/mapping_helper/airlock/bolter,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "iXL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -22972,14 +22982,17 @@
 	},
 /area/station/solar/west)
 "jeG" = (
-/obj/machinery/door/poddoor{
-	dir = 10;
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jgf" = (
 /obj/machinery/vending/snack,
@@ -25364,19 +25377,22 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "kYi" = (
-/obj/machinery/door/poddoor{
-	dir = 5;
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "kYB" = (
 /obj/grille/catwalk{
@@ -29446,12 +29462,6 @@
 	name = "Head of Personnel's Quarters"
 	})
 "oaa" = (
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -29459,7 +29469,16 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "oaf" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
@@ -33509,9 +33528,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/turretid/ai_chamber{
-	pixel_x = 24
-	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "rgl" = (
@@ -36441,12 +36457,6 @@
 	},
 /area/station/storage/primary)
 "toL" = (
-/obj/machinery/door/poddoor{
-	dir = 4;
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -36454,7 +36464,16 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "tpb" = (
 /obj/cable{
@@ -36991,19 +37010,22 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "tEj" = (
-/obj/machinery/door/poddoor{
-	dir = 9;
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "tEl" = (
 /obj/machinery/computer/bank_data{
