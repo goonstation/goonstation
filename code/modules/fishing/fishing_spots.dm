@@ -164,14 +164,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/clown_shoes
 	fishing_atom_type = /obj/item/clothing/shoes/clown_shoes
 	rod_tier_required = 1
-	fish_available = list(/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
-	/obj/item/coin = 25, \
-	/mob/living/critter/small_animal/cockroach = 1, \
-	/obj/item/currency/buttcoin = 20)
 
 /datum/fishing_spot/clown_shoes/New()
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/clown_shoes_loot(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/tiny_junk(src)
 
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
@@ -548,15 +545,12 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/lava_moon
 	fishing_atom_type = /turf/unsimulated/floor/lava
 	rod_tier_required = 2
-	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10,\
-	/obj/item/material_piece/slag = 20,\
-	/obj/decal/cleanable/ash = 20,\
-	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
-	/obj/item/raw_material/char =20)
 
 /datum/fishing_spot/lava_moon/New()
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/charred_remains(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/igneous_fish(src)
 
 /datum/fishing_spot/cryo
 	fishing_atom_type = /obj/machinery/atmospherics/unary/cryo_cell
@@ -745,11 +739,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/furnace
 	fishing_atom_type = /obj/machinery/power/furnace/thermo
 	rod_tier_required = 2
-	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
 
 /datum/fishing_spot/furnace/New()
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/igneous_fish(src)
 
 //#1 HOS mug
 /datum/fishing_spot/hosmug
@@ -769,11 +763,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/arc_electroplater
 	fishing_atom_type = /obj/machinery/arc_electroplater
 	rod_tier_required = 2
-	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
 
 /datum/fishing_spot/arc_electroplater/New()
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/igneous_fish(src)
 
 //golden toilet
 datum/fishing_spot/golden_toilet

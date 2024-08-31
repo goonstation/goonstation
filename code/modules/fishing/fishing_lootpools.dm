@@ -65,3 +65,24 @@
 	//clown-only-zone
 	if(!(user.bioHolder.HasEffect("clumsy")))
 		return FALSE
+
+///tiny junk items you can find in vending machines and others.
+/datum/fishing_lootpool/tiny_junk
+	fish_available = list(/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/coin = 15, \
+	/mob/living/critter/small_animal/cockroach = 1, \
+	/obj/item/currency/buttcoin = 10, \
+	/obj/item/currency/spacecash/really_small = 20, \
+	/obj/item/cigbutt = 5)
+
+///charred items you potentionally can find in lava or the oven in the kitchen
+/datum/fishing_lootpool/charred_remains
+	fish_available = list(/obj/item/material_piece/slag = 20,\
+	/obj/decal/cleanable/ash = 20,\
+	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
+	/obj/item/raw_material/char =20)
+
+///A mid-tier fish you can find in hot places.
+/datum/fishing_lootpool/igneous_fish
+	minimum_rod_tier = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
