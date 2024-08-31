@@ -87,7 +87,8 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"longtwintail" = /datum/customization_style/hair/hairup/longtwintail_half,\
 	"glamponytail" = /datum/customization_style/hair/hairup/glamponytail_half,\
 	"pig" = /datum/customization_style/hair/hairup/pig_half,\
-	"wavy_tail" = /datum/customization_style/hair/hairup/wavy_tail_half\
+	"wavy_tail" = /datum/customization_style/hair/hairup/wavy_tail_half,\
+	"bald" = /datum/customization_style/none
 	)
 
 // all these icon state names are ridiculous
@@ -219,41 +220,44 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 				type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
 				customization_first.style = new type_first
 
-	if (!has_second)
-		var/hair_detail = hair_details[customization_first.style.name] // check for detail styles for our chosen style
+		if (!has_second)
+			var/hair_detail = hair_details[customization_first.style.name] // check for detail styles for our chosen style
 
-		if (hair_detail && prob(50)) // found something in the list
-			customization_second = new hair_detail // default to being whatever we found
+			if (hair_detail && prob(50)) // found something in the list
+				customization_second = new hair_detail // default to being whatever we found
 
-			if (islist(hair_detail)) // if we found a bunch of things in the list
-				var/type_second = pick(hair_detail) // let's choose just one (we don't need to assign a list as someone's hair detail)
-				customization_second = new type_second
-				if (prob(20)) // with a small chance for another detail thing
-					var/type_third = pick(hair_detail)
-					customization_third = new type_third
-					customization_third.color = random_saturated_hex_color()
-					if (prob(5))
-						customization_third.color = randomize_hair_color(pick(hair_colors))
+				if (islist(hair_detail)) // if we found a bunch of things in the list
+					var/type_second = pick(hair_detail) // let's choose just one (we don't need to assign a list as someone's hair detail)
+					customization_second = new type_second
+					if (prob(20)) // with a small chance for another detail thing
+						var/type_third = pick(hair_detail)
+						customization_third = new type_third
+						customization_third.color = random_saturated_hex_color()
+						if (prob(5))
+							customization_third.color = randomize_hair_color(pick(hair_colors))
+					else
+						customization_third = new /datum/customization_style/none
+
+				customization_second.color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
+				if (prob(15))
+					customization_second.color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
+
+			else if (prob(5)) // chance for a special eye color
+				var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
+				customization_second.style = new type_second
+				if (prob(75))
+					customization_second.color = random_saturated_hex_color()
 				else
-					customization_third = new /datum/customization_style/none
+					customization_second.color = randomize_eye_color(pick(eye_colors))
+				customization_third.style = new /datum/customization_style/none
 
-			customization_second.color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
-			if (prob(15))
-				customization_second.color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
-
-		else if (prob(5)) // chance for a special eye color
-			var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
-			customization_second.style = new type_second
-			if (prob(75))
-				customization_second.color = random_saturated_hex_color()
-			else
-				customization_second.color = randomize_eye_color(pick(eye_colors))
-			customization_third.style = new /datum/customization_style/none
-
-		else // otherwise, nada
-			customization_second.style = new /datum/customization_style/none
-			customization_third.style = new /datum/customization_style/none
-
+			else // otherwise, nada
+				customization_second.style = new /datum/customization_style/none
+				customization_third.style = new /datum/customization_style/none
+	else
+		customization_first.style = new /datum/customization_style/none
+		customization_second.style = new /datum/customization_style/none
+		customization_third.style = new /datum/customization_style/none
 	if (change_underwear)
 		if (AH.gender == MALE)
 			if (prob(1))
