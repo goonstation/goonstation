@@ -1,4 +1,9 @@
 
+(t)fri aug 30 24
+(u)gibusgame
+(p)20382
+(e)🆕🗺🎨|C-Feature, A-Mapping, C-Sprites
+(+)Adds the Fishbowl Helmet, a variant of the regular Space Helmet. Available somewhere in space...
 (t)thu aug 29 24
 (u)Cherman0
 (p)20175
