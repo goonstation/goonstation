@@ -1,5 +1,9 @@
 
 (t)sat aug 31 24
+(u)Jan.antilles
+(p)20491
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added Round Glasses, a new swappable style of Prescription Glasses.
 (u)Lord_Earthfire
 (p)20492
 (e)⚖🌱|C-Balance, A-Hydroponics
