@@ -69,7 +69,7 @@
 					continue
 				else
 					boutput(M, SPAN_ALERT("You are sprayed with disgusting rotting flesh! You're pretty sure some of it got in your mouth."))
-			if (isalive(M) && !isingtangible(M))
+			if (isalive(M) && !isintangible(M))
 				M.emote("scream")
 			M.take_toxin_damage(25)
 			if (M.reagents)
