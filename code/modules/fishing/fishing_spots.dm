@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/clown_shoes
 	fishing_atom_type = /obj/item/clothing/shoes/clown_shoes
-	rod_tier_required = 2 //make them play a bit into the thing
+	rod_tier_required = 1
 	fish_available = list(/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/coin = 25, \
 	/mob/living/critter/small_animal/cockroach = 1, \
