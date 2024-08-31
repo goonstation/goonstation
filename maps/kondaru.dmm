@@ -34942,7 +34942,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "fEw" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -34952,6 +34951,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "fET" = (
@@ -39987,7 +39987,6 @@
 	name = "Research Router"
 	})
 "jkG" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -40000,6 +39999,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jkX" = (
@@ -42167,7 +42167,6 @@
 /turf/simulated/floor/grey,
 /area/station/hangar/engine)
 "kOZ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -42177,6 +42176,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "kPF" = (
@@ -50334,7 +50334,6 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "AI Core"
 	},
-/obj/mapping_helper/airlock/bolter,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -55242,7 +55241,6 @@
 	},
 /area/station/hallway/primary/south)
 "uun" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -55257,6 +55255,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "uux" = (
@@ -60341,7 +60340,6 @@
 /turf/simulated/floor,
 /area/station/mining/magnet)
 "xVX" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -60356,6 +60354,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "xWp" = (

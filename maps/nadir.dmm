@@ -5080,7 +5080,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cnv" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -5090,6 +5089,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cnx" = (
@@ -5529,7 +5529,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "cyE" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -5539,6 +5538,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cyG" = (
@@ -18467,7 +18467,6 @@
 	name = "Southeast Breach Hull"
 	})
 "hOB" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -18482,6 +18481,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "hOK" = (
@@ -21496,7 +21496,6 @@
 	},
 /area/station/medical/head)
 "jbc" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -21511,6 +21510,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jbf" = (
@@ -29479,7 +29479,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "mjl" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -29492,6 +29491,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "mjp" = (
@@ -49007,7 +49007,6 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "AI Core"
 	},
-/obj/mapping_helper/airlock/bolter,
 /obj/cable{
 	icon_state = "0-8"
 	},
