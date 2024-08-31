@@ -47836,11 +47836,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
-"kCU" = (
-/obj/machinery/turret,
-/obj/machinery/turret,
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai_upload)
 "kEr" = (
 /mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
@@ -106040,7 +106035,7 @@ bqK
 bue
 buS
 buS
-kCU
+spz
 bxx
 bxx
 bzz
