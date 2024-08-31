@@ -3727,6 +3727,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/ai_upload)
 "bEJ" = (
@@ -7259,10 +7260,6 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
-"dok" = (
-/obj/machinery/turret,
-/turf/simulated/floor/circuit/white,
-/area/station/turret_protected/ai_upload)
 "dov" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -14013,6 +14010,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/machinery/turret,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/ai_upload)
 "giE" = (
@@ -18483,6 +18481,7 @@
 /area/station/quartermaster/cargooffice)
 "hPg" = (
 /obj/machinery/light/small,
+/obj/machinery/turret,
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/ai_upload)
 "hPM" = (
@@ -29658,7 +29657,8 @@
 	icon_state = "1-2"
 	},
 /obj/sign_switch/east{
-	id = "nadiradio"
+	id = "nadiradio";
+	dir = 4
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
@@ -31135,7 +31135,8 @@
 	dir = 8
 	},
 /obj/sign_switch/east{
-	id = "kitchenopen"
+	id = "kitchenopen";
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -114704,7 +114705,7 @@ rha
 uha
 nIv
 bEB
-dok
+wAs
 wAs
 hPg
 uha
@@ -116516,7 +116517,7 @@ bey
 uha
 uha
 giz
-dok
+wAs
 wAs
 hPg
 uha

@@ -304,12 +304,12 @@ TYPEINFO(/obj/submachine/slot_machine)
 	attackby(var/obj/item/I, user)
 		if(istype(I, /obj/item/currency/spacecash/))
 			boutput(user, SPAN_NOTICE("You insert the cash into [src]."))
-
-			if(istype(I, /obj/item/currency/spacecash/buttcoin))
-				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
-			else
-				src.play_money += I.amount
-
+			src.play_money += I.amount
+			I.amount = 0
+			qdel(I)
+		else if(istype(I, /obj/item/currency/buttcoin/))
+			boutput(user, SPAN_NOTICE("You insert the cash into [src]."))
+			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 			I.amount = 0
 			qdel(I)
 

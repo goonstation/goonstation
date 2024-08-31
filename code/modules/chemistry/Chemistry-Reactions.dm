@@ -185,27 +185,27 @@
 /proc/omega_hairgrownium_grow_hair(var/mob/living/carbon/human/H, var/all_hairs)
 	var/list/possible_hairstyles = get_available_custom_style_types(H.client, no_gimmick_hair=!all_hairs) // if all_hairs is TRUE, character setup mode is FALSE, vice versa
 	var/hair_type = pick(possible_hairstyles)
-	H.bioHolder.mobAppearance.customization_first = new hair_type
-	H.bioHolder.mobAppearance.customization_first_color = random_saturated_hex_color()
+	H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
+	H.bioHolder.mobAppearance.customizations["hair_bottom"].color = random_saturated_hex_color()
 	hair_type = pick(possible_hairstyles)
-	H.bioHolder.mobAppearance.customization_second = new hair_type
-	H.bioHolder.mobAppearance.customization_second_color = random_saturated_hex_color()
+	H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new hair_type
+	H.bioHolder.mobAppearance.customizations["hair_middle"].color = random_saturated_hex_color()
 	hair_type = pick(possible_hairstyles)
-	H.bioHolder.mobAppearance.customization_third = new hair_type
-	H.bioHolder.mobAppearance.customization_third_color = random_saturated_hex_color()
+	H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
+	H.bioHolder.mobAppearance.customizations["hair_top"].color = random_saturated_hex_color()
 	H.update_colorful_parts()
 	boutput(H, SPAN_NOTICE("Your entire head feels extremely itchy!"))
 
 /proc/omega_hairgrownium_drop_hair(var/mob/living/carbon/human/H)
-	H.visible_message("<strong style='font-size: 170%;'>[H.name] hair fall out!!</strong>", "<strong style='font-size: 170%;'>you hair fall out!!</strong>")
+	H.visible_message("<strong style='font-size: 170%;'>[H.name] [H.is_bald()?"hairn't":"hair"] hair fall out!!</strong>", "<strong style='font-size: 170%;'>you [H.is_bald()?"hairn't":"hair"] fall out!!</strong>")
+	var/obj/item/I = new /obj/item
+	if(H.is_bald())
+		I = new /obj/item/clothing/head/bald_cap
+	else
+		I = H.create_wig()
+	I.set_loc(H.loc)
 	H.reagents.del_reagent("stable_omega_hairgrownium")
 	H.reagents.del_reagent("unstable_omega_hairgrownium")
-	var/obj/item/I = H.create_wig()
-	I.set_loc(H.loc)
-	H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-	H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-	H.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-	H.update_colorful_parts()
 
 /proc/flashpowder_reaction(turf/center, amount)
 	elecflash(center)

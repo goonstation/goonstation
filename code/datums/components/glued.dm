@@ -51,7 +51,7 @@ TYPEINFO(/datum/component/glued)
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(on_attackhand))
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
-	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, PROC_REF(move_blocked_check))
+	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(move_blocked_check))
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_set_loc))
 	RegisterSignals(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), PROC_REF(on_explode))
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(on_hitby_proj))
@@ -127,7 +127,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
-	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
+	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
 		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ, COMSIG_MOB_RESIST))
 	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
 	parent.remove_filter("glued_outline")

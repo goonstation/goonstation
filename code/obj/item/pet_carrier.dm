@@ -44,21 +44,21 @@
 	var/trap_mob_icon_state = "carrier-full"
 	/// The icon_state for the src.RELEASE_MOB() actionbar.
 	var/release_mob_icon_state = "carrier-full-open"
-	// Alpha mask icon state for cutting out the mob on non-transparent pixels.
+	/// Alpha mask icon state for cutting out the mob on non-transparent pixels.
 	var/const/carrier_alpha_mask = "carrier-mask"
 
-	// Empty carrier icon state name.
+	/// Empty carrier icon state name.
 	var/empty_carrier_icon_state = "carrier"
 
-	// Grate icon state names.
+	/// Grate icon state names.
 	var/const/grate_open_icon_state = "grate-open"
 	var/const/grate_closed_icon_state = "grate-closed"
 
-	// Carrier item state names.
+	/// Carrier item state names.
 	var/carrier_open_item_state = "carrier-open"
 	var/carrier_closed_item_state = "carrier-closed"
 
-	// For Noah's Shuttle medal
+	/// For Noah's Shuttle medal
 	var/gilded = FALSE
 
 	/// Carrier-related (grate_proxy, vis_contents_proxy) vis_flags.
