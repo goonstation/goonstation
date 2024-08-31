@@ -28,8 +28,6 @@
 		for (var/fish in src.fish_available)
 			// we add the weightings of our list onto the other.
 			result[fish] += src.fish_available[fish]
-			if(result[fish] < 0)
-				result -= fish
 	//then we return the list again
 	return result
 
