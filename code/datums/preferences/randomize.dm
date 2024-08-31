@@ -160,9 +160,6 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
 	var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
 	var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
-	var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
-	var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
-	var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
 	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
@@ -178,9 +175,6 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		hair_color2 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
 		hair_color3 = prob(50) ? hair_color1 : randomize_hair_color(random_saturated_hex_color())
 
-	customization_first.color = hair_color1
-	customization_second.color = hair_color2
-	customization_third.color = hair_color3
 	customization_first.color = hair_color1
 	customization_second.color = hair_color2
 	customization_third.color = hair_color3
@@ -227,51 +221,36 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	if (!has_second)
 		var/hair_detail = hair_details[customization_first.style.name] // check for detail styles for our chosen style
-		var/hair_detail = hair_details[customization_first.style.name] // check for detail styles for our chosen style
 
 		if (hair_detail && prob(50)) // found something in the list
-			customization_second = new hair_detail // default to being whatever we found
 			customization_second = new hair_detail // default to being whatever we found
 
 			if (islist(hair_detail)) // if we found a bunch of things in the list
 				var/type_second = pick(hair_detail) // let's choose just one (we don't need to assign a list as someone's hair detail)
 				customization_second = new type_second
-				customization_second = new type_second
 				if (prob(20)) // with a small chance for another detail thing
 					var/type_third = pick(hair_detail)
 					customization_third = new type_third
 					customization_third.color = random_saturated_hex_color()
-					customization_third = new type_third
-					customization_third.color = random_saturated_hex_color()
 					if (prob(5))
-						customization_third.color = randomize_hair_color(pick(hair_colors))
 						customization_third.color = randomize_hair_color(pick(hair_colors))
 				else
 					customization_third = new /datum/customization_style/none
-					customization_third = new /datum/customization_style/none
 
 			customization_second.color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
-			customization_second.color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
 			if (prob(15))
-				customization_second.color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
 				customization_second.color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
 
 		else if (prob(5)) // chance for a special eye color
 			var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
 			customization_second.style = new type_second
-			customization_second.style = new type_second
 			if (prob(75))
-				customization_second.color = random_saturated_hex_color()
 				customization_second.color = random_saturated_hex_color()
 			else
 				customization_second.color = randomize_eye_color(pick(eye_colors))
 			customization_third.style = new /datum/customization_style/none
-				customization_second.color = randomize_eye_color(pick(eye_colors))
-			customization_third.style = new /datum/customization_style/none
 
 		else // otherwise, nada
-			customization_second.style = new /datum/customization_style/none
-			customization_third.style = new /datum/customization_style/none
 			customization_second.style = new /datum/customization_style/none
 			customization_third.style = new /datum/customization_style/none
 
