@@ -29,7 +29,7 @@
 		return
 	else if (issilicon(user) && isscrewingtool(I))
 		boutput(user, SPAN_ALERT("[src]'s anti-intrusion countermeasures activate and flash you!"))
-		user.apply_flash(30,5,5,5)
+		user.apply_flash(30,2.5,2.5,2.5, disorient_time = 2.5)
 		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
 		return
 	..()
