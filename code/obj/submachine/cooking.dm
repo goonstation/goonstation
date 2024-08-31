@@ -662,6 +662,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
 			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
+			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/donut(src)
 			src.recipes += new /datum/cookingrecipe/oven/bagel(src)
 			src.recipes += new /datum/cookingrecipe/oven/crumpet(src)
