@@ -1,4 +1,4 @@
-//material property flags
+//material boolean property flags
 /// Does it burn?
 #define MATERIAL_FLAMMABLE (1<<0)
 /// Is it highly reflective?

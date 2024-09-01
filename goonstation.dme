@@ -1983,7 +1983,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\magtractor.dm"
 #include "code\obj\item\manudrive.dm"
 #include "code\obj\item\manufacturing_blueprints.dm"
-#include "code\obj\item\material.dm"
 #include "code\obj\item\mine.dm"
 #include "code\obj\item\misc_junk.dm"
 #include "code\obj\item\misc_weapons.dm"
