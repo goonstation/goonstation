@@ -418,6 +418,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
 
+/datum/supply_packs/janitor_sprayer
+	name = "WA-V3 Janitorial Sprayer"
+	desc = "x1 Brand new Wide Area V3 Cleaning Device, x1 Matching back-tank"
+	category = "Civilian Department"
+	containertype = /obj/storage/crate
+	containername = "WA-V3 Crate"
+	cost = PAY_TRADESMAN * 15 //pricy
+	contains = list(
+		/obj/item/gun/sprayer,
+		/obj/item/reagent_containers/glass/backtank
+	)
+
 /datum/supply_packs/hydronutrient
 	name = "Hydroponics: Nutrient Crate"
 	desc = "Five bulk jugs of the most essential plant nutrients"
