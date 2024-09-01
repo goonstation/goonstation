@@ -1,4 +1,9 @@
 
+(t)sun sep 01 24
+(u)Lord_Earthfire
+(p)20073
+(e)🎨⚖🔄⚗|C-Sprites, C-Balance, C-Rework, A-Chemistry
+(+)The recipe of cryoxadone was changed to: (2) Cryostylane + (1) Platinum + (2) Water -> (2) Cryoxadone @ less than 323K
 (t)sat aug 31 24
 (u)Jan.antilles
 (p)20491
