@@ -178,7 +178,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0)
 						continue
-					if (!(C.faction & FACTION_SYNDICATE))
+					if (!(C.faction && FACTION_SYNDICATE))
 						src.attack = 1
 					if (C.name == src.attacker)
 						src.attack = 1
