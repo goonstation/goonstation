@@ -1,5 +1,9 @@
 
 (t)sun sep 01 24
+(u)cringe
+(p)20500
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Meters now report the moles of gases that currently exist in their pipeline through MechComp.
 (u)Lord_Earthfire
 (p)20073
 (e)🎨⚖🔄⚗|C-Sprites, C-Balance, C-Rework, A-Chemistry
