@@ -331,11 +331,11 @@
 /area/prefab/blind_pig)
 "bw" = (
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/black,
 /area/prefab/blind_pig)

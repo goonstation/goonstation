@@ -274,7 +274,7 @@
 	},
 /area/prefab/discount_dans_asteroid)
 "hP" = (
-/obj/item/raw_material/scrap_metal{
+/obj/item/material/scrap_metal{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -299,7 +299,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "jQ" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -4;
 	pixel_y = 4
 	},
@@ -431,7 +431,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
 /area/prefab/discount_dans_asteroid)
 "oj" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 2
 	},
 /turf/variableTurf/clear,
@@ -497,7 +497,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "rw" = (
-/obj/item/raw_material/scrap_metal{
+/obj/item/material/scrap_metal{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -714,7 +714,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "Da" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -2;
 	pixel_y = -3
 	},
@@ -867,7 +867,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Jx" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 5;
 	pixel_y = 5
 	},

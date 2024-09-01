@@ -271,10 +271,10 @@
 	desc = "Strange pillars rising from cracks in the ground. They're covered in tiny pores."
 	luminant = TRUE
 	drop_table = list(
-		/obj/item/raw_material/rock = 60,
-		/obj/item/raw_material/molitz = 50,
-		/obj/item/raw_material/cobryl = 30,
-		/obj/item/raw_material/pharosium = 20
+		/obj/item/material/rock = 60,
+		/obj/item/material/molitz = 50,
+		/obj/item/material/cobryl = 30,
+		/obj/item/material/pharosium = 20
 	)
 
 /obj/nadir_doodad/bitelung
@@ -282,10 +282,10 @@
 	icon_state = "bitelung"
 	desc = "A cairn-like organism. It seems to be 'breathing', almost too slowly to detect with the eye."
 	drop_table = list(
-		/obj/item/raw_material/rock = 100,
-		/obj/item/raw_material/rock = 80,
-		/obj/item/raw_material/mauxite = 60,
-		/obj/item/raw_material/fibrilith = 50
+		/obj/item/material/rock = 100,
+		/obj/item/material/rock = 80,
+		/obj/item/material/mauxite = 60,
+		/obj/item/material/fibrilith = 50
 	)
 
 //TURFS

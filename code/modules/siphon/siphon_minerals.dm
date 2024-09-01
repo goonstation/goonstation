@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	///Sensitivity window for target resonances; a higher window is more forgiving of imprecise settings
 	var/sens_window = 0
 	///Stuff to produce when parameters are successfully met
-	var/product = /obj/item/raw_material/scrap_metal
+	var/product = /obj/item/material/scrap_metal
 	///Setup guide, formatted as a list of strings describing individual resonator positions and intensities
 	var/list/setup_guide = null
 
@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	x_torque = 0
 	y_torque = 0
 	shear = 0
-	product = /obj/item/raw_material/miracle
+	product = /obj/item/material/miracle
 	setup_guide = list(
 		"Type-AX Resonator, Position C4, 3 Intensity<br>",
 		"Type-AX Resonator, Position G4, 3 Intensity<br>",
@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 0
 	shear = 0
 	sens_window = 2
-	product = /obj/item/raw_material/rock
+	product = /obj/item/material/rock
 	setup_guide = list(
 		"Type-AX Resonator, Position F4, 2 Intensity<br>"
 	)
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = -4
 	shear = 16
 	sens_window = 5
-	product = /obj/item/raw_material/char
+	product = /obj/item/material/char
 	setup_guide = list(
 		"Type-AX Resonator, Position B7, 2 Intensity<br>",
 		"Type-AX Resonator, Position G2, 1 Intensity<br>",
@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = -16
 	shear = 8
 	sens_window = 7
-	product = /obj/item/raw_material/mauxite
+	product = /obj/item/material/mauxite
 	setup_guide = list(
 		"Type-AX Resonator, Position F4, 4 Intensity<br>",
 		"Type-AX Resonator, Position G4, 2 Intensity<br>",
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = -48
 	shear = 8
 	sens_window = 7
-	product = /obj/item/raw_material/molitz
+	product = /obj/item/material/molitz
 	setup_guide = list(
 		"Type-AX Resonator, Position E3, 4 Intensity<br>",
 		"Type-AX Resonator, Position E2, 4 Intensity<br>",
@@ -95,7 +95,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 0
 	shear = 40
 	sens_window = 7
-	product = /obj/item/raw_material/pharosium
+	product = /obj/item/material/pharosium
 	setup_guide = list(
 		"Type-AX Resonator, Position F6, 1 Intensity<br>",
 		"Type-AX Resonator, Position G5, 2 Intensity<br>",
@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 16
 	shear = 8
 	sens_window = 3
-	product = /obj/item/raw_material/martian
+	product = /obj/item/material/martian
 	setup_guide = list(
 		"Type-AX Resonator, Position E7, 3 Intensity<br>",
 		"Type-AX Resonator, Position E2, 1 Intensity<br>",
@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = -4
 	shear = 20
 	sens_window = 4
-	product = /obj/item/raw_material/claretine
+	product = /obj/item/material/claretine
 	setup_guide = list(
 		"Type-AX Resonator, Position C2, 1 Intensity<br>",
 		"Type-AX Resonator, Position E2, 1 Intensity<br>",
@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = -16
 	shear = 24
 	sens_window = 4
-	product = /obj/item/raw_material/bohrum
+	product = /obj/item/material/bohrum
 	setup_guide = list(
 		"Type-AX Resonator, Position C2, 2 Intensity<br>",
 		"Type-AX Resonator, Position D3, 2 Intensity<br>",
@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 0
 	shear = 12
 	sens_window = 1
-	product = /obj/item/raw_material/fibrilith
+	product = /obj/item/material/fibrilith
 
 	New()
 		src.shear = rand(8,16)
@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	x_torque = -96
 	shear = 4
 	sens_window = 9
-	product = /obj/item/raw_material/cobryl
+	product = /obj/item/material/cobryl
 
 /datum/siphon_mineral/syreline
 	name = "Syreline"
@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	x_torque = 88
 	shear = 6
 	sens_window = 1
-	product = /obj/item/raw_material/syreline
+	product = /obj/item/material/syreline
 
 /datum/siphon_mineral/erebite
 	name = "Erebite"
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = -22
 	shear = 33
 	sens_window = 2
-	product = /obj/item/raw_material/erebite
+	product = /obj/item/material/erebite
 
 	New()
 		src.shear = rand(30,40)
@@ -193,7 +193,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 8
 	shear = 16
 	sens_window = 3
-	product = /obj/item/raw_material/cerenkite
+	product = /obj/item/material/cerenkite
 
 	New()
 		src.shear = rand(8,24)
@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 13
 	shear = 4
 	sens_window = 1
-	product = /obj/item/raw_material/plasmastone
+	product = /obj/item/material/plasmastone
 
 	New()
 		src.shear = rand(4,10)
@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	name = "Koshmarite"
 	tick_req = 18
 	shear = 58
-	product = /obj/item/raw_material/eldritch
+	product = /obj/item/material/eldritch
 
 	New()
 		src.shear = rand(57,60)
@@ -228,14 +228,14 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	x_torque = 0
 	y_torque = 0
 	shear = 64
-	product = /obj/item/raw_material/gemstone
+	product = /obj/item/material/gemstone
 
 /datum/siphon_mineral/uqill
 	name = "Uqill"
 	tick_req = 40
 	shear = 54
 	sens_window = 2
-	product = /obj/item/raw_material/uqill
+	product = /obj/item/material/uqill
 //telecrystal and gnesis have unusual formative conditions difficult to induce manually
 //should probably have highly specific parameters, maybe obtained through secrets?
 //idea in particular: the required shear is in the 76-89 range and chooses a different value every 60 or 90 sec
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	name = "Telecrystal"
 	tick_req = 200
 	shear = 63
-	product = /obj/item/raw_material/telecrystal
+	product = /obj/item/material/telecrystal
 
 	New()
 		src.tick_req = rand(200,230)
@@ -259,7 +259,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	y_torque = 0
 	shear = 100
 	sens_window = 0
-	product = /obj/item/raw_material/gold
+	product = /obj/item/material/gold
 
 	New()
 		src.shear = rand(45,50) * 2 // 90 to 100, in only even increments
@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	tick_req = 1616
 	x_torque = 0
 	shear = 161
-	product = /obj/item/raw_material/starstone
+	product = /obj/item/material/starstone
 
 	New()
 		src.tick_req = rand(150,220) * 8

@@ -230,7 +230,7 @@
 							for (var/turf/simulated/wall/WT in range(2,get_center()))
 								if(IS_ARRIVALS(WT.loc)) continue
 								leavescan(WT, 1)
-								new /obj/item/raw_material/scrap_metal(WT)
+								new /obj/item/material/scrap_metal(WT)
 								if(prob(50))
 									WT.ReplaceWithLattice()
 								else
@@ -851,18 +851,18 @@
 			leavescan(T, 1)
 			fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 			if(prob(64))
-				new /obj/item/raw_material/scrap_metal(T)
+				new /obj/item/material/scrap_metal(T)
 				if(prob(32))
-					new /obj/item/raw_material/scrap_metal(T)
+					new /obj/item/material/scrap_metal(T)
 			if(prob(50))
 				T.ReplaceWithLattice()
 			else
 				T.ReplaceWithSpace()
 		else
 			if(T && prob(90) && !istype(T, /turf/space))
-				new /obj/item/raw_material/scrap_metal(T)
+				new /obj/item/material/scrap_metal(T)
 				if(prob(48))
-					new /obj/item/raw_material/scrap_metal(T)
+					new /obj/item/material/scrap_metal(T)
 				if(prob(32))
 					T.ReplaceWithLattice()
 				else

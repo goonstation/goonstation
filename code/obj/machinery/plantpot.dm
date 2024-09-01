@@ -503,7 +503,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			return
 
 
-	else if((istype(W, /obj/item/raw_material/shard) && W.material?.getID() == "plasmaglass") && !current)
+	else if((istype(W, /obj/item/material/shard) && W.material?.getID() == "plasmaglass") && !current)
 		// Planting a plasmaglass shard puts a crystal seed inside the plant pot for
 		// a moment, spawns a new plant from it, then removes the seed and one shard.
 		user.visible_message(SPAN_NOTICE("[user] plants a plasmaglass shard in the tray."))

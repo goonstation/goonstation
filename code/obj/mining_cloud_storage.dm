@@ -2,7 +2,7 @@
 	var/amount = 0
 	var/price = 0
 	var/for_sale = FALSE
-	var/type_path = /obj/item/raw_material
+	var/type_path = /obj/item/material
 	var/list/stats = list()
 	var/amount_sold = 0
 
@@ -116,7 +116,7 @@
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [dropped]!"), SPAN_NOTICE("You use [src]'s automatic loader on [dropped]."))
 			var/amtload = 0
 			var/rejected = 0
-			for (var/obj/item/raw_material/M in dropped.contents)
+			for (var/obj/item/material/M in dropped.contents)
 				if(M.material?.getName() != M.initial_material_name)
 					rejected += M.amount
 					continue
@@ -139,8 +139,8 @@
 	proc/quickload(var/mob/living/user,var/obj/item/O)
 		if (!user || QDELETED(O))
 			return
-		if(istype(O,/obj/item/raw_material/))
-			var/obj/item/raw_material/R = O
+		if(istype(O,/obj/item/material/))
+			var/obj/item/material/R = O
 			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, SPAN_ALERT("[src] rejects the anomalous ore."))
 				return
@@ -149,7 +149,7 @@
 			return
 		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
 		var/staystill = user.loc
-		for(var/obj/item/raw_material/M in view(1,user))
+		for(var/obj/item/material/M in view(1,user))
 			if (QDELETED(M) || QDELETED(O))
 				continue
 			if (M == O)
@@ -192,7 +192,7 @@
 				return
 			W = scoop.satchel
 
-		if (istype(W, /obj/item/raw_material/))
+		if (istype(W, /obj/item/material/))
 			if (broken)
 				src.write_message_broken(user)
 				return
@@ -200,7 +200,7 @@
 			if (!src.accept_loading(user))
 				return
 
-			var/obj/item/raw_material/R = W
+			var/obj/item/material/R = W
 			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, SPAN_ALERT("[src] rejects the anomalous ore."))
 				return
@@ -215,7 +215,7 @@
 			user.visible_message(SPAN_NOTICE("[user] starts dumping [satchel] into [src]."), SPAN_NOTICE("You start dumping [satchel] into [src]."))
 			var/amtload = 0
 			for (var/obj/item/loading in W.contents)
-				var/obj/item/raw_material/R = loading
+				var/obj/item/material/R = loading
 				if (R.material?.getName() != R.initial_material_name)
 					continue
 				src.load_item(R, user)
@@ -249,7 +249,7 @@
 			robogibs(src.loc)
 			playsound(src.loc, src.sound_destroyed, 50, 2)
 
-	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
+	proc/load_item(var/obj/item/material/R,var/mob/living/user)
 		if (!R)
 			return
 		if (user)
@@ -274,7 +274,7 @@
 			return 0
 		return 1
 
-	proc/add_ore_amount(var/material_name,var/delta,var/obj/item/raw_material/ore)
+	proc/add_ore_amount(var/material_name,var/delta,var/obj/item/material/ore)
 		var/datum/ore_cloud_data/OCD = ores[material_name]
 		if(isnull(OCD))
 			OCD = new /datum/ore_cloud_data()
@@ -325,7 +325,7 @@
 			if (transmit)
 				OCD.amount_sold += amount_ejected
 			for(var/i in 1 to amount_ejected)
-				var/obj/item/raw_material/ore = new OCD.type_path(src)
+				var/obj/item/material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
 				ore.setMaterial(OCD.stats[length(OCD.stats)], TRUE, (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
 				ore.initial_material_name = ore.material.getName()

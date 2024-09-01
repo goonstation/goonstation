@@ -93,7 +93,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "al" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "am" = (
@@ -124,7 +124,7 @@
 /turf/variableTurf/wall,
 /area/noGenerate)
 "aq" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ar" = (
@@ -219,7 +219,7 @@
 /area/noGenerate)
 "aF" = (
 /obj/lattice,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "aG" = (
@@ -230,7 +230,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "aH" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "aI" = (
@@ -696,7 +696,7 @@
 /area/noGenerate)
 "bL" = (
 /obj/lattice,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "bM" = (
@@ -725,7 +725,7 @@
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "bR" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "bS" = (
@@ -813,7 +813,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/fakeobject{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
@@ -940,7 +940,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt,
 /turf/variableTurf/floor,
 /area/noGenerate)
@@ -1142,7 +1142,7 @@
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "cT" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cU" = (
@@ -1160,7 +1160,7 @@
 /area/noGenerate)
 "cX" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "db" = (
@@ -1170,8 +1170,8 @@
 /area/noGenerate)
 "dc" = (
 /obj/lattice,
-/obj/item/raw_material/shard/glass,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/clothing/head/helmet/NT{
 	desc = "It looks pretty fancy.";
 	name = "NT-S.O. Helmet"

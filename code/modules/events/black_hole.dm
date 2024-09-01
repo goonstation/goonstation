@@ -238,7 +238,7 @@
 		else if (istype(T,/turf/simulated/wall))
 			var/atom/A = new /obj/structure/girder/reinforced(T)
 
-			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
+			var/atom/movable/B = new /obj/item/material/scrap_metal
 			B.set_loc(T)
 
 			if(T.material)

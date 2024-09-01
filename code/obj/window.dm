@@ -517,8 +517,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			return
 		var/atom/movable/A
 		// catastrophic event litter reduction
-		if(limiter.canISpawn(/obj/item/raw_material/shard))
-			A = new /obj/item/raw_material/shard
+		if(limiter.canISpawn(/obj/item/material/shard))
+			A = new /obj/item/material/shard
 			A.set_loc(src.loc)
 			if(src.material)
 				A.setMaterial(src.material)

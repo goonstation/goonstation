@@ -89,7 +89,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground/canyon)
 "ahE" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
 "ahI" = (
@@ -792,7 +792,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek)
 "aTS" = (
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
 "aTZ" = (
@@ -2258,13 +2258,13 @@
 /area/catacombs)
 "cKF" = (
 /obj/decal/mushrooms/type2,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /obj/critter/bat,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "cKV" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "cLm" = (
@@ -2953,7 +2953,7 @@
 /area/swampzone/interiors/bonktek/waffletek)
 "dCd" = (
 /obj/decal/stalagtite,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "dDu" = (
@@ -2978,8 +2978,8 @@
 /area/swampzone/interiors/bonktek)
 "dEv" = (
 /obj/storage/crate/wooden,
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood,
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
 "dEV" = (
@@ -3058,7 +3058,7 @@
 /area/swampzone/ground)
 "dIb" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/telecrystal,
+/obj/item/material/telecrystal,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "dIA" = (
@@ -3164,7 +3164,7 @@
 /turf/unsimulated/floor/industrial,
 /area/swampzone/interiors/quarry)
 "dPJ" = (
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -3805,7 +3805,7 @@
 	},
 /area/crypt/graveyard)
 "eDJ" = (
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "eDN" = (
@@ -3975,7 +3975,7 @@
 /area/swampzone/ground)
 "eLs" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "eLT" = (
@@ -4311,7 +4311,7 @@
 /turf/unsimulated/wall/setpieces/rootwall,
 /area/space)
 "feQ" = (
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "feZ" = (
@@ -4681,14 +4681,14 @@
 /area/syndicate_station)
 "fwr" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "fwF" = (
 /turf/unsimulated/floor,
 /area/swampzone/interiors/tunnels)
 "fwK" = (
-/obj/item/raw_material/claretine,
+/obj/item/material/claretine,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "fwN" = (
@@ -5153,11 +5153,11 @@
 /area/crypt/sigma/lab)
 "fVV" = (
 /obj/rack,
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood,
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
 "fWb" = (
@@ -5401,7 +5401,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/south)
 "gpE" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "gqu" = (
@@ -5860,7 +5860,7 @@
 /area/swampzone/interiors/bonktek)
 "gTY" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/claretine,
+/obj/item/material/claretine,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "gUe" = (
@@ -7612,7 +7612,7 @@
 /area/crater/cave)
 "iZa" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/pharosium,
+/obj/item/material/pharosium,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -8005,7 +8005,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek)
 "jzv" = (
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -8364,8 +8364,8 @@
 /area/crypt/sigma/crew)
 "jTN" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "jUq" = (
@@ -8413,8 +8413,8 @@
 /turf/unsimulated/floor/cave,
 /area/swampzone/deeps)
 "jXQ" = (
-/obj/item/raw_material/char,
-/obj/item/raw_material/uqill,
+/obj/item/material/char,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "jXS" = (
@@ -9415,7 +9415,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/quarry)
 "ldd" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /obj/item/horseshoe,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -10131,7 +10131,7 @@
 /area/swampzone/interiors/outbuildings)
 "lXU" = (
 /obj/decal/lightshaft,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -10417,8 +10417,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/rd)
 "mpC" = (
-/obj/item/raw_material/rock,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "mpP" = (
@@ -10835,7 +10835,7 @@
 	},
 /area/swampzone/ground/canyon)
 "mRu" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/boulder_trap,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -11258,7 +11258,7 @@
 /turf/unsimulated/floor/cave,
 /area/swampzone/ground/canyon)
 "nry" = (
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "nrD" = (
@@ -11279,7 +11279,7 @@
 /turf/space/fluid,
 /area/swampzone/interiors/bonktek/lounge)
 "nsf" = (
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "nsg" = (
@@ -11442,7 +11442,7 @@
 /area/swampzone/interiors/bonktek)
 "nCN" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "nCW" = (
@@ -11666,7 +11666,7 @@
 /area/swampzone/deeps)
 "nPi" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "nPq" = (
@@ -11990,7 +11990,7 @@
 /area/crater/biodome/north)
 "ofe" = (
 /obj/decal/stalagtite,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "ogH" = (
@@ -12004,8 +12004,8 @@
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone/ground)
 "ogR" = (
-/obj/item/raw_material/scrap_metal,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/scrap_metal,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "oha" = (
@@ -12789,8 +12789,8 @@
 /area/syndicate_station)
 "pgz" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
+/obj/item/material/char,
+/obj/item/material/char,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "pgP" = (
@@ -13092,8 +13092,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "pzk" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "pAe" = (
@@ -13183,7 +13183,7 @@
 /area/swampzone/interiors/quarry)
 "pIp" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
 "pIt" = (
@@ -13743,7 +13743,7 @@
 	},
 /area/swampzone/interiors/bonktek)
 "qti" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "qtL" = (
@@ -14153,7 +14153,7 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/swampzone/interiors/bonktek/security)
 "qTL" = (
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
 "qTW" = (
@@ -14425,14 +14425,14 @@
 /area/crypt/graveyard/swamp)
 "rjV" = (
 /obj/decal/stalagmite,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "rkz" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/bohrum,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/bohrum,
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
 "rkC" = (
@@ -15440,7 +15440,7 @@
 /area/syndicate_station)
 "sDP" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/wall/cave,
 /area/crater/cave)
 "sDZ" = (
@@ -15722,7 +15722,7 @@
 /area/swampzone/ground)
 "sUL" = (
 /obj/decal/mushrooms/type1,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "sVb" = (
@@ -15910,8 +15910,8 @@
 "tdS" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb2,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "tel" = (
@@ -16021,7 +16021,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "tkB" = (
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater)
@@ -16690,7 +16690,7 @@
 /area/swampzone/ground)
 "tZB" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -16853,10 +16853,10 @@
 /turf/unsimulated/floor,
 /area/crypt/sigma/kitchen)
 "ulo" = (
-/obj/item/material_piece/slag{
+/obj/item/material/slag{
 	pixel_x = -9
 	},
-/obj/item/material_piece/slag{
+/obj/item/material/slag{
 	pixel_x = -4;
 	pixel_y = -5
 	},
@@ -17758,7 +17758,7 @@
 /area/crater/biodome/research)
 "vjr" = (
 /obj/decal/mushrooms/type2,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "vjZ" = (
@@ -18238,11 +18238,11 @@
 /obj/storage/crate,
 /obj/item/extinguisher,
 /obj/item/reagent_containers/food/snacks/condiment/ironfilings,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "vNI" = (
@@ -19836,7 +19836,7 @@
 /area/swampzone/interiors/outbuildings)
 "xLr" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "xLw" = (
@@ -19909,7 +19909,7 @@
 /area/crypt/graveyard)
 "xQB" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "xQC" = (
@@ -20302,8 +20302,8 @@
 /area/swampzone/ground/canyon)
 "yiB" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "yiY" = (

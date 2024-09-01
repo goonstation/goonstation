@@ -925,7 +925,7 @@
 /turf/unsimulated/floor/black,
 /area/space_hive)
 "acP" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/honeyblocks/border,
 /area/space_hive)
 "acQ" = (
@@ -1361,7 +1361,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "aee" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "aef" = (
@@ -2342,7 +2342,7 @@
 /area/diner/motel)
 "akL" = (
 /obj/lattice,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "akS" = (
@@ -2448,7 +2448,7 @@
 /turf/simulated/floor/darkblue,
 /area/space)
 "ali" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless/random,
 /area/space)
 "alj" = (
@@ -2687,7 +2687,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "amp" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "amq" = (
@@ -4004,7 +4004,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asb" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
@@ -4055,7 +4055,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asj" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asl" = (
@@ -4957,7 +4957,7 @@
 /turf/space,
 /area/salyut)
 "axl" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/space,
@@ -5829,7 +5829,7 @@
 /area/h7/storage)
 "aGk" = (
 /obj/storage/crate,
-/obj/item/raw_material/telecrystal,
+/obj/item/material/telecrystal,
 /turf/simulated/floor,
 /area/h7/storage)
 "aGl" = (
@@ -6008,7 +6008,7 @@
 /turf/space,
 /area/space)
 "aGZ" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "aHb" = (
@@ -6233,7 +6233,7 @@
 "aHR" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
@@ -6313,7 +6313,7 @@
 	icon_state = "floattiles5"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedmedicalship)
 "aIf" = (
@@ -6674,12 +6674,12 @@
 	dir = 8
 	},
 /obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/scorched,
 /area/abandonedship)
@@ -6876,7 +6876,7 @@
 "aJR" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/stool/chair{
 	dir = 4
 	},
@@ -7458,8 +7458,8 @@
 "aLP" = (
 /obj/decal/cleanable/oil,
 /obj/item/skull,
-/obj/item/raw_material/miracle,
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
+/obj/item/material/miracle,
 /obj/storage/crate/bloody,
 /obj/item/shipcomponent/sensor/ecto,
 /turf/simulated/floor/airless/plating/scorched,
@@ -7721,7 +7721,7 @@
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
 "aMF" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/space,
 /area/space)
 "aMG" = (
@@ -7908,7 +7908,7 @@
 /area/space)
 "aNk" = (
 /obj/lattice,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "aNl" = (
@@ -9586,41 +9586,41 @@
 	},
 /area/fermid_hive)
 "aSD" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSE" = (
 /obj/fakeobject/skeleton,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
+/obj/item/material/pharosium,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/uqill,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSF" = (
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/uqill,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSG" = (
@@ -9647,7 +9647,7 @@
 	},
 /area/abandonedship)
 "aSM" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aSO" = (
@@ -9706,33 +9706,33 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "aSV" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSW" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/uqill,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSX" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
@@ -9793,8 +9793,8 @@
 /turf/simulated/floor/carpet,
 /area/derelict_ai_sat)
 "aTh" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aTi" = (
@@ -9810,7 +9810,7 @@
 /turf/simulated/floor/airless/grime,
 /area/abandonedship)
 "aTk" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/simulated/floor/airless/grime,
@@ -9901,14 +9901,14 @@
 	},
 /area/space)
 "aTv" = (
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aTw" = (
@@ -10226,14 +10226,14 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUu" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUv" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/uqill,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUw" = (
@@ -10263,35 +10263,35 @@
 /turf/simulated/floor,
 /area/h7/crew)
 "aUB" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUC" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUD" = (
 /obj/fakeobject/skeleton,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUE" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
@@ -10400,9 +10400,9 @@
 /turf/space,
 /area/space)
 "aUR" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/cobryl,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUS" = (
@@ -12347,14 +12347,14 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bbw" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
@@ -12639,7 +12639,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/h7/lab)
 "bcx" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel";
 	name = "solar paneling"
@@ -12975,7 +12975,7 @@
 /obj/machinery/light/worn{
 	dir = 4
 	},
-/obj/item/raw_material/telecrystal,
+/obj/item/material/telecrystal,
 /turf/simulated/floor,
 /area/h7/lab)
 "bdH" = (
@@ -13274,8 +13274,8 @@
 /area/helldrone)
 "bfx" = (
 /obj/table/auto,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal{
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal{
 	pixel_x = 5;
 	pixel_y = -10
 	},
@@ -14573,7 +14573,7 @@
 	},
 /area/salyut)
 "bka" = (
-/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/material/shard/plasmacrystal,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -14617,7 +14617,7 @@
 	},
 /area/salyut)
 "bkm" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -14820,7 +14820,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkY" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bkZ" = (
@@ -14929,7 +14929,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "blt" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space,
 /area/space)
 "blu" = (
@@ -15084,7 +15084,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "blN" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/critter/gunbot/drone/buzzdrone{
 	wanderer = 0
 	},
@@ -15132,7 +15132,7 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/abandonedmedicalship)
 "blY" = (
@@ -15301,7 +15301,7 @@
 /area/space)
 "bnm" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/item/material_piece/cloth/beewool,
+/obj/item/material/cloth/beewool,
 /turf/simulated/floor/airless{
 	icon_state = "hive"
 	},
@@ -15391,7 +15391,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "boh" = (
-/obj/item/material_piece/cloth/beewool,
+/obj/item/material/cloth/beewool,
 /turf/simulated/floor/airless{
 	icon_state = "hive"
 	},
@@ -16337,7 +16337,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
 "dtL" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "duy" = (
@@ -17300,7 +17300,7 @@
 /obj/decal/floatingtiles{
 	dir = 8
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/plating/scorched,
 /area/space_hive)
 "gwV" = (
@@ -21072,11 +21072,11 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fibrilith,
-/obj/item/raw_material/fibrilith,
-/obj/item/raw_material/fibrilith,
-/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/material/fabric,
+/obj/item/material/fibrilith,
+/obj/item/material/fibrilith,
+/obj/item/material/fibrilith,
+/obj/item/material/shard/plasmacrystal,
 /obj/item/reagent_containers/food/drinks/cola/random,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/device/audio_log/ht_3,

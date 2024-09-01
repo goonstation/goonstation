@@ -6,35 +6,35 @@
 	name = "Strange Vessel"
 	})
 "aM" = (
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -205,14 +205,14 @@
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool,
 /obj/item/clothing/mask/beard,
 /obj/item/clothing/mask/beard,
 /obj/item/clothing/mask/beard,
@@ -281,7 +281,7 @@
 	name = "Strange Vessel"
 	})
 "fo" = (
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -862,48 +862,48 @@
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
-/obj/item/material_piece/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
+/obj/item/material/cloth/jean,
 /obj/item/pen/crayon/golden,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
 	})
 "pH" = (
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -927,7 +927,7 @@
 	})
 "qB" = (
 /mob/living/critter/rockworm,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -1305,10 +1305,10 @@
 	})
 "yp" = (
 /mob/living/critter/rockworm,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -1338,14 +1338,14 @@
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
-/obj/item/material_piece/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
+/obj/item/material/cloth/brullbarhide,
 /obj/item/clothing/mask/hastur,
 /obj/item/clothing/mask/hastur,
 /obj/item/clothing/mask/hastur,
@@ -1455,14 +1455,14 @@
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
-/obj/item/material_piece/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
+/obj/item/material/cloth/hauntium,
 /obj/item/clothing/gloves/ring/wizard/soulguard,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
@@ -1796,13 +1796,13 @@
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /obj/item/decoration/walpfeathers,
 /obj/item/clothing/mask/blossommask,
 /turf/simulated/floor/ancient,
@@ -1851,19 +1851,19 @@
 	name = "Strange Vessel"
 	})
 "IO" = (
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
-/obj/item/material_piece/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
+/obj/item/material/soulsteel,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -1890,7 +1890,7 @@
 	})
 "JJ" = (
 /obj/item/parts/human_parts/arm/mutant/skeleton/right,
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /obj/random_item_spawner/prosthetics,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -2260,14 +2260,14 @@
 	name = "Strange Vessel"
 	})
 "OU" = (
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
-/obj/item/material_piece/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
+/obj/item/material/neutronium,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -2326,17 +2326,17 @@
 	name = "Strange Vessel"
 	})
 "Pz" = (
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
-/obj/item/material_piece/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -2448,8 +2448,8 @@
 	name = "Power Core"
 	})
 "RI" = (
-/obj/item/material_piece/bone,
-/obj/item/material_piece/hamburgris,
+/obj/item/material/bone,
+/obj/item/material/hamburgris,
 /obj/item/clothing/mask/skull,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
@@ -2582,19 +2582,19 @@
 	name = "Strange Vessel"
 	})
 "TI" = (
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
-/obj/item/material_piece/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
+/obj/item/material/spacelag,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{
 	name = "Strange Vessel"
@@ -2633,7 +2633,7 @@
 	name = "Strange Vessel"
 	})
 "VB" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -2746,7 +2746,7 @@
 	name = "Strange Vessel"
 	})
 "Xz" = (
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /obj/random_item_spawner/prosthetics,
 /obj/item/spook,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -3112,15 +3112,15 @@
 	icon_state = "ancient-4";
 	name = "curio rack"
 	},
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
-/obj/item/material_piece/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
+/obj/item/material/cloth/dyneema,
 /obj/item/boarvessel,
 /turf/simulated/floor/ancient,
 /area/iomoon/robot_ruins{

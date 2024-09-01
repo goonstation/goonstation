@@ -21,7 +21,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "af" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ag" = (
@@ -93,7 +93,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ar" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/variableTurf/floor,

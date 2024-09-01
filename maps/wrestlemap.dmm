@@ -346,7 +346,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/research_outpost/protest)
 "aeC" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/decal/cleanable/rust,
 /obj/decoration/syndcorpse10{
 	desc = "A real blow the wrestling community.";
@@ -7383,7 +7383,7 @@
 	desc = "Probably not a good idea to use anymore."
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/airless/black,
 /area/abandonedship{
@@ -13902,7 +13902,7 @@
 /area/research_outpost/protest)
 "gcl" = (
 /obj/table/glass/auto,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/blackwhite,
 /area/abandonedship{
@@ -14944,7 +14944,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/secondary/entry)
 "gCF" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -15601,7 +15601,7 @@
 	name = "The Ring"
 	})
 "gSK" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/airless/blackwhite,
 /area/abandonedship{
@@ -20423,7 +20423,7 @@
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/primary/west)
 "iWx" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/airless/white,
 /area/abandonedship{
@@ -31893,7 +31893,7 @@
 /area/station/storage/warehouse)
 "nYM" = (
 /obj/table/glass/auto,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/item/storage/box/fruit_wedges,
 /turf/simulated/floor/airless/black,
@@ -34031,7 +34031,7 @@
 	},
 /area/station/turret_protected/ai_upload)
 "oWH" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/blackwhite{
 	dir = 1
 	},
@@ -36100,7 +36100,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "pWo" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -36711,7 +36711,7 @@
 /area/station/hallway/primary/south)
 "qhz" = (
 /obj/decal/tile_edge/stripe,
-/obj/item/material_piece/slag{
+/obj/item/material/slag{
 	pixel_x = 5;
 	pixel_y = 15
 	},
@@ -41134,7 +41134,7 @@
 /obj/storage/closet,
 /obj/item/stamp,
 /obj/item/staple_gun/red,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/pen/marker/random,
 /obj/item/pen/crayon/random,
 /obj/item/pen,
@@ -45110,7 +45110,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 10
 	},
-/obj/item/material_piece/slag{
+/obj/item/material/slag{
 	pixel_x = 16;
 	pixel_y = 23
 	},
@@ -45245,12 +45245,12 @@
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -48353,7 +48353,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "vpb" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/white,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -48653,7 +48653,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/medbay/treatment1)
 "vuV" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/airless/grass/random/alt,
 /area/station/crew_quarters/garden{
 	name = "Space Garden"

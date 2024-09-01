@@ -7,7 +7,7 @@
 /turf/cordon,
 /area/cordon)
 "ac" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
 "ax" = (
@@ -23,7 +23,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "ba" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "bb" = (
@@ -40,11 +40,11 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "be" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "bf" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "bg" = (
@@ -52,7 +52,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bh" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bi" = (
@@ -76,7 +76,7 @@
 /turf/unsimulated/floor/longtile,
 /area/wrecknsspolaris)
 "bn" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
@@ -246,7 +246,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "bR" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/fluid_spawner/shortdelaybig,
 /turf/unsimulated/floor/wood/two,
 /area/wrecknsspolaris)
@@ -382,7 +382,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "ch" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "ci" = (
@@ -549,7 +549,7 @@
 /area/wrecknsspolaris)
 "cE" = (
 /obj/lattice,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "cF" = (
@@ -681,7 +681,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "cU" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -984,7 +984,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "ds" = (
@@ -1019,7 +1019,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "dx" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "dy" = (
@@ -1030,7 +1030,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "dz" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "dA" = (
@@ -1063,7 +1063,7 @@
 /area/wrecknsspolaris/outside/back)
 "dG" = (
 /obj/fluid_spawner/shortdelaybig,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "dH" = (
@@ -1205,7 +1205,7 @@
 /area/wrecknsspolaris)
 "dX" = (
 /obj/item/scrap,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1333,7 +1333,7 @@
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "em" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "en" = (
@@ -1608,7 +1608,7 @@
 /area/wrecknsspolaris)
 "eU" = (
 /obj/lattice,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/decoration/vent{
 	pixel_y = 32
 	},
@@ -1673,7 +1673,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "ff" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/lattice,
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
@@ -1696,7 +1696,7 @@
 /turf/space/fluid/noexplosion/nospawn,
 /area/wrecknsspolaris/outside/back)
 "fj" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "fk" = (
@@ -1730,7 +1730,7 @@
 	dir = 8;
 	icon_state = "tube-broken"
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fp" = (
@@ -2033,7 +2033,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "gk" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 2;
 	icon_state = "alt_propulsion"
@@ -2085,11 +2085,11 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gq" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gr" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gs" = (
@@ -2097,7 +2097,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
 "gt" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/teleport)
@@ -2106,12 +2106,12 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gv" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
 "gw" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/landmark/fall/sea/polaris,
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
@@ -2844,7 +2844,7 @@
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "iq" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -3009,7 +3009,7 @@
 /obj/storage/crate,
 /obj/item/clothing/head/genki,
 /obj/item/storage/rockit,
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
 /obj/item/clothing/suit/space/suv,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)

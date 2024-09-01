@@ -25,7 +25,7 @@
 
 	//currently_collecting is what's currently eligible for being sucked up, made up of the two other lists
 	var/list/buildmats_2_collect = list(/obj/item/tile, /obj/item/rods, /obj/item/sheet, /obj/item/cable_coil)
-	var/list/debris_2_collect = list(/obj/item/raw_material/scrap_metal, /obj/item/raw_material/shard)
+	var/list/debris_2_collect = list(/obj/item/material/scrap_metal, /obj/item/material/shard)
 	var/list/currently_collecting
 
 	//Vacuum settings

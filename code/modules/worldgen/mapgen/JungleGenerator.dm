@@ -99,7 +99,7 @@
 		var/image/ambient = GetOverlayImage("ambient")
 
 		if(src.ore || prob(8)) // provide less rock
-			default_ore = /obj/item/raw_material/rock
+			default_ore = /obj/item/material/rock
 		. = ..()
 		for (var/turf/unsimulated/floor/plating/asteroid/A in range(src,1))
 			A.UpdateIcon()

@@ -15,7 +15,7 @@
 /turf/simulated/floor/scorched2,
 /area/prefab/sea_sketch)
 "ae" = (
-/obj/item/material_piece/mauxite,
+/obj/item/material/mauxite,
 /obj/item/storage/toilet,
 /turf/simulated/floor/grime,
 /area/prefab/sea_sketch)

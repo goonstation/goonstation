@@ -1592,9 +1592,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
 	var/list/allowed_items = list(/obj/item/device/light/glowstick, /obj/item/clothing/head/butt, /obj/item/paper, /obj/item/reagent_containers/food/snacks/ingredient/meat,\
-	 							/obj/item/reagent_containers/food/snacks/ectoplasm, /obj/item/scrap, /obj/item/raw_material/scrap_metal, /obj/item/cell,/obj/item/cable_coil,\
+	 							/obj/item/reagent_containers/food/snacks/ectoplasm, /obj/item/scrap, /obj/item/material/scrap_metal, /obj/item/cell,/obj/item/cable_coil,\
 	 							/obj/item/item_box/medical_patches, /obj/item/item_box/gold_star, /obj/item/item_box/assorted/stickers, /obj/item/material/cloth,\
-	 							/obj/item/raw_material/shard, /obj/item/raw_material/telecrystal, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/ingredient/butter,\
+	 							/obj/item/material/shard, /obj/item/material/telecrystal, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/ingredient/butter,\
 	 							/obj/item/rcd_ammo)
 
 	get_help_message(dist, mob/user)
@@ -1897,7 +1897,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				src.meat += 1
 			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ectoplasm))
 				src.ghost += 1
-			if (istype(checked_item, /obj/item/scrap) || istype(checked_item,/obj/item/raw_material/scrap_metal))
+			if (istype(checked_item, /obj/item/scrap) || istype(checked_item,/obj/item/material/scrap_metal))
 				src.extra_shrapnel += 1
 			if (istype(checked_item,/obj/item/cable_coil))
 				src.cable += 1
@@ -1908,12 +1908,12 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					src.strength += 3
 			if (istype(checked_item, /obj/item/material/cloth))
 				src.strength = src.strength / 5
-			if (istype(checked_item, /obj/item/raw_material/shard))
-				var/obj/item/raw_material/shard/S = checked_item // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
+			if (istype(checked_item, /obj/item/material/shard))
+				var/obj/item/material/shard/S = checked_item // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
 				src.bleed += 1
-				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
+				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/material/shard/plasmacrystal)))
 					src.bleed += 1
-			if (istype(checked_item, /obj/item/raw_material/telecrystal))
+			if (istype(checked_item, /obj/item/material/telecrystal))
 				src.tele += 1
 			if (istype(checked_item, /obj/item/instrument))
 				var/obj/item/instrument/R = checked_item
@@ -1933,7 +1933,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			if (istype(checked_item, /obj/item/item_box/assorted/stickers))
 				var/obj/item/item_box/assorted/B = checked_item
 				src.throw_objs += B.contained_items
-			if (istype(checked_item, /obj/item/material/plasmastone) || istype(checked_item, /obj/item/raw_material/plasmastone))
+			if (istype(checked_item, /obj/item/material/plasmastone) || istype(checked_item, /obj/item/material/plasmastone))
 				src.plasma += 1
 
 	proc/arm(mob/user)

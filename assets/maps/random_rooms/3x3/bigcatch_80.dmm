@@ -17,7 +17,7 @@
 /turf/simulated/floor/blue,
 /area/dmm_suite/clear_area)
 "h" = (
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -63,7 +63,7 @@
 	},
 /area/dmm_suite/clear_area)
 "C" = (
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /obj/machinery/light/small/broken{
 	dir = 1
 	},

@@ -18,7 +18,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "f" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "k" = (

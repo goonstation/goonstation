@@ -852,10 +852,10 @@ SYNDICATE DRONE FACTORY AREAS
 
 			if(!next || next.density)
 				playsound(src.loc, 'sound/effects/Explosion2.ogg', 40, 1)
-				new/obj/item/raw_material/rock(src.loc)
-				new/obj/item/raw_material/rock(src.loc)
-				new/obj/item/raw_material/rock(src.loc)
-				new/obj/item/raw_material/rock(src.loc)
+				new/obj/item/material/rock(src.loc)
+				new/obj/item/material/rock(src.loc)
+				new/obj/item/material/rock(src.loc)
+				new/obj/item/material/rock(src.loc)
 				SPAWN(0)
 					dispose()
 				return

@@ -1,14 +1,30 @@
+//material statistic property identifier flags
+///ID for the electrical conductivity stat
+#define MATERIAL_PROPERTY_ELECTRICAL (1<<0)
+///ID for the thermal conductivity stat
+#define MATERIAL_PROPERTY_THERMAL (1<<1)
+///ID for the hardness stat
+#define MATERIAL_PROPERTY_HARDNESS (1<<2)
+///ID for the density stat
+#define MATERIAL_PROPERTY_DENSITY (1<<3)
+///ID for the chemical reactivity stat
+#define MATERIAL_PROPERTY_CHEMICAL (1<<4)
+///ID for the radioactivity stat
+#define MATERIAL_PROPERTY_RADIOACTIVE (1<<5)
+///ID for the neutron radioactivity stat
+#define MATERIAL_PROPERTY_N_RADIOACTIVE (1<<6)
+
 //material boolean property flags
 /// Does it burn?
-#define MATERIAL_FLAMMABLE (1<<0)
+#define MATERIAL_FLAG_FLAMMABLE (1<<0)
 /// Is it highly reflective?
-#define MATERIAL_REFLECTIVE (1<<1)
+#define MATERIAL_FLAG_REFLECTIVE (1<<1)
 /// Does it come from a living thing?
-#define MATERIAL_BIOLOGICAL (1<<2)
+#define MATERIAL_FLAG_BIOLOGICAL (1<<2)
 /// Could a living thing eat it?
-#define MATERIAL_EDIBLE (1<<3)
+#define MATERIAL_FLAG_EDIBLE (1<<3)
 /// Is it related to ghosts or spirits?
-#define MATERIAL_GHOSTLY (1<<4)
+#define MATERIAL_FLAG_GHOSTLY (1<<4)
 
 /// Global static list of rarity color associations
 var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#0070dd", "#a335ee", "#ff8000", "#ff0000")

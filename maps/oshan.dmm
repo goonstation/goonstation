@@ -13570,22 +13570,22 @@
 /area/space)
 "aUd" = (
 /obj/table/round/auto,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
 /turf/space/fluid,
 /area/space)
 "aUe" = (
 /obj/table/round/auto,
 /obj/table/round/auto,
 /obj/table/round/auto,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
 /turf/space/fluid,
 /area/space)
 "aUf" = (
@@ -14505,7 +14505,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "aZR" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "aZS" = (
@@ -15936,7 +15936,7 @@
 /obj/item/clothing/head/genki,
 /obj/item/clothing/head/genki,
 /obj/item/storage/rockit,
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
 /obj/item/clothing/suit/space/suv,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
@@ -20024,7 +20024,7 @@
 	},
 /area/station/bridge)
 "bve" = (
-/obj/item/material_piece/foolsfoolsgold,
+/obj/item/material/foolsfoolsgold,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bvf" = (
@@ -22616,10 +22616,10 @@
 /area/station/hallway/secondary/exit)
 "bDZ" = (
 /obj/table/round/auto,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
-/obj/item/material_piece/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
+/obj/item/material/coral,
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
 /obj/item/sheet/wood,
@@ -31067,7 +31067,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cib" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cie" = (
@@ -31499,7 +31499,7 @@
 /area/station/maintenance/inner/central)
 "ckP" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/goose,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/decal/cleanable/paper,
 /obj/item/paper,
 /turf/simulated/floor/plating/random,
@@ -32324,7 +32324,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
 "cTt" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "cTx" = (
@@ -32410,9 +32410,9 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "dbp" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/cobryl,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "dbH" = (
@@ -33269,7 +33269,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "efw" = (
-/obj/item/raw_material/pharosium,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "efM" = (
@@ -33565,11 +33565,11 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "eBy" = (
-/obj/item/raw_material/miracle,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/miracle,
-/obj/item/raw_material/rock,
-/obj/item/raw_material/bohrum,
+/obj/item/material/miracle,
+/obj/item/material/pharosium,
+/obj/item/material/miracle,
+/obj/item/material/rock,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "eCd" = (
@@ -34586,9 +34586,9 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "fOP" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/uqill,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "fPf" = (
@@ -35005,7 +35005,7 @@
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/crew_quarters/bar)
 "gsn" = (
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "gti" = (
@@ -35560,10 +35560,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "hbS" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "hcV" = (
@@ -35614,11 +35614,11 @@
 /area/station/maintenance/northeast)
 "hkh" = (
 /obj/storage/crate/furnacefuel,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating,
 /area/research_outpost/maint)
@@ -36236,7 +36236,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
 "imb" = (
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "imy" = (
@@ -36482,20 +36482,20 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "iFq" = (
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/uqill,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "iGB" = (
@@ -36927,13 +36927,13 @@
 /area/station/ranch)
 "jll" = (
 /obj/fakeobject/skeleton,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
+/obj/item/material/pharosium,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/uqill,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
@@ -37145,7 +37145,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "jEU" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
@@ -37762,8 +37762,8 @@
 	},
 /area/station/crew_quarters/info)
 "kDP" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kDZ" = (
@@ -37962,14 +37962,14 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "kVN" = (
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
-/obj/item/raw_material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "kWm" = (
@@ -38606,13 +38606,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
 "lRj" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
@@ -38753,8 +38753,8 @@
 /turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "mbP" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
@@ -39199,18 +39199,18 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
 "mFl" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/claretine,
-/obj/item/raw_material/uqill,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/claretine,
+/obj/item/material/uqill,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "mFo" = (
@@ -40517,8 +40517,8 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
 "olj" = (
-/obj/item/raw_material/rock,
-/obj/item/raw_material/cobryl,
+/obj/item/material/rock,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "olv" = (
@@ -42038,11 +42038,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "qsH" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
@@ -42465,12 +42465,12 @@
 /turf/simulated/floor/plating/random,
 /area/research_outpost/maint)
 "qZG" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "qZH" = (
@@ -42515,8 +42515,8 @@
 /area/station/maintenance/inner/central)
 "rcn" = (
 /obj/fakeobject/skeleton,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "rcz" = (
@@ -43273,13 +43273,13 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "sAV" = (
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "sBC" = (
@@ -45821,7 +45821,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -46554,8 +46554,8 @@
 /area/station/crew_quarters/catering)
 "xCY" = (
 /obj/critter/gunbot/drone/buzzdrone/fish,
-/obj/item/raw_material/rock,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/sunken_asteroid)
 "xDt" = (

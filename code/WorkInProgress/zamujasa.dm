@@ -310,9 +310,9 @@
 			var/obj/item/reagent_containers/I = W
 			base_score = 2 + I.quality
 
-		else if (istype(W, /obj/item/raw_material))
+		else if (istype(W, /obj/item/material))
 			// todo : itd be nice to use matsci but thats supposedly getting updated soon agani
-			var/obj/item/raw_material/I = W
+			var/obj/item/material/I = W
 			base_score = (3 + (I.metal + I.conductor + I.dense + I.crystal + I.powersource) * 2.5) * I.quality
 			base_score *= I.amount
 		else

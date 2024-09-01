@@ -153,7 +153,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
 	commodity = /datum/commodity/ore/gemstone
-	typepath = /obj/item/raw_material/gemstone
+	typepath = /obj/item/material/gemstone
 	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/stack/telec
@@ -678,7 +678,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/stack/cotton
 	name = "cotton"
-	typepath = /obj/item/raw_material/cotton
+	typepath = /obj/item/material/cotton
 	typepath_alt = /obj/item/material/cloth/cottonfabric
 
 /datum/rc_entry/item/matanalyzer

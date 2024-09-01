@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/snacks/yuck/burn = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
-	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/material/scrap_metal = 5, \
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
 /datum/fishing_spot/drain
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/reagent_containers/food/snacks/yuck = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
-	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/material/scrap_metal = 5, \
 	/obj/item/reagent_containers/food/fish/dace = 5,\
 	/obj/item/reagent_containers/food/fish/minnow = 5,\
 	/obj/item/reagent_containers/food/fish/bass = 9,\
@@ -390,8 +390,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/borgfish = 5,\
 	/obj/item/reagent_containers/food/snacks/yuck = 30,\
-	/obj/item/raw_material/scrap_metal = 10,\
-	/obj/item/raw_material/char = 10)
+	/obj/item/material/scrap_metal = 10,\
+	/obj/item/material/char = 10)
 
 /datum/fishing_spot/foamtank
 	fishing_atom_type = /obj/reagent_dispensers/foamtank
@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/snacks/yuck = 30,\
 	/obj/item/ammo/bullets/foamdarts = 20,\
-	/obj/item/raw_material/scrap_metal = 10)
+	/obj/item/material/scrap_metal = 10)
 
 /datum/fishing_spot/river
 	fishing_atom_type = /obj/river
@@ -450,7 +450,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/trash_bag = 10,\
 	/mob/living/critter/small_animal/cockroach = 10,\
 	/obj/item/c_tube = 10,\
-	/obj/item/raw_material/shard/glass = 10,\
+	/obj/item/material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
@@ -530,7 +530,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/material/slag = 20,\
 	/obj/decal/cleanable/ash = 20,\
 	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
-	/obj/item/raw_material/char =20)
+	/obj/item/material/char =20)
 
 /datum/fishing_spot/cryo
 	fishing_atom_type = /obj/machinery/atmospherics/unary/cryo_cell
@@ -751,7 +751,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/snacks/yuck/burn = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
-	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/material/scrap_metal = 5, \
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -766,7 +766,7 @@ datum/fishing_spot/golden_toilet
 	fish_available = list(/obj/item/trash_bag = 10,\
 	/mob/living/critter/small_animal/cockroach = 10,\
 	/obj/item/c_tube = 10,\
-	/obj/item/raw_material/shard/glass = 10,\
+	/obj/item/material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/item/light/bulb/yellow/broken = 20)
@@ -827,7 +827,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/snacks/condiment/custard = 30,\
 	/obj/item/reagent_containers/food/snacks/condiment/cream = 20,\
 	/obj/item/reagent_containers/food/snacks/condiment/syrup = 15,\
-	/obj/item/raw_material/ice = 35,\
+	/obj/item/material/ice = 35,\
 	/obj/item/reagent_containers/food/fish/yellow_tang = 10,\
 	/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom = 30)
 
@@ -835,7 +835,7 @@ datum/fishing_spot/golden_toilet
 	fishing_atom_type = /obj/item_dispenser/icedispenser
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/minnow = 20,\
-	/obj/item/raw_material/ice = 30,\
+	/obj/item/material/ice = 30,\
 	// notoriously unsanitary
 	/obj/item/reagent_containers/food/snacks/mushroom = 5,\
 	/obj/item/cigbutt = 10)
@@ -850,7 +850,7 @@ datum/fishing_spot/golden_toilet
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 5,
 	/obj/item/reagent_containers/food/fish/betta = 5,\
-	/obj/item/raw_material/shard/glass = 20,\
+	/obj/item/material/shard/glass = 20,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/shot = 10,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/wine = 10,\
 	/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail = 10)
@@ -901,7 +901,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/cable_coil/cut = 40,\
 	/obj/item/cable_coil/blue/cut = 40,\
 	/obj/item/cell = 10,\
-	/obj/item/raw_material/cotton = 20, )
+	/obj/item/material/cotton = 20, )
 
 //gibber
 /datum/fishing_spot/gibber
@@ -921,7 +921,7 @@ datum/fishing_spot/golden_toilet
 /datum/fishing_spot/deephole
 	fishing_atom_type = /turf/space/fluid/warp_z5
 	rod_tier_required = 3
-	fish_available = list(/obj/item/raw_material/rock = 10,
+	fish_available = list(/obj/item/material/rock = 10,
 	/obj/item/seashell = 10,
 	/obj/item/clothing/shoes/flippers = 5, //like fishing up a boot (cartoonstyle)
 	/mob/living/critter/small_animal/pikaia = 5,

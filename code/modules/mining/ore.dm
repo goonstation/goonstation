@@ -30,34 +30,34 @@
 
 /datum/ore/mauxite
 	name = "mauxite"
-	output = /obj/item/raw_material/mauxite
+	output = /obj/item/material/mauxite
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/uqill,/obj/item/material/fibrilith)
 	hardness_mod = 1
 	mining_health = 160
 
 /datum/ore/pharosium
 	name = "pharosium"
-	output = /obj/item/raw_material/pharosium
+	output = /obj/item/material/pharosium
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/uqill,/obj/item/material/fibrilith)
 	hardness_mod = 1
 	mining_health = 160
 
 /datum/ore/molitz
 	name = "molitz"
-	output = /obj/item/raw_material/molitz
+	output = /obj/item/material/molitz
 	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b,/datum/ore/event/gem/molitz_b)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/uqill,/obj/item/material/fibrilith)
 	event_chance = 20
 	hardness_mod = 1
 	mining_health = 160
 
 /datum/ore/char
 	name = "char"
-	output = /obj/item/raw_material/char
+	output = /obj/item/material/char
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/fibrilith)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/fibrilith)
 	tiles_per_rock_min = 6
 	tiles_per_rock_max = 16
 	amount_per_tile_min = 2
@@ -67,15 +67,15 @@
 
 /datum/ore/ice
 	name = "ice"
-	output = /obj/item/raw_material/ice
+	output = /obj/item/material/ice
 	hardness_mod = -2
 	mining_health = 5
 
 /datum/ore/cobryl
 	name = "cobryl"
-	output = /obj/item/raw_material/cobryl
+	output = /obj/item/material/cobryl
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/uqill,/obj/item/material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
 	hardness_mod = 2
@@ -83,9 +83,9 @@
 
 /datum/ore/bohrum
 	name = "bohrum"
-	output = /obj/item/raw_material/bohrum
+	output = /obj/item/material/bohrum
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/telecrystal,/obj/item/material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
 	hardness_mod = 3
@@ -94,9 +94,9 @@
 
 /datum/ore/claretine
 	name = "claretine"
-	output = /obj/item/raw_material/claretine
+	output = /obj/item/material/claretine
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/telecrystal,/obj/item/material/miracle)
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
 	hardness_mod = 3
@@ -105,7 +105,7 @@
 
 /datum/ore/viscerite
 	name = "viscerite"
-	output = /obj/item/raw_material/martian
+	output = /obj/item/material/martian
 	events = list()
 	gems = list()
 	event_chance = 0
@@ -117,9 +117,9 @@
 
 /datum/ore/syreline
 	name = "syreline"
-	output = /obj/item/raw_material/syreline
+	output = /obj/item/material/syreline
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/telecrystal,/obj/item/material/miracle)
 	amount_per_tile_min = 2
 	amount_per_tile_max = 3
 	hardness_mod = 4
@@ -130,9 +130,9 @@
 
 /datum/ore/cerenkite
 	name = "cerenkite"
-	output = /obj/item/raw_material/cerenkite
+	output = /obj/item/material/cerenkite
 	events = list(/datum/ore/event/gem,/datum/ore/event/radioactive)
-	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/uqill,/obj/item/material/miracle)
 	hardness_mod = 3
 	rarity_tier = 3
 	event_chance = 15
@@ -156,9 +156,9 @@
 
 /datum/ore/plasmastone
 	name = "plasmastone"
-	output = /obj/item/raw_material/plasmastone
+	output = /obj/item/material/plasmastone
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/uqill,/obj/item/material/miracle)
 	hardness_mod = 2
 	rarity_tier = 3
 	tiles_per_rock_min = 2
@@ -169,9 +169,9 @@
 
 /datum/ore/koshmarite
 	name = "koshmarite"
-	output = /obj/item/raw_material/eldritch
+	output = /obj/item/material/eldritch
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/uqill,/obj/item/material/miracle)
 	event_chance = 12
 	tiles_per_rock_min = 4
 	tiles_per_rock_max = 16
@@ -181,9 +181,9 @@
 
 /datum/ore/gold
 	name = "gold"
-	output = /obj/item/raw_material/gold
+	output = /obj/item/material/gold
 	events = list(/datum/ore/event/gem)
-	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/telecrystal,/obj/item/raw_material/miracle)
+	gems = list(/obj/item/material/gemstone,/obj/item/material/telecrystal,/obj/item/material/miracle)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
 	hardness_mod = 4
@@ -192,7 +192,7 @@
 
 /datum/ore/miracle
 	name = "miraclium"
-	output = /obj/item/raw_material/miracle
+	output = /obj/item/material/miracle
 	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
@@ -206,7 +206,7 @@
 
 /datum/ore/erebite
 	name = "erebite"
-	output = /obj/item/raw_material/erebite
+	output = /obj/item/material/erebite
 	events = list(/datum/ore/event/volatile)
 	event_chance = 33
 	tiles_per_rock_min = 1
@@ -220,7 +220,7 @@
 
 /datum/ore/starstone
 	name = "starstone"
-	output = /obj/item/raw_material/starstone
+	output = /obj/item/material/starstone
 	tiles_per_rock_min = 1
 	tiles_per_rock_max = 2
 	hardness_mod = 2

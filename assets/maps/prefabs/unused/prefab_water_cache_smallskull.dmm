@@ -5,7 +5,7 @@
 "b" = (
 /obj/item/skull,
 /obj/item/clothing/mask/breath,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/variableTurf/clear,
 /area/noGenerate)
 

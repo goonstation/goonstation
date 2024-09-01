@@ -565,7 +565,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "cj" = (
-/obj/item/material_piece/plutonium,
+/obj/item/material/plutonium,
 /turf/unsimulated/floor/engine,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -2619,12 +2619,12 @@
 /obj/item/currency/spacecash/random,
 /obj/item/currency/spacecash/random,
 /obj/item/currency/spacecash/random,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
 /obj/item/coin,
 /obj/item/coin,
 /obj/item/coin,
@@ -9924,7 +9924,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "OD" = (
-/obj/item/material_piece/plutonium,
+/obj/item/material/plutonium,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12

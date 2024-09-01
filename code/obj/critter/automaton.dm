@@ -210,7 +210,7 @@ var/global/the_automaton = null
 				else
 					src.visible_message(SPAN_ALERT("<B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!"))
 					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
-					var/obj/item/raw_material/scrap_metal/scrapmetal = new /obj/item/raw_material/scrap_metal
+					var/obj/item/material/scrap_metal/scrapmetal = new /obj/item/material/scrap_metal
 					scrapmetal.set_loc(src.loc)
 					qdel(W)
 				return

@@ -7,9 +7,9 @@
 /area/prefab/vault)
 "d" = (
 /obj/rack,
-/obj/item/raw_material/gold,
-/obj/item/raw_material/gold,
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
+/obj/item/material/gold,
+/obj/item/material/gold,
 /turf/unsimulated/floor/damaged3,
 /area/prefab/vault)
 "e" = (
@@ -23,15 +23,15 @@
 	dir = 4;
 	icon_state = "floattiles2"
 	},
-/obj/item/material_piece/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/void,
 /area/prefab/vault)
 "f" = (
 /obj/rack,
 /obj/lattice,
-/obj/item/material_piece/koshmarite,
-/obj/item/material_piece/koshmarite,
-/obj/item/material_piece/koshmarite,
+/obj/item/material/koshmarite,
+/obj/item/material/koshmarite,
+/obj/item/material/koshmarite,
 /turf/unsimulated/floor/void,
 /area/prefab/vault)
 "g" = (

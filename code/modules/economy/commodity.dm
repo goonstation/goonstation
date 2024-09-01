@@ -112,7 +112,7 @@
 
 /datum/commodity/ore
 	comname = "Rock"
-	comtype = /obj/item/raw_material
+	comtype = /obj/item/material
 	desc = "An ore that has various practical uses in manufacturing and research."
 	desc_buy = "The Promethus Consortium is currently gathering resources for a research project and is willing to buy this item"
 	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
@@ -126,110 +126,110 @@
 
 /datum/commodity/ore/mauxite
 	comname = "Mauxite"
-	comtype = /obj/item/raw_material/mauxite
+	comtype = /obj/item/material/mauxite
 	onmarket = 1
 	value = 0.9
 
 /datum/commodity/ore/pharosium
 	comname = "Pharosium"
-	comtype = /obj/item/raw_material/pharosium
+	comtype = /obj/item/material/pharosium
 	onmarket = 1
 	value = 1.1
 
 /datum/commodity/ore/char
 	comname = "Char"
-	comtype = /obj/item/raw_material/char
+	comtype = /obj/item/material/char
 	onmarket = 1
 	value = 0.5
 
 /datum/commodity/ore/molitz
 	comname = "Molitz"
-	comtype = /obj/item/raw_material/molitz
+	comtype = /obj/item/material/molitz
 	onmarket = 1
 	value = 0.9
 
 /datum/commodity/ore/gemstone
 	comname = "Gemstone"
-	comtype = /obj/item/raw_material/gemstone
+	comtype = /obj/item/material/gemstone
 	onmarket = 1
 	value = 4
 
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
-	comtype = /obj/item/raw_material/cobryl
+	comtype = /obj/item/material/cobryl
 	onmarket = 1
 	value = 1
 
 /datum/commodity/ore/uqill
 	comname = "Uqill"
-	comtype = /obj/item/raw_material/uqill
+	comtype = /obj/item/material/uqill
 	onmarket = 1
 	value = 5
 
 /datum/commodity/ore/fibrilith // why is this worth a ton of money?? dropping the value to further upset QMs
 	comname = "Fibrilith"
-	comtype = /obj/item/raw_material/fibrilith
+	comtype = /obj/item/material/fibrilith
 	onmarket = 1
 	value = 0.5
 
 /datum/commodity/ore/viscerite
 	comname = "Viscerite"
-	comtype = /obj/item/raw_material/martian
+	comtype = /obj/item/material/martian
 	onmarket = 1
 	value = 1
 
 /datum/commodity/ore/bohrum
 	comname = "Bohrum"
-	comtype = /obj/item/raw_material/bohrum
+	comtype = /obj/item/material/bohrum
 	onmarket = 1
 	value = 1.2
 
 /datum/commodity/ore/claretine
 	comname = "Claretine"
-	comtype = /obj/item/raw_material/claretine
+	comtype = /obj/item/material/claretine
 	onmarket = 1
 	value = 2
 
 /datum/commodity/ore/koshmarite
 	comname = "Koshmarite"
-	comtype = /obj/item/raw_material/eldritch
+	comtype = /obj/item/material/eldritch
 	onmarket = 1
 	value = 1
 
 /datum/commodity/ore/cerenkite
 	comname = "Cerenkite"
-	comtype = /obj/item/raw_material/cerenkite
+	comtype = /obj/item/material/cerenkite
 	onmarket = 1
 	value = 2
 
 /datum/commodity/ore/erebite
 	comname = "Erebite"
-	comtype = /obj/item/raw_material/erebite
+	comtype = /obj/item/material/erebite
 	onmarket = 1
 	value = 5
 
 /datum/commodity/ore/plasmastone
 	comname = "Plasmastone"
-	comtype = /obj/item/raw_material/plasmastone
+	comtype = /obj/item/material/plasmastone
 	onmarket = 1
 	value = 5
 
 /datum/commodity/ore/telecrystal
 	comname = "Telecrystal"
-	comtype = /obj/item/raw_material/telecrystal
+	comtype = /obj/item/material/telecrystal
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
 	onmarket = 1
 	value = 7
 
 /datum/commodity/ore/syreline
 	comname = "Syreline"
-	comtype = /obj/item/raw_material/syreline
+	comtype = /obj/item/material/syreline
 	onmarket = 1
 	value = 3
 
 /datum/commodity/ore/gold
 	comname = "Gold Nugget"
-	comtype = /obj/item/raw_material/gold
+	comtype = /obj/item/material/gold
 	onmarket = 1
 	value = 5
 
@@ -1679,7 +1679,7 @@
 
 /datum/commodity/flock/desired/rawmaterial
 	comname = "Raw Material Piece"
-	comtype = /obj/item/raw_material
+	comtype = /obj/item/material
 	desc_buy = "We are not selective. Any raw material is acceptable."
 	price = PAY_UNTRAINED/5
 

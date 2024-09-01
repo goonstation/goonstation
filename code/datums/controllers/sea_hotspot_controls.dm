@@ -843,8 +843,8 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			if(!(status & BROKEN))
 				broken()
 			else
-				new /obj/item/raw_material/shard/glass(src.loc)
-				new /obj/item/raw_material/shard/glass(src.loc)
+				new /obj/item/material/shard/glass(src.loc)
+				new /obj/item/material/shard/glass(src.loc)
 				qdel(src)
 				return
 		return*/

@@ -13699,7 +13699,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/material_piece/foolsfoolsgold,
+/obj/item/material/foolsfoolsgold,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
 "boC" = (
@@ -21324,8 +21324,8 @@
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)

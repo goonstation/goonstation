@@ -59,7 +59,7 @@
 	pixel_x = -6;
 	pixel_y = -8
 	},
-/obj/item/raw_material/scrap_metal{
+/obj/item/material/scrap_metal{
 	pixel_y = -4;
 	pixel_x = -12;
 	layer = 4

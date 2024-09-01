@@ -540,14 +540,14 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "wL" = (
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_y = -8
 	},
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = 9
 	},
 /obj/decal/cleanable/blood/drip/high{

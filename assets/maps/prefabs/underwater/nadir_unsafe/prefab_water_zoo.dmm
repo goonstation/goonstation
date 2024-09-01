@@ -32,12 +32,12 @@
 	},
 /area/prefab/zoo)
 "i" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /obj/item/clothing/glasses/macho{
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/raw_material/gold{
+/obj/item/material/gold{
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -47,7 +47,7 @@
 /area/prefab/zoo)
 "j" = (
 /obj/item/boomerang,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/item/clothing/head/safari,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -116,11 +116,11 @@
 /turf/simulated/floor/plating,
 /area/prefab/zoo)
 "A" = (
-/obj/item/raw_material/erebite,
-/obj/item/raw_material/plasmastone{
+/obj/item/material/erebite,
+/obj/item/material/plasmastone{
 	pixel_y = 4
 	},
-/obj/item/raw_material/gemstone{
+/obj/item/material/gemstone{
 	pixel_x = -6;
 	pixel_y = 5
 	},

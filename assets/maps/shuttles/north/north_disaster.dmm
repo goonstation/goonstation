@@ -323,7 +323,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "id" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "iF" = (
@@ -695,7 +695,7 @@
 	},
 /area/shuttle/escape/centcom)
 "tD" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "tL" = (
@@ -715,8 +715,8 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "uu" = (
-/obj/item/raw_material/shard/glass,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "uI" = (

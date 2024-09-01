@@ -1014,7 +1014,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 
 
-		else if (istype(W, /obj/item/sheet/) || istype(W, /obj/item/cable_coil/) || istype(W, /obj/item/raw_material/))
+		else if (istype(W, /obj/item/sheet/) || istype(W, /obj/item/cable_coil/) || istype(W, /obj/item/material/))
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 

@@ -7389,7 +7389,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
 	dir = 1;
@@ -7430,7 +7430,7 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
 	dir = 4;
@@ -17079,7 +17079,7 @@
 /area/built_zone)
 "ciS" = (
 /obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
+	free_resources = list(/obj/item/material/steel = 999, /obj/item/material/copper = 999, /obj/item/material/glass = 999)
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -17095,7 +17095,7 @@
 /area/built_zone)
 "ciV" = (
 /obj/machinery/manufacturer/mechanic{
-	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
+	free_resources = list(/obj/item/material/steel = 999, /obj/item/material/copper = 999, /obj/item/material/glass = 999)
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35098,7 +35098,7 @@
 /area/space)
 "dCC" = (
 /obj/table/wood/auto,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment/horizontal,
 /turf/space,
 /area/space)
@@ -35323,7 +35323,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dDE" = (
@@ -35429,7 +35429,7 @@
 /area/space)
 "dDZ" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -35536,7 +35536,7 @@
 /area/space)
 "dEG" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dEI" = (
@@ -35552,7 +35552,7 @@
 /area/space)
 "dEK" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dEL" = (
@@ -35691,7 +35691,7 @@
 /turf/space,
 /area/space)
 "dFA" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dFE" = (
@@ -35803,7 +35803,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dFP" = (
@@ -35811,7 +35811,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dFT" = (
@@ -35828,7 +35828,7 @@
 /area/space)
 "dFV" = (
 /obj/lattice,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "dGb" = (
@@ -45523,7 +45523,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -47331,7 +47331,7 @@
 /area/russian/radiation)
 "jvu" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -48925,7 +48925,7 @@
 	},
 /area/russian/radiation)
 "kiR" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
@@ -48950,7 +48950,7 @@
 	},
 /area/russian/radiation)
 "kjc" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -51833,7 +51833,7 @@
 /area/space)
 "lCP" = (
 /obj/lattice,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
@@ -53323,7 +53323,7 @@
 	},
 /area/space)
 "msz" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "msO" = (
@@ -54947,14 +54947,14 @@
 	},
 /area/space)
 "nbD" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless/random{
 	desc = " It is made of steel.";
 	name = "plating"
 	},
 /area/russian/radiation)
 "nbF" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg1";
@@ -56463,7 +56463,7 @@
 	},
 /area/space)
 "nPf" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -69411,7 +69411,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -70886,12 +70886,12 @@
 /turf/space,
 /area/russian/radiation)
 "vfx" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/grille/steel,
 /turf/space,
 /area/russian/radiation)
 "vfN" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/decal/cleanable/dirt,
 /turf/space,
 /area/russian/radiation)
@@ -70904,7 +70904,7 @@
 	},
 /area/space)
 "vhz" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -72978,7 +72978,7 @@
 	},
 /area/russian/radiation)
 "wqR" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -73337,7 +73337,7 @@
 	},
 /area/russian/radiation)
 "wyE" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/lattice,
 /turf/space,
 /area/space)
@@ -75481,7 +75481,7 @@
 	},
 /area/russian/radiation)
 "xIr" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -75579,13 +75579,13 @@
 /area/space)
 "xKO" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/russian/radiation)
 "xLk" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/russian/radiation)
 "xLo" = (
@@ -75827,7 +75827,7 @@
 	},
 /area/russian/radiation)
 "xSs" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"

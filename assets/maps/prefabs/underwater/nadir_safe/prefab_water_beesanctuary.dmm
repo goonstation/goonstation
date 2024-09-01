@@ -69,11 +69,11 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "eu" = (
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = 7;
 	pixel_y = -4
 	},
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -5;
 	pixel_y = 4
 	},
@@ -248,7 +248,7 @@
 /area/prefab/bee_sanctuary)
 "ke" = (
 /obj/window/crystal/east,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -14;
 	pixel_y = 1
 	},
@@ -459,7 +459,7 @@
 /obj/critter/domestic_bee/zombee,
 /obj/window/crystal/east,
 /obj/window/crystal/west,
-/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/material/shard/plasmacrystal,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "sC" = (
@@ -584,7 +584,7 @@
 	icon_state = "floattiles4"
 	},
 /obj/map/light/void,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -14;
 	pixel_y = 1
 	},
@@ -1087,10 +1087,10 @@
 /area/prefab/bee_sanctuary)
 "Pr" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_y = -13
 	},
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor,
@@ -1143,8 +1143,8 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "Rp" = (
-/obj/item/raw_material/shard/plasmacrystal,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal,
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -9;
 	pixel_y = 8
 	},

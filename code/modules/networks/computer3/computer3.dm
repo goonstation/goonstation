@@ -566,7 +566,7 @@
 	A.set_dir(src.dir)
 	if (src.status & BROKEN)
 		user?.show_text("The broken glass falls out.", "blue")
-		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+		var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 		G.set_loc( src.loc )
 		A.state = 3
 		A.icon_state = "3"

@@ -20,7 +20,7 @@
 	analysis_string = "Small extraneous mineral deposit detected."
 	excavation_string = "Something shiny tumbles out of the collapsing rock!"
 	scan_decal = "scan-gem"
-	var/gem_type = /obj/item/raw_material/gemstone
+	var/gem_type = /obj/item/material/gemstone
 
 	set_up(var/datum/ore/parent)
 		if (..() || !parent)
@@ -72,7 +72,7 @@
 	set_up(var/datum/ore/parent)
 		if (..())
 			return
-		gem_type = /obj/item/raw_material/molitz_beta
+		gem_type = /obj/item/material/molitz_beta
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		var/quantity = rand(2,3)

@@ -1213,7 +1213,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/shot_cost = 100
 	var/possible_bling_common = list(/obj/item/currency/spacecash,/obj/item/currency/spacecash/five,/obj/item/currency/spacecash/ten)
 	var/possible_bling_uncommon = list(/obj/item/currency/spacecash/hundred,/obj/item/coin)
-	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
+	var/possible_bling_rare = list(/obj/item/material/gemstone,/obj/item/material/gold)
 	default_material = "gold"
 	recoil_strength = 4
 
@@ -1237,7 +1237,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
-			var/chosen_bling// = pick(60;/obj/item/currency/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
+			var/chosen_bling// = pick(60;/obj/item/currency/spacecash,20;/obj/item/coin,10;/obj/item/material/gemstone,10;/obj/item/material/gold)
 			if (islist(src.possible_bling_rare) && prob(10))
 				chosen_bling = pick(src.possible_bling_rare)
 			else if (islist(src.possible_bling_uncommon) && prob(20))

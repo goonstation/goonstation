@@ -1426,7 +1426,7 @@
 /area/station/hallway/primary/northeast)
 "aEY" = (
 /obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	free_resources = list(/obj/item/material/steel = 1, /obj/item/material/copper = 1, /obj/item/material/glass = 1)
 	},
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
@@ -9158,7 +9158,7 @@
 /area/shuttle/arrival/station)
 "eez" = (
 /obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	free_resources = list(/obj/item/material/steel = 1, /obj/item/material/copper = 1, /obj/item/material/glass = 1)
 	},
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
@@ -13796,16 +13796,16 @@
 /area/shuttle/sea_elevator_room)
 "gdj" = (
 /obj/storage/crate,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -34012,7 +34012,7 @@
 /area/station/hallway/secondary/exit)
 "omd" = (
 /obj/item/furniture_parts/table/nanotrasen,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/blue,
 /area/pasiphae/bridge)
@@ -36524,7 +36524,7 @@
 /obj/item/rods{
 	pixel_x = 4
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating,
 /area/pasiphae/bridge)
 "poW" = (
@@ -36719,7 +36719,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "prw" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/blueblack{
 	dir = 8
@@ -36729,7 +36729,7 @@
 /obj/item/rods{
 	pixel_x = -5
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating,
 /area/pasiphae/bridge)
 "prO" = (
@@ -41372,10 +41372,10 @@
 /area/station/maintenance/disposal)
 "rDo" = (
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
@@ -45751,7 +45751,7 @@
 	pixel_x = -24
 	},
 /obj/machinery/manufacturer/uniform{
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5)
+	free_resources = list(/obj/item/material/cloth/cottonfabric = 5)
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -49417,7 +49417,7 @@
 	})
 "veC" = (
 /obj/structure/girder/reinforced,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor,
 /area/pasiphae/bridge)
 "veT" = (
@@ -51741,10 +51741,10 @@
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/machinery/light/small,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -52790,7 +52790,7 @@
 	icon_state = "floorscorched1";
 	name = "scorch"
 	},
-/obj/item/raw_material/telecrystal{
+/obj/item/material/telecrystal{
 	pixel_y = 8
 	},
 /obj/cable,

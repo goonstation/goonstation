@@ -1488,7 +1488,7 @@
 "WZ" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/fakeobject/skeleton,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -5;
 	pixel_y = 9
 	},

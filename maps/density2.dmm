@@ -3321,7 +3321,7 @@
 /obj/cable{
 	icon_state = "2-10"
 	},
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "uF" = (
@@ -5174,7 +5174,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Hs" = (
@@ -5375,7 +5375,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "IL" = (
@@ -5642,7 +5642,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Ku" = (
@@ -6481,7 +6481,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "PZ" = (
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Qa" = (
@@ -7686,7 +7686,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Yr" = (

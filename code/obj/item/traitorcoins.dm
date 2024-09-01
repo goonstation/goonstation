@@ -22,7 +22,7 @@
 				return
 			if (!src.loc || BOUNDS_DIST(src, user) > 0)
 				return
-			var/obj/item/raw_material/new_stack = split_stack(splitnum)
+			var/obj/item/material/new_stack = split_stack(splitnum)
 			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
 		else

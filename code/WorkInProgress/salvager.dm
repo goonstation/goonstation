@@ -145,7 +145,7 @@
 		else if (istype(A, /turf/simulated/floor))
 			var/turf/simulated/floor/F = A
 			if (prob(50))
-				var/atom/movable/B = new /obj/item/raw_material/scrap_metal
+				var/atom/movable/B = new /obj/item/material/scrap_metal
 				B.set_loc(get_turf(A))
 				if (F.material)
 					B.setMaterial(F.material)
@@ -158,7 +158,7 @@
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			for(var/i in 1 to 3)
 				if (prob(50))
-					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
+					var/atom/movable/B = new /obj/item/material/scrap_metal
 					B.set_loc(get_turf(A))
 					if (A.material)
 						B.setMaterial(A.material)
@@ -170,7 +170,7 @@
 			qdel(A)
 
 		else if (istype(A, /obj/structure/girder))
-			var/atom/movable/B = new /obj/item/raw_material/scrap_metal(get_turf(A))
+			var/atom/movable/B = new /obj/item/material/scrap_metal(get_turf(A))
 
 			if (A.material)
 				B.setMaterial(A.material)
@@ -183,7 +183,7 @@
 
 		else if (istype(A, /obj/window))
 			for(var/i in 1 to 3)
-				var/atom/movable/B = new /obj/item/raw_material/shard(get_turf(A))
+				var/atom/movable/B = new /obj/item/material/shard(get_turf(A))
 				if (A.material)
 					B.setMaterial(A.material)
 				else
@@ -195,7 +195,7 @@
 		else if (istype(A, /obj/grille))
 			var/atom/movable/B
 			if(prob(20))
-				B = new /obj/item/raw_material/scrap_metal(get_turf(A))
+				B = new /obj/item/material/scrap_metal(get_turf(A))
 
 				if (A.material)
 					B.setMaterial(A.material)
@@ -207,7 +207,7 @@
 			qdel(A)
 
 		else if (istype(A, /obj/lattice))
-			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
+			var/atom/movable/B = new /obj/item/material/scrap_metal
 			B.set_loc(get_turf(A))
 			if (A.material)
 				B.setMaterial(A.material)
@@ -228,7 +228,7 @@
 				if(O.deconstruct_flags & DECON_WIRECUTTERS)
 					new /obj/item/cable_coil/cut/small(get_turf(A))
 				for(var/i in 1 to scrap)
-					B = new /obj/item/raw_material/scrap_metal(get_turf(A))
+					B = new /obj/item/material/scrap_metal(get_turf(A))
 					if (A.material)
 						B.setMaterial(A.material)
 					else

@@ -1055,7 +1055,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				var/turf/U = user.loc
 				user.visible_message(SPAN_ALERT("[src] shatters completely!"))
 				playsound(U, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+				var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 				G.set_loc(U)
 				qdel(src)
 				if (prob (25))
@@ -1101,7 +1101,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		//have to do all this stuff anyway, so do it now
 		playsound(U, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+		var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 		G.set_loc(U)
 
 		if (src.reagents)
@@ -1247,7 +1247,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/ice))
+		if (istype(W, /obj/item/material/ice))
 			if (src.reagents.total_volume >= (src.reagents.maximum_volume - 5))
 				if (user.bioHolder.HasEffect("clumsy") && prob(50))
 					user.visible_message("[user] adds [W] to [src].<br>[SPAN_ALERT("[src] is too full and spills!")]",\
@@ -1448,7 +1448,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		T.visible_message(SPAN_ALERT("[src] shatters!"))
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 			G.set_loc(src.loc)
 		if (src.in_glass)
 			src.in_glass.set_loc(src.loc)
@@ -2036,7 +2036,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		T.visible_message(SPAN_ALERT("[src] shatters!"))
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 			G.set_loc(src.loc)
 		qdel(src)
 
@@ -2055,7 +2055,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		target.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		target.changeStatus("knockdown", 2 SECONDS)
 		playsound(target, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		var/obj/O = new /obj/item/raw_material/shard/glass
+		var/obj/O = new /obj/item/material/shard/glass
 		O.set_loc(get_turf(target))
 		if (src.material)
 			O.setMaterial(src.material)

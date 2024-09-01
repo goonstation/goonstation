@@ -131,7 +131,7 @@
 	pixel_y = 2;
 	pixel_x = 14
 	},
-/obj/item/material_piece/bone{
+/obj/item/material/bone{
 	pixel_y = -10;
 	desc = "What remains of the one who imprisoned him."
 	},

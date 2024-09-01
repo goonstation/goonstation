@@ -3,7 +3,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "b" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "c" = (
@@ -21,7 +21,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "f" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/space)
 "g" = (
@@ -39,7 +39,7 @@
 /turf/unsimulated/floor/polarispit,
 /area/noGenerate)
 "k" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "l" = (

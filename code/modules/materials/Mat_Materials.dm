@@ -448,127 +448,19 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
-//Material definitions
-/datum/material/interpolated
-	mat_id = "imcoderium"
-	name = "imcoderium"
-	desc = "You should not be seeing this"
-	color = "#6f00ff"
-	cached = FALSE
+//material types
 
-	///Create an interpolated material from two input materials, with bias. Bias of 0 is entirely mat1, bias of 1 is entirely mat2
-	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
-		..()
-		if(isnull(mat1) || isnull(mat2))
-			return
-		var/left_bias = 1 - bias
-
-		src.prefixes = (mat1.prefixes | mat2.prefixes)
-		src.suffixes = (mat1.suffixes | mat2.suffixes)
-
-		src.value = round(mat1.value *left_bias+ mat2.value * bias)
-		src.name = mat1.interpolateName(mat2, 0.5)
-		src.desc = "This is an alloy of [mat1.name] and [mat2.name]"
-		src.mat_id = "([mat1.getID()]+[mat2.getID()])"
-		src.alpha = round(mat1.alpha *left_bias+ mat2.alpha * bias)
-		if(islist(mat1.color) || islist(mat2.color))
-			var/list/colA = normalize_color_to_matrix(mat1.color)
-			var/list/colB = normalize_color_to_matrix(mat2.color)
-			src.color = list()
-			for(var/i in 1 to length(colA))
-				src.color += colA[i] *left_bias+ colB[i] * bias
-		else
-			src.color = rgb(round(GetRedPart(mat1.color) *left_bias+ GetRedPart(mat2.color) * bias), round(GetGreenPart(mat1.color) *left_bias+ GetGreenPart(mat2.color) * bias), round(GetBluePart(mat1.color) *left_bias+ GetBluePart(mat2.color) * bias))
-		src.properties = mergeProperties(mat1.properties, mat2.properties, bias)
-
-		src.edible_exact = mat1.edible_exact * left_bias + mat2.edible_exact * bias
-		if(src.edible_exact >= 0.5) src.edible = TRUE
-		else src.edible = FALSE
-
-		src.special_naming = FALSE // the naming proc doesn't carry over anyway
-
-		src.mixOnly = FALSE
-
-		//haha gross
-		for(var/triggername in triggerVars)
-			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
-			handleTriggerGenerations(src.vars[triggername])
-
-		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
-		for(var/datum/material_property/nProp in src.properties)
-			nProp.onValueChanged(src, src.properties[nProp])
-
-		//Texture merging. SUPER DUPER UGLY AAAAH
-		if(mat2.texture && !mat1.texture)
-			src.texture = mat2.texture
-			src.texture_blend = mat2.texture_blend
-		else if (mat1.texture && !mat2.texture)
-			src.texture = mat1.texture
-			src.texture_blend = mat1.texture_blend
-		else if (mat1.texture && mat2.texture)
-			if(mat1.generation == mat2.generation)
-				//Mat1 has higher priority in this case. Optional: implement some shitty blended texture thing. probably a bad idea.
-				src.texture = mat1.texture
-				src.texture_blend = mat1.texture_blend
-			else
-				if(mat1.generation < mat2.generation)
-					src.texture = mat1.texture
-					src.texture_blend = mat1.texture_blend
-				else
-					src.texture = mat2.texture
-					src.texture_blend = mat2.texture_blend
-		//
-
-		src.material_flags = mat1.material_flags | mat2.material_flags
-
-		src.parent_materials.Add(mat1)
-		src.parent_materials.Add(mat2)
-
-		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-// Metals
-
-/// Base metal material parent
+//Metals
 ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal
 	color = "#8C8C8C"
 
 	New()
 		. = ..()
-		material_flags |= MATERIAL_METAL
 		setProperty("electrical", 45)
 		setProperty("thermal", 54)
 		setProperty("density", 36)
 		setProperty("chemical", 54)
-
-/datum/material/metal/rock
-	mat_id = "rock"
-	name = "rock"
-	desc = "Near useless asteroid rock with some traces of random metals."
-	color = "#ACACAC"
-	texture = "rock"
-
-	New()
-		..()
-		setProperty("density", 18)
-		setProperty("hard", 18)
-		setProperty("electrical", 36)
-		setProperty("thermal", 36)
-
-
-/datum/material/metal/electrum
-	mat_id = "electrum"
-	name = "electrum"
-	desc = "Highly conductive alloy of gold and silver."
-	color = "#44ACAC"
-
-	New()
-		..()
-		setProperty("electrical", 81)
-		setProperty("density", 36)
-		setProperty("hard", 9)
-
 
 /datum/material/metal/steel
 	mat_id = "steel"
@@ -590,7 +482,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 18)
 		setProperty("hard", 9)
 
-
 /datum/material/metal/pharosium
 	mat_id = "pharosium"
 	name = "pharosium"
@@ -601,7 +492,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 63)
 		setProperty("density", 18)
 		setProperty("hard", 18)
-
 
 /datum/material/metal/cobryl
 	mat_id = "cobryl"
@@ -615,8 +505,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 18)
 		setProperty("chemical", 72)
 
-
-
 /datum/material/metal/bohrum
 	mat_id = "bohrum"
 	name = "bohrum"
@@ -628,7 +516,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 45)
 		setProperty("chemical", 63)
 
-
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
 	name = "mauxite"
@@ -638,7 +525,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 36)
 		setProperty("hard", 27)
-
 
 /datum/material/metal/cerenkite
 	mat_id = "cerenkite"
@@ -650,11 +536,9 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		value = 200
 
-		material_flags |= MATERIAL_ENERGY
 		setProperty("electrical", 54)
 		setProperty("radioactive", 45)
 		setProperty("hard", 18)
-
 
 /datum/material/metal/syreline
 	mat_id = "syreline"
@@ -671,7 +555,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("reflective", 72)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
-
 
 /datum/material/metal/gold
 	mat_id = "gold"
@@ -691,7 +574,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
-
 /datum/material/metal/silver
 	mat_id = "silver"
 	name = "silver"
@@ -707,6 +589,17 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("reflective", 54)
 		setProperty("electrical", 54)
 
+/datum/material/metal/electrum
+	mat_id = "electrum"
+	name = "electrum"
+	desc = "Highly conductive alloy of gold and silver."
+	color = "#44ACAC"
+
+	New()
+		..()
+		setProperty("electrical", 81)
+		setProperty("density", 36)
+		setProperty("hard", 9)
 
 /datum/material/metal/plasmasteel //This should have inverted plasmaglass stats
 	mat_id = "plasmasteel"
@@ -719,54 +612,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 63)
 		setProperty("hard", 27)
-
-
-/datum/material/metal/neutronium
-	mat_id = "neutronium"
-	name = "neutronium"
-	desc = "Neutrons condensed into a solid form."
-	color = "#043e9b"
-	alpha = 255
-
-	New()
-		..()
-		material_flags |= MATERIAL_ENERGY
-		setProperty("density", 81)
-		setProperty("hard", 27)
-		setProperty("electrical", 63)
-		setProperty("n_radioactive", 72)
-
-
-
-// Special Metals
-
-/datum/material/metal/slag
-	mat_id = "slag"
-	name = "slag"
-	desc = "A by-product left over after material has been processed."
-	color = "#26170F"
-
-	New()
-		..()
-		value = 10
-
-		setProperty("density", 18) //fucked up values for fucked up material but not silly putty
-		setProperty("hard", 18)
-		setProperty("electrical", 18)
-
-
-/datum/material/metal/spacelag
-	mat_id = "spacelag"
-	name = "spacelag"
-	desc = "*BUFFERING*"
-	color = "#3F3A38"
-
-	New()
-		..()
-		setProperty("density", 72)
-		setProperty("hard", 9)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/spacelag_add())
-
 
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
@@ -782,20 +627,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 72)
 		setProperty("chemical", 81)
 
-
-/datum/material/metal/negativematter
-	mat_id = "negativematter"
-	name = "negative matter"
-	desc = "It seems to repel matter."
-	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
-
-	New()
-		..()
-		material_flags |= MATERIAL_ENERGY
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/negative_add())
-
-
-//GIVE THIS STATS AND SPECIAL EFFECTS.
 /datum/material/metal/soulsteel
 	mat_id = "soulsteel"
 	name = "soulsteel"
@@ -809,21 +640,34 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 18)
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
-
-// Crystals
-ABSTRACT_TYPE(/datum/material/crystal)
-/datum/material/crystal
-	color = "#A3DCFF"
+//Ceramics
+//This includes rocks, crystals, glass, and generally most things defined by being hard, inflexible, and not very conductive
+ABSTRACT_TYPE(/datum/material/ceramic)
+/datum/material/ceramic
+	color = "#ACACAC"
 
 	New()
-		. = ..()
-		material_flags |= MATERIAL_CRYSTAL
-		setProperty("hard", 27)
-		setProperty("electrical", 27)
-		setProperty("thermal", 27)
-		setProperty("chemical", 45)
+		..()
+		setProperty("density", 18)
+		setProperty("hard", 18)
+		setProperty("electrical", 36)
+		setProperty("thermal", 36)
 
-/datum/material/crystal/glass
+/datum/material/ceramic/rock
+	mat_id = "rock"
+	name = "rock"
+	desc = "Near useless asteroid rock with some traces of random metals."
+	color = "#ACACAC"
+	texture = "rock"
+
+	New()
+		..()
+		setProperty("density", 18)
+		setProperty("hard", 18)
+		setProperty("electrical", 36)
+		setProperty("thermal", 36)
+
+/datum/material/ceramic/glass
 	mat_id = "glass"
 	name = "glass"
 	desc = "Terrestrial glass. Inferior to Molitz."
@@ -835,7 +679,105 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 18)
 		setProperty("hard", 27)
 
-/datum/material/crystal/molitz
+/datum/material/ceramic/slag
+	mat_id = "slag"
+	name = "slag"
+	desc = "A by-product left over after material has been processed."
+	color = "#26170F"
+
+	New()
+		..()
+		value = 10
+
+		setProperty("density", 18)
+		setProperty("hard", 18)
+		setProperty("electrical", 18)
+
+/datum/material/ceramic/spacelag
+	mat_id = "spacelag"
+	name = "spacelag"
+	desc = "*BUFFERING*"
+	color = "#3F3A38"
+
+	New()
+		..()
+		setProperty("density", 72)
+		setProperty("hard", 9)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/spacelag_add())
+
+/datum/material/ceramic/plasmastone
+	mat_id = "plasmastone"
+	name = "plasmastone"
+	desc = "Plasma in its solid state."
+	color = "#A114FF"
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 9)
+		setProperty("hard", 18)
+		setProperty("electrical", 45)
+		setProperty("radioactive", 18)
+		setProperty("thermal", 36)
+
+/datum/material/ceramic/plasmaglass
+	mat_id = "plasmaglass"
+	name = "plasma glass"
+	desc = "Crystallized plasma that has been rendered inert. Very hard and prone to making extremely sharp edges."
+	color = "#A114FF"
+	alpha = 180
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 63)
+		setProperty("electrical", 36)
+		setProperty("thermal", 36)
+
+/datum/material/ceramic/lapis
+	mat_id = "lapislazuli"
+	name = "lapis lazuli"
+	color = "#1719BD"
+	value = 500
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 36)
+		setProperty("hard", 45)
+
+/datum/material/ceramic/ice
+	mat_id = "ice"
+	name = "ice"
+	desc = "The frozen state of water."
+	color = "#E8F2FF"
+	alpha = 100
+
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("electrical", 18)
+		setProperty("density", 9)
+		setProperty("hard", 18)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
+
+//Crystals as a whole are a subtype of ceramics because we have a lot of them and they have some unique properties
+ABSTRACT_TYPE(/datum/material/ceramic/crystal)
+/datum/material/ceramic/crystal
+	color = "#A3DCFF"
+
+	New()
+		..()
+		setProperty("density", 18)
+		setProperty("hard", 18)
+		setProperty("electrical", 36)
+		setProperty("thermal", 36)
+
+/datum/material/ceramic/crystal/molitz
 	mat_id = "molitz"
 	name = "molitz"
 	desc = "Molitz is a common crystalline substance."
@@ -847,13 +789,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 27)
 		setProperty("hard", 36)
 
-/datum/material/crystal/molitz/beta
+/datum/material/ceramic/crystal/molitz/beta
 	mat_id = "molitz_b"
-	name = "molitz beta"
+	name = "molitz β"
 	color = "#ff2288"
 	desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
-/datum/material/crystal/claretine
+/datum/material/ceramic/crystal/claretine
 	mat_id = "claretine"
 	name = "claretine"
 	desc = "Claretine is a highly conductive salt."
@@ -865,8 +807,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 9)
 		setProperty("electrical", 72)
 
-
-/datum/material/crystal/erebite
+/datum/material/ceramic/crystal/erebite
 	mat_id = "erebite"
 	name = "erebite"
 	desc = "Erebite is an extremely volatile high-energy mineral."
@@ -887,184 +828,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
 
-
-/datum/material/crystal/plasmastone
-	mat_id = "plasmastone"
-	name = "plasmastone"
-	desc = "Plasma in its solid state."
-	color = "#A114FF"
-
-	New()
-		..()
-		material_flags |= MATERIAL_ENERGY
-		setProperty("density", 9)
-		setProperty("hard", 18)
-		setProperty("electrical", 45)
-		setProperty("radioactive", 18)
-		setProperty("flammable", 72)
-
-		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
-		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone_on_hit())
-
-
-/datum/material/crystal/plasmaglass
-	mat_id = "plasmaglass"
-	name = "plasma glass"
-	desc = "Crystallized plasma that has been rendered inert. Very hard and prone to making extremely sharp edges."
-	color = "#A114FF"
-	alpha = 180
-
-	New()
-		..()
-		setProperty("density", 27)
-		setProperty("hard", 63)
-
-
-/datum/material/crystal/gemstone
-	mat_id = "quartz"
-	name = "quartz"
-	desc = "Quartz is somewhat valuable but not particularly useful."
-	color = "#BBBBBB"
-	alpha = 220
-	var/gem_tier = 3
-
-	New()
-		..()
-		switch(gem_tier)
-			if(1)
-				value = 700
-				name = "clear [src.name]"
-				setProperty("density", 54)
-				setProperty("hard", 63)
-				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
-			if(2)
-				value = 500
-				name = "flawed [src.name]"
-				setProperty("density", 36)
-				setProperty("hard", 45)
-			if(3)
-				value = 200
-				name = "inferior [src.name]"
-				setProperty("density", 27)
-				setProperty("hard", 36)
-
-
-	diamond
-		mat_id = "diamond"
-		name = "diamond"
-		color = "#FFFFFF"
-		gem_tier = 1
-
-	onyx
-		mat_id = "onyx"
-		name = "onyx"
-		color = "#000000"
-
-	ruby
-		mat_id = "ruby"
-		name = "ruby"
-		color = "#D00000"
-		gem_tier = 1
-
-	rose_quartz
-		mat_id = "rosequartz"
-		name = "rose quartz"
-		color = "#FFC9E8"
-
-	jasper
-		mat_id = "jasper"
-		name = "jasper"
-		color = "#FF7A21"
-		gem_tier = 2
-
-	garnet
-		mat_id = "garnet"
-		name = "garnet"
-		color = "#DB8412"
-		gem_tier = 2
-
-	topaz
-		mat_id = "topaz"
-		name = "topaz"
-		color = "#EBB028"
-		gem_tier = 1
-
-	citrine
-		mat_id = "citrine"
-		name = "citrine"
-		color = "#F5F11B"
-
-	peridot
-		mat_id = "peridot"
-		name = "peridot"
-		color = "#9CC748"
-		gem_tier = 2
-
-	emerald
-		mat_id = "emerald"
-		name = "emerald"
-		color = "#3AB818"
-		gem_tier = 1
-
-	jade
-		mat_id = "jade"
-		name = "jade"
-		color = "#3C8F4D"
-
-	malachite
-		mat_id = "malachite"
-		name = "malachite"
-		color = "#1DF091"
-		gem_tier = 2
-
-	aquamarine
-		mat_id = "aquamarine"
-		name = "aquamarine"
-		color = "#68F7D8"
-
-	sapphire
-		mat_id = "sapphire"
-		name = "sapphire"
-		color = "#2789F2"
-		gem_tier = 1
-
-	lapis
-		mat_id = "lapislazuli"
-		name = "lapis lazuli"
-		color = "#1719BD"
-		gem_tier = 2
-
-	iolite
-		mat_id = "iolite"
-		name = "iolite"
-		color = "#D5A8FF"
-
-	amethyst
-		mat_id = "amethyst"
-		name = "amethyst"
-		color = "#BD0FDB"
-		gem_tier = 1
-
-	alexandrite
-		mat_id = "alexandrite"
-		name = "alexandrite"
-		color = "#EB2FA9"
-		gem_tier = 2
-
-/datum/material/crystal/uqill //Ancients
+/datum/material/ceramic/crystal/uqill
 	mat_id = "uqill"
 	name = "uqill"
 	desc = "Uqill is a rare and very dense stone."
 	color = "#0F0A08"
 	alpha = 255
-
-	transparent // For bulletproof windows.
-		mat_id = "uqillglass"
-		name = "transparent uqill"
-		desc = "Uqill-derived material developed for usage as transparent armor."
-		color = "#615757"
-		alpha = 180
 
 	New()
 		..()
@@ -1072,9 +841,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 36)
 		setProperty("chemical", 81)
 
+/datum/material/ceramic/crystal/uqill/transparent
+	mat_id = "uqillglass"
+	name = "transparent uqill"
+	desc = "Uqill-derived material developed for usage as transparent armor."
+	color = "#615757"
+	alpha = 180
 
-// hi it me cirr im doing dumb
-/datum/material/crystal/gnesis //Feather
+/datum/material/ceramic/crystal/gnesis
 	mat_id = "gnesis"
 	name = "gnesis"
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
@@ -1082,23 +856,20 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	texture = "flock"
 	texture_blend = BLEND_OVERLAY
 
-	transparent
-		mat_id = "gnesisglass"
-		name = "translucent gnesis"
-		desc = "A rare complex crystalline matrix with a lazily shifting internal structure. The layers are arranged to let light through."
-		color = "#ffffff"
-		alpha = 180
-
 	New()
 		..()
-		material_flags |= MATERIAL_METAL
-		setProperty("density", 18) //light
-		setProperty("hard", 45) // very hard
-		setProperty("reflective", 81) // shiny
-		setProperty("electrical", 63) // good conductor
+		setProperty("density", 18)
+		setProperty("hard", 45)
+		setProperty("electrical", 63)
 
+/datum/material/ceramic/crystal/gnesis/transparent
+	mat_id = "gnesisglass"
+	name = "translucent gnesis"
+	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. The layers are arranged to let light through."
+	color = "#ffffff"
+	alpha = 180
 
-/datum/material/crystal/telecrystal
+/datum/material/ceramic/crystal/telecrystal
 	mat_id = "telecrystal"
 	name = "telecrystal"
 	desc = "Telecrystal is a gemstone with space-warping properties."
@@ -1115,9 +886,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
 
-
-
-/datum/material/crystal/miracle
+/datum/material/ceramic/crystal/miracle
 	mat_id = "miracle"
 	name = "miraclium"
 	desc = "Miraclium is a bizarre substance that can have a wide variety of effects."
@@ -1133,8 +902,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("chemical", rand(9, 72))
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
-
-/datum/material/crystal/starstone
+/datum/material/ceramic/crystal/starstone
 	mat_id = "starstone"
 	name = "starstone"
 	desc = "An extremely rare jewel."
@@ -1150,71 +918,303 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 9)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
-
-/datum/material/crystal/ice
-	mat_id = "ice"
-	name = "ice"
-	desc = "The frozen state of water."
-	color = "#E8F2FF"
-	alpha = 100
-
-	edible_exact = 1
-	edible = 1
-
-	New()
-		..()
-		setProperty("electrical", 18)
-		setProperty("density", 9)
-		setProperty("hard", 18)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
-		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
-		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
-
-ABSTRACT_TYPE(/datum/material/crystal/wizard)
-/datum/material/crystal/wizard
-	alpha = 100
-	value = 650
+/datum/material/ceramic/crystal/diamond
+	mat_id = "diamond"
+	name = "diamond"
+	color = "#FFFFFF"
+	value = 700
+	alpha = 220
 
 	New()
 		..()
 		setProperty("density", 54)
-		setProperty("hard", 54)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/enchanted_add())
+		setProperty("hard", 63)
 
+/datum/material/ceramic/crystal/topaz
+	mat_id = "topaz"
+	name = "topaz"
+	color = "#EBB028"
+	value = 700
+	alpha = 220
 
-	quartz // basically wizard glass
-		mat_id = "wiz_quartz"
-		name = "enchanted quartz"
-		color = "#A3DCFF"
+	New()
+		..()
+		setProperty("density", 54)
+		setProperty("hard", 63)
 
-	topaz
-		mat_id = "wiz_topaz"
-		name = "enchanted topaz"
-		color = "#FFC87C"
+/datum/material/ceramic/crystal/garnet
+	mat_id = "garnet"
+	name = "garnet"
+	color = "#DB8412"
+	value = 500
+	alpha = 220
 
-	ruby
-		mat_id = "wiz_ruby"
-		name = "enchanted ruby"
-		color = "#991933"
+	New()
+		..()
+		setProperty("density", 36)
+		setProperty("hard", 45)
 
-	amethyst
-		mat_id = "wiz_amethyst"
-		name = "enchanted amethyst"
-		color = "#9966FF"
+/datum/material/ceramic/crystal/peridot
+	mat_id = "peridot"
+	name = "peridot"
+	color = "#9CC748"
+	value = 500
+	alpha = 220
 
-	emerald
-		mat_id = "wiz_emerald"
-		name = "enchanted emerald"
-		color = "#4CCC66"
+	New()
+		..()
+		setProperty("density", 36)
+		setProperty("hard", 45)
 
-	sapphire
-		mat_id = "wiz_sapphire"
-		name = "enchanted sapphire"
-		color = "#1966B3"
+/datum/material/ceramic/crystal/malachite
+	mat_id = "malachite"
+	name = "malachite"
+	color = "#1DF091"
+	value = 500
+	alpha = 220
 
-// Organics
+	New()
+		..()
+		setProperty("density", 36)
+		setProperty("hard", 45)
 
-/// Base organic material parent
+/datum/material/ceramic/crystal/alexandrite
+	mat_id = "alexandrite"
+	name = "alexandrite"
+	color = "#EB2FA9"
+	value = 500
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 36)
+		setProperty("hard", 45)
+
+/datum/material/ceramic/crystal/jade
+	mat_id = "jade"
+	name = "jade"
+	color = "#3C8F4D"
+	value = 200
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 36)
+
+/datum/material/ceramic/crystal/iolite
+	mat_id = "iolite"
+	name = "iolite"
+	color = "#D5A8FF"
+	value = 200
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 36)
+
+//aluminum oxide crystals most well-known in sapphire or ruby form
+ABSTRACT_TYPE(/datum/material/ceramic/crystal/corundum)
+/datum/material/ceramic/crystal/corundum
+
+	New()
+		..()
+		setProperty("density", 54)
+		setProperty("hard", 63)
+
+/datum/material/ceramic/crystal/corundum/ruby
+	mat_id = "ruby"
+	name = "ruby"
+	color = "#D00000"
+	value = 700
+	alpha = 220
+
+/datum/material/ceramic/crystal/corundum/sapphire
+	mat_id = "sapphire"
+	name = "sapphire"
+	color = "#2789F2"
+	value = 700
+	alpha = 220
+
+//beryllium-aluminum-sillicate crystals most well known as emeralds or aquamarines
+ABSTRACT_TYPE(/datum/material/ceramic/crystal/beryl)
+/datum/material/ceramic/crystal/corundum
+
+	New()
+		..()
+		setProperty("density", 54)
+		setProperty("hard", 63)
+
+/datum/material/ceramic/crystal/beryl/emerald
+	mat_id = "emerald"
+	name = "emerald"
+	color = "#3AB818"
+	value = 700
+	alpha = 220
+
+/datum/material/ceramic/crystal/beryl/aquamarine
+	mat_id = "aquamarine"
+	name = "aquamarine"
+	color = "#68F7D8"
+	value = 200
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 36)
+
+//silicon-dioxide crystals most well known as various forms of quartz
+ABSTRACT_TYPE(/datum/material/ceramic/crystal/quartz)
+/datum/material/ceramic/crystal/quartz
+	mat_id = "quartz"
+	name = "quartz"
+	desc = "Quartz is somewhat valuable but not particularly useful."
+	color = "#BBBBBB"
+
+	New()
+		..()
+		setProperty("density", 54)
+		setProperty("hard", 63)
+
+/datum/material/ceramic/crystal/quartz/amethyst
+	mat_id = "amethyst"
+	name = "amethyst"
+	color = "#BD0FDB"
+	value = 700
+	alpha = 220
+
+/datum/material/ceramic/crystal/quartz/jasper
+	mat_id = "jasper"
+	name = "jasper"
+	color = "#FF7A21"
+	value = 500
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 36)
+		setProperty("hard", 45)
+
+/datum/material/ceramic/crystal/quartz/citrine
+	mat_id = "citrine"
+	name = "citrine"
+	color = "#F5F11B"
+	value = 200
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 36)
+
+/datum/material/ceramic/crystal/quartz/rose
+	mat_id = "rosequartz"
+	name = "rose quartz"
+	color = "#FFC9E8"
+	value = 200
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 36)
+
+/datum/material/ceramic/crystal/quartz/quartz/onyx
+	mat_id = "onyx"
+	name = "onyx"
+	color = "#000000"
+	value = 200
+	alpha = 220
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 36)
+
+//Things like flesh, viscerite, and blob.
+ABSTRACT_TYPE(/datum/material/blobby)
+/datum/material/organic
+	color = "#555555"
+
+	New()
+		..()
+		setProperty("electrical", 36)
+
+//Wood and wood-like materials like bamboo
+ABSTRACT_TYPE(/datum/material/woody)
+/datum/material/woody
+	color = "#331f16"
+
+	New()
+		..()
+		setProperty("density", 45)
+		setProperty("hard", 27)
+
+//Dirt and dirt-like materials like sand and clay
+ABSTRACT_TYPE(/datum/material/dirty)
+/datum/material/dirty
+
+//Fabric materials such as wool and cotton
+ABSTRACT_TYPE(/datum/material/textile)
+/datum/material/textile
+
+	New()
+		. = ..()
+		setProperty("electrical", 36)
+		setProperty("hard", 9)
+		setProperty("density", 9)
+
+//Animal skins and similar materials
+ABSTRACT_TYPE(/datum/material/leathery)
+/datum/material/leather
+	color = "#8A3B11"
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 9)
+		setProperty("thermal", 27)
+		setProperty("electrical", 27)
+
+//Rubber and rubber-like materials
+ABSTRACT_TYPE(/datum/material/rubbery)
+/datum/material/rubbery
+	New()
+		. = ..()
+		setProperty("electrical", 27)
+
+//Anomolous things that can't be traditionally classified
+ABSTRACT_TYPE(/datum/material/degenerate)
+/datum/material/degenerate
+
+/datum/material/degenerate/neutronium
+	mat_id = "neutronium"
+	name = "neutronium"
+	desc = "Neutrons condensed into a solid form."
+	color = "#043e9b"
+	alpha = 255
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		setProperty("density", 81)
+		setProperty("hard", 27)
+		setProperty("electrical", 63)
+		setProperty("n_radioactive", 72)
+
+/datum/material/degenerate/negativematter
+	mat_id = "negativematter"
+	name = "negative matter"
+	desc = "It seems to repel matter."
+	color = list(-1, 0, 0, 0, -1, 0, 0, 0, -1, 1, 1, 1)
+
+	New()
+		..()
+		material_flags |= MATERIAL_ENERGY
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/negative_add())
+
 ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic
 	color = "#555555"

@@ -2332,7 +2332,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		//give some other random junk that'd reasonably be pulled off, for flavor
 		var/turf/T = get_turf(src)
 
-		var/obj/item/raw_material/scrap_metal/W = new /obj/item/raw_material/scrap_metal
+		var/obj/item/material/scrap_metal/W = new /obj/item/material/scrap_metal
 		W.setMaterial(getMaterial("wood"))
 		W.name = "mangled chunk of wood"
 		W.desc = "If you tilt your head and squint, it looks like it possibly might've been a stock at one point."

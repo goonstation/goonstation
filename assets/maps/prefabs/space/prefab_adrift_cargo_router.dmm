@@ -240,7 +240,7 @@
 /turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "rh" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "rP" = (
@@ -514,8 +514,8 @@
 /obj/storage/crate/freezer{
 	desc = "A freezer. This one smells faintly of fish."
 	},
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/fish/carp,
 /obj/item/reagent_containers/food/fish/herring,

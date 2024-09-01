@@ -16896,7 +16896,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "cfa" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "cfj" = (
@@ -18329,7 +18329,7 @@
 	},
 /area/station/hydroponics/bay)
 "daS" = (
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "dby" = (
@@ -18589,9 +18589,9 @@
 	name = "meat of questionable origin"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/snacks/hotdog,
 /obj/item/organ/liver,
 /obj/item/organ/heart,
@@ -19926,8 +19926,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "eaH" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "ebn" = (
@@ -22405,10 +22405,10 @@
 	},
 /area/station/security/hos)
 "fHR" = (
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/pharosium,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "fHS" = (
@@ -22552,7 +22552,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "fLX" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
@@ -28745,7 +28745,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
 "jXb" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "jXo" = (
@@ -29440,7 +29440,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "kuT" = (
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
@@ -32966,8 +32966,8 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown)
 "mBV" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/cobryl,
+/obj/item/material/syreline,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "mBW" = (
@@ -34076,7 +34076,7 @@
 	},
 /area/station/maintenance/east)
 "njm" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "njK" = (
@@ -34332,7 +34332,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "nrw" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
@@ -37328,8 +37328,8 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "pcq" = (
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "pct" = (
@@ -37421,7 +37421,7 @@
 	},
 /area/station/hallway/primary/west)
 "peT" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating,
 /area/space)
 "pfc" = (
@@ -37451,7 +37451,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "pgY" = (
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "phh" = (
@@ -37542,8 +37542,8 @@
 	},
 /area/station/hallway/primary/west)
 "pli" = (
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/pharosium,
+/obj/item/material/cobryl,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "plA" = (
@@ -38162,7 +38162,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "pBx" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "pBy" = (
@@ -43588,8 +43588,8 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "sVO" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/pharosium,
+/obj/item/material/syreline,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "sWg" = (
@@ -44487,9 +44487,9 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "tAq" = (
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "tAs" = (
@@ -44874,7 +44874,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "tMS" = (
-/obj/item/raw_material/pharosium,
+/obj/item/material/pharosium,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "tMY" = (
@@ -46093,7 +46093,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "uIe" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "uIG" = (
@@ -46201,8 +46201,8 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "uNs" = (
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/pharosium,
+/obj/item/material/cobryl,
+/obj/item/material/pharosium,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
@@ -47132,8 +47132,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "vrj" = (
-/obj/item/raw_material/gold,
-/obj/item/raw_material/rock,
+/obj/item/material/gold,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "vrm" = (
@@ -47849,7 +47849,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "vKP" = (
 /obj/lattice,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "vKU" = (
@@ -50120,8 +50120,8 @@
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "xnI" = (
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
@@ -51433,8 +51433,8 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "yfD" = (
-/obj/item/raw_material/gold,
-/obj/item/raw_material/rock,
+/obj/item/material/gold,
+/obj/item/material/rock,
 /mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)

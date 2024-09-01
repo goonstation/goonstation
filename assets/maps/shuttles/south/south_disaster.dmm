@@ -958,7 +958,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "Gx" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "Gy" = (

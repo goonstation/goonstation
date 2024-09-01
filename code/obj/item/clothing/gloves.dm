@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			goldsnap(user)
 
 		//Wow this is super dumb and dangerous why would you do this
-		if(istype(W, /obj/item/raw_material))
+		if(istype(W, /obj/item/material))
 			if(!istype(user, /mob/living/carbon/human)) return
 			if(user:gloves != src) return
 

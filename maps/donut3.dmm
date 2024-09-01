@@ -13121,7 +13121,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/item/material_piece/bone{
+/obj/item/material/bone{
 	desc = "All chewed up and slobbery. Yuck.";
 	layer = 3.1;
 	name = "grody bone"
@@ -61783,11 +61783,11 @@
 "sJH" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/grille/steel/broken,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -8;
 	pixel_y = -3
 	},
@@ -65942,11 +65942,11 @@
 /obj/table/glass/auto{
 	glass_broken = 1
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -6;
 	pixel_y = -7
 	},
@@ -67727,7 +67727,7 @@
 /area/station/hallway/primary/west)
 "uzx" = (
 /obj/grille/steel/broken,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -74697,7 +74697,7 @@
 	pixel_x = 29;
 	pixel_y = 10
 	},
-/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/material/shard/plasmacrystal,
 /obj/disposalpipe/segment{
 	dir = 8
 	},

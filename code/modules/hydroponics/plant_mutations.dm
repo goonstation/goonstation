@@ -738,25 +738,25 @@ ABSTRACT_TYPE(/datum/plantmutation)
 /datum/plantmutation/rocks/syreline
 	name_prefix = "Syreline "
 	dont_rename_crop = TRUE
-	crop = /obj/item/raw_material/syreline
+	crop = /obj/item/material/syreline
 	chance = 40
 
 /datum/plantmutation/rocks/bohrum
 	name_prefix = "Bohrum "
 	dont_rename_crop = TRUE
-	crop = /obj/item/raw_material/bohrum
+	crop = /obj/item/material/bohrum
 	chance = 20
 
 /datum/plantmutation/rocks/mauxite
 	name_prefix = "Mauxite "
 	dont_rename_crop = TRUE
-	crop = /obj/item/raw_material/mauxite
+	crop = /obj/item/material/mauxite
 	chance = 10
 
 /datum/plantmutation/rocks/uqill
 	name_prefix = "Uqill "
 	dont_rename_crop = TRUE
-	crop = /obj/item/raw_material/uqill
+	crop = /obj/item/material/uqill
 	chance = 5
 
 // trees. :effort:

@@ -126,7 +126,7 @@
 	item_state = "rd-case"
 	max_wclass = W_CLASS_BULKY// parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
-	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
+	spawn_contents = list(/obj/item/material/molitz_beta = 2, /obj/item/paper/hellburn)
 
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"

@@ -203,7 +203,7 @@
 			/obj/decal/cleanable/molten_item, /obj/decal/cleanable/machine_debris, /obj/decal/cleanable/oil, /obj/decal/cleanable/rust)
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
-			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
+			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/material/scrap_metal,\
 			/obj/item/currency/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
@@ -1848,7 +1848,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			switch(pick(1,2;75,3))
 				if (1)
 					if(prob(33))
-						var/obj/item/I = new /obj/item/raw_material/scrap_metal
+						var/obj/item/I = new /obj/item/material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)
@@ -1860,7 +1860,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					src.ReplaceWithSpace()
 				if(3)
 					if(prob(33))
-						var/obj/item/I = new /obj/item/raw_material/scrap_metal
+						var/obj/item/I = new /obj/item/material/scrap_metal
 						I.set_loc(src)
 						if (src.material)
 							I.setMaterial(src.material)

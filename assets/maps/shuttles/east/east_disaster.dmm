@@ -402,7 +402,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "lV" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "mi" = (

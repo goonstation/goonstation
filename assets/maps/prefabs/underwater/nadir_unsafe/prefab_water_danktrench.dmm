@@ -14,7 +14,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "q" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "r" = (

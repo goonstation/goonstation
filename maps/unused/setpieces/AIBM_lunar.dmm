@@ -4600,11 +4600,11 @@
 	layer = 3;
 	name = "ore-hauling robot"
 	},
-/obj/item/raw_material/plasmastone{
+/obj/item/material/plasmastone{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/raw_material/plasmastone{
+/obj/item/material/plasmastone{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -4691,11 +4691,11 @@
 /area/moon/museum/west)
 "lh" = (
 /obj/table/auto,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	desc = "It's a real authentic moon rock. Pretty neat!";
 	name = "moon rock"
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	desc = "It's a real authentic moon rock. Pretty neat!";
 	name = "moon rock"
 	},

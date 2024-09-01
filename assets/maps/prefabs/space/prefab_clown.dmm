@@ -4,7 +4,7 @@
 /area/noGenerate)
 "b" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "c" = (
@@ -26,7 +26,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "g" = (
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "h" = (

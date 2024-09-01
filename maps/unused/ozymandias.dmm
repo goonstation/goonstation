@@ -16428,7 +16428,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "ets" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/airless/damaged5,
 /area/space)
@@ -22193,7 +22193,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "fUp" = (
@@ -22297,7 +22297,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergency2)
 "fVD" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/clown{
 	name = "Honkington's Abode"
@@ -50354,10 +50354,10 @@
 /area/station/maintenance/inner/ne)
 "nlx" = (
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
 	name = "meat of questionable origin"
@@ -58413,10 +58413,10 @@
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "pqE" = (
@@ -60354,16 +60354,16 @@
 	})
 "pOH" = (
 /obj/storage/crate,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
@@ -62539,7 +62539,7 @@
 	},
 /area/station/science/lobby)
 "qud" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "quj" = (

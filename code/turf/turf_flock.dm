@@ -307,10 +307,10 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	var/atom/movable/B
 	for (var/i = 1 to rand(3, 6))
 		if (prob(70))
-			B = new /obj/item/raw_material/scrap_metal(T)
+			B = new /obj/item/material/scrap_metal(T)
 			B.setMaterial(getMaterial("gnesis"))
 		else
-			B = new /obj/item/raw_material/shard(T)
+			B = new /obj/item/material/shard(T)
 			B.setMaterial(getMaterial("gnesisglass"))
 
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)

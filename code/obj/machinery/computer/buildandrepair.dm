@@ -355,7 +355,7 @@ TYPEINFO(/obj/item/circuitboard)
 						src.state = STATE_HAS_BOARD
 						src.icon_state = "2"
 					if(STATE_HAS_GLASS)
-						var/obj/item/raw_material/shard/glass/debris = new /obj/item/raw_material/shard/glass(src.loc)
+						var/obj/item/material/shard/glass/debris = new /obj/item/material/shard/glass(src.loc)
 						debris.throw_at(get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5)), rand(2,4), 2)
 						src.state = STATE_HAS_CABLES
 						src.icon_state = "3"

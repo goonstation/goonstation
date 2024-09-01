@@ -25,7 +25,7 @@
 /obj/displaycase/ex_act(severity)
 	switch(severity)
 		if (1)
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
@@ -74,7 +74,7 @@
 		if (!( src.destroyed ))
 			src.set_density(0)
 			src.destroyed = 1
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 			G.set_loc(src.loc)
 			if (displayed)
 				displayed.set_loc(src.loc)

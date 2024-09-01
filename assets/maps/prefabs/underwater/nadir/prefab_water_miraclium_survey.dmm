@@ -51,7 +51,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "O" = (
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "Q" = (

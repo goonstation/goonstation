@@ -698,10 +698,10 @@
 /area/prefab/replicant_lab)
 "cb" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},

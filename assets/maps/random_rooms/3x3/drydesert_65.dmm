@@ -19,7 +19,7 @@
 /turf/simulated/floor/marslike,
 /area/dmm_suite/clear_area)
 "D" = (
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /turf/simulated/floor/marslike/t1,
 /area/dmm_suite/clear_area)
 

@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	/// External name of this property.
 	var/name = ""
 	/// Internal ID of this property.
-	var/id = ""
+	var/id = 0
 	/// Min value of this property. Please NOTHING BELOW `1`. It breaks everything.
 	var/min_value = 1
 	/// Max value of this property.
@@ -27,30 +27,30 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"
-	id = "electrical"
+	id = MATERIAL_PROPERTY_ELECTRICAL
 
 /datum/material_property/thermal_conductivity
 	name = "Thermal conductivity"
-	id = "thermal"
+	id = MATERIAL_PROPERTY_THERMAL
 
 /datum/material_property/hardness
 	name = "Hardness"
-	id = "hard"
+	id = MATERIAL_PROPERTY_HARDNESS
 	default_value = 27
 
 /datum/material_property/density
 	name = "Density"
-	id = "density"
+	id = MATERIAL_PROPERTY_DENSITY
 	default_value = 27
 
 /datum/material_property/chemical
-	name = "Chemical resistance"
-	id = "chemical"
+	name = "Chemical reactivity"
+	id = MATERIAL_PROPERTY_CHEMICAL
 	default_value = 27
 
 /datum/material_property/radioactivity
 	name = "Radioactivity"
-	id = "radioactive"
+	id = MATERIAL_PROPERTY_RADIOACTIVE
 	default_value = 0
 
 	onAdded(var/datum/material/M, var/new_value)
@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/datum/material_property)
 
 /datum/material_property/neutron_radioactivity
 	name = "Neutron Radioactivity"
-	id = "n_radioactive"
+	id = MATERIAL_PROPERTY_N_RADIOACTIVE
 	default_value = 0
 
 	onAdded(var/datum/material/M, var/new_value)

@@ -17864,7 +17864,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/item/material_piece/cloth/cottonfabric{
+/obj/item/material/cloth/cottonfabric{
 	desc = "Looks like owls plucked it.";
 	icon_state = "wad";
 	name = "wad of chair stuffing"
@@ -19102,7 +19102,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfR" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -25378,7 +25378,7 @@
 /area/station/crew_quarters/heads)
 "byA" = (
 /obj/table/wood/auto,
-/obj/item/material_piece/foolsfoolsgold,
+/obj/item/material/foolsfoolsgold,
 /obj/item/stamp/hop,
 /turf/simulated/floor/carpet/green/fancy/edge,
 /area/station/crew_quarters/heads)
@@ -42045,7 +42045,7 @@
 "ctW" = (
 /obj/decal/cleanable/machine_debris,
 /obj/landmark/halloween,
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/disposal)
 "ctX" = (
@@ -50838,7 +50838,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/item/material_piece/bone{
+/obj/item/material/bone{
 	desc = "All chewed up and slobbery. Yuck.";
 	layer = 3.1;
 	name = "grody bone"
@@ -51963,16 +51963,16 @@
 /area/station/storage/auxillary)
 "dbU" = (
 /obj/storage/crate,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
@@ -53465,7 +53465,7 @@
 /turf/space,
 /area/space)
 "dhV" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dhW" = (
@@ -53520,7 +53520,7 @@
 /turf/simulated/floor/black,
 /area/research_outpost)
 "diq" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -53743,7 +53743,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "djf" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "djg" = (
@@ -54580,7 +54580,7 @@
 /turf/space,
 /area/space)
 "dlB" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dlD" = (
@@ -54695,7 +54695,7 @@
 /turf/space,
 /area/space)
 "dlW" = (
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dmb" = (
@@ -54754,7 +54754,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "dml" = (
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dmm" = (
@@ -57623,10 +57623,10 @@
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/item/reagent_containers/food/fish/salmon,
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -60834,10 +60834,10 @@
 /area/station/engine/coldloop)
 "iYr" = (
 /obj/storage/crate/freezer,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/machinery/light/small,
 /obj/item/reagent_containers/food/snacks/ingredient/meat{
 	desc = "Ew.";
@@ -60920,7 +60920,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/north)
 "jbj" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)

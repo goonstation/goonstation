@@ -163,7 +163,7 @@
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
 "bS" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "eK" = (
@@ -230,13 +230,13 @@
 	color = "b4b4b4"
 	},
 /obj/decal/cleanable/molten_item,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
 "jI" = (
 /obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/shard/glass,
-/obj/item/raw_material/rock,
+/obj/item/material/shard/glass,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
 "jY" = (
@@ -261,8 +261,8 @@
 	icon_state = "body6";
 	name = "decomposed corpse"
 	},
-/obj/item/raw_material/rock,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
 "lc" = (
@@ -301,7 +301,7 @@
 /obj/decal/cleanable/generic,
 /obj/structure/girder/displaced,
 /obj/item/reagent_containers/pill/menthol,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
 "px" = (
@@ -314,13 +314,13 @@
 	icon_state = "floattiles5"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/blood/splatter,
 /obj/item/paper/Cloning,
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
 "sU" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /mob/living/critter/rockworm,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
@@ -341,7 +341,7 @@
 /turf/variableTurf/wall,
 /area/prefab/crashed_shuttle)
 "uk" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "ux" = (
@@ -402,7 +402,7 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/pill/antitox,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
 "zm" = (
@@ -455,7 +455,7 @@
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
 "BY" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/prefab/crashed_shuttle)
 "EG" = (
@@ -501,7 +501,7 @@
 	icon_state = "floattiles4";
 	dir = 8
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "Hw" = (
@@ -510,8 +510,8 @@
 	icon_state = "floattiles4";
 	dir = 8
 	},
-/obj/item/raw_material/rock,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/rock,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "HR" = (
@@ -611,7 +611,7 @@
 	color = "#DD0000";
 	icon_state = "coil1"
 	},
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "Rx" = (
@@ -635,7 +635,7 @@
 "SW" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/zombie/scientist,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless,
 /area/prefab/crashed_shuttle)
 "Tu" = (
@@ -665,7 +665,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/floor,
 /area/prefab/crashed_shuttle)
 "Xl" = (

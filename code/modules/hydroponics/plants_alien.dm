@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact/rocks
 	name = "Rock"
 	override_icon_state = "Rocks"
-	crop = /obj/item/raw_material/rock
+	crop = /obj/item/material/rock
 	unique_seed = /obj/item/seed/alien/rocks
 	starthealth = 80
 	growtime = 220
@@ -412,4 +412,4 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	harvestable = 1
 	endurance = 100
 	vending = 0
-	crop = /obj/item/raw_material/shard/plasmacrystal
+	crop = /obj/item/material/shard/plasmacrystal

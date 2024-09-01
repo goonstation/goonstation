@@ -15,7 +15,7 @@
 /turf/simulated/floor/black/grime,
 /area/dmm_suite/clear_area)
 "b" = (
-/obj/item/material_piece/bone{
+/obj/item/material/bone{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -31,7 +31,7 @@
 	},
 /area/dmm_suite/clear_area)
 "o" = (
-/obj/item/material_piece/bone{
+/obj/item/material/bone{
 	pixel_y = -6;
 	pixel_x = 4
 	},

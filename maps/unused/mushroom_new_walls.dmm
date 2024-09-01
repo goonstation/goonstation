@@ -4229,7 +4229,7 @@
 /obj/storage/crate/furnacefuel{
 	desc = "A crate with fuel to start the engine in a Emergency.";
 	name = "Emergency Engine Fuel Crate";
-	spawn_contents = list(/obj/item/raw_material/char = 40)
+	spawn_contents = list(/obj/item/material/char = 40)
 	},
 /turf/simulated/floor/neutral,
 /area/station/storage/emergency)

@@ -216,7 +216,7 @@
 /obj/storage/crate/furnacefuel
 	name = "furnace fuel crate"
 	desc = "A crate with fuel for a furnace."
-	spawn_contents = list(/obj/item/raw_material/char = 30)
+	spawn_contents = list(/obj/item/material/char = 30)
 
 /obj/storage/crate/robotics_supplies
 	name = "robotics supplies crate"
@@ -712,30 +712,30 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/reagent_containers/syringe)
 
 	ore
-		spawn_contents = list(/obj/item/raw_material/erebite = 5,
-		/obj/item/raw_material/miracle = 2,
-		/obj/item/raw_material/telecrystal = 5,
-		/obj/item/raw_material/cerenkite = 5,
+		spawn_contents = list(/obj/item/material/erebite = 5,
+		/obj/item/material/miracle = 2,
+		/obj/item/material/telecrystal = 5,
+		/obj/item/material/cerenkite = 5,
 		/obj/item/mining_tool/powered/hammer)
 
 	ore2
-		spawn_contents = list(/obj/item/raw_material/plasmastone = 5,
-		/obj/item/raw_material/uqill = 5,
+		spawn_contents = list(/obj/item/material/plasmastone = 5,
+		/obj/item/material/uqill = 5,
 		/obj/item/clothing/head/helmet/space/industrial,
 		/obj/item/clothing/suit/space/industrial,
 		/obj/item/mining_tool/powered/pickaxe)
 
 	ore3
-		spawn_contents = list(/obj/item/raw_material/cobryl = 5,
-		/obj/item/raw_material/gold = 5,
-		/obj/item/raw_material/claretine = 5,
-		/obj/item/raw_material/bohrum = 5,
+		spawn_contents = list(/obj/item/material/cobryl = 5,
+		/obj/item/material/gold = 5,
+		/obj/item/material/claretine = 5,
+		/obj/item/material/bohrum = 5,
 		/obj/item/mining_tool)
 
 	ore4
-		spawn_contents = list(/obj/item/raw_material/fibrilith = 5,
-		/obj/item/raw_material/miracle = 3,
-		/obj/item/raw_material/starstone,
+		spawn_contents = list(/obj/item/material/fibrilith = 5,
+		/obj/item/material/miracle = 3,
+		/obj/item/material/starstone,
 		/obj/item/mining_tool)
 
 	rad

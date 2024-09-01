@@ -45,7 +45,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "eJ" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = 4;
 	pixel_y = 3
 	},
@@ -80,7 +80,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
 "gG" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = -7;
 	pixel_y = -2
 	},
@@ -144,7 +144,7 @@
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
 "rG" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = -6;
 	pixel_y = 1
 	},
@@ -185,7 +185,7 @@
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "tP" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = 1
 	},
 /obj/decal/cleanable/cobwebFloor,
@@ -227,7 +227,7 @@
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Cu" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = -1;
 	pixel_y = -2
 	},
@@ -266,7 +266,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "EN" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -362,7 +362,7 @@
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
 "Ma" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = -3;
 	pixel_y = 1
 	},
@@ -372,7 +372,7 @@
 /turf/variableTurf/wall,
 /area/prefab/clown_nest)
 "SD" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -396,7 +396,7 @@
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "UC" = (
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_y = 5
 	},
 /turf/variableTurf/floor,

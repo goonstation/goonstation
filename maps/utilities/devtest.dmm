@@ -1758,7 +1758,7 @@
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/fullstack,
-/obj/item/material_piece/copper{
+/obj/item/material/copper{
 	amount = 200
 	},
 /turf/simulated/floor/bluewhite{
@@ -2641,8 +2641,8 @@
 	desc = "Ew.";
 	name = "meat of questionable origin"
 	},
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/storage/crate/bloody,
 /obj/railing/red{
 	dir = 8

@@ -85,7 +85,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aq" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/airless/damaged5,
 /area/space)
@@ -159,7 +159,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "az" = (
@@ -550,7 +550,7 @@
 /turf/simulated/floor/grey,
 /area/station/garden/owlery)
 "bx" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating{
 	icon_state = "platingdmg2"
 	},
@@ -1728,16 +1728,16 @@
 /area/station/quartermaster/office)
 "en" = (
 /obj/storage/crate,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/cotton,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
+/obj/item/material/fabric,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "eo" = (
@@ -7216,7 +7216,7 @@
 	name = "Asclepius Solar Array"
 	})
 "qH" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -16635,7 +16635,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/manufacturer/general{
-	free_resources = list(/obj/item/material_piece/steel = 1, /obj/item/material_piece/copper = 1, /obj/item/material_piece/glass = 1)
+	free_resources = list(/obj/item/material/steel = 1, /obj/item/material/copper = 1, /obj/item/material/glass = 1)
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)

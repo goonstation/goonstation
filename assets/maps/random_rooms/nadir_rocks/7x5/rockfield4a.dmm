@@ -6,14 +6,14 @@
 /turf/space/fluid/acid,
 /area/space)
 "m" = (
-/obj/item/raw_material/cobryl{
+/obj/item/material/cobryl{
 	pixel_y = 22;
 	pixel_x = -4
 	},
 /turf/space/fluid/acid,
 /area/space)
 "G" = (
-/obj/item/raw_material/cobryl{
+/obj/item/material/cobryl{
 	pixel_y = 22
 	},
 /turf/space/fluid/acid,

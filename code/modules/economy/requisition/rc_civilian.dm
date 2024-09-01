@@ -511,7 +511,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/rock
 	name = "rock"
 	commodity = /datum/commodity/ore
-	typepath = /obj/item/raw_material/rock
+	typepath = /obj/item/material/rock
 	feemod = PAY_UNTRAINED
 
 /datum/rc_entry/seed/grass

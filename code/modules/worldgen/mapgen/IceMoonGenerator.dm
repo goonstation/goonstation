@@ -130,7 +130,7 @@
 
 	destroy_asteroid(var/dropOre=1)
 		if(src.ore || prob(33)) // provide less rock
-			default_ore = /obj/item/raw_material/ice
+			default_ore = /obj/item/material/ice
 		. = ..()
 
 /turf/unsimulated/floor/plating/asteroid/icemoon

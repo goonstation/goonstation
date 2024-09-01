@@ -10,7 +10,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "ad" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "ae" = (
@@ -45,7 +45,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "am" = (
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /obj/item/currency/spacecash/hundred,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
@@ -526,7 +526,7 @@
 /obj/item/currency/spacecash/hundred,
 /obj/item/currency/spacecash/five,
 /obj/item/currency/spacecash/thousand,
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /obj/item/currency/spacecash/thousand,
 /obj/item/currency/spacecash/thousand,
 /obj/item/currency/spacecash/thousand,
@@ -1105,7 +1105,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_monkey_hideout)
 "dF" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/storage/crate,
 /turf/simulated/floor,
 /area/prefab/sea_monkey_hideout)

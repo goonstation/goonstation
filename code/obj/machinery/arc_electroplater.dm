@@ -77,7 +77,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return
 
-		if(istype(W, /obj/item/raw_material))
+		if(istype(W, /obj/item/material))
 			boutput(user, SPAN_ALERT("You need to process \the [W] first before using it in [src]!"))
 			return
 

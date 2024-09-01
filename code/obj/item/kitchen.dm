@@ -773,7 +773,7 @@ TRAYS
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, TRUE)
 		var/turf/T = get_turf(src)
 		for (var/i in 1 to (2 - (depth > 1)))
-			var/obj/O = new /obj/item/raw_material/shard/glass
+			var/obj/O = new /obj/item/material/shard/glass
 			O.set_loc(T)
 			if(src.material)
 				O.setMaterial(src.material)

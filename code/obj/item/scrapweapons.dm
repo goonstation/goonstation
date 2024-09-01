@@ -66,14 +66,14 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					successful = TRUE
 
 
-				if (istype(W, /obj/item/raw_material/scrap_metal))
+				if (istype(W, /obj/item/material/scrap_metal))
 					W.change_stack_amount(-1)
 					qdel(src)
 					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger)
 					boutput(user, SPAN_NOTICE("You fuse the handle and scrap metal into a scrap dagger."))
 					successful = TRUE
 
-				else if (istype(W, /obj/item/raw_material/shard))
+				else if (istype(W, /obj/item/material/shard))
 					if (istype(W.material, /datum/material/crystal/glass))
 						W.change_stack_amount(-1)
 						qdel(src)
@@ -167,13 +167,13 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 			else
 				boutput(user, "<span class='alert>You need to attach some wires before you stick anything on the spear!</span>")
 				. = ..()
-		else if (istype(W, /obj/item/raw_material/scrap_metal))
+		else if (istype(W, /obj/item/material/scrap_metal))
 			W.change_stack_amount(-1)
 			qdel(src)
 			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/spear/scrapmetal)
 			boutput(user, SPAN_NOTICE("You combine the blunt spear with the piece of scrap metal to add a sharp point."))
 
-		else if (istype(W, /obj/item/raw_material/shard))
+		else if (istype(W, /obj/item/material/shard))
 			if (istype(W.material, /datum/material/crystal/glass))
 				W.change_stack_amount(-1)
 				qdel(src)
@@ -326,13 +326,13 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass</b>. to complete the club."
 					src.icon_state = "club-wire"
 					src.item_state = "club-wire"
-		else if (istype(W, /obj/item/raw_material/scrap_metal))
+		else if (istype(W, /obj/item/material/scrap_metal))
 			W.change_stack_amount(-1)
 			qdel(src)
 			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/scrapmetal)
 			boutput(user, SPAN_NOTICE("You combine the club with the piece of scrap metal to add some extra weight."))
 
-		else if (istype(W, /obj/item/raw_material/shard))
+		else if (istype(W, /obj/item/material/shard))
 			if (istype(W.material, /datum/material/crystal/glass))
 				W.change_stack_amount(-1)
 				qdel(src)

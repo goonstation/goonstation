@@ -114,7 +114,7 @@ TYPEINFO(/obj/gold_bee)
 		..()
 		for(var/i in 1 to 7)
 			gibs.Add(new /obj/item/stamped_bullion)
-			gibs.Add(new /obj/item/raw_material/gold)
+			gibs.Add(new /obj/item/material/gold)
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)

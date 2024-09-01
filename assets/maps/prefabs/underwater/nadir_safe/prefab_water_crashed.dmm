@@ -6,7 +6,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ad" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ae" = (
@@ -19,16 +19,16 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "af" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ag" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ah" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ai" = (
@@ -40,7 +40,7 @@
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "al" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/damaged3,
 /area/station/turret_protected/sea_crashed)
 "am" = (
@@ -84,14 +84,14 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "au" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "av" = (
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "ax" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
@@ -100,15 +100,15 @@
 /turf/simulated/floor/damaged5,
 /area/station/turret_protected/sea_crashed)
 "az" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/damaged1,
 /area/station/turret_protected/sea_crashed)
 "aA" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aB" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "aC" = (
@@ -211,7 +211,7 @@
 /turf/simulated/floor/circuit/vintage,
 /area/station/turret_protected/sea_crashed)
 "aV" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
@@ -327,7 +327,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "bm" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "bn" = (
@@ -769,7 +769,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cS" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cT" = (
@@ -1260,7 +1260,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "dW" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/lattice,
 /turf/variableTurf/floor,
 /area/noGenerate)

@@ -2238,11 +2238,11 @@ datum
 					if (volume >= 10)
 						T.visible_message(SPAN_NOTICE("The substance flows out and takes a solid form."))
 						if(prob(50))
-							var/atom/movable/B = new /obj/item/raw_material/scrap_metal
+							var/atom/movable/B = new /obj/item/material/scrap_metal
 							B.set_loc(T)
 							B.setMaterial(getMaterial("gnesis"))
 						else
-							var/atom/movable/B = new /obj/item/raw_material/shard
+							var/atom/movable/B = new /obj/item/material/shard
 							B.set_loc(T)
 							B.setMaterial(getMaterial("gnesisglass"))
 						return

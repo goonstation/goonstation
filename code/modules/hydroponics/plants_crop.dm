@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	name = "Cotton"
 	seedcolor = "#FFFFFF"
 	dont_rename_crop = TRUE
-	crop = /obj/item/raw_material/cotton
+	crop = /obj/item/material/cotton
 	starthealth = 10
 	growtime = 40
 	harvtime = 150

@@ -5346,11 +5346,11 @@
 	icon_state = "moonmule";
 	name = "ore-hauling robot"
 	},
-/obj/item/raw_material/plasmastone{
+/obj/item/material/plasmastone{
 	pixel_x = 4;
 	pixel_y = 2
 	},
-/obj/item/raw_material/plasmastone{
+/obj/item/material/plasmastone{
 	pixel_x = -6;
 	pixel_y = 6
 	},
@@ -5404,11 +5404,11 @@
 /area/moon/museum/west)
 "aAG" = (
 /obj/table/auto,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	desc = "It's a real authentic moon rock. Pretty neat!";
 	name = "moon rock"
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	desc = "It's a real authentic moon rock. Pretty neat!";
 	name = "moon rock"
 	},
@@ -6785,7 +6785,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aIE" = (
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -6924,11 +6924,11 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aJi" = (
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /turf/unsimulated/wall/auto/adventure/icemoon,
 /area/lower_arctic/lower)
 "aJj" = (
-/obj/item/raw_material/claretine,
+/obj/item/material/claretine,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aJk" = (
@@ -6943,12 +6943,12 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aJp" = (
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aJq" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/telecrystal,
+/obj/item/material/telecrystal,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aJs" = (
@@ -7387,11 +7387,11 @@
 /area/crater/cave)
 "aKO" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aKP" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aKQ" = (
@@ -8418,12 +8418,12 @@
 /area/crater/biodome/north)
 "aOj" = (
 /obj/decal/stalagtite,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aOk" = (
 /obj/decal/stalagmite,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aOl" = (
@@ -8439,7 +8439,7 @@
 /area/marsoutpost)
 "aOn" = (
 /obj/item/mining_tool,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aOo" = (
@@ -8449,7 +8449,7 @@
 	icon_state = "vent-map";
 	name = "rusted vent"
 	},
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/red/side{
 	dir = 4
 	},
@@ -9211,12 +9211,12 @@
 /area/crater/biodome/north)
 "aQG" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aQH" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/pharosium,
+/obj/item/material/pharosium,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -9691,7 +9691,7 @@
 /area/crater/cave)
 "aSt" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aSu" = (
@@ -9976,11 +9976,11 @@
 /area/crater)
 "aTo" = (
 /obj/decal/mushrooms/type2,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aTp" = (
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aTq" = (
@@ -9988,7 +9988,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aTr" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aTs" = (
@@ -10154,7 +10154,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aUd" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aUe" = (
@@ -10421,12 +10421,12 @@
 	},
 /area/crater/cave)
 "aUO" = (
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aUP" = (
-/obj/item/raw_material/uqill,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aUQ" = (
@@ -10679,7 +10679,7 @@
 /area/crater/biodome/maint)
 "aVA" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/claretine,
+/obj/item/material/claretine,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aVB" = (
@@ -10821,18 +10821,18 @@
 	},
 /area/crater/biodome/crew)
 "aWf" = (
-/obj/item/raw_material/char,
+/obj/item/material/char,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aWg" = (
 /obj/decal/stalagtite,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aWh" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
+/obj/item/material/char,
+/obj/item/material/char,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aWi" = (
@@ -11095,9 +11095,9 @@
 /area/crater/biodome/maint)
 "aWW" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/bohrum,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/bohrum,
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "aWX" = (
@@ -11278,11 +11278,11 @@
 /obj/storage/crate,
 /obj/item/extinguisher,
 /obj/item/reagent_containers/food/snacks/condiment/ironfilings,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "aXE" = (
@@ -11639,7 +11639,7 @@
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYH" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/boulder_trap,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -11892,8 +11892,8 @@
 "aZD" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb2,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aZE" = (
@@ -12068,8 +12068,8 @@
 /area/crater/biodome/south)
 "bag" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bah" = (
@@ -12094,9 +12094,9 @@
 "bal" = (
 /obj/machinery/light/small,
 /obj/storage/crate,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
-/obj/item/raw_material/char,
+/obj/item/material/char,
+/obj/item/material/char,
+/obj/item/material/char,
 /obj/item/screwdriver,
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/pod1)
@@ -13087,7 +13087,7 @@
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "bdo" = (
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater)
@@ -13166,7 +13166,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bdE" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "medium"
 	},
 /turf/unsimulated/floor/arctic/snow/ice,
@@ -13212,8 +13212,8 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bdN" = (
-/obj/item/raw_material/char,
-/obj/item/raw_material/uqill,
+/obj/item/material/char,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bdS" = (
@@ -13236,13 +13236,13 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/entry)
 "bdY" = (
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bdZ" = (
 /obj/decal/mushrooms/type2,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /obj/critter/bat,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -13298,21 +13298,21 @@
 /area/lower_arctic/lower)
 "bel" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bem" = (
-/obj/item/raw_material/rock,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "ben" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beo" = (
-/obj/item/raw_material/uqill,
+/obj/item/material/uqill,
 /obj/item/horseshoe,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -13349,7 +13349,7 @@
 	},
 /area/marsoutpost)
 "beu" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "medium"
 	},
 /obj/decal/cleanable/ash,
@@ -13392,7 +13392,7 @@
 /area/crater/cave)
 "beB" = (
 /obj/decal/mushrooms/type1,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beC" = (
@@ -13428,11 +13428,11 @@
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/toy/sword,
 /obj/item/clothing/under/gimmick/chav,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
-/obj/item/raw_material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
+/obj/item/material/telecrystal,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "beF" = (
@@ -13542,7 +13542,7 @@
 /area/crater)
 "beX" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beY" = (
@@ -13674,7 +13674,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bfp" = (
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bfq" = (
@@ -13847,7 +13847,7 @@
 /area/lower_arctic/lower)
 "bfT" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /turf/unsimulated/wall/auto/adventure/cave,
 /area/crater/cave)
 "bfU" = (
@@ -14030,7 +14030,7 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "bgA" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "small"
 	},
 /obj/grille/steel/broken,
@@ -14115,7 +14115,7 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bgR" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bgS" = (
@@ -14215,7 +14215,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bhm" = (
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bhn" = (
@@ -14376,7 +14376,7 @@
 	},
 /area/marsoutpost)
 "bhU" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "medium"
 	},
 /obj/grille/steel/broken,
@@ -14387,7 +14387,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhW" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "medium"
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -19475,7 +19475,7 @@
 	},
 /area/iomoon/caves)
 "bBb" = (
-/obj/item/raw_material/cerenkite,
+/obj/item/material/cerenkite,
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
 	temperature = 313.15
@@ -22662,8 +22662,8 @@
 /area/crypt/graveyard/swamp)
 "bMG" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "bMH" = (
@@ -23384,7 +23384,7 @@
 /area/crater)
 "bOW" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/syreline,
+/obj/item/material/syreline,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "bOY" = (
@@ -23400,7 +23400,7 @@
 /area/shuttle/john/owlery)
 "bOZ" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/molitz,
+/obj/item/material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater)
 "bPb" = (
@@ -29064,7 +29064,7 @@
 	},
 /area/meat_derelict/guts)
 "ckj" = (
-/obj/item/material_piece/soulsteel,
+/obj/item/material/soulsteel,
 /turf/unsimulated/floor/cave,
 /area/cavetiny)
 "ckk" = (
@@ -29613,7 +29613,7 @@
 /area/sim/racing_entry)
 "clX" = (
 /obj/item/rods/steel,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "medium"
 	},
 /obj/decal/cleanable/blood{
@@ -30901,20 +30901,20 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqE" = (
-/obj/item/material_piece/organic/wood{
+/obj/item/material/organic/wood{
 	pixel_y = -10
 	},
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood{
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood{
 	pixel_y = 10
 	},
-/obj/item/material_piece/organic/wood{
+/obj/item/material/organic/wood{
 	pixel_y = 5
 	},
-/obj/item/material_piece/organic/wood{
+/obj/item/material/organic/wood{
 	pixel_y = -5
 	},
-/obj/item/material_piece/organic/wood,
+/obj/item/material/organic/wood,
 /obj/decal/wallscroll/scroll3{
 	pixel_y = 32
 	},
@@ -30938,7 +30938,7 @@
 	layer = 8
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/mauxite{
+/obj/item/material/mauxite{
 	layer = 10;
 	pixel_y = -8
 	},
@@ -30962,7 +30962,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqK" = (
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/tatami/west,
 /area/dojo)
@@ -31018,11 +31018,11 @@
 /area/dojo)
 "cqS" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqT" = (
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /turf/unsimulated/floor/tatami/west,
 /area/dojo)
 "cqU" = (
@@ -31030,7 +31030,7 @@
 /turf/unsimulated/floor/tatami/east,
 /area/dojo)
 "cqV" = (
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqW" = (
@@ -31039,10 +31039,10 @@
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqX" = (
-/obj/item/raw_material/scrap_metal,
-/obj/item/material_piece/slag,
+/obj/item/material/scrap_metal,
+/obj/item/material/slag,
 /obj/item/rods/steel,
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /turf/unsimulated/floor/dojo/stone,
 /area/dojo)
 "cqY" = (
@@ -31071,7 +31071,7 @@
 /turf/unsimulated/floor/tatami/west,
 /area/dojo)
 "crd" = (
-/obj/item/raw_material/cobryl,
+/obj/item/material/cobryl,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/tatami/north,
 /area/dojo)
@@ -31095,11 +31095,11 @@
 /area/dojo)
 "crh" = (
 /obj/storage/crate/wooden,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
+/obj/item/material/mauxite,
+/obj/item/material/mauxite,
+/obj/item/material/mauxite,
+/obj/item/material/mauxite,
 /turf/unsimulated/floor/tatami/south,
 /area/dojo)
 "cri" = (
@@ -31119,11 +31119,11 @@
 /area/dojo)
 "crl" = (
 /obj/storage/crate/wooden,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
-/obj/item/raw_material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
+/obj/item/material/bohrum,
 /turf/unsimulated/floor/tatami/south,
 /area/dojo)
 "crm" = (
@@ -32161,7 +32161,7 @@
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map"
 	},
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "cuW" = (
@@ -32198,7 +32198,7 @@
 	icon_state = "manifold-map"
 	},
 /obj/item/reagent_containers/pill/cyberpunk,
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
 "cva" = (
@@ -32792,7 +32792,7 @@
 /turf/space,
 /area/space)
 "cwT" = (
-/obj/item/raw_material/scrap_metal{
+/obj/item/material/scrap_metal{
 	desc = "Broken pieces of shuttle docking equipment. Someone must have taken off in a real hurry.";
 	name = "broken dock parts"
 	},
@@ -32880,7 +32880,7 @@
 	name = "torn up cable"
 	},
 /obj/decal/woodclutter,
-/obj/item/material_piece/wad,
+/obj/item/material/wad,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
@@ -33867,7 +33867,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "cAg" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "cAi" = (
@@ -34140,7 +34140,7 @@
 /obj/stool/chair/couch/red{
 	dir = 5
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "cAV" = (
@@ -34317,7 +34317,7 @@
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cBt" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cBu" = (
@@ -34521,10 +34521,10 @@
 	icon_state = "4-8"
 	},
 /obj/decal/woodclutter,
-/obj/item/material_piece/wad,
+/obj/item/material/wad,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -34540,7 +34540,7 @@
 	},
 /area/owlery/gangzone)
 "cCb" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -35067,7 +35067,7 @@
 	},
 /area/owlery/staffhall)
 "cDL" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cDM" = (
@@ -35578,11 +35578,11 @@
 "cFk" = (
 /obj/decal/woodclutter,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -35872,11 +35872,11 @@
 	},
 /obj/decal/woodclutter,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -35948,7 +35948,7 @@
 	},
 /area/owlery/gangzone)
 "cGo" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -36100,7 +36100,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -36276,7 +36276,7 @@
 /area/owlery/office)
 "cHm" = (
 /obj/decal/woodclutter,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -36289,7 +36289,7 @@
 /area/owlery/office)
 "cHn" = (
 /obj/decal/woodclutter,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -37354,7 +37354,7 @@
 	},
 /area/owlery/office)
 "cKG" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
@@ -38190,7 +38190,7 @@
 /area/owlery/gangzone)
 "cNi" = (
 /obj/decal/cleanable/paper,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cNj" = (
@@ -38244,10 +38244,10 @@
 /area/syndicate_station/battlecruiser)
 "cNv" = (
 /obj/decal/woodclutter,
-/obj/item/material_piece/wad,
+/obj/item/material/wad,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -38287,7 +38287,7 @@
 	},
 /area/owlery/gangzone)
 "cNC" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
@@ -38427,7 +38427,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
 "cNX" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/item/rods,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
@@ -38603,7 +38603,7 @@
 "cOo" = (
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -38772,7 +38772,7 @@
 	},
 /area/owlery/gangzone)
 "cOM" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -38847,7 +38847,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,
 /obj/decal/cleanable/paper,
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cPa" = (
@@ -39199,7 +39199,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cPS" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cPT" = (
@@ -39780,7 +39780,7 @@
 	name = "security camera"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/greenwhite{
 	dir = 9
 	},
@@ -39874,16 +39874,16 @@
 /area/owlery/owllock)
 "cRB" = (
 /obj/decal/woodclutter,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
 /obj/decal/cleanable/paper,
-/obj/item/material_piece/wad,
+/obj/item/material/wad,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /turf/unsimulated/grass,
@@ -40888,11 +40888,11 @@
 /area/owlery/owllock)
 "cUe" = (
 /obj/decal/woodclutter,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
@@ -41008,7 +41008,7 @@
 /area/owlery/owllock)
 "cUw" = (
 /obj/decal/cleanable/paper,
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
@@ -41047,20 +41047,20 @@
 /area/owlery/owleryhall)
 "cUD" = (
 /obj/decal/woodclutter,
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
-/obj/item/raw_material/cotton{
+/obj/item/material/cotton{
 	desc = "Seems like it was torn out of some jumpsuits.";
 	name = "shredded fabric"
 	},
 /obj/decal/cleanable/paper,
-/obj/item/material_piece/wad,
+/obj/item/material/wad,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
@@ -42499,7 +42499,7 @@
 /turf/unsimulated/grass,
 /area/owlery/Owlmait2)
 "cYq" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
@@ -42771,14 +42771,14 @@
 	},
 /area/owlery/owleryhall)
 "cZh" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/slime,
 /obj/decal/cleanable/dirt/dirt3,
 /obj/fluid_spawner/polluted_filth/salmonella,
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZi" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/slime,
 /obj/fluid_spawner/polluted_filth/yuck,
 /turf/unsimulated/floor/pool/no_animate,
@@ -43035,7 +43035,7 @@
 /area/afterlife/bar)
 "dao" = (
 /obj/decal/lightshaft,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -43297,7 +43297,7 @@
 	pixel_x = 6;
 	pixel_y = 9
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -43692,7 +43692,7 @@
 	pixel_x = -10;
 	pixel_y = 5
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -44072,7 +44072,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
@@ -48417,7 +48417,7 @@
 /obj/storage/secure/crate{
 	name = "DANGER DO NOT OPEN"
 	},
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /obj/fakeobject/skeleton{
 	desc = "The remnants of lag.";
 	name = "lag"
@@ -49451,7 +49451,7 @@
 /turf/unsimulated/floor/setpieces/swampgrass,
 /area/centcom/offices/tterc)
 "dBH" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 4;
 	pixel_y = 7
 	},
@@ -53260,7 +53260,7 @@
 /turf/unsimulated/floor/seabed,
 /area/centcom/garden)
 "dOE" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
@@ -53379,7 +53379,7 @@
 /turf/unsimulated/floor/seabed,
 /area/centcom/garden)
 "dOR" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/decal/tile_edge/line/green{
 	dir = 9;
 	icon_state = "line1"
@@ -53400,7 +53400,7 @@
 /turf/unsimulated/floor/seabed,
 /area/centcom/garden)
 "dOU" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/decal/tile_edge/line/green{
 	dir = 5;
 	icon_state = "line2"
@@ -53607,7 +53607,7 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dPv" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/decal/tile_edge/line/green{
 	dir = 10;
 	icon_state = "line2"
@@ -55951,7 +55951,7 @@
 /area/hospital/samostrel)
 "eUP" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -56223,7 +56223,7 @@
 /area/upper_arctic/mining)
 "fgU" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "fgX" = (
@@ -58548,7 +58548,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /obj/item/currency/spacecash/bag,
 /turf/unsimulated/floor/black/side{
 	dir = 5
@@ -59262,7 +59262,7 @@
 "hLe" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/item/decoration/ashtray{
 	pixel_x = -2;
 	pixel_y = 10
@@ -59301,7 +59301,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/currency/spacecash/bag,
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /obj/item/clothing/head/that/gold,
 /turf/unsimulated/floor/black/side{
 	dir = 5
@@ -59592,7 +59592,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /obj/item/currency/spacecash/bag,
 /turf/unsimulated/floor/black/side{
 	dir = 9
@@ -59692,7 +59692,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
@@ -61096,7 +61096,7 @@
 /obj/window{
 	dir = 1
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "small"
 	},
 /obj/grille/steel/broken,
@@ -62088,7 +62088,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /obj/item/currency/spacecash/bag,
 /turf/unsimulated/floor/black/side{
 	dir = 8
@@ -69899,9 +69899,9 @@
 	name = "Grungy Crate";
 	welded = 1
 	},
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
+/obj/item/material/gemstone,
 /obj/item/currency/spacecash/bag,
 /obj/item/currency/spacecash/bag,
 /obj/item/currency/spacecash/bag,
@@ -70631,7 +70631,7 @@
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
 "qWF" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
@@ -71528,7 +71528,7 @@
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
 /obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /turf/unsimulated/floor/black/side{
 	dir = 10
 	},
@@ -72709,7 +72709,7 @@
 /obj/item/currency/spacecash/million,
 /obj/item/clothing/gloves/ring/gold,
 /obj/item/toy/figure,
-/obj/item/raw_material/gold,
+/obj/item/material/gold,
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
@@ -77055,7 +77055,7 @@
 /area/hospital/samostrel)
 "woz" = (
 /obj/table/reinforced/auto,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/blood/gibs,
 /obj/machinery/door/window{
 	layer = 4
@@ -77599,7 +77599,7 @@
 /area/void_diner)
 "wIZ" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
 /mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
@@ -77915,7 +77915,7 @@
 /area/owlery/owllock)
 "wWP" = (
 /obj/decal/cleanable/paper,
-/obj/item/material_piece/wad,
+/obj/item/material/wad,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
@@ -78722,7 +78722,7 @@
 /obj/item/circuitboard/telescope,
 /obj/table/auto/desk,
 /obj/item/scrap,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 4;
 	pixel_y = 7
 	},

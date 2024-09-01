@@ -24,9 +24,9 @@
 	},
 /area/space)
 "aY" = (
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
 /turf/unsimulated/floor/martian,
 /area/space)
 "bo" = (
@@ -96,7 +96,7 @@
 /turf/unsimulated/floor/martian,
 /area/space)
 "dN" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/airless/minitiles,
 /area/space)
 "dX" = (
@@ -289,7 +289,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "mf" = (
-/obj/item/raw_material/martian,
+/obj/item/material/martian,
 /turf/unsimulated/floor/martian,
 /area/space)
 "mA" = (
@@ -667,10 +667,10 @@
 	},
 /area/space)
 "AQ" = (
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
 /turf/unsimulated/floor/martian,
 /area/space)
 "Be" = (
@@ -723,11 +723,11 @@
 	},
 /area/space)
 "Dm" = (
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
-/obj/item/raw_material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
+/obj/item/material/martian,
 /turf/unsimulated/floor/martian,
 /area/space)
 "Dy" = (

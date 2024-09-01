@@ -314,7 +314,7 @@
 			. += SPAN_ALERT("The magnetizer must be loaded with a chunk of plasmastone to use.")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/plasmastone) && !loaded)
+		if (istype(W, /obj/item/material/plasmastone) && !loaded)
 			loaded = 1
 			boutput(user, SPAN_NOTICE("You charge the magnetizer with the plasmastone."))
 			qdel(W)
@@ -896,7 +896,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/weakened = 0
 	var/amount = 2
 	var/invincible = 0
-	var/default_ore = /obj/item/raw_material/rock
+	var/default_ore = /obj/item/material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
 	var/list/space_overlays = null
@@ -943,7 +943,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		desc = "That's some cold stuff right there."
 		color = "#9cc4f5"
 		stone_color = "#9cc4f5"
-		default_ore = /obj/item/raw_material/ice
+		default_ore = /obj/item/material/ice
 
 	geode
 		name = "compacted stone"
@@ -974,7 +974,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		stone_color = "#7d93ad"
 		icon_state = "comet"
 		hardness = 1
-		default_ore = /obj/item/raw_material/rock
+		default_ore = /obj/item/material/rock
 
 		// varied layers
 
@@ -982,7 +982,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			name = "comet ice"
 			icon_state = "comet_ice"
 			stone_color = "#a8cdfa"
-			default_ore = /obj/item/raw_material/ice
+			default_ore = /obj/item/material/ice
 			hardness = 2
 
 		ice_dense
@@ -990,7 +990,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			desc = "A compressed layer of comet ice."
 			icon_state = "comet_ice_dense"
 			stone_color = "#2070CC"
-			default_ore = /obj/item/raw_material/ice
+			default_ore = /obj/item/material/ice
 			hardness = 5
 			amount = 6
 
@@ -999,14 +999,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			icon_state = "comet_char"
 			desc = "An inky-black assortment of carbon-rich dust and ice."
 			stone_color = "#111111"
-			default_ore = /obj/item/raw_material/char
+			default_ore = /obj/item/material/char
 
 		glassy
 			name = "blasted regolith"
 			desc = "This stuff has been blasted and fused by stellar radiation and impacts."
 			icon_state = "comet_glassy"
 			stone_color = "#111111"
-			default_ore = /obj/item/raw_material/molitz
+			default_ore = /obj/item/material/molitz
 			hardness = 4
 
 		copper
@@ -1014,21 +1014,21 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			desc = "Rich in soft metals."
 			icon_state = "comet_copper"
 			stone_color = "#553333"
-			default_ore = /obj/item/raw_material/pharosium
+			default_ore = /obj/item/material/pharosium
 
 		iron
 			name = "ferrous rock"
 			desc = "Dense metallic rock."
 			icon_state = "comet_iron"
 			stone_color = "#333333"
-			default_ore = /obj/item/raw_material/mauxite
+			default_ore = /obj/item/material/mauxite
 			hardness = 8
 
 		plasma
 			name = "plasma ice"
 			desc = "Concentrated plasma trapped in dense ice."
 			icon_state = "comet_plasma"
-			default_ore = /obj/item/raw_material/plasmastone
+			default_ore = /obj/item/material/plasmastone
 			hardness = 5
 
 		radioactive
@@ -1036,7 +1036,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			desc = "There's a hazardous amount of radioactive material in this metallic layer."
 			icon_state = "comet_radioactive"
 			stone_color = "#114444"
-			default_ore = /obj/item/raw_material/cerenkite
+			default_ore = /obj/item/material/cerenkite
 			hardness = 10
 
 	algae
@@ -2591,8 +2591,8 @@ TYPEINFO(/obj/item/cargotele)
 				return
 			PCEL.use(5)
 			if (src.target)
-				for(var/obj/item/raw_material/O in orange(1,src))
-					if (istype(O,/obj/item/raw_material/rock)) continue
+				for(var/obj/item/material/O in orange(1,src))
+					if (istype(O,/obj/item/material/rock)) continue
 					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
@@ -2604,10 +2604,10 @@ TYPEINFO(/obj/item/cargotele)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
 					PCEL.use(2)
 					R.set_loc(src.target)
-			for(var/obj/item/raw_material/O in range(6,src))
+			for(var/obj/item/material/O in range(6,src))
 				if (moved >= 10)
 					break
-				if (istype(O,/obj/item/raw_material/rock)) continue
+				if (istype(O,/obj/item/material/rock)) continue
 				step_towards(O, src.loc)
 				moved++
 			for(var/obj/item/scrap/S in range(6,src))

@@ -163,7 +163,7 @@
 
 /datum/commodity/trader/pianzi/telecrystal
 	comname = "Telecrystal"
-	comtype = /obj/item/raw_material/telecrystal
+	comtype = /obj/item/material/telecrystal
 	price_boundary = list(PAY_DOCTORATE,PAY_EXECUTIVE)
 	possible_names = list("Right now I'm in need of raw Telecrystals. Buying for top price as always!",
 	"Telecrystals, weird little things aren't they? What's even more weird is that i'm also buying them for such a great price!")

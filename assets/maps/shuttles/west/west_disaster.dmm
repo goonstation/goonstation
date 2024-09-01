@@ -185,7 +185,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "fL" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "fT" = (
@@ -272,7 +272,7 @@
 	},
 /area/centcom/outside)
 "jK" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "jT" = (
@@ -923,7 +923,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';

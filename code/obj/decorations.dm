@@ -188,7 +188,7 @@
 			if (src._health <= 0)
 				src.visible_message(SPAN_ALERT("\The [src] breaks apart."), SPAN_ALERT("You hear rock shattering."))
 				for (var/i in 1 to 3)
-					new /obj/item/raw_material/rock{rand_pos = TRUE}(src.loc)
+					new /obj/item/material/rock{rand_pos = TRUE}(src.loc)
 				qdel(src)
 		. = ..()
 

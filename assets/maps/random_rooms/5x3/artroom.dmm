@@ -32,7 +32,7 @@
 	pixel_y = 6
 	},
 /obj/decal/cleanable/dirt/dirt5,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "m" = (

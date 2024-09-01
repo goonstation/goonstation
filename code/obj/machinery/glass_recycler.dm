@@ -114,7 +114,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		else if (istype(W, /obj/item/material) && W.material?.getMaterialFlags() & MATERIAL_CRYSTAL && W.material?.getAlpha() <= 180)
 			success = TRUE
 			glass_amt += W.amount * 10
-		else if (istype(W, /obj/item/raw_material/shard))
+		else if (istype(W, /obj/item/material/shard))
 			success = TRUE
 			glass_amt += W.amount
 		else if (istype(W, /obj/item/plate))

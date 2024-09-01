@@ -21,17 +21,17 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/snacks/ice_cream,
 /obj/item/reagent_containers/food/snacks/ice_cream,
 /obj/item/reagent_containers/food/snacks/ice_cream,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
 /turf/simulated/floor/sandytile,
 /area/dmm_suite/clear_area)
 "k" = (
 /obj/stool/neon,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
 /turf/simulated/floor/sandytile,
 /area/dmm_suite/clear_area)
 "m" = (
@@ -63,7 +63,7 @@
 /turf/simulated/floor/marble,
 /area/dmm_suite/clear_area)
 "H" = (
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
 /turf/simulated/floor/marble,
 /area/dmm_suite/clear_area)
 "M" = (

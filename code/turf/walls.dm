@@ -147,7 +147,7 @@ TYPEINFO(/turf/simulated/wall)
 
 
 				if (prob(50))
-					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
+					var/atom/movable/B = new /obj/item/material/scrap_metal
 					B.set_loc(src)
 					B.setMaterial(src.material ? src.material : defaultMaterial)
 
@@ -178,7 +178,7 @@ TYPEINFO(/turf/simulated/wall)
 
 
 				if (prob(50))
-					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
+					var/atom/movable/C = new /obj/item/material/scrap_metal
 					C.set_loc(src)
 					C.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 

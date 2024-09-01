@@ -30,7 +30,7 @@
 /area/space)
 "aah" = (
 /obj/lattice,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "aai" = (
@@ -44,7 +44,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "aak" = (
@@ -52,7 +52,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "aal" = (
@@ -221,7 +221,7 @@
 	},
 /area/space)
 "aaB" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "aaC" = (
@@ -233,7 +233,7 @@
 /area/space)
 "aaD" = (
 /obj/lattice,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/station/wreckage)
 "aaE" = (
@@ -282,7 +282,7 @@
 /turf/space,
 /area/station/solar/east)
 "aaN" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/station/solar/east)
 "aaO" = (
@@ -422,7 +422,7 @@
 /area/space)
 "abj" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
 	},
@@ -448,7 +448,7 @@
 /area/station/wreckage)
 "abn" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/airless/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
@@ -850,7 +850,7 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "aci" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless{
 	icon_state = "platingdmg2"
 	},
@@ -904,7 +904,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "acr" = (
@@ -1066,7 +1066,7 @@
 /area/station/crew_quarters/lounge)
 "acL" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -1563,7 +1563,7 @@
 /area/station/wreckage)
 "aeb" = (
 /obj/table/wood/auto,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
@@ -2256,21 +2256,21 @@
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "age" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless/random,
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "agf" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/airless/random,
 /area/station/security/checkpoint/podbay{
 	name = "NanoTrasen Labor Camp Shuttle"
 	})
 "agh" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -3051,7 +3051,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/engine/substation/pylon)
 "aiV" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/lattice,
 /turf/space,
 /area/space)
@@ -3579,7 +3579,7 @@
 	})
 "aky" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/space)
 "akC" = (
@@ -3996,7 +3996,7 @@
 	name = "Hilarious Storage B"
 	})
 "alP" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -4076,13 +4076,13 @@
 /area/station/engine/substation/pylon)
 "amb" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless/random,
 /area/station/engine/substation/pylon)
 "amc" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/station/engine/substation/pylon)
 "amd" = (
@@ -4164,7 +4164,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/science/spectral)
 "amw" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -4682,7 +4682,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -4777,7 +4777,7 @@
 /obj/grille/catwalk{
 	dir = 4
 	},
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -10332,7 +10332,7 @@
 	requires_power = 0
 	})
 "aFb" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/simulated/floor/plating/airless/random,
 /area/station/hallway/secondary/exit)
 "aFc" = (
@@ -11694,7 +11694,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/mining/refinery)
 "aJb" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -11702,14 +11702,14 @@
 /area/station/hallway/secondary/exit)
 "aJd" = (
 /obj/lattice,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /turf/space,
 /area/space)
 "aJe" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless/random,
 /area/station/hallway/secondary/exit)
 "aJg" = (
@@ -11742,7 +11742,7 @@
 /area/station/hallway/secondary/exit)
 "aJm" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -15208,7 +15208,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -23893,7 +23893,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -25609,7 +25609,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/south)
 "bvE" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
@@ -41470,7 +41470,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "cof" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "cog" = (
@@ -43922,7 +43922,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "cww" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "cwx" = (
@@ -44062,7 +44062,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "cwT" = (
@@ -44355,7 +44355,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/airless{
 	icon_state = "floorscorched1"
@@ -51243,7 +51243,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/genpop)
 "kFI" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "kFS" = (
@@ -52211,7 +52211,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless,
 /area/space)
@@ -54992,7 +54992,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
 "qHm" = (
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/storage/emergency{

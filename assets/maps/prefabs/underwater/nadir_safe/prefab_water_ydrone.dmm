@@ -13,7 +13,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "d" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/variableTurf/clear,
@@ -47,7 +47,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "k" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "m" = (

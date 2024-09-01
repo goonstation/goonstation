@@ -10,7 +10,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "d" = (
-/obj/item/material_piece/koshmarite,
+/obj/item/material/koshmarite,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "e" = (
@@ -48,7 +48,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "m" = (
-/obj/item/material_piece/bone,
+/obj/item/material/bone,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "n" = (

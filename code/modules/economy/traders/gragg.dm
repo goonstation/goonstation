@@ -61,7 +61,7 @@
 
 /datum/commodity/trader/gragg/char
 	comname = "Char"
-	comtype = /obj/item/raw_material/char
+	comtype = /obj/item/material/char
 	amount = 100
 	price_boundary = list(PAY_UNTRAINED,PAY_UNTRAINED*2)
 	possible_names = list("SELLING CHAR. NOT EVEN FOOD.",
@@ -70,7 +70,7 @@
 
 /datum/commodity/trader/gragg/erebite
 	comname = "Strange Red Rock"
-	comtype = /obj/item/raw_material/erebite
+	comtype = /obj/item/material/erebite
 	amount = 5
 	price_boundary = list(PAY_DOCTORATE*2,PAY_DOCTORATE*4)
 	possible_names = list("SELLING GROSS SPICY ROCK. NOT GOOD EAT.",
@@ -79,7 +79,7 @@
 
 /datum/commodity/trader/gragg/cerenkite
 	comname = "Toxic Blue Rock"
-	comtype = /obj/item/raw_material/cerenkite
+	comtype = /obj/item/material/cerenkite
 	amount = 5
 	price_boundary = list(PAY_DOCTORATE,PAY_DOCTORATE*2)
 	possible_names = list("SELLING BAD TASTING ROCK. NOT GOOD EAT.",
@@ -88,7 +88,7 @@
 
 /datum/commodity/trader/gragg/plasmastone
 	comname = "Volatile Purple Rock"
-	comtype = /obj/item/raw_material/plasmastone
+	comtype = /obj/item/material/plasmastone
 	amount = 5
 	price_boundary = list(PAY_DOCTORATE*2,PAY_DOCTORATE*4)
 	possible_names = list("SELLING AWFUL PURPLE ROCK. TASTE TERRIBLE.",
@@ -97,10 +97,10 @@
 
 /datum/commodity/trader/gragg/uqill
 	comname = "Rock Worm Poop"
-	comtype = /obj/item/raw_material/uqill
+	comtype = /obj/item/material/uqill
 	amount = 5
 	price_boundary = list(PAY_IMPORTANT,PAY_IMPORTANT*2)
-	possible_alt_types = list(/obj/item/raw_material/gemstone)
+	possible_alt_types = list(/obj/item/material/gemstone)
 	alt_type_chance = 10
 	possible_names = list("SELLING ROCK WORM POOP. NOT KNOW WHY YOU WANT THAT. BUT THERE IT IS.",
 	"SELLING ROCK WORM POOP. NOT EATING THAT.",
@@ -111,7 +111,7 @@
 	comtype = /obj/artifact_type_spawner/gragg
 	amount = 1
 	price_boundary = list(PAY_IMPORTANT,PAY_EMBEZZLED)
-	possible_alt_types = list(/obj/item/raw_material/miracle)
+	possible_alt_types = list(/obj/item/material/miracle)
 	alt_type_chance = 5
 	possible_names = list("SELLING WEIRD THING I DUG UP. DONT KNOW WHAT IS.",
 	"ODD LITTLE THING. DUG IT UP. NO IDEA. CAN BUY IF WANT.")
@@ -120,41 +120,41 @@
 
 /datum/commodity/trader/gragg/rock
 	comname = "Rock"
-	comtype = /obj/item/raw_material/rock
+	comtype = /obj/item/material/rock
 	price_boundary = list(PAY_UNTRAINED/10,PAY_UNTRAINED/5)
 	possible_names = list("BUYING PLAIN ROCK. NOT ORE, JUST ROCK. STOCKING UP ON FOOD.",
 	"BUYING PLAIN ROCK. NOT METAL OR CRYSTAL, JUST STONE.")
 
 /datum/commodity/trader/gragg/mauxite
 	comname = "Mauxite"
-	comtype = /obj/item/raw_material/mauxite
+	comtype = /obj/item/material/mauxite
 	price_boundary = list(PAY_UNTRAINED/2,PAY_UNTRAINED)
 	possible_names = list("BUYING MAUXITE. CRUNCHY AND DELICIOUS.",
 	"BUYING MAUXITE. GOOD MEAL FOR LITHOVORE. HELPS GROW STRONG CARAPACE.")
 
 /datum/commodity/trader/gragg/bohrum
 	comname = "Bohrum"
-	comtype = /obj/item/raw_material/bohrum
+	comtype = /obj/item/material/bohrum
 	price_boundary = list(PAY_TRADESMAN,PAY_DOCTORATE)
 	possible_names = list("BUYING BOHRUM. GOES GOOD IN STONE SOUP.",
 	"BUYING BOHRUM. VERY DENSE. GOOD AND FILLING.")
 
 /datum/commodity/trader/gragg/cobryl
 	comname = "Cobryl"
-	comtype = /obj/item/raw_material/cobryl
+	comtype = /obj/item/material/cobryl
 	price_boundary = list(PAY_TRADESMAN,PAY_DOCTORATE)
 	possible_names = list("BUYING COBRYL. MAKE GOOD SNACK.",
 	"BUYING COBRYL. TASTY.")
 
 /datum/commodity/trader/gragg/syreline
 	comname = "Syreline"
-	comtype = /obj/item/raw_material/syreline
+	comtype = /obj/item/material/syreline
 	price_boundary = list(PAY_DOCTORATE,PAY_IMPORTANT)
 	possible_names = list("BUYING SYRELINE. NICE SWEET TREAT NOW AND THEN.",
 	"BUYING SYRELINE. NOT TOO MANY THOUGH. DON'T WANT FAT.")
 
 /datum/commodity/trader/gragg/starstone
 	comname = "Rare star-shaped jewel"
-	comtype = /obj/item/raw_material/starstone
+	comtype = /obj/item/material/starstone
 	price_boundary = list(PAY_DONTBUYIT,PAY_DONTBUYIT*2)
 	possible_names = list("WANT BUY PALE BLUE STAR-SHAPED GEMSTONE. EXTREMELY RARE. SELL TO ME IF FIND.")

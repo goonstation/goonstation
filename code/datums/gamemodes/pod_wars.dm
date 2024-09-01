@@ -271,7 +271,7 @@ var/list/pw_rewards_tier3 = null
 	name = "asteroid"
 	desc = "It's asteroid material."
 	hardness = 1
-	default_ore = /obj/item/raw_material/rock
+	default_ore = /obj/item/material/rock
 
 	// varied layers
 
@@ -956,7 +956,7 @@ proc/setup_pw_crate_lists()
 	pw_rewards_tier3 = list(/obj/item/gun/energy/crossbow = 1, /obj/item/device/chameleon = 1,
 		/obj/item/gun/flamethrower/backtank/napalm = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_high = 2,
 		/obj/item/shipcomponent/mainweapon/russian = 3, /obj/item/shipcomponent/mainweapon/disruptor = 3, /obj/item/shipcomponent/mainweapon/laser_ass = 4, /obj/item/shipcomponent/mainweapon/rockdrills = 4,
-		/obj/item/material/iridiumalloy{amount=4} = 1, /obj/item/material/erebite{amount=10} = 1, /obj/item/raw_material/starstone{amount=2} = 1, /obj/item/raw_material/miracle{amount=10} = 1)
+		/obj/item/material/iridiumalloy{amount=4} = 1, /obj/item/material/erebite{amount=10} = 1, /obj/item/material/starstone{amount=2} = 1, /obj/item/material/miracle{amount=10} = 1)
 
 
 /proc/make_fake_explosion(var/atom/I)

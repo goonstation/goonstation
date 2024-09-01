@@ -217,7 +217,7 @@
 	icon_state = "floattiles5"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aH" = (
@@ -5063,8 +5063,8 @@
 "nH" = (
 /obj/decal/cleanable/oil,
 /obj/item/skull,
-/obj/item/raw_material/miracle,
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
+/obj/item/material/miracle,
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
@@ -5216,7 +5216,7 @@
 "nZ" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/item/a_gift/festive,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
@@ -5411,12 +5411,12 @@
 	dir = 8
 	},
 /obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
@@ -5438,7 +5438,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "oG" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/space,
@@ -5802,7 +5802,7 @@
 /turf/simulated/floor/airless/damaged3,
 /area/space)
 "pI" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "pJ" = (
@@ -6027,7 +6027,7 @@
 /turf/simulated/floor/airless/grime,
 /area/space)
 "qp" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/simulated/floor/airless/grime,
@@ -6084,7 +6084,7 @@
 "qz" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/stool/chair{
 	dir = 4
 	},
@@ -6166,7 +6166,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "qK" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/critter/gunbot/drone/buzzdrone{
 	wanderer = 0
 	},
@@ -6418,7 +6418,7 @@
 	dir = 4;
 	color = "b4b4b4"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "ro" = (
@@ -6943,7 +6943,7 @@
 /turf/space,
 /area/space)
 "sq" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "medium"
 	},
 /obj/grille/steel/broken,
@@ -8931,9 +8931,9 @@
 /area/space)
 "xn" = (
 /obj/rack,
-/obj/item/material_piece/sphere/plasmaball,
-/obj/item/material_piece/sphere/plasmaball,
-/obj/item/material_piece/sphere/plasmaball,
+/obj/item/material/sphere/plasmaball,
+/obj/item/material/sphere/plasmaball,
+/obj/item/material/sphere/plasmaball,
 /turf/simulated/floor/black,
 /area/space)
 "xo" = (
@@ -10742,11 +10742,11 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fibrilith,
-/obj/item/raw_material/fibrilith,
-/obj/item/raw_material/fibrilith,
-/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/material/fabric,
+/obj/item/material/fibrilith,
+/obj/item/material/fibrilith,
+/obj/item/material/fibrilith,
+/obj/item/material/shard/plasmacrystal,
 /obj/item/reagent_containers/food/drinks/cola/random,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,

@@ -135,14 +135,14 @@
 /area/prefab/art_workshop)
 "nJ" = (
 /obj/table/wood/auto,
-/obj/item/material_piece/cloth/leather{
+/obj/item/material/cloth/leather{
 	pixel_x = -16
 	},
-/obj/item/material_piece/cloth/beewool{
+/obj/item/material/cloth/beewool{
 	pixel_x = -5
 	},
-/obj/item/material_piece/cloth/beewool,
-/obj/item/material_piece/cloth/beewool{
+/obj/item/material/cloth/beewool,
+/obj/item/material/cloth/beewool{
 	pixel_x = 3;
 	pixel_y = 4
 	},
@@ -196,11 +196,11 @@
 /area/prefab/art_workshop)
 "un" = (
 /obj/table/wood/auto/desk,
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood{
+/obj/item/material/organic/wood,
+/obj/item/material/organic/wood{
 	pixel_x = 8
 	},
-/obj/item/material_piece/organic/wood{
+/obj/item/material/organic/wood{
 	pixel_x = 4;
 	pixel_y = 5
 	},
@@ -251,30 +251,30 @@
 /area/prefab/art_workshop)
 "ze" = (
 /obj/table/wood/auto,
-/obj/item/material_piece/cloth/spidersilk{
+/obj/item/material/cloth/spidersilk{
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/obj/item/material_piece/cloth/spidersilk,
-/obj/item/material_piece/cloth/leather{
+/obj/item/material/cloth/spidersilk,
+/obj/item/material/cloth/leather{
 	pixel_x = 9
 	},
 /turf/simulated/floor/longtile/red,
 /area/prefab/art_workshop)
 "zX" = (
 /obj/table/wood/auto/desk,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_y = 3
 	},
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/item/tinyhammer{
 	pixel_x = -6;
 	pixel_y = 4

@@ -65,11 +65,11 @@
 /area/prefab/synd_lab)
 "l" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = -8;
 	pixel_y = 10
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 8;
 	pixel_y = -1
 	},
@@ -90,7 +90,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/storage/crate{
 	open = 1
 	},
@@ -100,11 +100,11 @@
 /area/prefab/synd_lab)
 "n" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/raw_material/telecrystal{
+/obj/item/material/telecrystal{
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/raw_material/telecrystal{
+/obj/item/material/telecrystal{
 	pixel_x = -4;
 	pixel_y = -1
 	},
@@ -178,19 +178,19 @@
 /area/prefab/synd_lab)
 "y" = (
 /obj/grille/steel,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = 4;
 	pixel_y = 8
 	},
 /turf/simulated/floor/black/grime,
 /area/prefab/synd_lab)
 "z" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2";
 	pixel_x = -8;
 	pixel_y = 9
 	},
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "A" = (
@@ -242,7 +242,7 @@
 	},
 /area/prefab/synd_lab)
 "I" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "J" = (
@@ -328,11 +328,11 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/synd_lab)
 "U" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = -10;
 	pixel_y = -4
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = -9;
 	pixel_y = 8
 	},
@@ -342,7 +342,7 @@
 /turf/simulated/floor/grey,
 /area/prefab/synd_lab)
 "W" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	icon_state = "rock2"
 	},
 /turf/variableTurf/floor,

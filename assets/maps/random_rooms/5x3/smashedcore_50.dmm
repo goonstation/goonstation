@@ -43,7 +43,7 @@
 	anchored = 1
 	},
 /obj/machinery/power/data_terminal,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -14;
 	pixel_y = 12
 	},
@@ -118,7 +118,7 @@
 	pixel_y = -32
 	},
 /obj/machinery/light/small/floor/warm/very,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_y = -8;
 	pixel_x = 7
 	},
@@ -343,7 +343,7 @@
 	},
 /area/dmm_suite/clear_area)
 "Y" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -12;
 	pixel_y = 1
 	},

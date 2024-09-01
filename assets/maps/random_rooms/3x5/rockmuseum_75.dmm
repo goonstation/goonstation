@@ -4,11 +4,11 @@
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_y = -10
 	},
-/obj/item/raw_material/rock,
-/obj/item/raw_material/rock{
+/obj/item/material/rock,
+/obj/item/material/rock{
 	pixel_y = 10
 	},
 /turf/simulated/floor/marble/border_bw,
@@ -21,10 +21,10 @@
 /area/dmm_suite/clear_area)
 "L" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/raw_material/gemstone{
+/obj/item/material/gemstone{
 	pixel_y = 10
 	},
-/obj/item/raw_material/gemstone,
+/obj/item/material/gemstone,
 /obj/item/decoration/flower_vase/vase7{
 	pixel_y = 14
 	},
@@ -32,22 +32,22 @@
 /area/dmm_suite/clear_area)
 "O" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/raw_material/ice{
+/obj/item/material/ice{
 	pixel_y = -10
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_y = 10
 	},
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
 /turf/simulated/floor/marble,
 /area/dmm_suite/clear_area)
 "Q" = (
 /obj/table/glass/reinforced/auto,
 /obj/railing/velvet,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_y = 10
 	},
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/marble,
 /area/dmm_suite/clear_area)
 "S" = (

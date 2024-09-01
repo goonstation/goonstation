@@ -4010,7 +4010,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "anv" = (
 /obj/table/auto,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "anw" = (
@@ -15731,7 +15731,7 @@
 /area/station/hos/quarter)
 "aTQ" = (
 /obj/table/wood/auto/desk,
-/obj/item/material_piece/foolsfoolsgold,
+/obj/item/material/foolsfoolsgold,
 /obj/item/device/gps,
 /turf/simulated/floor/wood,
 /area/station/hos/quarter)
@@ -17192,10 +17192,10 @@
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /obj/item/storage/box/donkpocket_kit,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)

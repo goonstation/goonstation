@@ -37,8 +37,8 @@
 /area/noGenerate)
 "n" = (
 /obj/item/skull,
-/obj/item/raw_material/miracle,
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
+/obj/item/material/miracle,
 /obj/storage/crate/bloody,
 /obj/item/shipcomponent/sensor/ecto,
 /turf/variableTurf/clear,
@@ -51,12 +51,12 @@
 /area/noGenerate)
 "p" = (
 /obj/decal/cleanable/machine_debris,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
-/obj/item/raw_material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
+/obj/item/material/plasmastone,
 /obj/storage/crate/bloody,
 /obj/item/gun/russianrevolver/fake357,
 /obj/item/sea_ladder,

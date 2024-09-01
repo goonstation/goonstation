@@ -1449,7 +1449,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/plasmastone
 	name = "Plasmastone"
 	desc = "1x Plasmastone"
-	contains = list(/obj/item/raw_material/plasmastone)
+	contains = list(/obj/item/material/plasmastone)
 	cost = PAY_IMPORTANT
 	hidden = 1
 	containertype = null
@@ -1467,7 +1467,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/telecrystal
 	name = "Telecrystal"
 	desc = "1x Telecrystal"
-	contains = list(/obj/item/raw_material/telecrystal)
+	contains = list(/obj/item/material/telecrystal)
 	cost = PAY_IMPORTANT
 	hidden = 1
 	containertype = null
@@ -1476,7 +1476,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/telecrystal_bulk
 	name = "Telecrystal Resupply Pack"
 	desc = "10x Telecrystal"
-	contains = list(/obj/item/raw_material/telecrystal = 10)
+	contains = list(/obj/item/material/telecrystal = 10)
 	cost = PAY_IMPORTANT*10
 	hidden = 1
 	containertype = /obj/storage/crate

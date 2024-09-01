@@ -161,9 +161,9 @@ TYPEINFO(/obj/machinery/power/solar)
 		if(!(status & BROKEN))
 			broken()
 		else
-			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+			var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 			G.set_loc(src.loc)
-			G = new /obj/item/raw_material/shard/glass
+			G = new /obj/item/material/shard/glass
 			G.set_loc(src.loc)
 
 			qdel(src)
@@ -230,7 +230,7 @@ TYPEINFO(/obj/machinery/power/solar)
 		if(1)
 			qdel(src)
 			if(prob(15))
-				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+				var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 				G.set_loc(src.loc)
 			return
 		if(2)

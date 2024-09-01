@@ -349,10 +349,10 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					S.setup(src, try_add_to_storage = TRUE)
 			if (8)
 				for (var/i=7, i>0, i--)
-					src.storage.add_contents(new /obj/item/raw_material/telecrystal(src))
+					src.storage.add_contents(new /obj/item/material/telecrystal(src))
 			if (9)
 				var/list/treasures = list(/obj/item/stamped_bullion,\
-				/obj/item/raw_material/telecrystal,\
+				/obj/item/material/telecrystal,\
 				/obj/item/skull,\
 				/obj/item/football,\
 				/obj/item/parts/human_parts/arm/left,\
@@ -367,9 +367,9 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/parrot,\
 				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl,\
-				/obj/item/raw_material/gemstone,\
-				/obj/item/raw_material/miracle,\
-				/obj/item/raw_material/uqill,\
+				/obj/item/material/gemstone,\
+				/obj/item/material/miracle,\
+				/obj/item/material/uqill,\
 				/obj/item/rcd = /obj/item/rcd_ammo/big,\
 				/obj/item/gun/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/pipeshot/scrap/five,\
 				/obj/item/gun/energy/taser_gun,\

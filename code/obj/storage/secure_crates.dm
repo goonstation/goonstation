@@ -183,7 +183,7 @@
 	nuclearfuel
 		name = "Fissile Materials Crate"
 		desc = "Contains the resources required to construct nuclear fuel rods."
-		spawn_contents = list(/obj/item/raw_material/cerenkite = 6)
+		spawn_contents = list(/obj/item/material/cerenkite = 6)
 
 /obj/storage/secure/crate/medical
 	desc = "A secure medical crate."

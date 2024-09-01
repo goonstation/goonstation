@@ -536,7 +536,7 @@
 			. += SPAN_ALERT("The pad's telecrystal socket is empty!")
 
 	attackby(var/obj/item/I, user)
-		if (istype(I, /obj/item/raw_material/telecrystal))
+		if (istype(I, /obj/item/material/telecrystal))
 			qdel(I)
 			has_crystal++
 			boutput(user, SPAN_NOTICE("You plug the telecrystal into the teleportation pad."))

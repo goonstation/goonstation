@@ -208,8 +208,8 @@
 			AST.space_overlays()
 
 		var/list/floors = list()
-		var/list/gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle,/obj/item/raw_material/gemstone,
-		/obj/item/raw_material/telecrystal,/obj/item/raw_material/fibrilith)
+		var/list/gems = list(/obj/item/material/uqill,/obj/item/material/miracle,/obj/item/material/gemstone,
+		/obj/item/material/telecrystal,/obj/item/material/fibrilith)
 		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
 			floors += T
 
@@ -918,7 +918,7 @@
 					I.amount = rand(2,10)
 					I.setMaterial(scrap_material)
 			if (6)
-				I = new /obj/item/raw_material/scrap_metal
+				I = new /obj/item/material/scrap_metal
 				I.set_loc(pick(turfs_near_center))
 				I.setMaterial(scrap_material)
 

@@ -24,12 +24,12 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			src.break_open()
 		else if (src.broken && severity < 3) //prevent spamming concussive charges
 			for (var/i in 1 to rand(2,3))
-				new /obj/item/raw_material/rock(src.loc)
+				new /obj/item/material/rock(src.loc)
 			qdel(src)
 
 /obj/geode/crystal
 	icon_state = "pale"
-	var/crystal_path = /obj/item/raw_material/molitz
+	var/crystal_path = /obj/item/material/molitz
 	var/amount = 5
 	///If true, look for custom material icon states in the form `crystals$$materialname`, otherwise do a best attempt to recolour using the material colour
 	///Darker materials (ie uqil) may need custom crystal sprites
@@ -75,23 +75,23 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			return
 		if (src.embedded_crystals_left <= 0)
 			for (var/i in 1 to 3)
-				new /obj/item/raw_material/rock(src.loc)
+				new /obj/item/material/rock(src.loc)
 			src.visible_message(SPAN_ALERT("[src] smashes into pieces!"))
 			qdel(src)
 			return
 		src.embedded_crystals_left--
 		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 50, 1)
-		var/spawn_type = pick(100; /obj/item/raw_material/molitz, 50; src.crystal_path, 10; /obj/item/raw_material/gemstone)
+		var/spawn_type = pick(100; /obj/item/material/molitz, 50; src.crystal_path, 10; /obj/item/material/gemstone)
 		var/obj/item/crystal = new spawn_type(src.loc)
 		boutput(user, SPAN_NOTICE("You pry \a [crystal] from [src]."))
 		user.lastattacked = src //is this how this works?
 
 	claretine
 		amount = 6
-		crystal_path = /obj/item/raw_material/claretine
+		crystal_path = /obj/item/material/claretine
 
 	molitz_b
-		crystal_path = /obj/item/raw_material/molitz_beta
+		crystal_path = /obj/item/material/molitz_beta
 		break_open()
 			..()
 			var/turf/simulated/T = get_turf(src)
@@ -104,7 +104,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 
 	starstone
 		icon_state = "dark"
-		crystal_path = /obj/item/raw_material/starstone
+		crystal_path = /obj/item/material/starstone
 		custom_crystal_states = TRUE
 		weight = 20
 		New()
@@ -114,7 +114,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 
 	uqill
 		icon_state = "red"
-		crystal_path = /obj/item/raw_material/uqill
+		crystal_path = /obj/item/material/uqill
 		custom_crystal_states = TRUE
 		weight = 40
 		New()
@@ -123,7 +123,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 
 	erebite
 		icon_state = "sandy"
-		crystal_path = /obj/item/raw_material/erebite
+		crystal_path = /obj/item/material/erebite
 		amount = 2
 		weight = 60
 

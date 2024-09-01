@@ -995,7 +995,7 @@ TYPEINFO(/obj/table/glass)
 			gnesis_smash()
 		else
 			for (var/i=0, i<2, i++)
-				var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+				var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 				G.set_loc(src.loc)
 				if (src.material)
 					G.setMaterial(src.material)

@@ -715,17 +715,17 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cD" = (
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)
 "cE" = (
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/slimy_honk)
 "cF" = (
 /obj/table/round/auto,
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/slimy_honk)
@@ -744,7 +744,7 @@
 /area/prefab/slimy_honk)
 "cJ" = (
 /mob/living/critter/spider/clown/cluwne,
-/obj/item/material_piece/cloth/spidersilk,
+/obj/item/material/cloth/spidersilk,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)

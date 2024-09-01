@@ -69,7 +69,7 @@
 
 /datum/commodity/trader/generic/telecrystal
 	comname = "Telecrystals"
-	comtype = /obj/item/raw_material/telecrystal
+	comtype = /obj/item/material/telecrystal
 	amount = 20
 	price_boundary = list(PAY_DOCTORATE,PAY_EXECUTIVE)
 	possible_names = list("We have a limited amount of telecrystal available for purchase.",
@@ -132,7 +132,7 @@
 
 /datum/commodity/trader/generic/anyore
 	comname = "Ore"
-	comtype = /obj/item/raw_material/
+	comtype = /obj/item/material/
 	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
 	possible_names = list("I'm looking to buy any kind of ore you might have.",
 	"Our ore supplies are critically low - I'll buy any kind of ore for this price.")

@@ -70,18 +70,18 @@
 /area/prefab/silverglass/research)
 "cB" = (
 /obj/storage/cart,
-/obj/item/raw_material/eldritch{
+/obj/item/material/eldritch{
 	pixel_x = -7
 	},
-/obj/item/raw_material/martian{
+/obj/item/material/martian{
 	pixel_x = 4;
 	pixel_y = -6
 	},
-/obj/item/raw_material/telecrystal{
+/obj/item/material/telecrystal{
 	pixel_y = 5
 	},
-/obj/item/raw_material/scrap_metal,
-/obj/item/raw_material/molitz{
+/obj/item/material/scrap_metal,
+/obj/item/material/molitz{
 	pixel_x = -1;
 	pixel_y = -3
 	},

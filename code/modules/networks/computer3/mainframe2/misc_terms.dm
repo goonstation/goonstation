@@ -2938,7 +2938,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		..()
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/telecrystal))
+		if (istype(W, /obj/item/material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
@@ -3020,7 +3020,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				return
 
 			var/obj/item/I = usr.equipped()
-			if (istype(I, /obj/item/raw_material/telecrystal))
+			if (istype(I, /obj/item/material/telecrystal))
 				usr.drop_item()
 				I.set_loc(src)
 				telecrystals[targetSlot] = I
@@ -3028,7 +3028,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				boutput(usr, SPAN_NOTICE("You insert [I] into the slot."))
 			else if (istype(I, /obj/item/magtractor))
 				var/obj/item/magtractor/mag = I
-				if (istype(mag.holding, /obj/item/raw_material/telecrystal))
+				if (istype(mag.holding, /obj/item/material/telecrystal))
 					I = mag.holding
 					mag.dropItem(0)
 					I.set_loc(src)
@@ -3272,7 +3272,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/raw_material/telecrystal))
+		if (istype(W, /obj/item/material/telecrystal))
 			return attack_hand(user)
 
 		else if (isscrewingtool(W))

@@ -22,19 +22,19 @@
 	name = "slightly-rusted secure crate";
 	req_access_txt = "52"
 	},
-/obj/item/raw_material/miracle{
+/obj/item/material/miracle{
 	rand_pos = 1
 	},
-/obj/item/raw_material/miracle{
+/obj/item/material/miracle{
 	rand_pos = 1
 	},
-/obj/item/raw_material/miracle{
+/obj/item/material/miracle{
 	rand_pos = 1
 	},
-/obj/item/raw_material/miracle{
+/obj/item/material/miracle{
 	rand_pos = 1
 	},
-/obj/item/raw_material/miracle{
+/obj/item/material/miracle{
 	rand_pos = 1
 	},
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,

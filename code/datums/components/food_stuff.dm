@@ -306,7 +306,7 @@ TYPEINFO(/datum/component/consume/can_eat_raw_materials)
 	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE, PROC_REF(is_a_raw_material))
 
 /datum/component/consume/can_eat_raw_materials/proc/is_a_raw_material(var/mob/M, var/mob/user, var/obj/item/I)
-	if (istype (I, /obj/item/raw_material) || (istype (I, /obj/item/raw_material/shard) || istype(I, /obj/item/raw_material/scrap_metal)) && can_eat_scrap)
+	if (istype (I, /obj/item/material) || (istype (I, /obj/item/material/shard) || istype(I, /obj/item/material/scrap_metal)) && can_eat_scrap)
 		return FORCE_EDIBILITY
 	else
 		return FALSE

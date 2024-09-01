@@ -42,7 +42,7 @@
 /turf/simulated/floor/carpet/clowncarpet,
 /area/prefab/dreamplaza)
 "aT" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/blood{
 	desc = "It looks like it's been here for months."
 	},
@@ -614,7 +614,7 @@
 /area/prefab/dreamplaza)
 "vc" = (
 /obj/lattice,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "vu" = (
@@ -947,7 +947,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "Fu" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 6;
 	pixel_y = 7
 	},
@@ -967,7 +967,7 @@
 /area/noGenerate)
 "FY" = (
 /obj/lattice,
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Gd" = (
@@ -1034,7 +1034,7 @@
 /area/prefab/dreamplaza)
 "Hu" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/item/raw_material/scrap_metal{
+/obj/item/material/scrap_metal{
 	pixel_x = -8;
 	pixel_y = -6
 	},
@@ -1049,7 +1049,7 @@
 	},
 /area/prefab/dreamplaza)
 "HY" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/terrazzo/white,
 /area/prefab/dreamplaza)
@@ -1061,7 +1061,7 @@
 /obj/neon_lining{
 	dir = 5
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 6;
 	pixel_y = -14
 	},
@@ -1266,7 +1266,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "Ob" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 6;
 	pixel_y = -8
 	},
@@ -1573,15 +1573,15 @@
 /turf/simulated/floor/plating,
 /area/prefab/dreamplaza)
 "YH" = (
-/obj/item/raw_material/shard/plasmacrystal,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/plasmacrystal,
+/obj/item/material/shard/glass{
 	pixel_x = -6;
 	pixel_y = 8
 	},
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "YT" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -6;
 	pixel_y = 10
 	},

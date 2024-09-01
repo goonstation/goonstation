@@ -20,7 +20,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 
 	var/list/junktier = list( // junk tier, 60%
 		/obj/item/a_gift/easter,
-		/obj/item/raw_material/rock,
+		/obj/item/material/rock,
 		/obj/item/balloon_animal,
 		/obj/item/cigpacket,
 		/obj/item/clothing/shoes/moon,
@@ -97,7 +97,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 			exclamation = "Loser! "
 
 		if (!prize_type)
-			prize_type = /obj/item/raw_material/rock
+			prize_type = /obj/item/material/rock
 		var/obj/item/prize = new prize_type
 		prize.set_loc(src.loc)
 		prize.layer += 0.1

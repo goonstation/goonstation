@@ -4356,11 +4356,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death(var/gibbed)
 		playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, pitch = 1.7)
-		new /obj/item/raw_material/claretine(src.loc)
-		new /obj/item/raw_material/chitin(src.loc)
+		new /obj/item/material/claretine(src.loc)
+		new /obj/item/material/chitin(src.loc)
 		if (prob(70))
-			new /obj/item/raw_material/claretine(src.loc)
-			new /obj/item/raw_material/chitin(src.loc)
+			new /obj/item/material/claretine(src.loc)
+			new /obj/item/material/chitin(src.loc)
 		..()
 
 	critter_attack(mob/target)

@@ -258,7 +258,7 @@
 			/obj/item/clothing/head/butt,
 			/obj/item/parts/human_parts/arm,
 			/obj/item/parts/human_parts/leg,
-			/obj/item/raw_material/cotton,
+			/obj/item/material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
 			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
@@ -284,7 +284,7 @@
 
 		New()
 			..()
-			allowed = list(/obj/item/raw_material/)
+			allowed = list(/obj/item/material/)
 
 		large
 			name = "large mining satchel"

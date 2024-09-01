@@ -22,8 +22,8 @@
 /area/prefab/mauxite_hideout)
 "eI" = (
 /obj/machinery/portable_reclaimer,
-/obj/item/material_piece/mauxite,
-/obj/item/material_piece/mauxite,
+/obj/item/material/mauxite,
+/obj/item/material/mauxite,
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "iM" = (
@@ -50,7 +50,7 @@
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "pq" = (
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "pG" = (
@@ -96,7 +96,7 @@
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "uk" = (
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
@@ -104,7 +104,7 @@
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "uX" = (
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /obj/railing/yellow{
 	dir = 8
 	},
@@ -142,13 +142,13 @@
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/prefab/mauxite_hideout)
 "AJ" = (
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /mob/living/critter/fermid{
 	dir = 8
 	},
 /obj/fakeobject/skeleton,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/uqill{
+/obj/item/material/gemstone,
+/obj/item/material/uqill{
 	pixel_y = 5;
 	pixel_x = -5
 	},
@@ -193,7 +193,7 @@
 /area/prefab/mauxite_hideout)
 "Hj" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "HU" = (
@@ -232,14 +232,14 @@
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "MD" = (
-/obj/item/raw_material/gold{
+/obj/item/material/gold{
 	pixel_x = 7;
 	pixel_y = 5
 	},
-/obj/item/raw_material/gold{
+/obj/item/material/gold{
 	pixel_y = -10
 	},
-/obj/item/raw_material/gold{
+/obj/item/material/gold{
 	pixel_x = -8
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
@@ -262,7 +262,7 @@
 "Rb" = (
 /obj/table/mauxite/auto,
 /obj/item/plate,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "TS" = (
@@ -303,7 +303,7 @@
 /obj/railing/yellow{
 	dir = 1
 	},
-/obj/item/raw_material/mauxite,
+/obj/item/material/mauxite,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "Ww" = (

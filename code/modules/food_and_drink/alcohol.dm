@@ -144,7 +144,7 @@
 				user.visible_message(SPAN_ALERT("<b>[user]</b> hits [O] with [src], shattering it open!"))
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 				if (makes_shards_on_break)
-					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
+					var/obj/item/material/shard/glass/G = new /obj/item/material/shard/glass
 					G.set_loc(U)
 				src.broken = 1
 				src.reagents.reaction(U)

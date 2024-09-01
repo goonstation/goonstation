@@ -7010,7 +7010,7 @@
 /area/moon/underground)
 "Ap" = (
 /obj/table/nanotrasen/auto,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	desc = "It's a real authentic moon rock. Pretty neat!";
 	name = "moon rock";
 	pixel_y = 4

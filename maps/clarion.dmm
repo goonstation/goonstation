@@ -514,11 +514,11 @@
 /obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/fish/bass,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen,
@@ -7894,7 +7894,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/item/material_piece/foolsfoolsgold,
+/obj/item/material/foolsfoolsgold,
 /obj/item/device/gps,
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -10541,7 +10541,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/machine_debris,
-/obj/item/material_piece/slag,
+/obj/item/material/slag,
 /obj/landmark/halloween,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -16833,7 +16833,7 @@
 	dir = 4
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -8;
 	pixel_y = 1
 	},

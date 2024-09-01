@@ -6,7 +6,7 @@
 /turf/space/fluid/acid,
 /area/space)
 "s" = (
-/obj/item/raw_material/miracle{
+/obj/item/material/miracle{
 	pixel_y = 21
 	},
 /turf/space/fluid/acid,

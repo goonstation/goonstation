@@ -468,7 +468,7 @@
 						add = CM.price
 						if (CM.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //not many wanderers travel to these far reaches. welcome, honored guest.
+						if (istype(O, /obj/item/material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //not many wanderers travel to these far reaches. welcome, honored guest.
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
 								qdel(O)
@@ -496,7 +496,7 @@
 						add = C.price
 						if (C.indemand)
 							add *= shippingmarket.demand_multiplier
-						if (istype(O, /obj/item/raw_material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //have you come to bring us from this desolate land?
+						if (istype(O, /obj/item/material) || istype(O, /obj/item/sheet) || istype(O, /obj/item/material) || istype(O, /obj/item/plant) || istype(O, /obj/item/reagent_containers/food/snacks/plant) || istype(O, /obj/item/reagent_containers/food/snacks/pizza)) //have you come to bring us from this desolate land?
 							add *= O:amount // TODO: fix for snacks
 							if (sell)
 								qdel(O)

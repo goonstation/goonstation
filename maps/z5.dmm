@@ -212,7 +212,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -3400,7 +3400,7 @@
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "ES" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "ET" = (
@@ -5166,7 +5166,7 @@
 /area/mining/magnet_control)
 "QR" = (
 /obj/lattice,
-/obj/item/raw_material/shard,
+/obj/item/material/shard,
 /turf/space,
 /area/noGenerate)
 "QT" = (
@@ -6211,7 +6211,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/space,
 /area/noGenerate)
 "XT" = (
@@ -6250,7 +6250,7 @@
 /obj/item/clothing/head/genki,
 /obj/item/clothing/head/genki,
 /obj/item/storage/rockit,
-/obj/item/raw_material/miracle,
+/obj/item/material/miracle,
 /obj/item/clothing/suit/space/suv,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)

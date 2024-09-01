@@ -2561,7 +2561,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/security)
 "ajy" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/airless/plating/scorched,
 /area/station/wreckage)
 "ajz" = (
@@ -3854,7 +3854,7 @@
 /area/station/security/brig)
 "aoX" = (
 /obj/structure/girder/displaced,
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "aoY" = (
@@ -3865,7 +3865,7 @@
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage)
 "aoZ" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -22953,7 +22953,7 @@
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/material_piece/slag{
+/obj/item/material/slag{
 	pixel_x = -4;
 	pixel_y = -5
 	},
@@ -36708,7 +36708,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "cBd" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	icon_state = "small"
 	},
 /obj/decal/cleanable/dirt,
@@ -64603,11 +64603,11 @@
 "xIf" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/bloody,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
+/obj/item/material/cerenkite,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "xIC" = (

@@ -111,7 +111,7 @@
 				if(prob(20))
 					new /obj/item/cigbutt(pick(turfs))
 				else if(prob(20))
-					new /obj/item/raw_material/shard/glass(pick(turfs))
+					new /obj/item/material/shard/glass(pick(turfs))
 
 		for(i in 1 to rand(0,4))
 			T = get_random_station_turf()

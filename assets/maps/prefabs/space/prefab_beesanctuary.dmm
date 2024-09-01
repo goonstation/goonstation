@@ -375,7 +375,7 @@
 /obj/critter/domestic_bee/zombee,
 /obj/window/crystal/east,
 /obj/window/crystal/west,
-/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/material/shard/plasmacrystal,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "oo" = (
@@ -826,7 +826,7 @@
 /area/prefab/bee_sanctuary)
 "BY" = (
 /obj/window/crystal/east,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -14;
 	pixel_y = 1
 	},
@@ -1492,7 +1492,7 @@
 	icon_state = "floattiles4"
 	},
 /obj/map/light/void,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -14;
 	pixel_y = 1
 	},
@@ -1585,19 +1585,19 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/prefab/bee_sanctuary)
 "Ug" = (
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = 7;
 	pixel_y = -4
 	},
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -5;
 	pixel_y = 4
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Us" = (
-/obj/item/raw_material/shard/plasmacrystal,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal,
+/obj/item/material/shard/plasmacrystal{
 	pixel_x = -9;
 	pixel_y = 8
 	},
@@ -1605,10 +1605,10 @@
 /area/prefab/bee_sanctuary)
 "UD" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_y = -13
 	},
-/obj/item/raw_material/shard/plasmacrystal{
+/obj/item/material/shard/plasmacrystal{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor,

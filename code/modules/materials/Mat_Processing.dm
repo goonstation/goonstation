@@ -234,7 +234,7 @@
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [O]!"), SPAN_NOTICE("You use [src]'s automatic loader on [O]."))
 			var/amtload = 0
-			for (var/obj/item/raw_material/M in O.contents)
+			for (var/obj/item/material/M in O.contents)
 				M.set_loc(src)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
@@ -323,7 +323,7 @@
 	var/working = FALSE
 
 	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/raw_material))
+		if (istype(I, /obj/item/material))
 			boutput(user, SPAN_ALERT("[I] needs to be refined before it can be turned into sheets."))
 			return
 		if (!istype(I, /obj/item/material))
@@ -524,7 +524,7 @@
 				return
 
 			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
-			if( istype(W, /obj/item/material) || istype(W, /obj/item/raw_material) )
+			if( istype(W, /obj/item/material) || istype(W, /obj/item/material) )
 				addMaterial(W, user)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))

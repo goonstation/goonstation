@@ -402,8 +402,8 @@
 				src.visible_message(SPAN_NOTICE("[user] shakes [src] to awaken its hunger!"))
 
 	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/raw_material) && !isdead(src))
-			if((istype(I, /obj/item/raw_material/shard)) || (istype(I, /obj/item/raw_material/scrap_metal)))
+		if(istype(I, /obj/item/material) && !isdead(src))
+			if((istype(I, /obj/item/material/shard)) || (istype(I, /obj/item/material/scrap_metal)))
 				src.visible_message("[M] tries to feed [src] but they won't take it!")
 				return
 			if (src.tamed)
@@ -421,10 +421,10 @@
 
 	seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
-			if (istype(ore, /obj/item/raw_material/shard)) continue
-			if (istype(ore, /obj/item/raw_material/scrap_metal)) continue
-			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
+		for (var/obj/item/material/ore in view(range, get_turf(src)))
+			if (istype(ore, /obj/item/material/shard)) continue
+			if (istype(ore, /obj/item/material/scrap_metal)) continue
+			if (!(istype(ore, /obj/item/material/rock)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore
 
 	setup_healths()

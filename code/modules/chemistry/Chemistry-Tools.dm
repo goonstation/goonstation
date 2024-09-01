@@ -533,7 +533,7 @@ proc/ui_describe_reagents(atom/A)
 			shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
 		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
-		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass
+		var/obj/item/material/shard/glass/shard = new /obj/item/material/shard/glass
 		shard.set_loc(get_turf(src))
 		qdel(src)
 		return TRUE

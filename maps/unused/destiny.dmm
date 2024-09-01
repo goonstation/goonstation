@@ -17588,10 +17588,10 @@
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom,
 /obj/item/storage/box/donkpocket_kit,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
-/obj/item/raw_material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
+/obj/item/material/ice,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "cMt" = (

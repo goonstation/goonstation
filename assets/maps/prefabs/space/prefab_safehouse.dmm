@@ -76,14 +76,14 @@
 "dh" = (
 /obj/fakeobject/safehouse/cloning_console,
 /obj/decal/cleanable/blood,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	layer = 3.2;
 	pixel_x = -3
 	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	layer = 3.2;
 	pixel_x = 6;
 	pixel_y = -3
@@ -246,7 +246,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 9;
 	pixel_y = 9
 	},

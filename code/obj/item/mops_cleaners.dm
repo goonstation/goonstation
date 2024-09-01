@@ -1043,7 +1043,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 
 		var/list/obj/item/items_to_suck = list()
 		for(var/obj/item/I in T)
-			if((I.w_class <= W_CLASS_TINY || istype(I, /obj/item/raw_material/shard)) && !I.anchored)
+			if((I.w_class <= W_CLASS_TINY || istype(I, /obj/item/material/shard)) && !I.anchored)
 				items_to_suck += I
 		if(length(items_to_suck))
 			var/item_desc = length(items_to_suck) > 1 ? "some items" : "\the [items_to_suck[1]]"

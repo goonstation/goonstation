@@ -9147,7 +9147,7 @@
 /area/space)
 "asM" = (
 /obj/window/reinforced/east,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "asN" = (
@@ -34332,7 +34332,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bPU" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/space,
 /area/space)
 "bPX" = (
@@ -34992,7 +34992,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "caF" = (
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	tag = "icon-medium";
 	icon_state = "medium"
 	},

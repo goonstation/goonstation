@@ -8,7 +8,7 @@
 /area/prefab/ghost_house)
 "ag" = (
 /obj/decal/woodclutter,
-/obj/item/material_piece/organic/wood,
+/obj/item/material/organic/wood,
 /turf/simulated/floor/grass,
 /area/prefab/ghost_house)
 "ah" = (

@@ -642,7 +642,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/real_goldfish)
 	icon_state = "goldenfish"
 	inhand_color = "#f0ec08"
 	rarity = ITEM_RARITY_LEGENDARY
-	slice_product = /obj/item/raw_material/gold
+	slice_product = /obj/item/material/gold
 	default_material = "gold"
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)

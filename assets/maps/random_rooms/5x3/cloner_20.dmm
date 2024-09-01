@@ -52,11 +52,11 @@
 /area/dmm_suite/clear_area)
 "H" = (
 /obj/decal/tile_edge/stripe/big,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 8;
 	pixel_y = 15
 	},
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = -4;
 	pixel_y = 8
 	},

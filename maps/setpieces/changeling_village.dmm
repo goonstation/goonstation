@@ -561,14 +561,14 @@
 	icon_state = "yellow"
 	})
 "lf" = (
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 14;
 	pixel_y = -11
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 24
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 17;
 	pixel_y = -4
 	},
@@ -815,7 +815,7 @@
 	icon_state = "green"
 	})
 "sc" = (
-/obj/item/raw_material/rock,
+/obj/item/material/rock,
 /turf/simulated/wall/auto/asteroid/mountain/snow,
 /area/space)
 "sk" = (
@@ -2160,26 +2160,26 @@
 	})
 "QJ" = (
 /obj/burning_barrel/bonfire,
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 13
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_y = -17;
 	pixel_x = -11
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 17;
 	pixel_y = -4
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 17;
 	pixel_y = -11
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_x = 10;
 	pixel_y = -17
 	},
-/obj/item/raw_material/rock{
+/obj/item/material/rock{
 	pixel_y = -17
 	},
 /turf/simulated/floor/auto/dirt,

@@ -36,7 +36,7 @@
 /area/dmm_suite/clear_area)
 "p" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass{
 	pixel_x = 5;
 	pixel_y = 9
 	},
@@ -78,8 +78,8 @@
 /area/dmm_suite/clear_area)
 "J" = (
 /obj/decal/cleanable/dirt,
-/obj/item/raw_material/shard/glass,
-/obj/item/raw_material/shard/glass{
+/obj/item/material/shard/glass,
+/obj/item/material/shard/glass{
 	pixel_x = -8;
 	pixel_y = 9
 	},

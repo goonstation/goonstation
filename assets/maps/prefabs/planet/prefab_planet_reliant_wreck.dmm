@@ -27,7 +27,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/cable,
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "fr" = (
@@ -189,7 +189,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "uS" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "va" = (
@@ -425,7 +425,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "GG" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "HT" = (
@@ -516,7 +516,7 @@
 /turf/variableTurf/clear,
 /area/pod_wars/spacejunk/reliant)
 "Ox" = (
-/obj/item/raw_material/shard/glass,
+/obj/item/material/shard/glass,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "Oz" = (
@@ -630,7 +630,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/reliant)
 "XV" = (
-/obj/item/raw_material/scrap_metal,
+/obj/item/material/scrap_metal,
 /turf/variableTurf/clear,
 /area/pod_wars/spacejunk/reliant)
 "Yv" = (

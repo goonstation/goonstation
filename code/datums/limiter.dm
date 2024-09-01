@@ -4,7 +4,7 @@ var/global/datum/limiter/limiter
 	limiter = new
 	limiter.addLimit(/obj/effects/sparks, 500)
 	limiter.addLimit(/obj/item/rods, 300)
-	limiter.addLimit(/obj/item/raw_material/shard, 300)
+	limiter.addLimit(/obj/item/material/shard, 300)
 	limiter.addLimit(/sound, 300)
 
 /datum/limiter

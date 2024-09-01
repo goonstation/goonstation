@@ -828,7 +828,7 @@ var/list/trinket_safelist = list(
 	/obj/item/instrument/harmonica,
 	/obj/item/horseshoe,
 	/obj/item/kitchen/utensil/knife,
-	/obj/item/raw_material/rock,
+	/obj/item/material/rock,
 	/obj/item/pen/fancy,
 	/obj/item/pen/odd,
 	/obj/item/plant/herb/cannabis/spawnable,

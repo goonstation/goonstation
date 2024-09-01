@@ -135,7 +135,7 @@
 	desc = "It's a small freezer unit that produces ice. Looks like it's hooked into the station water mains."
 	icon_state = "dispenser_ice"
 	filled_icon_state = "dispenser_ice"
-	withdraw_type = /obj/item/raw_material/ice
+	withdraw_type = /obj/item/material/ice
 	deposit_type = null
 	amount = 10000
 	display_amount = 0
