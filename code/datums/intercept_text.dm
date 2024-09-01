@@ -95,8 +95,8 @@
 	var/traitor_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
-	if(prob(prob_right_job))
-		if (correct_mob && correct_mob:assigned_role != "MODE")
+	if(prob(prob_right_job) && correct_mob:assigned_role != "MODE")
+		if (correct_mob)
 			traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
