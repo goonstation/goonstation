@@ -276,6 +276,14 @@ ABSTRACT_TYPE(/obj/machine_tray)
 /obj/machine_tray/attack_ai(mob/user as mob)
 	attack_hand(user)
 
+/obj/machine_tray/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/grab))
+		var/obj/item/grab/G = I
+		G.affecting.set_loc(src.loc)
+		qdel(I)
+	else
+		src.place_on(I, user)
+
 /obj/machine_tray/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!(isobj(O) || ismob(O)) || O.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || user.contents.Find(O))
 		return
