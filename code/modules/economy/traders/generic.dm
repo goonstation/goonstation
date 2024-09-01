@@ -61,7 +61,7 @@
 
 /datum/commodity/trader/generic/fabric
 	comname = "Cloth Fabric"
-	comtype = /obj/item/material_piece/cloth/cottonfabric
+	comtype = /obj/item/material/cloth/cottonfabric
 	amount = 300
 	price_boundary = list(PAY_UNTRAINED/10,PAY_UNTRAINED/5)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",

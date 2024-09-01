@@ -69,7 +69,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = FALSE
-	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
+	var/skinresult = /obj/item/material/cloth/leather //YEP
 	var/max_skins = FALSE
 
 	// for critters with removable arms(brullbar, bear)

@@ -2071,7 +2071,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
-	material_piece = /obj/item/material_piece/cloth/jean
+	material_piece = /obj/item/material/cloth/jean
 
 	New()
 		. = ..()

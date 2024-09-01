@@ -540,13 +540,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/cobryl
 	name = "cobryl"
 	commodity = /datum/commodity/ore/cobryl
-	typepath_alt = /obj/item/material_piece/cobryl
+	typepath_alt = /obj/item/material/cobryl
 	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/stack/syreline
 	name = "syreline"
 	commodity = /datum/commodity/ore/syreline
-	typepath_alt = /obj/item/material_piece/syreline
+	typepath_alt = /obj/item/material/syreline
 	feemod = PAY_IMPORTANT
 
 /datum/req_contract/civilian/robotics

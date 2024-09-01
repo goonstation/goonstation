@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	var/fallen_offset_z = -6
 	/// we want to use Z rather than Y incase anything gets rotated, it would look all jank
 
-	var/material_piece = /obj/item/material_piece/cloth/cottonfabric
+	var/material_piece = /obj/item/material/cloth/cottonfabric
 
 	stamina_damage = 0
 	stamina_cost = 0
@@ -92,7 +92,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 
 	proc/finish_rip_up(mob/user)
 		for (var/i in 1 to 3)
-			var/obj/item/material_piece/CF = new material_piece
+			var/obj/item/material/CF = new material_piece
 			CF.pixel_x = rand(-4,4)
 			CF.pixel_y = rand(-4,4)
 			CF.set_loc(get_turf(src))

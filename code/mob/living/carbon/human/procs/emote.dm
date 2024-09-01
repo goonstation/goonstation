@@ -274,8 +274,8 @@
 							else
 								if(prob(10) && istype(src.loc, /turf/simulated/floor/specialroom/freezer)) //ZeWaka: Fix for null.loc
 									message = "<b>[src]</B> farts. The fart freezes in MID-AIR!!!"
-									new/obj/item/material_piece/fart(src.loc)
-									var/obj/item/material_piece/fart/F = new /obj/item/material_piece/fart
+									new/obj/item/material/fart(src.loc)
+									var/obj/item/material/fart/F = new /obj/item/material/fart
 									F.set_loc(src.loc)
 
 						src.expel_fart_gas(oxyplasmafart)

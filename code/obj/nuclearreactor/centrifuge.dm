@@ -36,7 +36,7 @@
 				//we done here, spit out results
 				var/obj/item/nuclear_waste/waste = new(get_turf(src))
 				if(floor(extracted_fuel) >= 1)
-					var/obj/item/material_piece/plutonium/goodstuff = new(get_turf(src))
+					var/obj/item/material/plutonium/goodstuff = new(get_turf(src))
 					goodstuff.amount = floor(extracted_fuel)
 					goodstuff.UpdateStackAppearance()
 					extracted_fuel -= goodstuff.amount

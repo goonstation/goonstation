@@ -4,9 +4,9 @@
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
-	free_resources = list(/obj/item/material_piece/steel = 5,
-		/obj/item/material_piece/copper = 5,
-		/obj/item/material_piece/glass = 5)
+	free_resources = list(/obj/item/material/steel = 5,
+		/obj/item/material/copper = 5,
+		/obj/item/material/glass = 5)
 	available = list(/datum/manufacture/screwdriver,
 		/datum/manufacture/wirecutters,
 		/datum/manufacture/wrench,
@@ -91,9 +91,9 @@
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
-	free_resources = list(/obj/item/material_piece/steel = 5,
-		/obj/item/material_piece/copper = 5,
-		/obj/item/material_piece/glass = 5)
+	free_resources = list(/obj/item/material/steel = 5,
+		/obj/item/material/copper = 5,
+		/obj/item/material/glass = 5)
 	available = list(/datum/manufacture/robo_frame,
 		/datum/manufacture/full_cyborg_standard,
 		/datum/manufacture/full_cyborg_light,
@@ -194,10 +194,10 @@
 	supplemental_desc = "This one produces medical equipment and sterile clothing."
 	icon_state = "fab-med"
 	icon_base = "med"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2,
-		/obj/item/material_piece/cloth/cottonfabric = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2,
+		/obj/item/material/cloth/cottonfabric = 2)
 	available = list(
 		/datum/manufacture/scalpel,
 		/datum/manufacture/circular_saw,
@@ -260,11 +260,11 @@
 	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
 	icon_state = "fab-sci"
 	icon_base = "sci"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2,
-		/obj/item/material_piece/cloth/cottonfabric = 2,
-		/obj/item/material_piece/cobryl = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2,
+		/obj/item/material/cloth/cottonfabric = 2,
+		/obj/item/material/cobryl = 2)
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
@@ -311,9 +311,9 @@
 	supplemental_desc = "This one produces mining equipment like concussive charges and powered tools."
 	icon_state = "fab-mining"
 	icon_base = "mining"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2)
 	available = list(/datum/manufacture/pick,
 		/datum/manufacture/powerpick,
 		/datum/manufacture/blastchargeslite,
@@ -362,9 +362,9 @@
 	supplemental_desc = "This one produces modules for space pods or minisubs."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2)
 	available = list(
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/sub/preassembeled_parts,
@@ -397,9 +397,9 @@
 	supplemental_desc = "This one can create a wide variety of one-size-fits-all jumpsuits, as well as backpacks and radio headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5,
-		/obj/item/material_piece/steel = 5,
-		/obj/item/material_piece/copper = 5)
+	free_resources = list(/obj/item/material/cloth/cottonfabric = 5,
+		/obj/item/material/steel = 5,
+		/obj/item/material/copper = 5)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 		/datum/manufacture/shoes_brown,
@@ -481,18 +481,18 @@
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2)
 
 /obj/machinery/manufacturer/personnel
 	name = "personnel equipment manufacturer"
 	supplemental_desc = "This one can produce blank ID cards and access implants."
 	icon_state = "fab-access"
 	icon_base = "access"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2)
 	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
 	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
 
@@ -503,10 +503,10 @@
 	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
-	free_resources = list(/obj/item/material_piece/steel = 5,
-		/obj/item/material_piece/copper = 5,
-		/obj/item/material_piece/glass = 5,
-		/obj/item/material_piece/cloth/cottonfabric = 5)
+	free_resources = list(/obj/item/material/steel = 5,
+		/obj/item/material/copper = 5,
+		/obj/item/material/glass = 5,
+		/obj/item/material/cloth/cottonfabric = 5)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/id_card,
 		/datum/manufacture/implant_access,
@@ -562,8 +562,8 @@
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resources = list(/obj/item/material_piece/steel = 1,
-		/obj/item/material_piece/organic/wood = 1)
+	free_resources = list(/obj/item/material/steel = 1,
+		/obj/item/material/organic/wood = 1)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
@@ -579,10 +579,10 @@
 	desc = "This manufacturing unit seems to have been loaded with a bunch of nonstandard blueprints, apparently to be useful in surviving \"extreme scenarios\"."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resources = list(/obj/item/material_piece/steel = 50,
-		/obj/item/material_piece/copper = 50,
-		/obj/item/material_piece/glass = 50,
-		/obj/item/material_piece/cloth/cottonfabric = 50)
+	free_resources = list(/obj/item/material/steel = 50,
+		/obj/item/material/copper = 50,
+		/obj/item/material/glass = 50,
+		/obj/item/material/cloth/cottonfabric = 50)
 	accept_blueprints = FALSE
 	available = list(
 		/datum/manufacture/engspacesuit,
@@ -624,9 +624,9 @@
 	desc = "This one produces specialist engineering devices."
 	icon_state = "fab-engineering"
 	icon_base = "engineering"
-	free_resources = list(/obj/item/material_piece/steel = 2,
-		/obj/item/material_piece/copper = 2,
-		/obj/item/material_piece/glass = 2)
+	free_resources = list(/obj/item/material/steel = 2,
+		/obj/item/material/copper = 2,
+		/obj/item/material/glass = 2)
 	available = list(
 		/datum/manufacture/screwdriver/yellow,
 		/datum/manufacture/wirecutters/yellow,

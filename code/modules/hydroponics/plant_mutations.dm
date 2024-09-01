@@ -810,7 +810,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	dont_rename_crop = TRUE
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
-	crop = /obj/item/material_piece/rubber/latex
+	crop = /obj/item/material/rubber/latex
 	assoc_reagents = list("rubber")
 	infusion_reagents = list("spaceglue")
 

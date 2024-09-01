@@ -369,7 +369,7 @@
 		return
 
 	proc/create_chunk(var/turf/T)
-		var/obj/item/material_piece/wad/blob/BC = new
+		var/obj/item/material/wad/blob/BC = new
 		BC.set_loc(T)
 		BC.setMaterial(src.material)
 		BC.name = "chunk of blob"

@@ -35,7 +35,7 @@
 	var/good_grip = 1
 
 	butcherable = BUTCHER_ALLOWED
-	skinresult = /obj/item/material_piece/cloth/spidersilk
+	skinresult = /obj/item/material/cloth/spidersilk
 	max_skins = 4
 
 	blood_id = "black_goop"

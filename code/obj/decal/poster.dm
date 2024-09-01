@@ -1208,7 +1208,7 @@
 
 		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
 			user.visible_message(SPAN_ALERT("[user] cuts off the [src.name] with [W]."), SPAN_ALERT("You cut off the [src.name] with [W]."))
-			var/obj/item/material_piece/cloth/C = new(user.loc)
+			var/obj/item/material/cloth/C = new(user.loc)
 			if (src.material) C.setMaterial(src.material)
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
 			qdel(src)

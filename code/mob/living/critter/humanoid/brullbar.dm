@@ -13,7 +13,7 @@
 	can_disarm = TRUE
 	blood_id = "beff"
 	burning_suffix = "humanoid"
-	skinresult = /obj/item/material_piece/cloth/brullbarhide
+	skinresult = /obj/item/material/cloth/brullbarhide
 	max_skins = 3
 	health_brute = 50
 	health_brute_vuln = 0.6
@@ -222,7 +222,7 @@
 	desc = "You should run."
 	icon_state = "brullbarking"
 	icon_state_dead = "brullbarking-dead"
-	skinresult = /obj/item/material_piece/cloth/kingbrullbarhide
+	skinresult = /obj/item/material/cloth/kingbrullbarhide
 	max_skins = 5
 	health_brute = 250
 	health_brute_vuln = 0.7

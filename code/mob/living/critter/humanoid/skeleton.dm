@@ -7,8 +7,8 @@
 	var/list/produce = list()
 
 	for (var/i = 1, i <= 4, i++)
-		var/PT = /obj/item/material_piece/bone
-		var/obj/item/material_piece/bone/P = new PT
+		var/PT = /obj/item/material/bone
+		var/obj/item/material/bone/P = new PT
 		P.set_loc(T)
 		SPAWN(0)
 			for (var/k = 1, k <= 3, k++)
@@ -17,8 +17,8 @@
 
 	var/extra = rand(2,4)
 	for (var/i = 1, i <= extra, i++)
-		var/PT = /obj/item/material_piece/bone
-		var/obj/item/material_piece/bone/P  = new PT
+		var/PT = /obj/item/material/bone
+		var/obj/item/material/bone/P  = new PT
 		P.set_loc(T)
 		P.streak_object(alldirs)
 		produce += P
@@ -49,7 +49,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive
-	skinresult = /obj/item/material_piece/bone
+	skinresult = /obj/item/material/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
 	no_stamina_stuns = TRUE

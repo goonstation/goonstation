@@ -629,7 +629,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	icon_state = "blobfish"
 	inhand_color = "#da8fac"
 	rarity = ITEM_RARITY_RARE
-	slice_product = /obj/item/material_piece/wad/blob/random
+	slice_product = /obj/item/material/wad/blob/random
 
 //other
 
@@ -655,7 +655,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	icon_state = "treefish"
 	inhand_color = "#22c912"
 	rarity = ITEM_RARITY_RARE
-	slice_product = /obj/item/material_piece/organic/wood
+	slice_product = /obj/item/material/organic/wood
 	default_material = "wood"
 
 	slapsound()
@@ -674,6 +674,6 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 	desc = "This must be an experiment from a bored roboticist."
 	icon_state = "borgfish"
 	inhand_color = "#b6b5b5"
-	slice_product = /obj/item/material_piece/steel
+	slice_product = /obj/item/material/steel
 	default_material = "steel"
 	rarity = ITEM_RARITY_RARE

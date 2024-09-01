@@ -59,7 +59,7 @@
 		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
 		if (src.apply_material && length(materials) > 0)
-			var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
+			var/obj/item/material/applicable_material = locate(materials[materials[1]])
 			var/datum/material/mat = applicable_material?.material
 			A.setMaterial(mat)
 		return 1
@@ -92,7 +92,7 @@
 					F.removeMaterial()
 					var/atom/thing = new frame_path(F)
 					// Locate the reference of the first item requirment we use
-					var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
+					var/obj/item/material/applicable_material = locate(materials[materials[1]])
 					thing.setMaterial(applicable_material.material)
 					F.deconstructed_thing = thing
 				else
@@ -637,7 +637,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		var/obj/item/sheet/S = A
 		..()
-		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
+		var/obj/item/material/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/glass
@@ -662,7 +662,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
+		var/obj/item/material/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
@@ -894,8 +894,8 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/obj/item/material_piece/applicable_insulator = locate(materials[getManufacturingRequirement("insulated")])
-		var/obj/item/material_piece/applicable_conductor = locate(materials[getManufacturingRequirement("conductive")])
+		var/obj/item/material/applicable_insulator = locate(materials[getManufacturingRequirement("insulated")])
+		var/obj/item/material/applicable_conductor = locate(materials[getManufacturingRequirement("conductive")])
 		coil.setInsulator(applicable_insulator.material)
 		coil.setConductor(applicable_conductor.material)
 		return 1

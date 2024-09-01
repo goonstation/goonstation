@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 /datum/plant/crop/bamboo
 	name = "Bamboo"
 	seedcolor = "#FCDA91"
-	crop = /obj/item/material_piece/organic/bamboo
+	crop = /obj/item/material/organic/bamboo
 	starthealth = 15
 	growtime = 20
 	harvtime = 40
@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	name = "Tree"
 	seedcolor = "#9C5E13"
 	dont_rename_crop = TRUE
-	crop = /obj/item/material_piece/organic/wood
+	crop = /obj/item/material/organic/wood
 	starthealth = 40
 	growtime = 200
 	harvtime = 260

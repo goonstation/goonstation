@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	var/obj/target_item = null
 	var/cooktime = 0
 	var/max_wclass = W_CLASS_BULKY
-	var/obj/item/material_piece/my_bar = null
+	var/obj/item/material/my_bar = null
 
 	New()
 		..()
@@ -81,7 +81,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You need to process \the [W] first before using it in [src]!"))
 			return
 
-		if(istype(W,/obj/item/material_piece))
+		if(istype(W,/obj/item/material))
 			if(my_bar)
 				boutput(user, SPAN_ALERT("There is already a source material loaded in [src]!"))
 				return
@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 				return
 			else
 				src.visible_message(SPAN_NOTICE("[user] loads one of the [W] into the [src]."))
-				var/obj/item/material_piece/single_bar = W.split_stack(1)
+				var/obj/item/material/single_bar = W.split_stack(1)
 				single_bar.set_loc(src)
 				single_bar.dropped(user)
 				src.my_bar = single_bar

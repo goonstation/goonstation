@@ -78,7 +78,7 @@
 				if (src.fallen)
 					var/turf/our_turf = get_turf(src)
 					for (var/i in 0 to 2)
-						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
+						var/obj/item/material/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
 						log.Turn(90)
 					qdel(src)
 					return

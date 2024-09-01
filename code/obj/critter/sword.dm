@@ -111,7 +111,7 @@
 
 			SPAWN(55)
 				for(var/alloy_count = rand(2, 4), alloy_count > 0, alloy_count--)
-					new/obj/item/material_piece/iridiumalloy(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
+					new/obj/item/material/iridiumalloy(locate(death_loc_x + rand(-1, 1), death_loc_y + rand(-1, 1), death_loc_z))
 					alloy_count--
 
 			SPAWN(60)

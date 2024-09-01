@@ -220,7 +220,7 @@
 
 		if(OTHER)
 			T.ReplaceWith(floor_turf_type, handle_air=FALSE)
-			new/obj/item/material_piece/slag(T)
+			new/obj/item/material/slag(T)
 
 /datum/map_generator/room_maze_generator/random
 	room_size = 3

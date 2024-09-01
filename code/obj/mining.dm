@@ -959,7 +959,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		default_ore = null
 		hardness = 1
 		default_material = "jean"
-		default_ore = /obj/item/material_piece/cloth/jean
+		default_ore = /obj/item/material/cloth/jean
 		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
 		color = "#88c2ff"
 		stone_color = "#88c2ff"

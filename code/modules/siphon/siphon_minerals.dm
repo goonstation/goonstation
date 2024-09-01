@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	tick_req = 62
 	shear = 127
 	sens_window = 0
-	product = /obj/item/material_piece/wad/blob
+	product = /obj/item/material/wad/blob
 
 	New()
 		src.tick_req = rand(8,11) * 10

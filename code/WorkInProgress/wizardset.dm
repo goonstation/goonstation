@@ -591,7 +591,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	proc/create_bar(var/obj/machinery/portable_reclaimer/creator)
 		var/datum/material/MAT = new assoc_material()
 		var/bar_type = getProcessedMaterialForm(MAT)
-		var/obj/item/material_piece/BAR = new bar_type(creator.get_output_location())
+		var/obj/item/material/BAR = new bar_type(creator.get_output_location())
 		BAR.setMaterial(MAT)
 		playsound(src.loc, creator.sound_process, 40, 1)
 

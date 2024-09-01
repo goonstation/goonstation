@@ -357,7 +357,7 @@ obj/item/storage/wall/clothingrack/hatrack
 	anchored = ANCHORED
 	icon_state = "mineralshelf"
 	plane = PLANE_DEFAULT
-	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
+	can_hold = list(/obj/item/raw_material,/obj/item/material)
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
 	update_icon()

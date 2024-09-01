@@ -41,7 +41,7 @@
 	if (integrity_state == 0 && isweldingtool(W) && W:try_weld(user,1))
 		boutput(user, SPAN_NOTICE("You removed the mangled metal from the SWORD Engine!"))
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
-		var/obj/item/material_piece/iridiumalloy/A = new /obj/item/material_piece/iridiumalloy(get_turf(src))
+		var/obj/item/material/iridiumalloy/A = new /obj/item/material/iridiumalloy(get_turf(src))
 		A.amount = 1
 		integrity_state = 1
 		online = 0

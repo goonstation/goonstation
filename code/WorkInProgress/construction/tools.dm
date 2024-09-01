@@ -322,7 +322,7 @@ TYPEINFO(/obj/item/material_shaper)
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 
-	proc/determine_material(var/obj/item/material_piece/D, mob/user as mob)
+	proc/determine_material(var/obj/item/material/D, mob/user as mob)
 		var/datum/material/DM = D.material
 		var/which = null
 		if ((DM.getMaterialFlags() & MATERIAL_METAL) && (DM.getMaterialFlags() & MATERIAL_CRYSTAL))
@@ -414,8 +414,8 @@ TYPEINFO(/obj/item/material_shaper)
 	attackby(var/obj/item/W, mob/user as mob)
 		if (W.disposed)
 			return
-		if (istype(W, /obj/item/material_piece))
-			var/obj/item/material_piece/D = W
+		if (istype(W, /obj/item/material))
+			var/obj/item/material/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
 				qdel(W)
@@ -455,8 +455,8 @@ TYPEINFO(/obj/item/material_shaper)
 		if (!istype(over_object.loc, /turf))
 			processing = 0
 			return
-		if (istype(over_object, /obj/item/material_piece))
-			var/obj/item/material_piece/D = over_object
+		if (istype(over_object, /obj/item/material))
+			var/obj/item/material/D = over_object
 			if (!D.material)
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, SPAN_ALERT("That does not have a usable material."))
@@ -477,7 +477,7 @@ TYPEINFO(/obj/item/material_shaper)
 
 			user.visible_message(SPAN_NOTICE("[user] begins stuffing materials into [src]."))
 
-			for (var/obj/item/material_piece/M in over_object.loc)
+			for (var/obj/item/material/M in over_object.loc)
 				if (user.loc != procloc)
 					break
 				var/datum/material/MT = M.material

@@ -16,7 +16,7 @@
 	butcherable = BUTCHER_ALLOWED
 	chase_text = "punches out"
 
-	skinresult = /obj/item/material_piece/cloth/leather
+	skinresult = /obj/item/material/cloth/leather
 	max_skins = 2
 
 	New()

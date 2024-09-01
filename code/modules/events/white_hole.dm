@@ -205,8 +205,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/decal/cleanable/flockdrone_debris = 1,
 			/obj/decal/cleanable/flockdrone_debris/fluid = 1,
 			/obj/item/gun/energy/flock = 0.05,
-			/obj/item/material_piece/gnesisglass = 5,
-			/obj/item/material_piece/gnesis = 5,
+			/obj/item/material/gnesisglass = 5,
+			/obj/item/material/gnesis = 5,
 			/datum/reagent/flockdrone_fluid = 3,
 		),
 		"chapel" = list(
@@ -724,7 +724,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/raw_material/miracle = 1,
 			/obj/item/raw_material/erebite = 0.5,
 			/obj/item/raw_material/starstone = 0.01,
-			/obj/item/material_piece/cloth/carbon = 0.02,
+			/obj/item/material/cloth/carbon = 0.02,
 			/obj/item/raw_material/gemstone = 3,
 		),
 		//haha get irradiated nerds
@@ -758,7 +758,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper/book/from_file/nuclear_engineering = 10,
 			/obj/item/chem_grenade/firefighting = 5,
 			/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,
-			/obj/item/material_piece/plutonium = 1,
+			/obj/item/material/plutonium = 1,
 			/obj/item/raw_material/cerenkite = 10,
 		),
 		"janitorial" = list(

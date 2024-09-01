@@ -232,7 +232,7 @@
 
 /datum/ore/nanite
 	name = "nanite cluster"
-	output = /obj/item/material_piece/cloth/carbon
+	output = /obj/item/material/cloth/carbon
 	events = list(/datum/ore/event/loot_crate)
 	event_chance = 1
 	tiles_per_rock_min = 5

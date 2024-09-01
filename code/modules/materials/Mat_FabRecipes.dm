@@ -701,7 +701,7 @@
 			mat.removeAllTriggers(TRIGGERS_ON_ATTACK)
 			mat.addTrigger(TRIGGERS_ON_ATTACK, A)
 
-			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
+			var/obj/item/material/wad/W = new /obj/item/material/wad
 
 			if(refined?.material)
 				mat.setCanMix(0)

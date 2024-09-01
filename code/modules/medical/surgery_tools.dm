@@ -928,8 +928,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 					ownerMob.u_equip(tool)
 					qdel(tool)
 
-			else if (istype(tool, /obj/item/material_piece/cloth))
-				var/obj/item/material_piece/cloth/C = tool
+			else if (istype(tool, /obj/item/material/cloth))
+				var/obj/item/material/cloth/C = tool
 				C.in_use = FALSE
 				C.change_stack_amount(-1)
 

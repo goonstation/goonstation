@@ -16,7 +16,7 @@
 	pet_text = list("gently baps", "pets", "cuddles")
 	feed_text = "chatters happily!"
 
-	skinresult = /obj/item/material_piece/cloth/leather
+	skinresult = /obj/item/material/cloth/leather
 	max_skins = 1
 
 	New()

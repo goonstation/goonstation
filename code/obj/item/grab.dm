@@ -225,7 +225,7 @@
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
-					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
+					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material/cloth))
 						SPAWN(0.3 SECONDS) //wait for them to move in
 							if (!QDELETED(src))
 								attack_particle(src.assailant, src.affecting)
@@ -997,7 +997,7 @@
 //SPECIAL GRAB ITEMS STUFF//
 ////////////////////////////
 
-/obj/item/material_piece/cloth
+/obj/item/material/cloth
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/rag_muffle
 

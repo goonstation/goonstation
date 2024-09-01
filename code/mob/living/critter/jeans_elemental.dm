@@ -11,8 +11,8 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	butcherable = BUTCHER_ALLOWED
-	meat_type = /obj/item/material_piece/cloth/jean
-	custom_vomit_type = /obj/item/material_piece/cloth/jean
+	meat_type = /obj/item/material/cloth/jean
+	custom_vomit_type = /obj/item/material/cloth/jean
 	name_the_meat = FALSE
 	health_brute = 40
 	health_brute_vuln = 0.5

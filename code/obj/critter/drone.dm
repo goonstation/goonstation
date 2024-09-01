@@ -1099,9 +1099,9 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		if (A?.virtual)
 			droploot = /obj/item/device/key/virtual
 		else
-			new/obj/item/material_piece/iridiumalloy(src.loc)
-			new/obj/item/material_piece/iridiumalloy(src.loc)
-			new/obj/item/material_piece/iridiumalloy(src.loc)
+			new/obj/item/material/iridiumalloy(src.loc)
+			new/obj/item/material/iridiumalloy(src.loc)
+			new/obj/item/material/iridiumalloy(src.loc)
 		..()
 
 /obj/critter/gunbot/drone/iridium/whydrone

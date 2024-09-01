@@ -179,23 +179,23 @@ var/global/list/material_cache
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
-		return /obj/item/material_piece // just in case
+		return /obj/item/material // just in case
 
 	// higher on this list means higher priority, be careful with it!
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
-		return /obj/item/material_piece/block
+		return /obj/item/material/block
 	if (MAT.getMaterialFlags() & MATERIAL_METAL)
-		return /obj/item/material_piece/metal
+		return /obj/item/material/metal
 	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)
-		return /obj/item/material_piece/wad
+		return /obj/item/material/wad
 	if (MAT.getMaterialFlags() & MATERIAL_CLOTH)
-		return /obj/item/material_piece/cloth
+		return /obj/item/material/cloth
 	if (MAT.getMaterialFlags() & MATERIAL_RUBBER)
-		return /obj/item/material_piece/block
+		return /obj/item/material/block
 	if (MAT.getMaterialFlags() & MATERIAL_ENERGY)
-		return /obj/item/material_piece/sphere
+		return /obj/item/material/sphere
 
-	return /obj/item/material_piece
+	return /obj/item/material
 
 /// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)

@@ -10,7 +10,7 @@
 
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!I.material) return 0
 		if(!I.material.hasProperty(required_property)) return 0
 		if(greater_than)
@@ -39,7 +39,7 @@
 	name = "Radioactive Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(I.material.getProperty("radioactive") < 1 && I.material.getProperty("n_radioactive") < 1) return 0
 		return ..()
 
@@ -47,7 +47,7 @@
 	name = "Conductive Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(I.material.getProperty("electrical") < 5) return 0
 		return ..()
 
@@ -61,7 +61,7 @@
 	name = "Rubber"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_RUBBER)) return 0
 		return ..()
 
@@ -69,7 +69,7 @@
 	name = "Energy"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!( I.material.getMaterialFlags() & MATERIAL_ENERGY)) return 0
 		return ..()
 
@@ -77,7 +77,7 @@
 	name = "Cloth"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH)) return 0
 		return ..()
 
@@ -85,7 +85,7 @@
 	name = "Metal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_METAL)) return 0
 		return ..()
 
@@ -93,7 +93,7 @@
 	name = "Crystal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CRYSTAL)) return 0
 		return ..()
 
@@ -101,7 +101,7 @@
 	name = "Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_ORGANIC)) return 0
 		return ..()
 
@@ -109,7 +109,7 @@
 	name = "Metal or Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_ORGANIC || I.material.getMaterialFlags() & MATERIAL_METAL)) return 0
 		return ..()
 
@@ -117,7 +117,7 @@
 	name = "Metal or Crystal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CRYSTAL || I.material.getMaterialFlags() & MATERIAL_METAL)) return 0
 		return ..()
 
@@ -125,7 +125,7 @@
 	name = "Metal or Crystal or Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CRYSTAL || I.material.getMaterialFlags() & MATERIAL_METAL||I.material.getMaterialFlags() & MATERIAL_ORGANIC)) return 0
 		return ..()
 
@@ -133,7 +133,7 @@
 	name = "Cloth or Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH || I.material.getMaterialFlags() & MATERIAL_ORGANIC)) return 0
 		return ..()
 
@@ -141,7 +141,7 @@
 	name = "Cloth or Rubber"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH || I.material.getMaterialFlags() & MATERIAL_RUBBER)) return 0
 		return ..()
 
@@ -149,7 +149,7 @@
 	name = "Cloth or Organic or Rubber"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH || I.material.getMaterialFlags() & MATERIAL_ORGANIC || I.material.getMaterialFlags() & MATERIAL_RUBBER)) return 0
 		return ..()
 
@@ -157,7 +157,7 @@
 	name = "Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		return ..()
 
 /datum/matfab_part/optionalanymat
@@ -165,7 +165,7 @@
 	optional = TRUE
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		return ..()
 
 /datum/matfab_part/anymat_canmix
@@ -173,7 +173,7 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!I.material.getCanMix()) return 0
-		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/raw_material)) return 0
 		return ..()
 
 /datum/matfab_part/lens

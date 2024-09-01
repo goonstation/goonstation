@@ -22,10 +22,10 @@
 		else if (istype(content_holder, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/fab = content_holder
 			if (length(fab.free_resources) > 0)
-				for (var/obj/item/material_piece/mat_type as anything in fab.free_resources)
+				for (var/obj/item/material/mat_type as anything in fab.free_resources)
 					src.resources_to_produce += get_initial_item_health(mat_type) * fab.free_resources[mat_type]
 			else
-				for (var/obj/item/material_piece/mat in fab.contents)
+				for (var/obj/item/material/mat in fab.contents)
 					src.resources_to_produce += get_initial_item_health(mat) * mat.amount
 			src.resources_to_produce += round(fab.reagents.total_volume / 40)
 		else if (istype(content_holder, /obj/submachine/seed_vendor))

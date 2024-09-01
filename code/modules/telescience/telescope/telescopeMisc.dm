@@ -271,6 +271,6 @@ TYPEINFO(/obj/machinery/lrteleporter)
 					qdel(src)
 
 		if(prob(5) && alive && !dying)
-			new/obj/item/material_piece/iridiumalloy(src.loc)
+			new/obj/item/material/iridiumalloy(src.loc)
 
 		..()

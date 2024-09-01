@@ -153,7 +153,7 @@
 		if(istype(over_object, /obj/afterlife_donations))
 			return ..()
 
-		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
+		if (istype(over_object,/obj/item/material) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
 				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]!"))
@@ -685,99 +685,99 @@
 
 // bars, tied into the new material system
 
-/obj/item/material_piece/mauxite
+/obj/item/material/mauxite
 	desc = "A processed bar of Mauxite, a sturdy common metal."
 	default_material = "mauxite"
 	icon_state = "bar"
 
-/obj/item/material_piece/molitz
+/obj/item/material/molitz
 	desc = "A cut block of Molitz, a common crystalline substance."
 	default_material = "molitz"
 	icon_state = "bar"
 
-/obj/item/material_piece/pharosium
+/obj/item/material/pharosium
 	desc = "A processed bar of Pharosium, a conductive metal."
 	default_material = "pharosium"
 	icon_state = "bar"
 
-/obj/item/material_piece/cobryl
+/obj/item/material/cobryl
 	desc = "A processed bar of Cobryl, a somewhat valuable metal."
 	default_material = "cobryl"
 	icon_state = "bar"
 
-/obj/item/material_piece/claretine
+/obj/item/material/claretine
 	desc = "A compressed Claretine, a highly conductive salt."
 	default_material = "claretine"
 	icon_state = "bar"
 
-/obj/item/material_piece/bohrum
+/obj/item/material/bohrum
 	desc = "A processed bar of Bohrum, a heavy and highly durable metal."
 	default_material = "bohrum"
 	icon_state = "bar"
 
-/obj/item/material_piece/syreline
+/obj/item/material/syreline
 	desc = "A processed bar of Syreline, an extremely valuable and coveted metal."
 	default_material = "syreline"
 	icon_state = "bar"
 
-/obj/item/material_piece/plasmastone
+/obj/item/material/plasmastone
 	desc = "A cut block of Plasmastone."
 	default_material = "plasmastone"
 	icon_state = "bar"
 
-/obj/item/material_piece/uqill
+/obj/item/material/uqill
 	desc = "A cut block of Uqill. It is quite heavy."
 	default_material = "uqill"
 	icon_state = "bar"
 
-/obj/item/material_piece/koshmarite
+/obj/item/material/koshmarite
 	desc = "A cut block of an unusual dense stone. It seems similar to obsidian."
 	default_material = "koshmarite"
 	icon_state = "bar"
 
-/obj/item/material_piece/viscerite
+/obj/item/material/viscerite
 	desc = "A cut block of a disgusting flesh-like material. Grody."
 	default_material = "viscerite"
 	icon_state = "bar"
 
-/obj/item/material_piece/char
+/obj/item/material/char
 	desc = "A cut block of Char."
 	default_material = "char"
 	icon_state = "wad"
 	color = "#221122"
 
-/obj/item/material_piece/telecrystal
+/obj/item/material/telecrystal
 	desc = "A cut block of Telecrystal."
 	default_material = "telecrystal"
 	icon_state = "bar"
 
-/obj/item/material_piece/fibrilith
+/obj/item/material/fibrilith
 	desc = "A cut block of Fibrilith."
 	default_material = "fibrilith"
 	icon_state = "bar"
 
-/obj/item/material_piece/cerenkite
+/obj/item/material/cerenkite
 	desc = "A cut block of Cerenkite."
 	default_material = "cerenkite"
 	icon_state = "bar"
 
-/obj/item/material_piece/erebite
+/obj/item/material/erebite
 	desc = "A cut block of Erebite."
 	default_material = "erebite"
 	icon_state = "bar"
 
-/obj/item/material_piece/ice
+/obj/item/material/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"
 	default_material = "ice"
 
 /// Material piece
-/obj/item/material_piece
+/obj/item/material
 	name = "bar"
 	desc = "Some sort of processed material bar."
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "bar"
 	max_stack = INFINITY
-	stack_type = /obj/item/material_piece
+	stack_type = /obj/item/material
 	/// used for prefab bars
 	default_material = null
 	uses_default_material_appearance = TRUE
@@ -797,7 +797,7 @@
 
 	split_stack(var/toRemove)
 		if(toRemove >= amount || toRemove < 1) return 0
-		var/obj/item/material_piece/P = new src.type
+		var/obj/item/material/P = new src.type
 		P.set_loc(src.loc)
 		P.setMaterial(src.material)
 		src.change_stack_amount(-toRemove)
@@ -810,7 +810,7 @@
 			if (!isnum_safe(splitnum) || splitnum >= amount || splitnum < 1)
 				boutput(user, SPAN_ALERT("Invalid entry, try again."))
 				return
-			var/obj/item/material_piece/new_stack = split_stack(splitnum)
+			var/obj/item/material/new_stack = split_stack(splitnum)
 			user.put_in_hand_or_drop(new_stack)
 			new_stack.add_fingerprint(user)
 		else
@@ -839,7 +839,7 @@
 				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
 				return
 
-		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
+		if (istype(over_object,/obj/item/material) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
 				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]!"))
@@ -867,8 +867,8 @@
 				if("lhand")
 					if(dude.l_hand)
 						if(dude.l_hand == src) return
-						else if (istype(dude.l_hand, /obj/item/material_piece))
-							var/obj/item/material_piece/DP = dude.l_hand
+						else if (istype(dude.l_hand, /obj/item/material))
+							var/obj/item/material/DP = dude.l_hand
 							DP.stack_item(src)
 							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]!"))
 					else if(amount > 1)
@@ -881,8 +881,8 @@
 				if("rhand")
 					if(dude.r_hand)
 						if(dude.r_hand == src) return
-						else if (istype(dude.r_hand, /obj/item/material_piece))
-							var/obj/item/material_piece/DP = dude.r_hand
+						else if (istype(dude.r_hand, /obj/item/material))
+							var/obj/item/material/DP = dude.r_hand
 							DP.stack_item(src)
 							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]!"))
 					else if(amount > 1)
@@ -969,8 +969,8 @@
 				user.visible_message(SPAN_NOTICE("[user] hangs up a [B.name] in [A]!."), SPAN_NOTICE("You hang up a [B.name] in [A]!"))
 
 /// The metal appearance and stuff is on the parent, this is just a concrete subtype
-/obj/item/material_piece/metal
-/obj/item/material_piece/fart
+/obj/item/material/metal
+/obj/item/material/fart
 	icon_state = "fart"
 	name = "frozen fart"
 	desc = "Remarkable! The cold temperatures in the freezer have frozen the fart in mid-air."
@@ -979,29 +979,29 @@
 	mat_changename = FALSE
 	uses_default_material_appearance = FALSE
 
-/obj/item/material_piece/steel
+/obj/item/material/steel
 	desc = "A processed bar of Steel, a common metal."
 	default_material = "steel"
 	icon_state = "bar"
 	default_material = "steel"
 
-/obj/item/material_piece/hamburgris
+/obj/item/material/hamburgris
 	name = "clump"
 	desc = "A big clump of petrified mince, with a horrific smell."
 	default_material = "hamburgris"
 	icon_state = "wad"
 
-/obj/item/material_piece/glass
+/obj/item/material/glass
 	desc = "A cut block of glass, a common crystalline substance."
 	default_material = "glass"
 	icon_state = "block"
 
-/obj/item/material_piece/copper
+/obj/item/material/copper
 	desc = "A processed bar of copper, a conductive metal."
 	default_material = "copper"
 	icon_state = "bar"
 
-/obj/item/material_piece/iridiumalloy
+/obj/item/material/iridiumalloy
 	icon_state = "iridium"
 	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
@@ -1009,21 +1009,21 @@
 	uses_default_material_appearance = FALSE
 	amount = 5
 
-/obj/item/material_piece/spacelag
+/obj/item/material/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
 	default_material = "spacelag"
 	amount = 1
 
-/obj/item/material_piece/slag
+/obj/item/material/slag
 	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
 	default_material = "slag"
 	mat_changename = FALSE
 
-ABSTRACT_TYPE(/obj/item/material_piece/rubber)
-/obj/item/material_piece/rubber/latex
+ABSTRACT_TYPE(/obj/item/material/rubber)
+/obj/item/material/rubber/latex
 	name = "latex sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
@@ -1034,13 +1034,13 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		reagents.add_reagent("rubber", 10)
 		return ..()
 
-/obj/item/material_piece/rubber/plastic
+/obj/item/material/rubber/plastic
 	name = "plastic sheet"
 	icon_state = "latex"
 	desc = "A sheet of plastic."
 	default_material = "plastic"
 
-/obj/item/material_piece/organic/wood
+/obj/item/material/organic/wood
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
@@ -1059,7 +1059,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		else
 			..()
 
-/obj/item/material_piece/organic/bamboo
+/obj/item/material/organic/bamboo
 	name = "stalk"
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
@@ -1079,7 +1079,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		else
 			..()
 
-/obj/item/material_piece/cloth/spidersilk
+/obj/item/material/cloth/spidersilk
 	name = "space spider silk"
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
@@ -1087,89 +1087,89 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/leather
+/obj/item/material/cloth/leather
 	name = "leather"
 	desc = "leather made from the skin of some sort of space critter."
 	icon_state = "fabric"
 	default_material = "leather"
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/synthleather
+/obj/item/material/cloth/synthleather
 	name = "synthleather"
 	desc = "A type of artificial leather."
 	icon_state = "fabric"
 	default_material = "synthleather"
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/cottonfabric
+/obj/item/material/cloth/cottonfabric
 	name = "fabric"
 	desc = "A type of natural fabric."
 	icon_state = "fabric"
 	default_material = "cotton"
 
-/obj/item/material_piece/cloth/jean
+/obj/item/material/cloth/jean
 	name = "jean textile"
 	desc = "A type of a sturdy textile."
 	icon_state = "fabric"
 	default_material = "jean"
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/brullbarhide
+/obj/item/material/cloth/brullbarhide
 	name = "brullbar hide"
 	desc = "The hide of a brullbar."
 	icon_state = "fabric"
 	default_material = "brullbarhide"
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/kingbrullbarhide
+/obj/item/material/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
 	icon_state = "fabric"
 	default_material = "kingbrullbarhide"
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/carbon
+/obj/item/material/cloth/carbon
 	name = "fabric"
 	desc = "carbon based hi-tech material."
 	icon_state = "fabric"
 	default_material = "carbonfibre"
 
-/obj/item/material_piece/cloth/dyneema
+/obj/item/material/cloth/dyneema
 	name = "fabric"
 	desc = "carbon nanofibres and space spider silk!"
 	icon_state = "fabric"
 	default_material = "dyneema"
 
-/obj/item/material_piece/cloth/hauntium
+/obj/item/material/cloth/hauntium
 	name = "fabric"
 	desc = "This cloth seems almost alive."
 	icon_state = "fabric"
 	default_material = "hauntium"
 
-/obj/item/material_piece/cloth/beewool
+/obj/item/material/cloth/beewool
 	name = "bee wool"
 	desc = "Some bee wool."
 	icon_state = "fabric"
 	default_material = "beewool"
 	mat_changename = FALSE
 
-/obj/item/material_piece/cloth/carpet
+/obj/item/material/cloth/carpet
 	name = "carpet"
 	desc = "Some grimy carpet."
 	icon_state = "fabric"
 	default_material = "carpet"
 
-/obj/item/material_piece/soulsteel
+/obj/item/material/soulsteel
 	desc = "A bar of soulsteel. Metal made from souls."
 	icon_state = "bar"
 	default_material = "soulsteel"
 
-/obj/item/material_piece/metal/censorium
+/obj/item/material/metal/censorium
 	desc = "A bar of censorium. Nice try."
 	icon_state = "bar"
 	default_material = "censorium"
 
-/obj/item/material_piece/bone
+/obj/item/material/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
@@ -1177,36 +1177,36 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
-/obj/item/material_piece/gnesis
+/obj/item/material/gnesis
 	name = "wafer"
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesis"
 
-/obj/item/material_piece/gnesisglass
+/obj/item/material/gnesisglass
 	name = "wafer"
 	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
 
-/obj/item/material_piece/coral
+/obj/item/material/coral
 	name = "chunk"
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
 
-/obj/item/material_piece/neutronium
+/obj/item/material/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
 	default_material = "neutronium"
 
-/obj/item/material_piece/plutonium
+/obj/item/material/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "bar"
 	default_material = "plutonium"
 
-/obj/item/material_piece/foolsfoolsgold
+/obj/item/material/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
 	icon_state = "bar"

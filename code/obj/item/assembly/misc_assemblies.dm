@@ -1087,7 +1087,7 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 /datum/pipeshotrecipe/bone
 	thingsneeded = 2
 	result = /obj/item/ammo/bullets/pipeshot/bone
-	accepteditem = /obj/item/material_piece/bone
+	accepteditem = /obj/item/material/bone
 	craftname = "bone chunk"
 
 

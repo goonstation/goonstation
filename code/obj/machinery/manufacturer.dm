@@ -81,7 +81,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Base class for material pieces that the manufacturer accepts.
 	/// Keep this as material pieces only unless you're making larger changes to the system,
 	/// Various parts of the code are coupled to assuming that this is a material piece w/ a material.
-	var/base_material_class = /obj/item/material_piece
+	var/base_material_class = /obj/item/material
 	/// The amount of each free resource that the manufacturer comes preloaded with.
 	/// Separate from free_resources() as typically manufacturers use the same amount of each type.
 	var/free_resource_amt = 0
@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		// Send material data as tuples of material name, material id, material amount
 		var/resource_data = list()
-		for (var/obj/item/material_piece/P as anything in src.get_contents())
+		for (var/obj/item/material/P as anything in src.get_contents())
 			if (!P.material)
 				continue
 			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
@@ -1068,7 +1068,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Handles allowing the user to eject integer amounts of material
 	proc/eject_material(var/mat_ref, mob/user)
-		var/obj/item/material_piece/P = src.get_material_by_ref(mat_ref)
+		var/obj/item/material/P = src.get_material_by_ref(mat_ref)
 		if (!src.can_eject_material(P, user))
 			return
 		var/eject_amount = tgui_input_number(user,
@@ -1093,11 +1093,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			P.UpdateStackAppearance()
 			P.set_loc(src.get_output_location())
 		else
-			var/obj/item/material_piece/output = P.split_stack(eject_amount)
+			var/obj/item/material/output = P.split_stack(eject_amount)
 			output.set_loc(src.get_output_location())
 
 	/// Helper proc to check whether or not we can eject the material from storage or not.
-	proc/can_eject_material(var/obj/item/material_piece/material_in_storage, mob/user)
+	proc/can_eject_material(var/obj/item/material/material_in_storage, mob/user)
 		if (src.mode != MODE_READY)
 			src.grump_message(user, "ERROR: Cannot eject materials while the unit is working.", sound = TRUE)
 		else if (isnull(material_in_storage))
@@ -1551,7 +1551,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	/// Returns material which matches ref from storage, else returns null
 	proc/get_material_by_ref(var/mat_ref)
-		for (var/obj/item/material_piece/P as anything in src.get_contents())
+		for (var/obj/item/material/P as anything in src.get_contents())
 			if ("\ref[P]" == mat_ref)
 				return P
 		return null
@@ -1572,7 +1572,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Get the material in storage which satisfies some amount of a requirement.
 	proc/get_material_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
 		var/list/C = src.get_contents()
-		for (var/obj/item/material_piece/P as anything in C)
+		for (var/obj/item/material/P as anything in C)
 			if (!R.is_match(P.material))
 				continue
 			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
@@ -1597,7 +1597,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/mats_used = get_materials_needed(M)
 		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
 			var/required_amount = M.item_requirements[R]
-			for (var/obj/item/material_piece/P as anything in src.get_contents())
+			for (var/obj/item/material/P as anything in src.get_contents())
 				if ("\ref[P]" != mats_used[R])
 					continue
 				P.amount = round( (P.amount - (required_amount/10)), 0.1)
@@ -1861,7 +1861,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/ensure_contents()
 		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece), slots = INFINITY)
+			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material), slots = INFINITY)
 
 	proc/add_contents(obj/item/W, mob/user = null)
 		src.ensure_contents()
@@ -1873,7 +1873,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.ensure_contents()
 		var/list/storage_contents = src.storage.get_contents()
 		for (var/obj/item/I as anything in storage_contents)
-			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
+			if (!istype(I, /obj/item/material) || isnull(I.material))
 				// Invalid thing somehow, fuck
 				src.storage.transfer_stored_item(I, src.loc)
 		return storage_contents
@@ -1918,7 +1918,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.get_contents() // potentially load storage datum if it doesnt exist yet
 		for (var/mat_path in src.free_resources)
-			var/obj/item/material_piece/P = new mat_path
+			var/obj/item/material/P = new mat_path
 			P.amount = src.free_resources[mat_path]
 			src.add_contents(P)
 

@@ -847,7 +847,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 /datum/pipeshotrecipe/web
 	thingsneeded = 1
 	result = /obj/item/ammo/bullets/pipeshot/web
-	accepteditem = /obj/item/material_piece/cloth/spidersilk
+	accepteditem = /obj/item/material/cloth/spidersilk
 	craftname = "web"
 
 /datum/projectile/bullet/web

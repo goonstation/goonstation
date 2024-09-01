@@ -156,7 +156,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			boutput(user, "Recycling [W] just doesn't work.")
 		else if (istype(W, /obj/item/raw_material/martian))
 			src.reload_from_stack(W, user, 10)
-		else if (istype(W, /obj/item/material_piece/viscerite))
+		else if (istype(W, /obj/item/material/viscerite))
 			src.reload_from_stack(W, user, 10)
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck))
 			matter += 0.5

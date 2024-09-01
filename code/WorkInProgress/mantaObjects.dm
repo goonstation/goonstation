@@ -867,19 +867,19 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "bulbous coral"
 	icon_state = "bulbous"
 	database_id = "sea_plant_bluecoral"
-	drop_type = /obj/item/material_piece/coral
+	drop_type = /obj/item/material/coral
 
 /obj/sea_plant_manta/branching
 	name = "branching coral"
 	icon_state = "branching"
 	database_id = "sea_plant_branchcoral"
-	drop_type = /obj/item/material_piece/coral
+	drop_type = /obj/item/material/coral
 
 /obj/sea_plant_manta/coralfingers
 	name = "stylophora coral"
 	icon_state = "coralfingers"
 	database_id = "sea_plant_fingercoral"
-	drop_type = /obj/item/material_piece/coral
+	drop_type = /obj/item/material/coral
 
 /obj/sea_plant_manta/anemone
 	name = "sea anemone"

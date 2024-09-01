@@ -101,7 +101,7 @@
 		var/atom/output_location = src.get_output_location()
 
 		var/bar_type = getProcessedMaterialForm(MAT)
-		var/obj/item/material_piece/BAR = new bar_type
+		var/obj/item/material/BAR = new bar_type
 		BAR.setMaterial(MAT)
 		BAR.change_stack_amount(amount - 1)
 
@@ -110,7 +110,7 @@
 			M.add_contents(BAR)
 		else
 			BAR.set_loc(output_location)
-			for (var/obj/item/material_piece/other_bar in output_location.contents)
+			for (var/obj/item/material/other_bar in output_location.contents)
 				if (other_bar == BAR)
 					continue
 				if (BAR.material.isSameMaterial(other_bar.material))
@@ -289,7 +289,7 @@
 	proc/is_valid(var/obj/item/I)
 		if (!istype(I))
 			return
-		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
+		return (I.material && !istype(I,/obj/item/material) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
 
 	proc/brain_check(var/obj/item/I, var/mob/user, var/ask)
 		if (!istype(I))
@@ -326,14 +326,14 @@
 		if (istype(I, /obj/item/raw_material))
 			boutput(user, SPAN_ALERT("[I] needs to be refined before it can be turned into sheets."))
 			return
-		if (!istype(I, /obj/item/material_piece))
+		if (!istype(I, /obj/item/material))
 			return ..()
 		if (src.working || src.is_disabled())
 			return
 		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
 			return
-		var/obj/item/material_piece/taken_piece = null
+		var/obj/item/material/taken_piece = null
 		if (I.amount < 1)
 			playsound(src, 'sound/machines/buzz-sigh.ogg')
 			return
@@ -461,7 +461,7 @@
 					piece.change_stack_amount(amt - piece.amount)
 					FP.change_stack_amount(-amt)
 					SP.change_stack_amount(-amt)
-					if(istype(piece, /obj/item/material_piece))
+					if(istype(piece, /obj/item/material))
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
@@ -524,7 +524,7 @@
 				return
 
 			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
-			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
+			if( istype(W, /obj/item/material) || istype(W, /obj/item/raw_material) )
 				addMaterial(W, user)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
@@ -543,7 +543,7 @@
 		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
 		M.setName("[user.real_name] flesh")
 
-		var/obj/item/material_piece/wad/dummyItem = new /obj/item/material_piece/wad
+		var/obj/item/material/wad/dummyItem = new /obj/item/material/wad
 		dummyItem.set_loc(src)
 		dummyItem.setMaterial(M)
 		dummyItem.change_stack_amount(5)

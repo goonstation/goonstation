@@ -160,7 +160,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
 	desc = "A very distinctive outfit."
 	icon_state = "waldo"
 	item_state = "waldo"
-	material_piece = /obj/item/material_piece/cloth/jean
+	material_piece = /obj/item/material/cloth/jean
 	mat_changename = FALSE
 	default_material = "jean"
 
@@ -171,7 +171,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
 	desc = "A rather sinister outfit."
 	icon_state = "odlaw"
 	item_state = "odlaw"
-	material_piece = /obj/item/material_piece/cloth/jean
+	material_piece = /obj/item/material/cloth/jean
 	mat_changename = FALSE
 	default_material = "jean"
 
@@ -182,7 +182,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A very odd outfit."
 	icon_state = "waldont1"
 	item_state = "waldont1"
-	material_piece = /obj/item/material_piece/cloth/jean
+	material_piece = /obj/item/material/cloth/jean
 	mat_changename = FALSE
 	default_material = "jean"
 
@@ -850,7 +850,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "dawson"
 	cant_self_remove = 1
 	cant_other_remove = 1
-	material_piece = /obj/item/material_piece/cloth/jean
+	material_piece = /obj/item/material/cloth/jean
 	mat_changename = FALSE
 	default_material = "jean"
 
@@ -1541,7 +1541,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	desc = "A white shirt and a pair of torn jeans."
 	icon_state = "shirtnjeans"
 	item_state = "white"
-	material_piece = /obj/item/material_piece/cloth/jean
+	material_piece = /obj/item/material/cloth/jean
 	mat_changename = FALSE
 	default_material = "jean"
 

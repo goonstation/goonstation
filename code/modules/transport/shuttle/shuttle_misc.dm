@@ -186,7 +186,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 		sleep(0.25 SECONDS)
 		shoot_projectile_DIR((get_step(get_turf(src), SOUTH)), current_projectile, dir)
 
-/obj/item/material_piece/sphere/plasmaball // heh
+/obj/item/material/sphere/plasmaball // heh
 	name = "plasma round"
 	desc = "A hefty weaponized sphere of compressed plasma contained within a mesh of exotic materials."
 	w_class = W_CLASS_BULKY

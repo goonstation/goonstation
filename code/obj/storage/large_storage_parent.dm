@@ -531,7 +531,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				/obj/item/reagent_containers/food/snacks = "food",
 				/obj/item/casing = "ammo casings",
 				/obj/item/raw_material = "materials",
-				/obj/item/material_piece = "processed materials",
+				/obj/item/material = "processed materials",
 				/obj/item/paper = "paper",
 				/obj/item/tile = "floor tiles",
 				/obj/item/reagent_containers/food/fish = "fish")

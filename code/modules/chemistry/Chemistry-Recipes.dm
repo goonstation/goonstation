@@ -2470,7 +2470,7 @@
 				var/location = get_turf(holder.my_atom) || pick(holder.covered_cache)
 				for(var/mob/M in AIviewers(null, location))
 					boutput(M, SPAN_NOTICE("The plastic clumps together in a messy sheet."))
-				new /obj/item/material_piece/rubber/plastic(location)
+				new /obj/item/material/rubber/plastic(location)
 
 	hemodissolve // denaturing hemolymph
 		name = "Copper"

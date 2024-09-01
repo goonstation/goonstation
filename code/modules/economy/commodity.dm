@@ -100,7 +100,7 @@
 
 /datum/commodity/mat_bar
 	comname = "Material Bar"
-	comtype = /obj/item/material_piece
+	comtype = /obj/item/material
 	desc = "A Material Bar of some type."
 	desc_buy = "The Promethus Consortium is currently gathering resources for a research project and is willing to buy this item"
 	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
@@ -1673,7 +1673,7 @@
 
 /datum/commodity/flock/desired/material
 	comname = "Material Piece"
-	comtype = /obj/item/material_piece
+	comtype = /obj/item/material
 	desc_buy = "We are not selective. Any processed material is acceptable."
 	price = PAY_UNTRAINED/5
 
@@ -1701,13 +1701,13 @@
 
 /datum/commodity/flock/tech/gnesis
 	comname = "Gnesis"
-	comtype = /obj/item/material_piece/gnesis
+	comtype = /obj/item/material/gnesis
 	desc = "Our mind and matter, filled with stoic and resolute intent."
 	price = PAY_DOCTORATE*2
 
 /datum/commodity/flock/tech/gnesisglass
 	comname = "Translucent Gnesis"
-	comtype = /obj/item/material_piece/gnesisglass
+	comtype = /obj/item/material/gnesisglass
 	desc = "Our mind and matter, filled with open and honest intent."
 	price = PAY_DOCTORATE*2
 

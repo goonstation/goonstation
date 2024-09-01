@@ -144,8 +144,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/red_herring = 1,\
 	/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
+	/obj/item/material/cerenkite = 10,\
+	/obj/item/material/erebite = 10,\
 	/obj/item/clothing/shoes/clown_shoes = 5,\
 	/obj/item/coin = 5,\
 	/mob/living/carbon/human/future = 1,\
@@ -527,7 +527,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/fish/lava_fish = 25,\
 	/obj/item/reagent_containers/food/fish/igneous_fish = 10,\
-	/obj/item/material_piece/slag = 20,\
+	/obj/item/material/slag = 20,\
 	/obj/decal/cleanable/ash = 20,\
 	/obj/item/reagent_containers/food/snacks/yuck/burn = 20,\
 	/obj/item/raw_material/char =20)
@@ -590,8 +590,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 3
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
+	/obj/item/material/cerenkite = 10,\
+	/obj/item/material/erebite = 10,\
 	/obj/item/clothing/shoes/clown_shoes = 5,\
 	/mob/living/carbon/human/future = 1,\
 	/mob/living/critter/aberration = 1,\
@@ -605,8 +605,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 3
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
+	/obj/item/material/cerenkite = 10,\
+	/obj/item/material/erebite = 10,\
 	/obj/item/clothing/shoes/clown_shoes = 5,\
 	/mob/living/carbon/human/future = 1,\
 	/mob/living/critter/aberration = 1,\

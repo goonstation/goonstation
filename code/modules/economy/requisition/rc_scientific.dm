@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/telec
 	name = "telecrystal"
 	commodity = /datum/commodity/ore/telecrystal
-	typepath_alt = /obj/item/material_piece/telecrystal
+	typepath_alt = /obj/item/material/telecrystal
 	feemod = PAY_IMPORTANT //augmented by commodity price
 
 /datum/rc_entry/stack/telec/minprice
@@ -674,12 +674,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"
 	commodity = /datum/commodity/ore/fibrilith
-	typepath_alt = /obj/item/material_piece/fibrilith
+	typepath_alt = /obj/item/material/fibrilith
 
 /datum/rc_entry/stack/cotton
 	name = "cotton"
 	typepath = /obj/item/raw_material/cotton
-	typepath_alt = /obj/item/material_piece/cloth/cottonfabric
+	typepath_alt = /obj/item/material/cloth/cottonfabric
 
 /datum/rc_entry/item/matanalyzer
 	name = "material analyzer"
@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/stack/fancy_cloth
 	name = "high-grade cloth (carbon or bee wool)"
-	typepath = /obj/item/material_piece/cloth
+	typepath = /obj/item/material/cloth
 
 	extra_eval(obj/item/eval_item)
 		. = FALSE
@@ -697,17 +697,17 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/uqill_minprice
 	name = "uqill"
 	commodity = /datum/commodity/ore/uqill
-	typepath_alt = /obj/item/material_piece/uqill
+	typepath_alt = /obj/item/material/uqill
 
 /datum/rc_entry/stack/pharosium_minprice
 	name = "pharosium"
 	commodity = /datum/commodity/ore/pharosium
-	typepath_alt = /obj/item/material_piece/pharosium
+	typepath_alt = /obj/item/material/pharosium
 
 /datum/rc_entry/stack/viscerite_minprice
 	name = "viscerite"
 	commodity = /datum/commodity/ore/viscerite
-	typepath_alt = /obj/item/material_piece/viscerite
+	typepath_alt = /obj/item/material/viscerite
 
 /datum/rc_entry/item/free_insuls
 	name = "NT-standard insulated gloves"
@@ -740,7 +740,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/claretine
 	name = "claretine"
 	commodity = /datum/commodity/ore/claretine
-	typepath_alt = /obj/item/material_piece/claretine
+	typepath_alt = /obj/item/material/claretine
 	feemod = PAY_DOCTORATE
 
 /datum/rc_entry/stack/claretine/minprice
@@ -748,7 +748,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_entry/stack/electrum
 	name = "electrum"
-	typepath = /obj/item/material_piece
+	typepath = /obj/item/material
 	mat_id = "electrum"
 	feemod = PAY_IMPORTANT
 

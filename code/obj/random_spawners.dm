@@ -899,21 +899,21 @@
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
 	name = "Loot Crate Spawner"
-	guaranteed = list(/obj/item/material_piece/mauxite=10,
-	/obj/item/material_piece/molitz=10,
-	/obj/item/material_piece/pharosium=10)
+	guaranteed = list(/obj/item/material/mauxite=10,
+	/obj/item/material/molitz=10,
+	/obj/item/material/pharosium=10)
 	min_amt2spawn = 24
 	max_amt2spawn = 42
-	items2spawn = list(/obj/item/material_piece/mauxite,
-		/obj/item/material_piece/molitz,
-		/obj/item/material_piece/pharosium,
-		/obj/item/material_piece/cobryl,
-		/obj/item/material_piece/claretine,
-		/obj/item/material_piece/bohrum,
-		/obj/item/material_piece/syreline,
-		/obj/item/material_piece/plasmastone,
-		/obj/item/material_piece/uqill,
-		/obj/item/material_piece/koshmarite,
+	items2spawn = list(/obj/item/material/mauxite,
+		/obj/item/material/molitz,
+		/obj/item/material/pharosium,
+		/obj/item/material/cobryl,
+		/obj/item/material/claretine,
+		/obj/item/material/bohrum,
+		/obj/item/material/syreline,
+		/obj/item/material/plasmastone,
+		/obj/item/material/uqill,
+		/obj/item/material/koshmarite,
 		/obj/item/stamped_bullion,
 		/obj/item/raw_material/cotton,
 		/obj/item/raw_material/miracle,

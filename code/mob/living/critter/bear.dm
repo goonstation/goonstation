@@ -12,7 +12,7 @@
 	can_disarm = TRUE
 	blood_id = "methamphetamine"
 	burning_suffix = "humanoid"
-	skinresult = /obj/item/material_piece/cloth/leather
+	skinresult = /obj/item/material/cloth/leather
 	max_skins = 2
 	health_brute = 50
 	health_brute_vuln = 0.85

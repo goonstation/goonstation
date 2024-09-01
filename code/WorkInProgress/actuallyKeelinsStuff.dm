@@ -1606,7 +1606,7 @@ Returns:
 	attackby(obj/item/W, mob/user)
 		if(prob(8) && (!broken))
 			for(var/i=0, i<5, i++)
-				new/obj/item/material_piece/slag(src.loc)
+				new/obj/item/material/slag(src.loc)
 
 			src.visible_message(SPAN_ALERT("<B>[src] breaks into pieces!</B>"))
 			icon_state = "statuefloorpills0"

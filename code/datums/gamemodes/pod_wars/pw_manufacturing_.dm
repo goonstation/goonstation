@@ -5,9 +5,9 @@
 	icon_base = "hangar"
 	var/team_num = 0			//NT = 1, SY = 2
 	free_resources = list(
-		/obj/item/material_piece/mauxite = 20,
-		/obj/item/material_piece/pharosium = 20,
-		/obj/item/material_piece/molitz = 20
+		/obj/item/material/mauxite = 20,
+		/obj/item/material/pharosium = 20,
+		/obj/item/material/molitz = 20
 	)
 	available = list(
 		/datum/manufacture/pod/preassembeled_parts,

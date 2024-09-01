@@ -156,7 +156,7 @@
 				10; /obj/item/clothing/under/misc/casualjeanswb,
 				10; /obj/item/clothing/under/misc/casualjeansyel,
 				50; /obj/item/clothing/under/gimmick/shirtnjeans,
-				10; /obj/item/material_piece/cloth/jean,
+				10; /obj/item/material/cloth/jean,
 			)
 			var/turf/simulated/floor/plating/airless/asteroid/jean_floor = pick(floors)
 			floors -= jean_floor

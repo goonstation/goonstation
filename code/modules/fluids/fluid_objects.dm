@@ -92,8 +92,8 @@ TYPEINFO(/obj/machinery/drainage/big)
 
 			src.UpdateIcon()
 			return
-		if (istype(I,/obj/item/material_piece/cloth))
-			var/obj/item/material_piece/cloth/C = I
+		if (istype(I,/obj/item/material/cloth))
+			var/obj/item/material/cloth/C = I
 			src.clogged += (20 * C.amount) //One piece of cloth clogs for about 1 minute. (cause the machine loop updates ~3 second interval)
 			user.show_text("You stuff [I] into the drain.")
 			logTheThing(LOG_STATION, user, "clogs [name] shut temporarily at [log_loc(user)].")

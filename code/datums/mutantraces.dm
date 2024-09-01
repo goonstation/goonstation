@@ -1185,7 +1185,7 @@ TYPEINFO(/datum/mutantrace/skeleton)
 				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
-				I = new/obj/item/material_piece/bone(src.mob.loc)
+				I = new/obj/item/material/bone(src.mob.loc)
 				ThrowRandom(I, 1)
 
 			src.mob.dump_contents_chance = 100
@@ -2435,7 +2435,7 @@ TYPEINFO(/datum/mutantrace/pug)
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
-		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/parts) || istype(item, /obj/item/material_piece/bone))))
+		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !(istype(item, /obj/item/parts) || istype(item, /obj/item/material/bone))))
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))

@@ -67,7 +67,7 @@
 			. += "<br>[SPAN_NOTICE("Someone has uploaded a blueprint named '[current_bp.room_name]'.")]"
 
 	attackby(obj/item/W, mob/user)
-		if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
+		if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material)))
 			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
@@ -78,7 +78,7 @@
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
 		else
-			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece)))
+			if (!W.cant_drop && (istype(W, /obj/item/sheet) || istype(W, /obj/item/material)))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
 				return
@@ -198,8 +198,8 @@
 					src.crystal_owed -= sheets_consumed
 					continue
 
-			else if (istype(item, /obj/item/material_piece))
-				var/obj/item/material_piece/bars = item
+			else if (istype(item, /obj/item/material))
+				var/obj/item/material/bars = item
 				if (!bars.material) continue
 				if (src.metal_owed && bars.material.getMaterialFlags() & MATERIAL_METAL)
 					var/bars_consumed = ceil(min(bars.amount, src.metal_owed / BAR_SHEET_VALUE))
@@ -314,8 +314,8 @@
 					metal_count += sheets.amount
 				if (sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					crystal_count += sheets.amount
-			else if (istype(O, /obj/item/material_piece))
-				var/obj/item/material_piece/bars = O
+			else if (istype(O, /obj/item/material))
+				var/obj/item/material/bars = O
 				if (!bars.material) continue
 				if (bars.material.getMaterialFlags() & MATERIAL_METAL)
 					metal_count += bars.amount * BAR_SHEET_VALUE

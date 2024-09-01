@@ -444,7 +444,7 @@ proc/ui_describe_reagents(atom/A)
 			user.u_equip(I)
 			qdel(I)
 
-		else if (istype(I,/obj/item/material_piece/rubber))
+		else if (istype(I,/obj/item/material/rubber))
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, SPAN_ALERT("[src] is full."))
 				return

@@ -31,7 +31,7 @@
 /datum/material_recipe/hauntium
 	name = "hauntium"
 	result_id = "hauntium"
-	result_item = /obj/item/material_piece/cloth/hauntium
+	result_item = /obj/item/material/cloth/hauntium
 
 	validate(var/datum/material/M)
 		var/hasSteel = 0
@@ -83,7 +83,7 @@
 /datum/material_recipe/censorium
 	name = "censorium"
 	result_id = "censorium"
-	result_item = /obj/item/material_piece/metal/censorium
+	result_item = /obj/item/material/metal/censorium
 
 	validate(var/datum/material/M)
 		var/hasChar = 0
@@ -181,7 +181,7 @@
 /datum/material_recipe/dyneema
 	name = "dyneema"
 	result_id = "dyneema"
-	result_item = /obj/item/material_piece/cloth/dyneema
+	result_item = /obj/item/material/cloth/dyneema
 
 	validate(var/datum/material/M)
 		var/hasCarbon = 0
