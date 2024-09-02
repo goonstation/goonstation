@@ -1,5 +1,9 @@
 
 (t)mon sep 02 24
+(u)JORJ949
+(p)20498
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)AI cores now have a bolted door among other changes.
 (u)zelda4040404
 (p)20385
 (e)🎨🎩|C-Sprites, A-Clothing
