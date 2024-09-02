@@ -1,4 +1,17 @@
 
+(t)mon sep 02 24
+(u)zelda4040404
+(p)20385
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Enjoyers of hair bangs will find a new extra long option available.
+(u)MitchSmith
+(p)20305
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited Gimmick Bombs, Mousetrap Overlays, and Mousetrap Cars!
+(u)Mitch Smith
+(p)20406
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)VR Headsets and other minor eyewear have been resprited, and VR Headsets now have variants!
 (t)sun sep 01 24
 (u)Sockssq & Wrench
 (p)20417
