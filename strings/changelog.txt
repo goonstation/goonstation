@@ -1,5 +1,9 @@
 
 (t)sun sep 01 24
+(u)Sockssq & Wrench
+(p)20417
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds a new hair piece: V-Bangs. Sprites by Sockssq
 (u)MitchSmith
 (p)20322
 (e)🎨📦|C-Sprites, A-Game-Objects
