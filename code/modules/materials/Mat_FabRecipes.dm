@@ -9,10 +9,10 @@
 	postProcess(obj/item/reactor_component/I)
 		. = ..()
 		//default properties for all materials - everything is a sponge unless otherwise specified
-		if(!I.material.hasProperty("density"))
-			I.material.setProperty("density", 1)
-		if(!I.material.hasProperty("hard"))
-			I.material.setProperty("hard", 1)
+		if(!I.material.hasProperty(MATERIAL_PROPERTY_DENSITY))
+			I.material.setProperty(MATERIAL_PROPERTY_DENSITY, 1)
+		if(!I.material.hasProperty(MATERIAL_PROPERTY_HARDNESS))
+			I.material.setProperty(MATERIAL_PROPERTY_HARDNESS, 1)
 		if(I.material.getID()=="ice") //ice is cold
 			I.temperature = T0C-10
 

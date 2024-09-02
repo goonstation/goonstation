@@ -661,7 +661,7 @@
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
 				meat_rod.material.setName(user.name)
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
-					meat_rod.material.setProperty("radioactive", 3)
+					meat_rod.material.setProperty(MATERIAL_PROPERTY_RADIOACTIVE, 3)
 				meat_rod.setMaterial(meat_rod.material)
 				if(src.component_grid[chosen_slot[1]][chosen_slot[2]] == null) //double check, just in case
 					src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe

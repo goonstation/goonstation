@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/material_property)
 		return
 
 	proc/getBriefStatString(var/datum/material/M)
-		return "[src.name]: [round(M.getProperty(id) / M.getPropertyMax(id), 0.1)]%"
+		return "[src.name]: [round(M.getProperty(id) / M.getPropertyMax(id) * 100, 0.1)]%"
 
 /datum/material_property/electrical_conductivity
 	name = "Electrical conductivity"

@@ -48,8 +48,8 @@ var/global/list/material_cache
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
+		explosion_resistance = material.hasProperty(MATERIAL_PROPERTY_DENSITY) ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty(MATERIAL_PROPERTY_DENSITY) ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
 
 
@@ -430,18 +430,18 @@ proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/materia
 	var/hTC1 = 5
 	var/hTC2 = 5
 	if(matA)
-		if(matA.hasProperty("thermal") && matA.hasProperty("electrical"))
+		if(matA.hasProperty(MATERIAL_PROPERTY_THERMAL) && matA.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
 			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
-		else if(matA.hasProperty("thermal"))
+		else if(matA.hasProperty(MATERIAL_PROPERTY_THERMAL))
 			hTC1 = max(matA.getProperty("thermal"),0)
-		else if(matA.hasProperty("electrical"))
+		else if(matA.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
 			hTC1 = max(matA.getProperty("electrical"),0)
 	if(matB)
-		if(matB.hasProperty("thermal") && matB.hasProperty("electrical"))
+		if(matB.hasProperty(MATERIAL_PROPERTY_THERMAL) && matB.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
 			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
-		else if(matB.hasProperty("thermal"))
+		else if(matB.hasProperty(MATERIAL_PROPERTY_THERMAL))
 			hTC2 = max(matB.getProperty("thermal"),0)
-		else if(matB.hasProperty("electrical"))
+		else if(matB.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
 			hTC2 = max(matB.getProperty("electrical"),0)
 	//average thermal conductivity approximated as 10^(x/5)-1
 	//common values 0 = 0, 5 = 10, 10 = 100
