@@ -88,16 +88,15 @@
 		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
 
-/datum/intercept_text/proc/build_rev(correct_mob)
+/datum/intercept_text/proc/build_rev(var/list/datum/mind/correct_mob)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
 	var/traitor_name
 	var/traitor_job
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
 	var/prob_right_job = rand(prob_correct_job_lower, prob_correct_job_higher)
-	if(prob(prob_right_job) && correct_mob:assigned_role != "MODE")
-		if (correct_mob)
-			traitor_job = correct_mob:assigned_role
+	if(prob(prob_right_job) && correct_mob && correct_mob.assigned_role != "MODE")
+		traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
 		job_tmp.Remove("Captain", "Security Officer", "Security Assistant", "Vice Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director", "MODE")
