@@ -3955,7 +3955,10 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/shipalert,
+/obj/machinery/shipalert{
+	dir = 1;
+	
+	},
 /obj/item/decoration/flower_vase{
 	pixel_y = 24
 	},
@@ -5677,6 +5680,7 @@
 	},
 /obj/item/gun/russianrevolver,
 /obj/machinery/partyalarm{
+	dir = 8;
 	pixel_x = 24;
 	pixel_y = -5
 	},
