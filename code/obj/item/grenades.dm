@@ -935,11 +935,15 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/beep(i)
 		var/k = i/2
 		sleep(k*k)
-		if (src.icon_state_armed)
-			src.icon_state = icon_state_armed
-		if (istype(src, /obj/item/gimmickbomb/gold))
-			src.setMaterial(getMaterial("gold"))
+
+		if (icon_state_armed)
+			if (icon_state == src.icon_state)
+				icon_state = icon_state_armed
+			else
+				icon_state = src.icon_state
+
 		src.playbeep(src.loc, i, src.sound_beep)
+
 		if(i>=0)
 			src.beep(i-1)
 		else
@@ -1097,6 +1101,25 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	icon_state = "goldbomb"
 	icon_state_armed = "goldbomb1"
 	sound_beep = 'sound/machines/twobeep.ogg'
+
+	beep(i)
+		var/k = i/2
+		sleep(k*k)
+
+		src.setMaterial(getMaterial("gold"))
+
+		src.playbeep(src.loc, i, src.sound_beep)
+
+		if (icon_state_armed)
+			if (icon_state == src.icon_state)
+				icon_state = icon_state_armed
+			else
+				icon_state = src.icon_state
+
+		if(i>=0)
+			src.beep(i-1)
+		else
+			src.detonate()
 
 	detonate()
 		for(var/turf/G in range(5, src))
