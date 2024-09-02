@@ -88,7 +88,7 @@
 		src.text += "discovered the following set of fingerprints ([fingerprints]) on sensitive materials, and their owner should be closely observed."
 		src.text += "However, these could also belong to a current Cent. Com employee, so do not act on this without reason."
 
-/datum/intercept_text/proc/build_rev(var/list/datum/mind/correct_mob)
+/datum/intercept_text/proc/build_rev(var/datum/mind/correct_mob)
 	var/name_1 = pick(src.org_names_1)
 	var/name_2 = pick(src.org_names_2)
 	var/traitor_name
