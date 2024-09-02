@@ -577,7 +577,6 @@ TYPEINFO(/obj/item/device/matanalyzer)
 				if(length(W.material.getMaterialProperties()))
 					boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
 					for(var/datum/material_property/X in W.material.getMaterialProperties())
-						var/value = W.material.getProperty(X.id)
 						boutput(user, SPAN_NOTICE("• [X.getBriefStatString(W.material)]"))
 				else
 					boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))

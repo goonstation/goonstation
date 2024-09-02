@@ -48,9 +48,9 @@ var/global/list/material_cache
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty(MATERIAL_PROPERTY_DENSITY) ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
-		explosion_protection = material.hasProperty(MATERIAL_PROPERTY_DENSITY) ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
-		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
+		explosion_resistance = material.hasProperty(MATERIAL_PROPERTY_DENSITY) ? sqrt(round(max(4, material.getProperty(MATERIAL_PROPERTY_DENSITY)/9) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty(MATERIAL_PROPERTY_DENSITY) ? sqrt(round(max(4, material.getProperty(MATERIAL_PROPERTY_DENSITY)/9) - 4)) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL) >= 5*9)) flags |= CONDUCT
 
 
 /// Simply removes a material from an object.
@@ -431,18 +431,18 @@ proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/materia
 	var/hTC2 = 5
 	if(matA)
 		if(matA.hasProperty(MATERIAL_PROPERTY_THERMAL) && matA.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
-			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
+			hTC1 = (max(matA.getProperty(MATERIAL_PROPERTY_THERMAL)/9,0) + max(matA.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9,0))/2
 		else if(matA.hasProperty(MATERIAL_PROPERTY_THERMAL))
-			hTC1 = max(matA.getProperty("thermal"),0)
+			hTC1 = max(matA.getProperty(MATERIAL_PROPERTY_THERMAL)/9,0)
 		else if(matA.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
-			hTC1 = max(matA.getProperty("electrical"),0)
+			hTC1 = max(matA.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9,0)
 	if(matB)
 		if(matB.hasProperty(MATERIAL_PROPERTY_THERMAL) && matB.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
-			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
+			hTC2 = (max(matB.getProperty(MATERIAL_PROPERTY_THERMAL)/9,0) + max(matB.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9,0))/2
 		else if(matB.hasProperty(MATERIAL_PROPERTY_THERMAL))
-			hTC2 = max(matB.getProperty("thermal"),0)
+			hTC2 = max(matB.getProperty(MATERIAL_PROPERTY_THERMAL)/9,0)
 		else if(matB.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
-			hTC2 = max(matB.getProperty("electrical"),0)
+			hTC2 = max(matB.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9,0)
 	//average thermal conductivity approximated as 10^(x/5)-1
 	//common values 0 = 0, 5 = 10, 10 = 100
 	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2

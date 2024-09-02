@@ -349,7 +349,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)/9*10, FALSE, FALSE, 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -362,7 +362,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)/9*10, FALSE, TRUE, 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
@@ -629,8 +629,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/obj/item/I = owner
 		if (I.amount < 1) return
 		/// Init a property to 1 if it doesn't exist, its real value if it does, and if it does exist, delete it if the value is 0
-		var/radioactive = I.material.getProperty("radioactive")
-		var/n_radioactive = I.material.getProperty("n_radioactive")
+		var/radioactive = I.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)
+		var/n_radioactive = I.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)
 		if (!radioactive && !n_radioactive)
 			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return

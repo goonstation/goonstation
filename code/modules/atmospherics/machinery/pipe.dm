@@ -96,7 +96,7 @@
 	alpha = 128
 
 /obj/machinery/atmospherics/pipe/simple/proc/effective_fatigue_pressure()
-	return src.fatigue_pressure * ((src.material?.getProperty("density") ** 2) || 1)
+	return src.fatigue_pressure * ((src.material?.getProperty(MATERIAL_PROPERTY_DENSITY) ** 2) || 1)
 
 /// Returns list of coordinates to start and stop welding animation.
 /obj/machinery/atmospherics/pipe/simple/proc/get_welding_positions()

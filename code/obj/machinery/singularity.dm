@@ -377,9 +377,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 3 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
-			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
+			gain += A.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9 * 3 * A.material_amt
+			gain += A.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)/9 * 4 * A.material_amt
+			gain += A.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)/9 * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
 				gain *= min(I.amount, INFINITY)

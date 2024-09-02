@@ -59,9 +59,9 @@ TYPEINFO(/turf/simulated/wall)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty("density") >= 6)
+			if(src.material.getProperty(MATERIAL_PROPERTY_DENSITY) >= 6*9)
 				health *= 1.5
-			else if (src.material.getProperty("density") <= 2)
+			else if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) <= 2*9)
 				health *= 0.75
 			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				health /= 2
@@ -325,9 +325,9 @@ TYPEINFO(/turf/simulated/wall)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty("density") >= 6)
+			if(src.material.getProperty(MATERIAL_PROPERTIES_DENSITY) >= 6*9)
 				health *= 1.5
-			else if (src.material.getProperty("density") <= 2)
+			else if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) <= 2*9)
 				health *= 0.75
 			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				health /= 2

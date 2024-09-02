@@ -652,15 +652,15 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		..()
 		if(istype(src.material))
 			if(src.material.hasProperty(MATERIAL_PROPERTY_THERMAL))
-				protective_temperature = (100 - src.material.getProperty("thermal")) ** 1.65
-				setProperty("coldprot", round((100 - src.material.getProperty("thermal")) * 0.1))
-				setProperty("heatprot", round((100 - src.material.getProperty("thermal")) * 0.1))
+				protective_temperature = (100 - src.material.getProperty(MATERIAL_PROPERTY_THERMAL)/9) ** 1.65
+				setProperty("coldprot", round((100 - src.material.getProperty(MATERIAL_PROPERTY_THERMAL)/9) * 0.1))
+				setProperty("heatprot", round((100 - src.material.getProperty(MATERIAL_PROPERTY_THERMAL)/9) * 0.1))
 			else
 				protective_temperature = 0
 				setProperty("coldprot", 0)
 				setProperty("heatprot", 0)
 			if(src.material.hasProperty(MATERIAL_PROPERTY_HARDNESS) && src.material.hasProperty(MATERIAL_PROPERTY_DENSITY))
-				kick_bonus = round((src.material.getProperty("hard") * src.material.getProperty("density")) / 1500)
+				kick_bonus = round((src.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9 * src.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9) / 1500)
 			else
 				kick_bonus = 0
 		return

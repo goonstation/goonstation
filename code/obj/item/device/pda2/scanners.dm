@@ -182,7 +182,6 @@
 			. = "<u>[capitalize(A.material.getName())]</u><br>[A.material.getDesc()]<br><br>"
 			if (length(A.material.getMaterialProperties()))
 				for(var/datum/material_property/mat in A.material.getMaterialProperties())
-					var/value = A.material.getProperty(mat.id)
 					. += "• [mat.getBriefStatString(A.material)]<br>"
 			else
 				. += "The material is completely unremarkable."

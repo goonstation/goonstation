@@ -40,7 +40,7 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(I.material.getProperty("radioactive") < 1 && I.material.getProperty("n_radioactive") < 1) return 0
+		if(I.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE) < 1 && I.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE) < 1) return 0
 		return ..()
 
 /datum/matfab_part/conductive
@@ -48,7 +48,7 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(I.material.getProperty("electrical") < 5) return 0
+		if(I.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL) < 5*9) return 0
 		return ..()
 
 /datum/matfab_part/charge

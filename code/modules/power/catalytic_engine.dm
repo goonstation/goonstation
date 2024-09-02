@@ -458,13 +458,13 @@
 	//you should only be able to make these from things with a metal material flag
 	proc/setupMaterial()
 		///Corrosion resistance slows decay per cycle by an amount proportional to resistance percentage. Total corrosion immunity = no decay.
-		var/decay_ratio_adjustment = src.material.getProperty("chemical") * 0.00023
+		var/decay_ratio_adjustment = src.material.getProperty(MATERIAL_PROPERTY_CHEMICAL)/9 * 0.00023
 		src.decay_ratio = min(src.decay_ratio + decay_ratio_adjustment,1)
-		src.anode_viability = max(0,src.material.getProperty("electrical") * 17)
-		if(src.material.getMaterialFlags() & MATERIAL_ENERGY && src.anode_viability)
+		src.anode_viability = max(0,src.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9 * 17)
+		if((src.material.hasProperty(MATERIAL_PROPERTY_RADIOACTIVE) || src.material.hasProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)) && src.anode_viability)
 			src.anode_viability = round(src.anode_viability * 1.3)
-		var/cathode_density_factor = 180 - (abs(5-src.material.getProperty("density")) * 45)
-		var/cathode_hardness_factor = 100 - (abs(5-src.material.getProperty("hard")) * 12)
+		var/cathode_density_factor = 180 - (abs(5-src.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9) * 45)
+		var/cathode_hardness_factor = 100 - (abs(5-src.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9) * 12)
 		src.cathode_viability = round(cathode_density_factor * cathode_hardness_factor * 0.01)
 
 		//Apply efficacy multiplier to viability. increases in parameters beyond standard exponentially increase the base efficacy

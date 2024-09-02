@@ -177,7 +177,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if(reagents) reagents.temperature_reagents(exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
 		health -= 5
-		if(src.material?.getProperty("flammable") > 3) //why would you make a canister out of wood/etc
+		if(src.material.getMaterialFlags() & MATERIAL_FLAG_FLAMMABLE) //why would you make a canister out of wood/etc
 			health -= 1000 //BURN
 		healthcheck()
 

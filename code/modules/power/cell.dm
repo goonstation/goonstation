@@ -75,11 +75,11 @@
 		if (istype(src.material))
 			genrate = 0
 			if(src.material.hasProperty(MATERIAL_PROPERTY_RADIOACTIVE))
-				genrate += round(material.getProperty("radioactive"))
+				genrate += round(material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)/9)
 			if(src.material.hasProperty(MATERIAL_PROPERTY_N_RADIOACTIVE))
-				genrate += round(material.getProperty("n_radioactive") * 2)
+				genrate += round(material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)/9 * 2)
 			if(src.material.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
-				maxcharge = round((src.material.getProperty("electrical") ** 2) * 300, 500)
+				maxcharge = round(((src.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9) ** 2) * 300, 500)
 			else
 				maxcharge = 2500
 
@@ -90,9 +90,9 @@
 		src.setMaterial(coreMat)
 		if(genMat)
 			src.name = "[genMat.getName()]-doped [src.name]"
-			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			var/conductivity = (2 * coreMat.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9 + genMat.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9) / 3 //if self-charging, use a weighted average of the conductivities
 			maxcharge = round((conductivity ** 2) * 300, 500)
-			genrate = (coreMat.getProperty("radioactive") + coreMat.getProperty("n_radioactive") * 2 + genMat.getProperty("radioactive") * 2 + genMat.getProperty("n_radioactive") * 4) / 3 //weight this too
+			genrate = (coreMat.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)/9 + coreMat.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)/9 * 2 + genMat.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)/9 * 2 + genMat.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)/9 * 4) / 3 //weight this too
 
 /obj/item/cell/charged
 	charge = 7500

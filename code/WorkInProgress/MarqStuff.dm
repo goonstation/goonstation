@@ -616,18 +616,18 @@
 		. = ..()
 		spread_base = initial(spread_base)
 		if(src.material)
-			if (src.material.getProperty("density") <= 2)
+			if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) <= 2*9)
 				spread_base *= 1.5
-			if (src.material.getProperty("density") >= 5)
+			if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) >= 5*9)
 				spread_base *= 0.5
-			if (src.material.getProperty("density") >= 7)
+			if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) >= 7*9)
 				spread_base *= 0.75
 
-			if (src.material.getProperty("hard") <= 2)
+			if (src.material.getProperty(MATERIAL_PROPERTY_HARDNESS) <= 2*9)
 				max_draw = 2
-			if (src.material.getProperty("hard") >= 5)
+			if (src.material.getProperty(MATERIAL_PROPERTY_HARDNESS) >= 5*9)
 				max_draw = 5
-			if (src.material.getProperty("hard") >= 8)
+			if (src.material.getProperty(MATERIAL_PROPERTY_HARDNESS) >= 8*9)
 				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)
@@ -723,7 +723,7 @@
 		var/default_damage = 7
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty(MATERIAL_PROPERTY_HARDNESS))
-				current_projectile.damage = round(6+loaded.head_material.getProperty("hard")) //pretty close to the 7-15 range, which will get multiplied by bow draw
+				current_projectile.damage = round(6+loaded.head_material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9) //pretty close to the 7-15 range, which will get multiplied by bow draw
 			else
 				current_projectile.damage = default_damage
 		else

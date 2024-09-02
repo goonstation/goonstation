@@ -425,8 +425,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/armor = 0
 
 	if (src.material)
-		if (src.material.getProperty("density") >= 3)
-			armor += round(src.material.getProperty("density"))
+		if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) >= 3*9)
+			armor += round(src.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9)
 		else
 			amount += rand(1,3)
 

@@ -140,14 +140,14 @@
 		name = "[visrMat]-visored [helmMat] helmet"
 
 		// Setup the clothing stats based on material properties
-		var/prot = max(0, (5 - visrMat.getProperty("thermal")) * 5)
+		var/prot = max(0, (5 - visrMat.getProperty(MATERIAL_PROPERTY_THERMAL)/9) * 5)
 		setProperty("coldprot", 10+prot)
 		setProperty("heatprot", 2+round(prot/2))
 		// All crystals (assuming default chem value) will give 20 chemprot, same as normal helm
-		prot =  clamp(((visrMat.getProperty("chemical") - 4) * 10), 0, 35)
+		prot =  clamp(((visrMat.getProperty(MATERIAL_PROPERTY_CHEMICAL)/9 - 4) * 10), 0, 35)
 		setProperty("chemprot", prot)
 		 // Even if soft visor, still gives some value
-		prot = max(0, visrMat.getProperty("density") - 3) / 2
+		prot = max(0, visrMat.getProperty(MATERIAL_PROPERTY_DENSITY)/9 - 3) / 2
 		setProperty("meleeprot_head", 3 + prot)
 
 		// Setup item overlays

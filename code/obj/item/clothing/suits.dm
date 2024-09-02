@@ -1400,11 +1400,11 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	onMaterialChanged()
 		. = ..()
 		if (istype(src.material))
-			var/prot = max(0, (5 - src.material.getProperty("thermal")) * 10)
+			var/prot = max(0, (5 - src.material.getProperty(MATERIAL_PROPERTY_THERMAL)/9) * 10)
 			setProperty("coldprot", 10+prot)
 			setProperty("heatprot", 2+round(prot/2))
 
-			prot =  clamp(((src.material.getProperty("chemical") - 4) * 15), 0, 70) // 30 would be default for metal.
+			prot =  clamp(((src.material.getProperty(MATERIAL_PROPERTY_CHEMICAL)/9 - 4) * 15), 0, 70) // 30 would be default for metal.
 			setProperty("chemprot", prot)
 		return
 
@@ -1412,7 +1412,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	proc/set_custom_mats(datum/material/fabrMat, datum/material/renfMat)
 		src.setMaterial(fabrMat)
 		name = "[renfMat]-reinforced [fabrMat] bespoke space suit"
-		var/prot = max(0, renfMat.getProperty("density") - 3) / 2
+		var/prot = max(0, renfMat.getProperty(MATERIAL_PROPERTY_DENSITY)/9 - 3) / 2
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)

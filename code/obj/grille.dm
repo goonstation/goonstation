@@ -186,12 +186,12 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			health_max = material.getProperty("density") * 10
+			health_max = material.getProperty(MATERIAL_PROPERTY_DENSITY)/9 * 10
 			health = health_max
 
-			cut_resist = material.getProperty("hard") * 10
-			blunt_resist = material.getProperty("density") * 10
-			corrode_resist = material.getProperty("chemical") * 10
+			cut_resist = material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9 * 10
+			blunt_resist = material.getProperty(MATERIAL_PROPERTY_DENSITY)/9 * 10
+			corrode_resist = material.getProperty(MATERIAL_PROPERTY_CHEMICAL)/9 * 10
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -331,7 +331,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
 			if(src?.material.hasProperty(MATERIAL_PROPERTY_ELECTRICAL))
-				shock(AM, 60 + (5 * (src.material.getProperty("electrical") - 5)))  // sure loved people being able to throw corpses into these without any consequences.
+				shock(AM, 60 + (5 * (src.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9 - 5)))  // sure loved people being able to throw corpses into these without any consequences.
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
@@ -415,10 +415,10 @@
 		// electrocution check
 
 		var/OSHA_is_crying = 1
-		if (src.material && src.material.getProperty("electrical") < 4)
+		if (src.material && src.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL) < 4*9)
 			OSHA_is_crying = 0
 
-		if (OSHA_is_crying && src.material && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
+		if (OSHA_is_crying && src.material && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9 - 5))))
 			return
 
 		// Things that will electrocute you
@@ -557,7 +557,7 @@
 		if (!powernets[net])
 			return FALSE
 		if(src.material)
-			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical") * 5)
+			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL)/9 * 5)
 		else
 			powernets[net].newavail += lpower / 7500
 

@@ -1383,8 +1383,8 @@ Returns:
 			src.color = shaft.getColor()
 			src.alpha = shaft.getAlpha()
 		if(src.material && src.material.hasProperty(MATERIAL_PROPERTY_HARDNESS))
-			src.force = round(src.material.getProperty("hard") * 2)
-			src.throwforce = round(src.material.getProperty("hard") * 3)
+			src.force = round(src.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9 * 2)
+			src.throwforce = round(src.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9 * 3)
 		return
 
 	proc/SetPrefix()

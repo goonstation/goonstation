@@ -217,15 +217,13 @@ TYPEINFO(/obj/machinery/power/furnace)
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (W.material)
-			if (W.material.getProperty("flammable") <= 1)
+			if (W.material.getMaterialFlags & MATERIAL_FLAG_FLAMMABLE = 0)
 				return 0
+			if (W.amount == 1)
+				fuel += 80
 			else
-				var/fuel_amount = (10 * (2 ** (W.material.getProperty("flammable") - 2)))
-				if (W.amount == 1)
-					fuel += fuel_amount
-				else
-					stacked = TRUE
-					handle_stacks(W, fuel_amount)
+				stacked = TRUE
+				handle_stacks(W, 80)
 		else if (istype(W, /obj/item/currency/spacecash/))
 			if (W.amount == 1)
 				fuel_name = "a credit"

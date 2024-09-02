@@ -281,11 +281,8 @@ ABSTRACT_TYPE(/obj/item)
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
-			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
-				burn_type = 1
-			else
-				burn_type = 0
+			burn_possible = src.material.getMaterialFlags() & MATERIAL_FLAG_FLAMMABLE
+			burn_type = 1
 
 		if (src.material.countTriggers(TRIGGERS_ON_LIFE))
 			src.AddComponent(/datum/component/loctargeting/mat_triggersonlife)

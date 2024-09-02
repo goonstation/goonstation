@@ -22,7 +22,7 @@
 			// Mauxite is 15 / 50, so slightly better.
 			// I went with hardness here just because I figure if it's hard it doesn't break all that well.
 			// Probably could be adjusted, but this gives decent results, I guess. Eh.
-			maximum_pressure = max((src.material.getProperty("hard") * 4 + src.material.getProperty("density")) * ONE_ATMOSPHERE, ONE_ATMOSPHERE * 2)
+			maximum_pressure = max((src.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9 * 4 + src.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9) * ONE_ATMOSPHERE, ONE_ATMOSPHERE * 2)
 		return
 
 	New()

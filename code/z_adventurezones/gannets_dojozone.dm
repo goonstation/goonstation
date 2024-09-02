@@ -477,7 +477,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
+					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty(MATERIAL_PROPERTY_DENSITY) >= 3*9 && R.material.getProperty(MATERIAL_PROPERTY_HARDNESS) >= 2*9)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else

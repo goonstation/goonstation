@@ -101,10 +101,10 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
 
 	proc/getEffectiveRad()
-		return src.material.getProperty("radioactive") - src.radLost
+		return src.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE) - src.radLost
 
 	proc/getEffectiveNRad()
-		return src.material.getProperty("n_radioactive") - src.nRadLost
+		return src.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE) - src.nRadLost
 
 	proc/melt()
 		if(melted)
@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
 		for(var/datum/neutron/N as anything in inNeutrons)
-			if(prob(src.material.getProperty("density")*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
+			if(prob(src.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
 				if(N.velocity <= 1 & prob(src.getEffectiveNRad/9*10)) //neutron stimulated emission
 					//become less nradioactive and more radioactive
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					qdel(N)
 					src.temperature += 25
 				else
-					if(prob(src.material.getProperty("hard")*10)) //reflection is based on hardness
+					if(prob(src.material.getProperty(MATERIAL_PROPERTY_HARD)/9*10)) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
 					else if(is_control_rod) //control rods absorb neutrons
 						N.velocity = 0
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 				gloves = H.gloves
 			else
 				gloves = null
-			if(!gloves || gloves.material?.getProperty("thermal") > 2)
+			if(!gloves || gloves.material?.getProperty(MATERIAL_PROPERTY_THERMAL)/9 > 2)
 				boutput(user, SPAN_ALERT("\The [src] burns your hand!"))
 				user.TakeDamageAccountArmor(user.hand ? "l_arm" : "r_arm", 0, min((src.temperature-T0C)/20, 50) * mult, 0, DAMAGE_BURN)
 

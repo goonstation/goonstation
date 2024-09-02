@@ -810,13 +810,13 @@
 			return TRUE //don't irradiate ghosts
 
 		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 10 : 5
-		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density
+		var/density = (hit.material ? hit.material.getProperty(MATERIAL_PROPERTY_DENSITY) : 3*9) //3 is default density
 
 		//first are we colliding with this or ignoring it?
 		if(prob(density*multiplier))
 			//we hit it! now decide what that hit means
 			//first, reflection
-			if(hit.material && prob(hit.material.getProperty("hard")*10))
+			if(hit.material && prob(hit.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9*10))
 				//reflect
 				var/obj/projectile/reflected = shoot_reflected_bounce(O, hit)
 				reflected?.power = O.power
@@ -824,11 +824,11 @@
 
 			//then fission
 			//fission basically hits like an AoE contamination effect
-			if(hit.material && prob(hit.material.getProperty("n_radioactive")*10))
+			if(hit.material && prob(hit.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE)/9*10))
 				for(var/turf/T in range(1, hit))
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, TRUE, 1)
 				return FALSE
-			if(hit.material && prob(hit.material.getProperty("radioactive")*10))
+			if(hit.material && prob(hit.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE)/9*10))
 				for(var/turf/T in range(1, hit))
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
 				return FALSE

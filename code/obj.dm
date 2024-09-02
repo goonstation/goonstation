@@ -103,8 +103,8 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			pressure_resistance = max(20, (src.material.getProperty("density") /9 - 5) * ONE_ATMOSPHERE)
-			throwforce = src.material.getProperty("hard") /9
+			pressure_resistance = max(20, (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) /9 - 5) * ONE_ATMOSPHERE)
+			throwforce = src.material.getProperty(MATERIAL_PROPERTY_HARDNESS) /9
 			throwforce = max(throwforce, initial(throwforce))
 			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
