@@ -1,4 +1,4 @@
-//------------- WRAPPERS -------------//
+//------------ Wrappers ------------//
 /// A wrapper for _AddSpeechOutput that permits the usage of named arguments.
 #define AddSpeechOutput(output_id, arguments...) _AddSpeechOutput(output_id, list(##arguments))
 /// A wrapper for _AddSpeechModifier that permits the usage of named arguments.
@@ -11,14 +11,14 @@
 #define AddListenModifier(modifier_id, arguments...) _AddListenModifier(modifier_id, list(##arguments))
 
 
-//------------- COOLDOWNS -------------//
+//------------ Cooldowns ------------//
 /// The minimum time between voice sound effects for a single atom. Measured in tenths of a second.
 #define VOICE_SOUND_COOLDOWN 8
 /// The minimum time between playing the cluwne laugh for atoms affacted by it. Measured in tenths of a second.
 #define CLUWNE_NOISE_COOLDOWN 50
 
 
-//------------- MESSAGE RANGES -------------//
+//------------ Message Ranges ------------//
 /// The maximum distance from which standard spoken messages may be heard.
 #define DEFAULT_HEARING_RANGE 5
 /// The maximum distance from which whispered messages may be clearly heard.

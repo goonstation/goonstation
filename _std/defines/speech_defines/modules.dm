@@ -41,6 +41,7 @@
 #define SPEECH_OUTPUT_THRALLCHAT_THRALL "thrall_thrallchat"
 #define SPEECH_OUTPUT_THRALLCHAT_VAMPIRE "vampire_thrallchat"
 
+
 //------------ Speech Modifiers ------------//
 #define SPEECH_MODIFIER_ACCENT_ADMIN_BAD "accent_badmin"
 #define SPEECH_MODIFIER_ACCENT_ADMIN_GOOD "accent_goodmin"
@@ -123,6 +124,7 @@
 #define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
 
+
 //------------ Speech Prefixes ------------//
 #define SPEECH_PREFIX_AI_RADIO_1 "ai_radio_1"
 #define SPEECH_PREFIX_AI_RADIO_2 "ai_radio_2"
@@ -136,6 +138,7 @@
 #define SPEECH_PREFIX_RADIO_GENERAL "radio_general"
 #define SPEECH_PREFIX_RIGHT_HAND "right_hand"
 #define SPEECH_PREFIX_SILICON "silicon"
+
 
 //------------ Listen Inputs ------------//
 #define LISTEN_INPUT_BLOBCHAT "blobchat"
@@ -173,6 +176,7 @@
 #define LISTEN_INPUT_GHOSTLY_WHISPER "spooky"
 #define LISTEN_INPUT_THRALLCHAT "thrallchat"
 #define LISTEN_INPUT_THRALLCHAT_GLOBAL "global_thrallchat"
+
 
 //------------ Listen Modifiers ------------//
 #define LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS "chat_context_flags"

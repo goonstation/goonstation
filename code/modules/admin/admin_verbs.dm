@@ -2400,12 +2400,17 @@ var/list/fun_images = list()
 				players[M.mind.get_player()] = antag
 				break
 	var/total = 0
+	var/list/key_list = list()
 	for (var/datum/player/player in players)
 		var/datum/antagonist/antag = players[player]
 		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
 		total += 1
 		player.set_antag_tokens(player.get_antag_tokens() + 1)
+		key_list += player.key
 	boutput(src, "Roundstart antags given tokens: [total]")
+	var/key_text = english_list(key_list)
+	logTheThing(LOG_ADMIN, src, "[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
+	message_admins("[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
 
 /client/proc/spawn_all_type()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)

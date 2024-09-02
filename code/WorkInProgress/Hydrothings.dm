@@ -684,7 +684,6 @@
 	desc = "A disabled robot owl."
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "smallowl"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	anchored = ANCHORED
 	density = 1
 	flash_prob = 80

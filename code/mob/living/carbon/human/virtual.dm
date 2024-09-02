@@ -18,10 +18,12 @@
 		src.bioHolder.mobAppearance.fartsound = "virtual"
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
+		src.sims = null
 		if (!is_ghost)
 			src.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SPOKEN)
 			src.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_DEADCHAT)
 			src.default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 

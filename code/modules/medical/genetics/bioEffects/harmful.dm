@@ -956,3 +956,31 @@
 			else
 				owner:emote("sneeze")
 		return
+
+/datum/bioEffect/lazy_eye
+	name = "Ego Dislocation"
+	desc = "The subject's sense of self may not always align with their physical location."
+	id = "lazy_eye"
+	effectType = EFFECT_TYPE_DISABILITY
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	msgGain = "You feel strangly disjointed."
+	msgLose = "You feel grounded."
+	isBad = 1
+	icon_state  = "bad"
+
+	OnAdd()
+		. = ..()
+		src.owner.client?.lazy_eye = 5
+
+	OnRemove()
+		. = ..()
+		src.owner.client?.lazy_eye = 0
+
+	OnLife(mult)
+		if(..()) return
+		src.owner.client?.lazy_eye = 5

@@ -6,6 +6,7 @@
 	message.flags &= ~SAYFLAG_SPOKEN_BY_PLAYER; \
 	message.id = "\ref[message]";
 
+
 //------------ Relay Types ------------//
 #define SAY_RELAY_MICROPHONE (1 << 0)
 #define SAY_RELAY_PHONE (1 << 1)

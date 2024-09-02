@@ -31,6 +31,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/silenced = 0
 	///the "out of ammo oh no" click
 	var/click_sound = 'sound/weapons/Gunclick.ogg'
+	var/click_msg = "*click* *click*"
 	var/can_dual_wield = 1
 
 	var/slowdown = 0 //Movement delay attack after attack
@@ -280,7 +281,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
 				playsound(user, click_sound, 60, TRUE)
 			else
-				user.show_text("*click* *click*", "red")
+				user.show_text(src.click_msg, "red")
 		return FALSE
 
 	if (ishuman(user) && src.add_residue) // Additional forensic evidence for kinetic firearms (Convair880).
@@ -364,7 +365,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		return FALSE
 	if (!canshoot(user))
 		if (ismob(user) && src.click_sound)
-			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
+			user.show_text(src.click_msg, "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
 				playsound(user, click_sound, 60, TRUE)
 		return FALSE
@@ -450,7 +451,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	if (src.click_sound)
-		boutput(user, SPAN_ALERT("*click* *click*"))
+		boutput(user, SPAN_ALERT(src.click_msg))
 		if (!src.silenced)
 			playsound(user, click_sound, 60, TRUE)
 	return 0

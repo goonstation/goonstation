@@ -186,12 +186,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		..()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/gimmick/shitty_beard
-		bioHolder.mobAppearance.customization_first_color = "#281400"
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customization_second_color = "#241200"
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/hair/gimmick/shitty_beard_stains
-		bioHolder.mobAppearance.customization_third_color = "#663300"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#281400"
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/short/pomp
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/gimmick/shitty_beard_stains
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#663300"
 		bioHolder.age = 63
 		bioHolder.bloodType = "A+"
 		bioHolder.mobAppearance.gender = "male"

@@ -341,6 +341,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 	var/charge_time = 100
 	var/emagged = 0
 	var/makeshift = 0
+	var/mounted = FALSE
 	var/obj/item/cell/cell = null
 
 	emag_act(var/mob/user)
@@ -596,6 +597,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 /obj/item/robodefibrillator/mounted
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
+	mounted = TRUE
 
 	disposing()
 		parent?.defib = null

@@ -1,4 +1,4 @@
-//------------- MESSAGE MODIFIER FLAGS -------------//
+//------------ Message Modifier Flags ------------//
 /// This message should be formatted as an admin message. Message modifier flag.
 #define SAYFLAG_ADMIN_MESSAGE (1 << 0)
 /// This message should be displayed with quotation marks. Message modifier flag.
@@ -11,7 +11,7 @@
 #define SAYFLAG_WHISPER (1 << 4)
 
 
-//------------- ORDINARY SAYFLAGS -------------//
+//------------ Ordinary Sayflags ------------//
 /// This message has been sung, loudly.
 #define SAYFLAG_LOUD_SINGING (1 << 5)
 /// This message has been sung, softly.

@@ -1,4 +1,4 @@
-//------------- Player Speech Verbs -------------//
+//------------ Player Speech Verbs ------------//
 /mob/verb/ooc(message as text)
 	src.say(":ooc [message]")
 
@@ -82,7 +82,7 @@
 	src.say_verb("[prefix] [message]")
 
 
-//------------- Admin Speech Procs -------------//
+//------------ Admin Speech Procs ------------//
 #define ADMIN_SAY_PROC(proc_name, channel, module) \
 /client/proc/##proc_name(message as text) { \
 	SET_ADMIN_CAT(ADMIN_CAT_NONE); \
