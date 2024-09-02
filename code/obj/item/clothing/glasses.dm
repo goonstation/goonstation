@@ -23,6 +23,7 @@
 			return
 		return ..()
 
+
 /obj/item/clothing/glasses/crafted
 	name = "glasses"
 	icon_state = "crafted"
@@ -122,6 +123,19 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	item_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
+
+	attack_self(mob/user)
+		user.show_text("You swap the style of your glasses.")
+		if (src.icon_state == "glasses")
+			src.icon_state = "glasses_round"
+		else
+			src.icon_state = "glasses"
+
+/obj/item/clothing/glasses/regular/round
+	name = "round glasses"
+	icon_state = "glasses_round"
+	item_state = "glasses_round"
+	desc = "Big round corrective lenses, perfect for the near-sighted nerd."
 
 /obj/item/clothing/glasses/regular/ecto
 	name = "peculiar spectacles"
