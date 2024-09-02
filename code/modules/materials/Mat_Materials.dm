@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/material)
 	/// Associated list of all the various [/datum/material_property] that apply.
 	/// list[/datum/material_property] = value
 	VAR_PROTECTED/list/properties = list()
-	/// Various flags. See [material_properties.dm]
+	/// Various flags. See [_std\defines\materials.dm]
 	VAR_PROTECTED/material_flags = 0
 	/// In percent of a base value. How much this sells for.
 	VAR_PROTECTED/value = 100
@@ -40,16 +40,6 @@ ABSTRACT_TYPE(/datum/material)
 	/// Whether the specaialNaming proc is called when this material is applied.
 	VAR_PROTECTED/special_naming = FALSE
 
-	//Vars for alloys
-	/// Holds the parent materials.
-	VAR_PROTECTED/list/parent_materials = list()
-	/// Compound generation
-	VAR_PROTECTED/generation = 0
-	/// Can this be mixed with other materials?
-	VAR_PROTECTED/canMix = 1
-	/// Can this only be used after being combined with another material?
-	VAR_PROTECTED/mixOnly = 0
-
 	//material appearance vars
 	/// if not null, texture will be set when mat is applied.
 	VAR_PROTECTED/texture = ""
@@ -61,11 +51,6 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/color = "#FFFFFF"
 	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
 	VAR_PROTECTED/alpha = 255
-
-	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
-	VAR_PROTECTED/edible_exact = 0
-	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
-	VAR_PROTECTED/edible = 0
 
 	//triggers
 	//IF YOU CHANGE THESE IN ANY WAY, YOU MUST UPDATE _std/defines/materials.dm
@@ -147,20 +132,8 @@ ABSTRACT_TYPE(/datum/material)
 	proc/getAlpha()
 		return src.alpha
 
-	proc/getEdible()
-		return src.edible
-
-	proc/getCanMix()
-		return src.canMix
-
-	proc/getMixOnly()
-		return src.mixOnly
-
 	proc/getMaterialProperties()
 		return src.properties.Copy()
-
-	proc/getParentMaterials()
-		return src.parent_materials.Copy()
 
 	proc/isMutable()
 		return src.mutable
@@ -180,11 +153,6 @@ ABSTRACT_TYPE(/datum/material)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.color = color
-
-	proc/setCanMix(var/mix)
-		if(!src.mutable)
-			CRASH("Attempted to mutate an immutatble material!")
-		src.canMix = mix
 
 	//mutability procs
 
@@ -456,7 +424,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	color = "#8C8C8C"
 
 	New()
-		. = ..()
+		..()
 		setProperty("electrical", 45)
 		setProperty("thermal", 54)
 		setProperty("density", 36)
@@ -466,6 +434,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "steel"
 	name = "steel"
 	desc = "Terrestrial steel from Earth."
+	color = "#8C8C8C"
+
 	New()
 		..()
 		setProperty("density", 36)
@@ -498,9 +468,10 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "cobryl"
 	desc = "Cobryl is a somewhat valuable metal."
 	color = "#84D5F0"
+	value = 175
+
 	New()
 		..()
-		value = 175
 		setProperty("density", 36)
 		setProperty("hard", 18)
 		setProperty("chemical", 72)
@@ -510,6 +481,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "bohrum"
 	desc = "Bohrum is a heavy and highly durable metal."
 	color = "#3D692D"
+
 	New()
 		..()
 		setProperty("density", 54)
@@ -531,11 +503,10 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "cerenkite"
 	desc = "Cerenkite is a highly radioactive metal."
 	color = "#CDBDFF"
+	value = 200
 
 	New()
 		..()
-		value = 200
-
 		setProperty("electrical", 54)
 		setProperty("radioactive", 45)
 		setProperty("hard", 18)
@@ -545,15 +516,13 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "syreline"
 	desc = "Syreline is an extremely valuable and coveted metal."
 	color = "#FAF5D4"
+	value = 400
 
 	New()
 		..()
-		value = 400
-
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("density", 9)
 		setProperty("hard", 18)
-		setProperty("reflective", 72)
-
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 /datum/material/metal/gold
@@ -561,17 +530,15 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "gold"
 	desc = "A somewhat valuable and conductive metal."
 	color = "#F5BE18"
+	value = 300
 
 	New()
 		..()
-		value = 300
-
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("density", 54)
 		setProperty("hard", 18)
-		setProperty("reflective", 54)
 		setProperty("electrical", 63)
 		setProperty("thermal", 63)
-
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 /datum/material/metal/silver
@@ -579,14 +546,13 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
 	color = "#C1D1D2"
+	value = 250
 
 	New()
 		..()
-		value = 250
-
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("density", 36)
 		setProperty("hard", 18)
-		setProperty("reflective", 54)
 		setProperty("electrical", 54)
 
 /datum/material/metal/electrum
@@ -601,7 +567,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 36)
 		setProperty("hard", 9)
 
-/datum/material/metal/plasmasteel //This should have inverted plasmaglass stats
+/datum/material/metal/plasmasteel
 	mat_id = "plasmasteel"
 	name = "plasma steel"
 	desc = "A plasmastone/steel alloy. Very dense but quite soft."
@@ -616,13 +582,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/iridiumalloy
 	mat_id = "iridiumalloy"
 	name = "iridium alloy"
-	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
 	color = "#756596"
 
 	New()
 		..()
-		material_flags |= MATERIAL_CRYSTAL
 		setProperty("density", 72)
 		setProperty("hard", 72)
 		setProperty("chemical", 81)
@@ -635,7 +599,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 	New()
 		..()
-		material_flags|= MATERIAL_ENERGY
+		material_flags |= MATERIAL_FLAG_GHOSTLY
 		setProperty("density", 36)
 		setProperty("hard", 18)
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
@@ -643,13 +607,11 @@ ABSTRACT_TYPE(/datum/material/metal)
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
 	name = "plutonium"
-	canMix = 0 //Can not be easily modified.
 	desc = "Weapons grade refined plutonium."
 	color = "#230e4d"
 
 	New()
 		..()
-		material_flags |= MATERIAL_CRYSTAL
 		setProperty("density", 72)
 		setProperty("hard", 63)
 		setProperty("n_radioactive", 45)
@@ -700,11 +662,10 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 	name = "slag"
 	desc = "A by-product left over after material has been processed."
 	color = "#26170F"
+	value = 10
 
 	New()
 		..()
-		value = 10
-
 		setProperty("density", 18)
 		setProperty("hard", 18)
 		setProperty("electrical", 18)
@@ -729,7 +690,7 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY
+		material_flags |= MATERIAL_FLAG_FLAMMABLE
 		setProperty("density", 9)
 		setProperty("hard", 18)
 		setProperty("electrical", 45)
@@ -769,11 +730,9 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 	color = "#E8F2FF"
 	alpha = 100
 
-	edible_exact = 1
-	edible = 1
-
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_EDIBLE
 		setProperty("electrical", 18)
 		setProperty("density", 9)
 		setProperty("hard", 18)
@@ -789,8 +748,8 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE
 		setProperty("electrical", 36)
-		setProperty("flammable", 45)
 		setProperty("hard", 27)
 		setProperty("density", 18)
 
@@ -805,7 +764,6 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 		setProperty("electrical", 36)
 		setProperty("density", 27)
 		setProperty("hard", 45)
-		setProperty("flammable", 18)
 
 /datum/material/ceramic/chitin
 	mat_id = "chitin"
@@ -815,7 +773,6 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 
 	New()
 		..()
-		material_flags |= MATERIAL_METAL
 		setProperty("electrical", 36)
 		setProperty("density", 18)
 		setProperty("hard", 54)
@@ -830,7 +787,6 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 
 	New()
 		..()
-		material_flags |= MATERIAL_METAL | MATERIAL_CRYSTAL
 		setProperty("electrical", 36)
 		setProperty("density", 18)
 		setProperty("hard", 45)
@@ -844,7 +800,6 @@ ABSTRACT_TYPE(/datum/material/ceramic)
 	New()
 		..()
 		setProperty("electrical", 45)
-		setProperty("flammable", 18)
 		setProperty("density", 18)
 		setProperty("hard", 18)
 		setProperty("thermal", 9)
@@ -913,7 +868,6 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 63)
 		setProperty("hard", 27)
 		setProperty("electrical", 54)
@@ -956,6 +910,7 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("density", 18)
 		setProperty("hard", 45)
 		setProperty("electrical", 63)
@@ -976,10 +931,9 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("density", 9)
 		setProperty("hard", 18)
-		setProperty("reflective", 72)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/telecrystal_life())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
@@ -996,7 +950,6 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 		alpha = rand(20, 255)
 		setProperty("density", rand(9, 72))
 		setProperty("hard", rand(9, 72))
-		setProperty("reflective", rand(9, 81))
 		setProperty("chemical", rand(9, 72))
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
@@ -1010,7 +963,7 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 
 	New()
 		..()
-		setProperty("reflective", 81)
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("density", 81)
 		setProperty("hard", 81)
 		setProperty("electrical", 9)
@@ -1024,9 +977,8 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 
 	New()
 		..()
-		material_flags |= MATERIAL_CRYSTAL
+		material_flags |= MATERIAL_FLAG_REFLECTIVE
 		setProperty("hard", 27)
-		setProperty("reflective", 54)
 		setProperty("n_radioactive", 9)
 		setProperty("density", 45)
 
@@ -1038,11 +990,9 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal)
 
 	New()
 		..()
-		material_flags |= MATERIAL_CRYSTAL
 		setProperty("density", 27)
 		setProperty("hard", 18)
 		setProperty("thermal", 9)
-		setProperty("flammable", 9)
 		setProperty("electrical", 36)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
 
@@ -1249,7 +1199,7 @@ ABSTRACT_TYPE(/datum/material/ceramic/crystal/quartz)
 		setProperty("density", 27)
 		setProperty("hard", 36)
 
-/datum/material/ceramic/crystal/quartz/quartz/onyx
+/datum/material/ceramic/crystal/quartz/onyx
 	mat_id = "onyx"
 	name = "onyx"
 	color = "#000000"
@@ -1279,16 +1229,12 @@ ABSTRACT_TYPE(/datum/material/blobby)
 	texture = "bubbles"
 	texture_blend = BLEND_ADD
 
-	edible_exact = 0.6 //Just barely edible
-	edible = 1
-
 	New()
 		..()
-		material_flags |= MATERIAL_CRYSTAL | MATERIAL_CLOTH
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("chemical", 27)
 		setProperty("density", 45)
 		setProperty("hard", 9)
-		setProperty("flammable", 45)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 /datum/material/blobby/flesh
@@ -1297,11 +1243,9 @@ ABSTRACT_TYPE(/datum/material/blobby)
 	desc = "Meat from a carbon-based lifeform."
 	color = "#574846"
 
-	edible_exact = 0.6 //Just barely edible.
-	edible = 1
-
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("density", 27)
 		setProperty("hard", 9)
 
@@ -1330,16 +1274,12 @@ ABSTRACT_TYPE(/datum/material/blobby)
 	desc = "A disgusting flesh-like material. Ugh. What the hell is this?"
 	color = "#D04FFF"
 
-	edible_exact = 0.6 //Just barely edible.
-	edible = 1
-
 	New()
 		..()
-		material_flags |= MATERIAL_CLOTH
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("density", 36)
 		setProperty("hard", 9)
 		setProperty("chemical", 54)
-		setProperty("flammable", 18)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
 /datum/material/blobby/viscerite/tensed
@@ -1354,7 +1294,6 @@ ABSTRACT_TYPE(/datum/material/blobby)
 		setProperty("density", 27)
 		setProperty("hard", 27)
 		setProperty("chemical", 72)
-		setProperty("flammable", 18)
 
 /datum/material/blobby/beeswax
 	mat_id = "beeswax"
@@ -1364,25 +1303,21 @@ ABSTRACT_TYPE(/datum/material/blobby)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("density", 9)
 		setProperty("hard", 18)
-		setProperty("flammable", 36)
 
 /datum/material/blobby/honey
 	mat_id = "honey"
-	name = "refined honey" //Look calling both the globs and the material just "honey" isn't helping people's confusion wrt making clone pods
+	name = "honey"
 	desc = ""
 	color = "#f1da10"
-	edible_exact = TRUE
-	edible = TRUE
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("density", 18)
 		setProperty("hard", 9)
-		setProperty("flammable", 36)
-		// addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_honey())
-		// maybe make it sticky somehow?
 
 /datum/material/blobby/frozenfart
 	mat_id = "frozenfart"
@@ -1406,10 +1341,10 @@ ABSTRACT_TYPE(/datum/material/blobby)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL
 		setProperty("density", 45)
 		setProperty("chemical", 63)
 		setProperty("thermal", 18)
-		setProperty("flammable", 9)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
 
 /datum/material/blobby/ectoplasm
@@ -1420,7 +1355,7 @@ ABSTRACT_TYPE(/datum/material/blobby)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY
+		material_flags |= MATERIAL_FLAG_GHOSTLY
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
@@ -1432,11 +1367,10 @@ ABSTRACT_TYPE(/datum/material/blobby)
 	color = "#FFFFFF"
 	texture = "pizza2"
 	texture_blend = BLEND_SUBTRACT
-	edible_exact = 1
-	edible = 1
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("hard", 9)
 
 /datum/material/blobby/pickle
@@ -1446,15 +1380,13 @@ ABSTRACT_TYPE(/datum/material/blobby)
 	color = "#b8db56"
 	texture = "pickle"
 	texture_blend = BLEND_MULTIPLY
-	edible_exact = 1
-	edible = 1
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL | MATERIAL_FLAG_EDIBLE
 		setProperty("density", 18)
 		setProperty("hard", 9)
 		setProperty("thermal", 18)
-		setProperty("flammable", 18)
 
 /datum/material/blobby/glowstick
 	mat_id = "glowstick"
@@ -1479,6 +1411,7 @@ ABSTRACT_TYPE(/datum/material/woody)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL
 		setProperty("density", 45)
 		setProperty("hard", 27)
 
@@ -1491,10 +1424,8 @@ ABSTRACT_TYPE(/datum/material/woody)
 
 	New()
 		..()
-		material_flags |= MATERIAL_WOOD
 		setProperty("density", 45)
 		setProperty("hard", 27)
-		setProperty("flammable", 36)
 		setProperty("electrical", 36)
 
 /datum/material/woody/bamboo
@@ -1506,9 +1437,7 @@ ABSTRACT_TYPE(/datum/material/woody)
 
 	New()
 		..()
-		material_flags |= MATERIAL_WOOD
 		setProperty("density", 36)
-		setProperty("flammable", 36)
 		setProperty("electrical", 36)
 
 /datum/material/woody/cardboard
@@ -1521,7 +1450,6 @@ ABSTRACT_TYPE(/datum/material/woody)
 		..()
 		setProperty("density", 18)
 		setProperty("hard", 9)
-		setProperty("flammable", 36)
 		setProperty("electrical", 36)
 		addTrigger(TRIGGERS_ON_BLOBHIT, new /datum/materialProc/cardboard_blob_hit())
 		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/cardboard_on_hit())
@@ -1548,10 +1476,10 @@ ABSTRACT_TYPE(/datum/material/textile)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("thermal", 36)
-		setProperty("flammable", 36)
 
 /datum/material/textile/jean
 	mat_id = "jean"
@@ -1564,10 +1492,10 @@ ABSTRACT_TYPE(/datum/material/textile)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL
 		setProperty("density", 18)
 		setProperty("hard", 9)
 		setProperty("thermal", 18)
-		setProperty("flammable", 18)
 
 	proc/jeplacement(text)
 		var/first_letter = copytext(text, 1, 2)
@@ -1600,23 +1528,10 @@ ABSTRACT_TYPE(/datum/material/textile)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("thermal", 36)
-		setProperty("flammable", 36)
-
-/datum/material/textile/spidersilk
-	mat_id = "spidersilk"
-	name = "spider silk"
-	desc = "Spider silk is a protein fiber spun by space spiders."
-	color = "#CCCCCC"
-
-	New()
-		..()
-		setProperty("density", 54)
-		setProperty("hard", 9)
-		setProperty("thermal", 36)
-		setProperty("flammable", 45)
 
 /datum/material/textile/carbonfibre
 	mat_id = "carbonfibre"
@@ -1639,7 +1554,7 @@ ABSTRACT_TYPE(/datum/material/textile)
 
 	New()
 		..()
-		material_flags |= MATERIAL_METAL | MATERIAL_ENERGY
+		material_flags |= MATERIAL_FLAG_GHOSTLY
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 9)
@@ -1655,27 +1570,13 @@ ABSTRACT_TYPE(/datum/material/textile)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY | MATERIAL_CRYSTAL
+		material_flags |= MATERIAL_FLAG_GHOSTLY
 		setProperty("density", 54)
 		setProperty("hard", 9)
 		setProperty("thermal", 81)
 		setProperty("radioactive", 27)
 		setProperty("electrical", 63)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
-
-/datum/material/textile/dyneema
-	mat_id = "dyneema"
-	name = "dyneema"
-	desc = "A blend of carbon nanofibres and space spider silk. Highly versatile."
-	color = "#333333"
-
-	New()
-		..()
-		setProperty("density", 72)
-		setProperty("hard", 36)
-		setProperty("chemical", 81)
-		setProperty("electrical", 63)
-		setProperty("flammable", 9)
 
 /datum/material/textile/exoweave
 	mat_id = "exoweave"
@@ -1691,7 +1592,38 @@ ABSTRACT_TYPE(/datum/material/textile)
 		setProperty("thermal", 81)
 		setProperty("electrical", 72)
 
-/datum/material/textile/beewool
+/datum/material/textile/silk
+
+/datum/material/textile/silk/spider
+	mat_id = "spidersilk"
+	name = "spider silk"
+	desc = "Spider silk is a protein fiber spun by space spiders."
+	color = "#CCCCCC"
+
+	New()
+		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL
+		setProperty("density", 54)
+		setProperty("hard", 9)
+		setProperty("thermal", 36)
+
+/datum/material/textile/silk/dyneema
+	mat_id = "dyneema"
+	name = "dyneema"
+	desc = "A blend of carbon nanofibres and space spider silk. Highly versatile."
+	color = "#333333"
+
+	New()
+		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL
+		setProperty("density", 72)
+		setProperty("hard", 36)
+		setProperty("chemical", 81)
+		setProperty("electrical", 63)
+
+/datum/material/textile/wool
+
+/datum/material/textile/wool/bee
 	mat_id = "beewool"
 	name = "bee wool"
 	desc = "Wool of adorable furry space bees."
@@ -1701,9 +1633,9 @@ ABSTRACT_TYPE(/datum/material/textile)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_FLAMMABLE | MATERIAL_FLAG_BIOLOGICAL
 		setProperty("hard", 18)
 		setProperty("density", 18)
-		setProperty("flammable", 54)
 		setProperty("electrical", 27)
 		setProperty("thermal", 63)
 
@@ -1725,6 +1657,10 @@ ABSTRACT_TYPE(/datum/material/leathery)
 	desc = "Leather is a flexible material derived from processed animal skins."
 	color = "#8A3B11"
 
+	New()
+		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL
+
 /datum/material/leathery/synthleather
 	mat_id = "synthleather"
 	name = "synthleather"
@@ -1733,6 +1669,7 @@ ABSTRACT_TYPE(/datum/material/leathery)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL
 		setProperty("thermal", 36)
 		setProperty("electrical", 36)
 
@@ -1744,6 +1681,7 @@ ABSTRACT_TYPE(/datum/material/leathery)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL
 		setProperty("density", 27)
 		setProperty("hard", 18)
 		setProperty("thermal", 18)
@@ -1757,11 +1695,11 @@ ABSTRACT_TYPE(/datum/material/leathery)
 
 	New()
 		..()
+		material_flags |= MATERIAL_FLAG_BIOLOGICAL
 		setProperty("density", 63)
 		setProperty("hard", 27)
 		setProperty("thermal", 9)
 		setProperty("electrical", 36)
-		setProperty("flammable", 9)
 
 //Rubber and rubber-like materials
 ABSTRACT_TYPE(/datum/material/rubbery)
@@ -1808,7 +1746,6 @@ ABSTRACT_TYPE(/datum/material/rubbery)
 		setProperty("hard", 9)
 		setProperty("electrical", 9)
 		setProperty("thermal", 27)
-		setProperty("flammable", 27)
 
 //Anomolous things that can't be traditionally classified
 ABSTRACT_TYPE(/datum/material/degenerate)
@@ -1823,7 +1760,6 @@ ABSTRACT_TYPE(/datum/material/degenerate)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 81)
 		setProperty("hard", 27)
 		setProperty("electrical", 63)
@@ -1837,5 +1773,4 @@ ABSTRACT_TYPE(/datum/material/degenerate)
 
 	New()
 		..()
-		material_flags |= MATERIAL_ENERGY
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/negative_add())
