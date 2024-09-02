@@ -722,7 +722,7 @@
 		current_projectile.material = loaded.head_material
 		var/default_damage = 7
 		if(loaded.head_material)
-			if(loaded.head_material.hasProperty("hard"))
+			if(loaded.head_material.hasProperty(MATERIAL_PROPERTY_HARDNESS))
 				current_projectile.damage = round(6+loaded.head_material.getProperty("hard")) //pretty close to the 7-15 range, which will get multiplied by bow draw
 			else
 				current_projectile.damage = default_damage
