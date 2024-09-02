@@ -1500,7 +1500,7 @@
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			boutput(user, SPAN_NOTICE("You successfully attach the piece to [src.name]."))
 			src.update_bodypart(RP.slot)
-		else if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen) && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+		else if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen) && istype(W, /obj/item/sheet) && istype(W.material, /datum/material/ceramic))
 			var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
 			if (screenhead.smashed)
 				screenhead.start_repair(W, user)

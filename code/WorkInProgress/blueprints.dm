@@ -187,12 +187,12 @@
 			if (istype(item, /obj/item/sheet))
 				var/obj/item/sheet/sheets = item
 				if (!sheets.material) continue
-				if (src.metal_owed && sheets.material.getMaterialFlags() & MATERIAL_METAL)
+				if (src.metal_owed && istype(sheets.material, /datum/material/metal))
 					var/sheets_consumed = ceil(min(sheets.amount, src.metal_owed))
 					sheets.change_stack_amount(-sheets_consumed)
 					src.metal_owed -= sheets_consumed
 					continue
-				if (src.crystal_owed && sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+				if (src.crystal_owed && istype(sheets.material, /datum/material/ceramic))
 					var/sheets_consumed = ceil(min(sheets.amount, src.crystal_owed))
 					sheets.change_stack_amount(-sheets_consumed)
 					src.crystal_owed -= sheets_consumed
@@ -201,12 +201,12 @@
 			else if (istype(item, /obj/item/material))
 				var/obj/item/material/bars = item
 				if (!bars.material) continue
-				if (src.metal_owed && bars.material.getMaterialFlags() & MATERIAL_METAL)
+				if (src.metal_owed && istype(bars.material, /datum/material/metal))
 					var/bars_consumed = ceil(min(bars.amount, src.metal_owed / BAR_SHEET_VALUE))
 					bars.change_stack_amount(-bars_consumed)
 					src.metal_owed -= bars_consumed * BAR_SHEET_VALUE
 					continue
-				if (src.crystal_owed && bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+				if (src.crystal_owed && istype(bars.material, /datum/material/ceramic))
 					var/bars_consumed = ceil(min(bars.amount, src.crystal_owed / BAR_SHEET_VALUE))
 					bars.change_stack_amount(-bars_consumed)
 					src.crystal_owed -= bars_consumed * BAR_SHEET_VALUE
@@ -310,16 +310,16 @@
 			if (istype(O, /obj/item/sheet))
 				var/obj/item/sheet/sheets = O
 				if (!sheets.material) continue
-				if (sheets.material.getMaterialFlags() & MATERIAL_METAL)
+				if (istype(sheets.material, /datum/material/metal))
 					metal_count += sheets.amount
-				if (sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+				if (istype(sheets.material, /datum/material/ceramic))
 					crystal_count += sheets.amount
 			else if (istype(O, /obj/item/material))
 				var/obj/item/material/bars = O
 				if (!bars.material) continue
-				if (bars.material.getMaterialFlags() & MATERIAL_METAL)
+				if (istype(bars.material, /datum/material/ceramic))
 					metal_count += bars.amount * BAR_SHEET_VALUE
-				if (bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+				if (istype(bars.material, /datum/material/ceramic))
 					crystal_count += bars.amount * BAR_SHEET_VALUE
 		if (user)
 			var/message = SPAN_NOTICE("The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.")

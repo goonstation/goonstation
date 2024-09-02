@@ -325,28 +325,7 @@ TYPEINFO(/obj/item/material_shaper)
 	proc/determine_material(var/obj/item/material/D, mob/user as mob)
 		var/datum/material/DM = D.material
 		var/which = null
-		if ((DM.getMaterialFlags() & MATERIAL_METAL) && (DM.getMaterialFlags() & MATERIAL_CRYSTAL))
-			var/be_metal = 0
-			var/be_glass = 0
-			if (!metal)
-				be_metal = 1
-			else if (metal.isSameMaterial(DM))
-				be_metal = 1
-			if (!glass)
-				be_glass = 1
-			else if (glass.isSameMaterial(DM))
-				be_glass = 1
-			if (be_metal && be_glass)
-				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
-			else if (be_metal)
-				which = "metal"
-			else if (be_glass)
-				which = "glass"
-			else
-				playsound(src.loc, sound_grump, 40, 1)
-				boutput(user, SPAN_ALERT("[D] incompatible with current metal or glass."))
-				return null
-		else if (DM.getMaterialFlags() & MATERIAL_METAL)
+		if (istype(DM, /datum/material/metal))
 			if (!metal)
 				which = "metal"
 			else if (metal.isSameMaterial(DM))
@@ -355,7 +334,7 @@ TYPEINFO(/obj/item/material_shaper)
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, SPAN_ALERT("[D] incompatible with current metal."))
 				return null
-		else if (DM.getMaterialFlags() & MATERIAL_CRYSTAL)
+		else if (istype(DM, /datum/material/ceramic))
 			if (!glass)
 				which = "glass"
 			else if (glass.isSameMaterial(DM))
