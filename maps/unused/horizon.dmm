@@ -48113,7 +48113,7 @@
 "fIw" = (
 /obj/machinery/light_switch/north,
 /obj/table/wood/auto,
-/obj/item/currency/spacecash/buttcoin,
+/obj/item/currency/buttcoin,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},

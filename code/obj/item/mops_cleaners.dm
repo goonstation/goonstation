@@ -523,7 +523,7 @@ TRASH BAG
 			var/turf/simulated/T = target
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
-			T.wet = 0
+			T.dryify()
 
 		if (SPONGE_WIPE)
 			if (src.reagents.has_reagent("water"))
@@ -609,7 +609,6 @@ TRASH BAG
 		. = ..()
 
 /obj/item/caution/traitor
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/obj/item/reagent_containers/payload
 
 	New()
@@ -617,6 +616,7 @@ TRASH BAG
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
 		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
+		src.AddComponent(/datum/component/proximity)
 
 	attackby(obj/item/W, mob/user, params)
 		var/mob/living/carbon/human/H = user
@@ -635,7 +635,7 @@ TRASH BAG
 			return
 		. = ..()
 
-	HasProximity(atom/movable/AM)
+	EnteredProximity(atom/movable/AM)
 		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
@@ -1232,6 +1232,11 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	canshoot(mob/user)
 		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost && !src.clogged
+
+	shoot_point_blank(atom/target, mob/user, second_shot) //point blanking this doesn't really make sense
+		if (target == user)
+			return
+		shoot(target, get_turf(user), user, 0, 0)
 
 	process_ammo(mob/user)
 		if (!src.canshoot(user))
