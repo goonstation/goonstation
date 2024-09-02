@@ -1507,7 +1507,7 @@ ABSTRACT_TYPE(/datum/material/textile)
 	proc/replace_first_consonant_cluster(text, replacement)
 		var/original_text = text
 		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
-		. = regex.Replace(text, /datum/material/fabric/jean/proc/jeplacement)
+		. = regex.Replace(text, /datum/material/textile/jean/proc/jeplacement)
 		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
 		if(. == original_text)
 			. = "jean [.]"
