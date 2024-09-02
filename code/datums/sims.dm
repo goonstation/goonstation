@@ -451,7 +451,7 @@
 #ifdef RP_MODE
 	var/provide_plumbobs = 0
 #else
-	var/provide_plumbobs = 1
+	var/provide_plumbobs = 0
 #endif
 
 	New()
@@ -574,6 +574,12 @@ var/global/datum/simsControl/simsController = new()
 	var/start_y = 3
 
 	human
+
+		hygiene
+			start_y = 5
+			make_motives()
+				addMotive(/datum/simsMotive/hygiene)
+
 		start_y = 3
 		make_motives()
 			addMotive(/datum/simsMotive/hunger)
@@ -590,16 +596,30 @@ var/global/datum/simsControl/simsController = new()
 		make_motives()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
-			addMotive(/datum/simsMotive/hygiene)
+			//addMotive(/datum/simsMotive/hygiene)
 			//addMotive(/datum/simsMotive/bladder)
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
+
+		hygiene
+			start_y = 5
+			make_motives()
+				addMotive(/datum/simsMotive/hunger)
+				addMotive(/datum/simsMotive/hunger/thirst)
+				addMotive(/datum/simsMotive/hygiene)
 
 		wolf
 			make_motives()
 				addMotive(/datum/simsMotive/hunger/wolfy)
 				addMotive(/datum/simsMotive/hunger/thirst)
-				addMotive(/datum/simsMotive/hygiene)
+				//addMotive(/datum/simsMotive/hygiene)
+
+			hygiene
+				start_y = 5
+				make_motives()
+					addMotive(/datum/simsMotive/hunger/wolfy)
+					addMotive(/datum/simsMotive/hunger/thirst)
+					addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()

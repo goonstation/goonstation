@@ -294,7 +294,6 @@
 	onRemove(mob/owner)
 		owner.bioHolder?.RemoveEffect("deaf")
 
-
 /datum/trait/nolegs
 	name = "Stumped"
 	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
@@ -360,6 +359,30 @@
 
 			created_organ.donor = owner
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+/datum/trait/stinky
+	name = "Hyperhidrosis"
+	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
+	id = "stinky"
+	icon_state = "placeholder"
+	category = list("body")
+	points = 1
+	var/datum/simsHolder/prev_sims = null // for easily restoring previous sims
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			src.prev_sims = H.sims
+#ifdef RP_MODE
+			H.sims = new /datum/simsHolder/rp/hygiene(H)
+#else
+			H.sims = new /datum/simsHolder/human/hygiene(H)
+#endif
+
+	onRemove(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.sims = src.prev_sims ? src.prev_sims : null
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish

@@ -191,10 +191,11 @@
 
 
 	if (global_sims_mode) // IF YOU ARE HERE TO DISABLE SIMS MODE, DO NOT TOUCH THIS. LOOK IN GLOBAL.DM
+		var/stinky = src.traitHolder.hasTrait("stinky")
 #ifdef RP_MODE
-		sims = new /datum/simsHolder/rp(src)
+		sims = stinky ? new /datum/simsHolder/rp/hygiene(src) : new /datum/simsHolder/rp(src)
 #else
-		sims = new /datum/simsHolder/human(src)
+		sims = stinky ? new /datum/simsHolder/human/hygiene(src) : new /datum/simsHolder/human(src)
 #endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
