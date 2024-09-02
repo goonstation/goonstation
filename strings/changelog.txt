@@ -1,4 +1,9 @@
 
+(t)mon sep 02 24
+(u)Mitch Smith
+(p)20406
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)VR Headsets and other minor eyewear have been resprited, and VR Headsets now have variants!
 (t)sun sep 01 24
 (u)Sockssq & Wrench
 (p)20417
