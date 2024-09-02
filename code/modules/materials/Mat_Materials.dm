@@ -1456,6 +1456,22 @@ ABSTRACT_TYPE(/datum/material/blobby)
 		setProperty("thermal", 18)
 		setProperty("flammable", 18)
 
+/datum/material/blobby/glowstick
+	mat_id = "glowstick"
+	name = "glowsticks" //"it is made of glowsticks"
+	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
+	color = "#00e618"
+	alpha = 200
+
+	New()
+		..()
+		setProperty("density", 27)
+		setProperty("hard", 27)
+		setProperty("radioactive", 9)
+		setProperty("electrical", 18)
+		setProperty("thermal", 27)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())
+
 //Wood and wood-like materials like bamboo
 ABSTRACT_TYPE(/datum/material/woody)
 /datum/material/woody
@@ -1823,22 +1839,3 @@ ABSTRACT_TYPE(/datum/material/degenerate)
 		..()
 		material_flags |= MATERIAL_ENERGY
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/negative_add())
-
-
-/// Material for bundles of glowsticks as fuel rods
-/datum/material/metal/glowstick
-	mat_id = "glowstick"
-	name = "glowsticks" //"it is made of glowsticks"
-	canMix = 0 //don't make alloys of this
-	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
-	color = "#00e618"
-	alpha = 200
-
-	New()
-		..()
-		setProperty("density", 27)
-		setProperty("hard", 27)
-		setProperty("radioactive", 9)
-		setProperty("electrical", 18)
-		setProperty("thermal", 27)
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())
