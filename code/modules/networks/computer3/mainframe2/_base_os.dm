@@ -1265,8 +1265,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 				break
 
 			if (!success)
-				src.master.processing.len++
-				src.master.processing[length(src.master.processing)] = driver
+				src.master.processing += driver
 				driver.progid = length(src.master.processing)
 
 	driver.initialize(connect_file)
