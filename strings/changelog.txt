@@ -1,5 +1,9 @@
 
 (t)sun sep 01 24
+(u)MitchSmith
+(p)20322
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites Satchels!
 (u)cringe
 (p)20500
 (e)🆕💨|C-Feature, A-Atmospherics
