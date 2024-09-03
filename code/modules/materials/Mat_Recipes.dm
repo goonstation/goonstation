@@ -1,8 +1,8 @@
 /// material recipie definition
 /datum/material_recipe
 	var/name = ""
-	/// ID of the result material. used as fallback or when you do not want to use a result item.
-	var/result_id = null
+	/// Path of the result material. Used for setting the material of a generic item if the recipe doesnt specify an item to make.
+	var/result_mat = null
 	/// Path of the resulting material item.
 	var/result_item = null
 
@@ -33,26 +33,26 @@
 
 /datum/material_recipe/hauntium
 	name = "hauntium"
-	result_id = "hauntium"
+	result_mat = /datum/material/textile/hauntium
 	result_item = /obj/item/material/cloth/hauntium
 	ingredient1 = /datum/material/metal/soulsteel
 	ingredient2 = /datum/material/ceramic/crystal/koshmarite
 
 /datum/material_recipe/soulsteel
 	name = "soul steel"
-	result_id = "soulsteel"
+	result_mat = /datum/material/metal/soulsteel
 	ingredient1 = /datum/material/metal/steel
 	ingredient2 = /datum/material/blobby/ectoplasm
 
 /datum/material_recipe/steel
 	name = "steel"
-	result_id = "steel"
+	result_mat = /datum/material/metal/steel
 	ingredient1 = /datum/material/metal/mauxite
 	ingredient2 = /datum/material/ceramic/char
 
 /datum/material_recipe/censorium
 	name = "censorium"
-	result_id = "censorium"
+	result_mat = /datum/material/ceramic/censorium
 	result_item = /obj/item/material/metal/censorium
 	ingredient1 = /datum/material/ceramic/rock
 	ingredient2 = /datum/material/ceramic/char
@@ -60,49 +60,49 @@
 /datum/material_recipe/copper //this doesn't REALLY make sense how steel recipe does but I don't care. Need a way to make copper for coroisum
 //wtf is "coroisum" --Cherman0
 	name = "copper"
-	result_id = "copper"
+	result_mat = /datum/material/metal/copper
 	ingredient1 = /datum/material/metal/pharosium
 	ingredient2 = /datum/material/ceramic/char
 
 /datum/material_recipe/glass // yeah whatever sure char and molitz makes glass who gives a shit
 	name = "glass"
-	result_id = "glass"
+	result_mat = /datum/material/ceramic/glass
 	ingredient1 = /datum/material/ceramic/crystal/molitz
 	ingredient2 = /datum/material/ceramic/char
 
 /datum/material_recipe/electrum
 	name = "electrum"
-	result_id = "electrum"
+	result_mat = /datum/material/metal/electrum
 	ingredient1 = /datum/material/metal/gold
 	ingredient2 = /datum/material/metal/cobryl
 
 /datum/material_recipe/plasmasteel
 	name = "plasmasteel"
-	result_id = "plasmasteel"
+	result_mat = /datum/material/metal/plasmasteel
 	ingredient1 = /datum/material/ceramic/plasmastone
 	ingredient2 = /datum/material/metal/steel
 
 /datum/material_recipe/plasmaglass
 	name = "plasmaglass"
-	result_id = "plasmaglass"
+	result_mat = /datum/material/ceramic/plasmaglass
 	ingredient1 = /datum/material/ceramic/plasmastone
 	ingredient2 = /datum/material/ceramic/glass
 
 /datum/material_recipe/dyneema
 	name = "dyneema"
-	result_id = "dyneema"
+	result_mat = /datum/material/textile/dyneema
 	result_item = /obj/item/material/cloth/dyneema
 	ingredient1 = /datum/material/textile/carbonfibre
 	ingredient2 = /datum/material/textile/silk/spider
 
 /datum/material_recipe/synthleather
 	name = "synthleather"
-	result_id = "synthleather"
+	result_mat = /datum/material/leathery/synthleather
 	ingredient1 = /datum/material/rubbery/latex
 	ingredient2 = /datum/material/textile/cotton
 
 /datum/material_recipe/synthblubber
 	name = "synthblubber"
-	result_id = "synthblubber"
+	result_mat = /datum/material/rubbery/synthblubber
 	ingredient1 = /datum/material/rubbery/synthrubber
 	ingredient2 = /datum/material/ceramic/coral

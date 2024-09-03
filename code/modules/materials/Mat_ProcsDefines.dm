@@ -304,54 +304,6 @@ var/global/list/material_cache
 	var/part2 = copytext(mat2, round((length(mat2) * ot) + 0.5), 0)
 	return capitalize(ckey("[part1][part2]"))
 
-/// Returns a string for when a material fail or breaks depending on its material flags.
-/proc/getMatFailString(var/flag)
-	if(flag & MATERIAL_METAL && flag & MATERIAL_CRYSTAL && flag & MATERIAL_CLOTH)
-		return "frays apart into worthless dusty fibers"
-	if(flag & MATERIAL_METAL && flag & MATERIAL_CRYSTAL)
-		return "cracks and shatters into unworkable dust"
-	if(flag & MATERIAL_CLOTH && flag & MATERIAL_CRYSTAL)
-		return "shatters into useless brittle fibers"
-	if(flag & MATERIAL_ENERGY && flag & MATERIAL_CRYSTAL)
-		return "violently disintegrates into vapor"
-	if(flag & MATERIAL_ENERGY && flag & MATERIAL_METAL)
-		return "shines brightly before self-vaporizing"
-	if(flag & MATERIAL_ENERGY && flag & MATERIAL_CLOTH)
-		return "bursts into flames and is gone almost instantly"
-	if(flag & MATERIAL_ENERGY && flag & MATERIAL_ORGANIC)
-		return "catches on fire and rapidly burns to ash"
-	if(flag & MATERIAL_ORGANIC)
-		return "crumbles into worthless slime"
-	if(flag & MATERIAL_CRYSTAL)
-		return "shatters to dust and blows away"
-	if(flag & MATERIAL_METAL)
-		return "disintegrates into useless flakes"
-	if(flag & MATERIAL_CLOTH)
-		return "frays apart into useless strands"
-	if(flag & MATERIAL_ENERGY)
-		return "suddenly vanishes into nothingness"
-	if(flag & MATERIAL_RUBBER)
-		return "melts into an unworkable pile of slop"
-	return "comes apart"
-
-/// Translates a material flag into a string.
-/proc/getMatFlagString(var/flag)
-	switch(flag)
-		if(MATERIAL_CRYSTAL)
-			return "Crystal"
-		if(MATERIAL_METAL)
-			return "Metal"
-		if(MATERIAL_CLOTH)
-			return "Fabric"
-		if(MATERIAL_ORGANIC)
-			return "Organic Matter"
-		if(MATERIAL_ENERGY)
-			return "Energy Source"
-		if(MATERIAL_RUBBER)
-			return "Rubber"
-		else
-			return "Unknown"
-
 /// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/mat1, var/datum/material/mat2)
 	for(var/datum/material_recipe/R in materialRecipes)

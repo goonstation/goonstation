@@ -439,36 +439,33 @@
 				amt = max(0, amt)
 				if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
 					flick("smelter1",src)
-					var/datum/material/resultMaterial = getFusedMaterial(FP.material, SP.material)
 					var/datum/material_recipe/validRecipe = matchesMaterialRecipe(FP.material, SP.material)
-					var/obj/item/material/resultItemPath = getProcessedMaterialForm(resultMaterial)
-					var/apply_material = 1
+					if(!validRecipe)
+						boutput(usr, SPAN_NOTICE("Error: Did not match a recipe."))
+						return //didnt find a recipe that matches
 
-					if(validRecipe)
-						if(validRecipe.result_item)
-						//recipe specified a specific item to make
-							resultItemPath = validRecipe.result_item
-							apply_material = 0
-						else(validRecipe.result_id)
-						//recipe only specified a material and told us to figure it out
-							resultMaterial = getMaterial(validRecipe.result_id)
+					var/datum/material/resultMaterial
+					var/obj/item/material/resultItem
 
-					var/obj/item/piece = new resultItemPath(src)
+					if(validRecipe.result_item)
+					//recipe specified a specific item to make
+						resultItem = new validRecipe.result_item
+					else
+					//recipe only specified a material and told us to figure it out
+						resultItem = new /obj/item/material
+						resultItem.setMaterial(resultMaterial)
 
-					if(apply_material)
-						piece.setMaterial(resultMaterial)
-
-					piece.change_stack_amount(amt - piece.amount)
+					resultItem.change_stack_amount(amt - resultItem.amount)
 					FP.change_stack_amount(-amt)
 					SP.change_stack_amount(-amt)
-					if(istype(piece, /obj/item/material))
-						addMaterial(piece, usr)
+					if(istype(resultItem, /obj/item/material))
+						addMaterial(resultItem, usr)
 					else
-						piece.set_loc(get_turf(src))
-					validRecipe?.apply_to_obj(piece)
+						resultItem.set_loc(get_turf(src))
+					validRecipe?.apply_to_obj(resultItem)
 					first_part = null
 					second_part = null
-					boutput(usr, SPAN_NOTICE("You make [piece]."))
+					boutput(usr, SPAN_NOTICE("You make [resultItem]."))
 
 		else if(href_list["eject"])
 			var/obj/item/L = locate(href_list["eject"]) in src
