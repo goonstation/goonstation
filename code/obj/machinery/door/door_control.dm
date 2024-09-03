@@ -1,3 +1,6 @@
+#define CONTROLMODE_OPEN 1
+#define CONTROLMODE_BOLT 2
+#define CONTROLMODE_ACCESS 4
 ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
@@ -22,7 +25,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	var/welcome_text_alpha = 140
 	///colour value for speak proc
 	var/welcome_text_color = "#FF0100"
-	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open) - Does not change behavior for poddoors or conveyors
+	var/controlmode = 1 // 1 = open/close doors, 2 = toggle bolts (will close if open), 3 = nulls access (non-reversable!) - Does not change behavior for poddoors or conveyors
 
 
 	// Please keep synchronizied with these lists for easy map changes:
@@ -446,7 +449,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 					SPAWN(src.timer)
 						M.open()
 
-	if(src.controlmode == 1)
+	if(src.controlmode & CONTROLMODE_OPEN)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.density)
@@ -454,7 +457,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 				else
 					M.close()
 
-	if(src.controlmode == 2)
+	if(src.controlmode & CONTROLMODE_BOLT)
 		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
 				if (M.locked)
@@ -466,6 +469,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 						M.close()
 						SPAWN(5 DECI SECONDS)
 							M.set_locked()
+
+	if(src.controlmode & CONTROLMODE_ACCESS)
+		for (var/obj/machinery/door/airlock/M in by_type[/obj/machinery/door])
+			if (M.id == src.id)
+				M.req_access = null
+				M.req_access_txt = null
 
 	for (var/obj/machinery/conveyor/M as anything in machine_registry[MACHINES_CONVEYORS]) // Workaround for the stacked conveyor belt issue (Convair880).
 		if (M.id == src.id)
@@ -533,7 +542,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	pressed_icon = "antagscanner-u"
 	unpowered_icon = "antagscanner" // should never happen, this is a failsafe if anything.
 	requires_power = 0
-	welcome_text = "Welcome, Agent."
+	welcome_text = "Welcome, Agent. All facilities permanantly unlocked."
+	controlmode = CONTROLMODE_OPEN | CONTROLMODE_ACCESS
 
 /obj/machinery/door_control/ex_act(severity)
 	return
@@ -542,7 +552,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
-	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT))
+	if (user.mind?.get_antagonist(ROLE_SLEEPER_AGENT) || user.mind?.get_antagonist(ROLE_TRAITOR))
 		user.visible_message(SPAN_NOTICE("The [src] accepts the biometrics of the user and beeps, granting you access."))
 		src.toggle()
 		if (src.entrance_scanner)
@@ -1177,3 +1187,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 			pixel_y = -19
 		west
 			pixel_x = -22
+
+#undef CONTROLMODE_OPEN
+#undef CONTROLMODE_BOLT
+#undef CONTROLMODE_ACCESS

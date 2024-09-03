@@ -214,7 +214,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	return
 
 /obj/machinery/door/airlock/pyro/reinforced/syndicate
-	req_access_txt = "52"
+	req_access_txt = "-1"
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 
