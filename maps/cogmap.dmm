@@ -50446,9 +50446,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "mPR" = (
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 14
-	},
+/obj/machinery/computer/announcement/station/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "mQu" = (

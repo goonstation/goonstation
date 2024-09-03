@@ -21642,6 +21642,7 @@
 /area/station/bridge/customs)
 "gvK" = (
 /obj/disposalpipe/segment,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "gvN" = (
@@ -43976,8 +43977,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/shipalert{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -78188,7 +78188,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "xwC" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/computer/announcement/station/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "xwE" = (

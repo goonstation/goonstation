@@ -34519,6 +34519,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/maintenance/northwest)
+"fLc" = (
+/obj/machinery/computer/announcement/station/catering,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "fLN" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -77111,7 +77115,7 @@ bhC
 wwP
 bkL
 cyx
-bhC
+fLc
 bhC
 bkN
 bhB

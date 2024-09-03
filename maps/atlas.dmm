@@ -15547,10 +15547,14 @@
 /area/station/hallway/primary/south)
 "gZH" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/item/kitchen/rollingpin{
 	pixel_y = 5;
 	pixel_x = -5
+	},
+/obj/machinery/glass_recycler/bar{
+	pixel_y = 9;
+	pixel_x = -1;
+	g_amt = 10
 	},
 /turf/simulated/floor/white/side{
 	dir = 4
@@ -20855,7 +20859,6 @@
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "wLy" = (
-/obj/table/auto,
 /obj/machinery/door_control{
 	id = "kitchen_shutter";
 	name = "Kitchen Shutter Control";
@@ -20869,11 +20872,7 @@
 	pixel_x = -24;
 	pixel_y = 11
 	},
-/obj/machinery/glass_recycler/bar{
-	pixel_y = 9;
-	pixel_x = -1;
-	g_amt = 10
-	},
+/obj/machinery/computer/announcement/station/catering,
 /turf/simulated/floor/auto/grass,
 /area/station/crew_quarters/kitchen)
 "wLS" = (
