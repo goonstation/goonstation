@@ -30384,8 +30384,9 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "kWc" = (
-/obj/stool,
-/obj/item/swingsignfolded,
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "kWE" = (
@@ -45189,6 +45190,7 @@
 /area/station/medical/medbay/lobby)
 "tWE" = (
 /obj/reagent_dispensers/beerkeg,
+/obj/item/swingsignfolded,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "tXc" = (

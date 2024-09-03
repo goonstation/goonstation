@@ -9341,6 +9341,9 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "ejy" = (

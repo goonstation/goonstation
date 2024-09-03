@@ -48134,6 +48134,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"pmO" = (
+/obj/machinery/computer/announcement/station/catering{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "pmR" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -119503,7 +119509,7 @@ arZ
 rFP
 bow
 qYM
-qYM
+pmO
 aZR
 uED
 blP
