@@ -1,4 +1,38 @@
 
+(t)tue sep 03 24
+(u)JORJ949
+(p)20172
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Departmental announcement computers now have their own circuit boards.
+(t)mon sep 02 24
+(u)Knipje
+(p)20466
+(e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
+(+)Centcom engineers have standardized TEG valve names.
+(u)tarmunora
+(+)Projectiles aimed directly at light fixtures will now hit the light, breaking it. (projectile must do non-negligable damage)
+(u)LeahTheTech
+(p)20538
+(e)🆕🗺🔊|C-Feature, A-Mapping, C-Sound
+(*)Added catering announcement computers.
+(u)LeahTheTech
+(*)Soybeans now contain milk, don't ask how it makes sense.
+(u)JORJ949
+(p)20498
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)AI cores are now better standardized.
+(u)zelda4040404
+(p)20385
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Enjoyers of hair bangs will find a new extra long option available.
+(u)MitchSmith
+(p)20305
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited Gimmick Bombs, Mousetrap Overlays, and Mousetrap Cars!
+(u)Mitch Smith
+(p)20406
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)VR Headsets and other minor eyewear have been resprited, and VR Headsets now have variants!
 (t)sun sep 01 24
 (u)Sockssq & Wrench
 (p)20417

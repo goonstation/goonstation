@@ -25,6 +25,7 @@
 	health_burn = 25
 	health_burn_vuln = 1
 	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_VOID)
+	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
@@ -126,6 +127,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 10
 	health_burn_vuln = 0
+	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
@@ -283,6 +285,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	faction = list(FACTION_DERELICT)
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
