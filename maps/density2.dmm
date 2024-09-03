@@ -98,7 +98,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/aisat)
 "aI" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -3097,7 +3097,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "tl" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"

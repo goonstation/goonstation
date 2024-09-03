@@ -30705,7 +30705,7 @@
 /area/station/hydroponics/bay)
 "bxF" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 8;
 	id = "Sleeper_Access";
 	name = "Listening Post"

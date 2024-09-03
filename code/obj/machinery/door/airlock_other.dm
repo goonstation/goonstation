@@ -46,7 +46,7 @@ TYPEINFO(/obj/machinery/door/airlock/syndicate)
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon = 'icons/obj/doors/Doorext.dmi'
-	req_access_txt = "-1"
+	req_access_txt = "52"
 	cant_emag = TRUE
 	hardened = TRUE
 	aiControlDisabled = TRUE
