@@ -250,6 +250,7 @@
 		name = "Catering Announcement Computer"
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70 //a little less earsplitting
+		circuit_type = /obj/item/circuitboard/announcement/catering
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
