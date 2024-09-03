@@ -793,7 +793,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			if (!caller)
 				return ESIG_GENERIC
 
-			var/list/progs = list()
+			var/list/datum/computer/file/mainframe_program/progs = list()
 			progs.len = length(src.master.processing)
 
 			for (var/i in 1 to length(src.master.processing))
