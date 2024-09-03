@@ -10,7 +10,7 @@
 
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
+		if(!istype(I, /obj/item/material)) return 0
 		if(!I.material) return 0
 		if(!I.material.hasProperty(required_property)) return 0
 		if(greater_than)
@@ -39,7 +39,7 @@
 	name = "Radioactive Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
+		if(!istype(I, /obj/item/material)) return 0
 		if(I.material.getProperty(MATERIAL_PROPERTY_RADIOACTIVE) < 1 && I.material.getProperty(MATERIAL_PROPERTY_N_RADIOACTIVE) < 1) return 0
 		return ..()
 
@@ -47,7 +47,7 @@
 	name = "Conductive Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
+		if(!istype(I, /obj/item/material)) return 0
 		if(I.material.getProperty(MATERIAL_PROPERTY_ELECTRICAL) < 5*9) return 0
 		return ..()
 
@@ -61,103 +61,119 @@
 	name = "Rubber"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_RUBBER)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/rubbery))) return 0
 		return ..()
 
+//retained to avoid changing existing recipes, but this is really horrible. Please dont use it
+//if you want a radioactive or chemically active or spiritual material, just specify that instead
+//so its actually possible to know what materials meet that criteria without looking it up
 /datum/matfab_part/energy
 	name = "Energy"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!( I.material.getMaterialFlags() & MATERIAL_ENERGY)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(\
+		istype(I.material, /datum/material/metal/cerenkite) || \
+		istype(I.material, /datum/material/ceramic/crystal/erebite)	|| \
+		istype(I.material, /datum/material/ceramic/plasmastone)	|| \
+		istype(I.material, /datum/material/ceramic/crystal/telecrystal)	|| \
+		I.material.getMaterialFlags() & MATERIAL_FLAG_GHOSTLY)) return 0
 		return ..()
 
 /datum/matfab_part/cloth
 	name = "Cloth"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!istype(I.material, /datum/material/textile)) return 0
 		return ..()
 
 /datum/matfab_part/metal
 	name = "Metal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_METAL)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!istype(I.material, /datum/material/metal)) return 0
+		return ..()
+
+/datum/matfab_part/ceramic
+	name = "Ceramic"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!istype(I.material, /datum/material/ceramic)) return 0
 		return ..()
 
 /datum/matfab_part/crystal
 	name = "Crystal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CRYSTAL)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!istype(I.material, /datum/material/ceramic/crystal)) return 0
 		return ..()
 
 /datum/matfab_part/organic
 	name = "Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_ORGANIC)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(I.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL)) return 0
 		return ..()
 
 /datum/matfab_part/metalororganic
 	name = "Metal or Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_ORGANIC || I.material.getMaterialFlags() & MATERIAL_METAL)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(I.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL || istype(I.material, /datum/material/metal))) return 0
 		return ..()
 
 /datum/matfab_part/metalorcrystal
 	name = "Metal or Crystal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CRYSTAL || I.material.getMaterialFlags() & MATERIAL_METAL)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/ceramic) || istype(I.material, /datum/material/metal))) return 0
 		return ..()
 
 /datum/matfab_part/metalorcrystalororganic
 	name = "Metal or Crystal or Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CRYSTAL || I.material.getMaterialFlags() & MATERIAL_METAL||I.material.getMaterialFlags() & MATERIAL_ORGANIC)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/ceramic) || istype(I.material, /datum/material/metal) || I.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL)) return 0
 		return ..()
 
 /datum/matfab_part/clothororganic
 	name = "Cloth or Organic"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH || I.material.getMaterialFlags() & MATERIAL_ORGANIC)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/textile) || I.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL)) return 0
 		return ..()
 
 /datum/matfab_part/clothorrubber
 	name = "Cloth or Rubber"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH || I.material.getMaterialFlags() & MATERIAL_RUBBER)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/textile) || istype(I.material, /datum/material/rubbery))) return 0
 		return ..()
 
 /datum/matfab_part/clothororganicorrubber
 	name = "Cloth or Organic or Rubber"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		if(!(I.material.getMaterialFlags() & MATERIAL_CLOTH || I.material.getMaterialFlags() & MATERIAL_ORGANIC || I.material.getMaterialFlags() & MATERIAL_RUBBER)) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/textile) || istype(I.material, /datum/material/rubbery) || I.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL)) return 0
 		return ..()
 
 /datum/matfab_part/anymat
 	name = "Material"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
+		if(!istype(I, /obj/item/material)) return 0
 		return ..()
 
 /datum/matfab_part/optionalanymat
@@ -165,15 +181,7 @@
 	optional = TRUE
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
-		return ..()
-
-/datum/matfab_part/anymat_canmix
-	name = "Unprocessed Material"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		if(!I.material.getCanMix()) return 0
-		if(!istype(I, /obj/item/material) && !istype(I, /obj/item/material)) return 0
+		if(!istype(I, /obj/item/material)) return 0
 		return ..()
 
 /datum/matfab_part/lens
@@ -182,7 +190,6 @@
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/lens) ||  !I.material) return 0
 		return ..()
-
 
 /datum/matfab_part/chemical
 	name = "Chemical"
@@ -193,7 +200,7 @@
 /datum/matfab_part/starstone
 	name = "Starstone"
 	checkMatch(var/obj/item/I)
-		if(!I.material || (I.material.getID() != "starstone")) return 0
+		if(!(I.material || istype(I.material, /datum/material/ceramic/crystal/starstone))) return 0
 		return ..()
 
 /datum/matfab_part/glowstick
@@ -220,7 +227,7 @@
 
 	/// Does the object match our conditions?
 	proc/checkMatch(var/obj/item/I)
-		if(I.material && I.material.getMixOnly()) return 0
+		if(I.material) return 0
 		if(I.amount >= required_amount)
 			return 1
 		return -1 //Return -1 if theres not enough of the material. This will show up differently on the fab.

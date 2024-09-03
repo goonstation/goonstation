@@ -77,7 +77,7 @@ TYPEINFO(/obj/strip_door)
 
 	New()
 		..()
-		src.flap_material = new /datum/material/rubber/plastic()
+		src.flap_material = new /datum/material/ceramic/plastic()
 		src.flap_icon = image(src.icon, "strip_door_flaps", -1)
 		src.flap_icon.appearance_flags = RESET_COLOR | RESET_ALPHA
 		src.set_flaps()

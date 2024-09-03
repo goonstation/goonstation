@@ -1037,7 +1037,7 @@ proc/ui_describe_reagents(atom/A)
 
 		if(istype(W, /obj/item/organ))
 			var/obj/item/organ/organ = W
-			if(!(organ.material.getMaterialFlags() & MATERIAL_ORGANIC))
+			if(!(organ.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL))
 				boutput(user, SPAN_ALERT("The [src] rejects the non-organic organ!"))
 			else if (reagents.total_volume >= reagents.maximum_volume)
 				boutput(user, SPAN_ALERT("The [src] is too full!"))

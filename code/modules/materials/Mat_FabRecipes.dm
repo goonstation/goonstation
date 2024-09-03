@@ -71,7 +71,7 @@
 		..()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Fabric"; required_amount = 3} ())
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Reinforcement"; required_amount = 3} ())
-		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Visor"; required_amount = 2} ())
+		required_parts.Add(new/datum/matfab_part/ceramic {part_name = "Visor"; required_amount = 2} ())
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
@@ -346,7 +346,7 @@
 	category = "Components"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Lens"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/ceramic {part_name = "Lens"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -384,7 +384,7 @@
 	category = "Clothing"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Glasses"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/ceramic {part_name = "Glasses"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -594,7 +594,7 @@
 	category = "Tools"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalorceramic {part_name = "Sheet"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -620,7 +620,7 @@
 	category = "Tools"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalorceramic {part_name = "Sheet"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -823,7 +823,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Metal"
 						P.required_amount = numReq
 					if("crystal")
-						P = new/datum/matfab_part/crystal()
+						P = new/datum/matfab_part/ceramic()
 						P.part_name = "[isFinish?"(Main) ":""]Crystal"
 						P.required_amount = numReq
 					if("energy")

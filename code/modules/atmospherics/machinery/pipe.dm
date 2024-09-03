@@ -347,7 +347,7 @@
 		if (src.destroyed || src.ruptured)
 			boutput(user, SPAN_ALERT("You should repair [src] first."))
 			return
-		if (!(W.material?.getMaterialFlags() & MATERIAL_METAL))
+		if (!istype(W.material, /datum/material/metal))
 			boutput(user, SPAN_ALERT("You can't weld that!"))
 			return
 		if (W.material?.isSameMaterial(src.material))
