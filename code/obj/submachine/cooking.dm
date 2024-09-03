@@ -661,6 +661,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/banana_bread_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
+			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/donut(src)
@@ -743,7 +744,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_jaffa(src)
