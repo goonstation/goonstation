@@ -19,6 +19,7 @@
 	var/voice_message = "broadcasts"
 	var/voice_name = "Announcement Computer"
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
+	var/sound_volume = 100
 	var/override_font = null
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -139,7 +140,7 @@
 			message = "<font face = '[override_font]'> [message] </font>"
 			header = "<font face = '[override_font]'> [header] </font>"
 
-		command_announcement(message, header, msg_sound)
+		command_announcement(message, header, msg_sound, volume = src.sound_volume)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
 
@@ -243,6 +244,12 @@
 	ai
 		req_access = list(access_ai_upload)
 		name = "AI Announcement Computer"
+
+	catering
+		req_access = list(access_bar) //chef gets bar access
+		name = "Catering Announcement Computer"
+		sound_to_play = 'sound/misc/bingbong.ogg'
+		sound_volume = 70 //a little less earsplitting
 
 /obj/machinery/computer/announcement/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
