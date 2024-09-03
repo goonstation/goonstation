@@ -330,7 +330,7 @@
 			return ..()
 		if (src.working || src.is_disabled())
 			return
-		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+		if (!I.material || !(istype(I.material, /datum/material/metal) || istype(I.material, /datum/material/ceramic)))
 			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
 			return
 		var/obj/item/material/taken_piece = null
@@ -439,24 +439,24 @@
 				amt = max(0, amt)
 				if(amt && isnum_safe(amt) && FP && FP.amount >= amt && SP && SP.amount >= amt && (FP in src) && (SP in src))
 					flick("smelter1",src)
-					var/datum/material/merged = getFusedMaterial(FP.material, SP.material)
-					var/datum/material_recipe/RE = matchesMaterialRecipe(merged)
-					var/newtype = getProcessedMaterialForm(merged)
+					var/datum/material/resultMaterial = getFusedMaterial(FP.material, SP.material)
+					var/datum/material_recipe/validRecipe = matchesMaterialRecipe(FP.material, SP.material)
+					var/obj/item/material/resultItemPath = getProcessedMaterialForm(resultMaterial)
 					var/apply_material = 1
 
-					if(RE)
-						if(!RE.result_id && !RE.result_item)
-							RE.apply_to(merged)
-						else if(RE.result_item)
-							newtype = RE.result_item
+					if(validRecipe)
+						if(validRecipe.result_item)
+						//recipe specified a specific item to make
+							resultItemPath = validRecipe.result_item
 							apply_material = 0
-						else if(RE.result_id)
-							merged = getMaterial(RE.result_id)
+						else(validRecipe.result_id)
+						//recipe only specified a material and told us to figure it out
+							resultMaterial = getMaterial(validRecipe.result_id)
 
-					var/obj/item/piece = new newtype(src)
+					var/obj/item/piece = new resultItemPath(src)
 
 					if(apply_material)
-						piece.setMaterial(merged)
+						piece.setMaterial(resultMaterial)
 
 					piece.change_stack_amount(amt - piece.amount)
 					FP.change_stack_amount(-amt)
@@ -465,7 +465,7 @@
 						addMaterial(piece, usr)
 					else
 						piece.set_loc(get_turf(src))
-					RE?.apply_to_obj(piece)
+					validRecipe?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
 					boutput(usr, SPAN_NOTICE("You make [piece]."))
@@ -519,12 +519,8 @@
 			return
 
 		if(W.material != null)
-			if(!W.material.getCanMix())
-				boutput(user, SPAN_ALERT("This material can not be used in \the [src]."))
-				return
-
 			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
-			if( istype(W, /obj/item/material) || istype(W, /obj/item/material) )
+			if(istype(W, /obj/item/material))
 				addMaterial(W, user)
 			else
 				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
@@ -540,7 +536,7 @@
 		user.unequip_all()
 		user.set_loc(src)
 
-		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
+		var/datum/material/M = new /datum/material/blobby/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
 		M.setName("[user.real_name] flesh")
 
 		var/obj/item/material/wad/dummyItem = new /obj/item/material/wad

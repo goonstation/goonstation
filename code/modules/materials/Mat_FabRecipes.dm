@@ -679,7 +679,7 @@
 
 	New()
 		required_parts.Add(new/datum/matfab_part/chemical {part_name = "Chemical"; required_amount = 1} ())
-		required_parts.Add(new/datum/matfab_part/anymat_canmix {part_name = "Unprocessed Material"; required_amount = 10} ())
+		required_parts.Add(new/datum/matfab_part/anymat {part_name = "Unprocessed Material"; required_amount = 10} ())
 		required_parts.Add(new/datum/matfab_part/starstone {part_name = "Starstone"; required_amount = 1} ())
 		..()
 
@@ -704,7 +704,6 @@
 			var/obj/item/material/wad/W = new /obj/item/material/wad
 
 			if(refined?.material)
-				mat.setCanMix(0)
 				mat.setName("[master_chem_name]-infused [mat.getName()]")
 				mat.setID("[master_chem_name][mat.getID()]")
 				W.setMaterial(mat)

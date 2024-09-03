@@ -182,18 +182,16 @@ var/global/list/material_cache
 		return /obj/item/material // just in case
 
 	// higher on this list means higher priority, be careful with it!
-	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
+	if (istype(MAT, /datum/material/ceramic))
 		return /obj/item/material/block
-	if (MAT.getMaterialFlags() & MATERIAL_METAL)
+	if (istype(MAT, /datum/material/metal))
 		return /obj/item/material/metal
-	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)
+	if (istype(MAT, /datum/material/blobby))
 		return /obj/item/material/wad
-	if (MAT.getMaterialFlags() & MATERIAL_CLOTH)
+	if (istype(MAT, /datum/material/textile) || istype(MAT, /datum/material/leathery))
 		return /obj/item/material/cloth
-	if (MAT.getMaterialFlags() & MATERIAL_RUBBER)
+	if (istype(MAT, /datum/material/rubbery))
 		return /obj/item/material/block
-	if (MAT.getMaterialFlags() & MATERIAL_ENERGY)
-		return /obj/item/material/sphere
 
 	return /obj/item/material
 
@@ -232,10 +230,6 @@ var/global/list/material_cache
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
 	return newList
-
-/// Merges two materials and returns result as new material.
-/proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
-	return new /datum/material/interpolated(mat1, mat2, 0.5)
 
 //custom matsci event procs
 //Use these if you want the stom in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material
@@ -359,9 +353,9 @@ var/global/list/material_cache
 			return "Unknown"
 
 /// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
-/proc/matchesMaterialRecipe(var/datum/material/M)
+/proc/matchesMaterialRecipe(var/datum/material/mat1, var/datum/material/mat2)
 	for(var/datum/material_recipe/R in materialRecipes)
-		if(R.validate(M)) return R
+		if(R.validate(mat1, mat2)) return R
 	return null
 
 /proc/findRecipeName(var/obj/item/One,var/obj/item/Two)

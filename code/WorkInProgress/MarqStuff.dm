@@ -424,12 +424,11 @@
 			user.visible_message(SPAN_ALERT("<b>[user] stabs [target] with [src]!</b>"))
 			user.u_equip(src)
 			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, TRUE)
-			var/datum/material/fusedmaterial = getFusedMaterial(head_material,shaft_material)//uses a fused material to get the effects of both the shaft and head material as an implant as the lifeloop only accepts one material per implant
 			if (ishuman(target))
 				var/mob/living/carbon/human/H = target
 				var/obj/item/implant/projectile/body_visible/arrow/A = new
-				A.material = fusedmaterial
-				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
+				A.material = head_material
+				A.setMaterial(head_material, appearance = 0, setname = 0)
 				A.arrow = src
 				A.name = name
 				set_loc(A)
@@ -437,8 +436,8 @@
 			reagents.reaction(target, 2)
 			reagents.trans_to(target, reagents.total_volume)
 			take_bleeding_damage(target, null, 8, DAMAGE_STAB)
-			if (fusedmaterial)
-				fusedmaterial.triggerOnAttack(src, user, target)
+			if (head_material)
+				head_material.triggerOnAttack(src, user, target)
 			return 1
 		else
 			var/obj/item/I = target

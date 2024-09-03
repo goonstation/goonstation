@@ -129,12 +129,20 @@
 		if(!(I.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL || istype(I.material, /datum/material/metal))) return 0
 		return ..()
 
+/datum/matfab_part/metalorceramic
+	name = "Metal or Ceramic"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material)) return 0
+		if(!(istype(I.material, /datum/material/ceramic) || istype(I.material, /datum/material/metal))) return 0
+		return ..()
+
 /datum/matfab_part/metalorcrystal
 	name = "Metal or Crystal"
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material)) return 0
-		if(!(istype(I.material, /datum/material/ceramic) || istype(I.material, /datum/material/metal))) return 0
+		if(!(istype(I.material, /datum/material/ceramic/crystal) || istype(I.material, /datum/material/metal))) return 0
 		return ..()
 
 /datum/matfab_part/metalorcrystalororganic
