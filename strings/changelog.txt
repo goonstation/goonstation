@@ -1,5 +1,10 @@
 
 (t)tue sep 03 24
+(u)Glamurio (Ryou)
+(p)19165
+(e)🗺⚖🐣|A-Mapping, C-Balance, A-Respawning
+(*)Technical, Research and Medical Assistants are now properly part of their respective departments.
+(*)The specialized assistants can be played until you have played 75 rounds total. Staff assistants are unchanged.
 (u)TDHooligan
 (p)18986
 (e)🆕🎨💅🔊🧛|C-Feature, C-Sprites, C-QoL, C-Sound, A-Gamemodes

@@ -1071,12 +1071,6 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
-"adR" = (
-/obj/stool/chair/blue{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "adS" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 5
@@ -8896,14 +8890,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"aIg" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "aIl" = (
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
@@ -13254,13 +13240,6 @@
 "aYR" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/tech)
-"aYV" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot purge valve"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southwest)
 "aYY" = (
 /obj/table/auto,
 /obj/machinery/phone,
@@ -13631,6 +13610,19 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"bhv" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/hotloop)
 "bhA" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -13730,13 +13722,6 @@
 	dir = 8
 	},
 /area/station/quartermaster/office)
-"bxK" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold outlet valve";
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bAx" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -14294,12 +14279,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"diS" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/coldloop)
 "djg" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -14548,13 +14527,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"dQd" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "mixing valve"
-	},
-/obj/submachine/cargopad/engineering,
-/turf/simulated/floor/caution/west,
-/area/station/engine/core)
 "dRf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14809,6 +14781,13 @@
 	dir = 4
 	},
 /area/station/security/main)
+"eFo" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold outlet valve";
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "eFq" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -14984,19 +14963,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"fcV" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/hotloop)
 "fgR" = (
 /obj/lattice{
 	dir = 4;
@@ -15101,13 +15067,6 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
-"fyE" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "combustion chamber fuel valve"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/engine/core)
 "fyL" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -15185,13 +15144,6 @@
 	dir = 1
 	},
 /area/station/security/main)
-"fHe" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot auxiliary valve";
-	dir = 8
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "fHo" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -15552,21 +15504,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"gZH" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/machinery/glass_recycler/bar{
-	pixel_y = 9;
-	pixel_x = -1;
-	g_amt = 10
-	},
-/turf/simulated/floor/white/side{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "hay" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -15595,6 +15532,17 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"hgE" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/coldloop)
 "hjc" = (
 /obj/item/storage/wall/emergency{
 	dir = 8
@@ -15717,6 +15665,12 @@
 	dir = 5
 	},
 /area/station/janitor/office)
+"hvC" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/hotloop)
 "hwt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15817,6 +15771,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"hMI" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "hPY" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 9
@@ -16438,13 +16399,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay)
-"jUG" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold purge valve"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southeast)
 "jWt" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -16596,6 +16550,13 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
+"kmL" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "koV" = (
 /obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/purplewhite{
@@ -16807,6 +16768,15 @@
 /obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"kTQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "kUi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16849,6 +16819,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"kYF" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "combustion chamber fuel valve"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/engine/core)
 "kZr" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -16977,6 +16954,12 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge)
+"lpk" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "combustion chamber bypass valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "lqA" = (
 /obj/table/auto,
 /obj/item/boardgame/chess,
@@ -17253,6 +17236,13 @@
 "mqJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/magnet)
+"msA" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot auxiliary valve";
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "mtA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17596,6 +17586,13 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"nku" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold purge valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/southeast)
 "nlP" = (
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -17646,16 +17643,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
-"nuK" = (
-/obj/stool/chair/office/yellow{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/landmark/start/job/engineer,
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "nuN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18710,17 +18697,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/sanctuary)
-"qyp" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/coldloop)
 "qzG" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/stairs{
@@ -19030,6 +19006,13 @@
 	dir = 4
 	},
 /area/station/mining/staff_room)
+"rqQ" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "mixing valve"
+	},
+/obj/submachine/cargopad/engineering,
+/turf/simulated/floor/caution/west,
+/area/station/engine/core)
 "rsR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19119,12 +19102,6 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/ai)
-"rFr" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/hotloop)
 "rGB" = (
 /obj/machinery/recharge_station,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -19162,6 +19139,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
+"rMD" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "rNn" = (
 /obj/machinery/light{
 	dir = 8;
@@ -19233,6 +19220,21 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
+"rYo" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin{
+	pixel_y = 5;
+	pixel_x = -5
+	},
+/obj/machinery/glass_recycler/bar{
+	pixel_y = 9;
+	pixel_x = -1;
+	g_amt = 10
+	},
+/turf/simulated/floor/white/side{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "ses" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19464,12 +19466,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"tap" = (
-/obj/cable/orange{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "tbE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20209,13 +20205,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
-"uSJ" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "uTl" = (
 /obj/grille/catwalk,
 /obj/machinery/light/small{
@@ -20259,6 +20248,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"uWJ" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/coldloop)
 "uYa" = (
 /obj/machinery/light{
 	dir = 1;
@@ -20360,6 +20355,13 @@
 "vgX" = (
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
+"vhN" = (
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "vhR" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -20399,6 +20401,13 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
+"vpg" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot purge valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/southwest)
 "vqf" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
@@ -20478,12 +20487,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
-"vCI" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "combustion chamber bypass valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "vEm" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -20869,23 +20872,6 @@
 /mob/living/carbon/human/npc/monkey/albert,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
-"wLy" = (
-/obj/machinery/door_control{
-	id = "kitchen_shutter";
-	name = "Kitchen Shutter Control";
-	pixel_x = -24;
-	pixel_y = -6
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/phone/wall{
-	pixel_x = -24;
-	pixel_y = 11
-	},
-/obj/machinery/computer/announcement/station/catering,
-/turf/simulated/floor/auto/grass,
-/area/station/crew_quarters/kitchen)
 "wLS" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -20970,6 +20956,23 @@
 	dir = 1
 	},
 /area/listeningpost)
+"xcr" = (
+/obj/machinery/door_control{
+	id = "kitchen_shutter";
+	name = "Kitchen Shutter Control";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = -24;
+	pixel_y = 11
+	},
+/obj/machinery/computer/announcement/station/catering,
+/turf/simulated/floor/auto/grass,
+/area/station/crew_quarters/kitchen)
 "xcB" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
@@ -55617,7 +55620,7 @@ aax
 aiW
 aiW
 aiW
-aYV
+vpg
 ajZ
 apX
 ara
@@ -55625,7 +55628,7 @@ ara
 ara
 ato
 igD
-jUG
+nku
 aiW
 aiW
 aiW
@@ -57432,9 +57435,9 @@ aii
 anr
 apd
 apQ
-fyE
+kYF
 cJH
-fyE
+kYF
 avz
 avy
 awx
@@ -57733,11 +57736,11 @@ akN
 akN
 ant
 api
-uSJ
+kmL
 lMj
-fHe
+msA
 lMj
-bxK
+eFo
 avD
 awx
 aYR
@@ -58034,7 +58037,7 @@ aVQ
 ang
 akN
 aof
-vCI
+lpk
 aqa
 arU
 vug
@@ -58642,7 +58645,7 @@ apZ
 aqY
 sNo
 uBu
-tap
+vhN
 avz
 awB
 ayy
@@ -59540,21 +59543,21 @@ azo
 bZQ
 akN
 irz
-rFr
+hvC
 qve
 mkM
 qAu
 jca
 cvv
 gus
-dQd
+rqQ
 eCv
 hTW
 uBF
 yjD
 bhP
 tSd
-diS
+uWJ
 mvz
 azG
 aEr
@@ -60446,21 +60449,21 @@ sIm
 tmW
 akN
 dCj
-fcV
+bhv
 drv
 hmC
 avE
 xLn
 udk
 asb
-nuK
+rMD
 asb
 udk
 tvu
 avE
 awD
 azK
-qyp
+hgE
 aQA
 azG
 axH
@@ -63187,7 +63190,7 @@ ain
 aEC
 aCz
 aCj
-aIg
+kTQ
 agF
 aGG
 aXW
@@ -70708,7 +70711,7 @@ xAd
 hrc
 pmb
 kzg
-wLy
+xcr
 ygO
 bdZ
 tUb
@@ -71008,7 +71011,7 @@ mqh
 vEm
 iqM
 ofD
-gZH
+rYo
 tRn
 cXf
 tZl
@@ -71342,7 +71345,7 @@ aBx
 aXP
 aZN
 ayF
-adR
+hMI
 afg
 aBx
 pdA
