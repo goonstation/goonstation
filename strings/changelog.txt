@@ -1,5 +1,7 @@
 
 (t)mon sep 02 24
+(u)tarmunora
+(+)Projectiles aimed directly at light fixtures will now hit the light, breaking it. (projectile must do non-negligable damage)
 (u)LeahTheTech
 (p)20538
 (e)🆕🗺🔊|C-Feature, A-Mapping, C-Sound
