@@ -3,15 +3,15 @@
 #define ESIG_SUCCESS	0
 /// The command could not be carried out successfully.
 #define ESIG_GENERIC	(1 << 0)
-/// The command could not be carried out successfully, as a target was not specified or could not be found.
+/// The command could not be carried out successfully, as a target was required and could not be found.
 #define ESIG_NOTARGET	(1 << 1)
 /// The command could not be carried out successfully, as the command was not recognised.
 #define ESIG_BADCOMMAND	(1 << 2)
-/// The command could not be carried out successfully, as a user was required and could not be located.
+/// The command could not be carried out successfully, as a user was required and could not be found.
 #define ESIG_NOUSR		(1 << 3)
 /// The command could not be carried out successfully, as a result of an I/O error.
 #define ESIG_IOERR		(1 << 4)
-/// The command could not be carried out successfully, as a file was required and could not be located.
+/// The command could not be carried out successfully, as a file was required and could not be found.
 #define ESIG_NOFILE		(1 << 5)
 /// The command could not be carried out successfully, as write permission was required.
 #define ESIG_NOWRITE	(1 << 6)
@@ -905,18 +905,14 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 				return ESIG_NOTARGET
 
 			var/datum/computer/file/record/destfile = src.get_computer_datum(file.name, destination)
+			if (istype(destfile, /datum/computer/folder))
+				destination = destfile
+
+			if (user && !src.check_write_permission(destination, user))
+				return ESIG_NOWRITE
+
 			var/delete_dest = FALSE
 			if (destfile)
-				if (istype(destfile, /datum/computer/folder))
-					destination = destfile
-
-				if (istype(destination, /datum/computer/folder/link) && destination:target)
-					if (user && !src.check_write_permission(destination:target, user))
-						return ESIG_NOWRITE
-
-				else if (user && !src.check_write_permission(destination, user))
-					return ESIG_NOWRITE
-
 				if ((data["append"] == 1) && (!user || src.check_write_permission(destfile, user)) && (istype(destfile) && istype(file, /datum/computer/file/record)))
 					file:fields = destfile.fields + file:fields
 					delete_dest = TRUE
@@ -929,9 +925,6 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 
 			if (!destination.can_add_file(file, user))
 				return ESIG_GENERIC
-
-			if (user && !src.check_write_permission(destination, user))
-				return ESIG_NOWRITE
 
 			if (delete_dest && destfile)
 				destfile.dispose()
