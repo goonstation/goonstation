@@ -1,5 +1,15 @@
 
 (t)tue sep 03 24
+(u)TDHooligan
+(p)18986
+(e)🆕🎨💅🔊🧛|C-Feature, C-Sprites, C-QoL, C-Sound, A-Gamemodes
+(*)Gangs may now be tasked with vandalising departments!
+(*)Gangs have new weapons & equipment available in their locker.
+(*)Gangs can now view a scoreboard from their locker.
+(+)Gangs start with 1500 points.
+(+)Gangs now have access to regular, cleanable graffiti. This can't be used to claim territory.
+(+)Baseball bats' special attack knocks back on crit.
+(+)Item costs have been rebalanced to compete for these starting points.
 (u)JORJ949
 (p)20172
 (e)💅💡|C-QoL, A-Station-Systems
