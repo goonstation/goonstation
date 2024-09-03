@@ -202,6 +202,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
 
+	pass_unstable = TRUE
+
 	New()
 		..()
 		inserted_lamp = new light_type()
