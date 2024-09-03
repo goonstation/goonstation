@@ -67,8 +67,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			src.reagents.add_reagent(src.initial_reagents, initial_volume)
 		src.initial_reagents = null // no mo, no mooooo
 
-	attack_self(mob/user as mob)
-		return
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 	attackby(obj/item/I, mob/user)
@@ -76,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			try_to_apply_lid(I, user)
 		if (reagents)
 			reagents.physical_shock(I.force)
-		return
+		return ..()
 	afterattack(obj/target, mob/user , flag)
 		return
 
@@ -95,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if(over_object == src)
 			return
 		if (!src.is_open_container(FALSE))
-			return
+			return ..()
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
@@ -218,13 +216,14 @@ proc/ui_describe_reagents(atom/A)
 	New()
 		. = ..()
 		src.container_style ||= src.icon_state
-		src.AddComponent( \
-			/datum/component/reagent_overlay, \
-			reagent_overlay_icon = src.container_icon, \
-			reagent_overlay_icon_state = src.container_style, \
-			reagent_overlay_states = src.fluid_overlay_states, \
-			reagent_overlay_scaling = src.fluid_overlay_scaling, \
-		)
+		if (src.fluid_overlay_states > 0)
+			src.AddComponent( \
+				/datum/component/reagent_overlay, \
+				reagent_overlay_icon = src.container_icon, \
+				reagent_overlay_icon_state = src.container_style, \
+				reagent_overlay_states = src.fluid_overlay_states, \
+				reagent_overlay_scaling = src.fluid_overlay_scaling, \
+			)
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
@@ -296,7 +295,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container() && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
+		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container(TRUE) && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, SPAN_ALERT("[target] is empty."))
 				return

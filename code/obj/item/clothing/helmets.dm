@@ -41,6 +41,12 @@
 		icon_state = "space-OLD"
 		desc = "A relic of the past."
 		item_state = null
+	fishbowl
+		name = "fishbowl helmet"
+		icon_state = "space-fish"
+		desc = "You're about 90% sure this isn't just a regular fishbowl."
+		item_state = "s_helmet"
+		seal_hair = 0
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"

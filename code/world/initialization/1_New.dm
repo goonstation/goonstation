@@ -49,6 +49,14 @@
 
 	Z_LOG_DEBUG("World/New", "New() complete, running world.init()")
 
+#ifndef LIVE_SERVER
+#ifndef MY_COMPUTER_ACTUALLY_ISNT_THIS_FAST
+	// "my computer is too fast and when i start the server in vscode
+	// the client map area is just a black screen. for some reason adding
+	// a sleep before world New() fixes it"
+	sleep(1 SECOND)
+#endif
+#endif
 	SPAWN(0)
 		init()
 

@@ -920,7 +920,7 @@
 		/obj/item/material/uqill,
 		/obj/item/material/cerenkite,
 		/obj/item/material/erebite,
-		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/buttcoin,
 		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 

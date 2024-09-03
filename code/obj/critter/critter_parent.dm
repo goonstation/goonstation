@@ -15,7 +15,6 @@
 	density = 1
 	anchored = UNANCHORED
 	flags = CONDUCT | USEDELAY | FLUID_SUBMERGE
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
 	var/alive = 1
 	var/health = 10
@@ -195,7 +194,7 @@
 			//critters -= src //Stop processing this critter
 
 
-	HasProximity(atom/movable/AM as mob|obj)
+	EnteredProximity(atom/movable/AM)
 		if(task == "hibernating" && ismob(AM))
 			var/mob/living/M = AM
 			if(M.client) wake_from_hibernation()
@@ -331,6 +330,11 @@
 		if(W.hasProperty("impact"))
 			var/turf/T = get_edge_target_turf(src, get_dir(user, src))
 			src.throw_at(T, 2, W.getProperty("impact"))
+
+		if (W.force)
+			var/datum/gang/gang = user.get_gang()
+			if (gang && src.health > 0)
+				gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(src))
 
 		if (src.defensive)
 			if (src.target == user && src.task == "attacking")
@@ -793,6 +797,7 @@
 			if(nickname)
 				src.quality_name = nickname
 				src.name = "[nickname] [src.name]"
+		src.AddComponent(/datum/component/proximity)
 		..()
 
 	disposing()

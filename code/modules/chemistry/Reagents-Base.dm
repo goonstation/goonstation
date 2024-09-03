@@ -814,7 +814,7 @@
 				for(var/mob/O in AIviewers(M, null))
 					O.show_message(SPAN_ALERT("<b>[M] begins to crisp and burn!</b>"), 1)
 				boutput(M, SPAN_ALERT("Holy Water! It burns!"))
-				var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
+				var/burndmg = raw_volume * 1.25 / (length(covered) || 1) //the sanctification inflicts the pain, not the water that carries it.
 				burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 				M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 				M.change_vampire_blood(-burndmg)
