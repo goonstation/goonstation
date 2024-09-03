@@ -267,7 +267,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
-	Crossed(atom/movable/mover)
+	Cross(atom/movable/mover)
 		. = ..()
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
