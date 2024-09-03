@@ -2323,7 +2323,7 @@
 	item_requirements = list("fabric" = 10,
 							 "metal_superdense" = 5,
 							 "crystal" = 2,
-							 "organic_or_rubber" = 5)
+							 "rubber" = 5)
 	item_outputs = list(/obj/item/clothing/suit/space/light/engineer,/obj/item/clothing/head/helmet/space/light/engineer)
 	create = 1
 	time = 15 SECONDS

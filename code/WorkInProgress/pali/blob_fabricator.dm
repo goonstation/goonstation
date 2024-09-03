@@ -1,7 +1,7 @@
 
 /datum/manufacture/mechanics/blob
 	name = "blob"
-	item_requirements = list("organic_or_rubber" = 3)
+	item_requirements = list("organic" = 3)
 	create = 1
 	time = 10 SECONDS
 	apply_material = TRUE
@@ -9,12 +9,12 @@
 
 /datum/manufacture/mechanics/blob/base
 	name = "blob"
-	item_requirements = list("organic_or_rubber" = 1)
+	item_requirements = list("organic" = 1)
 	frame_path = /obj/blob
 
 /datum/manufacture/mechanics/blob/nucleus
 	name = "nucleus blob"
-	item_requirements = list("organic_or_rubber" = 30)
+	item_requirements = list("organic" = 30)
 	time = 1 MINUTE
 	frame_path = /obj/blob/nucleus
 

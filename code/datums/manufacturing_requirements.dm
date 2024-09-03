@@ -157,77 +157,82 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 
 #define MATCH_ANY 1 //! Pass as long as at least one flag is set.
 #define MATCH_ALL 2 //! Pass if every material flag being checked is set.
-#define MATCH_EXACT 3 //! Pass if every material flag being checked is set, and every material flag not checked is not set.
 
-ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
-/datum/manufacturing_requirement/match_flags
-	VAR_PROTECTED/material_flags //! The flag(s) of the material to match. This can be just one flag, or several with FLAG_A | FLAG_B | ...
-	VAR_PROTECTED/match_type = MATCH_ANY //! How we want to define a successful match. By default, pass as long as at least one flag is set.
+ABSTRACT_TYPE(/datum/manufacturing_requirement/match_type)
+/datum/manufacturing_requirement/match_type
+	VAR_PROTECTED/list/material_types //! The list of types to match. Needs at least one to match. If null then always matches
+	VAR_PROTECTED/material_flags = 0 //! The list of flags to match. Depending on match_type may require any or all flags to match
+	VAR_PROTECTED/match_type = MATCH_ANY //! How we want to define a successful flag match. By default, pass as long as at least one flag is set.
 
 	#ifdef CHECK_MORE_RUNTIMES
-	#define VALID_MATCHES list(MATCH_ANY, MATCH_ALL, MATCH_EXACT) //! Values which match_type can be set to
+	#define VALID_MATCHES list(MATCH_ANY, MATCH_ALL) //! Values which match_type can be set to
 	New()
 		. = ..()
-		if (isnull(src.material_flags))
-			CRASH("[src] created with null material_flags")
+		if (isnull(src.material_types))
+			CRASH("[src] created with null material_types")
 		if (!(src.match_type in VALID_MATCHES))
 			CRASH("[src] has invalid match_type [src.match_type], allowed values are [VALID_MATCHES]")
 	#endif
 
-	is_match(datum/material/M)
+	is_match(datum/material/suppliedMaterial)
 		. = ..()
 		if (!.) return
 		switch(src.match_type)
 			if (MATCH_ANY)
-				return (M.getMaterialFlags(M) & src.material_flags) > 0
+				if(!(suppliedMaterial.getMaterialFlags() & src.material_flags))
+					return FALSE //no flags matched
 			if (MATCH_ALL)
-				return (M.getMaterialFlags(M) & src.material_flags) == src.material_flags
-			if (MATCH_EXACT)
-				return (M.getMaterialFlags(M) == src.material_flags)
+				if((suppliedMaterial.getMaterialFlags() & src.material_flags) != src.material_flags)
+					return FALSE //not all flags matched
+		if(src.material_types == null)
+			return TRUE //we didnt specify types needed so anything goes
+		for(var/datum/material/allowedMaterial in src.material_types)
+			if(istype(suppliedMaterial, allowedMaterial))
+				return TRUE //found a type match
+		return FALSE //found no type matches
 
-/datum/manufacturing_requirement/match_flags/metal
+/datum/manufacturing_requirement/match_type/metal
 	name = "Metallic"
 	id = "metal_flag"
-	material_flags = MATERIAL_METAL
+	material_types = list(/datum/material/metal)
 
-/datum/manufacturing_requirement/match_flags/wood
+/datum/manufacturing_requirement/match_type/wood
 	name = "Wood"
 	id = "wood_flag"
-	material_flags = MATERIAL_WOOD
+	material_types = list(/datum/material/woody)
 
-/datum/manufacturing_requirement/match_flags/rubber
+/datum/manufacturing_requirement/match_type/rubber
 	name = "Rubber"
 	id = "rubber"
-	material_flags = MATERIAL_RUBBER
+	material_types = list(/datum/material/rubbery)
 
-/datum/manufacturing_requirement/match_flags/organic_or_rubber
-	name = "Organic or Rubber"
+/datum/manufacturing_requirement/match_type/organic
+	name = "Organic"
 	id = "organic_or_rubber"
-	material_flags = MATERIAL_ORGANIC | MATERIAL_RUBBER
+	material_flags = MATERIAL_FLAG_BIOLOGICAL
 
-/datum/manufacturing_requirement/match_flags/fabric
+/datum/manufacturing_requirement/match_type/fabric
 	name = "Fabric"
 	id = "fabric"
-	material_flags = MATERIAL_RUBBER | MATERIAL_ORGANIC | MATERIAL_CLOTH
+	material_types = list(/datum/material/textile, /datum/material/leathery)
 
-/datum/manufacturing_requirement/match_flags/crystal
+/datum/manufacturing_requirement/match_type/crystal
 	name = "Crystal"
 	id = "crystal"
-	material_flags = MATERIAL_CRYSTAL
+	material_types = list(/datum/material/ceramic)
 
-/datum/manufacturing_requirement/match_flags/energy
+/datum/manufacturing_requirement/match_type/energy
 	name = "Energy Source"
 	id = "energy"
-	material_flags = MATERIAL_ENERGY
+	material_types = MATERIAL_ENERGY
 
-/datum/manufacturing_requirement/match_flags/insulated
+/datum/manufacturing_requirement/match_type/insulated
 	name = "Insulative Material"
 	id = "insulative_flags"
-	material_flags = MATERIAL_CLOTH | MATERIAL_RUBBER
+	material_types = MATERIAL_CLOTH | MATERIAL_RUBBER
 
 #undef MATCH_ANY
 #undef MATCH_ALL
-#undef MATCH_EXACT
 
 ABSTRACT_TYPE(/datum/manufacturing_requirement/match_subtypes)
 /datum/manufacturing_requirement/match_subtypes
