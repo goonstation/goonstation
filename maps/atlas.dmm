@@ -13257,7 +13257,7 @@
 "aYV" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop purge valve"
+	name = "hot purge valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southwest)
@@ -13732,8 +13732,8 @@
 /area/station/quartermaster/office)
 "bxK" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop valve"
+	name = "cold outlet valve";
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -14295,7 +14295,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "diS" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold inlet valve"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "djg" = (
@@ -14547,7 +14549,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "dQd" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "mixing valve"
+	},
 /obj/submachine/cargopad/engineering,
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
@@ -14982,12 +14986,14 @@
 /area/station/hallway/primary/east)
 "fcV" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
@@ -15098,7 +15104,7 @@
 "fyE" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "combustion chamber inlet valve"
+	name = "combustion chamber fuel valve"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
@@ -15181,7 +15187,8 @@
 /area/station/security/main)
 "fHe" = (
 /obj/machinery/atmospherics/binary/valve{
-	dir = 4
+	name = "hot auxiliary valve";
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -16434,7 +16441,7 @@
 "jUG" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "cold loop purge valve"
+	name = "cold purge valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
@@ -18706,9 +18713,11 @@
 "qyp" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
-/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold inlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
@@ -19111,7 +19120,9 @@
 /turf/simulated/floor/blueblack,
 /area/station/turret_protected/ai)
 "rFr" = (
-/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot inlet valve"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "rGB" = (
@@ -20201,7 +20212,7 @@
 "uSJ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
-	name = "hot loop valve"
+	name = "hot outlet valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -20469,7 +20480,7 @@
 /area/station/medical/medbay/surgery)
 "vCI" = (
 /obj/machinery/atmospherics/binary/valve{
-	name = "hot loop bypass valve"
+	name = "combustion chamber bypass valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
