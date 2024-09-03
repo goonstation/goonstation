@@ -226,26 +226,33 @@
 	security
 		req_access = list(access_maxsec)
 		name = "Security Announcement Computer"
+		area_name = "Security"
 
 	research
 		req_access = list(access_research_director)
 		name = "Research Announcement Computer"
+		area_name = "Research"
 
 	medical
 		req_access = list(access_medical_director)
 		name = "Medical Announcement Computer"
+		area_name = "Medical"
 
 	engineering
 		req_access = list(access_engineering_chief)
 		name = "Engineering Announcement Computer"
-
-	cargo
-		req_access = list(access_cargo)
-		name = "QM Announcement Computer"
+		area_name = "Engineering"
 
 	ai
 		req_access = list(access_ai_upload)
 		name = "AI Announcement Computer"
+
+	cargo
+		req_access = list(access_cargo)
+		name = "QM Announcement Computer"
+		area_name = "Cargo"
+		sound_to_play = 'sound/misc/bingbong.ogg'
+		sound_volume = 70
 
 	catering
 		req_access = list(access_bar, access_kitchen)
@@ -266,9 +273,11 @@
 	name = "Syndicate Announcement computer"
 	theme = "syndicate"
 	icon_state = "announcementsyndie"
+	area_name = "Syndicate"
 	req_access = list(access_syndicate_shuttle)
 
 	commander
+		area_name = null
 		req_access = list(access_syndicate_commander)
 
 	console
