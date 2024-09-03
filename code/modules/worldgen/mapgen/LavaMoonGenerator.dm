@@ -226,11 +226,6 @@
 	carbon_dioxide = 20
 	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
-	destroy_asteroid(var/dropOre=1)
-		if(src.ore || prob(5)) // provide less rock
-			default_ore = /datum/material/crystal/gemstone
-		. = ..()
-
 /turf/unsimulated/floor/plating/asteroid/lavamoon
 	name = "floor"
 	desc = "A tunnel through the silicate. This doesn't seem to be water ice..."

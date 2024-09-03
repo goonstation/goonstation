@@ -72,7 +72,7 @@
 	set_up(var/datum/ore/parent)
 		if (..())
 			return
-		gem_type = /obj/item/material/molitz_beta
+		gem_type = /obj/item/material/molitz/beta
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		var/quantity = rand(2,3)

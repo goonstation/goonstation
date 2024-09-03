@@ -445,13 +445,13 @@ ABSTRACT_TYPE(/obj/item)
 			return FALSE
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
-	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY)
+	var/edible_check = src.edible || (src.material.getMaterialFlags() & MATERIAL_FLAG_EDIBLE) || (edibility_override & FORCE_EDIBILITY)
 	if (!edible_check && !can_matter_eat)
 		return FALSE
 
 	if (M == user)
 		src.eat_msg(M)
-		if (src.material && (src.material.getEdible() || edibility_override))
+		if (src.material && ((src.material.getMaterialFlags() & MATERIAL_FLAG_EDIBLE) || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -495,7 +495,7 @@ ABSTRACT_TYPE(/obj/item)
 		SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
 	logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-	if (src.material && (src.material.getEdible() || edibility_override))
+	if (src.material && ((src.material.getMaterialFlags() & MATERIAL_FLAG_EDIBLE)) || edibility_override)
 		src.material.triggerEat(M, src)
 
 	if (src.reagents && src.reagents.total_volume)
@@ -1682,7 +1682,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 		msg += " Turf contains <b>smoke</b> [log_reagents(T.active_airborne_liquid.group)]."
 	if (locate(/obj/item) in T.contents)
 		var/obj/item/W = locate(/obj/item) in T.contents
-		if (istype(W.material, /datum/material/crystal/plasmastone))
+		if (istype(W.material, /datum/material/ceramic/plasmastone))
 			msg += " Turf contains <b>plasmastone</b>."
 	logTheThing(LOG_BOMBING, M, "[msg]")
 

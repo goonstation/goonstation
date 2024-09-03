@@ -217,7 +217,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		var/started_full = fuel == maxfuel
 		var/fuel_name = initial(W.name)
 		if (W.material)
-			if (W.material.getMaterialFlags & MATERIAL_FLAG_FLAMMABLE = 0)
+			if (!(W.material.getMaterialFlags() & MATERIAL_FLAG_FLAMMABLE))
 				return 0
 			if (W.amount == 1)
 				fuel += 80

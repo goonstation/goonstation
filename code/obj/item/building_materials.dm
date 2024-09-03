@@ -101,7 +101,7 @@ MATERIAL
 		src.name = initial(name)
 		src.icon_state_base = initial(icon_state_base)
 		if (istype(material))
-			if (src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			if (istype(src.material, /datum/material/ceramic))
 				src.icon_state_base += "-g"
 			else
 				src.icon_state_base += "-m"
@@ -159,7 +159,7 @@ MATERIAL
 			var/obj/item/sheet/S = W
 			if (S.material && src.material && !S.material.isSameMaterial(src.material))
 				// build glass tables
-				if (src.material.getMaterialFlags() & MATERIAL_METAL && S.material.getMaterialFlags() & MATERIAL_CRYSTAL) // we're a metal and they're a glass
+				if (istype(src.material, /datum/material/metal) && istype(S.material, /datum/material/ceramic)) // we're a metal and they're a glass
 					if (src.amount_check(1,user) && S.amount_check(2,user))
 						var/reinf = S.reinforcement ? 1 : 0
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
@@ -167,7 +167,7 @@ MATERIAL
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
 						actions.start(new /datum/action/bar/icon/build(a_type, src.loc, 1, 3 SECONDS, S, 2, src, 1, S.material, 'icons/obj/furniture/table_glass.dmi', a_icon_state, /proc/sheet_crafting_callback, a_name), user)
 					return
-				else if (src.material.getMaterialFlags() & MATERIAL_CRYSTAL && S.material.getMaterialFlags() & MATERIAL_METAL) // we're a glass and they're a metal
+				else if (istype(src.material, /datum/material/ceramic) && istype(S.material, /datum/material/metal)) // we're a glass and they're a metal
 					if (src.amount_check(2,user) && S.amount_check(1,user))
 						var/reinf = src.reinforcement ? 1 : 0
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
@@ -206,7 +206,7 @@ MATERIAL
 				boutput(user, SPAN_ALERT("These rods won't work for reinforcing."))
 				return
 
-			if (src.material && (src.material.getMaterialFlags() & MATERIAL_METAL || src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			if (src.material && (istype(src.material, /datum/material/metal) || istype(src.material, /datum/material/ceramic)))
 				var/sheetsinput = input("Reinforce how many sheets?","Min: 1, Max: [min(min(R.amount,src.amount),50)]",1) as num
 				var/makesheets = min(min(R.amount,src.amount),50) //recalculate AFTER the popup to avoid interface stacking exploits
 				sheetsinput = min(sheetsinput,makesheets)
@@ -227,7 +227,7 @@ MATERIAL
 				boutput(user, SPAN_ALERT("You may only reinforce metal or crystal sheets."))
 				return
 
-		else if (isweldingtool(W) && (src.material.getMaterialFlags() & MATERIAL_METAL))
+		else if (isweldingtool(W) && (istype(src.material, /datum/material/metal)))
 			if(src.amount < 5)
 				boutput(user, SPAN_ALERT("You need at least five sheets to make a mask."))
 				return
@@ -305,7 +305,7 @@ MATERIAL
 		.["labeledAvailableAmount"] = "[src.amount] [src.name]\s"
 
 		var/list/availableRecipes = list()
-		if (src?.material?.getMaterialFlags() & MATERIAL_METAL)
+		if (istype(src?.material, /datum/material/metal))
 			if (src.reinforcement)
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/reinforced_metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
@@ -314,7 +314,7 @@ MATERIAL
 			else
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-		if (src?.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
+		if (istype(src?.material, /datum/material/ceramic))
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/glass))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 			if (src.reinforcement)
@@ -325,7 +325,7 @@ MATERIAL
 		if (src?.material?.getID() == "plastic")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/plastic))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
+		if (istype(src?.material, /datum/material/woody))
 			if (istype(src,/obj/item/sheet/wood/zwood))
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/zwood))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
