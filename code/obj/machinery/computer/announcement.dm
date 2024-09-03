@@ -213,39 +213,47 @@
 /obj/machinery/computer/announcement/station
 	req_access = null
 	name = "Station Announcement Computer"
+	circuit_type = /obj/item/circuitboard/announcement/station
 
 	bridge
 		req_access = list(access_heads)
 		name = "Bridge Announcement Computer"
 		announces_arrivals = 1
+		circuit_type = /obj/item/circuitboard/announcement/bridge
 
 	captain
 		req_access = list(access_captain)
 		name = "Executive Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/captain
 
 	security
 		req_access = list(access_maxsec)
 		name = "Security Announcement Computer"
 		area_name = "Security"
+		circuit_type = /obj/item/circuitboard/announcement/security
 
 	research
 		req_access = list(access_research_director)
 		name = "Research Announcement Computer"
 		area_name = "Research"
+		circuit_type = /obj/item/circuitboard/announcement/research
 
 	medical
 		req_access = list(access_medical_director)
 		name = "Medical Announcement Computer"
 		area_name = "Medical"
+		circuit_type = /obj/item/circuitboard/announcement/medical
 
 	engineering
 		req_access = list(access_engineering_chief)
 		name = "Engineering Announcement Computer"
 		area_name = "Engineering"
+		circuit_type = /obj/item/circuitboard/announcement/engineering
 
 	ai
 		req_access = list(access_ai_upload)
 		name = "AI Announcement Computer"
+		circuit_type = /obj/item/circuitboard/announcement/ai
 
 	cargo
 		req_access = list(access_cargo)
@@ -253,6 +261,7 @@
 		area_name = "Cargo"
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70
+		circuit_type = /obj/item/circuitboard/announcement/cargo
 
 	catering
 		req_access = list(access_bar, access_kitchen)
@@ -275,6 +284,7 @@
 	icon_state = "announcementsyndie"
 	area_name = "Syndicate"
 	req_access = list(access_syndicate_shuttle)
+	circuit_type = /obj/item/circuitboard/announcement/syndicate
 
 	commander
 		area_name = null
@@ -289,7 +299,7 @@
 	req_access = null
 	name = "Illegal Announcement Computer"
 	icon_state = "announcementclown"
-	circuit_type = /obj/item/circuitboard/clown_announcement
+	circuit_type = /obj/item/circuitboard/announcement/clown
 	var/emagged = FALSE
 	sound_to_play = 'sound/machines/announcement_clown.ogg'
 	override_font = "Comic Sans MS"
