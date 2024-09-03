@@ -248,7 +248,7 @@
 		name = "AI Announcement Computer"
 
 	catering
-		req_access = list(access_bar) //chef gets bar access
+		req_access = list(access_bar, access_kitchen)
 		name = "Catering Announcement Computer"
 		area_name = "Catering"
 		sound_to_play = 'sound/misc/bingbong.ogg'
