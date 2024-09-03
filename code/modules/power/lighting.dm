@@ -271,7 +271,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		. = ..()
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.called_target == src)
+			if(P.called_target == src && P.proj_data.damage > 5)
 				src.do_break
 
 //big standing lamps
