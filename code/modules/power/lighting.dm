@@ -267,7 +267,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
-
+	Crossed(atom/movable/mover)
+		. = ..()
+		if(istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if(P.called_target == src)
+				src.do_break
 
 //big standing lamps
 /obj/machinery/light/flamp
