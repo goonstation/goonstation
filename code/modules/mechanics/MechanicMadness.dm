@@ -2842,6 +2842,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		var/new_label = input(user, "Button label", "Button Panel") as text
 		var/new_signal = input(user, "Button signal", "Button Panel") as text
+		new_label = trimtext(new_label)
+		new_signal = trimtext(new_signal)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(new_label) && length(new_signal))
@@ -2869,6 +2871,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return 0
 		var/new_label = input(user, "Button label", "Button Panel", to_edit) as text
 		var/new_signal = input(user, "Button signal", "Button Panel", src.active_buttons[to_edit]) as text
+		new_label = trimtext(new_label)
+		new_signal = trimtext(new_signal)
 		if(!length(new_label) || !length(new_signal))
 			return 0
 		new_label = adminscrub(new_label)
@@ -2917,10 +2921,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		for (var/index in splittext(inputted_text, ";"))
 			var/first_equal_pos = findtext(index, "=")
 			if (!first_equal_pos) continue
-			var/button_name = copytext(index, 1, first_equal_pos)
-			var/signal = copytext(index, first_equal_pos + 1)
-			if (!button_name || !signal) continue
-			work_list[button_name] = signal
+			var/new_label = trimtext(copytext(index, 1, first_equal_pos))
+			var/new_signal = trimtext(copytext(index, first_equal_pos + 1))
+			if (!new_label || !new_signal) continue
+			work_list[new_label] = new_signal
 			button_count++
 			if (button_count >= 10) break
 		if (!length(work_list)) return FALSE

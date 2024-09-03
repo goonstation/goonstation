@@ -662,6 +662,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
 			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
+			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/donut(src)
 			src.recipes += new /datum/cookingrecipe/oven/bagel(src)
 			src.recipes += new /datum/cookingrecipe/oven/crumpet(src)
@@ -1301,21 +1302,25 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "brain meatball"
 					F.desc = "Oh jesus, brain meatballs? That's just nasty."
+					F.icon_state = "meatball_brain"
 					qdel( P )
 				if (/obj/item/clothing/head/butt)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "buttball"
 					F.desc = "The best you can hope for is that the meat was lean..."
+					F.icon_state = "meatball_butt"
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "synthetic meatball"
 					F.desc = "Let's be honest, this is probably as good as these things are going to get."
+					F.icon_state = "meatball_plant"
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "mystery meatball"
 					F.desc = "A meatball of even more dubious quality than usual."
+					F.icon_state = "meatball_mystery"
 					qdel( P )
 				if (/obj/item/plant/wheat/metal)
 					new/obj/item/reagent_containers/food/snacks/condiment/ironfilings/(src.loc)
