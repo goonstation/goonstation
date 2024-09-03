@@ -41092,7 +41092,7 @@
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "foa" = (
 /obj/stool/chair/comfy/blue{
@@ -47836,11 +47836,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
-"kCU" = (
-/obj/machinery/turret,
-/obj/machinery/turret,
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai_upload)
 "kEr" = (
 /mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
@@ -50366,7 +50361,7 @@
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "mMk" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -50899,7 +50894,7 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "nie" = (
 /obj/machinery/firealarm/north,
@@ -51124,7 +51119,7 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "npZ" = (
 /obj/cable{
@@ -52380,6 +52375,13 @@
 	id = "ai_core";
 	name = "AI Core Shield";
 	pixel_x = -22
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -53994,7 +53996,7 @@
 	},
 /obj/machinery/firealarm/east,
 /obj/machinery/partyalarm{
-	dir = 8;
+	dir = 2;
 	pixel_y = -26
 	},
 /turf/simulated/floor/black,
@@ -54410,7 +54412,7 @@
 	},
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "pQO" = (
 /obj/stool/chair/red{
@@ -61395,7 +61397,7 @@
 	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "vaa" = (
 /obj/machinery/door_control{
@@ -62639,8 +62641,11 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit,
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "wfd" = (
 /obj/machinery/light,
@@ -106040,7 +106045,7 @@ bqK
 bue
 buS
 buS
-kCU
+spz
 bxx
 bxx
 bzz
@@ -115725,7 +115730,7 @@ nIj
 gKQ
 bQp
 bQp
-bIB
+bIC
 qgt
 bKp
 bWU
@@ -116631,7 +116636,7 @@ pCO
 pCO
 tBN
 tNA
-bIB
+bIC
 swt
 bWT
 bXW
@@ -116933,7 +116938,7 @@ bNJ
 bPa
 uSJ
 nMC
-bIB
+bIC
 lZW
 bWU
 bXX
@@ -117235,7 +117240,7 @@ bKJ
 bKJ
 uSJ
 rPq
-bIB
+bIC
 bUB
 bWU
 bXX
@@ -117537,7 +117542,7 @@ bNK
 bPa
 gbw
 mVx
-bIB
+bIC
 bUA
 bWU
 bXX
@@ -117838,8 +117843,8 @@ bIC
 bIC
 bIC
 xJM
-bIB
-bIB
+bIC
+bIC
 iTv
 bWU
 bXX

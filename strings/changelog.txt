@@ -1,4 +1,54 @@
 
+(t)mon sep 02 24
+(u)LeahTheTech
+(*)Soybeans now contain milk, don't ask how it makes sense.
+(u)JORJ949
+(p)20498
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)AI cores are now better standardized.
+(u)zelda4040404
+(p)20385
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Enjoyers of hair bangs will find a new extra long option available.
+(u)MitchSmith
+(p)20305
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited Gimmick Bombs, Mousetrap Overlays, and Mousetrap Cars!
+(u)Mitch Smith
+(p)20406
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)VR Headsets and other minor eyewear have been resprited, and VR Headsets now have variants!
+(t)sun sep 01 24
+(u)Sockssq & Wrench
+(p)20417
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds a new hair piece: V-Bangs. Sprites by Sockssq
+(u)MitchSmith
+(p)20322
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites Satchels!
+(u)cringe
+(p)20500
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Meters now report the moles of gases that currently exist in their pipeline through MechComp.
+(u)Lord_Earthfire
+(p)20073
+(e)🎨⚖🔄⚗|C-Sprites, C-Balance, C-Rework, A-Chemistry
+(+)The recipe of cryoxadone was changed to: (2) Cryostylane + (1) Platinum + (2) Water -> (2) Cryoxadone @ less than 323K
+(t)sat aug 31 24
+(u)Jan.antilles
+(p)20491
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added Round Glasses, a new swappable style of Prescription Glasses.
+(u)Lord_Earthfire
+(p)20492
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Tumbling creeper have sharp enough thorns to actually cause bleeding injuries.
+(t)fri aug 30 24
+(u)gibusgame
+(p)20382
+(e)🆕🗺🎨|C-Feature, A-Mapping, C-Sprites
+(+)Adds the Fishbowl Helmet, a variant of the regular Space Helmet. Available somewhere in space...
 (t)thu aug 29 24
 (u)Cherman0
 (p)20175
