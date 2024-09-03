@@ -542,6 +542,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	New()
 		..()
+		setItemSpecial(/datum/item_special/jab)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
@@ -595,6 +596,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
+
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -611,6 +613,10 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	item_state = "knife"
+	New()
+		..()
+		setItemSpecial(/datum/item_special/simple)
 	gang
 		name = "familiar fighting knife"
 		force = 17
@@ -1911,6 +1917,8 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+		src.setItemSpecial(/datum/item_special/heavy_swing)
+
 
 //Machete for The Slasher
 /obj/item/slasher_machete

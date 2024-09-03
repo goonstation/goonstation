@@ -498,6 +498,53 @@
 			blood_slash(target,1,null, turn(user.dir,180), 3)
 		return msgs
 
+/datum/item_special/jab
+	cooldown = 2 SECONDS
+	staminaCost = 10
+	moveDelay = 5
+	moveDelayDuration = 4
+	damageMult = 0.8
+	overrideCrit = 0 // no crits, prevent insane bleeds
+
+	image = "jab"
+	name = "Jab"
+	desc = "Quickly jab in a direction. Lowers cooldown massively on a successful hit."
+
+	//cooldown on successful hit
+	//with an 80% damage mult this is ~2x bonus, but will be massively bumped down by even a little bit of armor
+	var/success_cooldown = 4 DECI SECONDS
+
+	onAdd()
+		if(master)
+			overrideStaminaDamage = master.stamina_damage * 0.4
+		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+			var/turf/turf = get_step(master, direction)
+
+			var/obj/itemspecialeffect/jab/effect = new /obj/itemspecialeffect/jab
+			effect.set_dir(direction)
+			effect.setup(turf)
+
+			var/hit = FALSE
+			for(var/atom/A in turf)
+				if(isTarget(A))
+					A.Attackby(master, user, params, 1)
+					hit = TRUE
+					last_use = world.time - (cooldown - success_cooldown)
+					break
+
+			afterUse(user)
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
+		return
+
+
 /datum/item_special/rangestab
 	cooldown = 0 //10
 	staminaCost = 5
@@ -1863,6 +1910,85 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
+
+/datum/item_special/heavy_swing
+	cooldown = 55 // slightly slower than the time to get up from a wallstun
+	staminaCost = 50
+	moveDelay = 10
+	moveDelayDuration = 5
+
+	requiresStaminaToFire = 1
+	staminaReqAmt = 90
+
+	var/damageMultHit = 0.85
+	var/damageMultShove = 0.2
+
+	image = "heavyswing"
+	name = "Heavy swing"
+	desc = "Step forward and do a wide swing. Interrupted if you step into something."
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		var/direction = get_dir_pixel(user, target, params)
+		var/list/attacked = list()
+
+		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
+			direction = (prob(50) ? turn(direction, 45) : turn(direction, -45))
+		var/turf/T2 = null
+		user.next_move = world.time + 6 DECI SECONDS
+		T2 = get_step(master, direction)
+		for(var/atom/A in T2)
+			if(isTarget(A) && ismob(A))
+				var/mob/M = A
+				M.throw_at(get_edge_cheap(T2, direction), 3, 20, thrown_by=user)
+				var/obj/itemspecialeffect/heavybump/bumpeffect = new /obj/itemspecialeffect/heavybump
+				bumpeffect.set_dir(direction)
+				bumpeffect.setup(T2)
+				damageMult = damageMultShove
+				master.attack_verbs = list("shoves", "barges")
+				M.Attackby(master, user, params, 1)
+				master.attack_verbs = initial(master.attack_verbs)
+				playsound(master,"sound/impact_sounds/metal_thump.ogg", 50, FALSE)
+				return
+		if (!step(user, direction)) return
+
+		var/obj/itemspecialeffect/heavystep/stepeffect = new /obj/itemspecialeffect/heavystep
+		stepeffect.set_dir(direction)
+		stepeffect.setup(T2)
+		playsound(master,"sound/misc/step/step_heavyboots_[pick(1,2,3)].ogg", 50, FALSE)
+
+		SPAWN(3 DECI SECONDS)
+			var/turf/one = get_step(T2, turn(direction, 90))
+			var/turf/three = get_step(T2, direction) // front middle tile
+			var/turf/two = get_step(three, turn(direction, 90))
+			var/turf/four = get_step(three, turn(direction, -90))
+			var/turf/five = get_step(T2, turn(direction, -90))
+			damageMult = damageMultHit
+
+			var/obj/itemspecialeffect/wide_swipe/swipe = new /obj/itemspecialeffect/wide_swipe
+			swipe.set_dir(direction)
+			swipe.setup(T2)
+
+			var/hit = 0
+			for(var/turf/T in list(five,four))
+				for(var/atom/A in T)
+					if(A in attacked) continue
+					if(isTarget(A))
+						A.Attackby(master, user, params, 1)
+						attacked += A
+						hit = 1
+			SPAWN(1 DECI SECONDS)
+				for(var/turf/T in list(three,two,one))
+					for(var/atom/A in T)
+						if(A in attacked) continue
+						if(isTarget(A))
+							A.Attackby(master, user, params, 1)
+							attacked += A
+							hit = 1
+
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 /obj/itemspecialeffect
 	name = ""
 	desc = ""
@@ -1950,6 +2076,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_y = -32
 		can_clash = 1
 
+	wide_swipe
+		icon = 'icons/effects/96x96.dmi'
+		icon_state = "wide_swipe"
+		pixel_x = -32
+		pixel_y = -32
 	dagger
 		icon = 'icons/effects/meleeeffects.dmi'
 		icon_state = "dagger"
@@ -1962,6 +2093,17 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = 0
 		pixel_y = 0
 		blend_mode = BLEND_ADD
+
+	heavybump
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "heavybump"
+		pixel_x = 0
+		pixel_y = 0
+	heavystep
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "heavystep"
+		pixel_x = 0
+		pixel_y = 0
 
 	simple
 		icon = 'icons/effects/effects.dmi'
@@ -2004,6 +2146,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = 0
 		pixel_y = 0
 
+	jab
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "quickjab"
+		pixel_x = 0
+		pixel_y = 0
+
+		New()
+			pixel_x = rand(-5,5)
+			pixel_y = rand(-5,5)
+			..()
 	barrier
 		name = "energy barrier"
 		icon = 'icons/effects/effects.dmi'

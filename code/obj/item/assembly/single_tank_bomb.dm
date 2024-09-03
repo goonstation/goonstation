@@ -50,7 +50,6 @@
 	var/obj/item/tank/plasma/part3 = null
 	status = 0
 	flags = TABLEPASS | CONDUCT
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/proximity_bomb/dropped()
 	. = ..()
@@ -139,13 +138,6 @@
 /obj/item/assembly/proximity_bomb/c_state(n)
 
 	src.icon_state = text("prox-igniter-tank[]", n)
-	return
-
-/obj/item/assembly/proximity_bomb/HasProximity(atom/movable/AM as mob|obj)
-	if (istype(AM, /obj/projectile))
-		return
-	if (AM.move_speed < 12 && src.part1)
-		src.part1.sense()
 	return
 
 /obj/item/assembly/proximity_bomb/bump(atom/O)

@@ -536,6 +536,7 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+	smashes_glasses = FALSE //foam
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
@@ -581,13 +582,16 @@ toxic - poisons
 	silentshot = 1
 	casing = null
 	reagent_payload = "curare"
-	implanted = /obj/item/implant/projectile/body_visible/dart
+	implanted = /obj/item/implant/projectile/body_visible/blowdart
 
 	madness
 		reagent_payload = "madness_toxin"
 
 	ls_bee
 		reagent_payload = "lsd_bee"
+
+	ketamine
+		reagent_payload = "ketamine"
 
 //0.41
 /datum/projectile/bullet/derringer

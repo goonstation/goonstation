@@ -178,7 +178,7 @@ proc/filter_carrier_pets(var/type)
 	setup_overlays()
 		if (src.use_custom_color)
 			if (src.client)
-				fur_color = src.client.preferences.AH.customization_first_color
+				fur_color = src.client.preferences.AH.customizations["hair_bottom"].color
 				eye_color = src.client.preferences.AH.e_color
 			var/image/overlay = image(src.icon, "mouse_colorkey")
 			overlay.color = fur_color
@@ -1689,7 +1689,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		eye_color = "#000000"
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
 		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "sparrow_colorkey")
 		overlay.color = fur_color
@@ -1768,7 +1768,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		eye_color = "#000000"
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
 		eye_color = src.client?.preferences.AH.e_color
 		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey")
 		overlay.color = fur_color
@@ -1815,7 +1815,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		.=..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("radioactive", scramble=TRUE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	setup_healths()
 		. = ..()
@@ -1823,7 +1828,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.healthlist -= "toxin"
 
 	setup_overlays()
-		fur_color = src.client?.preferences.AH.customization_first_color
+		fur_color = src.client?.preferences.AH.customizations["hair_bottom"].color
 		eye_color = src.client?.preferences.AH.e_color
 
 		var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey")
@@ -1912,7 +1917,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("scorpion_sting", scramble=TRUE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	setup_hands()
 		..()
@@ -2037,9 +2047,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		src.event_handler_flags |= USE_PROXIMITY
 		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
 		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
+		src.AddComponent(/datum/component/proximity)
 
 	setup_hands()
 		..()
@@ -2139,7 +2149,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
-	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
+	EnteredProximity(atom/movable/AM) //the part where it bites you if you pass by
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 			if (!sting.disabled && sting.cooldowncheck())
@@ -3352,6 +3362,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		butterflytype = rand(1,5)
 		src.icon_state = "butterfly[butterflytype]"
 		src.icon_state_dead = "butterfly[butterflytype]-dead"
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	setup_hands()
 		..()
@@ -3443,6 +3458,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	isFlying = TRUE
 	add_abilities = list(/datum/targetable/critter/vomit)
 
+	New(loc)
+		..()
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
+
 	Move()
 		. = ..()
 		misstep_chance = 23
@@ -3500,6 +3523,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	isFlying = TRUE
 	add_abilities = list(/datum/targetable/critter/blood_bite)
+
+	New(loc)
+		..()
+		START_TRACKING_CAT(TR_CAT_BUGS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
 
 	Move()
 		. = ..()

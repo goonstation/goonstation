@@ -202,6 +202,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
 
+	pass_unstable = TRUE
+
 	New()
 		..()
 		inserted_lamp = new light_type()
@@ -267,7 +269,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
+	Cross(atom/movable/mover)
+		. = ..()
+		if(istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if(P.called_target == src && P.proj_data?.damage > 5)
+				. = FALSE
 
+	bullet_act(obj/projectile/P)
+		. = ..()
+		src.do_break()
 
 //big standing lamps
 /obj/machinery/light/flamp

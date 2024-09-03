@@ -18,8 +18,7 @@
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
-	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/last_sound = 0
+	var/count = 1000	//! can travel 1000 steps before going inactive (in case of loops)
 
 	var/slowed = 0 // when you move, slows you down
 
@@ -111,7 +110,7 @@
 
 	// merge two holder objects
 	// used when a a holder meets a stuck holder
-	proc/merge(var/obj/disposalholder/other)
+	proc/merge(obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
@@ -119,30 +118,31 @@
 		other.merged(src)
 		qdel(other)
 
-	proc/merged(var/obj/disposalholder/host)
+	proc/merged(obj/disposalholder/host)
 		return
 
 	// called when player tries to move while in a pipe
-	relaymove(mob/user as mob)
-		if (user.stat)
+	relaymove(mob/user, direction)
+		if (is_incapacitated(user))
 			return
+
+		var/turf/our_turf = get_turf(src)
 
 		// drsingh: attempted fix for Cannot read null.loc
-		if (src == null || src.loc == null || src.loc.loc == null)
+		if (src == null || our_turf == null)
 			return
 
-		for (var/mob/M in hearers(src.loc.loc))
+		for (var/mob/M in hearers(our_turf))
 			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
-		if(last_sound + 6 < world.time)
+		if(ON_COOLDOWN(src, "pipeclang", (6 DECI SECONDS)))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
-			last_sound = world.time
 			if(!istype(user,/mob/living/critter/small_animal))
 				damage_pipe()
 			if(prob(30))
 				slowed++
 
-	mob_flip_inside(var/mob/user)
+	mob_flip_inside(mob/user)
 		var/obj/disposalpipe/P = src.loc
 		if(!istype(P))
 			return
