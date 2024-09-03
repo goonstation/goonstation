@@ -335,9 +335,6 @@ ABSTRACT_TYPE(/datum/material)
 		var/list/L = src.vars[triggerListName]
 		return length(L)
 
-	proc/interpolateName(datum/material/other, t)
-		. = getInterpolatedName(src.name, other.name, t)
-
 	proc/specialNaming(atom/target)
 		. = target.name
 

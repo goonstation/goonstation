@@ -144,7 +144,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			if (S.material && istype(S.material, /datum/material/ceramic))
 				if (S.amount >= 2)
 					W.change_stack_amount(-2)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)

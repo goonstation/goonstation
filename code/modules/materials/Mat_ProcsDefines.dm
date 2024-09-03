@@ -296,14 +296,6 @@ var/global/list/material_cache
 		src.material.triggerDrop(user, src)
 	return
 
-
-/// Merges two material names into one.
-/proc/getInterpolatedName(var/mat1, var/mat2, var/t)
-	var/ot = 1 - t
-	var/part1 = copytext(mat1, 1, round((length(mat1) * ot) + 0.5))
-	var/part2 = copytext(mat2, round((length(mat2) * ot) + 0.5), 0)
-	return capitalize(ckey("[part1][part2]"))
-
 /// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/mat1, var/datum/material/mat2)
 	for(var/datum/material_recipe/R in materialRecipes)
@@ -311,30 +303,9 @@ var/global/list/material_cache
 	return null
 
 /proc/findRecipeName(var/obj/item/One,var/obj/item/Two)
-	var/tempmerge = getFusedMaterial(One.material, Two.material)
 	for(var/datum/material_recipe/R in materialRecipes)
-		if(R.validate(tempmerge)) return R
-	return getInterpolatedName(One.material.getName(), Two.material.getName(), 0.5)
-
-/**
-	* Searches the parent materials of the given material, up to a given generation, for an id.
-	*
-	* Useful if you want to figure out if a given material was used in the making of another material.
-	*
-	* Keep in mind that this can be expensive so use it only when you have to.
-	*/
-/proc/hasParentMaterial(var/datum/material/M, var/search_id, var/max_generations = 3)
-	return searchMatTree(M, search_id, 0, max_generations)
-
-/proc/searchMatTree(var/datum/material/M, var/id, var/current_depth, var/max_depth = 3)
-	if(!M || !id) return null
-	if(!length(M.getParentMaterials())) return null
-	for(var/datum/material/CM in M.getParentMaterials())
-		if(CM.getID() == id) return CM
-		if(current_depth + 1 <= max_depth)
-			var/temp = searchMatTree(CM, id, current_depth + 1, max_depth)
-			if(temp) return temp
-	return null
+		if(R.validate(One.material, Two.material)) return R
+	return "--INVALID COMBINATION--"
 
 /// Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
 /proc/applyCableMaterials(atom/C, datum/material/insulator, datum/material/conductor, copy_material = FALSE)

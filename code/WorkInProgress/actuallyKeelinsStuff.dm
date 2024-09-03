@@ -751,13 +751,6 @@ Returns:
 
 	var/oneName = ""
 	var/twoName = ""
-	if(one && two)
-		oneName = one.name
-		twoName = two.name
-		one.name = getInterpolatedName(oneName, twoName, (rand(3,7) / 10))
-		two.name = getInterpolatedName(twoName, oneName, (rand(3,7) / 10))
-		oneName = one.name
-		twoName = two.name
 
 	oneOuter:
 		for(var/obj/O in oneContents)
