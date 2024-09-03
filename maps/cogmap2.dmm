@@ -4943,6 +4943,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/bot/cleanbot,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "apP" = (
@@ -7710,9 +7711,11 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "axP" = (
-/obj/machinery/bot/cleanbot,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)

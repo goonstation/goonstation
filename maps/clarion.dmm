@@ -3959,8 +3959,7 @@
 	name = "table"
 	},
 /obj/machinery/shipalert{
-	dir = 1;
-	
+	dir = 1
 	},
 /obj/item/decoration/flower_vase{
 	pixel_y = 24
@@ -32592,7 +32591,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
+/obj/machinery/computer/announcement/station/catering{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "qpv" = (
