@@ -1,3 +1,6 @@
+(t)wed aug 08 24
+(u)LeahTheTech
+(*)New buildmode "Spawn Object" effect: "Fling" - spawns the object on you and immediately throws it at the target location.
 (t)tue jul 09 24
 (u)Azrun
 (*)Some seasonal content can be enabled via Terrainify! Season setting added to Winter and Forest Station.

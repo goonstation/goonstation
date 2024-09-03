@@ -235,12 +235,12 @@ var/list/removed_jobs = list(
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
-			"customColor1" = src.AH.customization_first_color,
-			"customStyle1" = src.AH.customization_first.name,
-			"customColor2" = src.AH.customization_second_color,
-			"customStyle2" = src.AH.customization_second.name,
-			"customColor3" = src.AH.customization_third_color,
-			"customStyle3" = src.AH.customization_third.name,
+			"customColor1" = src.AH.customizations["hair_bottom"].color,
+			"customStyle1" = src.AH.customizations["hair_bottom"].style.name,
+			"customColor2" = src.AH.customizations["hair_middle"].color,
+			"customStyle2" = src.AH.customizations["hair_middle"].style.name,
+			"customColor3" = src.AH.customizations["hair_top"].color,
+			"customStyle3" = src.AH.customizations["hair_top"].style.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
 			"randomAppearance" = src.be_random_look,
@@ -698,22 +698,22 @@ var/list/removed_jobs = list(
 				var/current_color
 				switch (params["id"])
 					if ("custom1")
-						current_color = src.AH.customization_first_color
+						current_color = src.AH.customizations["hair_bottom"].color
 					if ("custom2")
-						current_color = src.AH.customization_second_color
+						current_color = src.AH.customizations["hair_middle"].color
 					if ("custom3")
-						current_color = src.AH.customization_third_color
+						current_color = src.AH.customizations["hair_top"].color
 					if ("underwear")
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first_color = new_color
+							src.AH.customizations["hair_bottom"].color = new_color
 						if ("custom2")
-							src.AH.customization_second_color = new_color
+							src.AH.customizations["hair_middle"].color = new_color
 						if ("custom3")
-							src.AH.customization_third_color = new_color
+							src.AH.customizations["hair_top"].color = new_color
 						if ("underwear")
 							src.AH.u_color = new_color
 					src.update_preview_icon()
@@ -730,11 +730,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first = new_style
+							src.AH.customizations["hair_bottom"].style = new_style
 						if ("custom2")
-							src.AH.customization_second = new_style
+							src.AH.customizations["hair_middle"].style = new_style
 						if ("custom3")
-							src.AH.customization_third = new_style
+							src.AH.customizations["hair_top"].style = new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -749,11 +749,11 @@ var/list/removed_jobs = list(
 
 				switch (params["id"])
 					if ("custom1")
-						current_style = src.AH.customization_first.type
+						current_style = src.AH.customizations["hair_bottom"].style.type
 					if ("custom2")
-						current_style = src.AH.customization_second.type
+						current_style = src.AH.customizations["hair_middle"].style.type
 					if ("custom3")
-						current_style = src.AH.customization_third.type
+						current_style = src.AH.customizations["hair_top"].style.type
 					if ("underwear")
 						current_style = src.AH.underwear
 
@@ -778,11 +778,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customization_first = new new_style
+							src.AH.customizations["hair_bottom"].style = new new_style
 						if ("custom2")
-							src.AH.customization_second = new new_style
+							src.AH.customizations["hair_middle"].style = new new_style
 						if ("custom3")
-							src.AH.customization_third = new new_style
+							src.AH.customizations["hair_top"].style = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -981,14 +981,14 @@ var/list/removed_jobs = list(
 				src.AH.gender = MALE
 				src.randomize_name()
 
-				src.AH.customization_first = new /datum/customization_style/hair/short/short
-				src.AH.customization_second = new /datum/customization_style/none
-				src.AH.customization_third = new /datum/customization_style/none
+				src.AH.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/short
+				src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
+				src.AH.customizations["hair_top"].style = new /datum/customization_style/none
 				src.AH.underwear = "No Underwear"
 
-				src.AH.customization_first_color = initial(src.AH.customization_first_color)
-				src.AH.customization_second_color = initial(src.AH.customization_second_color)
-				src.AH.customization_third_color = initial(src.AH.customization_third_color)
+				src.AH.customizations["hair_bottom"].color = initial(src.AH.customizations["hair_bottom"].color)
+				src.AH.customizations["hair_middle"].color = initial(src.AH.customizations["hair_middle"].color)
+				src.AH.customizations["hair_top"].color = initial(src.AH.customizations["hair_top"].color)
 				src.AH.e_color = "#101010"
 				src.AH.u_color = "#FEFEFE"
 
@@ -1150,7 +1150,7 @@ var/list/removed_jobs = list(
 			qdel(ourWig)
 
 		if (src.traitPreferences.traits_selected.Find("bald") && mutantRace)
-			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+			H.equip_if_possible(H.create_wig(keep_hair = TRUE), SLOT_HEAD)
 
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
@@ -1840,12 +1840,13 @@ var/list/removed_jobs = list(
 			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
-	proc/apply_post_new_stuff(mob/living/character)
+	proc/apply_post_new_stuff(mob/living/character, var/role_for_traits)
 		for (var/slot_id in src.custom_parts)
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
 			customization.try_apply(character, src.custom_parts)
 		if (src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
+			character.traitHolder.mind_role_fallback = role_for_traits
 			for (var/T in src.traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 
@@ -1856,18 +1857,18 @@ var/list/removed_jobs = list(
 			src.AH = new
 		if (src.AH.gender != src.gender)
 			src.AH.gender = src.gender
-		if (src.AH.customization_first_color == null)
-			src.AH.customization_first_color = "#101010"
-		if (src.AH.customization_first == null)
-			src.AH.customization_first = new  /datum/customization_style/none
-		if (src.AH.customization_second_color == null)
-			src.AH.customization_second_color = "#101010"
-		if (src.AH.customization_second == null)
-			src.AH.customization_second = new /datum/customization_style/none
-		if (src.AH.customization_third_color == null)
-			src.AH.customization_third_color = "#101010"
-		if (src.AH.customization_third == null)
-			src.AH.customization_third = new /datum/customization_style/none
+		if (src.AH.customizations["hair_bottom"].color == null)
+			src.AH.customizations["hair_bottom"].color = "#101010"
+		if (src.AH.customizations["hair_bottom"].style == null)
+			src.AH.customizations["hair_bottom"].style = new  /datum/customization_style/none
+		if (src.AH.customizations["hair_middle"].color == null)
+			src.AH.customizations["hair_middle"].color = "#101010"
+		if (src.AH.customizations["hair_middle"].style == null)
+			src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
+		if (src.AH.customizations["hair_top"].color == null)
+			src.AH.customizations["hair_top"].color = "#101010"
+		if (src.AH.customizations["hair_top"].style == null)
+			src.AH.customizations["hair_top"].style = new /datum/customization_style/none
 		if (src.AH.e_color == null)
 			src.AH.e_color = "#101010"
 		if (src.AH.u_color == null)

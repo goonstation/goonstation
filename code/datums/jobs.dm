@@ -1012,6 +1012,30 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	wiki_link = "https://wiki.ss13.co/Jobs#Gimmick_Jobs" // fallback for those without their own page
 
+#ifdef I_WANNA_BE_THE_JOB
+/datum/job/special/imcoder
+	name = "IMCODER"
+	// Used for debug testing. No need to define special landmark, this overrides job picks
+	access_string = "Captain"
+
+	slot_belt = list(/obj/item/storage/belt/utility/prepared/ceshielded)
+	slot_jump = list(/obj/item/clothing/under/rank/assistant)
+	slot_foot = list(/obj/item/clothing/shoes/magnetic)
+	slot_glov = list(/obj/item/clothing/gloves/yellow)
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_head = list(/obj/item/clothing/head/helmet/space/light/engineer)
+	slot_suit = list(/obj/item/clothing/suit/space/light/engineer)
+	slot_back = list(/obj/item/storage/backpack)
+	slot_mask = list(/obj/item/clothing/mask/gas)
+	items_in_backpack = list(
+		/obj/item/rcd/construction/safe/admin_crimes,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/sheet/steel/fullstack,
+		/obj/item/storage/box/cablesbox,
+		/obj/item/tank/oxygen,
+	)
+#endif
+
 /datum/job/special/station_builder
 	// Used for Construction game mode, where you build the station
 	name = "Station Builder"
@@ -1329,7 +1353,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	/obj/item/scissors/surgical_scissors = 1)
 
 	items_in_backpack = list(\
-	/obj/item/currency/spacecash/buttcoin,
+	/obj/item/currency/buttcoin,
 	/obj/item/currency/spacecash/fivehundred)
 
 /datum/job/special/souschef
@@ -2015,7 +2039,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Chaplain"
 	limit = 0
 	change_name_on_spawn = TRUE
-	slot_head = list(/obj/item/clothing/head/devil)
+	slot_head = list(/obj/item/clothing/head/headband/devil)
 	slot_mask = list(/obj/item/clothing/mask/moustache/safe)
 	slot_ears = list(/obj/item/device/radio/headset)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/red/demonic)
@@ -2656,7 +2680,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	slot_head = list(/obj/item/clothing/head/flatcap)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	slot_lhan = list(/obj/item/storage/briefcase/instruments)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Musician"
 
@@ -2836,9 +2860,14 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
-		C.assignment = "Staff Assistant"
-		C.name = "[C.registered]'s ID Card ([C.assignment])"
+		SPAWN(0)
+			var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
+			C.assignment = "Staff Assistant"
+			C.name = "[C.registered]'s ID Card ([C.assignment])"
+
+			var/obj/item/device/pda2/pda = locate() in M
+			pda.assignment = "Staff Assistant"
+			pda.ownerAssignment = "Staff Assistant"
 
 /datum/job/special/pathologist
 	name = "Pathologist"

@@ -337,6 +337,18 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
 
+	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name].", "You show off the [name].")
+		actions.start(new /datum/action/show_item(user, src, "disk"), user)
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name] at [target.name].", "You show off the [name] to [target.name]")
+		actions.start(new /datum/action/show_item(user, src, "disk"), user)
+
 /obj/item/disk/data/floppy/devkit
 	name = "data disk-'Development'"
 	title = "T-DISK"

@@ -34,8 +34,6 @@
 			return
 		var/obj/item/I = new gem_type
 		I.set_loc(AST)
-		I.quality = AST.quality + rand(-50,50)
-		I.name = "[getGemQualityName(I.quality)] [I.name]"
 
 /datum/ore/event/geode
 	analysis_string = "Large crystalline formations detected."
