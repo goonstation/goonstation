@@ -1,5 +1,15 @@
 
 (t)mon sep 02 24
+(u)Knipje
+(p)20466
+(e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
+(+)Centcom engineers have standardized TEG valve names.
+(u)tarmunora
+(+)Projectiles aimed directly at light fixtures will now hit the light, breaking it. (projectile must do non-negligable damage)
+(u)LeahTheTech
+(p)20538
+(e)🆕🗺🔊|C-Feature, A-Mapping, C-Sound
+(*)Added catering announcement computers.
 (u)LeahTheTech
 (*)Soybeans now contain milk, don't ask how it makes sense.
 (u)JORJ949

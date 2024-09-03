@@ -5047,6 +5047,19 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
+"cnv" = (
+/obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "cnx" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/black,
@@ -5483,6 +5496,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
+"cyE" = (
+/obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "cyG" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
@@ -5540,35 +5566,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/hall)
-"czQ" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
-"czU" = (
-/obj/cable,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 6;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "cAo" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/redblack,
@@ -6455,6 +6452,27 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"cUu" = (
+/obj/machinery/power/data_terminal,
+/obj/landmark/start/job/AI,
+/obj/cable,
+/obj/item/device/radio/intercom/AI{
+	broadcasting = 0;
+	dir = 8;
+	layer = 5
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_y = -26
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "cUx" = (
 /obj/rack,
 /obj/item/storage/belt/utility{
@@ -9278,13 +9296,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
-"ejx" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/grey/blackgrime,
-/area/station/crew_quarters/catering)
 "ejy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16743,24 +16754,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
-"hic" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 5;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "hix" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/engineering_mechanic,
@@ -18446,6 +18439,24 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
+"hOB" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "hOK" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/mail/bent/west,
@@ -18881,19 +18892,6 @@
 	dir = 1
 	},
 /area/pasiphae/survey)
-"hXs" = (
-/obj/cable,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "hXv" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -21479,6 +21477,24 @@
 	dir = 4
 	},
 /area/station/medical/head)
+"jbc" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "jbf" = (
 /obj/storage/closet/radiation,
 /turf/simulated/floor/engine,
@@ -29442,6 +29458,22 @@
 "mjg" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
+"mjl" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "mjp" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/redblack{
@@ -30472,24 +30504,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"mGA" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 9;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "mGC" = (
 /obj/table/auto,
 /obj/item/storage/box/cablesbox{
@@ -33040,6 +33054,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"nMy" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "nMF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -48977,6 +49001,30 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
+"uSd" = (
+/obj/mapping_helper/access/ai_upload,
+/obj/machinery/door/airlock/pyro/glass/command{
+	name = "AI Core"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "uSe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
@@ -53879,30 +53927,6 @@
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
-"xdR" = (
-/obj/mapping_helper/access/ai_upload,
-/obj/machinery/door/airlock/pyro/glass/command{
-	name = "AI Core"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "xep" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -56232,27 +56256,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"ykP" = (
-/obj/machinery/power/data_terminal,
-/obj/landmark/start/job/AI,
-/obj/cable,
-/obj/item/device/radio/intercom/AI{
-	broadcasting = 0;
-	dir = 8;
-	layer = 5
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_y = -26
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "ykY" = (
 /obj/cable/yellow{
 	icon_state = "2-9"
@@ -90025,7 +90028,7 @@ apP
 bWh
 soo
 aBg
-ejx
+nMy
 mIK
 gVW
 xFk
@@ -109910,9 +109913,9 @@ sEL
 mIG
 aDn
 ekF
-mGA
-czQ
-hXs
+hOB
+mjl
+cyE
 efi
 aDn
 mIG
@@ -110212,8 +110215,8 @@ sEL
 mIG
 aDn
 ckd
-xdR
-ykP
+uSd
+cUu
 mIG
 efm
 aDn
@@ -110514,9 +110517,9 @@ sEL
 mIG
 aDn
 pSO
-hic
-czQ
-czU
+jbc
+mjl
+cnv
 pSO
 aDn
 mIG

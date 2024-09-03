@@ -20557,6 +20557,27 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/space)
+"euL" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/blue{
+	icon_state = "0-2"
+	},
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Shield Control";
+	pixel_x = 8;
+	pixel_y = 26
+	},
+/obj/landmark/start/job/AI,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "euP" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -24149,6 +24170,28 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
+"gSV" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue{
+	icon_state = "0-2"
+	},
+/obj/cable/blue{
+	icon_state = "0-8"
+	},
+/obj/cable/blue{
+	icon_state = "0-4"
+	},
+/obj/cable/blue,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "gTi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -25960,6 +26003,26 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"ifA" = (
+/obj/cable/blue{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue,
+/obj/cable/blue{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "ifN" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet{
@@ -29231,26 +29294,6 @@
 	dir = 0
 	},
 /area/station/hallway/primary/south)
-"kni" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 8;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue,
-/obj/cable/blue{
-	icon_state = "0-2"
-	},
-/obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
-	},
-/obj/mapping_helper/access/ai_upload,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "knp" = (
 /obj/cable/yellow,
 /obj/machinery/power/solar/west,
@@ -30333,11 +30376,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"kWc" = (
-/obj/stool,
-/obj/item/swingsignfolded,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "kWE" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
@@ -30796,22 +30834,6 @@
 	icon_state = "fred1"
 	},
 /area/station/bridge)
-"llS" = (
-/obj/machinery/teleport/portal_ring,
-/obj/cable/blue{
-	icon_state = "0-4"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/turretid/ai_chamber{
-	pixel_y = 24
-	},
-/turf/simulated/floor/engine,
-/area/station/turret_protected/AIsat)
 "llV" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet,
@@ -30853,27 +30875,6 @@
 	icon_state = "fblue2"
 	},
 /area/station/crew_quarters/bar)
-"lmS" = (
-/obj/machinery/power/data_terminal,
-/obj/cable/blue{
-	icon_state = "0-2"
-	},
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Shield Control";
-	pixel_x = 8;
-	pixel_y = 26
-	},
-/obj/landmark/start/job/AI,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "lnc" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -33749,6 +33750,26 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"mXG" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 10;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue,
+/obj/cable/blue{
+	icon_state = "0-4"
+	},
+/obj/cable/blue{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "mXH" = (
 /obj/machinery/shipalert{
 	pixel_y = 24
@@ -35354,6 +35375,22 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"nZy" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 9;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "nZJ" = (
 /obj/table/auto,
 /obj/machinery/recharger{
@@ -36890,6 +36927,22 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
+"oNG" = (
+/obj/machinery/teleport/portal_ring,
+/obj/cable/blue{
+	icon_state = "0-4"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/turretid/ai_chamber{
+	pixel_y = 24
+	},
+/turf/simulated/floor/engine,
+/area/station/turret_protected/AIsat)
 "oNN" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -38263,26 +38316,6 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
-"pDq" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 10;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue,
-/obj/cable/blue{
-	icon_state = "0-4"
-	},
-/obj/cable/blue{
-	icon_state = "0-8"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "pDx" = (
 /obj/machinery/light/small/sticky/frostedred,
 /obj/reagent_dispensers/watertank,
@@ -38722,6 +38755,11 @@
 	dir = 4
 	},
 /area/station/hangar/main)
+"pTF" = (
+/obj/reagent_dispensers/beerkeg,
+/obj/item/swingsignfolded,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "pTM" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4
@@ -39371,6 +39409,26 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
+/area/station/turret_protected/ai)
+"qot" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 8;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue,
+/obj/cable/blue{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "qov" = (
 /obj/machinery/camera{
@@ -43251,28 +43309,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
-"sMu" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue{
-	icon_state = "0-2"
-	},
-/obj/cable/blue{
-	icon_state = "0-8"
-	},
-/obj/cable/blue{
-	icon_state = "0-4"
-	},
-/obj/cable/blue,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "sMH" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/blueblack{
@@ -44329,22 +44365,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
-"tvK" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 9;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "twb" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -45020,23 +45040,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/locker)
-"tPi" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue,
-/obj/cable/blue{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "tPt" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -45057,6 +45060,12 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"tQA" = (
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "tQN" = (
 /obj/stool/chair/comfy{
 	dir = 8
@@ -45199,10 +45208,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"tWE" = (
-/obj/reagent_dispensers/beerkeg,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "tXc" = (
 /obj/cable/orange,
 /obj/machinery/power/furnace{
@@ -46380,26 +46385,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"uQu" = (
-/obj/cable/blue{
-	icon_state = "0-4"
-	},
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 6;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue,
-/obj/cable/blue{
-	icon_state = "0-8"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "uQL" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -49512,6 +49497,22 @@
 /obj/decal/cleanable/generic,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"wMB" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "wMD" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
@@ -50649,22 +50650,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
-"xAs" = (
-/obj/machinery/door/poddoor/pyro{
-	density = 0;
-	dir = 5;
-	icon_state = "pdoor0";
-	id = "ai_core";
-	layer = 4;
-	name = "AI Core Shield";
-	opacity = 0
-	},
-/obj/cable/blue{
-	icon_state = "0-2"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/circuit/off,
-/area/station/turret_protected/ai)
 "xAN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51287,6 +51272,23 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"xXS" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	layer = 4;
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/obj/cable/blue,
+/obj/cable/blue{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
+/area/station/turret_protected/ai)
 "xYh" = (
 /obj/machinery/camera{
 	c_tag = "South Primary Hallway";
@@ -70904,7 +70906,7 @@ ptt
 jhM
 whX
 sTk
-tWE
+pTF
 jhM
 lwZ
 oGq
@@ -71508,7 +71510,7 @@ msN
 jhM
 jmz
 onI
-kWc
+tQA
 jhM
 eLs
 ueu
@@ -124076,9 +124078,9 @@ wEi
 wRk
 bCc
 bCN
-tvK
-kni
-pDq
+nZy
+qot
+mXG
 wEi
 jPK
 wEi
@@ -124086,7 +124088,7 @@ bDB
 sNX
 jtO
 ecY
-llS
+oNG
 qoa
 rMl
 ecY
@@ -124379,8 +124381,8 @@ wEi
 bCd
 bCO
 sNX
-lmS
-sMu
+euL
+gSV
 gav
 ydk
 bBk
@@ -124680,9 +124682,9 @@ wEi
 wRk
 bCe
 uxt
-xAs
-tPi
-uQu
+wMB
+xXS
+ifA
 wEi
 jPK
 wEi
