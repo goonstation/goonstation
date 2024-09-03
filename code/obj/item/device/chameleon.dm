@@ -129,7 +129,9 @@ TYPEINFO(/obj/item/device/chameleon)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
+		if (isgrab(target)) //don't scan grabs
+			return
+		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		//Okay, enough scanning shit without actual icons yo.
 		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
@@ -250,7 +252,9 @@ TYPEINFO(/obj/item/device/chameleon)
 			if (user && ismob(user))
 				user.show_text("You are too far away to do that.", "red")
 			return
-		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
+		if (isgrab(target)) //don't scan grabs
+			return
+		if (target.plane == PLANE_HUD && !isitem(target)) //don't grab hud stuff _unless_ it's an item. Grabs are the only exception I know
 			return
 		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)

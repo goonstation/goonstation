@@ -2860,9 +2860,14 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
-		C.assignment = "Staff Assistant"
-		C.name = "[C.registered]'s ID Card ([C.assignment])"
+		SPAWN(0)
+			var/obj/item/card/id/C = M.get_slot(SLOT_WEAR_ID)
+			C.assignment = "Staff Assistant"
+			C.name = "[C.registered]'s ID Card ([C.assignment])"
+
+			var/obj/item/device/pda2/pda = locate() in M
+			pda.assignment = "Staff Assistant"
+			pda.ownerAssignment = "Staff Assistant"
 
 /datum/job/special/pathologist
 	name = "Pathologist"
