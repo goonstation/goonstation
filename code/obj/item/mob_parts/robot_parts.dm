@@ -403,7 +403,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			//no need to update the holder here as robots do a full update on exploding
 
 	attackby(obj/item/W, mob/user)
-		if (src.smashed && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+		if (src.smashed && istype(W, /obj/item/sheet) && istype(W.material, /datum/material/ceramic))
 			src.start_repair(W, user)
 		else
 			..()

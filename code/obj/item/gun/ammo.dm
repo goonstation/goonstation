@@ -327,20 +327,12 @@
 			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty(MATERIAL_PROPERTY_DENSITY)/9 / 2)
 
-			if((src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			if((istype(src.material, /datum/material/ceramic)))
 				ammo_type.damage_type = D_PIERCING
-			if((src.material.getMaterialFlags() & MATERIAL_METAL))
+			if((istype(src.material, /datum/material/metal)))
 				ammo_type.damage_type = D_KINETIC
-			if((src.material.getMaterialFlags() & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_FLAG_BIOLOGICAL))
 				ammo_type.damage_type = D_TOXIC
-			if((src.material.getMaterialFlags() & MATERIAL_ENERGY))
-				ammo_type.damage_type = D_ENERGY
-			if((src.material.getMaterialFlags() & MATERIAL_METAL) && (src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
-				ammo_type.damage_type = D_SLASHING
-			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_ORGANIC))
-				ammo_type.damage_type = D_BURNING
-			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_METAL))
-				ammo_type.damage_type = D_RADIOACTIVE
 
 		return ..()
 
