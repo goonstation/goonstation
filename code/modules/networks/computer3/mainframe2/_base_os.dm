@@ -1338,7 +1338,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 		return ESIG_GENERIC
 
 	if (src.signal_program(1, list("command" = DWAINE_COMMAND_ULOGIN, "name" = file.fields["registered"])) != ESIG_SUCCESS)
-		src.message_user("Error: Login failure.  Please try again.")
+		src.message_user("Error: Login failure. Please try again.")
 		return ESIG_GENERIC
 
 	mainframe_prog_exit
