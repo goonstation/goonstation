@@ -55400,6 +55400,7 @@
 "doB" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Teleport Pad"
 	},
 /turf/unsimulated/floor/shuttle/red{
