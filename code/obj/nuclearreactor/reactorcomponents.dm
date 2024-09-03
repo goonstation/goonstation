@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		for(var/datum/neutron/N as anything in inNeutrons)
 			if(prob(src.material.getProperty(MATERIAL_PROPERTY_DENSITY)/9*10*src.neutron_cross_section)) //dense materials capture neutrons, configuration influences that
 				//if a neutron is captured, we either do fission or we slow it down
-				if(N.velocity <= 1 & prob(src.getEffectiveNRad/9*10)) //neutron stimulated emission
+				if(N.velocity <= 1 & prob(src.getEffectiveNRad()/9*10)) //neutron stimulated emission
 					//become less nradioactive and more radioactive
 					src.nRadLost += 0.01*9
 					src.radLost += -0.005*9
@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 50
-				else if(N.velocity <= 1 & prob(src.getEffectiveRad/9*10)) //stimulated emission
+				else if(N.velocity <= 1 & prob(src.getEffectiveRad()/9*10)) //stimulated emission
 					//become less radioactive and more spent fuel
 					src.radLost += 0.01*9
 					src.spent_fuel += 0.005
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					qdel(N)
 					src.temperature += 25
 				else
-					if(prob(src.material.getProperty(MATERIAL_PROPERTY_HARD)/9*10)) //reflection is based on hardness
+					if(prob(src.material.getProperty(MATERIAL_PROPERTY_HARDNESS)/9*10)) //reflection is based on hardness
 						N.dir = turn(N.dir,pick(180,225,135)) //either complete 180 or  180+/-45
 					else if(is_control_rod) //control rods absorb neutrons
 						N.velocity = 0
@@ -198,14 +198,14 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						qdel(N)
 					src.temperature += 1
 
-		if(prob(src.getEffectiveNRad/9*10*src.neutron_cross_section)) //fast spontaneous emission
+		if(prob(src.getEffectiveNRad()/9*10*src.neutron_cross_section)) //fast spontaneous emission
 			for(var/i in 1 to 3)
 				inNeutrons += new /datum/neutron(pick(alldirs), 3) //neutron radiation gets you fast neutrons
 			//become less nradioactive and more radioactive
 			src.nRadLost += 0.01*9
 			src.radLost += -0.005*9
 			src.temperature += 20
-		if(prob(src.getEffectiveRad/9*10*src.neutron_cross_section)) //spontaneous emission
+		if(prob(src.getEffectiveRad()/9*10*src.neutron_cross_section)) //spontaneous emission
 			for(var/i in 1 to 3)
 				inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
 			//become less radioactive and more spent fuel
@@ -259,7 +259,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 	extra_info()
 		. = ..()
-		. += "Radioactivity: [src.getEffectiveRad/9*10 + src.getEffectiveNRad/9*20]%"
+		. += "Radioactivity: [src.getEffectiveRad()/9*10 + src.getEffectiveNRad()/9*20]%"
 
 /obj/item/reactor_component/fuel_rod/glowsticks
 	name = "makeshift fuel rod"

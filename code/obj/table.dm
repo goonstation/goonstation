@@ -1103,7 +1103,7 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+				if (!S.material || !istype(S.material, /datum/material/ceramic))
 					boutput(user, SPAN_ALERT("You have to use glass or another crystalline material to repair [src]!"))
 				else if (S.change_stack_amount(-1))
 					boutput(user, SPAN_NOTICE("You add glass to [src]!"))

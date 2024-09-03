@@ -63,8 +63,6 @@ TYPEINFO(/turf/simulated/wall)
 				health *= 1.5
 			else if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) <= 2*9)
 				health *= 0.75
-			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-				health /= 2
 		return
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
@@ -325,13 +323,10 @@ TYPEINFO(/turf/simulated/wall)
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.getProperty(MATERIAL_PROPERTIES_DENSITY) >= 6*9)
+			if(src.material.getProperty(MATERIAL_PROPERTY_DENSITY) >= 6*9)
 				health *= 1.5
 			else if (src.material.getProperty(MATERIAL_PROPERTY_DENSITY) <= 2*9)
 				health *= 0.75
-			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-				health /= 2
-				desc += " Wait where did the girder go?"
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)

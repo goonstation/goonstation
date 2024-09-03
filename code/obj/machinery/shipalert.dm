@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/shipalert)
 				//no effect
 				boutput(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
 		if (SMASHED)
-			if (istype(W, /obj/item/sheet) && (W.material.getMaterialFlags() & MATERIAL_CRYSTAL) && W.amount >= 2)
+			if (istype(W, /obj/item/sheet) && (istype(W.material, /datum/material/ceramic)) && W.amount >= 2)
 				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(repair_callback), list(user, W), W.icon, W.icon_state, "[user] repairs [src]'s safety glass.", INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 /obj/machinery/shipalert/proc/repair_callback(mob/user, obj/item/sheet/glass)

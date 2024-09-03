@@ -2049,7 +2049,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(istype(C, /obj/item/sheet))
 		var/obj/item/sheet/S = C
 		if (!S.amount_check(2,user)) return
-		if (S?.material?.getMaterialFlags() & MATERIAL_METAL)
+		if (istype(S?.material, /datum/material/ceramic))
 			var/msg = "the girder"
 
 			if(!girder_egg)
@@ -2136,7 +2136,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 			else
 				actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
-		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
+		else if ((istype(S?.material, /datum/material/ceramic)) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.rwindows : /obj/window/reinforced, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
 			else

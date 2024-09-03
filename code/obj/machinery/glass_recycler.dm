@@ -111,7 +111,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 						if (!B.broken) glass_amt += 2
 					else
 						glass_amt += W.amount
-		else if (istype(W, /obj/item/material) && W.material?.getMaterialFlags() & MATERIAL_CRYSTAL && W.material?.getAlpha() <= 180)
+		else if (istype(W, /obj/item/material) && istype(W?.material, /datum/material/ceramic) && W.material?.getAlpha() <= 180)
 			success = TRUE
 			glass_amt += W.amount * 10
 		else if (istype(W, /obj/item/material/shard))

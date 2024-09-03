@@ -398,7 +398,7 @@
 	else
 		if (istype(W, /obj/item/sheet))
 			var/obj/item/sheet/S = W
-			if (S.material.getMaterialFlags() & MATERIAL_METAL)
+			if (istype(S.material, /datum/material/metal))
 				if (src.metal_ammo == src.max_ammo)
 					boutput(user, "The lamp manufacturer is full.")
 				else
