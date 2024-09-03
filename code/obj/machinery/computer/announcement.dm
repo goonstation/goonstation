@@ -21,6 +21,8 @@
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
 	var/sound_volume = 100
 	var/override_font = null
+	///Override for where this says it's coming from
+	var/area_name = null
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -135,7 +137,7 @@
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 
-		var/header = "[A.name] Announcement by [ID.registered] ([ID.assignment])"
+		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
 		if (override_font )
 			message = "<font face = '[override_font]'> [message] </font>"
 			header = "<font face = '[override_font]'> [header] </font>"
@@ -248,6 +250,7 @@
 	catering
 		req_access = list(access_bar) //chef gets bar access
 		name = "Catering Announcement Computer"
+		area_name = "Catering"
 		sound_to_play = 'sound/misc/bingbong.ogg'
 		sound_volume = 70 //a little less earsplitting
 		circuit_type = /obj/item/circuitboard/announcement/catering
