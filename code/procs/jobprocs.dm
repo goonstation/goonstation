@@ -72,7 +72,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	#ifdef I_WANNA_BE_THE_JOB
 	for (var/mob/new_player/player in unassigned)
 		player.mind.assigned_role = I_WANNA_BE_THE_JOB
-	return
+	if(prob(100))
+		return
 	#endif
 
 	var/list/pick1 = list()
