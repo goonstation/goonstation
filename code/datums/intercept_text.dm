@@ -103,7 +103,7 @@
 		traitor_job = pick(job_tmp)
 	if(prob(prob_right_dude) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if (correct_mind)
-			traitor_name = correct_mind:current
+			traitor_name = correct_mind.current
 	else
 		traitor_name = src.pick_mob()
 
