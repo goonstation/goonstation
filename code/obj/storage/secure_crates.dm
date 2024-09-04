@@ -13,6 +13,7 @@
 	always_display_locks = 1
 	throwforce = 50
 	can_flip_bust = 1
+	is_short = TRUE
 
 /obj/storage/secure/crate/weapon
 	desc = "A secure weapons crate."
