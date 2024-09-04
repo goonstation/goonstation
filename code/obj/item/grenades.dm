@@ -109,7 +109,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 			src.icon_state = initial(src.icon_state)
 
 	ex_act(severity)
-		if(src.detonating)
+		if(!src.detonating)
 			src.detonate(null)
 		. = ..()
 
