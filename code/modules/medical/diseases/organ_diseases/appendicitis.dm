@@ -10,6 +10,10 @@
 	stage_prob = 1
 	var/robo_restart = 0
 
+/datum/ailment/disease/appendicitis/setup_strain() //no more asymptomatic appendicitis
+	var/datum/ailment_data/disease/strain = ..()
+	return strain
+
 /datum/ailment/disease/appendicitis/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
