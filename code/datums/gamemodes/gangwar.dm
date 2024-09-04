@@ -1412,7 +1412,8 @@ proc/broadcast_to_all_gangs(var/message)
 			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(spraycan.graffititargets[1])
 			tag.icon_state = iconstate
 			tag.dir = spraycan.tagging_direction
-			gang?.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
+			if (gang)
+				gang.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
 		else
 			var/list/turf/turfs_ordered = new/list(length(spraycan.graffititargets))
 			var/spraydirection = dir_to_angle(spraycan.tagging_direction)
@@ -1441,7 +1442,8 @@ proc/broadcast_to_all_gangs(var/message)
 						if (istype(area,targetArea))
 							chosenTurf = turfs_ordered[i]
 							break
-			gang?.do_vandalism(vandal_score, chosenTurf)
+			if (gang)
+				gang.do_vandalism(vandal_score, chosenTurf)
 
 
 		spraycan.clear_targets()

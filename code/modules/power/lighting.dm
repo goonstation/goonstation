@@ -1065,7 +1065,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
 
 			var/datum/gang/gang = user.get_gang()
-			gang?.do_vandalism(GANG_VANDALISM_LIGHT_BREAK_POINTS, src.loc)
+			if (gang)
+				gang.do_vandalism(GANG_VANDALISM_LIGHT_BREAK_POINTS, src.loc)
 
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
