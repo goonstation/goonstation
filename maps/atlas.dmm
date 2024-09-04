@@ -1071,12 +1071,6 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
-"adR" = (
-/obj/stool/chair/blue{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "adS" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 5
@@ -3437,9 +3431,6 @@
 /mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"api" = (
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "apm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7680,14 +7671,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"aIg" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/station/science/teleporter)
 "aIl" = (
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
@@ -12562,6 +12545,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"cuh" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "cuA" = (
 /obj/machinery/firealarm/north,
 /obj/machinery/glass_recycler/chemistry{
@@ -13605,6 +13594,7 @@
 	dir = 4;
 	level = -1
 	},
+/obj/landmark/start/job/technical_assistant,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "eXT" = (
@@ -13912,12 +13902,6 @@
 	dir = 1
 	},
 /area/station/security/main)
-"fHe" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "fHo" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -13957,6 +13941,10 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
+"fLA" = (
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "fMe" = (
 /obj/mapping_helper/airlock/cycler{
 	cycle_id = "engineering";
@@ -14338,6 +14326,21 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
+"gZH" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin{
+	pixel_y = 5;
+	pixel_x = -5
+	},
+/obj/machinery/glass_recycler/bar{
+	pixel_y = 9;
+	pixel_x = -1;
+	g_amt = 10
+	},
+/turf/simulated/floor/white/side{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "hay" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -14624,6 +14627,13 @@
 	icon_state = "engine_caution_west"
 	},
 /area/station/engine/combustion_chamber)
+"hMI" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "hMJ" = (
 /obj/machinery/atmospherics/unary/tank,
 /obj/cable/orange{
@@ -15995,6 +16005,15 @@
 /obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"kTQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/station/science/teleporter)
 "kUi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16700,6 +16719,17 @@
 /obj/item/clothing/suit/hazard/fire/heavy,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
+"mOw" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "mSa" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
@@ -17085,6 +17115,10 @@
 	dir = 8
 	},
 /area/station/crew_quarters/cafeteria)
+"nOs" = (
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "nOy" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
@@ -17170,6 +17204,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
+"nXt" = (
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "nXw" = (
 /obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/engine{
@@ -17774,23 +17812,6 @@
 /obj/machinery/phone,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
-"prx" = (
-/obj/machinery/door_control{
-	id = "kitchen_shutter";
-	name = "Kitchen Shutter Control";
-	pixel_x = -24;
-	pixel_y = -6
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/phone/wall{
-	pixel_x = -24;
-	pixel_y = 11
-	},
-/obj/machinery/computer/announcement/station/catering,
-/turf/simulated/floor/auto/grass,
-/area/station/crew_quarters/kitchen)
 "prE" = (
 /obj/disposalpipe/junction,
 /turf/simulated/floor,
@@ -18775,6 +18796,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor,
 /area/station/engine/power)
 "rKL" = (
@@ -18994,6 +19016,7 @@
 /obj/cable/orange{
 	icon_state = "2-4"
 	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/engine/core)
 "syn" = (
@@ -20803,6 +20826,23 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/station/crew_quarters/cafeteria)
+"wLy" = (
+/obj/machinery/door_control{
+	id = "kitchen_shutter";
+	name = "Kitchen Shutter Control";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = -24;
+	pixel_y = 11
+	},
+/obj/machinery/computer/announcement/station/catering,
+/turf/simulated/floor/auto/grass,
+/area/station/crew_quarters/kitchen)
 "wLS" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -20850,21 +20890,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"wPz" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/machinery/glass_recycler/bar{
-	pixel_y = 9;
-	pixel_x = -1;
-	g_amt = 10
-	},
-/turf/simulated/floor/white/side{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "wRc" = (
 /obj/machinery/turret,
 /obj/decal/stripe_delivery,
@@ -58689,13 +58714,13 @@ sxa
 oZf
 nxc
 phC
-api
+nXt
 avx
 fWp
 fXR
 fxr
 lAa
-lAa
+fLA
 hWY
 anp
 aCs
@@ -58997,7 +59022,7 @@ fWp
 fXR
 mTa
 lAa
-lAa
+nOs
 uas
 anp
 aCs
@@ -59291,7 +59316,7 @@ boo
 sRB
 qYp
 kpe
-fHe
+cuh
 kEu
 kbp
 pen
@@ -60204,7 +60229,7 @@ aaa
 hGg
 kbJ
 nvv
-eVW
+mOw
 lAa
 fqO
 anp
@@ -63234,7 +63259,7 @@ ain
 aEC
 aCz
 aCj
-aIg
+kTQ
 agF
 aGG
 aXW
@@ -70755,7 +70780,7 @@ xAd
 hrc
 pmb
 kzg
-prx
+wLy
 ygO
 bdZ
 tUb
@@ -71055,7 +71080,7 @@ mqh
 vEm
 iqM
 ofD
-wPz
+gZH
 tRn
 cXf
 tZl
@@ -71389,7 +71414,7 @@ aBx
 aXP
 aZN
 ayF
-adR
+hMI
 afg
 aBx
 pdA
