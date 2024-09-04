@@ -1,5 +1,9 @@
 
 (t)tue sep 03 24
+(u)Sovexe
+(p)20528
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Arcfiends can no longer use Flash, Polarize, or Jamming Field from inside of lockers, wires, etc.
 (u)Glamurio (Ryou)
 (p)19165
 (e)🗺⚖🐣|A-Mapping, C-Balance, A-Respawning
