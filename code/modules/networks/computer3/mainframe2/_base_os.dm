@@ -223,7 +223,7 @@
 #define DWAINE_COMMAND_BREAK	25
 
 /**
- *	Reply to a request for information.
+ *	Instruct a program to reply to a request for information.
  *	Has unique data fields for each implementation, depending on the data requested.
  */
 #define DWAINE_COMMAND_REPLY	30
