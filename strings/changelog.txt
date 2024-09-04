@@ -1,4 +1,13 @@
+
 (t)wed sep 04 24
+(u)Smilg
+(p)20361
+(e)🆕⚖📦🤖|C-Feature, C-Balance, A-Game-Objects, A-Silicons
+(*)You can Emag unplugged law modules, scrambling their text to a random ion storm law.
+(u)Lord_Earthfire
+(p)20518
+(e)⚖🔄⚗|C-Balance, C-Rework, A-Chemistry
+(+)The Aranesp recipe was changed to: (1) Insulin + (1) cryoxadone + (0) nickel @ under 273K -> (2) aranesp + (0) nickel. The reaction heats up over time and, if left unattended, can turn into useless(?) tar.
 (u)LeahTheTech
 (*)Small animals will no longer slow you down when pulled or grabbed. No more dragging weirdly heavy dead roaches.
 (t)tue sep 03 24
