@@ -53514,6 +53514,7 @@
 /obj/machinery/turretid/ai_upload{
 	pixel_y = 24
 	},
+/obj/machinery/firealarm/east,
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
@@ -55801,7 +55802,11 @@
 /turf/simulated/floor,
 /area/station/routing/engine)
 "qMn" = (
-/obj/machinery/firealarm/east,
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 12;
+	tag = ""
+	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "qMw" = (
@@ -62382,6 +62387,11 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"vSV" = (
+/obj/machinery/turret,
+/obj/machinery/firealarm/east,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "vTv" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -62409,6 +62419,14 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"vUx" = (
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -12;
+	tag = ""
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "vVq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/grille/catwalk,
@@ -105738,7 +105756,7 @@ bpJ
 bqi
 bqJ
 brn
-bqK
+vUx
 bqK
 bqJ
 cCq
@@ -107557,7 +107575,7 @@ bui
 srJ
 cyC
 spz
-srJ
+vSV
 bxx
 kMC
 wLb
