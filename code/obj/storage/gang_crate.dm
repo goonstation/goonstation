@@ -904,9 +904,9 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short)
 	spraypaint
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45,off_x=-2)
-			spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45)
-			spawn_item(C,I,/obj/item/spray_paint,scale_x=0.6,scale_y=0.45,off_x=2)
+			spawn_item(C,I,/obj/item/spray_paint_gang,scale_x=0.6,scale_y=0.45,off_x=-2)
+			spawn_item(C,I,/obj/item/spray_paint_gang,scale_x=0.6,scale_y=0.45)
+			spawn_item(C,I,/obj/item/spray_paint_gang,scale_x=0.6,scale_y=0.45,off_x=2)
 	flash
 		weight = 1 // it sucks getting more than 1 of these
 		tier = GANG_CRATE_GEAR

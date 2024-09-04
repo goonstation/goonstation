@@ -11,6 +11,7 @@
 //some holder stuff i dont understand
 #define MAX_TEMP_REACTION_VARIANCE 8
 #define CHEM_EPSILON 0.0001
+#define APPLY_CHEM_EPSILON(x) (x <= CHEM_EPSILON ? 0 : x)
 
 //makes sure we cant have too many critters
 #define CRITTER_REACTION_LIMIT 50

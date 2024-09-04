@@ -980,7 +980,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 
 /obj/item/storage/belt/gun/revolver
 	name = "revolver belt"
-	desc = "A stylish leather belt for holstering a revolver and it's ammo."
+	desc = "A stylish leather belt for holstering a revolver and its ammo."
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
 	slots = 6

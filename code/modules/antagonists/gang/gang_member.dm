@@ -17,7 +17,7 @@
 		antagonist_icon = "gang_member_[gang.color_id]"
 		src.gang.members += new_owner
 		if (src.gang.gang_points[new_owner] == null)
-			src.gang.gang_points[new_owner] = 0
+			src.gang.gang_points[new_owner] = GANG_STARTING_POINTS
 		. = ..()
 
 	disposing()
