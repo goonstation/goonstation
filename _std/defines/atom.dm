@@ -71,6 +71,7 @@
 #define THROW_GUNIMPACT (1 << 2)
 #define THROW_SLIP		(1 << 3)
 #define THROW_PEEL_SLIP	(1 << 4)
+#define THROW_BASEBALL  (1 << 5) // throw that doesn't stun into walls.
 
 //For serialization purposes
 #define DESERIALIZE_ERROR				(0 << 0)
