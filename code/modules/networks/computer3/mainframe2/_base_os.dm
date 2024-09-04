@@ -828,10 +828,10 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 			var/datum/mainframe2_user_data/user = caller.useracc
 			var/datum/computer/target_file = src.parse_datum_directory(data["path"], src.holder.root, FALSE, user)
 
-			if (!target_file || (target_file.holding_folder != src.master.runfolder) || (target_file != src.master.runfolder) || (target_file != src.holder.root))
+			if (!target_file || (target_file.holding_folder == src.master.runfolder) || (target_file == src.master.runfolder) || (target_file == src.holder.root))
 				return ESIG_NOFILE
 
-			if (!user || src.check_mode_permission(target_file, user))
+			if (user && !src.check_mode_permission(target_file, user))
 				return ESIG_NOFILE
 
 			if (istype(target_file.holding_folder, /datum/computer/file/mainframe_program/driver/mountable))
