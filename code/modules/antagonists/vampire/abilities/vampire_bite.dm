@@ -83,8 +83,8 @@
 			boutput(M, SPAN_ALERT("The blood of the dead provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		H.change_vampire_blood(bitesize, 1)
-		H.change_vampire_blood(bitesize, 0)
+		H.change_vampire_blood(bitesize, 1, victim = HH)
+		H.change_vampire_blood(bitesize, 0, victim = HH)
 		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
@@ -98,7 +98,7 @@
 			if (M.get_vampire_blood() >= 20 * mult)
 				M.change_vampire_blood(-20 * mult, 0)
 			else
-				M.change_vampire_blood(0, 0, 1)
+				M.change_vampire_blood(0, 0, 1, victim = HH)
 			M.TakeDamage("chest", 0, 30 * mult)
 
 	else
@@ -108,19 +108,19 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				H.change_vampire_blood(bitesize, 0)
-				H.change_vampire_blood(bitesize, 1)
+				H.change_vampire_blood(bitesize, 0, victim = HH)
+				H.change_vampire_blood(bitesize, 1, victim = HH)
 				H.tally_bite(HH,bitesize)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
-				HH.change_vampire_blood(0, 0, 1)
+				HH.change_vampire_blood(0, 0, 1, victim = HH)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 				return 0
 		else
 			var/bitesize = 10 * mult
-			H.change_vampire_blood(bitesize, 1)
-			H.change_vampire_blood(bitesize, 0)
+			H.change_vampire_blood(bitesize, 1, victim = HH)
+			H.change_vampire_blood(bitesize, 0, victim = HH)
 			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
@@ -237,8 +237,8 @@
 			boutput(M, SPAN_ALERT("The blood of the rotten provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		M.change_vampire_blood(bitesize, 1)
-		M.change_vampire_blood(bitesize, 0)
+		M.change_vampire_blood(bitesize, 1, victim = HH)
+		M.change_vampire_blood(bitesize, 0, victim = HH)
 		H.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
@@ -251,7 +251,7 @@
 		if (M.get_vampire_blood() >= 20 * mult)
 			M.change_vampire_blood(-20 * mult, 0)
 		else
-			M.change_vampire_blood(0, 0, 1)
+			M.change_vampire_blood(0, 0, 1, victim = HH)
 		M.TakeDamage("chest", 0, 30 * mult)
 
 	else
@@ -261,19 +261,19 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				M.change_vampire_blood(bitesize, 0)
-				M.change_vampire_blood(bitesize, 1)
+				M.change_vampire_blood(bitesize, 0, victim = HH)
+				M.change_vampire_blood(bitesize, 1, victim = HH)
 				H.tally_bite(HH,bitesize)
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
-				HH.change_vampire_blood(0, 0, 1)
+				HH.change_vampire_blood(0, 0, 1, victim = HH)
 				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
 				return 0
 		else
 			var/bitesize = 10 * mult
-			M.change_vampire_blood(bitesize, 1)
-			M.change_vampire_blood(bitesize, 0)
+			M.change_vampire_blood(bitesize, 1, victim = HH)
+			M.change_vampire_blood(bitesize, 0, victim = HH)
 			H.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
