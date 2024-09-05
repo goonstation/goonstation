@@ -25,6 +25,7 @@
 		"cloner_stuff",
 		"hemophilia",
 		"nohair",
+		"nowig",
 	)
 
 	var/list/traitData = list()
@@ -637,7 +638,7 @@
 	id = "bald"
 	icon_state = "bald"
 	points = 0
-	category = list("trinkets", "nopug")
+	category = list("trinkets", "nopug","nowig")
 
 
 // Skill - White Border
@@ -1332,7 +1333,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You will grow hair even if you usually would not (due to being a lizard or something)."
 	id = "mutant_hair"
 	points = 0
-	category = list("body", "nohair")
+	category = list("body", "nohair","nowig")
 	icon_state = "hair"
 
 	onAdd(mob/owner)
