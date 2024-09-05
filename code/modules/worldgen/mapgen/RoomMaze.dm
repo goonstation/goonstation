@@ -166,8 +166,10 @@
 			min_y = room_a.y + room_a.height * 0.5 + rand(-range, range)
 			max_y = min_y + prob(15)
 
-		if(max_x == src.gen_max_x || max_y == src.gen_max_y )
-			max_x = max_x
+		if(min_x < 0)	min_x = 0
+		if(min_y < 0)	min_y = 0
+		if(max_x > src.gen_max_x)	max_x = src.gen_max_x
+		if(max_y > src.gen_max_y)	max_y = src.gen_max_y
 
 		for(var/i in min_x to max_x)
 			for(var/j in min_y to max_y)
