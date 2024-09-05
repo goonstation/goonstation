@@ -380,7 +380,7 @@
 			var/mob/living/carbon/human/H = owner
 			if (!H.sims)
 				H.sims = new /datum/simsHolder(H)
-			H.sims.motives.Remove("Hygiene")
+			H.sims.removeMotive("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish

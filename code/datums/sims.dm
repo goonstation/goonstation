@@ -56,11 +56,6 @@
 		simsController.simsMotives -= src
 		..()
 
-	disposing()
-		if (hud)
-			qdel(hud)
-		..()
-
 	proc/updateHud()
 		var/change = 0
 		if (value > last_life_value)
@@ -669,6 +664,12 @@ var/global/datum/simsControl/simsController = new()
 			return
 		motives[initial(M.name)] = M
 		M.holder = src
+
+	proc/removeMotive(var/name)
+		if((name in src.motives))
+			var/datum/simsMotive/S = src.motives[name]
+			src.motives.Remove(name)
+			qdel(S)
 
 	proc/getValue(var/name)
 		if (name in motives)
