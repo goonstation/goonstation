@@ -1128,6 +1128,8 @@ var/list/removed_jobs = list(
 		if (!src.AH)
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
+		if (!src.preview)
+			return
 
 		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/trait_id in src.traitPreferences.traits_selected)
@@ -1136,14 +1138,16 @@ var/list/removed_jobs = list(
 				mutantRace = T.mutantRace
 				break
 
+		var/mob/living/carbon/human/H = src.preview.preview_thing
 		src.AH.mutant_race = mutantRace
 		var/s_orig = src.AH.s_tone_original
+		if (src.traitPreferences.traits_selected.Find("mutant_hair") && mutantRace)
+			H.hair_override = TRUE
+		else
+			H.hair_override = FALSE
 		src.preview?.update_appearance(src.AH, mutantRace, src.spessman_direction, name = src.real_name)
 		src.AH.s_tone_original = s_orig // refuse any edits made by mutantrace setting/etc
 		// bald trait preview stuff
-		if (!src.preview)
-			return
-		var/mob/living/carbon/human/H = src.preview.preview_thing
 		var/ourWig = H.head
 		if (ourWig)
 			H.u_equip(ourWig)
