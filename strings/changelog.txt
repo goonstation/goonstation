@@ -1,5 +1,9 @@
 
 (t)wed sep 04 24
+(u)LeahTheTech
+(p)20564
+(e)🎨|C-Sprites
+(*)Added a new zero cost trait "Hairy" that just lets mutantrace characters have hair. Incompatible with pugs (have their own hair) and skeletons (are skeletons).
 (u)Smilg
 (p)20361
 (e)🆕⚖📦🤖|C-Feature, C-Balance, A-Game-Objects, A-Silicons
