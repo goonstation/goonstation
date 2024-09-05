@@ -24,6 +24,7 @@
 		"nopug",
 		"cloner_stuff",
 		"hemophilia",
+		"nohair",
 	)
 
 	var/list/traitData = list()
@@ -1260,7 +1261,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -1
-	category = list("species", "cloner_stuff")
+	category = list("species", "cloner_stuff", "nohair")
 	mutantRace = /datum/mutantrace/skeleton
 
 /datum/trait/roach
@@ -1278,7 +1279,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan... Aw, look at those little ears!"
 	id = "pug"
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
-	category = list("species", "nopug")
+	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
 /datum/trait/super_slips
@@ -1325,6 +1326,20 @@ TYPEINFO(/datum/trait/partyanimal)
 					explanation_text += "[ingredient], "
 				else
 					explanation_text += "and [ingredient]<br/>"
+
+/datum/trait/mutant_hair
+	name = "Hairy"
+	desc = "You will grow hair even if you usually would not (due to being a lizard or something)."
+	id = "mutant_hair"
+	points = 0
+	category = list("body", "nohair")
+	icon_state = "hair"
+
+	onAdd(mob/owner)
+		owner.bioHolder.AddEffect("hair_growth")
+
+	onRemove(mob/owner)
+		owner.bioHolder.RemoveEffect("hair_growth")
 
 //Infernal Contract Traits
 /datum/trait/hair
