@@ -544,8 +544,30 @@
 		name = "Aranesp"
 		id = "aranesp"
 		result = "aranesp"
-		required_reagents = list("atropine" = 1, "epinephrine" = 1, "insulin" = 1)
-		result_amount = 3
+		required_reagents = list("nickel" = 0, "cryoxadone" = 1, "insulin" = 1)
+		result_amount = 2
+		instant = 0
+		reaction_speed = 0.25
+		max_temperature = T0C
+		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+		mix_phrase = "The solution emits a fine mist as it slowly begins to change colour."
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			//It calculates as if created_volume of the liquid with a 50K higher temperature was added.
+			holder.temperature_reagents(max(holder.total_temperature + 50, 1), exposed_volume = created_volume*100, exposed_heat_capacity = holder.composite_heat_capacity, change_min = 1)
+
+	aranesp_goes_tar
+		name = "Aranesp_goes_tar"
+		id = "aranesp_goes_tar"
+		result = "gvomit"
+		required_reagents = list("nickel" = 0, "cryoxadone" = 1, "insulin" = 1)
+		result_amount = 1
+		min_temperature = T0C
+		mix_phrase = "The solution coagulates into a nasty green-blackish tar."
+		mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.add_reagent("carbon", created_volume,,holder.total_temperature, chemical_reaction = TRUE, chem_reaction_priority = 2)
 
 	soriumstable
 		name = "Stable Sorium"
@@ -2573,7 +2595,7 @@
 		var/count = 0
 
 		does_react(var/datum/reagents/holder)
-			if (holder.my_atom && holder.my_atom.is_open_container() && holder.total_temperature > (-10 + T0C)\
+			if (holder.my_atom && holder.my_atom.is_open_container() && holder.total_temperature > (30 + T0C)\
 				|| (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
 				return TRUE
 			else
@@ -3359,12 +3381,20 @@
 		name = "Cryoxadone" // leaving this name alone
 		id = "cryoxadone"
 		result = "cryoxadone"
-		required_reagents = list("cryostylane" = 1, "mutagen" = 1, "plasma" = 1, "acetone" = 1)
-		result_amount = 3
-		mix_phrase = "The solution bubbles softly."
+		required_reagents = list("cryostylane" = 2, "water" = 2, "platinum" = 1)
+		result_amount = 2
+		instant = 0
+		reaction_speed = 1
+		max_temperature = T0C + 50
+		mix_phrase = "The solution bubbles as frost precipitates from the sorrounding air."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
-		reaction_icon_color = "#301bee"
+		reaction_icon_state = list("reaction_ice-1", "reaction_ice-2")
+		reaction_icon_color = "#24ccff"
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			//that factor of 100 in exposed_volume is apparently a relict of old chemistry code, but whatever. It calculates as if created_volume of the liquid with a 175K lower temperature was added.
+			holder.temperature_reagents(max(holder.total_temperature - 175, 1), exposed_volume = created_volume*100, exposed_heat_capacity = holder.composite_heat_capacity, change_min = 1)
+
 
 	cryostylane
 		name = "Cryostylane"
@@ -4200,7 +4230,7 @@
 		name = "Bath Salts"
 		id= "bathsalts"
 		result = "bathsalts"
-		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "ghostchilijuice" = 1)
+		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "el_diablo" = 1)
 		min_temperature = T0C + 100
 		result_amount = 6
 		mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."
@@ -4649,6 +4679,7 @@
 		id = "fermid"
 		required_reagents = list("ants" = 1, "mutagen" = 1, "aranesp" = 1, "booster_enzyme" = 1 )
 		instant = 1
+		min_temperature = T0C //no multiple fermids through a single container by abusing the aranesp reaction
 		mix_phrase = "The ants begin to rapidly mutate!"
 		var/static/reaction_count = 0
 

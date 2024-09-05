@@ -18,6 +18,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/team_num
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
+	/// Used for hoodies (and anything that uses the toggle_hood component)
+	var/hooded = FALSE
 
 
 	setupProperties()
@@ -2027,7 +2029,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
-		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, FALSE)
+		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

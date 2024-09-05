@@ -33,8 +33,6 @@
 	var/can_write_on = FALSE
 	///value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
 	var/tmp/messy = 0
-	var/tmp/checkinghasproximity = 0
-	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
@@ -544,19 +542,6 @@ proc/generate_space_color()
 				if (!(locate(/obj/table) in src) && !(locate(/obj/rack) in src))
 					Ar.sims_score = max(Ar.sims_score - 4, 0)
 
-	var/i = 0
-	i = 0
-	if (src.neighcheckinghasproximity > 0)
-		for (var/turf/T in range(1,src))
-			if (T.checkinghasproximity > 0)
-				for(var/thing in T)
-					var/atom/A = thing
-					// I Said No sanity check
-					if(i++ >= 50)
-						break
-					if (A.event_handler_flags & USE_PROXIMITY)
-						A.HasProximity(M, 1) //IMPORTANT MBCNOTE : ADD USE_PROXIMITY FLAG TO ANY ATOM USING HASPROX THX BB
-
 	if(!src.throw_unlimited && M?.no_gravity)
 		BeginSpacePush(M)
 
@@ -719,8 +704,6 @@ var/global/in_replace_with = 0
 	var/old_opaque_atom_count = src.opaque_atom_count
 
 	var/old_blocked_dirs = src.blocked_dirs
-	var/old_checkinghasproximity = src.checkinghasproximity
-	var/old_neighcheckinghasproximity = src.neighcheckinghasproximity
 
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
@@ -732,6 +715,8 @@ var/global/in_replace_with = 0
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
+
+	var/old_comp_lookup = src.comp_lookup
 
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
@@ -827,8 +812,6 @@ var/global/in_replace_with = 0
 	new_turf.pass_unstable += old_pass_unstable
 
 	new_turf.blocked_dirs = old_blocked_dirs
-	new_turf.checkinghasproximity = old_checkinghasproximity
-	new_turf.neighcheckinghasproximity = old_neighcheckinghasproximity
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
@@ -839,6 +822,25 @@ var/global/in_replace_with = 0
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	new_turf.process_cell_operations = old_process_cell_operations
 #endif
+
+	//combine the old comp_lookup with the new one because turfs sometimes register signals in New
+	if (!src.comp_lookup)
+		src.comp_lookup = old_comp_lookup
+	else
+		for (var/signal_type in old_comp_lookup)
+			//nothing there, just copy the old one
+			if (!src.comp_lookup[signal_type])
+				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
+			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
+			else if (islist(comp_lookup[signal_type]))
+				src.comp_lookup[signal_type] += old_comp_lookup[signal_type]
+			//it's just a datum
+			else
+				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
+					src.comp_lookup[signal_type] = old_comp_lookup[signal_type] + list(src.comp_lookup[signal_type])
+				else //the old one wasn't a list, make it so
+					src.comp_lookup[signal_type] = list(old_comp_lookup[signal_type], src.comp_lookup[signal_type])
+
 
 	//cleanup old overlay to prevent some Stuff
 	//This might not be necessary, i think its just the wall overlays that could be manually cleared here.
