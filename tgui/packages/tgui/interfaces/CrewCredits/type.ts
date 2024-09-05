@@ -8,6 +8,13 @@
 
 import { BooleanLike } from 'common/react';
 
+export enum CrewCreditsTabKeys {
+  Crew,
+  Antagonists,
+  Score,
+  Citations,
+}
+
 export interface CrewTabData {
   groups: GroupBlockProps[];
 }
@@ -22,7 +29,7 @@ export interface CrewMemberProps {
   dead: BooleanLike;
   player: string;
   role: string;
-  head?: BooleanLike;
+  head?: boolean;
 }
 
 
@@ -82,8 +89,36 @@ export interface ScoreItemProps {
   value: string;
 }
 
-export enum CrewCreditsTabKeys {
-  General,
-  Antagonists,
-  Score,
+export interface CitationTabData {
+  tickets: CitationsByTargetData[];
+  fines: CitationsByTargetData[];
 }
+
+export interface CitationByTargetListProps {
+  title: string;
+  citation_targets: CitationsByTargetData[];
+}
+
+export interface CitationsByTargetData {
+  name: string;
+  citations: CitationData[];
+}
+
+export interface TicketData {
+  reason: string,
+  issuer: string,
+  issuer_job: string,
+}
+
+export interface FineData extends TicketData {
+  amount: number,
+  approver: string,
+  approver_job: string,
+  paid_amount: number,
+  paid: BooleanLike,
+}
+
+export type CitationData = TicketData | FineData
+
+export const isFineData = (value: CitationData): value is FineData =>
+  'amount' in value;

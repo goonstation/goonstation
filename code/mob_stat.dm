@@ -59,14 +59,26 @@
 		if (mapSwitcher)
 			stats["Map Vote Spacer"] = -1
 			if (mapSwitcher.current)
-				saveStat("Map:", mapSwitcher.current)
+				var/currentMap = mapSwitcher.current
+
+				if (mapSwitcher.locked && !mapSwitcher.next && isadmin(src))
+					currentMap += " (Compiling)"
+
+				saveStat("Map:", currentMap)
 
 			stats["Next Map:"] = 0
 			if (mapSwitcher.next)
 				var/nextMap = mapSwitcher.next
 
+				//if the players voted for the next map, show them compile status, otherwise limit that info to admins
+				if (mapSwitcher.locked && (mapSwitcher.nextMapIsVotedFor || isadmin(src)))
+					nextMap += " (Compiling)"
+
 				if (mapSwitcher.nextMapIsVotedFor && isadmin(src))
 					nextMap += " (Player Voted)"
+
+				if (mapSwitcher.queuedVoteCompile && mapSwitcher.voteChosenMap)
+					nextMap += " (Queued: [mapSwitcher.voteChosenMap])"
 
 				saveStat("Next Map:", nextMap)
 
@@ -74,7 +86,7 @@
 				saveStat("Map Vote Link:",mapVoteLinkStat)
 
 				if (mapSwitcher.voteCurrentDuration)
-					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration + PREGAME_LOBBY_TICKS) - world.time) / 10)] seconds remaining, [map_vote_holder.voters] vote[map_vote_holder.voters != 1 ? "s" : ""])")
+					saveStat("Map Vote Time:", "([round(((mapSwitcher.voteStartedAt + mapSwitcher.voteCurrentDuration) - TIME) / (1 SECOND))] seconds remaining, [map_vote_holder.voters] vote[map_vote_holder.voters != 1 ? "s" : ""])")
 			else
 				stats["Map Vote Link:"] = 0
 				stats["Map Vote Time:"] = 0
@@ -154,9 +166,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 				//BLUEGH ADMIN SHIT
 				if (mobStat.statNames[i] == "Server Load:")
 					stat("Server Load:", "[world.cpu]")
-					#if DM_VERSION >= 514
 					stat("Map CPU %:", "[world.map_cpu]")
-					#endif
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif

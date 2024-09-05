@@ -16,8 +16,8 @@
 #define CONDUCT						(1<<6)
 /// can mousedrop reagents into from a reagent_container
 #define ACCEPTS_MOUSEDROP_REAGENTS	(1<<7)
-/// takes a fingerprint
-#define FPRINT						(1<<8)
+/// doesn't record fingerprints
+#define NOFPRINT					(1<<8)
 /// item has priority to check when entering or leaving
 #define ON_BORDER					(1<<9)
 /// can pass through a closed door
@@ -34,16 +34,16 @@
 #define FLUID_SUBMERGE				(1<<15)
 /// gets a perspective overlay from adjacent fluids
 #define IS_PERSPECTIVE_FLUID		(1<<16)
-/// specifically note this object as solid
-#define ALWAYS_SOLID_FLUID			(1<<17)
+/// this object is solid to fluids as long as it is also dense (think doors)
+#define FLUID_DENSE					(1<<17)
 /// Calls equipment_click from hand_range_attack on items worn with this flag set.
 #define HAS_EQUIP_CLICK				(1<<18)
 /// Has the possibility for a TGUI interface
 #define TGUI_INTERACTIVE			(1<<19)
 /// Has a click delay for attack_self()
 #define ATTACK_SELF_DELAY			(1<<20)
-/// Counts as dense for purposes of fluids. *scream.
-#define FLUID_DENSE					(1<<21)
+/// This object is solid to fluids regardless of density (think fluid forcefields)
+#define FLUID_DENSE_ALWAYS			(1<<21)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
 #define CLICK_DELAY_IN_CONTENTS		(1<<22)
 /// If an item cannot be crushed by the crusher
@@ -63,6 +63,8 @@
 #define COLD_BURN					(1<<4)
 /// Prevents an item from being placed inside of a storage container, regardless of the item's `w_class` or the storage's `can_hold` list.
 #define UNSTORABLE					(1<<5)
+/// Prevents the action bar when this item is put on someone/interacting with the item of someone to be hidden
+#define OBVIOUS_INTERACTION_BAR		(1<<6)
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -223,3 +225,6 @@
 #define MATCH_UNLIT 0
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
+
+///macro for rendering an image fullsize on paper
+#define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"

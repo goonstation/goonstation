@@ -28,7 +28,7 @@
 				clear_selection()
 				return
 			if (T)
-				var/obj/perm_portal/P = new /obj/perm_portal(T)
+				var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal(T)
 				P.target = target
 		else if ("right" in pa)
 			var/turf/T = get_turf(object)
@@ -39,7 +39,7 @@
 				target.overlays += selection
 				boutput(user, SPAN_NOTICE("Target set."))
 
-/obj/perm_portal
+/obj/laser_sink/perm_portal
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		var/blx = sandbox.context["min_x"]
 		var/bly = sandbox.context["min_y"]

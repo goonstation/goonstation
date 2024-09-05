@@ -76,7 +76,9 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Very Happy" = "ai_veryhappy-dol",\
 	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
 	"Wink" = "ai_wink-dol",\
-	"Wink (Inverted)" = "ai_wink-lod") // this should be in typeinfo
+	"Wink (Inverted)" = "ai_wink-lod",\
+	"Devious" = "ai_devious-dol",\
+	"Devious (Inverted)" = "ai_devious-lod") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -86,6 +88,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
+	var/default_hat_y = 14
 	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
@@ -108,6 +111,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/termMute = FALSE
 	var/canvox = 1
 	var/can_announce = 1
+	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
 	var/dismantle_stage = 0
@@ -125,6 +129,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
 	var/locking = 0
+	HELP_MESSAGE_OVERRIDE(null)
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
@@ -194,7 +199,6 @@ or don't if it uses a custom topopen overlay
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 
 	req_access = list(access_heads)
-	var/obj/item/clothing/head/hat = null
 
 	var/fire_res_on_core = 0
 
@@ -209,26 +213,6 @@ or don't if it uses a custom topopen overlay
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
-
-	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
-		if( src.hat )
-			src.hat.wear_image.pixel_y = 0
-			src.UpdateOverlays(null, "hat")
-			if (user)
-				user.put_in_hand_or_drop(src.hat)
-			else
-				src.hat.set_loc(src.loc)
-			src.hat = null
-		// src.hat.wear_image.pixel_y = 10
-		// src.UpdateOverlays(src.hat.wear_image, "hat")
-		var/image/hat_image = SafeGetOverlayImage(hat.icon_state, hat.icon, hat.icon_state, src.layer+0.3)
-		hat_image.pixel_y = 12
-		if (istype(hat, /obj/item/clothing/head/bighat))
-			hat_image.pixel_y = 20
-
-		src.UpdateOverlays(hat_image, "hat")
-		src.hat = hat
-		hat.set_loc(src)
 
 /mob/living/silicon/ai/proc/give_feet()
 	animate(src, pixel_y = 14, time = 5, easing = SINE_EASING)
@@ -262,6 +246,22 @@ or don't if it uses a custom topopen overlay
 	..()
 	src.turn_it_back_on()
 
+/mob/living/silicon/ai/get_help_message(dist, mob/user)
+	switch(src.dismantle_stage)
+		if(0)
+			. = "You can swipe an <b>ID card</b> to unlock the cover."
+		if(1)
+			. = "You can use a <b>crowbar</b> to pry open the cover, or swipe an <b>ID card</b> to lock it."
+		if(2)
+			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
+		if(3)
+			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
+		if(4)
+			. = "You can insert a <b>brain</b> to activate the AI."
+	if(src.dismantle_stage < 4 && isdead(src))
+		. += " You can use an <b>empty hand</b> to reboot the AI."
+	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
+
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
 
@@ -293,7 +293,11 @@ or don't if it uses a custom topopen overlay
 
 	ai_station_map = new /obj/minimap/ai
 	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
-
+	SPAWN(0)
+		if (bought_hat || prob(5))
+			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
+		else
+			AddComponent(/datum/component/hattable, TRUE, FALSE, default_hat_y)
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
 	light.set_brightness(0.6)
@@ -316,7 +320,7 @@ or don't if it uses a custom topopen overlay
 	src.coreSkin = skinToApply
 	src.set_color(global.random_color())
 	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
-	src.UpdateOverlays(SafeGetOverlayImage("backscreen", 'icons/mob/ai.dmi', "ai_blank"), "backscreen")
+	src.AddOverlays(SafeGetOverlayImage("backscreen", 'icons/mob/ai.dmi', "ai_blank"), "backscreen")
 	update_appearance()
 
 	src.eyecam = new /mob/living/intangible/aieye(src)
@@ -340,9 +344,7 @@ or don't if it uses a custom topopen overlay
 		var/datum/contextAction/ai_hologram/action = new actionType(src)
 		hologramContextActions += action
 
-	if(prob(5))
-		var/hat_type = pick(childrentypesof(/obj/item/clothing/head))
-		src.set_hat(new hat_type)
+
 
 
 	SPAWN(0)
@@ -354,9 +356,9 @@ or don't if it uses a custom topopen overlay
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.device_color = "#7F7FE2"
 		src.radio3.name = "Secure Channels Monitor"
-		src.radio1.broadcasting = 1
+		src.radio1.broadcasting = FALSE
 		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
-		src.radio3.broadcasting = 0
+		src.radio3.broadcasting = FALSE
 		src.internal_pda.name = "AI's Internal PDA Unit"
 		src.internal_pda.owner = "AI"
 		if (src.brain && src.key)
@@ -470,23 +472,13 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
-			var/turf/T = user.loc
-			SPAWN(6 SECONDS)
-				if (user.loc != T || !can_act(user))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
-				src.dismantle_stage = 3
+			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (src.dismantle_stage == 3)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
-			var/turf/T = user.loc
-			SPAWN(6 SECONDS)
-				if (user.loc != T || !can_act(user))
-					boutput(user, SPAN_ALERT("You were interrupted!"))
-					return
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
-				src.dismantle_stage = 2
+			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
+				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else ..()
 
 	else if (isweldingtool(W))
@@ -595,17 +587,7 @@ or don't if it uses a custom topopen overlay
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
-	else if( istype(W,/obj/item/clothing/head))
-		user.drop_item()
-		src.set_hat(W, user)
-		user.visible_message( SPAN_NOTICE("[user] places the [W] on the [src]!") )
-		src.show_message( SPAN_NOTICE("[user] places the [W] on you!") )
-		if(istype(W, /obj/item/clothing/head/butt))
-			var/obj/item/clothing/head/butt/butt = W
-			if(butt.donor == user)
-				user.unlock_medal("Law 1: Don't be an asshat", 1)
 		return
-
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
 			user.show_message(SPAN_ALERT("[src] already has a plating kit installed!"))
@@ -712,6 +694,15 @@ or don't if it uses a custom topopen overlay
 		return TRUE
 	return FALSE
 
+/// for dismantle action bar
+/mob/living/silicon/ai/proc/toggle_CPU_bolts(mob/user)
+	switch(src.dismantle_stage)
+		if(2)
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
+			src.dismantle_stage = 3
+		if(3)
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
+			src.dismantle_stage = 2
 
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
@@ -763,7 +754,7 @@ or don't if it uses a custom topopen overlay
 					var/mob/living/carbon/human/M = user
 					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
-					user.changeStatus("weakened", 2 SECONDS)
+					user.changeStatus("knockdown", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()
 
@@ -1010,8 +1001,6 @@ or don't if it uses a custom topopen overlay
 		return list()
 
 	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
-	if (src.hat)
-		. += SPAN_NOTICE("[src.name] is wearing the [bicon(src.hat)] [src.hat.name].")
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is nonfunctional...")
@@ -1249,9 +1238,9 @@ or don't if it uses a custom topopen overlay
 
 				//flick("ai-flip", src)
 				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
-					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
+					AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
-						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
+						AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 
 				for (var/mob/living/M in view(1, null))
@@ -1268,7 +1257,7 @@ or don't if it uses a custom topopen overlay
 					var/turf/T = get_edge_target_turf(src, get_dir(src, get_step_away(M, src)))
 					if (T && isturf(T))
 						M.throw_at(T, 100, 2)
-						M.changeStatus("weakened", 1 SECOND)
+						M.changeStatus("knockdown", 1 SECOND)
 						M.changeStatus("stunned", 2 SECONDS)
 					break
 
@@ -1403,7 +1392,7 @@ or don't if it uses a custom topopen overlay
 	if (src.druggy) src.druggy = 0
 	if (src.jitteriness) src.jitteriness = 0
 	if (src.sleeping) src.sleeping = 0
-	src.delStatus("weakened")
+	src.delStatus("knockdown")
 
 /mob/living/silicon/ai/use_power()
 	..()
@@ -1499,7 +1488,7 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/process_locks()
 	if(weapon_lock)
-		src.setStatus("paralysis", 5 SECONDS)
+		src.setStatus("unconscious", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
 			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
@@ -1822,11 +1811,11 @@ or don't if it uses a custom topopen overlay
 	var/list/bodies = new/list()
 
 	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H))
+		if (H.shell && !H.dependent && !isdead(H) && !H.mind)
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
-		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
+		if (R.shell && !R.dependent && !isdead(R) && !R.mind && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
@@ -1836,12 +1825,15 @@ or don't if it uses a custom topopen overlay
 
 	if (src.deployed_to_eyecam)
 		src.eyecam.return_mainframe()
-	if (src.mind)
-		target_shell.mainframe = src
-		target_shell.dependent = 1
-		src.deployed_shell = target_shell
-		src.mind.transfer_to(target_shell)
+	if (!src.mind)
 		return
+	if (target_shell.mind)
+		boutput(src, SPAN_ALERT(SPAN_BOLD("That shell is already occupied!")))
+		return
+	target_shell.mainframe = src
+	target_shell.dependent = 1
+	src.deployed_shell = target_shell
+	src.mind.transfer_to(target_shell)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
@@ -2255,12 +2247,12 @@ or don't if it uses a custom topopen overlay
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
 		else // convoluted that I'm terrified of breaking some super specific thing by doing that
-			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
+			AddOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
 
 
-	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
+	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("unconscious"))
 		clearFaceOverlays(1)
-		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
+		AddOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
 
 	else
 		src.icon_state = coreSkin
@@ -2271,36 +2263,36 @@ or don't if it uses a custom topopen overlay
 		UpdateOverlays(I, "faceplate")
 
 		if (faceEmotion != "ai_tetris")
-			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai_face-glow", src.layer+0.1), "face_glow")
+			AddOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai_face-glow", src.layer+0.1), "face_glow")
 		else
 			UpdateOverlays(null, "face_glow")
 
-		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
+		AddOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
-			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_bat-[coreSkin]"), "power-status")
+			src.AddOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_bat-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_apc-[coreSkin]"), "power-status")
+			src.AddOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_apc-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
-			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
+			src.AddOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
 		else
 			src.UpdateOverlays(null, "moustache")
 
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
+			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")
+			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")
 		else if(coreSkin == "dwaine" || coreSkin == "ailes" || coreSkin == "salvage" || coreSkin == "gardengear" || coreSkin == "telegun")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
+			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
 		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
+			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
 		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
+			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
 		else
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
+			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
 
 	else
 		src.UpdateOverlays(null, "top")
@@ -2309,20 +2301,20 @@ or don't if it uses a custom topopen overlay
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "burn")
 		if(25 to 49)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-25"), "burn")
+			src.AddOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-25"), "burn")
 		if(50 to 74)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-50"), "burn")
+			src.AddOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-50"), "burn")
 		if(75 to INFINITY)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-75"), "burn")
+			src.AddOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-75"), "burn")
 	switch(src.bruteloss)
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "brute")
 		if(25 to 49)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-25"), "brute")
+			src.AddOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-25"), "brute")
 		if(50 to 74)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-50"), "brute")
+			src.AddOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-50"), "brute")
 		if(75 to INFINITY)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-75"), "brute")
+			src.AddOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-75"), "brute")
 
 /// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
@@ -2809,9 +2801,9 @@ proc/get_mobs_trackable_by_AI()
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		qdel(plating)
 		skinToApply = plating.skin
-		UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
-		src.UpdateOverlays(src.image_background_overlay, "background")
-		src.UpdateOverlays(src.image_top_overlay, "top")
+		AddOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
+		src.AddOverlays(src.image_background_overlay, "background")
+		src.AddOverlays(src.image_top_overlay, "top")
 
 
 /mob/living/silicon/ai/latejoin

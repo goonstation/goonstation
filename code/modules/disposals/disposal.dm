@@ -18,8 +18,7 @@
 	var/datum/gas_mixture/gas = null	// gas used to flush, will appear at exit point
 	var/active = 0	// true if the holder is moving, otherwise inactive
 	dir = 0
-	var/count = 1000	//*** can travel 1000 steps before going inactive (in case of loops)
-	var/last_sound = 0
+	var/count = 1000	//! can travel 1000 steps before going inactive (in case of loops)
 
 	var/slowed = 0 // when you move, slows you down
 
@@ -111,7 +110,7 @@
 
 	// merge two holder objects
 	// used when a a holder meets a stuck holder
-	proc/merge(var/obj/disposalholder/other)
+	proc/merge(obj/disposalholder/other)
 		for(var/atom/movable/AM in other)
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
@@ -119,36 +118,37 @@
 		other.merged(src)
 		qdel(other)
 
-	proc/merged(var/obj/disposalholder/host)
+	proc/merged(obj/disposalholder/host)
 		return
 
 	// called when player tries to move while in a pipe
-	relaymove(mob/user as mob)
-		if (user.stat)
+	relaymove(mob/user, direction)
+		if (is_incapacitated(user))
 			return
+
+		var/turf/our_turf = get_turf(src)
 
 		// drsingh: attempted fix for Cannot read null.loc
-		if (src == null || src.loc == null || src.loc.loc == null)
+		if (src == null || our_turf == null)
 			return
 
-		for (var/mob/M in hearers(src.loc.loc))
+		for (var/mob/M in hearers(our_turf))
 			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
-		if(last_sound + 6 < world.time)
+		if(ON_COOLDOWN(src, "pipeclang", (6 DECI SECONDS)))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
-			last_sound = world.time
 			if(!istype(user,/mob/living/critter/small_animal))
 				damage_pipe()
 			if(prob(30))
 				slowed++
 
-	mob_flip_inside(var/mob/user)
+	mob_flip_inside(mob/user)
 		var/obj/disposalpipe/P = src.loc
 		if(!istype(P))
 			return
 		user.show_text(SPAN_ALERT("You leap and slam against the inside of [P]! Ouch!"))
-		user.changeStatus("paralysis", 4 SECONDS)
-		user.changeStatus("weakened", 4 SECONDS)
+		user.changeStatus("unconscious", 4 SECONDS)
+		user.changeStatus("knockdown", 4 SECONDS)
 		src.visible_message(SPAN_ALERT("<b>[P]</b> emits a loud thump and rattles a bit."))
 
 		animate_storage_thump(P)
@@ -1391,7 +1391,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 			if (7)
 				src.name = "neutron loaf"
-				src.desc = "Oh good, the flavor atoms in this prison loaf have collapsed down to a a solid lump of neutrons."
+				src.desc = "Oh good, the flavor atoms in this prison loaf have collapsed down to a solid lump of neutrons."
 				src.icon_state = "ploaf4"
 				src.force = 32
 				src.throwforce = 32
@@ -2074,7 +2074,7 @@ TYPEINFO(/obj/disposaloutlet)
 					src.trunk.linked = src	// link the pipe trunk to self
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	was_built_from_frame(mob/user, newly_built)
 		if (!newly_built)
@@ -2157,7 +2157,7 @@ TYPEINFO(/obj/disposaloutlet)
 
 // check if mob has client, if so restore client view on eject
 /mob/pipe_eject(var/direction)
-	src.changeStatus("weakened", 2 SECONDS)
+	src.changeStatus("knockdown", 2 SECONDS)
 	return
 
 /obj/decal/cleanable/blood/gibs/pipe_eject(var/direction)

@@ -134,6 +134,14 @@
 	icon_state = "ammobag-sp-d"
 	anchored = ANCHORED_ALWAYS
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/K = I

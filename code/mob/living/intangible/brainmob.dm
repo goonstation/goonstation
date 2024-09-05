@@ -11,7 +11,7 @@
 
 
 	say(var/message)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -31,7 +31,7 @@
 			return
 		var/message_mode = ""
 		var/prefix = copytext(message, 1, 2)
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		switch(prefix)
 			if("*")
 				return src.emote(copytext(message, 2), 1)

@@ -13,7 +13,8 @@
 	cast(mob/target)
 		if (!holder)
 			return 1
-
+		if(..())
+			return 1
 		var/mob/living/intangible/wraith/W = holder.owner
 
 		if (!W || !target)

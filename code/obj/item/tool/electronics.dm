@@ -15,7 +15,7 @@
 	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
 	..()
@@ -168,6 +168,10 @@
 				viewstat = 0
 				boutput(user, SPAN_NOTICE("You unsecure the [src]."))
 			else if(secured == 2)
+				if(!isturf(user.loc))
+					boutput(user, SPAN_ALERT("You can't deploy the [src] from in here!"))
+					return
+
 				boutput(user, SPAN_ALERT("You deploy the [src]!"))
 				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
@@ -194,7 +198,7 @@
 	..()
 
 /obj/item/electronics/frame/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
-	if(!iscarbon(user) || user.stat || user.getStatusDuration("weakened") || user.getStatusDuration("paralysis"))
+	if(!iscarbon(user) || user.stat || user.getStatusDuration("knockdown") || user.getStatusDuration("unconscious"))
 		return
 
 	if(BOUNDS_DIST(user, src) > 0)
@@ -348,7 +352,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -360,7 +364,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -372,7 +376,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -508,7 +512,7 @@
 	. = ..()
 	known_rucks = new
 	ruck_controls = new
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	if(isnull(mechanic_controls)) mechanic_controls = ruck_controls //For objective tracking and admin
 	if(!src.net_id)
@@ -894,7 +898,6 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

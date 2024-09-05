@@ -15,7 +15,7 @@ Contains:
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE
+	flags = TABLEPASS | CONDUCT | TGUI_INTERACTIVE
 	c_flags = ONBACK
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
@@ -79,7 +79,7 @@ Contains:
 	remove_air(amount)
 		return air_contents.remove(amount)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	assume_air(datum/gas_mixture/giver)
@@ -153,7 +153,10 @@ Contains:
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
 			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
-			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
+			var/pressure_delta = max(1, pressure - src.previous_pressure)
+			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / pressure_delta)
+			// Prevent some absurd compensation value from existing. This can happen during varedits or cold bombs (one tank of cold fallout and one of hot agent b mix together)
+			react_compensation = clamp(react_compensation, 0, 1)
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
@@ -351,7 +354,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	#if defined(MAP_OVERRIDE_MANTA)
 	icon_state = "jetpack_mag0"
 	item_state = "jetpack_mag"
-	c_flags = IS_JETPACK
+	c_flags = IS_JETPACK | ONBACK
 	var/base_icon_state = "jetpack_mag"
 	#else
 	icon_state = "jetpack0"
@@ -412,10 +415,18 @@ TYPEINFO(/obj/item/tank/jetpack)
 	item_state = "jetpack_mk2_0"
 	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
 	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
+	abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
 
-	New()
-		..()
-		setProperty("negate_fluid_speed_penalty", 0.6)
+	toggle()
+		. = ..()
+		if (src.on)
+			src.setProperty("negate_fluid_speed_penalty", 0.6)
+		else
+			src.delProperty("negate_fluid_speed_penalty")
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_equipped_modifiers()
+
 
 /obj/item/tank/jetpack/syndicate
 	name = "jetpack (oxygen)"
@@ -466,7 +477,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/emergency_oxygen
 	name = "pocket oxygen tank"
 	icon_state = "pocket_oxtank"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
@@ -479,18 +490,19 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 3
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 /obj/item/tank/emergency_oxygen/extended
 	name = "extended capacity pocket oxygen tank"
 	desc = "An extended capacity version of the pocket emergency oxygen tank."
 	icon_state = "ex_pocket_oxtank"
+	var/default_fill_mols = ONE_ATMOSPHERE * 60 / (R_IDEAL_GAS_EQUATION * T20C) //I think this is mols???
 
 	New()
 		..()
 		src.air_contents.volume = 6
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = src.default_fill_mols
 		return
 
 	empty
@@ -499,19 +511,29 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			..()
 			src.air_contents.oxygen = null
 			return
+	plasma
+		name = "extended capacity plasma tank"
+		desc = "A standard extended capacity oxygen tank that someone has filled with plasma. Wow!"
+		icon_state = "ex_pocket_plastank"
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			src.air_contents.toxins = src.default_fill_mols
+
 
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
-	item_state = "em_oxtank"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	item_state = "mini_oxtank"
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
-	force = 3
+	force = 4
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	desc = "A personal oxygen tank meant to keep you alive in an emergency. This one hooks directly to your jumpsuit's belt. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 	compatible_with_TTV = FALSE
@@ -519,8 +541,15 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 15
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
+
+	empty
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
 
 ////////////////////////////////////////////////////////////
 
@@ -678,3 +707,31 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			S.part2 = null
 			//S = null
 			qdel(S)
+
+/obj/item/tank/mini_plasma
+	name = "mini plasma tank"
+	icon_state = "mini_plastank"
+	item_state = "mini_plastank"
+	flags = TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	health = 5
+	w_class = W_CLASS_NORMAL
+	force = 4
+	stamina_damage = 30
+	stamina_cost = 16
+	desc = "This orange gas tank is used to contain toxic, volatile plasma. This one hooks directly to your jumpsuit's belt."
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	distribute_pressure = 17
+	compatible_with_TTV = FALSE
+
+	New()
+		..()
+		src.air_contents.volume = 10
+		src.air_contents.toxins = (ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+		New()
+			..()
+			src.air_contents.toxins = null
+			return

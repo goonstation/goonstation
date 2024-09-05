@@ -1,0 +1,28 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"A" = (
+/obj/fakeobject/crashed_arrivals,
+/turf/space,
+/area/allowGenerate)
+"K" = (
+/obj/mapping_helper/mob_spawn/critter/random/gunbot,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+A
+a
+"}
+(3,1,1) = {"
+a
+a
+K
+"}

@@ -30,7 +30,8 @@
 			var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported", 20; "drunkenly spotted")
 			var/anomlytext = pick("strange anomaly", "wave of cosmic energy", "spectral emission", 20; "shuttle of phantom George Melons clones")
 			var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards", 20; "about to seriously fuck up")
-			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and Cover immediately.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
+			playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
+			command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Duck and cover immediately and be aware it may strike multiple times.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
 		var/loops = rand(20, 100)
 		var/freebie = 1
 		for (var/i=0, i<loops, i++)
@@ -47,7 +48,7 @@
 						if (prob(30) && iscarbon(M))
 							if (!M.lying)
 								M.show_text("The shockwave sends you flying to the ground!", "red")
-								M.getStatusDuration("weakened")
+								M.getStatusDuration("knockdown")
 								M.force_laydown_standup()
 
 								var/turf/T1 = get_turf(M)
@@ -90,6 +91,7 @@
 			ThrowRandom(B, dist = 6, speed = 1)
 		H.visible_message(SPAN_ALERT("<b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!"),\
 		SPAN_ALERT("[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!"))
+		H.organHolder.back_op_stage = BACK_SURGERY_OPENED
 
 	/// If that didn't work, try severing a limb or tail
 	else if (!is_bot && prob(limbloss_prob)) // It'll try to sever an arm, then a leg, then an arm, then a leg
@@ -108,6 +110,7 @@
 				H.visible_message(SPAN_ALERT("<b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!"),\
 				SPAN_ALERT("[changer ? "Our" : "Your"] [magical ? "tægl" : "tail"] is torn free from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!"))
 				H.drop_and_throw_organ("tail", dist = 6, speed = 1, showtext = 1)
+				H.organHolder.back_op_stage = BACK_SURGERY_OPENED
 			for(var/obj/item/parts/L in possible_limbs)
 				if(length(possible_limbs) > 2) // Lets not remove both limbs unless that's all that's left
 					if(possible_limbs[L] == "arm" && (!H.limbs.l_arm || !H.limbs.l_arm))
@@ -151,9 +154,9 @@
 	H.visible_message(SPAN_ALERT("[is_bot ? "Oily chunks of twisted shrapnel" : "Wadded hunks of blood and gore"] burst out of where <b>[H]</b>'s [magical ? "arse" : "ass"] used to be!"),\
 	SPAN_ALERT("[nobutt_phrase[assmagic]]"))
 	if(!magical)
-		H.changeStatus("weakened", 3 SECONDS)
+		H.changeStatus("knockdown", 3 SECONDS)
 	else
-		H.changeStatus("weakened", 1 DECI SECOND)
+		H.changeStatus("knockdown", 1 DECI SECOND)
 	H.force_laydown_standup()
 
 /// Returns 0 if it cant be severed like this, 1 if it always gets severed, or 2 if it *sometimes* gets severed

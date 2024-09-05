@@ -510,6 +510,7 @@
 			..()
 			return
 		else
+			logTheThing(LOG_STATION, user, "builds an amusing duck at [log_loc(src)]")
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
@@ -522,7 +523,7 @@
 		//bad, but eh clowns...
 		if (prob(30))
 			for (var/mob/living/carbon/human/H in view(2, user))
-				if (H.hasStatus("weakened"))
+				if (H.hasStatus("knockdown"))
 					JOB_XP(user, "Clown", 2)
 					break
 
@@ -856,7 +857,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 				ghost_to_toss.set_loc(soul_stuff.loc)
 
 		some_poor_fucker.throw_at(T, 1, 1)
-		some_poor_fucker.changeStatus("weakened", 2 SECONDS)
+		some_poor_fucker.changeStatus("knockdown", 2 SECONDS)
 
 
 

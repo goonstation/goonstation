@@ -116,7 +116,7 @@
 				H.visible_message(SPAN_ALERT("[H] spasms violently!"), SPAN_ALERT("Sharp pains start wracking your chest!"))
 				src.scary_message = TRUE
 			H.TakeDamage("All", 0, 5)
-			H.do_disorient(stamina_damage = 50, weakened = 1 SECONDS, disorient = 2 SECOND)
+			H.do_disorient(stamina_damage = 50, knockdown = 1 SECONDS, disorient = 2 SECOND)
 			holder.addPoints(SAP_LIMIT_MOB)
 
 		else if (issilicon(src.target))
@@ -131,7 +131,7 @@
 			S.TakeDamage("chest", 3, 0, DAMAGE_BURN)
 			S.cell.use(POWER_CELL_DRAIN_RATE)
 			holder.addPoints(SAP_LIMIT_MOB)
-			S.do_disorient(stamina_damage = 50, weakened = 1 SECONDS, disorient = 2 SECOND)
+			S.do_disorient(stamina_damage = 50, knockdown = 1 SECONDS, disorient = 2 SECOND)
 
 		else if (istype(src.target, /obj/machinery))
 			var/area/A = get_area(src.target)

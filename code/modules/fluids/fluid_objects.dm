@@ -24,7 +24,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/base_icon = "drain"
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FLUID_SUBMERGE | NOSPLASH
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -127,7 +127,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	icon_state = "channel"
 	name = "channel"
 	desc = "A channel that can restrict liquid flow in one direction."
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	var/required_to_pass = 150 //fluid on the side that my Dir points to will need this amount to be able to cross
 
 	New()
@@ -147,6 +147,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/delay = 600
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "fluid_spawn"
+	invisibility = INVIS_ADVENTURE
 
 	var/datum/reagents/R
 
@@ -281,7 +282,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	process()
 		if(contained) return
 		if (slurping)
-			if (src.reagents.total_volume < bladder)
+			if (src.reagents.total_volume < src.reagents.maximum_volume)
 				var/turf/T = get_turf(src)
 				if (T.active_liquid && T.active_liquid.group && T.active_liquid.group.reagents)
 					T.active_liquid.group.drain(T.active_liquid,slurp,src)
@@ -304,7 +305,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 				UpdateIcon()
 
 	update_icon()
-		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
+		var/amt = round((src.reagents.total_volume / src.reagents.maximum_volume) * 12,1)
 		icon_state = "[base_icon][amt]"
 
 		var/overlay_istate = "w_off"
@@ -315,7 +316,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		else
 			overlay_istate = "w_off"
 
-		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
+		AddOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 		var/activetext = "OFF"
 		if (slurping) activetext = "IN"
@@ -459,7 +460,7 @@ TYPEINFO(/obj/item/sea_ladder)
 	item_state = "sea_ladder"
 	w_class = W_CLASS_NORMAL
 	throwforce = 10
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 9
 	stamina_damage = 30
 	stamina_cost = 20
@@ -516,7 +517,6 @@ TYPEINFO(/obj/naval_mine)
 	anchored = UNANCHORED
 
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
-	flags = FPRINT
 
 	var/active = 1
 

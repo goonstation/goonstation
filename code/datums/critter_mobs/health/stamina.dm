@@ -14,6 +14,6 @@
 
 	on_deplete()
 		holder.visible_message(SPAN_ALERT("[holder] collapses!"))
-		holder.changeStatus("paralysis", 6 SECONDS)
+		holder.changeStatus("unconscious", 6 SECONDS)
 
 	// @todo finish this

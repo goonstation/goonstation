@@ -24,7 +24,7 @@
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
-				affected_mob.changeStatus("weakened", 10 SECONDS)
+				affected_mob.changeStatus("knockdown", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
@@ -41,7 +41,7 @@
 				random_brute_damage(affected_mob, 5)
 				affected_mob.take_oxygen_deprivation(5)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
-				affected_mob.changeStatus("weakened", 10 SECONDS)
+				affected_mob.changeStatus("knockdown", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
@@ -55,7 +55,7 @@
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
 				affected_mob.changeStatus("stunned", 10 SECONDS)
-				affected_mob.changeStatus("weakened", 10 SECONDS)
+				affected_mob.changeStatus("knockdown", 10 SECONDS)
 				for(var/mob/O in viewers(affected_mob, null))
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
 

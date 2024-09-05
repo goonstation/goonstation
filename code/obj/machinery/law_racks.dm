@@ -228,8 +228,6 @@
 		damage = round((0.15*P.power*P.proj_data.ks_ratio), 1.0)
 		damage = damage - min(damage,3) //bullet resist
 		if (damage < 1 || istype(P.proj_data,/datum/projectile/laser/heavy/law_safe))
-			if(!P.proj_data.silentshot)
-				src.visible_message(SPAN_ALERT("[src] is hit by the [P] but it deflects harmlessly."))
 			return
 
 		src.material_trigger_on_bullet(src, P)
@@ -245,9 +243,6 @@
 				changeHealth(-damage*0.5,P.shooter)
 			if (D_ENERGY)
 				changeHealth(-damage*0.75,P.shooter)
-
-		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	update_icon()
 		var/image/circuit_image = null
@@ -673,7 +668,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))
@@ -697,7 +692,7 @@
 				src.ClearSpecificParticles("mine_spark")
 			sleep(0.7 SECONDS) // just enough time to recognize the card
 			if (I)
-				fireflash(I,0, checkLos = FALSE)
+				fireflash(I,0, checkLos = FALSE, chemfire = CHEM_FIRE_RED)
 				I.combust()
 
 	/**
@@ -837,3 +832,11 @@
 	name = "AI Law Mount Rack - Syndicate Model"
 	icon_state = "airack_syndicate_empty"
 	desc = "A large electronics rack that can contain AI Law Circuits, to modify the behavior of connected AIs. This one has a little S motif on the side."
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()

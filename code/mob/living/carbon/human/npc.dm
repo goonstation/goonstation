@@ -350,6 +350,7 @@
 			if(stop_fight)
 				ai_target = null
 				ai_set_state(AI_PASSIVE)
+				walk(src, null)
 				return
 
 
@@ -360,7 +361,7 @@
 					src.visible_message("<b>[src]</b> [pick("stares off into space momentarily.","loses track of what they were doing.")]")
 					return
 
-				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
+				if((carbon_target.getStatusDuration("knockdown") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("unconscious")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
 						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [mask] from [carbon_target]'s head!</b>"))
@@ -391,18 +392,19 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
-						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
-							switch(pick(1,2))
-								if(1)
-									hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
-								if(2)
-									src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
+						if(istype(W))
+							W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
+							if(src.bioHolder.HasEffect("coprolalia") && prob(10))
+								switch(pick(1,2))
+									if(1)
+										hearers(src) << "<B>[src.name]</B> makes machine-gun noises with [his_or_her(src)] mouth."
+									if(2)
+										src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
 				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					src.throw_item(ai_target, list("npc_throw"))
+					src.adjust_throw(src.throw_item(ai_target, list("npc_throw")))
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck() && !A?.sanctuary)
 				//I can attack someone! =D
@@ -462,7 +464,7 @@
 				if(valid)
 					ai_pounced = world.timeofday
 					src.visible_message(SPAN_ALERT("[src] lunges at [ai_target]!"))
-					ai_target:changeStatus("weakened", 2 SECONDS)
+					ai_target:changeStatus("knockdown", 2 SECONDS)
 					SPAWN(0)
 						step_towards(src,ai_target)
 						step_towards(src,ai_target)
@@ -865,7 +867,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus(list("stunned", "paralysis", "weakened")) || !sight_check(1)) return 1
+	if(stat || hasStatus(list("stunned", "unconscious", "knockdown")) || !sight_check(1)) return 1
 	else return 0
 
 /mob/living/carbon/human/proc/ai_validpath()
@@ -917,7 +919,7 @@
 	if(istype(src.loc, /obj/machinery/disposal))
 		var/obj/machinery/disposal/C = src.loc
 		src.set_loc(C.loc)
-		src.changeStatus("weakened", 2 SECONDS)
+		src.changeStatus("knockdown", 2 SECONDS)
 
 	else if(istype(src.loc, /obj/storage/closet))
 		var/obj/storage/closet/C = src.loc
@@ -930,7 +932,7 @@
 	else if(istype(src.loc, /obj/vehicle/))
 		var/obj/vehicle/V = src.loc
 		if (V.rider == src)
-			if(!(src.getStatusDuration("paralysis") || src.getStatusDuration("stunned") || src.getStatusDuration("weakened") || src.stat))
+			if(!(src.getStatusDuration("unconscious") || src.getStatusDuration("stunned") || src.getStatusDuration("knockdown") || src.stat))
 				V.eject_rider(0, 1)
 
 	else if(istype(src.loc, /obj/icecube/))

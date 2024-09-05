@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../../backend";
 import { BioEffect, GeneList } from "../BioEffect";
 import { Box, Button, LabeledList, Section } from "../../../components";
@@ -39,7 +38,7 @@ export const StorageTab = (props, context) => {
   chromosomes.sort((a, b) => a.name > b.name ? 1 : -1);
 
   return (
-    <Fragment>
+    <>
       {saveSlots > 0 && (
         <Section
           title="Stored Mutations"
@@ -67,7 +66,7 @@ export const StorageTab = (props, context) => {
                 key={c.ref}
                 label={c.name}
                 buttons={
-                  <Fragment>
+                  <>
                     <Button
                       disabled={c.name === toSplice}
                       icon="map-marker-alt"
@@ -78,7 +77,7 @@ export const StorageTab = (props, context) => {
                       color="bad"
                       icon="trash"
                       onClick={() => act("deletechromosome", { ref: c.ref })} />
-                  </Fragment>
+                  </>
                 }>
                 {c.desc}
                 <Box mt={0.5}>
@@ -110,7 +109,7 @@ export const StorageTab = (props, context) => {
           ))}
         </LabeledList>
       </Section>
-    </Fragment>
+    </>
   );
 };
 
@@ -131,7 +130,7 @@ export const RecordTab = (props, context) => {
   } = record;
 
   return (
-    <Fragment>
+    <>
       <Section title={name}>
         <LabeledList>
           <LabeledList.Item label="Genetic Signature">
@@ -145,6 +144,6 @@ export const RecordTab = (props, context) => {
           noGenes="No genes found in sample."
           isSample />
       </Section>
-    </Fragment>
+    </>
   );
 };

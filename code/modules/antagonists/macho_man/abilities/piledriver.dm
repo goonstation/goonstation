@@ -3,6 +3,7 @@
 	desc = "Piledrive a target"
 	icon_state = "Drop"
 	cast(atom/target)
+		. = ..()
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)
 				if (isliving(G.affecting))
@@ -10,8 +11,7 @@
 					var/mob/living/H = G.affecting
 					if (H.lying)
 						H.lying = 0
-						H.delStatus("paralysis")
-						H.delStatus("weakened")
+						H.remove_stuns()
 						H.set_clothing_icon_dirty()
 					H.transforming = 1
 					holder.owner.transforming = 1
@@ -63,5 +63,5 @@
 					O.icon_state = "explosion"
 					SPAWN(3.5 SECONDS) qdel(O)
 					random_brute_damage(H, 50)
-					H.changeStatus("weakened", 10 SECONDS)
+					H.changeStatus("knockdown", 10 SECONDS)
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_piledriver

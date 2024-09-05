@@ -49,3 +49,6 @@ var/global/list/audio_channel_name_to_id = list(
 
 /// the world gets split into a K-by-K grid and each tick each sound can only be played once in each big tile of this grid
 #define SOUND_LIMITER_GRID_SIZE 3
+
+///how loud are dectalk bots
+#define BOTTALK_VOLUME 33

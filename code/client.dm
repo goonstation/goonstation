@@ -15,7 +15,6 @@
 	var/stealth_hide_fakekey = 0
 	var/alt_key = 0
 	var/flourish = 0
-	var/pray_l = 0
 	var/fakekey = null
 	var/observing = 0
 	var/warned = 0
@@ -192,6 +191,7 @@
 
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
+	logTheThing(LOG_ADMIN, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]")
 	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
 	login_success = 0
@@ -303,8 +303,10 @@
 
 	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
-		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])"))
+		var/banUrl = "<a href='[goonhub_href("/admin/bans/[checkBan["ban"]["id"]]", TRUE)]'>[checkBan["ban"]["id"]]</a>"
+		logTheThing(LOG_ADMIN, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])")
+		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned (ID: [checkBan["ban"]["id"]], IP: [src.address], CID: [src.computer_id])", "access")
+		if (announce_banlogin) message_admins(SPAN_INTERNAL("Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (ID: [banUrl], IP: [src.address], CID: [src.computer_id])"))
 		var/banstring = {"
 							<!doctype html>
 							<html>
@@ -343,8 +345,11 @@
 	src.player.record_login()
 
 	//admins and mentors can enter a server through player caps.
-	if (init_admin())
+	var/admin_status = init_admin()
+	if (admin_status == 1)
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
+	else if (admin_status == 2)
+		boutput(src, "<span class='ooc adminooc'>You are possibly an admin! Please complete the Goonhub Auth process.</span>")
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
@@ -353,15 +358,51 @@
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you were recently disconnected and were caught by the grace period!</span>")
-	else if(player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
-		boutput(src, "<span class='ooc adminooc'>I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
-		tgui_alert(src.mob, "I'm sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL")
-		del(src)
+	else if (player_capa && (total_clients_for_cap() >= player_cap) && !src.holder)
+		if (istype(src.mob, /mob/new_player))
+			var/mob/new_player/new_player = src.mob
+			new_player.blocked_from_joining = TRUE
+#if defined(LIVE_SERVER) && defined(NIGHTSHADE)
+		var/list/servers_to_offer = list("streamer1", "streamer2", "streamer3", "main3", "main4")
+#elif defined(LIVE_SERVER)
+		var/list/servers_to_offer = list("main1", "main3", "main4")
+#else
+		var/list/servers_to_offer = list()
+#endif
+		var/list/valid_servers = list()
+		for (var/server in servers_to_offer)
+			if (config.server_id == server)
+				continue
+			var/datum/game_server/game_server = game_servers.find_server(server)
+			if (game_server)
+				valid_servers[game_server.name] = game_server
+		if (length(valid_servers))
+			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server.</span>")
+			var/idx = tgui_input_list(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. Would you like to be redirected?", "SERVER FULL", valid_servers, timeout = 30 SECONDS)
+			var/datum/game_server/redirect_choice = valid_servers[idx]
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit. [redirect_choice ? "Accepted" : "Declined"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].", "admin")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit. [redirect_choice ? "<span style='color:limegreen'>Accepted</span>" : "<span style='color:red'>Declined</span>"] redirect[redirect_choice ? " to [redirect_choice.id]" : ""].")
+			if (redirect_choice)
+				changeServer(redirect_choice.id)
+			tgui_process.close_user_uis(src.mob)
+			del(src)
+		else
+			boutput(src, "<span class='ooc adminooc'>Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected</span>")
+			tgui_alert(src.mob, "Sorry, the player cap of [player_cap] has been reached for this server. You will now be forcibly disconnected", "SERVER FULL", timeout = 30 SECONDS)
+			logTheThing(LOG_ADMIN, src, "kicked by popcap limit.")
+			logTheThing(LOG_DIARY, src, "kicked by popcap limit.", "admin")
+			if (global.pcap_kick_messages)
+				message_admins("[key_name(src)] was kicked by popcap limit.")
+			tgui_process.close_user_uis(src.mob)
+			del(src)
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+	add_to_donator_list(src.ckey)
 
 	SPAWN(0) // to not lock up spawning process
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
@@ -435,23 +476,23 @@
 
 #ifdef LIVE_SERVER
 		// check client version validity
-		if (src.byond_version < 514 || src.byond_build < 1584)
+		if (src.byond_version < 515 || src.byond_build < 1633)
 			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
-				src << link("http://www.byond.com/download/")
-	#if (BUILD_TIME_UNIX < 1682899200) //cut off may 1st, 2023
+			if (tgui_alert(src, "Consider updating BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/")
+	#if (BUILD_TIME_UNIX < 1719817200) //cut off sept 1st, 2024 (for forced 515)
 			else
-				tgui_alert(src, "Version enforcement will be enabled May 1st, 2023. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+				tgui_alert(src, "Version enforcement will be enabled September 1st, 2024. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
 	#else
 			// kick out of date clients
 			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
-			del(src)
 			tgui_process.close_user_uis(src.mob)
+			del(src)
 			return
 	#endif
-		if (src.byond_version >= 515)
-			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
-				src << link("http://www.byond.com/download/")
+		if (src.byond_version >= 516)
+			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
+				src << link("https://www.byond.com/download/")
 #endif
 
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - setjoindate")
@@ -525,6 +566,7 @@
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
 
+	logTheThing(LOG_ADMIN, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]")
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
 	if (config.log_access)
@@ -666,15 +708,23 @@
 	if(!address || (world.address == src.address))
 		admins[src.ckey] = "Host"
 	if (admins.Find(src.ckey) && !src.holder)
+		if (config.goonhub_auth_enabled)
+			src.goonhub_auth = new(src)
+			src.goonhub_auth.show_ui()
+			return 2
+		else
+			src.make_admin()
+			return 1
+	return 0
+
+/client/proc/make_admin()
+	if (admins.Find(src.ckey) && !src.holder)
 		src.holder = new /datum/admins(src)
 		src.holder.rank = admins[src.ckey]
 		update_admins(admins[src.ckey])
 		onlineAdmins |= (src)
 		if (!NT.Find(src.ckey))
 			NT.Add(src.ckey)
-		return 1
-
-	return 0
 
 /client/proc/clear_admin()
 	if(src.holder)
@@ -878,17 +928,7 @@ var/global/curr_day = null
 	set name = "RP Rules"
 	set category = "Commands"
 
-	src.Browse( {"<center><h2>Goonstation RP Server Guidelines and Rules</h2></center><hr>
-	Welcome to [station_name(1)]!<br>The roleplay servers use our main rules and unique roleplay rules listed below. If you do not agree to this second set of rules, please play on our Classic servers.<hr>
-		<ol><li><b>Make an effort to roleplay.</b> Play a coherent, believable character. Playing a violent or racist character is not allowed. Play your character as though they wish to keep their job at Nanotrasen. This includes listening to security and the chain of command and, if you are a member of command, taking your job as a leader seriously in-character. Only minor crime is permitted for non-antagonists. Avoid memes (e.g. sus, pog, amogus), txt spk (e.g. lol, wtf), and out of game terminology when you are playing your character. LOOC is available if you need to communicate out of character.</li>
-		<li><b>Escalate through roleplay before attacking other players.</b> The goal of the roleplay server is character interaction and interesting scenarios. Both crew and antagonists are expected to roleplay escalation before engaging in hostilities. As an antagonist, your goal is to increase, not decrease, roleplay opportunities. Give people a sense of dread, an obvious motive, or some means of roleplaying and reacting, before you harm them. As security, your priority is the crew’s safety and maintaining the peace. You should treat criminals fairly and determine appropriate consequences for their actions. Enemies to Nanotrasen such as confirmed non-human antagonists and open syndicate members may be treated harshly.</li>
-		<li><b>After you’ve selected a job, be sure to stay in your lane.</b> While you are capable of doing anything within the game mechanics, allow those who have selected the relevant job to attempt the task first. As an example, breaking into medical and treating yourself when there are medical staff present is not okay. Choosing captain just to go and work the genetics machine all round is not acceptable.</li>
-		<li><b>As an antagonist you are free to kill and grief, provided you escalate per rule 2.</b> You are not required to be evil, but you do have a broad toolset to push the round forward and make things exciting. Treat your role as an interesting challenge and not an excuse to destroy other people’s game experiences. Your objectives do not allow you to ignore any rule, RP or otherwise. As an antagonist, you are not protected against being murdered or griefed, but it is expected that the crew roleplays and does not kill you just for the sake of killing an antagonist.</li>
-		<li><b>Do not use out of game information in game.</b> Only use in-game information; the things your character can perceive or could know. While we have no hard rule on what a character can and cannot know, be reasonable about your character’s knowledge and capabilities. Do not call out antagonists based on information that is only obvious as a player. For example, the drowsiness effects on your screen are not a good in-character basis to call out a changeling. The debris and adventure zones are for enhancing roleplay. Rushing through them for the sake of items alone is prohibited. It is reasonable for the crew to assume people with syndicate gear such as red space suits are antagonists.</li>
-		<li><b>Be kind to other players.</b> Be respectful and considerate of other players, as their experiences are just as important as your own. Do not use LOOC or other means of communication to put down other players or accuse them of rulebreaking. If your problem with another player extends to rulebreaking, press F1 to contact the admins. It is your responsibility to respect the boundaries of others when you RP. If you feel uncomfortable, or worry that people are uncomfortable, don’t be afraid to use LOOC to communicate. Furthermore, do not advantage your friends in game or exclude others from roleplaying opportunities without good cause.</li>
-		<li><b>These rules are extra rules for the roleplay server.</b> The core rules still apply to the roleplay server. Do not argue with the administration about the RP rules or core rules.</li></ol>
-<p><br /></p><center>
-"}, "window=rprules;title=RP+Rules" )
+	tgui_alert(src, content_window = "rpRules", do_wait = FALSE)
 #endif
 
 /client/verb/changeServer(var/server as text)
@@ -897,8 +937,8 @@ var/global/curr_day = null
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
 	if (server)
-		boutput(usr, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
-		usr << link(game_server.url)
+		boutput(src, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
+		src << link(game_server.url)
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
 	set name = "Download Sprite"
@@ -945,7 +985,7 @@ var/global/curr_day = null
 			if( !A.mouse_opacity || A.invisibility > mob.see_invisible ) continue
 			stat( A )
 
-	if (!src.holder)//todo : maybe give admins a toggle
+	if (!src.holder || src.holder.slow_stat)
 		sleep(1.2 SECONDS) //and make this number larger
 	else
 		sleep(0.1 SECONDS)
@@ -1170,12 +1210,10 @@ var/global/curr_day = null
 
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
 		qdel(src.parallax_controller)
-		src.parallax_controller = new(null, src)
-		src.mob?.register_parallax_signals()
+		src.parallax_controller = new(src)
 
 	else if (src.parallax_controller)
 		qdel(src.parallax_controller)
-		src.mob?.unregister_parallax_signals()
 
 /client/verb/apply_view_tint()
 	set hidden = 1
@@ -1194,6 +1232,20 @@ var/global/curr_day = null
 	src.set_saturation(s)
 	src.player.cloudSaves.putData("saturation", s)
 	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
+
+
+/client/verb/toggle_camera_recoil()
+	set hidden = 1
+	set name = "toggle-camera-recoil"
+
+	if (!src.recoil_controller)
+		src.recoil_controller = new/datum/recoil_controller(src)
+
+	if ((winget(src, "menu.toggle_camera_recoil", "is-checked") == "true"))
+		src.recoil_controller?.enable()
+
+	else
+		src.recoil_controller?.disable()
 
 /client/proc/set_view_size(var/x, var/y)
 	//These maximum values make for a near-fullscreen game view at 32x32 tile size, 1920x1080 monitor resolution.
@@ -1552,3 +1604,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #undef _SKIN_TEXT
 #undef _SKIN_COMMAND_BG
 #undef SKIN_TEMPLATE
+
+/// Flashes the window in the Windows titlebar
+/client/proc/flash_window(times = -1)
+	winset(src, "mainwindow", "flash=[times]")

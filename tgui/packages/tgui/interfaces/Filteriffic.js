@@ -6,7 +6,6 @@
 */
 
 import { useBackend, useLocalState } from "../backend";
-import { Fragment } from 'inferno';
 import { Box, Button, Collapsible, ColorBox, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { map } from 'common/collections';
@@ -37,7 +36,7 @@ const FilterFloatEntry = (props, context) => {
   const { act } = useBackend(context);
   const [step, setStep] = useLocalState(context, `${filterName}-${name}`, 0.01);
   return (
-    <Fragment>
+    <>
       <NumberInput
         value={value}
         minValue={-500}
@@ -64,7 +63,7 @@ const FilterFloatEntry = (props, context) => {
         format={value => toFixed(value, 4)}
         width="70px"
         onChange={(e, value) => setStep(value)} />
-    </Fragment>
+    </>
   );
 };
 
@@ -94,7 +93,7 @@ const FilterTransformEntry = (props, context) => {
     transMatrix = Array(1, 0, 0, 0, 1, 0);
   }
   return (
-    <Fragment>
+    <>
       Matrix:
       <Stack>
         {[0, 1, 2].map((col, key) => (
@@ -134,7 +133,7 @@ const FilterTransformEntry = (props, context) => {
           </Stack.Item>
         ))}
       </Stack>
-    </Fragment>
+    </>
   );
 };
 
@@ -161,7 +160,7 @@ const FilterColorEntry = (props, context) => {
       }
     }
     return (
-      <Fragment>
+      <>
         <Button
           icon="pencil-alt"
           onClick={() => act('modify_color_value', {
@@ -203,11 +202,11 @@ const FilterColorEntry = (props, context) => {
             </Stack.Item>
           ))}
         </Stack>
-      </Fragment>
+      </>
     );
   } else {
     return (
-      <Fragment>
+      <>
         {value.type}
         <Button
           icon="pencil-alt"
@@ -231,7 +230,7 @@ const FilterColorEntry = (props, context) => {
           onClick={() => act('convert_color_value_matrix', {
             name: filterName,
           })} />
-      </Fragment>
+      </>
     );
   }
 };
@@ -240,7 +239,7 @@ const FilterIconEntry = (props, context) => {
   const { value, filterName } = props;
   const { act } = useBackend(context);
   return (
-    <Fragment>
+    <>
       <Button
         icon="pencil-alt"
         onClick={() => act('modify_icon_value', {
@@ -249,7 +248,7 @@ const FilterIconEntry = (props, context) => {
       <Box inline ml={1}>
         {value}
       </Box>
-    </Fragment>
+    </>
   );
 };
 
@@ -260,7 +259,7 @@ const FilterFlagsEntry = (props, context) => {
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['flags'];
   return (
-    map((bitField, flagName) => (
+    map(flags, (bitField, flagName) => (
       <Button.Checkbox
         checked={value & bitField}
         content={flagName}
@@ -270,7 +269,7 @@ const FilterFlagsEntry = (props, context) => {
             [name]: value ^ bitField,
           },
         })} />
-    ))(flags)
+    ))
   );
 };
 
@@ -281,7 +280,7 @@ const FilterSpaceEntry = (props, context) => {
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['space'];
   return (
-    map((spaceField, flagName) => (
+    map(flags, (spaceField, flagName) => (
       <Button.Checkbox
         checked={value === spaceField}
         content={flagName}
@@ -291,7 +290,7 @@ const FilterSpaceEntry = (props, context) => {
             [name]: spaceField,
           },
         })} />
-    ))(flags)
+    ))
   );
 };
 
@@ -302,7 +301,7 @@ const FilterBlendmodeEntry = (props, context) => {
   const filterInfo = data.filter_info;
   const flags = filterInfo[filterType]['blend_mode'];
   return (
-    map((flagField, flagName) => (
+    map(flags, (flagField, flagName) => (
       <Button.Checkbox
         checked={value === flagField}
         content={flagName}
@@ -312,7 +311,7 @@ const FilterBlendmodeEntry = (props, context) => {
             [name]: flagField,
           },
         })} />
-    ))(flags)
+    ))
   );
 };
 
@@ -373,7 +372,7 @@ const FilterEntry = (props, context) => {
     <Collapsible
       title={name + " (" + type + ")"}
       buttons={(
-        <Fragment>
+        <>
           <NumberInput
             value={priority}
             stepPixelSize={10}
@@ -394,9 +393,9 @@ const FilterEntry = (props, context) => {
           <Button.Confirm
             icon="minus"
             onClick={() => act("remove_filter", { name: name })} />
-        </Fragment>
+        </>
       )}>
-      <Section level={2}>
+      <Section>
         <LabeledList>
           {targetFilterPossibleKeys.map(entryName => {
             const defaults = filterDefaults[type]['defaults'];
@@ -439,7 +438,7 @@ export const Filteriffic = (props, context) => {
         </NoticeBox>
         <Section
           title={hiddenSecret ? (
-            <Fragment>
+            <>
               <Box mr={0.5} inline>
                 MASS EDIT:
               </Box>
@@ -451,7 +450,7 @@ export const Filteriffic = (props, context) => {
                 content="Apply"
                 confirmContent="ARE YOU SURE?"
                 onClick={() => act('mass_apply', { path: massApplyPath })} />
-            </Fragment>
+            </>
           ) : (
             <Box
               inline
@@ -476,9 +475,9 @@ export const Filteriffic = (props, context) => {
               No filters
             </Box>
           ) : (
-            map((entry, key) => (
+            map(filters, (entry, key) => (
               <FilterEntry filterDataEntry={entry} name={key} key={key} />
-            ))(filters)
+            ))
           )}
         </Section>
       </Window.Content>

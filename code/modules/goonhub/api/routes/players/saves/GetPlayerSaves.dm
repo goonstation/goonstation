@@ -4,5 +4,5 @@
 /datum/apiRoute/players/saves/get
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/players/saves"
-	queryParams = list("player_id")
+	queryParams = list("player_id", "ckey")
 	correct_response = /datum/apiModel/GetPlayerSaves

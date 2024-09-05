@@ -38,7 +38,7 @@
 		for (var/turf/T in L)
 			if (T == OT)
 				continue
-			fireflash_melting(T, 0, heat, 0)
+			fireflash_melting(T, 0, heat, 0, chemfire = CHEM_FIRE_RED)
 			for (var/mob/living/M in T)
 				if (!M.is_heat_resistant())
 					M.TakeDamage("All", 0, 15, 0, DAMAGE_BURN)

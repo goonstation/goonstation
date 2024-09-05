@@ -27,6 +27,8 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	//var/image/image_panel = null
 	var/load_max = 12
 	var/HTML = null
+	///oh no
+	var/has_brick = FALSE
 
 /obj/submachine/laundry_machine/New()
 	..()
@@ -91,11 +93,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					clothing.UpdateName()
 				else if (istype(item, /obj/item/currency/spacecash))
 					var/obj/item/currency/spacecash/cash = item
+					cash.changeStatus("freshly_laundered", INFINITE_STATUS)
 					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
 					for (var/amount in amounts)
 						if (amount >= cash.amount)
 							break
 						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
+						newcash.changeStatus("freshly_laundered", INFINITE_STATUS)
 						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
@@ -109,7 +113,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					H.gloves?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					H.glasses?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					H.head?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
-				H.changeStatus("weakened", 1 SECONDS)
+				H.changeStatus("knockdown", 1 SECONDS)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
 				src.open = 1
@@ -124,6 +128,9 @@ TYPEINFO(/obj/submachine/laundry_machine)
 		src.cycle_current++
 		if (src.occupant)
 			H.TakeDamage("All", 2, 0, 0, DAMAGE_BLUNT) //Getting washed like that has gotta hurt
+			if (src.has_brick && prob(80))
+				boutput(H, SPAN_ALERT("The brick flies around and hits you in the head, <b>OWW!</b>"))
+				H.TakeDamage("Head", /obj/item/brick::force, 0, 0, DAMAGE_BLUNT)
 			H.take_oxygen_deprivation(rand(0,3)) //Hard to keep breathing while in the machine
 			src.shake()
 			playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
@@ -149,16 +156,41 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				H.delStatus("marker_painted")
 			else
 				src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
+			if (locate(/obj/item/brick) in src.contents)
+				src.start_brick_grump()
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			playsound(src, 'sound/machines/washing_start.ogg', 80, TRUE)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
+			H?.delStatus("burning")
 			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, TRUE)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
 			playsound(src, 'sound/machines/engine_highpower.ogg', 20, TRUE)
 			src.shake()
+
+/obj/submachine/laundry_machine/proc/start_brick_grump()
+	set waitfor = FALSE
+	src.has_brick = TRUE
+	while (src.cycle == WASH || src.cycle == DRY)
+		animate_storage_thump(src, 11)
+		if (prob(50))
+			step(src, pick(cardinal))
+			src.visible_message(SPAN_ALERT("[src] [pick("rattles", "shudders", "judders", "complains", "grumps")]"), group = "angry_laundry")
+		if (prob(1))
+			if (prob(20))
+				src.unload(get_turf(src))
+				src.blowthefuckup()
+			else
+				src.visible_message(SPAN_ALERT("Everything flies out of [src]!"))
+				src.unload(get_step(src, src.dir), fling = TRUE)
+				src.on = FALSE
+				src.open = TRUE
+				src.process()
+			src.has_brick = FALSE
+			break
+		sleep(0.5 SECOND)
 
 /obj/submachine/laundry_machine/proc/shake(var/amt = 5)
 	set waitfor = 0
@@ -187,7 +219,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")
@@ -215,6 +247,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			W.affecting.set_loc(src)
 			src.open = 0
 			src.on = 1
+			src.cycle = PRE
 			var/mob/M = W.affecting
 			src.occupant = M
 			UpdateIcon()
@@ -242,11 +275,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	src.visible_message("[user] unloads [src] onto [T].")
 	src.unload(T)
 
-/obj/submachine/laundry_machine/proc/unload(var/turf/T)
+/obj/submachine/laundry_machine/proc/unload(var/turf/T, fling = FALSE)
 	if (src.contents.len)
 		T = istype(T) ?  T : get_turf(src)
 		for (var/atom/movable/AM in src)
 			AM.set_loc(T)
+			if (fling)
+				AM.throw_at(get_steps(src, src.dir, 5), 5, 2)
 		src.UpdateIcon()
 
 /obj/submachine/laundry_machine/ui_interact(mob/user, datum/tgui/ui)
@@ -288,6 +323,10 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					if (!(src in processing_items))
 						processing_items.Add(src)
 	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/Click(location, control, params)
+	if(!src.ghost_observe_occupant(usr, src.occupant))
+		. = ..()
 
 #undef PRE
 #undef WASH

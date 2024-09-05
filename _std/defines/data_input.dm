@@ -16,6 +16,7 @@
 #define DATA_INPUT_RESTORE "Restore to Default (WILL NULL LISTS AND OBJECTS)"
 #define DATA_INPUT_MOB_REFERENCE "Mob Reference"
 #define DATA_INPUT_BOOL "Boolean"
+#define DATA_INPUT_BITFIELD "Bit Field"
 
 // varediting options
 #define DATA_INPUT_NUM_ADJUST "Num Adjust"

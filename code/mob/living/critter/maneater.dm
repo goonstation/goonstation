@@ -1,5 +1,5 @@
 /proc/vegetablegibs(turf/T, list/ejectables, bdna, btype)
-	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soylent, \
+	var/list/vegetables = list(/obj/item/reagent_containers/food/snacks/plant/soy/soylent, \
 		                       /obj/item/reagent_containers/food/snacks/plant/lettuce, \
 		                       /obj/item/reagent_containers/food/snacks/plant/cucumber, \
 		                       /obj/item/reagent_containers/food/snacks/plant/carrot, \
@@ -52,6 +52,7 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/maneater_devour)
 	planttype = /datum/plant/maneater
+	can_bleed = FALSE
 	var/baseline_health = 120 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
@@ -279,7 +280,7 @@
 		var/list/potential_caretakers = list()
 		for(var/mob/living/carbon/human/checked_human in hearers(5, src))
 			//botanists or people who contributed to the plant can be caretakers and be talked to
-			if ((checked_human.faction & src.faction) || (checked_human in src.growers))
+			if (length(checked_human.faction & src.faction) || (checked_human in src.growers))
 				potential_caretakers += checked_human
 		//we only talk to people we actually want to talk to
 		if (length(potential_caretakers) > 0)

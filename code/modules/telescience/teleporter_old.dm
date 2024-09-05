@@ -153,9 +153,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 		..()
 		if(status & NOPOWER)
 			icon_state = "controller-p"
-			if (istype(linked_computer))
-				linked_computer.icon_state = "tele0"
-				linked_computer.light.disable()
 		else
 			icon_state = "controller"
 

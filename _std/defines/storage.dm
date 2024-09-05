@@ -1,7 +1,9 @@
 // storage defines for storage datums and outside use
 
 /// storage can hold the item
-#define STORAGE_CAN_HOLD 1
+#define STORAGE_CAN_HOLD 2
+/// there is room for some of the item, but not all
+#define STORAGE_CAN_HOLD_SOME 1
 /// storage can't hold the item, due to it being an unallowable type
 #define STORAGE_CANT_HOLD 0
 /// storage can't hold the item, due to it being too large

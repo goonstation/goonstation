@@ -23,10 +23,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(20))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE && prob(20))
 			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> vomits profusely!"))
 			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
@@ -56,24 +53,24 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/how = pick("intently", "directly", "fixedly", "unflinchingly", "directly", "unwaveringly", "petrifyingly", "longingly", "determinedly", "hungrily", "grodily")
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> stares [how] at [src.focused]."))
 		if(focus_level <= 1)
-			M.do_disorient(10, weakened = 0.7 SECONDS, stunned = 0, paralysis = 0, disorient = 0.7 SECONDS, remove_stamina_below_zero = 0)
+			M.do_disorient(10, knockdown = 0.7 SECONDS, stunned = 0, unconscious = 0, disorient = 0.7 SECONDS, remove_stamina_below_zero = 0)
 		else if(focus_level <= 2)
-			M.do_disorient(30, weakened = 1.5 SECONDS, stunned = 0, paralysis = 0, disorient = 1.5 SECONDS, remove_stamina_below_zero = 0)
+			M.do_disorient(30, knockdown = 1.5 SECONDS, stunned = 0, unconscious = 0, disorient = 1.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(5)
 			boutput(M, SPAN_ALERT("You feel a headache."))
 		else if(focus_level <= 3)
-			M.do_disorient(30, weakened = 2 SECONDS, stunned = 0, paralysis = 0, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
+			M.do_disorient(30, knockdown = 2 SECONDS, stunned = 0, unconscious = 0, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			M.TakeDamage("head", 5, 0)
 			boutput(M, SPAN_ALERT("Your head is pounding with extreme pain."))
 		else if(focus_level <= 4)
-			M.do_disorient(50, weakened = 2.5 SECONDS, stunned = 0, paralysis = 0.5 SECONDS, disorient = 2.5 SECONDS, remove_stamina_below_zero = 0)
+			M.do_disorient(50, knockdown = 2.5 SECONDS, stunned = 0, unconscious = 0.5 SECONDS, disorient = 2.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			blood_slash(M, 3)
 			M.TakeDamage("head", 10, 0)
 			boutput(M, SPAN_ALERT("The gaze seems to almost burrow into your skull. You feel like your head is going to split open."))
 		else if(focus_level <= 5)
-			M.do_disorient(80, weakened = 3 SECONDS, stunned = 0, paralysis = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
+			M.do_disorient(80, knockdown = 3 SECONDS, stunned = 0, unconscious = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
 			blood_slash(M, 5)
 			M.TakeDamage("head", 15, 0)
 			boutput(M, SPAN_ALERT("The intensity of the plant's gaze makes you feel like your head is going to <i>literally</i> split open."))
@@ -106,14 +103,13 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		var/pr = 20
 		if(src.focused)
 			pr += 10
 
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(pr))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
@@ -178,19 +174,22 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		. = ..()
 		if (.)
 			return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth < (P.harvtime + DNA?.get_effective_value("harvtime")))
+		if (POT.get_current_growth_stage() < HYP_GROWTH_HARVESTABLE)
 			return
 
 		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
 			if(!otherPot.current || otherPot.dead)
 				continue
-			otherPot.growth += 2
-			if(istype(otherPot.plantgenes,/datum/plantgenes/))
-				var/datum/plantgenes/otherDNA = otherPot.plantgenes
-				if(HYPCheckCommut(otherDNA,/datum/plant_gene_strain/photosynthesis))
-					otherPot.growth += 4
+			var/datum/plant/other_growing = otherPot.current
+			if (other_growing.simplegrowth || !otherPot.current_tick)
+				otherPot.growth += 2
+			else
+				var/datum/plantgrowth_tick/manipulated_tick = otherPot.current_tick
+				manipulated_tick.growth_rate += 2
+				if(istype(otherPot.plantgenes,/datum/plantgenes/))
+					var/datum/plantgenes/other_DNA = otherPot.plantgenes
+					if(HYPCheckCommut(other_DNA,/datum/plant_gene_strain/photosynthesis))
+						manipulated_tick.growth_rate += 4
 
 /datum/plant/artifact/plasma
 	name = "Plasma"
@@ -235,11 +234,11 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(16))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(16))
 			playsound(POT,'sound/voice/animal/cat.ogg',30,TRUE,-1)
 			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> meows!"))
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > P.HYPget_growth_to_harvestable(DNA) + 10)
 			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message(SPAN_NOTICE("The synthcat climbs out of the tray!"))
@@ -252,7 +251,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime") + 10)) return 0
+		if (POT.growth < P.HYPget_growth_to_matured(DNA) + 10) return 0
 
 		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,TRUE,-1)
 		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> hisses!"))
@@ -292,7 +291,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			chance_to_damage += 17
 			health_treshold_for_spreading -= 15
 		// We check for the health treshold and if we have grown sufficiently
-		if (POT.growth > (current_planttype.growtime - DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
 			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
 				var/datum/plant/growing = checked_plantpot.current
 				// We don't try to destroy other creepers and cannot attack crystals
@@ -337,10 +336,10 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if (.) return
 		var/datum/plant/current_plant = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (current_plant.growtime - DNA?.get_effective_value("growtime")) && prob(4))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_MATURED && prob(4))
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
-		if (POT.growth > (current_plant.harvtime - DNA?.get_effective_value("harvtime")))
+		if (POT.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE)
 			var/mob/living/critter/plant/maneater/new_maneater = new(get_turf(POT))
 			//Quality with the maneater is simulated a bit differently. It's calulated out of the endurance and potency-stat only
 			var/simulated_quality = (rand(-5, 5) + DNA?.get_effective_value("potency") / 6 + DNA?.get_effective_value("endurance") / 9)
@@ -366,10 +365,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPattacked_proc(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth < (P.growtime - DNA?.get_effective_value("growtime"))) return 0
+		if (POT.get_current_growth_stage() < HYP_GROWTH_MATURED) return 0
 
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))

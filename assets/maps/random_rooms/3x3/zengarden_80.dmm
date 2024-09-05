@@ -3,7 +3,7 @@
 /turf/simulated/floor/dojo/sand/vertical,
 /area/dmm_suite/clear_area)
 "m" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	desc = "A calming slab of rock. Nice to look at.";
 	dir = 8;
 	name = "rock"
@@ -37,7 +37,7 @@
 /turf/simulated/floor/dojo/sand/circle,
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/decal/fakeobjects/moonrock{
+/obj/fakeobject/moonrock{
 	desc = "A calming slab of rock. Nice to look at.";
 	dir = 8;
 	name = "rock"

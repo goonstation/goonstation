@@ -30,7 +30,7 @@
 				affected_mob.take_brain_damage(10)
 			if (probmult(4))
 				boutput(affected_mob, SPAN_ALERT("You pass out momentarily."))
-				affected_mob.changeStatus("paralysis", 4 SECONDS)
+				affected_mob.changeStatus("unconscious", 4 SECONDS)
 			if (probmult(5))
 				affected_mob.emote(pick("shiver","pale","drool"))
 

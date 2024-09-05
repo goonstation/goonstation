@@ -1,333 +1,68 @@
-/// This serves as a bridge between old materials pieces and new ones. Eventually old ones should just be updated.
-TYPEINFO(/obj/machinery/processor)
-	mats = 20
-
-/obj/machinery/processor
-	name = "Material processor"
-	desc = "Turns raw materials, and objects containing materials, into processed pieces."
+/obj/machinery/sheet_extruder
+	name = "sheet extruder"
+	desc = "A specialised machine for turning material bars into sheets."
 	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab3-on"
+	density = TRUE
 	anchored = ANCHORED
-	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	var/working = FALSE
 
-	/// Things that this is currently processing into materials
-	var/list/atom/processing
-
-	var/atom/output_location = null
-
-	New()
-		. = ..()
-		src.processing = list()
-
-	process()
-		if(length(src.processing))
-			var/atom/current_thing = src.processing[1]
-			var/list/matches = list()
-
-			for(var/atom/A in src.processing)
-				if(A == current_thing) continue
-				if(A.material.isSameMaterial(current_thing.material))
-					matches.Add(A)
-
-			var/output_location = get_output_location()
-			var/obj/item/material_piece/exists_nearby = null
-			for(var/obj/item/material_piece/G in output_location)
-				if(G.material.isSameMaterial(current_thing.material))
-					exists_nearby = G
-					break
-
-			matches.Add(current_thing)
-
-			var/totalAmount = 0
-			for(var/obj/item/M in matches)
-				totalAmount += M.amount
-
-			var/mat_id
-			var/datum/material/mat
-
-			//Check for exploitable inputs and divide the result accordingly
-			var/div_factor = 1 / current_thing.material_amt
-			var/second_mat = null
-
-			if (istype(current_thing, /obj/item/cable_coil))
-				var/obj/item/cable_coil/C = current_thing
-				second_mat = C.conductor
-
-			//Output processed amount if there is enough input material
-			var/out_amount = round(totalAmount/div_factor)
-			if (out_amount > 0)
-				if(exists_nearby)
-					exists_nearby.change_stack_amount(out_amount)
-					mat_id = exists_nearby.material.getID()
-					mat = exists_nearby.material
-				else
-					var/newType = getProcessedMaterialForm(current_thing.material)
-					var/obj/item/material_piece/P = new newType
-					P.set_loc(get_output_location())
-					P.setMaterial(current_thing.material)
-					P.change_stack_amount(out_amount - P.amount)
-					mat_id = P.material.getID()
-					mat = P.material
-
-				if (istype(output_location, /obj/machinery/manufacturer))
-					var/obj/machinery/manufacturer/M = output_location
-					M.update_resource_amount(mat_id, out_amount * 10, mat)
-
-				//If the input was a cable coil, output the conductor too
-				if (second_mat)
-					var/obj/item/material_piece/second_exists_nearby = null
-					var/second_mat_id
-					for(var/obj/item/material_piece/G in output_location)
-						if(G.material.isSameMaterial(second_mat))
-							second_exists_nearby = G
-							break
-
-					if(second_exists_nearby)
-						second_exists_nearby.change_stack_amount(out_amount)
-						second_mat_id = second_exists_nearby.material.getID()
-						second_mat = second_exists_nearby.material
-					else
-						var/newType = getProcessedMaterialForm(second_mat)
-						var/obj/item/material_piece/PC = new newType
-						PC.set_loc(get_output_location())
-						PC.setMaterial(second_mat)
-						PC.change_stack_amount(out_amount - PC.amount)
-						second_mat_id = PC.material.getID()
-						second_mat = PC.material
-
-					if (istype(output_location, /obj/machinery/manufacturer))
-						var/obj/machinery/manufacturer/M = output_location
-						M.update_resource_amount(second_mat_id, out_amount * 10, second_mat)
-
-			//Delete items in processor and output leftovers
-			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor
-			for(var/atom/movable/D in matches)
-				var/obj/item/R = D
-				if (leftovers != 0 && R.amount)
-					R.change_stack_amount(leftovers-R.amount)
-					if(R.amount < 1) //no fractionals tyvm
-						qdel(R)
-					else
-						R.set_loc(src.loc)
-					leftovers = 0
-					continue
-				qdel(D)
-
-			if (out_amount > 0)//No animation and beep if nothing processed
-				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
-				flick("fab3-work",src)
-			else
-				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
-
-	attackby(var/obj/item/W, mob/user)
-		// this comment isn't relevant anymore since I removed the check but it's too funny to delete -aloe <3
-		//
-		//Wire: Fix for: undefined proc or verb /turf/simulated/floor/set loc()
-		//		like somehow a dude tried to load a turf? how the fuck? whatever just kill me
-
-		if(istype(W, /obj/item/material_piece))
-			boutput(user, SPAN_ALERT("[W] has already been processed."))
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/raw_material))
+			boutput(user, SPAN_ALERT("[I] needs to be refined before it can be turned into sheets."))
 			return
-
-		if(istype(W, /obj/item/ore_scoop))
-			var/obj/item/ore_scoop/O = W
-			if (O.satchel)
-				W = O.satchel
-
-		if(istype(W, /obj/item/satchel))
-			var/obj/item/satchel/S = W
-			boutput(user, SPAN_NOTICE("You empty \the [W] into \the [src]."))
-			for(var/obj/item/I in S)
-				if(I.material)
-					src.add_item_for_processing(I, user)
-			S.UpdateIcon()
-			S.tooltip_rebuild = TRUE
-			return
-
-		else if (W.cant_drop) //For borg held items
-			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
+		if (!istype(I, /obj/item/material_piece))
 			return ..()
-
-		if(W.material)
-			boutput(user, SPAN_NOTICE("You put \the [W] into \the [src]."))
-			user.u_equip(W)
-			src.add_item_for_processing(W, user)
-			W.dropped(user)
-
-	mouse_drop(over_object, src_location, over_location)
-		if(!isliving(usr))
-			boutput(usr, SPAN_ALERT("Get your filthy dead fingers off that!"))
+		if (src.working || src.is_disabled())
 			return
-
-		if(over_object == src)
-			output_location = null
-			boutput(usr, SPAN_NOTICE("You reset the processor's output target."))
+		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
 			return
-
-		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, SPAN_ALERT("The processor is too far away from the target!"))
+		var/obj/item/material_piece/taken_piece = null
+		if (I.amount < 1)
+			playsound(src, 'sound/machines/buzz-sigh.ogg')
 			return
-
-		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
-			return
-
-		if (istype(over_object,/obj/storage/crate/))
-			var/obj/storage/crate/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, SPAN_ALERT("You can't use a currently unopenable crate as an output target."))
-			else
-				src.output_location = over_object
-				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
-
-		else if (istype(over_object,/obj/storage/cart/))
-			var/obj/storage/cart/C = over_object
-			if (C.locked || C.welded)
-				boutput(usr, SPAN_ALERT("You can't use a currently unopenable cart as an output target."))
-			else
-				src.output_location = over_object
-				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
-
-		else if (istype(over_object,/obj/machinery/manufacturer/))
-			var/obj/machinery/manufacturer/M = over_object
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, SPAN_ALERT("You can't use a non-functioning manufacturer as an output target."))
-			else
-				src.output_location = M
-				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
-
-		else if (istype(over_object, /obj/machinery/nanofab))
-			var/obj/machinery/nanofab/N = over_object
-			if (N.status & BROKEN || N.status & NOPOWER)
-				boutput(usr, SPAN_ALERT("You can't use a non-functioning nano-fabricator as an output target."))
-			else
-				src.output_location = N
-				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
-
-		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
-			var/obj/O = over_object
-			src.output_location = O.loc
-			boutput(usr, SPAN_NOTICE("You set the processor to output on top of [O]!"))
-
-		else if (istype(over_object,/turf/simulated/floor/))
-			src.output_location = over_object
-			boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
-
+		if (I.amount == 1)
+			user.u_equip(I)
+			taken_piece = I
 		else
-			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
-
-	MouseDrop_T(atom/movable/O, mob/user)
-		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || is_incapacitated(user) || isAI(user))
-			return
-
-		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
-			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [O]!"), SPAN_NOTICE("You use [src]'s automatic loader on [O]."))
-			var/amtload = 0
-			for (var/obj/item/raw_material/mat in O.contents)
-				src.add_item_for_processing(mat, user)
-				amtload += max(mat.amount, 1)
-			if (amtload)
-				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
-			else
-				boutput(user, SPAN_ALERT("No material loaded!"))
-			return
-
-		if (!istype(O, /obj/item))
-			return
-		var/obj/item/W = O
-		if((W in user) && !W.cant_drop)
-			user.u_equip(W)
-			W.set_loc(src.loc)
-			W.dropped(user)
-
-		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
-		if(W.material && !istype(W, /obj/item/material_piece))
-			quickload(user, W)
-		else
-			src.Attackby(W, user)
-
-	Exited(thing, newloc)
-		. = ..()
-		if ((thing in src.processing) && newloc != src)
-			src.processing -= thing
-
-	proc/quickload(var/mob/living/user, var/obj/item/initial_item)
-		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [initial_item] into [src]!"),
-			SPAN_NOTICE("You begin quickly stuffing [initial_item] into [src]!"),
-			SPAN_NOTICE("You hear multiple objects being shoved into a chute."))
-		user.u_equip(initial_item)
-		src.add_item_for_processing(initial_item, user)
-		initial_item.dropped(user)
-
-		var/staystill = user.loc
-		for(var/obj/item/other_item in view(1, user))
-			if (other_item.loc == user)
-				continue
-			if (!istype(other_item, initial_item.type))
-				continue
-			if(!istype(other_item, /obj/item/cable_coil))
-				if (!istype(other_item.material))
+			taken_piece = I.split_stack(1)
+		taken_piece.set_loc(src)
+		src.working = TRUE
+		playsound(src, 'sound/machines/hiss.ogg', 50, TRUE, -1)
+		boutput(user, "You load [taken_piece] into [src].")
+		SPAWN(2 SECONDS)
+			flick("fab3-work", src)
+			sleep(0.5 SECONDS)
+			src.working = FALSE
+			if (src.is_disabled() || QDELETED(src) || QDELETED(taken_piece))
+				return
+			var/obj/item/sheet/sheets = new(src)
+			sheets.set_stack_amount(10)
+			sheets.setMaterial(taken_piece.material)
+			sheets.set_loc(src.loc)
+			for (var/obj/item/sheet/other_sheets in src.loc?.contents)
+				if (other_sheets == sheets)
 					continue
+				if (sheets.material.isSameMaterial(other_sheets.material))
+					if (other_sheets.stack_item(sheets))
+						break
+			qdel(taken_piece)
 
-			src.add_item_for_processing(other_item, user)
-			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
-			sleep(0.5)
-			if (user.loc != staystill) break
-		boutput(user, SPAN_NOTICE("You finish stuffing [initial_item] into [src]!"))
+	power_change()
+		..()
+		src.UpdateIcon()
 
-	proc/get_output_location()
-		if (isnull(output_location))
-			return src.loc
+	update_icon(...)
+		if (src.is_broken())
+			src.icon_state = "fab3-broken"
+		else if (!src.powered())
+			src.icon_state = "fab3-off"
+		else
+			src.icon_state = "fab3-on"
 
-		if (BOUNDS_DIST(src.output_location, src) > 0)
-			output_location = null
-			return src.loc
-
-		if (istype(output_location,/obj/machinery/manufacturer))
-			var/obj/machinery/manufacturer/M = output_location
-			if (M.status & NOPOWER || M.status & BROKEN | M.dismantle_stage > 0)
-				return M.loc
-			return M
-
-		else if (istype(output_location,/obj/storage/crate))
-			var/obj/storage/crate/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
-
-		else if (istype(output_location,/obj/storage/cart))
-			var/obj/storage/cart/C = output_location
-			if (C.locked || C.welded || C.open)
-				return C.loc
-			return C
-
-		return output_location
-
-	/// Adds an item to the processing list and places it inside the processor
-	proc/add_item_for_processing(obj/thing, mob/user)
-		thing.set_loc(src)
-		src.processing += thing
-		logTheThing(LOG_STATION, user, "adds [log_object(thing)] to a material processor.")
-
-/obj/machinery/processor/portable
-	name = "Portable material processor"
-	icon = 'icons/obj/scrap.dmi'
-	icon_state = "reclaimer"
-	anchored = UNANCHORED
-	density = 1
-
-	custom_suicide = 1
-	suicide(var/mob/user)
-		if (!src.user_can_suicide(user))
-			return 0
-
-		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
-		user.unequip_all()
-		user.set_loc(src)
-		user.make_cube(life = 5 MINUTES, T = src.loc)
 
 /obj/machinery/neosmelter
 	name = "Nano-crucible"
@@ -438,7 +173,7 @@ TYPEINFO(/obj/machinery/processor)
 				second_part = null
 
 		updateResultName()
-		attack_hand(usr)
+		src.Attackhand(usr)
 
 	proc/updateResultName()
 		if(first_part && second_part)
@@ -511,9 +246,9 @@ TYPEINFO(/obj/item/device/matanalyzer)
 
 /obj/item/device/matanalyzer
 	icon_state = "matanalyzer"
-	name = "Material analyzer"
+	name = "material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)

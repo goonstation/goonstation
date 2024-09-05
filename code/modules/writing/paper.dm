@@ -61,6 +61,8 @@
 	var/list/stamps = null
 	var/list/form_fields = list()
 	var/field_counter = 1
+	///Some subtypes might want to hide the scrollbar
+	var/scrollbar = TRUE
 
 /obj/item/paper/New()
 	..()
@@ -175,6 +177,9 @@
 			var/stamp_y = text2num_safe(params["y"])
 			var/stamp_r = text2num_safe(params["r"])	// rotation in degrees
 			var/obj/item/stamp/stamp = ui.user.equipped()
+			if(!istype(stamp))
+				boutput(usr, "What stamp? Where stamp?")
+				return
 
 			if(length(stamps) < PAPER_MAX_STAMPS)
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
@@ -220,6 +225,7 @@
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
+		"scrollbar" = src.scrollbar,
 	)
 
 /obj/item/paper/ui_data(mob/user)
@@ -660,7 +666,7 @@
 			return
 
 		boutput(user, "You remove a piece of paper from the [src].")
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 /obj/item/stamp
 	name = "rubber stamp"
@@ -668,7 +674,6 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
-	flags = FPRINT | TABLEPASS
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
@@ -947,6 +952,7 @@
 	sealed = TRUE
 	two_handed = TRUE
 	info = ""
+	hitsound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	var/headline = ""
 	var/publisher = ""
 

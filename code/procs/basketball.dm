@@ -89,7 +89,7 @@
 	for(var/mob/N in AIviewers(M, null))
 		if(GET_DIST(N, target) <= 2)
 			if(N != M)
-				N.changeStatus("weakened", 5 SECONDS)
+				N.changeStatus("knockdown", 5 SECONDS)
 				random_brute_damage(N, 10)
 		if(N.client)
 			shake_camera(N, 6, 32)
@@ -222,7 +222,7 @@
 	for(var/mob/N in AIviewers(M, null))
 		if(GET_DIST(N, target) <= 2)
 			if(N != M)
-				N.changeStatus("weakened", 5 SECONDS)
+				N.changeStatus("knockdown", 5 SECONDS)
 		if(N.client)
 			shake_camera(N, 6, 16)
 			N.show_message(SPAN_ALERT("[M] clown jams [target]!"), 1)
@@ -429,7 +429,7 @@
 	var/selfdestruct = 0
 	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	item_state = "radio"
 	throwforce = 5
@@ -535,7 +535,7 @@
 			usr.u_equip(R)
 			usr.put_in_hand_or_drop(T)
 			T.set_frequency(initial(T.frequency))
-			T.attack_self(usr)
+			T.AttackSelf(usr)
 			return
 		else if (href_list["selfdestruct"])
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
@@ -548,11 +548,11 @@
 			if (href_list["temp"])
 				src.temp = null
 		if (ismob(src.loc))
-			attack_self(src.loc)
+			src.AttackSelf(src.loc)
 		else
 			for(var/mob/M in viewers(1, src))
 				if (M.client)
-					src.attack_self(M)
+					src.AttackSelf(M)
 	return
 
 /mob/proc/bball_spellpower()

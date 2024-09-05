@@ -104,7 +104,7 @@
 			// If there's some other shit in the air lets deal with it here.
 			var/N2O_pp = (breath.nitrous_oxide/TOTAL_MOLES(breath))*breath_pressure
 			if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
-				holder.changeStatus("paralysis", 3 SECONDS)
+				holder.changeStatus("unconscious", 3 SECONDS)
 				if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
 					holder.sleeping = max(holder.sleeping, 2)
 			else if (N2O_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning

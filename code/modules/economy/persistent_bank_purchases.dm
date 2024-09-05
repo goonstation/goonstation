@@ -127,11 +127,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 		if(isAI(M))
 			var/mob/living/silicon/ai/AI = M
-			if (ispath(path, /obj/item/clothing))
-				if(ispath(path,/obj/item/clothing/head))
-					AI.set_hat(new path(AI))
-					equip_success = 1
-
+			path = null
+			AI.bought_hat = TRUE
+			return
 
 
 		//The AI can't really wear items...
@@ -339,45 +337,36 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			var/succ = 0
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				/*if (H.head && istype(H.head, /obj/item/clothing/head))
-					var/path = text2path("[H.head.type]/april_fools")
-					if (ispath(path))
-						M.u_equip(H.head)
-						qdel(H.head)
-						var/obj/item/clothing/head/hatt = new path
-						H.force_equip(hatt)
-						succ = 1*/
 
-
-				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under/rank))
-					var/obj/origin = text2path("[H.w_uniform.type]/april_fools")
+				if (H.w_uniform && istype(H.w_uniform, /obj/item/clothing/under))
+					var/obj/item/clothing/under/origin = text2path("[H.w_uniform.type]/april_fools")
 					if (ispath(origin))
-						H.w_uniform.icon_state = "[H.w_uniform.icon_state]-alt"
-						H.w_uniform.item_state = "[H.w_uniform.item_state]-alt"
+						H.w_uniform.icon = origin.icon
+						H.w_uniform.icon_state = origin.icon_state
+						H.w_uniform.item_state = origin.item_state
 						H.w_uniform.desc = initial(origin.desc)
 						succ = 1
 
 				if (H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
-					var/obj/origin = text2path("[H.wear_suit.type]/april_fools")
+					var/obj/item/clothing/suit/origin = text2path("[H.wear_suit.type]/april_fools")
 					if (ispath(origin))
-						H.wear_suit.icon_state = "[H.wear_suit.icon_state]-alt"
-						H.wear_suit.item_state = "[H.wear_suit.item_state]-alt"
+						H.wear_suit.icon_state = origin.icon_state
+						H.wear_suit.item_state = origin.item_state
 						H.wear_suit.desc = initial(origin.desc)
 						if (istype(H.wear_suit, /obj/item/clothing/suit/labcoat))
-							H.wear_suit:coat_style = "[H.wear_suit:coat_style]-alt"
+							H.wear_suit.coat_style = origin.coat_style
 						succ = 1
 
 				if (H.head && istype(H.head, /obj/item/clothing/head))
-					var/obj/origin = text2path("[H.head.type]/april_fools")
+					var/obj/item/clothing/head/origin = text2path("[H.head.type]/april_fools")
 					if (ispath(origin))
-						H.head.icon_state = "[H.head.icon_state]-alt"
-						H.head.item_state = "[H.head.item_state]-alt"
+						H.head.icon_state = origin.icon_state
+						H.head.item_state = origin.item_state
 						H.head.desc = initial(origin.desc)
 						if (istype(H.head, /obj/item/clothing/head/helmet/space/engineer))
 							var/obj/item/clothing/head/helmet/space/engineer/helmet_with_flashlight = H.head
-							helmet_with_flashlight.base_icon_state = "espace-alt"
-							helmet_with_flashlight.icon_state = "espace-alt0"
-							helmet_with_flashlight.item_state = "s_helmet"
+							var/obj/item/clothing/head/helmet/space/engineer/orig = origin
+							helmet_with_flashlight.base_icon_state = orig.base_icon_state
 						succ = 1
 
 			return succ
@@ -498,7 +487,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					launch_with_missile(M.loc)
 				else
 					launch_with_missile(M)
-			return ..()
+			..()
+			return TRUE
 
 	critter_respawn
 		name = "Alt Ghost Critter"
@@ -788,7 +778,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
-				A.set_hat(new picked())
+				A.bought_hat = TRUE
 				return 1
 			return 0

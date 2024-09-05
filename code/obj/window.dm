@@ -9,7 +9,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	density = 1
 	stops_space_move = 1
 	dir = NORTHEAST //full tile
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	text = "<font color=#aaf>#"
@@ -345,7 +345,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.proj_data?.window_pass)
+			if(P.proj_data?.window_pass && !src.opacity)
 				return TRUE
 		if (!is_cardinal(dir))
 			return FALSE //full tile window, you can't move into it!
@@ -760,7 +760,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
-	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = USEDELAY | ON_BORDER | FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
 	var/connectdir
@@ -825,7 +825,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	update_icon()
 		if (!src.anchored)
 			icon_state = "[mod]0"
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
 			update_damage_overlay()
 			return
 
@@ -838,9 +838,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				src.connect_image = image(src.icon, "overlay-[overlaydir]")
 			else
 				src.connect_image.icon_state = "overlay-[overlaydir]"
-				src.UpdateOverlays(src.connect_image, "connect")
+				src.AddOverlays(src.connect_image, "connect")
 		else
-			src.UpdateOverlays(null, "connect")
+			src.ClearSpecificOverlays("connect")
 		src.update_damage_overlay()
 
 	proc/update_neighbors()
@@ -869,7 +869,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.damage_image.icon_state = "light-[connectdir]"
 		else
 			src.damage_image.icon_state = null
-		src.UpdateOverlays(src.damage_image, "damage")
+		src.AddOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3

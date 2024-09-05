@@ -120,7 +120,7 @@
 "z" = (
 /obj/rack,
 /obj/item/weldingtool,
-/obj/item/mining_tool/power_pick,
+/obj/item/mining_tool/powered/pickaxe,
 /turf/simulated/floor/black/grime,
 /area/shuttle/sea_elevator)
 "A" = (

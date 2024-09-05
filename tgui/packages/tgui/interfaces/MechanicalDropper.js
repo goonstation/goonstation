@@ -20,7 +20,7 @@ const DropperModeSection = (props) => {
     onTransferModeChange,
   } = props;
   return (
-    <Section fitted py={0.6} pl={0.6} pr={1.2}>
+    <Section fitted fill>
       <Tabs vertical>
         <Tabs.Tab
           selected={transferMode === TO_SELF}
@@ -109,7 +109,7 @@ export const MechanicalDropper = (_props, context) => {
     <Window title="Mechanical Dropper" width={400} height={105}>
       <Window.Content>
         <Stack>
-          <Stack.Item align="center">
+          <Stack.Item>
             <DropperModeSection
               transferMode={transferMode}
               onTransferModeChange={onTransferModeChange}

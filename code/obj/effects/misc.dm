@@ -45,3 +45,11 @@
 	pixel_x = -32
 	pixel_y = -32
 	layer = EFFECTS_LAYER_4
+
+/obj/effects/gang_crate_indicator
+	name = "gang crate indicator"
+	anchored = ANCHORED
+	icon = null
+	pixel_x = 0
+	pixel_y = 0
+	layer = EFFECTS_LAYER_4

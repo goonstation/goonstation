@@ -126,7 +126,7 @@
 			display_active.color = "#00FF00"
 		else
 			display_active.color = "#FA0000"
-		build_icon()
+		update_icon()
 
 	//Changes shield orientation based on direction the generator is facing
 	proc/update_orientation()
@@ -138,7 +138,7 @@
 	proc/createForcefieldObject(xa, ya, turf/T)
 		if(isnull(T))
 			T = locate((src.x + xa), (src.y + ya), src.z)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src, TRUE)
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield(T, src)
 		S.layer = 2
 		src.deployed_shields += S
 		return S
@@ -206,7 +206,7 @@
 			display_active.color = "#00FF00"
 		else
 			display_active.color = "#FA0000"
-		build_icon()
+		update_icon()
 
 	get_draw()
 		var/shield_draw = 0
@@ -221,10 +221,11 @@
 		. = ..()
 
 	proc/createDoorForcefield(var/obj/machinery/door/D)
-		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src, 1) //1 update tiles
+		var/obj/forcefield/energyshield/S = new /obj/forcefield/energyshield (get_turf(D), src)
 
 		S.layer = 2
 		S.set_dir(D.dir)
+		S.powered_locally = FALSE
 		if(!src.emagged)
 			S.linked_door = D
 			D.linked_forcefield = S
@@ -261,7 +262,7 @@
 
 		playsound(src.loc, src.sound_on, 50, 1)
 		display_active.color = "#00FF00"
-		build_icon()
+		update_icon()
 
 #undef SHIELD_BLOCK_GAS
 #undef SHIELD_BLOCK_FLUID

@@ -60,7 +60,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
-	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
+	flags = IS_PERSPECTIVE_FLUID | FLUID_DENSE //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
 
 	podbay_autoclose
 		autoclose = TRUE
@@ -93,12 +93,12 @@
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
 		bioHolder.ownerType = src.type
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/moustache/vandyke
-		bioHolder.mobAppearance.customization_first_color = "#241200"
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_second_color = "#241200"
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_third_color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/moustache/vandyke
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#241200"
 		bioHolder.mobAppearance.e_color = "#363978"
 		bioHolder.mobAppearance.s_tone = "#FFCC99"
 		bioHolder.age = 52
@@ -176,7 +176,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		else
 			boutput(user, SPAN_ALERT("Invalid biometric profile. Access denied."))
 
-/obj/decal/fakeobjects/safehouse/cloner
+/obj/fakeobject/safehouse/cloner
 	name = "lazarus H-16 cloning pod"
 	desc = "An advanced cloning pod, designed to be operated automatically through packets. What a great idea!"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -290,7 +290,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 //DECORATIVE OBJECTS
 
-/obj/decal/fakeobjects/beacon
+/obj/fakeobject/beacon
 	name = "broken beacon"
 	desc = "A small tracking beacon in fairly poor condition. What's it doing all the way out here?"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -374,7 +374,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "scuffmarks"
 
-/obj/decal/fakeobjects/recordplayer
+/obj/fakeobject/recordplayer
 	name = "old record player"
 	desc = "An old fashioned turntable for playing vinyl. Doesn't appear to be plugged in."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -392,7 +392,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		src.add_fingerprint(user)
 		return
 
-/obj/decal/fakeobjects/safehouse/reclaimer
+/obj/fakeobject/safehouse/reclaimer
 	name = "enzymatic reclaimer"
 	desc = "A tank resembling a rather large blender, designed to recover biomatter for use in cloning."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -406,7 +406,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		src.add_fingerprint(user)
 		return
 
-/obj/decal/fakeobjects/safehouse/biomatter_tank
+/obj/fakeobject/safehouse/biomatter_tank
 	name = "biomatter reserve tank"
 	desc = "A reserve tank for storing large quantities of biomatter. You could clone a small army with a tank that size."
 	icon = 'icons/obj/large/32x48.dmi'
@@ -415,7 +415,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1
 
-/obj/decal/fakeobjects/safehouse/biotube
+/obj/fakeobject/safehouse/biotube
 	name = "biomatter transfer pipe"
 	desc = "A large pipe for transporting fluid. It looks very durable."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -423,7 +423,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = ANCHORED
 	layer = 2.8
 
-/obj/decal/fakeobjects/safehouse/conduit
+/obj/fakeobject/safehouse/conduit
 	name = "electrical conduit"
 	desc = "An electrical conduit. The casing is welded on"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -431,7 +431,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = ANCHORED
 	layer = 2.8
 
-/obj/decal/fakeobjects/safehouse/mechcomp_cabinet
+/obj/fakeobject/safehouse/mechcomp_cabinet
 	name = "component cabinets"
 	desc = "A pair of cabinets containing mechanical components, set up to automate operation of the cloner. Technology is incredible!"
 	icon = 'icons/obj/large/32x48.dmi'
@@ -440,7 +440,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1
 
-/obj/decal/fakeobjects/safehouse/cloning_console
+/obj/fakeobject/safehouse/cloning_console
 	name = "cloning console"
 	desc = "A console used to operate a cloning scanner and pod. This one looks like it's seen better days."
 	icon = 'icons/obj/computer.dmi'
@@ -449,7 +449,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	density = 1
 	layer = 3.1
 
-/obj/decal/fakeobjects/safehouse/dead_exec
+/obj/fakeobject/safehouse/dead_exec
 	name = "dead clone"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
 	icon_state = "deadexecclean"
@@ -460,7 +460,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		name = "bloody clone"
 		icon_state = "deadexecbloody"
 
-/obj/decal/fakeobjects/safehouse/airhandlingunit
+/obj/fakeobject/safehouse/airhandlingunit
 	name = "air handling unit"
 	desc = "This a recirculating air handling unit designed to keep ambient conditions within comfortable limits."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -468,7 +468,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/safehouse/airfilter
+/obj/fakeobject/safehouse/airfilter
 	name = "air filter"
 	desc = "This is a filter for scrubbing CO2 and other harmful gases out the air. The 'filter clogged' alarm is lit up."
 	icon = 'icons/obj/adventurezones/safehouse.dmi'

@@ -43,13 +43,6 @@ To contribute audio to the game, please follow our audio guidelines! It details 
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fmaps)
 To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission. There are also guides on how to map included.
 
-## FAQ (Frequently Asked Question)
-
-#### Q: I'm getting a compilation error like `unable to open +secret\__secret.dme`.
-
-You’ll need to create a file named `__secret.dme` in the +secret subdirectory. It should be blank and have no contents. You can run the `initial_setup.bat` file to create it automatically. Read the [Goonstation Development Guide](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev) for additional details.
-
-
 ## LICENSE
 [![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 

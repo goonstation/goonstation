@@ -236,7 +236,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		else if(src.cooktime >= 120)
 			if(prob(30) && (src.cooktime % 5) == 0)
 				src.visible_message(SPAN_ALERT("[src] really flares up!"))
-				fireflash(src, 1)
+				fireflash(src, 1, chemfire = CHEM_FIRE_RED)
 		return
 
 	custom_suicide = 1

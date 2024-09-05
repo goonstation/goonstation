@@ -32,7 +32,7 @@
 	var/limbpath = /datum/limb/brullbar
 	var/frenzypath = /datum/targetable/critter/frenzy
 
-	faction = FACTION_ICEMOON
+	faction = list(FACTION_ICEMOON)
 
 	attackby(obj/item/W, mob/living/user)
 		if (!isdead(src))
@@ -163,7 +163,7 @@
 		if (prob(30))
 			src.visible_message(SPAN_ALERT("<b>[src] devours [target]! Holy shit!</b>"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			if (ishuman(target)) new /obj/decal/fakeobjects/skeleton(target.loc)
+			if (ishuman(target)) new /obj/fakeobject/skeleton(target.loc)
 			target.ghostize()
 			target.gib()
 			return

@@ -105,6 +105,54 @@
 	name = "data disk - 'Mr. Muggles'"
 	read_only = 1
 
+/obj/item/disk/data/floppy/lrt
+	name = "galactic coordinate disk - 'Blank'"
+	title = "Teleconsole"
+	icon_state = "datadisktele0"
+	random_color = FALSE
+
+	var/target_name
+
+	New()
+		. = ..()
+		var/datum/computer/file/lrt_data/place = new /datum/computer/file/lrt_data(src)
+		place.place_name = src.target_name
+		src.root.add_file( place )
+
+	icemoon
+		name = "galactic coordinate disk - 'Moon X15'"
+		target_name = "Moon X15"
+
+	solarium
+		name = "galactic coordinate disk - 'Sol'"
+		icon_state = "datadisktele1"
+		target_name = "Sol"
+
+	biodome
+		name = "galactic coordinate disk - 'Moon X05'"
+		target_name = "Moon X05"
+
+	mars_outpost
+		name = "galactic coordinate disk - 'Mars'"
+		target_name = "Mars"
+
+	lavamoon
+		name = "galactic coordinate disk - 'Io'"
+		target_name = "Io"
+
+	luna_museum
+		name = "galactic coordinate disk - 'Lunar Museum'"
+		target_name = "Luna"
+
+	ainley
+		name = "galactic coordinate disk - 'Ainley'"
+		target_name = "Ainley Staff Retreat"
+
+	meat_derelict
+		name = "galactic coordinate disk - 'Derelict Station'"
+		target_name = "Derelict Station"
+
+
 /obj/item/disk/data/fixed_disk
 	name = "Storage Drive"
 	icon_state = "harddisk"
@@ -272,6 +320,9 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 	w_class = W_CLASS_TINY
 	random_color = 0
 	file_amount = 32
+	HELP_MESSAGE_OVERRIDE({"Use on an armed nuclear bomb to alter the time remaining until detonation.
+	Use on an armory authorization computer to issue an emergency authorization or unauthorization.
+	Use on an escape shuttle launch computer to alter the time until departure."})
 
 	New()
 		. = ..()
@@ -285,6 +336,18 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 			src.root.add_file( authrec )
 			src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 			src.read_only = 1
+
+	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name].", "You show off the [name].")
+		actions.start(new /datum/action/show_item(user, src, "disk"), user)
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		user.visible_message("[user] flashes the [name] at [target.name].", "You show off the [name] to [target.name]")
+		actions.start(new /datum/action/show_item(user, src, "disk"), user)
 
 /obj/item/disk/data/floppy/devkit
 	name = "data disk-'Development'"

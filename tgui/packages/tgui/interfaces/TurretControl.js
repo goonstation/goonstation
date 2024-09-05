@@ -37,48 +37,46 @@ export const TurretControl = (props, context) => {
       title={emagged ? "FATAL ERROR" : `Turret control (${area})`}
       theme={emagged ? 'syndicate' : 'ntos'}
       width={400}
-      height={160}
+      height={150}
     >
       <Window.Content align="center">
-        <Box py="6px">
-          {(!emagged && !locked) && (
-            <Box fontSize="16px">
-              <Section width="70%">
-                <Stack>
-                  <Stack.Item width="50%">
-                    <Button icon="exclamation-triangle" fluid selected={enabled} onClick={() => set_enabled(true)}>Enabled</Button>
-                  </Stack.Item>
-                  <Stack.Item width="50%">
-                    <Button icon="power-off" fluid selected={!enabled} onClick={() => set_enabled(false)}>Disabled</Button>
-                  </Stack.Item>
-                </Stack>
-              </Section>
-              <Section width="70%">
-                <Stack>
-                  <Stack.Item width="50%">
-                    <Button icon="bolt" fluid selected={!lethal} onClick={() => set_lethal(false)}>Stun</Button>
-                  </Stack.Item>
-                  <Stack.Item width="50%">
-                    <Button icon="skull-crossbones" fluid selected={lethal} onClick={() => set_lethal(true)}>Lethal</Button>
-                  </Stack.Item>
-                </Stack>
-              </Section>
+        {(!emagged && !locked) && (
+          <Box fontSize="16px">
+            <Section>
+              <Stack>
+                <Stack.Item grow={1}>
+                  <Button icon="exclamation-triangle" fluid selected={enabled} onClick={() => set_enabled(true)}>Enabled</Button>
+                </Stack.Item>
+                <Stack.Item grow={1}>
+                  <Button icon="power-off" fluid selected={!enabled} onClick={() => set_enabled(false)}>Disabled</Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+            <Section>
+              <Stack>
+                <Stack.Item grow={1}>
+                  <Button icon="bolt" fluid selected={!lethal} onClick={() => set_lethal(false)}>Stun</Button>
+                </Stack.Item>
+                <Stack.Item grow={1}>
+                  <Button icon="skull-crossbones" fluid selected={lethal} onClick={() => set_lethal(true)}>Lethal</Button>
+                </Stack.Item>
+              </Stack>
+            </Section>
+          </Box>
+        )}
+        {!emagged && !!locked && (
+          <Section>Panel locked, swipe ID card to unlock.</Section>
+        )}
+        {!!emagged && (
+          <Box py="20px">
+            <Box align="center" fontFamily="Courier New">
+              {glitch("ERROR: UNABLE TO READ AUTHORIZATION", 12)}
             </Box>
-          )}
-          {!emagged && !!locked && (
-            <Section>Panel locked, swipe ID card to unlock.</Section>
-          )}
-          {!!emagged && (
-            <Box py="20px">
-              <Box align="center" fontFamily="Courier New">
-                {glitch("ERROR: UNABLE TO READ AUTHORIZATION", 12)}
-              </Box>
-              <Box align="center" style={{ "font-size": "20px" }}>
-                {generate_kill(7)}
-              </Box>
+            <Box align="center" style={{ "font-size": "20px" }}>
+              {generate_kill(7)}
             </Box>
-          )}
-        </Box>
+          </Box>
+        )}
       </Window.Content>
     </Window>
   );

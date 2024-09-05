@@ -1,11 +1,11 @@
 //handheld device for manual calibration of siphon systems
 TYPEINFO(/obj/item/device/calibrator)
-	mats = list("CRY-1", "CON-1")
-
+	mats = list("crystal" = 1,
+				"conductive" = 1)
 /obj/item/device/calibrator
 	name = "harmonic systems calibrator"
 	icon_state = "calibrator"
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 5.0
 	w_class = W_CLASS_SMALL
@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 	New()
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, src.frequency)
 		..()
 
 	disposing()
@@ -449,6 +449,8 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		SPAWN(2 SECONDS)
 			for (var/obj/machinery/siphon/resonator/res in orange(4,src))
 				if (res.status & BROKEN) continue
+				var/turf/T = get_turf(res)
+				if (ON_COOLDOWN(T, "resonator_anti_stack", 1 DECI SECOND)) continue
 				var/xadj = res.x - src.x
 				var/yadj = res.y - src.y
 				if(abs(xadj) > 4 || abs(yadj) > 4) continue //this is apparently necessary?
@@ -652,6 +654,9 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				return
 		else if(istype(W,/obj/item/device/calibrator))
 			var/scalex = input(user,"Accepts values 0 through [src.max_intensity]","Adjust Intensity","1") as num
+			if(BOUNDS_DIST(src, user) > 1)
+				boutput(user, SPAN_NOTICE("You are too far away from [src] to calibrate it!"))
+				return
 			scalex = clamp(scalex,0,src.max_intensity)
 			src.intensity = scalex
 			src.update_fx()

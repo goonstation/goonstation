@@ -94,7 +94,7 @@ const HairPreview = (props, context) => {
     <Section width="140px" align="center">
       <Stack vertical>
         <Stack.Item>
-          <Image pixelated width="60px" height="100px" src={`${hairStyle["hair_icon"]}`} />
+          <Image width="60px" height="100px" src={`${hairStyle["hair_icon"]}`} />
         </Stack.Item>
         <Stack.Item>{hairName}</Stack.Item>
         <Stack.Item>

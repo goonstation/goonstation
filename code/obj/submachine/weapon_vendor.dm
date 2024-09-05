@@ -70,7 +70,7 @@
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
-		if (.)
+		if (. || GET_COOLDOWN(src, "anti-spam"))
 			return
 
 		switch(action)
@@ -78,6 +78,8 @@
 				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
 				if (src.credits[M.category] >= M.cost)
 					src.credits[M.category] -= M.cost
+					if (!M.cost)
+						ON_COOLDOWN(src, "anti-spam", 1 SECOND)
 					var/atom/A = new M.path(src.loc)
 					playsound(src.loc, sound_buy, 80, 1)
 					src.vended(A)
@@ -212,6 +214,16 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		switch(action) // Keep track of each purchase for the crew credits
+			if ("redeem")
+				var/datum/materiel/M = locate(params["ref"]) in materiel_stock
+				if (src.credits[M.category] >= M.cost && usr.mind.is_antagonist())
+					var/datum/antagonist/nuclear_operative/nukie = usr.mind.get_antagonist(ROLE_NUKEOP) || usr.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					nukie?.purchased_items.Add(M)
+		..()
+
 
 /obj/submachine/weapon_vendor/pirate
 	name = "Pirate Weapons Vendor"
@@ -509,12 +521,12 @@
 */
 /datum/materiel/utility/belt
 	name = "Tactical Espionage Belt"
-	path = /obj/item/storage/fanny/syndie
+	path = /obj/item/storage/fanny/syndie/large
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife
 	name = "Combat Knife"
-	path = /obj/item/dagger/syndicate/specialist
+	path = /obj/item/dagger/specialist
 	description = "A field-tested 10 inch combat knife, helps you move faster when held & knocks down targets when thrown."
 
 /datum/materiel/utility/rpg_ammo

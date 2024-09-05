@@ -103,14 +103,14 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if(overlay_image)
 			if(isliving(owner))
 				var/mob/living/L = owner
-				L.UpdateOverlays(overlay_image, id)
+				L.AddOverlays(overlay_image, id)
 
 	proc/OnRemove()  //Called when the effect is removed.
 		removed = 1
 		if(overlay_image)
 			if(isliving(owner))
 				var/mob/living/L = owner
-				L.UpdateOverlays(null, id)
+				L.ClearSpecificOverlays(id)
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		//Make sure you don't have more gaps than basepairs or youll get an error.
 		//But at that point the mutation would be unsolvable.
 
-		if(owner.blockGaps > length(blockListCurr))
+		if(src.owner.blockGaps > length(src.blockListCurr))
 			CRASH("bioEffect [owner.name] has [owner.blockGaps] block gaps but only [length(blockListCurr)] blocks")
 
 		for(var/i=0, i<owner.blockGaps, i++)
@@ -293,6 +293,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		linked_power = null
 		..()
 
+
 	castcheck(atom/target)
 		if (!owner)
 			return FALSE
@@ -335,3 +336,108 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		else
 			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power.")
 		return 0
+
+
+/datum/targetable/geneticsAbility/wrapper
+	var/wrapped_ability = null
+	var/datum/targetable/ability = null
+	var/list/override_params
+
+	New(datum/abilityHolder/holder)
+		ability = new wrapped_ability(holder)
+		src.holder = holder
+		src.name = ability.name
+		src.desc = ability.desc
+		src.disabled = ability.disabled
+		if( !src.cooldown ) src.cooldown = ability.cooldown
+		if( !src.max_range) src.max_range = ability.max_range
+		if( !src.start_on_cooldown ) src.start_on_cooldown = ability.start_on_cooldown
+
+		if(override_params && islist(override_params))
+			for(var/key in override_params)
+				if(hasvar(ability, key) && !(key in src.vars) && !isatom(override_params[key]))
+					ability.vars[key] = override_params[key]
+
+		src.pointCost = ability.pointCost
+		src.special_screen_loc = ability.special_screen_loc
+		src.helpable = ability.helpable
+
+		src.cd_text_color = ability.cd_text_color
+		src.copiable = ability.copiable
+		src.targeted = ability.targeted
+		src.target_anything = ability.target_anything
+		src.target_in_inventory = ability.target_in_inventory
+		src.target_nodamage_check = ability.target_nodamage_check
+		src.target_ghosts = ability.target_ghosts
+		src.target_selection_check = ability.target_selection_check
+		src.lock_holder = ability.lock_holder
+		src.ignore_holder_lock = ability.ignore_holder_lock
+		src.restricted_area_check = ability.restricted_area_check
+		src.check_range = ability.check_range
+		src.sticky = ability.sticky
+		src.ignore_sticky_cooldown = ability.ignore_sticky_cooldown
+		src.interrupt_action_bars = ability.interrupt_action_bars
+		src.cooldown_after_action = ability.cooldown_after_action
+		src.action_key_number = ability.action_key_number
+		src.waiting_for_hotkey = ability.waiting_for_hotkey
+		src.theme = ability.theme
+		src.tooltip_flags = ability.tooltip_flags
+
+		..()
+
+		if (!src.icon || !src.icon_state)
+			src.object.icon = ability.icon
+			src.object.icon_state = ability.icon_state
+		src.object.name = ability.name
+		src.object.desc = ability.desc
+
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		var/icon/overlay_icon = icon(src.ability.icon,src.ability.icon_state)
+		overlay_icon.Blend(icon('icons/mob/genetics_powers.dmi',"darkener"), ICON_ADD)
+		B.UpdateOverlays(image(overlay_icon), "ability_overlay")
+
+	onAttach(var/datum/abilityHolder/H)
+		..()
+
+	cast(atom/target)
+		if (..())
+			return 1
+		. = ability.cast(target)
+
+	handleCast(atom/target, params)
+		. = ..()
+		src.ability.last_cast = src.last_cast
+
+	// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
+	// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
+	tryCast(atom/target, params)
+		. = ability.tryCast(arglist(args))
+
+	updateObject()
+		. = ability.updateObject(arglist(args))
+
+	castcheck(atom/target)
+		. = ..() && ability.castcheck(arglist(args))
+
+	afterCast()
+		. = ability.afterCast(arglist(args))
+
+	afterAction()
+		. = ability.afterAction(arglist(args))
+
+	Stat()
+		updateObject(holder.owner)
+		stat(null, object)
+		. = ability.Stat(arglist(args))
+
+	// See comment in /atom/movable/screen/ability (Convair880).
+	target_reference_lookup()
+		. = ability.target_reference_lookup(arglist(args))
+
+	display_available()
+		. = ..() && ability.display_available(arglist(args))
+
+	flip_callback()
+		. = ability.flip_callback(arglist(args))

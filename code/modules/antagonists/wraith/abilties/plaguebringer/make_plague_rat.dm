@@ -77,7 +77,7 @@
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
 		if (lucky_dude.add_subordinate_antagonist(ROLE_PLAGUE_RAT, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "plague rat", src.holder.owner)
-			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
+			message_admins("[key_name(lucky_dude)] respawned as a plague rat for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)
 		W.spawn_marker = null

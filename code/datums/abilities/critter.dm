@@ -80,4 +80,3 @@
 
 	cast(atom/target)
 		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)

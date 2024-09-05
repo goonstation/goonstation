@@ -99,7 +99,7 @@ TYPEINFO(/obj/item/device/audio_log)
 		max_lines = 30
 
 		attack_hand(mob/user)
-			return attack_self(user)
+			return src.AttackSelf(user)
 
 		updateSelfDialog()
 			return updateUsrDialog()

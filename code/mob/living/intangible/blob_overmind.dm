@@ -310,7 +310,10 @@
 			src.update_buttons()
 			return
 		else
-			if(params["right"])
+			if(params["left"])
+				var/datum/blob_ability/spread_abil = src.get_ability(/datum/blob_ability/spread)
+				spread_abil?.onUse(T)
+			else if(params["right"])
 				if (T && (!isghostrestrictedz(T.z) || (isghostrestrictedz(T.z) && restricted_z_allowed(src, T)) || src.tutorial || (src.client && src.client.holder)))
 					if (src.tutorial)
 						if (!tutorial.PerformAction("clickmove", T))
@@ -592,6 +595,25 @@
 		src.hat = hat
 		hat.set_loc(src)
 
+	proc/go_critical() //I'm sure this won't turn out to be a bad idea
+		SPAWN(0)
+			while (TRUE)
+				if (prob(10)) //pfff sure
+					sleep(1)
+				var/emergency_var = 0 //no infinite loops if we *really* can't find one
+				var/obj/blob/blob = pick(by_type[/obj/blob])
+				while ((blob.surrounded == (NORTH | SOUTH | EAST | WEST)) && emergency_var < 100)
+					blob = pick(by_type[/obj/blob])
+					emergency_var++
+				if (!blob) //give up and try again next iteration
+					continue
+				for (var/dir in cardinal)
+					if (!(blob.surrounded & dir))
+						var/turf/T = get_step(blob, dir)
+						if (T?.can_blob_spread_here(skip_adjacent = TRUE))
+							var/obj/blob/new_blob = new(T)
+							new_blob.setOvermind(blob.overmind)
+							blob.overmind.total_placed++
 
 /atom/movable/screen/blob
 	plane = PLANE_HUD

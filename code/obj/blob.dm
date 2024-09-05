@@ -40,6 +40,7 @@
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
 	var/processed_on_killed = FALSE //! Whether onKilled already ran
+	var/surrounded = 0 //! bitfield of dirs we have other blob tiles around us on
 
 	New()
 		..()
@@ -321,7 +322,7 @@
 		act1 = pick_string("blob.txt", "act1_[adj1]")
 		adj1 = pick_string("blob.txt", "adj1_[adj1]")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
-		src.visible_message(SPAN_COMBAT("<b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!"))
+		src.visible_message(SPAN_COMBAT("<b>[user.name]</b> [adj1] [act1] [src]! That's [adj2] [act2]!"), group="blobnuzzled")
 		return
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -497,6 +498,7 @@
 				if (B)
 					dirs |= dir
 			icon_state = num2text(dirs)
+			src.surrounded = dirs
 
 		//else if(istext( special_icon ))
 		//	if(!BLOB_OVERLAYS[ special_icon ])
@@ -921,7 +923,7 @@
 		. = ..()
 		dead = 1
 		if(absorbed_temp > 1000)
-			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
+			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range, chemfire = CHEM_FIRE_RED)
 
 
 /obj/blob/plasmaphyll
@@ -1018,7 +1020,7 @@
 	health_max = 75
 	can_absorb = 0
 	gas_impermeable = TRUE
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 
 	New()
 		..()
@@ -1048,7 +1050,7 @@
 	gas_impermeable = TRUE
 	health = 40
 	health_max = 40
-	flags = ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 
 	New()
 		..()

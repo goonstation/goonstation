@@ -31,6 +31,19 @@
 	density = 0
 	anchored = ANCHORED
 
+// MISC DECOR
+
+/obj/item/decoration/photoframe
+	name = "little photo frame"
+	desc = "Someone has left the sample photo of a dog in this frame, how delightful."
+	icon = 'icons/misc/walp_decor.dmi'
+	icon_state = "picframe_brown"
+
+	black
+		icon_state = "picframe_black"
+
+// CRITTERS
+
 /obj/critter/domestic_bee/walp_bee
 	name = "pastel bee"
 	desc = "This bee is highly A E S T H E T I C."

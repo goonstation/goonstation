@@ -920,7 +920,7 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/buttcoin,
 		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
@@ -1496,10 +1496,13 @@
 	min_amt2spawn = 2
 	max_amt2spawn = 2
 	rare_chance = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/bad,
-						/obj/item/reagent_containers/food/snacks/pizza/pepperbad,
-						/obj/item/reagent_containers/food/snacks/pizza/mushbad)
+	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/cargo/cheese,
+						/obj/item/reagent_containers/food/snacks/pizza/cargo/pepperoni,
+						/obj/item/reagent_containers/food/snacks/pizza/cargo/mushroom)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+	one
+		amt2spawn = 1
 
 /obj/random_item_spawner/cola
 	name = "random cola spawner"
@@ -1513,6 +1516,9 @@
 						/obj/item/reagent_containers/food/drinks/bottle/soda/orange,
 						/obj/item/reagent_containers/food/drinks/bottle/soda/grones)
 	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
+
+	one
+		amt2spawn = 1
 
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
@@ -1536,7 +1542,7 @@
 						/obj/item/clothing/head/odlawhat,
 						/obj/item/clothing/head/fake_waldohat,
 						/obj/item/clothing/head/flatcap,
-						/obj/item/clothing/head/devil,
+						/obj/item/clothing/head/headband/devil,
 						/obj/item/clothing/head/biker_cap,
 						/obj/item/clothing/head/mj_hat,
 						/obj/item/clothing/head/genki,
@@ -1576,6 +1582,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd,
 						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/giraffehat,
 						/obj/item/clothing/head/mushroomcap/random)
 
 	one
@@ -1649,6 +1656,75 @@
 						/obj/item/clothing/shoes/virtual,
 						/obj/item/clothing/shoes/witchfinder,
 						/obj/item/clothing/shoes/ziggy)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
+/obj/random_item_spawner/formalclothes
+	name = "formal clothing spawner"
+	icon_state = "rand_gimmick"
+	min_amt2spawn = 5
+	max_amt2spawn = 10
+	items2spawn = list(/obj/item/clothing/under/gimmick/red_wcoat,
+						/obj/item/clothing/under/gimmick/black_wcoat,
+						/obj/item/clothing/under/gimmick/blue_wcoat,
+						/obj/item/clothing/under/rank/bartender/tuxedo,
+						/obj/item/clothing/under/redtie,
+						/obj/item/clothing/under/shirt_pants_w/blacktie,
+						/obj/item/clothing/under/shirt_pants_w/bluetie,
+						/obj/item/clothing/under/shirt_pants_w/redtie,
+						/obj/item/clothing/under/shirt_pants_w,
+						/obj/item/clothing/under/shirt_pants_br/blacktie,
+						/obj/item/clothing/under/shirt_pants_br/bluetie,
+						/obj/item/clothing/under/shirt_pants_br/redtie,
+						/obj/item/clothing/under/shirt_pants_br,
+						/obj/item/clothing/under/shirt_pants_b/blacktie,
+						/obj/item/clothing/under/shirt_pants_b/redtie,
+						/obj/item/clothing/under/shirt_pants_b/bluetie,
+						/obj/item/clothing/under/shirt_pants_b,
+						/obj/item/clothing/under/gimmick/butler,
+						/obj/item/clothing/under/misc/dress,
+						/obj/item/clothing/under/misc/dress/red,
+						/obj/item/clothing/suit/dressb,
+						/obj/item/clothing/under/misc/fancy_vest)
 
 	one
 		amt2spawn = 1
@@ -1800,9 +1876,9 @@
 	/obj/item/gun/kinetic/pistol,
 	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,
@@ -1983,13 +2059,13 @@
 		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
 		/obj/item/reagent_containers/food/snacks/plant/potato,
 		/obj/item/reagent_containers/food/snacks/plant/pumpkin,
-		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
 		/obj/item/reagent_containers/food/snacks/plant/garlic,
 		/obj/item/reagent_containers/food/snacks/plant/eggplant,
 		/obj/item/reagent_containers/food/snacks/plant/turmeric,
 		/obj/item/reagent_containers/food/snacks/plant/mustard,
 		/obj/item/reagent_containers/food/snacks/plant/bamboo,
-		/obj/item/reagent_containers/food/snacks/plant/soylent
+		/obj/item/reagent_containers/food/snacks/plant/soy/soylent
 	)
 
 	New()
@@ -2007,7 +2083,7 @@
 		// Exclude toxic / dangerous / fruits or subtypes
 		items2spawn -= list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
 			/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
-			/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
 			/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
 			/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
 			/obj/item/reagent_containers/food/snacks/plant/purplegoop,

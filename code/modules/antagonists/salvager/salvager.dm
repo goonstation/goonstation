@@ -15,7 +15,7 @@
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
-
+		H.traitHolder.removeAll()
 		// You are... no one...
 		randomize_look(H, change_gender=FALSE)
 		H.bioHolder.mobAppearance.flavor_text = null
@@ -129,7 +129,7 @@
 	slot_foot = list()
 	slot_back = list()
 	slot_belt = list()
-	spawn_id = 0
+	spawn_id = FALSE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 

@@ -176,6 +176,6 @@ obj/decal/teleport_mark
 		..()
 		for(var/obj/O in location)
 			if(O == src) continue
-			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
+			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/fakeobject/teleport_pad) )
 				qdel(src)
 				return

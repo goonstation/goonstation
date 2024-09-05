@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/injector_belt)
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 
 	var/can_trigger = 1
@@ -128,16 +128,17 @@ TYPEINFO(/obj/item/injector_belt)
 
 //////////////////////////////////////
 
-TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
+TYPEINFO(/obj/item/clothing/mask/injector_mask)
 	mats = 10
 
-/obj/item/clothing/mask/gas/injector_mask
+/obj/item/clothing/mask/injector_mask
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
-	flags = FPRINT | TABLEPASS  | NOSPLASH
-	c_flags =  COVERSMOUTH | MASKINTERNALS
+	flags = TABLEPASS  | NOSPLASH
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
+	c_flags =  COVERSMOUTH | MASKINTERNALS | BLOCKSMOKE
+	w_class = W_CLASS_NORMAL
 
 	var/can_trigger = 1
 	var/mob/owner = null
@@ -408,7 +409,7 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 		return 1
 
 	check_trigger(mob/M)
-		if(M.getStatusDuration("stunned") || M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || isunconscious(M)) return 1
+		if(M.getStatusDuration("stunned") || M.getStatusDuration("unconscious") || M.getStatusDuration("knockdown") || isunconscious(M)) return 1
 		else return 0
 
 /datum/injector_belt_condition/life
@@ -494,10 +495,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 
 /proc/autoinjector_ui_act(obj/source, action, params, mob/user, var/maximum_volume)
 	var/obj/item/injector_belt/current_belt = null
-	var/obj/item/clothing/mask/gas/injector_mask/current_mask = null
+	var/obj/item/clothing/mask/injector_mask/current_mask = null
 	if (istype(source, /obj/item/injector_belt))
 		current_belt = source
-	else if (istype(source, /obj/item/clothing/mask/gas/injector_mask))
+	else if (istype(source, /obj/item/clothing/mask/injector_mask))
 		current_mask = source
 
 	switch(action)

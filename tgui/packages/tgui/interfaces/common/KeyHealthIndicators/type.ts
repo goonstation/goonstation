@@ -31,7 +31,3 @@ export interface BrainDamageData {
   desc: string
   color: string
 }
-
-export interface DisplayBrainProps extends DisplayOccupiedProps {
-  status: BrainDamageData
-}

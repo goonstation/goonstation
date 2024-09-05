@@ -89,7 +89,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	desc = "A makeshift mechanical vest set to trigger a payload when the user dies."
 	icon_state = "bombvest0"
 	item_state = "armorvest"
-	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0
@@ -496,3 +496,68 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/gang
+	name = "light armor vest"
+	desc = "A minimalist plate carrier strapped to your torso. Provides as much protection as you can get without cramping your style."
+	icon = 'icons/obj/items/gang.dmi'
+	icon_state = "lightvest"
+	item_state = "lightvest"
+	body_parts_covered = TORSO
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 0.5)
+
+TYPEINFO(/obj/item/clothing/suit/armor/tacticalvest)
+	mat_appearances_to_ignore = list("carbonfibre")
+
+/obj/item/clothing/suit/armor/tacticalvest // Using own type to avoid having to mess with all the attackby junk with armor vests
+	name = "tactical vest"
+	desc = "A tactical vest with carrying pouches on the front. Contains carbon fibres."
+	icon_state = "armorvest"
+	item_state = "armorvest"
+	body_parts_covered = TORSO
+	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
+	mat_changename = FALSE
+	default_material = "carbonfibre"
+	var/maxslots = 3
+
+	New()
+		..()
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_POCKET_SIZED, slots = maxslots, opens_if_worn = TRUE)
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 1)
+
+
+/obj/item/clothing/suit/armor/tacticalvest/light
+	name = "light tactical vest"
+	desc = "A lightweight tactical vest with lots of carrying pouches on the front. It only offers minor protections. Contains carbon fibres."
+	icon_state = "armorvest-light"
+	item_state = "armorvest-light"
+	maxslots = 5
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
+
+/obj/item/clothing/suit/armor/tacticalvest/heavy
+	name = "heavy tactical vest"
+	desc = "A heavy duty tactical vest with lots of carrying pouches on the front. Contains carbon fibres."
+	icon_state = "heavy"
+	item_state = "heavy"
+	maxslots = 5
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 8)
+		setProperty("rangedprot", 1.5)
+		setProperty("disorient_resist", 10)
+		setProperty("movespeed", 0.75)

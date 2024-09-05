@@ -19,7 +19,6 @@
 	icon = 'icons/obj/writing.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "pen"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY
@@ -731,6 +730,7 @@
 
 			src.remove_filter("reagent_coloration")
 			src.reset_color()
+		G.name = null
 
 	get_desc()
 		. = ..()
@@ -885,7 +885,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 	rand_pos = 1
 
@@ -1130,7 +1130,7 @@
 		src.update()
 		user.update_inhands()
 		SPAWN(0)
-			attack_self(user)
+			src.AttackSelf(user)
 			return
 		return
 
@@ -1327,7 +1327,7 @@
 					src.display_booklet_contents(usr,page_num)
 			if ("title_page")
 				if (cur_page.loc.loc == usr)
-					cur_page.attack_self(usr)
+					cur_page.AttackSelf(usr)
 			if ("title_book")
 				src.give_title(usr)
 			if ("first_page")
@@ -1420,7 +1420,6 @@
 	desc = "A portable typewriter, whoa!"
 	icon_state = "portable_typewriter"
 	icon = 'icons/obj/writing.dmi'
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	throwforce = 0
 	w_class = W_CLASS_TINY

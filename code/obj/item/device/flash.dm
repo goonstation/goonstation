@@ -1,6 +1,7 @@
 TYPEINFO(/obj/item/device/flash)
-	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
-
+	mats = list("metal" = 3,
+				"conductive" = 5,
+				"crystal" = 5)
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
@@ -11,7 +12,7 @@ TYPEINFO(/obj/item/device/flash)
 	throw_speed = 4
 	throw_range = 10
 	click_delay = COMBAT_CLICK_DELAY
-	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	flags = TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
@@ -269,7 +270,7 @@ TYPEINFO(/obj/item/device/flash)
 				var/dist = GET_DIST(get_turf(src),M)
 				dist = min(dist,4)
 				dist = max(dist,1)
-				M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+				M.apply_flash(20, knockdown = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 
 
 	// Handle bulb wear.
@@ -369,7 +370,7 @@ TYPEINFO(/obj/item/device/flash)
 
 /obj/item/device/flash/emp_act()
 	if(iscarbon(src.loc))
-		src.attack_self()
+		src.AttackSelf()
 	return
 
 // The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).
@@ -477,7 +478,7 @@ TYPEINFO(/obj/item/device/flash/revolution)
 
 	proc/finish_conversion(mob/living/M, mob/user)
 		M.mind?.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_CONVERTED)
-		M.setStatus("weakened", 5 SECONDS)
+		M.setStatus("knockdown", 5 SECONDS)
 		ON_COOLDOWN(global, "conspiracy_convert", src.convert_cooldown)
 		for (var/datum/mind/antag in ticker.mode.traitors)
 			if (antag.get_antagonist(ROLE_CONSPIRATOR))

@@ -115,7 +115,7 @@
 						var/obj/minion = new src.mob_type(chosen_turf)
 						if (ismobcritter(minion))
 							var/mob/living/critter/C = minion
-							C.faction |= FACTION_WRAITH
+							LAZYLISTADDUNIQUE(C.faction, FACTION_WRAITH)
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)

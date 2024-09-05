@@ -50,9 +50,9 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	icon_state = "synthesizer"
 	anchored = ANCHORED
 	density = 0
-	var/glass_amt = 0
+	var/glass_amt = 5
 	var/list/product_list = list()
-	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = NOSPLASH | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
@@ -164,6 +164,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("cocktail", /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail, 1)
 		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("pint", /obj/item/reagent_containers/food/drinks/drinkingglass/pint, 1)
 
 	proc/create(var/type, mob/user)
 		var/datum/glass_product/target_product = null
@@ -228,6 +229,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/chemistry //Chemistry doesn't really need all of the drinking glass options and such so I'm limiting it down a notch.
 	name = "chemistry glass recycler"
+	glass_amt = 15
 
 	get_products()
 		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
@@ -242,6 +244,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 /obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
 	name = "kitchen glass recycler"
+	glass_amt = 20
 
 	get_products()
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
@@ -251,6 +254,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
 		product_list += new /datum/glass_product("wine", /obj/item/reagent_containers/food/drinks/drinkingglass/wine, 1)
 		product_list += new /datum/glass_product("cocktail", /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail, 1)
+		product_list += new /datum/glass_product("pint", /obj/item/reagent_containers/food/drinks/drinkingglass/pint, 1)
 		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
 		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
 		product_list += new /datum/glass_product("longbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/long, 2)

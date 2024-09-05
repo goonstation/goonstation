@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/plant_gene_strain)
 /datum/plant_gene_strain
 	var/name = null                 // self-explanatory
 	var/desc = null                 // this too
@@ -6,10 +7,12 @@
 	var/negative = 0                // is this mutation something you shouldn't want?
 	var/process_proc_chance = 100   // on_process's chance of actually occurring per call
 
-	proc/on_process(var/obj/machinery/plantpot/PP)
+	proc/on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (!PP)
 			return 1
 		if (!PP.current)
+			return 1
+		if (!growth_tick)
 			return 1
 		if (!prob(process_proc_chance))
 			return 1
@@ -126,6 +129,12 @@
 	name = "Fast Metabolism"
 	desc = "This gene causes a plant to grow faster, but also consume water more rapidly."
 
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
+		if (..())
+			return
+		growth_tick.tick_multiplier += 0.5
+		growth_tick.water_consumption += 1
+
 /datum/plant_gene_strain/inert
 	name = "Inert"
 	desc = "This gene causes the plants produce to spawn, most of the time, without additional chemicals."
@@ -134,32 +143,38 @@
 	name = "Slow Metabolism"
 	desc = "This gene slows the growth of a plant, but reduces water consumption."
 
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
+		if (..())
+			return
+		growth_tick.tick_multiplier -= 0.25
+		growth_tick.water_consumption -= 0.5
+
 /datum/plant_gene_strain/growth_fast
 	name = "Rapid Growth"
 	desc = "This gene causes a plant to grow more rapidly with no drawbacks."
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
-		PP.growth += 2
+		growth_tick.growth_rate += 2
 
 /datum/plant_gene_strain/growth_slow
 	name = "Stunted Growth"
 	desc = "This gene slows down a plant's growth rate."
 	negative = 1
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
 		if (PP.growth > 1)
-			PP.growth--
+			growth_tick.growth_rate -= 1
 
 /datum/plant_gene_strain/invasive
 	name = "Invasive Growth"
 	desc = "This gene causes the plant to take over other trays and grow onto other plants."
 	chance = 4 //this is a rare gene that is worth hunting for
 
-	on_process(var/obj/machinery/plantpot/carrying_plantpot)
+	on_process(var/obj/machinery/plantpot/carrying_plantpot, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
 		var/damage_to_other_plants = 10 // the amount of damage the plant deals to other plants
@@ -172,7 +187,7 @@
 		if (istype(current_planttype, /datum/plant/artifact/creeper))
 			return
 		// We check for the health treshold and if we have grown sufficiently
-		if (carrying_plantpot.growth > (current_planttype.growtime - current_plantgenes?.get_effective_value("growtime")) && carrying_plantpot.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+		if (carrying_plantpot.get_current_growth_stage() >= HYP_GROWTH_MATURED && carrying_plantpot.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
 			for (var/obj/machinery/plantpot/checked_plantpot in range(1,carrying_plantpot))
 				var/datum/plant/growing = checked_plantpot.current
 				// We don't try to destroy plants of our own type and cannot attack crystals
@@ -266,12 +281,11 @@
 	name = "Poor Health"
 	desc = "A harmful gene strain that will cause gradual and continuous damage to the plant."
 	negative = 1
-	process_proc_chance = 24
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
-		PP.HYPdamageplant("frailty",1)
+		growth_tick.health_change -= 0.24
 
 /datum/plant_gene_strain/seedless
 	name = "Seedless"
@@ -288,7 +302,7 @@
 	process_proc_chance = 1
 	negative = 1
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
 		PP.HYPkillplant()
@@ -296,12 +310,11 @@
 /datum/plant_gene_strain/unstable
 	name = "Unstable"
 	desc = "Weakening of the genetic structure will cause this plant to mutate by itself."
-	process_proc_chance = 18
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
-		PP.HYPmutateplant(1)
+		growth_tick.mutation_severity += 0.18
 
 /datum/plant_gene_strain/stabilizer
 	name = "Stabilizer"
@@ -310,25 +323,23 @@
 /datum/plant_gene_strain/accelerator
 	name = "Accelerator"
 	desc = "A highly rare gene strain that will cause the plant to gradually improve its own growth rate."
-	process_proc_chance = 10
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
-		var/datum/plantgenes/DNA = PP.plantgenes
-		DNA.growtime++
-		DNA.harvtime++
+		growth_tick.growtime_bonus += 0.1
+		growth_tick.harvtime_bonus += 0.1
 
 /datum/plant_gene_strain/photosynthesis
 	name = "Advanced Photosynthesis"
 	desc = "A chlorophyll mutation causing the plant to respond very well to high amounts of light."
 
-	on_process(var/obj/machinery/plantpot/PP)
+	on_process(var/obj/machinery/plantpot/PP, var/datum/plantgrowth_tick/growth_tick)
 		if (..())
 			return
 		var/turf/T = PP.loc
 		if (istype(T,/turf/) && T.RL_GetBrightness() >= 1)
-			PP.growth += 2
+			growth_tick.growth_rate += 2
 
 /datum/plant_gene_strain/variable_harvest
 	name = "Variable Harvest"

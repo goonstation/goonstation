@@ -26,7 +26,8 @@
 	/datum/commodity/trader/buford/groboost,
 	/datum/commodity/trader/buford/fruitful,
 	/datum/commodity/trader/buford/topcrop,
-	/datum/commodity/trader/buford/weedkiller)// 8
+	/datum/commodity/trader/buford/weedkiller,
+	/datum/commodity/trader/buford/methane)
 
 	dialogue_greet = list("Hey man. Got the good shit for sale, yeah.",
 	"Sup brother, what's goin' on. Got the damn fresh shit for you here.",
@@ -148,6 +149,14 @@
 	price_boundary = list(PAY_UNTRAINED/4,PAY_UNTRAINED)
 	possible_names = list("Selling some good ol' weedkiller. Got any shitty plants, douse em with this.",
 	"Weedkiller for sale. Like, for shitty weeds, not good weed. Ha ha.")
+
+/datum/commodity/trader/buford/methane
+	comname = "Methane canister"
+	comtype = /obj/machinery/portable_atmospherics/canister/methane
+	amount = 1
+	price_boundary = list(PAY_EXECUTIVE, PAY_EMBEZZLED) //a little expensive
+	possible_names = list("Big ol' canister of stink, don't ask where it comes from.",
+	"Probably won't get you high but it's worth a shot. Maybe.")
 
 // Buford wants these things
 

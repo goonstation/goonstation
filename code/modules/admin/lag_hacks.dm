@@ -5,6 +5,7 @@ client/proc/show_admin_lag_hacks()
 	set desc = "A few janky commands that can smooth the game during an Emergency."
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	src.holder.show_laghacks(src.mob)
 
 /datum/admins/proc/show_laghacks(mob/user)
@@ -50,6 +51,7 @@ client/proc/lightweight_mobs()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (processScheduler.hasProcess("Mob"))
 		var/datum/controller/process/mobs/M = processScheduler.nameToProcessMap["Mob"]
@@ -69,6 +71,7 @@ client/proc/slow_fluids()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (processScheduler.hasProcess("Fluid_Groups"))
 		var/datum/controller/process/fluid_group/P = processScheduler.nameToProcessMap["Fluid_Groups"]
@@ -86,6 +89,7 @@ client/proc/slow_atmos()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (processScheduler.hasProcess("Atmos"))
 		var/datum/controller/process/P = processScheduler.nameToProcessMap["Atmos"]
@@ -103,6 +107,7 @@ client/proc/slow_ticklag()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	//var/prev = world.tick_lag
 	//world.tick_lag = OVERLOADED_WORLD_TICKLAG
@@ -118,6 +123,7 @@ client/proc/disable_deletions()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (processScheduler.hasProcess("DeleteQueue"))
 		var/datum/controller/process/P = processScheduler.nameToProcessMap["DeleteQueue"]
@@ -132,6 +138,7 @@ client/proc/disable_ingame_logs()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (disable_log_lists)
 		disable_log_lists = 0

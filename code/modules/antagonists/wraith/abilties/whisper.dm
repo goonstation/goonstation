@@ -22,7 +22,7 @@
 			else
 				var/message = html_encode(tgui_input_text(usr, "What would you like to whisper to [target]?", "Whisper"))
 				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
-				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
+				message = ghostify_message(trimtext(copytext(sanitize(message), 1, 255)))
 				if (!message)
 					return 1
 				boutput(usr, "<b>You whisper to [target]:</b> [message]")

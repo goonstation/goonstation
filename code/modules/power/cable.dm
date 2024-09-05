@@ -11,7 +11,8 @@
 	if(powernets && length(powernets) >= netnum)
 		PN = powernets[netnum]
 
-	elecflash(src)
+	if (PN?.avail > 0)
+		elecflash(src)
 
 	if(ignore_range || in_interact_range(src, user))
 		return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)

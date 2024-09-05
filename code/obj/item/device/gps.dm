@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/gps)
 	var/distress = 0
 	var/active = 0		//probably should
 	var/atom/tracking_target = null		//unafilliated with allowtrack, which essentially just lets your gps appear on other gps lists
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
@@ -241,7 +241,7 @@ TYPEINFO(/obj/item/device/gps)
 		serial = rand(4201,7999)
 		START_TRACKING
 		src.net_id = generate_net_id(src)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	get_desc(dist, mob/user)
 		. = "<br>Its serial code is [src.serial]-[identifier]."

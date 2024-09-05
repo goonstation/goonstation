@@ -42,6 +42,7 @@ var/global/datum/phrase_log/phrase_log = new
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
+	var/PANIC = FALSE
 
 	New()
 		..()
@@ -103,7 +104,11 @@ var/global/datum/phrase_log/phrase_log = new
 			@"sadge",
 			@"\bmorb(?!id)",
 			@"1984",
-			@"skibidi"
+			@"skibidi",
+			@"gyatt",
+			@"\brizz",
+			@"griddy",
+			@"ohio",
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
@@ -122,11 +127,17 @@ var/global/datum/phrase_log/phrase_log = new
 
 	proc/load()
 		if(fexists(src.uncool_words_filename))
-			uncool_words = regex(jointext(json_decode(file2text(src.uncool_words_filename)),"|"), "i")
+			uncool_words = regex("([jointext(json_decode(file2text(src.uncool_words_filename)),"|")])", "i")
 		if(fexists(src.filename))
 			src.phrases = json_decode(file2text(src.filename))
 		else
 			src.phrases = list()
+
+		if(!islist(src.phrases))
+			PANIC = TRUE
+			ircbot.export("admin", list("msg" = "<@480972525703266314> Holy fuck phrase_log is panicing come fix it"))
+			src.phrases = list()
+
 		src.original_lengths = list()
 		for(var/category in src.phrases)
 			src.original_lengths[category] = length(src.phrases[category])
@@ -158,18 +169,24 @@ var/global/datum/phrase_log/phrase_log = new
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Sussy word - [key_name(user)] [category]: \"[phrase]\""))
 		#ifdef RP_MODE
-		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
+		if(category != "ooc" && category != "looc" && !(category == "deadsay" || (user && inafterlife(user))) && is_ic_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
 		if(is_uncool(phrase))
+			phrase = replacetext(phrase, src.uncool_words, "**$1**")
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
-			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
+			if (user.being_controlled)
+				ircmsg["msg"] = "WAS FORCED TO trigger the uncool word detection USING WITCHCRAFT OR SOMETHING: [category]: \"[phrase]\""
+			else
+				ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
 			SPAWN(0)
 				ircbot.export("admin", ircmsg)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, SPAN_ADMIN("Uncool word - [key_name(user)] [category]: \"[phrase]\""))
 			return
+		if(length(phrase) > 4000)
+			return //for massive papers etc
 		if(category in src.phrases)
 			if(no_duplicates)
 				src.phrases[category] |= phrase
@@ -200,7 +217,7 @@ var/global/datum/phrase_log/phrase_log = new
 		rustg_file_write(file2text(new_uncool), src.uncool_words_filename)
 
 	proc/save()
-		if(isnull(src.phrases))
+		if(isnull(src.phrases) || PANIC)
 			return
 		for(var/category in src.phrases)
 			var/list/phrases = src.phrases[category]
@@ -214,6 +231,17 @@ var/global/datum/phrase_log/phrase_log = new
 						phrases.Swap(i, rand(i, length(phrases)))
 				src.phrases[category] = phrases.Copy(1, src.max_length + 1)
 		rustg_file_write(json_encode(src.phrases), src.filename)
+
+	proc/export_file_to_client()
+		if(fexists(src.filename))
+			usr << ftp(file(src.filename))
+
+	proc/import_file_and_stop_panic()
+		var/F = input(usr, "json file") as file|null
+		if(F)
+			src.phrases = json_decode(file2text(F))
+		if(islist(src.phrases))
+			PANIC = FALSE
 
 	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
 	proc/random_api_phrase(category)
@@ -230,10 +258,10 @@ var/global/datum/phrase_log/phrase_log = new
 			for (var/datum/apiModel/entry in randomEntries.entries)
 				switch(category)
 					if("ai_laws")
-						if(entry["uploader_name"] != "Random Event")
-							new_phrases += entry["law_text"]
+						if(entry:uploader_name != "Random Event")
+							new_phrases += entry:law_text
 					if("tickets", "fines")
-						new_phrases += entry["reason"]
+						new_phrases += entry:reason
 			src.cached_api_phrases[category] = new_phrases
 
 		var/list/L = src.cached_api_phrases[category]
@@ -259,7 +287,7 @@ var/global/datum/phrase_log/phrase_log = new
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))
 				if(replace_names)
-					. = src.name_regex.Replace(., PROC_REF(random_station_name_replacement_proc))
+					. = src.name_regex.Replace(., /datum/phrase_log/proc/random_station_name_replacement_proc)
 				return
 		return null
 

@@ -168,10 +168,10 @@
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
 						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME, mult)
-					else if (isturf(owner.loc))
+					else if (isturf(owner.loc) || ismob(owner.loc))
 						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
-
-						breath = owner.loc.remove_air(breath_moles)
+						var/turf/T = get_turf(owner)
+						breath = T?.remove_air(breath_moles)
 
 				else //Still give containing object the chance to interact
 					underwater = 0 // internals override underwater state
@@ -214,12 +214,13 @@
 	///Return value is the number of lungs that successfully breathed
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		var/datum/organ_status/lung/status_updates = new
-		if (owner.nodamage)
-			src.update_breath_hud(status_updates)
-			return
 		var/area/A = get_area(owner)
-		if( A?.sanctuary )
+		if( A?.sanctuary || owner.nodamage )
 			src.update_breath_hud(status_updates)
+			if (owner.losebreath)
+				owner.losebreath = 0
+			if (owner.get_oxygen_deprivation())
+				owner.take_oxygen_deprivation(-50 * mult)
 			return
 		// Looks like we're in space
 		// or with recent atmos changes, in a room that's had a hole in it for any amount of time, so now we check src.loc

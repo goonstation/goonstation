@@ -75,6 +75,6 @@ TYPEINFO(/datum/component/bullet_holes)
 	src.impact_image_base.overlays = null
 	for (var/image/impact_image in src.impact_images)
 		src.impact_image_base.overlays += impact_image
-	A.UpdateOverlays(src.impact_image_base, "projectiles")
+	A.AddOverlays(src.impact_image_base, "projectiles")
 
 #undef MAX_OFFSET

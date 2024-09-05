@@ -1,24 +1,3 @@
-/mob/living/carbon/human/proc/give_lizard_powers()
-	if (ishuman(src)) // not4long
-		var/datum/abilityHolder/lizard/A = src.get_ability_holder(/datum/abilityHolder/lizard)
-		if (A && istype(A))
-			return
-		var/datum/abilityHolder/lizard/W = src.add_ability_holder(/datum/abilityHolder/lizard)
-		W.addAbility(/datum/targetable/lizardAbility/colorshift)
-		W.addAbility(/datum/targetable/lizardAbility/colorchange)
-		W.addAbility(/datum/targetable/lizardAbility/regrow_tail)
-	else return
-
-/mob/living/carbon/human/proc/remove_lizard_powers()
-	if (ishuman(src))
-		var/datum/abilityHolder/lizard/W = src.get_ability_holder(/datum/abilityHolder/lizard)
-		if (W && istype(W))
-			W.removeAbility(/datum/targetable/lizardAbility/colorshift)
-			W.removeAbility(/datum/targetable/lizardAbility/colorchange)
-			W.removeAbility(/datum/targetable/lizardAbility/regrow_tail)
-			src.remove_ability_holder(/datum/abilityHolder/lizard)
-	else return
-
 /mob/living/carbon/human/proc/update_lizard_parts()
 	if (ishuman(src))
 		var/mob/living/carbon/human/liz = src
@@ -121,14 +100,14 @@
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
 
-			var/col1 = AHs.customization_first_color
-			var/col2 = AHs.customization_second_color
-			var/col3 = AHs.customization_third_color
+			var/col1 = AHs.customizations["hair_bottom"].color
+			var/col2 = AHs.customizations["hair_middle"].color
+			var/col3 = AHs.customizations["hair_top"].color
 
-			AHs.customization_first_color = col3
-			AHs.customization_second_color = col1
-			AHs.customization_third_color = col2
-			AHs.s_tone = AHs.customization_first_color
+			AHs.customizations["hair_bottom"].color = col3
+			AHs.customizations["hair_middle"].color = col1
+			AHs.customizations["hair_top"].color = col2
+			AHs.s_tone = AHs.customizations["hair_bottom"].color
 
 			L.visible_message(SPAN_NOTICE("<b>[L.name]</b> changes colors!"))
 			L.update_lizard_parts()
@@ -193,14 +172,14 @@
 		var/spot
 		switch(region)
 			if (1)
-				AHliz.customization_first_color = color
+				AHliz.customizations["hair_bottom"].color = color
 				AHliz.s_tone = color
 				spot = "skin"
 			if (2)
-				AHliz.customization_second_color = color
+				AHliz.customizations["hair_middle"].color = color
 				spot = "belly splotch"
 			if (3)
-				AHliz.customization_third_color = color
+				AHliz.customizations["hair_top"].color = color
 				spot = "head thing"
 		L.visible_message("[L]'s [spot] changes color!", SPAN_NOTICE("Your [region_name] changes color!"))
 		L.update_lizard_parts()

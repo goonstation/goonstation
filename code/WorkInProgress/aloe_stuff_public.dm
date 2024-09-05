@@ -47,8 +47,8 @@
 	icon_state = "catbrix"
 	butcherable = BUTCHER_NOT_ALLOWED
 	health = 30
-	randomize_name = 0
-	randomize_look = 0
+	random_name = 0
+	random_look = 0
 	health_brute = 30
 	health_burn = 30
 

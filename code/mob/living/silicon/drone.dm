@@ -3,7 +3,7 @@
 	desc = "Allows the user to remotely operate a drone."
 	icon_state = "matanalyzer"
 	var/signal_tag = "mining"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/list/drone_list = list()
 
 	attack_self(var/mob/user as mob)
@@ -65,7 +65,7 @@
 		src.radio = new /obj/item/device/radio(src)
 		src.ears = src.radio
 
-		var/obj/item/mining_tool/drill/D = new /obj/item/mining_tool/drill(src)
+		var/obj/item/mining_tool/powered/drill/D = new /obj/item/mining_tool/powered/drill(src)
 		equipment_slots[1] = D
 		var/obj/item/ore_scoop/borg/S = new /obj/item/ore_scoop/borg(src)
 		equipment_slots[2] = S
@@ -225,7 +225,7 @@
 			return
 
 		if (isdead(src))
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 		// wtf?

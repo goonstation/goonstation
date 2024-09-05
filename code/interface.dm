@@ -71,9 +71,9 @@
 			set desc = "Open an interactive map in your browser"
 			set hidden = 1
 			if (map_settings)
-				src << link(map_settings.goonhub_map)
+				src << link(goonhub_href(map_settings.goonhub_map))
 			else
-				src << link("http://goonhub.com/maps/cogmap")
+				src << link(goonhub_href("/maps/cogmap"))
 
 		forum()
 			set category = "Commands"

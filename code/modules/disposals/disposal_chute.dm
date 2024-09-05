@@ -19,7 +19,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon_state = "disposal"
 	anchored = ANCHORED
 	density = 1
-	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -41,6 +41,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		if((src.pixel_x == 0) && (src.dir == WEST))
+			src.pixel_x += 5
+		if((src.pixel_x == 0) && (src.dir == EAST))
+			src.pixel_x += -5
+
 		START_TRACKING
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN(0.5 SECONDS)
@@ -279,8 +284,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// leave the disposal
 	proc/go_out(mob/user)
 		user.set_loc(src.loc)
-		if (!user.hasStatus("weakened"))
-			user.changeStatus("weakened", 1 SECOND)
+		if (!user.hasStatus("knockdown"))
+			user.changeStatus("knockdown", 1 SECOND)
 			user.force_laydown_standup()
 		update()
 		return
@@ -518,8 +523,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.suiciding = 0
 		return 1
 
-	return_air()
-		return src.loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc?.return_air()
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
@@ -604,7 +610,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		..()
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 	expel(var/obj/disposalholder/H)
 		..(H)
@@ -665,11 +671,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	attackby(var/obj/item/I, var/mob/user)
 		return
 
+	Entered()
+		. = ..()
+		flush = 1
+
 	MouseDrop_T(mob/target, mob/user)
 		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isAI(target) || isghostcritter(user))
 			return
 		..()
-		flush = 1
 
 		if (!is_processing)
 			SubscribeToProcess()

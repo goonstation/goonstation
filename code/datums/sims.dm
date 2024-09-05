@@ -72,9 +72,9 @@
 				src.image_change = image(src.icon, "change[change]", layer = HUD_LAYER+2)
 			else
 				src.image_change.icon_state = "change[change]"
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		else
-			src.hud.UpdateOverlays(null, "change")
+			src.hud.ClearSpecificOverlays("change")
 		//var/a_change = value - last_life_value
 		var/maptext_color = "#ffffff"
 		var/round_value = round(value)
@@ -98,7 +98,7 @@
 		if (!src.image_meter)
 			src.image_meter = image(src.icon, "[src.icon_state]-o", layer = HUD_LAYER+1)
 		src.image_meter.color = rgb((1 - ratio) * 255, ratio * 255, 0)
-		src.hud.UpdateOverlays(src.image_meter, "meter")
+		src.hud.AddOverlays(src.image_meter, "meter")
 
 	proc/updateHudIcon(var/icon/I)
 		if (!I || !src.hud)
@@ -106,9 +106,8 @@
 		src.icon = I
 		src.hud.icon = I
 		if (src.image_change)
-			src.hud.UpdateOverlays(null, "change")
 			src.image_change.icon = I
-			src.hud.UpdateOverlays(src.image_change, "change")
+			src.hud.AddOverlays(src.image_change, "change")
 		if (src.image_meter)
 			src.image_meter.icon = I
 			src.updateHud()
@@ -269,29 +268,8 @@
 			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
 					holder.owner.setStatus("filthy", 3 MINUTES)
-			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_FILTHY) && holder.owner.hasStatus("rancid"))
 				holder.owner.delStatus("rancid")
-			/*
-			if (value < 10 && prob((10 - value) * 1.5))
-				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
-					if (H != holder.owner && prob(30 - value) * 2)
-						//H.stunned = max(holder.owner.stunned, 1) <- Let's not punish others for our poor choices in life - unrealistic but more fun
-						H.vomit()
-						H.visible_message(SPAN_ALERT("[H] throws up all over \himself. Gross!"))
-						boutput(H, SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-				holder.owner.changeStatus("stunned", 1 SECOND)
-				holder.owner.visible_message(SPAN_ALERT("[holder.owner] throws up all over \himself. Gross!"))
-				holder.owner.vomit()
-				showOwner(SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-			*/
-			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				holder.owner.infected(P)
-				showOwner(SPAN_ALERT("You feel really sick.")) // in a bad way
-			#endif
 
 		getWarningMessage()
 			if (value < 25)
@@ -406,9 +384,9 @@
 		mayStandardDeplete()
 			if (..())
 				// JFC fuck mobs
-				if (holder.owner.getStatusDuration("weakened"))
+				if (holder.owner.getStatusDuration("knockdown"))
 					return 0
-				if (holder.owner.getStatusDuration("paralysis"))
+				if (holder.owner.getStatusDuration("unconscious"))
 					return 0
 				if (holder.owner.lying)
 					return 0

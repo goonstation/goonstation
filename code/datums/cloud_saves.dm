@@ -7,7 +7,9 @@
 
 /datum/cloudSaves
 	var/datum/player/player = null
+	///generic cloud data
 	var/list/data = list()
+	///cloudsaves. ONLY FOR CHARACTER PROFILE CLOUD SAVES. NOTHING ELSE.
 	var/list/saves = list()
 	var/loaded = FALSE // Have we performed an initial fetch
 	var/simulating = FALSE
@@ -78,10 +80,10 @@
 			src.loaded = TRUE
 
 		else
-			if (!src.player.id) return FALSE
+			if (!src.player.id && !src.player.ckey) return FALSE
 			try
 				var/datum/apiRoute/players/saves/get/getSavesAndData = new
-				getSavesAndData.queryParams = list("player_id" = src.player.id)
+				getSavesAndData.queryParams = list("player_id" = src.player.id, "ckey" = src.player.ckey)
 				var/datum/apiModel/GetPlayerSaves/savesAndData = apiHandler.queryAPI(getSavesAndData)
 				var/list/newData = list()
 				for (var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data in savesAndData.data)
@@ -102,18 +104,21 @@
 
 	/// Save new cloud data for this player
 	proc/putData(key, value)
+		if(value == src.data[key]) //don't bother sending data if we'd be making no change
+			return TRUE //but treat it as a success I guess
+
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("data", key, value)
 
 		else
-			if (!src.player?.id)
-				logTheThing(LOG_DEBUG, src.player?.ckey, "No player ID found in cloud data put [key], [value]")
-				logTheThing(LOG_DIARY, src.player?.ckey, "No player ID found in cloud data put [key], [value]", "admin")
+			if (!src.player.id && !src.player.ckey)
+				logTheThing(LOG_DEBUG, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]")
+				logTheThing(LOG_DIARY, src.player.ckey, "No player ID or ckey found in cloud data put [key], [value]", "admin")
 				return
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
-				addPlayerData.buildBody(src.player.id, key, value)
+				addPlayerData.buildBody(src.player.id, src.player.ckey, key, value)
 				apiHandler.queryAPI(addPlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
@@ -124,17 +129,20 @@
 		src.data[key] = value
 		return TRUE
 
-	/// Save a new cloud file for this player
+	/// Save a new cloud file for this player. ONLY FOR CHARACTER PROFILE CLOUD SAVES. USE putData FOR ANYTHING ELSE.
 	proc/putSave(name, data)
+		if(data == src.saves[name]) //don't bother sending save if we'd be making no change
+			return TRUE //but treat it as a success I guess
+
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("saves", name, data)
 
 		else
-			if (!src.player.id) return
+			if (!src.player.id && !src.player.ckey) return
 			try
 				var/datum/apiRoute/players/saves/file/post/addPlayerSave = new
-				addPlayerSave.buildBody(src.player.id, name, data)
+				addPlayerSave.buildBody(src.player.id, src.player.ckey, name, data)
 				apiHandler.queryAPI(addPlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
@@ -152,10 +160,10 @@
 			src.deleteSimulatedCloud("data", key)
 
 		else
-			if (!src.player.id) return
+			if (!src.player.id && !src.player.ckey) return
 			try
 				var/datum/apiRoute/players/saves/data/delete/deletePlayerData = new
-				deletePlayerData.buildBody(src.player.id, key)
+				deletePlayerData.buildBody(src.player.id, src.player.ckey, key)
 				apiHandler.queryAPI(deletePlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
@@ -173,10 +181,10 @@
 			src.deleteSimulatedCloud("saves", name)
 
 		else
-			if (!src.player.id) return
+			if (!src.player.id && !src.player.ckey) return
 			try
 				var/datum/apiRoute/players/saves/file/delete/deletePlayerSave = new
-				deletePlayerSave.buildBody(src.player.id, name)
+				deletePlayerSave.buildBody(src.player.id, src.player.ckey, name)
 				apiHandler.queryAPI(deletePlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name

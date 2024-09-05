@@ -21,6 +21,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		var/objects_fucked_up = 0
 
 		for (var/obj/xmastree/X in oview(1, M))

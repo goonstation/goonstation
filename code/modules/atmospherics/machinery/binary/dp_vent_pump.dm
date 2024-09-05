@@ -37,8 +37,8 @@
 /obj/machinery/atmospherics/binary/dp_vent_pump/New()
 	..()
 	if(src.frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 		src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, null, frequency)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/update_icon()
 	var/turf/T = get_turf(src)

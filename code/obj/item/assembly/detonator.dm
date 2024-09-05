@@ -25,7 +25,7 @@
 	var/dfcodeTries = 3 //How many code attempts before *boom*
 	var/mob/builtBy = null
 
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	force = 1
 	throwforce = 2
 	throw_speed = 1
@@ -313,6 +313,7 @@
 	src.dispatch_event("prime")
 
 	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time / 10] seconds.")
+	playsound_global(world, 'sound/machines/siren_generalquarters_quiet.ogg', 100)
 	logTheThing(LOG_BOMBING, usr, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
 	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
 	src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.part_fs.time / 10] seconds.</font></B>")

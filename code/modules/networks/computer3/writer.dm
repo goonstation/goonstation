@@ -21,6 +21,9 @@
 	var/tmp/list/known_printers = list()
 	var/tmp/printer_status = "???"
 
+	// No special permissions required, but authentication is required to use print server
+	req_access = list(access_fuck_all)
+
 	initialize()
 		if (..())
 			return TRUE

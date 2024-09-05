@@ -73,6 +73,8 @@
 #define AMMO_ROCKET_MRL "rocket_mrl"
 #define AMMO_ROCKET_ALL AMMO_ROCKET_SING, AMMO_ROCKET_RPG, AMMO_ROCKET_MRL
 
+#define AMMO_FOUR_BORE "four_bore"
+
 #define AMMO_FOAMDART "foamdart"
 #define AMMO_AIRZOOKA "airzooka"
 
@@ -83,6 +85,7 @@
 #define AMMO_FLECHETTE "flechette"
 #define AMMO_BLOWDART "blowdart"
 #define AMMO_STAPLE "staple"
+#define AMMO_WEBLEY "webley"
 
 #define AMMO_DART_ALL AMMO_FOAMDART,AMMO_BLOWDART
 

@@ -51,6 +51,8 @@ proc/debug_map_apc_count(delim,zlim)
 /client/proc
 	map_debug_panel()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+		ADMIN_ONLY
+		SHOW_VERB_DESC
 
 		var/area_txt = "<B>APC LOCATION REPORT</B><HR>"
 		area_txt += debug_map_apc_count("<BR>")
@@ -60,7 +62,8 @@ proc/debug_map_apc_count(delim,zlim)
 
 	general_report()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-
+		ADMIN_ONLY
+		SHOW_VERB_DESC
 		if(!processScheduler)
 			usr << alert("Process Scheduler not found.")
 
@@ -80,6 +83,8 @@ proc/debug_map_apc_count(delim,zlim)
 
 	air_report()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+		ADMIN_ONLY
+		SHOW_VERB_DESC
 
 		if(!processScheduler || !air_master)
 			alert(usr,"processScheduler or air_master not found.","Air Report")
@@ -164,7 +169,7 @@ proc/debug_map_apc_count(delim,zlim)
 		var/burning = 0
 		if(istype(target, /turf/simulated))
 			var/turf/simulated/T = target
-			if(T.active_hotspot)
+			if(length(T.active_hotspots))
 				burning = 1
 
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
@@ -172,6 +177,8 @@ proc/debug_map_apc_count(delim,zlim)
 	fix_next_move()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Press this if everybody freezes up"
+		ADMIN_ONLY
+		SHOW_VERB_DESC
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
 		if (disable_next_click)
@@ -206,6 +213,7 @@ proc/debug_map_apc_count(delim,zlim)
 		set name = "Open Profiler"
 
 		ADMIN_ONLY
+		SHOW_VERB_DESC
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
 		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
@@ -281,15 +289,6 @@ proc/debug_map_apc_count(delim,zlim)
 			if(theTurf.loc:do_not_irradiate)
 				img.app.color = "#0f0"
 			else
-				img.app.color = "#f00"
-
-	proximity
-		name = "proximity turfs"
-		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf:checkinghasproximity)
-				img.app.color = "#0f0"
-			else if(theTurf:neighcheckinghasproximity)
 				img.app.color = "#f00"
 
 	areas
@@ -993,12 +992,6 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
-	checkinghasproximity
-		name = "checkinghasproximity"
-		help = "Green = yes. Red = no. Yellow = next to yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasproximity ? "#0f0" : (theTurf.neighcheckinghasproximity ? "#ff0" : "#f00")
-
 	blood_owner/no_items
 		name = "blood owner - no items"
 		is_ok(atom/A)
@@ -1632,6 +1625,7 @@ proc/info_overlay_choices()
 	set name = "Debug Overlay"
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/list/available_overlays = info_overlay_choices()
 	activeOverlay?.OnDisabled(src)
 	if(!name || name == "REMOVE")

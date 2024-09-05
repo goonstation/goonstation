@@ -17,7 +17,7 @@
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/item/clothing/suit/bedsheet/green,
-/obj/decal/fakeobjects/skeleton/unanchored{
+/obj/fakeobject/skeleton/unanchored{
 	pixel_y = -4
 	},
 /obj/item/paper/artists_anger{

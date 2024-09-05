@@ -54,7 +54,7 @@ VUVUZELA
 				if (last_touched.sims)
 					last_touched.sims.affectMotive("fun", 10)
 			if(M.bioHolder.HasEffect("clumsy"))
-				M.changeStatus("weakened", 5 SECONDS)
+				M.changeStatus("knockdown", 5 SECONDS)
 				JOB_XP(M, "Clown", 2)
 			else
 				if (prob(20))

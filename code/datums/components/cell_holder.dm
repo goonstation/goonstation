@@ -4,16 +4,18 @@
 	var/can_be_recharged = TRUE
 	var/max_cell_size = INFINITY
 	var/swappable_cell = TRUE
+	var/restrict_cell_type
 
 TYPEINFO(/datum/component/cell_holder)
 	initialization_args = list(
 		ARG_INFO("new_cell", DATA_INPUT_REF, "ref to cell that will be first used"),
 		ARG_INFO("chargable", DATA_INPUT_BOOL, "If it can be placed in a recharger", TRUE),
 		ARG_INFO("max_cell", DATA_INPUT_NUM, "Maximum size of cell that can be held", INFINITY),
-		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE)
+		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE),
+		ARG_INFO("restrict_cell", DATA_INPUT_TYPE, "Path to restrict cell types to", null)
 	)
 
-/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
+/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE, restrict_cell = null)
 	. = ..()
 	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_CELL_IS_CELL))
 		return COMPONENT_INCOMPATIBLE
@@ -24,6 +26,7 @@ TYPEINFO(/datum/component/cell_holder)
 	can_be_recharged = chargable
 	max_cell_size = max_cell
 	swappable_cell = swappable
+	restrict_cell_type = restrict_cell
 
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
 	RegisterSignal(parent, COMSIG_CELL_SWAP, PROC_REF(do_swap))
@@ -39,6 +42,7 @@ TYPEINFO(/datum/component/cell_holder)
 		src.can_be_recharged = C.can_be_recharged
 		src.max_cell_size = C.max_cell_size
 		src.swappable_cell = C.swappable_cell
+		src.restrict_cell_type = C.restrict_cell_type
 		qdel(src.cell)
 		src.cell = C.cell
 		src.cell?.set_loc(parent)
@@ -75,6 +79,9 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/component/cell_holder/proc/begin_swap(mob/user, atom/movable/P)
 	if(src.swappable_cell)
 		var/list/ret = list()
+		if (restrict_cell_type && !istype(P, restrict_cell_type))
+			boutput(user, SPAN_NOTICE("[parent] can't fit the [P]."))
+			return
 		if((SEND_SIGNAL(P, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) && (ret["max_charge"] <= src.max_cell_size))
 			actions.start(new /datum/action/bar/icon/cellswap(user, P, parent), user)
 		else

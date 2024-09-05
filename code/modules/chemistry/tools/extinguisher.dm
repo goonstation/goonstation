@@ -1,3 +1,22 @@
+var/global/list/extinguisher_blacklist_clog = list("vomit",
+	"blackpowder",
+	"blood",
+	"ketchup",
+	"gvomit",
+	"carbon",
+	"cryostylane",
+	"chickensoup",
+	"salt")
+var/global/list/extinguisher_blacklist_melt = list("acid",
+	"pacid",
+	"phlogiston",
+	"big_bang",
+	"clacid",
+	"nitric_acid",
+	"firedust",
+	"foof",
+	"infernite")
+
 /obj/item/extinguisher
 	name = "fire extinguisher"
 	icon = 'icons/obj/items/items.dmi'
@@ -13,7 +32,7 @@
 	var/reinforced = FALSE
 	var/shattered = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
 	throwforce = 10
 	w_class = W_CLASS_NORMAL
@@ -29,22 +48,8 @@
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	move_triggered = 1
-	var/list/banned_reagents = list("vomit",
-	"blackpowder",
-	"blood",
-	"ketchup",
-	"gvomit",
-	"carbon",
-	"cryostylane",
-	"chickensoup",
-	"salt")
-	var/list/melting_reagents = list("acid",
-	"pacid",
-	"phlogiston",
-	"big_bang",
-	"clacid",
-	"nitric_acid",
-	"firedust")
+	var/list/banned_reagents = null
+	var/list/melting_reagents = null
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
@@ -58,6 +63,8 @@
 
 /obj/item/extinguisher/New()
 	..()
+	src.banned_reagents = global.extinguisher_blacklist_clog
+	src.melting_reagents = global.extinguisher_blacklist_melt
 	src.create_reagents(initial_volume)
 	reagents.add_reagent("ff-foam", initial_volume)
 	src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
@@ -130,7 +137,7 @@
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
-			fireflash(src.loc, 0)
+			fireflash(src.loc, 0, chemfire = CHEM_FIRE_RED)
 			explosion(src, src.loc, -1,0,1,1)
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
@@ -148,7 +155,7 @@
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
-			fireflash(src.loc, 0)
+			fireflash(src.loc, 0, chemfire = CHEM_FIRE_RED)
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
 				return
@@ -251,7 +258,7 @@
 	reinforced = TRUE
 	New()
 		..()
-		src.banned_reagents += src.melting_reagents
+		src.banned_reagents = global.extinguisher_blacklist_clog + global.extinguisher_blacklist_melt
 		src.melting_reagents = list()
 
 	shatter_chemically(var/projectiles = FALSE)

@@ -7,7 +7,7 @@
 import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
-import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN, MESSAGE_TYPES } from './constants';
+import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN } from './constants';
 import { canPageAcceptType, createMessage, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 
@@ -330,13 +330,7 @@ class ChatRenderer {
       message.node = node;
       // Query all possible selectors to find out the message type
       if (!message.type) {
-        // IE8: Does not support querySelector on elements that
-        // are not yet in the document.
-        const typeDef = !Byond.IS_LTE_IE8 && MESSAGE_TYPES
-          .find(typeDef => (
-            typeDef.selector && node.querySelector(typeDef.selector)
-          ));
-        message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
+        message.type = MESSAGE_TYPE_UNKNOWN;
       }
       updateMessageBadge(message);
       if (!countByType[message.type]) {
@@ -432,10 +426,6 @@ class ChatRenderer {
   }
 
   saveToDisk() {
-    // Allow only on IE11
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     // Compile currently loaded stylesheets as CSS text
     let cssText = '';
     const styleSheets = document.styleSheets;

@@ -45,7 +45,7 @@ export const space_heater = (props, context) => {
   } = data;
   return (
     <Window
-      title={Glitch_Text(emagged, "Space HVAC", 1)}
+      title={emagged ? Glitch_Text(emagged, "Space HVAC", 1) : null} // null lets us use the src.name at the time of ui_interact
       width={350}
       height={250}>
       <Window.Content>
@@ -67,7 +67,7 @@ const BatteryStatus = (props, context) => {
     set_temperature,
   } = data;
   return (
-    <Section title={Glitch_Text(emagged, "Battery status", 2)} grow={0}>
+    <Section title={Glitch_Text(emagged, "Battery status", 2)}>
       <LabeledList>
         <LabeledList.Item
           label={Glitch_Text(emagged, "Cell", 1)}

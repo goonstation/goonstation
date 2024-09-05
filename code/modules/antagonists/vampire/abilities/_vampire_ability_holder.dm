@@ -200,7 +200,8 @@
 			src.last_power = 1
 
 			src.addAbility(/datum/targetable/vampire/phaseshift_vampire)
-			src.addAbility(/datum/targetable/vampire/enthrall)
+			if(src.owner?.mind && !(src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.pseudo || src.owner.mind.get_antagonist(ROLE_VAMPIRE)?.vr))
+				src.addAbility(/datum/targetable/vampire/enthrall)
 			src.addAbility(/datum/targetable/vampire/speak_thrall)
 
 		if (src.last_power == 1 && src.vamp_blood >= src.level2)
@@ -257,7 +258,7 @@
 		src.updateButtons()
 
 	proc/transmit_thrall_msg(var/message,var/mob/sender)
-		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -312,7 +313,7 @@
 					boutput(owner, SPAN_ALERT("Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B>"))
 					boutput(M, SPAN_NOTICE("Your divine protection saves you from enthrallment!"))
 					owner.emote("scream")
-					owner.changeStatus("weakened", 5 SECONDS)
+					owner.changeStatus("knockdown", 5 SECONDS)
 					owner.TakeDamage("chest", 0, 30)
 					return
 
@@ -364,12 +365,12 @@
 
 		switch (stunned_only_is_okay)
 			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
+				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("unconscious") > 0 || M.getStatusDuration("knockdown"))
 					return 0
 				else
 					return 1
 			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
+				if (!isalive(M) || M.getStatusDuration("unconscious") > 0)
 					return 0
 				else
 					return 1

@@ -475,7 +475,7 @@
 							boutput(usr, SPAN_NOTICE("Card authorized."))
 							src.scan = id_card
 						else
-							boutput(usr, SPAN_ALERT("Pin number incorrect."))
+							boutput(usr, SPAN_ALERT("PIN incorrect."))
 							src.scan = null
 					else
 						boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))

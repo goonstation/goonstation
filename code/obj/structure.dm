@@ -7,6 +7,7 @@ obj/structure
 		density = 1
 		material_amt = 0.2
 		var/state = 0
+		var/projectile_passthrough_chance = 50
 		desc = "A metal support for an incomplete wall."
 		HELP_MESSAGE_OVERRIDE({"
 			You can use a <b>crowbar</b> to displace it,
@@ -18,6 +19,7 @@ obj/structure
 			name = "displaced girder"
 			icon_state = "displaced"
 			anchored = UNANCHORED
+			projectile_passthrough_chance = 70
 			desc = "An unsecured support for an incomplete wall."
 			HELP_MESSAGE_OVERRIDE({"
 				You can use a <b>screwdriver</b> to seperate the metal into sheets,
@@ -28,6 +30,7 @@ obj/structure
 			name = "reinforced girder"
 			icon_state = "reinforced"
 			state = 2
+			projectile_passthrough_chance = 30
 			desc = "A reinforced metal support for an incomplete wall."
 			get_help_message(dist, mob/user)
 				if (src.state == 2)
@@ -55,6 +58,11 @@ obj/structure/ex_act(severity)
 		if(3)
 			return
 	return
+
+/obj/structure/girder/Cross(obj/projectile/mover)
+	if (istype(mover) && !mover.proj_data.always_hits_structures && prob(src.projectile_passthrough_chance))
+		return TRUE
+	return (!density)
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())

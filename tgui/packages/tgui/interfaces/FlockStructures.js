@@ -33,7 +33,6 @@ export const FlockStructures = (props, context) => {
                         </Stack.Item>
                         <Stack.Item>
                           <Image
-                            pixelated
                             height="64px"
                             width="64px"
                             src={`data:image/png;base64,${icon}`} />

@@ -23,19 +23,30 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
 
       - name: Install Dependencies
         run: |
+          touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
-          touch +secret/__secret.dme
 
       - name: Check TGUI
         run: |
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
 
       - name: Misc Checks
         run: |
@@ -63,27 +74,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: touch +secret/__secret.dme
-      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.11
         with:
-          repository: OpenDreamProject/OpenDream
-          submodules: "recursive"
-          path: OpenDream
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "7.0"
-      - uses: actions/cache@v4
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-od-${{ hashFiles('OpenDream/**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-od
-      - uses: zyactions/dotnet-restore@v1
-        with:
-          working-directory: OpenDream
-      - run: dotnet build -c Release OpenDream/OpenDream.sln
-      - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme --version=514.1584
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
 
   compile:
     name: Compile
@@ -95,8 +92,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -107,7 +104,6 @@ jobs:
           echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
-          touch +secret/__secret.dme
 
       - name: Compile
         run: |
@@ -139,8 +135,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -159,7 +155,18 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: "yarn"
+          cache-dependency-path: ./tgui/yarn.lock
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: pip
 
       - name: Install Dependencies
         run: |
@@ -167,12 +174,11 @@ jobs:
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
-          touch +secret/__secret.dme
 
       - name: Misc Checks
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
-          tools/ci/build_tgui.sh
+          tgui/bin/tgui --ci
           tools/ci/check_grep_secret.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
@@ -185,4 +191,4 @@ jobs:
 
       - name: Compile
         run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme
+          tools/ci/dm.sh -DCIBUILD goonstation.dme

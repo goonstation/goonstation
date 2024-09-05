@@ -19,6 +19,7 @@
 		if(!holder)
 			return
 
+		. = ..()
 		var/has_spellpower = holder.owner.wizard_spellpower(src) // we track spellpower *before* we turn our staff into a snake
 
 		var/atom/movable/stick = null

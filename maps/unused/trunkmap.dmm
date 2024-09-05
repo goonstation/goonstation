@@ -250,7 +250,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aaP" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -260,7 +260,7 @@
 	},
 /area/station/medical/cdc)
 "aaQ" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 1
 	},
 /obj/cable{
@@ -542,7 +542,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aby" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "abz" = (
@@ -640,7 +640,7 @@
 /area/russian)
 "abT" = (
 /obj/table/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/greenwhite{
 	dir = 8
 	},
@@ -1443,7 +1443,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aeb" = (
-/obj/machinery/processor,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "aec" = (
@@ -1770,7 +1770,7 @@
 /turf/simulated/floor/plating,
 /area/russian)
 "aeV" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /turf/simulated/floor,
 /area/russian)
 "aeY" = (
@@ -1885,7 +1885,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "afp" = (
-/obj/decal/fakeobjects/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -1953,7 +1953,7 @@
 	},
 /area/listeningpost)
 "afB" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -2017,7 +2017,7 @@
 	},
 /area/space)
 "afJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -3231,7 +3231,7 @@
 /turf/simulated/floor/white,
 /area/russian)
 "akq" = (
-/obj/decal/fakeobjects/apc_broken{
+/obj/fakeobject/apc_broken{
 	pixel_y = 24
 	},
 /obj/cable{
@@ -3670,13 +3670,13 @@
 /turf/space,
 /area/space)
 "alN" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/simulated/floor/greenwhite{
 	dir = 9
 	},
 /area/station/medical/cdc)
 "alO" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -3686,7 +3686,7 @@
 	},
 /area/station/medical/cdc)
 "alP" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -3732,7 +3732,7 @@
 	},
 /area/station/medical/cdc)
 "alV" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -13257,7 +13257,7 @@
 "aUR" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "aUS" = (
@@ -13281,7 +13281,7 @@
 "aUV" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -15974,7 +15974,7 @@
 "beT" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 4;
-	icon_state = "wall_space";
+	icon_state = "wall_trans";
 	name = "window"
 	},
 /area/shuttle/arrival/station)
@@ -17059,7 +17059,7 @@
 /area/station/hallway/secondary/exit)
 "biQ" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/shuttle/arrival/station)
 "biR" = (
@@ -25910,7 +25910,7 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "ezU" = (
-/obj/decal/fakeobjects/shuttleengine,
+/obj/fakeobject/shuttleengine,
 /turf/simulated/shuttle/wall,
 /area/space)
 "eBe" = (
@@ -26360,9 +26360,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/engineering)
 "fYF" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "gck" = (
@@ -27048,7 +27046,7 @@
 /area/station/hangar/engine)
 "iuk" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "iuv" = (
@@ -27466,7 +27464,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "jJG" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/simulated/shuttle/wall{
 	dir = 8;
 	icon_state = "pwall";
@@ -28543,7 +28541,7 @@
 	},
 /area/station/teleporter)
 "mpp" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -28594,7 +28592,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "mzR" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/gear/armory/equipment,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "mBg" = (
@@ -29930,7 +29928,7 @@
 "rel" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "rem" = (
@@ -30380,7 +30378,7 @@
 /turf/space,
 /area/station/security/prison)
 "seX" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "sfI" = (
@@ -31602,7 +31600,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "vKn" = (
-/obj/decal/fakeobjects/shuttlethruster,
+/obj/fakeobject/shuttlethruster,
 /turf/space,
 /area/space)
 "vLE" = (
@@ -32037,7 +32035,7 @@
 "xdz" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "xdW" = (
@@ -32128,7 +32126,7 @@
 "xED" = (
 /turf/simulated/shuttle/wall{
 	dir = 1;
-	icon_state = "wall_space"
+	icon_state = "wall_trans"
 	},
 /area/space)
 "xEU" = (

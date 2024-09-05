@@ -28,7 +28,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	item_state = "banana"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
 	is_syndicate = FALSE
 	stamina_damage = 0
@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
@@ -108,7 +109,8 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 			src.icon_state = initial(src.icon_state)
 
 	ex_act(severity)
-		src.detonate(null)
+		if(!src.detonating)
+			src.detonate(null)
 		. = ..()
 
 	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
@@ -116,7 +118,9 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		return new src.type
 
 	proc/detonate(mob/user) // Most grenades require a turf reference.
+		SHOULD_CALL_PARENT(TRUE)
 		var/turf/T = get_turf(src)
+		src.detonating = TRUE
 		if (!T || !isturf(T))
 			return null
 		else
@@ -691,8 +695,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		return
 
 TYPEINFO(/obj/item/old_grenade/oxygen)
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
-
+	mats = list("metal_dense" = 2,
+				"conductive" = 2,
+				"molitz" = 10,
+				"char" = 1)
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -918,6 +924,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
+	var/icon_state_armed = null
 
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
@@ -932,8 +939,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	proc/beep(i)
 		var/k = i/2
 		sleep(k*k)
-		flick(icon_state+"_beep", src)
+
 		src.playbeep(src.loc, i, src.sound_beep)
+
 		if(i>=0)
 			src.beep(i-1)
 		else
@@ -947,10 +955,14 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
 	proc/arm(mob/usr as mob)
+
 		usr.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
 		for(var/mob/O in viewers(usr))
 			if (O.client)
 				O.show_message(SPAN_ALERT("<B>[usr] has armed the [src.name]! Run!</B>"), 1)
+
+		if (icon_state_armed)
+			icon_state = icon_state_armed
 
 		SPAWN(0)
 			src.beep(10)
@@ -988,6 +1000,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Owls. Owls everywhere"
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
+	icon_state_armed = "owlbomb_beep"
 
 	detonate()
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
@@ -1001,6 +1014,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Owls. Owls everywhere"
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
+	icon_state_armed = "owlbomb_beep"
 
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
@@ -1041,6 +1055,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	name = "hotdog bomb"
 	desc = "A hotdog bomb? What the heck does that even mean?!"
 	icon_state = "hotdog"
+	icon_state_armed = "hotdog_beep"
 
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
@@ -1078,14 +1093,35 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "What a crappy grenade."
 	icon_state = "fartbomb"
 	sound_beep = 'sound/voice/farts/poo2.ogg'
+	icon_state_armed = "fartbomb_beep"
 	sound_explode = 'sound/voice/farts/superfart.ogg'
 	is_dangerous = FALSE
 
 /obj/item/gimmickbomb/gold
 	name = "Gold Bomb"
 	desc = "Why explode when you can gold!"
-	icon_state = "banana"
+	icon_state = "goldbomb"
+	icon_state_armed = "goldbomb1"
 	sound_beep = 'sound/machines/twobeep.ogg'
+
+	beep(i)
+		var/k = i/2
+		sleep(k*k)
+
+		src.setMaterial(getMaterial("gold"))
+
+		src.playbeep(src.loc, i, src.sound_beep)
+
+		if (icon_state_armed)
+			if (icon_state == src.icon_state)
+				icon_state = icon_state_armed
+			else
+				icon_state = src.icon_state
+
+		if(i>=0)
+			src.beep(i-1)
+		else
+			src.detonate()
 
 	detonate()
 		for(var/turf/G in range(5, src))
@@ -1315,7 +1351,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/expl_devas = 0
 	var/expl_heavy = 0
@@ -1507,24 +1543,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (!istype(T, /turf/simulated/wall) && !istype(T, /turf/simulated/floor))
 					continue
 
-				T.hotspot_expose(2000, 125)
-
-				var/obj/overlay/O = new/obj/overlay(T)
-				O.name = "Thermite"
-				O.desc = "A searing wall of flames."
-				O.icon = 'icons/effects/fire.dmi'
-				O.anchored = ANCHORED
-				O.layer = TURF_EFFECTS_LAYER
-				O.color = "#ff9a3a"
-				var/datum/light/point/light = new
-				light.set_brightness(1)
-				light.set_color(0.5, 0.3, 0.0)
-				light.attach(O)
-
-				if (istype(T,/turf/simulated/wall))
-					O.set_density(1)
-				else
-					O.set_density(0)
 
 				var/distance = GET_DIST(T, location)
 				if (distance < 2)
@@ -1533,7 +1551,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					if (istype(T, /turf/simulated/wall/auto/feather))
 						var/turf/simulated/wall/auto/feather/flockwall = T
 						flockwall.takeDamage("fire", 1)
-						O.icon_state = "2"
 						if (flockwall.health <= 0)
 							flockwall.destroy()
 					else if (istype(T, /turf/simulated/wall))
@@ -1544,12 +1561,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 					if (F && istype(F))
 						F.to_plating()
-						F.burn_tile()
-						O.icon_state = "2"
-				else
-					O.icon_state = "1"
-					if (istype(T, /turf/simulated/floor))
-						var/turf/simulated/floor/F = T
 						F.burn_tile()
 
 			for (var/obj/machinery/door/DR in src.loc)
@@ -1579,6 +1590,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					qdel(firelock)
 					continue
 
+			// placed here so that fire appears in place of destroyed turfs
+			fireflash(location, src.expl_range, 2000, checkLos = FALSE, chemfire = CHEM_FIRE_DARKRED)
+
 			for (var/mob/living/M in range(src.expl_range, location))
 				if(check_target_immunity(M)) continue
 				var/damage = 30 / (GET_DIST(M, src) + 1)
@@ -1586,11 +1600,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				M.update_burning(damage)
 
 			SPAWN(10 SECONDS)
-				if (src)
-					for (var/obj/overlay/O in range(src.expl_range, location))
-						if (O.name == "Thermite")
-							qdel(O)
-					qdel(src)
+				qdel(src)
 		else
 			qdel(src)
 

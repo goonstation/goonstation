@@ -5,7 +5,7 @@
 
 	// why is this not in human/attackby?
 
-	if (!(W.object_flags & NO_ARM_ATTACH || W.cant_drop || W.two_handed) && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
+	if (W.can_arm_attach() && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
 		var/mob/living/carbon/human/H = src
 
 		if (!H.limbs.vars[user.zone_sel.selecting])
@@ -14,9 +14,7 @@
 
 	user.lastattacked = src
 
-	if (user.mob_flags & AT_GUNPOINT)
-		for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
-			G.shoot()
+	SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
 
 	var/obj/item/grab/block/block = user.check_block()
 	if (block)
@@ -30,10 +28,18 @@
 
 	if (!shielded || !(W.flags & NOSHIELD))
 		// drsingh Cannot read null.force
-#ifdef DATALOGGER
 		if (W.force)
+#ifdef DATALOGGER
 			game_stats.Increment("violence")
 #endif
+			var/datum/gang/gang = user.get_gang()
+			if (gang && user != src && src.health > 10)
+				if (isnpc(src))
+					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER,get_turf(src))
+				else
+					gang.do_vandalism(W.force*GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER,get_turf(src))
+
+
 		if (!isnull(W))
 			W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special, params) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
 			if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack

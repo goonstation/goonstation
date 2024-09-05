@@ -121,8 +121,8 @@
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
 							boutput(src, SPAN_ALERT("You leap and slam yourself against the inside of [container]! Ouch!"))
-							src.changeStatus("paralysis", 4 SECONDS)
-							src.changeStatus("weakened", 3 SECONDS)
+							src.changeStatus("unconscious", 4 SECONDS)
+							src.changeStatus("knockdown", 3 SECONDS)
 							container.visible_message(SPAN_ALERT("<b>[container]</b> emits a loud thump and rattles a bit."))
 							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							animate_shake(container)

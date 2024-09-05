@@ -92,3 +92,13 @@
 		name = "transgender pride flag"
 		icon_state = "trans"
 		starting_flag = /obj/item/flag/trans
+
+	mlmvinc
+		name = "\improper Vincian MLM pride flag"
+		icon_state = "mlmvinc"
+		starting_flag = /obj/item/flag/mlmvinc
+
+	mlmachi
+		name = "\improper Achilean MLM pride flag"
+		icon_state = "mlmachi"
+		starting_flag = /obj/item/flag/mlmachi

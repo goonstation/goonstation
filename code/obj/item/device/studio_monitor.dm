@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
@@ -298,9 +298,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 			for(var/mob/living/HH in I.get_speaker_targets())
 				if(is_rock_immune(HH))
-					HH.delStatus("stunned")
-					HH.delStatus("weakened")
-					HH.delStatus("paralysis")
+					HH.remove_stuns()
 					HH.delStatus("slowed")
 					HH.delStatus("disorient")
 					HH.change_misstep_chance(-INFINITY)

@@ -3,6 +3,8 @@
 	var/atom/movable/screen/hud/tool2
 	var/atom/movable/screen/hud/tool3
 	var/atom/movable/screen/hud/charge
+	var/atom/movable/screen/hud/intent
+	var/atom/movable/screen/hud/pulling
 	var/atom/movable/screen/hud/eyecam
 
 	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
@@ -12,24 +14,30 @@
 	var/list/obj/item/tool_selector_tools = list()
 	var/show_tool_selector = 0
 	var/mob/living/silicon/hivebot/master
+	var/icon/icon_hud = 'icons/mob/hud_robot.dmi'
 
 	New(M)
 		..()
 		master = M
 
-		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-3:16, SOUTH to CENTER+2:16, SOUTH", HUD_LAYER)
-		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-3:16, SOUTH+1 to CENTER+2:16, SOUTH+1", HUD_LAYER, SOUTH)
+		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-3:16, SOUTH to CENTER+4:16, SOUTH", HUD_LAYER)
+		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-3:16, SOUTH+1 to CENTER+4:16, SOUTH+1", HUD_LAYER, SOUTH)
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-4:16, SOUTH+1", HUD_LAYER, SOUTHWEST)
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER-4:16, SOUTH", HUD_LAYER, EAST)
-		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+3:16, SOUTH+1", HUD_LAYER, SOUTHEAST)
-		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+3:16, SOUTH", HUD_LAYER, WEST)
+		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+5:16, SOUTH+1", HUD_LAYER, SOUTHEAST)
+		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_side", "CENTER+5:16, SOUTH", HUD_LAYER, WEST)
 
-		charge = create_screen("charge", "Battery", 'icons/mob/hud_robot.dmi', "charge4", "CENTER-3:16, SOUTH", HUD_LAYER+1)
-		tool1 = create_screen("tool1", "Tool 1", 'icons/mob/hud_robot.dmi', "mod10", "CENTER-2:16, SOUTH", HUD_LAYER+1)
-		tool2 = create_screen("tool2", "Tool 2", 'icons/mob/hud_robot.dmi', "mod20", "CENTER-1:16, SOUTH", HUD_LAYER+1)
-		tool3 = create_screen("tool3", "Tool 3", 'icons/mob/hud_robot.dmi', "mod30", "CENTER:16, SOUTH", HUD_LAYER+1)
-		create_screen("store", "Store", 'icons/mob/hud_robot.dmi', "store", "CENTER+1:16, SOUTH", HUD_LAYER+1)
-		create_screen("tools", "Tools", 'icons/mob/hud_robot.dmi', "tools", "CENTER+2:16, SOUTH", HUD_LAYER+1)
+		tool1 = create_screen("tool1", "Tool 1", icon_hud, "mod10", "CENTER-3:16, SOUTH", HUD_LAYER+1)
+		tool2 = create_screen("tool2", "Tool 2", icon_hud, "mod20", "CENTER-2:16, SOUTH", HUD_LAYER+1)
+		tool3 = create_screen("tool3", "Tool 3", icon_hud, "mod30", "CENTER-1:16, SOUTH", HUD_LAYER+1)
+		create_screen("store", "Store", icon_hud, "store", "CENTER:16, SOUTH", HUD_LAYER+1)
+		charge = create_screen("charge", "Battery", icon_hud, "charge4", "CENTER+1:16, SOUTH", HUD_LAYER+1)
+		charge.maptext_y = -5
+		charge.maptext_width = 48
+		charge.maptext_x = -9
+		create_screen("tools", "Tools", icon_hud, "tools", "CENTER+2:16, SOUTH", HUD_LAYER+1)
+		intent = create_screen("intent", "Intent", icon_hud, "intent-[master.a_intent]", "CENTER+3:16, SOUTH", HUD_LAYER+1)
+		pulling = create_screen("pulling", "Pulling", icon_hud, "pull0", "CENTER+4:16, SOUTH", HUD_LAYER+1)
 
 		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
 		eyecam.underlays += "block"
@@ -47,6 +55,10 @@
 		src.tool3 = null
 		qdel(src.charge)
 		src.charge = null
+		qdel(src.intent)
+		src.intent = null
+		qdel(src.pulling)
+		src.pulling = null
 		qdel(src.eyecam)
 		src.eyecam = null
 		src.last_tools = null
@@ -75,12 +87,42 @@
 				master.uneq_active()
 			if ("tools")
 				set_show_tool_selector(!show_tool_selector)
+			if ("intent")
+				if (master.a_intent == INTENT_HELP)
+					master.set_a_intent(INTENT_HARM)
+				else
+					master.set_a_intent(INTENT_HELP)
+			if ("pulling")
+				if (master.pulling)
+					unpull_particle(master,pulling)
+					master.remove_pulling()
+					src.update_pulling()
+				else if(!isturf(master.loc))
+					boutput(master, SPAN_NOTICE("You can't pull things while inside \a [master.loc]."))
+				else
+					var/list/atom/movable/pullable = list()
+					for(var/atom/movable/AM in range(1, get_turf(master)))
+						if(AM.anchored || !AM.mouse_opacity || AM.invisibility > master.see_invisible || AM == master)
+							continue
+						pullable += AM
+					var/atom/movable/to_pull = null
+					if(length(pullable) == 1)
+						to_pull = pullable[1]
+					else if(length(pullable) < 1)
+						boutput(master, SPAN_NOTICE("There is nothing to pull."))
+					else
+						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
+					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
+						to_pull.pull(master)
 			if ("eyecam")
 				master.become_eye()
 
 	proc
 		update_charge()
 			if (master.cell)
+				var/pct = round(100*master.cell.charge/master.cell.maxcharge, 1)
+				charge.maptext = "<span class='ps2p ol vt c' style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[pct]%</span>"
+
 				switch(round(100*master.cell.charge/master.cell.maxcharge))
 					if(75 to INFINITY)
 						charge.icon_state = "charge4"
@@ -94,6 +136,7 @@
 						charge.icon_state = "charge0"
 			else
 				charge.icon_state = "charge-none"
+				charge.maptext = "<span class='ps2p ol vt c' style='color: #f00;'>---</span>"
 
 		update_active_tool()
 			if (!master.module_active)
@@ -113,13 +156,13 @@
 			var/obj/item/tool2 = master.module_states[2]
 			var/obj/item/tool3 = master.module_states[3]
 			if (tool1)
-				add_object(tool1, HUD_LAYER+2, "CENTER-2:16, SOUTH")
+				add_object(tool1, HUD_LAYER+2, "CENTER-3:16, SOUTH")
 				tool1.set_loc(master)
 			if (tool2)
-				add_object(tool2, HUD_LAYER+2, "CENTER-1:16, SOUTH")
+				add_object(tool2, HUD_LAYER+2, "CENTER-2:16, SOUTH")
 				tool2.set_loc(master)
 			if (tool3)
-				add_object(tool3, HUD_LAYER+2, "CENTER:16, SOUTH")
+				add_object(tool3, HUD_LAYER+2, "CENTER-1:16, SOUTH")
 				tool3.set_loc(master)
 			last_tools = master.module_states.Copy()
 
@@ -169,6 +212,12 @@
 					remove_screen(H)
 				for (var/obj/item/tool in tool_selector_tools)
 					remove_object(tool)
+
+		update_intent()
+			intent.icon_state = "intent-[master.a_intent]"
+
+		update_pulling()
+			pulling.icon_state = "pull[master.pulling ? 1 : 0]"
 
 	proc/update_status_effects()
 		for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.

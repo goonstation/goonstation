@@ -150,6 +150,29 @@
 		message = finnishify(message)
 		return message
 
+/datum/bioEffect/speech/german
+	name = "Frontal Gyrus Alteration Type-DE"
+	desc = "Forces the language center of the subject's brain to construct sentences in a German manner."
+	id = "accent_german"
+	effectType =  EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "You can no longer pronounce th for ze life of you!"
+	msgLose = "You can now pronounce thoughtful, and thatch, and that!"
+	reclaim_fail = 10
+	lockProb = 25
+	lockedGaps = 2
+	lockedDiff = 2
+	lockedChars = list("G","C")
+	lockedTries = 3
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = germify(message)
+		return message
+
+
+
 /datum/bioEffect/speech/tommy // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "Frontal Gyrus Alteration Type-T"
 	desc = "Forces the langua.... what!? What the fuck is this? What happened here!? Gods have mercy on our souls."

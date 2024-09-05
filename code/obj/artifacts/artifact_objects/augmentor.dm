@@ -117,7 +117,7 @@
 
 			working = 1
 			T.visible_message(SPAN_ALERT("<b>[O]</b> suddenly lashes out at [H.name] with a flurry of sharp implements!"))
-			H.changeStatus("paralysis", 4 SECONDS)
+			H.changeStatus("unconscious", 4 SECONDS)
 			playsound(H.loc, pick(work_sounds), 50, 1, -1)
 			random_brute_damage(user, 10)
 			sleep(1 SECOND)

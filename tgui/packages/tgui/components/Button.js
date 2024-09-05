@@ -8,7 +8,7 @@ import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { createLogger } from '../logging';
-import { Box } from './Box';
+import { Box, computeBoxClassName } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
@@ -52,10 +52,6 @@ export const Button = props => {
       onClick(e);
     }
   };
-  // IE8: Use "unselectable" because "user-select" doesn't work.
-  if (Byond.IS_LTE_IE8) {
-    rest.unselectable = true;
-  }
   let buttonContent = (
     <Box
       className={classes([
@@ -75,6 +71,7 @@ export const Button = props => {
           ? 'Button--color--' + color
           : 'Button--color--default',
         className,
+        computeBoxClassName(rest),
       ])}
       tabIndex={!disabled && '0'}
       onKeyUp={e => {

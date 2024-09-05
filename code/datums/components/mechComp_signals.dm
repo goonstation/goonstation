@@ -75,10 +75,16 @@
 */
 
 /datum/component/mechanics_holder
+	/// associative list of atoms to the input they're registered to
+	/// list[atom] = "name of input"
 	var/list/connected_outgoing
+	/// simple list of atoms that are connected (no inputs)
+	/// list[] = [atom, atom, ...]
 	var/list/connected_incoming
 	var/list/inputs
 	var/list/configs
+	///Associative list of atoms to the pair of line images drawn from us to them (there are two so it renders when either end is rendered)
+	var/list/lines
 
 	var/defaultSignal = "1"
 
@@ -89,14 +95,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 	initialization_args = list()
 
 /datum/component/mechanics_holder/Initialize()
-	// associative list of atoms to the input they're registered to
-	// list[atom] = "name of input"
 	src.connected_outgoing = list()
-	// simple list of atoms that are connected (no inputs)
-	// list[] = [atom, atom, ...]
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
+	src.lines = list()
 
 	src.configs.Add(list(DC_ALL, CONNECT_COMP, LIST_CONNECTIONS))
 	..()
@@ -146,6 +149,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 //Delete all connections. (Often caused by DC_ALL user command, and unwrenching MechComp devices.)
 /datum/component/mechanics_holder/proc/WipeConnections()
 	for(var/atom/A in src.connected_incoming)
+		src.removeLines(A)
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_OUTGOING, parent)
 	for(var/atom/A in src.connected_outgoing)
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_INCOMING, parent)
@@ -176,10 +180,17 @@ TYPEINFO(/datum/component/mechanics_holder)
 	boutput(user, out.Join())
 	return
 
+/datum/component/mechanics_holder/proc/removeLines(atom/A)
+	var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP)
+	for (var/image/line as anything in src.lines[A])
+		image_group.remove_image(line)
+		line.loc = null
+	src.lines -= A
+
 //Remove a device from our list of transitting devices.
 /datum/component/mechanics_holder/proc/removeIncoming(var/comsig_target, var/atom/A)
 	src.connected_incoming.Remove(A)
-	return
+	src.removeLines(A)
 
 //Remove a device from our list of receiving devices.
 /datum/component/mechanics_holder/proc/removeOutgoing(var/comsig_target, var/atom/A)
@@ -350,7 +361,24 @@ TYPEINFO(/datum/component/mechanics_holder)
 	SEND_SIGNAL(trigger, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
 	var/list/trg_outgoing = pointer_container[1]
 	var/selected_input = input(user, "Select \"[receiver.name]\" Input", "Input Selection") in inputs + "*CANCEL*"
-	if(selected_input == "*CANCEL*") return
+	if(selected_input == "*CANCEL*")
+		return
+
+	//draw a line for meson lookers
+	var/datum/lineResult/R1 = drawLine(get_turf(trigger), get_turf(receiver), "data", null,\
+		trigger.pixel_x, trigger.pixel_y,\
+		receiver.pixel_x, receiver.pixel_y,\
+		getCrossed = 0, mode = LINEMODE_SIMPLE)
+	var/datum/lineResult/R2 = drawLine(get_turf(receiver), get_turf(trigger), "data", null,\
+		receiver.pixel_x, receiver.pixel_y,\
+		trigger.pixel_x, trigger.pixel_y,\
+		getCrossed = 0, mode = LINEMODE_SIMPLE_REVERSED)
+	src.lines[trigger] = list(R1.lineImage, R2.lineImage)
+	var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP)
+	for (var/image/line as anything in src.lines[trigger])
+		line.plane = PLANE_OVERLAY_EFFECTS
+		line.alpha = 190
+		image_group.add_image(line)
 
 	trg_outgoing |= receiver //Let's not allow making many of the same connection.
 	trg_outgoing[receiver] = selected_input
@@ -398,7 +426,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					var/inp = input(user,"Please enter Signal:", "Signal setting", defaultSignal) as text
 					if(!in_interact_range(parent, user) || user.stat)
 						return
-					inp = trim(strip_html_tags(inp))
+					inp = trimtext(strip_html_tags(inp))
 					if(length(inp))
 						defaultSignal = inp
 						boutput(user, SPAN_SUCCESS("The signal is now set to [inp]."))

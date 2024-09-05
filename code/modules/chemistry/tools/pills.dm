@@ -61,7 +61,7 @@
 		if (I.is_open_container(TRUE) && I.reagents)
 			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
 				return
-			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
+			src.AfterAttack(I, user)	//Probably weird but afterattack contains the dissolving code
 		return
 
 	proc/create_random_icon()
@@ -158,6 +158,15 @@
 	New()
 		..()
 		reagents.add_reagent("cyanide", 50)
+
+/obj/item/reagent_containers/pill/toxlite // Small pill for the trader that sells cyanide. So as to not be offgassed instantly.
+	name = "small cyanide pill"
+	desc = "Smaller but still Highly lethal."
+	icon_state = "pill5"
+
+	New()
+		..()
+		reagents.add_reagent("cyanide", 30)
 
 /obj/item/reagent_containers/pill/stox
 	name = "morphine pill"

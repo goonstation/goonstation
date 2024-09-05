@@ -41,7 +41,7 @@
 /atom/proc/add_fingerprint(mob/living/M, hidden_only = FALSE)
 	if (!ismob(M) || isnull(M.key))
 		return
-	if (!(src.flags & FPRINT))
+	if (src.flags & NOFPRINT)
 		return
 	var/time = time2text(TIME, "hh:mm:ss")
 	// The actual print that we save to the player-visible prints list
@@ -161,7 +161,7 @@
 /atom/proc/clean_forensic()
 	if (!src)
 		return
-	if (!(src.flags & FPRINT))
+	if (src.flags & NOFPRINT)
 		return
 	// The first version accidently looped through everything for every atom. Consequently, cleaner grenades caused horrendous lag on my local server. Woops.
 	if (!ismob(src)) // Mobs are a special case.

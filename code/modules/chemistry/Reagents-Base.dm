@@ -77,8 +77,8 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",3)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 3
 
 /datum/reagent/chromium
 	name = "chromium"
@@ -121,8 +121,8 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",3)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 3
 
 /datum/reagent/ethanol
 	name = "ethanol"
@@ -134,7 +134,7 @@
 	fluid_g = 255
 	transparency = 5
 	addiction_prob = 1
-	addiction_min = 10
+	addiction_min = 50
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
@@ -251,6 +251,14 @@
 				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 			..()
 
+	handle_addiction(var/mob/M, var/rate, var/addProb)
+		if (isliving(M))
+			var/mob/living/H = M
+			if (isalcoholresistant(H))
+				addProb /= 4
+				rate /= 4
+		..(M, rate, addProb)
+
 /datum/reagent/hydrogen
 	name = "hydrogen"
 	id = "hydrogen"
@@ -281,7 +289,6 @@
 	fluid_b = 135
 	transparency = 255
 	overdose = 20
-	pathogen_nutrition = list("iron")
 
 	on_mob_life(var/mob/living/H, var/mult = 1)
 		..()
@@ -298,7 +305,7 @@
 				M.nutrition -= rand(3,5)
 				M.take_toxin_damage(10) // im bad
 				M.setStatusMin("stunned", 3 SECONDS * mult)
-				M.setStatusMin("weakened", 3 SECONDS * mult)
+				M.setStatusMin("knockdown", 3 SECONDS * mult)
 
 /datum/reagent/lithium
 	name = "lithium"
@@ -358,8 +365,8 @@
 				L.cure_disease(plague)
 		..()
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("poison",1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.poison_damage += 1
 
 /datum/reagent/nickel
 	name = "nickel"
@@ -380,7 +387,6 @@
 	fluid_g = 254
 	fluid_b = 252
 	transparency = 20
-	pathogen_nutrition = list("nitrogen")
 
 /datum/reagent/oxygen
 	name = "oxygen"
@@ -402,9 +408,8 @@
 	fluid_b = 110
 	transparency = 255
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(66))
-			P.growth++
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.growth_rate += 0.66
 
 /datum/reagent/plasma
 	name = "plasma"
@@ -425,7 +430,7 @@
 			if(holder)
 				var/list/covered = holder.covered_turf()
 				for(var/turf/t in covered)
-					SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6))
+					SPAWN(1 DECI SECOND) fireflash(t, clamp(((volume/covered.len)/15), 0, 6), chemfire = CHEM_FIRE_RED)
 		if(holder)
 			holder.del_reagent(id)
 
@@ -451,10 +456,10 @@
 	reaction_turf(var/turf/T, var/volume)
 		return 1 //changed return value to 1 for fluids. remove if this was a bad idea
 
-	on_plant_life(var/obj/machinery/plantpot/P)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 		var/datum/plant/growing = P.current
 		if (growing.growthmode != "plasmavore")
-			P.HYPdamageplant("poison",2)
+			growth_tick.poison_damage += 2
 
 /datum/reagent/platinum
 	name = "platinum"
@@ -476,10 +481,9 @@
 	fluid_b = 190
 	transparency = 255
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(40))
-			P.growth++
-			P.health++
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.growth_rate += 0.4
+		growth_tick.health_change += 0.4
 
 /datum/reagent/silicon
 	name = "silicon"
@@ -544,7 +548,6 @@
 	overdose = 200
 	hunger_value = 0.098
 	thirst_value = -0.098
-	pathogen_nutrition = list("sugar")
 	taste = "sweet"
 	stun_resist = 6
 	threshold = THRESHOLD_INIT
@@ -566,7 +569,7 @@
 		M.make_jittery(2 )
 		M.changeStatus("drowsy", -10 SECONDS)
 		if(prob(4))
-			M.reagents.add_reagent("epinephrine", 1.2 * mult) // let's not metabolize into meth anymore
+			M.reagents.add_reagent("epinephrine", 3 * src.calculate_depletion_rate(M, mult)) // let's not metabolize into meth anymore
 		//if(prob(2))
 			//M.reagents.add_reagent("cholesterol", rand(1,3))
 		..()
@@ -598,11 +601,11 @@
 				responseBee.visible_message("<b>[responseBee]</b> [ pick("looks confused.", "appears to undergo a metaphysical crisis.  What is human?  What is space bee?<br>Or it might just have gas.", "looks perplexed.", "bumbles in a confused way.", "holds out its forelegs, staring into its little bee-palms and wondering what is real.") ]")
 
 		else
-			if (!M.getStatusDuration("paralysis"))
+			if (!M.getStatusDuration("unconscious"))
 				boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 				M.emote("collapse")
-				//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
-				M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
+				//M.changeStatus("unconscious", ((2 * severity)*15) * mult)
+				M.changeStatus("knockdown", ((4 * severity)*1.5 SECONDS) * mult)
 
 			if (prob(8))
 				M.take_toxin_damage(severity * mult)
@@ -683,9 +686,9 @@
 		if(spawncleanable && !istype(T, /turf/space) && !(locate(/obj/decal/cleanable/greenglow) in T))
 			make_cleanable(/obj/decal/cleanable/greenglow,T)
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		if (prob(80)) P.HYPdamageplant("radiation",3)
-		if (prob(16)) P.HYPmutateplant(1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.radiation_damage += 2.4
+		growth_tick.mutation_severity += 0.16
 
 /datum/reagent/sodium
 	name = "sodium"
@@ -696,7 +699,6 @@
 	fluid_g = 200
 	fluid_b = 200
 	transparency = 255
-	pathogen_nutrition = list("sodium")
 	fluid_flags = FLUID_STACKING_BANNED
 
 /datum/reagent/uranium
@@ -715,9 +717,9 @@
 		..()
 		return
 
-	on_plant_life(var/obj/machinery/plantpot/P)
-		P.HYPdamageplant("radiation",2)
-		if (prob(24)) P.HYPmutateplant(1)
+	on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+		growth_tick.radiation_damage += 2
+		growth_tick.mutation_severity += 0.24
 
 /datum/reagent/water
 	name = "water"
@@ -727,7 +729,6 @@
 	fluid_g = 165
 	fluid_b = 254
 	transparency = 80
-	pathogen_nutrition = list("water")
 	thirst_value = 0.8909
 	hygiene_value = 1.33
 	bladder_value = -0.2
@@ -749,6 +750,11 @@
 			var/mob/living/carbon/human/H = L
 			if (H.organHolder)
 				H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
+				var/obj/item/toy/sponge_capsule/capsule = locate() in H.organHolder?.stomach?.stomach_contents
+				if (capsule)
+					capsule.add_water()
+					L.visible_message(SPAN_ALERT("[L] vomits up a rapidly expanding sponge capsule!"))
+					H.reagents?.remove_reagent("water", 10)
 		L.nutrition += 1  * mult
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
@@ -808,7 +814,7 @@
 				for(var/mob/O in AIviewers(M, null))
 					O.show_message(SPAN_ALERT("<b>[M] begins to crisp and burn!</b>"), 1)
 				boutput(M, SPAN_ALERT("Holy Water! It burns!"))
-				var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
+				var/burndmg = raw_volume * 1.25 / (length(covered) || 1) //the sanctification inflicts the pain, not the water that carries it.
 				burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 				M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
 				M.change_vampire_blood(-burndmg)

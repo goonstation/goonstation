@@ -21,6 +21,6 @@
 		else if (probmult(10))
 			H.take_brain_damage(1)
 
-		H.changeStatus("weakened", 5 * mult SECONDS)
+		H.changeStatus("knockdown", 5 * mult SECONDS)
 		H.losebreath+=20 * mult
 		H.take_oxygen_deprivation(20 * mult)

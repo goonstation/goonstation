@@ -82,6 +82,9 @@
 
 	src.try_push_in(target, user)
 
+/obj/machinery/atmospherics/unary/cryo_cell/Click(location, control, params)
+	if(!ghost_observe_occupant(usr, src.occupant))
+		. = ..()
 
 /obj/machinery/atmospherics/unary/cryo_cell/Exited(atom/movable/AM, atom/newloc)
 	..()
@@ -272,6 +275,10 @@
 		else
 			if (I.cant_drop)
 				boutput(user, SPAN_ALERT("You can't put that in [src] while it's attached to you!"))
+				return
+			var/obj/item/robodefibrillator/defibrillator = I
+			if(defibrillator.mounted)
+				boutput(user, SPAN_ALERT("You can't install a mounted Defibrillator!"))
 				return
 			src.defib = I
 			boutput(user, SPAN_NOTICE("Defibrillator installed into [src]."))

@@ -28,8 +28,6 @@
 	var/max_range = PROJ_INFINITE_RANGE
 	/// What kind of implant this projectile leaves in impacted mobs
 	var/implanted = null
-	/// Forensic ID of the gun, etc that shot this projectile, used for forensics on implanted projectiles
-	var/forensic_ID = null
 	/// The mob/thing that fired this projectile
 	var/atom/shooter = null
 	/// Mob-typed copy of `shooter` var to save time on casts later
@@ -139,21 +137,22 @@
 	proc/setDirection(x,y, do_turn = 1, angle_override = 0)
 		xo = x
 		yo = y
+		var/matrix/scale_matrix = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		if (do_turn)
 			//src.transform = null
-			src.transform = turn(matrix(),(angle_override ? angle_override : arctan(y,x)))
+			src.transform = turn(scale_matrix,(angle_override ? angle_override : arctan(y,x)))
 		else if (angle_override)
-			src.transform = null
+			src.transform = scale_matrix
 			facing_dir = angle2dir(angle_override)
 
-	proc/launch()
+	proc/launch(do_delay = FALSE)
 		if (proj_data)
 			proj_data.on_launch(src)
 		src.setup()
 		if(proj_data)
 			proj_data.post_setup(src)
 		if (!QDELETED(src))
-			SPAWN(0)
+			SPAWN(do_delay ? 0 : -1)
 				if (!is_processing)
 					process()
 
@@ -294,7 +293,8 @@
 			if (!proj_data) return //ZeWaka: Fix for null.override_color
 			if (!proj_data.override_color)
 				src.color = "#ffffff"
-
+	proc/get_len()
+		return sqrt(src.xo**2 + src.yo**2)
 	// Awful var names. TODO rename pretty much everything here, or at least document the functions
 	proc/setup()
 		if(QDELETED(src))
@@ -302,21 +302,20 @@
 		if (src.proj_data == null)
 			die()
 			return
-
+		src.pixel_z = src.proj_data.x_offset
+		src.pixel_w = src.proj_data.y_offset
 		name = src.proj_data.name
 		pierces_left = src.proj_data.pierces
 		goes_through_walls = src.proj_data.goes_through_walls
 		goes_through_mobs = src.proj_data.goes_through_mobs
 		set_icon()
 
-		var/len = sqrt(src.xo**2 + src.yo**2)
-
+		var/len = src.get_len()
 		if (len == 0 || proj_data.projectile_speed == 0)
 			return //will die on next step before moving
 
 		src.xo = src.xo / len
 		src.yo = src.yo / len
-
 		if (src.yo == 0)
 			if (src.xo < 0)
 				src.angle = -90
@@ -333,7 +332,7 @@
 			var/anglecheck = arcsin(src.xo / r)
 			if (anglecheck < 0)
 				src.angle = -src.angle
-		transform = null
+		transform = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		Turn(angle)
 		if (!proj_data.precalculated)
 			src.was_setup = 1
@@ -354,8 +353,8 @@
 				ys = -1
 				y32 = -y32
 		var/max_t = src.max_range * (32/speed)
-		var/next_x = x32 / 2
-		var/next_y = y32 / 2
+		var/next_x = x32 * (16-wx*xs)/32
+		var/next_y = y32 * (16-wy*ys)/32
 		var/ct = 0
 		var/turf/T = get_turf(src)
 		var/cx = T.x
@@ -526,7 +525,7 @@
 		src.tracked_blood = null
 		return
 
-	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
 		return
 
 ABSTRACT_TYPE(/datum/projectile)
@@ -535,6 +534,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/name = "projectile"
 	var/icon = 'icons/obj/projectiles.dmi'
 	var/icon_state = "bullet"	// A special note: the icon state, if not a point-symmetric sprite, should face NORTH by default.
+	var/x_offset = 0 //! absolute pixel offset of the projectile, set automatically based on the icon size
+	var/y_offset = 0
+	var/scale = 1
 	var/invisibility = INVIS_NONE
 	var/impact_image_state = null // what kinda overlay they puke onto non-mobs when they hit
 	var/brightness = 0
@@ -561,14 +563,16 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/shot_sound = 'sound/weapons/Taser.ogg' // file location for the sound you want it to play
 	var/shot_sound_extrarange = 0 //should the sound have extra range?
 	var/shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
+	var/shot_pitch = 1
 	var/shot_number = 0          // How many projectiles should be fired, each will cost the full cost
 	var/shot_delay = 0.1 SECONDS          // Time between shots in a burst.
 	var/damage_type = D_KINETIC  // What is our damage type
 	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
+	var/always_hits_structures = FALSE //always hits doors and girders
 	var/window_pass = 0          // Can we pass windows
 	var/obj/projectile/master = null // The projectile obj that we're associated with
-	var/silentshot = 0           // Standard visible message upon bullet_act.
+	var/silentshot = 0           // Standard hit message upon bullet_act.
 	var/implanted                // Path of "bullet" left behind in the mob on successful hit
 	var/disruption = 0           // planned thing to deal with pod electronics / etc
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
@@ -607,6 +611,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/hits_wraiths = 0
 	var/goes_through_walls = 0
 	var/goes_through_mobs = 0
+	var/smashes_glasses = TRUE
 	var/pierces = 0
 	var/ticks_between_mob_hits = 0
 	var/is_magical = 0              //magical projectiles, i.e. the chaplain is immune to these
@@ -619,6 +624,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	New()
 		. = ..()
 		generate_stats()
+		var/icon/fuck_you_byond = icon(src.icon)
+		src.x_offset = -(fuck_you_byond.Width() - 32)/2
+		src.y_offset = -(fuck_you_byond.Height() - 32)/2
 
 	onVarChanged(variable, oldval, newval)
 		. = ..()
@@ -693,6 +701,49 @@ ABSTRACT_TYPE(/datum/projectile)
 
 		post_setup(obj/projectile/P)
 			return
+
+		/// returns projectile stats that can be displayed in a tooltip
+		get_tooltip_content()
+			. = ""
+			var/stam
+			var/b_force = "Bullet damage: [src.damage]"
+			var/disrupt
+			if (src.stun)
+				stam += "Stamina: [clamp(src.stun * 4, src.stun * 2, src.stun + 80)] dmg"
+			if (src.armor_ignored)
+				b_force += " - [round(src.armor_ignored * 100, 1)]% armor piercing"
+			if (src.disruption)
+				disrupt = "Pod disruption: [round(src.disruption, 1)]% chance"
+
+			if (stam)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stamina.png")]\" width=\"10\" height=\"10\" /> [stam]"
+			. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/ranged.png")]\" width=\"10\" height=\"10\" /> [b_force]"
+			if (disrupt)
+				. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/stun.png")]\" width=\"10\" height=\"10\" /> [disrupt]"
+
+		///copies the name, visuals, and sfx of another projectile datum - for varedit shenanigans
+		copy_appearance_of(datum/projectile/P)
+			src.name = P.name
+			src.sname = P.sname
+
+			src.icon = P.icon
+			src.icon_state = P.icon_state
+
+			src.invisibility = P.invisibility
+			src.brightness = P.brightness
+
+			src.color_red = P.color_red
+			src.color_green = P.color_green
+			src.color_blue = P.color_blue
+			src.color_icon = P.color_icon
+			src.override_color = P.override_color
+
+			src.shot_sound = P.shot_sound
+			src.shot_sound_extrarange = P.shot_sound_extrarange
+			src.shot_volume = P.shot_volume
+
+			src.ie_type = P.ie_type
+			src.impact_image_state = P.impact_image_state
 
 // THIS IS INTENDED FOR POINTBLANKING.
 /proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T)
@@ -835,7 +886,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(sound_source, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
-			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
+			playsound(sound_source, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange, pitch = DATA.shot_pitch == 1 ? null : DATA.shot_pitch)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))
@@ -869,7 +920,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	if (ismob(P.shooter))
 		Q.mob_shooter = P.shooter
 	Q.name = "reflected [Q.name]"
-	Q.launch()
+	Q.launch(do_delay = (Q.reflectcount % 5 == 0))
 	return Q
 
 /*
@@ -967,5 +1018,5 @@ ABSTRACT_TYPE(/datum/projectile)
 				return
 
 	Q.name = "reflected [Q.name]"
-	Q.launch()
+	Q.launch(do_delay = (Q.reflectcount % 5 == 0))
 	return Q

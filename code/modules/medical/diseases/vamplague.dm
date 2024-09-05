@@ -26,7 +26,7 @@
 
 	if (probmult(10))
 		boutput(affected_mob, SPAN_ALERT("Your joints ache horribly!"))
-		affected_mob.changeStatus("weakened", stuntime SECONDS)
+		affected_mob.changeStatus("knockdown", stuntime SECONDS)
 		affected_mob.changeStatus("stunned", stuntime SECONDS)
 		affected_mob.take_toxin_damage(toxdamage * 2)
 

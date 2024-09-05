@@ -7,7 +7,7 @@
 	icon_state = "railing"
 	layer = OBJ_LAYER
 	color = "#ffffff"
-	flags = FPRINT | USEDELAY | ON_BORDER
+	flags = USEDELAY | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
@@ -86,7 +86,7 @@
 	New()
 		..()
 		if(src.is_reinforced)
-			src.flags |= ALWAYS_SOLID_FLUID
+			src.flags |= FLUID_DENSE
 		layerify()
 
 	Turn()
@@ -128,7 +128,7 @@
 				user.show_text("You cut off the reinforcement on [src].", "blue")
 				src.icon_state = "railing"
 				src.is_reinforced = 0
-				src.flags &= !ALWAYS_SOLID_FLUID
+				src.flags &= !FLUID_DENSE
 				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
 				R.amount = 1
 				if(src.material)
@@ -145,7 +145,7 @@
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
-					src.flags |= ALWAYS_SOLID_FLUID
+					src.flags |= FLUID_DENSE
 			else
 				user.show_text("[src] is already reinforced!", "red")
 
@@ -155,7 +155,7 @@
 	attack_ai(mob/user)
 		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
 			return
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
 	Bumped(var/mob/AM as mob)
 		. = ..()
@@ -219,6 +219,14 @@
 		icon = 'icons/obj/velvetrope.dmi'
 		icon_state = "velvetrope"
 		desc = "A cushy red velvet rope strewn between two golden poles."
+		can_reinforce = FALSE
+
+	guard // I'm yoinking this from window.dm and there's nothing you can do to stop me
+		name = "guard railing"
+		desc = "Doesn't look very sturdy, but it's better than nothing?"
+		icon = 'icons/obj/structures.dmi'
+		is_reinforced = TRUE
+		icon_state = "safetyrail"
 		can_reinforce = FALSE
 
 /datum/action/bar/icon/railing_jump
@@ -308,13 +316,13 @@
 		if(obstacle) // did we end up ever bumping the dest or two corners?
 			// if they are a living mob, make them TASTE THE PAIN
 			if (istype(ownerMob, /mob/living))
-				if (!ownerMob.hasStatus("weakened"))
-					ownerMob.changeStatus("weakened", 4 SECONDS)
+				if (!ownerMob.hasStatus("knockdown"))
+					ownerMob.changeStatus("knockdown", 4 SECONDS)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE, -1)
 					ownerMob.visible_message(SPAN_ALERT("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]"))
 				// chance for additional head bump damage
 				if (prob(25))
-					ownerMob.changeStatus("weakened", 4 SECONDS)
+					ownerMob.changeStatus("knockdown", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE, -1)
 					ownerMob.visible_message(SPAN_ALERT("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]"))

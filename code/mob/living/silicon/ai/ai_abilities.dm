@@ -371,6 +371,7 @@
 		var/obj/machinery/camera/C
 		var/list/obj/machinery/camera/cameras_to_repair = list()
 
+		. = ..()
 		for(C in camnets["SS13"])
 			if(!C.camera_status && istype_exact(C,/obj/machinery/camera))
 				cameras_to_repair |= C
@@ -517,6 +518,6 @@
 						M.apply_flash(35, 0, 0, 25)
 					else
 						dist = clamp(dist,1,4)
-						M.apply_flash(20, weak = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
+						M.apply_flash(20, knockdown = 2, uncloak_prob = 100, stamina_damage = (35 / dist), disorient_time = 3)
 		else
 			boutput(holder.owner, "Target is outside of camera range!")

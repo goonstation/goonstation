@@ -3,7 +3,7 @@
 	display_name = "\improper Syndicate gunbot"
 	antagonist_icon = "syndicate"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/nuclear_operative
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	mob_path = /mob/living/critter/robotic/gunbot/syndicate
 
 	New(datum/mind/new_owner)

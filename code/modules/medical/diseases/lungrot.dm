@@ -15,7 +15,7 @@
 
 /datum/ailment/disease/lungrot/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/affecting_ailment, mult)
 	//if salbutamol is out of the person, increase the cure chance by a lot
-	if (affected_mob.reagents.get_reagent_amount("salbutamol") > 0)
+	if (affected_mob.reagents?.get_reagent_amount("salbutamol") > 0)
 		affecting_ailment.recureprob = 1
 	else
 		affecting_ailment.recureprob = 20
@@ -54,7 +54,7 @@
 				miasma_to_breath = rand(18,28)
 
 		// Now we add the miasma and deal damage
-		affected_mob.reagents.add_reagent("miasma", miasma_to_add * mult)
+		affected_mob.reagents?.add_reagent("miasma", miasma_to_add * mult)
 		affected_mob.take_toxin_damage(tox_damage_to_deal * mult)
 
 		// On later stages, we begin breathing out miasma

@@ -17,18 +17,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	genome = 18
 	assoc_reagents = list("juice_tomato")
 	commuts = list(/datum/plant_gene_strain/splicing,/datum/plant_gene_strain/quality/inferior)
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		switch(reagent)
-			if("phlogiston","infernite","pyrosium","sorium")
-				if (prob(33))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/incendiary)
-			if("strange_reagent")
-				if (prob(50))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tomato/killer)
+	mutations = list(/datum/plantmutation/tomato/incendiary, /datum/plantmutation/tomato/killer)
 
 /datum/plant/fruit/grape
 	name = "Grape"
@@ -89,21 +78,9 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	genome = 19
 	assoc_reagents = list("juice_watermelon")
 	nectarlevel = 15
-	mutations = list(/datum/plantmutation/melon/george, /datum/plantmutation/melon/bowling)
+	mutations = list(/datum/plantmutation/melon/george, /datum/plantmutation/melon/bowling, /datum/plantmutation/melon/balloon, /datum/plantmutation/melon/hindenballoon)
 	commuts = list(/datum/plant_gene_strain/immortal,/datum/plant_gene_strain/seedless)
 	special_proc = 1 // my sincerest apologies for this, it's there only for a dumb effect on the bowling melons
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		switch(reagent)
-			if("helium")
-				if (prob(50))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/melon/balloon)
-			if("hydrogen")
-				if (prob(50))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/melon/hindenballoon)
 
 /datum/plant/fruit/chili
 	name = "Chili"
@@ -119,24 +96,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	assoc_reagents = list("capsaicin")
 	mutations = list(/datum/plantmutation/chili/chilly,/datum/plantmutation/chili/ghost)
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/growth_slow)
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		switch(reagent)
-			if("cryostylane")
-				if (prob(80))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/chili/chilly)
-			if("cryoxadone")
-				if (prob(40))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/chili/chilly)
-			if("el_diablo")
-				if (prob(60))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/chili/ghost)
-			if("phlogiston")
-				if (prob(95))
-					DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/chili/ghost)
 
 /datum/plant/fruit/apple
 	name = "Apple"
@@ -207,14 +166,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	genome = 19
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 	assoc_reagents = list("juice_pumpkin")
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		if (reagent == "capsaicin")
-			if (prob(80))
-				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/pumpkin/latte)
+	mutations = list(/datum/plantmutation/pumpkin/latte)
 
 /datum/plant/fruit/avocado
 	name = "Avocado"
@@ -242,13 +194,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	commuts = list(/datum/plant_gene_strain/mutations,/datum/plant_gene_strain/terminator)
 	mutations = list(/datum/plantmutation/eggplant/literal)
 	assoc_reagents = list("nicotine")
-
-	HYPinfusionP(var/obj/item/seed/S,var/reagent)
-		..()
-		var/datum/plantgenes/DNA = S.plantgenes
-		if (!DNA) return
-		if(reagent == "eggnog" && prob(80))
-			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/eggplant/literal)
 
 /datum/plant/fruit/strawberry
 	name = "Strawberry"

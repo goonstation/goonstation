@@ -29,6 +29,7 @@
 			boutput(M, SPAN_ALERT("You're already jamming radio signals."))
 			return 1
 
+		. = ..()
 		boutput(M, SPAN_NOTICE("<b>You will disrupt radio signals in your immediate vicinity for the next [src.duration / 10] seconds.</b>"))
 		OTHER_START_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 		SPAWN(src.duration)

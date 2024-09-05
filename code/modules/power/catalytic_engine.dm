@@ -5,7 +5,7 @@
 #define UNIT_INACTIVE 1
 #define UNIT_ACTIVE 2
 
-/obj/decal/fakeobjects/catalytic_doodad
+/obj/fakeobject/catalytic_doodad
 	name = "catalytic generator pipe"
 	desc = "Pipe section allowing a catalytic rod to contact outside fluid for catalysis."
 	icon = 'icons/obj/machines/catalysis.dmi'
