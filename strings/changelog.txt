@@ -1,6 +1,10 @@
 
 (t)thu sep 05 24
 (u)JORJ949
+(p)19998
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Reworked Atlas Engineering, moving the computer core to AI foyer.
+(u)JORJ949
 (p)20542
 (e)💅📦|C-QoL, A-Game-Objects
 (+)Departmental announcements now have a set sender and the syndicate stopped announcing they are spying on you.
