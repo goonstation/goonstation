@@ -21,8 +21,12 @@
 			return 1
 
 		. = ..()
-
 		var/datum/abilityHolder/vampire/vamp_holder = src.holder
+		if (vamp_holder.last_victim && QDELETED(vamp_holder.last_victim))
+			boutput(src.holder.owner, SPAN_ALERT("Your victim has left this plane."))
+			vamp_holder.last_victim = null
+			src.active = FALSE
+			return
 		if (!src.active)
 			if (!vamp_holder.last_victim)
 				boutput(src.holder.owner, SPAN_ALERT("You have yet to drink the blood of an innocent."))
