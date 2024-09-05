@@ -92,7 +92,9 @@ TYPEINFO(/obj/machinery/crusher)
 			target.set_loc(owner.loc)
 		walk(target, 0)
 		target.changeStatus("stunned", 5 SECONDS)
-
+		var/mob/M = target
+		if(M.key || M.client) // so it doesn't message for npcs (hopefully)
+			message_ghosts("Someone is being crushed at [log_loc(M, ghostjump=TRUE)].")
 
 	onUpdate()
 		. = ..()
