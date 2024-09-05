@@ -1004,11 +1004,10 @@ client/proc/toggle_ghost_respawns()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (global_sims_mode && !H.sims)
-				var/stinky = H.traitHolder.hasTrait("stinky")
 #ifdef RP_MODE
-				H.sims = stinky ? new /datum/simsHolder/rp/hygiene(H) : new /datum/simsHolder/rp(H)
+				H.sims = new /datum/simsHolder/rp(H)
 #else
-				H.sims = stinky ? new /datum/simsHolder/human/hygiene(H) : new /datum/simsHolder/human(H)
+				H.sims = new /datum/simsHolder/human(H)
 #endif
 			else if (!global_sims_mode && H.sims)
 				qdel(H.sims)

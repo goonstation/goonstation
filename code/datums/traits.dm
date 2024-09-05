@@ -364,25 +364,23 @@
 	name = "Hyperhidrosis"
 	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
 	id = "stinky"
-	icon_state = "placeholder"
+	icon_state = "stinky"
 	category = list("body")
 	points = 1
-	var/datum/simsHolder/prev_sims = null // for easily restoring previous sims
 
 	onAdd(var/mob/owner)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			src.prev_sims = H.sims
-#ifdef RP_MODE
-			H.sims = new /datum/simsHolder/rp/hygiene(H)
-#else
-			H.sims = new /datum/simsHolder/human/hygiene(H)
-#endif
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.addMotive(/datum/simsMotive/hygiene)
 
 	onRemove(var/mob/owner)
 		if(ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.sims = src.prev_sims ? src.prev_sims : null
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.motives.Remove("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish

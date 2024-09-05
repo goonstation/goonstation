@@ -292,7 +292,6 @@
 	var/datum/objective/specialist/werewolf/feed/feed_objective = null
 	var/datum/reagents/tainted_saliva_reservoir = null
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
-	var/datum/simsHolder/prev_sims = null // this is cleaner probably
 
 	New()
 		. = ..()
@@ -308,17 +307,15 @@
 			var/mob/living/carbon/human/H = newbody
 			if (H.sims)
 				// Did you know that the motive system has no way to remove a motive? Now you do! This has been fun facts with aloe
-				src.prev_sims = H.sims
 				qdel(H.sims)
-				var/stinky = H.traitHolder.hasTrait("stinky")
-				H.sims = stinky ? new /datum/simsHolder/rp/wolf/hygiene(H) : new /datum/simsHolder/rp/wolf(H)
+				H.sims = new /datum/simsHolder/rp/wolf(H)
 
 	onRemove(mob/from_who)
 		. = ..()
 		var/mob/living/carbon/human/H = from_who
 		if (istype(H.sims, /datum/simsHolder/rp/wolf))
 			qdel(H.sims)
-			H.sims = src.prev_sims
+			H.sims = new /datum/simsHolder/rp(H)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
