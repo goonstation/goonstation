@@ -14,13 +14,13 @@
 	else
 		return 0
 
-/mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+/mob/proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0, var/mob/victim = null)
 	if (!isvampire(src) && !isvampiricthrall(src))
 		return
 
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
-		AH.change_vampire_blood(change, total_blood, set_null)
+		AH.change_vampire_blood(change, total_blood, set_null, victim)
 	else
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
@@ -139,7 +139,7 @@
 			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
 
-	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/mob/victim = null)
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = FALSE, var/mob/victim = null)
 		if (victim)
 			src.last_victim = victim
 		if (total_blood)
@@ -147,14 +147,20 @@
 				src.vamp_blood = 0
 				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
 
-			src.vamp_blood = max(src.vamp_blood + change, 0)
+			if (set_null)
+				src.vamp_blood = 0
+			else
+				src.vamp_blood = max(src.vamp_blood + change, 0)
 
 		else
 			if (src.points < 0)
 				src.points = 0
 				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
 
-			src.points = max(src.points + change, 0)
+			if (set_null)
+				src.points = 0
+			else
+				src.points = max(src.points + change, 0)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
