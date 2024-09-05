@@ -90,7 +90,6 @@
 			HH.blood_volume = 0
 		else
 			HH.blood_volume -= 20 * mult
-		if (istype(H)) H.blood_tracking_output()
 
 	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
 		if(istype(M))
@@ -112,8 +111,6 @@
 				H.change_vampire_blood(bitesize, 0)
 				H.change_vampire_blood(bitesize, 1)
 				H.tally_bite(HH,bitesize)
-				if (istype(H))
-					H.blood_tracking_output()
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
@@ -146,8 +143,6 @@
 					if (prob(65))
 						HH.changeStatus("knockdown", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
-
-			if (istype(H)) H.blood_tracking_output()
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))

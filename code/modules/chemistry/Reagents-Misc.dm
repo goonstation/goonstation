@@ -3266,7 +3266,6 @@ datum
 								var/bloodget = volume_passed / 3
 								M.change_vampire_blood(bloodget, 1) // vamp_blood
 								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
-								V.blood_tracking_output()
 								V.check_for_unlocks()
 								holder.del_reagent(src.id)
 								return 0

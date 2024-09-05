@@ -69,8 +69,9 @@
 	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	var/vamp_blood = 0
 	points = 0 // Replaces the old vamp_blood_remaining var.
-	var/vamp_blood_tracking = 1
 	var/mob/vamp_isbiting = null
+	///For blood tracking
+	var/mob/last_victim = null
 #ifdef BONUS_POINTS
 	vamp_blood = 99999
 	points = 99999
@@ -138,26 +139,22 @@
 			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
 
-	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/mob/victim = null)
+		if (victim)
+			src.last_victim = victim
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
 				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
 
-			if (set_null)
-				src.vamp_blood = 0
-			else
-				src.vamp_blood = max(src.vamp_blood + change, 0)
+			src.vamp_blood = max(src.vamp_blood + change, 0)
 
 		else
 			if (src.points < 0)
 				src.points = 0
 				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
 
-			if (set_null)
-				src.points = 0
-			else
-				src.points = max(src.points + change, 0)
+			src.points = max(src.points + change, 0)
 
 			if (change > 0 && ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
@@ -170,24 +167,6 @@
 			return src.vamp_blood
 		else
 			return src.points
-
-	proc/blood_tracking_output(var/deduct = 0)
-		if (!src.owner || !ismob(src.owner))
-			return
-
-		if (!istype(src, /datum/abilityHolder/vampire))
-			return
-
-		if (!src.vamp_blood_tracking)
-			return
-
-		if (deduct > 1)
-			boutput(src.owner, SPAN_NOTICE("You used [deduct] units of blood, and have [src.points - deduct] remaining."))
-
-		else
-			boutput(src.owner, SPAN_NOTICE("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
-
-		return
 
 	proc/check_for_unlocks()
 		if (!src.owner || !ismob(src.owner))
