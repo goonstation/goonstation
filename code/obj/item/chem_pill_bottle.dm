@@ -1,5 +1,5 @@
 /obj/item/chem_pill_bottle
-	name = "Pill bottle"
+	name = "pill bottle"
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
 	w_class = W_CLASS_SMALL
@@ -34,9 +34,7 @@
 
 	// spawn a pill, returns a pill or null if there aren't any left in the bottle
 	proc/create_pill()
-		var/totalpills = src.pcount + length(src.contents)
-
-		if(totalpills <= 0)
+		if(total_pills() <= 0)
 			return null
 
 		var/obj/item/reagent_containers/pill/P = null
@@ -69,7 +67,7 @@
 		return P
 
 	proc/rebuild_desc()
-		var/totalpills = src.pcount + length(src.contents)
+		var/totalpills = total_pills()
 		if(totalpills > 15)
 			src.desc = "A [src.pname] pill bottle. There are too many to count."
 			src.inventory_counter.update_text("**")
@@ -90,22 +88,29 @@
 		else ..()
 
 	attack_self(var/mob/user as mob)
+		tip_out(user, user.loc)
+
+	/// returns the total number of remaining pills
+	proc/total_pills()
+		return src.pcount + length(src.contents)
+
+	proc/tip_out(var/mob/user as mob, atom/location, var/skip_messages = FALSE)
 		var/obj/item/reagent_containers/pill/P = src.create_pill()
 		if (istype(P))
 			var/i = rand(3,8)
-			var/turf/T = user.loc
-			while(istype(P) && i > 0 && user.loc == T)
-				P.set_loc(T)
+			while(istype(P) && i > 0)
+				P.set_loc(location)
 				P = src.create_pill()
 				i--
-			if (src.pcount + length(src.contents) > 0)
-				boutput(user, SPAN_NOTICE("You tip out a bunch of pills from [src] into [T]."))
-			else
-				boutput(user, SPAN_NOTICE("You tip out all the pills from [src] into [T]."))
+			if (!skip_messages)
+				if (src.pcount + length(src.contents) > 0)
+					boutput(user, SPAN_NOTICE("You tip out a bunch of pills from [src] into [location]."))
+				else
+					boutput(user, SPAN_NOTICE("You tip out all the pills from [src] into [location]."))
 			rebuild_desc()
 		else
-			boutput(user, SPAN_ALERT("It's empty."))
-			return
+			if (!skip_messages)
+				boutput(user, SPAN_ALERT("It's empty."))
 
 	attack_hand(mob/user)
 		if(user.r_hand == src || user.l_hand == src)
@@ -128,7 +133,8 @@
 			user.show_text("That's too far away!", "red")
 			return
 		if (!istype(O, /obj/item/reagent_containers/pill))
-			user.show_text("\The [src] can't hold anything but pills!", "red")
+			if (istype(O, /obj/item) && O != src) // don't display this message if its a mob or something obvious
+				boutput(usr, SPAN_ALERT("[src] can't hold anything but pills!"))
 			return
 
 		user.visible_message(SPAN_NOTICE("[user] begins quickly filling [src]!"))
@@ -143,3 +149,42 @@
 			if (user.loc != staystill)
 				break
 		boutput(user, SPAN_NOTICE("You finish filling [src]!"))
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (usr == over_object && istype(usr, /mob/living/carbon) && (src.loc == usr || src.loc?.loc == usr))
+			if(usr.restrained())
+				boutput(usr, SPAN_ALERT("You can't get into the [src] in your current state."))
+				return
+			// Need a free hand, or the bottle to be already in-hand
+			if (!usr.is_in_hands(src))
+				if (!usr.is_in_hands(null))
+					boutput(usr, SPAN_ALERT("You need a free hand to do that."))
+					return
+				usr.drop_item(src)
+				usr.put_in_hand(src)
+
+			var/obj/item/reagent_containers/pill/pill = src.create_pill()
+			if (isnull(pill))
+				boutput(usr, SPAN_ALERT("[src] is empty!"))
+				return
+			// clumsy people have a chance to spill pills on the floor when popping one
+			if(total_pills() > 0 && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(25))
+				usr.visible_message(SPAN_NOTICE("[usr] tips [src], spilling pills on their face - one even manages to land in their mouth!")
+									null, SPAN_NOTICE("Someone spills some pills."))
+				tip_out(usr, usr.loc)
+			else usr.visible_message(SPAN_NOTICE("[usr] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1)
+			pill.pill_action(usr, usr)
+			rebuild_desc()
+			return
+
+		else if (istype(over_object,/obj/table))
+			tip_out(usr, over_object.loc)
+			return
+		..()
+
+	// Don't dump the bottle onto the table if using drag-and-drop to dump out pills.
+	should_place_on(obj/target, params)
+		if (istype(target, /obj/table) && islist(params) && params["dragged"])
+			return FALSE
+		. = ..()
