@@ -113,7 +113,7 @@
 		axis_stop_value = 6
 	else
 		axis_start_value = 12
-		axis_stop_value = -12
+		axis_stop_value = 12
 
 	switch(dir)
 		if(SOUTH, NORTH)
