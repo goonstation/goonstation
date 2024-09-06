@@ -2788,7 +2788,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "aML" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 8;
@@ -2805,7 +2804,11 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/circuit,
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "aMS" = (
 /obj/decal/tile_edge/line/red{
@@ -5933,9 +5936,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 8;
@@ -5961,9 +5962,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "bHI" = (
@@ -7008,7 +7007,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/outer/east)
 "bZw" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 9;
@@ -7021,7 +7019,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "bZC" = (
 /obj/cable{
@@ -7331,12 +7333,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"cdP" = (
-/obj/stool/chair/comfy{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/station/medical/breakroom)
 "cdU" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -8828,9 +8824,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 8;
@@ -9564,15 +9558,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/ai)
-"cJi" = (
-/obj/machinery/light/incandescent/cool{
-	dir = 8
-	},
-/obj/stool/chair/comfy{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/medical/breakroom)
 "cKj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11127,9 +11112,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -11869,6 +11852,16 @@
 	dir = 8
 	},
 /area/station/medical/head)
+"dwr" = (
+/obj/table/wood/round/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/shipalert{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "dws" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -14037,9 +14030,7 @@
 /area/station/security/detectives_office)
 "edy" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
 	icon_state = "tile1"
@@ -14787,9 +14778,7 @@
 	tag = ""
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
@@ -15004,6 +14993,16 @@
 	dir = 8
 	},
 /area/spacehabitat/pool)
+"etw" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 8
+	},
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/medical/breakroom)
 "etG" = (
 /obj/disposalpipe/switch_junction/right/north{
 	mail_tag = "QM"
@@ -17993,7 +17992,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "fqd" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 5;
@@ -18006,7 +18004,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "fqg" = (
 /obj/disposalpipe/segment,
@@ -18687,9 +18689,7 @@
 	pixel_y = 34
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "fCs" = (
@@ -19362,7 +19362,6 @@
 /turf/simulated/floor/blueblack,
 /area/station/security/checkpoint/customs)
 "fMx" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
@@ -19379,7 +19378,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "fMB" = (
 /obj/lattice{
@@ -21631,10 +21631,6 @@
 	dir = 9
 	},
 /area/station/bridge/customs)
-"gvK" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "gvN" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -22552,6 +22548,11 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"gKU" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "gKX" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
@@ -22783,7 +22784,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
 "gOM" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 6;
@@ -22794,7 +22794,11 @@
 	opacity = 0
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "gPb" = (
 /obj/lattice{
@@ -24130,9 +24134,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 5;
@@ -27559,16 +27561,6 @@
 	dir = 6
 	},
 /area/station/solar/small_backup1)
-"ipg" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/firealarm/south,
-/turf/simulated/floor/yellowblack,
-/area/station/engine/engineering)
 "ipi" = (
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
@@ -27990,12 +27982,6 @@
 	dir = 1
 	},
 /area/station/engine/inner)
-"ixs" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lobby)
 "ixv" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -29976,9 +29962,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 4;
@@ -32858,9 +32842,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "jUb" = (
@@ -35339,9 +35321,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 4;
@@ -40118,6 +40098,13 @@
 /obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"lZV" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/elect)
 "mac" = (
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/lobby)
@@ -43929,9 +43916,7 @@
 	icon_state = "tile1"
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -43958,17 +43943,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
-"nlO" = (
-/obj/table/wood/round/auto,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/shipalert{
-	dir = 1;
-	
-	},
-/turf/simulated/floor/black,
-/area/station/bridge)
 "nlT" = (
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
@@ -44705,9 +44679,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 9;
@@ -54364,9 +54336,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
@@ -54898,6 +54868,17 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"qAX" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/firealarm/south,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/engineering)
 "qBc" = (
 /obj/grille/catwalk/jen,
 /obj/disposalpipe/segment{
@@ -56995,6 +56976,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/turret_protected/ai_upload)
+"rib" = (
+/obj/stool/chair/office,
+/obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/carpet/green/fancy/narrow,
+/area/station/medical/medbay/lobby)
 "rig" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
@@ -59493,12 +59480,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
-"rXb" = (
-/obj/landmark/start/job/medical_doctor,
-/obj/stool/chair/office,
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/carpet/green/fancy/narrow,
-/area/station/medical/medbay/lobby)
 "rXd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59807,7 +59788,6 @@
 	},
 /area/station/crew_quarters/hor)
 "sbF" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -59826,7 +59806,8 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "sbI" = (
 /obj/disposalpipe/segment/morgue,
@@ -63466,6 +63447,13 @@
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
+"tiT" = (
+/obj/stool/chair/comfy{
+	dir = 8
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/medical/breakroom)
 "tiX" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -64817,7 +64805,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/mapping_helper/access/heads,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -64831,6 +64818,7 @@
 	enter_id = "outer";
 	name = "AI Core"
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "tFa" = (
@@ -65155,7 +65143,6 @@
 /obj/machinery/door/airlock/pyro/command{
 	req_access = null
 	},
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/cable{
@@ -65166,6 +65153,7 @@
 	enter_id = "inner";
 	name = "AI Core"
 	},
+/obj/mapping_helper/access/ai_upload,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "tJf" = (
@@ -65525,6 +65513,10 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
+"tOd" = (
+/obj/machinery/computer/announcement/station/catering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "tOe" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -68415,10 +68407,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
-"uHV" = (
-/obj/stool/chair/couch/purple,
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "uHW" = (
 /obj/machinery/light/small/sticky{
 	dir = 1
@@ -71326,6 +71314,13 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/maintenance/inner/north)
+"vBp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "vBq" = (
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/sauna)
@@ -74255,12 +74250,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
-"wtX" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/engine/elect)
 "wua" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -77084,7 +77073,14 @@
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/light/small/floor/cool/very,
-/turf/simulated/floor/circuit/off,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "xhm" = (
 /obj/machinery/light{
@@ -77132,6 +77128,11 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
+"xhY" = (
+/obj/stool/chair/couch/purple,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "xhZ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/disposalpipe/segment{
@@ -78168,10 +78169,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
-"xwC" = (
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "xwE" = (
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/security/checkpoint/escape)
@@ -78916,7 +78913,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "xIP" = (
-/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 10;
@@ -78927,7 +78923,11 @@
 	opacity = 0
 	},
 /obj/cable,
-/turf/simulated/floor/circuit,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "xIX" = (
 /obj/stool/chair{
@@ -114966,7 +114966,7 @@ jBA
 ouo
 apH
 gbW
-nlO
+dwr
 ffU
 biw
 sVZ
@@ -119212,7 +119212,7 @@ oEz
 wWJ
 xbh
 jtX
-cJi
+etw
 cax
 puB
 aOX
@@ -120118,7 +120118,7 @@ qsX
 gBl
 qqd
 vQB
-cdP
+tiT
 kKr
 qLF
 xVt
@@ -122263,7 +122263,7 @@ gYK
 nUB
 aFv
 eWy
-ixs
+vBp
 hAg
 hAg
 hAg
@@ -123663,7 +123663,7 @@ xNp
 gyn
 bYQ
 wHr
-gvK
+gKU
 uqX
 hll
 kCZ
@@ -124358,7 +124358,7 @@ cZj
 jid
 vqc
 iQG
-rXb
+rib
 mEj
 hMV
 eOy
@@ -124569,7 +124569,7 @@ oil
 fIL
 cRf
 oad
-xwC
+tOd
 oaT
 xIO
 pQh
@@ -126188,7 +126188,7 @@ qco
 dpP
 efW
 oEZ
-uHV
+xhY
 vyp
 lKW
 wVP
@@ -137900,7 +137900,7 @@ fCu
 ycH
 lpF
 bto
-wtX
+lZV
 fdz
 ePN
 ngg
@@ -138230,7 +138230,7 @@ dqc
 ceA
 jee
 bRC
-ipg
+qAX
 vqi
 vqi
 vqi
