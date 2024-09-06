@@ -1,4 +1,10 @@
 
+(t)fri sep 06 24
+(u)444explorer
+(p)20588
+(e)|
+(+)Renames Technical Assistant, Medical Assistant and Research Assistant to Technical Trainee, Medical Trainee and Research Trainee.
+(+)Staff Assistant and Security Assistant are not effected by this rename.
 (t)thu sep 05 24
 (u)JORJ949
 (p)20212
