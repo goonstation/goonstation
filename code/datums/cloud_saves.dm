@@ -105,7 +105,7 @@
 	/// Save new cloud data for this player
 	proc/putData(key, value)
 		if(value == src.data[key]) //don't bother sending data if we'd be making no change
-			return FALSE //but treat it as a failure I guess??
+			return 17 //but treat it as a failure I guess?? //DEBUG SHIT REVERT THIS
 
 		if (src.simulating)
 			// Local fallback, update JSON file
@@ -132,7 +132,7 @@
 	/// Save a new cloud file for this player. ONLY FOR CHARACTER PROFILE CLOUD SAVES. USE putData FOR ANYTHING ELSE.
 	proc/putSave(name, data)
 		if(data == src.saves[name]) //don't bother sending save if we'd be making no change
-			return FALSE //but treat it as a failure I guess??
+			return 17 //but treat it as a failure I guess?? //DEBUG SHIT REVERT THIS
 
 		if (src.simulating)
 			// Local fallback, update JSON file
