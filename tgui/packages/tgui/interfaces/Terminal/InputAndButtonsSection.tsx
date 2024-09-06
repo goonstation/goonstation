@@ -5,40 +5,64 @@
  * @license ISC
  */
 
-import { Button, Flex, Input, Section, Tooltip } from 'tgui-core/components';
+import { useEffect, useState } from 'react';
+import { Button, Flex, Section, Tooltip } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { TerminalInput } from './TerminalInput';
 import { TerminalData } from './types';
 
 export const InputAndButtonsSection = () => {
   const { act, data } = useBackend<TerminalData>();
-  const { TermActive } = data;
+  const { TermActive, inputValue, ckey } = data;
 
-  const handleInputEnter = (_e, value) => {
-    act('text', { value: value });
-  };
-  const handleEnterClick = () => {
-    // Still a tiny bit hacky but it's a manual click on the enter button which already caused me too much grief
+  const [localInputValue, setLocalInputValue] = useState(inputValue);
+
+  const setDOMInputValue = (value) => {
+    // In theory, only calling setLocalInputValue(...) should work, but it doesn't, and requires the below hack to work.
+    // I think the cause of this is the useEffect() in tgui's Input.tsx. I couldn't find a workaround.
     const domInput = document.querySelector(
       ".terminalInput input[class^='_inner']",
     ) as HTMLInputElement;
-    act('text', { value: domInput.value });
-    domInput.value = '';
+    domInput.value = value;
   };
+
+  const handleInputEnter = (_e, value) =>
+    act('text', { value: value, ckey: ckey });
+  const handleEnterClick = () => {
+    act('text', { value: localInputValue, ckey: ckey });
+    setLocalInputValue('');
+    setDOMInputValue('');
+  };
+  const handleHistoryPrevious = () =>
+    act('history', { direction: 'prev', ckey: ckey });
+  const handleHistoryNext = () =>
+    act('history', { direction: 'next', ckey: ckey });
+  const handleInputChange = (_e, value) => setLocalInputValue(value);
   const handleRestartClick = () => act('restart');
+
+  // When inputValue changes, it means a history event happened, so only then should we erase local input value with what was received from the server.
+  useEffect(() => {
+    setLocalInputValue(inputValue);
+    setDOMInputValue(inputValue);
+  }, [inputValue]);
 
   return (
     <Section fitted>
       <Flex align="center">
         <Flex.Item grow>
-          <Input
+          <TerminalInput
+            autoFocus
+            value={localInputValue}
             className="terminalInput"
             placeholder="Type Here"
             selfClear
             fluid
             mr="0.5rem"
+            onKeyUp={handleHistoryPrevious}
+            onKeyDown={handleHistoryNext}
             onEnter={handleInputEnter}
-            // TODO-REACT: re-implement up/down arrow `history` functionallity
+            onChange={handleInputChange}
           />
         </Flex.Item>
         <Flex.Item>
