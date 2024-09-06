@@ -60,8 +60,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE, season=null)
 		var/list/turfs_to_fix = get_turfs_to_fix()
 		clear_out_turfs(turfs_to_fix)
-
-		clear_around_beacons()
+		clear_out_turfs(get_beacon_turfs(), by_type[/obj/warp_beacon])
 
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
@@ -132,12 +131,12 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
-	proc/clear_around_beacons()
+	proc/get_beacon_turfs()
 		var/list/turfs_to_fix = list()
 		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
-			for(var/turf/T in range(4,W))
+			for(var/turf/T in range(5, W))
 				turfs_to_fix |= T
-		clear_out_turfs(turfs_to_fix, by_type[/obj/warp_beacon])
+		return turfs_to_fix
 
 	proc/get_ptl_beams()
 		. = list()
@@ -513,7 +512,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, FALSE)
 
-			log_terrainify( "turned space into an THE VOID.")
+			log_terrainify(user, "turned space into an THE VOID.")
 
 /proc/generate_void(all_z_levels = FALSE)
 	station_repair.ambient_light = new /image/ambient
@@ -579,6 +578,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
+			traveling_crate_turfs += station_repair.get_beacon_turfs()
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
 				if(station_repair.allows_vehicles)
@@ -624,6 +624,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					LG.lava_percent = 25
 
 			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
+			traveling_crate_turfs += station_repair.get_beacon_turfs()
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/auto/iomoon)
 				if(station_repair.allows_vehicles)
@@ -734,6 +735,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
 			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
+			traveling_crate_turfs += station_repair.get_beacon_turfs()
 			for(var/turf/unsimulated/wall/setpieces/martian/auto/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 				if(station_repair.allows_vehicles)
@@ -943,6 +945,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			generator.generate_map()
 
 		var/list/turf/turfs_to_clear = station_repair.get_turfs_to_fix()
+		turfs_to_clear += station_repair.get_beacon_turfs()
 		generator.clear_walls(turfs_to_clear)
 
 		generator.generate_terrain(space, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)

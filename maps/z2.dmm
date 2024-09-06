@@ -57796,7 +57796,7 @@
 	desc = "A staff fridge. This one is filthy.";
 	name = "gross refrigerator"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
+/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti,
 /obj/item/reagent_containers/food/snacks/yuck,
 /obj/item/reagent_containers/food/drinks/cola,
 /obj/item/reagent_containers/food/drinks/bottle/beer,

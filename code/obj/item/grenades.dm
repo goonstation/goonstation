@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
@@ -108,7 +109,8 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 			src.icon_state = initial(src.icon_state)
 
 	ex_act(severity)
-		src.detonate(null)
+		if(!src.detonating)
+			src.detonate(null)
 		. = ..()
 
 	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
@@ -116,7 +118,9 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		return new src.type
 
 	proc/detonate(mob/user) // Most grenades require a turf reference.
+		SHOULD_CALL_PARENT(TRUE)
 		var/turf/T = get_turf(src)
+		src.detonating = TRUE
 		if (!T || !isturf(T))
 			return null
 		else
