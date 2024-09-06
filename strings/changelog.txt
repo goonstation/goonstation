@@ -1,5 +1,9 @@
 
 (t)fri sep 06 24
+(u)cringe
+(p)20481
+(e)🪲🆕🎨💨|C-Bug, C-Feature, C-Sprites, A-Atmospherics
+(+)Pipes now use a variant of modular pipes. This means that when a pipe is ruptured or merely missing an end, they appear visually distinct. Ruptured pipes are broken in the center, while missing ends are broken at the ends. These states can also appear simultaneously.
 (u)444explorer
 (p)20588
 (e)|
