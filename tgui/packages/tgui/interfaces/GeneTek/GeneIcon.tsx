@@ -18,7 +18,7 @@ interface GeneIconProps {
 export const GeneIcon = memo((props: GeneIconProps) => {
   const { name, size, style = {}, ...rest } = props;
   if (size) {
-    style['font-size'] = size * 100 + '%';
+    style['fontSize'] = size * 100 + '%';
   }
   return (
     <Box

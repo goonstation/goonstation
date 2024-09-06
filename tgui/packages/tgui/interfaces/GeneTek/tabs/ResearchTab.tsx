@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { useState } from 'react';
 import {
   AnimatedNumber,
   Button,
@@ -30,6 +31,13 @@ export const ResearchTab = (props) => {
     savedMutations,
     research,
   } = data;
+
+  // We need to store research locally, since we can be passed partial updates
+  const [researchTree, setResearchData] = useState(research);
+
+  if (researchTree !== research) {
+    setResearchData(research);
+  }
 
   const { maxBuyMats, setBuyMats } = props;
 
@@ -79,7 +87,7 @@ export const ResearchTab = (props) => {
               ? ar.map((r) => (
                   <Section
                     key={r.ref}
-                    title={research[r.ref]?.name}
+                    title={researchTree[r.ref]?.name}
                     buttons={
                       <Button
                         icon="flask"
@@ -91,7 +99,7 @@ export const ResearchTab = (props) => {
                       </Button>
                     }
                   >
-                    <Description text={research[r.ref]?.desc} />
+                    <Description text={researchTree[r.ref]?.desc} />
                   </Section>
                 ))
               : 'No research is currently available at this tier.'}
@@ -104,10 +112,10 @@ export const ResearchTab = (props) => {
             {fr.length
               ? fr.map((r) => (
                   <Section
-                    key={research[r.ref].name}
-                    title={research[r.ref].name}
+                    key={researchTree[r.ref].name}
+                    title={researchTree[r.ref].name}
                   >
-                    <Description text={research[r.ref].desc} />
+                    <Description text={researchTree[r.ref].desc} />
                   </Section>
                 ))
               : 'No research has been completed at this tier.'}
