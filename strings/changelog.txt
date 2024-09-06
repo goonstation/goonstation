@@ -1,5 +1,9 @@
 
 (t)fri sep 06 24
+(u)Sovexe
+(p)20595
+(e)🔒🔄|A-Secret, C-Rework
+(+)The lava edges in the NT Retention Center adventure zone has been made much more forgiving.
 (u)cringe
 (p)20481
 (e)🪲🆕🎨💨|C-Bug, C-Feature, C-Sprites, A-Atmospherics
