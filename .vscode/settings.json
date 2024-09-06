@@ -12,6 +12,7 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit"
 	},
+	"scm.showHistoryGraph": false,
 	"[javascript]": {
 		"editor.rulers": [
 			120

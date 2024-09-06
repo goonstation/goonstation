@@ -921,9 +921,12 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/syndicate
 	desc = "That chair is giving off some bad vibes."
 	comfort_value = -5
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
-	HasProximity(atom/movable/AM as mob|obj)
+	New()
+		..()
+		src.AddComponent(/datum/component/proximity)
+
+	EnteredProximity(atom/movable/AM)
 		if (isliving(AM) && !isintangible(AM) && prob(40) && !AM.hasStatus("knockdown"))
 			src.visible_message(SPAN_ALERT("[src] trips [AM]!"), SPAN_ALERT("You hear someone fall."))
 			AM.changeStatus("knockdown", 2 SECONDS)
@@ -1376,7 +1379,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 	/obj/item/currency/spacecash/small,
 	/obj/item/currency/spacecash/tourist,
-	/obj/item/currency/spacecash/buttcoin)
+	/obj/item/currency/buttcoin)
 
 	New()
 		..()
