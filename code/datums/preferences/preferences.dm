@@ -358,7 +358,7 @@ var/list/removed_jobs = list(
 								boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 							if (17)
 								boutput(usr, SPAN_ALERT("Savefile reports no change. Sure"))
-							else (1)
+							if (1)
 								boutput(usr, SPAN_NOTICE("Savefile saved!"))
 								return TRUE
 
@@ -369,7 +369,7 @@ var/list/removed_jobs = list(
 						boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 					if (17)
 						boutput(usr, SPAN_ALERT("Savefile reports no change. Sure"))
-					else (1)
+					if (1)
 						boutput(usr, SPAN_NOTICE("Savefile saved!"))
 						return TRUE
 
