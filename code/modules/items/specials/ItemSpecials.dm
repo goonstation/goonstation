@@ -84,7 +84,6 @@
 
 
 
-#define ITEMSPECIAL_PIXELDIST_SQUARED  (70 * 70) //lol i'm putting the define RIGHT HERE.
 // These two numbers will be compared later (pixeldist squared AND the result of this function). We don't need to do unnessecary sqrt cause this is just a simple < > comparison!
 /proc/get_dist_pixel_squared(var/atom/source, var/atom/target, params)
 	var/dx = (target.x - source.x) * 32
@@ -499,6 +498,53 @@
 			blood_slash(target,1,null, turn(user.dir,180), 3)
 		return msgs
 
+/datum/item_special/jab
+	cooldown = 2 SECONDS
+	staminaCost = 10
+	moveDelay = 5
+	moveDelayDuration = 4
+	damageMult = 0.8
+	overrideCrit = 0 // no crits, prevent insane bleeds
+
+	image = "jab"
+	name = "Jab"
+	desc = "Quickly jab in a direction. Lowers cooldown massively on a successful hit."
+
+	//cooldown on successful hit
+	//with an 80% damage mult this is ~2x bonus, but will be massively bumped down by even a little bit of armor
+	var/success_cooldown = 4 DECI SECONDS
+
+	onAdd()
+		if(master)
+			overrideStaminaDamage = master.stamina_damage * 0.4
+		return
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!isturf(target.loc) && !isturf(target)) return
+		if(!usable(user)) return
+		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+			preUse(user)
+			var/direction = get_dir_pixel(user, target, params)
+			var/turf/turf = get_step(master, direction)
+
+			var/obj/itemspecialeffect/jab/effect = new /obj/itemspecialeffect/jab
+			effect.set_dir(direction)
+			effect.setup(turf)
+
+			var/hit = FALSE
+			for(var/atom/A in turf)
+				if(isTarget(A))
+					A.Attackby(master, user, params, 1)
+					hit = TRUE
+					last_use = world.time - (cooldown - success_cooldown)
+					break
+
+			afterUse(user)
+			if (!hit)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
+		return
+
+
 /datum/item_special/rangestab
 	cooldown = 0 //10
 	staminaCost = 5
@@ -699,6 +745,17 @@
 			if(master)
 				overrideStaminaDamage = master.stamina_damage * 0.8
 			return
+
+	baseball
+		name = "Baseball Swing"
+		desc = "An AoE attack with a chance for a home run."
+
+		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
+			if (msgs.damage > 0 && msgs.stamina_crit)
+				var/turf/target_turf = get_edge_target_turf(target, get_dir(user, target))
+				target.throw_at(target_turf, 4, 1, throw_type = THROW_BASEBALL)
+				msgs.played_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
+			return msgs
 
 /datum/item_special/launch_projectile
 	cooldown = 3 SECONDS
@@ -2089,6 +2146,16 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_x = 0
 		pixel_y = 0
 
+	jab
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "quickjab"
+		pixel_x = 0
+		pixel_y = 0
+
+		New()
+			pixel_x = rand(-5,5)
+			pixel_y = rand(-5,5)
+			..()
 	barrier
 		name = "energy barrier"
 		icon = 'icons/effects/effects.dmi'
@@ -2218,6 +2285,46 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_y = -32
 		can_clash = 1
 
+	graffiti
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti1"
+		pixel_x = -32
+		pixel_y = -32
+	graffiti_flipped
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti2"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop //vertical slash
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop1"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop_flipped
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop2"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave //horizontal slash
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave1"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave_flipped
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave2"
+		pixel_x = -32
+		pixel_y = -32
+
+
 	spear
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "spear"
@@ -2327,3 +2434,4 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(progress == 1)
 			state = ACTIONSTATE_FINISH
 			return
+

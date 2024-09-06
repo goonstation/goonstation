@@ -1,5 +1,203 @@
 
+(t)tue sep 03 24
+(u)Glamurio (Ryou)
+(p)19165
+(e)🗺⚖🐣|A-Mapping, C-Balance, A-Respawning
+(*)Technical, Research and Medical Assistants are now properly part of their respective departments.
+(*)The specialized assistants can be played until you have played 75 rounds total. Staff assistants are unchanged.
+(u)TDHooligan
+(p)18986
+(e)🆕🎨💅🔊🧛|C-Feature, C-Sprites, C-QoL, C-Sound, A-Gamemodes
+(*)Gangs may now be tasked with vandalising departments!
+(*)Gangs have new weapons & equipment available in their locker.
+(*)Gangs can now view a scoreboard from their locker.
+(+)Gangs start with 1500 points.
+(+)Gangs now have access to regular, cleanable graffiti. This can't be used to claim territory.
+(+)Baseball bats' special attack knocks back on crit.
+(+)Item costs have been rebalanced to compete for these starting points.
+(u)JORJ949
+(p)20172
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Departmental announcement computers now have their own circuit boards.
+(t)mon sep 02 24
+(u)Knipje
+(p)20466
+(e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
+(+)Centcom engineers have standardized TEG valve names.
+(u)tarmunora
+(+)Projectiles aimed directly at light fixtures will now hit the light, breaking it. (projectile must do non-negligable damage)
+(u)LeahTheTech
+(p)20538
+(e)🆕🗺🔊|C-Feature, A-Mapping, C-Sound
+(*)Added catering announcement computers.
+(u)LeahTheTech
+(*)Soybeans now contain milk, don't ask how it makes sense.
+(u)JORJ949
+(p)20498
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)AI cores are now better standardized.
+(u)zelda4040404
+(p)20385
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Enjoyers of hair bangs will find a new extra long option available.
+(u)MitchSmith
+(p)20305
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited Gimmick Bombs, Mousetrap Overlays, and Mousetrap Cars!
+(u)Mitch Smith
+(p)20406
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)VR Headsets and other minor eyewear have been resprited, and VR Headsets now have variants!
+(t)sun sep 01 24
+(u)Sockssq & Wrench
+(p)20417
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds a new hair piece: V-Bangs. Sprites by Sockssq
+(u)MitchSmith
+(p)20322
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites Satchels!
+(u)cringe
+(p)20500
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Meters now report the moles of gases that currently exist in their pipeline through MechComp.
+(u)Lord_Earthfire
+(p)20073
+(e)🎨⚖🔄⚗|C-Sprites, C-Balance, C-Rework, A-Chemistry
+(+)The recipe of cryoxadone was changed to: (2) Cryostylane + (1) Platinum + (2) Water -> (2) Cryoxadone @ less than 323K
+(t)sat aug 31 24
+(u)Jan.antilles
+(p)20491
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added Round Glasses, a new swappable style of Prescription Glasses.
+(u)Lord_Earthfire
+(p)20492
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Tumbling creeper have sharp enough thorns to actually cause bleeding injuries.
+(t)fri aug 30 24
+(u)gibusgame
+(p)20382
+(e)🆕🗺🎨|C-Feature, A-Mapping, C-Sprites
+(+)Adds the Fishbowl Helmet, a variant of the regular Space Helmet. Available somewhere in space...
+(t)thu aug 29 24
+(u)Cherman0
+(p)20175
+(e)🗺💅|A-Mapping, C-QoL
+(+)Donut3 engineering redesigned with OSHA radiation protection standards in mind.
+(u)LeahTheTech
+(p)20443
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Standardized AI upload turret placements. Generally this means more turrets on maps that lacked them.
+(t)wed aug 28 24
+(u)Cherman0
+(p)20446
+(e)🪲🏅📡|C-Bug, A-Medal, A-AI
+(+)"I'm in" medal now properly awards the ailes AI skin.
+(u)Colossus
+(p)20452
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Ether now depletes at a 0.3 to 0.6 rate(50% faster), but takes slightly less time to KO and start drowsiness (from 40/20 cycles to 30/15 cycles depending on volume).
+(u)gus
+(p)20451
+(e)|
+(+)fixed manudrive duping
+(t)tue aug 27 24
+(u)tarmunora
+(p)20431
+(e)📄|A-UI
+(*)Changed tooltip HTML handling. Please report any oddities.
+(u)OmegaShoots
+(p)20441
+(e)🪲|C-Bug
+(+)Using the "set button list" on Button Panels can now work properly with inputs containing multiple equal signs.
+(u)Glamurio (Ryou)
+(p)20366
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Hair will now be visible under the hood when wearing hoods from hoodies.
+(u)Sovexe
+(p)20439
+(e)🪲🏅|C-Bug, A-Medal
+(+)Players with the "40K" medal can now redeem the (AI Core Skin) Salvaged reward as expected.
+(t)mon aug 26 24
+(u)ithebinman
+(p)20420
+(e)|
+(+)Fixed incorrect reagent in Bath Salts recipe - You now require El Diablo Chili instead of Ghost Chili Juice.
+(u)gus
+(p)20311
+(e)🗺|A-Mapping
+(+)Added a valve to Kondaru toxins
+(+)added an exterior shutters button to kondaru telesci
+(t)sat aug 24 24
+(u)Zamujasa
+(+)Daggers now open mail. They're knives, after all.
+(+)Syndicate daggers are particularly adept at opening mail.
+(u)KakoLookiyam
+(p)20112
+(e)🆕|C-Feature
+(*)Mechcomp cabinets are now capable with of equipping internal gravitons.
+(+)Mechcomp cabinets can now attach internal graviton components. When attached, a graviton is only able to fling its enclosing cabinet itself a shorter distance than a floor mounted graviton.
+(t)fri aug 23 24
+(u)Klushy225
+(p)20388
+(e)💅💪|C-QoL, A-Traits
+(+)The German accent is now able to be understood.
+(t)thu aug 22 24
+(u)Iamgoofball
+(p)20390
+(e)🔄📄|C-Rework, A-UI
+(+)Replaces instance of "lynched" with "gibbed" in the critter compendium.
+(t)tue aug 20 24
+(u)LeahTheTech
+(+)The WA-V3 is no longer illegal.
+(u)LeahTheTech + Flaborized
+(p)20317
+(e)🗺🎨🧫🔊📦|A-Mapping, C-Sprites, C-Experimental, C-Sound, A-Game-Objects
+(*)Added the WA-V3 (get it?) janitorial sprayer, available in a crate from cargo for 4500 credits. See minor changes for details.
+(+)The WA-V3 pulls from a 500u back-mounted tank and has three different modes with different reagent costs: narrow (10u), wave (20u) and w i d e (30u). The tank itself also has 3 "small" capacity inventory slots.
+(+)Replaced the Tsunami spray bottle spawn with a cybernetic spray bottle spawn.
+(t)mon aug 19 24
+(u)JORJ949
+(p)20370
+(e)|
+(+)Classic SecTechs now get Space Law. Also increased available quantity from 1->3
+(t)sun aug 18 24
+(u)LeahTheTech
+(+)Roboticist PDAs get the silicon PDA group.
+(t)sat aug 17 24
+(u)Bork and Wrench
+(p)20343
+(e)🎨📦|C-Sprites, A-Game-Objects
+(*)Resprites the Garden Trowel, and gives it a new In-Hand and Sound Effect when digging and planting. Sprites by Bork
+(t)fri aug 16 24
+(u)LeahTheTech
+(+)Vampire blood steal is now much quieter.
+(t)thu aug 15 24
+(u)Munien
+(p)20262
+(e)🗺|A-Mapping
+(+)Headsets can now be inserted into Devil Horns the same as other headbands.
 (t)wed aug 14 24
+(u)LeahTheTech
+(p)20302
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(*)Removed the machine translator implant recipe from the robotics fabricator. Silicons may now communicate freely without fear of being overheard.
+(u)TDHooligan
+(p)20287
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Screwdrivers, daggers and forks now have a new special attack.
+(u)Cherman0
+(p)20278
+(e)🗺🔎🔄🏅📦|A-Mapping, C-Code-Quality, C-Rework, A-Medal, A-Game-Objects
+(+)The captain's antique now requires certain material statistics to make a more powerful gun instead of "quality".
+(u)JORJ949
+(p)20100
+(e)⚖📦💡|C-Balance, A-Game-Objects, A-Station-Systems
+(*)Armory deauthorization cooldown now starts upon authorization.
+(u)JORJ949
+(p)18622
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(*)Armory doors are now immune to wire hacking.
 (u)JORJ949
 (p)20248
 (e)🗺💅|A-Mapping, C-QoL

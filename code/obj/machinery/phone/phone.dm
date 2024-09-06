@@ -78,6 +78,8 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
+		RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
+
 		START_TRACKING
 
 	disposing()
@@ -91,6 +93,7 @@ TYPEINFO(/obj/machinery/phone)
 		handset = null
 
 		STOP_TRACKING
+		UnregisterSignal(src, COMSIG_CORD_RETRACT)
 		..()
 
 	get_desc()
@@ -104,8 +107,6 @@ TYPEINFO(/obj/machinery/phone)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
-				user.drop_item(PH)
-				qdel(PH)
 				hang_up()
 			return
 		if(issnippingtool(P))
@@ -144,47 +145,6 @@ TYPEINFO(/obj/machinery/phone)
 			src.gib(src.loc)
 			qdel(src)
 
-	proc/draw_cord()
-		if(!src.handset)
-			return
-		var/handset_offset_x = -7
-		var/handset_offset_y = -7
-		var/atom/movable/target = src.handset
-		if(ismob(src.handset.loc))
-			var/mob/living/M = src.handset.loc
-			target = M
-			switch (M.dir)
-				if (NORTH)
-					handset_offset_y = -1
-					if (M.hand == LEFT_HAND)
-						handset_offset_x = -6
-					else
-						handset_offset_x = 6
-				if (SOUTH)
-					handset_offset_y = -1
-					if (M.hand == LEFT_HAND)
-						handset_offset_x = 6
-					else
-						handset_offset_x = -6
-				if (EAST)
-					if(M.hand == LEFT_HAND)
-						handset_offset_x = 4
-						handset_offset_y = -4
-					else
-						handset_offset_x = -4
-						handset_offset_y = -2
-				if(WEST)
-					if(M.hand == LEFT_HAND)
-						handset_offset_x = 4
-						handset_offset_y = -2
-					else
-						handset_offset_x = -4
-						handset_offset_y = -4
-						handset_offset_x = -4
-		var/datum/lineResult/result = drawLine(src, target, "cord", "cord_end", src.pixel_x - 4, src.pixel_y - 1, target.pixel_x + handset_offset_x, target.pixel_y + handset_offset_y, LINEMODE_STRETCH)
-		result.lineImage.layer = src.layer+0.01
-		src.UpdateOverlays(result.lineImage, "phone_line_\ref[src]")
-
 	// Attempt to pick up the handset
 	attack_hand(mob/living/user)
 		..(user)
@@ -196,9 +156,8 @@ TYPEINFO(/obj/machinery/phone)
 			return
 
 		src.handset = new /obj/item/phone_handset(src,user)
-		RegisterSignal(src.handset, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(draw_cord), TRUE)
+		src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1)
 		user.put_in_hand_or_drop(src.handset)
-		src.draw_cord()
 		src.answered = TRUE
 
 		src.icon_state = "[answered_icon]"
@@ -342,11 +301,13 @@ TYPEINFO(/obj/machinery/phone)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
 			src.linked = null
+		src.RemoveComponentsOfType(/datum/component/cord)
 		src.ringing = FALSE
+		src.handset?.force_drop(sever=TRUE)
+		qdel(src.handset)
 		src.handset = null
 		src.icon_state = "[phone_icon]"
 		tgui_process.close_uis(src)
-		src.ClearSpecificOverlays("phone_line_\ref[src]")
 		UpdateIcon()
 		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
@@ -432,10 +393,8 @@ TYPEINFO(/obj/machinery/phone)
 		if(src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
 			if(src.get_holder())
 				boutput(src.get_holder(),SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
-			src.force_drop(sever=TRUE)
 			src.parent.hang_up()
 			processing_items.Remove(src)
-			qdel(src)
 
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
@@ -473,13 +432,13 @@ TYPEINFO(/obj/machinery/phone)
 			for (var/obj/item/device/radio/intercom/I in range(3, listener))
 				I.talk_into(M, text, null, M.get_heard_name(just_name_itself=TRUE), lang_id)
 
-	attack_hand(mob/user)
-		. = ..()
-		src.parent?.draw_cord()
+	// attack_hand(mob/user)
+	// 	. = ..()
+	// 	src.parent?.draw_cord()
 
-	dropped(mob/user)
-		. = ..()
-		src.parent?.draw_cord()
+	// dropped(mob/user)
+	// 	. = ..()
+	// 	src.parent?.draw_cord()
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25

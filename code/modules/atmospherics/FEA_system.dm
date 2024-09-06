@@ -221,6 +221,8 @@ var/global/total_gas_mixtures = 0
 			turf_list += T
 		air_master.air_groups -= turf_AG
 		turf_AG.members.len = 0
+		turf_AG.borders?.len = 0
+		qdel(turf_AG)
 	LAGCHECK(LAG_REALTIME)
 
 	for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
