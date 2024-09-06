@@ -78,7 +78,6 @@
 		abilityHolder.addAbility(/datum/targetable/artifact_limb_ability/martian_pull)
 		abilityHolder.addAbility(/datum/targetable/critter/psyblast/martian)
 		abilityHolder.addAbility(/datum/targetable/critter/teleport)
-		abilityHolder.addAbility(/datum/targetable/critter/bioluminate)
 
 		// back once again to ruin the day, it's CIRR fucking up things
 		/*SPAWN(0) // Commenting this out until martian gamemode is real again
@@ -163,7 +162,6 @@
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
-		abilityHolder.addAbility(/datum/targetable/critter/powerpunch)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
 
 
