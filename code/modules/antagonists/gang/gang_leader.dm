@@ -19,7 +19,7 @@
 			src.gang.select_gang_name()
 
 		if (src.gang.gang_points[new_owner] == null)
-			src.gang.gang_points[new_owner] = 0
+			src.gang.gang_points[new_owner] = GANG_STARTING_POINTS
 
 		. = ..()
 

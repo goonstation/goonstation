@@ -558,18 +558,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"all" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/science/artifact)
 "alG" = (
 /obj/machinery/light_switch/east,
 /obj/cable{
@@ -2146,26 +2134,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southwest)
-"aYR" = (
-/obj/machinery/door_control{
-	id = "scienceteleporter2";
-	name = "Pad Access Door";
-	pixel_x = -8;
-	pixel_y = 26
-	},
-/obj/machinery/door_control{
-	id = "scienceteleporter";
-	name = "Pad Shutters";
-	pixel_x = 6;
-	pixel_y = 26
-	},
-/obj/stool/chair/office/purple{
-	dir = 4
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/teleporter)
 "aZc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5080,13 +5048,17 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "cnv" = (
-/obj/machinery/door/poddoor{
+/obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 6;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cnx" = (
 /obj/disposalpipe/segment/bent/east,
@@ -5525,13 +5497,17 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "cyE" = (
-/obj/machinery/door/poddoor{
+/obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 10;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "cyG" = (
 /obj/cable,
@@ -6493,9 +6469,9 @@
 /obj/machinery/door_control{
 	id = "ai_core";
 	name = "AI Core Shield";
-	pixel_y = -21
+	pixel_y = -26
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "cUx" = (
 /obj/rack,
@@ -8648,14 +8624,6 @@
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
 	})
-"dTx" = (
-/obj/stool/chair/office{
-	dir = 4
-	},
-/obj/disposalpipe/segment/bent/west,
-/obj/landmark/start/job/medical_doctor,
-/turf/simulated/floor/white,
-/area/station/medical/staff)
 "dTB" = (
 /obj/table/reinforced/chemistry/auto/drugs,
 /obj/item/storage/box/beakerbox{
@@ -9328,13 +9296,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
-"ejx" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/grey/blackgrime,
-/area/station/crew_quarters/catering)
 "ejy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9472,17 +9433,6 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
-"emB" = (
-/obj/stool/chair/office,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark/start/job/medical_doctor,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/staff)
 "emN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9635,6 +9585,20 @@
 	},
 /turf/simulated/shuttle/wall/flock,
 /area/space)
+"eqK" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "eqM" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/disposalpipe/segment/mail/vertical,
@@ -11326,6 +11290,17 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"faB" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "faQ" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light_switch/east,
@@ -14429,13 +14404,6 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/baroffice)
-"grf" = (
-/obj/landmark/start/job/scientist,
-/obj/stool/chair/purple{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/science/hall)
 "grh" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -14713,6 +14681,15 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"gwg" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/storage)
 "gwh" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/cable,
@@ -14767,15 +14744,6 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
-"gxk" = (
-/obj/machinery/light_switch/east,
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/engine/elect)
 "gxo" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/greenblack/corner,
@@ -15209,6 +15177,27 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"gFj" = (
+/obj/machinery/door_control{
+	id = "scienceteleporter2";
+	name = "Pad Access Door";
+	pixel_x = -8;
+	pixel_y = 26
+	},
+/obj/machinery/door_control{
+	id = "scienceteleporter";
+	name = "Pad Shutters";
+	pixel_x = 6;
+	pixel_y = 26
+	},
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/teleporter)
 "gFk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18202,14 +18191,6 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
-"hIE" = (
-/obj/stool/chair/office{
-	dir = 8
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/treatment)
 "hIJ" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18459,13 +18440,22 @@
 	name = "Southeast Breach Hull"
 	})
 "hOB" = (
-/obj/machinery/door/poddoor{
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 9;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "hOK" = (
 /obj/landmark/gps_waypoint,
@@ -20151,6 +20141,15 @@
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"iwv" = (
+/obj/stool/chair/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/science/hall)
 "iww" = (
 /obj/rack,
 /obj/item/tank/air,
@@ -21479,13 +21478,22 @@
 	},
 /area/station/medical/head)
 "jbc" = (
-/obj/machinery/door/poddoor{
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 5;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "jbf" = (
 /obj/storage/closet/radiation,
@@ -24274,17 +24282,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/lounge)
-"kjS" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/obj/landmark/start/job/engineer,
-/obj/disposalpipe/segment/transport,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/engineering)
 "kjV" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/headset/research{
@@ -28356,6 +28353,15 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"lOv" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/obj/landmark/start/job/medical_doctor,
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/treatment)
 "lOH" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
@@ -29453,13 +29459,20 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/west)
 "mjl" = (
-/obj/machinery/door/poddoor{
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
 	dir = 4;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	opacity = 0
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/engine,
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "mjp" = (
 /obj/machinery/firealarm/west,
@@ -33041,6 +33054,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"nMy" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/station/crew_quarters/catering)
 "nMF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -33290,14 +33313,6 @@
 	},
 /turf/simulated/floor/black,
 /area/pasiphae)
-"nRT" = (
-/obj/stool/chair/yellow{
-	dir = 1
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/engine/storage)
 "nRV" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -33887,6 +33902,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"ohS" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/obj/disposalpipe/segment/bent/west,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/staff)
 "ohY" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/black,
@@ -44680,6 +44703,13 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"sZM" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/black,
+/area/station/engine/engineering)
 "sZX" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -45285,6 +45315,19 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/grey,
 /area/pasiphae/bridge)
+"tmy" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/black,
+/area/station/science/artifact)
 "tmC" = (
 /obj/machinery/fluid_canister,
 /turf/simulated/floor/plating,
@@ -46164,19 +46207,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
-"tFU" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/stool/chair/blue{
-	dir = 4
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "tGe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47204,15 +47234,6 @@
 	dir = 4
 	},
 /area/station/security/main)
-"ubT" = (
-/obj/landmark/start/job/scientist,
-/obj/stool/chair/purple{
-	dir = 8
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 1
-	},
-/area/station/science/hall)
 "ucO" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -48653,6 +48674,17 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
+"uLL" = (
+/obj/stool/chair/office,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/staff)
 "uMd" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
@@ -48970,18 +49002,28 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "uSd" = (
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield"
-	},
+/obj/mapping_helper/access/ai_upload,
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "AI Core"
 	},
-/obj/mapping_helper/access/ai_upload,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-8"
 	},
-/turf/simulated/floor/engine,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "ai_core";
+	name = "AI Core Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/circuit/off,
 /area/station/turret_protected/ai)
 "uSe" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -50317,6 +50359,16 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/yellowblack,
 /area/station/hallway/primary/southeast)
+"vyY" = (
+/obj/machinery/light_switch/east,
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/elect)
 "vzn" = (
 /obj/item/device/radio/intercom/science{
 	dir = 8
@@ -51550,6 +51602,13 @@
 	},
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
+"wbf" = (
+/obj/stool/chair/purple{
+	dir = 4
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/black,
+/area/station/science/hall)
 "wbj" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -52862,13 +52921,6 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
-"wGL" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/obj/landmark/start/job/engineer,
-/turf/simulated/floor/black,
-/area/station/engine/engineering)
 "wHl" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
@@ -89976,7 +90028,7 @@ apP
 bWh
 soo
 aBg
-ejx
+nMy
 mIK
 gVW
 xFk
@@ -97820,7 +97872,7 @@ mjv
 xjY
 baP
 tLt
-all
+tmy
 qNE
 fFJ
 cNY
@@ -98390,7 +98442,7 @@ oGv
 ksw
 jCS
 nLw
-dTx
+ohS
 oYC
 rJL
 hxL
@@ -98691,7 +98743,7 @@ cHZ
 lNL
 kfr
 dUF
-emB
+uLL
 tXL
 and
 kIi
@@ -98715,7 +98767,7 @@ oWG
 oWG
 oWG
 oWG
-aYR
+gFj
 fyB
 oRv
 hhc
@@ -99937,7 +99989,7 @@ jxB
 fCJ
 agE
 xpC
-grf
+wbf
 czo
 cfj
 iYL
@@ -100843,7 +100895,7 @@ czb
 gXP
 agE
 gXP
-ubT
+iwv
 czo
 mXd
 iYL
@@ -101111,7 +101163,7 @@ tJR
 kFE
 mBq
 vwg
-tFU
+eqK
 oub
 rhg
 qdX
@@ -104740,7 +104792,7 @@ ixn
 ixn
 ixn
 hrK
-hIE
+lOv
 idg
 iOk
 ieD
@@ -109620,7 +109672,7 @@ vEo
 vIQ
 hWH
 kit
-gxk
+vyY
 rjb
 bHF
 jPY
@@ -110828,7 +110880,7 @@ rZb
 lMn
 qbA
 dJM
-wGL
+sZM
 kpw
 ayN
 orx
@@ -111734,7 +111786,7 @@ tdq
 dVh
 vXY
 oQG
-kjS
+faB
 aKP
 xyj
 kRi
@@ -112941,7 +112993,7 @@ fdg
 rZb
 oHA
 oyX
-nRT
+gwg
 qip
 snt
 ciw
