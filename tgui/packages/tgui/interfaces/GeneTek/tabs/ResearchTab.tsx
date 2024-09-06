@@ -32,7 +32,7 @@ export const ResearchTab = (props) => {
     research,
   } = data;
 
-  // We need to store research locally, since we can be passed partial updates
+  // Store research locally, since we can be passed partial updates
   const [researchTree, setResearchData] = useState(research);
 
   if (researchTree !== research) {
