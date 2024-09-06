@@ -207,7 +207,7 @@ const PlantOverview = (props) => {
   const { cat_lens, container } = props;
   return (
     <Section title="Overview">
-      <Flex height="100%" direction="column">
+      <Flex height="100%">
         <Flex.Item grow>
           <Box>
             Items ready for extraction: <b>{cat_lens[0]}</b> <br />
