@@ -81,7 +81,7 @@ export const GeneTek = () => {
                 <Divider />
               </>
             )}
-            <Flex>
+            <Flex style={{ zIndex: 1 }}>
               <ProgressBar value={materialCur} maxValue={materialMax} mb={1}>
                 <Box position="absolute" bold>
                   Materials
@@ -90,7 +90,7 @@ export const GeneTek = () => {
                 {' / '}
                 {materialMax}
               </ProgressBar>
-              <Flex.Item grow={0} shrink={0} ml={1}>
+              <Flex.Item ml={1}>
                 <Button
                   circular
                   compact
