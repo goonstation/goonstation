@@ -23,4 +23,7 @@ export type TerminalData = {
   fontColor: string;
   bgColor: string;
   peripherals: Array<PeripheralData>;
+  inputValue: string;
+  loadTimestamp: number;
+  ckey: string;
 };
