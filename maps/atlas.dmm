@@ -11266,9 +11266,7 @@
 /area/listeningpost/syndicate_teleporter)
 "aXt" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -11678,9 +11676,7 @@
 /area/station/crew_quarters/heads)
 "aZD" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
@@ -16150,9 +16146,7 @@
 /area/station/chapel/sanctuary)
 "lky" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"

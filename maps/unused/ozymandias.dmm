@@ -28536,24 +28536,12 @@
 /area/station/security/brig)
 "hwh" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/small/warm/very{
 	dir = 4;
 	pixel_x = 12
@@ -80363,9 +80351,7 @@
 /area/station/hallway/primary/west)
 "uMO" = (
 /obj/table/wood/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/head/red{
 	pixel_x = -3;
 	pixel_y = 9

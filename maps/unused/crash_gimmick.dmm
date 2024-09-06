@@ -6073,9 +6073,7 @@
 	pixel_y = 32
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/red/standard/edge/north{
 	desc = " It is made of temp."
@@ -6213,21 +6211,11 @@
 /area/russian/radiation)
 "bji" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/dice,
 /obj/item/dice,
 /turf/simulated/floor/carpet/purple/fancy/edge/north{
@@ -27595,9 +27583,7 @@
 /area/russian/radiation)
 "cQD" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red/side{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -28882,9 +28868,7 @@
 /area/russian/radiation)
 "cUF" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -44851,9 +44835,7 @@
 /area/russian/radiation)
 "ird" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -46542,9 +46524,7 @@
 	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -48272,9 +48252,7 @@
 "jOw" = (
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -52812,9 +52790,7 @@
 /area/russian/radiation)
 "lZC" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -58749,9 +58725,7 @@
 /area/russian/radiation)
 "oNp" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
