@@ -353,19 +353,25 @@ var/list/removed_jobs = list(
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
-						if (istext(ret))
-							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
-						else
-							boutput( usr, SPAN_NOTICE("Savefile saved!") )
-							return TRUE
+						switch(ret)
+							if (0)
+								boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
+							if (17)
+								boutput(usr, SPAN_ALERT("Savefile reports no change. Sure"))
+							else (1)
+								boutput(usr, SPAN_NOTICE("Savefile saved!"))
+								return TRUE
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
-				if (istext(ret))
-					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
-				else
-					boutput(usr, SPAN_NOTICE("Savefile saved!"))
-					return TRUE
+				switch(ret)
+					if (0)
+						boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
+					if (17)
+						boutput(usr, SPAN_ALERT("Savefile reports no change. Sure"))
+					else (1)
+						boutput(usr, SPAN_NOTICE("Savefile saved!"))
+						return TRUE
 
 			if ("cloud-load")
 				var/profilenum_old = src.profile_number
