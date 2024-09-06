@@ -70,9 +70,9 @@
 
 	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
 #ifdef IN_MAP_EDITOR
-	icon_state = "intact-map"
-#else
 	icon_state = "intact"
+#else
+	icon_state = "normal"
 #endif
 	color = "#B4B4B4"
 
@@ -108,7 +108,7 @@
 	var/stop
 	var/axis_start_value
 	var/axis_stop_value
-	if(icon_state=="exposed")
+	if(icon_state=="broken")
 		axis_start_value = 6
 		axis_stop_value = 6
 	else
@@ -366,6 +366,9 @@
 	if (!("reinforced" in src.name_prefixes))
 		src.name_prefix("reinforced") // so it says "bohrum reinforced pipe"
 	src.UpdateName()
+	src.UpdateIcon()
+	src.node1?.UpdateIcon()
+	src.node2?.UpdateIcon()
 
 #undef SHEETS_TO_REINFORCE
 
@@ -389,7 +392,7 @@
 	if(disconnected)
 		return
 	if(ruptured)
-		icon_state = "exposed"
+		icon_state = "broken"
 
 		var/image/leak
 		var/datum/gas_mixture/gas = return_air()
@@ -401,7 +404,7 @@
 			leak.alpha = clamp(ruptured * 10, 40, 200)
 		UpdateOverlays(leak,"leak")
 	else
-		icon_state = "intact"
+		icon_state = "normal"
 		ClearSpecificOverlays("leak")
 	alpha = invisibility ? 128 : 255
 	switch(src.dir)
@@ -491,7 +494,6 @@
 
 
 /obj/machinery/atmospherics/pipe/simple/insulated
-	icon_state = "intact"
 	color = "#FF0000"
 	minimum_temperature_difference = 10000 KELVIN
 	thermal_conductivity = 0
