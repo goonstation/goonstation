@@ -9112,10 +9112,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 7;
-	pixel_y = -3
-	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "atL" = (
@@ -27800,7 +27796,9 @@
 /area/shuttle/arrival/station)
 "bqX" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/grime,
@@ -41964,7 +41962,9 @@
 /area/station/crew_quarters/captain)
 "bZL" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -41972,7 +41972,9 @@
 /area/station/security/brig)
 "bZM" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /obj/machinery/flasher/solitary{
 	pixel_x = 24
 	},
@@ -41980,12 +41982,16 @@
 /area/station/security/brig)
 "bZN" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZO" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "bZP" = (
@@ -43788,23 +43794,57 @@
 /area/station/ranch)
 "cer" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ces" = (
@@ -54517,6 +54557,7 @@
 /area/station/storage/hydroponics)
 "eub" = (
 /obj/lattice{
+	dir = 6;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -55247,6 +55288,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/market)
+"fEx" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "fEN" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/stripe_delivery,
@@ -55261,17 +55309,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
-"fFS" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "fGR" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -58535,7 +58572,9 @@
 /area/station/crew_quarters/toilets)
 "kEM" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr{
+	network = "arcadevr"
+	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
@@ -58840,13 +58879,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
-"lmN" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "lne" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -58975,6 +59007,17 @@
 /obj/lattice,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"lBF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "lCl" = (
 /obj/machinery/light_switch{
 	name = "W light switch";
@@ -60718,13 +60761,6 @@
 	},
 /turf/space,
 /area/space)
-"oyF" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/turret,
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "ozT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -62481,13 +62517,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"rRC" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "rRM" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -65833,6 +65862,12 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"xHG" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "xHP" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -65911,6 +65946,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
+"xRO" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "xSL" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -124000,15 +124042,15 @@ bgz
 bgz
 qea
 hUH
-eub
+xHG
 lyH
 hdu
 qff
+xHG
+xHG
+xHG
+xRO
 eub
-eub
-eub
-oyF
-rRC
 cAF
 cAF
 bsN
@@ -125212,7 +125254,7 @@ aVc
 cAL
 bVd
 bSg
-lmN
+fEx
 bVk
 cfS
 auM
@@ -126721,7 +126763,7 @@ hUH
 aVc
 czf
 dam
-fFS
+lBF
 hCK
 nvz
 pqo
