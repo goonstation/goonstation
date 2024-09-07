@@ -12,13 +12,7 @@
  * SOFTWARE.
  */
 
-import {
-  Component,
-  createRef,
-  KeyboardEvent,
-  MouseEvent,
-  RefObject,
-} from 'react';
+import { Component, createRef, KeyboardEvent, RefObject } from 'react';
 import { clamp } from 'tgui-core/math';
 
 export interface Interaction {
@@ -34,7 +28,7 @@ const getParentWindow = (node?: HTMLDivElement | null): Window => {
 // Returns a relative position of the pointer inside the node's bounding box
 const getRelativePosition = (
   node: HTMLDivElement,
-  event: MouseEvent,
+  event: MouseEvent | React.MouseEvent,
 ): Interaction => {
   const rect = node.getBoundingClientRect();
   const pointer = event as MouseEvent;
@@ -71,7 +65,7 @@ export class Interactive extends Component {
     this.containerRef = createRef();
   }
 
-  handleMoveStart = (event: MouseEvent) => {
+  handleMoveStart = (event: React.MouseEvent) => {
     const el = this.containerRef?.current;
     if (!el) return;
 
@@ -82,7 +76,7 @@ export class Interactive extends Component {
     this.toggleDocumentEvents(true);
   };
 
-  handleMove = (_window: Window, event: MouseEvent) => {
+  handleMove = (event: MouseEvent) => {
     // Prevent text selection
     event.preventDefault();
 
@@ -128,8 +122,6 @@ export class Interactive extends Component {
     const toggleEvent = state
       ? parentWindow.addEventListener
       : parentWindow.removeEventListener;
-    // @ts-ignore TODO-REACT,
-    // probably should just replace a bunch of this with a fork of colorful that exposes internals
     toggleEvent('mousemove', this.handleMove);
     toggleEvent('mouseup', this.handleMoveEnd);
   }
