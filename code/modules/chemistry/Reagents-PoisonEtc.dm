@@ -756,6 +756,68 @@ datum
 					holder.my_atom.color = "#ffffff"
 				return ..()
 
+		harmful/super_ipecac // vomit your heart out
+			name = "super ipecac"
+			id = "super_ipecac"
+			description = "A highly potent variant of space ipecac, sufficient to make someone vomit out everything in them. Litterally."
+			reagent_state = LIQUID
+			fluid_r = 2
+			fluid_g = 50
+			fluid_b = 25
+			transparency = 200
+			depletion_rate = 0.2
+			/// how much cycles this has been in the target's system.
+			var/cycles = 0
+			/// a list with the organs the person is able to loose a few before falling over dead; of course you vomit everything out EXCEPT the stomach
+			var/list/non_vital_organs = list("left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "intestines", "spleen", "pancreas", "appendix")
+			/// a list with vital organs the person should only loose on cycle 40 and upwards
+			var/list/vital_organs = list("brain", "heart")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				src.cycles += mult
+				if(probmult(50))
+					if (src.cycles > 10 && prob(35) && !ON_COOLDOWN(M, "super_ipecac_blood_vomit", 9 SECONDS)) //when after the 10th cycle, you have a chance of vomiting blood and suffering high toxin damage
+						M.visible_message(SPAN_ALERT("[M] vomits a concerning amount of blood all over themselves!"))
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
+						var/blood_loss = rand(10,20) * mult
+						bleed(M, blood_loss, blood_loss)
+						M.take_toxin_damage(6 * mult)
+						M.change_misstep_chance(10 * mult)
+						M.stuttering += rand(3,6)
+					else
+						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
+						M.vomit(0, null, vomit_message)
+						M.stuttering += rand(0,2)
+						M.change_misstep_chance(5 * mult)
+						M.take_toxin_damage(2 * mult)
+					if(src.cycles > 20 && isliving(M) && !ON_COOLDOWN(M, "super_ipecac_organ_loss", 6 SECONDS))
+						var/mob/living/victim = M
+						if(victim.organHolder)
+							//after 20 cycles (4u), we start loosing organs
+							var/datum/organHolder/vomitable_organHolder = victim.organHolder
+							var/list/available_organs = list()
+							available_organs += src.non_vital_organs
+							if(src.cycles > 40)
+								//after 40 cycles (8u) this chem has a very high chance to kill by straight out vomiting out the brain or heart
+								available_organs += src.vital_organs
+							//now, we go through each organ and kick out every already missing organ from the list
+							for (var/organ in available_organs)
+								if(!vomitable_organHolder.get_organ(organ))
+									available_organs -= organ
+							//after we are finished, we look if organs are left (to account for changelings emptying all out of themselves) and then vomit out the organ
+							if(length(available_organs))
+								var/picked_organ = pick(available_organs)
+								var/obj/item/organ/organ_to_loose = vomitable_organHolder.get_organ(picked_organ)
+								vomitable_organHolder.drop_organ(picked_organ, get_turf(victim))
+								M.visible_message(SPAN_ALERT("[M] also vomits out [his_or_her(M)] [organ_to_loose.name]! [pick("WHAT THE FUCK!", "HOLY HECK!", "FRIGGING HELL!")]"))
+								var/organ_blood_loss = rand(15,25) * mult
+								bleed(M, organ_blood_loss, organ_blood_loss)
+								M.change_misstep_chance(5 * mult)
+								M.setStatusMin("stunned", 2 SECOND * mult)
+				..()
+
+
+
 		harmful/cholesterol
 			name = "cholesterol"
 			id = "cholesterol"
