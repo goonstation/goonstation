@@ -96,6 +96,39 @@
 	max_wclass = W_CLASS_TINY
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
 
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (usr == over_object && istype(usr, /mob/living/carbon) && (src.loc == usr || src.loc?.loc == usr))
+			if(usr.restrained())
+				boutput(usr, SPAN_ALERT("You can't get into the [src] in your current state."))
+				return FALSE
+			if (!usr.is_in_hands(src))
+				if (!usr.is_in_hands(null))
+					boutput(usr, SPAN_ALERT("You need a free hand to do that."))
+					return FALSE
+				usr.drop_item(src) // this is just to prevent an item ghost in the inventory, but there might be a better way to do that.
+				usr.put_in_hand(src)
+			eat_pill_from_bottle(usr)
+			return
+		..()
+	/// returns true if a pill was successfully swallowed
+	proc/eat_pill_from_bottle(mob/user)
+		if (!contents.len)
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return FALSE
+		var/obj/item/reagent_containers/pill/Pill = contents[contents.len] // take the last pill, because it makes it easier to poison someone
+		if (!Pill)
+			user.visible_message(
+				SPAN_NOTICE("[user] chokes on something from [src]!"),
+				SPAN_NOTICE("You choke on [contents[contents.len]]!"),
+				SPAN_NOTICE("Someone chokes on something.")
+			)
+			user.drop_item(contents[contents.len])
+			return
+		user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+		Pill.pill_action(user, user)
+		playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+
+
 /obj/item/storage/briefcase
 	name = "briefcase"
 	icon_state = "briefcase"
