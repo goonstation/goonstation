@@ -9,7 +9,7 @@
  */
 
 import { marked } from 'marked';
-import { Component, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -229,36 +229,28 @@ interface PaperSheetEditData {
   editUsr: string;
 }
 
-// ugh.  So have to turn this into a full
-// component too if I want to keep updates
-// low and keep the weird flashing down
-class PaperSheetEdit extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      previewSelected: 'Preview',
-      oldText: props.value || '',
-      textAreaText: '',
-      combinedText: props.value || '',
-      showingHelpTip: false,
-    };
-  }
+const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
+  value,
+  textColor,
+  fontFamily,
+  stamps,
+  backgroundColor,
+}) => {
+  const [previewSelected, setPreviewSelected] = useState('Preview');
+  const [oldText] = useState(value || '');
+  const [textAreaText, setTextAreaText] = useState('');
+  const [combinedText, setCombinedText] = useState(value || '');
+  const [showingHelpTip, setShowingHelpTip] = useState(false);
 
-  // This is the main rendering part, this creates the html from marked text
-  // as well as the form fields
-  createPreview(value, doFields = false) {
-    const { data } = useBackend();
-    const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
-    const out = { text: text };
-    // check if we are adding to paper, if not
-    // we still have to check if someone entered something
-    // into the fields
+  const { data } = useBackend<PaperSheetEditData>();
+  const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
+
+  const createPreview = (value, doFields = false) => {
+    const out = { text: text, fieldCounter: 0, formFields: {} };
     value = value.trim();
     if (value.length > 0) {
-      // Second, we sanitize the text of html
       const sanitizedText = sanitizeText(value);
       const signedText = signDocument(sanitizedText, penColor, editUsr);
-      // Third we replace the [__] with fields as markedjs fucks them up
       const fieldedText = createFields(
         signedText,
         penFont,
@@ -266,10 +258,7 @@ class PaperSheetEdit extends Component {
         penColor,
         fieldCounter,
       );
-      // Fourth, parse the text using markup
       const formattedText = runMarkedDefault(fieldedText.text);
-      // Fifth, we wrap the created text in the pin color, and font.
-      // crayon is bold (<b> tags), maybe make fountain pin italic?
       const fontedText = setFontinText(
         formattedText,
         penFont,
@@ -280,9 +269,6 @@ class PaperSheetEdit extends Component {
       out.fieldCounter = fieldedText.counter;
     }
     if (doFields) {
-      // finally we check all the form fields to see
-      // if any data was entered by the user and
-      // if it was return the data and modify the text
       const finalProcessing = checkAllFields(
         out.text,
         penFont,
@@ -294,15 +280,14 @@ class PaperSheetEdit extends Component {
       out.formFields = finalProcessing.fields;
     }
     return out;
-  }
+  };
 
-  onInputHandler(e, value) {
-    if (value !== this.state.textAreaText) {
-      const combinedLength =
-        this.state.oldText.length + this.state.textAreaText.length;
+  const onInputHandler = (e) => {
+    let value = e.target.value;
+    if (value !== textAreaText) {
+      const combinedLength = oldText.length + textAreaText.length;
       if (combinedLength > MAX_PAPER_LENGTH) {
         if (combinedLength - MAX_PAPER_LENGTH >= value.length) {
-          // Basically we cannot add any more text to the paper
           value = '';
         } else {
           value = value.substr(
@@ -310,145 +295,112 @@ class PaperSheetEdit extends Component {
             value.length - (combinedLength - MAX_PAPER_LENGTH),
           );
         }
-        // we check again to save an update
-        if (value === this.state.textAreaText) {
-          // Do nothing
+        if (value === textAreaText) {
           return;
         }
       }
-      this.setState(() => ({
-        textAreaText: value,
-        combinedText: this.createPreview(value),
-      }));
+      setTextAreaText(value);
+      setCombinedText(createPreview(value).text);
     }
-  }
-  // the final update send to byond, final upkeep
-  finalUpdate(newText) {
-    const { act } = useBackend();
-    const finalProcessing = this.createPreview(newText, true);
-    act('save', finalProcessing);
-    this.setState(() => {
-      return {
-        textAreaText: '',
-        previewSelected: 'save',
-        combinedText: finalProcessing.text,
-      };
-    });
-    // byond should switch us to readonly mode from here
-  }
+  };
 
-  render() {
-    const { textColor, fontFamily, stamps, backgroundColor } = this.props;
-    return (
-      <Flex direction="column" fillPositionedParent>
-        <Flex.Item>
-          <Tabs size="100%">
-            <Tabs.Tab
-              key="marked_edit"
-              textColor="black"
-              backgroundColor={
-                this.state.previewSelected === 'Edit' ? 'grey' : 'white'
+  const finalUpdate = (newText) => {
+    const { act } = useBackend();
+    const finalProcessing = createPreview(newText, true);
+    act('save', finalProcessing);
+    setTextAreaText('');
+    setPreviewSelected('save');
+    setCombinedText(finalProcessing.text);
+  };
+
+  return (
+    <Flex direction="column" fillPositionedParent>
+      <Flex.Item>
+        {/* size="100%" */}
+        <Tabs>
+          <Tabs.Tab
+            key="marked_edit"
+            textColor="black"
+            backgroundColor={previewSelected === 'Edit' ? 'grey' : 'white'}
+            selected={previewSelected === 'Edit'}
+            onClick={() => setPreviewSelected('Edit')}
+          >
+            Edit
+          </Tabs.Tab>
+          <Tabs.Tab
+            key="marked_preview"
+            textColor="black"
+            backgroundColor={previewSelected === 'Preview' ? 'grey' : 'white'}
+            selected={previewSelected === 'Preview'}
+            onClick={() => {
+              setPreviewSelected('Preview');
+              setCombinedText(createPreview(textAreaText).text);
+            }}
+          >
+            Preview
+          </Tabs.Tab>
+          <Tabs.Tab
+            key="marked_done"
+            textColor="black"
+            backgroundColor={
+              previewSelected === 'confirm'
+                ? 'red'
+                : previewSelected === 'save'
+                  ? 'grey'
+                  : 'white'
+            }
+            selected={
+              previewSelected === 'confirm' || previewSelected === 'save'
+            }
+            onClick={() => {
+              if (previewSelected === 'confirm') {
+                finalUpdate(textAreaText);
+              } else if (previewSelected === 'Edit') {
+                setPreviewSelected('confirm');
+                setCombinedText(createPreview(textAreaText).text);
+              } else {
+                setPreviewSelected('confirm');
               }
-              selected={this.state.previewSelected === 'Edit'}
-              onClick={() => this.setState({ previewSelected: 'Edit' })}
-            >
-              Edit
-            </Tabs.Tab>
-            <Tabs.Tab
-              key="marked_preview"
-              textColor="black"
-              backgroundColor={
-                this.state.previewSelected === 'Preview' ? 'grey' : 'white'
-              }
-              selected={this.state.previewSelected === 'Preview'}
-              onClick={() =>
-                this.setState(() => {
-                  const newState = {
-                    previewSelected: 'Preview',
-                    textAreaText: this.state.textAreaText,
-                    combinedText: this.createPreview(this.state.textAreaText)
-                      .text,
-                  };
-                  return newState;
-                })
-              }
-            >
-              Preview
-            </Tabs.Tab>
-            <Tabs.Tab
-              key="marked_done"
-              textColor="black"
-              backgroundColor={
-                this.state.previewSelected === 'confirm'
-                  ? 'red'
-                  : this.state.previewSelected === 'save'
-                    ? 'grey'
-                    : 'white'
-              }
-              selected={
-                this.state.previewSelected === 'confirm' ||
-                this.state.previewSelected === 'save'
-              }
-              onClick={() => {
-                if (this.state.previewSelected === 'confirm') {
-                  this.finalUpdate(this.state.textAreaText);
-                } else if (this.state.previewSelected === 'Edit') {
-                  this.setState(() => {
-                    const newState = {
-                      previewSelected: 'confirm',
-                      textAreaText: this.state.textAreaText,
-                      combinedText: this.createPreview(this.state.textAreaText)
-                        .text,
-                    };
-                    return newState;
-                  });
-                } else {
-                  this.setState({ previewSelected: 'confirm' });
-                }
-              }}
-            >
-              {this.state.previewSelected === 'confirm' ? 'Confirm' : 'Save'}
-            </Tabs.Tab>
-            <Tabs.Tab
-              key="marked_help"
-              textColor={'black'}
-              backgroundColor="white"
-              icon="question-circle-o"
-              onmouseover={() => {
-                this.setState({ showingHelpTip: true });
-              }}
-              onmouseout={() => {
-                this.setState({ showingHelpTip: false });
-              }}
-            >
-              Help
-            </Tabs.Tab>
-          </Tabs>
-        </Flex.Item>
-        <Flex.Item grow={1} basis={1}>
-          {(this.state.previewSelected === 'Edit' && (
-            <TextArea
-              value={this.state.textAreaText}
-              textColor={textColor}
-              fontFamily={fontFamily}
-              height={window.innerHeight - 60 + 'px'}
-              backgroundColor={backgroundColor}
-              onInput={this.onInputHandler.bind(this)}
-            />
-          )) || (
-            <PaperSheetView
-              value={this.state.combinedText}
-              stamps={stamps}
-              fontFamily={fontFamily}
-              textColor={textColor}
-            />
-          )}
-        </Flex.Item>
-        {this.state.showingHelpTip && <HelpToolip />}
-      </Flex>
-    );
-  }
-}
+            }}
+          >
+            {previewSelected === 'confirm' ? 'Confirm' : 'Save'}
+          </Tabs.Tab>
+          <Tabs.Tab
+            key="marked_help"
+            textColor={'black'}
+            backgroundColor="white"
+            icon="question-circle-o"
+            onMouseOver={() => setShowingHelpTip(true)}
+            // @ts-ignore TODO-REACT
+            onMouseLeave={() => setShowingHelpTip(false)}
+          >
+            Help
+          </Tabs.Tab>
+        </Tabs>
+      </Flex.Item>
+      <Flex.Item grow={1} basis={1}>
+        {previewSelected === 'Edit' ? (
+          <TextArea
+            value={textAreaText}
+            textColor={textColor}
+            fontFamily={fontFamily}
+            height={window.innerHeight - 60 + 'px'}
+            backgroundColor={backgroundColor}
+            onInput={onInputHandler}
+          />
+        ) : (
+          <PaperSheetView
+            value={combinedText}
+            stamps={stamps}
+            fontFamily={fontFamily}
+            textColor={textColor}
+          />
+        )}
+      </Flex.Item>
+      {showingHelpTip && <HelpToolip />}
+    </Flex>
+  );
+};
 
 interface PaperSheetProps {
   editMode: number;
