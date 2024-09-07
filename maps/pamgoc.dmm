@@ -9112,6 +9112,10 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 7;
+	pixel_y = -3
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "atL" = (
@@ -47786,12 +47790,13 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/table/auto,
 /obj/item/storage/box/flashbang_kit{
-	pixel_y = 13;
-	pixel_x = 5
+	pixel_x = 6;
+	pixel_y = 13
 	},
 /obj/item/storage/box/flashbang_kit{
-	pixel_x = -1;
+	pixel_x = 0;
 	pixel_y = 13
 	},
 /obj/item/chem_grenade/pepper{
@@ -47806,7 +47811,6 @@
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ckJ" = (
@@ -55301,6 +55305,17 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"fFS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "fGR" = (
 /obj/stool/chair/yellow{
 	dir = 4
@@ -55463,17 +55478,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
-"fVd" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "fVR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pool"
@@ -58882,6 +58886,13 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
+"lmN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "lne" = (
 /obj/overlay{
 	icon = 'icons/misc/beach2.dmi';
@@ -60753,6 +60764,13 @@
 	},
 /turf/space,
 /area/space)
+"oyF" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "ozT" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -62509,6 +62527,13 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"rRC" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "rRM" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -63183,13 +63208,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/teleporter)
-"sZM" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/turret,
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "tas" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;
@@ -64533,13 +64551,6 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
-"vwk" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "vwQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
@@ -65112,13 +65123,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"wdv" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "wdw" = (
 /obj/disposalpipe/segment{
 	dir = 1
@@ -124049,8 +124053,8 @@ qff
 eub
 eub
 eub
-sZM
-wdv
+oyF
+rRC
 cAF
 cAF
 bsN
@@ -125254,7 +125258,7 @@ aVc
 cAL
 bVd
 bSg
-vwk
+lmN
 bVk
 cfS
 auM
@@ -125553,7 +125557,7 @@ cCO
 kAf
 teZ
 aVc
-cAL
+czf
 bUo
 crq
 crq
@@ -125855,7 +125859,7 @@ cCO
 kAf
 teZ
 aVc
-cAL
+czf
 bQx
 afK
 aib
@@ -126157,7 +126161,7 @@ cCO
 kAf
 teZ
 aVc
-cAL
+czf
 fqj
 crq
 crq
@@ -126459,7 +126463,7 @@ cCO
 kAf
 teZ
 aVc
-cAL
+czf
 bUp
 crq
 crq
@@ -126761,9 +126765,9 @@ cCO
 vbk
 hUH
 aVc
-cAL
+czf
 dam
-fVd
+fFS
 hCK
 nvz
 pqo
@@ -127063,7 +127067,7 @@ cCO
 kAf
 teZ
 aoY
-cAL
+czf
 cAL
 cAL
 cAL
