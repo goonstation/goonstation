@@ -216,6 +216,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
 		logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
+		message_ghosts("<b>[src]</b> has been armed at [log_loc(src.loc, ghostjump=TRUE)].")
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
 		gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED

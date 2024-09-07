@@ -1131,19 +1131,20 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE)
 			for (var/direction in alldirs)
 				var/turf/T = get_step(src, turn(direction, 180))
-				if (istype(T, /turf/unsimulated/floor/auto))
-					var/turf/unsimulated/floor/auto/TA = T
-					if (TA.edge_priority_level >= src.edge_priority_level)
-						T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+				if(T)
+					if (istype(T, /turf/unsimulated/floor/auto))
+						var/turf/unsimulated/floor/auto/TA = T
+						if (TA.edge_priority_level >= src.edge_priority_level)
+							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+							continue
+					if(turn(direction, 180) & connectdir)
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
 						continue
-				if(turn(direction, 180) & connectdir)
-					T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
-					continue
-				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-				edge_overlay.plane = PLANE_FLOOR
-				T.UpdateOverlays(edge_overlay, "edge_[direction]")
+					var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+					edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+					edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+					edge_overlay.plane = PLANE_FLOOR
+					T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"

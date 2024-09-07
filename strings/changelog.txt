@@ -1,4 +1,32 @@
 
+(t)thu sep 05 24
+(u)JORJ949
+(p)20212
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Removed Wrestling Belt and Katana from Surplus crates.
+(u)JORJ949
+(p)19998
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Reworked Atlas Engineering, moving the computer core to AI foyer.
+(u)JORJ949
+(p)20542
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Departmental announcements now have a set sender and the syndicate stopped announcing they are spying on you.
+(t)wed sep 04 24
+(u)LeahTheTech + Klushy225
+(p)20564
+(e)🎨|C-Sprites
+(*)Added a new zero cost trait "Hairy" that just lets mutantrace characters have hair. Incompatible with pugs (have their own hair) and skeletons (are skeletons).
+(u)Smilg
+(p)20361
+(e)🆕⚖📦🤖|C-Feature, C-Balance, A-Game-Objects, A-Silicons
+(*)You can Emag unplugged law modules, scrambling their text to a random ion storm law.
+(u)Lord_Earthfire
+(p)20518
+(e)⚖🔄⚗|C-Balance, C-Rework, A-Chemistry
+(+)The Aranesp recipe was changed to: (1) Insulin + (1) cryoxadone + (0) nickel @ under 273K -> (2) aranesp + (0) nickel. The reaction heats up over time and, if left unattended, can turn into useless(?) tar.
+(u)LeahTheTech
+(*)Small animals will no longer slow you down when pulled or grabbed. No more dragging weirdly heavy dead roaches.
 (t)tue sep 03 24
 (u)Sovexe
 (p)20528
