@@ -770,12 +770,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		return FALSE // unless for some godforsaken reason, this securitron has a non-stunning weapon
 	. = ..()
 	var/aggression_hp = 1
-	if(ishuman(attacker))
-		var/mob/living/carbon/human/H = attacker
-		if(istype(H.wear_suit,/obj/item/clothing/suit/security_badge))
-			aggression_hp -= 0.4 // 20 damage allowed out of pure respect
 	if(src.allowed(attacker))
 		aggression_hp -= 0.2 // 10 damage allowed for the bosses
+		if(ishuman(attacker))
+			var/mob/living/carbon/human/H = attacker
+			if(istype(H.wear_suit,/obj/item/clothing/suit/security_badge))
+				aggression_hp -= 0.3 // 15 damage allowed out of pure respect
 	if(src.get_health_percentage() > aggression_hp) // if health is still high enough, assume it was friendly fire
 		return FALSE
 	if(.)
@@ -942,5 +942,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 /mob/living/critter/robotic/securitron/weed_seeking/assess_perp(mob/living/perp)
 	if(perp.reagents && perp.reagents.has_reagent("THC"))
+		EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", 10 SECONDS)
 		return 420
 	. = ..()

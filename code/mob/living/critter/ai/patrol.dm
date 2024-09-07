@@ -28,6 +28,7 @@
 		if(combat_target)
 			var/datum/aiTask/sequence/goalbased/combat_instance = src.holder.get_instance(src.combat_interrupt_type, list(src.holder, src))
 			if(combat_instance.precondition())
+				src.holder.stop_move()
 				src.holder.interrupt_to_task(combat_instance)
 			return
 
