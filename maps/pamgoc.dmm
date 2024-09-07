@@ -54557,7 +54557,6 @@
 /area/station/storage/hydroponics)
 "eub" = (
 /obj/lattice{
-	dir = 6;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
@@ -55464,6 +55463,17 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/refinery)
+"fVd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "fVR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Pool"
@@ -56758,12 +56768,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
-"hPE" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "hPJ" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 8;
@@ -57843,17 +57847,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
-"jpD" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/storage/secure/crate/gear/armory/equipment,
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "jqq" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -60437,13 +60430,6 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
-"nLc" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "nLQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62292,13 +62278,6 @@
 	},
 /turf/space,
 /area/space)
-"rwP" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/turret,
-/turf/space,
-/area/station/turret_protected/armory_outside)
 "rwU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -63204,6 +63183,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/teleporter)
+"sZM" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "tas" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;
@@ -64547,6 +64533,13 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"vwk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "vwQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
@@ -65119,6 +65112,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"wdv" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "wdw" = (
 /obj/disposalpipe/segment{
 	dir = 1
@@ -124042,15 +124042,15 @@ bgz
 bgz
 qea
 hUH
-hPE
+eub
 lyH
 hdu
 qff
-hPE
-hPE
-hPE
-rwP
 eub
+eub
+eub
+sZM
+wdv
 cAF
 cAF
 bsN
@@ -124949,7 +124949,7 @@ cCO
 kAf
 teZ
 bRb
-hdu
+cAL
 cAL
 cAL
 cAL
@@ -125251,10 +125251,10 @@ cCO
 vbk
 hUH
 aVc
-hdu
+cAL
 bVd
 bSg
-nLc
+vwk
 bVk
 cfS
 auM
@@ -125553,7 +125553,7 @@ cCO
 kAf
 teZ
 aVc
-hdu
+cAL
 bUo
 crq
 crq
@@ -125855,7 +125855,7 @@ cCO
 kAf
 teZ
 aVc
-hdu
+cAL
 bQx
 afK
 aib
@@ -126157,7 +126157,7 @@ cCO
 kAf
 teZ
 aVc
-hdu
+cAL
 fqj
 crq
 crq
@@ -126459,7 +126459,7 @@ cCO
 kAf
 teZ
 aVc
-hdu
+cAL
 bUp
 crq
 crq
@@ -126761,9 +126761,9 @@ cCO
 vbk
 hUH
 aVc
-hdu
+cAL
 dam
-jpD
+fVd
 hCK
 nvz
 pqo
@@ -127063,7 +127063,7 @@ cCO
 kAf
 teZ
 aoY
-hdu
+cAL
 cAL
 cAL
 cAL
