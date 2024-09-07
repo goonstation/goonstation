@@ -1,4 +1,18 @@
 
+(t)fri sep 06 24
+(u)Sovexe
+(p)20595
+(e)🔒🔄|A-Secret, C-Rework
+(+)The lava edges in the NT Retention Center adventure zone has been made much more forgiving.
+(u)cringe
+(p)20481
+(e)🪲🆕🎨💨|C-Bug, C-Feature, C-Sprites, A-Atmospherics
+(+)Pipes now use a variant of modular pipes. This means that when a pipe is ruptured or merely missing an end, they appear visually distinct. Ruptured pipes are broken in the center, while missing ends are broken at the ends. These states can also appear simultaneously.
+(u)444explorer
+(p)20588
+(e)|
+(+)Renames Technical Assistant, Medical Assistant and Research Assistant to Technical Trainee, Medical Trainee and Research Trainee.
+(+)Staff Assistant and Security Assistant are not effected by this rename.
 (t)thu sep 05 24
 (u)JORJ949
 (p)20212
