@@ -1,31 +1,23 @@
 /datum/aiHolder/patroller/New()
 	..()
-	default_task = get_instance(/datum/aiTask/sequence/patrol, list(src))
+	default_task = get_instance(/datum/aiTask/patrol, list(src))
 
-/// move between targets found with targeting_subtask, interrupting to combat_interrupt if seek_target on owner finds a combat target
-/datum/aiTask/sequence/patrol
+/// move between targets found with targeting_instance, interrupting to combat_interrupt if seek_target on owner finds a combat target
+/datum/aiTask/patrol
 	name = "patrolling"
 	distance_from_target = 0
 	max_dist = 7
-	var/targeting_subtask_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
+	var/targeting_instance_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
 	var/combat_interrupt_type = /datum/aiTask/sequence/goalbased/critter/attack
+	var/datum/aiTask/succeedable/move/move_subtask
 
-/datum/aiTask/sequence/patrol/New(parentHolder, transTask)
+/datum/aiTask/patrol/New(parentHolder, transTask)
 	. = ..()
-	add_task(src.holder.get_instance(src.targeting_subtask_type, list(holder)))
-	var/datum/aiTask/succeedable/move/movesubtask = holder.get_instance(/datum/aiTask/succeedable/move, list(holder))
-	if(istype(movesubtask))
-		movesubtask.max_path_dist = 150
-	add_task(movesubtask)
+	src.move_subtask = src.holder.get_instance(/datum/aiTask/succeedable/move, list(holder))
+	if(istype(src.move_subtask))
+		src.move_subtask.max_path_dist = 150
 
-/datum/aiTask/sequence/patrol/next_task()
-	. = ..()
-	if (length(holder.priority_tasks)) //consume priority tasks first
-		var/datum/aiTask/priority_task = holder.priority_tasks[1]
-		holder.priority_tasks -= priority_task
-		return priority_task
-
-/datum/aiTask/sequence/patrol/on_tick()
+/datum/aiTask/patrol/on_tick()
 	var/list/mob/living/combat_targets
 	if(ismobcritter(src.holder.owner)) // check for targets
 		var/mob/living/critter/C = src.holder.owner
@@ -39,12 +31,19 @@
 				src.holder.interrupt_to_task(combat_instance)
 			return
 
-	if(src.holder.target && istype(subtasks[subtask_index], /datum/aiTask/succeedable/move)) // MOVE TASK
+	if(src.holder.target) // MOVE TASK
 		// make sure we both set our target and move to our target correctly
-		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
-		if(M && !M.move_target)
-			M.distance_from_target = src.distance_from_target
-			M.move_target = get_turf(src.holder.target)
+		if(src.move_subtask)
+			src.move_subtask.distance_from_target = src.distance_from_target
+			src.move_subtask.move_target = get_turf(src.holder.target)
+			src.move_subtask.on_tick()
+			if(src.move_subtask.succeeded())
+				src.holder.target = null
+
+	if(!src.holder.target)
+		var/datum/aiTask/succeedable/targeting_instance = src.holder.get_instance(src.targeting_instance_type, list(src.holder, src))
+		targeting_instance.on_tick()
+
 	. = ..()
 
 /datum/aiTask/succeedable/patrol_target_locate
@@ -57,7 +56,7 @@
 
 /datum/aiTask/succeedable/patrol_target_locate/succeeded()
 	var/distance = GET_DIST(get_turf(src.holder.owner), get_turf(src.target))
-	if(distance > 1 && distance <= src.max_dist)
+	if(distance <= src.max_dist)
 		src.holder.target = get_turf(src.target)
 
 	if(src.holder.target)
@@ -73,7 +72,7 @@
 	for(var/obj/item/X in by_cat[TR_CAT_CANNABIS_OBJ_ITEMS])
 		var/obj/item/plant/herb/cannabis/C = X
 		if (istype(C) && C.z == holder.owner.z)
-			src.target = C
+			src.holder.target = C
 			break
 
 /// securitron patrol pattern
@@ -87,7 +86,7 @@
 /datum/aiHolder/patroller/packet_based/New()
 	. = ..()
 
-	default_task = get_instance(/datum/aiTask/sequence/patrol/packet_based, list(src))
+	default_task = get_instance(/datum/aiTask/patrol/packet_based, list(src))
 
 	src.net_id = generate_net_id(src.owner)
 
@@ -109,7 +108,7 @@
 	..()
 
 /datum/aiHolder/patroller/packet_based/proc/ai_receive_signal(mob/attached, datum/signal/signal, transmission_method, range, connection_id)
-	if(!src.enabled || !istype(src.current_task,/datum/aiTask/sequence/patrol)) // this ai is off or busy
+	if(!src.enabled) // this ai is off
 		return
 
 	if(connection_id == "ai_beacon")
@@ -148,20 +147,19 @@
 		src.target = signal.source
 		src.next_patrol_id = signal.data["next_patrol"]
 
-/datum/aiTask/sequence/patrol/packet_based
-	targeting_subtask_type = /datum/aiTask/succeedable/patrol_target_locate/packet_based
+/datum/aiTask/patrol/packet_based
+	targeting_instance_type = /datum/aiTask/succeedable/patrol_target_locate/packet_based
 
 /datum/aiTask/succeedable/patrol_target_locate/packet_based
-	max_fails = 5 // very generous
-	var/packet_sent = FALSE
+	max_fails = 5
 
-/datum/aiTask/succeedable/patrol_target_locate/packet_based/on_reset()
+/datum/aiTask/succeedable/patrol_target_locate/packet_based/switched_to()
 	. = ..()
-	packet_sent = FALSE
+	src.tick()
 
 /datum/aiTask/succeedable/patrol_target_locate/packet_based/on_tick()
 	. = ..()
-	if(!src.packet_sent && istype(src.holder,/datum/aiHolder/patroller/packet_based))
+	if(istype(src.holder,/datum/aiHolder/patroller/packet_based))
 		var/datum/aiHolder/patroller/packet_based/packet_holder = src.holder
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.holder.owner
@@ -171,4 +169,3 @@
 		else
 			signal.data["findbeacon"] = "patrol"
 		SEND_SIGNAL(src.holder.owner, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "ai_beacon")
-		src.packet_sent = TRUE

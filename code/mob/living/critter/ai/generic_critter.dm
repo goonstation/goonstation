@@ -96,8 +96,6 @@
 	return has_started && C.can_critter_attack() //if we've started an attack, and can attack again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/attack/on_tick()
-	if(length(holder.owner.grabbed_by))
-		holder.owner.resist()
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target

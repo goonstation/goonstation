@@ -970,7 +970,7 @@ Code:
 				return
 			var/datum/signal/signal = get_free_signal()
 			signal.encryption = "ERR_12939_CORRUPT_PACKET:"
-			signal.encryption_density = 85
+			signal.encryption_obfuscation = 85
 			signal.data["backdoor"] = netpass_syndicate
 			signal.data["command"] = "text_message"
 			signal.data["message"] = "BOOM"

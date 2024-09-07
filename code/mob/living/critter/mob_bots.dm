@@ -419,6 +419,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	robot_talk_understand = TRUE
 	density = FALSE
 	hand_count = 1
+	base_move_delay = 2.75
+	base_walk_delay = 3.5
 	can_burn = FALSE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -460,7 +462,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	src.net_id = generate_net_id(src)
 
 	remove_lifeprocess(/datum/lifeprocess/blindness)
-	remove_lifeprocess(/datum/lifeprocess/viruses)
 	remove_lifeprocess(/datum/lifeprocess/blood)
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 
@@ -480,11 +481,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
 		src.contexts += new actionType()
 
+	START_TRACKING
+
 	#ifdef I_AM_ABOVE_THE_LAW
 	START_TRACKING_CAT(TR_CAT_DELETE_ME)
 	#endif
 
 /mob/living/critter/robotic/securitron/disposing()
+	STOP_TRACKING
+
 	#ifdef I_AM_ABOVE_THE_LAW
 	STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
 	#endif

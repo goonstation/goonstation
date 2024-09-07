@@ -1,8 +1,8 @@
 /datum/aiHolder/patroller/packet_based/securitron/New()
 	. = ..()
-	default_task = get_instance(/datum/aiTask/sequence/patrol/packet_based/securitron, list(src))
+	default_task = get_instance(/datum/aiTask/patrol/packet_based/securitron, list(src))
 
-/datum/aiTask/sequence/patrol/packet_based/securitron
+/datum/aiTask/patrol/packet_based/securitron
 	combat_interrupt_type = /datum/aiTask/sequence/goalbased/critter/securitron_attack
 
 /// A variant of attack that knows how to use batons
