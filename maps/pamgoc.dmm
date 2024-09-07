@@ -47784,9 +47784,29 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "1-8"
 	},
-/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/obj/item/storage/box/flashbang_kit{
+	pixel_y = 13;
+	pixel_x = 5
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = -1;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 10;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ckJ" = (
@@ -54536,11 +54556,9 @@
 /turf/simulated/floor/plating,
 /area/station/storage/hydroponics)
 "eub" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
@@ -56595,14 +56613,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "hCK" = (
-/obj/storage/secure/crate/gear/armory/equipment,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 15
-	},
+/obj/item/gun/flamethrower/assembled/loaded,
+/obj/storage/secure/crate/plasma/armory/anti_biological,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "hDd" = (
@@ -56743,6 +56758,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
+"hPE" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "hPJ" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 8;
@@ -57822,6 +57843,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
+"jpD" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/storage/secure/crate/gear/armory/equipment,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "jqq" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -60405,6 +60437,13 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
+"nLc" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor,
+/area/station/ai_monitored/armory)
 "nLQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62253,6 +62292,13 @@
 	},
 /turf/space,
 /area/space)
+"rwP" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/turret,
+/turf/space,
+/area/station/turret_protected/armory_outside)
 "rwU" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -123994,17 +124040,17 @@ bgz
 bgz
 bgz
 bgz
-hUH
 qea
 hUH
+hPE
 lyH
 hdu
 qff
-hUH
-hUH
-hUH
-osb
-cDF
+hPE
+hPE
+hPE
+rwP
+eub
 cAF
 cAF
 bsN
@@ -124296,8 +124342,8 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
+teZ
 teZ
 kAf
 teZ
@@ -124598,11 +124644,11 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 anJ
 bQa
+aTa
 aTa
 aTa
 aTa
@@ -124900,10 +124946,10 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 bRb
+hdu
 cAL
 cAL
 cAL
@@ -125202,13 +125248,13 @@ cCO
 cCO
 cCO
 cCO
-teZ
 vbk
 hUH
 aVc
-cAL
+hdu
 bVd
 bSg
+nLc
 bVk
 cfS
 auM
@@ -125504,12 +125550,12 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 aVc
-cAL
+hdu
 bUo
+crq
 crq
 crq
 crq
@@ -125806,13 +125852,13 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
-eub
+teZ
 aVc
-cAL
+hdu
 bQx
 afK
+aib
 aib
 aib
 ckI
@@ -126108,12 +126154,12 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 aVc
-cAL
+hdu
 fqj
+crq
 crq
 crq
 crq
@@ -126410,12 +126456,12 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 aVc
-cAL
+hdu
 bUp
+crq
 crq
 crq
 crq
@@ -126712,12 +126758,12 @@ cCO
 cCO
 cCO
 cCO
-teZ
 vbk
 hUH
 aVc
-cAL
+hdu
 dam
+jpD
 hCK
 nvz
 pqo
@@ -127014,10 +127060,10 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 aoY
+hdu
 cAL
 cAL
 cAL
@@ -127316,11 +127362,11 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
 teZ
 qHH
 bQa
+aTa
 aTa
 aTa
 aTa
@@ -127618,8 +127664,8 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kAf
+teZ
 teZ
 teZ
 teZ
@@ -127920,8 +127966,8 @@ cCO
 cCO
 cCO
 cCO
-teZ
 kft
+hUH
 hUH
 hUH
 hUH
