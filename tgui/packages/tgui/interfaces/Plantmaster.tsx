@@ -133,7 +133,6 @@ export const Plantmaster = () => {
           <PlantOverview
             cat_lens={category_lengths}
             container={inserted ? inserted_container : null}
-            seedoutput={seedoutput}
           />
         )}
         {category === 'extractables' && (

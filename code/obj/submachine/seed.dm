@@ -24,7 +24,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	ui_static_data(mob/user)
+	ui_data(mob/user)
 		var/exlist = list()
 		var/seedlist = list()
 		var/geneout = null//tmp var for storing analysis results
@@ -140,7 +140,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			if("change_tab")
 				src.mode = params["tab"]
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("ejectbeaker")
 				var/obj/item/I = src.inserted
@@ -152,7 +152,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					else
 						I.set_loc(src.loc) // causes Exited proc to be called
 						usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("insertbeaker")
 				if (src.inserted)
@@ -169,21 +169,21 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					ui.user.drop_item()
 					inserting.set_loc(src)
 					boutput(ui.user, SPAN_NOTICE("You add [inserted] to the machine!"))
-					update_static_data(ui.user, ui)
+					. = TRUE
 
 			if("ejectseeds")
 				for (var/obj/item/seed/S in src.seeds)
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("ejectextractables")
 				for (var/obj/item/I in src.extractables)
 					src.extractables.Remove(I)
 					I.set_loc(src.loc)
 					usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("eject")
 				var/obj/item/I = locate(params["eject_ref"]) in src
@@ -197,13 +197,13 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					src.splicing2 = null
 				I.set_loc(src.loc)
 				ui.user.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 
 			if("sort")
 				src.sort = params["sortBy"]
 				src.sortAsc = text2num(params["asc"])
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
@@ -227,7 +227,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("label")
 				var/obj/item/I = locate(params["label_ref"]) in src
@@ -235,7 +235,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				if(istype(I) && I.name != newname)
 					phrase_log.log_phrase("seed", newname, TRUE)
 					I.name = newname
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("extract")
 				var/obj/item/I = locate(params["extract_ref"]) in src
@@ -265,7 +265,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 							give -= 1
 					src.extractables.Remove(I)
 					qdel(I)
-					update_static_data(ui.user, ui)
+					. = TRUE
 				else
 					boutput(ui.user, SPAN_ALERT("This item is not viable extraction produce."))
 
@@ -284,7 +284,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else if(!src.splicing2)
 					src.splicing2 = I
 
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("infuse")
 				var/obj/item/seed/S = locate(params["infuse_ref"]) in src
@@ -341,7 +341,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 										playsound(src, 'sound/effects/zzzt.ogg', 50, TRUE)
 										boutput(usr, SPAN_NOTICE("Infusion of [R.name] successful."))
 								src.inserted.reagents.remove_reagent(R.id,10)
-					update_static_data(ui.user, ui)
+					. = TRUE
 
 			if("splice")
 				// Get the seeds being spliced first
@@ -489,7 +489,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				qdel(seed1)
 				qdel(seed2)
 				src.mode = "seedlist"
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 
 
@@ -502,7 +502,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			user.drop_item()
 			W.set_loc(src)
 			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
-			src.update_static_data_for_all_viewers()
 			tgui_process.update_uis(src)
 
 
@@ -513,7 +512,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
 			W.dropped(user)
-			src.update_static_data_for_all_viewers()
 			tgui_process.update_uis(src)
 			return
 
@@ -539,7 +537,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
 				S.tooltip_rebuild = 1
-				src.update_static_data_for_all_viewers()
 				tgui_process.update_uis(src)
 		else ..()
 
@@ -570,7 +567,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				P.set_loc(src)
 				sleep(0.3 SECONDS)
 			boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
-			src.update_static_data_for_all_viewers()
 			tgui_process.update_uis(src)
 		else ..()
 
