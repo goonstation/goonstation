@@ -316,8 +316,8 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   return (
     <Flex direction="column" fillPositionedParent>
       <Flex.Item>
-        {/* size="100%" */}
-        <Tabs>
+        {/* */}
+        <Tabs fluid>
           <Tabs.Tab
             key="marked_edit"
             textColor="black"
@@ -402,38 +402,33 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   );
 };
 
-interface PaperSheetProps {
-  editMode: number;
-  text: string;
-  paperColor: string;
-  penColor: string;
-  penFont: string;
-  stamps: Array<Array<string>>;
-  stampClass: string;
-  sizeX: number;
-  sizeY: number;
-  name: string;
-  scrollbar: boolean;
-}
-
-export const PaperSheet: React.FC<PaperSheetProps> = ({
-  editMode,
-  text,
-  paperColor = 'white',
-  penColor = 'black',
-  penFont = 'Verdana',
-  stamps,
-  stampClass,
-  sizeX,
-  sizeY,
-  name,
-  scrollbar,
-}) => {
+export const PaperSheet = () => {
+  const { data } = useBackend<PaperSheetData>();
+  const {
+    editMode,
+    text,
+    paperColor,
+    penColor,
+    penFont,
+    stamps,
+    stampClass,
+    sizeX,
+    sizeY,
+    name,
+    scrollbar,
+  } = data;
   const [stampList, setStampList] = useState<Array<Array<string>>>([]);
+  const [editModeState, setEditModeState] = useState(editMode || 0);
 
   useEffect(() => {
     setStampList(stamps || []);
   }, [stamps]);
+
+  useEffect(() => {
+    if (editMode !== undefined) {
+      setEditModeState(editMode);
+    }
+  }, [editMode]);
 
   const decideMode = (mode: number) => {
     switch (mode) {
@@ -471,8 +466,8 @@ export const PaperSheet: React.FC<PaperSheetProps> = ({
     >
       <Window.Content backgroundColor={paperColor} scrollable={scrollbar}>
         {/* @ts-ignore TODO-REACT */}
-        <Box id="page" fitted fillPositionedParent>
-          {decideMode(editMode)}
+        <Box id="page" fillPositionedParent>
+          {decideMode(editModeState)}
         </Box>
       </Window.Content>
     </Window>
