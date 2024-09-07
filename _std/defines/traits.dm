@@ -12,4 +12,4 @@
 #define TRAIT_STARTING_POINTS 1
 
  /// How many traits people can select at most.
-#define TRAIT_MAX 7
+#define TRAIT_MAX INFINITY

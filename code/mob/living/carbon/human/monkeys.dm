@@ -211,6 +211,9 @@
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
+			if(prob(10))
+				// he can have a little treat
+				src.equip_new_if_possible(/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop, SLOT_R_HAND)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
 				idk.set_loc(src)
@@ -237,7 +240,7 @@
 		..()
 		START_TRACKING
 		if (!src.disposed)
-			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+			src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name

@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/obj/item/cloth)
 
 /obj/item/cloth/New()
 	..()
-	src.create_reagents(10)
+	src.create_reagents(20)
 
 /obj/item/cloth/disposing()
 	..()
@@ -52,9 +52,12 @@ ABSTRACT_TYPE(/obj/item/cloth)
 
 /obj/item/cloth/process_grab(var/mult = 1)
 	..()
-	if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state == GRAB_CHOKE && iscarbon(src.chokehold.affecting))
-		src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
-		src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
+	if (chokehold.transfering_chemicals || chokehold.state > GRAB_AGGRESSIVE) // Having more than an aggressive grab will transfer the chemicals anyway
+		if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state >= GRAB_AGGRESSIVE && iscarbon(src.chokehold.affecting))
+			//src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult) // No more ingesting means no stacking damage horribly and instantly
+			src.reagents.trans_to(chokehold.affecting, 2 * mult)
+		else
+			chokehold.transfering_chemicals = FALSE
 
 /obj/item/cloth/is_open_container()
 	.= 1

@@ -116,7 +116,7 @@ proc/is_music_playing()
 			if (!client_vol)
 				continue
 
-			C.sound_playing[ music_sound.channel ][1] = 1
+			C.sound_playing[ music_sound.channel ][1] = 100
 			C.sound_playing[ music_sound.channel ][2] = VOLUME_CHANNEL_RADIO
 
 			music_sound.volume = client_vol

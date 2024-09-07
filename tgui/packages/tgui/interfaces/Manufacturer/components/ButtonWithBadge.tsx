@@ -14,7 +14,7 @@ type ButtonWithBadgeProps = {
   width?: number | string,
   height?: number | string,
   noImageShadow?: boolean,
-  imagePath: string;
+  imagePath: string | null;
   children?: InfernoNode;
   disabled?: boolean;
   onClick?: Function;
@@ -50,13 +50,14 @@ export const ButtonWithBadge = (props:ButtonWithBadgeProps) => {
     >
       <Stack>
         <Stack.Item>
-          <Image
-            verticalAlign="top"
-            height={height || "100%"}
-            pixelated
-            src={imagePath}
-            backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
-          />
+          {imagePath && (
+            <Image
+              verticalAlign="top"
+              height={height || "100%"}
+              src={imagePath}
+              backgroundColor={noImageShadow ? null : "rgba(0,0,0,0.2)"}
+            />
+          )}
         </Stack.Item>
         <Stack.Item grow mx={1}>
           {children}

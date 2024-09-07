@@ -62,9 +62,9 @@ datum
 					L.update_burning(2 * mult)
 				..()
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("fire",8)
-				P.growth -= 12
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.fire_damage += 8
+				growth_tick.growth_rate -= 12
 
 		combustible/phlogiston/firedust
 			name = "phlogiston dust"
@@ -125,8 +125,8 @@ datum
 				..()
 				return
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison",1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 			syndicate
 				name = "syndicate napalm"
@@ -167,15 +167,15 @@ datum
 				var/radius = clamp(volume*0.15, 0, 8)
 				var/list/covered = holder.covered_turf()
 				var/list/affected = list()
+				radius = clamp((volume/covered.len)*0.15, 0, 8)
+				holder?.del_reagent(id)
 				for(var/turf/t in covered)
-					radius = clamp((volume/covered.len)*0.15, 0, 8)
 					affected += fireflash_melting(t, radius, rand(3000, 6000), 500, chemfire = CHEM_FIRE_RED)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
 						O.visible_message(SPAN_ALERT("[O] melts!"))
 						qdel(O)
-				holder?.del_reagent(id)
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!holder)
@@ -626,8 +626,8 @@ datum
 					M.vomit(0, null, vomit_message)
 				..()
 
-			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("poison", 1)
+			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
+				growth_tick.poison_damage += 1
 
 		// cogwerks - gunpowder test. IS THIS A TERRIBLE GODDAMN IDEA? PROBABLY
 

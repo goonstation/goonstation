@@ -4,9 +4,6 @@ names@=
 	Rincewind
 	Shazam
 	Merlin
-	Voldemort
-	Dumbledore
-	Snape
 	Wizard Whitebeard
 	Prospero
 	Elminster

@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
         with:
@@ -38,11 +38,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
-          touch +secret/__secret.dme
 
       - name: Check TGUI
         run: |
@@ -74,8 +74,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - run: touch +secret/__secret.dme
-      - uses: robinraju/release-downloader@v1.9
+      - uses: robinraju/release-downloader@v1.11
         with:
           repository: "OpenDreamProject/OpenDream"
           tag: "latest"
@@ -93,8 +92,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -105,7 +104,6 @@ jobs:
           echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
           echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
-          touch +secret/__secret.dme
 
       - name: Compile
         run: |
@@ -137,8 +135,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -157,7 +155,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
         with:
@@ -176,7 +174,6 @@ jobs:
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
           tools/bootstrap/python -c ''
-          touch +secret/__secret.dme
 
       - name: Misc Checks
         run: |

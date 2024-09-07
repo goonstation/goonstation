@@ -43,6 +43,8 @@ var/global
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
 	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
+	list/donator_ckeys = list()
+	list/online_donator_ckeys = list()
 	list/mobs = list()
 	list/ai_mobs = list()
 	list/processing_items = list()
@@ -94,6 +96,8 @@ var/global
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = FALSE
+	/// Areas built anew belong to a single unconnected zone, which gives its turfs over to other expandable areas when contacting them
+	area/unconnected_zone/unconnected_zone = new
 
 	/// Contains objects in ID-based switched object groups, such as blinds and their switches
 	list/switched_objs = list()
@@ -277,6 +281,8 @@ var/global
 	player_capa = 0
 	player_cap = 55
 	player_cap_grace = list()
+	/// specifies if pcap kick messages show display to admins in chat
+	pcap_kick_messages = TRUE
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
@@ -355,7 +361,6 @@ var/global
 		LOG_VEHICLE		=	list(),
 		LOG_GAMEMODE	=	list(),
 		LOG_SIGNALERS	=	list(),
-		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
 		LOG_CHEMISTRY	=	list(),
 	)
@@ -527,6 +532,8 @@ var/global
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
 	list/protected_frequencies = list(R_FREQ_SYNDICATE)
+	///base movedelay threshold for slipping
+	base_slip_delay = BASE_SPEED_SUSTAINED
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

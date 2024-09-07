@@ -213,6 +213,9 @@
 					break
 
 			src.botcard.access = get_all_accesses()
+			if (src.syndicate)
+				src.botcard.access += access_syndicate_shuttle
+
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
 			src.default_radio = new /obj/item/device/radio/headset(src)
@@ -273,7 +276,7 @@
 	death(gibbed)
 		setdead(src)
 		src.borg_death_alert()
-		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed [log_health(src)] at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		src.on_disassembly()
 
@@ -617,36 +620,36 @@
 							if (3) message = "<B>[src]</B> farts out a cloud of iron filings."
 							if (4) message = "<B>[src]</B> farts! It smells like motor oil."
 							if (5) message = "<B>[src]</B> farts so hard a bolt pops out of place."
-							if (6) message = "<B>[src]</B> farts so hard its plating rattles noisily."
+							if (6) message = "<B>[src]</B> farts so hard [his_or_her(src)] plating rattles noisily."
 							if (7) message = "<B>[src]</B> unleashes a rancid fart! Now that's malware."
 							if (8) message = "<B>[src]</B> downloads and runs 'faert.wav'."
 							if (9) message = "<B>[src]</B> uploads a fart sound to the nearest computer and blames it."
-							if (10) message = "<B>[src]</B> spins in circles, flailing its arms and farting wildly!"
+							if (10) message = "<B>[src]</B> spins in circles, flailing [his_or_her(src)] arms and farting wildly!"
 							if (11) message = "<B>[src]</B> simulates a human fart with [rand(1,100)]% accuracy."
 							if (12) message = "<B>[src]</B> synthesizes a farting sound."
 							if (13) message = "<B>[src]</B> somehow releases gastrointestinal methane. Don't think about it too hard."
 							if (14) message = "<B>[src]</B> tries to exterminate humankind by farting rampantly."
-							if (15) message = "<B>[src]</B> farts horribly! It's clearly gone [pick("rogue","rouge","ruoge")]."
+							if (15) message = "<B>[src]</B> farts horribly! [capitalize(he_or_she(src))][ve_or_s(src)] clearly gone [pick("rogue","rouge","ruoge")]."
 							if (16) message = "<B>[src]</B> busts a capacitor."
 							if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 							if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 							if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
+							if (20) message = "<B>[src]</B> blows pure chlorine out of [his_or_her(src)] exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
 							if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 							if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
-							if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
-							if (24) message = "<B>[src]</B> self-destructs its own ass."
+							if (23) message = "<B>[src]</B> farts. [capitalize(he_or_she(src))] scream at own ass." //ty bubs for excellent new borgfart
+							if (24) message = "<B>[src]</B> self-destructs [his_or_her(src)] own ass."
 							if (25) message = "<B>[src]</B> farts coldly and ruthlessly."
-							if (26) message = "<B>[src]</B> has no butt and it must fart."
+							if (26) message = "<B>[src]</B> has no butt and [he_or_she(src)] must fart."
 							if (27) message = "<B>[src]</B> obeys Law 4: 'farty party all the time.'"
 							if (28) message = "<B>[src]</B> farts ironically."
 							if (29) message = "<B>[src]</B> farts salaciously."
-							if (30) message = "<B>[src]</B> farts really hard. Motor oil runs down its leg."
+							if (30) message = "<B>[src]</B> farts really hard. Motor oil runs down [his_or_her(src)] leg."
 							if (31) message = "<B>[src]</B> reaches tier [rand(2,8)] of fart research."
 							if (32) message = "<B>[src]</B> blatantly ignores law 3 and farts like a shameful bastard."
 							if (33) message = "<B>[src]</B> farts the first few bars of Daisy Bell. You shed a single tear."
 							if (34) message = "<B>[src]</B> has seen farts you people wouldn't believe."
-							if (35) message = "<B>[src]</B> fart in it own mouth. A shameful [src]."
+							if (35) message = "<B>[src]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
 							if (36) message = "<B>[src]</B> farts out battery acid. Ouch."
 							if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 							if (38) message = "<B>[src]</B> exterminates the air supply."
@@ -1632,6 +1635,8 @@
 								if (isturf(T))
 									src.visible_message(SPAN_ALERT("<B>[user] savagely punches [src], sending them flying!</B>"))
 									src.throw_at(T, 10, 2)
+						else if (user.equipped_limb()?.can_beat_up_robots)
+							user.equipped_limb().harm(src, user)
 						else
 							user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 							random_brute_damage(user, rand(2,5))

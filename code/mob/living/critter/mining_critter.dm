@@ -10,6 +10,7 @@
 /datum/limb/mouth/fermid
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	can_beat_up_robots = TRUE //angry space ants
 
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
@@ -44,7 +45,7 @@
 	health_brute = 25
 	health_brute_vuln = 1
 	health_burn = 25
-	health_burn_vuln = 0.1
+	health_burn_vuln = 0.3
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
@@ -56,10 +57,16 @@
 
 	New()
 		..()
-		src.faction |= FACTION_FERMID
+		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
+		START_TRACKING_CAT(TR_CAT_BUGS)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_BUGS)
+		..()
+
 
 	is_spacefaring()
 		return TRUE
@@ -369,6 +376,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/vomit_ore)
+	butcherable = BUTCHER_ALLOWED
 	var/tamed = FALSE
 	var/seek_ore = TRUE
 	var/eaten = 0

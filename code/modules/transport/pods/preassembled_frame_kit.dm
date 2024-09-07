@@ -140,7 +140,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 		if(BUILD_STEP_WELD_1)
 			if (isscrewingtool(I))
 				user.visible_message("[user] begins screwing down the frame's circuit boards and its engine...")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				action_bar.proc_path = /obj/structure/preassembeled_vehicleframe/proc/step_screw_1
 				action_bar.end_message = "[user] finishes screwing the the frame's circuit boards and its engine."
 				actions.start(action_bar, user)
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 		if(BUILD_STEP_WELD_2)
 			if (isscrewingtool(I))
 				user.visible_message("[user] begins screwing the pod's maintenance panels shut...")
-				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				action_bar.proc_path = /obj/structure/preassembeled_vehicleframe/proc/step_screw_2
 				action_bar.end_message = "With the cockpit and exterior indicators secured, the control system automatically starts up."
 				actions.start(action_bar, user)

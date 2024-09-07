@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Table, Tabs } from '../components';
+import { Box, Button, Dimmer, Divider, Flex, NumberInput, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
@@ -104,9 +104,7 @@ const ReagentDisplay = (props, context) => {
   const container = props.container || NoContainer;
 
   return (
-    <SectionEx
-      capitalize
-      title={container.name}>
+    <Section title={capitalize(container.name)}>
       {!!props.container || (
         <Dimmer>
           <Button
@@ -120,7 +118,7 @@ const ReagentDisplay = (props, context) => {
       )}
       <ReagentGraph container={container} />
       <ReagentList container={container} />
-    </SectionEx>
+    </Section>
   );
 };
 
@@ -128,10 +126,7 @@ const PlantOverview = (props, context) => {
   const { act } = useBackend(context);
   const { cat_lens, container } = props;
   return (
-    <SectionEx
-      capitalize
-      title={"Overview"}
-    >
+    <Section title="Overview">
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Box>
@@ -141,7 +136,7 @@ const PlantOverview = (props, context) => {
           <ReagentDisplay container={container} />
         </Flex.Item>
       </Flex>
-    </SectionEx>
+    </Section>
   );
 };
 const TitleRow = (props, context) => {
@@ -277,10 +272,11 @@ const PlantSeeds = (props, context) => {
     extractablesPerPage*(page - 1) + extractablesPerPage);
   const splice_disable = (splice_seeds[0] !== null && splice_seeds[1] !== null);
   return (
-    <Section fill
+    <Section
+      fill
       title="Seeds"
       buttons={(
-        <Flex.Item textAlign="center" basis={1.5}>
+        <>
           <Button
             icon="eject"
             tooltip="All seeds will be ejected from the Plantmaster"
@@ -313,7 +309,7 @@ const PlantSeeds = (props, context) => {
             onClick={() => act('outputmode')}>
             Output Internally
           </Button.Checkbox>
-        </Flex.Item>
+        </>
       )}>
       <Flex height="100%" direction="column">
         <Flex.Item height={splicing ? "60%" : "100%"}>
@@ -336,10 +332,10 @@ const PlantSeeds = (props, context) => {
             <Section
               title="Splicing"
               buttons={
-                <Flex.Item textAlign="center" basis={1.5}>
-                  Splice Chance: {splice_chance}%&nbsp;
-                  <Button onClick={() => act('splice')}>Splice</Button>
-                </Flex.Item>
+                <>
+                  {`Splice Chance: ${splice_chance}%`}
+                  <Button ml={1} onClick={() => act('splice')}>Splice</Button>
+                </>
               }>
               <Table>
                 <TitleRow show_damage sortBy={sortBy} sortAsc={sortAsc} />
@@ -371,10 +367,11 @@ const PlantExtractables = (props, context) => {
     extractablesPerPage*(page - 1) + extractablesPerPage);
 
   return (
-    <Section fill
+    <Section
+      fill
       title="Extractable Items"
       buttons={(
-        <Flex.Item textAlign="center" basis={1.5}>
+        <>
           <Button
             icon="eject"
             tooltip="All produce will be ejected from the Plantmaster"
@@ -407,7 +404,7 @@ const PlantExtractables = (props, context) => {
             onClick={() => act('outputmode')}>
             Output Internally
           </Button.Checkbox>
-        </Flex.Item>
+        </>
       )}>
       <Flex height="100%" direction="column">
         <Flex.Item grow>

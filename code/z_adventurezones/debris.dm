@@ -43,7 +43,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 
 	attackby(obj/item/W, mob/user, params)
 		user.lastattacked = src
-		if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
+		if(istype(W, /obj/item/spray_paint_gang) || istype(W, /obj/item/spray_paint_graffiti) || istype(W, /obj/item/gang_flyer))
 			return
 
 		if (istype(W, /obj/item/pen))

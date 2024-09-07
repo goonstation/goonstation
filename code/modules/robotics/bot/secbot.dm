@@ -780,7 +780,7 @@
 				src.weeoo()
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
-						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
+						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>", group = "storage_thud")
 					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
@@ -960,7 +960,7 @@
 			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
-				if(R["criminal"] == "*Arrest*")
+				if(R["criminal"] == ARREST_STATE_ARREST)
 					threatcount = 7
 					break
 

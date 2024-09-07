@@ -190,6 +190,11 @@ var/datum/respawn_controls/respawn_controller
 		else if (usr.ghost)	// ghost is on /mob
 			var/mob/dead/observer/ghost = usr.ghost
 			is_round_observer = ghost?.observe_round
+			if (isliving(usr) && inafterlife(usr))
+				var/mob/living/oldmob = usr
+				SPAWN(1)
+					// if you're in the afterlife your mob is raptured
+					heavenly_spawn(oldmob, reverse = TRUE)
 		logTheThing(LOG_DEBUG, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].")
 		logTheThing(LOG_DIARY, usr, "used a timed respawn[is_round_observer ? " after joining as an observer" : ""].", "game")
 

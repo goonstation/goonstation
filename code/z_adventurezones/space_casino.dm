@@ -126,21 +126,21 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 
 // Misc props
 
-/obj/decal/fakeobjects/genetics_scrambler
+/obj/fakeobject/genetics_scrambler
 	name = "modified GeneTek Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/chefbot
+/obj/fakeobject/chefbot
 	name = "inactive chefbot"
 	desc = "It seems to still be sparking..."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot0"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/brokengamblebot
+/obj/fakeobject/brokengamblebot
 	name = "inactive gambling robot"
 	icon = 'icons/obj/bots/robuddy/pr-6.dmi'
 	icon_state = "body"

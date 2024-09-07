@@ -5,7 +5,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
 	event_handler_flags = USE_FLUID_ENTER
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = CAN_REPROGRAM_ACCESS
 	machine_registry_idx = MACHINES_BOTS
 	pass_unstable = TRUE
@@ -145,7 +144,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	bullet_act(var/obj/projectile/P)
 		if (!P || !istype(P))
 			return
-		hit_twitch(src)
 
 		var/damage = 0
 		damage = round(((P.power/4)*P.proj_data.ks_ratio), 1.0)
@@ -197,7 +195,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
-				var/audio = dectalk("\[:nk\][message]")
+				var/audio = dectalk("\[:nk\][message]", BOTTALK_VOLUME)
 				if (audio && audio["audio"])
 					for (var/mob/O in hearers(src, null))
 						if (!O.client)
@@ -216,11 +214,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 			. += SPAN_ALERT("<B>[src]'s parts look very loose!</B>")
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
-	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)
-		P.initial_power -= 10
-		if(P.initial_power <= 0)
-			src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
-			P.die()
+	hit_twitch(src)
+	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)))
+		if (!ON_COOLDOWN(src, "projectile_bot_hit", 0.5 SECONDS))
+			var/obj/particle/attack/bot_hit/hit_particle = new
+			hit_particle.set_loc(src.loc)
+			hit_particle.transform.Turn(rand(0, 360))
+			if (P.proj_data.damage > 1)
+				flick("block_spark", hit_particle)
+				if (P.proj_data.damage_type & D_KINETIC)
+					playsound(src, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE) // replace with more unique sound if found later
+			else
+				flick("block_spark_armor", hit_particle)
+				if (P.proj_data.damage_type & D_ENERGY)
+					playsound(src, 'sound/effects/sparks6.ogg', 40, TRUE)
+		if (P.proj_data.ks_ratio > 0)
+			P.initial_power -= 10
+			if(P.initial_power <= 0)
+				src.bullet_act(P) // die() prevents the projectile from calling bullet_act normally
+				P.die()
 	if(!src.density)
 		return PROJ_OBJ_HIT_OTHER_OBJS | PROJ_ATOM_PASSTHROUGH
 

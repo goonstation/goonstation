@@ -794,10 +794,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			for(var/mob/living/carbon/H in viewers(src, null))
 				if (H.bioHolder.HasEffect("accent_swedish"))
 					return
-				boutput(H, SPAN_ALERT("[stinkString()]"))
+				boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
 				if(prob(30))
 					H.changeStatus("stunned", 2 SECONDS)
-					boutput(H, SPAN_ALERT("[stinkString()]"))
+					boutput(H, SPAN_ALERT("[stinkString()]"), "stink_message")
 					var/vomit_message = SPAN_ALERT("[H] vomits, unable to handle the fishy stank!")
 					H.vomit(0, null, vomit_message)
 
@@ -1154,7 +1154,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/donuts.dmi'
 	icon_state = "base"
 	item_state = "donut1"
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	fill_amt = 2
 	heal_amt = 1
@@ -1298,13 +1298,54 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	food_effects = list("food_explosion_resist")
 	meal_time_flags = MEAL_TIME_BREAKFAST
+	var/random_bagel = TRUE
 
 	New()
 		..()
-		if(rand(1,3) == 1)
-			src.icon_state = "seedbagel"
-			src.name = "seed bagel"
-			src.desc = "A bagel. But with seeds on it!"
+		if (random_bagel)
+			if(prob(33))
+				src.icon_state = "seedbagel"
+				src.name = "seed bagel"
+				src.desc = "A bagel. But with seeds on it!"
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/cream))
+			boutput(user, SPAN_NOTICE("You top the bagel with cream cheese!"))
+			var/obj/item/reagent_containers/food/snacks/bagel/creamcheese/D = new/obj/item/reagent_containers/food/snacks/bagel/creamcheese(W.loc)
+			user.u_equip(W)
+			user.put_in_hand_or_drop(D)
+			qdel(W)
+			qdel(src)
+		if(istype(W,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon))
+			boutput(user, SPAN_NOTICE("You top the bagel with tasty, salty lox!"))
+			var/obj/item/reagent_containers/food/snacks/bagel/lox/D = new/obj/item/reagent_containers/food/snacks/bagel/lox(W.loc)
+			user.u_equip(W)
+			user.put_in_hand_or_drop(D)
+			qdel(W)
+			qdel(src)
+
+	creamcheese
+		name = "cream cheese bagel"
+		desc = "This bagel has cream cheese on it. Yum!"
+		icon_state = "bagel-creamcheese"
+		heal_amt = 2
+		bites_left = 3
+		initial_volume = 10
+		initial_reagents = list("cream"=10)
+		food_effects = list("food_explosion_resist", "food_cold")
+		random_bagel = FALSE
+
+	lox
+		name = "lox bagel"
+		desc = "Lovingly topped with salty salmon."
+		icon_state = "bagel-lox"
+		heal_amt = 4
+		bites_left = 3
+		initial_volume = 10
+		initial_reagents = list("salt"=5)
+		food_effects = list("food_explosion_resist", "food_cold")
+		random_bagel = FALSE
+
 
 /obj/item/reagent_containers/food/snacks/crumpet
 	name = "crumpet"
@@ -2373,6 +2414,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					nigiri.icon_state = "nigiri3"
 				if("filletslice-small")
 					nigiri.icon_state = "nigiri4"
+				if("filletslice-pufferfish")
+					nigiri.icon_state = "nigiri_pufferfish"
+					nigiri.desc = "A ball of sticky rice with a thin slice of pufferfish fillet ontop. Hopefully properly prepared."
+			if (W.reagents?.total_volume > 0)
+				W.reagents.trans_to(nigiri, W.reagents.total_volume)
 			user.u_equip(W)
 			qdel(W)
 			if(handspawn)
@@ -2557,7 +2603,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "zongzi-wrapped"
 	bites_left = 3
 	heal_amt = 2
-	var/unwrapped = 0
+	var/unwrapped = FALSE
 	food_effects = list("food_all", "food_energized_big")
 
 
@@ -2575,9 +2621,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	attack_self(mob/user as mob)
 		if (unwrapped)
 			attack(user, user)
+			return
 
-		unwrapped = 1
-		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
+		unwrapped = TRUE
+		user.visible_message("[user] unwraps [src]!", "You unwrap [src].")
 		icon_state = "zongzi"
 		desc = "A glutinous rice snack. The distinctive bamboo leaf wrapper seems to be missing."
 
@@ -2727,6 +2774,43 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
+
+/obj/item/reagent_containers/food/snacks/danish_cheese
+	name = "cheese danish"
+	desc = "A delicious little parcel of pastry and cheese."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_cheese"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#ffc758"
+	initial_volume = 15
+	food_effects = list("food_burn","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/cinnamonbun
+	name = "cinnamon bun"
+	desc = "A delicious little pastry roll with a swirl of cinnamon."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "cinnamonbun"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#C58C66"
+	initial_volume = 20
+	initial_reagents = list("sugar"=10, "cinnamon"=10)
+	food_effects = list("food_burn","food_warm")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/chocolate_cherry
+	name = "chocolate covered cherry"
+	desc = "A cherry lovingly covered in chocolate with a cream filling."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "chocolate_cherry"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#492b21"
+	initial_volume = 15
+	food_effects = list("food_burn","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/tandoorichicken
 	name = "tandoori chicken"

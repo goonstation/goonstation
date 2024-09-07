@@ -61,7 +61,7 @@ export const RegionAllocatorPanel = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Section title="Allocate New Region" >
+            <Section title="Allocate New Region">
               <Button content="Custom Region" onClick={customRegion} />
               <Button content="Load Prefab" onClick={loadPrefab} />
               <Button content="Load From File" onClick={loadFile} />

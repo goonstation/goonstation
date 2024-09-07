@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { BlockQuote, Button, Collapsible, Flex, Input, Section } from '../components';
+import { BlockQuote, Button, Collapsible, Input, Section } from '../components';
 
 
 type Observable = {
@@ -24,9 +24,9 @@ interface Observables {
 const ObserverButton = (props, context) => {
   const { act } = useBackend(context);
   const { obsObject } = props;
-  let icon=null;
+  let icon: string | null = null;
   let displayed_name=obsObject.name;
-  let extra=null;
+  let extra: string | null = null;
   if (obsObject.dead) { icon = "skull"; }
   if (obsObject.name !== obsObject.real_name) { displayed_name += " ("+obsObject.real_name+")"; }
   if (obsObject.job !== null) { extra = "Job: "+obsObject.job; }
@@ -74,12 +74,12 @@ export const ObserverMenu = (props, context) => {
   return (
     <Window title="Choose something to observe" width={600} height={600}>
       <Window.Content scrollable>
-        <Section fill
+        <Section
+          fill
           title="Observables"
           buttons={(
-            <Flex>
+            <>
               <Button
-                fluid
                 id="random_observe_button"
                 disabled={data.mydata.filter((obs) => obs.player && !obs.dead).length === 0}
                 onClick={() => act("observe", { 'targetref': GetRandomAlivePlayer(data.mydata)?.ref })}
@@ -87,7 +87,6 @@ export const ObserverMenu = (props, context) => {
                 tooltip="Observe a random player"
               />
               <Button.Checkbox
-                fluid
                 icon="skull"
                 tooltip={deadFilter ? "Show dead mobs" : "Hide dead mobs"}
                 id="dead_filter_button"
@@ -98,13 +97,12 @@ export const ObserverMenu = (props, context) => {
                 width={20}
                 autoFocus
                 autoSelect
-                fluid
                 id="search_bar"
                 onInput={(_, value) => onSearch(value)}
                 placeholder="Search by name or job"
                 value={searchQuery}
               />
-            </Flex>
+            </>
           )}>
           <Collapsible key="Antags" title="Antagonists" open={!!data.dnrset} color="red" >
             {(!data.dnrset) && <BlockQuote>You must set DNR to view the antagonists</BlockQuote>}

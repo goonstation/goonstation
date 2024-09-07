@@ -6073,9 +6073,7 @@
 	pixel_y = 32
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/red/standard/edge/north{
 	desc = " It is made of temp."
@@ -6213,21 +6211,11 @@
 /area/russian/radiation)
 "bji" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/dice,
 /obj/item/dice,
 /turf/simulated/floor/carpet/purple/fancy/edge/north{
@@ -9093,7 +9081,7 @@
 	},
 /area/russian/radiation)
 "btS" = (
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/table/reinforced/chemistry/auto,
@@ -9104,7 +9092,7 @@
 	},
 /area/russian/radiation)
 "btT" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white{
@@ -9416,7 +9404,7 @@
 	},
 /area/russian/radiation)
 "bvh" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
@@ -9434,7 +9422,7 @@
 	},
 /area/russian/radiation)
 "bvj" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white{
@@ -9746,7 +9734,7 @@
 	},
 /area/russian/radiation)
 "bvV" = (
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -9998,7 +9986,7 @@
 	},
 /area/russian/radiation)
 "bxo" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -10010,7 +9998,7 @@
 	},
 /area/russian/radiation)
 "bxp" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment{
@@ -10022,7 +10010,7 @@
 	},
 /area/russian/radiation)
 "bxq" = (
-/obj/machinery/incubator,
+/obj/fakeobject/incubator,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /obj/disposalpipe/segment/transport,
@@ -17079,7 +17067,7 @@
 /area/built_zone)
 "ciS" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 999
+	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -17095,7 +17083,7 @@
 /area/built_zone)
 "ciV" = (
 /obj/machinery/manufacturer/mechanic{
-	free_resource_amt = 999
+	free_resources = list(/obj/item/material_piece/steel = 999, /obj/item/material_piece/copper = 999, /obj/item/material_piece/glass = 999)
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -19531,7 +19519,7 @@
 	},
 /area/russian/radiation)
 "ctc" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 4;
 	pixel_x = -24
 	},
@@ -25856,7 +25844,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "there's grease all over that";
 	icon = 'icons/obj/decals/misc.dmi';
 	icon_state = "drain";
@@ -27397,7 +27385,7 @@
 /area/russian/radiation)
 "cQb" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of an engineer. not very handsome.";
 	interesting = "Something isn't right here... This guy wasn't alive when he was shot";
 	name = "engineer's skeleton"
@@ -27595,9 +27583,7 @@
 /area/russian/radiation)
 "cQD" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red/side{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -28882,9 +28868,7 @@
 /area/russian/radiation)
 "cUF" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -39205,7 +39189,7 @@
 "fHr" = (
 /obj/machinery/light_switch/north,
 /obj/table/wood/auto,
-/obj/item/currency/spacecash/buttcoin,
+/obj/item/currency/buttcoin,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -44851,9 +44835,7 @@
 /area/russian/radiation)
 "ird" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -46542,9 +46524,7 @@
 	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -48272,9 +48252,7 @@
 "jOw" = (
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -52812,9 +52790,7 @@
 /area/russian/radiation)
 "lZC" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -54626,7 +54602,7 @@
 	},
 /area/russian/radiation)
 "mTO" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "not much of a chef";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -54723,7 +54699,7 @@
 	},
 /area/russian/radiation)
 "mXd" = (
-/obj/decal/fakeobjects/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -58749,9 +58725,7 @@
 /area/russian/radiation)
 "oNp" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -62702,7 +62676,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
@@ -62749,7 +62723,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -63777,7 +63751,7 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -63890,7 +63864,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body9";
@@ -63997,9 +63971,7 @@
 /area/russian/radiation)
 "rsT" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south{
 	desc = " It is made of temp."
 	},
@@ -64303,7 +64275,7 @@
 /area/russian/radiation)
 "rzR" = (
 /obj/item/clothing/head/emerg,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "still has his... uh... bedsheet?";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -64392,7 +64364,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "Eugh, the stench is horrible!";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body8";
@@ -65023,7 +64995,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The partially decomposed corpse of some poor chump.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -65759,7 +65731,7 @@
 	},
 /area/russian/radiation)
 "sho" = (
-/obj/decal/fakeobjects/skeleton,
+/obj/fakeobject/skeleton,
 /turf/space,
 /area/space)
 "shH" = (
@@ -66169,7 +66141,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "ssC" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "She seems to have bled out from her injuries.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body3";
@@ -66447,7 +66419,7 @@
 	},
 /area/russian/radiation)
 "sDq" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	desc = "A futuristic system that collects residual power from chicken alchemy.";
 	dir = 8;
 	name = "Chicken Power Generator"
@@ -66863,7 +66835,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "sOU" = (
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	desc = "The control panel for a mark 1 rancher minishuttle. It is currently deactivated.";
 	name = "Rancher Shuttle Controls"
 	},
@@ -67468,7 +67440,7 @@
 /obj/machinery/camera/ranch{
 	dir = 4
 	},
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	desc = "A futuristic system that collects residual power from chicken alchemy.";
 	dir = 8;
 	name = "Chicken Power Generator"
@@ -69524,7 +69496,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/space,
 /area/russian/radiation)
 "ujz" = (
@@ -70032,7 +70004,7 @@
 	},
 /area/russian/radiation)
 "uBR" = (
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "this is not right. this is NOT right.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -70363,7 +70335,7 @@
 /area/russian/radiation)
 "uLK" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	dir = 1;
 	pixel_y = 24
 	},
@@ -70839,7 +70811,7 @@
 /turf/space,
 /area/space)
 "vdL" = (
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/space,
 /area/space)
 "veA" = (
@@ -70878,7 +70850,7 @@
 /area/russian/radiation)
 "vfo" = (
 /obj/item/clothing/shoes/moon,
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "This is very important.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "clowncorpse";
@@ -72178,7 +72150,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/circuit{
 	burnt = 1;
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry. It is made of pharosium.";
@@ -72197,7 +72169,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/circuit{
 	burnt = 1;
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry. It is made of pharosium.";
@@ -72210,7 +72182,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/vacuumtape,
+/obj/fakeobject/vacuumtape,
 /turf/simulated/floor/circuit{
 	burnt = 1;
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry. It is made of pharosium.";
@@ -72876,7 +72848,7 @@
 	},
 /area/russian/radiation)
 "woA" = (
-/obj/decal/fakeobjects/sink{
+/obj/fakeobject/sink{
 	name = "Rusty Sink"
 	},
 /turf/space,
@@ -74716,7 +74688,7 @@
 	},
 /area/russian/radiation)
 "xnD" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -74733,7 +74705,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
 	color = "b4b4b4"
@@ -74745,7 +74717,7 @@
 	},
 /area/russian/radiation)
 "xnH" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
 	color = "b4b4b4"
@@ -74764,7 +74736,7 @@
 	},
 /area/russian/radiation)
 "xoi" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-12"
 	},
@@ -75999,7 +75971,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6;
@@ -76014,7 +75986,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	dir = 4;
 	name = "grimy pipe";
 	pixel_y = -6;

@@ -155,8 +155,8 @@
 							X.show_text("The stunhat has [hat.uses] charges left!", "red")
 
 
-						src.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
-						src.stuttering = max(target.stuttering,5)
+						src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
+						src.stuttering = max(target.stuttering,30)
 					else
 						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
@@ -222,7 +222,7 @@
 		else
 			qdel(G)
 
-		src.next_click = world.time + (COMBAT_CLICK_DELAY)
+		src.next_click = world.time + src.combat_click_delay
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && length(src.grabbed_by) > 0)
@@ -245,7 +245,7 @@
 		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
-		src.next_click = world.time + (COMBAT_CLICK_DELAY)
+		src.next_click = world.time + src.combat_click_delay
 
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
@@ -377,11 +377,14 @@
 		damage -= armor_mod
 		msgs.stamina_target -= max((STAMINA_DISARM_COST * 2.5) - armor_mod, 0)
 
-		var/attack_resistance = target.check_attack_resistance()
+		var/attack_resistance = target.check_attack_resistance(null, src)
 		if (attack_resistance)
-			damage = 0
-			if (istext(attack_resistance))
-				msgs.show_message_target(attack_resistance)
+			if (isnum(attack_resistance))
+				damage *= attack_resistance
+			else
+				damage = 0
+				if (istext(attack_resistance))
+					msgs.show_message_target(attack_resistance)
 		msgs.damage = max(damage, 0)
 	else if ( !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)) )
 		var/armor_mod = 0
@@ -591,7 +594,7 @@
 		attack_effects(target, zone_sel?.selecting)
 		msgs.flush(suppress_flags)
 
-/mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
+/mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1, var/datum/limb/limb = null)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	var/do_armor = TRUE
@@ -699,11 +702,14 @@
 			msgs.base_attack_message = SPAN_COMBAT("<b>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B>")
 
 	//check godmode/sanctuary/etc
-	var/attack_resistance = msgs.target.check_attack_resistance()
+	var/attack_resistance = msgs.target.check_attack_resistance(null, src)
 	if (attack_resistance)
-		damage = 0
-		if (istext(attack_resistance))
-			msgs.show_message_target(attack_resistance)
+		if (isnum(attack_resistance))
+			damage *= attack_resistance
+		else
+			damage = 0
+			if (istext(attack_resistance))
+				msgs.show_message_target(attack_resistance)
 
 	if(isliving(target))
 		var/mob/living/L = target
@@ -999,7 +1005,7 @@
 			target.TakeDamage(def_zone, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 
 			if ((damage_type & (DAMAGE_CUT | DAMAGE_STAB)) || bleed_always)
-				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type)
+				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type, is_crit=stamina_crit)
 				target.spread_blood_clothes(target)
 				owner.spread_blood_hands(target)
 				if (prob(15))
@@ -1195,15 +1201,18 @@
 
 /////////////////////////////////////////////////////// Target damage modifiers //////////////////////////////////
 
-/mob/proc/check_attack_resistance(var/obj/item/I)
+/mob/proc/check_attack_resistance(var/obj/item/I, var/mob/attacker)
 	return null
 
-/mob/living/silicon/robot/check_attack_resistance(var/obj/item/I)
+/mob/living/silicon/robot/check_attack_resistance(var/obj/item/I, var/mob/attacker)
 	if (!I)
-		return SPAN_ALERT("Sensors indicate no damage from external impact.")
+		if (attacker.equipped_limb()?.can_beat_up_robots)
+			return 0.5 //let's say they do half damage because metal is stronk
+		else
+			return SPAN_ALERT("Sensors indicate no damage from external impact.")
 	return null
 
-/mob/living/check_attack_resistance(var/obj/item/I)
+/mob/living/check_attack_resistance(var/obj/item/I, var/mob/attacker)
 	if (reagents?.get_reagent_amount("ethanol") >= 100 && prob(40) && !I)
 		return SPAN_ALERT("You drunkenly shrug off the blow!")
 	return null

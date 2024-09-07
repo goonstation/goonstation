@@ -5,7 +5,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
 	item_state = "cell"
-	flags = FPRINT|TABLEPASS
 	force = 5
 	throwforce = 5
 	throw_speed = 3

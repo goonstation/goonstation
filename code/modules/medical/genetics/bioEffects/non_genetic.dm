@@ -198,11 +198,6 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	occur_in_genepools = 0
 	var/personalized_stink = null
 
-	New()
-		..()
-		if (prob(5))
-			src.personalized_stink = stinkString()
-
 	OnAdd()
 		. = ..()
 		holder.owner?.UpdateParticles(new/particles/stink_lines, "stink_lines", KEEP_APART | RESET_TRANSFORM)
@@ -214,11 +209,9 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"))
-				else if (src.personalized_stink)
-					boutput(C, SPAN_ALERT("[src.personalized_stink]"))
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"), "stink_message")
 				else
-					boutput(C, SPAN_ALERT("[stinkString()]"))
+					boutput(C, SPAN_ALERT("[stinkStringHygiene(owner)]"), "stink_message")
 	OnRemove()
 		holder.owner?.ClearSpecificParticles("stink_lines")
 		. = ..()

@@ -949,7 +949,7 @@ proc/setup_pw_crate_lists()
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)
 
 	pw_rewards_tier2 = list(/obj/item/tank/jetpack = 1, /obj/item/old_grenade/smoke = 2,/obj/item/chem_grenade/flashbang = 2, /obj/item/barrier = 1,
-		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/fireaxe = 1, /obj/item/dagger/syndicate/specialist = 2,
+		/obj/item/old_grenade/emp = 3, /obj/item/sword/discount = 4, /obj/item/storage/firstaid/crit = 1, /obj/item/fireaxe = 1, /obj/item/dagger/specialist = 2,
 		/obj/item/shipcomponent/mainweapon/mining = 2, /obj/item/shipcomponent/mainweapon/laser = 4, /obj/item/shipcomponent/mainweapon/disruptor_light = 4,/obj/item/ammo/power_cell/higher_power = 3, /obj/item/ammo/power_cell/self_charging/pod_wars_standard = 3,
 		/obj/item/material_piece/cerenkite{amount=5} = 1, /obj/item/material_piece/claretine{amount=5} = 1, /obj/item/material_piece/bohrum{amount=10} = 1, /obj/item/material_piece/plasmastone{amount=10} = 1, /obj/item/material_piece/uqill{amount=10} = 1, /obj/item/material_piece/telecrystal{amount=10})
 

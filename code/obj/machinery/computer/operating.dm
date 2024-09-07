@@ -1,5 +1,5 @@
 /obj/machinery/computer/operating
-	name = "Operating Computer"
+	name = "operating computer"
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/computer.dmi'
@@ -170,6 +170,8 @@
 		else
 			if (O.robotic)
 				special = "Cybernetic"
+			if (O.synthetic)
+				special = "Synthetic"
 			if (O.unusual)
 				special = "Unusual"
 			var/list/organ_calc = calc_organ_damage_severity(O)

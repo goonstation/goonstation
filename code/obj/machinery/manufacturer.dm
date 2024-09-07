@@ -1,4 +1,5 @@
 #define MAX_QUEUE_LENGTH 20 //! maximum amount of blueprints which may be queued for printing
+#define MAX_OUTPUT 20 //! maximum amount of items produced for a blueprint at once
 #define WIRE_EXTEND 1 //! wire which reveals blueprints in the "hidden" type
 #define WIRE_POWER 2 //! wire which can disable machine power
 #define WIRE_MALF 3 //! wire which causes machine to malfunction
@@ -6,11 +7,15 @@
 #define MODE_READY "ready" //! machine is ready to produce more things
 #define MODE_WORKING "working" //! machine is making some things
 #define MODE_HALT "halt" //! machine had to stop making things or couldnt due to some problem that occured
-#define MIN_SPEED 1 //! lowest speed fabricator can function at
+#define MIN_SPEED 1 //! lowest speed manufacturer can function at
 #define DEFAULT_SPEED 3 //! speed which manufacturers run at by default
 #define MAX_SPEED 3 //! maximum speed default manufacturers can be set to
 #define MAX_SPEED_HACKED 5 //! maximum speed manufacturers which are hacked (WIRE_EXTEND has been pulsed) can be set to
-#define MAX_SPEED_DAMAGED 8 //! maximum speed that fabricators which flip_out() can be set to, randomly.
+#define MAX_SPEED_DAMAGED 8 //! maximum speed that manufacturers which flip_out() can be set to, randomly.
+#define DISMANTLE_NONE 0 //! 0 - Undismantled state. Changed to 1 (DISMANTLE_PLATING_BOLTS) with a wrenching tool, or back to 0 with a wrenching tool too.
+#define DISMANTLE_PLATING_BOLTS 1 //! 1 - External plating pryable. Changed to 2 (DISMANTLE_PLATING_SHEETS) with a prying tool, or back to 1 with renforced metal sheets.
+#define DISMANTLE_PLATING_SHEETS 2 //! 2 - Internal wiring exposed. Changed to 3 (DISMANTLE_WIRES) with a snipping tool, changed to 2 by adding cabling back.
+#define DISMANTLE_WIRES 3 //! 3 - internal mechanism exposed. Using a wrenching tool at this point disassembles it into sheet metal.
 #define ALL_BLUEPRINTS (src.available + src.download + src.hidden + src.drive_recipes)
 #define ORE_TAX(price) round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01)
 
@@ -26,62 +31,79 @@ TYPEINFO(/obj/machinery/manufacturer)
 	density = TRUE
 	anchored = ANCHORED
 	power_usage = 200
-	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
+
+	/// req_access is used to lock out specific features and not limit deconstruction therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
-	// General stuff
 	var/health = 100
-	var/supplemental_desc = null //! appended in get_desc() to the base description, to make subtype definitions cleaner
-	var/mode = MODE_READY //! the current status of the machine. Ready, working, or halt are all modes used currently.
+	var/supplemental_desc = null //! Appended in get_desc() to the base description, to make subtype definitions cleaner
+	/// The current status of the machine.
+	/// "ready" / MODE_READY - The machine is ready to produce more blueprints.
+	/// "working" / MODE_WORKING - The machine is currently producing a blueprint.
+	/// "halt" / MODE_HALT - The machine stopped due to some problem arising.
+	var/mode = MODE_READY
+	/// A somewhat legacy variable to output silent yet visible errors to the user in the UI.
+	/// Current uses include when there is a lack of materials, an invalid blueprint, and when there is not enough manudrive uses.
 	var/error = null
+	// If this is 0, then the machine is no longer electrified. Use src.is_electrified() to check if the machine is electrified.
+	/// This is a timer decremented every process() tick representing how long the machine will be electrified for.
+	var/time_left_electrified = 0
 	var/active_power_consumption = 0 //! How much power is consumed while active? This is determined automatically when the unit starts a production cycle
-	var/panel_open = FALSE
-	var/dismantle_stage = 0
-	var/hacked = FALSE
-	var/malfunction = FALSE
+	var/panel_open = FALSE //! Whether or not the wiring panel is open for the UI.
+	var/dismantle_stage = DISMANTLE_NONE //! The dismantlement stage we are currently at. See manufacturer.dm line 15 for details on the defines
+	var/hacked = FALSE //! Whether or not we are hacked, and thus will show our hidden blueprints + change our maximum speed setting.
+	var/malfunction = FALSE //! Whether or not the manufacturer is malfunctioning, and thus will occasionally flip_out() among other glitchy things.
+	var/emagged = FALSE //! Whether or not a traitor emagged the manufacturer, and thus will start acting really weird atop other things
+	var/power_wire_cut = FALSE //! Whether or not the power wire is cut, removing the ability for the manufacturer to do work
 	var/electrified = 0 //! This is a timer and not a true/false; it's decremented every process() tick
-	var/output_target = null
-	var/list/nearby_turfs = list()
+	var/atom/output_target = null //! The current atom we will output product into. Can be a turf, a crate, etc.
+	var/list/turf/nearby_turfs = list() //! Turfs around the manufacturer are stored here for performance reasons
 	var/wires = 15 //! This is a bitflag used to track wire states, for hacking and such. Replace it with something cleaner if an option exists when you're reading this :p
-	var/output_message_user = null //! Used as a cache when outputting messages to users
 	var/frequency = FREQ_PDA
 	var/net_id = null
 	var/device_tag = "PNET_MANUFACTURER"
-	var/obj/machinery/power/data_terminal/link = null
-	var/obj/item/card/id/scan = null //! Used when deducting payment for ores from a Rockbox
+	var/obj/machinery/power/data_terminal/link = null //! The data terminal attached underfloor to this manufacturer. Allows use of PNET packets
+	var/datum/db_record/account = null //! Card currently scanned into the machine, used when deducting payment for ores from a Rockbox
 
-	// Printing and queues
-	var/original_duration = 0 //! duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
-	var/time_left = 0 //! time the current blueprint will take to manufacture
-	var/time_started = 0 //! time the last blueprint was queued
-	var/speed = DEFAULT_SPEED
-	var/repeat = FALSE
-	var/manual_stop = FALSE
-	var/output_cap = 20
-	var/list/queue = list()
+	/* Printing and queues */
+	var/original_duration = 0 //! Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
+	var/time_left = 0 //! Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
+	var/time_started = 0 //! Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
+	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
+	var/repeat = FALSE //! Controls whether or not to repeat the first item in the queue while working.
+	var/output_cap = MAX_OUTPUT //! The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
+	var/list/datum/manufacture/queue = list() //! A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
 
-	// Resources/materials
-	var/base_material_class = /obj/item/material_piece //! Base class for material pieces that the manufacturer accepts. Keep this as material pieces only unless you're making larger changes to the system
-	var/free_resource_amt = 0 //! The amount of each free resource that the manufacturer comes preloaded with
-	var/list/obj/item/material_piece/free_resources = list() //! See free_resource_amt; this is the list of resources being populated from
-	var/obj/item/disk/data/floppy/manudrive/manudrive = null
+	/* Resources/materials */
+	/// Base class for material pieces that the manufacturer accepts.
+	/// Keep this as material pieces only unless you're making larger changes to the system,
+	/// Various parts of the code are coupled to assuming that this is a material piece w/ a material.
+	var/base_material_class = /obj/item/material_piece
+	/// The amount of each free resource that the manufacturer comes preloaded with.
+	/// Separate from free_resources() as typically manufacturers use the same amount of each type.
+	var/free_resource_amt = 0
+	/// The types of material pieces of which the manufacturer will be spawned with.
+	/// The amount of each resource is defined on free_resource_amt
+	var/list/free_resources = list()
+	/// Supposedly used by podwards manufacturers, but not really
+	/// Kind of legacy is this is removed soon
 	var/list/resource_amounts = list()
-	var/list/materials_in_use = list()
+	var/obj/item/disk/data/floppy/manudrive/manudrive = null //! Where insertible manudrives are held for reading blueprints and getting/setting fablimits.
 	var/should_update_static = TRUE //! true by default to update first time around, set to true whenever something is done that invalidates static data
-	var/list/material_patterns_by_id = list() //! Helper list which stores all the material patterns each loaded material satisfies, along with its ID
+	var/list/material_patterns_by_ref = list() //! Helper list which stores all the material patterns each loaded material satisfies, by ref to the piece
 
-	// Production options
-	var/search = null
-	var/category = null
+	/* Production options */
+	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
 	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
-	var/accept_blueprints = TRUE
-	var/list/available = list() //! A list of every option available in this unit subtype by default
-	var/list/download = list() //! Options gained from scanned blueprints
-	var/list/drive_recipes = list() //! Options provided by an inserted manudrive
-	var/list/hidden = list() //! These options are available by default, but can't be printed unless the machine is hacked
+	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
+
+	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
+	var/list/download = list() //! Manufacture datum typepaths gained from scanned blueprints
+	var/list/drive_recipes = list() //! Manufacture datum typepaths provided by an inserted manudrive
+	var/list/hidden = list() //! These manufacture datum typepaths are available by default, but can't be printed or seen unless the machine is hacked
 
 	// Unsorted stuff. The names for these should (hopefully!) be self-explanatory
 	var/image/work_display = null
@@ -180,11 +202,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			. += "<br>[SPAN_ALERT("It seems to be offline.")]"
 
 		switch(src.dismantle_stage)
-			if(1)
+			if(DISMANTLE_PLATING_BOLTS)
 				. += "<br>[SPAN_ALERT("It's partially dismantled. To deconstruct it, use a crowbar. To repair it, use a wrench.")]"
-			if(2)
+			if(DISMANTLE_PLATING_SHEETS)
 				. += "<br>[SPAN_ALERT("It's partially dismantled. To deconstruct it, use wirecutters. To repair it, add reinforced metal.")]"
-			if(3)
+			if(DISMANTLE_WIRES)
 				. += "<br>[SPAN_ALERT("It's partially dismantled. To deconstruct it, use a wrench. To repair it, add some cable.")]"
 
 	process(mult)
@@ -196,24 +218,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.mode == MODE_WORKING)
 			use_power(src.active_power_consumption)
 
-		if (src.electrified > 0)
-			src.electrified--
-		/*
-		if (src.mode == MODE_WORKING)
-			if (src.malfunction && prob(8))
-				src.flip_out()
-			src.time_left -= src.speed * 4.4 * mult
-			use_power(src.active_power_consumption)
-			if (src.time_left < 1)
-				src.output_loop(src.queue[1])
-				SPAWN(0)
-					if (length(src.queue) < 1)
-						src.manual_stop = 0
-						playsound(src.loc, src.sound_happy, 50, 1)
-						src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
-						src.mode = MODE_READY
-						src.build_icon()
-		*/
+		if (src.time_left_electrified > 0)
+			src.time_left_electrified--
 
 	proc/finish_work()
 		if(length(src.queue))
@@ -222,7 +228,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.queue -= src.queue[1]
 
 		if (length(src.queue) < 1)
-			src.manual_stop = 0
 			playsound(src.loc, src.sound_happy, 50, 1)
 			src.visible_message(SPAN_NOTICE("[src] finishes its production queue."))
 			src.mode = MODE_READY
@@ -267,18 +272,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.take_damage(damage)
 
 	power_change()
+		if (QDELETED(src))
+			return
 		if(src.is_broken())
 			src.build_icon()
 		else
-			if(src.powered() && src.dismantle_stage < 3)
-				status &= ~NOPOWER
+			if(src.powered() && src.dismantle_stage < DISMANTLE_WIRES)
+				src.check_power_status()
 				src.build_icon()
 			else
 				SPAWN(rand(0, 15))
-					status |= NOPOWER
+					src.check_power_status()
 					src.build_icon()
 
-	// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
+	/// Overriden to not disable if no power, wire maintenence to restore power is on the GUI which creates catch-22 situation
 	broken_state_topic(mob/user)
 		. = user.shared_ui_interaction(src)
 		if (src.is_broken())
@@ -306,7 +313,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		for (var/obj/item/material_piece/P as anything in src.get_contents())
 			if (!P.material)
 				continue
-			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_id[P.material.getID()]))
+			resource_data += list(list("name" = P.material.getName(), "id" = P.material.getID(), "amount" = P.amount, "byondRef" = "\ref[P]", "satisfies" = src.material_patterns_by_ref["\ref[P.material]"]))
 
 		// Package additional information into each queued item for the badges so that it can lookup its already sent information
 		var/queue_data = list()
@@ -332,14 +339,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			"malfunction" = src.malfunction,
 			"mode" = src.mode,
 			"wire_bitflags" = src.wires,
-			"card_balance" = (!isnull(src.scan) ? FindBankAccountByName(src.scan.registered)["current_money"] : null),
-			"card_owner" = (!isnull(src.scan) ? src.scan.registered : null),
+			"banking_info" = src.get_bank_data(),
 			"speed" = src.speed,
 			"repeat" = src.repeat,
 			"error" = src.error,
 			"resource_data" = resource_data,
 			"manudrive_uses_left" = src.get_drive_uses_left(),
-			"indicators" = list("electrified" = src.electrified,
+			"indicators" = list("electrified" = src.is_electrified(),
 							    "malfunctioning" = src.malfunction,
 								"hacked" = src.hacked,
 								"hasPower" = !src.is_disabled(),
@@ -377,7 +383,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return null
 
-
 	/// Gets rockbox data as list for ui_static_data
 	proc/rockboxes_as_list()
 		var/rockboxes = list()
@@ -404,7 +409,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 
 	/// Converts list of manufacture datums to list keyed by category containing listified manufacture datums of said category.
-	proc/blueprints_as_list	(var/list/L, mob/user, var/static_elements = FALSE)
+	proc/blueprints_as_list(var/list/L, mob/user, var/static_elements = FALSE)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
@@ -423,8 +428,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		// Fix not having generated material names for blueprints like multitools
 		if (isnull(M.item_names))
 			M.item_names = list()
-			for (var/i in M.item_paths)
-				M.item_names += get_nice_mat_name_for_manufacturers(i)
+			for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+				M.item_names += R.getName()
 
 		for (var/i in 1 to length(M.item_outputs))
 			var/T
@@ -446,14 +451,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			img = getItemIcon(M.item_outputs[1], C = user.client)
 
+		var/requirement_data = list()
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			requirement_data += list(list("name" = R.getName(), "id" = R.getID(), "amount" = M.item_requirements[R]))
+
 		return list(
 			"name" = M.name,
 			"category" = M.category,
-			"material_names" = M.item_names,
-			"item_paths" = M.item_paths,
+			"requirement_data" = requirement_data,
 			"item_names" = generated_names,
 			"item_descriptions" = generated_descriptions,
-			"item_amounts" = M.item_amounts,
 			"item_outputs" = M.item_outputs,
 			"create" = M.create,
 			"time" = M.time,
@@ -464,15 +471,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 		)
 
 	attack_hand(mob/user)
-		if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
+		// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load
+		if (length(free_resources) > 0)
 			claim_free_resources()
-		if(src.electrified)
+		if(src.is_electrified())
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
 		src.ui_interact(user)
 
-	proc/validate_disp(datum/manufacture/M)
+	proc/is_electrified()
+		return src.time_left_electrified > 0
+
+	/// Returns whether or not a blueprint is able to be used for printing
+	proc/blueprint_is_available(datum/manufacture/M)
 		. = FALSE
 		if(src.available && (M in src.available))
 			return TRUE
@@ -486,15 +498,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if(src.hacked && src.hidden && (M in src.hidden))
 			return TRUE
 
-	/// Clear src.queue but not the current working print if it exists
-	proc/clear_queue()
-		if (!length(src.queue))
-			return
-		src.queue = list()
-
 	/// Try to shock the target if the machine is electrified, returns whether or not the target got shocked
 	proc/try_shock(mob/target, var/chance)
-		if (src.electrified)
+		if (src.is_electrified())
 			return src.shock(usr, chance)
 		return FALSE
 
@@ -516,8 +522,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// Helper to play the grump with or without a grump message/sound. Just as a note the sound is appropriate when the machine is reporting the error,
 	/// if its a grump that the player probably had to think about or find out then theres no "reason" for there to be sound
 	proc/grump_message(mob/target = null, var/message = null, var/sound = FALSE)
-		if (!isnull(message) && !isnull(target))
-			boutput(target, SPAN_ALERT(message))
+		if (!isnull(message))
+			if (!isnull(target))
+				boutput(target, SPAN_ALERT(message))
+			else
+				src.visible_message(SPAN_ALERT(message))
 		if (sound)
 			playsound(src.loc, src.sound_grump, 50, 1)
 
@@ -574,7 +583,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!istype(I,/datum/manufacture/))
 					return
 				// Verify that there is no href fuckery abound
-				if(!validate_disp(I))
+				if(!blueprint_is_available(I))
 					// Since a manufacturer may get unhacked or a downloaded item could get deleted between someone
 					// opening the window and clicking the button we can't assume intent here, so no cluwne
 					return
@@ -606,7 +615,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					var/obj/item/I = usr.equipped()
 					src.scan_card(I)
 				if (params["remove"])
-					src.scan = null
+					src.account = null
 				return TRUE
 
 			if ("speed")
@@ -631,7 +640,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (ON_COOLDOWN(src, "clear", 1 SECOND))
 					src.grump_message(usr, "Slow down!")
 					return
-				src.clear_queue()
+				src.queue = list()
 				src.mode = MODE_READY
 				src.build_icon()
 				if (src.action_bar)
@@ -685,7 +694,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return
 				if(tgui_alert(usr, "Are you sure you want to remove [I.name] from the [src]?", "Confirmation", list("Yes", "No")) == "Yes")
 					if (!src.allowed(usr))
-						src.grump_message(usr, "ERROR: Could not re-validate authenticaion credentials. Aborting.", sound = TRUE)
+						src.grump_message(usr, "ERROR: Could not re-validate authentication credentials. Aborting.", sound = TRUE)
 						return
 					if (!src.can_use_ranged(src) && !src.check_physical_proximity(usr))
 						return
@@ -710,29 +719,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/datum/ore_cloud_data/OCD = storage.ores[ore_name]
 		if (!OCD.amount || OCD.amount <= 0)
 			src.grump_message(usr, "ERROR: That just ran out, hold your horses!", sound = TRUE)
-		var/price = OCD.price
-		var/taxes = round(max(rockbox_globals.rockbox_client_fee_min,abs(price*rockbox_globals.rockbox_client_fee_pct/100)),0.01) //transaction taxes for the station budget
+		var/taxes = ORE_TAX(OCD.price) //transaction taxes for the station budget
 
 		if(storage?.is_disabled())
 			return
 
-		if(!scan)
+		if(!src.account)
 			src.grump_message(usr, "ERROR: No card scanned. Please scan your ID.", sound = TRUE)
 			return
-		else
-			src.output_message_user = null
-		if (src.scan.registered in FrozenAccounts)
+		if (src.get_bank_data()["name"] in FrozenAccounts)
 			src.grump_message(usr, "ERROR: Account cannot be liquidated due to active borrows.", sound = TRUE)
 			return
-		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
-		if (account)
+		if (src.account)
 			var/quantity = tgui_input_number(usr, "How many units do you want to purchase?", "Ore Purchase", default=1, max_value=OCD.amount, min_value=0)
 			if(!isnum_safe(quantity))
 				return
 			////////////
 
 			if(OCD.amount >= quantity && quantity > 0)
-				var/subtotal = round(price * quantity)
+				var/subtotal = round(OCD.price * quantity)
 				var/sum_taxes = round(taxes * quantity)
 				var/rockbox_fees = (!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0) * quantity
 				var/total = subtotal + sum_taxes + rockbox_fees
@@ -757,15 +762,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 							var/amount_per_account = divisible_amount/length(accounts)
 							for(var/datum/db_record/t as anything in accounts)
 								t["current_money"] += amount_per_account
-							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox&trade; sale, deposited to your account.")
+							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX&trade;-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox&trade; sale, deposited to the shipping budget.")
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGD_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
 					wagesystem.shipping_budget += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
-
-					//src.output_message_user = "Enjoy your purchase!" its not grumpy but its not shown either
 				else
 					src.grump_message(usr, "ERROR: You don't have enough dosh, bucko.", sound = TRUE)
 			else
@@ -784,15 +787,38 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
+	/*
+	Handling for shocking the user
+	Handling for getting the satchel of an ore scoop
+	Handling for getting the blueprint into a fabricator
+	Handling for loading material bars from a satchel
+	Handling for tools (screwdriver, open maint panel)
+	Handling for tools (welding, repair/load)
+	Handling for cable coils (repair, load)
+	Handling for tools (crowbar, dismantle)
+	Handling for tools (snipping, dismantle)
+	Handling for reconstruction (sheets, reconstruct)
+	Handling for cable coils (reconstruct)
+	Handling for inserting manudrives
+	Grumping for trying to insert sheets/coils/raw mats
+	Handling for inserting material pieces
+	Handling for.. snipping/pulsing calling Attackhand when the panel is open?
+	Handling for early return if a card is scanned successfully
+	Handling for calling parent proc + hitting the machine
+	*/
+
 	attackby(obj/item/W, mob/user)
-		if (src.electrified)
+		// Handling for shocking the user
+		if (src.is_electrified())
 			if (src.shock(user, 33))
 				return
 
+		// Handling for getting the satchel of an ore scoop
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
 
+		// Handling for getting the blueprint into a fabricator
 		if (istype(W, /obj/item/paper/manufacturer_blueprint))
 			if (!src.accept_blueprints)
 				src.grump_message(user, "This manufacturer unit does not accept blueprints.")
@@ -831,18 +857,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 			return
 
+		// Handling for loading material bars from a satchel
 		else if (istype(W, /obj/item/satchel))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [W]!"), SPAN_NOTICE("You use [src]'s automatic loader on [W]."))
 			var/amtload = 0
 			for (var/obj/item/M in W.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M)
+				src.add_contents(M, user)
 				amtload++
 			W:UpdateIcon()
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [W]!"))
 			else boutput(user, SPAN_ALERT("No materials loaded!"))
 
+		// Handling for tools (screwdriver, open maint panel)
 		else if (isscrewingtool(W))
 			if (!src.panel_open)
 				src.panel_open = TRUE
@@ -852,6 +880,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.build_icon()
 			tgui_process.try_update_ui(user, src)
 
+		// Handling for tools (welding, repair/load)
 		else if (isweldingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -862,7 +891,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.add_contents(W, user)
 			else
 				if (src.health < 50)
 					boutput(user, SPAN_ALERT("It's too badly damaged. You'll need to replace the wiring first."))
@@ -872,6 +901,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health == 100)
 						boutput(user, SPAN_NOTICE("<b>[src] looks fully repaired!</b>"))
 
+		// Handling for cable coils (repair, load, reconstruct)
 		else if (istype(W,/obj/item/cable_coil) && src.panel_open)
 			var/obj/item/cable_coil/C = W
 			var/do_action = 0
@@ -883,7 +913,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [C] into the [src]."), SPAN_NOTICE("You load [C] into the [src]."))
-				src.change_contents(mat_piece = C, user = user)
+				src.add_contents(C, user)
 			else
 				if (src.health >= 50)
 					boutput(user, SPAN_ALERT("The wiring is fine. You need to weld the external plating to do further repairs."))
@@ -895,6 +925,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					if (src.health >= 50)
 						boutput(user, SPAN_NOTICE("The wiring is fully repaired. Now you need to weld the external plating."))
 
+		// Handling for tools (wrench, dismantle/reconstruct/load)
 		else if (iswrenchingtool(W))
 			var/do_action = 0
 			if (istype(W,src.base_material_class) && src.accept_loading(user))
@@ -905,57 +936,62 @@ TYPEINFO(/obj/machinery/manufacturer)
 					do_action = 1
 			if (do_action == 1)
 				user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
-				src.change_contents(mat_piece = W, user = user)
+				src.add_contents(W, user)
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				if (src.dismantle_stage == 0)
+				if (src.dismantle_stage == DISMANTLE_NONE)
 					user.visible_message("<b>[user]</b> loosens [src]'s external plating bolts.")
-					src.dismantle_stage = 1
-				else if (src.dismantle_stage == 1)
+					src.dismantle_stage = DISMANTLE_PLATING_BOLTS
+				else if (src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 					user.visible_message("<b>[user]</b> fastens [src]'s external plating bolts.")
-					src.dismantle_stage = 0
-				else if (src.dismantle_stage == 3)
+					src.dismantle_stage = DISMANTLE_NONE
+				else if (src.dismantle_stage == DISMANTLE_WIRES)
 					user.visible_message("<b>[user]</b> dismantles [src]'s mechanisms.")
 					new /obj/item/sheet/steel/reinforced(src.loc)
 					qdel(src)
 					return
 				src.build_icon()
 
-		else if (ispryingtool(W) && src.dismantle_stage == 1)
+		// Handling for tools (crowbar, dismantle)
+		else if (ispryingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_BOLTS)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			src.dismantle_stage = 2
+			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
 
-		else if (issnippingtool(W) && src.dismantle_stage == 2)
+		// Handling for tools (snipping, dismantle)
+		else if (issnippingtool(W) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			if (!(status & NOPOWER))
 				if (src.shock(user,100))
 					return
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-			src.dismantle_stage = 3
-			src.status |= NOPOWER
+			src.dismantle_stage = DISMANTLE_WIRES
+			src.check_power_status()
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
 			C.UpdateIcon()
 			src.build_icon()
 
-		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == 2)
+		// Handling for reconstruction (sheets, reconstruct)
+		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == DISMANTLE_PLATING_SHEETS)
 			user.visible_message("<b>[user]</b> adds plating to [src].")
-			src.dismantle_stage = 1
+			src.dismantle_stage = DISMANTLE_PLATING_BOLTS
 			qdel(W)
 			src.build_icon()
 
-		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == 3)
+		// Handling for cable coils (reconstruct)
+		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == DISMANTLE_WIRES)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
-			src.dismantle_stage = 2
+			src.dismantle_stage = DISMANTLE_PLATING_SHEETS
 			var/obj/item/cable_coil/C = W
 			C.use(1)
-			src.status &= ~NOPOWER
+			src.check_power_status()
 			src.shock(user,100)
 			src.build_icon()
 
+		// Handling for inserting manudrives
 		else if (istype(W,/obj/item/disk/data/floppy/manudrive))
 			if (src.manudrive)
 				boutput(user, SPAN_ALERT("You swap out the disk in the manufacturer with a different one."))
@@ -978,21 +1014,25 @@ TYPEINFO(/obj/machinery/manufacturer)
 			should_update_static = TRUE
 
 
-		else if (istype(W,/obj/item/sheet/) || (istype(W,/obj/item/cable_coil/ || (istype(W,/obj/item/raw_material/ )))))
+		else if (istype(W, /obj/item/sheet/) || istype(W, /obj/item/cable_coil/) || istype(W, /obj/item/raw_material/))
 			src.grump_message(user, "The fabricator rejects the [W]. You'll need to refine them in a reclaimer first.", sound = TRUE)
 			return
 
+		// Handling for inserting material pieces
 		else if (istype(W, src.base_material_class) && src.accept_loading(user))
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."), SPAN_NOTICE("You load [W] into [src]."))
-			src.change_contents(mat_piece = W, user = user)
+			src.add_contents(W, user)
 
+		// Handling for.. snipping/pulsing calling Attackhand when the panel is open?
 		else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 			src.Attackhand(user)
 			return
 
+		// Handling for early return if a card is scanned successfully
 		else if(scan_card(W))
 			return
 
+		// Handling for calling parent proc + hitting the machine
 		else
 			..()
 			user.lastattacked = src
@@ -1026,66 +1066,78 @@ TYPEINFO(/obj/machinery/manufacturer)
 		storage[index_2] = temp_hold
 		src.should_update_static = TRUE
 
-	proc/eject_material(var/mat_ref, mob/user = null)
-		if (src.mode != MODE_READY)
-			src.grump_message(user, "You cannot eject materials while the unit is working.")
+	/// Handles allowing the user to eject integer amounts of material
+	proc/eject_material(var/mat_ref, mob/user)
+		var/obj/item/material_piece/P = src.get_material_by_ref(mat_ref)
+		if (!src.can_eject_material(P, user))
 			return
-		var/ejectamt = 0
-		var/turf/ejectturf = get_output_location(user)
-		var/obj/item/material_piece/target
-		for(var/obj/item/material_piece/P in src.get_contents())
-			if ("\ref[P]" == mat_ref)
-				target = P
-				break
-		if (isnull(target))
-			src.grump_message(user, "ERROR: Material not found in storage.", sound = TRUE)
+		var/eject_amount = tgui_input_number(user,
+											 "How many material pieces do you want to eject?",
+											 title = "Eject Materials",
+											 default = 0,
+											 max_value = ceil(P.amount),
+											 min_value = 0,
+											 round_input = TRUE,
+											)
+		if (!src.can_eject_material(P, user))
 			return
-		if (target.amount < 1)
-			src.grump_message(user, "ERROR: Not enough material to eject bars.", sound = TRUE)
+		// In case tgui_input_number() misses something or it's 0 (Likely trying to cancel action)
+		if (!isnum(eject_amount) || !isnum_safe(eject_amount) || eject_amount < 1)
+			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s.", sound = TRUE)
 			return
-		// Since tgui_input_number() is awaited here, make sure they are adjacent before and after
-		if (!src.check_physical_proximity(user))
-			return
-		ejectamt = floor(tgui_input_number(user,"How many material pieces do you want to eject?","Eject Materials", 0, ceil(target.amount), 0))
-		if (!src.check_physical_proximity(user) || src.mode != MODE_READY || ejectamt <= 0 || !isnum_safe(ejectamt))
-			return
-		if (!ejectturf)
-			return
-		if (ejectamt > target.amount)
-			src.grump_message(user, "There's not that much material in [name]. It has ejected what it could.", sound = TRUE)
-			ejectamt = floor(target.amount)
-		if (ejectamt == target.amount)
-			if (user)
-				user.put_in_hand_or_drop(target)
-			src.storage.transfer_stored_item(target, ejectturf)
+		// This should never happen either
+		if (eject_amount > P.amount)
+			src.grump_message(user, "ERROR: Cannot eject [eject_amount] piece\s, as there are only [floor(P.amount)] piece\s available to eject.", sound = TRUE)
+			eject_amount = floor(P.amount)
+		if (eject_amount == P.amount)
+			P.UpdateStackAppearance()
+			P.set_loc(src.get_output_location())
 		else
-			var/obj/item/material_piece/P = new target.type
-			P.setMaterial(target.material)
-			P.change_stack_amount(ejectamt - P.amount)
-			target.change_stack_amount(-ejectamt)
-			P.set_loc(ejectturf)
+			var/obj/item/material_piece/output = P.split_stack(eject_amount)
+			output.set_loc(src.get_output_location())
 
+	/// Helper proc to check whether or not we can eject the material from storage or not.
+	proc/can_eject_material(var/obj/item/material_piece/material_in_storage, mob/user)
+		if (src.mode != MODE_READY)
+			src.grump_message(user, "ERROR: Cannot eject materials while the unit is working.", sound = TRUE)
+		else if (isnull(material_in_storage))
+			src.grump_message(user, "ERROR: Cannot find material in storage. Aborting.", sound = TRUE)
+		else if (material_in_storage.amount < 1)
+			src.grump_message(user, "ERROR: Not enough material to eject whole amounts of bars.", sound = TRUE)
+		else if (!src.check_physical_proximity(user))
+			src.grump_message(user, "You have to be able to take that out yourself, you can't reach the bars from here!", sound = TRUE)
+		else
+			return TRUE
+		return FALSE
+
+	/// Scan in some supposed card into the machine, prompting the usr for a PIN. Returns TRUE if we managed to scan the card.
 	proc/scan_card(obj/item/I)
 		var/obj/item/card/id/ID = get_id_card(I)
-		if (istype(ID))
-			boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(ID.registered)
-			if(account)
-				var/enterpin = usr.enter_pin("Card Reader")
-				if (enterpin == ID.pin)
-					boutput(usr, SPAN_NOTICE("Card authorized."))
-					src.scan = ID
-					return TRUE
-				else
-					boutput(usr, SPAN_ALERT("PIN incorrect."))
-					src.scan = null
-			else
-				boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
-				src.scan = null
-		else
+		if (!istype(ID))
 			src.grump_message(usr, "You need to be holding an ID or something with an ID to scan it in!", sound = TRUE)
-		return FALSE
+			return
+		boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
+		var/datum/db_record/bank_account = FindBankAccountByName(ID.registered)
+		if(!bank_account)
+			src.grump_message(usr, "No bank account associated with this ID found.")
+			return
+		var/enterpin = usr.enter_pin("Card Reader")
+		if (enterpin != ID.pin)
+			src.grump_message(usr, "PIN incorrect.")
+			return
+		boutput(usr, SPAN_NOTICE("Card authorized."))
+		src.account = bank_account
+		return TRUE
+
+	/// Get the relevant bank record data from the current account. Returns null if there's no account scanned yet
+	proc/get_bank_data()
+		if (!src.account)
+			return
+		var/list/bank_info = list()
+		var/list/keys_of_interest = list("name", "current_money")
+		for (var/key in keys_of_interest)
+			bank_info[key] = src.account.get_field(key)
+		return bank_info
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -1159,7 +1211,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/obj/item/M in O.contents)
 				if (!istype(M,src.base_material_class))
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.get_contents() // Ensure contents exist first
+				src.add_contents(M, user)
 				amtload++
 			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
 			else boutput(user, SPAN_ALERT("No material loaded!"))
@@ -1176,7 +1229,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					continue
 				if (O.loc == user)
 					continue
-				src.change_contents(mat_piece = M, user = user)
+				src.add_contents(M, user)
 				sleep(0.5)
 				if (user.loc != staystill) break
 			boutput(user, SPAN_NOTICE("You finish stuffing materials into [src]!"))
@@ -1276,8 +1329,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (!item_bp)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ERR#NOITEMBLUEPRINT"))
 					return
-
-				if (free_resource_amt > 0) // We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+				// We do this here instead of on New() as a tiny optimization to keep some overhead off of map load - Also required for packets
+				if (length(free_resources) > 0)
 					claim_free_resources()
 
 				if (!check_enough_materials(item_bp))
@@ -1297,7 +1350,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/queue_length = length(src.queue)
 				if (queue_length < 1) // Nothing in list
 					return
-				src.clear_queue()
+				src.queue = list()
 
 				if (length(src.queue) < 1)
 					post_signal(list("address_1" = sender, "sender" = src.net_id, "command" = "term_message", "data" = "ACK#CLEARED"))
@@ -1383,7 +1436,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return FALSE
 		if (src.is_disabled())
 			return FALSE
-		if (src.dismantle_stage > 0)
+		if (src.dismantle_stage > DISMANTLE_NONE)
 			return FALSE
 		if (!isliving(user))
 			return FALSE
@@ -1394,14 +1447,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return FALSE
 		return TRUE
 
-	proc/isWireColorCut(wireColor)
-		var/wireFlag = APCWireColorToFlag[wireColor]
-		return ((src.wires & wireFlag) == 0)
-
-	proc/isWireCut(wireIndex)
-		var/wireFlag = APCIndexToFlag[wireIndex]
-		return ((src.wires & wireFlag) == 0)
-
 	proc/cut(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
 		var/wireIndex = APCWireColorToIndex[wireColor]
@@ -1410,13 +1455,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_EXTEND)
 				src.hacked = FALSE
 			if(WIRE_SHOCK)
-				src.electrified = -1
+				src.time_left_electrified = 0
 			if(WIRE_MALF)
 				src.malfunction = TRUE
 			if(WIRE_POWER)
 				if(!src.is_disabled())
 					src.shock(user, 100)
-					src.status |= NOPOWER
+				src.power_wire_cut = TRUE
+				src.check_power_status()
 
 	proc/mend(mob/user, wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
@@ -1424,13 +1470,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.wires |= wireFlag
 		switch(wireIndex)
 			if(WIRE_SHOCK)
-				src.electrified = 0
+				src.time_left_electrified = 0
 			if(WIRE_MALF)
 				src.malfunction = FALSE
 			if(WIRE_POWER)
+				src.power_wire_cut = FALSE
+				src.check_power_status()
 				if (!(src.status & BROKEN) && (src.status & NOPOWER))
 					src.shock(user, 100)
-					src.status &= ~NOPOWER
 
 	proc/pulse(mob/user, wireColor)
 		var/wireIndex = APCWireColorToIndex[wireColor]
@@ -1438,7 +1485,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if(WIRE_EXTEND)
 				src.hacked = !src.hacked
 			if (WIRE_SHOCK)
-				src.electrified = 30
+				src.time_left_electrified = 30
 			if (WIRE_MALF)
 				src.malfunction = !src.malfunction
 			if (WIRE_POWER)
@@ -1493,190 +1540,69 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.add_schematic(X,"hidden")
 				src.hidden -= X
 
-	proc/match_material_pattern(pattern, datum/material/mat)
-		if (!mat) // Marq fix for various cannot read null. runtimes
-			return FALSE
-
-		if (pattern == "ALL") // anything at all
-			return TRUE
-		if (pattern == "ORG|RUB")
-			return mat.getMaterialFlags() & MATERIAL_RUBBER || mat.getMaterialFlags() & MATERIAL_ORGANIC
-		if (pattern == "RUB")
-			return mat.getMaterialFlags() & MATERIAL_RUBBER
-		if (pattern == "WOOD")
-			return mat.getMaterialFlags() & MATERIAL_WOOD
-		else if (copytext(pattern, 4, 5) == "-") // wildcard
-			var/firstpart = copytext(pattern, 1, 4)
-			var/secondpart = text2num_safe(copytext(pattern, 5))
-			switch(firstpart)
-				// this was kind of thrown together in a panic when i felt shitty so if its horrible
-				// go ahead and clean it up a bit
-				if ("MET")
-
-					if (mat.getMaterialFlags() & MATERIAL_METAL)
-						// maux hardness = 15
-						// bohr hardness = 33
-						switch(secondpart)
-							if(2)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
-							if(3 to INFINITY)
-								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
-							else
-								return TRUE
-				if ("CRY")
-					if (mat.getMaterialFlags() & MATERIAL_CRYSTAL)
-
-						switch(secondpart)
-							if(2)
-								return mat.getProperty("density") >= 7
-							else
-								return TRUE
-				if ("REF")
-					return (mat.getProperty("reflective") >= 6)
-				if ("CON")
-					switch(secondpart)
-						if(2)
-							return (mat.getProperty("electrical") >= 8)
-						else
-							return (mat.getProperty("electrical") >= 6)
-				if ("INS")
-					switch(secondpart)
-						if(2)
-							return mat.getProperty("electrical") <= 2 && (mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-						else
-							return mat.getProperty("electrical") <= 4 && (mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-				if ("DEN")
-					switch(secondpart)
-						if(2)
-							return mat.getProperty("density") >= 6
-						else
-							return mat.getProperty("density") >= 4
-				if ("POW")
-					if (mat.getMaterialFlags() & MATERIAL_ENERGY)
-						switch(secondpart)
-							if(3)
-								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
-							if(2)
-								return mat.getProperty("radioactive") >= 2
-							else
-								return TRUE
-				if ("FAB")
-					return mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
-				if ("GEM")
-					return istype(mat, /datum/material/crystal/gemstone)
-		else if (pattern == mat.getID()) // specific material id
-			return TRUE
-		return FALSE
-
 	/// Get a list of the patterns a material satisfies. Does not include "ALL" in list, as it is assumed such a requirement is handled separately.
 	/// Includes all previous material tier strings for simple "x in y" checks, as well as material ID for those recipies which need exact mat.
-	proc/get_patterns_material_satisfies(datum/material/M)
+	proc/get_requirements_material_satisfies(datum/material/M)
 		. = list()
-		var/material_flags = M.getMaterialFlags()
-		// get properties with getters once, ideally
-		var/density = M.getProperty("density")
-		var/hard = M.getProperty("hard")
-		var/reflective = M.getProperty("reflective")
-		var/electrical = M.getProperty("electrical")
-		var/radioactive = M.getProperty("radioactive")
-		if (!M)
-			return .
-		if (material_flags & MATERIAL_RUBBER)
-			. += "RUB"
-		if (material_flags & MATERIAL_ORGANIC)
-			. += "ORG"
-		if (material_flags & MATERIAL_WOOD)
-			. += "WOOD"
-		if (material_flags & MATERIAL_METAL)
-			var/hardness = (hard * 2) + density
-			if (hardness >= 15)
-				. += "MET-3"
-			if (hardness >= 10)
-				. += "MET-2"
-			. += "MET-1"
-		if (material_flags & MATERIAL_CRYSTAL)
-			if (density >= 7)
-				. += "CRY-2"
-			. += "CRY-1"
-		if (reflective >= 6)
-			. += "REF"
-		if (electrical >= 6)
-			if (electrical >= 8)
-				. += "CON-2"
-			. += "CON-1"
-		if (electrical <= 4 && material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
-			if (electrical <= 2)
-				. += "INS-2"
-			. += "INS-1"
-		if (density >= 4)
-			if (density >= 6)
-				. += "DEN-2"
-			. += "DEN-1"
-		if (material_flags & MATERIAL_ENERGY)
-			if (radioactive >= 2)
-				if (radioactive >= 5)
-					. += "POW-3"
-				. += "POW-2"
-			. += "POW-1"
-		if (material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC))
-			. += "FAB-1"
-		if (istype(M, /datum/material/crystal/gemstone))
-			. += "GEM-1"
+		for (var/R_id as anything in requirement_cache)
+			var/datum/manufacturing_requirement/R = getManufacturingRequirement(R_id)
+			if (R.is_match(M))
+				. += R.getID()
 
-	/// Returns material in storage which first satisfies a pattern, otherwise returns null
-	/// Similar to get_materials_needed, but ignores amounts and implications of choosing materials
-	proc/get_material_for_pattern(var/pattern)
-		var/list/C = src.get_contents()
-		if (!length(C))
-			return null
-		if (pattern == "ALL")
-			return C[1]
-		for (var/piece_index in 1 to length(C))
-			var/obj/item/material_piece/P = C[piece_index]
-			var/P_id = P.material.getID()
-			if (pattern in src.material_patterns_by_id[P_id])
+	/// Returns material which matches ref from storage, else returns null
+	proc/get_material_by_ref(var/mat_ref)
+		for (var/obj/item/material_piece/P as anything in src.get_contents())
+			if ("\ref[P]" == mat_ref)
 				return P
 		return null
 
-	/// Returns associative list of item path to mat_id that will be used, but does not guarantee all item_paths are satisfied or that
-	/// the blueprint will have the required materials ready by the time it reaches the front of the queue
+	/// Returns associative list of manufacturing requirement to material piece references, but does not guarantee all item_paths are satisfied or that
+	/// the blueprint will have the required materials ready by the time it reaches the front of the queue. Reqs not satisfied are not added to mats_used
 	proc/get_materials_needed(datum/manufacture/M)
 		var/list/mats_used = list()
-		var/list/mats_available = list()
+		var/list/mats_reserved = list()
 
-		var/list/C = src.get_contents()
-		for (var/path_index in 1 to length(M.item_paths))
-			var/required_pattern = M.item_paths[path_index]
-			var/required_amount = M.item_amounts[path_index]
-			for (var/piece_index in 1 to length(C))
-				var/obj/item/material_piece/P = C[piece_index]
-				var/P_id = P.material.getID()
-				if (!(P_id in mats_available))
-					mats_available[P_id] = P.amount * 10
-				if (mats_available[P_id] < required_amount)
-					continue
-				if (required_pattern == "ALL" || (required_pattern in src.material_patterns_by_id[P_id]) || P_id == required_pattern)
-					mats_used[required_pattern] = P_id
-					mats_available[P_id] -= required_amount
-					break
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			var/piece_ref = src.get_material_for_requirement(R, M.item_requirements[R], mats_reserved)
+			if (!isnull(piece_ref))
+				mats_used[R] = piece_ref
 
 		return mats_used
 
-	/// Check if a blueprint can be manufactured with the current materials.
-	proc/check_enough_materials(datum/manufacture/M)
-		var/list/mats_used = get_materials_needed(M)
-		if (length(mats_used) == length(M.item_paths)) // we have enough materials, so return the materials list, else return null
-			return mats_used
+	/// Get the material in storage which satisfies some amount of a requirement.
+	proc/get_material_for_requirement(datum/manufacturing_requirement/R, var/required_amount, var/list/mats_reserved)
+		var/list/C = src.get_contents()
+		for (var/obj/item/material_piece/P as anything in C)
+			if (!R.is_match(P.material))
+				continue
+			// We can use this material! Get the amount of free material and reserve/mark as used whatever is free.
+			var/P_ref = "\ref[P]"
+			var/amount_free = P.amount - mats_reserved[P_ref]
+			var/amount_to_use = min(amount_free, required_amount / 10)
+			if ((amount_to_use * 10) < required_amount)
+				continue
+			mats_reserved[P_ref] ||= 0
+			mats_reserved[P_ref] += amount_to_use
+			return P_ref
 
-	/// Go through the material requirements of a blueprint, and remove the matching materials from materials_in_use in appropriate quantities
-	proc/remove_materials(datum/manufacture/M)
-		var/list/mats_used = check_enough_materials(M)
+	/// Check if a blueprint can be manufactured with the current materials.
+	/// mats_used - a list from get_materials_needed to avoid calling the proc twice
+	proc/check_enough_materials(datum/manufacture/M, var/list/mats_used = null)
 		if (isnull(mats_used))
-			return // how
-		for (var/i = 1 to length(M.item_paths))
-			var/pattern = M.item_paths[i]
-			var/mat_id = mats_used[pattern]
-			src.change_contents(-M.item_amounts[i]/10, mat_id)
+			mats_used = get_materials_needed(M)
+		return length(mats_used) == length(M.item_requirements)
+
+	/// Go through the material requirements of a blueprint, removing the respective used materials
+	proc/remove_materials(datum/manufacture/M)
+		var/list/mats_used = get_materials_needed(M)
+		for (var/datum/manufacturing_requirement/R as anything in M.item_requirements)
+			var/required_amount = M.item_requirements[R]
+			for (var/obj/item/material_piece/P as anything in src.get_contents())
+				if ("\ref[P]" != mats_used[R])
+					continue
+				P.amount = round( (P.amount - (required_amount/10)), 0.1)
+				if (P.amount <= 0)
+					qdel(P)
 
 	/// Get how many more times a drive can produce items it is stocked with
 	proc/get_drive_uses_left()
@@ -1693,7 +1619,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (status & NOPOWER || status & BROKEN)
 			return
 		if (!length(src.queue))
-			src.manual_stop = 0
 			src.mode = MODE_READY
 			src.build_icon()
 			return
@@ -1719,16 +1644,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.malfunction && prob(40))
 			src.flip_out()
 		if (new_production)
-			var/list/mats_used = check_enough_materials(M)
-			if (!mats_used)
+			var/list/mats_used = get_materials_needed(M)
+			if (!(length(mats_used) == length(M.item_requirements)))
 				src.mode = MODE_HALT
 				src.error = "Insufficient usable materials to continue queue production."
 				src.visible_message(SPAN_ALERT("[src] emits an angry buzz!"))
 				playsound(src.loc, src.sound_grump, 50, 1)
 				src.build_icon()
 				return
-			else
-				src.materials_in_use = mats_used
 
 			// speed/power usage
 			// spd   time    new     old (1500 * speed * 1.5)
@@ -1779,23 +1702,23 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (length(M.item_outputs) <= 0)
 			return
-		var/mcheck = check_enough_materials(M)
-		if(mcheck)
+		var/list/materials_used = src.get_materials_needed(M)
+		if(src.check_enough_materials(M, materials_used))
 			var/make = clamp(M.create, 0, src.output_cap)
 			switch(M.randomise_output)
 				if(1) // pick a new item each loop
 					while (make > 0)
-						src.dispense_product(pick(M.item_outputs),M)
+						src.dispense_product(pick(M.item_outputs), M, materials_used)
 						make--
 				if(2) // get a random item from the list and produce it
 					var/to_make = pick(M.item_outputs)
 					while (make > 0)
-						src.dispense_product(to_make,M)
+						src.dispense_product(to_make, M, materials_used)
 						make--
 				else // produce every item in the list once per loop
 					while (make > 0)
 						for (var/X in M.item_outputs)
-							src.dispense_product(X,M)
+							src.dispense_product(X, M, materials_used)
 						make--
 
 			src.remove_materials(M)
@@ -1808,18 +1731,19 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		return
 
-	proc/dispense_product(product,datum/manufacture/M)
+	proc/dispense_product(product, datum/manufacture/M, var/list/materials_used)
+		var/atom/movable/A
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
-				var/atom/movable/A = new product(src)
+				A = new product(src)
 				if (isitem(A))
 					var/obj/item/I = A
-					M.modify_output(src, I, src.materials_in_use)
+					M.modify_output(src, I, materials_used)
 					I.set_loc(src.get_output_location(I))
 				else
 					A.set_loc(src.get_output_location(A))
 			else
-				new product(get_output_location())
+				A = new product(get_output_location())
 
 		else if (istext(product) || isnum(product))
 			if (istext(product) && copytext(product,1,8) == "reagent")
@@ -1834,23 +1758,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (welp.Width() > 32 || welp.Height() > 32)
 				welp.Scale(32, 32)
 				product = welp
-			var/obj/dummy = new /obj/item(get_turf(src))
-			dummy.name = "strange thing"
-			dummy.desc = "The fuck is this?"
-			dummy.icon = welp
-
+			A = new /obj/item(get_turf(src))
+			A.name = "strange thing"
+			A.desc = "The fuck is this?"
+			A.icon = welp
 		else if (isfile(product)) // adapted from vending machine code
 			var/S = sound(product)
 			if (S)
 				playsound(src.loc, S, 50, 0)
 
-		else if (isobj(product))
-			var/obj/X = product
-			X.set_loc(get_output_location())
+		else if (isobj(product) || ismob(product))
+			A = product
+			A.set_loc(get_output_location())
 
-		else if (ismob(product))
-			var/mob/X = product
-			X.set_loc(get_output_location())
+		return A
 
 	proc/flip_out()
 		if (status & BROKEN || status & NOPOWER || !src.malfunction)
@@ -1886,8 +1807,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (prob(10))
 			src.speed = rand(MIN_SPEED, MAX_SPEED_DAMAGED)
 		if (prob(5))
-			if (!src.electrified)
-				src.electrified = 5
+			if (!src.is_electrified())
+				src.time_left_electrified = 5
 
 	proc/build_icon()
 		icon_state = "fab[src.icon_base ? "-[src.icon_base]" : null]"
@@ -1896,7 +1817,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			src.UpdateOverlays(null, "work")
 			src.UpdateOverlays(null, "activity")
 			icon_state = "[src.icon_base]-broken"
-		else if (src.dismantle_stage >= 2)
+		else if (src.dismantle_stage >= DISMANTLE_PLATING_SHEETS)
 			src.UpdateOverlays(null, "work")
 			src.UpdateOverlays(null, "activity")
 			icon_state = "fab-noplate"
@@ -1938,11 +1859,18 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.manudrive = null
 		should_update_static = TRUE
 
+	proc/ensure_contents()
+		if (isnull(src.storage))
+			src.create_storage(/datum/storage/no_hud/machine, can_hold=list(/obj/item/material_piece), slots = INFINITY)
+
+	proc/add_contents(obj/item/W, mob/user = null)
+		src.ensure_contents()
+		src.storage.add_contents(W, user, visible=FALSE)
+
 	/// Safely gets our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
 	/// Also ejects things w/o material or that aren't pieces, to ensure safety
 	proc/get_contents()
-		if (isnull(src.storage))
-			src.create_storage(/datum/storage/no_hud, can_hold=list(/obj/item/material_piece))
+		src.ensure_contents()
 		var/list/storage_contents = src.storage.get_contents()
 		for (var/obj/item/I as anything in storage_contents)
 			if (!istype(I, /obj/item/material_piece) || isnull(I.material))
@@ -1950,72 +1878,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.storage.transfer_stored_item(I, src.loc)
 		return storage_contents
 
-	/*
-	Safely modifies our storage contents. In case someone does something like load materials into the machine before we have initialized our storage
-	Parameters for selection of material (requires at least one non-null):
-	mat_id = material id to set. creates a new material if none of that id exists
-	mat_path = material path to use. creates material of path with amount arg or default amount if null
-	material_piece = physical object to add. transfers it to the storage, but adds it to an existing stack instead of applicable
-	material = material datum to add. acts as/overrides mat_id if provided
-	amount = delta material to add. 5 to add 5 bars, -5 to remove 5 bars, 0.5 to add 0.5 bars, etc.
-	user = (optional) any mob that may be loading this
-	*/
-	proc/change_contents(var/amount = null, var/mat_id = null, var/mat_path = null, var/obj/item/material_piece/mat_piece = null, var/datum/material/mat_datum = null, var/mob/living/user = null)
-		if (!isnull(mat_path))
-			mat_piece = new mat_path
-			if (amount)
-				mat_piece.amount = amount
-
-		if (!amount)
-			if (isnull(mat_piece))
-				return
-			else
-				amount = mat_piece.amount
-
-		if (isnull(mat_id) && isnull(mat_piece) && isnull(mat_datum) && isnull(mat_path))
-			CRASH("add_contents on [src] cannot add null material to contents. something probably tried to add a material but gave null!")
-
-		// Try stacking with existing same material in storage
-		var/list/C = src.get_contents()
-		if (!isnull(mat_datum))
-			mat_id = mat_datum.getID()
-		for (var/obj/item/material_piece/P as anything in C)
-			if (!P.material)
-				continue
-			// Match by material piece or id
-			if (mat_piece && mat_piece.material && P.material.isSameMaterial(mat_piece.material) ||\
-				mat_id && mat_id == P.material.getID())
-				// fuck floating point, lets pretend we only use tenths
-				P.amount = round(P.amount + amount, 0.1)
-				if (user)
-					user.u_equip(mat_piece)
-					mat_piece.dropped(user)
-				if (!isnull(mat_piece))
-					qdel(mat_piece)
-				if (P.amount <= 0)
-					// Handle removing material from helper lists now that it's gone
-					material_patterns_by_id[P.material.getID()] = null
-					qdel(P)
-				return
-
-		// No same material in storage, create/add the one we have and update the patterns index accordingly
-		if (!isnull(mat_piece))
-			if (isnull(mat_piece.material))
-				return
-			src.storage.add_contents(mat_piece, user = user, visible = FALSE)
-			material_patterns_by_id[mat_piece.material.getID()] = src.get_patterns_material_satisfies(mat_piece.material)
-			return
-
-		if (isnull(mat_datum))
-			// we gave an ID but no M, so override 'M' for this
-			mat_datum = getMaterial(mat_id)
-
-		var/T = getProcessedMaterialForm(mat_datum)
-		var/obj/item/material_piece/P = new T
-		P.amount = max(0, amount)
-		src.storage.add_contents(P, user = user, visible = FALSE)
-
-		material_patterns_by_id[P.material.getID()] = src.get_patterns_material_satisfies(P.material)
+	on_add_contents(obj/item/I)
+		if (!("\ref[I.material]" in src.material_patterns_by_ref))
+			src.material_patterns_by_ref["\ref[I.material]"] = src.get_requirements_material_satisfies(I.material)
 
 	proc/take_damage(damage_amount = 0)
 		if (!damage_amount)
@@ -2044,24 +1909,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.build_icon()
 
-	proc/get_our_material(mat_id)
-		for (var/obj/item/material_piece/M as anything in src.get_contents())
-			if (M.material && M.material.getID() == mat_id)
-				return M.material
-
+	/// Adds the resources we define in free_resources to our storage, and clears the list when we're done
+	/// to represent we do not have more resources to claim
 	proc/claim_free_resources()
-
 		if (src.deconstruct_flags & DECON_BUILT)
-			free_resource_amt = 0
+			free_resources = list()
 			return
 
-		if (length(free_resources) && free_resource_amt > 0)
-			for (var/typepath in src.free_resources)
-				if (ispath(typepath))
-					src.change_contents(amount = free_resource_amt, mat_path = typepath )
-			free_resource_amt = 0
-		else
-			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+		src.get_contents() // potentially load storage datum if it doesnt exist yet
+		for (var/mat_path in src.free_resources)
+			var/obj/item/material_piece/P = new mat_path
+			P.amount = src.free_resources[mat_path]
+			src.add_contents(P)
+
+		free_resources = list()
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
@@ -2093,7 +1954,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					return C
 		else if (istype(src.output_target,/obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = src.output_target
-			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
+			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > DISMANTLE_NONE)
 				src.output_target = null
 				return src.loc
 			if (A && istype(A,M.base_material_class))
@@ -2107,837 +1968,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else
 			return src.loc
 
-
-// Fabricator Defines
-
-/obj/machinery/manufacturer/general
-	name = "general manufacturer"
-	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-	available = list(/datum/manufacture/screwdriver,
-		/datum/manufacture/wirecutters,
-		/datum/manufacture/wrench,
-		/datum/manufacture/crowbar,
-		/datum/manufacture/extinguisher,
-		/datum/manufacture/welder,
-		/datum/manufacture/flashlight,
-		/datum/manufacture/weldingmask,
-		/datum/manufacture/metal,
-		/datum/manufacture/metalR,
-		/datum/manufacture/rods2,
-		/datum/manufacture/glass,
-		/datum/manufacture/glassR,
-		/datum/manufacture/atmos_can,
-		/datum/manufacture/gastank,
-		/datum/manufacture/miniplasmatank,
-		/datum/manufacture/minioxygentank,
-		/datum/manufacture/player_module,
-		/datum/manufacture/cable,
-		/datum/manufacture/powercell,
-		/datum/manufacture/powercellE,
-		/datum/manufacture/powercellC,
-		/datum/manufacture/powercellH,
-		/datum/manufacture/light_bulb,
-		/datum/manufacture/red_bulb,
-		/datum/manufacture/yellow_bulb,
-		/datum/manufacture/green_bulb,
-		/datum/manufacture/cyan_bulb,
-		/datum/manufacture/blue_bulb,
-		/datum/manufacture/purple_bulb,
-		/datum/manufacture/blacklight_bulb,
-		/datum/manufacture/light_tube,
-		/datum/manufacture/red_tube,
-		/datum/manufacture/yellow_tube,
-		/datum/manufacture/green_tube,
-		/datum/manufacture/cyan_tube,
-		/datum/manufacture/blue_tube,
-		/datum/manufacture/purple_tube,
-		/datum/manufacture/blacklight_tube,
-		/datum/manufacture/table_folding,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/shoes,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/flippers,
-#endif
-		/datum/manufacture/breathmask,
-#ifdef MAP_OVERRIDE_NADIR
-		/datum/manufacture/nanoloom,
-		/datum/manufacture/nanoloom_cart,
-#endif
-		/datum/manufacture/fluidcanister,
-		/datum/manufacture/meteorshieldgen,
-		/datum/manufacture/shieldgen,
-		/datum/manufacture/doorshieldgen,
-		/datum/manufacture/patch,
-		/datum/manufacture/saxophone,
-		/datum/manufacture/trumpet)
-	hidden = list(/datum/manufacture/RCDammo,
-		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge,
-		/datum/manufacture/bottle,
-		/datum/manufacture/vuvuzela,
-		/datum/manufacture/harmonica,
-		/datum/manufacture/bikehorn,
-		/datum/manufacture/bullet_22,
-		/datum/manufacture/bullet_smoke,
-		/datum/manufacture/stapler,
-		/datum/manufacture/bagpipe,
-		/datum/manufacture/fiddle,
-		/datum/manufacture/whistle)
-
-#define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
-
-/obj/machinery/manufacturer/general/grody
-	name = "grody manufacturer"
-	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
-	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
-	free_resource_amt = 0
-	free_resources = list()
-	malfunction = TRUE
-	wires = MALFUNCTION_WIRE_CUT
-
-#undef MALFUNCTION_WIRE_CUT
-
-/obj/machinery/manufacturer/robotics
-	name = "robotics fabricator"
-	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
-	icon_state = "fab-robotics"
-	icon_base = "robotics"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-
-	available = list(/datum/manufacture/robo_frame,
-		/datum/manufacture/full_cyborg_standard,
-		/datum/manufacture/full_cyborg_light,
-		/datum/manufacture/robo_head,
-		/datum/manufacture/robo_chest,
-		/datum/manufacture/robo_arm_r,
-		/datum/manufacture/robo_arm_l,
-		/datum/manufacture/robo_leg_r,
-		/datum/manufacture/robo_leg_l,
-		/datum/manufacture/robo_head_light,
-		/datum/manufacture/robo_chest_light,
-		/datum/manufacture/robo_arm_r_light,
-		/datum/manufacture/robo_arm_l_light,
-		/datum/manufacture/robo_leg_r_light,
-		/datum/manufacture/robo_leg_l_light,
-		/datum/manufacture/robo_leg_treads,
-		/datum/manufacture/robo_head_screen,
-		/datum/manufacture/robo_module,
-		/datum/manufacture/cyberheart,
-		/datum/manufacture/cybereye,
-		/datum/manufacture/cybereye_meson,
-		/datum/manufacture/cybereye_spectro,
-		/datum/manufacture/cybereye_prodoc,
-		/datum/manufacture/cybereye_camera,
-		/datum/manufacture/shell_frame,
-		/datum/manufacture/ai_interface,
-		/datum/manufacture/latejoin_brain,
-		/datum/manufacture/shell_cell,
-		/datum/manufacture/cable,
-		/datum/manufacture/powercell,
-		/datum/manufacture/powercellE,
-		/datum/manufacture/powercellC,
-		/datum/manufacture/powercellH,
-		/datum/manufacture/crowbar,
-		/datum/manufacture/wrench,
-		/datum/manufacture/screwdriver,
-		/datum/manufacture/scalpel,
-		/datum/manufacture/circular_saw,
-		/datum/manufacture/surgical_scissors,
-		/datum/manufacture/hemostat,
-		/datum/manufacture/suture,
-		/datum/manufacture/stapler,
-		/datum/manufacture/surgical_spoon,
-		/datum/manufacture/implanter,
-		/datum/manufacture/secbot,
-		/datum/manufacture/medbot,
-		/datum/manufacture/firebot,
-		/datum/manufacture/floorbot,
-		/datum/manufacture/cleanbot,
-		/datum/manufacture/digbot,
-		/datum/manufacture/visor,
-		/datum/manufacture/deafhs,
-		/datum/manufacture/robup_jetpack,
-		/datum/manufacture/robup_healthgoggles,
-		/datum/manufacture/robup_sechudgoggles,
-		/datum/manufacture/robup_spectro,
-		/datum/manufacture/robup_recharge,
-		/datum/manufacture/robup_repairpack,
-		/datum/manufacture/robup_speed,
-		/datum/manufacture/robup_mag,
-		/datum/manufacture/robup_meson,
-		/datum/manufacture/robup_aware,
-		/datum/manufacture/robup_physshield,
-		/datum/manufacture/robup_fireshield,
-		/datum/manufacture/robup_teleport,
-		/datum/manufacture/robup_visualizer,
-		/*/datum/manufacture/robup_thermal,*/
-		/datum/manufacture/robup_efficiency,
-		/datum/manufacture/robup_repair,
-		/datum/manufacture/implant_robotalk,
-		/datum/manufacture/sbradio,
-		/datum/manufacture/implant_health,
-		/datum/manufacture/implant_antirot,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
-		/datum/manufacture/rods2,
-		/datum/manufacture/metal,
-		/datum/manufacture/glass,
-		/datum/manufacture/asimov_laws,
-		/datum/manufacture/borg_linker)
-
-	hidden = list(/datum/manufacture/flash,
-		/datum/manufacture/cybereye_thermal,
-		/datum/manufacture/cybereye_laser,
-		/datum/manufacture/cyberbutt,
-		/datum/manufacture/robup_expand,
-		/datum/manufacture/cardboard_ai,
-		/datum/manufacture/corporate_laws,
-		/datum/manufacture/robocop_laws)
-
-/obj/machinery/manufacturer/medical
-	name = "medical fabricator"
-	supplemental_desc = "This one produces medical equipment and sterile clothing."
-	icon_state = "fab-med"
-	icon_base = "med"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
-
-	available = list(
-		/datum/manufacture/scalpel,
-		/datum/manufacture/circular_saw,
-		/datum/manufacture/surgical_scissors,
-		/datum/manufacture/hemostat,
-		/datum/manufacture/suture,
-		/datum/manufacture/stapler,
-		/datum/manufacture/surgical_spoon,
-		/datum/manufacture/prodocs,
-		/datum/manufacture/glasses,
-		/datum/manufacture/visor,
-		/datum/manufacture/deafhs,
-		/datum/manufacture/hypospray,
-		/datum/manufacture/patch,
-		/datum/manufacture/mender,
-		/datum/manufacture/penlight,
-		/datum/manufacture/stethoscope,
-		/datum/manufacture/latex_gloves,
-		/datum/manufacture/surgical_mask,
-		/datum/manufacture/surgical_shield,
-		/datum/manufacture/scrubs_white,
-		/datum/manufacture/scrubs_teal,
-		/datum/manufacture/scrubs_maroon,
-		/datum/manufacture/scrubs_blue,
-		/datum/manufacture/scrubs_purple,
-		/datum/manufacture/scrubs_orange,
-		/datum/manufacture/scrubs_pink,
-		/datum/manufacture/patient_gown,
-		/datum/manufacture/eyepatch,
-		/datum/manufacture/blindfold,
-		/datum/manufacture/muzzle,
-		/datum/manufacture/stress_ball,
-		/datum/manufacture/body_bag,
-		/datum/manufacture/implanter,
-		/datum/manufacture/implant_health,
-		/datum/manufacture/implant_antirot,
-		/datum/manufacture/floppydisk,
-		/datum/manufacture/crowbar,
-		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
-		/datum/manufacture/empty_kit,
-		/datum/manufacture/rods2,
-		/datum/manufacture/metal,
-		/datum/manufacture/glass
-	)
-
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
-
-/obj/machinery/manufacturer/science
-	name = "science fabricator"
-	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
-	icon_state = "fab-sci"
-	icon_base = "sci"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric,
-		/obj/item/material_piece/cobryl)
-	available = list(
-		/datum/manufacture/flashlight,
-		/datum/manufacture/gps,
-		/datum/manufacture/crowbar,
-		/datum/manufacture/extinguisher,
-		/datum/manufacture/welder,
-		/datum/manufacture/patch,
-		/datum/manufacture/atmos_can,
-		/datum/manufacture/artifactforms,
-		/datum/manufacture/fluidcanister,
-		/datum/manufacture/chembarrel,
-		/datum/manufacture/chembarrel/yellow,
-		/datum/manufacture/chembarrel/red,
-		/datum/manufacture/condenser,
-		/datum/manufacture/fractionalcondenser,
-		/datum/manufacture/beaker_lid_box,
-		/datum/manufacture/bunsen_burner,
-		/datum/manufacture/spectrogoggles,
-		/datum/manufacture/atmos_goggles,
-		/datum/manufacture/reagentscanner,
-		/datum/manufacture/dropper,
-		/datum/manufacture/mechdropper,
-		/datum/manufacture/patient_gown,
-		/datum/manufacture/blindfold,
-		/datum/manufacture/muzzle,
-		/datum/manufacture/audiotape,
-		/datum/manufacture/audiolog,
-		/datum/manufacture/rods2,
-		/datum/manufacture/metal,
-		/datum/manufacture/glass)
-
-	hidden = list(/datum/manufacture/scalpel,
-		/datum/manufacture/circular_saw,
-		/datum/manufacture/surgical_scissors,
-		/datum/manufacture/hemostat,
-		/datum/manufacture/suture,
-		/datum/manufacture/stapler,
-		/datum/manufacture/surgical_spoon
-	)
-
-/obj/machinery/manufacturer/mining
-	name = "mining fabricator"
-	supplemental_desc = "This one produces mining equipment like concussive charges and powered tools."
-	icon_state = "fab-mining"
-	icon_base = "mining"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-	available = list(/datum/manufacture/pick,
-		/datum/manufacture/powerpick,
-		/datum/manufacture/blastchargeslite,
-		/datum/manufacture/blastcharges,
-		/datum/manufacture/powerhammer,
-		/datum/manufacture/drill,
-		/datum/manufacture/conc_gloves,
-		/datum/manufacture/digbot,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/shoes,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/engspacesuit,
-		/datum/manufacture/lightengspacesuit,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/engdivesuit,
-		/datum/manufacture/flippers,
-#endif
-		/datum/manufacture/industrialarmor,
-		/datum/manufacture/industrialboots,
-		/datum/manufacture/powercell,
-		/datum/manufacture/powercellE,
-		/datum/manufacture/powercellC,
-		/datum/manufacture/powercellH,
-		/datum/manufacture/ore_scoop,
-		/datum/manufacture/oresatchel,
-		/datum/manufacture/oresatchelL,
-		/datum/manufacture/microjetpack,
-		/datum/manufacture/jetpack,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/jetpackmkII,
-#endif
-		/datum/manufacture/geoscanner,
-		/datum/manufacture/geigercounter,
-		/datum/manufacture/eyes_meson,
-		/datum/manufacture/flashlight,
-		/datum/manufacture/ore_accumulator,
-		/datum/manufacture/rods2,
-		/datum/manufacture/metal,
-#ifndef UNDERWATER_MAP
-		/datum/manufacture/mining_magnet
-#endif
-		)
-
-/obj/machinery/manufacturer/hangar
-	name = "ship component fabricator"
-	supplemental_desc = "This one produces modules for space pods or minisubs."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-	available = list(
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/sub/preassembeled_parts,
-#else
-		/datum/manufacture/putt/preassembeled_parts,
-		/datum/manufacture/pod/preassembeled_parts,
-#endif
-		/datum/manufacture/pod/armor_light,
-		/datum/manufacture/pod/armor_heavy,
-		/datum/manufacture/pod/armor_industrial,
-		/datum/manufacture/cargohold,
-		/datum/manufacture/storagehold,
-		/datum/manufacture/orescoop,
-		/datum/manufacture/conclave,
-		/datum/manufacture/communications/mining,
-		/datum/manufacture/pod/weapon/bad_mining,
-		/datum/manufacture/pod/weapon/mining,
-		/datum/manufacture/pod/weapon/mining/drill,
-		/datum/manufacture/pod/weapon/ltlaser,
-		/datum/manufacture/engine,
-		/datum/manufacture/engine2,
-		/datum/manufacture/engine3,
-		/datum/manufacture/pod/lock,
-		/datum/manufacture/beaconkit,
-		/datum/manufacture/podgps
-	)
-
-/obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
-	name = "uniform manufacturer"
-	supplemental_desc = "This one can create a wide variety of one-size-fits-all jumpsuits, as well as backpacks and radio headsets."
-	icon_state = "fab-jumpsuit"
-	icon_base = "jumpsuit"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/cloth/cottonfabric,
-		/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper)
-	accept_blueprints = FALSE
-	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
-		/datum/manufacture/shoes_brown,
-		/datum/manufacture/shoes_white,
-		/datum/manufacture/flippers,
-		/datum/manufacture/civilian_headset,
-		/datum/manufacture/jumpsuit_assistant,
-		/datum/manufacture/jumpsuit_pink,
-		/datum/manufacture/jumpsuit_red,
-		/datum/manufacture/jumpsuit_orange,
-		/datum/manufacture/jumpsuit_yellow,
-		/datum/manufacture/jumpsuit_green,
-		/datum/manufacture/jumpsuit_blue,
-		/datum/manufacture/jumpsuit_purple,
-		/datum/manufacture/jumpsuit_black,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/jumpsuit_white,
-		/datum/manufacture/jumpsuit_brown,
-		/datum/manufacture/pride_lgbt,
-		/datum/manufacture/pride_ace,
-		/datum/manufacture/pride_aro,
-		/datum/manufacture/pride_bi,
-		/datum/manufacture/pride_inter,
-		/datum/manufacture/pride_lesb,
-		/datum/manufacture/pride_gay,
-		/datum/manufacture/pride_nb,
-		/datum/manufacture/pride_pan,
-		/datum/manufacture/pride_poly,
-		/datum/manufacture/pride_trans,
-		/datum/manufacture/suit_black,
-		/datum/manufacture/dress_black,
-		/datum/manufacture/hat_black,
-		/datum/manufacture/hat_white,
-		/datum/manufacture/hat_pink,
-		/datum/manufacture/hat_red,
-		/datum/manufacture/hat_yellow,
-		/datum/manufacture/hat_orange,
-		/datum/manufacture/hat_green,
-		/datum/manufacture/hat_blue,
-		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat,
-		/datum/manufacture/backpack,
-		/datum/manufacture/backpack_red,
-		/datum/manufacture/backpack_green,
-		/datum/manufacture/backpack_blue,
-		/datum/manufacture/satchel,
-		/datum/manufacture/satchel_red,
-		/datum/manufacture/satchel_green,
-		/datum/manufacture/satchel_blue)
-
-	hidden = list(/datum/manufacture/breathmask,
-		/datum/manufacture/patch,
-		/datum/manufacture/towel,
-		/datum/manufacture/handkerchief,
-		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
-
-/// cogwerks - a gas extractor for the engine
-
-/obj/machinery/manufacturer/gas
-	name = "gas extractor"
-	supplemental_desc = "This one can create gas canisters, either empty or filled with gases extracted from certain minerals."
-	icon_state = "fab-atmos"
-	icon_base = "atmos"
-	accept_blueprints = FALSE
-	available = list(
-		/datum/manufacture/atmos_can,
-		/datum/manufacture/air_can/large,
-		/datum/manufacture/o2_can,
-		/datum/manufacture/co2_can,
-		/datum/manufacture/n2_can,
-		/datum/manufacture/plasma_can,
-		/datum/manufacture/red_o2_grenade)
-
-// a blank manufacturer for mechanics
-
-/obj/machinery/manufacturer/mechanic
-	name = "reverse-engineering fabricator"
-	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-
-/obj/machinery/manufacturer/personnel
-	name = "personnel equipment manufacturer"
-	supplemental_desc = "This one can produce blank ID cards and access implants."
-	icon_state = "fab-access"
-	icon_base = "access"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-	available = list(/datum/manufacture/id_card, /datum/manufacture/implant_access,	/datum/manufacture/implanter)
-	hidden = list(/datum/manufacture/id_card_gold, /datum/manufacture/implant_access_infinite)
-
-//combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
-//and i hate this, i do, but you're gonna have to update this list whenever you update /personnel or /uniform
-/obj/machinery/manufacturer/hop_and_uniform
-	name = "personnel manufacturer"
-	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
-	icon_state = "fab-access"
-	icon_base = "access"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
-	accept_blueprints = FALSE
-	available = list(/datum/manufacture/id_card,
-		/datum/manufacture/implant_access,
-		/datum/manufacture/implanter,
-		/datum/manufacture/shoes,
-		/datum/manufacture/shoes_brown,
-		/datum/manufacture/shoes_white,
-		/datum/manufacture/flippers,
-		/datum/manufacture/civilian_headset,
-		/datum/manufacture/jumpsuit_assistant,
-		/datum/manufacture/jumpsuit,
-		/datum/manufacture/jumpsuit_white,
-		/datum/manufacture/jumpsuit_pink,
-		/datum/manufacture/jumpsuit_red,
-		/datum/manufacture/jumpsuit_orange,
-		/datum/manufacture/jumpsuit_yellow,
-		/datum/manufacture/jumpsuit_green,
-		/datum/manufacture/jumpsuit_blue,
-		/datum/manufacture/jumpsuit_purple,
-		/datum/manufacture/jumpsuit_black,
-		/datum/manufacture/jumpsuit_brown,
-		/datum/manufacture/pride_lgbt,
-		/datum/manufacture/pride_ace,
-		/datum/manufacture/pride_aro,
-		/datum/manufacture/pride_bi,
-		/datum/manufacture/pride_inter,
-		/datum/manufacture/pride_lesb,
-		/datum/manufacture/pride_gay,
-		/datum/manufacture/pride_nb,
-		/datum/manufacture/pride_pan,
-		/datum/manufacture/pride_poly,
-		/datum/manufacture/pride_trans,
-		/datum/manufacture/hat_black,
-		/datum/manufacture/hat_white,
-		/datum/manufacture/hat_pink,
-		/datum/manufacture/hat_red,
-		/datum/manufacture/hat_yellow,
-		/datum/manufacture/hat_orange,
-		/datum/manufacture/hat_green,
-		/datum/manufacture/hat_blue,
-		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat)
-
-	hidden = list(/datum/manufacture/id_card_gold,
-		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/patch,
-		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
-
-/obj/machinery/manufacturer/qm // This manufacturer just creates different crated and boxes for the QM. Lets give their boring lives at least something more interesting.
-	name = "crate manufacturer"
-	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
-	icon_state = "fab-crates"
-	icon_base = "crates"
-	free_resource_amt = 1
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/organic/wood)
-	accept_blueprints = FALSE
-	available = list(/datum/manufacture/crate,
-		/datum/manufacture/packingcrate,
-		/datum/manufacture/wooden,
-		/datum/manufacture/medical,
-		/datum/manufacture/biohazard,
-		/datum/manufacture/freezer)
-
-	hidden = list(/datum/manufacture/classcrate)
-
-/obj/machinery/manufacturer/zombie_survival
-	name = "\improper Uber-Extreme Survival Manufacturer"
-	desc = "This manufacturing unit seems to have been loaded with a bunch of nonstandard blueprints, apparently to be useful in surviving \"extreme scenarios\"."
-	icon_state = "fab-crates"
-	icon_base = "crates"
-	free_resource_amt = 50
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
-	accept_blueprints = FALSE
-	available = list(
-		/datum/manufacture/engspacesuit,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/suture,
-		/datum/manufacture/scalpel,
-		/datum/manufacture/flashlight,
-		/datum/manufacture/armor_vest,
-		/datum/manufacture/bullet_22,
-		/datum/manufacture/harmonica,
-		/datum/manufacture/riot_shotgun,
-		/datum/manufacture/riot_shotgun_ammo,
-		/datum/manufacture/clock,
-		/datum/manufacture/clock_ammo,
-		/datum/manufacture/saa,
-		/datum/manufacture/saa_ammo,
-		/datum/manufacture/riot_launcher,
-		/datum/manufacture/riot_launcher_ammo_pbr,
-		/datum/manufacture/riot_launcher_ammo_flashbang,
-		/datum/manufacture/sniper,
-		/datum/manufacture/sniper_ammo,
-		/datum/manufacture/tac_shotgun,
-		/datum/manufacture/tac_shotgun_ammo,
-		/datum/manufacture/gyrojet,
-		/datum/manufacture/gyrojet_ammo,
-		/datum/manufacture/plank,
-		/datum/manufacture/brute_kit,
-		/datum/manufacture/burn_kit,
-		/datum/manufacture/crit_kit,
-		/datum/manufacture/spacecillin,
-		/datum/manufacture/bat,
-		/datum/manufacture/quarterstaff,
-		/datum/manufacture/cleaver,
-		/datum/manufacture/fireaxe,
-		/datum/manufacture/shovel)
-
-/obj/machinery/manufacturer/engineering
-	name = "Engineering Specialist Manufacturer"
-	desc = "This one produces specialist engineering devices."
-	icon_state = "fab-engineering"
-	icon_base = "engineering"
-	free_resource_amt = 2
-	free_resources = list(/obj/item/material_piece/steel,
-		/obj/item/material_piece/copper,
-		/obj/item/material_piece/glass)
-	available = list(
-		/datum/manufacture/screwdriver/yellow,
-		/datum/manufacture/wirecutters/yellow,
-		/datum/manufacture/wrench/yellow,
-		/datum/manufacture/crowbar/yellow,
-		/datum/manufacture/extinguisher,
-		/datum/manufacture/welder/yellow,
-		/datum/manufacture/soldering,
-		/datum/manufacture/multitool,
-		/datum/manufacture/t_scanner,
-		/datum/manufacture/RCD,
-		/datum/manufacture/RCDammo,
-		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge,
-		/datum/manufacture/atmos_goggles,
-		/datum/manufacture/engivac,
-		/datum/manufacture/lampmanufacturer,
-		/datum/manufacture/breathmask,
-		/datum/manufacture/engspacesuit,
-		/datum/manufacture/lightengspacesuit,
-		/datum/manufacture/floodlight,
-		/datum/manufacture/powercell,
-		/datum/manufacture/powercellE,
-		/datum/manufacture/powercellC,
-		/datum/manufacture/powercellH,
-#ifdef UNDERWATER_MAP
-		/datum/manufacture/engdivesuit,
-		/datum/manufacture/flippers,
-#endif
-#ifdef MAP_OVERRIDE_OSHAN
-	/datum/manufacture/cable/reinforced,
-#endif
-		/datum/manufacture/mechanics/laser_mirror,
-		/datum/manufacture/mechanics/laser_splitter,
-		/datum/manufacture/interdictor_kit,
-		/datum/manufacture/interdictor_board_standard,
-		/datum/manufacture/interdictor_board_nimbus,
-		/datum/manufacture/interdictor_board_zephyr,
-		/datum/manufacture/interdictor_board_devera,
-		/datum/manufacture/interdictor_rod_lambda,
-		/datum/manufacture/interdictor_rod_sigma,
-		/datum/manufacture/interdictor_rod_epsilon,
-		/datum/manufacture/interdictor_rod_phi
-	)
-
-	New()
-		. = ..()
-		if (isturf(src.loc)) //not inside a frame or something
-			new /obj/item/paper/book/from_file/interdictor_guide(src.loc)
-
-/// Manufacturer blueprints can be read by any manufacturer unit to add the referenced object to the unit's production options.
-/obj/item/paper/manufacturer_blueprint
-	name = "manufacturer blueprint"
-	desc = "This is a laminated blueprint covered in specialized instructions. A manufacturing unit could build something from this."
-	info = "There's all manner of confusing diagrams and instructions on here. It's meant for a machine to read."
-	icon = 'icons/obj/electronics.dmi'
-	icon_state = "blueprint"
-	item_state = "sheet"
-	var/datum/manufacture/blueprint = null
-	var/override_name_desc = TRUE //! If non-zero, the name and description of this blueprint will be overriden on New() with standardized values
-
-	New(loc, schematic = null)
-		..()
-		if(istype(schematic, /datum/manufacture))
-			src.blueprint = schematic
-		else if (!schematic)
-			if (ispath(src.blueprint))
-				src.blueprint = get_schematic_from_path(src.blueprint)
-			else
-				qdel(src)
-				return FALSE
+	proc/check_power_status()
+		if (src.powered() && !src.power_wire_cut && src.dismantle_stage <= 2)
+			src.status &= ~NOPOWER
 		else
-			if (istext(schematic))
-				src.blueprint = get_schematic_from_name(schematic)
-			else if (ispath(schematic))
-				src.blueprint = get_schematic_from_path(schematic)
-		if (!src.blueprint)
-			qdel(src)
-			return FALSE
-		if(src.override_name_desc)
-			src.name = "manufacturer blueprint: [src.blueprint.name]"
-			src.desc = "This laminated blueprint could be read by a manufacturing unit to add \the [src.blueprint.name] to its production options."
-		src.pixel_x = rand(-4, 4)
-		src.pixel_y = rand(-4, 4)
-		return TRUE
-
-/obj/item/paper/manufacturer_blueprint/clonepod
-	blueprint = /datum/manufacture/mechanics/clonepod
-
-/obj/item/paper/manufacturer_blueprint/clonegrinder
-	blueprint = /datum/manufacture/mechanics/clonegrinder
-
-/obj/item/paper/manufacturer_blueprint/clone_scanner
-	blueprint = /datum/manufacture/mechanics/clone_scanner
-
-/obj/item/paper/manufacturer_blueprint/loafer
-	blueprint = /datum/manufacture/mechanics/loafer
-
-/obj/item/paper/manufacturer_blueprint/lawrack
-	blueprint = /datum/manufacture/mechanics/lawrack
-
-/obj/item/paper/manufacturer_blueprint/ai_status_display
-	blueprint = /datum/manufacture/mechanics/ai_status_display
-
-/obj/item/paper/manufacturer_blueprint/thrusters
-	name = "manufacturer blueprint: Alastor Pattern Thrusters"
-	desc = "This blueprint lacks the usual human-readable documentation, and is smudged with traces of charcoal. Huh."
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "blueprint"
-	blueprint = /datum/manufacture/thrusters
-
-/obj/item/paper/manufacturer_blueprint/alastor
-	name = "manufacturer blueprint: Alastor Pattern Laser Rifle"
-	desc = "This blueprint lacks the usual human-readable documentation, and is smudged with traces of charcoal. Huh."
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "blueprint"
-	blueprint = /datum/manufacture/alastor
-
-/obj/item/paper/manufacturer_blueprint/interdictor_kit
-	name = "Interdictor Frame Kit"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
-	blueprint = /datum/manufacture/interdictor_kit
-
-/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda
-	name = "Lambda Phase-Control Rod"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
-	blueprint = /datum/manufacture/interdictor_rod_lambda
-
-/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma
-	name = "Sigma Phase-Control Rod"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
-	blueprint = /datum/manufacture/interdictor_rod_sigma
-
-/obj/item/paper/manufacturer_blueprint/gunbot
-	name = "manufacturer blueprint: AP-Class Security Robot"
-	desc = "This blueprint seems to detail a very old model of security bot dating back to the 2030s. Hopefully the manufacturers have legacy support."
-	blueprint = /datum/manufacture/mechanics/gunbot
-	override_name_desc = FALSE
-
-#ifdef ENABLE_ARTEMIS
-/obj/machinery/manufacturer/artemis
-	name = "Scout Vessel Manufacturer"
-	desc = "A manufacturing unit that can produce equipment for scouting vessels."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
-	accept_blueprints = 0
-	available = list(
-	/datum/manufacture/nav_sat)
-#endif
-/******************** Nadir Resonators *******************/
-
-/obj/item/paper/manufacturer_blueprint/resonator_type_ax
-	name = "Type-AX Resonator"
-	blueprint = /datum/manufacture/resonator_type_ax
-
-/obj/item/paper/manufacturer_blueprint/resonator_type_sm
-	name = "Type-SM Resonator"
-	blueprint = /datum/manufacture/resonator_type_sm
-
-
-/// This is a special item that breaks apart into blueprints for the machines needed to build/repair a cloner.
-/obj/item/cloner_blueprints_folder
-	name = "dirty manila folder"
-	desc = "An old manila folder covered in stains. It looks like it'll fall apart at the slightest touch."
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "folder"
-	w_class = W_CLASS_SMALL
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 10
-
-	attack_self(mob/user)
-		boutput(user, SPAN_ALERT("The folder disintegrates in your hands, and papers scatter out. Shit!"))
-		new /obj/item/paper/manufacturer_blueprint/clonepod(get_turf(src))
-		new /obj/item/paper/manufacturer_blueprint/clonegrinder(get_turf(src))
-		new /obj/item/paper/manufacturer_blueprint/clone_scanner(get_turf(src))
-		new /obj/item/paper/hecate(get_turf(src))
-		qdel(src)
+			src.status |= NOPOWER
 
 /datum/action/bar/manufacturer
 	duration = 100 SECONDS
@@ -2963,7 +1998,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 	onInterrupt()
 		..()
 		MA.time_left = src.duration - (TIME - src.started)
-		MA.manual_stop = FALSE
 		MA.error = null
 		MA.mode = MODE_READY
 		MA.build_icon()
@@ -3012,6 +2046,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 				getItemIcon(I.item_outputs[1])
 
 #undef MAX_QUEUE_LENGTH
+#undef DISMANTLE_NONE
+#undef DISMANTLE_PLATING_BOLTS
+#undef DISMANTLE_PLATING_SHEETS
+#undef DISMANTLE_WIRES
 #undef WIRE_EXTEND
 #undef WIRE_POWER
 #undef WIRE_MALF

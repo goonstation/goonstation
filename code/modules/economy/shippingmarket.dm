@@ -1,6 +1,5 @@
-#define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
-#define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
-
+#define SUPPLY_OPEN_TIME (1 SECOND) //Time it takes to open supply door in seconds.
+#define SUPPLY_CLOSE_TIME (15 SECONDS) //Time it takes to close supply door in seconds.
 /// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
 #define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 100
 /// The number of peak points on the pressure crystal graph offering bonus credits
@@ -72,9 +71,6 @@
 				qdel(C)
 
 
-		SPAWN(300)
-			market_shift()
-
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
 
@@ -92,10 +88,6 @@
 			src.add_req_contract()
 
 		update_shipping_data()
-
-		// 7:30 +/- 2:30 = 5 ~ 10 minutes
-		time_between_shifts = 7.5 MINUTES
-		time_until_shift = time_between_shifts + rand(-150, 150) SECONDS
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -152,27 +144,17 @@
 		return picked_contract
 
 	proc/timeleft()
-		var/timeleft = src.time_until_shift - TIME
+		return max(0, src.time_until_shift - TIME)
 
-		if(timeleft <= 0)
-			src.time_until_shift = TIME + time_between_shifts + rand(-90,90) SECONDS
-			market_shift()
-			return 0
-
-		return timeleft
-
-	// Returns the time, in MM:SS format
+	/// Returns the time in MM:SS format
 	proc/get_market_timeleft()
 		var/timeleft = src.timeleft() / 10
 		if(timeleft)
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/market_shift()
-		#ifndef FUCK_OFF_WITH_THE_MAIL
-		var/time_since_previous = (TIME - last_market_update)
-		#endif
-		last_market_update = TIME
-		elapsed_shifts += 1
+		src.last_market_update = TIME
+		src.elapsed_shifts += 1
 
 		// Chance of a commodity being hot. Sometimes the market is on fire.
 		// Sometimes it is not. They still have to have a positive value roll,
@@ -298,7 +280,7 @@
 		#ifndef FUCK_OFF_WITH_THE_MAIL
 		if (src.elapsed_shifts % 2 == 0) //every other shift
 			SPAWN(0)
-				src.generate_mail(time_since_previous)
+				src.generate_mail()
 		#endif
 
 		SPAWN(5 SECONDS)
@@ -317,9 +299,12 @@
 			update_shipping_data()
 			update_buy_prices()
 
-	proc/generate_mail(time_since_previous)
-		var/adjustment = max(time_since_previous, 2 MINUTES)
+	proc/generate_mail()
 		var/alive_players = 0
+		var/target_percentage = 0.375
+		for(var/datum/job/civilian/mail_courier/J in job_controls.staple_jobs)
+			if (J.assigned)
+				target_percentage = 0.5
 		for(var/client/C)
 			if (!isliving(C.mob) || isdead(C.mob) || !ishuman(C.mob) || inafterlife(C.mob))
 				continue
@@ -330,8 +315,10 @@
 		// one hour / 7.5 minutes = 8
 		// so, 3 / 8 = 37.5% of players should get mail
 		// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
-		var/mail_amount = ceil(alive_players * (0.25 * (adjustment / (7.5 MINUTES))))
-		logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
+		// readjusting upwards slightly as the mail delivery rate was cut
+		var/mail_amount = ceil(alive_players * target_percentage)
+		logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail.")
+		mail_amount = min(mail_amount, 100) // no more infinite ~~nuggets~~ mail, please
 		if (alive_players >= 1)
 			var/obj/storage/crate/mail/mail_crate = new
 			mail_crate.name = "mail box"
@@ -399,7 +386,7 @@
 
 
 	proc/calculate_artifact_price(var/modifier, var/correctness)
-		return ((modifier**2) * PAY_EMBEZZLED * correctness)
+		return ((modifier**1.5) * PAY_EMBEZZLED * correctness)
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
@@ -550,6 +537,11 @@
 		value = round(value)
 		if (sell && value > 0)
 			src.pressure_crystal_sales["[pc.pressure]"] = value
+			var/datum/signal/pdaSignal = get_free_signal() // tell sciv
+			var/message = "Notification: [value] credits earned from outgoing pressure crystal at [pc.pressure] kiloblast. "
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"=message)
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
 		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
@@ -649,6 +641,7 @@
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
 			wagesystem.shipping_budget += share_NT
 			account["current_money"] += share_seller
+			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets

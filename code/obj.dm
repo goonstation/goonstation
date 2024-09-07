@@ -21,6 +21,9 @@
 	var/_health = 100
 	var/_max_health = 100
 
+	/// if gun/bullet related, forensic profile of it
+	var/forensic_ID = null
+
 	New()
 		. = ..()
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
@@ -103,7 +106,6 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.getQuality()
 			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
@@ -178,6 +180,9 @@
 	proc/pixelaction(atom/target, params, mob/user, reach)
 		return 0
 
+	proc/can_arm_attach()
+		return !(src.object_flags & NO_ARM_ATTACH )
+
 	assume_air(datum/air_group/giver)
 		if (loc)
 			return loc.assume_air(giver)
@@ -190,8 +195,8 @@
 		else
 			return null
 
-	return_air()
-		if (loc)
+	return_air(direct = FALSE)
+		if (loc && !direct)
 			return loc.return_air()
 		else
 			return null
@@ -472,3 +477,12 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		return TRUE
 
 /obj/proc/after_abcu_spawn()
+
+/// creates an id profile for any forenics purpose. override as needed
+/obj/proc/CreateID()
+	. = ""
+
+	do
+		for(var/i = 1 to 10) // 20 characters are way too fuckin' long for anyone to care about
+			. += "[pick(numbersAndLetters)]"
+	while(. in forensic_IDs)

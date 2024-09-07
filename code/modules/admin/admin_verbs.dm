@@ -135,6 +135,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_managebioeffect,
 		/client/proc/toggle_cloning_with_records,
 		/client/proc/toggle_random_job_selection,
+		/client/proc/toggle_tracy_profiling,
 
 		/client/proc/debug_deletions,
 
@@ -220,7 +221,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_add_freeform_ai_law,
 		/client/proc/cmd_admin_show_ai_laws,
 		/client/proc/cmd_admin_reset_ai,
-		/client/proc/addpathogens,
 		/client/proc/addreagents,
 		/client/proc/respawn_as_self,
 		/datum/admins/proc/toggletraitorscaling,
@@ -247,6 +247,7 @@ var/list/admin_verbs = list(
 		/client/proc/resetbuildmode,
 		/client/proc/togglebuildmode,
 		/client/proc/toggle_buildmode_view,
+		/client/proc/toggle_hide_offline,
 		/client/proc/cmd_admin_rejuvenate_all,
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
@@ -282,7 +283,6 @@ var/list/admin_verbs = list(
 		//client/proc/cmd_admin_delete,
 		/client/proc/noclip,
 		/client/proc/idclip,
-		///client/proc/addpathogens,
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_list_players,
 		/client/proc/cmd_give_player_pets,
@@ -400,6 +400,7 @@ var/list/admin_verbs = list(
 		/client/proc/special_fullbright,
 		/client/proc/replace_space_exclusive,
 		/client/proc/dereplace_space,
+		/client/proc/unterrainify,
 		/client/proc/ghostdroneAll,
 		/client/proc/showLoadingHint,
 		/client/proc/showPregameHTML,
@@ -424,7 +425,9 @@ var/list/admin_verbs = list(
 #endif
 		/client/proc/distribute_tokens,
 		/client/proc/spawn_all_type,
-		/client/proc/region_allocator_panel
+		/client/proc/region_allocator_panel,
+		/datum/admins/proc/toggle_pcap_kick_messages,
+		/client/proc/set_round_req_bypass,
 		),
 
 	7 = list(
@@ -1090,7 +1093,7 @@ var/list/fun_images = list()
 	SHOW_VERB_DESC
 	if(istext(J))
 		var/idx = job_controls.savefile_get_job_names(src)?.Find(J)
-		if(job_controls.savefile_load(src, idx))
+		if(job_controls.cloudsave_load(src, idx))
 			J = job_controls.create_job(TRUE)
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
@@ -1160,7 +1163,7 @@ var/list/fun_images = list()
 		ticker.minds += mymob.mind
 	mymob.mind.transfer_to(H)
 	if(new_mob)
-		H.Equip_Rank(jobstring, 2) //ZeWaka: joined_late is 2 so you don't get announced.
+		H.Equip_Rank(jobstring, 2, skip_manifest = src.holder.skip_manifest) //ZeWaka: joined_late is 2 so you don't get announced.
 		H.update_colorful_parts()
 	qdel(mymob)
 	if (flourish)
@@ -1357,6 +1360,13 @@ var/list/fun_images = list()
 	if (confirm7 == "Yes")
 		src.set_saturation(1)
 		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
+
+	var/confirm8 = tgui_alert(src.mob, "Disable Global Parallax?", "Disable Global Parallax?", list("Yes", "No"))
+	if (confirm8 == "Yes")
+		parallax_enabled = !parallax_enabled
+
+		for (var/client/client in clients)
+			client.toggle_parallax()
 
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
@@ -1795,6 +1805,9 @@ var/list/fun_images = list()
 		var/ignorePlayerVote = tgui_alert(src.mob, "The next map was voted for by the players, are you sure you want to override it? This could be very rude!", "Ignore Players?", list("Yes", "No"))
 		if (ignorePlayerVote == "No")
 			return
+
+	if (mapSwitcher.locked)
+		return alert("The server is currently switching to another map. You will need to wait.")
 
 	var/info = "Select a map"
 	info += "\nCurrently on: [mapSwitcher.current]"
@@ -2241,7 +2254,8 @@ var/list/fun_images = list()
 
 	var/client/C = src.client
 	if (choice in type_procs)
-		call(A, type_procs[choice])()
+		var/procpath/procpath = type_procs[choice]
+		call(A, procpath.name)()
 		src.update_cursor()
 		return
 
@@ -2557,12 +2571,17 @@ var/list/fun_images = list()
 				players[M.mind.get_player()] = antag
 				break
 	var/total = 0
+	var/list/key_list = list()
 	for (var/datum/player/player in players)
 		var/datum/antagonist/antag = players[player]
 		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
 		total += 1
 		player.set_antag_tokens(player.get_antag_tokens() + 1)
+		key_list += player.key
 	boutput(src, "Roundstart antags given tokens: [total]")
+	var/key_text = english_list(key_list)
+	logTheThing(LOG_ADMIN, src, "[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
+	message_admins("[key_name(src.mob)] distributed antagonist tokens to the following roundstart antagonists: [key_text]")
 
 /client/proc/spawn_all_type()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2641,3 +2660,21 @@ var/list/fun_images = list()
 		src.holder.region_allocator_panel = new
 
 	src.holder.region_allocator_panel.ui_interact(src.mob)
+
+/client/proc/set_round_req_bypass(ckey as text)
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Set round req bypass"
+	set desc = "Set a flag for a specific ckey to allow them to bypass round requirements for jobs etc."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	var/datum/player/player = make_player(ckey)
+	if (!player)
+		boutput(src, SPAN_ALERT("Unable to load data for ckey \"[ckey]\""))
+		return
+	var/value = alert(src, "Set flag on or off? Currently [player.cloudSaves.getData("bypass_round_reqs") ? "on" : "off"]", "Round requirement bypass for [ckey]", "On", "Off")
+	if (player.cloudSaves.putData("bypass_round_reqs", (value == "On")))
+		boutput(src, "Successfully set round requirement bypass flag")
+		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
+	else
+		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))

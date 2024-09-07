@@ -107,7 +107,7 @@ datum
 				if(!affected_mob)
 					affected_mob = holder.my_atom
 				//let's not make the lungrot reaction effectively double the depletion rate of miasma
-				affected_mob.reagents.add_reagent("miasma", mult * depletion_rate)
+				affected_mob.reagents.add_reagent("miasma", src.calculate_depletion_rate(affected_mob, mult))
 				..()
 
 
@@ -528,78 +528,3 @@ datum
 			fluid_b = 40
 			transparency = 50
 			disease = /datum/ailment/disease/leprosy
-
-		// Marquesas' one stop pathology shop
-		blood/pathogen
-			name = "pathogen"
-			id = "pathogen"
-			description = "A liquid sample of one (or multiple) pathogens."
-			reagent_state = LIQUID
-			fluid_r = 50
-			fluid_b = 50
-			fluid_g = 180
-			transparency = 200
-			depletion_rate = 0.8
-			smoke_spread_mod = 10
-
-			reaction_turf(var/turf/T, var/volume)
-				return
-
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
-				. = ..()
-				// sure just fucking splash around in the stuff
-				// this is mainly so puddles from the sweating symptom can infect
-				for (var/uid in src.pathogens)
-					var/datum/pathogen/P = src.pathogens[uid]
-					logTheThing(LOG_PATHOLOGY, M, "is splashed with [src] containing pathogen [P].")
-					if(istype(M, /mob/living/carbon/human))
-						var/mob/living/carbon/human/H = M
-						if(prob(100-H.get_disease_protection()))
-							if(H.infected(P))
-								H.show_message(SPAN_ALERT("Ew, some of that disgusting green stuff touched you!"))
-				return
-
-			on_plant_life(var/obj/machinery/plantpot/P)
-				return
-
-		antiviral
-			name = "Viral Serum"
-			id = "antiviral"
-			description = "An agent which can be used to create a specialized cure for a viral pathogen."
-			reagent_state = 2
-
-		// To make matters easier, fungi and parasites are both cured by the same biocides
-		biocide
-			name = "Biocide"
-			id = "biocide"
-			description = "An agent which can be used to create a specialized cure for a fungal or parasitic pathogen."
-			reagent_state = 2
-
-		// A mutation inhibitor that should destroy great mutatis cells.
-		// A derivative of mutadone.
-		inhibitor
-			name = "Mutation Inhibitor"
-			id = "inhibitor"
-			description = "An agent which can be used to create a specialized cure for a cellular mutative pathogen"
-			reagent_state = 2
-
-		bacterialmedium
-			name = "Bacterial Medium"
-			id = "bacterialmedium"
-			description = "A solution useful for the cultivation of bacteria."
-			reagent_state = 2
-			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
-
-		parasiticmedium
-			name = "Parasitic Medium"
-			id = "parasiticmedium"
-			description = "A solution useful for the cultivation of parasites."
-			reagent_state = 2
-			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
-
-		fungalmedium
-			name = "Fungal Medium"
-			id = "fungalmedium"
-			description = "A solution encouraging the growth of fungi."
-			reagent_state = 2
-			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")

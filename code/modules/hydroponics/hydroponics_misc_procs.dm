@@ -116,7 +116,7 @@ proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plant
 
 	switch(quality_status)
 		if("jumbo")
-			completed_name = "jumbo [completed_name]"
+			completed_name = "JUMBO [uppertext(completed_name)]"
 		if("rotten")
 			switch(quality_score)
 				if(-14 to -11)
@@ -200,16 +200,18 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 	//Now the seed it created and we can release it upon the world
 	return child
 
-proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype)
+proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype, var/force_new_datum = FALSE)
 	// this proc returns a copy of a planttype
 	// for basic plants, it just returns the planttype, since they are singletons.
 	// for spliced plants, since they run on instanced copies, it creates a new instance inside applied_object.
-	if (parent_planttype.hybrid)
+	// If we want to generate a new plant datum out one of our singletons, because we want to modify it (e.g. weed), set force_new_datum to TRUE
+	if (parent_planttype.hybrid || force_new_datum)
 		var/plantType = parent_planttype.type
 		var/datum/plant/hybrid = new plantType(applied_object)
 		for (var/transfered_variables in parent_planttype.vars)
 			if (issaved(parent_planttype.vars[transfered_variables]) && transfered_variables != "holder")
 				hybrid.vars[transfered_variables] = parent_planttype.vars[transfered_variables]
+		hybrid.hybrid = TRUE // That's cursed, but i'm here for it
 		return hybrid
 	else
 		return parent_planttype
@@ -437,3 +439,9 @@ proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 		if(upperbound && checkedvariable > upperbound) return 0
 		return 1
 	else return 1
+
+proc/HYPstat_rounding(var/input_number)
+	// Since plantstats are integers, but we want to accomodate for fractional plantgrowth_tick-multipliers, we need some special behaviour
+	// This proc will take a value and round up with a chance equal to the first two fractional numbers
+	// this means e.g. 4,24 in this proc will output a 5 with a 24% chance and a 4 with a 76% chance
+	return trunc(input_number) + (prob(fract(input_number) * 100) * sign(input_number))

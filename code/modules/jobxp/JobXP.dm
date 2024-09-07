@@ -30,13 +30,20 @@ var/list/xp_cache = list()
 			var/xpEarned = keyList[job]
 			var/xpTotal = get_xp(key, job)
 
-			html += {"<p>[job] +[xpEarned]xp</p>"}
 			if (isnull(xpTotal))
 				xpTotal = xpEarned // for local dev servers where get_xp will always return null
-			var/current_level = round(LEVEL_FOR_XP(xpTotal))
-			var/percent_complete = round((xpTotal / XP_FOR_LEVEL(current_level + 1))*100)
-			html += {"<span style="float:left">Level [current_level]</span><span style="float:right">Level [current_level+1]</span><br>"}
-			html += {"<div class="progress-bar"><div class="progress" style="width: [min(percent_complete, 100)]%"></div></div><br><br>"}
+			var/current_level = LEVEL_FOR_XP(xpTotal)
+			var/level_exp = xpTotal - XP_FOR_LEVEL(current_level)
+			var/level_exp_req = XP_FOR_LEVEL(current_level  + 1) - XP_FOR_LEVEL(current_level)
+			var/percent_complete = round((level_exp / level_exp_req )*100)
+
+			html += {"
+			<div style="margin: 0.5em;"><b>[job] &mdash; Level [current_level]</b>
+			<br>Gained +[xpEarned]xp ([xpTotal]xp total)
+			<br><div class="progress-bar"><div class="progress" style="width: [min(percent_complete, 100)]%; color: white; font-size: 80%; font-family: Tahoma, sans-serif; padding-top: 7px; padding-right: 2px; text-align: right;">[percent_complete]%</div></div>
+			<div style='text-align: right;'>[level_exp]/[level_exp_req]xp<br>[level_exp_req - level_exp] to next</div>
+			</div>
+			"}
 
 		if(!hasEntries)
 			html += {"<p>No experience earned.</p><br>"}

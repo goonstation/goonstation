@@ -141,7 +141,7 @@ interface DestinationSearchProps {
 const DestinationSearch = (props: DestinationSearchProps, context) => {
   const {
     destinations = [],
-    destinationTag = null,
+    destinationTag,
   } = props;
   const { act } = useBackend(context);
 

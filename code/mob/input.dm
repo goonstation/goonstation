@@ -206,7 +206,7 @@
 						deliver_move_trigger(running ? "sprint" : m_intent)
 
 					// Tripping (the physical kind)
-					var/trip_chance = 5
+					var/trip_chance = 2 // because of how often this is called, 2% seems like more than enough
 					if (src.traitHolder && src.traitHolder.hasTrait("trippy") && prob(trip_chance))
 						src.setStatus("resting", INFINITE_STATUS)
 						src.force_laydown_standup()

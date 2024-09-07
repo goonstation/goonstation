@@ -2,7 +2,7 @@
 	name = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
@@ -159,7 +159,6 @@
 	name = "ducktape"
 	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	m_amt = 200
 	amount = 10

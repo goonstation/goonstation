@@ -26,7 +26,8 @@
 /// light: color "#0000ff" | dark: color "#7996ff"
 #define SPAN_HINT(string) ("<span class='hint'>" + string + "</span>")
 
-
+/// light: color "#a97da9" | dark: color "#5A1D8A"
+#define SPAN_ARTHINT(string) ("<span class='arthint'>" + string + "</span>")
 
 /* == == == Important Messages == == == */
 

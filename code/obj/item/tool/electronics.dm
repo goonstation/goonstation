@@ -15,7 +15,7 @@
 	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
 	..()
@@ -352,7 +352,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -364,7 +364,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -376,7 +376,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -899,7 +899,6 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

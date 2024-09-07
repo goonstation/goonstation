@@ -3,8 +3,10 @@
 
 ABSTRACT_TYPE(/obj/machinery/power/power_wheel)
 TYPEINFO(/obj/machinery/power/power_wheel)
-	mats = list("CON-1"=5, "MET-1"=25, "INS-1"=3, "POW-2"=10)
-
+	mats = list("conductive" = 5,
+				"metal" = 25,
+				"insulated" = 3,
+				"energy_high" = 10)
 /obj/machinery/power/power_wheel
 	name = "Kinetic Generator"
 	desc = "A large wheel used to generate power."

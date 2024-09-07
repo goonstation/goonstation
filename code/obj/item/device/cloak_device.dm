@@ -7,7 +7,7 @@ TYPEINFO(/obj/item/cloaking_device)
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
 	var/active = 0
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
+	flags = TABLEPASS | CONDUCT | NOSHIELD
 	item_state = "electronic"
 	throwforce = 5
 	throw_speed = 2
@@ -69,6 +69,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
 			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
+			user.playsound_local(src, "sparks", 50, 0)
 		src.active = FALSE
 		src.UpdateIcon()
 

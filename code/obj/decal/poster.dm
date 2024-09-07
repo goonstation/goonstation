@@ -670,20 +670,37 @@
 				var/which = pick(
 					// the fuck II poster
 					30;"fuckII",
-					// new contest winners
+					// contest winners from January 2021 and June 2024
 					50;"contest1",
 					50;"contest2",
 					50;"contest3",
 					50;"contest4",
 					50;"contest5",
-					// new contest not-winners but cool nonetheless
+					50;"contest6",
+					50;"contest7",
+					50;"contest8",
+					50;"contest9",
+					50;"contest10",
+					50;"contest11",
+					50;"contest12",
+					50;"contest13",
+					50;"contest14",
+					50;"contest15",
+					50;"contest16",
+					// poster contest not-winners but cool nonetheless
 					5 ;"contest-other1",
 					5 ;"contest-other2",
 					5 ;"contest-other3",
 					5 ;"contest-other4",
 					5 ;"contest-other5",
 					5 ;"contest-other6",
-					5 ;"contest-other7"
+					5 ;"contest-other7",
+					5 ;"contest-other8",
+					5 ;"contest-other9",
+					5 ;"contest-other10",
+					5 ;"contest-other11",
+					5 ;"contest-other12",
+					5 ;"contest-other13"
 					)
 				switch(which)
 					if("fuckII")
@@ -705,6 +722,48 @@
 					if("contest5")
 						src.name = "Work! Ranch"
 						src.icon_state = "work_ranch"
+					if("contest6")
+						src.name = "Red Saw"
+						src.icon_state = "red_saw"
+					if("contest7")
+						src.name = "Men in Red"
+						src.icon_state = "men_in_red"
+						src.desc = "The classic 50's movie with the highest amount of explosives used on set ever."
+					if("contest8")
+						src.name = "Capy King"
+						src.icon_state = "capy_king"
+						src.desc = "Who thought it was a good idea to bring the capybaby this close to the sun?"
+					if("contest9")
+						src.name = "Pie Hard"
+						src.icon_state = "pie_hard"
+						src.desc = "\"Something smells funny. The HoS is against Don McClown...and that's just the way he honks it.\""
+					if("contest10")
+						src.name = "Parting Red"
+						src.icon_state = "parting_red"
+					if("contest11")
+						src.name = "Mentors"
+						src.icon_state = "mentors"
+					if("contest12")
+						src.name = "Changer III"
+						src.icon_state = "changeriii"
+						src.desc = "Coming this summer...a totally fictional horror story. NOT based on a true story."
+					if("contest13")
+						src.name = "Clown"
+						src.icon_state = "clown"
+					if("contest14")
+						src.name = "Planet Abzu"
+						src.icon_state = "planet_abzu"
+						src.desc = {"\"This summer, take a journey to a cambrian world untouched by time and discover the mysteries
+								lying beneath the waves of this distant ocean planet.
+								A nature documentary presented by David Spacenborough.\""}
+					if("contest15")
+						src.name = "Fuckin Monky"
+						src.icon_state = "fuckin_monky"
+						src.desc = "This summer...based on real events (maybe)...the damn monkeys!"
+					if("contest16")
+						src.name = "Wraithbusters"
+						src.icon_state = "wraithbusters"
+						src.desc = "\"If there's something strange / In your stationhood. / Who you gonna call? / (Wraithbusters!)\""
 					if("contest-other1")
 						src.name = "Pack Smart"
 						src.icon_state = "pack_smart"
@@ -726,6 +785,26 @@
 					if("contest-other7")
 						src.name = "Code"
 						src.icon_state = "code"
+					if("contest-other8")
+						src.name = "Click 2"
+						src.icon_state = "click2"
+						src.desc = "\"What if the greatest movie of all time had a sequel?\""
+					if("contest-other9")
+						src.name = "Biodome"
+						src.icon_state = "biodome"
+					if("contest-other10")
+						src.name = "Rat"
+						src.icon_state = "rat"
+					if("contest-other11")
+						src.name = "The Honkinator"
+						src.icon_state = "the_honkinator"
+					if("contest-other12")
+						src.name = "The Cluwne"
+						src.icon_state = "the_cluwne"
+						src.desc = "\"This summer...things are getting...honked.\""
+					if("contest-other13")
+						src.name = "Cluwne XVII"
+						src.icon_state = "cluwnexvii"
 
 			attack_hand(mob/user)
 				. = ..()

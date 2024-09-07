@@ -177,7 +177,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | USEDELAY
+	flags = FLUID_SUBMERGE | USEDELAY
 	material_amt = 0.2
 
 	var/on = 0 // 1 if on, 0 if off
@@ -199,6 +199,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	var/removable_bulb = 1
 	var/datum/light/point/light
 	var/install_type = INSTALL_WALL
+
+	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
+
+	pass_unstable = TRUE
 
 	New()
 		..()
@@ -225,6 +229,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			A.remove_light(src)
 		if (light)
 			light.dispose()
+
+		qdel(src.light_overlay)
+		src.light_overlay = null
 		..()
 
 	proc/autoposition(setdir = null, instant = FALSE)
@@ -262,7 +269,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
+	Cross(atom/movable/mover)
+		. = ..()
+		if(istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if(P.called_target == src && P.proj_data?.damage > 5)
+				. = FALSE
 
+	bullet_act(obj/projectile/P)
+		. = ..()
+		src.do_break()
 
 //big standing lamps
 /obj/machinery/light/flamp
@@ -817,6 +833,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	light.set_color(initial(src.light_type.color_r), initial(src.light_type.color_g), initial(src.light_type.color_b))
 	light.set_height(2.4)
 	light.attach(src)
+	if (is_valid_icon_state("[src.base_state]-overlay", src.icon))
+		light_overlay = new()
+		light_overlay.mouse_opacity = 0
+		light_overlay.icon = src.icon
+		light_overlay.icon_state = "[src.base_state]-overlay"
+		light_overlay.vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 	SPAWN(1 DECI SECOND)
 		update()
 
@@ -862,13 +884,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			if(LIGHT_BROKEN)
 				icon_state = "[base_state]-broken"
 				on = 0
+	if (!on)
+		vis_contents -= light_overlay
+		return
+	if (!(light_overlay in vis_contents))
+		vis_contents += light_overlay
 
 /obj/machinery/light/proc/do_break()
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
-	icon_state = "[base_state]-broken"
 	on = 0
 	light.disable()
+	src.update_icon_state()
 	elecflash(src, radius = 1, power = 2, exclude_center = 0)
 	logTheThing(LOG_STATION, null, "Light '[name]' broke itself (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
@@ -879,10 +906,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	logTheThing(LOG_STATION, null, "Light '[name]' burned out (burnprob: [current_lamp.burnprob]) at ([log_loc(src)])")
 	SPAWN(0.2 SECONDS)
 		src.light.set_brightness(original_brightness)
-		src.icon_state = "[base_state]-burned"
 		src.current_lamp.breakprob = WORN_LIGHT_BREAKPROB
 		src.current_lamp.light_status = LIGHT_BURNED
 		src.current_lamp.update()
+		src.update_icon_state()
 		playsound(src, 'sound/effects/sparks4.ogg', 40, TRUE)
 		src.on = FALSE
 		src.light.disable()
@@ -1036,6 +1063,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 			boutput(user, "You hit the light, and it smashes!")
 			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
+
+			var/datum/gang/gang = user.get_gang()
+			gang?.do_vandalism(GANG_VANDALISM_LIGHT_BREAK_POINTS, src.loc)
+
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -1252,7 +1283,6 @@ TYPEINFO(/obj/item/light)
 /obj/item/light
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	flags = FPRINT | TABLEPASS
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
@@ -1461,6 +1491,14 @@ TYPEINFO(/obj/item/light)
 		color_r = 0.95
 		color_g = 0.2
 		color_b = 0.2
+	reddish //apparently y'all didn't have reddish bulbs?
+		name = "reddish light bulb"
+		desc = "Fancy."
+		icon_state = "bulb-red"
+		base_state = "bulb-red"
+		color_r = 0.98
+		color_g = 0.75
+		color_b = 0.5
 	yellow
 		name = "yellow light bulb"
 		desc = "Fancy."

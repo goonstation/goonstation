@@ -187,8 +187,12 @@ TYPEINFO(/obj/machinery/recharge_station)
 		. = ..()
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
-	if (BOUNDS_DIST(AM, src) > 0 || BOUNDS_DIST(src, user) > 0)
-		return
+	if (ismob(AM))
+		if (BOUNDS_DIST(AM, src) > 0 || BOUNDS_DIST(src, user) > 0)
+			return
+	else
+		if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
+			return
 	if (!isturf(AM.loc) && !(AM in user))
 		return
 	if (!isliving(user) || isAI(user))
@@ -314,8 +318,16 @@ TYPEINFO(/obj/machinery/recharge_station)
 						bdna = H.bioHolder.Uid
 						btype = H.bioHolder.bloodType
 					gibs(src.loc, null, bdna, btype)
-
-					H.Robotize_MK2(TRUE, syndicate=TRUE)
+					if (isnpcmonkey(H))
+						H.ghostize()
+						var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,
+						/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,
+						/obj/machinery/bot/floorbot)
+						var/obj/machinery/bot/bot = new robopath (src.loc)
+						bot.emag_act()
+						qdel(H)
+					else
+						H.Robotize_MK2(TRUE, syndicate=TRUE)
 					src.build_icon()
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 			else

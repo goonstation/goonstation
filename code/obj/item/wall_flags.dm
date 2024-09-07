@@ -20,6 +20,7 @@
 			return
 		if (istype(T, /turf/simulated/wall/) || istype(T, /turf/unsimulated/wall))
 			var/obj/decal/poster/flag/new_flag = new src.associated_flag(T)
+			qdel(new_flag.flag_item)
 			new_flag.flag_item = src
 			user.u_equip(src)
 			src.set_loc(new_flag)

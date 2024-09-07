@@ -15,7 +15,7 @@ TRASH BAG
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS|OPENCONTAINER|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
@@ -94,125 +94,6 @@ TRASH BAG
 	initial_volume = 25
 	refill_speed = 0.75
 
-/obj/janitorTsunamiWave
-	name = "chemicals"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "tsunami"
-	alpha = 175
-	anchored = ANCHORED
-
-	New(var/_loc, var/atom/target)
-		..()
-		set_loc(_loc)
-		create_reagents(10)
-		reagents.add_reagent("cleaner", 10)
-		var/direction = src.dir
-		if(target)
-			direction = get_dir_alt(src, target)
-		if(direction == NORTHEAST || direction == NORTHWEST || direction == SOUTHEAST || direction == SOUTHWEST)
-			direction = turn(direction, 45)
-		switch(direction)
-			if(NORTH)
-				pixel_x = -32
-			if(EAST)
-				pixel_y = -32
-			if(SOUTH)
-				pixel_x = -32
-				pixel_y = -64
-			if(WEST)
-				pixel_x = -64
-				pixel_y = -32
-		var/matrix/M = matrix()
-		M = M.Scale(0,0)
-		src.transform = M
-		animate(src, transform=matrix(), time = 25, easing = ELASTIC_EASING)
-		SPAWN(0)
-			go(direction)
-
-	proc/go(var/direction)
-		src.set_dir(direction)
-		clean(direction)
-		for(var/i=0, i<10, i++)
-			var/turf/T = get_step(src.loc, direction)
-			if(!isnull(T))
-				var/blocked = 0
-				for(var/atom/movable/A in T)
-					if(A.density && A.anchored && !ismob(A))
-						blocked = 1
-						break
-				if(T.density || blocked)
-					return vanish()
-				else
-					src.set_loc(T)
-					clean(direction)
-					src.set_dir(direction)
-			sleep(0.2 SECONDS)
-		vanish()
-		return
-
-	proc/vanish()
-		animate(src, alpha = 0, time = 5)
-		SPAWN(0.5 SECONDS)
-			src.invisibility = INVIS_ALWAYS
-			src.set_loc(null)
-			qdel(src)
-		return
-
-	proc/clean(var/direction)
-		var/turf/left
-		var/turf/right
-		switch(direction)
-			if(NORTH)
-				left = locate(x-1,y,z)
-				right = locate(x+1,y,z)
-			if(EAST)
-				left = locate(x,y+1,z)
-				right = locate(x,y-1,z)
-			if(SOUTH)
-				left = locate(x+1,y,z)
-				right = locate(x-1,y,z)
-			if(WEST)
-				left = locate(x,y-1,z)
-				right = locate(x,y+1,z)
-
-		var/list/affected = list(src.loc, left, right)
-		for(var/turf/B in affected)
-			reagents.reaction(B)
-			for (var/atom/A in B)
-				if (istype(A, /obj/overlay/tile_effect) || A.invisibility >= INVIS_ALWAYS_ISH)
-					continue
-				reagents.reaction(A)
-		return
-
-/obj/item/spraybottle/cleaner/tsunami
-	name = "Tsunami-P3 spray bottle"
-	desc = "A highly over-engineered spray bottle with all kinds of actuators, pumps and matter-generators. Never runs out of cleaner and has a remarkable range."
-	icon_state = "tsunami"
-	item_state = "tsunami"
-	var/lastUse = null
-
-	afterattack(atom/A as mob|obj, mob/user as mob)
-		if (A.storage)
-			return
-		if (!isturf(user.loc))
-			return
-
-		if(lastUse)
-			var/actual = (world.timeofday - lastUse)
-			if(actual < 0) actual += 864000
-			if(actual < 40) return
-
-		lastUse = world.timeofday
-
-		reagents.clear_reagents()
-		reagents.add_reagent("cleaner", 100)
-
-		if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
-			JOB_XP(user, "Janitor", 2)
-
-		new/obj/janitorTsunamiWave(get_turf(src), A)
-		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
-
 /obj/item/spraybottle/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
@@ -289,7 +170,6 @@ TRASH BAG
 	throw_speed = 5
 	throw_range = 10
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
@@ -362,6 +242,10 @@ TRASH BAG
 		src.reagents.reaction(T, 1, 5)
 		src.reagents.remove_any(5)
 		mopcount++
+		if (istype(T, /turf/simulated))
+			var/turf/simulated/S = T
+			if (S.wet < 1)
+				S.wetify(1, rand(20, 35) SECONDS)
 
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
@@ -435,13 +319,7 @@ TRASH BAG
 
 			if(istype(U,/turf/simulated))
 				var/turf/simulated/T = U
-				var/wetoverlay = image('icons/effects/water.dmi',"wet_floor")
-				T.overlays += wetoverlay
-				T.wet = 1
-				SPAWN(30 SECONDS)
-					if (istype(T))
-						T.wet = 0
-						T.overlays -= wetoverlay
+				T.wetify(1, 75 SECONDS)
 
 		if (mopcount >= 5) //Okay this stuff is an ugly hack and i feel bad about it.
 			SPAWN(0.5 SECONDS)
@@ -645,7 +523,7 @@ TRASH BAG
 			var/turf/simulated/T = target
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
-			T.wet = 0
+			T.dryify()
 
 		if (SPONGE_WIPE)
 			if (src.reagents.has_reagent("water"))
@@ -711,7 +589,6 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 4
 	stamina_crit_chance = 10
@@ -732,7 +609,6 @@ TRASH BAG
 		. = ..()
 
 /obj/item/caution/traitor
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/obj/item/reagent_containers/payload
 
 	New()
@@ -740,6 +616,7 @@ TRASH BAG
 		payload = new /obj/item/reagent_containers/glass/bucket/red(src)
 		payload.reagents.add_reagent("invislube", payload.reagents.maximum_volume)
 		src.create_reagents(1)
+		src.AddComponent(/datum/component/proximity)
 
 	attackby(obj/item/W, mob/user, params)
 		var/mob/living/carbon/human/H = user
@@ -758,7 +635,7 @@ TRASH BAG
 			return
 		. = ..()
 
-	HasProximity(atom/movable/AM)
+	EnteredProximity(atom/movable/AM)
 		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
@@ -782,7 +659,6 @@ TRASH BAG
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS
 	throw_pixel = 0
 	throw_spin = 0
 	var/currentSelection = "wet"
@@ -895,8 +771,8 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
-	mats = list("bamboo"=3, "MET-1"=10)
-
+	mats = list("bamboo" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
@@ -904,7 +780,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	icon_state = "handvac"
 	health = 7
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
 	var/obj/item/trash_bag/trashbag
@@ -1108,8 +984,8 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			. = ..()
 
 TYPEINFO(/obj/item/handheld_vacuum/overcharged)
-	mats = list("neutronium"=3, "MET-1"=10)
-
+	mats = list("neutronium" = 3,
+				"metal" = 10)
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
 	color = list(0,0,1, 0,1,0, 1,0,0)
@@ -1228,7 +1104,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet
@@ -1286,3 +1162,321 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "biobag"
 	base_state = "biobag"
 	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard
+
+/obj/item/gun/sprayer
+	name = "\improper WA-V3 Cleaning Device" //name and desc suggested by tekotheteapot
+	desc = "The Wide Area V3 Cleaning Device, holy grail of space janitorial hardware.<br>\
+		Must ONLY be used with Nanotrasen™ licensed WA-V3 back tanks."
+	icon_state = "sprayer"
+	item_state = "janitor_sprayer"
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	shoot_delay = 2 SECONDS
+	recoil_enabled = FALSE
+	click_sound = 'sound/effects/tinyhiss.ogg'
+	click_msg = "*hisss*"
+	contraband = 0 //lol
+	var/clogged = FALSE
+
+	New()
+		. = ..()
+		src.set_current_projectile(new /datum/projectile/special/shotchem/wave)
+		src.projectiles = list(src.current_projectile, new /datum/projectile/special/shotchem/wave/wide, new /datum/projectile/special/shotchem/wave/single)
+		src.UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		if (src.clogged)
+			return "Can be unclogged in a <b>sink</b>."
+
+	pickup(mob/user)
+		..()
+		src.connect(user)
+
+	proc/connect(user)
+		if (src.get_tank(user) && !src.GetComponent(/datum/component/reagent_overlay/other_target))
+			src.AddComponent(/datum/component/reagent_overlay/other_target, src.icon, "sprayer", reagent_overlay_states = 4, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = TRUE, target = src.get_tank(user))
+
+	dropped(mob/user)
+		..()
+		src.disconnect()
+
+	proc/disconnect()
+		src.RemoveComponentsOfType(/datum/component/reagent_overlay/other_target)
+
+	proc/get_tank(mob/user)
+		RETURN_TYPE(/obj/item/reagent_containers/glass/backtank)
+		if (!user)
+			user = src.loc
+		if (!ismob(user))
+			return null
+		if (istype(user.back, /obj/item/reagent_containers/glass/backtank))
+			return user.back
+		return null
+
+	update_icon(...)
+		switch(src.current_projectile_num)
+			if (1)
+				src.icon_state = "[initial(src.icon_state)]-normal"
+			if (2)
+				src.icon_state = "[initial(src.icon_state)]-wide"
+			if (3)
+				src.icon_state = "[initial(src.icon_state)]-narrow"
+
+	set_current_projectile(datum/projectile/newProj)
+		. = ..()
+		src.UpdateIcon()
+
+	attack_self(mob/user)
+		. = ..()
+		playsound(src.loc, 'sound/machines/button.ogg', 40, 1, -10, 1.3)
+
+	canshoot(mob/user)
+		return src.get_tank()?.reagents.total_volume >= src.current_projectile.cost && !src.clogged
+
+	shoot_point_blank(atom/target, mob/user, second_shot) //point blanking this doesn't really make sense
+		if (target == user)
+			return
+		shoot(target, get_turf(user), user, 0, 0)
+
+	process_ammo(mob/user)
+		if (!src.canshoot(user))
+			boutput(user, SPAN_ALERT("[src] makes a sad little pffft noise."))
+			return FALSE
+		var/obj/item/reagent_containers/glass/backtank/tank = src.get_tank()
+		if (tank.reagents.has_any(global.extinguisher_blacklist_clog))
+			boutput(user, SPAN_ALERT("[src] sputters and clogs up!"))
+			src.clogged = TRUE
+			return FALSE
+		if(tank.reagents.has_reagent("water") || tank.reagents.has_reagent("cleaner"))
+			JOB_XP(user, "Janitor", 2)
+		return TRUE
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
+		if(!..())
+			return
+		SPAWN(1.3 SECONDS)
+			playsound(start, 'sound/machines/windup.ogg', 80, FALSE, -10)
+			eat_twitch(src)
+			sleep(0.4 SECONDS)
+			eat_twitch(src)
+
+	alter_projectile(obj/projectile/P)
+		if(!P.reagents)
+			P.create_reagents(src.current_projectile.cost)
+		src.get_tank().reagents.trans_to_direct(P.reagents, src.current_projectile.cost)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (!src.projectiles) //we're already emagged
+			return
+		boutput(user, SPAN_ALERT("You short out the pressure lock on [src]!"))
+		src.set_current_projectile(new /datum/projectile/special/shotchem/wave/wide/emagged)
+		src.projectiles = null
+
+//Why are all the sane reagent container behaviour on /glass?!!!?
+/obj/item/reagent_containers/glass/backtank
+	name = "\improper WA-V3 back tank"
+	desc = "A little label on the side reads \"not for use with corrosive substances\"."
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "janitor_tank"
+	item_state = "janitor_tank"
+	initial_volume = 500
+	initial_reagents = list("cleaner" = 500)
+	incompatible_with_chem_dispensers = TRUE
+	shatter_immune = TRUE
+	w_class = W_CLASS_BULKY
+	c_flags = ONBACK
+	fluid_overlay_states = 0 //we want to add our own component, thanks
+
+	New(loc, new_initial_reagents)
+		..()
+
+		src.AddComponent(/datum/component/reagent_overlay/worn_overlay/janitor_tank, src.icon, src.icon_state,\
+			reagent_overlay_states = 6, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = TRUE,\
+			worn_overlay_icon = src.wear_image_icon, worn_overlay_icon_state = src.icon_state, worn_overlay_states = 1)
+
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
+
+	is_open_container(input)
+		return input
+
+	on_reagent_change(add)
+		..()
+		if (src.reagents.has_any(global.extinguisher_blacklist_melt) && !src.hasStatus("acid"))
+			src.setStatus("acid", 5 SECONDS)
+
+	equipped(mob/user, slot)
+		. = ..()
+		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
+		sprayer?.connect(user)
+
+	unequipped(mob/user)
+		. = ..()
+		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
+		sprayer?.disconnect(user)
+
+	//stupid hack to make reagents transfer before storage datums yoink the item
+	//blame the entirety of reagent transfer code being stuffed into two copy-pasted afterattack stacks
+	attackby(obj/item/W, mob/user, params)
+		if (W.is_open_container(FALSE) && W.reagents?.total_volume > 0)
+			return
+		. = ..()
+
+/datum/projectile/special/shotchem/wave
+	name = "chemicals"
+	icon = 'icons/effects/96x96.dmi'
+	icon_state = "tsunami"
+	cost = 20
+	sname = "wave"
+	projectile_speed = 16
+	shot_sound = 'sound/effects/bigwave.ogg'
+	shot_volume = 60 //this is a loud sound
+	can_spawn_fluid = TRUE //so if we shoot water it will make a puddle, but cleaner is *clean*!
+	goes_through_mobs = TRUE
+	smashes_glasses = FALSE
+	/// How far to either side of the central path does the projectile extend
+	var/size = 1
+	/// Percentage of total reagents applied to each turf affected
+	var/chem_pct_app_tile = 1/12
+	/// What type of things can we push around?
+	var/push_type = /obj/item
+
+	cross_turf(obj/projectile/O, turf/T)
+		if (QDELETED(O))
+			return
+		var/dir = angle2dir(O.angle)
+		//clean the center turf
+		src.turf_effect(O, T, dir)
+		if (QDELETED(O))
+			return
+		if (size <= 0)
+			return
+		for (var/sign in list(-1, 1))
+			for (var/i in 1 to size)
+				var/turf/side_turf
+				side_turf = get_steps(T, turn(dir, 90), i * sign)
+				//clean regardless
+				src.turf_effect(O, side_turf, dir)
+				if (QDELETED(O))
+					return
+				//now check collision
+				var/turf/prev_turf = get_steps(T, turn(dir, 90), (i - 1) * sign)
+				if (!jpsTurfPassable(side_turf, prev_turf, O))
+					//we hit a wall, discard any reagents we *would* have spent on the missed tiles
+					O.reagents.remove_any((size - i) * src.chem_pct_app_tile * O.reagents.maximum_volume)
+					break
+		//if we're going diagonally, clean the cardinally adjacent tiles too to avoid skipping
+		if (!(dir in cardinal))
+			for (var/side_dir in cardinal)
+				var/turf/side_turf = get_step(T, side_dir)
+				src.turf_effect(O, side_turf, dir)
+				if (QDELETED(O))
+					return
+
+	turf_effect(obj/projectile/O, turf/T, dir)
+		if (T in O.special_data["visited"])
+			return
+		..(O, T)
+		src.push_stuff(O, T, dir)
+		if (QDELETED(O))
+			return
+		LAZYLISTADD(O.special_data["visited"], T)
+
+	proc/push_stuff(obj/projectile/O, turf/T, dir)
+		var/count = 0
+		for (var/atom/movable/AM in T)
+			if (AM == O.shooter)
+				continue
+			if (ismob(AM))
+				var/mob/M = AM
+				M.lastgasp() //heeheehoohoo
+				if (M.get_oxygen_deprivation() == 0)
+					M.take_oxygen_deprivation(5)
+			if (!istype(AM, src.push_type))
+				continue
+			if (!AM.anchored)
+				step(AM, dir)
+			count++
+			if (count > 50) //panic clause for TOO MUCH STUFF
+				return
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.alpha = 175
+		O.special_data["chem_pct_app_tile"] = src.chem_pct_app_tile
+
+/datum/projectile/special/shotchem/wave/single
+	sname = "narrow"
+	cost = 10
+	size = 0
+	scale = 1/3
+	chem_pct_app_tile = 0.1
+	projectile_speed = 24
+	shot_pitch = 1.1
+	shot_volume = 45
+
+/datum/projectile/special/shotchem/wave/wide
+	sname = "wide"
+	cost = 30
+	size = 2
+	scale = 5/3
+	chem_pct_app_tile = 0.05
+	projectile_speed = 8
+	push_type = /atom/movable //hehehe
+	shot_pitch = 0.9
+
+/datum/projectile/special/shotchem/wave/wide/emagged
+	projectile_speed = 24
+	shot_pitch = 0.7
+
+	post_setup(obj/projectile/O)
+		. = ..()
+		var/turf/throw_target = get_steps(O.shooter, turn(angle2dir(O.angle), 180), 10)
+		var/atom/movable/shooter = O.shooter
+		if (!istype(shooter)) //yeah just in case an area fired the projectile (????)
+			return
+		shooter.throw_at(throw_target, 4, 2, thrown_from = get_turf(O))
+
+	turf_effect(obj/projectile/O, turf/simulated/floor/T, dir)
+		if (istype(T))
+			if (prob(30))
+				T.pry_tile()
+			else if (prob(30))
+				T.burn_tile()
+		..()
+
+
+/obj/item/spraybottle/cleaner/tsunami
+	name = "Tsunami-P3 spray bottle"
+	desc = "A highly over-engineered spray bottle with all kinds of actuators, pumps and matter-generators. Never runs out of cleaner and has a remarkable range."
+	icon_state = "tsunami"
+	item_state = "tsunami"
+	var/lastUse = null
+
+	afterattack(atom/A as mob|obj, mob/user as mob)
+		if (A.storage)
+			return
+		if (!isturf(user.loc))
+			return
+
+		if(lastUse)
+			var/actual = (world.timeofday - lastUse)
+			if(actual < 0) actual += 864000
+			if(actual < 40) return
+
+		lastUse = world.timeofday
+
+		reagents.clear_reagents()
+		reagents.add_reagent("cleaner", 100)
+
+		if(src.reagents.has_reagent("water") || src.reagents.has_reagent("cleaner"))
+			JOB_XP(user, "Janitor", 2)
+
+		var/datum/projectile/proj_data = new /datum/projectile/special/shotchem/wave
+
+		var/obj/projectile/projectile = shoot_projectile_ST_pixel_spread(user, proj_data, A)
+		if(!projectile.reagents)
+			projectile.create_reagents(100)
+		src.reagents.trans_to_direct(projectile.reagents, 100)
+		playsound(src.loc, 'sound/effects/bigwave.ogg', 50, 1)

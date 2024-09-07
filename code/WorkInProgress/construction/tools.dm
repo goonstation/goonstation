@@ -288,7 +288,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 	icon = 'icons/obj/items/tools/lampman.dmi'
 	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
 	icon_state = "bio-white"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	w_class = W_CLASS_SMALL
 	click_delay = 1
 	prefix = "bio"
@@ -306,7 +306,7 @@ TYPEINFO(/obj/item/material_shaper)
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "shaper"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	click_delay = 1
 
 	var/mode = 0
@@ -502,7 +502,7 @@ TYPEINFO(/obj/item/room_planner)
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
-	flags = FPRINT | TABLEPASS | EXTRADELAY
+	flags = TABLEPASS | EXTRADELAY
 	w_class = W_CLASS_SMALL
 	click_delay = 1
 

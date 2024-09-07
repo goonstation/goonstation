@@ -210,9 +210,9 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = 330
 	default_ore = null
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/cave
+	replace_type = /turf/unsimulated/floor/plating/asteroid/cave
 
-/turf/simulated/floor/plating/airless/asteroid/cave
+/turf/unsimulated/floor/plating/asteroid/cave
 	name = "cave"
 	desc = "cave floor"
 	color = "#7c5855"

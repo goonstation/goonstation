@@ -21,6 +21,9 @@ TYPEINFO(/obj/machinery/crusher)
 
 	var/last_sfx = 0
 
+/obj/machinery/crusher/wall
+	power_usage = 0
+
 /obj/machinery/crusher/Bumped(atom/movable/AM)
 	return_if_overlay_or_effect(AM)
 	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
@@ -89,7 +92,10 @@ TYPEINFO(/obj/machinery/crusher)
 			target.set_loc(owner.loc)
 		walk(target, 0)
 		target.changeStatus("stunned", 5 SECONDS)
-
+		var/mob/M = target
+		if(ismob(M))
+			if(M.key || M.client) // so it doesn't message for npcs (hopefully)
+				message_ghosts("Someone is being crushed at [log_loc(M, ghostjump=TRUE)].")
 
 	onUpdate()
 		. = ..()

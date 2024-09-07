@@ -98,6 +98,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		food_color = "#FFECB7"
 		real_name = "small fish"
 		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
+	pufferfish
+		name = "pufferfish fillet"
+		icon_state = "fillet-pufferfish"
+		food_color = "#eeedec"
+		real_name = "pufferfish"
+		slice_amount = 2 // Divides the 40u of poison into still lethal slices
+		slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/pufferfish
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	name = "slice of fish fillet"
@@ -120,6 +127,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		icon_state = "filletslice-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
+	pufferfish
+		name = "slice of pufferfish fillet"
+		icon_state = "filletslice-pufferfish"
+		food_color = "#e0dbce"
+		real_name = "pufferfish"
+
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/pufferfish_liver
+	name = "pufferfish liver"
+	desc = "The most toxic part of pufferfish."
+	icon_state = "pufferfish-liver"
+	food_color = "#693576"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
 	name = "raw shrimp meat"
@@ -669,21 +688,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		src.pixel_x = rand(-8, 8)
 		src.pixel_y = rand(-8, 8)
 
-/obj/item/reagent_containers/food/snacks/ingredient/pasta
-	// generic uncooked pasta parent
-	name = "pasta sheet"
-	desc = "Uncooked pasta."
-	heal_amt = 0
-
-	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("... You must be really hungry."))
-		..()
-
-/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
-	name = "pasta sheet"
-	desc = "An uncooked sheet of pasta."
-	icon_state = "pasta-sheet"
-
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles
 	name = "wheat noodles"
@@ -727,43 +731,58 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 		..()
 		boutput(M, SPAN_ALERT("Raw potato tastes pretty nasty...")) // does it?
 
-
+// this is cursed on multiple levels, both the placement and the function
 /obj/item/reagent_containers/food/snacks/proc/random_spaghetti_name()
 	.= pick(list("spagtetti","splaghetti","spaghetty","spagtti","spagheti","spaghettie","spahetti","spetty","pisketti","spagoody","spaget","spagherti","spaceghetti"))
 
-/obj/item/reagent_containers/food/snacks/ingredient/spaghetti
-	name = "spaghetti noodles"
-	desc = "Original italian noodles."
-	icon_state = "spaghetti"
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/pasta)
+/obj/item/reagent_containers/food/snacks/ingredient/pasta
+	// generic uncooked pasta parent
+	name = "pasta sheet"
+	desc = "Uncooked pasta."
 	heal_amt = 0
 
-	New()
-		..()
-		name = "[random_spaghetti_name()] noodles"
-
-	get_desc()
-		..()
-		.= "Original italian [name]."
-
-
-	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
-			boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
-			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
-			if (user.mob_flags & IS_BONEY)
-				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
-				boutput(user, SPAN_ALERT("... whoa, that felt good. Like really good."))
-				user.reagents.add_reagent("boneyjuice",20)
-			else
-				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
-			user.u_equip(W)
-			user.put_in_hand_or_drop(D)
-			qdel(W)
-			qdel(src)
-
 	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("The noodles taste terrible uncooked..."))
+		boutput(M, SPAN_ALERT("... You must be really hungry."))
 		..()
+
+	spaghetti
+		name = "spaghetti noodles"
+		desc = "Original italian noodles."
+		icon_state = "spaghetti"
+		heal_amt = 0
+
+		New()
+			..()
+			name = "[random_spaghetti_name()] noodles"
+
+		get_desc()
+			..()
+			.= "Original italian [src.name]."
+
+		attackby(obj/item/W, mob/user)
+			if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
+				boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
+				var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
+				if (user.mob_flags & IS_BONEY)
+					D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
+					boutput(user, SPAN_ALERT("... whoa, that felt good. Like really good."))
+					user.reagents.add_reagent("boneyjuice",20)
+				else
+					D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
+				user.u_equip(W)
+				user.put_in_hand_or_drop(D)
+				qdel(W)
+				qdel(src)
+
+		heal(var/mob/M)
+			boutput(M, SPAN_ALERT("The noodles taste terrible uncooked..."))
+			..()
+
+	sheet
+		name = "pasta sheet"
+		desc = "An uncooked sheet of pasta."
+		icon_state = "pasta-sheet"
 
 /obj/item/reagent_containers/food/snacks/ingredient/butter //its actually margarine
 	name = "butter"

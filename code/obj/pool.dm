@@ -4,7 +4,7 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID | FLUID_DENSE_ALWAYS
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -28,6 +28,9 @@
 	plane = PLANE_FLOOR
 	icon_state = "pool"
 
+/obj/pool/perspective/innercorners
+	name = "pool"
+	icon_state = "pool_inner"
 /obj/pool_springboard
 	name = "springboard"
 	density = 0
@@ -64,6 +67,8 @@
 			user.pixel_y = 15
 			user.layer = EFFECTS_LAYER_UNDER_1
 			user.set_loc(src.loc)
+			if(user.buckled)
+				user.buckled.unbuckle()
 			user.buckled = src
 			sleep(0.3 SECONDS)
 			user.pixel_x = -3

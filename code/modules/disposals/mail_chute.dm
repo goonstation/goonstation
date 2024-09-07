@@ -5,6 +5,7 @@
 	icon_state = "mailchute"
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
+	light_style = "mailchute"
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
@@ -331,7 +332,8 @@
 
 /obj/machinery/disposal/mail/small
 	icon = 'icons/obj/disposal_small.dmi'
-	handle_normal_state = "disposal-handle"
+	handle_normal_state = "mail-handle"
+	light_style = "disposal"
 	density = 0
 
 /obj/machinery/disposal/mail/small/autoname

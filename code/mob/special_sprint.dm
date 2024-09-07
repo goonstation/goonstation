@@ -1,6 +1,7 @@
 /datum/special_sprint
 	///Disable regular sprinting behaviour
 	var/overrides_sprint = FALSE
+	var/no_sprint_boost = FALSE // For things that prevent sprinting speed, but don't prevent sprinting skills
 	proc/can_sprint(mob/M)
 		if (isliving(M))
 			var/mob/living/owner = M
@@ -32,6 +33,8 @@
 	var/cloak = FALSE
 
 	do_sprint(mob/M)
+		if (M.traitHolder.hasTrait("slowstrider"))
+			src.no_sprint_boost = TRUE
 		new /obj/dummy/spell_batpoof(get_turf(M), M, src.cloak)
 
 /datum/special_sprint/poof/bat/cloak

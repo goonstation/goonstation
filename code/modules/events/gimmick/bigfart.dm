@@ -91,6 +91,7 @@
 			ThrowRandom(B, dist = 6, speed = 1)
 		H.visible_message(SPAN_ALERT("<b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!"),\
 		SPAN_ALERT("[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!"))
+		H.organHolder.back_op_stage = BACK_SURGERY_OPENED
 
 	/// If that didn't work, try severing a limb or tail
 	else if (!is_bot && prob(limbloss_prob)) // It'll try to sever an arm, then a leg, then an arm, then a leg
@@ -109,6 +110,7 @@
 				H.visible_message(SPAN_ALERT("<b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!"),\
 				SPAN_ALERT("[changer ? "Our" : "Your"] [magical ? "tægl" : "tail"] is torn free from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!"))
 				H.drop_and_throw_organ("tail", dist = 6, speed = 1, showtext = 1)
+				H.organHolder.back_op_stage = BACK_SURGERY_OPENED
 			for(var/obj/item/parts/L in possible_limbs)
 				if(length(possible_limbs) > 2) // Lets not remove both limbs unless that's all that's left
 					if(possible_limbs[L] == "arm" && (!H.limbs.l_arm || !H.limbs.l_arm))

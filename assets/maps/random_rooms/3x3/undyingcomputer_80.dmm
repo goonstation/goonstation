@@ -73,7 +73,7 @@
 	})
 "r" = (
 /obj/decal/cleanable/oil/streak,
-/obj/decal/fakeobjects/operatorconsole{
+/obj/fakeobject/operatorconsole{
 	pixel_y = -1;
 	pixel_x = -1;
 	name = "dusty computer tower";
@@ -144,7 +144,7 @@
 	pixel_x = 1;
 	pixel_y = 7
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	layer = 2;
 	pixel_y = 4;
 	pixel_x = -3;

@@ -18,7 +18,8 @@
 				if (!L.throws_can_hit_me) continue
 				if (L.lying) continue
 				src.throw_impact(A, thr)
-				. = TRUE
+				if (thr.stops_on_mob_hit)
+					. = TRUE
 			// **TODO: Better behaviour for windows
 			// which are dense, but shouldn't always stop movement
 			if(isobj(A))

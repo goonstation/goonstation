@@ -43,6 +43,8 @@ TYPEINFO(/obj/machinery/plantpot)
 	var/weedproof = 0  // Does this tray block weeds from appearing in it? (Won't stop deliberately planted weeds)
 	var/list/contributors = list() // Who helped grow this plant? Mainly used for critters.
 
+	var/datum/plantgrowth_tick/current_tick //! the plantgrowth_tick the plantpot will resolve next. This can be accessed and modifed by machinery like e.g. UV-lamps
+
 	var/report_freq = FREQ_HYDRO //Radio channel to report plant status/death/whatever.
 	var/net_id = null
 
@@ -143,14 +145,17 @@ TYPEINFO(/obj/machinery/plantpot)
 	return src.current.HYPget_growth_stage(src.plantgenes, src.growth)
 
 /obj/machinery/plantpot/proc/update_water_level() //checks reagent contents of the pot, then returns the cuurent water level
+	var/list/water_substitutes = src.get_available_water_subsitutes()
 	var/current_total_volume = (src.reagents ? src.reagents.total_volume : 0)
 	var/current_water_level = (src.reagents ? src.reagents.get_reagent_amount("water") : 0)
+	for (var/substitute in water_substitutes)
+		current_water_level += (src.reagents ? src.reagents.get_reagent_amount(substitute) : 0)
 	switch(current_water_level)
 		if(0 to 0) current_water_level = 1
 		if(0 to 40) current_water_level = 2
 		if(40 to 100) current_water_level = 3
-		if(100 to 200) current_water_level = 4
-		if(200 to INFINITY) current_water_level = 5
+		if(100 to 200.1) current_water_level = 4
+		if(200.1 to INFINITY) current_water_level = 5
 	if(current_water_level != src.water_level)
 		src.water_level = current_water_level
 		src.do_update_water_icon = 1
@@ -159,8 +164,8 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(0 to 0) current_total_volume = 1
 			if(0 to 40) current_total_volume = 2
 			if(40 to 100) current_total_volume = 3
-			if(100 to 200) current_total_volume = 4
-			if(200 to INFINITY) current_total_volume = 5
+			if(100 to 200.1) current_total_volume = 4
+			if(200.1 to INFINITY) current_total_volume = 5
 		if(current_total_volume != src.total_volume)
 			src.total_volume = current_total_volume
 			src.do_update_water_icon = 1
@@ -171,7 +176,14 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	return current_water_level
 
-/obj/machinery/plantpot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/plantpot/proc/get_available_water_subsitutes()
+	var/list/output = list("poo","water_holy")
+	if (src.current?.growthmode == "carnivore")
+		output += "blood"
+	return output
+
+
+/obj/machinery/plantpot/EnteredProximity(atom/movable/AM)
 	if(!src.current || src.dead)
 		return
 	src.current?.ProximityProc(src, AM)
@@ -188,12 +200,14 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/was_deconstructed_to_frame(mob/user)
 	src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
+	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
+	qdel(src.current_tick)
+	src.current_tick = null
 	boutput( user, SPAN_ALERT("In the process of deconstructing the tray you destroy the plant.") )
 
 /obj/machinery/plantpot/process()
 	..()
 
-		// We skip every other tick. Another cpu-conserving measure.
 	if(!src.current || src.dead)
 		return
 		// If the plantpot is empty or contains a dead plant, we don't need to do anything
@@ -205,45 +219,16 @@ TYPEINFO(/obj/machinery/plantpot)
 	// We'll be referencing these a lot!
 
 	// REAGENT PROCESSING
-	var/drink_rate = 1
-	// drink_rate is how much reagent is consumed per tick. This used to be 0.5, but got bumped
-	// up to 1 when the tick rate for plant pots was halved.
 	if(growing.simplegrowth)
 		src.growth++
 		// Simplegrowth is used pretty much only for crystals. It essentially skips all
 		// simulation whatsoever and just adds one growth point per tick, ignoring all
 		// reagents and everything else going on.
 	else
-		var/current_water_level = src.update_water_level()
-
-		// The above is pretty much to figure out whether or not the water level
-		// icon on the plant pot needs to change.
-
-		if(current_water_level)
-			if(current_water_level <= 200) // max water limit!!
-				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/metabolism_slow) && prob(50))
-					src.growth++
-					drink_rate /= 2
-					// If our plant has a slow metabolism, it will only gain growth 50% of
-					// the time compared to usual. It consumes reagents a lot slower though.
-					// This is essentially like putting the plant on slow-mo overall.
-				else
-					src.growth += growth_rate
-					// If not, it grows 2 points per tick - the regular rate. Remember, the
-					// tick rate is halved so 1 point would mean plants take AGES to grow.
-				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/metabolism_fast))
-					drink_rate *= 2
-					src.growth += growth_rate
-					// The "growth rate on crack" mutation. Also causes it to take up
-					// reagents a lot faster - it's like hitting fast forward for plants.
-		else
-			// If there's no water in the plant pot, we slowly damage the plant and prevent
-			// it from gaining any growth if it's not a weed.
-			if(!growing.nothirst)
-				src.HYPdamageplant("drought",1)
-			else
-				src.growth++
-
+		// For proper simulation, we have created a plantgrowth_tick to hold all data which affect the growth of the plant
+		// For cases in which this proc doesnt exist, we create it to be able to proceed with effects of chems and the such
+		if (!src.current_tick)
+			src.current_tick = new /datum/plantgrowth_tick(src)
 		// Now we look through every reagent currently in the plantpot and call the reagent's
 		// on_plant_life proc. These are defined in the chemistry reagents file on each reagent
 		// for the sake of efficiency.
@@ -251,22 +236,15 @@ TYPEINFO(/obj/machinery/plantpot)
 			for(var/current_id in src.reagents.reagent_list)
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 				if(current_reagent)
-					current_reagent.on_plant_life(src)
-
+					current_reagent.on_plant_life(src, src.current_tick)
+		// similary, we call all process ticks of the gene strains the plant currently has and let them modify the current plantgrowth tick
 		if(DNA.commuts)
 			for (var/datum/plant_gene_strain/X in DNA.commuts)
-				X.on_process(src)
-
-	src.reagents?.remove_any_except(drink_rate, "nectar")
-	// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
-	// it's quota, except nectar because that's supposed to stay in the plant pot.
-
-	//We give off nectar and should check our nectar levels
-	if(growing.nectarlevel)
-		var/current_level = src.reagents.get_reagent_amount("nectar")
-		if(current_level < growing.nectarlevel)
-			src.reagents.add_reagent("nectar", randfloat(growing.nectarlevel * 0.2, growing.nectarlevel * 0.5) )
-	// This keeps the nectar at the amount specified in the plant's datum.
+				X.on_process(src, src.current_tick)
+		// last, but not least, we resolve the plantgrowth_tick and apply all changes to the plant
+		src.HYPresolve_plantgrowth_tick(src.current_tick)
+		// after the plantgrowth_tick was resolved and deleted, we store a new one we prepare to resolve next
+		src.current_tick = new /datum/plantgrowth_tick(src)
 
 	// Special procs now live in the plant datums file! These are for plants that will
 	// occasionally do special stuff on occasion, such as radweeds, lashers, and the like.
@@ -458,7 +436,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(growing.HYPattacked_proc(src,user,W)) return
 
 			if(src.dead)
-				src.visible_message(SPAN_ALERT("[src] is is destroyed by [user.name]'s [W]!"))
+				src.visible_message(SPAN_ALERT("[src] is destroyed by [user.name]'s [W.name]!"))
 				src.HYPdestroyplant()
 				return
 			else
@@ -796,6 +774,12 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(src.dead)
 		src.name = "dead " + src.name
 
+/obj/machinery/plantpot/disposing()
+	qdel(src.current_tick)
+	src.current_tick = null
+	. = ..()
+
+
 /obj/machinery/plantpot/proc/HYPcheck_if_harvestable()
 	// Pretty much figure out if we can harvest the plant yet or not. This is used for
 	// updating the sprite and obviously handling harvesting when a player clicks
@@ -810,6 +794,70 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	if(src.get_current_growth_stage() >= HYP_GROWTH_HARVESTABLE) return TRUE
 	else return FALSE
+
+/obj/machinery/plantpot/proc/HYPresolve_plantgrowth_tick()
+	if(!src.current_tick)
+		return
+	var/datum/plantgenes/DNA = src.plantgenes
+	var/current_water_level = src.update_water_level()
+	var/final_growth_rate = src.current_tick.growth_rate
+	var/final_health_change = src.current_tick.health_change
+	if(current_water_level)
+		//if there is enough water, we check the max water limit and apply the bonus for keeping the plant in optimal water range
+		if(current_water_level <= src.current_tick.bonus_growth_water_limit)
+			final_health_change += src.current_tick.bonus_growth_rate
+			final_growth_rate  += src.current_tick.bonus_health_rate
+	else
+		// If there's no water in the plant pot, we damage the plant and apply the thirst growth multiplier
+		src.HYPdamageplant("drought", HYPstat_rounding(src.current_tick.thirst_damage * src.current_tick.tick_multiplier))
+		final_growth_rate *= src.current_tick.thirst_growth_rate_multiplier
+	// now we calculate the final values of growthrate and health changes
+	final_growth_rate *= src.current_tick.tick_multiplier
+	final_health_change *= src.current_tick.tick_multiplier
+
+	// now we apply the changes by the plantgrowth_tick
+	// health and growth
+	if (final_health_change < 0)
+		src.HYPdamageplant("frailty", HYPstat_rounding(final_health_change * -1))
+	else
+		src.health += HYPstat_rounding(final_health_change)
+	src.growth += HYPstat_rounding(final_growth_rate)
+	// damage-sources
+	if (src.current_tick.fire_damage > 0)
+		src.HYPdamageplant("fire", HYPstat_rounding(src.current_tick.fire_damage * src.current_tick.tick_multiplier))
+	if (src.current_tick.poison_damage > 0)
+		src.HYPdamageplant("poison", HYPstat_rounding(src.current_tick.poison_damage * src.current_tick.tick_multiplier))
+	if (src.current_tick.radiation_damage > 0)
+		src.HYPdamageplant("poison", HYPstat_rounding(src.current_tick.radiation_damage * src.current_tick.tick_multiplier))
+	if (src.current_tick.acid_damage > 0)
+		src.HYPdamageplant("radiation", HYPstat_rounding(src.current_tick.acid_damage * src.current_tick.tick_multiplier))
+	// plant-stats
+	if (DNA)
+		DNA.growtime += HYPstat_rounding(src.current_tick.growtime_bonus * src.current_tick.tick_multiplier)
+		DNA.harvtime += HYPstat_rounding(src.current_tick.harvtime_bonus * src.current_tick.tick_multiplier)
+		DNA.cropsize += HYPstat_rounding(src.current_tick.cropsize_bonus * src.current_tick.tick_multiplier)
+		DNA.harvests += HYPstat_rounding(src.current_tick.harvests_bonus * src.current_tick.tick_multiplier)
+		DNA.potency += HYPstat_rounding(src.current_tick.potency_bonus * src.current_tick.tick_multiplier)
+		DNA.endurance += HYPstat_rounding(src.current_tick.endurance_bonus * src.current_tick.tick_multiplier)
+	// Now we modify chems in the tray
+	if (src.reagents)
+		src.reagents?.remove_any_except(src.current_tick.water_consumption * src.current_tick.tick_multiplier, "nectar")
+		// This is where drink_rate does its thing. It will remove a bit of all reagents to meet
+		// it's quota, except nectar because that's supposed to stay in the plant pot.
+		// We give off nectar and should check our nectar levels
+		if(src.current.nectarlevel)
+			var/current_level = src.reagents.get_reagent_amount("nectar")
+			if(current_level < src.current.nectarlevel)
+				src.reagents.add_reagent("nectar", src.current.nectarlevel * randfloat(0.2, 0.5) * src.current_tick.tick_multiplier * src.current_tick.nectar_generation_multiplier_bonus)
+		// This keeps the nectar at the amount specified in the plant's datum.
+	//Now, we apply mutagenic chemicals
+	//since mutation chems can stack via their severity, we use this in this case
+	var/final_mutation_severity = HYPstat_rounding(src.current_tick.mutation_severity * src.current_tick.tick_multiplier)
+	if (final_mutation_severity > 0)
+		src.HYPmutateplant(final_mutation_severity)
+	// At last, growth_tick isn't usefull anymore, so we can get rid of it
+	qdel(src.current_tick)
+
 
 /obj/machinery/plantpot/proc/HYPharvesting(var/mob/living/user,var/obj/item/satchel/SA)
 	// This proc is where the harvesting actually happens. Again it shouldn't need tweaking
@@ -835,10 +883,12 @@ TYPEINFO(/obj/machinery/plantpot)
 		return
 
 	if(growing.harvested_proc)
-		if(growing.HYPharvested_proc(src,user)) return
-		if(MUT?.HYPharvested_proc_M(src,user)) return
 		// Does this plant react to being harvested? If so, do it - it also functions as
 		// a check since harvesting will stop here if this returns anything other than 0.
+		if(growing.HYPharvested_proc(src,user)) return
+		if(MUT?.HYPharvested_proc_M(src,user)) return
+		//it can happen during HYPharvested_proc that the planttype in the pot gets replaced, we account for that here
+		growing = src.current
 
 	if(hydro_controls)
 		src.recently_harvested = 1
@@ -1183,7 +1233,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
-		setup_use_proximity()
+		src.AddComponent(/datum/component/proximity)
 
 	src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 	// Add the plant's total endurance score to the health.
@@ -1231,6 +1281,11 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.UpdateIcon()
 	src.update_name()
 	src.growth_rate = 2
+	// with the new plant created, we give it a plantgrowth_tick, if it is not a simple crystal
+	if (!growing.simplegrowth)
+		src.current_tick = new /datum/plantgrowth_tick(src)
+	// at the end, we update the water overlay of the plant, because some plants consider different chems as water substitutent (like blood on maneating plants)
+	src.update_water_level()
 
 /obj/machinery/plantpot/proc/HYPkillplant()
 	// Simple proc to kill the plant without clearing the plantpot out altogether.
@@ -1243,8 +1298,11 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.health_warning = 0
 	src.harvest_warning = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()// If there's no plant here, there doesn't need to be a check
+	src.RemoveComponentsOfType(/datum/component/proximity) // If there's no plant here, there doesn't need to be a check
 	src.update_name()
+	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
+	qdel(src.current_tick)
+	src.current_tick = null
 
 /obj/machinery/plantpot/proc/HYPdestroyplant()
 	// This resets the plantpot back to it's base state, apart from reagents.
@@ -1263,9 +1321,12 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	src.generation = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()
+	src.RemoveComponentsOfType(/datum/component/proximity)
 	src.update_name()
 	src.post_alert(list("event" = "cleared"))
+	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
+	qdel(src.current_tick)
+	src.current_tick = null
 
 /obj/machinery/plantpot/proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
 	// The proc to use for causing health damage to plants. You can just directly alter

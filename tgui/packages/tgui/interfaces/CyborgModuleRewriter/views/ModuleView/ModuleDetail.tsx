@@ -102,9 +102,9 @@ interface OrganizeButtonsProps {
 const OrganizeButtons = (props: OrganizeButtonsProps) => {
   const { onMoveDown, onMoveUp, onRemove, itemRef } = props;
   const isItemSelected = !!itemRef;
-  const handleMoveUpClick = () => onMoveUp(itemRef);
-  const handleMoveDownClick = () => onMoveDown(itemRef);
-  const handleRemoveClick = () => onRemove(itemRef);
+  const handleMoveUpClick = () => itemRef && onMoveUp(itemRef);
+  const handleMoveDownClick = () => itemRef && onMoveDown(itemRef);
+  const handleRemoveClick = () => itemRef && onRemove(itemRef);
   return (
     <>
       <Button icon="arrow-up" disabled={!isItemSelected} onClick={handleMoveUpClick} title="Move Up" />

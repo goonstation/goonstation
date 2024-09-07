@@ -218,6 +218,10 @@
 			boutput(user, "\The [src] is already fully loaded with paper!")
 	else if (istype(W, /obj/item/paper) && !istype(W, /obj/item/paper/book)) //should also exclude all other weird paper subtypes, but i think books are the only one
 		if (src.paper_amt < src.paper_max)
+			var/obj/item/paper/sheet = W
+			if(length(sheet.info))
+				boutput(user, SPAN_ALERT("\The [src] only takes blank paper!"))
+				return
 			boutput(user, "You load \the [W] into \the [src].")
 			src.paper_amt ++
 			UpdateIcon()

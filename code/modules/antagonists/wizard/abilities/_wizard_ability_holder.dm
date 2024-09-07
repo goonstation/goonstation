@@ -160,6 +160,7 @@
 
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
+	icon_state = "fixme"
 	var/requires_being_on_turf = FALSE
 	var/requires_robes = 0
 	var/offensive = 0

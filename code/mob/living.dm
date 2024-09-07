@@ -48,7 +48,8 @@
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/skin_process = list() //digesting patches
+	/// all applied patches (ex. medical patches)
+	var/list/applied_patches = list()
 
 	var/sound_burp = 'sound/voice/burp.ogg'
 	var/sound_scream = 'sound/voice/screams/robot_scream.ogg' // for silicon mobs
@@ -103,6 +104,9 @@
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
 
+	/// completely immune to catching and spreading disease/medical-like ailments
+	var/ailment_immune = FALSE
+
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 
@@ -123,7 +127,7 @@
 	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
-/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
@@ -152,7 +156,7 @@
 	SPAWN(0)
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
-			init_preferences?.apply_post_new_stuff(src)
+			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 
 /mob/living/flash(duration)
@@ -172,9 +176,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in skin_process)
+	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)
-	skin_process = null
+	src.applied_patches = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
@@ -346,7 +350,7 @@
 	return ..()
 
 /mob/living/detach_hud(datum/hud/hud)
-	if (observers.len) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
+	if (length(observers)) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
 		for (var/mob/dead/target_observer/observer in observers)
 			observer.detach_hud(hud)
 	return ..()
@@ -381,7 +385,7 @@
 	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target.loc))
+			if (istype(target, /atom/movable) && (isturf(target.loc) || !reach))
 				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
@@ -615,7 +619,7 @@
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()
-	. = src.bioHolder.mobAppearance.customization_first_color
+	. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -911,15 +915,15 @@
 
 	if(my_client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("sing", message, user = my_client.mob, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("radio", message, user = my_client.mob, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("say", message, user = my_client.mob, strip_html = TRUE)
 
 	last_words = message
 
-	if (src.stuttering)
+	if (src.stuttering && !isrobot(src))
 		message = stutter(message)
 
 	if (src.get_brain_damage() >= 60)
@@ -1497,6 +1501,10 @@
 	if (!isalive(src)) //can't resist when dead or unconscious
 		return
 
+	if (src.hasStatus("paralysis"))
+		src.show_text("You are completely paralysed and can't resist!", "red")
+		return
+
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
@@ -1749,10 +1757,7 @@
 	if (m_intent == "walk")
 		. += WALK_DELAY_ADD
 
-	if (src.nodamage)
-		return .
-
-	if (src.do_hurt_slowdown)
+	if (src.do_hurt_slowdown && !src.nodamage)
 		var/health_deficiency = 0
 		if (src.max_health > 0)
 			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
@@ -1766,7 +1771,7 @@
 
 	. = min(., maximum_slowdown)
 
-	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
+	if (pushpull_multiplier != 0 && !src.nodamage) // if we're not completely ignoring pushing/pulling
 		if (src.pulling)
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
@@ -1829,6 +1834,9 @@
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
 
+	if (src.nodamage)
+		return .
+
 	var/turf/T = get_turf(src)
 	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
 		. = max(., base_speed)
@@ -1858,31 +1866,35 @@
 	var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_SPRINT)
 	if (stop_here)
 		return
-	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
-		return
 	if (src.client && src.special_sprint?.can_sprint(src))
 		src.special_sprint.do_sprint(src)
+		src.do_sprint_boost()
+		return
 	if (src.special_sprint?.overrides_sprint)
 		return
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
+		return
 	else if (src.use_stamina)
-		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
-				//if (src.hasStatus("blocking"))
-				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
-				//		qdel(G)
+		src.do_sprint_boost()
+		return
 
-				var/last = src.loc
-				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+/mob/living/proc/do_sprint_boost()
+	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && world.time >= src.next_sprint_boost)
+		if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 
-				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-				src.next_move = world.time
-				attempt_move(src)
-				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+			var/last = src.loc
+			var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
 
-				if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
-					sprint_particle(src, last)
-					if (!isFlying)
-						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
+			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+			src.next_move = world.time
+			attempt_move(src)
+
+			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
+				sprint_particle(src, last)
+				if (!isFlying)
+					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -1976,15 +1988,8 @@
 
 
 		var/list/shield_amt = list()
-		var/shield_multiplier = 1
 
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC, D_SLASHING, D_TOXIC)
-				shield_multiplier = 0.5
-			if(D_ENERGY, D_RADIOACTIVE)
-				shield_multiplier = 2
-
-		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power * shield_multiplier, shield_amt)
+		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power, shield_amt)
 		damage *= max(0, (1-shield_amt["shield_strength"]))
 		stun *= max(0, (1-shield_amt["shield_strength"]))
 
@@ -2063,7 +2068,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
+		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
@@ -2117,13 +2122,6 @@
 	else
 		shock_damage = 1 * prot
 
-	if (H)
-		for (var/uid in H.pathogens)
-			var/datum/pathogen/P = H.pathogens[uid]
-			shock_damage = P.onshocked(shock_damage, wattage)
-			if (!shock_damage)
-				return 0
-
 	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
@@ -2146,7 +2144,7 @@
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
@@ -2154,7 +2152,7 @@
 			src.flash(60)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 
 			var/turf/T = get_turf(src)
@@ -2292,6 +2290,12 @@
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
 
+
+/// Returns a multiplier for how much chems to deplete from their reagent holder per Life()
+/// This will be multiplied by that chems corresponding depletion rate
+/mob/living/proc/get_chem_depletion_multiplier()
+	return 1
+
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
 	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate
@@ -2332,3 +2336,19 @@
 			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> barely slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
+
+/mob/living/proc/meson(atom/source)
+	if (!source)
+		CRASH("meson proc called without a source!!")
+	src.vision.set_scan(1)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+
+/mob/living/proc/unmeson(atom/source)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
+			return
+	src.vision.set_scan(0)

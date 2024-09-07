@@ -115,7 +115,7 @@
 		amount = 3
 		max_amount = 3
 		stand_type = "shotgun_rack"
-		contained_weapon = /obj/item/gun/kinetic/riotgun
+		contained_weapon = /obj/item/gun/kinetic/pumpweapon/riotgun
 		contained_weapon_name = "riot shotgun"
 		req_access = list(access_security)
 

@@ -16,6 +16,7 @@
 	var/affecting_stam_drain = 20
 	var/resist_count = 0
 	var/item_grab_overlay_state = "grab_small"
+	var/transfering_chemicals = FALSE
 	var/can_pin = 1
 	var/dropped = 0
 	var/irresistible = 0
@@ -224,6 +225,17 @@
 					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message(SPAN_ALERT("[src.assailant] has grabbed [src.affecting] aggressively (now hands)!"), 1)
+					if (istype(src.loc, /obj/item/cloth) || istype(src.loc, /obj/item/material_piece/cloth))
+						SPAWN(0.3 SECONDS) //wait for them to move in
+							if (!QDELETED(src))
+								attack_particle(src.assailant, src.affecting)
+						var/obj/item/cloth = src.loc
+						if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+							logTheThing(LOG_COMBAT, src.assailant, "tries to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
+							boutput(src.affecting, SPAN_BOLD("[src.assailant] presses the [cloth] in your face to force you to breathe in chemicals!"))
+							SPAWN(2 SECONDS) // When it actually begins passing chemicals through
+								if (src.state >= GRAB_AGGRESSIVE)
+									transfering_chemicals = TRUE
 					icon_state = "reinforce"
 					src.state = GRAB_AGGRESSIVE //used to be '1'. SKIP LEVEL 1
 					set_affected_loc()
@@ -266,10 +278,6 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-		if (istype(src.loc, /obj/item/cloth))
-			var/obj/item/cloth/cloth = src.loc
-			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
-				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
@@ -772,7 +780,7 @@
 
 	src.hide_attack = initial(src.hide_attack)
 
-ABSTRACT_TYPE(/obj/item/grab/threat)
+//this should be abstract but abstract type markers propagate to the parent
 /obj/item/grab/threat
 	var/activated = FALSE
 
@@ -940,6 +948,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
 						for (var/mob/O in AIviewers(user))
 							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
@@ -973,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 							if (throw_target)
 								item_num_to_throw--
 								playsound(itm, "swing_hit", 50, 1)
-								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8, thrown_by=user) // Range: 1-4, Speed: 1-2
 
 							if (!item_num_to_throw)
 								break
@@ -994,7 +1003,7 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 
 	New()
 		..()
-		src.create_reagents(10)
+		src.create_reagents(20)
 
 	disposing()
 		..()
@@ -1003,9 +1012,12 @@ ABSTRACT_TYPE(/obj/item/grab/threat)
 
 	process_grab(var/mult = 1)
 		..()
-		if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state == GRAB_CHOKE && iscarbon(src.chokehold.affecting))
-			src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult)
-			src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
+		if (chokehold.transfering_chemicals || chokehold.state > GRAB_AGGRESSIVE) // Having more than an aggressive grab will transfer the chemicals anyway
+			if (src.chokehold && src.reagents && src.reagents.total_volume > 0 && chokehold.state >= GRAB_AGGRESSIVE && iscarbon(src.chokehold.affecting))
+				//src.reagents.reaction(chokehold.affecting, INGEST, 0.5 * mult) // No more ingesting means no stacking damage horribly and instantly
+				src.reagents.trans_to(chokehold.affecting, 1.5 * mult)
+			else
+				chokehold.transfering_chemicals = FALSE
 
 	is_open_container()
 		.= 1

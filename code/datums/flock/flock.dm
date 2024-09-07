@@ -19,6 +19,7 @@ var/flock_signal_unleashed = FALSE
 var/datum/flock/default_flock = null
 ///Gimmick flock with infinite compute that lone structures and units automatically connect to
 proc/get_default_flock()
+	RETURN_TYPE(/datum/flock)
 	if (!default_flock)
 		default_flock = new
 		default_flock.relay_allowed = FALSE

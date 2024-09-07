@@ -155,23 +155,32 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 	HYPharvested_proc(obj/machinery/plantpot/POT, mob/user)
 		// check if we need to add a suffix
+		var/new_weed_suffix = null
 		if (!src.weed_suffix && POT.plantgenes?.get_effective_value("potency") > INITIAL_REQUIRED_POTENCY)
-			src.weed_suffix = pick_string("chemistry_tools.txt", "WEED_suffixes")
+			new_weed_suffix = pick_string("chemistry_tools.txt", "WEED_suffixes")
 
-		if (src.weed_suffix)
+		if (src.weed_suffix || new_weed_suffix)
 			// if we have a suffix, check if we need to generate more prefixes
 			var/target_prefix_num = min(MAX_PREFIXES, round(POT.plantgenes?.get_effective_value("potency") / POTENCY_PER_PREFIX))
+			var/list/new_weed_prefix = src.weed_prefixes
 			if (length(src.weed_prefixes) < target_prefix_num)
 				var/prefixes_to_add = target_prefix_num - length(src.weed_prefixes)
 				for (var/i in 1 to prefixes_to_add)
-					weed_prefixes += pick_string("chemistry_tools.txt", "WEED_prefixes")
-
+					new_weed_prefix += pick_string("chemistry_tools.txt", "WEED_prefixes")
+			// we don't want to modify the cannabis singleton, so we force the generation of a new "hybrid" cannabis plant datum
+			var/datum/plant/herb/cannabis/new_cannabis_datum = HYPgenerateplanttypecopy(POT, src, TRUE)
 			// actually build the name
-			src.name = ""
-			for (var/prefix in src.weed_prefixes)
+			new_cannabis_datum.name = ""
+			if(new_weed_suffix)
+				new_cannabis_datum.weed_suffix = new_weed_suffix
+			new_cannabis_datum.weed_prefixes = new_weed_prefix
+			for (var/prefix in new_cannabis_datum.weed_prefixes)
 				// add in reverse order so newer prefixes are near the start
-				src.name = prefix + " [src.name]"
-			src.name += src.weed_suffix
+				new_cannabis_datum.name = prefix + " [new_cannabis_datum.name]"
+			new_cannabis_datum.name += new_cannabis_datum.weed_suffix
+			//now we are set and can insert our new cannabis datum into the plantpot
+			POT.current = new_cannabis_datum
+
 
 #undef INITIAL_REQUIRED_POTENCY
 #undef POTENCY_PER_PREFIX

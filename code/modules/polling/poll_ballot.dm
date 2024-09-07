@@ -25,7 +25,7 @@
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "PollBallot")
-	ui.open()
+		ui.open()
 
 /datum/poll_ballot/ui_data(mob/user)
 	. = list(

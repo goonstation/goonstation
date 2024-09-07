@@ -7,7 +7,7 @@
 
 import { InfernoNode } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Button, Flex, Image, Section, Stack } from '../../components';
+import { Box, Button, Image, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { isSoulProductData } from './type';
 import type { ZoldorfCommonProductData, ZoldorfPlayerShopData } from './type';
@@ -53,7 +53,7 @@ export const ZoldorfPlayerShop = (_, context) => {
           {credits !== 0 && (
             <Stack.Item bold>
               <Box inline>{`Cash: ${credits}⪽`}</Box>
-              <Button ml="5px" icon="eject" content={'eject'} onClick={() => act('returncash')} />
+              <Button ml={1} icon="eject" content="Eject" onClick={() => act('returncash')} />
             </Stack.Item>
           )}
         </Stack>
@@ -69,33 +69,33 @@ interface ZoldorfProductListItemProps extends ZoldorfCommonProductData {
 const ZoldorfProductListItem = (props: ZoldorfProductListItemProps) => {
   const { name, img, stock, infinite, children } = props;
   return (
-    <Section height="20px">
-      <Flex
+    <Stack.Item height="20px">
+      <Stack
         align="center"
         style={{
           "border-bottom": "1px solid #555", // match vending machine border
           "padding-bottom": "2px", // align border between buttons
         }}
       >
-        <Flex.Item>
+        <Stack.Item>
           <Box
             position="relative" // don't increase line-height, but keep image size
             height="20px" // 20 px height - 32 px sprite = -12 px of offset
             top="-6px" // -12px / 2 = -6px top offset to keep them centered
           >
-            {img && <Image pixelated src={`data:image/png;base64,${img}`} />}
+            {img && <Image src={`data:image/png;base64,${img}`} />}
           </Box>
-        </Flex.Item>
-        <Flex.Item grow>
+        </Stack.Item>
+        <Stack.Item grow>
           <>
             {!infinite && <Box inline italic>{`${stock} x`}&nbsp;</Box>}
             <Box inline>{name}</Box>
           </>
-        </Flex.Item>
-        <Flex.Item bold>
+        </Stack.Item>
+        <Stack.Item bold>
           {children}
-        </Flex.Item>
-      </Flex>
-    </Section>
+        </Stack.Item>
+      </Stack>
+    </Stack.Item>
   );
 };

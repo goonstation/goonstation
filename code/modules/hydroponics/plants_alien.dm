@@ -180,11 +180,16 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
 			if(!otherPot.current || otherPot.dead)
 				continue
-			otherPot.growth += 2
-			if(istype(otherPot.plantgenes,/datum/plantgenes/))
-				var/datum/plantgenes/otherDNA = otherPot.plantgenes
-				if(HYPCheckCommut(otherDNA,/datum/plant_gene_strain/photosynthesis))
-					otherPot.growth += 4
+			var/datum/plant/other_growing = otherPot.current
+			if (other_growing.simplegrowth || !otherPot.current_tick)
+				otherPot.growth += 2
+			else
+				var/datum/plantgrowth_tick/manipulated_tick = otherPot.current_tick
+				manipulated_tick.growth_rate += 2
+				if(istype(otherPot.plantgenes,/datum/plantgenes/))
+					var/datum/plantgenes/other_DNA = otherPot.plantgenes
+					if(HYPCheckCommut(other_DNA,/datum/plant_gene_strain/photosynthesis))
+						manipulated_tick.growth_rate += 4
 
 /datum/plant/artifact/plasma
 	name = "Plasma"

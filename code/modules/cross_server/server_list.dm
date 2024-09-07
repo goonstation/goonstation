@@ -26,6 +26,12 @@
 		"byond://goon4.goonhub.com:26400",
 		4
 		))
+	add_server(new/datum/game_server(
+		"main5",
+		"Goonstation 5 Roleplay overflow: Rocko",
+		"byond://goon5.goonhub.com:26500",
+		5
+		))
 
 	add_server(new/datum/game_server(
 		"streamer1",

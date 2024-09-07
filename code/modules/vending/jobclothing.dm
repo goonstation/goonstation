@@ -33,7 +33,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/serpico, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/red, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/flatcap, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/head/policecap, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/bobby, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/siren, 2)
 		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/security, 2, cost=PAY_TRADESMAN/1.5)
@@ -243,3 +242,29 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 #ifdef SEASON_WINTER
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
 #endif
+
+/obj/machinery/vending/jobclothing/syndicate
+	name = "Syndicate Apparel"
+	desc = "A vending machine that vends Syndicate clothing."
+	icon_state = "syndieclothing"
+	icon_panel = "snack-panel"
+	icon_off = "syndieclothing-off"
+	icon_broken = "syndieclothing-broken"
+	icon_fallen = "syndieclothing-fallen"
+	pay = 1
+	acceptcard = 1
+	req_access = list()
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/syndicate, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/space/syndicate, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/space/syndicate, 2)
+		product_list += new/datum/data/vending_product(/obj/item/tank/jetpack/syndicate, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas/swat, 2, cost=PAY_IMPORTANT)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/syndicate, 2, cost=PAY_IMPORTANT/2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/swat, 4)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/syndie, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
+

@@ -34,7 +34,7 @@
 	var/list/statsus = list()
 
 	if (config?.server_name)
-		statsus += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b>"
+		statsus += "<b><a href=\"[config.goonhub_url]\">[config.server_name]</a></b>"
 	else
 		statsus += "<b>SERVER NAME HERE</b>"
 

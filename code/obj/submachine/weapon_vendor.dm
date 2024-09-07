@@ -521,12 +521,12 @@
 */
 /datum/materiel/utility/belt
 	name = "Tactical Espionage Belt"
-	path = /obj/item/storage/fanny/syndie
+	path = /obj/item/storage/fanny/syndie/large
 	description = "The classic 7 slot syndicate belt pack. Has no relation to the fanny pack."
 
 /datum/materiel/utility/knife
 	name = "Combat Knife"
-	path = /obj/item/dagger/syndicate/specialist
+	path = /obj/item/dagger/specialist
 	description = "A field-tested 10 inch combat knife, helps you move faster when held & knocks down targets when thrown."
 
 /datum/materiel/utility/rpg_ammo

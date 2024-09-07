@@ -16,7 +16,7 @@
 			return relay.deductPoints(cost)
 		return 1
 
-	pointCheck(cost)
+	pointCheck(cost, quiet = FALSE)
 		if (!relay)
 			return 1
 		if (!relay.usesPoints)
@@ -25,7 +25,8 @@
 			logTheThing(LOG_DEBUG, usr, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
 			relay.points = 0
 		if (cost > relay.points)
-			boutput(owner, relay.notEnoughPointsMessage)
+			if (!quiet)
+				boutput(owner, relay.notEnoughPointsMessage)
 			return 0
 		return 1
 
@@ -88,6 +89,7 @@
 		owner.attach_hud(hud)
 
 		animate_levitate(owner)
+		LAZYLISTADDUNIQUE(owner.faction, FACTION_WRAITH)
 
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant", 100)
@@ -97,6 +99,7 @@
 
 	OnRemove()
 		if (owner)
+			owner.faction -= FACTION_WRAITH
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
@@ -253,7 +256,7 @@
 		var/on_cooldown = round((owner.last_cast - world.time) / 10)
 
 		if (owner.pointCost)
-			if (owner.pointCost > owner.holder.relay.points)
+			if (!owner.holder.pointCheck(owner.pointCost, quiet = TRUE))
 				newcolor = rgb(64, 64, 64)
 				point_overlay.maptext = "<span class='sh vb r ps2p' style='color: #cc2222;'>[owner.pointCost]</span>"
 			else

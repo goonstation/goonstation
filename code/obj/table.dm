@@ -630,6 +630,55 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 
 	auto
 		auto = TRUE
+
+TYPEINFO(/obj/table/sleek)
+TYPEINFO_NEW(/obj/table/sleek)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/sleek/auto)
+/obj/table/sleek
+	name = "sleek metal table"
+	desc = "A table with a reflective dark surface."
+	icon = 'icons/obj/furniture/table_sleek.dmi'
+	parts_type = /obj/item/furniture_parts/table/sleek
+
+	auto
+		auto = TRUE
+TYPEINFO(/obj/table/monodesk)
+TYPEINFO_NEW(/obj/table/monodesk)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/monodesk/auto)
+/obj/table/monodesk
+	name = "monochrome desk"
+	desc = "A sturdy desk with a little drawer to store things in!"
+	icon = 'icons/obj/furniture/table_monochrome_desk.dmi'
+	parts_type = /obj/item/furniture_parts/table/monodesk
+	has_drawer = TRUE
+
+	auto
+		auto = TRUE
+/obj/table/monodesk/auto/candystash
+	desc = "One of the drawers seems to have something colorful peeking out."
+	drawer_contents = list(/obj/item/kitchen/peach_rings,
+				/obj/item/reagent_containers/food/snacks/candy/chocolate = 2,
+				/obj/item/kitchen/gummy_worms_bag = 2,
+				/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch = 2,
+				/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop,
+				/obj/item/reagent_containers/food/snacks/candy/hard_candy,
+				/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon,
+				/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/caramel,
+				/obj/item/clothing/mask/cigarette/nicofree,
+				/obj/item/cigpacket/nicofree)
+
+/obj/table/monodesk/auto/files
+	desc = "The drawer seems to be stuffed with files and paper."
+	drawer_contents = list(/obj/item/paper_bin,
+				/obj/item/folder =4,
+				/obj/item/paper/blueprint/chart,
+				/obj/item/paper/blueprint/cog1,
+				/obj/item/pen/fancy,
+				/obj/item/pen,
+				/obj/item/clipboard)
+
 /* ======================================== */
 /* ---------------------------------------- */
 /* ======================================== */
@@ -1152,6 +1201,11 @@ TYPEINFO(/obj/table/glass)
 				random_brute_damage(user, rand(10,30),1)
 				take_bleeding_damage(user, user, rand(10,30))
 
+		if (isliving(user))
+			var/mob/living/dude = user
+			var/datum/gang/gang = dude.get_gang()
+			gang?.do_vandalism(GANG_VANDALISM_TABLING, src.loc)
+
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (ismob(AM))
@@ -1161,6 +1215,10 @@ TYPEINFO(/obj/table/glass)
 				src.visible_message(SPAN_ALERT("[M] smashes through [src]!"))
 				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 				src.smash()
+				if (isliving(thr.thrown_by))
+					var/mob/living/dude = thr.thrown_by
+					var/datum/gang/gang = dude.get_gang()
+					gang?.do_vandalism(GANG_VANDALISM_TABLING, src.loc)
 				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
 				if (ishuman(M))

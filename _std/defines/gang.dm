@@ -1,4 +1,4 @@
-#define GANG_MAX_MEMBERS 4
+#define GANG_MAX_MEMBERS 3
 
 /// How long the leader must cryo before gang members can take their role
 #define GANG_CRYO_LOCKOUT 7.5 MINUTES
@@ -30,8 +30,10 @@
 // Having 10% of the top heat is level '1'
 // Having less than 10% is level '0'
 
+/// Amount of points a gang member starts with
+#define GANG_STARTING_POINTS 1500
 
-/// /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
+/// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
 /// time in seconds between gangs gaining spray bottles
 #define GANG_SPRAYPAINT_REGEN 7.5 MINUTES
@@ -76,8 +78,8 @@
 #define GANG_CRATE_INITIAL_DROP  30 MINUTES //!  when the first gang crate drops on RP
 #define GANG_CRATE_DROP_FREQUENCY 40 MINUTES //! how often gang crates are dropped on RP
 #else
-#define GANG_CRATE_INITIAL_DROP  17 MINUTES //!  when the first gang crate drops on classic
-#define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
+#define GANG_CRATE_INITIAL_DROP  15 MINUTES //!  when the first gang crate drops on classic
+#define GANG_CRATE_DROP_FREQUENCY 20 MINUTES //! how often gang crates are dropped on classic
 #endif
 
 
@@ -85,7 +87,7 @@
 #define GANG_LOOT_INITIAL_DROP 10 MINUTES //! when the first gang duffel bag spawns on RP
 #define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on RP
 #else
-#define GANG_LOOT_INITIAL_DROP 7.5 MINUTES //! when the first gang duffel bag spawns on classic
+#define GANG_LOOT_INITIAL_DROP 5 MINUTES //! when the first gang duffel bag spawns on classic
 #define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on classic
 #endif
 #define GANG_LOOT_DROP_VOLUME_PER_GANG 2 //! how many duffel bags spawn, per gang
@@ -133,11 +135,31 @@
 #define GANG_TAG_HEAT_DECAY_MUL 0.9
 
 
+// GANG VANDALISM DEFINES:
+// Occasionally, gangs are told to do vandalism instead of duffle bags.
+// They must deface departments enough to recieve a duffle bag on their location.
+
+/// The total vandalism 'score' required to complete the objective.
+#define GANG_VANDALISM_REQUIRED_SCORE 500
+/// How much graffiti is worth, per tile
+#define GANG_VANDALISM_PER_GRAFFITI_TILE 20
+/// How many tiles of graffiti spawns in graffiti bottles
+#define GANG_VANDALISM_GRAFFITI_MAX 20
+/// How many points light breaks are worth
+#define GANG_VANDALISM_LIGHT_BREAK_POINTS 10
+/// How many points throwing a person into a vending machine is worth
+#define GANG_VANDALISM_VENDOR_KO 10
+/// How many points throwing a person into a glass table
+#define GANG_VANDALISM_TABLING 10
+/// How many points ripped up floor tiles are worth
+#define GANG_VANDALISM_FLOORTILE_POINTS 2
+/// How many points each point of damage is worth, for violence
+#define GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER 0.5
+/// How many points each point of damage is worth, for violence
+#define GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER 0
+
 
 // GANG TAG SIZES:
-
-
-
 
 /// Radius of the circle that tags claim
 #define GANG_TAG_INFLUENCE_LOCKER 4

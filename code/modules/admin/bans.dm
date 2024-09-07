@@ -37,7 +37,7 @@
 
 	/// Add a ban
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE, added_externally = FALSE)
-		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
+		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 
 		var/datum/apiModel/Tracked/BanResource/ban
 		if (!added_externally)
@@ -76,7 +76,7 @@
 		adminMsg += adminClient ? key_name(adminClient) : adminKey
 		adminMsg += " has banned [targetClient ? targetClient : replacementText] [serverLogSnippet].<br>Reason: [reason]<br>Duration: [durationHuman]."
 		if (ban)
-			adminMsg += " <a href='https://goonhub.com/admin/bans/[ban.id]' target='_blank'>View Ban</a>"
+			adminMsg += " <a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>View Ban</a>"
 		adminMsg += "</span>"
 		message_admins(adminMsg)
 
@@ -85,7 +85,7 @@
 			var/ircmsg[] = new()
 			ircmsg["key"] = adminKey
 			ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
-			ircmsg["msg"] = reason + "\n\n\[View Ban\](<https://goonhub.com/admin/bans/[ban.id]>)"
+			ircmsg["msg"] = reason + "\n\n\[View Ban\](<[goonhub_href("/admin/bans/[ban.id]")]>)"
 			ircmsg["time"] = durationHuman
 			ircmsg["timestamp"] = ((world.realtime / 10) / 60) + (duration / 60) // duration is in seconds, bot expects minutes
 			ircbot.export_async("ban", ircmsg)
@@ -138,7 +138,7 @@
 			SPAWN(0)
 				try
 					// Add these details to the existing ban
-					src.addDetails(ban, TRUE, "bot", ckey, comp_id, ip)
+					src.addDetails(ban.id, TRUE, "bot", ckey, comp_id, ip)
 				catch (var/exception/e)
 					var/logMsg = "Failed to add ban evasion details to ban [ban.id] because: [e.name]"
 					logTheThing(LOG_ADMIN, "bot", logMsg)
@@ -146,7 +146,7 @@
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
-		message += "Banned By: [ban.game_admin["ckey"]]<br>"
+		message += "Banned By: [ban.game_admin.ckey]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
 			message += "(This ban will be automatically removed in [ban.duration_human])"
@@ -163,7 +163,7 @@
 
 	/// Update an existing ban
 	proc/update(banId, admin_ckey, server_id, ckey, comp_id, ip, reason, duration, requires_appeal)
-		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
+		duration = floor(duration ? duration / 10 : duration) // duration given in deciseconds, api expects seconds
 		var/datum/apiRoute/bans/update/updateBan = new
 		updateBan.routeParams = list("[banId]")
 		updateBan.buildBody(
@@ -194,13 +194,13 @@
 		var/logMsg = "edited [constructTarget(target,"admin")]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, logMsg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, logMsg, "admin")
-		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] edited [target]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]. <a href='https://goonhub.com/admin/bans/[ban.id]' target='_blank'>View Ban</a></span>")
+		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] edited [target]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]. <a href='[goonhub_href("/admin/bans/[ban.id]", TRUE)]'>View Ban</a></span>")
 
 		// Tell Discord
 		var/ircmsg[] = new()
 		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
 		ircmsg["name"] = (adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A")
-		ircmsg["msg"] = "edited [target]'s ban. Reason: [ban.reason]. Duration: [durationHuman]. [serverLogSnippet].\n\n\[View Ban\](<https://goonhub.com/admin/bans/[ban.id]>)"
+		ircmsg["msg"] = "edited [target]'s ban. Reason: [ban.reason]. Duration: [durationHuman]. [serverLogSnippet].\n\n\[View Ban\](<[goonhub_href("/admin/bans/[ban.id]")]>)"
 		ircbot.export_async("admin", ircmsg)
 
 	/// Remove a ban
@@ -230,9 +230,9 @@
 		ircbot.export_async("admin", ircmsg)
 
 	/// Add details to an existing ban
-	proc/addDetails(datum/apiModel/Tracked/BanResource/ban, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
+	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
 		var/datum/apiRoute/bans/add_detail/addDetail = new
-		addDetail.routeParams = list("[ban.id]")
+		addDetail.routeParams = list("[banId]")
 		addDetail.buildBody(admin_ckey, roundId, ckey, comp_id, ip, evasion)
 		var/datum/apiModel/Tracked/BanDetail/banDetail
 		try
@@ -244,16 +244,16 @@
 		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
 		var/target = "(Ckey: [banDetail.ckey], IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
-		var/original_ckey = ban.original_ban_detail["ckey"]
+		var/original_ckey = banDetail.original_ban_detail.ckey
 
 		// Tell admins
-		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='https://goonhub.com/admin/bans/[ban.id]' target='_blank'>[ban.id]</a>, Original Ckey: [original_ckey]"
+		var/msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID <a href='[goonhub_href("/admin/bans/[banId]", TRUE)]'>[banId]</a>, Original Ckey: [original_ckey]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
 		message_admins("<span class='internal'>[messageAdminsAdmin] [msg]</span>")
 
 		// Tell discord
-		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[ban.id]\](<https://goonhub.com/admin/bans/[ban.id]>), Original Ckey: [original_ckey]"
+		msg = "added ban [evasion ? "evasion" : ""] details [target] to Ban ID \[[banId]\](<[goonhub_href("/admin/bans/[banId]")]>), Original Ckey: [original_ckey]"
 		var/ircmsg[] = new()
 		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"

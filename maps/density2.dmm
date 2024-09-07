@@ -2389,16 +2389,12 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "nY" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -2428,6 +2424,27 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
+"oF" = (
+/obj/storage/secure/crate/weapon/armory{
+	name = "armory in a box"
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/thermal,
+/obj/item/gun/energy/pulse_rifle,
+/obj/item/gun/kinetic/pumpweapon/riotgun,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/EOD,
+/obj/item/clothing/head/helmet/EOD,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/revimp_kit,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "oG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/garden)
@@ -2883,7 +2900,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -3340,6 +3357,10 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science)
+"uQ" = (
+/obj/machinery/sheet_extruder,
+/turf/simulated/floor/plating/airless,
+/area/station/quartermaster/magnet)
 "uR" = (
 /obj/machinery/light{
 	dir = 4;
@@ -3434,10 +3455,6 @@
 /obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"vL" = (
-/obj/machinery/sheet_extruder,
-/turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
 "vM" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -3694,10 +3711,6 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
-"xP" = (
-/obj/storage/secure/crate/gear/armory/equipment,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "xU" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -6474,27 +6487,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"Qc" = (
-/obj/storage/secure/crate/weapon/armory{
-	name = "armory in a box"
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_x = 4;
-	pixel_y = -6
-	},
-/obj/item/clothing/glasses/thermal,
-/obj/item/gun/energy/pulse_rifle,
-/obj/item/gun/kinetic/riotgun,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/EOD,
-/obj/item/clothing/head/helmet/EOD,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/revimp_kit,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "Qg" = (
 /obj/stool/bench/red,
 /obj/landmark/start/job/geneticist,
@@ -6886,6 +6878,10 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
+"Tq" = (
+/obj/landmark/start/job/mail_courier,
+/turf/simulated/floor/auto/dirt,
+/area/station/crew_quarters/garden/sunlight)
 "Tt" = (
 /obj/machinery/gibber{
 	dir = 4
@@ -7165,6 +7161,10 @@
 /obj/strip_door,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"VI" = (
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "VK" = (
 /obj/kitchenspike,
 /turf/simulated/floor/plating,
@@ -23594,7 +23594,7 @@ Rf
 Rf
 Rf
 Rf
-XB
+Rf
 Rf
 Rf
 Rf
@@ -49770,7 +49770,7 @@ MU
 MU
 MU
 RC
-xP
+VI
 aG
 aG
 Rf
@@ -50676,7 +50676,7 @@ MU
 Oc
 QF
 kD
-Qc
+oF
 Sy
 aG
 Rf
@@ -57000,7 +57000,7 @@ mM
 Pf
 sv
 qG
-qG
+Tq
 qG
 qG
 qG
@@ -80511,7 +80511,7 @@ zw
 zw
 zw
 gN
-vL
+uQ
 Rf
 Rf
 Rf

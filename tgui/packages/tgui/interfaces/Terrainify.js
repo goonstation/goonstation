@@ -76,7 +76,7 @@ export const TerrainToggles = props => {
 
   return (
     terrain && typeData[terrain].toggles && Object.keys(typeData[terrain].toggles).length ? (
-      <Section title="Toggles" >
+      <Section title="Toggles">
         {Object.keys(typeData[terrain].toggles).map((toggleOption, buttonIndex) => (
           <Flex.Item mb={1} key={buttonIndex}>
             <Button.Checkbox
@@ -172,13 +172,7 @@ export const Terrainify = (props, context) => {
       width={500}
       height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Terrainify
-            </Box>
-          }>
+        <Section title="Terrainify">
           <Flex direction="row">
             <TerrainChoice
               typeData={typeData}
@@ -186,7 +180,7 @@ export const Terrainify = (props, context) => {
               onTerrainValue={handleSetTerrain} />
             <Flex.Item ml={2} />
             <Flex.Item ml={1}>
-              <Section title="Description" >
+              <Section title="Description">
                 {!terrain ? "..." : typeData[terrain].description}
               </Section>
               <TerrainVehicleChoice

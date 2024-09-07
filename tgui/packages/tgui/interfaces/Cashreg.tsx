@@ -95,7 +95,7 @@ const CenterPart = (_, context) => {
       align="center"
       justify="space-around"
       className={classes(['cashreg__centerpart', (owner && is_owner) && 'cashreg__amount'])}
-      onClick={(owner && is_owner) && (amount ? () => act('clear_transaction') : () => act('set_amount'))}>
+      onClick={owner && is_owner ? (amount ? () => act('clear_transaction') : () => act('set_amount')) : undefined}>
       {owner ? (
         amount ? (
           <table className="cashreg__table">

@@ -560,7 +560,7 @@
 
 			var/dmg = part.dmg_blunt + part.dmg_burns
 			var/pct = 100 - clamp(dmg / part.max_health * 100, 0, 100)
-			return "<span style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[!mini_health ? "[add_lspace(round(pct), 3)]%" : "[add_lspace(round(part.max_health - dmg), 3)]</span>/<span style='color: #ffffff;'>[add_lspace(round(part.max_health), 3)]"]</span>"
+			return "<span style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[!mini_health ? "[pad_leading(round(pct), 3)]%" : "[pad_leading(round(part.max_health - dmg), 3)]</span>/<span style='color: #ffffff;'>[pad_leading(round(part.max_health), 3)]"]</span>"
 
 
 		update_pulling()

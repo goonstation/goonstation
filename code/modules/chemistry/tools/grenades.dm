@@ -19,7 +19,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	var/list/obj/beakers = new/list()
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
+	flags = TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
 	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
@@ -86,7 +86,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	src.arm(user)
 
 /obj/item/chem_grenade/ex_act(severity)
-	src.explode()
+	if(!src.detonating)
+		src.explode()
 	. = ..()
 
 /obj/item/chem_grenade/get_desc()
@@ -250,8 +251,8 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 // If it's not, the foam resp. smoke reaction occurs prematurely without carrying the target reagents with them.
 
 TYPEINFO(/obj/item/chem_grenade/custom)
-	mats = list("MET-2" = 4, "POW-1" = 2)
-
+	mats = list("metal_dense" = 4,
+				"energy" = 2)
 /obj/item/chem_grenade/custom
 	name = "disassembled chemical grenade"
 	icon_state = "grenade-chem1"
