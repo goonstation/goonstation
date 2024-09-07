@@ -32,7 +32,7 @@
 				"toxic_slurry","space_fungus","blood","meat_slurry")
 			if ("eldritch")
 				// all the worst stuff. all of it
-				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
+				potential_reagents = list("chlorine","super_ipecac","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
 				"amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","cytotoxin","neurotoxin","mutagen","wolfsbane",

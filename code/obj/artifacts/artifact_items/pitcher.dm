@@ -109,6 +109,8 @@
 			reagents.add_reagent("omnizine", 50)
 		if (prob(15))
 			reagents.add_reagent("mutagen", 30)
+		if (prob(5))
+			reagents.add_reagent("super_ipecac", 10)
 		if (prob(10))
 			reagents.add_reagent("omega_mutagen", 30)
 		if (prob(5))

@@ -788,8 +788,8 @@ datum
 						var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 						M.vomit(0, null, vomit_message)
 						M.stuttering += rand(0,2)
-						M.change_misstep_chance(5 * mult)
-						M.take_toxin_damage(2 * mult)
+						M.change_misstep_chance(6 * mult)
+						M.take_toxin_damage(3 * mult)
 					if(src.cycles > 20 && isliving(M) && !ON_COOLDOWN(M, "super_ipecac_organ_loss", 6 SECONDS))
 						var/mob/living/victim = M
 						if(victim.organHolder)
