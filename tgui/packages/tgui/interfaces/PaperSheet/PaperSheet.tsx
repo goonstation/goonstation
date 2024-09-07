@@ -23,8 +23,9 @@ import { sanitizeText } from '../../sanitize';
 import { HelpToolip } from './PaperHelpTooltip';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
 const WINDOW_TITLEBAR_HEIGHT = 30;
+
 // Hacky, yes, works?...yes
-const textWidth = (text, font, fontsize) => {
+const textWidth = (text: string, font: string, fontsize: string) => {
   // default font height is 12 in tgui
   font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
@@ -33,7 +34,12 @@ const textWidth = (text, font, fontsize) => {
   return ctx.measureText(text).width;
 };
 
-const setFontinText = (text, font, color, bold = false) => {
+const setFontinText = (
+  text: string,
+  font: string,
+  color: string,
+  bold = false,
+) => {
   return (
     '<span style="' +
     'color:' +
@@ -52,6 +58,7 @@ const setFontinText = (text, font, color, bold = false) => {
 const createIDHeader = (index) => {
   return 'paperfield_' + index;
 };
+
 // To make a field you do a [_______] or however long the field is
 // we will then output a TEXT input for it that hopefully covers
 // the exact amount of spaces
@@ -112,7 +119,7 @@ const createFields = (txt, font, fontsize, color, counter) => {
   };
 };
 
-const signDocument = (txt, color, user) => {
+const signDocument = (txt: string, color: string, user: string) => {
   return txt.replace(signRegex, () => {
     return setFontinText(user, 'Times New Roman', color, true);
   });
@@ -169,7 +176,7 @@ const checkAllFields = (txt, font, color, userName, bold = false) => {
     const fullMatch = matches[0];
     const id = matches.groups.id;
     if (id) {
-      const dom = document.getElementById(id);
+      const dom = document.getElementById(id) as HTMLInputElement;
       // make sure we got data, and kill any html that might
       // be in it
       const domText = dom && dom.value ? dom.value : '';
@@ -181,7 +188,7 @@ const checkAllFields = (txt, font, color, userName, bold = false) => {
         continue;
       }
       // this is easier than doing a bunch of text manipulations
-      const target = dom.cloneNode(true);
+      const target = dom.cloneNode(true) as HTMLInputElement;
       // in case they sign in a field
       if (sanitizedText.match(signRegex)) {
         target.style.fontFamily = 'Times New Roman';
@@ -210,7 +217,7 @@ const checkAllFields = (txt, font, color, userName, bold = false) => {
   return { text: txt, fields: values };
 };
 
-const pauseEvent = (e) => {
+const pauseEvent = (e: MouseEvent) => {
   if (e.stopPropagation) {
     e.stopPropagation();
   }
@@ -239,6 +246,7 @@ const Stamp = (props) => {
     />
   ) : (
     <Box
+      // @ts-ignore TODO-REACT
       id={activeStamp && 'stamp'}
       style={stampTransform}
       className="paper__stamp-text"
@@ -618,23 +626,40 @@ class PaperSheetEdit extends Component {
   }
 }
 
-export const PaperSheet = () => {
-  const { data } = useBackend();
-  const {
-    editMode,
-    text,
-    paperColor = 'white',
-    penColor = 'black',
-    penFont = 'Verdana',
-    stamps,
-    stampClass,
-    sizeX,
-    sizeY,
-    name,
-    scrollbar,
-  } = data;
-  const stampList = !stamps ? [] : stamps;
-  const decideMode = (mode) => {
+interface PaperSheetProps {
+  editMode: number;
+  text: string;
+  paperColor: string;
+  penColor: string;
+  penFont: string;
+  stamps: Array<Array<string>>;
+  stampClass: string;
+  sizeX: number;
+  sizeY: number;
+  name: string;
+  scrollbar: boolean;
+}
+
+export const PaperSheet: React.FC<PaperSheetProps> = ({
+  editMode,
+  text,
+  paperColor = 'white',
+  penColor = 'black',
+  penFont = 'Verdana',
+  stamps,
+  stampClass,
+  sizeX,
+  sizeY,
+  name,
+  scrollbar,
+}) => {
+  const [stampList, setStampList] = useState<Array<Array<string>>>([]);
+
+  useEffect(() => {
+    setStampList(stamps || []);
+  }, [stamps]);
+
+  const decideMode = (mode: number) => {
     switch (mode) {
       case 0:
         return <PaperSheetView value={text} stamps={stampList} readOnly />;
@@ -660,6 +685,7 @@ export const PaperSheet = () => {
         return 'ERROR ERROR WE CANNOT BE HERE!!';
     }
   };
+
   return (
     <Window
       title={name}
@@ -668,6 +694,7 @@ export const PaperSheet = () => {
       height={sizeY || 500}
     >
       <Window.Content backgroundColor={paperColor} scrollable={scrollbar}>
+        {/* @ts-ignore TODO-REACT */}
         <Box id="page" fitted fillPositionedParent>
           {decideMode(editMode)}
         </Box>
