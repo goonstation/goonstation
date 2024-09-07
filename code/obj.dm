@@ -216,7 +216,7 @@
 		else
 			return null
 
-	proc/initialize()
+	proc/initialize(map_init)
 
 	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE

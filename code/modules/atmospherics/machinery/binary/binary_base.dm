@@ -73,7 +73,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/binary/initialize()
+/obj/machinery/atmospherics/binary/initialize(map_init)
 	if(node1 && node2) return
 
 	var/node2_connect = dir
@@ -88,7 +88,9 @@
 		if(target.initialize_directions & get_dir(target,src))
 			node2 = target
 			break
-
+	if(!map_init)
+		src.node1?.initialize(TRUE)
+		src.node2?.initialize(TRUE)
 	UpdateIcon()
 
 /obj/machinery/atmospherics/binary/build_network()
