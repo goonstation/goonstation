@@ -320,6 +320,10 @@ ABSTRACT_TYPE(/datum/contextAction/knit/amigurumi)
 
 /datum/contextAction/knit/big_scarf
 	name = "long wool scarf"
+	duration = 20 SECONDS
+	icon_state = "knit_big_scarf"
+	cost = 5
+	knitting_project = /obj/item/clothing/suit/scarf/long
 
 /obj/item/clothing/suit/scarf/long
 	name = "long scarf"

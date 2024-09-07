@@ -5,7 +5,7 @@
 	name = "martian"
 	real_name = "martian"
 	var/martian_type = "basic"
-	desc = "Genocidal monsters from Mars."
+	desc = "Murderous monsters from Mars."
 	density = 1
 	icon_state = "martian"
 	icon_state_dead = "martian-dead"
@@ -19,15 +19,15 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
-	health_brute = 16
-	health_brute_vuln = 1
-	health_burn = 16
+	health_brute = 75
+	health_brute_vuln = 0.5
+	health_burn = 75
 	health_burn_vuln = 1.5
-	speechverb_say = "screeches"
+	speechverb_say = "burbles"
 	speechverb_exclaim = "screeches"
-	speechverb_ask = "screeches"
-	speechverb_gasp = "screeches"
-	speechverb_stammer = "screeches"
+	speechverb_ask = "warbles"
+	speechverb_gasp = "gurgles"
+	speechverb_stammer = "crackles"
 
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliate_patience = 3
@@ -75,6 +75,7 @@
 
 	New()
 		..()
+		abilityHolder.addAbility(/datum/targetable/artifact_limb_ability/martian_pull)
 		abilityHolder.addAbility(/datum/targetable/critter/psyblast/martian)
 		abilityHolder.addAbility(/datum/targetable/critter/teleport)
 
@@ -153,10 +154,16 @@
 	martian_type = "warrior"
 	icon_state = "martianW"
 	icon_state_dead = "martianW-dead"
-	health_brute = 18
-	health_brute_vuln = 0.7
-	health_burn = 18
-	health_burn_vuln = 1.2
+	health_brute = 150
+	health_brute_vuln = 0.5
+	health_burn = 150
+	health_burn_vuln = 1.5
+
+	New()
+		..()
+		abilityHolder.addAbility(/datum/targetable/critter/slam)
+		abilityHolder.addAbility(/datum/targetable/critter/tackle)
+
 
 	critter_attack(var/mob/target)
 		if (src.equipped())
@@ -217,6 +224,7 @@
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
+		abilityHolder.addAbility(/datum/targetable/critter/scarylook)
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
@@ -242,6 +250,23 @@
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
+		abilityHolder.addAbility(/datum/targetable/critter/scarylook)
+
+/mob/living/critter/martian/mortian
+	name = "mortian"
+	real_name = "mortian"
+	martian_type = "mortian"
+	icon_state = "martianM"
+	icon_state_dead = "martianM-dead"
+	health_brute = 150
+	health_burn = 150
+
+	New()
+		..()
+		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
+		abilityHolder.addAbility(/datum/targetable/critter/bholerip)
+		abilityHolder.addAbility(/datum/targetable/critter/fadeout)
+		abilityHolder.addAbility(/datum/targetable/critter/writhe)
 
 // These were for a martian gamemode so im leaving them as non-npcs for now
 /mob/living/critter/martian/sapper
@@ -250,7 +275,12 @@
 	martian_type = "sapper"
 	icon_state = "martianSP"
 	icon_state_dead = "martianSP-dead"
-	is_npc = FALSE
+
+	New()
+		..()
+		abilityHolder.addAbility(/datum/targetable/critter/zzzap)
+		abilityHolder.addAbility(/datum/targetable/critter/bury_hide)
+
 
 /mob/living/critter/martian/overseer
 	name = "martian overseer"
@@ -258,17 +288,16 @@
 	martian_type = "overseer"
 	icon_state = "martianL"
 	icon_state_dead = "martianL-dead"
-	health_brute = 25
-	health_brute_vuln = 0.8
-	health_burn = 25
-	health_burn_vuln = 1
+	health_brute = 300
+	health_burn = 300
 	leader = TRUE
-	is_npc = FALSE
+	//is_npc = FALSE
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/summon)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
+		abilityHolder.addAbility(/datum/targetable/critter/mezzer)
 
 // this is being copied and pasted more than once, this ends now
 // merging in the admin verb stuff so we can display the appropriate stuff to admins when players speak, because knowing real names of martian babblers would be nice

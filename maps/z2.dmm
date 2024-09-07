@@ -51122,12 +51122,8 @@
 /area/centcom/lounge)
 "dIs" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/unsimulated/floor/black,
 /area/centcom/lounge)
 "dIt" = (
