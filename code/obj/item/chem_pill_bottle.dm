@@ -150,41 +150,49 @@
 				break
 		boutput(user, SPAN_NOTICE("You finish filling [src]!"))
 
-	mouse_drop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 		if (usr == over_object && istype(usr, /mob/living/carbon) && (src.loc == usr || src.loc?.loc == usr))
 			if(usr.restrained())
 				boutput(usr, SPAN_ALERT("You can't get into the [src] in your current state."))
-				return
-			// Need a free hand, or the bottle to be already in-hand
+				return FALSE
 			if (!usr.is_in_hands(src))
 				if (!usr.is_in_hands(null))
 					boutput(usr, SPAN_ALERT("You need a free hand to do that."))
-					return
-				usr.drop_item(src)
+					return FALSE
+				usr.drop_item(src) // this is just to prevent an item ghost in the inventory, but there might be a better way to do that.
 				usr.put_in_hand(src)
-
-			var/obj/item/reagent_containers/pill/pill = src.create_pill()
-			if (isnull(pill))
-				boutput(usr, SPAN_ALERT("[src] is empty!"))
-				return
-			// clumsy people have a chance to spill pills on the floor when popping one
-			if(total_pills() > 0 && usr.bioHolder && usr.bioHolder.HasEffect("clumsy") && prob(25))
-				usr.visible_message(SPAN_NOTICE("[usr] tips [src], spilling pills on their face - one even manages to land in their mouth!")
-									null, SPAN_NOTICE("Someone spills some pills."))
-				tip_out(usr, usr.loc)
-			else usr.visible_message(SPAN_NOTICE("[usr] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
-			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1)
-			pill.pill_action(usr, usr)
-			rebuild_desc()
+			eat_pill_from_bottle(usr)
 			return
 
 		else if (istype(over_object,/obj/table))
+			// Is it bad form to use params like this? It is pretty useful for communicating between mouse_drop() and MouseDrop_T(),
+			// the alternatives in this situation are putting the tip_out() call into the table's MouseDrop_T() - but I would personally prefer item logic
+			// to remain in said item's class - or use a SPAWN(0) to wait out MouseDrop_T().
+			if (!islist(params)) params = params2list(params)
+			if (params) params["dumped"] = TRUE
 			tip_out(usr, over_object.loc)
 			return
 		..()
 
+	proc/eat_pill_from_bottle(mob/user)
+	/// returns true if a pill was successfully swallowed
+		var/obj/item/reagent_containers/pill/pill = src.create_pill()
+		if (isnull(pill))
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return FALSE
+		// clumsy people have a chance to spill pills on the floor when popping one
+		if(total_pills() > 0 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(25))
+			user.visible_message(SPAN_NOTICE("[user] tips [src], spilling pills on their face - one even manages to land in their mouth!"),
+								null, SPAN_NOTICE("Someone spills some pills."))
+			tip_out(user, user.loc)
+		else user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+		playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+		pill.pill_action(user, user)
+		rebuild_desc()
+		return TRUE
+
 	// Don't dump the bottle onto the table if using drag-and-drop to dump out pills.
 	should_place_on(obj/target, params)
-		if (istype(target, /obj/table) && islist(params) && params["dragged"])
+		if (istype(target, /obj/table) && islist(params) && params["dumped"])
 			return FALSE
 		. = ..()
