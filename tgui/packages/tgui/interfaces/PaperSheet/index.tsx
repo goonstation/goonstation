@@ -316,7 +316,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   return (
     <Flex direction="column" fillPositionedParent>
       <Flex.Item>
-        {/* */}
         <Tabs fluid>
           <Tabs.Tab
             key="marked_edit"
