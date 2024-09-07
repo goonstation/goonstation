@@ -769,7 +769,7 @@ datum
 			/// how much cycles this has been in the target's system.
 			var/cycles = 0
 			/// a list with the organs the person is able to loose a few before falling over dead; of course you vomit everything out EXCEPT the stomach
-			var/list/non_vital_organs = list("left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "intestines", "spleen", "pancreas", "appendix")
+			var/list/non_vital_organs = list("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "intestines", "spleen", "pancreas", "appendix")
 			/// a list with vital organs the person should only loose on cycle 40 and upwards
 			var/list/vital_organs = list("brain", "heart")
 
