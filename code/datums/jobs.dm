@@ -32,6 +32,7 @@
 	var/high_priority_job = FALSE
 	///Fill up to this limit, then drop this job out of high priotity
 	var/high_priority_limit = INFINITY
+	//should a job be considered last for selection, but also as a last resort fallback job? NOTE: ignores other requirements such as round min/max
 	var/low_priority_job = FALSE
 	var/order_priority = 1 //! What order jobs are filled in within their priority tier, lower number = higher priority
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
@@ -670,12 +671,11 @@ ABSTRACT_TYPE(/datum/job/research)
 	wiki_link = "https://wiki.ss13.co/Scientist"
 
 /datum/job/research/research_assistant
-	name = "Research Assistant"
+	name = "Research Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Scientist"
 	rounds_allowed_to_play = ROUNDS_MAX_RESASS
-	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 	slot_jump = list(/obj/item/clothing/under/color/purple)
@@ -722,12 +722,11 @@ ABSTRACT_TYPE(/datum/job/research)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/research/medical_assistant
-	name = "Medical Assistant"
+	name = "Medical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Medical Doctor"
 	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
-	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/red)
@@ -830,12 +829,11 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/engineering/technical_assistant
-	name = "Technical Assistant"
+	name = "Technical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
-	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
