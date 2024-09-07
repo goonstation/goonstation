@@ -26509,7 +26509,9 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
 	},
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bmS" = (
@@ -28013,7 +28015,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "brq" = (
@@ -39463,12 +39467,10 @@
 /obj/machinery/firealarm/south,
 /turf/simulated/floor/purple/side,
 /area/station/janitor/supply)
-"bUu" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/black,
-/area/station/medical/crematorium)
 "bUv" = (
-/obj/machinery/traymachine/morgue,
+/obj/machinery/traymachine/morgue{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bUw" = (
@@ -54478,16 +54480,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "enP" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "epL" = (
@@ -55148,7 +55147,6 @@
 	req_access = null;
 	turretArea = /area/station/turret_protected/armory_outside
 	},
-/obj/mapping_helper/access/hos,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "fqT" = (
@@ -62084,19 +62082,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
-"rdk" = (
-/obj/machinery/door/airlock/pyro/security{
-	aiControlDisabled = 1;
-	name = "Armory";
-	req_access = null
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/hos,
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/ai_monitored/armory)
 "rgR" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -104119,8 +104104,8 @@ dNg
 bHA
 bWQ
 cCj
-bUu
-bUu
+cro
+cro
 beJ
 aRD
 civ
@@ -126435,7 +126420,7 @@ crq
 crq
 crq
 atD
-rdk
+enP
 lCl
 pBE
 bUj
