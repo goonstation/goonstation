@@ -4,25 +4,20 @@
  * @author Original WarlockD (https://github.com/warlockd)
  * @author Changes stylemistake
  * @author Changes ThePotato97
+ * @author Changes ZeWaka
  * @license MIT
  */
-
-// export const PaperSheet = () => {};
-
-// TODO-REACT unstub
 
 import { marked } from 'marked';
 import { Component, useEffect, useState } from 'react';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
-import { clamp } from 'tgui-core/math';
 
-import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { sanitizeText } from '../../sanitize';
 import { HelpToolip } from './PaperHelpTooltip';
+import { PaperSheetStamper, PaperSheetView } from './Stamps';
 const MAX_PAPER_LENGTH = 5000; // Question, should we send this with ui_data?
-const WINDOW_TITLEBAR_HEIGHT = 30;
 
 // Hacky, yes, works?...yes
 const textWidth = (text: string, font: string, fontsize: string) => {
@@ -217,193 +212,22 @@ const checkAllFields = (txt, font, color, userName, bold = false) => {
   return { text: txt, fields: values };
 };
 
-const pauseEvent = (e: MouseEvent) => {
-  if (e.stopPropagation) {
-    e.stopPropagation();
-  }
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.cancelBubble = true;
-  e.returnValue = false;
-  return false;
-};
-
-const Stamp = (props) => {
-  const { image, opacity, activeStamp } = props;
-  const stampTransform = {
-    left: image.x + 'px',
-    top: image.y + 'px',
-    transform: 'rotate(' + image.rotate + 'deg)',
-    opacity: opacity || 1.0,
-  };
-  return image.sprite.match('stamp-.*') ? (
-    <img
-      id={activeStamp && 'stamp'}
-      style={stampTransform}
-      className="paper__stamp"
-      src={resolveAsset(image.sprite)}
-    />
-  ) : (
-    <Box
-      // @ts-ignore TODO-REACT
-      id={activeStamp && 'stamp'}
-      style={stampTransform}
-      className="paper__stamp-text"
-    >
-      {image.sprite}
-    </Box>
-  );
-};
-
-const setInputReadonly = (text, readonly) => {
-  return readonly
-    ? text.replace(/<input\s[^d]/g, '<input disabled ')
-    : text.replace(/<input\sdisabled\s/g, '<input ');
-};
-
-// got to make this a full component if we
-// want to control updates
-export const PaperSheetView = (props) => {
-  const { value = '', stamps = [], backgroundColor, readOnly } = props;
-  const stampList = stamps || [];
-  const textHtml = {
-    __html:
-      '<span class="paper-text">' +
-      setInputReadonly(value, readOnly) +
-      '</span>',
-  };
-  return (
-    <Box
-      className="paper__page"
-      position="relative"
-      backgroundColor={backgroundColor}
-      width="100%"
-      height="100%"
-    >
-      <Box
-        color="black"
-        backgroundColor={backgroundColor}
-        fillPositionedParent
-        width="100%"
-        height="100%"
-        dangerouslySetInnerHTML={textHtml}
-        p="10px"
-      />
-      {stampList.map((o, i) => (
-        <Stamp
-          key={o[0] + i}
-          image={{ sprite: o[0], x: o[1], y: o[2], rotate: o[3] }}
-        />
-      ))}
-    </Box>
-  );
-};
-
-interface PaperSheetStamperProps {
+interface PaperSheetEditProps {
   value: string;
-  stampClass: string;
+  textColor: string;
+  fontFamily: string;
   stamps: Array<Array<string>>;
+  backgroundColor: string;
 }
 
-const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
-  value,
-  stampClass,
-  stamps,
-}) => {
-  const [x, setX] = useState(0);
-  const [y, setY] = useState(0);
-  const [rotate, setRotate] = useState(0);
-
-  const findStampPosition = (e: MouseEvent) => {
-    let rotating: boolean;
-    const windowRef = document.querySelector('.Layout__content');
-    if (e.shiftKey) {
-      rotating = true;
-    }
-
-    const stamp = document.getElementById('stamp');
-    if (stamp) {
-      const stampHeight = stamp.clientHeight;
-      const stampWidth = stamp.clientWidth;
-
-      const currentHeight = rotating
-        ? y
-        : e.pageY + windowRef.scrollTop - stampHeight;
-      const currentWidth = rotating ? x : e.pageX - stampWidth / 2;
-
-      const widthMin = 0;
-      const heightMin = 0;
-
-      const widthMax = windowRef.clientWidth - stampWidth;
-      const heightMax =
-        windowRef.clientHeight + windowRef.scrollTop - stampHeight;
-
-      const radians = Math.atan2(
-        e.pageX - currentWidth,
-        e.pageY - currentHeight,
-      );
-
-      const newRotate = rotating ? radians * (180 / Math.PI) * -1 : rotate;
-
-      return [
-        clamp(currentWidth, widthMin, widthMax),
-        clamp(currentHeight, heightMin, heightMax),
-        newRotate,
-      ];
-    }
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    const pos = findStampPosition(e);
-    if (!pos) {
-      return;
-    }
-    // center offset of stamp & rotate
-    pauseEvent(e);
-    setX(pos[0]);
-    setY(pos[1]);
-    setRotate(pos[2]);
-  };
-
-  const handleMouseClick = (e: MouseEvent) => {
-    if (e.pageY <= WINDOW_TITLEBAR_HEIGHT) {
-      return;
-    }
-    const { act } = useBackend();
-    const stampObj = {
-      x,
-      y,
-      r: rotate,
-    };
-    act('stamp', stampObj);
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('click', handleMouseClick);
-
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('click', handleMouseClick);
-    };
-  }, [x, y, rotate]);
-
-  const stampList = stamps || [];
-  const currentPos = {
-    sprite: stampClass,
-    x,
-    y,
-    rotate,
-  };
-
-  return (
-    <>
-      <PaperSheetView readOnly value={value} stamps={stampList} />
-      <Stamp activeStamp opacity={0.5} image={currentPos} />
-    </>
-  );
-};
+interface PaperSheetEditData {
+  text: string;
+  penColor: string;
+  penFont: string;
+  isCrayon: boolean;
+  fieldCounter: number;
+  editUsr: string;
+}
 
 // ugh.  So have to turn this into a full
 // component too if I want to keep updates
