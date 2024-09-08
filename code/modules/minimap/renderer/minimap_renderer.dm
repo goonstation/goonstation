@@ -143,8 +143,13 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 
 	src.radar_minimaps_by_z_level["[T.z]"].DrawBox(colour, T.x, T.y)
 
+	/*
+	Disable dynamic radar map updates until explosions and other large turf
+	updates can be better supported by the RSC updates
+
 	if (update_icon)
 		src.radar_minimap_objects_by_z_level["[T.z]"].icon = icon(src.radar_minimaps_by_z_level["[T.z]"])
+	*/
 
 /// Separates a given bitflag into a list of the separate bits composing it. Eg. 1011 -> (0001, 0010, 1000), or in base 10: 11 -> (1, 2, 8).
 /datum/minimap_renderer/proc/separate_bitflag(bitflag)

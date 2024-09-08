@@ -43,7 +43,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 	dropped(mob/user)
 		. = ..()
-		user.closeContextActions()
+		user?.closeContextActions()
 
 	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
