@@ -47,6 +47,9 @@
 			return
 		else if (!is_incapacitated(L))
 			return
+		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/secbot = src.holder.owner
+			secbot.halted = FALSE
 		src.transition_task = src.holder.default_task
 		src.fixed_target = null
 		src.holder.interrupt_to_task(src.holder.default_task)
