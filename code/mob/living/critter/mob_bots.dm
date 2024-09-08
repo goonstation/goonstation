@@ -399,6 +399,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				continue
 			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 
+ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_item)
 /mob/living/critter/robotic/securitron
 	name = "securitron"
 	real_name = "securitron"
@@ -419,13 +420,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	robot_talk_understand = TRUE
 	density = FALSE
 	hand_count = 1
-	base_move_delay = 2.75
-	base_walk_delay = 3.5
+	base_move_delay = 3.25
+	base_walk_delay = 4.25
 	can_burn = FALSE
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
 	dna_to_absorb = 0
+	emp_vuln = 3
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
@@ -433,13 +435,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1.25
-	ai_retaliates = TRUE
-	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_retaliate_patience = 0
-	ai_type = /datum/aiHolder/patroller/packet_based/securitron
+	ai_retaliates = FALSE // this is a lie- special retaliation behavior in was_harmed
+	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
 	var/initial_limb = /obj/item/baton/mobsecbot
+	var/drop_initial = FALSE
 	var/net_id
 	var/power = TRUE
 	var/control_freq = FREQ_BOT_CONTROL
@@ -459,6 +460,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 /mob/living/critter/robotic/securitron/New()
 	. = ..()
+
+	if(src.initial_limb)
+		var/datum/handHolder/HH = hands[1]
+		src.hud.add_object(src.equipped(), HUD_LAYER+2, HH.screenObj.screen_loc)
+
 	src.net_id = generate_net_id(src)
 
 	remove_lifeprocess(/datum/lifeprocess/blindness)
@@ -498,17 +504,49 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 /mob/living/critter/robotic/securitron/setup_hands()
 	..()
 	var/datum/handHolder/HH = hands[1]
-	HH.limb = new /datum/limb/item
+	if (src.initial_limb)
+		HH.limb = new /datum/limb/item
+		HH.item = new src.initial_limb(src)
+		var/obj/item/I = HH.item
+		I.temp_flags |= IS_LIMB_ITEM
+		I.cant_drop = 1
+		I.cant_self_remove = 1
+		I.cant_other_remove = 1
+	else
+		HH.limb = new /datum/limb/small_critter/med
 	HH.limb_name = "long arm"
 	HH.name = "long arm"
 	HH.icon_state = "handn"
 	HH.icon = 'icons/mob/critter_ui.dmi'
+	src.update_inhands()
+
+/mob/living/critter/robotic/securitron/post_setup_hands()
+	..()
+	var/datum/handHolder/HH = hands[1]
 	if (src.initial_limb)
-		HH.item = new src.initial_limb(src)
-		var/obj/item/I = HH.item
-		I.cant_drop = 1
-		I.cant_self_remove = 1
-		I.cant_other_remove = 1
+		HH.limb.holder.remove_object = HH.item
+
+/mob/living/critter/robotic/securitron/proc/change_hand_item()
+	set name = "Change hand item"
+	var/type = get_one_match(tgui_input_text(usr, "Item type", "Item type"), /obj/item)
+	if (!type)
+		return
+	var/datum/handHolder/HH = hands[1]
+	if(!istype(HH.limb, /datum/limb/item))
+		HH.limb.dispose()
+		HH.limb = new /datum/limb/item
+	var/obj/item/old_item = HH.item
+	HH.item = new type(src)
+	var/obj/item/I = HH.item
+	I.temp_flags |= IS_LIMB_ITEM
+	I.cant_drop = 1
+	I.cant_self_remove = 1
+	I.cant_other_remove = 1
+	HH.limb.holder.remove_object = HH.item
+	src.hud.remove_object(old_item)
+	qdel(old_item)
+	src.hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
+	src.update_inhands()
 
 /mob/living/critter/robotic/securitron/setup_healths()
 	add_hh_robot(src.health_brute, src.health_brute_vuln)
@@ -521,6 +559,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	return 2
 
 /mob/living/critter/robotic/securitron/death(var/gibbed)
+	for (var/datum/handHolder/HH in hands)
+		if (HH.limb.holder.remove_object && src.drop_initial)
+			var/obj/item/I = HH.limb.holder.remove_object
+			I.temp_flags &= ~IS_LIMB_ITEM
+			I.cant_drop = initial(I.cant_drop)
+			I.cant_self_remove = initial(I.cant_self_remove)
+			I.cant_other_remove = initial(I.cant_other_remove)
 	..(gibbed, 0)
 	if (!gibbed)
 		gib(src)
@@ -743,12 +788,36 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	return 0
 
 /mob/living/critter/robotic/securitron/critter_attack(mob/target)
+	if(actions.hasAction(src,/datum/action/bar/icon/mob_secbot_cuff,FALSE))
+		return
+
 	if((target.lying) && ishuman(target) && !target.hasStatus("handcuffed"))
 		var/datum/targetable/critter/handcuff = src.abilityHolder.getAbility(/datum/targetable/critter/bot/handcuff)
 		if(handcuff && !handcuff.disabled && handcuff.cooldowncheck())
 			handcuff.handleCast(target)
 			return
+
+	var/obj/item/I = src.equipped()
+	if (I && istype(I,/obj/item/baton))
+		var/obj/item/baton/baton = I
+		if(!baton.is_active)
+			baton.AttackSelf(src)
+			return
 	..()
+
+/mob/living/critter/robotic/securitron/critter_basic_attack(mob/target)
+	var/obj/item/I = src.equipped()
+	if(!I)
+		return FALSE
+	if (istype(I,/obj/item/gun))
+		src.set_a_intent(INTENT_HARM)
+	else
+		src.set_a_intent(INTENT_DISARM)
+	src.hand_attack(target)
+	if(istype(I,/obj/item/gun/kinetic/pumpweapon))
+		var/obj/item/gun/kinetic/pumpweapon/gun_to_rack = I
+		gun_to_rack.AttackSelf(src) // causes it to rack riot shotguns after firing
+	return TRUE
 
 /mob/living/critter/robotic/securitron/proc/check_access(obj/item/I)
 	if(!istype(src.req_access, /list)) //something's very wrong
@@ -765,10 +834,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			return 0
 	return 1
 
-/mob/living/critter/robotic/securitron/should_critter_retaliate(mob/attacker, obj/attacked_with)
+/mob/living/critter/robotic/securitron/was_harmed(mob/attacker, obj/attacked_with, special, intent)
+	..()
+	if(!src.ai.enabled)
+		return
 	if(attacker.hasStatus("handcuffed") && !src.emagged) // usually doesnt matter... unless
-		return FALSE // unless for some godforsaken reason, this securitron has a non-stunning weapon
-	. = ..()
+		return // unless for some godforsaken reason, this securitron has a non-stunning weapon
 	var/aggression_hp = 1
 	if(src.allowed(attacker))
 		aggression_hp -= 0.2 // 10 damage allowed for the bosses
@@ -776,13 +847,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			var/mob/living/carbon/human/H = attacker
 			if(istype(H.wear_suit,/obj/item/clothing/suit/security_badge))
 				aggression_hp -= 0.3 // 15 damage allowed out of pure respect
-	if(src.get_health_percentage() > aggression_hp) // if health is still high enough, assume it was friendly fire
-		return FALSE
-	if(.)
-		EXTEND_COOLDOWN(attacker, "MARKED_FOR_SECURITRON_ARREST", 5 SECONDS)
-		if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
-			src.accuse_perp(attacker, rand(5,8))
-			src.siren()
+	if(src.get_health_percentage() >= aggression_hp) // if health is still high enough, assume it was friendly fire
+		return
+	EXTEND_COOLDOWN(attacker, "MARKED_FOR_SECURITRON_ARREST", 15 SECONDS)
+	if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+		src.accuse_perp(attacker, rand(5,8))
+		src.siren()
 
 /mob/living/critter/robotic/securitron/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(ON_COOLDOWN(src,"EMAG_COOLDOWN",12 SECONDS)) // no rapid double emags
@@ -796,7 +866,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			OVERRIDE_COOLDOWN(user, "ARRESTED_BY_SECURITRON_\ref[src]", 3 SECONDS) // just enough time to book it
 		else if(src.emagged == 1)
 			boutput(user, SPAN_ALERT("You scramble [src]'s target verification circuits!"))
-			OVERRIDE_COOLDOWN(user, "ARRESTED_BY_SECURITRON_\ref[src]", 1 SECOND) // run fast
+			OVERRIDE_COOLDOWN(user, "ARRESTED_BY_SECURITRON_\ref[src]", 0.5 SECONDS) // run fast
 		else
 			boutput(user, SPAN_ALERT("You mess with \the [src] a bit more, just for kicks."))
 	playsound(src, 'sound/effects/sparks4.ogg', 50, FALSE, 0, 1)
@@ -945,3 +1015,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", 10 SECONDS)
 		return 420
 	. = ..()
+
+/mob/living/critter/robotic/securitron/beepsky
+	name = "Officer Beepsky"
+	desc = "It's Officer Beepsky! He's a loose cannon but he gets the job done."
+	initial_limb = /obj/item/baton/mobsecbot/beepsky
+	drop_initial = TRUE
+	base_move_delay = 3
+	base_walk_delay = 4

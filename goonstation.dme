@@ -537,7 +537,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\ai\pig.dm"
 #include "code\mob\living\critter\ai\roach.dm"
 #include "code\mob\living\critter\ai\rockworm.dm"
-#include "code\mob\living\critter\ai\securitron.dm"
 #include "code\mob\living\critter\ai\shared.dm"
 #include "code\mob\living\critter\ai\sleeping.dm"
 #include "code\mob\living\critter\ai\spider.dm"

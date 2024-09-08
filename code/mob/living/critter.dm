@@ -1034,7 +1034,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		handcount++
 		if (HH.object_for_inhand)
 			var/obj/item/I = new HH.object_for_inhand
-			var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][HH.suffix]",
+			var/suffix = I.two_handed ? "-LR" : "[HH.suffix]"
+			var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][suffix]",
 									layer = HH.render_layer, pixel_x = HH.offset_x, pixel_y = HH.offset_y)
 			qdel(I)
 			src.UpdateOverlays(inhand, "inhands_[handcount]")
@@ -1046,7 +1047,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				continue
 			if (!I.inhand_image)
 				I.inhand_image = image(I.inhand_image_icon, "", HH.render_layer)
-			I.inhand_image.icon_state = I.item_state ? "[I.item_state][HH.suffix]" : "[I.icon_state][HH.suffix]"
+			var/suffix = I.two_handed ? "-LR" : "[HH.suffix]"
+			I.inhand_image.icon_state = I.item_state ? "[I.item_state][suffix]" : "[I.icon_state][suffix]"
 			I.inhand_image.pixel_x = HH.offset_x
 			I.inhand_image.pixel_y = HH.offset_y
 			I.inhand_image.layer = HH.render_layer
@@ -1072,6 +1074,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				qdel(HH.item)
 				continue
 			var/obj/item/I = HH.item
+			if(I.cant_drop)
+				continue
 			I.set_loc(src.loc)
 			I.layer = initial(I.layer)
 			u_equip(I)
