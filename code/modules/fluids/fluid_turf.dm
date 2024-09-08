@@ -446,7 +446,7 @@
 	luminosity = 1
 	generateLight = 0
 	spawningFlags = SPAWN_PLANTSMANTA
-	turf_flags = CAN_BE_SPACE_SAMPLE | MANTA_PUSH
+	turf_flags = MANTA_PUSH
 
 //Manta
 /turf/space/fluid/manta/nospawn

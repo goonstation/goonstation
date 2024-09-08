@@ -2,8 +2,7 @@
 
 /// Exposes our reagents and material to some temperature, letting them figure out how to react to it.
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
-	if (src.reagents)
-		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1, cannot_be_cooled = cannot_be_cooled)
+	src.reagents?.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1, cannot_be_cooled = cannot_be_cooled)
 	src.material_trigger_on_temp(exposed_temperature)
 
 /obj/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume, cannot_be_cooled = FALSE)
@@ -15,19 +14,15 @@
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, source_of_heat, electric = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	src.material_trigger_on_temp(exposed_temperature)
-	if (src.reagents)
-		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
-	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || \
-		!ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || \
-		!ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
-		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
-			for (var/atom/movable/item as anything in src)
-				item.temperature_expose(null, exposed_temperature, exposed_volume)
-				if (item?.flags & FLUID_SUBMERGE)
-					item.electric_expose(electric)
-		else
-			for(var/atom/movable/item as anything in src)
-				item.temperature_expose(null, exposed_temperature, exposed_volume)
+	src.reagents?.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
+	if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
+		for (var/atom/movable/item as anything in src)
+			item.temperature_expose(null, exposed_temperature, exposed_volume)
+			if (item.flags & FLUID_SUBMERGE)
+				item.electric_expose(electric)
+	else
+		for(var/atom/movable/item as anything in src)
+			item.temperature_expose(null, exposed_temperature, exposed_volume)
 
 /// * Checks if we should light on fire if we do not have a hotspot already. If we should and don't have one, spawns one.
 /// * Returns: TRUE if we ignited or already have a hotspot, FALSE if we didn't make one or have one.
@@ -42,7 +37,7 @@
 		if (locate(/obj/fire_foam) in src)
 			for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
 				qdel(hotspot)
-				src.active_hotspots -= hotspot
+			src.active_hotspots.len = 0
 			return FALSE
 
 		if (source_of_heat)
@@ -81,22 +76,23 @@
 
 	return igniting
 
-/// Adds a hotspot to self, deletes the previous of the same type if there was one. Sets processing to true also, since a fire kinda should be processed.
+/// Adds a hotspot to self if a previous one of the same type can not be found. Sets processing to true also, since a fire kinda should be processed.
 /turf/proc/add_hotspot(temperature, volume, chemfire = null)
-	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
-		if ((istype(hotspot, /obj/hotspot/chemfire) && chemfire) || (istype(hotspot, /obj/hotspot/gasfire) && !chemfire))
-			qdel(hotspot)
-			src.active_hotspots -= hotspot
-	var/obj/hotspot/hotspot = !chemfire ? (new /obj/hotspot/gasfire(src)) : (new /obj/hotspot/chemfire(src, chemfire))
+	var/obj/hotspot/hotspot
+	for (var/obj/hotspot/selected as anything in src.active_hotspots)
+		if ((istype(selected, /obj/hotspot/chemfire) && chemfire) || (istype(selected, /obj/hotspot/gasfire) && !chemfire))
+			hotspot = selected
+	if(isnull(hotspot))
+		hotspot = !chemfire ? (new /obj/hotspot/gasfire(src)) : (new /obj/hotspot/chemfire(src, chemfire))
+		src.active_hotspots += hotspot
 	hotspot.temperature = temperature
 	hotspot.volume = volume
 	hotspot.set_real_color()
-	src.active_hotspots += hotspot
 	if (issimulatedturf(src))
 		var/turf/simulated/self = src
 		self.processing = TRUE
 		if(!self.parent)
-			air_master.active_singletons |= src
+			air_master.active_singletons[src] = null
 	return hotspot
 
 ABSTRACT_TYPE(/obj/hotspot)
@@ -160,14 +156,11 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 	if(src.volume > CELL_VOLUME*0.95)
 		bypassing = TRUE
-	else
-		bypassing = FALSE
-
-	if(bypassing)
 		if(!just_spawned)
 			src.volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
 			src.temperature = location.air.temperature
 	else
+		bypassing = FALSE
 		var/datum/gas_mixture/affected = location.air.remove_ratio(src.volume/max((location.air.volume/5),1))
 
 		affected.temperature = src.temperature
@@ -181,10 +174,8 @@ ABSTRACT_TYPE(/obj/hotspot)
 		//Scale volume at 40% of HOTSPOT_MAX_TEMPERATURE to allow for hotspot icon to transition to 2nd state
 		if(src.temperature > ( HOTSPOT_MAX_NOCAT_TEMPERATURE * 0.4 ))
 			// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
-			var/max_temp = HOTSPOT_MAX_NOCAT_TEMPERATURE
-			if(src.catalyst_active)
-				// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
-				max_temp = HOTSPOT_MAX_CAT_TEMPERATURE
+			// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
+			var/max_temp = src.catalyst_active ? HOTSPOT_MAX_CAT_TEMPERATURE : HOTSPOT_MAX_NOCAT_TEMPERATURE
 			var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / max_temp), 1, CELL_VOLUME)
 			src.volume = max(src.volume, temperature_scaled_volume)
 
@@ -290,33 +281,22 @@ ABSTRACT_TYPE(/obj/hotspot)
 /// Converts our temperature into an approximate color based on blackbody radiation.
 /obj/hotspot/gasfire/set_real_color()
 	var/input = temperature / 100
-
 	var/red
+	var/green
+	var/blue
 	if (input <= 66)
 		red = 255
-	else
-		red = input - 60
-		red = 329.698727446 * (red ** -0.1332047592)
-	red = clamp(red, 0, 255)
-
-	var/green
-	if (input <= 66)
-		green = max(0.001, input)
-		green = 99.4708025861 * log(green) - 161.1195681661
-	else
-		green = input - 60
-		green = 288.1221695283 * (green ** -0.0755148492)
-	green = clamp(green, 0, 255)
-
-	var/blue
-	if (input >= 66)
-		blue = 255
-	else
+		green = 99.4708025861 * log(max(0.001, input)) - 161.1195681661
 		if (input <= 19)
 			blue = 0
 		else
-			blue = input - 10
-			blue = 138.5177312231 * log(blue) - 305.0447927307
+			blue = 138.5177312231 * log(input - 10) - 305.0447927307
+	else
+		red = 329.698727446 * ((input - 60) ** -0.1332047592)
+		green = 288.1221695283 * ((input - 60) ** -0.0755148492)
+		blue = 255
+	red = clamp(red, 0, 255)
+	green = clamp(green, 0, 255)
 	blue = clamp(blue, 0, 255)
 
 	color = rgb(red, green, blue) //changing obj.color is not expensive, and smooths imperfect light transitions

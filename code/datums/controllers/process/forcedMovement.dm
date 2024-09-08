@@ -25,7 +25,7 @@ proc/EndSpacePush(var/atom/movable/A)
 				continue
 
 			var/turf/T = M.loc
-			if (!istype(T) || (!(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited) || T != M.loc) && !M.no_gravity)
+			if (!istype(T) || (!(istype(T, /turf/space) || T.throw_unlimited) || T != M.loc) && !M.no_gravity)
 				EndSpacePush(M)
 				continue
 
@@ -35,7 +35,7 @@ proc/EndSpacePush(var/atom/movable/A)
 					EndSpacePush(M)
 					continue
 
-				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE || M.no_gravity)
+				if (istype(T, /turf/space) || M.no_gravity)
 					var/prob_slip = 5
 
 					if (tmob.hasStatus("handcuffed"))
