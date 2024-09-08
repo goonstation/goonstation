@@ -672,8 +672,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		for (var/mob/living/critter/robotic/securitron/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
 			if (secbot.emagged || !secbot.ai.enabled)
 				continue
-			secbot.ai.stop_move()
-			secbot.ai.wait(1 SECOND)
+			src.canmove = 0
+			SPAWN(0.5 SECONDS)
+				src.canmove = 1
 			secbot.say("AWAITING COMMAND...")
 			bots += secbot
 			break

@@ -583,8 +583,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	if (src.power && src.emagged)
 		boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
 		return
-	if(src.ai.enabled)
-		src.ai.wait(1 SECOND)
 	user.showContextActions(src.contexts, src, src.configContextLayout)
 
 /mob/living/critter/robotic/securitron/pull(mob/user)
@@ -655,8 +653,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 /mob/living/critter/robotic/securitron/attack_hand(mob/user, params)
 	if (user.a_intent == INTENT_HELP && src.allowed(user))
-		if(src.ai.enabled)
-			src.ai.wait(1 SECOND)
+		src.canmove = 0
+		SPAWN(1 SECOND)
+			src.canmove = 1
 		user.showContextActions(src.contexts, src, src.configContextLayout)
 	else
 		..()
