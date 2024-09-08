@@ -439,6 +439,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
+	var/chase_speed_bonus = 1
 	var/obj/machinery/camera/camera = null
 	var/initial_limb = /obj/item/baton/mobsecbot
 	var/drop_initial = FALSE
@@ -484,6 +485,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", src.net_id, control_freq)
 	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", src.net_id, FREQ_PDA)
+
 	src.camera = new /obj/machinery/camera(src)
 	src.camera.c_tag = src.real_name
 	src.camera.network = "Robots"
@@ -583,6 +585,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 		src.death(TRUE)
 	else
 		..()
+
+/mob/living/critter/robotic/securitron/special_movedelay_mod(delay, space_movement, aquatic_movement)
+	var/chase_delay = BASE_SPEED
+	if (src.is_npc && src.ai && src.ai.target && isliving(src.ai.target))
+		chase_delay -= src.chase_speed_bonus
+	. = ..(chase_delay, space_movement, aquatic_movement)
+
 
 /mob/living/critter/robotic/securitron/attack_ai(mob/user as mob)
 	if (src.power && src.emagged)
@@ -732,9 +741,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	if (GET_COOLDOWN(C, "ARRESTED_BY_SECURITRON_\ref[src]"))
 		return FALSE // we JUST arrested this jerk
 	. = ..()
-	if(. && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level >= 4)
-		src.accuse_perp(C, threat_level)
-		src.siren()
+	if (.)
+		if (!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level >= 4)
+			src.accuse_perp(C, threat_level)
+			src.siren()
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.

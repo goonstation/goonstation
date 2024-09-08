@@ -27,6 +27,7 @@
 		if (isliving(target) && secbot.ai.enabled && !istype(target, /mob/living/critter/robotic/securitron) && target != secbot.ai.target)
 			var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/task = \
 				secbot.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron, list(secbot.ai, secbot.ai.default_task, target))
+			secbot.ai.target = target
 			task.fixed_target = target
 			task.transition_task = task
 			secbot.ai.interrupt_to_task(task)
@@ -50,6 +51,7 @@
 		else if (!is_incapacitated(L))
 			return
 		OVERRIDE_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION", 0)
+		src.holder.target = null
 		src.transition_task = src.holder.default_task
 		src.fixed_target = null
 		src.holder.interrupt_to_task(src.holder.default_task)
