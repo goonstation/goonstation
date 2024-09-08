@@ -274,7 +274,7 @@
 
 	if (length(mdir_light_rgbas) == 1) //dont loop/average if list only contains 1 thing
 		var/alpha = rgba[4]
-		var/alpha_scaled = min(255, alpha / 2)
+		var/alpha_scaled = min(255, alpha * 0.4)
 		for(var/atom/movable/light/simple_light/medium/directional/mdir_light as anything in src.mdir_lights)
 			if(mdir_light.dist == mdir_light_dists[length(mdir_light_dists)])
 				rgba[4] = min(255, alpha)
