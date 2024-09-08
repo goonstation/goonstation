@@ -59,26 +59,28 @@
 /// Distribute air from the group out to members
 /datum/air_group/proc/suspend_group_processing()
 	ASSERT(group_processing == TRUE)
-	group_processing = FALSE
 	update_tiles_from_group()
+	group_processing = FALSE
 
 /// Collect air from the members to the group.
 /datum/air_group/proc/resume_group_processing()
 	ASSERT(group_processing == FALSE)
-	group_processing = TRUE
 	update_group_from_tiles()
+	group_processing = TRUE
 
-/// Copy group air information from individual tile air. Used right before turning on group processing.
+/// Copy group air information to individual tile air. Used right before turning on group processing.
 /datum/air_group/proc/update_group_from_tiles()
+	// Single sample? Seems like not very many...
+	// Local var, direct access to gas_mixture, no need to pool
+	var/sample_member
+
 	if(!members || !length(members)) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
 		return FALSE
-	// Single sample? Seems like not very many...
-	// Local var, direct access to gas_mixture, no need to pool
 
-	var/turf/simulated/sample_member = pick(members)
-	if (sample_member.air)
-		var/datum/gas_mixture/sample_air = sample_member.air
+	sample_member = pick(members)
+	if (sample_member:air)
+		var/datum/gas_mixture/sample_air = sample_member:air
 
 		src.air.copy_from(sample_air)
 		src.air.group_multiplier = length(members)

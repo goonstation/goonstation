@@ -46,9 +46,11 @@
 			//	return 0.62 //todo : a cooler underwater effect if possible
 			//if (istype(T, /turf/space))
 			//	return 0 // in space nobody can hear you fart
-		var/datum/gas_mixture/air = T.return_air()
-		attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
-		attenuate = clamp(attenuate, 0, 1)
+		if (issimulatedturf(T)) //danger :)
+			var/datum/gas_mixture/air = T.return_air()
+			if (air)
+				attenuate *= MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE
+				attenuate = clamp(attenuate, 0, 1)
 
 	return attenuate
 
