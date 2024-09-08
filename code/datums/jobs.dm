@@ -671,7 +671,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	wiki_link = "https://wiki.ss13.co/Scientist"
 
 /datum/job/research/research_assistant
-	name = "Research Assistant"
+	name = "Research Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Scientist"
@@ -722,7 +722,7 @@ ABSTRACT_TYPE(/datum/job/research)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/research/medical_assistant
-	name = "Medical Assistant"
+	name = "Medical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Medical Doctor"
@@ -829,7 +829,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/engineering/technical_assistant
-	name = "Technical Assistant"
+	name = "Technical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Engineer"

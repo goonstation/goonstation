@@ -9804,9 +9804,7 @@
 "aTj" = (
 /obj/stool/bed,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/airless/grime,
 /area/abandonedship)
 "aTk" = (
