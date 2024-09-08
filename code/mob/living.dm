@@ -2337,6 +2337,15 @@
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
 
+///helper proc to return a new bioholder to be used for blood reagent data
+/mob/living/proc/get_blood_bioholder()
+	var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
+	bloodHolder.CopyOther(src.bioHolder)
+	bloodHolder.ownerName = src.real_name
+	bloodHolder.ownerType = src.type
+	bloodHolder.owner = src
+	return bloodHolder
+
 /mob/living/proc/meson(atom/source)
 	if (!source)
 		CRASH("meson proc called without a source!!")
