@@ -248,6 +248,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 		log_terrainify(user, "started Terrainify: [name]")
 		src.startTime = world.timeofday
 
+		minimap_renderer.radar_minimaps_by_z_level -= "1"
+
 		if(src.ambient_color)
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
