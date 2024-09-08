@@ -788,7 +788,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	return threatcount
 
 /mob/living/critter/robotic/securitron/proc/allowed(mob/M)
+	if(isghostdrone(M))
+		return 0
+	if(issilicon(M) || isAIeye(M))
 	//check if it doesn't require any access at all
+		return 1
 	if(src.check_access(null))
 		return 1
 	if(src.check_access(M.equipped()))

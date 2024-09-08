@@ -5,7 +5,7 @@
 /// move between targets found with targeting_instance, interrupting to combat_interrupt if seek_target on owner finds a combat target
 /datum/aiTask/patrol
 	name = "patrolling"
-	distance_from_target = 0
+	distance_from_target = 1
 	max_dist = 7
 	var/targeting_instance_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
 	var/combat_interrupt_type = /datum/aiTask/sequence/goalbased/critter/attack

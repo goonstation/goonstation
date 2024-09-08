@@ -2343,7 +2343,7 @@
 		src.icon_state = "[src.base_icon_state][toggled_result ? "on" : "off"]"
 
 	checkRequirements(var/mob/living/critter/robotic/securitron/securitron, var/mob/user)
-		if (!issilicon(user) && GET_DIST(securitron, user) > 1)
+		if (!issilicon(user) && !isAIeye(user) && GET_DIST(securitron, user) > 1)
 			return FALSE
 		else
 			return TRUE
