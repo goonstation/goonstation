@@ -439,6 +439,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
+	var/obj/machinery/camera/camera = null
 	var/initial_limb = /obj/item/baton/mobsecbot
 	var/drop_initial = FALSE
 	var/net_id
@@ -483,6 +484,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", src.net_id, control_freq)
 	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", src.net_id, FREQ_PDA)
+	src.camera = new /obj/machinery/camera(src)
+	src.camera.c_tag = src.real_name
+	src.camera.network = "Robots"
 
 	for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
 		src.contexts += new actionType()
@@ -495,6 +499,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 /mob/living/critter/robotic/securitron/disposing()
 	STOP_TRACKING
+	qdel(src.camera)
 
 	#ifdef I_AM_ABOVE_THE_LAW
 	STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
