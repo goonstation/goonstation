@@ -759,7 +759,7 @@ datum
 		harmful/super_ipecac // vomit your heart out
 			name = "super ipecac"
 			id = "super_ipecac"
-			description = "A highly potent variant of space ipecac, sufficient to make someone vomit out everything in them. Litterally."
+			description = "A highly potent variant of space ipecac, sufficient to make someone vomit out everything in them. Literally."
 			reagent_state = LIQUID
 			fluid_r = 2
 			fluid_g = 50
