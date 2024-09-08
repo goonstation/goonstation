@@ -1,5 +1,9 @@
 
 (t)sun sep 08 24
+(u)JORJ949
+(p)20429
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Atlas security has been remodelled. The HoP's vault has been invaded by the HoS.
 (u)LeahTheTech
 (p)20583
 (e)🆕⚖🧛🔨|C-Feature, C-Balance, A-Gamemodes, A-Player-Actions
