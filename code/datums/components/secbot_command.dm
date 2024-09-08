@@ -40,10 +40,8 @@
 	name = "attacking whistle target"
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/on_tick()
-	if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
-		var/mob/living/critter/robotic/securitron/secbot = src.holder.owner
-		if(secbot.halted)
-			return
+	if(GET_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION"))
+		return
 	. = ..()
 	if(src.fixed_target && isliving(src.fixed_target))
 		var/mob/living/L = src.fixed_target
@@ -52,8 +50,7 @@
 		else if (!is_incapacitated(L))
 			return
 		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
-			var/mob/living/critter/robotic/securitron/secbot = src.holder.owner
-			secbot.halted = FALSE
+		OVERRIDE_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION", 0)
 		src.transition_task = src.holder.default_task
 		src.fixed_target = null
 		src.holder.interrupt_to_task(src.holder.default_task)

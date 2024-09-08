@@ -654,7 +654,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 /mob/living/critter/robotic/securitron/attack_hand(mob/user, params)
 	if (user.a_intent == INTENT_HELP && src.allowed(user))
 		src.ai.stop_move()
-		EXTEND_COOLDOWN(secbot, "HALT_FOR_INTERACTION", 4 SECONDS)
+		EXTEND_COOLDOWN(src, "HALT_FOR_INTERACTION", 4 SECONDS)
 		user.showContextActions(src.contexts, src, src.configContextLayout)
 	else
 		..()
