@@ -1,4 +1,130 @@
 
+(t)fri sep 06 24
+(u)Sovexe
+(p)20595
+(e)🔒🔄|A-Secret, C-Rework
+(+)The lava edges in the NT Retention Center adventure zone has been made much more forgiving.
+(u)cringe
+(p)20481
+(e)🪲🆕🎨💨|C-Bug, C-Feature, C-Sprites, A-Atmospherics
+(+)Pipes now use a variant of modular pipes. This means that when a pipe is ruptured or merely missing an end, they appear visually distinct. Ruptured pipes are broken in the center, while missing ends are broken at the ends. These states can also appear simultaneously.
+(u)444explorer
+(p)20588
+(e)|
+(+)Renames Technical Assistant, Medical Assistant and Research Assistant to Technical Trainee, Medical Trainee and Research Trainee.
+(+)Staff Assistant and Security Assistant are not effected by this rename.
+(t)thu sep 05 24
+(u)JORJ949
+(p)20212
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Removed Wrestling Belt and Katana from Surplus crates.
+(u)JORJ949
+(p)19998
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Reworked Atlas Engineering, moving the computer core to AI foyer.
+(u)JORJ949
+(p)20542
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Departmental announcements now have a set sender and the syndicate stopped announcing they are spying on you.
+(t)wed sep 04 24
+(u)LeahTheTech + Klushy225
+(p)20564
+(e)🎨|C-Sprites
+(*)Added a new zero cost trait "Hairy" that just lets mutantrace characters have hair. Incompatible with pugs (have their own hair) and skeletons (are skeletons).
+(u)Smilg
+(p)20361
+(e)🆕⚖📦🤖|C-Feature, C-Balance, A-Game-Objects, A-Silicons
+(*)You can Emag unplugged law modules, scrambling their text to a random ion storm law.
+(u)Lord_Earthfire
+(p)20518
+(e)⚖🔄⚗|C-Balance, C-Rework, A-Chemistry
+(+)The Aranesp recipe was changed to: (1) Insulin + (1) cryoxadone + (0) nickel @ under 273K -> (2) aranesp + (0) nickel. The reaction heats up over time and, if left unattended, can turn into useless(?) tar.
+(u)LeahTheTech
+(*)Small animals will no longer slow you down when pulled or grabbed. No more dragging weirdly heavy dead roaches.
+(t)tue sep 03 24
+(u)Sovexe
+(p)20528
+(e)⚖🔨|C-Balance, A-Player-Actions
+(*)Arcfiends can no longer use Flash, Polarize, or Jamming Field from inside of lockers, wires, etc.
+(u)Glamurio (Ryou)
+(p)19165
+(e)🗺⚖🐣|A-Mapping, C-Balance, A-Respawning
+(*)Technical, Research and Medical Assistants are now properly part of their respective departments.
+(*)The specialized assistants can be played until you have played 75 rounds total. Staff assistants are unchanged.
+(u)TDHooligan
+(p)18986
+(e)🆕🎨💅🔊🧛|C-Feature, C-Sprites, C-QoL, C-Sound, A-Gamemodes
+(*)Gangs may now be tasked with vandalising departments!
+(*)Gangs have new weapons & equipment available in their locker.
+(*)Gangs can now view a scoreboard from their locker.
+(+)Gangs start with 1500 points.
+(+)Gangs now have access to regular, cleanable graffiti. This can't be used to claim territory.
+(+)Baseball bats' special attack knocks back on crit.
+(+)Item costs have been rebalanced to compete for these starting points.
+(u)JORJ949
+(p)20172
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Departmental announcement computers now have their own circuit boards.
+(t)mon sep 02 24
+(u)Knipje
+(p)20466
+(e)🗺💅💡|A-Mapping, C-QoL, A-Station-Systems
+(+)Centcom engineers have standardized TEG valve names.
+(u)tarmunora
+(+)Projectiles aimed directly at light fixtures will now hit the light, breaking it. (projectile must do non-negligable damage)
+(u)LeahTheTech
+(p)20538
+(e)🆕🗺🔊|C-Feature, A-Mapping, C-Sound
+(*)Added catering announcement computers.
+(u)LeahTheTech
+(*)Soybeans now contain milk, don't ask how it makes sense.
+(u)JORJ949
+(p)20498
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)AI cores are now better standardized.
+(u)zelda4040404
+(p)20385
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Enjoyers of hair bangs will find a new extra long option available.
+(u)MitchSmith
+(p)20305
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited Gimmick Bombs, Mousetrap Overlays, and Mousetrap Cars!
+(u)Mitch Smith
+(p)20406
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)VR Headsets and other minor eyewear have been resprited, and VR Headsets now have variants!
+(t)sun sep 01 24
+(u)Sockssq & Wrench
+(p)20417
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds a new hair piece: V-Bangs. Sprites by Sockssq
+(u)MitchSmith
+(p)20322
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprites Satchels!
+(u)cringe
+(p)20500
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Meters now report the moles of gases that currently exist in their pipeline through MechComp.
+(u)Lord_Earthfire
+(p)20073
+(e)🎨⚖🔄⚗|C-Sprites, C-Balance, C-Rework, A-Chemistry
+(+)The recipe of cryoxadone was changed to: (2) Cryostylane + (1) Platinum + (2) Water -> (2) Cryoxadone @ less than 323K
+(t)sat aug 31 24
+(u)Jan.antilles
+(p)20491
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added Round Glasses, a new swappable style of Prescription Glasses.
+(u)Lord_Earthfire
+(p)20492
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Tumbling creeper have sharp enough thorns to actually cause bleeding injuries.
+(t)fri aug 30 24
+(u)gibusgame
+(p)20382
+(e)🆕🗺🎨|C-Feature, A-Mapping, C-Sprites
+(+)Adds the Fishbowl Helmet, a variant of the regular Space Helmet. Available somewhere in space...
 (t)thu aug 29 24
 (u)Cherman0
 (p)20175
