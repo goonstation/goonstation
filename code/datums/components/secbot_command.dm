@@ -27,6 +27,7 @@
 		if (isliving(target) && secbot.ai.enabled && !istype(target, /mob/living/critter/robotic/securitron) && target != secbot.ai.target)
 			var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/task = \
 				secbot.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron, list(secbot.ai, secbot.ai.default_task, target))
+			task.fixed_target = target
 			task.transition_task = task
 			secbot.ai.interrupt_to_task(task)
 			secbot.accuse_perp(target, rand(5,8)) // id rather excess emotes than non-telegraphed securitrons, so this has no emote cooldown check

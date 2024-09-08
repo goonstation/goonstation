@@ -112,6 +112,9 @@
 	if(!src.enabled) // this ai is off
 		return
 
+	if(!istype(src.current_task,/datum/aiTask/patrol)) // we are in a whistle chase or something
+		return
+
 	if(connection_id == "ai_beacon")
 		src.nav_beacon_signal(signal)
 

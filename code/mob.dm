@@ -92,7 +92,7 @@
 	var/charges = 0
 	var/nutrition = 100
 	var/losebreath = 0
-	var/intent = null
+	var/intent = INTENT_HELP
 	var/a_intent = "help"
 	var/m_intent = "run"
 	var/lastKnownIP = null

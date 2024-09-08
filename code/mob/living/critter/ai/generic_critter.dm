@@ -62,7 +62,7 @@
 	var/mob/living/critter/C = holder.owner
 	return C.can_critter_attack()
 
-/* Commented out because it doesnt seem to help with anything, and interferes with some critter ai
+/* Commented out and replaced with intent set inside critter attacks
 /datum/aiTask/sequence/goalbased/critter/attack/on_reset()
 	..()
 	var/mob/living/critter/C = holder.owner

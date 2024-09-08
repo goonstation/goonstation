@@ -822,6 +822,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	else
 		src.set_a_intent(INTENT_DISARM)
 	src.hand_attack(target)
+	var/bonus_hits = src.emagged - 1
+	SPAWN(0)
+		while(bonus_hits >= 1)
+			sleep(2)
+			src.next_click = 0
+			src.hand_attack(target)
+			bonus_hits--
 	if(istype(I,/obj/item/gun/kinetic/pumpweapon))
 		var/obj/item/gun/kinetic/pumpweapon/gun_to_rack = I
 		gun_to_rack.AttackSelf(src) // causes it to rack riot shotguns after firing
@@ -846,7 +853,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	..()
 	if(!src.ai.enabled || istype(attacker, /mob/living/critter/robotic/securitron))
 		return
-	if(attacker.hasStatus("handcuffed") && !src.emagged)
+	if(attacker.hasStatus("handcuffed") && !src.is_detaining)
 		return
 	var/aggression_hp = 1
 	if(src.allowed(attacker))
@@ -883,11 +890,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	src.emagged++
 	src.set_power(TRUE)
 
-	if (src.emagged >= 5)
+	if (src.emagged > 5)
 		playsound(src, 'sound/effects/glitchy1.ogg', 50, FALSE, 0, 1)
 		src.say("I WAS THE LAW.")
 		SPAWN(5 DECI SECONDS)
-			src.blowthefuckup(2)
+			src.blowthefuckup(3)
 
 	logTheThing(LOG_STATION, user, "emagged securitron ([src]) at [log_loc(src)].")
 	return 1
