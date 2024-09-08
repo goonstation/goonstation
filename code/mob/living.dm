@@ -2339,11 +2339,11 @@
 
 ///helper proc to return a new bioholder to be used for blood reagent data
 /mob/living/proc/get_blood_bioholder()
-	var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
+	var/datum/bioHolder/unlinked/bloodHolder = new/datum/bioHolder/unlinked(null)
 	bloodHolder.CopyOther(src.bioHolder)
 	bloodHolder.ownerName = src.real_name
 	bloodHolder.ownerType = src.type
-	bloodHolder.owner = src
+	bloodHolder.weak_owner = get_weakref(src)
 	return bloodHolder
 
 /mob/living/proc/meson(atom/source)
