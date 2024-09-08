@@ -1,5 +1,9 @@
 
 (t)sun sep 08 24
+(u)LeahTheTech
+(p)20583
+(e)🆕⚖🧛🔨|C-Feature, C-Balance, A-Gamemodes, A-Player-Actions
+(*)Vampires now have a new ability to track the last person they drank blood from. It uses the same icon as the old "vampire blood tracking" button you pressed once and forgot about.
 (u)JORJ949
 (p)20186
 (e)⚖🎭|C-Balance, A-RP
