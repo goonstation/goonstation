@@ -427,7 +427,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	can_disarm = TRUE
 	can_help = TRUE
 	dna_to_absorb = 0
-	emp_vuln = 3
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
@@ -573,6 +572,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	else
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		make_cleanable(/obj/decal/cleanable/oil,src.loc)
+
+/mob/living/critter/robotic/securitron/emp_act()
+	if(src.emagged)
+		src.death(TRUE)
+	else
+		..()
 
 /mob/living/critter/robotic/securitron/attack_ai(mob/user as mob)
 	if (src.power && src.emagged)
