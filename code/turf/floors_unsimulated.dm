@@ -1085,7 +1085,9 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		if (current_state > GAME_STATE_WORLD_NEW)
+		if( current_state == GAME_STATE_PREGAME && station_repair.station_generator)
+			worldgenCandidates += src
+		else if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				UpdateIcon()
 				if(istype(src))
