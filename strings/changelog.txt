@@ -1,4 +1,9 @@
 
+(t)sun sep 08 24
+(u)JORJ949
+(p)20186
+(e)⚖🎭|C-Balance, A-RP
+(*)RP and Classic security officer and HoS accesses have been unified. See the PR for a more in depth comparison and report any issues that may arise to the forum thread.
 (t)fri sep 06 24
 (u)Sovexe
 (p)20595

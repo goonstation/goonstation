@@ -292,7 +292,7 @@ or don't if it uses a custom topopen overlay
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
-	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
+	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
 			AddComponent(/datum/component/hattable, TRUE, TRUE, default_hat_y)
