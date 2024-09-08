@@ -273,7 +273,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 /turf/simulated/return_air(direct = FALSE)
 	if(src.parent?.group_processing)
 		return src.parent.air
-	else if(!isnull(src.air))
+	else if(src.air)
 		return src.air
 	else
 		return ..()
