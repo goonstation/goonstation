@@ -1,3 +1,7 @@
+/**
+ *	Minimap UI handles are responsible for all TGUI logic pertaining to minimaps and minimap controllers. This typically
+ *	involves setting up the ByondUI to display the minimap and passing other parameters to the UI.
+ */
 /atom/movable/minimap_ui_handler
 	/// The current unique ID of the minimap, used for rendering it in a ByondUI component.
 	var/minimap_id
@@ -84,11 +88,11 @@
 
 
 /atom/movable/minimap_ui_handler/minimap_controller
-	///The minimap controller object, containing data on selected coordinates and the controlled minimap.
+	/// The minimap controller object, containing data on selected coordinates and the controlled minimap.
 	var/obj/minimap_controller/minimap_controller
-	///An associative list of data for each minimap marker, so that the UI may read it.
+	/// An associative list of data for each minimap marker, so that the UI may read it.
 	var/list/minimap_markers_list
-	///Whether the next call of `"toggle_visibility_all"` will turn all markers opaque or transparent. Does not reflect whether the markers are opaque or transparent.
+	/// Whether the next call of `"toggle_visibility_all"` will turn all markers opaque or transparent. Does not reflect whether the markers are opaque or transparent.
 	var/markers_visible = TRUE
 
 /atom/movable/minimap_ui_handler/minimap_controller/New(parent, control_id = "minimap_ui_\ref[src]", obj/minimap_controller/minimap_controller, tgui_title, tgui_theme)
@@ -121,9 +125,9 @@
 
 /atom/movable/minimap_ui_handler/minimap_controller/ui_data(mob/user)
 	..()
-	minimap_markers_list = list()
+	src.minimap_markers_list = list()
 	for (var/atom/target as anything in src.minimap_controller.controlled_minimap.map.minimap_markers)
-		var/datum/minimap_marker/marker = src.minimap_controller.controlled_minimap.map.minimap_markers[target]
+		var/datum/minimap_marker/minimap/marker = src.minimap_controller.controlled_minimap.map.minimap_markers[target]
 		if (!marker.on_minimap_z_level || !marker.list_on_ui)
 			continue
 
@@ -137,9 +141,9 @@
 		)))
 
 	. = list(
-		"markers_visible" = markers_visible,
+		"markers_visible" = src.markers_visible,
 		"selecting_coordinates" = src.minimap_controller.selecting_coordinates,
-		"minimap_markers" = minimap_markers_list
+		"minimap_markers" = src.minimap_markers_list
 	)
 
 	if (src.minimap_controller.selected_x && src.minimap_controller.selected_y)
@@ -171,7 +175,7 @@
 
 			if (!(list_entry["marker"]))
 				return
-			var/datum/minimap_marker/marker = list_entry["marker"]
+			var/datum/minimap_marker/minimap/marker = list_entry["marker"]
 
 			if (!marker)
 				return
@@ -213,7 +217,7 @@
 
 			if (!(list_entry["marker"]))
 				return
-			var/datum/minimap_marker/marker = list_entry["marker"]
+			var/datum/minimap_marker/minimap/marker = list_entry["marker"]
 
 			if (!marker)
 				return
