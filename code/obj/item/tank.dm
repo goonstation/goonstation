@@ -9,7 +9,7 @@ Contains:
 -Plasma Tank
 */
 
-#define TANK_VOLUME_LITRES 70 //! The volume of a normal tank in litres
+#define TANK_VOLUME 70 * LITERS //! The volume of a normal tank in litres
 
 /obj/item/tank
 	name = "tank"
@@ -48,7 +48,7 @@ Contains:
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.volume = TANK_VOLUME_LITRES
+		src.air_contents.volume = TANK_VOLUME
 		src.air_contents.temperature = T20C
 		processing_items |= src
 		src.create_inventory_counter()
@@ -168,7 +168,7 @@ Contains:
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
 			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
-			var/volume_scale = (air_contents.volume / TANK_VOLUME_LITRES) ** (1/4)
+			var/volume_scale = (air_contents.volume / TANK_VOLUME) ** (1/4)
 			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
@@ -341,8 +341,8 @@ Contains:
 
 	New()
 		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
 ////////////////////////////////////////////////////////////
 
@@ -376,7 +376,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	update_wear_image(mob/living/carbon/human/H, override)
@@ -469,7 +469,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 30
-		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 ////////////////////////////////////////////////////////////
 
@@ -481,7 +481,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 ////////////////////////////////////////////////////////////
@@ -553,7 +553,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 15
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	empty
@@ -574,8 +574,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 		return
 
 ////////////////////////////////////////////////////////////
@@ -588,7 +588,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME_LITRES / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	proc/release()
@@ -748,4 +748,4 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			src.air_contents.toxins = null
 			return
 
-#undef TANK_VOLUME_LITRES
+#undef TANK_VOLUME
