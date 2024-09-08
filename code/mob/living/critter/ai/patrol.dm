@@ -18,10 +18,8 @@
 		src.move_subtask.max_path_dist = 150
 
 /datum/aiTask/patrol/on_tick()
-	if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
-		var/mob/living/critter/robotic/securitron/secbot = src.holder.owner
-		if(secbot.halted)
-			return
+	if(GET_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION"))
+		return
 
 	var/list/mob/living/combat_targets
 	if(ismobcritter(src.holder.owner)) // check for targets

@@ -439,7 +439,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
-	var/halted = FALSE
 	var/initial_limb = /obj/item/baton/mobsecbot
 	var/drop_initial = FALSE
 	var/net_id
@@ -654,10 +653,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 /mob/living/critter/robotic/securitron/attack_hand(mob/user, params)
 	if (user.a_intent == INTENT_HELP && src.allowed(user))
-		src.halted = TRUE
 		src.ai.stop_move()
-		SPAWN(3 SECONDS)
-			src.halted = FALSE
+		EXTEND_COOLDOWN(secbot, "HALT_FOR_INTERACTION", 4 SECONDS)
 		user.showContextActions(src.contexts, src, src.configContextLayout)
 	else
 		..()

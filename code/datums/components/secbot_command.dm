@@ -40,6 +40,10 @@
 	name = "attacking whistle target"
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/on_tick()
+	if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+		var/mob/living/critter/robotic/securitron/secbot = src.holder.owner
+		if(secbot.halted)
+			return
 	. = ..()
 	if(src.fixed_target && isliving(src.fixed_target))
 		var/mob/living/L = src.fixed_target
