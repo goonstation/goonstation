@@ -88,7 +88,7 @@
 /// Copy group air information to individual tile air. Used right before turning off group processing.
 /datum/air_group/proc/update_tiles_from_group()
 	for(var/turf/simulated/member as anything in members)
-		member.air = member.return_air().copy_from(src.air)
+		member.air?.copy_from(src.air)
 
 #ifdef ATMOS_ARCHIVING
 /datum/air_group/proc/archive()
