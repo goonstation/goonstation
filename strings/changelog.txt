@@ -1,4 +1,17 @@
 
+(t)sun sep 08 24
+(u)JORJ949
+(p)20429
+(e)🗺🔄|A-Mapping, C-Rework
+(*)Atlas security has been remodelled. The HoP's vault has been invaded by the HoS.
+(u)LeahTheTech
+(p)20583
+(e)🆕⚖🧛🔨|C-Feature, C-Balance, A-Gamemodes, A-Player-Actions
+(*)Vampires now have a new ability to track the last person they drank blood from. It uses the same icon as the old "vampire blood tracking" button you pressed once and forgot about.
+(u)JORJ949
+(p)20186
+(e)⚖🎭|C-Balance, A-RP
+(*)RP and Classic security officer and HoS accesses have been unified. See the PR for a more in depth comparison and report any issues that may arise to the forum thread.
 (t)fri sep 06 24
 (u)Sovexe
 (p)20595

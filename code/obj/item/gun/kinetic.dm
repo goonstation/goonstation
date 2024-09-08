@@ -1181,8 +1181,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 /obj/item/gun/kinetic/american180
-	name = "\improper American-180"
-	desc = "A .22 machine gun, loaded with a huge triple-stack pancake mag. It's a shame you can't see the sights through it."
+	name = "\improper Razorbill-180"
+	desc = "A .22 submachine gun from Cormorant Precision Arms loaded with a huge pancake magazine, marketed towards max-security prison guards and security forces facing massed wave attacks."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "american180"
 	item_state = "a180"
