@@ -95,7 +95,7 @@
 			air_master.active_singletons[src] = null
 	return hotspot
 
-ABSTRACT_TYPE(/atom/movable/hotspot)
+// ABSTRACT_TYPE(/atom/movable/hotspot) // i dont feel like touching code outside of atmos oh well
 /// The object that represents fire ingame. Very nice and warm.
 /atom/movable/hotspot
 	mouse_opacity = 0
