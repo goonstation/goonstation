@@ -39,3 +39,8 @@
 			boutput(src.holder.owner, SPAN_ALERT("You suppress your bloodlust. For now."))
 			src.active = FALSE
 
+	proc/update_target(mob/target)
+		if (!active)
+			return
+		var/datum/component/tracker_hud/vampire/tracker = src.holder.owner.GetComponent(/datum/component/tracker_hud/vampire)
+		tracker.target = target
