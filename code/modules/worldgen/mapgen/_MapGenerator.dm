@@ -32,7 +32,7 @@ proc/initialize_biomes()
 	if (current_state >= GAME_STATE_PLAYING)
 		LAGCHECK(LAG_LOW)
 	else
-		LAGCHECK(300)
+		LAGCHECK(LAG_HIGH)
 
 ABSTRACT_TYPE(/area/map_gen)
 /area/map_gen
