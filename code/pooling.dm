@@ -8,7 +8,7 @@ var
 	list/object_pools = list()
 	list/pool_limit_overrides = list(/sound = 300, \
 									/obj/effects/sparks = 1000, \
-									/obj/hotspot = 1000, \
+									/atom/movable/hotspot = 1000, \
 									/datum/effects/system/spark_spread = 200,
 									/obj/effects/harmless_smoke = 500,
 									/obj/effects/foam = 500,

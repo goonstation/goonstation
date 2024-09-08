@@ -14,7 +14,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	/// The direction of the pressure delta.
 	var/tmp/pressure_direction = 0
 	/// Current fire object on us.
-	var/tmp/list/obj/hotspot/active_hotspots
+	var/tmp/list/atom/movable/hotspot/active_hotspots
 
 #ifdef ATMOS_PROCESS_CELL_STATS_TRACKING
 	var/tmp/process_cell_operations = 0
@@ -227,7 +227,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 				if(issimulatedturf(tile) && !tile.gas_impermeable)
 					air_master.tiles_to_update[tile] = null
 
-	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+	for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 		qdel(hotspot)
 	src.active_hotspots.len = 0
 
@@ -402,13 +402,13 @@ var/global/list/turf/hotly_processed_turfs = list()
 		return
 
 	if(src.air.react() & CATALYST_ACTIVE)
-		for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+		for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 			hotspot.catalyst_active = TRUE
 	else
-		for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+		for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 			hotspot.catalyst_active = FALSE
 
-	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+	for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 		hotspot.process(possible_fire_spreads)
 
 	if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)

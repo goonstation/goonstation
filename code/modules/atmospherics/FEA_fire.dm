@@ -35,7 +35,7 @@
 
 	if (length(src.active_hotspots))
 		if (locate(/obj/fire_foam) in src)
-			for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+			for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 				qdel(hotspot)
 			src.active_hotspots.len = 0
 			return FALSE
@@ -45,7 +45,7 @@
 				My best guess on why we need this is so mounted igniters and such don't cool down hotspots when used, only heating them up.
 				I don't like how much effort was needed in renaming this var from "soh" and figuring out what it does - cringe */
 			if ((air_contents.toxins > 0.5 MOLES) && (air_contents.oxygen > 0.5 MOLES))
-				for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+				for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 					if (hotspot.temperature < exposed_temperature)
 						hotspot.temperature = exposed_temperature
 						hotspot.set_real_color()
@@ -70,7 +70,7 @@
 
 		src.add_hotspot(exposed_temperature, exposed_volume)
 
-		for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+		for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 			hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
@@ -78,12 +78,12 @@
 
 /// Adds a hotspot to self if a previous one of the same type can not be found. Sets processing to true also, since a fire kinda should be processed.
 /turf/proc/add_hotspot(temperature, volume, chemfire = null)
-	var/obj/hotspot/hotspot
-	for (var/obj/hotspot/selected as anything in src.active_hotspots)
-		if ((istype(selected, /obj/hotspot/chemfire) && chemfire) || (istype(selected, /obj/hotspot/gasfire) && !chemfire))
+	var/atom/movable/hotspot/hotspot
+	for (var/atom/movable/hotspot/selected as anything in src.active_hotspots)
+		if ((istype(selected, /atom/movable/hotspot/chemfire) && chemfire) || (istype(selected, /atom/movable/hotspot/gasfire) && !chemfire))
 			hotspot = selected
 	if(isnull(hotspot))
-		hotspot = !chemfire ? (new /obj/hotspot/gasfire(src)) : (new /obj/hotspot/chemfire(src, chemfire))
+		hotspot = !chemfire ? (new /atom/movable/hotspot/gasfire(src)) : (new /atom/movable/hotspot/chemfire(src, chemfire))
 		src.active_hotspots += hotspot
 	hotspot.temperature = temperature
 	hotspot.volume = volume
@@ -95,9 +95,9 @@
 			air_master.active_singletons[src] = null
 	return hotspot
 
-ABSTRACT_TYPE(/obj/hotspot)
+ABSTRACT_TYPE(/atom/movable/hotspot)
 /// The object that represents fire ingame. Very nice and warm.
-/obj/hotspot
+/atom/movable/hotspot
 	mouse_opacity = 0
 	anchored = ANCHORED_ALWAYS
 	flags = UNCRUSHABLE
@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 	var/datum/light/light
 #endif
-	/// Volume to expose to other atoms. Also used while [/obj/hotspot/var/bypassing] is FALSE to act on a volume of gas on our turf.
+	/// Volume to expose to other atoms. Also used while [/atom/movable/hotspot/var/bypassing] is FALSE to act on a volume of gas on our turf.
 	var/volume = 125
 	/// Our temperature.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
@@ -122,7 +122,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
 
-/obj/hotspot/New(turf/newLoc, chemfire = null)
+/atom/movable/hotspot/New(turf/newLoc, chemfire = null)
 	..()
 	START_TRACKING
 
@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	// note: light is left disabled until the color is set
 #endif
 
-/obj/hotspot/disposing()
+/atom/movable/hotspot/disposing()
 	STOP_TRACKING
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 	light.disable(queued_run = TRUE)
@@ -144,12 +144,12 @@ ABSTRACT_TYPE(/obj/hotspot)
 	..()
 
 /// override. used to modify fire color and ambient light at any point of its lifetime
-/obj/hotspot/proc/set_real_color()
+/atom/movable/hotspot/proc/set_real_color()
 	return
 
-/// Interact with our turf, performing reactions, scaling volume up, and exposing things on our turf while [/obj/hotspot/var/bypassing] is FALSE,
+/// Interact with our turf, performing reactions, scaling volume up, and exposing things on our turf while [/atom/movable/hotspot/var/bypassing] is FALSE,
 /// and simply scaling up while it is set to TRUE.
-/obj/hotspot/proc/perform_exposure()
+/atom/movable/hotspot/proc/perform_exposure()
 	var/turf/simulated/floor/location = loc
 	if(!issimulatedturf(location))
 		return FALSE
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	src.set_real_color()
 
 ///Temperature expose every atom that crosses us, burning living mobs that cross us.
-/obj/hotspot/Crossed(var/atom/A)
+/atom/movable/hotspot/Crossed(var/atom/A)
 	..()
 	A.temperature_expose(null, temperature, volume)
 	if (isliving(A))
@@ -196,7 +196,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 		H.update_burning(B)
 
 /// Process fire survival, mob burning, hotspot exposure, and heat radiation.
-/obj/hotspot/proc/process(list/turf/simulated/possible_spread)
+/atom/movable/hotspot/proc/process(list/turf/simulated/possible_spread)
 	if (src.just_spawned)
 		src.just_spawned = FALSE
 		return FALSE
@@ -244,7 +244,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	location.wet = 0
 
 	if (bypassing)
-		if (istype(src, /obj/hotspot/gasfire))
+		if (istype(src, /atom/movable/hotspot/gasfire))
 			icon_state = "3"
 		location.burn_tile()
 
@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 				if(!length(possible_target.active_hotspots))
 					possible_target.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
-	else if (istype(src, /obj/hotspot/gasfire))
+	else if (istype(src, /atom/movable/hotspot/gasfire))
 		if (volume > (CELL_VOLUME * 0.4))
 			icon_state = "2"
 		else
@@ -265,21 +265,21 @@ ABSTRACT_TYPE(/obj/hotspot)
 	return TRUE
 
 
-/obj/hotspot/ex_act()
+/atom/movable/hotspot/ex_act()
 	return
 
 /// fire created by a gaseous source. or atmos fire.
-/obj/hotspot/gasfire
+/atom/movable/hotspot/gasfire
 	icon_state = "1"
 	alpha = 160
 
-/obj/hotspot/gasfire/New(turf/newLoc)
+/atom/movable/hotspot/gasfire/New(turf/newLoc)
 	..()
 	src.set_dir(pick(cardinal))
 
 // now this is ss13 level code
 /// Converts our temperature into an approximate color based on blackbody radiation.
-/obj/hotspot/gasfire/set_real_color()
+/atom/movable/hotspot/gasfire/set_real_color()
 	var/input = temperature / 100
 	var/red
 	var/green
@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 #endif
 
 /// chemical/magical fire. represents a fire coming from a chemical or magical source
-/obj/hotspot/chemfire
+/atom/movable/hotspot/chemfire
 	icon = 'icons/effects/fire_chemical.dmi'
 	icon_state = "red_full-1"
 	plane = PLANE_NOSHADOW_BELOW
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	var/under_state
 
 // chemfire - use a chem_fire define
-/obj/hotspot/chemfire/New(turf/newLoc, chemfire)
+/atom/movable/hotspot/chemfire/New(turf/newLoc, chemfire)
 	..()
 	src.fire_color = chemfire
 
@@ -365,18 +365,18 @@ ABSTRACT_TYPE(/obj/hotspot)
 	UpdateIcon()
 	src.update_neighbors()
 
-/obj/hotspot/chemfire/disposing()
+/atom/movable/hotspot/chemfire/disposing()
 	var/turf/T = get_turf(src)
 	. = ..()
 	src.update_neighbors(T)
 
-/obj/hotspot/chemfire/proc/update_neighbors(turf/T)
+/atom/movable/hotspot/chemfire/proc/update_neighbors(turf/T)
 	if(!T)
 		T = get_turf(src)
-	for (var/obj/hotspot/chemfire/C in orange(1,T))
+	for (var/atom/movable/hotspot/chemfire/C in orange(1,T))
 		C.UpdateIcon()
 
-/obj/hotspot/chemfire/update_icon()
+/atom/movable/hotspot/chemfire/update_icon()
 	var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), null, TRUE, FALSE)
 	var/side_connect = connectdir & (EAST | WEST)
 	var/third_row = connectdir & (SOUTH)
@@ -412,7 +412,7 @@ ABSTRACT_TYPE(/obj/hotspot)
 	else
 		src.ClearSpecificOverlays("fire-under2")
 
-/obj/hotspot/chemfire/set_real_color()
+/atom/movable/hotspot/chemfire/set_real_color()
 	if (src.color_set)
 		return
 

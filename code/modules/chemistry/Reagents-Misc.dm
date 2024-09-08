@@ -606,7 +606,7 @@ datum
 
 			reaction_turf(var/turf/target, var/volume)
 				var/list/hotspots = list()
-				for (var/obj/hotspot/hotspot in target)
+				for (var/atom/movable/hotspot/hotspot in target)
 					hotspots += hotspot
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
@@ -618,7 +618,7 @@ datum
 								lowertemp.toxins = max(lowertemp.toxins-50,0)
 								lowertemp.react()
 								T.assume_air(lowertemp)
-					for (var/obj/hotspot/hotspot as anything in hotspots)
+					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
 						qdel(hotspot)
 
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
@@ -1158,7 +1158,7 @@ datum
 							B.dispose()
 
 				var/list/hotspots = list()
-				for (var/obj/hotspot/hotspot in target)
+				for (var/atom/movable/hotspot/hotspot in target)
 					hotspots += hotspot
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
@@ -1170,7 +1170,7 @@ datum
 							lowertemp.toxins = max(lowertemp.toxins-50,0)
 							lowertemp.react()
 							T.assume_air(lowertemp)
-					for (var/obj/hotspot/hotspot as anything in hotspots)
+					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
 						qdel(hotspot)
 
 				return
