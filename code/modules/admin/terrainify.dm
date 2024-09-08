@@ -213,6 +213,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
 	var/ambient_color
+	var/startTime
 
 	New()
 		..()
@@ -223,6 +224,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 		return FALSE
 
 	proc/log_terrainify(mob/user, text)
+		if(src.startTime)
+			text += "Took [(world.timeofday - src.startTime)/10] seconds."
 		logTheThing(LOG_ADMIN, user, "[text]")
 		logTheThing(LOG_DIARY, user, "[text]", "admin")
 		message_admins("[key_name(user)] [text]")
@@ -242,6 +245,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 		post_convert(params, user)
 
 	proc/pre_convert(params, mob/user)
+		log_terrainify(user, "started Terrainify: [name]")
+		src.startTime = world.timeofday
+
 		if(src.ambient_color)
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
@@ -280,6 +286,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 					player_mob.changeStatus("knockdown", 5 SECONDS)
 
 			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry), 10 SECONDS)
+
+		log_terrainify(user, "has turned space and the station into [src.name].")
 		return
 
 	proc/convert_station_level(params, mob/user)
@@ -318,7 +326,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
 					A.color = color_matrix
 
-			message_admins("[key_name(user)] started Terrainify: [name].")
 			terrainify_lock = src
 			. = TRUE
 		else

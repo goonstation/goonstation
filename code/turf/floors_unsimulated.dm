@@ -1095,8 +1095,6 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 
 	generate_worldgen()
 		src.UpdateIcon()
-		if(istype(src))
-			update_neighbors()
 
 	update_icon()
 		. = ..()
@@ -1128,7 +1126,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 
 	proc/edge_overlays()
 		if(src.icon_state_edge)
-			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE)
+			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE, turf_only=TRUE)
 			for (var/direction in alldirs)
 				var/turf/T = get_step(src, turn(direction, 180))
 				if(T)
