@@ -122,9 +122,8 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /// Process moving movable atoms within us based on the pressure differential.
 /turf/simulated/proc/high_pressure_movements()
-	if(!loc:sanctuary)
-		for(var/atom/movable/in_tile as anything in src)
-			in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
+	for(var/atom/movable/in_tile as anything in src)
+		in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
 
 	pressure_difference = 0
 
