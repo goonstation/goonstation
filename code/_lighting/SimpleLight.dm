@@ -380,26 +380,26 @@
 			vx = 0
 			vy = 32
 		if (NORTHEAST)
-			vx = sqrt(2)/16
-			vy = sqrt(2)/16
+			vx = sqrt(2)*16
+			vy = sqrt(2)*16
 		if (EAST)
-			vx = 1
+			vx = 32
 			vy = 0
 		if (SOUTHEAST)
-			vx = sqrt(2)/16
-			vy = -sqrt(2)/16
+			vx = sqrt(2)*16
+			vy = -sqrt(2)*16
 		if (SOUTH)
 			vx = 0
 			vy = -32
 		if (SOUTHWEST)
-			vx = -sqrt(2)/16
-			vy = -sqrt(2)/16
+			vx = -sqrt(2)*16
+			vy = -sqrt(2)*16
 		if (WEST)
 			vx = -32
 			vy = 0
 		if (NORTHWEST)
-			vx = -sqrt(2)/16
-			vy = sqrt(2)/16
+			vx = -sqrt(2)*16
+			vy = sqrt(2)*16
 
 	var/turf/T = get_steps(src, direct, 5)
 	if (!T)
