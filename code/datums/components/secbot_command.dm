@@ -49,7 +49,6 @@
 			return
 		else if (!is_incapacitated(L))
 			return
-		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
 		OVERRIDE_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION", 0)
 		src.transition_task = src.holder.default_task
 		src.fixed_target = null
