@@ -733,8 +733,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			hand_range_attack(target, params)
 			return
 	if (HH.can_attack)
-		L.attack_hand(target, src)
-		HH.set_cooldown_overlay()
+		var/obj/item/equipped = src.equipped()
+		if(equipped && src.next_click <= world.time)
+			src.next_click = world.time + max(equipped.click_delay,src.combat_click_delay)
+			target.Attackby(equipped, src, params)
+		else
+			L.attack_hand(target, src)
+			HH.set_cooldown_overlay()
 	else
 		boutput(src, SPAN_ALERT("You cannot attack with your [HH.name]!"))
 

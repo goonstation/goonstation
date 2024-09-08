@@ -435,7 +435,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1.25
-	ai_retaliates = FALSE // this is a lie- special retaliation behavior in was_harmed
+	ai_retaliates = FALSE // this is a lie- special retaliation behavior in was_harmed and whistles
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
@@ -577,6 +578,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	if (src.power && src.emagged)
 		boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
 		return
+	if(src.ai.enabled)
+		src.ai.wait(1 SECOND)
 	user.showContextActions(src.contexts, src, src.configContextLayout)
 
 /mob/living/critter/robotic/securitron/pull(mob/user)
@@ -647,6 +650,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 /mob/living/critter/robotic/securitron/attack_hand(mob/user, params)
 	if (user.a_intent == INTENT_HELP && src.allowed(user))
+		if(src.ai.enabled)
+			src.ai.wait(1 SECOND)
 		user.showContextActions(src.contexts, src, src.configContextLayout)
 	else
 		..()
@@ -708,8 +713,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, control_freq)
 
 /mob/living/critter/robotic/securitron/valid_target(var/mob/living/C)
-	if (C.hasStatus("handcuffed"))
-		return FALSE // already handled
+	if (ishuman(C))
+		if (C.hasStatus("handcuffed"))
+			return FALSE // already cuffed
+	else if (is_incapacitated(C))
+		return FALSE // already stunned
 	var/threat_level = assess_perp(C)
 	if (!GET_COOLDOWN(C, "MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
 		return FALSE // not a threat
@@ -791,7 +799,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	if(actions.hasAction(src,/datum/action/bar/icon/mob_secbot_cuff,FALSE))
 		return
 
-	if((target.lying) && ishuman(target) && !target.hasStatus("handcuffed"))
+	if(!src.is_detaining && ishuman(target) && (target.lying) && !target.hasStatus("handcuffed"))
 		var/datum/targetable/critter/handcuff = src.abilityHolder.getAbility(/datum/targetable/critter/bot/handcuff)
 		if(handcuff && !handcuff.disabled && handcuff.cooldowncheck())
 			handcuff.handleCast(target)
@@ -836,10 +844,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 /mob/living/critter/robotic/securitron/was_harmed(mob/attacker, obj/attacked_with, special, intent)
 	..()
-	if(!src.ai.enabled)
+	if(!src.ai.enabled || istype(attacker, /mob/living/critter/robotic/securitron))
 		return
-	if(attacker.hasStatus("handcuffed") && !src.emagged) // usually doesnt matter... unless
-		return // unless for some godforsaken reason, this securitron has a non-stunning weapon
+	if(attacker.hasStatus("handcuffed") && !src.emagged)
+		return
 	var/aggression_hp = 1
 	if(src.allowed(attacker))
 		aggression_hp -= 0.2 // 10 damage allowed for the bosses
@@ -847,7 +855,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 			var/mob/living/carbon/human/H = attacker
 			if(istype(H.wear_suit,/obj/item/clothing/suit/security_badge))
 				aggression_hp -= 0.3 // 15 damage allowed out of pure respect
-	if(src.get_health_percentage() >= aggression_hp) // if health is still high enough, assume it was friendly fire
+	if(src.get_health_percentage() >= aggression_hp) // if health is still high enough, assume it was friendly fire or a 0 damage hit
 		return
 	EXTEND_COOLDOWN(attacker, "MARKED_FOR_SECURITRON_ARREST", 15 SECONDS)
 	if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
@@ -955,13 +963,16 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 			if(secbot.ai?.enabled)
 				secbot.trash_talk()
 
+		//////PDA NOTIFY/////
+		if(istype(master, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/secbot = master
+			if(!secbot.report_arrests)
+				return
 
 		var/area/user_location = get_area(master)
 		var/turf/target_loc = get_turf(target)
 		if(!target_loc)
 			target_loc = get_turf(master)
-
-			//////PDA NOTIFY/////
 
 		var/message2send ="Notification: [target] detained by [master] in [user_location] at coordinates [target_loc.x], [target_loc.y]."
 

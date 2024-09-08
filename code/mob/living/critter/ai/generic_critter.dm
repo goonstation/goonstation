@@ -103,8 +103,9 @@
 		var/mob/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			C.critter_attack(holder.target)
-			has_started = TRUE
+			if(holder.owner.next_click <= world.time) // prevents ai with handheld items from spamclicking
+				C.critter_attack(holder.target)
+				has_started = TRUE
 
 /datum/aiTask/succeedable/critter/attack/on_reset()
 	has_started = FALSE
@@ -117,7 +118,6 @@
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/New(parentHolder, transTask, atom/fixed_target)
 	..(parentHolder, transTask)
-	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/attack, list(holder)))
 	src.fixed_target = fixed_target
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/get_targets()

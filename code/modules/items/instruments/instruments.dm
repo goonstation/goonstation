@@ -665,15 +665,16 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
 	icon_state = "whistle-sec"
 	contraband = 4 //beepsky takes stolen whistles seriously
-	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command a nearby securitron to follow your pointing, point at a perp to have them arrested.")
 
 	post_play_effect(mob/user)
 		var/list/bots = list()
-		for (var/obj/machinery/bot/secbot/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
-			if (secbot.emagged)
+		for (var/mob/living/critter/robotic/securitron/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
+			if (secbot.emagged || !secbot.ai.enabled)
 				continue
-			secbot.KillPathAndGiveUp(1)
-			secbot.speak("Awaiting command...")
+			secbot.ai.stop_move()
+			secbot.ai.wait(1 SECOND)
+			secbot.say("AWAITING COMMAND...")
 			bots += secbot
 			break
 
