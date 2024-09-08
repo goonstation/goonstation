@@ -36,6 +36,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /// Return new gas mixture with the gas variables we start with.
 /turf/return_air(direct = FALSE)
+	RETURN_TYPE(/datum/gas_mixture)
 	// TODO this is returning a new air object, but object_tile returns the existing air
 	//  This is used in a lot of places and thrown away, so it should be pooled,
 	//  But there is no way to tell here if it will be retained or discarded, so
@@ -271,9 +272,10 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /// Returns air mixture of turf or air group, if we have one. If we don't, return [/turf/return_air].
 /turf/simulated/return_air(direct = FALSE)
+	RETURN_TYPE(/datum/gas_mixture)
 	if(src.parent?.group_processing)
 		return src.parent.air
-	else if(!isnull(src.air))
+	else if(src.air)
 		return src.air
 	else
 		return ..()

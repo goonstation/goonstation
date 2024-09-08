@@ -237,6 +237,7 @@ TYPEINFO(/atom)
 
 	///if direct then only return gas ACTUALLY inside the thing rather than surrounding air
 	proc/return_air(direct = FALSE)
+		RETURN_TYPE(/datum/gas_mixture)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
