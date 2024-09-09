@@ -6021,9 +6021,7 @@
 "qo" = (
 /obj/stool/bed,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/airless/grime,
 /area/space)
 "qp" = (
@@ -10628,9 +10626,7 @@
 /area/space)
 "Bz" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
