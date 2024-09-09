@@ -15,7 +15,7 @@ var/datum/disease_controller/disease_controls
 /proc/get_disease_from_path(var/disease_path)
 	RETURN_TYPE(/datum/ailment)
 	if (!ispath(disease_path))
-		stack_trace("<b>Disease:</b> Attempt to find schematic with null path")
+		logTheThing(LOG_DEBUG, null, "<b>Disease:</b> Attempt to find schematic with null path")
 		return null
 	if (!disease_controls.standard_diseases.len)
 		logTheThing(LOG_DEBUG, null, "<b>Disease:</b> Cant find disease due to empty disease list")
