@@ -485,7 +485,6 @@
 			tgui_process.close_user_uis(src.mob)
 			del(src)
 			return
-	#endif
 		if (src.byond_version >= 516)
 			if (tgui_alert(src, "Please DOWNGRADE BYOND to the latest stable release of version 515! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
 				src << link("https://www.byond.com/download/")
