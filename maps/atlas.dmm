@@ -10687,6 +10687,10 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
+"dRj" = (
+/obj/machinery/disposal_pipedispenser,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "dRu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -10851,6 +10855,11 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 2;
+	name = "autoname - SS13"
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
@@ -21452,11 +21461,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -21514,10 +21518,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
-"yge" = (
-/obj/machinery/fluid_canister,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "ygk" = (
 /obj/machinery/alarm{
 	dir = 4;
@@ -61585,7 +61585,7 @@ ebc
 dBc
 ebc
 ebc
-szF
+dRj
 eQS
 eQS
 aaa
@@ -61881,7 +61881,7 @@ jpB
 iex
 yka
 aDa
-yge
+ajz
 ebc
 ebc
 ebc
@@ -62191,7 +62191,7 @@ nBF
 uPV
 ebc
 ebc
-ajz
+szF
 joU
 aaa
 aaa
