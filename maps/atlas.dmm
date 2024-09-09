@@ -5732,15 +5732,6 @@
 	dir = 8
 	},
 /area/station/ranch)
-"aFs" = (
-/obj/machinery/plantpot,
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/obj/railing/orange/reinforced,
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "aFy" = (
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/bluewhite{
@@ -10726,7 +10717,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/purplewhite{
-	dir = 5
+	dir = 1
 	},
 /area/station/science/chemistry)
 "dWc" = (
@@ -12152,7 +12143,7 @@
 /area/station/ai_monitored/armory)
 "gvu" = (
 /turf/simulated/floor/purplewhite/corner{
-	dir = 8
+	dir = 4
 	},
 /area/station/science/chemistry)
 "gvK" = (
@@ -13287,6 +13278,14 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = -1;
+	pixel_x = -1
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -14035,9 +14034,6 @@
 	dir = 8
 	},
 /obj/machinery/cashreg,
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/rancher,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -14492,8 +14488,8 @@
 	dir = 4
 	},
 /obj/landmark/start/job/scientist,
-/turf/simulated/floor/purplewhite/corner{
-	dir = 4
+/turf/simulated/floor/purplewhite{
+	dir = 8
 	},
 /area/station/science/chemistry)
 "kKU" = (
@@ -14630,8 +14626,8 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "kWK" = (
-/obj/submachine/chem_extractor,
 /obj/machinery/light,
+/obj/machinery/vending/chem,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "kWU" = (
@@ -14732,7 +14728,7 @@
 "lha" = (
 /obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite{
-	dir = 5
+	dir = 4
 	},
 /area/station/science/chemistry)
 "liZ" = (
@@ -15391,6 +15387,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"mtM" = (
+/obj/submachine/chem_extractor,
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/station/science/chemistry)
 "mwK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16477,11 +16479,6 @@
 /area/station/engine/core)
 "omt" = (
 /obj/machinery/chemicompiler_stationary,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -17665,6 +17662,11 @@
 /obj/item/device/radio/intercom/science{
 	dir = 4
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
@@ -18614,6 +18616,10 @@
 "sWU" = (
 /obj/machinery/firealarm/north,
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/plantpot,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -19722,9 +19728,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/purplewhite/corner{
-	dir = 4
-	},
+/turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "uTl" = (
 /obj/grille/catwalk,
@@ -20170,6 +20174,15 @@
 	pixel_x = -4
 	},
 /turf/simulated/floor/dirt,
+/area/station/ranch)
+"vKz" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 4
+	},
 /area/station/ranch)
 "vKB" = (
 /obj/machinery/power/apc/autoname_west,
@@ -20715,9 +20728,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
+/turf/simulated/floor/white,
 /area/station/science/chemistry)
 "wFl" = (
 /obj/machinery/firealarm/north,
@@ -61895,7 +61906,7 @@ jpB
 iex
 yka
 aDa
-ajz
+oZy
 ebc
 ebc
 ebc
@@ -65219,7 +65230,7 @@ xNO
 xnE
 qYE
 aCz
-oZy
+ajz
 ebc
 ebc
 ebc
@@ -66421,7 +66432,7 @@ gpL
 aRn
 jXN
 aCz
-aCz
+mtM
 lha
 fhj
 iQi
@@ -66721,8 +66732,8 @@ aAD
 alP
 lUZ
 aCC
-oVw
-xOW
+vKz
+aCz
 aCz
 aCz
 aCz
@@ -67024,7 +67035,7 @@ aBr
 aWh
 aCC
 oVw
-aDi
+xOW
 aDi
 aGZ
 vKl
@@ -67325,7 +67336,7 @@ aAF
 aBo
 kyy
 aCC
-aFs
+oVw
 aDi
 aYo
 aPc
