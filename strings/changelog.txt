@@ -1,5 +1,9 @@
 
 (t)mon sep 09 24
+(u)JORJ949
+(p)20627
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI cores now have cameras in them that AI eyes can view out of.
 (u)Wrench
 (p)20638
 (e)🗺|A-Mapping
