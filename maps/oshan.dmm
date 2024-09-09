@@ -44569,6 +44569,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"uLy" = (
+/obj/item/implant/projectile/staple,
+/obj/item/clothing/head/helmet/space/fishbowl,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "uMA" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -45965,6 +45970,16 @@
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"wPf" = (
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/gimmick/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "wPq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
@@ -59843,8 +59858,8 @@ kSl
 aUm
 aUv
 aUC
-aVZ
-aUC
+uLy
+wPf
 aVZ
 aUC
 aUv
