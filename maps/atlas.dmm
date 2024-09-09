@@ -7812,12 +7812,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/hallway/secondary/exit)
 "aQr" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aQu" = (
@@ -10578,13 +10573,10 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "dHY" = (
-/obj/stool/chair/office/purple{
-	pixel_y = 0;
-	dir = 8
-	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
 /obj/machinery/light_switch/east,
+/obj/machinery/computer/announcement/station/research,
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/science/research_director)
 "dIJ" = (
@@ -10807,7 +10799,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/green/side{
+	dir = 9
+	},
 /area/station/ranch)
 "eeM" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
@@ -12054,6 +12048,14 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/hallway/secondary/exit)
+"gov" = (
+/obj/chicken_nesting_box,
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gpH" = (
 /obj/machinery/door_control/podbay/mining/new_walls/north,
 /obj/decal/mule/dropoff,
@@ -14662,7 +14664,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/dirt,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
 /area/station/ranch)
 "kZr" = (
 /obj/decal/tile_edge/stripe/big{
@@ -15811,7 +15819,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
 "nlP" = (
-/turf/simulated/floor/green/side{
+/turf/simulated/floor/green/corner{
 	dir = 1
 	},
 /area/station/ranch)
@@ -19075,6 +19083,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/stool/chair/office/purple{
+	pixel_y = 0;
+	dir = 8
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/science/research_director)
 "tIj" = (
@@ -20203,9 +20215,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/green/side{
-	dir = 1
-	},
+/turf/simulated/floor,
 /area/station/ranch)
 "vPa" = (
 /obj/machinery/atmospherics/unary/vent{
@@ -68828,7 +68838,7 @@ aCD
 aDW
 dkR
 aQr
-aGZ
+gov
 kYX
 vOo
 xYT
