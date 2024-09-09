@@ -49,7 +49,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
 
 	Login()
 		.=..()

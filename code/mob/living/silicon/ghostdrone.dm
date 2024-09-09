@@ -925,7 +925,7 @@
 				continue
 			var/mob/M = C.mob
 
-			if ((M in hearers(src) || M.client.holder))
+			if (((M in hearers(src)) || M.client.holder))
 				var/thisR = rendered
 				if (isghostdrone(M) || M.client.holder)
 					if ((istype(M, /mob/dead/observer)||M.client.holder)&& src.mind)

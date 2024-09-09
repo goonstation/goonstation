@@ -1287,6 +1287,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	shatter_immune = TRUE
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
+	wear_layer = MOB_BACK_LAYER + 0.3
 	fluid_overlay_states = 0 //we want to add our own component, thanks
 
 	New(loc, new_initial_reagents)

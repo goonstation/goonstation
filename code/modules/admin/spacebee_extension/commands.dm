@@ -721,8 +721,7 @@
 		var/ircmsg[] = new()
 		ircmsg["key"] = "Loggo"
 		ircmsg["name"] = "Lazy Admin Logs"
-		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: [goonhub_href("/admin/logs/[roundId]")]"
+		ircmsg["msg"] = "Logs for this round can be found here: [goonhub_href("/admin/logs/[roundId]")]"
 		ircbot.export("help", ircmsg)
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/rename

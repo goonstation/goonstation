@@ -2206,7 +2206,7 @@ datum
 				return
 
 			proc/replace_organ(var/mob/living/carbon/human/H)
-				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/organ_name = pick(non_vital_organ_strings)
 				var/obj/item/organ/organ = H.get_organ(organ_name)
 				if (istype(organ, /obj/item/organ/flock_crystal))
 					return
@@ -3264,9 +3264,9 @@ datum
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
-								M.change_vampire_blood(bloodget, 1) // vamp_blood
-								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
-								V.blood_tracking_output()
+								var/datum/bioHolder/unlinked/bioHolder = src.data
+								M.change_vampire_blood(bloodget, 1, victim = bioHolder?.weak_owner?.deref()) // vamp_blood
+								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
 								holder.del_reagent(src.id)
 								return 0
