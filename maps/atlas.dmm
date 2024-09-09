@@ -11426,6 +11426,7 @@
 "fmZ" = (
 /obj/machinery/disposal/chemlink,
 /obj/machinery/light_switch/north,
+/obj/disposalpipe/trunk/east,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -13073,9 +13074,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "iwg" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -13570,6 +13573,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
