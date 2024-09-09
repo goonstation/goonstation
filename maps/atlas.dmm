@@ -5589,7 +5589,9 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
 /area/station/ranch)
 "aEM" = (
 /obj/cable{
@@ -16722,6 +16724,7 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grasstodirt{
 	dir = 4
 	},
@@ -16798,7 +16801,9 @@
 	dir = 8
 	},
 /obj/storage/secure/closet/civilian/ranch,
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
 /area/station/ranch)
 "pbm" = (
 /obj/cable{
@@ -19753,7 +19758,9 @@
 	dir = 8
 	},
 /obj/machinery/interdictor/unlocked,
-/turf/simulated/floor/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
 /area/station/ranch)
 "uUE" = (
 /obj/machinery/conveyor/WE{
