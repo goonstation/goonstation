@@ -5450,7 +5450,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aCZ" = (
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/research_director)
 "aDa" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -17661,6 +17661,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/hangar/main)
 "quH" = (
@@ -62486,7 +62487,7 @@ gau
 vLq
 cmO
 wcc
-aGG
+aDa
 aPF
 aOn
 aXW
@@ -62788,7 +62789,7 @@ hTZ
 aSC
 aFj
 aDM
-aGG
+aDa
 aUn
 aVh
 frl
@@ -63090,7 +63091,7 @@ ocb
 sFU
 cmO
 qzG
-aGG
+aDa
 aHo
 kTx
 tIb
@@ -63392,7 +63393,7 @@ aGG
 aDb
 tLy
 aGG
-aGG
+aDa
 aCZ
 rPV
 cQC
