@@ -13070,6 +13070,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
+/obj/mapping_helper/access/chemistry,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "iwg" = (
@@ -21021,6 +21023,8 @@
 	pixel_y = 2;
 	pixel_x = -4
 	},
+/obj/mapping_helper/access/chemistry,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "xkg" = (
@@ -61913,7 +61917,7 @@ jpB
 iex
 yka
 aDa
-oZy
+nWD
 ebc
 ebc
 ebc
@@ -65545,7 +65549,7 @@ uHC
 uHC
 gOA
 aqX
-nWD
+oZy
 eQS
 aaC
 aaC
