@@ -48758,7 +48758,8 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	name = "hot reserve tank valve";
-	dir = 1
+	dir = 1;
+	
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
