@@ -368,7 +368,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!src.occupant?.mind)
 			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
 		else
-			src.occupant.job = src.occupant.mind.job //Set the new mob's job to our mind's job
+			src.occupant.job = src.occupant.mind.assigned_role //Set the new mob's job to our mind's job
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue
