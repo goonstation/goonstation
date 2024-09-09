@@ -33904,7 +33904,7 @@
 	pixel_y = -9
 	},
 /obj/machinery/firealarm{
-	dir = 4;
+	dir = 8;
 	pixel_x = 24;
 	pixel_y = 7
 	},
@@ -48758,8 +48758,7 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	name = "hot reserve tank valve";
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
