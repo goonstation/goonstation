@@ -35686,6 +35686,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
+"iao" = (
+/obj/cable/reinforced{
+	icon_state = "4-8-thick"
+	},
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "ibd" = (
 /obj/stool,
 /turf/simulated/floor/specialroom/arcade,
@@ -86577,7 +86584,7 @@ aBn
 fwi
 wOT
 wOT
-wOT
+qZb
 wOT
 wOT
 wOT
@@ -89599,7 +89606,7 @@ wOT
 wOT
 vZO
 qKi
-wOT
+qZb
 fLg
 aqn
 aqn
@@ -109867,7 +109874,7 @@ aoj
 aoj
 aoj
 aoj
-chJ
+iao
 aoj
 aoj
 aoj
