@@ -94,6 +94,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/network = "SS13"
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
+	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
 	var/list/connected_robots = list()
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
@@ -382,6 +383,10 @@ or don't if it uses a custom topopen overlay
 		if(!isnull(src.client))
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
+
+		src.camera = new /obj/machinery/camera(src)
+		src.camera.c_tag = src.real_name
+		src.camera.network = "Robots"
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
