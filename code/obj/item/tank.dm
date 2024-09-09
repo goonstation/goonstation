@@ -9,7 +9,7 @@ Contains:
 -Plasma Tank
 */
 
-#define TANK_VOLUME 70 * LITERS //! The volume of a normal tank in litres
+#define TANK_VOLUME 70 LITERS //! The volume of a normal tank in litres
 
 /obj/item/tank
 	name = "tank"
