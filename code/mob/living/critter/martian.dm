@@ -19,9 +19,9 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
-	health_brute = 75
+	health_brute = 50
 	health_brute_vuln = 0.5
-	health_burn = 75
+	health_burn = 50
 	health_burn_vuln = 1.5
 	speechverb_say = "burbles"
 	speechverb_exclaim = "screeches"
@@ -154,10 +154,8 @@
 	martian_type = "warrior"
 	icon_state = "martianW"
 	icon_state_dead = "martianW-dead"
-	health_brute = 150
-	health_brute_vuln = 0.5
-	health_burn = 150
-	health_burn_vuln = 1.5
+	health_brute = 100
+	health_burn = 100
 
 	New()
 		..()
@@ -195,6 +193,8 @@
 	icon_state = "martianS"
 	icon_state_dead = "martianS-dead"
 	ai_type = /datum/aiHolder/ranged
+	health_brute = 100
+	health_burn = 100
 
 	setup_hands()
 		..()
@@ -214,10 +214,8 @@
 	martian_type = "mutant"
 	icon_state = "martianP"
 	icon_state_dead = "martianP-dead"
-	health_brute = 10
-	health_brute_vuln = 1
-	health_burn = 10
-	health_burn_vuln = 1
+	health_brute = 33
+	health_burn = 33
 	ai_type = /datum/aiHolder/ranged
 
 	New()
@@ -242,10 +240,8 @@
 	martian_type = "initiate"
 	icon_state = "martianP"
 	icon_state_dead = "martianP-dead"
-	health_brute = 10
-	health_brute_vuln = 1
-	health_burn = 10
-	health_burn_vuln = 1
+	health_brute = 25
+	health_burn = 25
 
 	New()
 		..()
@@ -258,8 +254,8 @@
 	martian_type = "mortian"
 	icon_state = "martianM"
 	icon_state_dead = "martianM-dead"
-	health_brute = 150
-	health_burn = 150
+	health_brute = 100
+	health_burn = 100
 
 	New()
 		..()
@@ -288,8 +284,8 @@
 	martian_type = "overseer"
 	icon_state = "martianL"
 	icon_state_dead = "martianL-dead"
-	health_brute = 300
-	health_burn = 300
+	health_brute = 200
+	health_burn = 200
 	leader = TRUE
 	//is_npc = FALSE
 
@@ -346,10 +342,8 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	martian_type = "infiltrator"
 	icon_state = "martianI"
 	icon_state_dead = "martianI-dead"
-	health_brute = 50
-	health_brute_vuln = 0.5
-	health_burn = 50
-	health_burn_vuln = 1
+	health_brute = 75
+	health_burn = 75
 	is_npc = FALSE
 
 	setup_equipment_slots()

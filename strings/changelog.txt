@@ -1,4 +1,9 @@
+
 (t)mon sep 09 24
+(u)Romayne
+(p)20129
+(e)🆕💨📦🔬|C-Feature, A-Atmospherics, A-Game-Objects, A-Science
+(*)Tank explosions will now become a new kind of devastating when fallout is added.
 (u)LeahTheTech
 (+)Getting hit by a washing machine now hurts.
 (u)ZeWaka
