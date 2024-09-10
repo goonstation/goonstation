@@ -15684,26 +15684,17 @@
 /obj/machinery/phone{
 	pixel_y = 8
 	},
-/obj/item/device/transfer_valve{
-	pixel_x = -8
-	},
-/obj/item/device/transfer_valve{
-	pixel_x = 8
-	},
-/obj/item/device/transfer_valve{
+/obj/item/clothing/glasses/vr{
+	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
+	network = "bombtest";
+	pixel_x = -6;
 	pixel_y = 3
 	},
 /obj/item/clothing/glasses/vr{
 	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
 	network = "bombtest";
-	pixel_x = -8;
-	pixel_y = 7
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
-	network = "bombtest";
-	pixel_x = 8;
-	pixel_y = 7
+	pixel_x = 5;
+	pixel_y = 0
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
