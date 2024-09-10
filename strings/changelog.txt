@@ -1,5 +1,9 @@
 
 (t)mon sep 09 24
+(u)Lyy
+(p)20530
+(e)🎨📦🎩|C-Sprites, A-Game-Objects, A-Clothing
+(+)Resprited some of the Captain's gear to be more consistent.
 (u)JORJ949
 (p)20627
 (e)💅🤖|C-QoL, A-Silicons
