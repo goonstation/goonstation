@@ -116,7 +116,7 @@
 	icon_state = "medium_dir"
 	New(loc, dir=0)
 		..()
-		src.dir = dir
+		src.dir = dir //nothing will care about whether or not light rotates, so why spend precious time calling set_dir()?
 		switch(dir)
 			if(0)
 				icon_state = "medium_center"
@@ -233,24 +233,19 @@
 /atom/proc/update_medium_light_visibility()
 	if(src.medium_lights[1].invisibility == INVIS_ALWAYS) // toggled off
 		return
-	if(!(isturf(src.loc) || isturf(src)))
+	if(isturf(src.loc) || isturf(src))
 		for (var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
-			src:vis_contents -= light
-		return
-	for (var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
-		if(light.dir)
-			var/turf/T = get_step(get_turf(src), light.dir)
-			if(T?.opacity || T?.opaque_atom_count)
-				src:vis_contents -= light
+			if(light.dir)
+				var/turf/T = get_step(get_turf(src), light.dir)
+				if(T?.opacity || T?.opaque_atom_count)
+					src:vis_contents -= light
+				else
+					src:vis_contents += light
 			else
 				src:vis_contents += light
-		else
-			src:vis_contents += light
-
-
-
-
-
+	else
+		for (var/atom/movable/light/simple_light/medium/light as anything in src.medium_lights)
+			src:vis_contents -= light
 
 
 /atom/movable/light/simple_light/medium/directional

@@ -722,7 +722,7 @@ proc/get_moving_lights_stats()
 
 /turf/proc/RL_Init()
 	if (fullbright || loc:force_fullbright)
-		src.RL_MulOverlay?.dispose()
+		src.RL_MulOverlay?.dispose() //Qdel is slow, and there should be absolutely nothing else that should hold a reference to this.
 		src.RL_MulOverlay = null
 		src.RL_AddOverlay?.dispose()
 		src.RL_AddOverlay = null
