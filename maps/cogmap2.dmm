@@ -16515,6 +16515,9 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 4
 	},

@@ -4166,9 +4166,6 @@
 	dir = 4
 	},
 /area/station/engine/elect)
-"axg" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "axi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -5450,7 +5447,7 @@
 	pixel_y = -6
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ranch)
+/area/station/science/artifact)
 "aCN" = (
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/sanitary,
@@ -11539,7 +11536,7 @@
 	name = "Emergency Mass Driver"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ranch)
+/area/station/science/artifact)
 "cMJ" = (
 /obj/machinery/clonepod,
 /obj/cable{
@@ -12267,7 +12264,7 @@
 "eyH" = (
 /obj/decal/poster/wallsign/warning3,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/ranch)
+/area/station/science/artifact)
 "eyM" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/red,
@@ -13228,7 +13225,7 @@
 	id = "artlabgun"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ranch)
+/area/station/science/artifact)
 "grv" = (
 /obj/submachine/weapon_vendor/security,
 /obj/machinery/firealarm/north,
@@ -13621,9 +13618,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"hoQ" = (
-/turf/simulated/wall/auto/reinforced/supernorn/yellow,
-/area/station/hallway/primary/south)
 "hqc" = (
 /obj/machinery/light{
 	dir = 1;
@@ -16491,7 +16485,7 @@
 "mYw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/science/artifact)
 "mYT" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/activation_button/ignition_switch{
@@ -17190,10 +17184,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
-"olo" = (
-/obj/decal/poster/wallsign/warning3,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
 "omc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -18771,7 +18761,7 @@
 	},
 /obj/mapping_helper/access/artlab,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/science/artifact)
 "rQh" = (
 /obj/lattice{
 	dir = 4;
@@ -19959,7 +19949,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating/random,
-/area/station/ranch)
+/area/station/science/artifact)
 "uzK" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -61485,7 +61475,7 @@ azL
 bdC
 amD
 anl
-hoQ
+alx
 sjW
 vFd
 ske
@@ -66634,7 +66624,7 @@ aBY
 aAE
 aBr
 aWh
-azM
+aRn
 aDh
 aDU
 aZX
@@ -67246,7 +67236,7 @@ aGZ
 aCM
 rOO
 mYw
-olo
+eyH
 aIz
 aaa
 aax
@@ -67545,7 +67535,7 @@ aFs
 aDi
 aYo
 aPc
-aGk
+tet
 uzo
 gqF
 cKR
@@ -67847,9 +67837,9 @@ sWU
 aEL
 paq
 aFr
-aGk
-aGk
-aGk
+tet
+tet
+tet
 eyH
 aIz
 aaa
@@ -69056,9 +69046,9 @@ qdr
 aQr
 aGZ
 aAC
-axg
-axg
-axg
+aGk
+aGk
+aGk
 aIz
 aaa
 aaa
