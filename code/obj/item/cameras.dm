@@ -239,7 +239,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	// Update overlay layer for photo when dropping on floor or in belt/bag/container
 	dropped()
 		..()
-		render_photo_image(src.layer)
+		render_photo_image(initial(src.layer))
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)
