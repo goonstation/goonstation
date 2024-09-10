@@ -89,7 +89,7 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (istype(A, /mob/dead) || isintangible(A) || iswraith(A) || isflockmob(A)) return
+		if (istype(A, /mob/dead) || A.anchored || isintangible(A) || iswraith(A) || isflockmob(A)) return
 		return_if_overlay_or_effect(A)
 		activate()
 

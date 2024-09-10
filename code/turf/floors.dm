@@ -1533,9 +1533,14 @@ TYPEINFO(/turf/simulated/floor/grass)
 	src.wet = wetType
 
 	SPAWN(timeout)
-		src.ClearSpecificOverlays("wet_overlay")
+		src.dryify()
+
+/turf/simulated/proc/dryify()
+	src.ClearSpecificOverlays("wet_overlay")
+	if(istype(src, /turf/simulated/floor/airless/plating/catwalk)) // ""Guh" - Leah" - Me
+		var/obj/grille/catwalk/catwalk = locate() in src
 		catwalk?.ClearSpecificOverlays("wet_overlay")
-		src.wet = 0
+	src.wet = 0
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
@@ -1961,6 +1966,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
 		user?.unlock_medal("Misclick", 1)
+		var/datum/gang/gang = user?.get_gang()
+		if (gang && !params["quick_replace"])
+			gang.do_vandalism(GANG_VANDALISM_FLOORTILE_POINTS,src)
+
 
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
@@ -2016,7 +2025,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
-			src.Attackby(P, user)
+			var/list/newParams = list()
+			newParams["quick_replace"] = TRUE
+			src.Attackby(P, user, newParams)
 			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite

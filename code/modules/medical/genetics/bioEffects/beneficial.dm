@@ -568,16 +568,16 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color_original = HAH.customization_first_color
-				HAH.customization_second_color_original = HAH.customization_second_color
-				HAH.customization_third_color_original = HAH.customization_third_color
+				HAH.customizations["hair_bottom"].color_original = HAH.customizations["hair_bottom"].color
+				HAH.customizations["hair_middle"].color_original = HAH.customizations["hair_middle"].color
+				HAH.customizations["hair_top"].color_original = HAH.customizations["hair_top"].color
 				HAH.s_tone_original = HAH.s_tone
 				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
 					hulk_skin = rgb(gray_af, gray_af, gray_af)
-				HAH.customization_first_color = "#4F7942" // a pleasant fern green
-				HAH.customization_second_color = "#3F704D" // a bold hunter green
-				HAH.customization_third_color = "#0B6623" // a vibrant forest green
+				HAH.customizations["hair_bottom"].color = "#4F7942" // a pleasant fern green
+				HAH.customizations["hair_middle"].color = "#3F704D" // a bold hunter green
+				HAH.customizations["hair_top"].color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
@@ -589,14 +589,14 @@ var/list/radio_brains = list()
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color = HAH.customization_first_color_original
-				HAH.customization_second_color = HAH.customization_second_color_original
-				HAH.customization_third_color = HAH.customization_third_color_original
+				HAH.customizations["hair_bottom"].color = HAH.customizations["hair_bottom"].color_original
+				HAH.customizations["hair_middle"].color = HAH.customizations["hair_middle"].color_original
+				HAH.customizations["hair_top"].color = HAH.customizations["hair_top"].color_original
 				HAH.s_tone = HAH.s_tone_original
 				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
-					HAH.customization_first_color = fix_colors(HAH.customization_first_color)
-					HAH.customization_second_color = fix_colors(HAH.customization_second_color)
-					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
+					HAH.customizations["hair_bottom"].color = fix_colors(HAH.customizations["hair_bottom"].color)
+					HAH.customizations["hair_middle"].color = fix_colors(HAH.customizations["hair_middle"].color)
+					HAH.customizations["hair_top"].color = fix_colors(HAH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 
@@ -607,9 +607,9 @@ var/list/radio_brains = list()
 		if (ishuman(owner) && src.visible && prob(33)) //whatever
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customization_first_color = "#4F7942" // a pleasant fern green
-				HAH.customization_second_color = "#3F704D" // a bold hunter green
-				HAH.customization_third_color = "#0B6623" // a vibrant forest green
+				HAH.customizations["hair_bottom"].color = "#4F7942" // a pleasant fern green
+				HAH.customizations["hair_middle"].color = "#3F704D" // a bold hunter green
+				HAH.customizations["hair_top"].color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
 				HAH.UpdateMob()
 
@@ -1018,3 +1018,45 @@ var/list/radio_brains = list()
 	OnRemove()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 		. = ..()
+
+// hair_override gene
+/datum/bioEffect/hair_growth
+	name = "Androgen Booster"
+	desc = "A boost of androgens causes a subject to sprout hair, even if they are normally incapable of it."
+	id = "hair_growth"
+	msgGain = "Your scalp itches."
+	msgLose = "Your scalp stops itching."
+	occur_in_genepools = 0 // this shouldn't be available outside of admin shenanigans
+	probability = 0
+	scanner_visibility = 0 // nor should it be visible
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	acceptable_in_mutini = 0
+	curable_by_mutadone = FALSE
+	effectType = EFFECT_TYPE_POWER
+
+	OnAdd()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/M = owner
+			if (M.AH_we_spawned_with)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
+				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
+				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
+				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
+				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
+
+			M.hair_override = 1
+			M.bioHolder.mobAppearance.UpdateMob()
+			M.update_colorful_parts()
+		..()
+
+	OnRemove()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/M = owner
+
+			M.hair_override = 0
+			M.bioHolder.mobAppearance.UpdateMob()
+			M.update_colorful_parts()
+		..()

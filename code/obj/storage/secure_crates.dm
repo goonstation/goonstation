@@ -13,6 +13,17 @@
 	always_display_locks = 1
 	throwforce = 50
 	can_flip_bust = 1
+	is_short = TRUE
+
+	Cross(atom/movable/mover) //copy pasted from actual crates because this pathing is AGONY
+		if(istype(mover, /obj/projectile))
+			return 1
+		if(src.is_short && src.open && isliving(mover)) // let people climb onto the crate if the crate is open and against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
+		return ..()
 
 /obj/storage/secure/crate/weapon
 	desc = "A secure weapons crate."
