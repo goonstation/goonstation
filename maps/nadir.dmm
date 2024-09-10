@@ -19299,7 +19299,7 @@
 "ieD" = (
 /obj/storage/closet/medicalclothes,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24;
 	pixel_y = 4
 	},
