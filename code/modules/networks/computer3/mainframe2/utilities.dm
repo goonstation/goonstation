@@ -874,7 +874,7 @@
 					if(no_messages)
 						grep_results += "[to_check] could not be read."
 
-			if (grep_results)
+			if (length(grep_results))
 				message_user("[jointext(grep_results, "|n")]", "multiline")
 			else if (.)
 				message_user(., "multiline")
