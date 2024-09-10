@@ -10846,7 +10846,17 @@
 	},
 /obj/storage/secure/closet/command/hos,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "quarters_hos"
+	id = "quarters_hos";
+	pixel_x = 5;
+	pixel_y = 27
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = "";
+	pixel_x = -18
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 9
@@ -11789,6 +11799,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = "";
+	pixel_y = -6
+	},
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "dlb" = (
@@ -12121,6 +12139,13 @@
 "eeM" = (
 /obj/storage/secure/crate/weapon/armory/shotgun,
 /obj/machinery/recharger/wall/sticky,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "ehK" = (
@@ -13753,6 +13778,13 @@
 	},
 /obj/machinery/door_timer/genpop/new_walls/west,
 /obj/landmark/start/job/security_officer,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -13791,6 +13823,13 @@
 /area/space)
 "hGr" = (
 /obj/machinery/vending/jobclothing/security,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "hGB" = (
@@ -14381,6 +14420,9 @@
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
 /obj/landmark/start/job/head_of_security,
+/obj/machinery/light{
+	light_type = /obj/item/light/tube/yellowish
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
 	},
@@ -15325,6 +15367,13 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
@@ -15720,6 +15769,13 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -20849,6 +20905,14 @@
 /obj/mapping_helper/access/security,
 /obj/disposalpipe/segment/brig{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = "";
+	pixel_x = -18
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
