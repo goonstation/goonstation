@@ -1,5 +1,9 @@
 
 (t)tue sep 10 24
+(u)Carton171
+(p)20435
+(e)🔄🔊|C-Rework, C-Sound
+(*)Introduced a new sound for the Lawbringer "Assault" mode.
 (u)LeahTheTech
 (p)20654
 (e)🪲🔊|C-Bug, C-Sound
