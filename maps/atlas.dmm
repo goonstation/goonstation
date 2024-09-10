@@ -14650,7 +14650,7 @@
 /area/station/janitor/office)
 "kWK" = (
 /obj/machinery/light,
-/obj/machinery/vending/chem,
+/obj/machinery/vending/chemistry,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "kWU" = (
