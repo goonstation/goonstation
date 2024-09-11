@@ -9423,12 +9423,6 @@
 "bky" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
-"blJ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/engineering)
 "boo" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -10929,8 +10923,8 @@
 	},
 /area/station/security/main)
 "ecR" = (
-/obj/reagent_dispensers/fueltank,
 /obj/machinery/firealarm/east,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/purple,
 /area/research_outpost/hangar)
 "ecZ" = (
@@ -10980,7 +10974,6 @@
 	dir = 9
 	},
 /obj/machinery/meter,
-/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "eoM" = (
@@ -12505,7 +12498,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "gJC" = (
-/obj/machinery/vending/standard/toxins,
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -15204,15 +15197,6 @@
 "kUo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
-"kUH" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "kWf" = (
 /obj/disposalpipe/segment,
 /obj/machinery/conveyor/SN{
@@ -16355,18 +16339,6 @@
 /obj/table/wood/auto,
 /obj/machinery/phone{
 	pixel_y = 8
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
-	network = "bombtest";
-	pixel_x = -6;
-	pixel_y = 3
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
-	network = "bombtest";
-	pixel_x = 5;
-	pixel_y = 0
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -17559,9 +17531,6 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "oZy" = (
@@ -18506,7 +18475,6 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/airless/darkblue/checker,
 /area/station/engine/core)
 "qYE" = (
@@ -19124,7 +19092,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "seR" = (
-/obj/reagent_dispensers/foamtank,
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -19263,7 +19231,6 @@
 /obj/cable/orange{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/engine/core)
 "sxH" = (
@@ -21425,15 +21392,6 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"vVc" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "vVr" = (
 /obj/machinery/plantpot,
 /obj/railing/orange/reinforced,
@@ -22283,13 +22241,6 @@
 /area/station/mining/staff_room)
 "xqY" = (
 /obj/machinery/firealarm/west,
-/obj/machinery/networked/storage/bomb_tester{
-	bank_id = "Mixer"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -60124,7 +60075,7 @@ avx
 fWp
 fXR
 fxr
-blJ
+lAa
 fLA
 hWY
 anp
@@ -60418,7 +60369,7 @@ wGd
 vLg
 vLg
 qYp
-kUH
+kpe
 tkN
 rON
 kmv
@@ -60426,7 +60377,7 @@ tqQ
 fWp
 fXR
 mTa
-blJ
+lAa
 nOs
 uas
 anp
@@ -60720,7 +60671,7 @@ ykT
 boo
 sRB
 qYp
-vVc
+kpe
 cuh
 kEu
 kbp
