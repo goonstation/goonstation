@@ -12,20 +12,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	var/ability_path = null
 	var/datum/targetable/geneticsAbility/ability = null
 
-/datum/bioEffect/power/cryokinesis
-	name = "Cryokinesis"
-	desc = "Allows the subject to control ice and cold."
-	id = "cryokinesis"
-	msgGain = "You notice a strange cold tingle in your fingertips."
-	msgLose = "Your fingers feel warmer."
-	effectType = EFFECT_TYPE_POWER
-	cooldown = 600
-	probability = 66
-	blockCount = 3
-	blockGaps = 2
-	stability_loss = 10
-	ability_path = /datum/targetable/geneticsAbility/cryokinesis
-
 	New()
 		..()
 		check_ability_owner()
@@ -66,6 +52,20 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()
+
+/datum/bioEffect/power/cryokinesis
+	name = "Cryokinesis"
+	desc = "Allows the subject to control ice and cold."
+	id = "cryokinesis"
+	msgGain = "You notice a strange cold tingle in your fingertips."
+	msgLose = "Your fingers feel warmer."
+	effectType = EFFECT_TYPE_POWER
+	cooldown = 600
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/cryokinesis
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
