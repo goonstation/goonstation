@@ -2114,7 +2114,7 @@ or don't if it uses a custom topopen overlay
 	var/mob/message_mob = src.get_message_mob()
 	if (!message_mob.client || isdead(src))
 		return
-	var/confirm = tgui_alert(message_mob, "Become a ghost and permanently replace yourself with a latejoinable AI? (WARNING: YOU CANNOT BE LAWED TO DO THIS AND YOU CANNOT BE REVIVED.)", "Permanently Suicide?", list("Yes", "Cancel"))
+	var/confirm = tgui_alert(message_mob, "Become a ghost and allow other players to join into your core? (WARNING: YOU CANNOT BE LAWED OR ORDERED TO DO THIS AND YOU CANNOT BE REVIVED.)", "Permanently Shut Down?", list("Yes", "Cancel"))
 	if (confirm != "Yes")
 		return
 
@@ -2607,7 +2607,7 @@ proc/get_mobs_trackable_by_AI()
 
 	//Tell the crew the AI is gone
 	if(announce)
-		command_alert("Station AI unit malfunction detected, attempting download of new mind from Central Command database.","Artificial Intelligence Update", alert_origin = ALERT_STATION)
+		command_alert("Station AI unit [pick("crash", "kernel panic", "unrecoverable error")] detected, attempting automated download of new personality from Central Command database...","Artificial Intelligence Update", alert_origin = ALERT_STATION)
 	logTheThing(LOG_COMBAT, src, "is replaced with a latejoin AI at [log_loc(src)].")
 
 	qdel(src.brain)
