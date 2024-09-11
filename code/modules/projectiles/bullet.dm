@@ -1811,6 +1811,13 @@ datum/projectile/bullet/autocannon
 			desired_x = closest.x - P.x - P.pixel_x/32
 			desired_y = closest.y - P.y - P.pixel_y/32
 
+			if(ismovable(closest))
+				var/atom/movable/AM = closest
+				if(AM.bound_width > 32)
+					desired_x += AM.bound_width / 64 - 0.5
+				if(AM.bound_height > 32)
+					desired_y += AM.bound_height / 64 - 0.5
+
 			.= 1
 
 	tick(var/obj/projectile/P)
@@ -1896,9 +1903,9 @@ datum/projectile/bullet/autocannon
 				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
 				boutput(M, pod.ship_message(message))
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, angle, obj/projectile/O)
 		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
-			explosion_new(null, get_turf(hit), 12)
+			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/vehicle = hit
