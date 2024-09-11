@@ -13865,8 +13865,6 @@
 "hPj" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
-/obj/landmark/start/job/janitor,
-/obj/artifact_spawner,
 /obj/machinery/door_control{
 	id = "crusher";
 	name = "Crusher Door Control";
@@ -13874,8 +13872,11 @@
 	pixel_y = 0;
 	dir = 4
 	},
-/turf/simulated/floor/circuit/purple,
-/area/station/science/artifact)
+/obj/landmark/start/job/janitor,
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/station/janitor/office)
 "hQG" = (
 /obj/storage/secure/closet/command/hos,
 /obj/storage/secure/closet/command/hos,
