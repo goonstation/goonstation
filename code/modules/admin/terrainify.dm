@@ -277,6 +277,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 		if(params["Prefabs"])
 			place_prefabs(10)
 
+		if(current_state >= GAME_STATE_PREGAME)
+			initialize_worldgen()
+
 		if(current_state >= GAME_STATE_PLAYING && params["Re-Entry"])
 			for (var/client/C in clients)
 				var/mob/player_mob = C.mob
