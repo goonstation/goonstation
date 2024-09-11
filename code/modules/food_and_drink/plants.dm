@@ -997,6 +997,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	crop_prefix = "unpeeled "
 	desc = "Cavendish, of course."
 	icon_state = "banana"
+	item_state = "banana"
 	planttype = /datum/plant/fruit/banana
 	bites_left = 2
 	heal_amt = 2
@@ -1031,6 +1032,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/index = findtext(src.name, "unpeeled")
 			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
+			src.item_state = "banana-fruit"
+			user.update_inhands()
 			var/obj/item/bananapeel/droppeel = new /obj/item/bananapeel(user.loc)
 			// Scale peel size to banana size
 			// If banana 80% normal size or larger, directly copy banana's size for the peel

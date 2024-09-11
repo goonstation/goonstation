@@ -208,7 +208,7 @@
 			min = src.rounds_needed_to_play
 		if (src.rounds_allowed_to_play)
 			max = src.rounds_allowed_to_play
-		if (!min || !max)
+		if (!min && !max)
 			return TRUE
 
 		var/round_num = player.get_rounds_participated()
@@ -216,7 +216,7 @@
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > min && round_num <= max)
+		if (round_num >= min && (round_num <= max || !max))
 			return TRUE
 		return FALSE
 

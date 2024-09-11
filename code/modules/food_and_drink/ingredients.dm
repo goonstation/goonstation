@@ -425,6 +425,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	name = "peeled banana"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-fruit"
+	item_state = "banana-fruit"
 
 /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	name = "cheese"
