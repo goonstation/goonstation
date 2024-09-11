@@ -150,10 +150,9 @@
 			if(medium_light.dir)
 				// divided by two because the directional sprites are brighter
 				rgba[4] = alpha_scaled
-				medium_light.color = rgba
 			else
 				rgba[4] = min(255, alpha)
-				medium_light.color = rgba
+			medium_light.color = rgba
 	else
 		update_medium_light_color()
 
