@@ -2601,9 +2601,9 @@ proc/get_mobs_trackable_by_AI()
 		eyecam.return_mainframe()
 	if (deployed_shell)
 		src.return_to(deployed_shell)
-	src.ghostize()
 	if (src.mind)
 		src.mind.register_death()
+	src.ghostize()
 
 	//Tell the crew the AI is gone
 	if(announce)
@@ -2617,8 +2617,6 @@ proc/get_mobs_trackable_by_AI()
 	src.update_appearance()
 	src.name = "AI"
 	src.UpdateName()
-	if (src.mind)
-		src.mind.assigned_role = "AI"
 
 /*-----Core-Creation---------------------------------------*/
 
