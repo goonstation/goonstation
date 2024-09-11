@@ -711,7 +711,7 @@ proc/get_moving_lights_stats()
 		qdel(src.RL_AddOverlay)
 		src.RL_AddOverlay = null
 	// cirr effort to remove redundant overlays that still persist EVEN THOUGH they shouldn't
-	for(var/obj/overlay/tile_effect/lighting/L in src.contents)
+	for(var/atom/movable/light/robust_light/L in src.contents)
 		L.set_loc(null)
 		qdel(L)
 	*/
