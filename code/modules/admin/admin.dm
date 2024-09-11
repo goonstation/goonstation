@@ -2156,7 +2156,7 @@ var/global/noir = 0
 										thing = new path(locate(X, Y, Z))
 										if(isobj(thing))
 											var/obj/O = thing
-											O.initialize()
+											O.initialize(TRUE)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
@@ -2172,7 +2172,7 @@ var/global/noir = 0
 											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
 											if(isobj(thing))
 												var/obj/O = thing
-												O.initialize()
+												O.initialize(TRUE)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -4141,7 +4141,7 @@ var/global/noir = 0
 					A = new chosen(get_turf(usr))
 				if(isobj(A))
 					var/obj/O = A
-					O.initialize()
+					O.initialize(TRUE)
 				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(usr)])")

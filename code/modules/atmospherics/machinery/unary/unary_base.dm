@@ -37,15 +37,15 @@
 
 	new_network.normal_members += src
 
-/obj/machinery/atmospherics/unary/initialize(map_init)
+/obj/machinery/atmospherics/unary/initialize(player_caused_init)
 	var/node_connect = dir
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
 			break
-	if(!map_init)
-		src.node?.initialize(TRUE)
+	if(player_caused_init)
+		src.node?.initialize(FALSE)
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/build_network()
