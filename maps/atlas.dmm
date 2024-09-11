@@ -1802,7 +1802,7 @@
 	pixel_y = 10
 	},
 /obj/item/wrench,
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "aii" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -10895,7 +10895,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "boC" = (
 /obj/machinery/door/airlock/pyro/alt{
@@ -10986,7 +10986,7 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "bwv" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -11091,7 +11091,7 @@
 /area/station/security/interrogation)
 "bCt" = (
 /obj/machinery/atmospherics/unary/portables_connector,
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "bCz" = (
 /obj/cable/yellow{
@@ -13880,7 +13880,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "hPY" = (
 /obj/decal/tile_edge/stripe/big{
@@ -15413,7 +15413,7 @@
 	},
 /area/listeningpost)
 "kBQ" = (
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "kCN" = (
 /obj/securearea{
@@ -15485,7 +15485,7 @@
 /obj/machinery/dispenser,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/firealarm/east,
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "kNc" = (
 /obj/lattice{
@@ -16625,7 +16625,7 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "nik" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -18388,7 +18388,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "ray" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -19027,7 +19027,7 @@
 /obj/cable/orange{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "szE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -19131,7 +19131,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "sSG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -19789,7 +19789,7 @@
 /obj/machinery/power/reactor_stats,
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "tYS" = (
 /obj/machinery/power/data_terminal,
@@ -20123,7 +20123,7 @@
 	id = "Cold Loop Gas Supply 2";
 	target_pressure = 1000
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "uLo" = (
 /obj/grille/catwalk{
@@ -20653,7 +20653,7 @@
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "vLl" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -21624,7 +21624,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/manufacturer/gas,
-/turf/simulated/floor/airless/darkblue/checker,
+/turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "xGd" = (
 /obj/table/syndicate/auto,
