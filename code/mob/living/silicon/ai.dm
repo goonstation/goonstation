@@ -2603,6 +2603,7 @@ proc/get_mobs_trackable_by_AI()
 		src.return_to(deployed_shell)
 	if (src.mind)
 		src.mind.register_death()
+		src.mind.get_player()?.dnr = TRUE
 	src.ghostize()
 
 	//Tell the crew the AI is gone
