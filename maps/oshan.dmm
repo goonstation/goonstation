@@ -31631,15 +31631,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/tools)
-"clA" = (
-/obj/machinery/conveyor/SN{
-	id = "north";
-	move_lag = 10;
-	operating = 1
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/storage/tools)
 "clD" = (
 /obj/machinery/vending/coffee,
 /turf/simulated/floor,
@@ -37248,7 +37239,7 @@
 	move_lag = 10;
 	operating = 1
 	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/storage/tools)
 "jJY" = (
 /obj/table/auto,
@@ -37488,6 +37479,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/captain)
+"kdw" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/storage/tools)
 "kdB" = (
 /obj/shrub{
 	dir = 6
@@ -87916,7 +87911,7 @@ azt
 szI
 uES
 sIS
-aCs
+kdw
 clz
 aBG
 aig
@@ -88219,7 +88214,7 @@ ozO
 jIt
 oLQ
 nZe
-clA
+nZe
 wCt
 clH
 tKE
