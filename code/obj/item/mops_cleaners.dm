@@ -1289,6 +1289,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	c_flags = ONBACK
 	wear_layer = MOB_BACK_LAYER + 0.3
 	fluid_overlay_states = 0 //we want to add our own component, thanks
+	HELP_MESSAGE_OVERRIDE("You can use a <b>wrench</b> to empty the <i>high pressure</i> tank.")
 
 	New(loc, new_initial_reagents)
 		..()
@@ -1317,10 +1318,31 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
 		sprayer?.disconnect(user)
 
-	//stupid hack to make reagents transfer before storage datums yoink the item
-	//blame the entirety of reagent transfer code being stuffed into two copy-pasted afterattack stacks
 	attackby(obj/item/W, mob/user, params)
+		//stupid hack to make reagents transfer before storage datums yoink the item
+		//blame the entirety of reagent transfer code being stuffed into two copy-pasted afterattack stacks
 		if (W.is_open_container(FALSE) && W.reagents?.total_volume > 0)
+			return
+		if (iswrenchingtool(W))
+			if (src.cant_drop)
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			boutput(user, SPAN_NOTICE("You loosen the pressure retaining bolts on [src]..."))
+			src.cant_drop = TRUE //I want a pause for dramatic effect goddamnit
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, src)
+			SPAWN(0.5 SECONDS)
+				src.cant_drop = FALSE
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, src)
+				if (!src.reagents.total_volume)
+					boutput(user, SPAN_NOTICE("...but nothing happens."))
+					return
+				if (src.reagents.total_volume > 100)
+					playsound(src.loc, 'sound/effects/bigsplash.ogg', 50, 1)
+					user.changeStatus("knockdown", 5 SECONDS)
+				boutput(user, SPAN_ALERT("You get splashed in the face by the pressurized contents of [src]!"))
+				src.reagents.reaction(user, TOUCH, src.reagents.total_volume/2, FALSE)
+				src.reagents.reaction(get_turf(src), TOUCH, 0, TRUE)
+				src.reagents.clear_reagents()
 			return
 		. = ..()
 

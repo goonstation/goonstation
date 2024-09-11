@@ -2206,7 +2206,7 @@ datum
 				return
 
 			proc/replace_organ(var/mob/living/carbon/human/H)
-				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/organ_name = pick(non_vital_organ_strings)
 				var/obj/item/organ/organ = H.get_organ(organ_name)
 				if (istype(organ, /obj/item/organ/flock_crystal))
 					return

@@ -1,5 +1,47 @@
 
+(t)wed sep 11 24
+(u)KakoLookiyuam
+(p)20647
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Fixed the grep shell utility from appending an extra newline to output.
+(t)tue sep 10 24
+(u)cringe
+(p)20614
+(e)🆕💨|C-Feature, A-Atmospherics
+(*)Expect to see the gods playing with constructible atmos.
+(u)Carton171
+(p)20435
+(e)🔄🔊|C-Rework, C-Sound
+(*)Introduced a new sound for the Lawbringer "Assault" mode.
+(u)LeahTheTech
+(p)20654
+(e)🪲🔊|C-Bug, C-Sound
+(+)Using a wrench on a WA-V3 tank will now empty the contents.
+(u)JORJ949
+(p)20605
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(+)The AI's "Emergency" law module has been rewritten.
+(u)444explorer
+(p)20587
+(e)⚖💅🧱📦|C-Balance, C-QoL, A-Materials, A-Game-Objects
+(+)Gemstones are now more transparent - Use them in windows!
 (t)mon sep 09 24
+(u)Lyy
+(p)20530
+(e)🎨📦🎩|C-Sprites, A-Game-Objects, A-Clothing
+(+)Resprited some of the Captain's gear to be more consistent.
+(u)JORJ949
+(p)20627
+(e)💅🤖|C-QoL, A-Silicons
+(+)AI cores now have cameras in them that AI eyes can view out of.
+(u)Wrench
+(p)20638
+(e)🗺|A-Mapping
+(+)The Fishbowl Helmet and Donkini have been added somewhere in the Oceans around Oshan Station and Nadir Station...
+(u)Lord_Earthfire
+(p)20606
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Added hyper vomitium to traitor poison bottles, artifacts and designer pills. This chem makes sure you vomit out everything. Literally everything.
 (u)Romayne
 (p)20129
 (e)🆕💨📦🔬|C-Feature, A-Atmospherics, A-Game-Objects, A-Science
