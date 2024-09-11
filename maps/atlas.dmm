@@ -9844,6 +9844,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"bYP" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/space)
 "bZv" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -11771,6 +11781,9 @@
 "fwI" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 4
@@ -15600,11 +15613,15 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "lHv" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8
@@ -18281,6 +18298,26 @@
 	desc = "The Regional Director wouldn't stop raving about the great price they got for this carpet. Looking at it makes you uneasy."
 	},
 /area/station/crew_quarters/cafeteria)
+"qxb" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 4
+	},
+/obj/machinery/communications_dish{
+	pixel_y = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/engine/vacuum,
+/area/space)
 "qxl" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
@@ -19882,6 +19919,13 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
+"top" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/airless,
+/area/research_outpost)
 "tpk" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/quadway/overfloor,
@@ -20490,13 +20534,20 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "uiU" = (
-/obj/machinery/computer/announcement/station/research{
-	dir = 8
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13"
+	},
+/obj/machinery/computer3/generic/communications{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/purple,
 /area/research_outpost)
@@ -53541,7 +53592,7 @@ aaa
 aaa
 aaa
 wPV
-wPV
+top
 wPV
 aaa
 aaa
@@ -53843,7 +53894,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+bYP
 aaa
 aaa
 aaa
@@ -54145,7 +54196,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+qxb
 aaa
 aaa
 aaa
