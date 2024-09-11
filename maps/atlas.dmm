@@ -9142,10 +9142,7 @@
 	dir = 10
 	},
 /obj/cable/yellow{
-	icon_state = "2-8"
-	},
-/obj/cable/yellow{
-	icon_state = "2-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
@@ -9864,6 +9861,9 @@
 	},
 /obj/grille/catwalk{
 	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -10608,16 +10608,18 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aZm" = (
-/obj/machinery/power/tracker/west,
-/obj/cable/yellow,
+/obj/machinery/power/tracker/north,
 /obj/grille/catwalk{
 	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/solar/south)
+/area/station/solar/north)
 "aZn" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -16742,10 +16744,7 @@
 	dir = 6
 	},
 /obj/cable/yellow{
-	icon_state = "1-8"
-	},
-/obj/cable/yellow{
-	icon_state = "1-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
@@ -17167,18 +17166,16 @@
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/listeningpost)
 "oiu" = (
-/obj/machinery/power/tracker/north,
-/obj/cable/yellow{
-	icon_state = "0-2"
-	},
 /obj/grille/catwalk{
 	dir = 4
 	},
+/obj/machinery/power/tracker/west,
+/obj/cable/yellow,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/area/station/solar/north)
+/area/station/solar/south)
 "oiH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -17585,6 +17582,13 @@
 /area/station/hallway/primary/south)
 "pkT" = (
 /obj/submachine/fishing_upload_terminal/portable,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/station/ranch)
 "pmb" = (
@@ -19948,6 +19952,13 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/plating/random,
 /area/station/science/artifact)
 "uzK" = (
@@ -21540,6 +21551,9 @@
 	},
 /obj/grille/catwalk{
 	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -66878,7 +66892,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aZm
 xDr
 ehK
 ehK
@@ -66954,7 +66968,7 @@ aKF
 aKF
 aKF
 aVs
-aaa
+oiu
 aaa
 aaa
 aaa
@@ -67482,7 +67496,7 @@ aaa
 aaa
 aaa
 aaa
-oiu
+aaa
 nyB
 aaa
 aaa
@@ -67558,7 +67572,7 @@ aaa
 aaa
 aaa
 aSj
-aZm
+aaa
 aaa
 aaa
 aaa
@@ -69045,7 +69059,7 @@ aDW
 qdr
 aQr
 aGZ
-aAC
+aGk
 aGk
 aGk
 aGk
