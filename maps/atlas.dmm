@@ -14050,7 +14050,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "jgk" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/turf/simulated/wall/auto/reinforced/supernorn/the_tuff_stuff,
 /area/station/science/testchamber/bombchamber{
 	requires_power = 0
 	})
