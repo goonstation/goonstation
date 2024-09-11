@@ -15623,6 +15623,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -19190,6 +19191,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "scE" = (
