@@ -436,13 +436,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	health_burn_vuln = 1.25
 	ai_retaliates = FALSE // this is a lie- special retaliation behavior in was_harmed and whistles
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/patroller/packet_based
+	ai_type = /datum/aiHolder/patroller/packet_based/securitron
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
-	var/chase_speed_bonus = 1.1
+	var/chase_speed_bonus = 0.9
 	var/obj/machinery/camera/camera = null
 	var/initial_limb = /obj/item/baton/mobsecbot
-	var/drop_initial = FALSE
+	var/drop_limb_item = FALSE
 	var/net_id
 	var/power = TRUE
 	var/control_freq = FREQ_BOT_CONTROL
@@ -499,6 +499,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	START_TRACKING_CAT(TR_CAT_DELETE_ME)
 	#endif
 
+/mob/living/critter/robotic/securitron/get_fingertip_color() // so flashing a badge gives the right fingertip tone
+	return "#656565"
+
 /mob/living/critter/robotic/securitron/disposing()
 	STOP_TRACKING
 	qdel(src.camera)
@@ -522,6 +525,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	else
 		HH.limb = new /datum/limb/small_critter/med
 	HH.limb_name = "long arm"
+	HH.suffix = "-R"
 	HH.name = "long arm"
 	HH.icon_state = "handn"
 	HH.icon = 'icons/mob/critter_ui.dmi'
@@ -567,7 +571,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 /mob/living/critter/robotic/securitron/death(var/gibbed)
 	for (var/datum/handHolder/HH in hands)
-		if (HH.limb.holder.remove_object && src.drop_initial)
+		if (HH.limb.holder.remove_object && src.drop_limb_item)
 			var/obj/item/I = HH.limb.holder.remove_object
 			I.temp_flags &= ~IS_LIMB_ITEM
 			I.cant_drop = initial(I.cant_drop)
@@ -704,6 +708,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 		if ("arrest_type")
 			src.is_detaining = !src.is_detaining
 			src.say("TEN-FOUR. ENGAGEMENT MODE: [src.is_detaining ? "DETAIN" : "RESTRAIN"].")
+			if (istype(src.ai,/datum/aiHolder/patroller/packet_based/securitron))
+				var/datum/aiHolder/patroller/packet_based/securitron/securitron_ai = src.ai
+				securitron_ai.is_detaining = src.is_detaining
 			return src.is_detaining
 		if ("report_arrests")
 			src.report_arrests = !src.report_arrests
@@ -783,7 +790,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 			threatcount += 5
 
 		perpname = H_perp.face_visible() ? H_perp.real_name : perpname
-		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
+		if(perp.traitHolder?.hasTrait("stowaway") && perp.traitHolder?.hasTrait("jailbird"))
 			if(isnull(data_core.security.find_record("name", perpname)))
 				threatcount += 5
 
@@ -838,6 +845,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	..()
 
 /mob/living/critter/robotic/securitron/critter_basic_attack(mob/target)
+	EXTEND_COOLDOWN(target, "MARKED_FOR_SECURITRON_ARREST", 10 SECONDS)
 	var/obj/item/I = src.equipped()
 	if(!I)
 		return FALSE
@@ -855,7 +863,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 			bonus_hits--
 	if(istype(I,/obj/item/gun/kinetic/pumpweapon))
 		var/obj/item/gun/kinetic/pumpweapon/gun_to_rack = I
-		gun_to_rack.AttackSelf(src) // causes it to rack riot shotguns after firing
+		gun_to_rack.AttackSelf(src) // causes it to rack riot shotguns (and kuvaldas) after firing
+	if(istype(I,/obj/item/gun/kinetic/single_action))
+		var/obj/item/gun/kinetic/single_action/gun_to_cock = I
+		if(!gun_to_cock.hammer_cocked)
+			gun_to_cock.AttackSelf(src) // causes it to cock colt saas (and flintlocks) after firing
 	return TRUE
 
 /mob/living/critter/robotic/securitron/proc/check_access(obj/item/I)
@@ -886,7 +898,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 			var/mob/living/carbon/human/H = attacker
 			if(istype(H.wear_suit,/obj/item/clothing/suit/security_badge))
 				aggression_hp -= 0.3 // 15 damage allowed out of pure respect
-	if(src.get_health_percentage() >= aggression_hp) // if health is still high enough, assume it was friendly fire or a 0 damage hit
+	if(src.get_health_percentage() > aggression_hp) // if health is still high enough, assume it was friendly fire or a 0 damage hit
 		return
 	EXTEND_COOLDOWN(attacker, "MARKED_FOR_SECURITRON_ARREST", 15 SECONDS)
 	if(!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
@@ -985,6 +997,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	..()
 	if(ishuman(target))
 		OVERRIDE_COOLDOWN(target,"ARRESTED_BY_SECURITRON_\ref[master]",src.arrest_cooldown)
+		OVERRIDE_COOLDOWN(target,"MARKED_FOR_SECURITRON_ARREST",0)
 		target.handcuffs = new /obj/item/handcuffs/guardbot(target)
 		target.setStatus("handcuffed", duration = INFINITE_STATUS)
 		logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(target,"combat")] at [log_loc(master)].")
@@ -1062,5 +1075,5 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	name = "Officer Beepsky"
 	desc = "It's Officer Beepsky! He's a loose cannon but he gets the job done."
 	initial_limb = /obj/item/baton/mobsecbot/beepsky
-	drop_initial = TRUE
-	chase_speed_bonus = 1.5
+	drop_limb_item = TRUE
+	chase_speed_bonus = 1.3

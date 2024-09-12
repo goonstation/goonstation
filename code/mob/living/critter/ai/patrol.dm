@@ -10,16 +10,19 @@
 	name = "patrolling"
 	distance_from_target = 0
 	max_dist = 7
-	var/targeting_instance_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
-	var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/combat_subtask
+	var/combat_subtask_type = /datum/aiTask/sequence/goalbased/critter/attack/fixed_target
+	var/targeting_subtask_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
 	var/datum/aiTask/succeedable/move/move_subtask
+	var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/combat_subtask
+	var/datum/aiTask/succeedable/targeting_subtask
 
 /datum/aiTask/patrol/New(parentHolder, transTask)
 	. = ..()
 	src.move_subtask = src.holder.get_instance(/datum/aiTask/succeedable/move, list(holder))
 	if(istype(src.move_subtask))
 		src.move_subtask.max_path_dist = 150
-	src.combat_subtask = src.holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target, list(src.holder, src, null))
+	src.combat_subtask = src.holder.get_instance(src.combat_subtask_type, list(src.holder, src, null))
+	src.targeting_subtask = src.holder.get_instance(src.targeting_subtask_type, list(src.holder, src))
 
 /datum/aiTask/patrol/on_tick()
 	if(GET_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION"))
@@ -54,18 +57,13 @@
 				src.holder.target = null
 
 	if(!src.holder.target)
-		var/datum/aiTask/succeedable/targeting_instance = src.holder.get_instance(src.targeting_instance_type, list(src.holder, src))
-		targeting_instance.on_tick()
+		src.targeting_subtask.on_tick()
 
 	. = ..()
 
 /datum/aiTask/succeedable/patrol_target_locate
 	max_dist = 120
 	max_fails = 3
-
-/datum/aiTask/succeedable/patrol_target_locate/switched_to()
-	. = ..()
-	src.holder.target = null
 
 /datum/aiTask/succeedable/patrol_target_locate/succeeded()
 	var/distance = GET_DIST(get_turf(src.holder.owner), get_turf(src.target))
@@ -88,21 +86,24 @@
 			src.holder.target = C
 			break
 
-/// securitron patrol pattern
+/// packet based patrol pattern
 /datum/aiHolder/patroller/packet_based
+	default_task_type = /datum/aiTask/patrol/packet_based
+
+/datum/aiTask/patrol/packet_based
 	var/net_id
 	var/next_patrol_id
 	var/atom/nearest_beacon
 	var/nearest_beacon_id
 	var/nearest_dist
-	default_task_type = /datum/aiTask/patrol/packet_based
+	targeting_subtask_type = /datum/aiTask/succeedable/patrol_target_locate/packet_based
 
-/datum/aiHolder/patroller/packet_based/New()
+/datum/aiTask/patrol/packet_based/New()
 	. = ..()
 
-	src.net_id = generate_net_id(src.owner)
+	src.net_id = generate_net_id(src.holder.owner)
 
-	src.owner.AddComponent(
+	src.holder.owner.AddComponent(
 		/datum/component/packet_connected/radio, \
 		"ai_beacon",\
 		FREQ_NAVBEACON, \
@@ -112,24 +113,31 @@
 		null, \
 		FALSE \
 	)
-	RegisterSignal(src.owner, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(ai_receive_signal))
+	RegisterSignal(src.holder.owner, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(ai_receive_signal))
 
-/datum/aiHolder/patroller/packet_based/disposing()
-	qdel(get_radio_connection_by_id(src.owner, "ai_beacon"))
-	UnregisterSignal(src.owner, COMSIG_MOVABLE_RECEIVE_PACKET)
+	var/datum/aiTask/succeedable/patrol_target_locate/packet_based/packet_targeting_subtask = src.targeting_subtask
+	packet_targeting_subtask.packet_holder = src
+
+/datum/aiTask/patrol/packet_based/disposing()
+	src.targeting_subtask.disposing()
 	..()
 
-/datum/aiHolder/patroller/packet_based/proc/ai_receive_signal(mob/attached, datum/signal/signal, transmission_method, range, connection_id)
-	if(!src.enabled) // this ai is off
+/datum/aiTask/patrol/packet_based/disposing()
+	UnregisterSignal(src.holder.owner, COMSIG_MOVABLE_RECEIVE_PACKET)
+	..()
+
+/datum/aiTask/patrol/packet_based/proc/ai_receive_signal(mob/attached, datum/signal/signal, transmission_method, range, connection_id)
+	if(!src.holder.enabled) // this ai is off
 		return
 
-	if(!istype(src.current_task,/datum/aiTask/patrol)) // we are in a whistle chase or something
+	var/mob/living/critter/C = src.holder.owner
+	if(isliving(src.combat_subtask.fixed_target) && C.valid_target(src.combat_subtask.fixed_target)) // we are in a chase or something
 		return
 
 	if(connection_id == "ai_beacon")
 		src.nav_beacon_signal(signal)
 
-/datum/aiHolder/patroller/packet_based/proc/nav_beacon_signal(datum/signal/signal)
+/datum/aiTask/patrol/packet_based/proc/nav_beacon_signal(datum/signal/signal)
 	if(signal.data["address_1"] != src.net_id) // commanding the bot requires directly addressing it
 		return
 
@@ -140,7 +148,7 @@
 		return
 
 	if(!src.next_patrol_id) // we have not yet found a beacon
-		var/dist = GET_DIST(get_turf(src.owner),get_turf(signal.source))
+		var/dist = GET_DIST(get_turf(src.holder.owner),get_turf(signal.source))
 		if(nearest_beacon) // try to find a better beacon
 			if(dist < nearest_dist)
 				src.nearest_beacon = signal.source
@@ -151,36 +159,61 @@
 			src.nearest_beacon = signal.source
 			src.nearest_beacon_id = signal.data["beacon"]
 			src.nearest_dist = dist
-			SPAWN(1 SECOND) // nav beacons have a decisecond delay before responding
-				src.target = src.nearest_beacon
+			SPAWN(3 DECI SECONDS) // nav beacons have a decisecond delay before responding
+				src.holder.target = src.nearest_beacon
 				src.next_patrol_id = src.nearest_beacon_id
 				src.nearest_beacon = null
 				src.nearest_beacon_id = null
 				src.nearest_dist = null
 
 	else if(signal.data["beacon"] == src.next_patrol_id) // destination reached, or nerd successful
-		src.target = signal.source
+		src.holder.target = signal.source
 		src.next_patrol_id = signal.data["next_patrol"]
 
-/datum/aiTask/patrol/packet_based
-	targeting_instance_type = /datum/aiTask/succeedable/patrol_target_locate/packet_based
-
 /datum/aiTask/succeedable/patrol_target_locate/packet_based
-	max_fails = 5
-
-/datum/aiTask/succeedable/patrol_target_locate/packet_based/switched_to()
-	. = ..()
-	src.tick()
+	var/datum/aiTask/patrol/packet_based/packet_holder
 
 /datum/aiTask/succeedable/patrol_target_locate/packet_based/on_tick()
 	. = ..()
-	if(istype(src.holder,/datum/aiHolder/patroller/packet_based))
-		var/datum/aiHolder/patroller/packet_based/packet_holder = src.holder
+	if(istype(src.packet_holder))
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.holder.owner
-		signal.data["sender"] = packet_holder.net_id
-		if(packet_holder.next_patrol_id)
-			signal.data["findbeacon"] = packet_holder.next_patrol_id
+		signal.data["sender"] = src.packet_holder.net_id
+		if(src.packet_holder.next_patrol_id)
+			signal.data["findbeacon"] = src.packet_holder.next_patrol_id
 		else
 			signal.data["findbeacon"] = "patrol"
 		SEND_SIGNAL(src.holder.owner, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "ai_beacon")
+
+/// and lastly, the actual securitron attack task
+/datum/aiHolder/patroller/packet_based/securitron
+	default_task_type = /datum/aiTask/patrol/packet_based/securitron
+	var/is_detaining = FALSE
+
+/datum/aiTask/patrol/packet_based/securitron
+	combat_subtask_type = /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron
+
+/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron
+	name = "apprehending perp"
+	max_dist = 40
+
+/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/on_tick()
+	if(GET_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION"))
+		return
+	. = ..()
+	if(src.fixed_target && isliving(src.fixed_target))
+		var/mob/living/L = src.fixed_target
+		if (istype(src.holder,/datum/aiHolder/patroller/packet_based/securitron))
+			var/datum/aiHolder/patroller/packet_based/securitron/securitron_ai = src.holder
+			if(securitron_ai.is_detaining)
+				return
+		if (ishuman(L))
+			if(!L.hasStatus("handcuffed"))
+				return
+		else if (!is_incapacitated(L))
+			return
+		OVERRIDE_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION", 0)
+		src.holder.target = null
+		src.transition_task = src.holder.default_task
+		src.fixed_target = null
+		src.holder.interrupt_to_task(src.holder.default_task)

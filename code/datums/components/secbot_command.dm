@@ -36,22 +36,3 @@
 				secbot.siren()
 			if (src.parent)
 				src.RemoveComponent()
-
-/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron
-	name = "attacking whistle target"
-
-/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/on_tick()
-	if(GET_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION"))
-		return
-	. = ..()
-	if(src.fixed_target && isliving(src.fixed_target))
-		var/mob/living/L = src.fixed_target
-		if(ishuman(L) && !L.hasStatus("handcuffed"))
-			return
-		else if (!is_incapacitated(L))
-			return
-		OVERRIDE_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION", 0)
-		src.holder.target = null
-		src.transition_task = src.holder.default_task
-		src.fixed_target = null
-		src.holder.interrupt_to_task(src.holder.default_task)
