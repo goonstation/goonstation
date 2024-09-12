@@ -120,21 +120,22 @@
 		FALSE \
 	)
 
-	if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
-		var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
-		src.control_freq = securitron_owner.control_freq
+	SPAWN(1 SECOND)
+		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
+			src.control_freq = securitron_owner.control_freq
 
-	if(src.control_freq)
-		src.holder.owner.AddComponent(
-			/datum/component/packet_connected/radio, \
-			"bot_control",\
-			src.control_freq, \
-			src.net_id, \
-			null, \
-			FALSE, \
-			null, \
-			FALSE \
-		)
+		if(src.control_freq)
+			src.holder.owner.AddComponent(
+				/datum/component/packet_connected/radio, \
+				"bot_control",\
+				src.control_freq, \
+				src.net_id, \
+				null, \
+				FALSE, \
+				null, \
+				FALSE \
+			)
 
 	RegisterSignal(src.holder.owner, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(ai_receive_signal))
 
@@ -237,6 +238,9 @@
 	if(signal.data["command"] == "bot_status")
 		src.send_status()
 		return
+
+	if(signal.data["address_1"] != src.net_id) // commanding the bot requires directly addressing it
+		return FALSE
 
 	if((signal.data["command"] == "guard" || signal.data["command"] == "lockdown") && signal.data["target"])
 		var/area/potential_area = signal.data["target"]
