@@ -148,6 +148,8 @@ TYPEINFO(/obj/strip_door)
 				return TRUE
 			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
 				return TRUE
+			else if (istype(A,/mob/living/critter/robotic/securitron))
+				return TRUE
 			else if (isdead(M))
 				return TRUE
 			else if(!M.lying) // or you're lying down
