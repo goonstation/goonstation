@@ -2172,15 +2172,13 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
-	receives_implants = list(/obj/item/implant/health)
 	slot_back = list(/obj/item/reagent_containers/glass/backtank)
 	slot_belt = list(/obj/item/storage/fanny/janny/tactical)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
 	slot_head = list(/obj/item/clothing/head/janiberet)
-	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+	slot_mask = list(/obj/item/clothing/mask/gas/swat/nt)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes)
 	slot_glov = list(/obj/item/clothing/gloves/long)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/sanitation)
 	slot_rhan = list(/obj/item/gun/sprayer)
 	slot_card = /obj/item/card/id/nt_specialist

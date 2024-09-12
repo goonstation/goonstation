@@ -669,7 +669,6 @@
 		/obj/item/cloth/towel/janitor,
 		/obj/item/handheld_vacuum,
 		/obj/item/reagent_containers/glass/bucket,
-		/obj/item/clothing/suit/space/ntso,
 		/obj/item/cloth/handkerchief/nt,
 		/obj/item/lamp_manufacturer/organic
 	)
