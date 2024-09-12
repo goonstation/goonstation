@@ -2380,7 +2380,7 @@
 	report_arrests
 		name = "Report Arrests"
 		desc = "Toggle reporting arrests"
-		icon_state = "secbot_radio_off"
+		icon_state = "secbot_radio_on"
 		base_icon_state = "secbot_radio_"
 		setting = "report_arrests"
 
