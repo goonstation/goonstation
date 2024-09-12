@@ -252,6 +252,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
 			custom.color_original = customCopy.color_original
 			custom.color = customCopy.color
+			custom.dye = customCopy.dye
 			custom.style_original = customCopy.style_original
 			custom.style = customCopy.style
 			custom.offset_y = customCopy.offset_y
