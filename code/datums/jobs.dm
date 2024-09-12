@@ -2161,36 +2161,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			return
 		M.bioHolder.AddEffect("chameleon", magical=1)
 
-/datum/job/special/halloween/ntjani
-	linkcolor = "#3348ff"
-	name = "Nanotrasen Sanitation Operative"
-	limit = 1
-	wages = PAY_IMPORTANT
-	requires_whitelist = TRUE
-	allow_traitors = FALSE
-	allow_spy_theft = FALSE
-	can_join_gangs = FALSE
-	cant_spawn_as_rev = TRUE
-	receives_badge = TRUE
-	slot_back = list(/obj/item/reagent_containers/glass/backtank)
-	slot_belt = list(/obj/item/storage/fanny/janny/tactical)
-	slot_jump = list(/obj/item/clothing/under/misc/turds)
-	slot_head = list(/obj/item/clothing/head/janiberet)
-	slot_mask = list(/obj/item/clothing/mask/gas/swat/nt)
-	slot_foot = list(/obj/item/clothing/shoes/galoshes)
-	slot_glov = list(/obj/item/clothing/gloves/long)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt/sanitation)
-	slot_rhan = list(/obj/item/gun/sprayer)
-	slot_card = /obj/item/card/id/nt_specialist
-	slot_poc1 = list(/obj/item/device/pda2/janitor)
-	slot_poc2 = list(/obj/item/tank/emergency_oxygen)
-
-	faction = list(FACTION_NANOTRASEN)
-	New()
-		..()
-		src.access = get_access("Janitor") + list(access_heads)
-		return
-
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN

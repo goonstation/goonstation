@@ -123,17 +123,6 @@
 /obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
 
-/obj/item/device/radio/headset/command/nt/sanitation
-	icon_tooltip = "NanoTrasen Sanitation Operative"
-	secure_frequencies = list(
-		"h" = R_FREQ_COMMAND,
-		"c" = R_FREQ_CIVILIAN,
-		)
-	secure_classes = list(
-		"h" = RADIOCL_COMMAND,
-		"c" = RADIOCL_CIVILIAN,
-		)
-
 /obj/item/device/radio/headset/command/inspector
 	name = "inspector's headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by official Inspectors."
