@@ -300,14 +300,14 @@
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
 	New()
-		destinations = list("North" = NORTH, "South" = EAST)
+		destinations = list("North Carousel" = NORTH, "South Carousel" = EAST)
 		default_direction = NORTH
 		..()
 
 /obj/machinery/cargo_router/oshan_south
 	trigger_when_no_match = 0
 	New()
-		destinations = list("South" = SOUTH, "North" = WEST)
+		destinations = list("South Carousel" = SOUTH, "North Carousel" = WEST)
 		default_direction = SOUTH
 		..()
 
