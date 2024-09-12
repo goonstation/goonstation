@@ -2173,7 +2173,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
 	receives_implants = list(/obj/item/implant/health)
-	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_back = list(/obj/item/reagent_containers/glass/backtank)
 	slot_belt = list(/obj/item/storage/fanny/janny/tactical)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
 	slot_head = list(/obj/item/clothing/head/janiberet)
@@ -2181,13 +2181,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_glov = list(/obj/item/clothing/gloves/long)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/sanitation)
-	slot_rhan = list(/obj/item/mop)
+	slot_rhan = list(/obj/item/gun/sprayer)
 	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/device/pda2/janitor)
 	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
-	items_in_backpack = list(/obj/item/clothing/suit/space/ntso,
-							/obj/item/cloth/handkerchief/nt,
-							/obj/item/lamp_manufacturer/organic)
+
 	faction = list(FACTION_NANOTRASEN)
 	New()
 		..()

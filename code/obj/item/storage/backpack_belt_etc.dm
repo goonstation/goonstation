@@ -663,13 +663,15 @@
 
 /obj/item/storage/fanny/janny/tactical
 	name = "tactical janny pack"
+	slots = 7
 
 	spawn_contents = list(
 		/obj/item/cloth/towel/janitor,
 		/obj/item/handheld_vacuum,
-		/obj/item/sponge,
-		/obj/item/spraybottle/cleaner/tsunami,
-		/obj/item/reagent_containers/glass/bucket
+		/obj/item/reagent_containers/glass/bucket,
+		/obj/item/clothing/suit/space/ntso,
+		/obj/item/cloth/handkerchief/nt,
+		/obj/item/lamp_manufacturer/organic
 	)
 /* -------------------- Belts -------------------- */
 
