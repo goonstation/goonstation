@@ -90,6 +90,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 
 	disposing()
+		message_ghosts("<b>[src]</b> has been destroyed at [log_loc(src, ghostjump=TRUE)].")
 		mailgroups.len = 0
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
@@ -311,6 +312,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
+				message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)
@@ -368,6 +370,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!src.occupant?.mind)
 			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
 		else
+			src.occupant.job = src.occupant.mind.assigned_role //Set the new mob's job to our mind's job
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue

@@ -16,7 +16,6 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
 
 		if (!M || !target || !ismob(target))
 			return 1
@@ -47,6 +46,5 @@
 		if (!(L.bioHolder && L.traitHolder.hasTrait("training_chaplain")))
 			L.contract_disease(/datum/ailment/disease/vamplague, null, null, 1) // path, name, strain, bypass resist
 
-		if (istype(H)) H.blood_tracking_output(src.pointCost)
 		logTheThing(LOG_COMBAT, M, "uses diseased touch on [constructTarget(L,"combat")] at [log_loc(M)].")
 		return 0

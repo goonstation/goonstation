@@ -1015,3 +1015,7 @@ proc/GetBioeffectResearchLevelFromGlobalListByID(var/id)
 		. = BE.research_level
 	else
 		. = 0
+
+///Bioholder type for when you need a bioholder that isn't strongly linked to an owner, uses a weakref to allow GC
+/datum/bioHolder/unlinked
+	var/datum/weakref/weak_owner = null
