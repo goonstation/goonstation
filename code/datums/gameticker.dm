@@ -316,6 +316,8 @@ var/global/current_state = GAME_STATE_INVALID
 	if(!countJob("AI")) // There is no roundstart AI, spawn in a Latejoin AI on the spawn landmark.
 		for(var/turf/T in job_start_locations["AI"])
 			new /mob/living/silicon/ai/latejoin(T)
+	if(!countJob("Cyborg") && !countJob("Roboticist")) //if no borgs or roboticists to make borgs, autobuild a latejoin one
+		new /mob/living/silicon/robot/spawnable/light/latejoin(pick(job_start_locations["Cyborg"]))
 	if(!processScheduler.isRunning)
 		processScheduler.start()
 
