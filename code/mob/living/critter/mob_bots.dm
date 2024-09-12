@@ -468,7 +468,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	. = ..()
 
 	if(src.real_name == "securitron")
-		src.real_name = "\improper Securitron-" + rand(1,9) + rand(0,9) + rand(0,9)
+		src.real_name = "\improper Securitron-" + "[rand(1,9)]" + "[rand(0,9)]" + "[rand(0,9)]"
 		src.name = src.real_name
 	if(src.initial_limb)
 		var/datum/handHolder/HH = hands[1]
