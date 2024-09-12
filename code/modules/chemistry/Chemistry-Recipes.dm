@@ -2125,10 +2125,10 @@
 		name = "Antihol"
 		id = "antihol"
 		result = "antihol"
-		required_reagents = list("ethanol" = 1, "charcoal" = 1)
+		required_reagents = list("ipecac" = 1, "charcoal" = 3)
 		result_amount = 2
-		mix_phrase = "A minty and refreshing smell drifts from the effervescent mixture."
-		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "A gross sludge forms in the mixture"
+		mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
 
 	ectocooler
 		name = "Ecto Cooler"

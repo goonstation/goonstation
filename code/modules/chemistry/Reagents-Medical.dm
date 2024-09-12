@@ -1591,18 +1591,17 @@ datum
 			id = "antihol"
 			description = "A medicine which quickly eliminates alcohol in the body."
 			reagent_state = LIQUID
-			fluid_r = 0
-			fluid_b = 180
-			fluid_g = 200
+			depletion_rate = 0.6
+			fluid_r = 40
+			fluid_b = 0
+			fluid_g = 40
 			transparency = 220
 			value = 6 // 5c + 1c
 			var/list/flushed_reagents = list("ethanol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(holder, 8 * mult, flushed_reagents)
-				if (M.get_toxin_damage() <= 25)
-					M.take_toxin_damage(-2 * mult)
+				flush(holder, 2.5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1610,7 +1609,7 @@ datum
 			name = "space ipecac"
 			id = "ipecac"
 			fluid_r = 2
-			fluid_g = 20
+			fluid_g = 2
 			fluid_b =  5
 			description = "Used to induce emesis. In space."
 			reagent_state = LIQUID
