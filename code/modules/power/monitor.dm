@@ -110,12 +110,12 @@
 	circuit_type = /obj/item/circuitboard/powermonitor_smes
 
 /obj/machinery/computer/power_monitor/smes/New()
-	..()
+	. = ..()
 	START_TRACKING
 
 /obj/machinery/computer/power_monitor/smes/disposing()
 	STOP_TRACKING
-	..()
+	. = ..()
 
 /obj/machinery/computer/power_monitor/smes/ui_static_data(mob/user)
 	. = list(
