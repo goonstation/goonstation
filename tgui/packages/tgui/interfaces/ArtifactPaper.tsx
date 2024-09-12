@@ -10,6 +10,9 @@ import { Button, Flex, Section, TextArea } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
+// TODO: change usages to be theme-based rather than override color here
+const paperColor = 'white';
+
 interface ArtifactPaperData {
   artifactName;
   artifactOrigin;
@@ -45,8 +48,8 @@ export const ArtifactPaper = () => {
       width={800}
       height={835}
     >
-      <Window.Content>
-        <Section>
+      <Window.Content backgroundColor={paperColor}>
+        <Section backgroundColor={paperColor}>
           <h3>Artifact Name</h3>
           <h4>{artifactName === '' ? 'unknown' : artifactName}</h4>
           <h3>Artifact Origin</h3>
@@ -97,14 +100,15 @@ export const ArtifactPaper = () => {
             fluid
             height={5}
             onChange={(_, x) => act('fault', { newFaults: x })}
+            backgroundColor={paperColor}
           />
-
           <h3>Additional Information</h3>
           <TextArea
             value={artifactDetails}
             fluid
             height={10}
             onChange={(_, x) => act('detail', { newDetail: x })}
+            backgroundColor={paperColor}
           />
         </Section>
       </Window.Content>
