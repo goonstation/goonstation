@@ -124,13 +124,13 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 /datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
-		return 0 // Who's cutting whose hair, now?
+		return FALSE // Who's cutting whose hair, now?
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
-	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
+	if(ishuman(M) && H.head || ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
-		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
+		boutput(user, SPAN_NOTICE("You're going to need to remove anything that obstructs the hair first."))
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(H.is_bald())
@@ -146,7 +146,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			boutput(user, SPAN_NOTICE("You poke [M] with your [thing]. If you want to attack [M], you'll need to remove [him_or_her(M)] from the barber shop or set your intent to anything other than 'help', first."))
 			return ATTACK_PRE_DONT_ATTACK
 		else
-			return 0
+			return FALSE
 
 	if (!isnull(src.barbee) && src.barbee != M) // If we are already cutting someone's hair...
 		user.show_text("You are already cutting someone's hair.", "red")
@@ -162,13 +162,13 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 /datum/component/barber/proc/do_shave(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
-		return 0 // Who's cutting whose hair, now?
+		return FALSE // Who's cutting whose hair, now?
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
 	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
-		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
+		boutput(user, SPAN_NOTICE("You're going to need to remove anything that obstructs the face first."))
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(issilicon(M))
@@ -225,37 +225,30 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 /datum/component/barber/proc/get_barbery_conditions(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!ishuman(M))
-		return 0 // shouldn't happen, but just in case someone manages to shave a rat or something
-	var/barbery_conditions = 0
+		return FALSE // shouldn't happen, but just in case someone manages to shave a rat or something
+
+	var/barbery_conditions = 100 // how good we can... barber. you know. the conditions of our barbering. the measurement of our barberism. our barbery conditions.
+	var/list/flavor = list("slowly", "methodically", "peacefully", "quickly", "aggressively", "angrily", "happily")
+	var/list/conditions = list()
+
 	// let's see how ideal the haircutting conditions are
-	if(M.stat || issilicon(user))
-		barbery_conditions = 100
-	else
-		if (M.buckled)
-			barbery_conditions += 10
-		if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
-			barbery_conditions += 30
-
-		if(istype(get_area(M), /area/station/crew_quarters/barber_shop))
-			if(get_area(M) == get_area(user))
-				barbery_conditions += 30
-			else	// you should ideally be in the same room as whoever's hair you're cutting
-				barbery_conditions += 5
-
-		if(M.jitteriness)
+	// refactored these to be subtractive rather than additive - glamurio
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.jitteriness && !M.jitteriness) // your jitteriness kind of... syncs up
 			barbery_conditions -= 20
+			conditions.Add("jittery")
+		if(H.bioHolder.HasEffect("blind") && !istype(H.glasses, /obj/item/clothing/glasses/visor)) // yeah, I mean, obviously
+			barbery_conditions -= 50
+			conditions.Add("blind")
+		if(H.bioHolder.HasEffect("clumsy"))
+			barbery_conditions -= 20
+			conditions.Add("clumsy")
+		if(H.hasStatus("drunk") && !isalcoholresistant(H))
+			barbery_conditions -= 20
+			conditions.Add("drunk")
 
-		if(ishuman(user))
-			if(istype(user.w_uniform, /obj/item/clothing/under/misc/barber))
-				barbery_conditions += 30
-			if(user.jitteriness && !M.jitteriness) // your jitteriness kind of... syncs up
-				barbery_conditions -= 20
-			if(user.mind.assigned_role == "Barber") // 60% chance just for being you, 90 if you're wearing pants
-				barbery_conditions += 60
-			else if(M == user)
-				barbery_conditions -= 30
-			if(user.bioHolder.HasEffect("clumsy"))
-				barbery_conditions -= 20
+	boutput(user, SPAN_NOTICE("You begin cutting the hair of [M] [conditions ? ", despite being [english_list(conditions)]" : "[pick(flavor)]"]."))
 
 	var/degree_of_success = 0
 	if(prob(clamp(barbery_conditions, 10, 100)))

@@ -160,6 +160,23 @@ datum
 							did_not_react = 0
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+
+						// Reset hair dye
+						var/had_dye = FALSE
+						var/list/datum/customizationHolder/customizations = H.bioHolder.mobAppearance.customizations
+						if(customizations["hair_top"].dye)
+							customizations["hair_top"].dye = null
+							had_dye = TRUE
+						if(customizations["hair_middle"].dye)
+							customizations["hair_middle"].dye = null
+							had_dye = TRUE
+						if(customizations["hair_bottom"].dye)
+							customizations["hair_bottom"].dye = null
+							had_dye = TRUE
+						if (had_dye)
+							boutput(H, SPAN_NOTICE("The dye in your hair washes right out!"))
+							H.update_colorful_parts()
+
 						if (H.mutantrace?.aquaphobic && istype(src, /datum/reagent/water))
 							animate_shake(H)
 							if (prob(50))

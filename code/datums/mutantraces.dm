@@ -456,6 +456,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			AH.customizations["hair_middle"].color = fix_colors(AH.customizations["hair_middle"].color)
 			AH.customizations["hair_top"].color = fix_colors(AH.customizations["hair_top"].color)
 
+			AH.customizations["hair_bottom"].dye = fix_colors(AH.customizations["hair_bottom"].dye)
+			AH.customizations["hair_middle"].dye = fix_colors(AH.customizations["hair_middle"].dye)
+			AH.customizations["hair_top"].dye = fix_colors(AH.customizations["hair_top"].dye)
+
 		AH.s_tone_original = AH.s_tone
 		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
 			AH.s_tone = AH.customizations["hair_bottom"].color

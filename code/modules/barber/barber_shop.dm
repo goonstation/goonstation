@@ -21,13 +21,15 @@
 	hat_offset_y = -15 // offsets for hattable component
 	hat_offset_x = 0
 	compatible_species = list("human", "cow", "werewolf", "flubber") // No wigs for martians / blobs
+	var/list/styles = list()
 
-	///Takes a list of style ids to colors and generates a wig from it
-	proc/setup_wig(var/style_list)
+	/// Takes a list of style ids to colors and generates a wig from it
+	proc/setup_wig(var/list/style_list)
 		if (!style_list)
 			return
 		var/actuallyHasHair = FALSE
-		for (var/style_id in style_list)
+		src.styles = style_list
+		for (var/style_id in src.styles)
 			if (style_id == "none")
 				continue
 			var/image/h_image = image('icons/mob/human_hair.dmi', style_id) //  aloe TODO make these work with unlockable hair
@@ -37,6 +39,13 @@
 			actuallyHasHair = TRUE
 		if (!actuallyHasHair)
 			src.icon_state = "short"
+
+	/// Takes a list of colors and colors the wig
+	proc/dye_wig(var/list/color_list)
+		if (length(styles) == 0)
+			return
+		for (var/i in color_list)
+			styles[i] = color_list[i]
 
 ///A type to allow you to spawn custom wigs from the map editor
 /obj/item/clothing/head/wig/spawnable
@@ -251,23 +260,23 @@
 
 
 /obj/item/dye_bottle/proc/dye_hair(mob/living/carbon/human/M as mob, mob/user as mob, obj/item/dye_bottle/bottle as obj)
-	if(!ishuman(M) || !user.mind)	return 0
+	if(!ishuman(M) || !user.mind)	return FALSE
 	if(!istype(src, /obj/item/dye_bottle))
 		boutput(user, "Hi! The thing you're using is trying to dye someone's hair, despite it not being a thing that's supposed to do that!")
 		boutput(user, "Please call 1-800-CODER and tell us what's going on!")
-		return 0
+		return FALSE
 	if(src.uses_left <= 0)
 		boutput(user, SPAN_ALERT("\The [src] is empty!"))
-		return 0
+		return FALSE
 	if(!M?.organHolder?.head)
 		boutput(user, SPAN_ALERT("[M] has no head, and you're all out of stump dye!"))
-		return 0
-	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
+		return FALSE
+	else
 		var/mob/living/carbon/human/H = M
-		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
+		if(ishuman(M) && H.head || ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
-			boutput(user, SPAN_HINT("You're going to need to remove that mask/helmet first."))
-			return 0
+			boutput(user, SPAN_HINT("You're going to need to remove anything that obstructs the hair first."))
+			return FALSE
 		var/result_msg1 = "[user] dyes [M]'s hair."
 		var/result_msg2 = SPAN_NOTICE("You dye [M]'s hair.")
 		var/result_msg3 = SPAN_NOTICE("[user] dyes your hair.")
@@ -293,11 +302,11 @@
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
 			if (recolor_these_hair_layers_instead & HAIR_1_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_bottom"].dye = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_2_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_middle"].dye = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_3_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations["hair_top"].dye = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 				famtofuckup.emote("scream")
@@ -313,19 +322,19 @@
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_bottom"].dye = bottle.customization_first_color
 						if(MIDDLE_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_middle"].dye = bottle.customization_first_color
 						if(TOP_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations["hair_top"].dye = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
-						M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_bottom"].dye = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_middle"].dye = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations["hair_top"].dye = bottle.customization_first_color
 
 				if(EYES)
 					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
