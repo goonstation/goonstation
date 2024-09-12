@@ -653,6 +653,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/list/success_list, var/nustyle, var/whichp)
 		src.M = barbee
 		src.user = barber
+		if (M == user) // cutting yourself should be possible, but to encourage asking someone else it's slower
+			duration = duration * 3
 		src.degree_of_success = success_list["degree_of_success"]
 		src.conditions = success_list["conditions"]
 		src.new_style = nustyle
