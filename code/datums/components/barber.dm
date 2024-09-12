@@ -228,7 +228,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		return FALSE // shouldn't happen, but just in case someone manages to shave a rat or something
 
 	var/barbery_conditions = 100 // how good we can... barber. you know. the conditions of our barbering. the measurement of our barberism. our barbery conditions.
-	var/list/flavor = list("slowly", "methodically", "peacefully", "quickly", "aggressively", "angrily", "happily")
 	var/list/conditions = list()
 
 	// let's see how ideal the haircutting conditions are
@@ -248,8 +247,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			barbery_conditions -= 20
 			conditions.Add("drunk")
 
-	boutput(user, SPAN_NOTICE("You begin cutting the hair of [M] [conditions ? ", despite being [english_list(conditions)]" : "[pick(flavor)]"]."))
-
 	var/degree_of_success = 0
 	if(prob(clamp(barbery_conditions, 10, 100)))
 		degree_of_success = 3 // success
@@ -262,7 +259,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 			else
 				degree_of_success = 2 // fine haircut, but wrong style
 
-	return degree_of_success
+	return list("degree_of_success" = degree_of_success, "conditions" = conditions)
 
 /datum/component/barber/proc/mutant_barber_fluff(mob/living/carbon/human/M, mob/living/carbon/human/user, var/barbery_type)
 	if(!ishuman(M))
@@ -639,26 +636,31 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/user
 	var/degree_of_success
+	var/list/conditions = list()
 	var/datum/customization_style/new_style
 	var/which_part
 	// for text output
 	var/cut = "cut"
 	var/cuts = "cuts"
 	var/cutting = "cutting"
+	var/hair = "hair"
+	var/list/flavor = list("slowly", "methodically", "peacefully", "quickly", "aggressively", "angrily", "happily")
+	var/cut_sound = 'sound/items/Scissor.ogg'
 
 	proc/getHairStyles()
 		return list()
 
-	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/succ, var/nustyle, var/whichp)
+	New(var/mob/living/carbon/human/barbee, var/mob/living/carbon/human/barber, var/list/success_list, var/nustyle, var/whichp)
 		src.M = barbee
 		src.user = barber
-		src.degree_of_success = succ
+		src.degree_of_success = success_list["degree_of_success"]
+		src.conditions = success_list["conditions"]
 		src.new_style = nustyle
 		src.which_part = whichp
-		M.tri_message(user, "[user] begins [cutting] [M]'s hair.",\
-			SPAN_NOTICE("[user] begins [cutting] your hair."),\
-			SPAN_NOTICE("You begin [cutting] [M]'s hair."))
-		playsound(user, 'sound/items/Scissor.ogg', 100, TRUE)
+		M.tri_message(user, "[user] begins [cutting] [M]'s [hair]. [length(conditions) > 0 ? ", despite being [english_list(conditions)]" : "[pick(flavor)]"].",\
+			SPAN_NOTICE("[M == user ? "You begin [cutting] your [hair]" : "[user] begins [cutting] your [hair]"][length(conditions) > 0 ? ", despite being [english_list(conditions)]" : " [pick(flavor)]"]."),\
+			SPAN_NOTICE("[M == user ? "You begin [cutting] your [hair]" : "You begin [cutting] [M]'s [hair]"][length(conditions) > 0 ? ", despite being [english_list(conditions)]" : " [pick(flavor)]"]."))
+		playsound(user, src.cut_sound, 100, TRUE)
 		..()
 
 	onUpdate()
@@ -680,8 +682,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, TRUE)
 				logTheThing(LOG_COMBAT, user, "mangles (barbery failure with moderate damage) [constructTarget(M,"combat")]'s head at [log_loc(user)].")
 				M.tri_message(user, SPAN_ALERT("[user] mangles the absolute fuck out of [M]'s head!."),\
-					SPAN_ALERT("[user] mangles the absolute fuck out of your head!"),\
-					SPAN_ALERT("You mangle the absolute fuck out of [M]'s head!"))
+					SPAN_ALERT("[M == user ? "You mangle the absolute fuck out of your head! Ow" : "[user] mangles the absolute fuck out of your head"]!"),\
+					SPAN_ALERT("[M == user ? "You mangle the absolute fuck out of your head! Ow" : "You mangle the absolute fuck out of [M]'s head"]!"))
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/none
@@ -692,8 +694,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				logTheThing(LOG_COMBAT, user, "cuts all of [constructTarget(M,"combat")]'s hair off (barbery failure with small damage) at [log_loc(user)].")
 				M.tri_message(user, SPAN_ALERT("[user] [cuts] all of [M]'s hair off!."),\
-					SPAN_ALERT("[user] [cuts] all of your hair off!"),\
-					SPAN_ALERT("You [cut] all of [M]'s hair off!"))
+					SPAN_ALERT("[M == user ? "You [cut] all of your hair off" : "[user] [cuts] all of your hair off"]!"),\
+					SPAN_ALERT("[M == user ? "You [cut] all of your hair off" : "You [cut] all of [M]'s hair off"]!"))
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
@@ -703,7 +705,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (2) // you cut their hair into something else
-				playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
+				playsound(M, src.cut_sound, 100, TRUE)
 				logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair into a random one at [log_loc(user)].")
 				var/hair_type = pick(hair_list)
 				new_style = new hair_type
@@ -714,16 +716,16 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						M.bioHolder.mobAppearance.customizations["hair_middle"].style = new_style
 					if(3)
 						M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
-				M.tri_message(user, "[user] [cuts] [M]'s hair.",\
-											SPAN_NOTICE("[user] [cuts] your hair."),\
-																					SPAN_NOTICE("You [cut] [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?"))
+				M.tri_message(user, "[user] [cuts] [M]'s [hair], but it doesn't quite look right!",\
+					SPAN_NOTICE("[M == user ? "You [cut] your [hair]" : "[user] [cuts] your [hair]"], but it doesn't quite look right!"),\
+					SPAN_NOTICE("[M == user ? "You [cut] your [hair]" : "You [cut] [M]'s [hair]"], but it doesn't quite look right!"))
 			if (3) // you did it !!
-				playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
+				playsound(M, src.cut_sound, 100, TRUE)
 				if (src.which_part == ALL_HAIR)
 					logTheThing(LOG_COMBAT, user, "cuts all of [constructTarget(M,"combat")]'s hair into a wig at [log_loc(user)].")
 					M.tri_message(user, "[user] [cuts] all of [M]'s hair off and makes it into a wig.",\
-						SPAN_NOTICE("[user] [cuts] all your hair off and makes it into a wig."),\
-						SPAN_NOTICE("You [cut] all of [M]'s hair off and make it into a wig."))
+						SPAN_NOTICE("[M == user ? "You [cut] all your hair off and make it into a wig" : "[user] [cuts] all your hair off and makes it into a wig"]."),\
+						SPAN_NOTICE("[M == user ? "You [cut] all your hair off and make it into a wig" : "You [cut] all of [M]'s hair off and makes it into a wig"]."))
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
 					M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/none
@@ -732,8 +734,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				else
 					logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
 					M.tri_message(user, "[user] [cuts] [M]'s hair.",\
-						SPAN_NOTICE("[user] [cuts] your hair."),\
-						SPAN_NOTICE("You [cut] [M]'s hair."))
+						SPAN_NOTICE("[M == user ? "You [cut] your [hair]" : "[user] [cuts] your [hair]"]."),\
+						SPAN_NOTICE("[M == user ? "You [cut] your [hair]" : "You [cut] [M]'s [hair]"]."))
 					switch(which_part)
 						if (BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customizations["hair_bottom"].style = new_style
@@ -742,7 +744,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						if (TOP_DETAIL)
 							M.bioHolder.mobAppearance.customizations["hair_top"].style = new_style
 
-		M.set_clothing_icon_dirty() // why the fuck is hair updated in clothing
 		M.update_colorful_parts()
 		..()
 
@@ -751,10 +752,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		..()
 
 /datum/action/bar/barber/haircut
-	cut = "cut"
-	cuts = "cuts"
-	cutting = "cutting"
-
 	getHairStyles()
 		return get_available_custom_style_types(filter_type=/datum/customization_style/hair)
 
@@ -762,6 +759,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cut = "shave"
 	cuts = "shaves"
 	cutting = "shaving"
+	hair = "face"
+	cut_sound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 
 	getHairStyles()
 		return get_available_custom_style_types(filter_type=/datum/customization_style/beard) \
