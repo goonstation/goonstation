@@ -20,7 +20,7 @@ var
 									/obj/item/currency/spacecash = 300,
 									/obj/item/paper = 300,
 									/obj/decal/cleanable = 800,
-									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
+									/atom/movable/light/robust_light = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
 /datum/proc/pooled_deprecated(var/pooltype)
 	SHOULD_CALL_PARENT(TRUE)
 	dispose()
