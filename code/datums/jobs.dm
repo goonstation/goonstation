@@ -1222,25 +1222,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
-/datum/job/special/space_cowboy
-	name = "Space Cowboy"
-	linkcolor = "#FF99FF"
-	limit = 0
-	wages = PAY_UNTRAINED
-	access_string = "Space Cowboy" // holy heck why does this have a unique string
-	slot_jump = list(/obj/item/clothing/under/rank/det)
-	slot_belt = list(/obj/item/gun/kinetic/single_action/colt_saa)
-	slot_head = list(/obj/item/clothing/head/cowboy)
-	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_foot = list(/obj/item/clothing/shoes/cowboy)
-	slot_poc1 = list(/obj/item/cigpacket/random)
-	slot_poc2 = list(/obj/item/device/light/zippo/gold)
-	slot_lhan = list(/obj/item/whip)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	// missing wiki link
-
-
 /datum/job/special/stowaway
 	name = "Stowaway"
 	limit = 2
@@ -2120,6 +2101,98 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.bioHolder.AddEffect("pickle", magical=TRUE)
 		M.blood_id = "juice_pickle"
 
+/datum/job/special/halloween/cowboy
+	name = "Space Cowboy"
+	limit = 1
+	wages = PAY_UNTRAINED
+	receives_badge = TRUE
+	change_name_on_spawn = TRUE
+	access_string = "Rancher" // it didnt actually have a unique string
+	slot_jump = list(/obj/item/clothing/under/rank/det)
+	slot_suit = list(/obj/item/clothing/suit/poncho)
+	slot_belt = list(/obj/item/storage/belt/rancher/cowboy)
+	slot_head = list(/obj/item/clothing/head/cowboy)
+	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_foot = list(/obj/item/clothing/shoes/cowboy)
+	slot_card = /obj/item/card/id/civilian
+	slot_poc1 = list(/obj/item/device/pda2/botanist)
+	slot_poc2 = list(/obj/item/device/light/zippo/gold)
+	slot_back = list(/obj/item/storage/backpack/satchel/brown)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("cow", magical=1)
+
+/datum/job/special/halloween/wizard
+	name = "Discount Wizard"
+	limit = 1
+	wages = PAY_UNTRAINED
+	change_name_on_spawn = TRUE
+	access_string = "Staff Assistant"
+	slot_jump = list(/obj/item/clothing/under/shorts/black)
+	slot_suit = list(/obj/item/clothing/suit/bathrobe)
+	slot_head = list(/obj/item/clothing/head/apprentice)
+	slot_foot = list(/obj/item/clothing/shoes/fuzzy)
+	items_in_backpack = list(/obj/item/mop)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("melt", magical=1)
+
+/datum/job/special/halloween/spy
+	name = "Super Spy"
+	wages = PAY_UNTRAINED
+	limit = 1
+	access_string = "Staff Assistant"
+	slot_jump = list(/obj/item/clothing/under/suit/black)
+	slot_eyes = list(/obj/item/clothing/glasses/eyepatch)
+	slot_suit = list(/obj/item/clothing/suit/armor/sneaking_suit/costume)
+	items_in_backpack = list(/obj/item/clothing/suit/cardboard_box )
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("chameleon", magical=1)
+
+/datum/job/special/halloween/ntjani
+	linkcolor = "#3348ff"
+	name = "Nanotrasen Sanitation Operative"
+	limit = 1
+	wages = PAY_IMPORTANT
+	requires_whitelist = TRUE
+	allow_traitors = FALSE
+	allow_spy_theft = FALSE
+	can_join_gangs = FALSE
+	cant_spawn_as_rev = TRUE
+	receives_badge = TRUE
+	receives_implants = list(/obj/item/implant/health)
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/storage/fanny/janny/tactical)
+	slot_jump = list(/obj/item/clothing/under/misc/turds)
+	slot_head = list(/obj/item/clothing/head/janiberet)
+	slot_foot = list(/obj/item/clothing/shoes/galoshes)
+	slot_glov = list(/obj/item/clothing/gloves/long)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/sanitation)
+	slot_rhan = list(/obj/item/mop)
+	slot_card = /obj/item/card/id/nt_specialist
+	slot_poc1 = list(/obj/item/device/pda2/janitor)
+	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
+	items_in_backpack = list(/obj/item/clothing/suit/space/ntso,
+							/obj/item/cloth/handkerchief/nt,
+							/obj/item/lamp_manufacturer/organic)
+	faction = list(FACTION_NANOTRASEN)
+	New()
+		..()
+		src.access = get_access("Janitor") + list(access_heads)
+		return
+
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
@@ -2181,7 +2254,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
 		C.flags = null
 
-// end halloween jobs
+// end halloween jobs1
 #endif
 
 /datum/job/special/syndicate_weak

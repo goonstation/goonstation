@@ -661,6 +661,16 @@
 	)
 	slots = 5
 
+/obj/item/storage/fanny/janny/tactical
+	name = "tactical janny pack"
+
+	spawn_contents = list(
+		/obj/item/cloth/towel/janitor,
+		/obj/item/handheld_vacuum,
+		/obj/item/sponge,
+		/obj/item/spraybottle/cleaner/tsunami,
+		/obj/item/reagent_containers/glass/bucket
+	)
 /* -------------------- Belts -------------------- */
 
 /obj/item/storage/belt
@@ -864,6 +874,16 @@
 		/obj/item/chicken_carrier,
 		/obj/item/chicken_carrier,
 		/obj/item/fishing_rod/basic)
+
+	cowboy
+		name = "cowboy belt"
+		desc = "Yeehaw pardner."
+		icon_state = "hunterbelt"
+		item_state = "hunter"
+		spawn_contents = list(/obj/item/gun/kinetic/foamdartgun,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
