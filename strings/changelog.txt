@@ -1,5 +1,9 @@
 
 (t)thu sep 12 24
+(u)JORJ949
+(p)20658
+(e)🆕🤖🐣|C-Feature, A-Silicons, A-Respawning
+(*)AIs now have a "Go Offline" command to replace themselves with a latejoin AI, this is also announced to the crew.
 (u)TealSeer
 (p)20205
 (e)⛔🎭|C-Removal, A-RP
