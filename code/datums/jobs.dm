@@ -2152,6 +2152,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_eyes = list(/obj/item/clothing/glasses/eyepatch)
 	slot_suit = list(/obj/item/clothing/suit/armor/sneaking_suit/costume)
+	slot_foot = list(/obj/item/clothing/shoes/swat)
 	items_in_backpack = list(/obj/item/clothing/suit/cardboard_box )
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2254,7 +2255,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
 		C.flags = null
 
-// end halloween jobs1
+// end halloween jobs
 #endif
 
 /datum/job/special/syndicate_weak
