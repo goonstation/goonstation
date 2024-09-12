@@ -1,5 +1,9 @@
 
 (t)thu sep 12 24
+(u)JORJ949
+(p)20674
+(e)🪲💡|C-Bug, A-Station-Systems
+(*)The automated alert for the engine not being setup has been fixed.
 (u)LeahTheTech
 (p)20661
 (e)🗺|A-Mapping
