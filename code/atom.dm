@@ -521,8 +521,6 @@ TYPEINFO(/atom/movable)
 		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
-	if(istype(src, /atom/movable/light)) //they are completely intangible soo
-		return
 	if (isturf(src.loc))
 		var/turf/T = src.loc
 		if(src.opacity)

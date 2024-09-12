@@ -312,7 +312,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
-				message_ghosts("<b>[src]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
+				message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)
