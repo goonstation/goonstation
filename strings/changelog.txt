@@ -1,5 +1,9 @@
 
 (t)thu sep 12 24
+(u)LeahTheTech
+(p)20661
+(e)🗺|A-Mapping
+(*)The Oshan belt carousel stations have been improved and a chute has been added from cargo onto the belt.
 (u)JORJ949
 (p)20658
 (e)🆕🤖🐣|C-Feature, A-Silicons, A-Respawning
