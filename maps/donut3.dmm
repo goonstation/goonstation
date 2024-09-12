@@ -17376,7 +17376,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor/plating/jen,
 /area/station/security/beepsky)
 "fhR" = (
@@ -22535,7 +22535,7 @@
 "gKA" = (
 /obj/disposalpipe/segment/mail,
 /obj/stool/chair,
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "gKJ" = (
@@ -49027,7 +49027,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "oPb" = (
@@ -69703,7 +69703,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -12

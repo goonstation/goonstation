@@ -1715,7 +1715,7 @@
 	item_requirements = list("metal_dense" = 30,
 							 "conductive_high" = 20,
 							 "energy" = 20)
-	item_outputs = list(/obj/machinery/bot/secbot)
+	item_outputs = list(/mob/living/critter/robotic/securitron)
 	create = 1
 	time = 120 SECONDS
 	category = "Machinery"

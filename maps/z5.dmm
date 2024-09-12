@@ -4096,7 +4096,7 @@
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "Jm" = (
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	control_freq = 1441;
 	desc = "A tattered and rusted security bot,  powered only by nicotine and fury at those who abandoned him here.";
 	emagged = 2;

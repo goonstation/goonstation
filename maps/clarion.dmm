@@ -27284,7 +27284,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor/black,
 /area/station/security/beepsky)
 "mre" = (
@@ -34507,7 +34507,7 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 1
 	},
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	name = "Doctor Batonsly"
 	},
 /obj/stool/chair/blue{

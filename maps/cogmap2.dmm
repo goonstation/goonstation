@@ -15730,7 +15730,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/unsimulated/floor/shuttle/green{
 	dir = 4
 	},
@@ -20926,7 +20926,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "blY" = (
@@ -52099,7 +52099,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "dcE" = (

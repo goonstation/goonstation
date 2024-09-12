@@ -475,11 +475,11 @@
 				user.u_equip(src)
 				src.set_loc(user) //while spell effects resolve, i temporarily stick them inside the player and delete them later in case of lag or need for the item to stick around longer (i.e. hat trick)
 				user.visible_message(SPAN_ALERT("<b>[user.name] opens a portal to hell! Oh GOD! SOMETHING IS COMING! ITS! a securitron?</b>"),SPAN_ALERT("<b>The scroll burns in your hands and a portal to the depths of insanity manifests itself. A Lesser Demon is brought forth from hell.</b>"))
-				var/obj/machinery/bot/secbot/bot = new /obj/machinery/bot/secbot
-				bot.name = "Lesser Demon"
-				bot.desc = "If they weren't demonic enough already..."
-				bot.hat = "that"
-				bot.set_loc(get_turf(user))
+				var/mob/living/critter/robotic/securitron/secbot = new /mob/living/critter/robotic/securitron
+				secbot.real_name = "Lesser Demon"
+				secbot.name = secbot.real_name
+				secbot.desc = "If they weren't demonic enough already..."
+				secbot.set_loc(get_turf(user))
 			if("presto")
 				if(src.used)
 					return

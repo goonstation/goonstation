@@ -17709,7 +17709,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "oXp" = (

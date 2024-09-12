@@ -56751,7 +56751,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor{
 	desc = "";
 	dir = 8;

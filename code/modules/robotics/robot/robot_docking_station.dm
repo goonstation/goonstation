@@ -320,8 +320,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 					gibs(src.loc, null, bdna, btype)
 					if (isnpcmonkey(H))
 						H.ghostize()
-						var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,
-						/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,
+						var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/medbot,
+						/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,
 						/obj/machinery/bot/floorbot)
 						var/obj/machinery/bot/bot = new robopath (src.loc)
 						bot.emag_act()

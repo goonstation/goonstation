@@ -2186,7 +2186,7 @@
 						dab_id.dab_count++
 						dab_id.tooltip_rebuild = 1
 					src.add_karma(-4)
-					if(!dab_id && locate(/obj/machinery/bot/secbot/beepsky) in view(7, get_turf(src)))
+					if(!dab_id && locate(/mob/living/critter/robotic/securitron) in view(7, get_turf(src)))
 						var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
 						if(sec_record && sec_record["criminal"] != ARREST_STATE_ARREST)
 							sec_record["criminal"] = ARREST_STATE_ARREST

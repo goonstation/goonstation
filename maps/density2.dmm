@@ -1532,7 +1532,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -7800,7 +7800,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;

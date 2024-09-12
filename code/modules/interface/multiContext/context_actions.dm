@@ -2384,6 +2384,13 @@
 		base_icon_state = "secbot_detain_"
 		setting = "report_arrests"
 
+	patrolling
+		name = "Patrol"
+		desc = "Toggle patrolling"
+		icon_state = "secbot_detain_off"
+		base_icon_state = "secbot_detain_"
+		setting = "patrolling"
+
 
 /datum/contextAction/speech_pro
 	icon = 'icons/ui/context16x16.dmi'

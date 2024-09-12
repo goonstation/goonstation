@@ -47,6 +47,11 @@
 			src.holder.interrupt_to_task(src.combat_subtask)
 			return
 
+	if(istype(C, /mob/living/critter/robotic/securitron))
+		var/mob/living/critter/robotic/securitron/securitron_owner = C
+		if(!securitron_owner.patrolling)
+			return
+
 	if(src.holder.target) // MOVE TASK
 		// make sure we both set our target and move to our target correctly
 		if(src.move_subtask)
@@ -92,6 +97,7 @@
 
 /datum/aiTask/patrol/packet_based
 	var/net_id
+	var/control_freq = FREQ_BOT_CONTROL
 	var/next_patrol_id
 	var/atom/nearest_beacon
 	var/nearest_beacon_id
@@ -105,7 +111,7 @@
 
 	src.holder.owner.AddComponent(
 		/datum/component/packet_connected/radio, \
-		"ai_beacon",\
+		"nav_beacon",\
 		FREQ_NAVBEACON, \
 		src.net_id, \
 		null, \
@@ -113,6 +119,22 @@
 		null, \
 		FALSE \
 	)
+
+	if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+		var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
+		src.control_freq = securitron_owner.control_freq
+
+	src.holder.owner.AddComponent(
+		/datum/component/packet_connected/radio, \
+		"bot_control",\
+		src.control_freq, \
+		src.net_id, \
+		null, \
+		FALSE, \
+		null, \
+		FALSE \
+	)
+
 	RegisterSignal(src.holder.owner, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(ai_receive_signal))
 
 	var/datum/aiTask/succeedable/patrol_target_locate/packet_based/packet_targeting_subtask = src.targeting_subtask
@@ -130,22 +152,24 @@
 	if(!src.holder.enabled) // this ai is off
 		return
 
+	if(!signal.data["command"])
+		return FALSE
+
+	if(connection_id != "nav_beacon") // its pda stuff
+		return TRUE
+
 	var/mob/living/critter/C = src.holder.owner
 	if(isliving(src.combat_subtask.fixed_target) && C.valid_target(src.combat_subtask.fixed_target)) // we are in a chase or something
-		return
+		return FALSE
 
-	if(connection_id == "ai_beacon")
-		src.nav_beacon_signal(signal)
-
-/datum/aiTask/patrol/packet_based/proc/nav_beacon_signal(datum/signal/signal)
 	if(signal.data["address_1"] != src.net_id) // commanding the bot requires directly addressing it
-		return
+		return FALSE
 
 	if(signal.data["auth_code"] != netpass_security) // commanding the bot requires netpass_security
-		return
+		return FALSE
 
-	if(!signal.data["beacon"] || !signal.data["patrol"] || !signal.data["next_patrol"])
-		return
+	if(signal.data["command"] == "patrol" && (!signal.data["beacon"] || !signal.data["patrol"] || !signal.data["next_patrol"]))
+		return FALSE
 
 	if(!src.next_patrol_id) // we have not yet found a beacon
 		var/dist = GET_DIST(get_turf(src.holder.owner),get_turf(signal.source))
@@ -154,8 +178,8 @@
 				src.nearest_beacon = signal.source
 				src.nearest_beacon_id = signal.data["beacon"]
 				src.nearest_dist = dist
-			return
-		else // start the 1 second countdown to assigning best found beacon as target
+			return FALSE
+		else // start the 0.3 second countdown to assigning best found beacon as target
 			src.nearest_beacon = signal.source
 			src.nearest_beacon_id = signal.data["beacon"]
 			src.nearest_dist = dist
@@ -170,6 +194,8 @@
 		src.holder.target = signal.source
 		src.next_patrol_id = signal.data["next_patrol"]
 
+	return FALSE
+
 /datum/aiTask/succeedable/patrol_target_locate/packet_based
 	var/datum/aiTask/patrol/packet_based/packet_holder
 
@@ -183,9 +209,8 @@
 			signal.data["findbeacon"] = src.packet_holder.next_patrol_id
 		else
 			signal.data["findbeacon"] = "patrol"
-		SEND_SIGNAL(src.holder.owner, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "ai_beacon")
+		SEND_SIGNAL(src.holder.owner, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "nav_beacon")
 
-/// and lastly, the actual securitron attack task
 /datum/aiHolder/patroller/packet_based/securitron
 	default_task_type = /datum/aiTask/patrol/packet_based/securitron
 	var/is_detaining = FALSE
@@ -193,6 +218,86 @@
 /datum/aiTask/patrol/packet_based/securitron
 	combat_subtask_type = /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron
 
+/datum/aiTask/patrol/packet_based/securitron/proc/send_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src.holder.owner
+	signal.data["sender"] = src.net_id
+	signal.data["type"] = "secbot"
+	signal.data["name"] = src.holder.owner.name
+	signal.data["loca"] = get_area(src.holder.owner)
+	signal.data["mode"] = 1
+	SEND_SIGNAL(src.holder.owner, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "bot_control")
+
+/datum/aiTask/patrol/packet_based/securitron/ai_receive_signal(mob/attached, datum/signal/signal, transmission_method, range, connection_id)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	if(signal.data["command"] == "bot_status")
+		src.send_status()
+		return
+
+	if((signal.data["command"] == "guard" || signal.data["command"] == "lockdown") && signal.data["target"])
+		var/area/potential_area = signal.data["target"]
+		if(!istype(potential_area) || potential_area.name == "Space" || potential_area.name == "Ocean") // we are NOT Podsky
+			return FALSE
+		var/datum/aiTask/succeedable/patrol_target_locate/guard/guard_subtask = src.holder.get_instance(/datum/aiTask/succeedable/patrol_target_locate/guard, list(src.holder, src))
+		guard_subtask.guard_area = potential_area
+		src.targeting_subtask = guard_subtask
+		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
+			securitron_owner.patrolling = TRUE
+			if(signal.data["command"] == "lockdown")
+				securitron_owner.lockdown = TRUE
+			else
+				securitron_owner.lockdown = FALSE
+		return
+
+	if(signal.data["command"] == "summon" && signal.data["target"])
+		var/turf/potential_turf = signal.data["target"]
+		if(!istype(potential_turf))
+			return FALSE
+		src.holder.stop_move()
+		src.holder.target = null
+		src.targeting_subtask = src.holder.get_instance(src.targeting_subtask_type, list(src.holder, src))
+		src.holder.target = potential_turf
+		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
+			securitron_owner.patrolling = TRUE
+			securitron_owner.lockdown = FALSE
+		return
+
+	if(signal.data["command"] == "stop")
+		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
+			securitron_owner.patrolling = FALSE
+			src.holder.stop_move()
+			securitron_owner.lockdown = FALSE
+		src.holder.target = null
+		src.targeting_subtask = src.holder.get_instance(src.targeting_subtask_type, list(src.holder, src))
+		return
+
+	if(signal.data["command"] == "go")
+		if(istype(src.holder.owner, /mob/living/critter/robotic/securitron))
+			var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
+			securitron_owner.patrolling = TRUE
+			securitron_owner.lockdown = FALSE
+		src.holder.target = null
+		src.targeting_subtask = src.holder.get_instance(src.targeting_subtask_type, list(src.holder, src))
+		return
+
+/datum/aiTask/succeedable/patrol_target_locate/guard
+	var/area/guard_area
+
+/datum/aiTask/succeedable/patrol_target_locate/guard/on_tick()
+	if(!istype(src.guard_area) || src.guard_area.name == "Space" || src.guard_area.name == "Ocean") // we are STILL not Podsky
+		src.guard_area = null
+	var/list/turf/turfs = get_area_turfs(src.guard_area, 1)
+	if(length(turfs) >= 1)
+		src.holder.target = pick(turfs)
+	. = ..()
+
+/// and lastly, the actual securitron attack task
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron
 	name = "apprehending perp"
 	max_dist = 40

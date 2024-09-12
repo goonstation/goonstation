@@ -8473,7 +8473,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "aSQ" = (
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -14531,7 +14531,7 @@
 /area/station/solar/aisat)
 "bKe" = (
 /obj/disposalpipe/junction/right/west,
-/obj/machinery/bot/secbot/autopatrol,
+/mob/living/critter/robotic/securitron/autopatrol,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "bKg" = (
@@ -18979,7 +18979,7 @@
 	name = "Station Intercom (Medical)"
 	},
 /obj/stool/bench/blue/auto,
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	name = "Doctor Batonsly"
 	},
 /turf/simulated/floor/white,
@@ -28425,7 +28425,7 @@
 /area/station/science/artifact)
 "oLB" = (
 /obj/stool/bench/red/auto,
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "oLO" = (
@@ -34948,7 +34948,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/bot/secbot/autopatrol,
+/mob/living/critter/robotic/securitron/autopatrol,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "tIo" = (

@@ -11469,7 +11469,7 @@
 "aPe" = (
 /obj/item/cigbutt,
 /obj/cable,
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
@@ -22432,7 +22432,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "bBV" = (
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -34343,7 +34343,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor/greenwhite/other{
 	dir = 6
 	},
@@ -35536,7 +35536,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	name = "Doctor Batonsly"
 	},
 /turf/simulated/floor/bluewhite,

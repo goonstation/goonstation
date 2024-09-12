@@ -172,8 +172,9 @@ TYPEINFO(/obj/machinery/navbeacon)
 			signal.data[key] = codes[key]
 
 		if(signal.data["patrol"])
+			signal.data["command"] = "patrol"
 			signal.encryption = "ERR_12845_NT_SECURE_PACKET:"
-			signal.encryption_obfuscation = 90
+			signal.encryption_obfuscation = 99
 			signal.data["auth_code"] = netpass_security
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)

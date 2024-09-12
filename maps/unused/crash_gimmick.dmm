@@ -26595,7 +26595,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"

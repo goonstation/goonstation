@@ -1082,19 +1082,19 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/rocket.ogg'
 	impact_image_state = "secbot1-wild"
 	implanted = null
-	typetospawn = /obj/machinery/bot/secbot
+	typetospawn = /mob/living/critter/robotic/securitron
 
 	on_hit(atom/hit)
-		var/obj/machinery/bot/secbot/beepsky = ..()
+		var/mob/living/critter/robotic/securitron/beepsky = ..()
 		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
 			hitguy.do_disorient(15, knockdown = 20 * 10, disorient = 80)
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
-				beepsky.target = hitguy
+				EXTEND_COOLDOWN(hitguy, "MARKED_FOR_SECURITRON_ARREST", 100 SECONDS)
 
 	on_end(obj/projectile/O)
-		var/obj/machinery/bot/secbot/beepsky = ..()
+		var/mob/living/critter/robotic/securitron/beepsky = ..()
 		if(istype(beepsky))
 			beepsky.emagged = 1
 

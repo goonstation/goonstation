@@ -7569,7 +7569,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aNi" = (
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
@@ -26430,7 +26430,7 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "ivc" = (

@@ -146,7 +146,7 @@
 	name = "GLOMAR Salvager"
 	})
 "u" = (
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	control_freq = 0
 	},
 /obj/machinery/conveyor/EW{
@@ -165,7 +165,7 @@
 	name = "GLOMAR Salvager"
 	})
 "w" = (
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	control_freq = 0
 	},
 /obj/disposalpipe/segment,
