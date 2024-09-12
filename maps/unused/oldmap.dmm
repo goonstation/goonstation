@@ -7234,7 +7234,6 @@
 	icon_state = "tabledir";
 	dir = 1
 	},
-/obj/item/secbot_assembly,
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor,
 /area/security/main)

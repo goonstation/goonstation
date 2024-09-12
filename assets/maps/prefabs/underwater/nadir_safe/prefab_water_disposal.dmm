@@ -96,7 +96,6 @@
 	name = "GLOMAR Salvager"
 	})
 "o" = (
-/obj/item/secbot_assembly,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{

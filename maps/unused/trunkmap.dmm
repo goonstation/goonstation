@@ -6100,7 +6100,6 @@
 /area/station/security/main)
 "atO" = (
 /obj/table/auto,
-/obj/item/secbot_assembly,
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = 6
 	},
