@@ -2380,15 +2380,15 @@
 	report_arrests
 		name = "Report Arrests"
 		desc = "Toggle reporting arrests"
-		icon_state = "secbot_detain_off"
-		base_icon_state = "secbot_detain_"
+		icon_state = "secbot_radio_off"
+		base_icon_state = "secbot_radio_"
 		setting = "report_arrests"
 
 	patrolling
 		name = "Patrol"
 		desc = "Toggle patrolling"
-		icon_state = "secbot_detain_off"
-		base_icon_state = "secbot_detain_"
+		icon_state = "secbot_patrol_off"
+		base_icon_state = "secbot_patrol_"
 		setting = "patrolling"
 
 
