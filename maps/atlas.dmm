@@ -16717,8 +16717,12 @@
 	dir = 6
 	},
 /obj/cable/yellow{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
 /turf/simulated/floor/airless/plating/catwalk{
 	icon_state = "catwalk_cross"
 	},
@@ -22590,9 +22594,6 @@
 	},
 /obj/grille/catwalk{
 	dir = 4
-	},
-/obj/cable/yellow{
-	icon_state = "1-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -68050,7 +68051,7 @@ aaa
 aaa
 aaa
 aaa
-aZm
+aaa
 xDr
 ehK
 ehK
@@ -68654,7 +68655,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aZm
 nyB
 aaa
 aaa
