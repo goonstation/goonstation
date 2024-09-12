@@ -4100,7 +4100,8 @@
 	control_freq = 1441;
 	desc = "A tattered and rusted security bot,  powered only by nicotine and fury at those who abandoned him here.";
 	emagged = 2;
-	name = "Mr. Beepsky"
+	name = "Mr. Beepsky";
+	no_camera = 1
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)

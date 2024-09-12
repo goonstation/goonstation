@@ -124,16 +124,17 @@
 		var/mob/living/critter/robotic/securitron/securitron_owner = src.holder.owner
 		src.control_freq = securitron_owner.control_freq
 
-	src.holder.owner.AddComponent(
-		/datum/component/packet_connected/radio, \
-		"bot_control",\
-		src.control_freq, \
-		src.net_id, \
-		null, \
-		FALSE, \
-		null, \
-		FALSE \
-	)
+	if(src.control_freq)
+		src.holder.owner.AddComponent(
+			/datum/component/packet_connected/radio, \
+			"bot_control",\
+			src.control_freq, \
+			src.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
 
 	RegisterSignal(src.holder.owner, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(ai_receive_signal))
 
