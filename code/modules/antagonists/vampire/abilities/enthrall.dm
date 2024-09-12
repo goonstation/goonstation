@@ -141,8 +141,6 @@
 			//we also restore their real actual blood pressure a bit, to allow vampires to save their thralls who are drained
 			target.blood_volume = min(target.blood_volume + 200, initial(target.blood_volume))
 
-			H.blood_tracking_output(cost)
-
 			H.deductPoints(cost)
 
 			boutput(M, SPAN_NOTICE("You donate 200 blood points to [target]."))

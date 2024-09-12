@@ -1,9 +1,7 @@
+ABSTRACT_TYPE(/datum/bioEffect/power)
 /datum/bioEffect/power
-	name = "Cryokinesis"
-	desc = "Allows the subject to control ice and cold."
-	id = "cryokinesis"
-	msgGain = "You notice a strange cold tingle in your fingertips."
-	msgLose = "Your fingers feel warmer."
+	name = "parent_power"
+	id = "power_parent_do_not_use"
 	effectType = EFFECT_TYPE_POWER
 	cooldown = 600
 	probability = 66
@@ -11,7 +9,7 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
+	var/ability_path = null
 	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
@@ -54,6 +52,20 @@
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()
+
+/datum/bioEffect/power/cryokinesis
+	name = "Cryokinesis"
+	desc = "Allows the subject to control ice and cold."
+	id = "cryokinesis"
+	msgGain = "You notice a strange cold tingle in your fingertips."
+	msgLose = "Your fingers feel warmer."
+	effectType = EFFECT_TYPE_POWER
+	cooldown = 600
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/cryokinesis
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -2306,6 +2318,7 @@
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"
 

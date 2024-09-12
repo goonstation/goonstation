@@ -5936,9 +5936,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 8;
@@ -5964,9 +5962,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "bHI" = (
@@ -8828,9 +8824,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 8;
@@ -11118,9 +11112,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -14038,9 +14030,7 @@
 /area/station/security/detectives_office)
 "edy" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
 	icon_state = "tile1"
@@ -14788,9 +14778,7 @@
 	tag = ""
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
@@ -18701,9 +18689,7 @@
 	pixel_y = 34
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/brig/south_side)
 "fCs" = (
@@ -24148,9 +24134,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 5;
@@ -29978,9 +29962,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 4;
@@ -32860,9 +32842,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "jUb" = (
@@ -35341,9 +35321,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 4;
@@ -43938,9 +43916,7 @@
 	icon_state = "tile1"
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -44703,9 +44679,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/check{
 	color = "#AB8CB0";
 	dir = 9;
@@ -54362,9 +54336,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
@@ -77067,11 +77039,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24;
-	pixel_y = 9
-	},
+/obj/machinery/firealarm/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
