@@ -439,7 +439,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	ai_type = /datum/aiHolder/patroller/packet_based
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
-	var/chase_speed_bonus = 1
+	var/chase_speed_bonus = 1.1
 	var/obj/machinery/camera/camera = null
 	var/initial_limb = /obj/item/baton/mobsecbot
 	var/drop_initial = FALSE
@@ -735,16 +735,18 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 			return FALSE // already cuffed
 	else if (is_incapacitated(C))
 		return FALSE // already stunned
-	var/threat_level = assess_perp(C)
-	if (!GET_COOLDOWN(C, "MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
-		return FALSE // not a threat
 	if (GET_COOLDOWN(C, "ARRESTED_BY_SECURITRON_\ref[src]"))
 		return FALSE // we JUST arrested this jerk
 	. = ..()
-	if (.)
-		if (!ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown) && threat_level >= 4)
-			src.accuse_perp(C, threat_level)
-			src.siren()
+	if (!.)
+		return FALSE
+	var/threat_level = assess_perp(C)
+	if (!GET_COOLDOWN(C, "MARKED_FOR_SECURITRON_ARREST")) // set in assess_perp
+		return FALSE // not a threat
+	if (threat_level >= 4 && !ON_COOLDOWN(src, "SECURITRON_EMOTE", src.emote_cooldown))
+		src.accuse_perp(C, threat_level)
+		src.siren()
+	return TRUE
 
 //If the security records say to arrest them, arrest them
 //Or if they have weapons and aren't security, arrest them.
@@ -787,14 +789,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 
 	// we have grounds to make an arrest, don't bother with further analysis
 	if(threatcount >= 4)
-		EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", threatcount * 2.5 SECONDS)
+		EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", threatcount * 3 SECONDS)
 		return threatcount
 
 	// note - this does allow flagging 'fire elemental' and such for arrest. probably fine
 	if (src.check_records) // bot is set to actively compare security records
 		for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 			if(R["criminal"] == "*Arrest*")
-				EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", 1 SECOND) // clearing a record stops securitrons quickly
+				EXTEND_COOLDOWN(perp, "MARKED_FOR_SECURITRON_ARREST", 5 SECONDS) // clearing a record stops securitrons quickly
 				threatcount = 7
 				break
 
@@ -1061,5 +1063,4 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	desc = "It's Officer Beepsky! He's a loose cannon but he gets the job done."
 	initial_limb = /obj/item/baton/mobsecbot/beepsky
 	drop_initial = TRUE
-	base_move_delay = 3
-	base_walk_delay = 4
+	chase_speed_bonus = 1.5

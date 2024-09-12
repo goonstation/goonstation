@@ -1,14 +1,17 @@
+/datum/aiHolder/patroller
+	var/datum/aiTask/default_task_type = /datum/aiTask/patrol
+
 /datum/aiHolder/patroller/New()
 	..()
-	default_task = get_instance(/datum/aiTask/patrol, list(src))
+	default_task = get_instance(src.default_task_type, list(src))
 
 /// move between targets found with targeting_instance, interrupting to combat_interrupt if seek_target on owner finds a combat target
 /datum/aiTask/patrol
 	name = "patrolling"
-	distance_from_target = 1
+	distance_from_target = 0
 	max_dist = 7
 	var/targeting_instance_type = /datum/aiTask/succeedable/patrol_target_locate/global_cannabis
-	var/combat_interrupt_type = /datum/aiTask/sequence/goalbased/critter/attack
+	var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/combat_subtask
 	var/datum/aiTask/succeedable/move/move_subtask
 
 /datum/aiTask/patrol/New(parentHolder, transTask)
@@ -16,23 +19,29 @@
 	src.move_subtask = src.holder.get_instance(/datum/aiTask/succeedable/move, list(holder))
 	if(istype(src.move_subtask))
 		src.move_subtask.max_path_dist = 150
+	src.combat_subtask = src.holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target, list(src.holder, src, null))
 
 /datum/aiTask/patrol/on_tick()
 	if(GET_COOLDOWN(src.holder.owner, "HALT_FOR_INTERACTION"))
 		return
 
-	var/list/mob/living/combat_targets
-	if(ismobcritter(src.holder.owner)) // check for targets
-		var/mob/living/critter/C = src.holder.owner
-		combat_targets = C.seek_target(src.max_dist)
+	if(!ismobcritter(src.holder.owner))
+		return
 
-	if(length(combat_targets) >= 1) // interrupt into combat_interrupt_type
-		var/mob/living/combat_target = src.get_best_target(combat_targets)
-		if(combat_target)
-			var/datum/aiTask/sequence/goalbased/combat_instance = src.holder.get_instance(src.combat_interrupt_type, list(src.holder, src))
-			if(combat_instance.precondition())
-				src.holder.stop_move()
-				src.holder.interrupt_to_task(combat_instance)
+	var/mob/living/critter/C = src.holder.owner
+	var/mob/living/combat_target
+	if(src.holder.target && isliving(src.holder.target) && C.valid_target(src.holder.target))
+		combat_target = src.holder.target
+	else
+		var/list/mob/living/potential_targets = C.seek_target(src.max_dist)
+		if(length(potential_targets) >= 1)
+			combat_target = src.get_best_target(potential_targets)
+
+	if(combat_target) // interrupt into combat_interrupt_type
+		if(src.combat_subtask.precondition())
+			src.holder.stop_move()
+			src.combat_subtask.fixed_target = combat_target
+			src.holder.interrupt_to_task(src.combat_subtask)
 			return
 
 	if(src.holder.target) // MOVE TASK
@@ -86,11 +95,10 @@
 	var/atom/nearest_beacon
 	var/nearest_beacon_id
 	var/nearest_dist
+	default_task_type = /datum/aiTask/patrol/packet_based
 
 /datum/aiHolder/patroller/packet_based/New()
 	. = ..()
-
-	default_task = get_instance(/datum/aiTask/patrol/packet_based, list(src))
 
 	src.net_id = generate_net_id(src.owner)
 
