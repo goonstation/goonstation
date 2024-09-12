@@ -1650,7 +1650,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\robotics\bot\medbot.dm"
 #include "code\modules\robotics\bot\mining.dm"
 #include "code\modules\robotics\bot\mulebot.dm"
-#include "code\modules\robotics\bot\secbot.dm"
 #include "code\modules\robotics\bot\skullbot.dm"
 #include "code\modules\robotics\robot\robot_docking_station.dm"
 #include "code\modules\robotics\robot\robot_module_rewriter.dm"
