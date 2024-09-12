@@ -62,7 +62,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 			var/obj/item/gun/sprayer/sprayer = W
 			sprayer.clogged = FALSE
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			boutput(user, SPAN_NOTICE("You clean out the clogged nozzle."))
+			boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else
@@ -1351,7 +1351,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/condiment/mayo(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet)
-					new/obj/item/reagent_containers/food/snacks/ingredient/spaghetti(src.loc)
+					new/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen(src.loc)

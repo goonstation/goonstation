@@ -108,6 +108,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			for(var/turf/T in range(src,0))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
+			message_ghosts("<b>A law rack</b> has been destroyed at [log_loc(src.loc, ghostjump=TRUE)].")
 			qdel(src)
 			return
 		var/law_update_needed = FALSE

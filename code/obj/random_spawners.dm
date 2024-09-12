@@ -2009,7 +2009,9 @@
 		max_amt2spawn = 3
 
 
-/obj/random_item_spawner/armory_breaching_supplies //random
+/obj/random_item_spawner/armory_breaching_supplies //"random"
+	name = "armory breaching supplies"
+	icon_state = "breachspawn"
 	spawn_items()
 		new /obj/rack(src.loc)
 		new /obj/item/breaching_charge{

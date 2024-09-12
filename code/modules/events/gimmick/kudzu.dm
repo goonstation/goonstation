@@ -28,6 +28,7 @@
 			boutput(user, "You plant the [src] on the [A].")
 			logTheThing(LOG_STATION, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
+			message_ghosts("<b>Kudzu</b> has been planted at [log_loc(src.loc, ghostjump=TRUE)].")
 			user.u_equip(src)
 			qdel(src)
 

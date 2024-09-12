@@ -15809,6 +15809,12 @@
 	dir = 4
 	},
 /area/station/medical/staff)
+"emH" = (
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/greenblack{
+	dir = 5
+	},
+/area/station/hallway/secondary/west)
 "emJ" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
@@ -21420,6 +21426,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/equipment)
+"fIM" = (
+/obj/disposalpipe/segment/vertical,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/greenblack{
+	dir = 4
+	},
+/area/station/hallway/secondary/west)
 "fIR" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
@@ -25208,6 +25221,12 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
+"gGI" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "gGJ" = (
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -25963,6 +25982,14 @@
 /area/station/crew_quarters/locker{
 	name = "North Dock Restroom"
 	})
+"gPJ" = (
+/obj/stool/chair/yellow,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/engineering/private)
 "gPK" = (
 /obj/machinery/vehicle/escape_pod{
 	dir = 8
@@ -26865,14 +26892,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/solar/west)
-"hcA" = (
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 16
-	},
-/turf/simulated/floor/bluewhite/corner{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "hcF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/camera{
@@ -28517,24 +28536,12 @@
 /area/station/security/brig)
 "hwh" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/small/warm/very{
 	dir = 4;
 	pixel_x = 12
@@ -29122,11 +29129,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"hEe" = (
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "hEg" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -39548,11 +39550,6 @@
 /obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
-"ktJ" = (
-/turf/simulated/floor/greenblack{
-	dir = 5
-	},
-/area/station/hallway/secondary/west)
 "ktM" = (
 /obj/machinery/sleep_console{
 	dir = 8
@@ -57239,6 +57236,16 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"paE" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor,
+/area/station/engine/engineering/private)
 "paJ" = (
 /obj/machinery/light{
 	dir = 8;
@@ -80344,9 +80351,7 @@
 /area/station/hallway/primary/west)
 "uMO" = (
 /obj/table/wood/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/head/red{
 	pixel_x = -3;
 	pixel_y = 9
@@ -81627,6 +81632,17 @@
 	dir = 4
 	},
 /area/station/science/lobby)
+"vbj" = (
+/obj/table/wood/auto,
+/obj/displaycase/captain{
+	pixel_y = 6
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/bridge/captain)
 "vbA" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -89783,17 +89799,6 @@
 /obj/item/sheet/steel/fullstack,
 /turf/simulated/floor/white/grime,
 /area/ghostdrone_factory)
-"wXS" = (
-/obj/table/wood/auto,
-/obj/displaycase/captain{
-	pixel_y = 6
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/bridge/captain)
 "wXX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -91012,6 +91017,15 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"xms" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 16
+	},
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/bluewhite/corner{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "xmy" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -127233,7 +127247,7 @@ wJq
 qVa
 sAZ
 hnN
-hnN
+fIM
 hnN
 pnG
 wXZ
@@ -127537,7 +127551,7 @@ xhT
 wII
 bhW
 tFZ
-ktJ
+emH
 lbO
 wrG
 rUj
@@ -145310,7 +145324,7 @@ sNW
 yea
 lKF
 hci
-hEe
+gGI
 qoC
 qoC
 qoC
@@ -146215,7 +146229,7 @@ tpP
 tSf
 hvM
 bcU
-hcA
+xms
 vlk
 ykP
 tXM
@@ -152304,7 +152318,7 @@ aJu
 mdZ
 jWT
 vTX
-wXS
+vbj
 gCo
 vTX
 azV
@@ -168910,7 +168924,7 @@ tcH
 arV
 oAF
 dvk
-qaR
+gPJ
 hkf
 bYJ
 xkj
@@ -170723,7 +170737,7 @@ bYJ
 mua
 awt
 oMR
-oMR
+paE
 oMR
 oMR
 sNo

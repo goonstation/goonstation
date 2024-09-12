@@ -10590,16 +10590,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
-"aJg" = (
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/purple{
-	dir = 8
-	},
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
 "aJi" = (
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
@@ -11095,12 +11085,6 @@
 /area/station/hallway/primary/east)
 "aKO" = (
 /obj/storage/closet/port_a_sci,
-/turf/simulated/floor/wood,
-/area/station/science/lobby)
-"aKP" = (
-/obj/stool/chair/office/purple{
-	dir = 4
-	},
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "aKR" = (
@@ -14564,7 +14548,8 @@
 	control_freq = 1441;
 	desc = "A tattered and rusted security bot,  powered only by nicotine and fury at those who abandoned him here.";
 	emagged = 2;
-	name = "Mr. Beepsky"
+	name = "Mr. Beepsky";
+	no_camera = 1
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
@@ -17276,15 +17261,6 @@
 "blH" = (
 /turf/simulated/floor/yellow/side,
 /area/station/storage/emergency)
-"blI" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "blK" = (
 /obj/computerframe{
 	anchored = 1;
@@ -18444,12 +18420,6 @@
 "bpT" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor,
-/area/station/engine/elect)
-"bpU" = (
-/obj/stool/chair/yellow,
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
 /area/station/engine/elect)
 "bpV" = (
 /obj/shrub{
@@ -34186,6 +34156,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/diner/dining)
+"flf" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
 "flB" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/yellow/side{
@@ -34203,15 +34180,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"fnG" = (
-/obj/stool/chair/blue{
-	dir = 8
-	},
-/obj/machinery/light/incandescent/cool,
-/turf/simulated/floor/blue/corner{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery/storage)
 "fnS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -39555,6 +39523,11 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor,
 /area/station/security/processing)
+"mXI" = (
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/blue/checker,
+/area/station/medical/medbay)
 "mXZ" = (
 /obj/item/a_gift,
 /turf/simulated/floor/plating/random,
@@ -40545,6 +40518,16 @@
 /obj/item/furniture_parts/table,
 /turf/simulated/floor/martian,
 /area/martian_trader)
+"ori" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/cool,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/blue/corner{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery/storage)
 "osv" = (
 /obj/stool/chair/blue{
 	dir = 4
@@ -42769,6 +42752,17 @@
 	name = "reinforced plating"
 	},
 /area/station/maintenance/disposal)
+"rAw" = (
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "rAZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -43234,6 +43228,16 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"szc" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "szF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/purple,
@@ -44566,6 +44570,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"uLy" = (
+/obj/item/implant/projectile/staple,
+/obj/item/clothing/head/helmet/space/fishbowl,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "uMA" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -45962,6 +45971,16 @@
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
+"wPf" = (
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/gimmick/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "wPq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
@@ -46670,6 +46689,13 @@
 "xNc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"xNO" = (
+/obj/stool/chair/office/purple{
+	dir = 4
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "xOk" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/creamer{
@@ -59833,8 +59859,8 @@ kSl
 aUm
 aUv
 aUC
-aVZ
-aUC
+uLy
+wPf
 aVZ
 aUC
 aUv
@@ -93078,7 +93104,7 @@ akR
 anm
 anY
 fha
-apN
+mXI
 ard
 gNA
 ovi
@@ -97899,7 +97925,7 @@ afq
 afq
 afq
 ajQ
-fnG
+ori
 lok
 uEW
 fQL
@@ -103094,7 +103120,7 @@ wKy
 xnV
 boF
 aeA
-bpU
+flf
 sHl
 brs
 bse
@@ -104576,10 +104602,10 @@ aHr
 aHM
 aIq
 ayO
-aJg
+rAw
 aJG
 aJG
-aKP
+xNO
 xOk
 ayO
 aet
@@ -105807,7 +105833,7 @@ aer
 bhs
 cgA
 afk
-blI
+szc
 ceB
 aAy
 boJ

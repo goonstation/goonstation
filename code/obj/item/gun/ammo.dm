@@ -347,7 +347,7 @@
 /obj/item/ammo/bullets/bullet_22
 	sname = ".22 LR"
 	name = ".22 magazine"
-	desc = "Despite being very small, these bullets are still lethal."
+	desc = "Cheap and easily mass-produced, these are a popular round for target practice, varmint-shooting and self-defense in confined spaces."
 	icon_state = "pistol_magazine"
 	amount_left = 10
 	max_amount = 10
@@ -358,7 +358,8 @@
 		ammo_type = new/datum/projectile/bullet/bullet_22/a180
 		amount_left = 177
 		max_amount = 177
-		desc = "177 rounds of .22 unceremoniously crammed into a goofy pancake magazine."
+		desc = "177 rounds of .22 fastidiously loaded into a fussy pancake magazine."
+
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."

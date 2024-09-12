@@ -3952,23 +3952,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"aCQ" = (
-/obj/landmark/pest,
-/obj/disposalpipe/segment,
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/machinery/shipalert{
-	dir = 1
-	},
-/obj/item/decoration/flower_vase{
-	pixel_y = 24
-	},
-/turf/simulated/floor/carpet{
-	dir = 8;
-	icon_state = "fblue1"
-	},
-/area/station/bridge)
 "aCR" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
@@ -9389,14 +9372,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"bkq" = (
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 8
-	},
-/area/station/science/chemistry)
 "bkr" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
@@ -16811,6 +16786,11 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southeast)
+"exV" = (
+/obj/stool/chair/office/purple,
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "eyf" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19311,14 +19291,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/main)
-"gtb" = (
-/obj/machinery/camera,
-/obj/stool/chair/comfy/blue{
-	dir = 8
-	},
-/obj/item/storage/wall/office,
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "gtj" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/computer/power_monitor/smes{
@@ -19964,6 +19936,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"gWL" = (
+/obj/machinery/camera,
+/obj/stool/chair/comfy/blue{
+	dir = 8
+	},
+/obj/item/storage/wall/office,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "gXP" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -20749,6 +20730,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"hAW" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/science/lobby)
 "hBv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21869,6 +21859,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"inP" = (
+/obj/disposalpipe/segment/food{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/kitchen)
 "iox" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -22296,6 +22299,12 @@
 	dir = 4
 	},
 /area/station/crew_quarters/bar)
+"iDb" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "iDw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27117,10 +27126,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"miq" = (
-/obj/stool/chair/office/purple,
-/turf/simulated/floor/black,
-/area/station/science/chemistry)
 "mjj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27989,19 +27994,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"mRX" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/stool/chair/yellow{
-	anchored = 0;
-	dir = 8
-	},
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "yellowblack"
-	},
-/area/station/engine/core/nuclear)
 "mSq" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod1_horizontal/single_vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -28731,6 +28723,20 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"nwc" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/orangeblack/side/white,
+/area/station/engine/engineering)
 "nwl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -32513,6 +32519,15 @@
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"qla" = (
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "qlx" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -32584,19 +32599,6 @@
 	},
 /turf/simulated/floor/neutral/corner,
 /area/station/science/artifact)
-"qps" = (
-/obj/disposalpipe/segment/food{
-	dir = 4
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/machinery/computer/announcement/station/catering{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/kitchen)
 "qpv" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -37878,6 +37880,11 @@
 /obj/submachine/claw_machine,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
+"ulP" = (
+/obj/stool/chair/office,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/carpet,
+/area/station/science/lobby)
 "ulV" = (
 /obj/machinery/rkit,
 /turf/simulated/floor/yellow,
@@ -39227,6 +39234,20 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"ver" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/stool/chair/yellow{
+	anchored = 0;
+	dir = 8
+	},
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "yellowblack"
+	},
+/area/station/engine/core/nuclear)
 "veA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -39562,19 +39583,6 @@
 /obj/xmastree/ephemeral,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
-"vwF" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/orangeblack/side/white,
-/area/station/engine/engineering)
 "vwS" = (
 /obj/machinery/light,
 /obj/disposalpipe/segment{
@@ -39601,6 +39609,23 @@
 /obj/machinery/computer/ordercomp,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/warehouse)
+"vyd" = (
+/obj/landmark/pest,
+/obj/disposalpipe/segment,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/shipalert{
+	dir = 1
+	},
+/obj/item/decoration/flower_vase{
+	pixel_y = 24
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fblue1"
+	},
+/area/station/bridge)
 "vys" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -70351,7 +70376,7 @@ crF
 srk
 cFO
 sNf
-iRg
+iDb
 qrc
 nbU
 cFO
@@ -70665,7 +70690,7 @@ sGW
 aHU
 aHU
 aHU
-gtb
+gWL
 fWK
 noI
 aPm
@@ -74912,7 +74937,7 @@ tJp
 qXE
 reU
 tJp
-mRX
+ver
 lEV
 uVN
 ozL
@@ -79425,7 +79450,7 @@ wzQ
 brj
 bso
 aYT
-vwF
+nwc
 kad
 xLt
 kKs
@@ -80614,7 +80639,7 @@ aSz
 aTZ
 tPW
 aWM
-aCQ
+vyd
 aZp
 msW
 eJy
@@ -83613,7 +83638,7 @@ awF
 tHq
 epv
 ayX
-qps
+inP
 xqt
 vjR
 aAu
@@ -87872,7 +87897,7 @@ bfG
 bgQ
 nQh
 bjf
-bkq
+qla
 wvG
 cdu
 jrF
@@ -88177,7 +88202,7 @@ czP
 bjg
 gip
 bSl
-miq
+exV
 hNt
 bgR
 tVu
@@ -91176,7 +91201,7 @@ xYZ
 omE
 kaQ
 lSW
-jiQ
+hAW
 kut
 aQj
 nUd
@@ -91475,7 +91500,7 @@ asm
 nuT
 aHM
 jgf
-omE
+ulP
 aLo
 mgQ
 jiQ

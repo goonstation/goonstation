@@ -3042,9 +3042,7 @@
 /area/station/hallway/primary/east)
 "alp" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/flasher/solitary{
 	pixel_x = -24
 	},
@@ -3560,9 +3558,7 @@
 /area/station/security/brig)
 "anL" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4093,9 +4089,7 @@
 /area/station/security/brig)
 "aqp" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "aqq" = (
@@ -5080,6 +5074,18 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"aug" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light_switch/west,
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold inlet valve"
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/engine/coldloop)
 "aum" = (
 /obj/disposalpipe/segment/food{
 	dir = 4;
@@ -6776,57 +6782,23 @@
 /area/station/crew_quarters/arcade)
 "aAi" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aAj" = (
@@ -17138,24 +17110,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
-"bfW" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot reserve tank valve"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/inner)
 "bfX" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -26363,10 +26317,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
-"bRF" = (
-/obj/stool/chair/yellow,
-/turf/simulated/floor/yellow/side,
-/area/station/engine/elect)
 "bRT" = (
 /obj/storage/closet/office,
 /turf/simulated/floor/plating,
@@ -27310,14 +27260,6 @@
 /obj/item/paper/book/from_file/dwainedummies,
 /turf/simulated/floor/purple/side{
 	dir = 9
-	},
-/area/station/science/lobby)
-"bVl" = (
-/obj/stool/chair/couch{
-	dir = 4
-	},
-/turf/simulated/floor/purple/side{
-	dir = 1
 	},
 /area/station/science/lobby)
 "bVm" = (
@@ -31729,9 +31671,7 @@
 /area/station/maintenance/southeast)
 "ckd" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "cke" = (
@@ -37304,20 +37244,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"cHR" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/obj/machinery/firealarm/south,
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot inlet valve"
-	},
-/turf/simulated/floor/black/side{
-	dir = 8
-	},
-/area/station/engine/hotloop)
 "cIO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -37992,19 +37918,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"djB" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable/blue{
-	icon_state = "4-8"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold purge valve"
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/inner)
 "djH" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -38284,6 +38197,13 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"dtK" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot purge valve"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "dtM" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -40149,15 +40069,6 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
-"eDy" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold radiator bypass valve"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/blue,
-/area/station/engine/coldloop)
 "eDF" = (
 /obj/lattice{
 	dir = 1;
@@ -40211,6 +40122,11 @@
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint)
+"eFF" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
 "eFK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40511,17 +40427,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"eRW" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold reserve tank valve"
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/inner)
 "eSb" = (
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
@@ -40784,6 +40689,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
+"fdS" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/lobby)
 "feD" = (
 /obj/grille/steel,
 /obj/cable,
@@ -41208,6 +41122,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
+"fpJ" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "combustion chamber outlet valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/hotloop)
 "fqc" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -41625,6 +41545,10 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
+"fGf" = (
+/obj/machinery/computer/announcement/station/catering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "fGA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -41972,6 +41896,19 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"fUm" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "combustion chamber bypass valve";
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/engine/hotloop)
 "fUp" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
@@ -42008,6 +41945,15 @@
 /obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"fVA" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold radiator bypass valve"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue,
+/area/station/engine/coldloop)
 "fVJ" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
@@ -42050,10 +41996,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"fZo" = (
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
 "fZG" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -42687,10 +42629,6 @@
 /obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
-"gEa" = (
-/obj/stool/chair/yellow,
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "gEu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42796,6 +42734,24 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/eva)
+"gGM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "combustion chamber inlet valve"
+	},
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/engine/hotloop)
 "gGO" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -43138,6 +43094,20 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
+"gRG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1;
+	name = "combustion chamber fuel valve"
+	},
+/turf/simulated/floor/red,
+/area/station/engine/hotloop)
 "gSz" = (
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/grime,
@@ -43209,12 +43179,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/head)
-"gWZ" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "combustion chamber outlet valve"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/hotloop)
 "gXk" = (
 /obj/lattice{
 	dir = 8;
@@ -44259,31 +44223,6 @@
 /obj/machinery/light/small/floor/greenish,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
-"hLG" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "combustion chamber bypass valve";
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/engine/hotloop)
-"hLX" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold inlet valve"
-	},
-/turf/simulated/floor/black/side{
-	dir = 4
-	},
-/area/station/engine/coldloop)
 "hLZ" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -44984,6 +44923,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/brig)
+"ipJ" = (
+/obj/stool/chair/comfy/blue,
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "ipZ" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -46183,9 +46127,7 @@
 /area/station/maintenance/northeast)
 "jsv" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable,
 /obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/grime,
@@ -46237,6 +46179,19 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"jup" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot inlet valve"
+	},
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/engine/hotloop)
 "juv" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -47594,6 +47549,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
+"kuw" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold reserve tank valve"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "kuI" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -49458,24 +49424,6 @@
 /obj/item/bat,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction2)
-"mdv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "combustion chamber inlet valve"
-	},
-/turf/simulated/floor/black/side{
-	dir = 8
-	},
-/area/station/engine/hotloop)
 "mea" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -50230,6 +50178,20 @@
 	icon_state = "fred3"
 	},
 /area/station/crew_quarters/jazz)
+"mGd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/machinery/firealarm/south,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot inlet valve"
+	},
+/turf/simulated/floor/black/side{
+	dir = 8
+	},
+/area/station/engine/hotloop)
 "mGQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -50442,10 +50404,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"mPR" = (
-/obj/machinery/computer/announcement/station/catering,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "mQu" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -50978,6 +50936,10 @@
 "nkI" = (
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
+"nkK" = (
+/obj/landmark/start/job/medical_assistant,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "nlf" = (
 /obj/stool/chair{
 	dir = 1
@@ -51332,6 +51294,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"nyD" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 1;
+	name = "combustion chamber fuel valve"
+	},
+/turf/simulated/floor/red,
+/area/station/engine/hotloop)
 "nyE" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -51716,18 +51685,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
-"nOu" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/light_switch/west,
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold inlet valve"
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/engine/coldloop)
 "nPn" = (
 /obj/table/auto,
 /turf/simulated/floor/white,
@@ -54282,6 +54239,11 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
+"pJe" = (
+/obj/disposalpipe/segment/mail,
+/obj/landmark/start/job/research_assistant,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "pJv" = (
 /obj/machinery/firealarm/east,
 /obj/disposalpipe/segment/mail,
@@ -56509,19 +56471,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
-"ryf" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot inlet valve"
-	},
-/turf/simulated/floor/black/side{
-	dir = 8
-	},
-/area/station/engine/hotloop)
 "ryN" = (
 /mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -56664,6 +56613,19 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/east)
+"rEo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable/blue{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold purge valve"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "rEA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -57504,10 +57466,6 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"sfM" = (
-/obj/stool/chair/comfy/blue,
-/turf/simulated/floor/wood/two,
-/area/station/medical/staff)
 "sfR" = (
 /obj/storage/crate,
 /obj/machinery/alarm{
@@ -59919,13 +59877,6 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
-"tZk" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot purge valve"
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/inner)
 "tZB" = (
 /obj/lattice{
 	dir = 6;
@@ -61013,9 +60964,7 @@
 /area/station/engine/inner)
 "uHv" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
 	},
@@ -61660,13 +61609,6 @@
 	dir = 1
 	},
 /area/station/engine/inner)
-"vjx" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 1;
-	name = "combustion chamber fuel valve"
-	},
-/turf/simulated/floor/red,
-/area/station/engine/hotloop)
 "vli" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -64611,6 +64553,24 @@
 	dir = 6
 	},
 /area/space)
+"xHF" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot reserve tank valve"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	name = "factory pipe"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "xIf" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/bloody,
@@ -64621,20 +64581,6 @@
 /obj/item/raw_material/cerenkite,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
-"xIC" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	name = "factory pipe"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 1;
-	name = "combustion chamber fuel valve"
-	},
-/turf/simulated/floor/red,
-/area/station/engine/hotloop)
 "xJE" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -64892,6 +64838,18 @@
 	dir = 9
 	},
 /area/station/janitor/office)
+"xTv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold inlet valve"
+	},
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
+/area/station/engine/coldloop)
 "xTB" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
@@ -65315,6 +65273,11 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/yellow,
 /area/station/storage/primary)
+"yiI" = (
+/obj/stool/chair/yellow,
+/obj/landmark/start/job/technical_assistant,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "yiM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -95791,7 +95754,7 @@ snM
 bQW
 bSA
 mlR
-bVl
+fdS
 bWw
 bXB
 bZf
@@ -97621,7 +97584,7 @@ dxk
 coq
 cAL
 cqt
-fZo
+pJe
 djA
 ctg
 ctZ
@@ -99746,7 +99709,7 @@ wnj
 mwV
 kfp
 mRI
-sfM
+ipJ
 dqC
 ucm
 xuy
@@ -100037,7 +100000,7 @@ dmk
 cox
 cpy
 cqB
-cqB
+nkK
 cqB
 cqB
 jIo
@@ -109662,13 +109625,13 @@ bwW
 qva
 uJG
 rSs
-xIC
+gRG
 gni
 ykS
 lyy
 cYT
-ryf
-cHR
+jup
+mGd
 bqk
 wHn
 quh
@@ -109962,9 +109925,9 @@ bvS
 bwL
 bwW
 rlD
-vjx
+nyD
 oLE
-xIC
+gRG
 tXn
 fna
 bCo
@@ -110566,7 +110529,7 @@ eWJ
 btv
 bxJ
 uKI
-mdv
+gGM
 qCl
 pTo
 rDG
@@ -110586,7 +110549,7 @@ bbg
 bNp
 bOR
 vdE
-bRF
+eFF
 qwc
 bVz
 bKp
@@ -110869,7 +110832,7 @@ jBq
 ihz
 wCQ
 byC
-hLG
+fUm
 scY
 fdu
 upE
@@ -111170,7 +111133,7 @@ bqk
 bxJ
 uKI
 uKI
-gWZ
+fpJ
 eJV
 bqk
 iIP
@@ -112072,7 +112035,7 @@ bqm
 qMc
 bqm
 bqm
-bfW
+xHF
 tUE
 adC
 adC
@@ -112375,7 +112338,7 @@ bqm
 bqm
 iBz
 opS
-tZk
+dtK
 adC
 adC
 adC
@@ -113535,7 +113498,7 @@ atA
 avZ
 aqP
 hbN
-mPR
+fGf
 asl
 aDd
 bOP
@@ -113600,7 +113563,7 @@ qWU
 dcN
 qRH
 nqD
-gEa
+yiI
 uHm
 bMc
 uks
@@ -114187,7 +114150,7 @@ xkc
 bqp
 iBz
 cOb
-djB
+rEo
 adC
 adC
 adC
@@ -114488,7 +114451,7 @@ maK
 eMs
 bqp
 bqp
-eRW
+kuw
 iRV
 adC
 adC
@@ -115706,7 +115669,7 @@ gqG
 rEA
 ykC
 jgo
-nOu
+aug
 jsC
 hEU
 uCy
@@ -116006,7 +115969,7 @@ ssE
 dgI
 jZi
 pCy
-eDy
+fVA
 iXk
 tYu
 mWl
@@ -116614,8 +116577,8 @@ drn
 jJT
 bBN
 bBN
-hLX
-hLX
+xTv
+xTv
 inz
 mWl
 mqt

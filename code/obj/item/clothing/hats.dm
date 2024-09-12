@@ -108,7 +108,7 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	desc = "This hood protects you from harmful biological contaminants. This one has a purple visor."
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
 
