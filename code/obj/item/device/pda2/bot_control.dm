@@ -169,9 +169,9 @@
 						if (!botlist.len)
 							PDA.updateSelfDialog()
 							return
+						var/stored_lockdown = src.lockdown
 						SPAWN(0)
 							// we are gonna try to do this for real, but with a sleep - mylie
-							var/stored_lockdown = src.lockdown
 							var/list/bots = list()
 							for(var/list/mob/living/critter/robotic/securitron/bot in src.botlist)
 								if(stored_lockdown)
