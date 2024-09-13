@@ -104,7 +104,7 @@
 						. += "<A href='byond://?src=\ref[src];op=summonall'>Summon all active bots</A><br><br>"
 						. += "<A href='byond://?src=\ref[src];op=allguardhere'>Set all bots to guard</A><br><br>"
 						. += "<A href='byond://?src=\ref[src];op=alllockdown'>Set all bots to lockdown</A><br><br>"
-						. += "<A href='byond://?src=\ref[src];op=getareas'>Get list of valid areas</A><br><br>"
+				. += "<A href='byond://?src=\ref[src];op=getareas'>Get list of valid areas</A><br><br>"
 				. += "<A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A>"
 
 	Topic(href, href_list)
