@@ -133,7 +133,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	///The product currently being vended
 	var/datum/data/vending_product/currently_vending = null // zuh
 
-	var/mechcomp_compatible = TRUE
+	var/mechcomp_compatible = TRUE //Can this vending machine take mechcomp inputs?
 
 	power_usage = 50
 
@@ -2093,7 +2093,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	player_list = list()
 	var/lastPlayerPrice = 0
 	icon_panel = "standard-panel"
-	var/mechcomp_compatible = FALSE
+	mechcomp_compatible = FALSE //Player vending machines can't take mechcomp inputs
 
 	New()
 		. = ..()
