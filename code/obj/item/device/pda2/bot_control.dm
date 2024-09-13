@@ -171,14 +171,15 @@
 							return
 						SPAWN(0)
 							// we are gonna try to do this for real, but with a sleep - mylie
+							var/stored_lockdown = src.lockdown
 							var/list/bots = list()
 							for(var/list/mob/living/critter/robotic/securitron/bot in src.botlist)
-								if(src.lockdown)
-									post_status("bot_control", "command", "lockdown", "address_1", active.net_id, "target", guardthis)
-									self_text("[active] ordered to lockdown [guardthis].")
+								if(stored_lockdown)
+									post_status("bot_control", "command", "lockdown", "address_1", bot.net_id, "target", guardthis)
+									self_text("[bot] ordered to lockdown [guardthis].")
 								else
-									post_status("bot_control", "command", "guard", "address_1", active.net_id, "target", guardthis)
-									self_text("[active] ordered to guard [guardthis].")
+									post_status("bot_control", "command", "guard", "address_1", bot.net_id, "target", guardthis)
+									self_text("[bot] ordered to guard [guardthis].")
 								sleep(2 DECI SECONDS)
 							if(length(bots) >= 1)
 								self_text("[english_list(bots)] ordered to guard [guardthis].")
@@ -204,9 +205,9 @@
 					// trying this for real - mylie
 					var/list/bots = list()
 					for(var/list/mob/living/critter/robotic/securitron/bot in src.botlist)
-						post_status("bot_control", "command", "summon", "address_1", active.net_id, "target", summon_turf)
-						post_status("bot_control", "command", "bot_status", "address_1", active.net_id)
-						self_text("[active] summoned to [summon_turf.loc].")
+						post_status("bot_control", "command", "summon", "address_1", bot.net_id, "target", summon_turf)
+						post_status("bot_control", "command", "bot_status", "address_1", bot.net_id)
+						self_text("[bot] summoned to [summon_turf.loc].")
 						sleep(2 DECI SECONDS)
 					if(length(bots) >= 1)
 						self_text("[english_list(bots)] summoned to [summon_turf.loc].")
