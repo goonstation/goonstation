@@ -173,7 +173,7 @@
 						SPAWN(0)
 							// we are gonna try to do this for real, but with a sleep - mylie
 							var/list/bots = list()
-							for(var/list/mob/living/critter/robotic/securitron/bot in src.botlist)
+							for(var/mob/living/critter/robotic/securitron/bot in src.botlist)
 								if(stored_lockdown)
 									post_status("bot_control", "command", "lockdown", "address_1", bot.net_id, "target", guardthis)
 									self_text("[bot] ordered to lockdown [guardthis].")
@@ -204,7 +204,7 @@
 				SPAWN(0)
 					// trying this for real - mylie
 					var/list/bots = list()
-					for(var/list/mob/living/critter/robotic/securitron/bot in src.botlist)
+					for(var/mob/living/critter/robotic/securitron/bot in src.botlist)
 						post_status("bot_control", "command", "summon", "address_1", bot.net_id, "target", summon_turf)
 						post_status("bot_control", "command", "bot_status", "address_1", bot.net_id)
 						self_text("[bot] summoned to [summon_turf.loc].")
