@@ -96,6 +96,9 @@
 /area/station/engine/inner)
 "bA" = (
 /obj/reagent_dispensers/foamtank,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "bC" = (
@@ -154,6 +157,9 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
@@ -504,6 +510,9 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "mj" = (
@@ -820,6 +829,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
+"st" = (
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor/black,
+/area/station/engine/inner)
 "sO" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -873,6 +886,9 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "ue" = (
@@ -923,6 +939,9 @@
 /obj/machinery/camera/auto{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "vb" = (
@@ -966,6 +985,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
@@ -1032,6 +1054,9 @@
 "xI" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/light,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "xL" = (
@@ -1711,6 +1736,9 @@
 /area/station/engine/inner)
 "RO" = (
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "Sj" = (
@@ -1772,6 +1800,9 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "Tu" = (
@@ -1788,6 +1819,12 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/grey,
+/area/station/engine/inner)
+"TS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
 /area/station/engine/inner)
 "TY" = (
 /turf/simulated/floor/engine,
@@ -1865,6 +1902,12 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/emergency,
 /obj/item/paper/emergencycooler,
 /turf/simulated/floor/engine,
+/area/station/engine/inner)
+"VI" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
 /area/station/engine/inner)
 "VM" = (
 /turf/space,
@@ -2025,6 +2068,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
+"Zm" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "ZB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
@@ -2060,12 +2112,12 @@ ER
 oa
 iu
 YU
-Rk
+st
 oa
 GX
 GX
 GX
-GX
+VI
 Tl
 vw
 RO
@@ -2078,7 +2130,7 @@ ER
 oa
 zm
 GX
-FR
+Rk
 oa
 QY
 mT
@@ -2096,7 +2148,7 @@ ER
 oa
 zm
 GX
-GX
+FR
 oa
 WF
 RD
@@ -2107,7 +2159,7 @@ TY
 TY
 Na
 sO
-GX
+TS
 ER
 "}
 (5,1,1) = {"
@@ -2125,7 +2177,7 @@ TY
 TY
 Na
 sO
-GX
+TS
 ER
 "}
 (6,1,1) = {"
@@ -2143,7 +2195,7 @@ OV
 OV
 GY
 sO
-GX
+TS
 ER
 "}
 (7,1,1) = {"
@@ -2407,7 +2459,7 @@ yR
 ax
 tX
 tX
-ax
+Zm
 oU
 od
 fc
