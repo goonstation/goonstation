@@ -57936,7 +57936,10 @@
 	},
 /area/centcom)
 "gAK" = (
-)
+/turf/unsimulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/afterlife/bar/sanctuary)
 "gAY" = (
 /obj/lattice{
 	dir = 1;
@@ -65118,6 +65121,10 @@
 "myh" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
+"mzj" = (
+/obj/submachine/slot_machine,
+/turf/unsimulated/floor/carpet/red,
+/area/afterlife/bar/sanctuary)
 "mzo" = (
 /obj/grille/catwalk,
 /turf/space,
@@ -67234,6 +67241,15 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
+"ohZ" = (
+/obj/decal/cleanable/glitter/harmless,
+/obj/machinery/vending/jobclothing/catering/afterlife,
+/turf/unsimulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue1";
+	tag = "icon-fblue2 (NORTHWEST)"
+	},
+/area/afterlife/bar/sanctuary)
 "oiq" = (
 /obj/table/wood/auto/desk,
 /obj/item/clipboard,
@@ -104408,7 +104424,7 @@ cro
 cnH
 aaa
 dcp
-gAK
+mzj
 dcg
 daP
 rKC
@@ -105616,7 +105632,7 @@ dcp
 dcp
 tRD
 dcp
-gAK
+dcp
 qjv
 fBq
 dcp
@@ -105914,7 +105930,7 @@ aaa
 dcp
 ddE
 daP
-gAK
+eZl
 wyy
 tVj
 eZl
@@ -106214,7 +106230,7 @@ cnw
 aaa
 aaa
 dcp
-gAK
+eZl
 iGw
 daP
 kxB
@@ -106225,7 +106241,7 @@ gAK
 dSI
 eHV
 daN
-gAK
+dct
 dbd
 ddt
 ddF
@@ -107726,7 +107742,7 @@ aaa
 dcp
 jag
 xzs
-gAK
+eZl
 jEc
 dcu
 daP
@@ -108029,7 +108045,7 @@ dcp
 dcp
 dcp
 dcp
-gAK
+ohZ
 dcp
 dcp
 dcp
