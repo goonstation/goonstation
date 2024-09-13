@@ -20024,7 +20024,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai)
 "bqk" = (
-/obj/landmark/engine_room/newcogmap,
+/obj/landmark/engine_room,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "bqm" = (
