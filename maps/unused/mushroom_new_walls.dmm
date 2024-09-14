@@ -11817,7 +11817,7 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
-/obj/stool/bench/blue/auto,
+/obj/decoration/decorativeplant/plant7,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15187,6 +15187,7 @@
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
+/obj/machinery/computer/announcement/station/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -23080,6 +23081,7 @@
 	c_tag = "Research Sector North"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "jHJ" = (
@@ -23104,7 +23106,7 @@
 	},
 /area/station/security/processing)
 "jIc" = (
-/obj/machinery/manufacturer/science,
+/obj/machinery/computer/announcement/station/research,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "jIe" = (
@@ -32292,10 +32294,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/decoration/decorativeplant/plant7,
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/machinery/computer/announcement/station/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -40140,13 +40142,15 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
 "yhs" = (
-/obj/storage/secure/closet/civilian/kitchen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
