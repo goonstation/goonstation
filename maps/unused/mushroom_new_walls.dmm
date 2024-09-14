@@ -5843,9 +5843,8 @@
 	},
 /area/station/chapel/sanctuary)
 "aEw" = (
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/table/wood/auto,
+/obj/item/ghostboard,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
 	},
@@ -5865,14 +5864,6 @@
 /obj/landmark/spawner/artifact/one_in_ten,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"aEF" = (
-/obj/window/reinforced{
-	dir = 2
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 5
-	},
-/area/station/chapel/sanctuary)
 "aEI" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
@@ -5920,22 +5911,13 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"aFa" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "chapelgun"
-	},
-/obj/machinery/door/window/westleft{
-	name = "Chapel Mass Driver"
-	},
-/turf/simulated/floor/plating,
-/area/station/chapel/sanctuary)
 "aFb" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "chapelgun"
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 6
+	},
 /area/station/chapel/sanctuary)
 "aFc" = (
 /obj/table/auto,
@@ -6309,21 +6291,9 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aHm" = (
-/obj/window/reinforced{
-	dir = 1;
-	tag = "icon-rwindow (NORTH)"
-	},
+/obj/stool,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
-	},
-/area/station/chapel/sanctuary)
-"aHp" = (
-/obj/window/reinforced{
-	dir = 1;
-	tag = "icon-rwindow (NORTH)"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
 	},
 /area/station/chapel/sanctuary)
 "aHr" = (
@@ -6430,13 +6400,16 @@
 "aHQ" = (
 /obj/table/wood/auto,
 /obj/candle_light,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 6
 	},
 /area/station/chapel/sanctuary)
 "aHU" = (
 /obj/table/wood/auto,
-/obj/item/ghostboard,
+/obj/item/device/microphone,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -6701,15 +6674,8 @@
 	dir = 1
 	},
 /area/station/chapel/sanctuary)
-"aJa" = (
-/obj/table/wood/auto,
-/obj/loudspeaker,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "aJe" = (
-/obj/stool,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
 	},
@@ -6734,9 +6700,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "aJq" = (
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 5
 	},
@@ -6860,11 +6824,6 @@
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
-/area/station/chapel/sanctuary)
-"aJM" = (
-/obj/table/wood/auto,
-/obj/item/bible,
-/turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "aJN" = (
 /obj/stool,
@@ -7218,8 +7177,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aLo" = (
-/obj/table/wood/auto,
-/obj/candle_light,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -7228,8 +7185,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aLq" = (
-/obj/table/wood/auto,
-/obj/item/device/microphone,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -15456,6 +15412,10 @@
 	dir = 4;
 	level = 2
 	},
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15483,10 +15443,13 @@
 	dir = 1;
 	level = 2
 	},
-/obj/machinery/meter,
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/table/auto,
+/obj/item/item_box/medical_patches/styptic,
+/obj/item/wrench,
+/obj/item/paper/cryo,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15585,7 +15548,7 @@
 /area/station/bridge)
 "czC" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay)
+/area/station/medical/medbay/surgery)
 "cAe" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -16877,8 +16840,9 @@
 /turf/space,
 /area/station/engine/proto)
 "dMp" = (
+/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
-	level = 2
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -16897,15 +16861,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/armory_outside)
-"dNL" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 10;
-	level = 2
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "dOw" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 8
@@ -16932,6 +16887,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/machinery/sleeper/port_a_medbay,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "dQg" = (
@@ -17998,9 +17954,6 @@
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 1
 	},
-/obj/window/reinforced/west{
-	dir = 2
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -18014,12 +17967,7 @@
 /area/station/crew_quarters/bar)
 "eNK" = (
 /obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/window/reinforced/west{
-	dir = 2
-	},
+/obj/item/robodefibrillator,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "eQs" = (
@@ -18058,14 +18006,9 @@
 /turf/space,
 /area/station/engine/proto)
 "eQZ" = (
-/obj/table/auto,
-/obj/item/weldingtool,
-/obj/item/wrench,
-/obj/item/paper/cryo,
-/obj/window/reinforced/west{
-	dir = 2
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1
 	},
-/obj/item/item_box/medical_patches/styptic,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "eRb" = (
@@ -18085,12 +18028,6 @@
 	},
 /area/station/bridge)
 "eRs" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1
-	},
-/obj/window/reinforced/west{
-	dir = 2
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -18104,14 +18041,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
-"eSL" = (
-/obj/window/reinforced/west,
-/obj/window/reinforced/west{
-	dir = 2
-	},
-/obj/machinery/sleeper/port_a_medbay,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay)
 "eTh" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -19205,9 +19134,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "fQU" = (
-/obj/window/reinforced{
-	dir = 8
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -20425,13 +20351,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "haV" = (
-/obj/window/reinforced{
-	dir = 2
-	},
-/obj/window/reinforced{
-	dir = 8
-	},
-/obj/machinery/vending/medical,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -20544,9 +20464,6 @@
 /obj/item/clothing/mask/surgical,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/mask/surgical_shield,
-/obj/window/reinforced{
-	dir = 2
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -24754,7 +24671,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "loL" = (
-/obj/window/reinforced/west,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -26418,7 +26334,6 @@
 	},
 /area/station/security/processing)
 "mYl" = (
-/obj/window/reinforced/west,
 /obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -26591,9 +26506,6 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "ndD" = (
-/obj/window/reinforced/west{
-	dir = 4
-	},
 /obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -28341,6 +28253,15 @@
 	dir = 6
 	},
 /area/station/science/lab)
+"oGq" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "chapelgun"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 6
+	},
+/area/station/chapel/sanctuary)
 "oGD" = (
 /obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/purple,
@@ -29202,6 +29123,13 @@
 	},
 /turf/simulated/floor,
 /area/station/security/processing)
+"piA" = (
+/obj/table/wood/auto,
+/obj/candle_light,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "piX" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor,
@@ -36070,15 +35998,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
-"uyS" = (
-/obj/machinery/activation_button/driver_button{
-	pixel_y = 30;
-	id = "chapelgun"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
-/area/station/chapel/sanctuary)
 "uAm" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -36452,6 +36371,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
+"uOo" = (
+/obj/table/wood/auto,
+/obj/loudspeaker,
+/turf/simulated/floor/specialroom/chapel,
+/area/station/chapel/sanctuary)
 "uOp" = (
 /obj/machinery/light/incandescent,
 /mob/living/carbon/human/npc/monkey,
@@ -36802,6 +36726,10 @@
 /obj/landmark/start/job/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"vdF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/surgery)
 "vfi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
@@ -36882,6 +36810,12 @@
 	},
 /turf/space,
 /area/space)
+"vjY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "vkx" = (
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/bluegreen,
@@ -37509,6 +37443,18 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"vJM" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "chapelgun"
+	},
+/obj/machinery/door/window/westleft{
+	name = "Chapel Mass Driver"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 10
+	},
+/area/station/chapel/sanctuary)
 "vJX" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -37950,6 +37896,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"whg" = (
+/obj/table/wood/auto,
+/obj/item/bible,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 5
+	},
+/area/station/chapel/sanctuary)
 "whs" = (
 /obj/storage/crate,
 /obj/item/instrument/bikehorn,
@@ -88489,12 +88442,12 @@ ayi
 aBS
 aCs
 aDv
+piA
+uOo
+whg
+aHQ
 aEv
 aDy
-aEj
-aHQ
-aJa
-aJM
 aLo
 aMu
 aCs
@@ -88790,13 +88743,13 @@ auB
 auB
 aBS
 aCs
-uyS
+aEZ
 aEw
-aFa
+aJN
 aHm
 aHU
 aJe
-aJN
+vJM
 aLq
 aMv
 aCs
@@ -89093,13 +89046,13 @@ axg
 axg
 aCs
 aDy
-aEF
+aEj
 aFb
-aHp
+aEv
 aDy
 aJq
-aEY
-aEv
+oGq
+vjY
 aDy
 lBg
 aOs
@@ -89396,11 +89349,11 @@ auB
 aCs
 twU
 iIL
-aFe
+iIL
 iIL
 iIL
 aCs
-iIL
+aFe
 iIL
 iIL
 aCs
@@ -95175,7 +95128,7 @@ bte
 btQ
 rdI
 cxk
-dNL
+loS
 eRs
 cxV
 gWv
@@ -95780,7 +95733,7 @@ daC
 mzV
 cyA
 dPD
-eSL
+fQR
 fPW
 haT
 inb
@@ -96083,8 +96036,8 @@ mzV
 czC
 czC
 czC
-fQR
-cxV
+vdF
+vdF
 ilA
 jBS
 dRA
