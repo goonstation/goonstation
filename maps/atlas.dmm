@@ -1864,7 +1864,17 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/storage/secure/closet/kitchen,
+/obj/table/reinforced/auto,
+/obj/machinery/glass_recycler/bar{
+	pixel_y = 9;
+	pixel_x = -1;
+	g_amt = 10
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/white/corner{
 	dir = 8
 	},
@@ -4788,13 +4798,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aAq" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/effects/background_objects/station/ss10,
-/turf/space,
-/area/space)
+/obj/machinery/light,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
 "aAr" = (
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/quartermaster/office)
@@ -10887,6 +10893,9 @@
 /area/station/science/artifact)
 "bAD" = (
 /obj/storage/secure/crate/gear/armory/equipment,
+/obj/machinery/turretid/armory{
+	pixel_x = 24
+	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "bBt" = (
@@ -11074,6 +11083,10 @@
 "caL" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/box/plates{
+	pixel_y = 7
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
@@ -11489,14 +11502,9 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "cXf" = (
-/obj/table/auto,
-/obj/item/storage/box/plates{
-	pixel_y = 7
-	},
-/turf/simulated/floor/white/side{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
+/obj/effects/background_objects/station/ss10,
+/turf/space,
+/area/space)
 "cXJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11857,6 +11865,13 @@
 /area/station/turret_protected/Zeta)
 "dKA" = (
 /obj/machinery/chem_dispenser/chef,
+/obj/machinery/disposal/small{
+	dir = 4;
+	pixel_x = -4
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/simulated/floor/white/corner{
 	dir = 4
 	},
@@ -12023,7 +12038,35 @@
 	},
 /area/station/solar/south)
 "eeM" = (
-/obj/storage/secure/crate/weapon/armory/shotgun,
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -13
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 9
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 1
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 12;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 4;
+	pixel_y = 8
+	},
 /obj/machinery/recharger/wall/sticky,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -12090,6 +12133,11 @@
 "epr" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/kitchen/rollingpin{
+	pixel_y = 5;
+	pixel_x = -5
 	},
 /turf/simulated/floor/white/side{
 	dir = 10
@@ -12225,7 +12273,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/submachine/foodprocessor,
 /obj/noticeboard/persistent{
 	name = "Kitchen persistent notice board";
 	persistent_id = "kitchen"
@@ -12235,6 +12282,7 @@
 	pixel_y = -1;
 	pixel_x = -32
 	},
+/obj/storage/secure/closet/kitchen,
 /turf/simulated/floor/white/corner,
 /area/station/crew_quarters/kitchen)
 "eAH" = (
@@ -12639,14 +12687,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/mining/magnet)
 "fps" = (
-/obj/stove,
-/obj/item/soup_pot{
-	pixel_y = 10;
-	pixel_x = 4
+/obj/item/device/radio/intercom/catering{
+	dir = 8
 	},
-/obj/item/ladle{
-	pixel_y = 12;
-	pixel_x = -4
+/obj/submachine/chef_oven{
+	dir = 8
 	},
 /turf/simulated/floor/white/side{
 	dir = 8
@@ -12895,39 +12940,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "fKM" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -13
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -4;
-	pixel_y = 12
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -13;
-	pixel_y = 12
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 9
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 1
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 12;
-	pixel_y = 8
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 4;
-	pixel_y = 8
-	},
-/obj/machinery/turretid/armory{
-	pixel_x = -24
-	},
-/turf/simulated/floor,
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "fLt" = (
 /obj/lattice{
@@ -13624,8 +13638,11 @@
 /area/listeningpost)
 "hrc" = (
 /obj/storage/secure/closet/fridge/kitchen,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/white/side{
-	dir = 1
+	dir = 5
 	},
 /area/station/crew_quarters/kitchen)
 "hte" = (
@@ -13692,14 +13709,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/small{
-	dir = 8;
-	pixel_x = 4
-	},
-/obj/disposalpipe/trunk{
-	dir = 8;
-	name = "factory pipe"
-	},
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf,
+/obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
@@ -14340,11 +14352,6 @@
 /area/station/security/brig)
 "iLn" = (
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "iLG" = (
@@ -14562,7 +14569,15 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/submachine/chef_oven,
+/obj/stove,
+/obj/item/ladle{
+	pixel_y = 12;
+	pixel_x = -4
+	},
+/obj/item/soup_pot{
+	pixel_y = 10;
+	pixel_x = 4
+	},
 /turf/simulated/floor/white/side{
 	dir = 8
 	},
@@ -15398,19 +15413,18 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "kzg" = (
-/obj/shrub{
-	dir = 1
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/decal/tile_edge/line/black,
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/grass/random,
+/obj/submachine/foodprocessor,
+/turf/simulated/floor/white/side{
+	dir = 4
+	},
 /area/station/crew_quarters/kitchen)
 "kzp" = (
 /obj/landmark/start/job/bartender,
@@ -15689,7 +15703,7 @@
 	},
 /area/station/chapel/sanctuary)
 "lko" = (
-/obj/machinery/weapon_stand/phaser_rack,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "lkD" = (
@@ -16394,7 +16408,9 @@
 	pixel_y = 12
 	},
 /obj/machinery/computer/announcement/station/catering,
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/white/side{
+	dir = 4
+	},
 /area/station/crew_quarters/kitchen)
 "mNV" = (
 /obj/machinery/power/tracker/small_backup4,
@@ -17178,9 +17194,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "ofD" = (
-/turf/simulated/floor/white/side{
-	dir = 5
+/obj/disposalpipe/segment{
+	dir = 4
 	},
+/turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "ogX" = (
 /obj/machinery/power/terminal,
@@ -17409,12 +17426,11 @@
 	},
 /area/station/engine/power)
 "oOr" = (
-/obj/storage/secure/crate/weapon/armory/pod_weapons,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
+/obj/cable{
+	icon_state = "0-2"
 	},
+/obj/storage/secure/crate/weapon/armory/shotgun,
+/obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "oPh" = (
@@ -17627,17 +17643,19 @@
 	dir = 4;
 	pixel_x = -15
 	},
+/obj/item/paper/book/from_file/cookbook{
+	pixel_y = 5;
+	pixel_x = 11
+	},
 /obj/table/auto,
 /obj/machinery/mixer{
 	pixel_y = 4;
 	pixel_x = -4;
 	name = "KitchenHelper #2"
 	},
-/obj/item/paper/book/from_file/cookbook{
-	pixel_y = 5;
-	pixel_x = 11
+/turf/simulated/floor/white/side{
+	dir = 4
 	},
-/turf/simulated/floor/auto/grass,
 /area/station/crew_quarters/kitchen)
 "pmn" = (
 /obj/cable{
@@ -17692,7 +17710,7 @@
 "pqD" = (
 /obj/machinery/navbeacon/mule/catering_north,
 /obj/decal/mule/beacon,
-/obj/disposalpipe/segment,
+/obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "pqW" = (
@@ -18657,12 +18675,11 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "rCX" = (
-/obj/item/device/radio/intercom/catering,
-/obj/submachine/chef_oven,
-/turf/simulated/floor/white/corner{
-	dir = 8
+/obj/decal/cleanable/writing{
+	words = "BREACH IN CASE OF HUNGER"
 	},
-/area/station/crew_quarters/kitchen)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/ai_monitored/armory)
 "rDt" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -18846,19 +18863,7 @@
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/catering)
 "rYo" = (
-/obj/table/auto,
-/obj/item/kitchen/rollingpin{
-	pixel_y = 5;
-	pixel_x = -5
-	},
-/obj/machinery/glass_recycler/bar{
-	pixel_y = 9;
-	pixel_x = -1;
-	g_amt = 10
-	},
-/turf/simulated/floor/white/side{
-	dir = 4
-	},
+/turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "scE" = (
 /obj/disposalpipe/junction/right/south,
@@ -19002,6 +19007,11 @@
 /area/station/engine/core)
 "sxH" = (
 /obj/random_item_spawner/armory_breaching_supplies,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "szE" = (
@@ -19747,15 +19757,10 @@
 	},
 /area/station/bridge)
 "tRn" = (
-/obj/table/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/reagent_containers/food/snacks/breadloaf,
-/obj/item/kitchen/utensil/knife,
-/turf/simulated/floor/white/side{
-	dir = 4
-	},
+/turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "tTr" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -19809,8 +19814,8 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/white/corner{
-	dir = 4
+/turf/simulated/floor/white/side{
+	dir = 1
 	},
 /area/station/crew_quarters/kitchen)
 "tZu" = (
@@ -20283,11 +20288,12 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "uYF" = (
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
-/obj/machinery/power/apc/autoname_north/noaicontrol,
-/obj/cable{
-	icon_state = "0-2"
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
 	},
+/obj/machinery/weapon_stand/phaser_rack,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "uZH" = (
@@ -20528,6 +20534,9 @@
 /obj/submachine/chef_sink/chem_sink{
 	dir = 8;
 	pixel_x = 5
+	},
+/obj/submachine/chef_oven{
+	dir = 8
 	},
 /turf/simulated/floor/white/side{
 	dir = 8
@@ -21750,8 +21759,9 @@
 /area/space)
 "xOc" = (
 /obj/decal/mule/dropoff,
-/obj/disposalpipe/junction/right/east{
-	dir = 8
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
@@ -21925,7 +21935,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/white/corner{
+	dir = 4
+	},
 /area/station/crew_quarters/kitchen)
 "ykT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -67345,7 +67357,7 @@ aaa
 aaa
 aax
 aaa
-aAq
+aax
 agl
 afS
 aAZ
@@ -71576,7 +71588,7 @@ iqM
 ofD
 rYo
 tRn
-cXf
+rYo
 tZl
 rhk
 pUJ
@@ -72471,7 +72483,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+cXf
 afa
 tJS
 hFR
@@ -72479,7 +72491,7 @@ wwD
 agV
 agV
 agV
-rCX
+agV
 jcY
 fps
 vyf
@@ -72780,7 +72792,7 @@ afa
 aez
 aez
 aez
-aez
+rCX
 aez
 aez
 kUo
@@ -73685,7 +73697,7 @@ aeu
 afa
 aez
 oOr
-gGS
+hdM
 agr
 agr
 aez
@@ -73987,9 +73999,9 @@ aeu
 afa
 aez
 uYF
-hdM
+gGS
 vgk
-agr
+aAq
 aez
 bwW
 kbx
