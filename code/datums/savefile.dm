@@ -477,9 +477,7 @@
 		var/savefile/save = src.savefile_save(user.ckey, 1, 1)
 		var/exported = save.ExportText()
 
-		user.player.cloudSaves.putSave(name, exported)
-		return TRUE
+		return user.player.cloudSaves.putSave(name, exported)
 
 	cloudsave_delete(client/user, name)
-		user.player.cloudSaves.deleteSave(name)
-		return TRUE
+		return user.player.cloudSaves.deleteSave(name)

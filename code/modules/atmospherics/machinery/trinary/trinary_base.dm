@@ -46,7 +46,7 @@
 	src.air2.volume = 200
 	src.air3.volume = 200
 
-/obj/machinery/atmospherics/trinary/initialize()
+/obj/machinery/atmospherics/trinary/initialize(player_caused_init)
 	var/node1_connect = turn(src.dir, -180)
 	var/node2_connect = flipped ? turn(src.dir, 90) : turn(src.dir, -90)
 	var/node3_connect = src.dir
@@ -65,7 +65,10 @@
 		if(target.initialize_directions & get_dir(target,src))
 			src.node3 = target
 			break
-
+	if(player_caused_init)
+		src.node1?.initialize(FALSE)
+		src.node2?.initialize(FALSE)
+		src.node3?.initialize(FALSE)
 	UpdateIcon()
 
 /obj/machinery/atmospherics/trinary/disposing()

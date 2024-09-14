@@ -32,6 +32,7 @@
 	var/high_priority_job = FALSE
 	///Fill up to this limit, then drop this job out of high priotity
 	var/high_priority_limit = INFINITY
+	//should a job be considered last for selection, but also as a last resort fallback job? NOTE: ignores other requirements such as round min/max
 	var/low_priority_job = FALSE
 	var/order_priority = 1 //! What order jobs are filled in within their priority tier, lower number = higher priority
 	var/cant_allocate_unwanted = FALSE //! Job cannot be set to "unwanted" in player preferences.
@@ -207,7 +208,7 @@
 			min = src.rounds_needed_to_play
 		if (src.rounds_allowed_to_play)
 			max = src.rounds_allowed_to_play
-		if (!min || !max)
+		if (!min && !max)
 			return TRUE
 
 		var/round_num = player.get_rounds_participated()
@@ -215,7 +216,7 @@
 			return TRUE
 		if (player.cloudSaves.getData("bypass_round_reqs")) //special flag for account transfers etc.
 			return TRUE
-		if (round_num > min && round_num <= max)
+		if (round_num >= min && (round_num <= max || !max))
 			return TRUE
 		return FALSE
 
@@ -302,22 +303,14 @@ ABSTRACT_TYPE(/datum/job/command)
 
 #ifdef SUBMARINE_MAP
 	slot_suit = list(/obj/item/clothing/suit/armor/hopcoat)
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/hop)
-	slot_jump = list(/obj/item/clothing/under/suit/hop)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/command/hop)
-	slot_poc1 = list(/obj/item/pocketwatch)
-	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
-#else
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/hop)
-	slot_jump = list(/obj/item/clothing/under/suit/hop)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/command/hop)
-	slot_poc1 = list(/obj/item/pocketwatch)
-	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #endif
+	slot_back = list(/obj/item/storage/backpack)
+	slot_belt = list(/obj/item/device/pda2/hop)
+	slot_jump = list(/obj/item/clothing/under/suit/hop)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/command/hop)
+	slot_poc1 = list(/obj/item/pocketwatch)
+	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 
 /datum/job/command/head_of_security
 	name = "Head of Security"
@@ -342,29 +335,18 @@ ABSTRACT_TYPE(/datum/job/command)
 
 #ifdef SUBMARINE_MAP
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security/fancy_alt)
-	slot_suit = list(/obj/item/clothing/suit/armor/vest)
-	slot_back = list(/obj/item/storage/backpack/security)
-	slot_belt = list(/obj/item/device/pda2/hos)
-	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
-	slot_poc2 = list(/obj/item/requisition_token/security)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
-	slot_head = list(/obj/item/clothing/head/hos_hat)
-	slot_ears = list(/obj/item/device/radio/headset/command/hos)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-
-
 #else
+	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
+#endif
+	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
 	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
 	slot_poc2 = list(/obj/item/requisition_token/security)
-	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
-	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_head = list(/obj/item/clothing/head/hos_hat)
 	slot_ears = list(/obj/item/device/radio/headset/command/hos)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-#endif
 
 	derelict
 		name = null//"NT-SO Special Operative"
@@ -670,12 +652,11 @@ ABSTRACT_TYPE(/datum/job/research)
 	wiki_link = "https://wiki.ss13.co/Scientist"
 
 /datum/job/research/research_assistant
-	name = "Research Assistant"
+	name = "Research Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Scientist"
 	rounds_allowed_to_play = ROUNDS_MAX_RESASS
-	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/research)
 	slot_ears = list(/obj/item/device/radio/headset/research)
 	slot_jump = list(/obj/item/clothing/under/color/purple)
@@ -722,19 +703,18 @@ ABSTRACT_TYPE(/datum/job/research)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/research/medical_assistant
-	name = "Medical Assistant"
+	name = "Medical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Medical Doctor"
 	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
-	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/red)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
 	slot_jump = list(/obj/item/clothing/under/scrub = 30,/obj/item/clothing/under/scrub/teal = 14,/obj/item/clothing/under/scrub/blue = 14,/obj/item/clothing/under/scrub/purple = 14,/obj/item/clothing/under/scrub/orange = 14,/obj/item/clothing/under/scrub/pink = 14)
-	slot_belt = list(/obj/item/device/pda2/medical)
 	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
 
 // Engineering Jobs
@@ -830,12 +810,11 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/engineering/technical_assistant
-	name = "Technical Assistant"
+	name = "Technical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
-	low_priority_job = TRUE
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
