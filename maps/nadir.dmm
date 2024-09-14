@@ -5361,6 +5361,10 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/medical/medbay/surgery)
+"cuH" = (
+/obj/item/clothing/head/helmet/space/fishbowl,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "cuL" = (
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
@@ -19295,7 +19299,7 @@
 "ieD" = (
 /obj/storage/closet/medicalclothes,
 /obj/machinery/firealarm{
-	dir = 8;
+	dir = 4;
 	pixel_x = -24;
 	pixel_y = 4
 	},
@@ -50046,6 +50050,17 @@
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
+"vum" = (
+/obj/machinery/light/small/floor/cool,
+/obj/fakeobject/skeleton{
+	desc = "The head seems to be gone.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body2";
+	name = "corpse"
+	},
+/obj/item/clothing/under/gimmick/donkini,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "vuv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/heads{
@@ -81630,8 +81645,8 @@ bzS
 bzS
 syI
 kQE
-tjr
-hvz
+cuH
+vum
 tjr
 lmL
 sdl

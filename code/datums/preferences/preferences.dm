@@ -353,7 +353,7 @@ var/list/removed_jobs = list(
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
-						if (istext(ret))
+						if (!ret)
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
@@ -361,7 +361,7 @@ var/list/removed_jobs = list(
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
-				if (istext(ret))
+				if (!ret)
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile saved!"))

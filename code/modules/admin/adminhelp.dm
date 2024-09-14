@@ -26,7 +26,8 @@
 	if (!msg)
 		return
 
-	var/logLine = global.logLength + 1
+	//TOOD: re-add this when the goonhub logs support it
+	// var/logLine = global.logLength + 1
 	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/antag_text = ""
 	for (var/datum/antagonist/antag in client.mob.mind.antagonists)
@@ -35,7 +36,7 @@
 	ircmsg["key"] = client.key
 	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][antag_text][client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][trimtext(antag_text)]]")
 	ircmsg["msg"] = html_decode(msg)
-	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
+	ircmsg["log_link"] = "[goonhub_href("/admin/logs/[roundId]")]"
 	var/unique_message_id = md5("ahelp" + json_encode(ircmsg))
 	ircmsg["msgid"] = unique_message_id
 
@@ -69,8 +70,7 @@
 		var/ircmsg_fah[] = new()
 		ircmsg_fah["key"] = "Loggo"
 		ircmsg_fah["name"] = "First Adminhelp Notice"
-		// ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html or here: [goonhub_href("/admin/logs/[roundId]")]"
+		ircmsg_fah["msg"] = "Logs for this round can be found here: [goonhub_href("/admin/logs/[roundId]")]"
 		ircbot.export_async("help", ircmsg_fah)
 
 	ircbot.export_async("help", ircmsg)
