@@ -36165,8 +36165,8 @@
 	density = 0;
 	dir = 4;
 	icon_state = "pdoor0";
-	id = "kitchen";
-	name = "Kitchen Shutter";
+	id = "bar";
+	name = "Bar Shutter";
 	opacity = 0
 	},
 /turf/simulated/floor,
