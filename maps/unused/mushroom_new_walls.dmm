@@ -15407,14 +15407,14 @@
 /turf/space,
 /area/space)
 "cvJ" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
-	},
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15438,10 +15438,6 @@
 	},
 /area/station/engine/engineering/private)
 "cws" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
-	},
 /obj/machinery/light/emergency{
 	dir = 1
 	},
@@ -15449,6 +15445,10 @@
 /obj/item/item_box/medical_patches/styptic,
 /obj/item/wrench,
 /obj/item/paper/cryo,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	level = 2
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -16799,22 +16799,20 @@
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "dJX" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	level = 2
-	},
-/obj/machinery/light/incandescent{
-	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
 /area/station/medical/medbay)
 "dKO" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
-	},
+/obj/machinery/atmospherics/pipe/manifold,
+/obj/machinery/meter,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dKZ" = (
@@ -16839,9 +16837,9 @@
 /turf/space,
 /area/station/engine/proto)
 "dMp" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10;
+	level = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -16975,6 +16973,10 @@
 	dir = 4;
 	tag = "icon-bulb1 (EAST)"
 	},
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/device/analyzer/healthanalyzer,
+/obj/item/clothing/mask/surgical,
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -19126,9 +19128,11 @@
 /area/station/storage/primary)
 "fPW" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/med_data,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -20352,9 +20356,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/stool/chair/blue{
-	dir = 1
-	},
+/obj/machinery/vending/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "haV" = (
@@ -20466,11 +20468,7 @@
 	},
 /area/station/janitor/supply)
 "hfi" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/mask/surgical_shield,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -21696,7 +21694,6 @@
 /area/station/hydroponics/bay)
 "inb" = (
 /obj/landmark/pest,
-/obj/machinery/light/incandescent,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -22800,6 +22797,9 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
+"jua" = (
+/turf/simulated/wall/false_wall,
+/area/station/crew_quarters/kitchen)
 "juF" = (
 /turf/simulated/floor/airless/solar,
 /area/space)
@@ -22956,9 +22956,6 @@
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
-/obj/window/reinforced/west{
-	dir = 1
-	},
 /obj/item/remote/porter/port_a_medbay,
 /obj/item/remote/porter/port_a_nanomed{
 	pixel_x = 7
@@ -22968,9 +22965,6 @@
 	},
 /area/station/medical/medbay)
 "jBS" = (
-/obj/window/reinforced/west{
-	dir = 1
-	},
 /obj/machinery/vending/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -29120,6 +29114,18 @@
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"pin" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "piv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -72826,7 +72832,7 @@ uGC
 vYV
 vYV
 vYV
-vYV
+jua
 vYV
 anA
 aaa
@@ -96054,7 +96060,7 @@ czC
 czC
 vdF
 vdF
-ilA
+pin
 jBS
 dRA
 nbT
