@@ -429,6 +429,15 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
+	martian_ray
+		proj = new/datum/projectile/energy_bolt/raybeam
+		shots = 3
+		current_shots = 9
+		cooldown = 1 SECONDS
+		reload_time = 3 SECONDS
+		spread_angle = 3
+
+
 /datum/limb/gun/spawner
 	proj = new/datum/projectile/special/spawner
 	shots = 1

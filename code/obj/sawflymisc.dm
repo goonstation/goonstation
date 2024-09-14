@@ -45,7 +45,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		..()
 
 	detonate()
-		var/turf/T =  get_turf(src)
+		var/turf/T =  ..()
 		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE

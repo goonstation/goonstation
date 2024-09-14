@@ -2704,6 +2704,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 
 ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine
+	name = "Engineering Department"
 	sound_environment = 5
 	workplace = 1
 	station_map_colour = MAPC_ENGINEERING
@@ -2858,7 +2859,7 @@ TYPEINFO(/area/station/engine/substation)
 
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical
-	name = "Medical area"
+	name = "Medbay"
 	icon_state = "medbay"
 	workplace = 1
 	station_map_colour = MAPC_MEDICAL

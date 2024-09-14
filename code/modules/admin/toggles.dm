@@ -689,7 +689,6 @@ client/proc/toggle_ghost_respawns()
 		flourish = 0
 	else
 		flourish = 1
-	message_admins("[key_name(usr)] toggled its Flourish Mode to [flourish].")
 
 /datum/admins/proc/adsound()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

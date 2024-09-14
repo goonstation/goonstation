@@ -920,7 +920,7 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/buttcoin,
 		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
@@ -2009,7 +2009,9 @@
 		max_amt2spawn = 3
 
 
-/obj/random_item_spawner/armory_breaching_supplies //random
+/obj/random_item_spawner/armory_breaching_supplies //"random"
+	name = "armory breaching supplies"
+	icon_state = "breachspawn"
 	spawn_items()
 		new /obj/rack(src.loc)
 		new /obj/item/breaching_charge{

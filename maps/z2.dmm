@@ -7036,7 +7036,7 @@
 /area/lower_arctic/lower)
 "aJE" = (
 /obj/decal/icefloor,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "aJG" = (
 /obj/decal/cleanable/dirt,
@@ -7349,7 +7349,7 @@
 /obj/decal/icefloor,
 /obj/decal/lightshaft,
 /obj/map/light/cyan,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "aKH" = (
 /obj/stone{
@@ -13084,7 +13084,7 @@
 "bdn" = (
 /obj/decal/icefloor,
 /obj/creepy_sound_trigger_glacier,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "bdo" = (
 /obj/item/raw_material/plasmastone,
@@ -18127,7 +18127,7 @@
 /obj/item/plant/herb/cannabis/omega/spawnable,
 /obj/item/plant/herb/cannabis/omega/spawnable,
 /obj/item/plant/herb/cannabis/omega/spawnable,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "btA" = (
 /obj/decal/cleanable/dirt,
@@ -51122,12 +51122,8 @@
 /area/centcom/lounge)
 "dIs" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/unsimulated/floor/black,
 /area/centcom/lounge)
 "dIt" = (
@@ -55240,7 +55236,7 @@
 	dir = 8;
 	tag = "icon-toilet (WEST)"
 	},
-/obj/item/currency/spacecash/buttcoin,
+/obj/item/currency/buttcoin,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "elx" = (
@@ -57716,7 +57712,7 @@
 "gwj" = (
 /obj/decal/icefloor,
 /mob/living/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "gwr" = (
 /obj/disposalpipe/segment/bent/north,
@@ -57796,7 +57792,7 @@
 	desc = "A staff fridge. This one is filthy.";
 	name = "gross refrigerator"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
+/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti,
 /obj/item/reagent_containers/food/snacks/yuck,
 /obj/item/reagent_containers/food/drinks/cola,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -61327,7 +61323,7 @@
 "jqo" = (
 /obj/decal/icefloor,
 /mob/living/critter/brullbar/king,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "jqw" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -65027,7 +65023,7 @@
 /obj/item/plant/herb/cannabis/omega/spawnable,
 /obj/item/plant/herb/cannabis/omega/spawnable,
 /obj/item/plant/herb/cannabis/omega/spawnable,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "mvU" = (
 /obj/admin_plaque{
@@ -67423,7 +67419,7 @@
 "osX" = (
 /obj/decal/icefloor,
 /mob/living/critter/spider/ice,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "otN" = (
 /obj/machinery/light/small/floor{
@@ -67737,7 +67733,7 @@
 /obj/item/plant/herb/cannabis/omega/spawnable,
 /obj/item/plant/herb/cannabis/omega/spawnable,
 /obj/item/plant/herb/cannabis/omega/spawnable,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "oJd" = (
 /obj/decal/exhibit/lowend{
@@ -68265,7 +68261,7 @@
 	pixel_x = -3;
 	pixel_y = 15
 	},
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "phj" = (
 /obj/fakeobject/pipe{
@@ -76838,7 +76834,7 @@
 	zamboni = 1
 	},
 /obj/map/light/cyan,
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "wgc" = (
 /obj/fakeobject/pipe{
@@ -78619,7 +78615,7 @@
 	pixel_x = -3;
 	pixel_y = 15
 	},
-/turf/unsimulated/floor/arctic/snow/lake,
+/turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "xyo" = (
 /obj/table/auto,
@@ -105153,7 +105149,7 @@ aaa
 aIp
 aIp
 aIC
-aIC
+aJE
 aJE
 aJE
 aJi
@@ -105458,7 +105454,7 @@ aIC
 aJE
 aJE
 aKE
-aJE
+aLt
 aIC
 aIp
 aIp
