@@ -11502,6 +11502,10 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "cXf" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
 /obj/effects/background_objects/station/ss10,
 /turf/space,
 /area/space)
@@ -67357,7 +67361,7 @@ aaa
 aaa
 aax
 aaa
-aax
+cXf
 agl
 afS
 aAZ
@@ -72483,7 +72487,7 @@ aaa
 aaa
 aaa
 aaa
-cXf
+aaa
 afa
 tJS
 hFR
