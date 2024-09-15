@@ -14481,7 +14481,7 @@
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/obj/machinery/nanofab,
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "bJT" = (
