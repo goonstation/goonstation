@@ -4689,6 +4689,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
@@ -11852,11 +11853,11 @@
 "bjQ" = (
 /obj/pool{
 	density = 0;
-	dir = 8;
 	icon = 'icons/obj/fluid.dmi';
 	icon_state = "ladder";
 	name = "ladder";
-	pixel_y = -9
+	pixel_y = -9;
+	dir = 1
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -28652,6 +28653,7 @@
 /area/station/crew_quarters/arcade)
 "oRk" = (
 /obj/machinery/plantpot,
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "oRW" = (
@@ -36903,6 +36905,11 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery)
+"vek" = (
+/obj/critter/parrot/random,
+/obj/machinery/firealarm/west,
+/turf/simulated/floor/grass/random,
+/area/station/garden/owlery)
 "vfi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
@@ -77270,7 +77277,7 @@ aAl
 tfa
 bQe
 xFS
-ogC
+vek
 xFS
 xFS
 xFS
