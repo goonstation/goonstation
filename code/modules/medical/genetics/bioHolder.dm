@@ -869,7 +869,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		for(var/D as anything in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				if(!ignoreMagic ||ignoreMagic && !BE.is_magical) // No removing hairy trait or job traits!
+				if(!ignoreMagic || ignoreMagic && !BE.is_magical) // No removing hairy trait or job traits!
 					RemoveEffect(BE.id)
 					BE.owner = null
 					BE.holder = null
