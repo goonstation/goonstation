@@ -32975,7 +32975,9 @@
 	dir = 8
 	},
 /obj/submachine/ranch_feed_grinder,
-/turf/simulated/floor/auto/dirt,
+/turf/simulated/floor/grasstodirt{
+	dir = 10
+	},
 /area/station/ranch)
 "sgw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
