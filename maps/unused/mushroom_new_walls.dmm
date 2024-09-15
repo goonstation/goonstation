@@ -30217,7 +30217,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/railing/orange{
+/obj/railing/orange/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
@@ -31356,7 +31356,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/railing/orange{
+/obj/railing/orange/reinforced{
 	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
