@@ -5857,6 +5857,8 @@
 "aEw" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
+/obj/item/device/microphone,
+/obj/item/bible,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 9
 	},
@@ -6292,7 +6294,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aHm" = (
-/obj/stool,
+/obj/table/wood/auto,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -6399,20 +6401,11 @@
 	},
 /area/station/bridge)
 "aHQ" = (
-/obj/table/wood/auto,
-/obj/candle_light,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 6
-	},
-/area/station/chapel/sanctuary)
-"aHU" = (
-/obj/table/wood/auto,
-/obj/item/device/microphone,
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
 	},
 /area/station/chapel/sanctuary)
 "aHZ" = (
@@ -35325,6 +35318,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "tNp" = (
+/obj/machinery/navbeacon/guardbot_buddytime,
 /turf/simulated/floor{
 	icon_state = "carpetNE"
 	},
@@ -38084,7 +38078,7 @@
 /area/station/maintenance/northwest)
 "whg" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/candle_light,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 5
 	},
@@ -88994,7 +88988,7 @@ aEZ
 aEw
 aJN
 aHm
-aHU
+aEZ
 aJe
 vJM
 aLq
