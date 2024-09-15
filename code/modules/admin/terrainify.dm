@@ -511,6 +511,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
+	additional_toggles = list("Void Bubbles"=FALSE)
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
@@ -518,13 +519,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			generate_void()
+			generate_void(params=params)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, FALSE)
 
 			log_terrainify(user, "turned space into an THE VOID.")
 
-/proc/generate_void(all_z_levels = FALSE)
+/proc/generate_void(all_z_levels = FALSE, params = null)
 	station_repair.ambient_light = new /image/ambient
 	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
 	station_repair.station_generator = new/datum/map_generator/void_generator
@@ -541,6 +542,105 @@ ABSTRACT_TYPE(/datum/terrainify)
 	station_repair.station_generator.generate_terrain(space, flags = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 	for (var/turf/S in space)
 		S.AddOverlays(station_repair.ambient_light, "ambient")
+
+	if(params && params["Void Bubbles"])
+		var/datum/bsp_tree/tree = new(width=world.maxx, height=world.maxy, min_width=30, min_height=25)
+		var/edge_noise = rustg_cnoise_generate("60", "5", "6", "3", "[world.maxx]", "[world.maxy]")
+		var/bubble_count = rand(8, 15)
+		var/list/bubble_nodes = list()
+		var/datum/bsp_node/room
+		var/list/bubble_edges = list()
+		for(var/x in 1 to bubble_count)
+			var/list/bubble_turfs = list()
+			if(length(tree.leaves))
+				room = pick(tree.leaves)
+			else
+				break
+
+			tree.leaves -= room
+			for(var/datum/bsp_node/leaf in bubble_nodes)
+				if(tree.are_nodes_adjacent(room, leaf))
+					room = null
+					break
+			if(!room)
+				continue
+
+			var/list/branch = tree.get_leaves(room.parent.parent)
+			tree.leaves -= branch
+
+			var/blacklist_generators = list(/datum/map_generator/icemoon_generator,
+											/datum/map_generator/mars_generator,
+											/datum/map_generator/void_generator,
+											/datum/map_generator/asteroids,
+											/datum/map_generator/sea_caves,
+											/datum/map_generator/storehouse_generator,
+											/datum/map_generator/room_maze_generator,
+											/datum/map_generator/room_maze_generator/random,
+											/datum/map_generator/room_maze_generator/spatial)
+
+			var/datum/map_generator/generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
+			generator = new generator()
+
+			//Place Prefab or just Terrain
+			if(prob(85))
+				var/count= 0
+				var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
+				var/maxTries = (P.required ? 5 : 2)
+				while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+					var/turf/target = locate(rand(room.x+room.width/3, room.x+room.width-room.width/3), rand(room.y+room.height/3, room.y+room.height-room.height/3), Z_LEVEL_STATION)
+					if(istype(target.loc, /area/station))
+						count = maxTries
+						continue
+
+					var/datum/loadedProperties/ret = P.applyTo(target)
+					if (ret)
+						var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+						for(var/turf/T in space_turfs)
+							if(!istype(T, /turf/space))
+								space_turfs -= T
+						generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+						logTheThing(LOG_DEBUG, null, "Void Bubble placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+						break
+					else
+						count++
+
+
+			for(var/turf/unsimulated/floor/void/V in block(locate(room.x, room.y, Z_LEVEL_STATION), locate(room.x + room.width-1, room.y + room.height-1, Z_LEVEL_STATION)))
+				bubble_turfs += V
+
+			if(length(bubble_turfs) > 50)
+				// Rough up the edges so it is less blocky
+				var/edge_turfs = list()
+				var/edge_size = 4
+				edge_turfs += block(locate(room.x,                          room.y, 						  Z_LEVEL_STATION), locate(room.x + edge_size, 				room.y + room.height-1, Z_LEVEL_STATION))
+				edge_turfs += block(locate(room.x + edge_size,              room.y,                           Z_LEVEL_STATION), locate(room.x + room.width-edge_size, 	room.y + edge_size,     Z_LEVEL_STATION))
+				edge_turfs += block(locate(room.x + room.width - edge_size, room.y,                           Z_LEVEL_STATION), locate(room.x + room.width-1, 			room.y + room.height-1, Z_LEVEL_STATION))
+				edge_turfs += block(locate(room.x + edge_size,              room.y + room.height - edge_size, Z_LEVEL_STATION), locate(room.x + room.width-edge_size, 	room.y + room.height-1, Z_LEVEL_STATION))
+
+				for(var/turf/BT in edge_turfs)
+					if(istype(BT, /turf/unsimulated/floor/void))
+						var/bubble_value
+						var/index = BT.x * world.maxx + BT.y
+						if(index <= length(edge_noise))
+							bubble_value = text2num(edge_noise[index])
+						var/on_edge = (BT.x == room.x)  			    \
+								   || (BT.x == (room.x + room.width-1)) \
+								   || (BT.y == room.y)                  \
+								   || (BT.y == (room.y + room.height-1))
+						if(!bubble_value || on_edge)
+							bubble_turfs -= BT
+							bubble_edges += BT
+							BT.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
+							BT.allows_vehicles = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles
+
+				generator.generate_terrain(bubble_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+				bubble_nodes += room
+
+			logTheThing(LOG_DEBUG, null, "Void Bubble: [generator] [log_loc(locate(room.x, room.y, Z_LEVEL_STATION))]")
+
+		SPAWN(10 SECONDS)
+			for(var/turf/unsimulated/floor/auto/void/BE in bubble_edges)
+				BE.edge_overlays()
 
 	station_repair.clean_up_station_level()
 
