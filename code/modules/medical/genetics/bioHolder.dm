@@ -759,7 +759,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(timeleft) newEffect.timeLeft = timeleft
 			if(magical)
 				newEffect.curable_by_mutadone = FALSE
-				newEffect.stability_loss = FALSE
+				newEffect.stability_loss = 0
 				newEffect.can_scramble = FALSE
 				newEffect.can_reclaim = FALSE
 				newEffect.degrade_to = null
