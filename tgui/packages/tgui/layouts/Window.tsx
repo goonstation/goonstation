@@ -99,6 +99,7 @@ export const Window = (props: Props) => {
         title={title || decodeHtmlEntities(config.title)}
         status={config.status}
         fancy={fancy}
+        refreshing={config.refreshing ? true : false} /* |GOONSTATION-ADD| */
         onDragStart={dragStartHandler}
         onClose={() => {
           logger.log('pressed close');
@@ -178,6 +179,7 @@ type TitleBarProps = Partial<{
   onDragStart: (e) => void;
   status: number;
   title: string;
+  refreshing: boolean; // |GOONSTATION-ADD|
 }> &
   PropsWithChildren;
 
@@ -226,6 +228,14 @@ const TitleBar = (props: TitleBarProps) => {
         >
           <Icon name="bug" />
         </div>
+      )}
+      {props.refreshing === true && (
+        <Icon
+          className="TitleBar__refreshSpinner"
+          color={'blue'}
+          spin
+          name="spinner"
+        />
       )}
       {Boolean(fancy && canClose) && (
         <div className="TitleBar__close TitleBar__clickable" onClick={onClose}>

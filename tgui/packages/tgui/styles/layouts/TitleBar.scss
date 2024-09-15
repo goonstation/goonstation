@@ -80,6 +80,17 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   line-height: base.rem(32px) !important;
 }
 
+.TitleBar__refreshSpinner {
+  position: absolute;
+  top: 0;
+  right: 48px;
+  right: base.rem(48px);
+  font-size: 20px;
+  font-size: base.rem(20px);
+  line-height: 32px !important;
+  line-height: base.rem(32px) !important;
+}
+
 .TitleBar__close {
   position: absolute;
   top: -1px;
@@ -99,8 +110,8 @@ $shadow-color: rgba(0, 0, 0, 0.1) !default;
   position: absolute;
   top: 6px;
   top: base.rem(6px);
-  right: 52px;
-  right: base.rem(52px);
+  right: 72px;
+  right: base.rem(72px);
   min-width: 20px;
   min-width: base.rem(20px);
   padding: 2px 4px;

@@ -59,9 +59,11 @@ export const getRoutedComponent = () => {
   if (suspended) {
     return SuspendedWindow;
   }
+  /* |GOONSTATION-CHANGE| - we add a spinner to the top right instead
   if (config?.refreshing) {
     return RefreshingWindow;
   }
+  */
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
     if (kitchenSink) {
