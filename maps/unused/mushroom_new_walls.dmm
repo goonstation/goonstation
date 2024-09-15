@@ -5944,14 +5944,6 @@
 /obj/item/storage/box/glassbox,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
-"aFd" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
-/obj/chicken_nesting_box,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "aFe" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -32975,6 +32967,10 @@
 	dir = 8
 	},
 /obj/submachine/ranch_feed_grinder,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 10
 	},
@@ -83430,7 +83426,7 @@ flP
 oUE
 wdi
 cAL
-aFd
+vFW
 uqd
 avF
 bAQ
