@@ -184,6 +184,15 @@
 				for(var/datum/material_property/mat in A.material.getMaterialProperties())
 					var/value = A.material.getProperty(mat.id)
 					. += "• [mat.getAdjective(A.material)] ([value])<br>"
+				switch(A.material.getAlpha())
+					if(-INFINITY to 80)
+						. += "• extremely transparent ([A.material.getAlpha()])"
+					if(80 to 130)
+						. += "• very transparent ([A.material.getAlpha()])"
+					if(130 to 180)
+						. += "• transparent ([A.material.getAlpha()])"
+					if(180 to INFINITY)
+						. += "• opaque ([A.material.getAlpha()])"
 			else
 				. += "The material is completely unremarkable."
 
