@@ -14,7 +14,7 @@
 		) ; \
 	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
 		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add(src) ; \
+			src.RL_AddOverlay = new /atom/movable/light/robust_light/add(src) ; \
 			src.RL_AddOverlay.icon = src.RL_OverlayIcon ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
@@ -24,14 +24,14 @@
 			_N.RL_AddLumR, _N.RL_AddLumG, _N.RL_AddLumB, 0, \
 			_NE.RL_AddLumR, _NE.RL_AddLumG, _NE.RL_AddLumB, 0, \
 			0, 0, 0, 1) ; \
-	} else { if(src.RL_AddOverlay) { qdel(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
+	} else { if(src.RL_AddOverlay) { src.RL_AddOverlay.dispose(); src.RL_AddOverlay = null; } } \
 	} while(FALSE)
 
 
 // requires atten to be defined outside
 #define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
-	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
+	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)**2 + (src.y - ly)**2 + height2) + RL_Atten_Constant ; \
 	if (atten < RL_Atten_Threshold) { break } \
 	src.RL_LumR += r*atten ; \
 	src.RL_LumG += g*atten ; \
@@ -49,7 +49,7 @@
 
 #define RL_APPLY_LIGHT_LINE(src, lx, ly, dir, radius, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
-	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
+	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)**2 + (src.y - ly)**2 + height2) + RL_Atten_Constant ; \
 	var/exponent = 3.5 ;\
 	atten *= (max( abs(ly-src.y),abs(lx-src.x),0.85 )/radius)**exponent ;\
 	if (radius <= 1) { atten *= 0.1 }\
@@ -79,7 +79,7 @@
 	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
 	} while(FALSE)
 
-#define APPLY_AND_UPDATE if (RL_Started) { for (var/turf in src.apply()) { var/turf/T = turf; RL_UPDATE_LIGHT(T) } }
+#define APPLY_AND_UPDATE if (RL_Started) { for (var/turf/T as anything in src.apply()) { RL_UPDATE_LIGHT(T) } }
 
 #define RL_Atten_Quadratic 2.2 // basically just brightness scaling atm
 #define RL_Atten_Constant -0.11 // constant subtracted at every point to make sure it goes <0 after some distance
