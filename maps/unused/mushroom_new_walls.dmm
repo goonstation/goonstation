@@ -38573,6 +38573,13 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
+"wRt" = (
+/obj/chicken_nesting_box,
+/obj/machinery/camera/auto/ranch{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "wRD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -83426,7 +83433,7 @@ flP
 oUE
 wdi
 cAL
-vFW
+wRt
 uqd
 avF
 bAQ
