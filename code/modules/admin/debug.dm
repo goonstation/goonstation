@@ -756,7 +756,6 @@ body
 				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
 					continue
 				qdel(door)
-
 		if ("Chemist's Delight")
 			for (var/turf/simulated/floor/T in world)
 				LAGCHECK(LAG_LOW)
