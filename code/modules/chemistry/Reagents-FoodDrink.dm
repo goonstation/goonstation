@@ -2929,7 +2929,7 @@ datum
 				. = ..()
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
 					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
-						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER, TRUE)
+						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
 						boutput(M, "You feel plain.")
 				return
 

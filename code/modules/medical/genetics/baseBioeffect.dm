@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/reclaim_mats = 10 // Materials returned when this gene is reclaimed
 	var/reclaim_fail = 5 // Chance % for a reclamation of this gene to fail
 	var/curable_by_mutadone = TRUE //! if 0/FALSE, we cant mutadone this - reinforced, magic genes and anti-toxins use this
-	var/curable_by_vanilla = TRUE //! only for magical genes like clown clumsiness or hairy trait! - we REALLY dont want to lose this
+	var/is_magical = FALSE //! only for trait genes/similar, we really dont want to lose this
 	var/stability_loss = 0
 	var/tmp/activated_from_pool = 0
 	var/altered = 0
