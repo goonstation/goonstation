@@ -2608,10 +2608,9 @@
 /area/station/engine/engineering/ce)
 "aoM" = (
 /obj/machinery/light/incandescent,
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/turf/simulated/floor/grasstodirt{
+	dir = 5
 	},
-/turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "aoO" = (
 /obj/grille/catwalk{
@@ -3941,6 +3940,13 @@
 /obj/table/auto,
 /turf/simulated/floor,
 /area/station/janitor/office)
+"avk" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/storage/secure/closet/civilian/ranch,
+/turf/simulated/floor/auto/dirt,
+/area/station/ranch)
 "avo" = (
 /obj/item/mop,
 /obj/item/storage/box/lightbox/tubes,
@@ -4606,7 +4612,16 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "ayy" = (
-/obj/submachine/ranch_feed_grinder,
+/obj/disposalpipe/trunk/mail/east,
+/obj/machinery/disposal/mail/small/autoname{
+	dir = 4;
+	mail_tag = "ranch";
+	mailgroup = "botany"
+	},
+/obj/table/wood/auto,
+/obj/item/kitchen/utensil/knife,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "ayF" = (
@@ -5934,13 +5949,8 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "ranch";
-	mailgroup = "botany"
-	},
-/turf/simulated/floor/auto/dirt,
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aFe" = (
 /obj/machinery/door/poddoor/pyro{
@@ -15562,6 +15572,9 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
+"cAL" = (
+/turf/simulated/floor/grasstodirt,
+/area/station/ranch)
 "cBd" = (
 /obj/stool/chair/couch/green{
 	dir = 8;
@@ -20552,13 +20565,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
-"hjE" = (
-/obj/table/wood/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/rancher,
-/obj/machinery/cashreg,
-/turf/simulated/floor/plating,
-/area/station/ranch)
 "hjJ" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -22377,6 +22383,16 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"iYe" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "iYx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -25393,6 +25409,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/proto)
+"mbc" = (
+/obj/railing/orange/reinforced{
+	dir = 3
+	},
+/obj/landmark/start/job/rancher,
+/turf/simulated/floor/auto/dirt,
+/area/station/ranch)
 "mbJ" = (
 /obj/machinery/light/incandescent{
 	dir = 1
@@ -28871,12 +28894,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "paR" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
-/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
-/obj/item/kitchen/utensil/knife,
 /obj/railing/orange/reinforced{
 	dir = 4
+	},
+/obj/stool/chair/green{
+	dir = 1
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
@@ -32946,10 +32968,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "sgc" = (
-/obj/storage/secure/closet/civilian/ranch,
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/submachine/ranch_feed_grinder,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "sgw" = (
@@ -34558,6 +34583,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "tse" = (
@@ -35722,8 +35750,11 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail{
-	dir = 4;
+	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
@@ -35807,12 +35838,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "uqd" = (
-/obj/stool/chair/green,
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
 	},
-/turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "uqh" = (
 /obj/machinery/disposal,
@@ -37858,7 +37888,9 @@
 	},
 /area/station/hallway/primary/south)
 "wdi" = (
-/obj/landmark/start/job/rancher,
+/obj/railing/orange/reinforced{
+	dir = 3
+	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "wdt" = (
@@ -38465,6 +38497,17 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"wOk" = (
+/obj/table/wood/auto,
+/obj/mapping_helper/access/rancher,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/cashreg,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "wOl" = (
 /obj/machinery/plantpot,
 /obj/machinery/light/incandescent{
@@ -82780,7 +82823,7 @@ oYJ
 xbm
 qSX
 rzV
-rzV
+eeu
 tra
 unG
 enc
@@ -83081,9 +83124,9 @@ jvN
 pan
 mzj
 fDW
-rzV
-rzV
-rzV
+mbc
+caU
+pdJ
 aoM
 jvN
 bAQ
@@ -83384,10 +83427,10 @@ cMw
 flP
 oUE
 wdi
-rzV
+cAL
 aFd
 uqd
-hjE
+avF
 bAQ
 xkn
 eqv
@@ -83681,11 +83724,11 @@ wuu
 xIs
 gmA
 uFg
-avF
+wOk
 paR
 eeu
 hjN
-eeu
+avk
 sgc
 jvN
 avF
@@ -86400,7 +86443,7 @@ uSK
 rKV
 qPI
 uSK
-yjo
+iYe
 uSK
 uSK
 uSK
