@@ -16934,6 +16934,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
+"dQN" = (
+/obj/disposalpipe/junction/left/east,
+/turf/simulated/floor/green/side,
+/area/station/hallway/primary/south)
 "dQO" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -83426,7 +83430,7 @@ gLt
 wuu
 qYZ
 uSK
-eRb
+dQN
 spN
 cMw
 flP
