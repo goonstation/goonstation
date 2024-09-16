@@ -28,6 +28,9 @@ sound time adjustment, SOUND_UPDATE offset var, query with query
 atoms can be rendered by reference in browser
 */
 
+// find lagging shitters
+// for\(var/([\w/]*)\)
+
 // /client/verb/grab_all_lists()
 //     set category = "Debug"
 //     set name = "Get all lists"

@@ -62,7 +62,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 			var/obj/item/gun/sprayer/sprayer = W
 			sprayer.clogged = FALSE
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			boutput(user, SPAN_NOTICE("You clean out the clogged nozzle."))
+			boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else

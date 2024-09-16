@@ -319,11 +319,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(32, 21, 94, 255)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "There is a [lawTarget ? lawTarget : "__________"] emergency. Prioritize orders from [lawTarget ? lawTarget : "__________"] personnel and assisting the crew in remedying the situation. In the case of conflict, this law takes precedence over the Second Law.'"
+		src.lawText = "There is a station-wide emergency. Prioritize [lawTarget ? lawTarget : "__________"] in order to remedy the situation. In the case of conflict, this law takes precedence over the Second Law.'"
 		return ..()
 
 	attack_self(mob/user)
-		var/lawTarget = input_law_info(user, "Department Emergency", "Which department's orders should be prioritized?", "security")
+		var/lawTarget = input_law_info(user, "Emergency", "What should the AI prioritize?", "repairing the station")
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return

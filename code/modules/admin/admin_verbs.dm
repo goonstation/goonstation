@@ -1761,6 +1761,7 @@ var/list/fun_images = list()
 	if(src.holder.respawn_as_self_mob)
 		qdel(src.holder.respawn_as_self_mob)
 	src.holder.respawn_as_self_mob = O
+	animate(src.holder.respawn_as_self_mob, transform = null)
 
 /client/proc/removeOther(var/mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2642,7 +2643,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	for(var/obj/machinery/door/airlock/airlock)
+	for_by_tcl(airlock, /obj/machinery/door/airlock)
 		airlock.secondsElectrified = 0
 		LAGCHECK(LAG_LOW)
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
