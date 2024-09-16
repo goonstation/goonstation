@@ -97,6 +97,7 @@ You can double-click these batch files to achieve the same thing:
 
 **Other Commands**
 - `yarn tgui-polyfill:build` - Build polyfills. You need to run it when updating any of the static (numbered) polyfills.
+- `yarn tgui-polyfill:static-css` -  Polyfill CSS Variables & autoprefix static css files. Takes a folder directory as an argument.
 
 ## Important Memo
 

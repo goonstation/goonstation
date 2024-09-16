@@ -13,6 +13,3 @@ import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
 import 'unfetch/polyfill';
-
-import cssVars from 'css-vars-ponyfill';
-cssVars();

@@ -75,6 +75,14 @@ module.exports = (env = {}, argv) => {
               },
             },
             {
+              loader: require.resolve('postcss-loader'),
+              options: {
+                postcssOptions: {
+                  plugins: [require.resolve('postcss-css-variables')],
+                },
+              },
+            },
+            {
               loader: require.resolve('sass-loader'),
             },
           ],
