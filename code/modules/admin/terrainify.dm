@@ -50,7 +50,10 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(src.ambient_obj)
 					T.vis_contents |= src.ambient_obj
 				if(src.weather_img)
-					T.AddOverlays(src.weather_img, "weather")
+					if(islist(src.weather_img))
+						T.AddOverlays(pick(src.weather_img), "weather")
+					else
+						T.AddOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
@@ -419,7 +422,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(station_repair.ambient_obj)
 				T.vis_contents |= station_repair.ambient_obj
 			if(station_repair.weather_img)
-				T.AddOverlays(station_repair.weather_img, "weather")
+				if(islist(station_repair.weather_img))
+					T.AddOverlays(pick(station_repair.weather_img), "weather")
+				else
+					T.AddOverlays(station_repair.weather_img, "weather")
 			if(station_repair.weather_effect)
 				var/obj/effects/E = locate(station_repair.weather_effect) in T
 				if(!E)
@@ -773,9 +779,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.station_generator = new/datum/map_generator/jungle_generator
 
 			if(rain == "Yes")
-				station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				station_repair.weather_img.alpha = 200
-				station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
+				//station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+				station_repair.weather_img = list()
+				for(var/idx in 1 to 4)
+					station_repair.weather_img += image('icons/effects/64x64.dmi',"rain_[idx]", layer = EFFECTS_LAYER_BASE)
+					station_repair.weather_img[idx].alpha
+					station_repair.weather_img[idx].alpha = 200
+					station_repair.weather_img[idx].plane = PLANE_NOSHADOW_ABOVE
 			else if(rain)
 				station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
 
@@ -788,7 +798,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
 						S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
 						if(rain == "Yes")
-							S.AddOverlays(station_repair.weather_img, "rain")
+							S.AddOverlays(pick(station_repair.weather_img), "weather")
 						else
 							new station_repair.weather_effect(S)
 						if(params["Ambient Light Obj"])
