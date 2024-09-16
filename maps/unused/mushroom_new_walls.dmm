@@ -16122,6 +16122,7 @@
 	pixel_x = -4
 	},
 /obj/disposalpipe/trunk/mail/south,
+/obj/machinery/vending/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
