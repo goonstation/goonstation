@@ -11187,7 +11187,6 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bgE" = (
-/obj/machinery/vending/monkey,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
@@ -11195,6 +11194,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bgH" = (
@@ -14845,10 +14845,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bYl" = (
-/obj/machinery/vending/monkey,
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "bZu" = (
@@ -20903,7 +20903,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "htu" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/research,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
