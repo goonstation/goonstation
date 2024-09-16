@@ -13879,7 +13879,6 @@
 /area/station/janitor/office)
 "hQG" = (
 /obj/storage/secure/closet/command/hos,
-/obj/storage/secure/closet/command/hos,
 /obj/machinery/door_control/bolter/new_walls/north{
 	id = "quarters_hos";
 	dir = 2
@@ -14815,10 +14814,6 @@
 	},
 /area/station/security/main)
 "jJg" = (
-/obj/machinery/light{
-	layer = 3;
-	light_type = /obj/item/light/tube/light_purpleish
-	},
 /obj/stool/chair/office/purple{
 	dir = 1;
 	tag = "icon-office_chair_purple (WEST)"
