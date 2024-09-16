@@ -193,7 +193,7 @@
 	plane = PLANE_FLOOR
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
-	var/welding_cost = 3
+	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
 
 
 	var/image/pipeimg = null
