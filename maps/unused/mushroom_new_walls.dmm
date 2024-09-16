@@ -17680,7 +17680,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "eBB" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins{
+	name = "Vendomat"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
