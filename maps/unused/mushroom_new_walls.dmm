@@ -20093,19 +20093,14 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "gIe" = (
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
-	network = "bombtest"
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
-	network = "bombtest";
-	pixel_x = 2;
-	pixel_y = 5
-	},
 /obj/machinery/light/incandescent,
 /obj/table/reinforced/industrial/auto{
 	icon_state = "12"
+	},
+/obj/item/clothing/glasses/vr/bomb,
+/obj/item/clothing/glasses/vr/bomb{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
