@@ -13879,7 +13879,6 @@
 /area/station/janitor/office)
 "hQG" = (
 /obj/storage/secure/closet/command/hos,
-/obj/storage/secure/closet/command/hos,
 /obj/machinery/door_control/bolter/new_walls/north{
 	id = "quarters_hos";
 	dir = 2

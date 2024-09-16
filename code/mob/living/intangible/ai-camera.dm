@@ -511,6 +511,12 @@
 		set desc = "Change your name."
 		mainframe?.rename_self()
 
+	verb/go_offline()
+		set category = "AI Commands"
+		set name = "Go Offline"
+		set desc = "Disconnect your brain such that a new AI can take your place."
+		mainframe?.go_offline()
+
 	stopObserving()
 		src.set_loc(get_turf(src))
 		src.observing = null

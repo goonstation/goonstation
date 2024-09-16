@@ -1399,8 +1399,27 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
 	slot_poc1 = list(/obj/item/device/pda2/medical_director)
-	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
-	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
+	alt_names = list(
+		"Acupuncturist",
+	  	"Anesthesiologist",
+		"Cardiologist",
+		"Dental Specialist",
+		"Dermatologist",
+		"Emergency Medicine Specialist",
+		"Hematology Specialist",
+		"Hepatology Specialist",
+		"Immunology Specialist",
+		"Internal Medicine Specialist",
+		"Maxillofacial Specialist",
+		"Medical Director's Assistant",
+		"Neurological Specialist",
+		"Ophthalmic Specialist",
+		"Orthopaedic Specialist",
+		"Otorhinolaryngology Specialist",
+		"Plastic Surgeon",
+		"Thoracic Specialist",
+		"Vascular Specialist",
+	)
 
 /datum/job/special/random/vip
 	name = "VIP"
