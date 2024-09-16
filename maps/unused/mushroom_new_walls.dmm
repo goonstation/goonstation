@@ -19197,6 +19197,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "fQU" = (
+/obj/machinery/dialysis,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
