@@ -68,7 +68,7 @@ function task-lint {
   yarn run tgui:eslint @Args
   Write-Output "tgui: eslint check passed"
   yarn run tgui:prettier @Args
-  Write-Output "tgui: eslint check passed"
+  Write-Output "tgui: prettier check passed"
 }
 
 function task-test {

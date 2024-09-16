@@ -2299,7 +2299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"balanced-match@npm:^1.0.0":
+"balanced-match@npm:^1.0.0, balanced-match@npm:^1.0.2":
   version: 1.0.2
   resolution: "balanced-match@npm:1.0.2"
   checksum: 10c0/9308baf0a7e4838a82bbfd11e01b1cb0f0cf2893bc1676c27c2a8c0e70cbae1c59120c3268517a8ae7fb6376b4639ef81ca22582611dbee4ed28df945134aaee
@@ -2735,6 +2735,16 @@ __metadata:
     webpack:
       optional: true
   checksum: 10c0/acadd2a93f505bf8a8d1c6912a476ef953585f195412b6aa1f2581053bcce8563b833f2a6666c1e1521f4b35fb315176563495a38933becc89e3143cfa7dce45
+  languageName: node
+  linkType: hard
+
+"css-vars-ponyfill@npm:^2.4.9":
+  version: 2.4.9
+  resolution: "css-vars-ponyfill@npm:2.4.9"
+  dependencies:
+    balanced-match: "npm:^1.0.2"
+    get-css-data: "npm:^2.0.2"
+  checksum: 10c0/b761ed5a3dd438ec22cb8afaf8916325a14465ab3a1e71e85fa4ccd3b8c582910c21cd51793edd137d4b27679bf8fd2b8b151533f1c829025b1a5a48846bf7b3
   languageName: node
   linkType: hard
 
@@ -4030,6 +4040,13 @@ __metadata:
   version: 2.0.5
   resolution: "get-caller-file@npm:2.0.5"
   checksum: 10c0/c6c7b60271931fa752aeb92f2b47e355eac1af3a2673f47c9589e8f8a41adc74d45551c1bc57b5e66a80609f10ffb72b6f575e4370d61cc3f7f3aaff01757cde
+  languageName: node
+  linkType: hard
+
+"get-css-data@npm:^2.0.2":
+  version: 2.1.1
+  resolution: "get-css-data@npm:2.1.1"
+  checksum: 10c0/b87baae6d70f0817b0a14b8273e490fbba5ffda97449a236a1f540b83018da9a2075453534d1225869bb027e24cd48d9f5a91474db74c7531579e28973f6728c
   languageName: node
   linkType: hard
 
@@ -7679,6 +7696,7 @@ __metadata:
   resolution: "tgui-polyfill@workspace:packages/tgui-polyfill"
   dependencies:
     core-js: "npm:^3.38.0"
+    css-vars-ponyfill: "npm:^2.4.9"
     regenerator-runtime: "npm:^0.14.1"
     terser: "npm:^5.30.2"
     unfetch: "npm:^5.0.0"
