@@ -1,4 +1,14 @@
 
+(t)sun sep 15 24
+(u)Lord_Earthfire
+(p)20665
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Man-eating plants gain additional endurance from eating humans seasoned with various condiments such as mustard, salt or pepper.
+(t)sat sep 14 24
+(u)Lord_Earthfire
+(p)20695
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Space fungus cannot cause food poisoning anymore.
 (t)thu sep 12 24
 (u)JORJ949
 (p)20674
