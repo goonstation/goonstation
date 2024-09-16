@@ -6400,14 +6400,6 @@
 	icon_state = "fgreen2"
 	},
 /area/station/bridge)
-"aHQ" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 6
-	},
-/area/station/chapel/sanctuary)
 "aHZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -10212,7 +10204,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/machinery/nanofab,
+/obj/machinery/nanofab/refining,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "bcF" = (
@@ -10548,7 +10540,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/manufacturer/general/grody,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "bea" = (
@@ -16374,9 +16366,6 @@
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai_upload)
 "dos" = (
-/obj/grille/catwalk{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -16385,6 +16374,9 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/grille/catwalk{
+	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
@@ -19350,7 +19342,9 @@
 	},
 /area/station/engine/engineering/private)
 "fXD" = (
-/obj/machinery/light/incandescent,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/escape{
 	dir = 4
 	},
@@ -20391,12 +20385,6 @@
 	name = "solar paneling"
 	},
 /area/station/solar/aisat)
-"gZD" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/escape{
-	dir = 8
-	},
-/area/station/hallway/secondary/exit)
 "gZG" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bathroom/extra2)
@@ -31819,26 +31807,10 @@
 /area/station/crew_quarters/cafeteria)
 "rhk" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual killing field full of brutally lethal weapons! Killer!";
-	name = "VR Combat Goggles";
-	network = "gunsim"
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual killing field full of brutally lethal weapons! Killer!";
-	name = "VR Combat Goggles";
-	network = "gunsim"
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual killing field full of brutally lethal weapons! Killer!";
-	name = "VR Combat Goggles";
-	network = "gunsim"
-	},
-/obj/item/clothing/glasses/vr{
-	desc = "A pair of VR goggles connected to a virtual killing field full of brutally lethal weapons! Killer!";
-	name = "VR Combat Goggles";
-	network = "gunsim"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "rhu" = (
@@ -32079,6 +32051,16 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"rsR" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=arrivals";
+	location = "chapel"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "rsV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -32362,6 +32344,7 @@
 "rBy" = (
 /obj/table/auto,
 /obj/item/gun/russianrevolver,
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "rBP" = (
@@ -33890,7 +33873,7 @@
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
-	id = "kitchen";
+	id = "kitchenvip";
 	name = "Kitchen Shutter";
 	opacity = 0
 	},
@@ -35045,8 +35028,8 @@
 	},
 /obj/submachine/foodprocessor,
 /obj/machinery/door_control{
-	id = "kitchen";
-	name = "Kitchen Shutter Control";
+	id = "kitchenvip";
+	name = "VIP Delivery Shutter Control";
 	pixel_y = 28
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -38685,12 +38668,6 @@
 	dir = 8
 	},
 /area/station/security/processing)
-"wQi" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor/escape{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "wQw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -85974,7 +85951,7 @@ wlC
 aLd
 anE
 aNf
-aOi
+rsR
 aPB
 aMl
 aNf
@@ -86233,7 +86210,7 @@ aaa
 aaa
 aaY
 aaY
-wQi
+abo
 adh
 acF
 adf
@@ -88686,7 +88663,7 @@ aDv
 piA
 uOo
 whg
-aHQ
+aEY
 aEv
 aDy
 aLo
@@ -88948,7 +88925,7 @@ iNk
 iNk
 xzw
 moy
-gZD
+qgp
 fgx
 tGi
 abS
