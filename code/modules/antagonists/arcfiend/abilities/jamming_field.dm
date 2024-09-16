@@ -5,7 +5,6 @@
 	icon_state = "jamming_field"
 	cooldown = 2 MINUTES
 	pointCost = 150
-	container_safety_bypass = TRUE
 	var/duration = 30 SECONDS
 
 	cast(atom/target)

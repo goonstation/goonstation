@@ -663,6 +663,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		changeIcon()
 
 	proc/launch(var/atom/target)
+		src.event_handler_flags |= IMMUNE_TRENCH_WARP
 		target_turf = get_turf(target)
 		if(launched) return
 		else launched = 1

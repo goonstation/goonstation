@@ -536,6 +536,7 @@ toxic - poisons
 	max_range = 15
 	dissipation_rate = 0
 	ie_type = null
+	smashes_glasses = FALSE //foam
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
@@ -581,12 +582,16 @@ toxic - poisons
 	silentshot = 1
 	casing = null
 	reagent_payload = "curare"
+	implanted = /obj/item/implant/projectile/body_visible/blowdart
 
 	madness
 		reagent_payload = "madness_toxin"
 
 	ls_bee
 		reagent_payload = "lsd_bee"
+
+	ketamine
+		reagent_payload = "ketamine"
 
 //0.41
 /datum/projectile/bullet/derringer
@@ -733,9 +738,9 @@ toxic - poisons
 			var/turf/target = get_edge_target_turf(M, dirflag)
 			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
-		if (ismob(hit))
+		if (ismob(hit) && prob(60))
 			var/mob/M = hit
-			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1)
+			take_bleeding_damage(M, proj.shooter, 3, DAMAGE_CUT, 1, override_bleed_level=rand(2,4))
 		..()
 
 /datum/projectile/bullet/kuvalda_slug //engine block destroying slug. not as fun as Buck, but longer range and AP.
@@ -858,6 +863,18 @@ toxic - poisons
 			P.special_data["last_projectile_locs"] = get_turf(P)
 			bleed(P.special_data["unfortunate"],0,1,P.special_data["last_projectile_locs"])
 		..()
+
+	burst
+		shot_delay = 1
+		shot_number = 4
+		pierces = 2
+		projectile_speed = 72
+		dissipation_delay = 50
+		armor_ignored = 0.5
+		implanted = /obj/item/implant/projectile/shrapnel
+
+
+
 
 
 /datum/projectile/bullet/flak_chunk
@@ -1133,20 +1150,21 @@ toxic - poisons
 
 //0.787
 /datum/projectile/bullet/cannon // autocannon should probably be renamed next
-	name = "cannon round"
+	name = "20mm AP round"
 	brightness = 0.7
 	window_pass = 0
 	icon_state = "20mm"
 	damage_type = D_PIERCING
-	armor_ignored = 0.66
-	hit_type = DAMAGE_CUT
-	damage = 150
-	dissipation_delay = 1
+	armor_ignored = 0.8
+	hit_type = DAMAGE_STAB
+	damage = 100
+	dissipation_delay = 30
 	dissipation_rate = 5
 	cost = 1
 	shot_sound = 'sound/weapons/20mm.ogg'
-	shot_volume = 130
+	shot_volume = 100
 	implanted = null
+	projectile_speed = 128
 
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
@@ -1166,14 +1184,8 @@ toxic - poisons
 			//hit.setTexture()
 
 			var/turf/T = get_turf(hit)
-			new /obj/effects/rendersparks (T)
+			new /obj/effects/explosion/smoky(T)
 			var/impact = clamp(1,3, proj.pierces_left % 4)
-			if(proj.pierces_left <= 1 )
-				new /obj/effects/explosion/dangerous(T)
-				new /obj/effects/explosion/dangerous(get_step(T, dirflag))
-				new /obj/effects/explosion/dangerous(get_step(get_step(T, dirflag), dirflag))
-				proj.die()
-				return
 
 			if(hit && ismob(hit))
 				var/mob/living/M = hit
@@ -1191,23 +1203,14 @@ toxic - poisons
 
 			if(hit && isobj(hit))
 				var/obj/O = hit
-				O.throw_shrapnel(T, 1, 1)
-
-				if(istype(hit, /obj/machinery/door))
-					var/obj/machinery/door/D = hit
-					if(!D.cant_emag)
-						D.take_damage(D.health) //fuck up doors without needing ex_act(1)
-
-				else if(istype(hit, /obj/window))
-					var/obj/window/W = hit
-					W.smash()
-
-				else
-					O.ex_act(impact)
+				O.blowthefuckup(impact)
 
 			if(hit && isturf(hit))
 				T.throw_shrapnel(T, 1, 1)
-				T.ex_act(2)
+				T.meteorhit()
+
+	antiair_burst
+		shot_number = 4
 
 //1.0
 /datum/projectile/bullet/rod // for the coilgun
@@ -1337,6 +1340,7 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
 
+
 	plasma_orb
 		name = "fusion orb"
 		damage_type = D_BURNING
@@ -1454,6 +1458,12 @@ datum/projectile/bullet/autocannon
 
 		on_hit(atom/hit)
 			explosion_new(null,get_turf(hit), 8, 0.75)
+
+		double
+			shot_delay = 0.20 SECONDS
+			shot_number = 2
+			damage = 50
+			shot_sound = 'sound/effects/exlow.ogg'
 
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
@@ -1801,6 +1811,13 @@ datum/projectile/bullet/autocannon
 			desired_x = closest.x - P.x - P.pixel_x/32
 			desired_y = closest.y - P.y - P.pixel_y/32
 
+			if(ismovable(closest))
+				var/atom/movable/AM = closest
+				if(AM.bound_width > 32)
+					desired_x += AM.bound_width / 64 - 0.5
+				if(AM.bound_height > 32)
+					desired_y += AM.bound_height / 64 - 0.5
+
 			.= 1
 
 	tick(var/obj/projectile/P)
@@ -1886,9 +1903,9 @@ datum/projectile/bullet/autocannon
 				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
 				boutput(M, pod.ship_message(message))
 
-	on_hit(atom/hit)
+	on_hit(atom/hit, angle, obj/projectile/O)
 		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
-			explosion_new(null, get_turf(hit), 12)
+			explosion_new(null, get_turf(O), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/vehicle = hit
@@ -2025,11 +2042,10 @@ datum/projectile/bullet/autocannon
 	damage = 6
 
 /datum/projectile/bullet/howitzer
-	name = "howitzer round"
+	name = "high explosive round"
 	brightness = 0.7
 	window_pass = 0
-	icon = 'icons/obj/large/bigprojectiles.dmi'
-	icon_state = "152mm-shot"
+	icon_state = "120mm"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	damage = 200
@@ -2044,15 +2060,33 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bullethole-large"
 	casing = /obj/item/casing/cannon
 	shot_sound_extrarange = 1
+	projectile_speed = 48
 
-	on_hit(atom/hit)
-		for(var/turf/T in range(get_turf(hit), 4))
-			new /obj/effects/explosion/dangerous(T)
-		explosion_new(null, get_turf(hit), 100)
+	on_hit(atom/hit, obj/projectile/P)
+		var/turf/T = get_turf(hit)
+		explosion_new(null, T, 40)
+		for(var/turf/T2 in range(hit, 3))
+			spawn(rand(1,2))
+				new /obj/effects/explosion/dangerous(T2)
 
 	on_launch(obj/projectile/proj)
-		for(var/mob/M in range(proj.loc, 5))
-			shake_camera(M, 3, 6)
+		for(var/mob/M in range(proj.loc, 2))
+			shake_camera(M, 2, 4)
+
+	siege
+		name = "siege round"
+		icon_state = "305mm"
+		damage = 1600
+		projectile_speed = 24
+		shot_sound = 'sound/effects/explosion_new1.ogg'
+
+		on_hit(atom/hit, obj/projectile/P)
+			var/turf/T = get_turf(hit)
+			explosion_new(null, T, 80)
+			for(var/turf/T2 in range(hit, 4))
+				spawn(rand(1,2))
+					new /obj/effects/explosion/dangerous(T2)
+
 
 /datum/projectile/bullet/glitch
 	name = "bullet"

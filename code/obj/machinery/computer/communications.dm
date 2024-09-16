@@ -327,6 +327,10 @@
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
+	if (emergency_shuttle.online)
+		boutput(usr, SPAN_ALERT("The emergency shuttle is currently in flight!"))
+		return
+
 	logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
 	message_admins(SPAN_INTERNAL("[key_name(usr)] called the Emergency Shuttle to the station"))

@@ -133,6 +133,10 @@ TRAYS
 	dir = NORTH
 	throwforce = 7
 
+	New()
+		..()
+		setItemSpecial(/datum/item_special/jab)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
@@ -891,6 +895,8 @@ TRAYS
 	space_left = INFINITY
 	initial_foods = list(/obj/item/reagent_containers/food/snacks/scotch_egg = 6)
 
+TYPEINFO(/obj/item/plate/pizza_box)
+	mat_appearances_to_ignore = "cardboard"
 /obj/item/plate/pizza_box
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
@@ -904,6 +910,7 @@ TRAYS
 	max_space = 6
 	space_left = 6
 	can_headsmash = FALSE
+	default_material = "cardboard"
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -1016,6 +1023,16 @@ TRAYS
 	attack_self(mob/user)
 		toggle_box(user)
 		return TRUE
+
+	attackby(obj/item/W, mob/user, params)
+		if (iswrenchingtool(W) && !length(src.contents))
+			var/obj/item/sheet/sheets = new(src.loc)
+			sheets.amount = 2
+			sheets.setMaterial(src.material)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			qdel(src)
+			return
+		. = ..()
 
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"

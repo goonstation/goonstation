@@ -54,7 +54,7 @@ proc/get_default_flock()
 	var/current_egg_cost = FLOCK_LAY_EGG_COST
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
-	var/list/enemies = list()
+	var/list/atom/movable/enemies = list()
 	var/list/atom/movable/ignores = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()

@@ -108,6 +108,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			for(var/turf/T in range(src,0))
 				make_cleanable(/obj/decal/cleanable/machine_debris, T)
+			message_ghosts("<b>A law rack</b> has been destroyed at [log_loc(src.loc, ghostjump=TRUE)].")
 			qdel(src)
 			return
 		var/law_update_needed = FALSE
@@ -668,7 +669,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))

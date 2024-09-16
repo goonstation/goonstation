@@ -196,6 +196,7 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	capacity = 12
+	digestion_per_tick = 10
 
 	on_transplant(mob/M)
 		. = ..()

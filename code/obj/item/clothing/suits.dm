@@ -18,6 +18,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/team_num
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
+	/// Used for hoodies (and anything that uses the toggle_hood component)
+	var/hooded = FALSE
 
 
 	setupProperties()
@@ -1978,6 +1980,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		setProperty("chemprot", 70)
 
+#define BADGE_SHOWOFF_COOLDOWN 2 SECONDS
+
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
@@ -2000,10 +2004,32 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
 	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
 		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		actions.start(new /datum/action/show_item(user, src, "badge"), user)
+
+/obj/item/clothing/suit/security_badge/shielded
+	name = "NTSO Tactical Badge"
+	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
+	tooltip_flags = REBUILD_ALWAYS
+
+	get_desc()
+		. = ..()
+		var/ret = list()
+		if ((SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += " It has [ret["charge"]]/[ret["max_charge"]] PUs left!"
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
+		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

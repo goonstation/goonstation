@@ -5,6 +5,9 @@
  * the order that things are compiled in is important. please stick with alphabetical order unless it wont compile in alphabetical order.
  */
 
+#if fexists("__build.local.dm")
+#include "__build.local.dm"			// this is for setting local testing defines, like `#define STOP_DISTRACTING_ME` (before due to collated defines)
+#endif
 #include "__build.dm"				// this controls how a lot of our defines and macros and code is compiled, so it absolutely needs to be the first
 #include "macros\_metamacros.dm"	// this has some structural helpers that a lot of other macros/defines use, so it needs to be near the start
 #include "_spaceman_dmm.dm"			// linter stuff is used in other macros

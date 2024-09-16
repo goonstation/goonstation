@@ -351,7 +351,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		AM.pipe_eject(0)
 		AM?.throw_at(target, 5, 1)
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 /obj/machinery/floorflusher/industrial

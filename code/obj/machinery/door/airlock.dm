@@ -754,7 +754,7 @@ var/global/list/cycling_airlocks = list()
 
 		return
 	else if (isscrewingtool(C))
-		if (src.hardened)
+		if (src.hardened || src.cant_hack)
 			boutput(user, SPAN_ALERT("Your tool can't pierce this airlock! Huh."))
 			return
 		if (!src.has_panel)
@@ -1456,6 +1456,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 	else if(locked)
 		boutput(user, SPAN_ALERT("The door bolts are down!"))
 	else if(!density)
+		if (!src.safety)
+			logTheThing(LOG_COMBAT, user, "closes an airlock with a cut safety wire at [log_loc(src)]")
 		close()
 	else
 		open()

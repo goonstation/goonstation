@@ -26,6 +26,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/last_used = 0
 	var/cant_emag = FALSE
 	var/hardened = FALSE // Can't be hacked, RCD'd or controlled by silicon mobs.
+	var/cant_hack = FALSE //Like the above but can be RCD'd and controlled by silicons
 	var/locked = FALSE
 	var/icon_base = "door"
 	var/brainloss_stumble = FALSE // Can a mob stumble into this door if they have enough brain damage? Won't work if you override Bumped() or attackby() and don't check for it separately.
@@ -122,7 +123,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 /obj/machinery/door/Cross(atom/movable/mover)
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
-		if(P.proj_data.window_pass)
+		if(P.proj_data.window_pass && !P.proj_data.always_hits_structures)
 			return !opacity
 	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 		if (ismob(mover))
@@ -398,7 +399,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(1)
 			qdel(src)
 		if(2)
-			if(prob(25))
+			if(prob(66))
 				qdel(src)
 			else
 				take_damage(health_max/2)
@@ -580,6 +581,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
 					L.changeStatus("knockdown", 3 SECONDS)
+					logTheThing(LOG_COMBAT, L, "gets horribly crushed in a door at [log_loc(L)]")
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)
