@@ -14303,6 +14303,7 @@
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
 	},
+/obj/machinery/espresso_machine,
 /turf/simulated/floor{
 	icon_state = "carpetS"
 	},
@@ -15893,6 +15894,9 @@
 /obj/machinery/glass_recycler,
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/small/floor,
+/obj/drink_rack/mug{
+	pixel_x = -26
+	},
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -19772,6 +19776,7 @@
 	desc = "A black countertop table for storing kitchen-y objects.";
 	name = "kitchen counter"
 	},
+/obj/item/storage/box/sushi_box,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gtR" = (
@@ -25868,6 +25873,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/item/storage/box/sushi_box,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mrV" = (
@@ -31813,11 +31819,8 @@
 /area/station/crew_quarters)
 "rhu" = (
 /obj/stool/bed/brig,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr";
-	throwforce = 0
-	},
 /obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red/side,
 /area/station/security/brig)
 "rhT" = (
@@ -32052,7 +32055,7 @@
 "rsR" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=arrivals";
+	codes_txt = "patrol;next_patrol=market";
 	location = "chapel"
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -39983,12 +39986,9 @@
 /area/station/science/lab)
 "xOy" = (
 /obj/stool/bed/brig,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr";
-	throwforce = 0
-	},
 /obj/item/clothing/suit/bedsheet/orange,
 /obj/machinery/light/incandescent,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red/side,
 /area/station/security/brig)
 "xPV" = (
@@ -115073,7 +115073,7 @@ xjf
 rRc
 gFh
 jdY
-tnA
+osI
 wPL
 tRY
 tvs
