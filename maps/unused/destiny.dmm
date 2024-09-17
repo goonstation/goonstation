@@ -526,8 +526,7 @@
 	})
 "ack" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent{
@@ -21478,9 +21477,7 @@
 	dir = 4
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -21667,57 +21664,23 @@
 /area/station/hallway/primary/north)
 "eAx" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -36588,15 +36551,9 @@
 	pixel_y = 2
 	},
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -37280,9 +37237,7 @@
 /area/station/hangar/qm)
 "mlY" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/disposal/mail/small{
 	dir = 1;
 	mail_tag = "brig";
@@ -51730,9 +51685,7 @@
 	pixel_x = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -55681,9 +55634,7 @@
 /area/station/crew_quarters/lounge)
 "vLx" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -11

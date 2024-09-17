@@ -22,7 +22,7 @@
 /datum/achievementReward/aicase/ai_ailes
 	title = "(AI Core Skin) Bulky"
 	desc = "Replaces your core with a bulky older model."
-	required_medal = "I'm In"
+	required_medal = "I'm in"
 	aiskin = "ailes"
 
 datum/achievementReward/aicase/ai_crt
@@ -58,7 +58,7 @@ datum/achievementReward/aicase/ai_industrial
 datum/achievementReward/aicase/ai_salvage
 	title = "(AI Core Skin) Salvaged"
 	desc = "Superficially smashes up your AI core a bit - for that really RUGGED aesthetic."
-	required_medal = "40k" //placeholder until salvagers get a greentext medal - ideally also have the core frame in the magpie use this skin
+	required_medal = "40K" //placeholder until salvagers get a greentext medal - ideally also have the core frame in the magpie use this skin
 	aiskin = "salvage"
 
 /datum/achievementReward/aicase/ai_shock

@@ -447,7 +447,7 @@ var/global/list/nuke_op_camo_matrix = null
 			target_y = T.y
 
 		var/turf/plant_location = locate(target_x, target_y, Z_LEVEL_STATION)
-		plant_location.AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
+		plant_location.AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE, "nuclear_bomb_pin", 'icons/obj/minimap/minimap_markers.dmi', "[marker_name] Plant Site")
 
 /datum/game_mode/nuclear/process()
 	set background = 1

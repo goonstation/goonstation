@@ -906,6 +906,7 @@
 					M.name = "commander's gloves"
 					M.real_name = "commander's gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#3c6dc3"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1077,6 +1078,7 @@
 					M.name = "CentCom gloves"
 					M.real_name = "CentCom gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					M.fingertip_color = "#d73715"
 					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
@@ -1410,7 +1412,7 @@
 /datum/achievementReward/beefriend
 	title = "(Reagent) Bee"
 	desc = "You're gonna burp one up, probably."
-	required_medal = "Bombini is missing!"
+	required_medal = "Bombini is Missing!"
 
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
@@ -1453,6 +1455,7 @@
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
+
 /datum/achievementReward/HotrodHelmet
 	title = "(Skin) Hotrod Welding Helmet"
 	desc = "Requires you to hold a welding helmet."

@@ -291,15 +291,6 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.color = "#f00"
 
-	proximity
-		name = "proximity turfs"
-		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf:checkinghasproximity)
-				img.app.color = "#0f0"
-			else if(theTurf:neighcheckinghasproximity)
-				img.app.color = "#f00"
-
 	areas
 		name = "areas"
 		help = "Differentiates between different areas. Also gives you area names because thats cool and stuff."
@@ -1000,12 +991,6 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.color = "#0000ff"
 			else
 				img.app.alpha = 0
-
-	checkinghasproximity
-		name = "checkinghasproximity"
-		help = "Green = yes. Red = no. Yellow = next to yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkinghasproximity ? "#0f0" : (theTurf.neighcheckinghasproximity ? "#ff0" : "#f00")
 
 	blood_owner/no_items
 		name = "blood owner - no items"

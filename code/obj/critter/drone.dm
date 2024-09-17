@@ -178,7 +178,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0)
 						continue
-					if (!(C.faction & FACTION_SYNDICATE))
+					if (!(FACTION_SYNDICATE in C.faction))
 						src.attack = 1
 					if (C.name == src.attacker)
 						src.attack = 1
@@ -609,7 +609,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		health = 800
 		maxhealth = 800
 		score = 500
-		droploot = /obj/item/currency/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
+		droploot = /obj/item/currency/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
 

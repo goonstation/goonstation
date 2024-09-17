@@ -1,9 +1,7 @@
+ABSTRACT_TYPE(/datum/bioEffect/power)
 /datum/bioEffect/power
-	name = "Cryokinesis"
-	desc = "Allows the subject to control ice and cold."
-	id = "cryokinesis"
-	msgGain = "You notice a strange cold tingle in your fingertips."
-	msgLose = "Your fingers feel warmer."
+	name = "parent_power"
+	id = "power_parent_do_not_use"
 	effectType = EFFECT_TYPE_POWER
 	cooldown = 600
 	probability = 66
@@ -11,7 +9,7 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
+	var/ability_path = null
 	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
@@ -54,6 +52,20 @@
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()
+
+/datum/bioEffect/power/cryokinesis
+	name = "Cryokinesis"
+	desc = "Allows the subject to control ice and cold."
+	id = "cryokinesis"
+	msgGain = "You notice a strange cold tingle in your fingertips."
+	msgLose = "Your fingers feel warmer."
+	effectType = EFFECT_TYPE_POWER
+	cooldown = 600
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/cryokinesis
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -180,7 +192,10 @@
 			the_server.eaten(owner)
 			using = FALSE
 			return
-
+		if (istype(the_object, /obj/item/implant))
+			var/obj/item/implant/implant = the_object
+			if (implant.owner)
+				implant.on_remove(implant.owner)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
@@ -193,21 +208,20 @@
 
 		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
 			var/obj/item/I = the_object
-			if(I)
-				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
-					I.storage?.hide_hud(owner)
-					logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
-					// Organs and body parts have special behaviors we need to account for
-					if (ishuman(owner))
-						var/mob/living/carbon/human/H = owner
-						if (istype(the_object, /obj/item/organ))
-							var/obj/item/organ/organ_obj = the_object
-							if (organ_obj.donor)
-								H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
-						else if (istype(the_object, /obj/item/parts))
-							var/obj/item/parts/part = the_object
-							part.delete()
-							H.hud.update_hands()
+			if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+				I.storage?.hide_hud(owner)
+				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
+				// Organs and body parts have special behaviors we need to account for
+				if (ishuman(owner))
+					var/mob/living/carbon/human/H = owner
+					if (istype(the_object, /obj/item/organ))
+						var/obj/item/organ/organ_obj = the_object
+						if (organ_obj.donor)
+							H.organHolder.drop_organ(the_object,H) //hide it inside self so it doesn't hang around until the eating is finished
+					else if (istype(the_object, /obj/item/parts))
+						var/obj/item/parts/part = the_object
+						part.delete()
+						H.hud.update_hands()
 			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
 				owner.visible_message(SPAN_ALERT("[owner] eats [the_object]."))
 				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
@@ -536,13 +550,13 @@
 		if (H.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = H.bioHolder.mobAppearance
 
-			var/col1 = AHs.customization_first_color
-			var/col2 = AHs.customization_second_color
-			var/col3 = AHs.customization_third_color
+			var/col1 = AHs.customizations["hair_bottom"].color
+			var/col2 = AHs.customizations["hair_middle"].color
+			var/col3 = AHs.customizations["hair_top"].color
 
-			AHs.customization_first_color = col3
-			AHs.customization_second_color = col1
-			AHs.customization_third_color = col2
+			AHs.customizations["hair_bottom"].color = col3
+			AHs.customizations["hair_middle"].color = col1
+			AHs.customizations["hair_top"].color = col2
 
 			H.visible_message(SPAN_NOTICE("<b>[H.name]</b>'s hair changes colors!"))
 			H.update_colorful_parts()
@@ -2304,6 +2318,7 @@
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"
 

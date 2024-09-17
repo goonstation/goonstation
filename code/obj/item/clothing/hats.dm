@@ -108,7 +108,7 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	desc = "This hood protects you from harmful biological contaminants. This one has a purple visor."
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
 
@@ -1518,6 +1518,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 		name = "tiger ears"
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
+
+/obj/item/clothing/head/headband/devil
+	name = "devil horns"
+	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
+	icon = 'icons/obj/clothing/item_hats.dmi'
+	wear_image_icon = 'icons/mob/clothing/head.dmi'
+	icon_state = "devil"
+	item_state = "devil"
 
 /obj/item/clothing/head/headband/antlers
 	name = "antlers"

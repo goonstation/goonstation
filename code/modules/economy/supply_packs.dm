@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/flour = 6,
 					/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig = 4,
-					/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 3,
+					/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/sugar = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/tortilla = 3,
@@ -417,6 +417,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
+
+/datum/supply_packs/janitor_sprayer
+	name = "WA-V3 Janitorial Sprayer"
+	desc = "x1 Brand new Wide Area V3 Cleaning Device, x1 Matching back-tank"
+	category = "Civilian Department"
+	containertype = /obj/storage/crate
+	containername = "WA-V3 Crate"
+	cost = PAY_TRADESMAN * 15 //pricy
+	contains = list(
+		/obj/item/gun/sprayer,
+		/obj/item/reagent_containers/glass/backtank
+	)
 
 /datum/supply_packs/hydronutrient
 	name = "Hydroponics: Nutrient Crate"

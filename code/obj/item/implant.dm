@@ -522,8 +522,8 @@ THROWING DARTS
 
 	deactivate()
 		. = ..()
-		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
-		C?.RemoveComponent(/datum/component/minimap_marker)
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
+		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
 
 	on_death()
 		src.deactivate()
@@ -532,13 +532,13 @@ THROWING DARTS
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 /obj/item/implant/pod_wars/syndicate
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 
 /** Deprecated **/
@@ -701,7 +701,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	/// You probably want to call this parent after exploding or whatever
 	proc/do_effect(power)
 		SHOULD_CALL_PARENT(TRUE)
-		if (. >= 6)
+		if (power >= 6)
 			src.owner.visible_message(SPAN_ALERT("<b>[src.owner][big_message]!</b>"))
 		else
 			src.owner.visible_message("[src.owner][small_message].")
@@ -737,7 +737,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		SPAWN(1)
 			T.hotspot_expose(800,125)
-			explosion_new(src, T, 7 * power, 1) //The . is the tally of explosionPower in this poor slob.
+			explosion_new(src, T, 7 * power, 1) //power is the tally of explosionPower in this poor slob.
 			if (ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
 				H.dump_contents_chance = 80 //hee hee
@@ -1471,6 +1471,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (src.reagents?.total_volume)
 				src.reagents.trans_to(owner, 1 * mult)
 
+		blowdart
+			name = "blowdart"
+			desc = "a sharp little dart with a little poison reservoir."
+			icon_state = "blowdart"
+			leaves_wound = FALSE
+			barbed = TRUE
+
+			New()
+				..()
+				implant_overlay = null
+
 		dart
 			name = "dart"
 			pull_out_name = "dart"
@@ -1571,19 +1582,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					syringe.do_heal(src.owner)
 			proc/set_owner(obj/item/tool/janktanktwo/injector)
 				src.syringe = injector
-
-
-
-
-	blowdart
-		name = "blowdart"
-		desc = "a sharp little dart with a little poison reservoir."
-		icon_state = "blowdart"
-		leaves_wound = FALSE
-
-		New()
-			..()
-			implant_overlay = null
 
 	flintlock
 		name= "flintlock round"

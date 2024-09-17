@@ -231,7 +231,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
-					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
+					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>", group = "storage_thud")
 				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
@@ -843,8 +843,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				for (var/obj/item/I in M)
 					if (istype(I, /obj/item/implant))
 						I.set_loc(meatcube)
-
-					I.set_loc(src)
+					else
+						I.set_loc(src)
 
 			src.locked = FALSE
 

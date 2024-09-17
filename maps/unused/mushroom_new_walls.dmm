@@ -14157,21 +14157,11 @@
 /area/station/crew_quarters/cafeteria)
 "buL" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "buO" = (
@@ -14646,9 +14636,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /turf/simulated/floor/blueblack,
 /area/station/crew_quarters/captain)
 "bNO" = (
@@ -19069,9 +19057,7 @@
 /obj/item/pen,
 /obj/item/paper_bin,
 /obj/machinery/flasher/minibrig/new_walls/north,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "fKx" = (
