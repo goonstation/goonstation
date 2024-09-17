@@ -1463,19 +1463,6 @@
 					playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 					swap_heads(held_head, user)
 					return //swap_heads handles all the rest
-					//Borgs die to parts now the moment they cease having a head, so none of the code below is relevant anymore
-					/*
-					if(src.part_head)
-						boutput(user, SPAN_ALERT("[src] already has a head part."))
-						return
-					src.part_head = RP
-					if (src.part_head.brain)
-						if(src.part_head.brain.owner)
-							if(src.part_head.brain.owner.current)
-								src.gender = src.part_head.brain.owner.current.gender
-								if(src.part_head.brain.owner.current.client)
-									src.lastKnownIP = src.part_head.brain.owner.current.client.address
-							src.part_head.brain.owner.transfer_to(src)*/
 				if("l_arm")
 					if(src.part_arm_l)
 						boutput(user, SPAN_ALERT("[src] already has a left arm part."))
