@@ -31801,6 +31801,13 @@
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
+"cvB" = (
+/obj/disposalpipe/segment/brig,
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "cvI" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
@@ -35077,9 +35084,6 @@
 	},
 /area/station/hydroponics/bay)
 "gCT" = (
-/obj/railing/yellow{
-	dir = 4
-	},
 /obj/machinery/conveyor/SN{
 	id = "east";
 	move_lag = 10;
@@ -41087,6 +41091,7 @@
 	id = "west";
 	position = 1
 	},
+/obj/railing/yellow,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "oXf" = (
@@ -43425,7 +43430,6 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "sBM" = (
-/obj/decal/stripe_delivery,
 /obj/machinery/conveyor/WN{
 	id = "east";
 	move_lag = 10;
@@ -43793,6 +43797,15 @@
 /obj/landmark/start/job/head_of_security,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/west,
 /area/station/bridge)
+"tbQ" = (
+/obj/disposalpipe/segment/brig,
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/neutral/side{
+	dir = 8
+	},
+/area/station/hallway/primary/east)
 "tcD" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	name = "Detective's Office";
@@ -46724,6 +46737,7 @@
 /obj/machinery/computer/barcode{
 	dir = 8
 	},
+/obj/railing/yellow,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "xuS" = (
@@ -103061,10 +103075,10 @@ tmG
 aLv
 aBW
 aBW
-aBW
-aOu
+cvB
+tbQ
+tbQ
 aPE
-aOu
 aOu
 aOu
 bgG
