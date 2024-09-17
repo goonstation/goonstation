@@ -951,6 +951,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			..()
 			src.color = random_saturated_hex_color(1)
 
+
 /obj/item/clothing/head/beret/prisoner
 	name = "prisoner's beret"
 	desc = "This is a prisoner's beret. <i>Allons enfants de la Patrie, Le jour de gloire est arrivé!</i>"
@@ -958,6 +959,26 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	New()
 		..()
 		src.color = "#FF8800"
+
+/obj/item/clothing/head/beret/dyeable
+	name = "dyeable beret"
+	desc = "Can be dyed with hair dye. Obviously."
+	icon_state = "beret_base"
+	item_state = "dye_beret"
+	var/new_color
+
+	New()
+		..()
+		src.color = "FFFFFF"
+
+	attackby(obj/item/dye_bottle/W, mob/user)
+		. = ..()
+		if (istype(W, /obj/item/dye_bottle))
+			new_color = W.customization_first_color
+			src.color = new_color
+			src.UpdateIcon()
+			user.update_clothing()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [his_or_her(user)] beret."))
 
 /obj/item/clothing/head/bandana
 	name = "bandana"
