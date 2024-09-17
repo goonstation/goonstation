@@ -82,7 +82,6 @@ var/datum/job_controller/job_controls
 		if (!valid_jobs.Find(job))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
-		var/datum/preferences/P = player.client.preferences
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
 			if ((!job.allow_traitors && player.mind.special_role))
