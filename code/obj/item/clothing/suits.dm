@@ -1116,7 +1116,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 		New()
 			..()
-			src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+			src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 // LONG SHIRTS
 // No they're not sweaters
