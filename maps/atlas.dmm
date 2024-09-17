@@ -4470,6 +4470,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "azr" = (
@@ -8477,6 +8478,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aVh" = (
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/science/research_director)
 "aVi" = (
@@ -11744,6 +11746,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -14378,6 +14381,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"jEH" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/lab)
 "jEN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17117,6 +17124,13 @@
 "nZX" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
+"oam" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/storage)
 "oao" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -18276,6 +18290,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "qok" = (
@@ -19163,6 +19178,7 @@
 	icon_state = "1-8"
 	},
 /obj/item/device/radio/beacon,
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "scE" = (
@@ -22194,6 +22210,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "xaj" = (
@@ -22397,6 +22414,15 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"xre" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/research_outpost/hangar)
 "xsb" = (
 /obj/machinery/nanofab/refining,
 /obj/machinery/light_switch/east,
@@ -47300,7 +47326,7 @@ aaa
 aaa
 aIR
 tFL
-uCu
+jEH
 cUW
 fJJ
 mno
@@ -49416,7 +49442,7 @@ aaa
 sTG
 qcw
 kRO
-hgm
+oam
 qAL
 gRr
 htT
@@ -51229,7 +51255,7 @@ rwZ
 tCd
 dCV
 gtu
-feJ
+xre
 sEl
 cpN
 aaa
