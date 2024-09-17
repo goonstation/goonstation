@@ -89,7 +89,7 @@ var/datum/job_controller/job_controls
 				return
 			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
 				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)))
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
 				return
 			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
 				return
