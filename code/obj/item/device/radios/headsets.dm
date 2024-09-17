@@ -234,31 +234,27 @@
 
 /obj/item/device/radio/headset/command/rd
 	name = "research director's headset"
-	desc = "This headset can receive on the Medical channel in addition to other secure frequencies. The 'sci' part of 'medsci'."
+	desc = "This headset seems to be covered in a large variety of burns."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"r" = R_FREQ_RESEARCH,
-		"m" = R_FREQ_MEDICAL,
 		)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
 		"r" = RADIOCL_RESEARCH,
-		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "rd"
 	icon_tooltip = "Research Director"
 
 /obj/item/device/radio/headset/command/md
 	name = "medical director's headset"
-	desc = "This headset can receive on the Research channel in addition to other secure frequencies. The 'med' part of 'medsci'."
+	desc = "Perfect for shouting at the Chief Engineer that the reactor is killing people."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
-		"r" = R_FREQ_RESEARCH,
 		"m" = R_FREQ_MEDICAL,
 		)
 	secure_classes = list(
 		"h" = RADIOCL_COMMAND,
-		"r" = RADIOCL_RESEARCH,
 		"m" = RADIOCL_MEDICAL,
 		)
 	icon_override = "md"
