@@ -1,4 +1,8 @@
 
+(t)tue sep 17 24
+(u)aloe
+(+)You can once again suffer from multiple kinds of allergies. If you really want to. For whatever reason.
+(+)Epinephrine is a bit better at purging histamine.
 (t)sun sep 15 24
 (u)Lord_Earthfire
 (p)20665
