@@ -886,7 +886,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	spawn_contents = list(/obj/item/storage/box/cutlery,\
 	/obj/item/kitchen/rollingpin,\
 	/obj/item/paper/book/from_file/cookbook,\
-	/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 5)
+	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 5)
 
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
@@ -1074,7 +1074,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/kitchen/utensil/knife,
 	/obj/item/kitchen/utensil/spoon,
 	/obj/item/kitchen/rollingpin,
-	/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 5)
+	/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 5)
 
 /obj/storage/secure/closet/barber
 	spawn_contents = list(/obj/item/clothing/under/misc/barber = 3,

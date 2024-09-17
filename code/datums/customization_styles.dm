@@ -411,6 +411,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Bangs: Mysterious"
 				id = "mysterybangs"
 				random_allowed = FALSE
+			vbangs
+				name = "V-Bangs"
+				id = "v_bangs"
+				random_allowed = FALSE
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"
@@ -471,6 +475,14 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Half-Shaved: Right"
 				id = "halfshavedL"
 				gender = MASCULINE | FEMININE
+			streakbangR
+				name = "Bang: Streak Right"
+				id = "streakbangR"
+				random_allowed = FALSE
+			streakbangL
+				name = "Bang: Streak Left"
+				id = "streakbangL"
+				random_allowed = FALSE
 			kingofrockandroll
 				name = "Kingmetal"
 				id = "king-of-rock-and-roll"
