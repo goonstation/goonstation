@@ -7836,11 +7836,10 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aMp" = (
-/turf/unsimulated/floor{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "floor_dark"
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 9
 	},
+/turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aMq" = (
 /obj/window/cubicle{
@@ -8431,12 +8430,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"aOm" = (
-/turf/unsimulated/floor{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "floor_dark"
-	},
-/area/marsoutpost)
 "aOn" = (
 /obj/item/mining_tool,
 /obj/item/raw_material/rock,
@@ -9271,12 +9264,10 @@
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aQO" = (
-/turf/unsimulated/floor{
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "floor_dark";
-	opacity = 1
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 6
 	},
+/turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "aQP" = (
 /obj/lattice{
@@ -15760,11 +15751,10 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "blB" = (
-/turf/unsimulated/floor{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "floor_dark";
-	opacity = 1
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 8
 	},
+/turf/unsimulated/floor/grime,
 /area/marsoutpost)
 "blC" = (
 /obj/item/caution,
@@ -28665,7 +28655,6 @@
 "cjc" = (
 /obj/racing_clowncar/kart/red{
 	dir = 8;
-	icon_state = "kart_red_u";
 	returnpoint = "kart1"
 	},
 /turf/unsimulated/floor{
@@ -28716,7 +28705,6 @@
 "cjg" = (
 /obj/racing_clowncar/kart/red{
 	dir = 8;
-	icon_state = "kart_red_u";
 	returnpoint = "kart6"
 	},
 /turf/unsimulated/floor{
@@ -29133,7 +29121,6 @@
 "cko" = (
 /obj/racing_clowncar/kart/red{
 	dir = 8;
-	icon_state = "kart_red_u";
 	returnpoint = "kart4"
 	},
 /turf/unsimulated/floor{
@@ -60916,6 +60903,12 @@
 	icon_state = "rootfloor_3"
 	},
 /area/catacombs)
+"jcC" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 1
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "jcL" = (
 /obj/grille/steel,
 /obj/cable,
@@ -67066,6 +67059,12 @@
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
+"obB" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "obN" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
@@ -67906,12 +67905,6 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
-"oSO" = (
-/turf/unsimulated/wall/auto/lead/white{
-	explosion_resistance = 999999;
-	name = "virtual lead wall"
-	},
-/area/sim/gunsim/lobby)
 "oTk" = (
 /turf/unsimulated/floor/blackwhite{
 	dir = 10
@@ -74726,8 +74719,7 @@
 /area/crypt/sigma/lab)
 "uCm" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
-	dir = 8;
-	explosion_resistance = 999999
+	dir = 8
 	},
 /area/sim/gunsim/arena)
 "uCF" = (
@@ -76715,7 +76707,6 @@
 /area/sim/gunsim/maintenance)
 "wcT" = (
 /turf/unsimulated/wall/auto/lead/white{
-	explosion_resistance = 999999;
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/arena)
@@ -77711,7 +77702,6 @@
 "wNY" = (
 /obj/death_button/create_dummy,
 /turf/unsimulated/wall/auto/lead/white{
-	explosion_resistance = 999999;
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/arena)
@@ -79249,8 +79239,7 @@
 	})
 "xVg" = (
 /obj/machinery/door/airlock/pyro/classic{
-	name = "Crew Quarters";
-	tag = null
+	name = "Crew Quarters"
 	},
 /turf/simulated/floor/grime,
 /area/observatory)
@@ -79487,6 +79476,12 @@
 "ybJ" = (
 /turf/unsimulated/floor/dojo/stone,
 /area/titlescreen)
+"ybN" = (
+/obj/mapping_helper/turf/floor/darkener{
+	dir = 5
+	},
+/turf/unsimulated/floor/grime,
+/area/marsoutpost)
 "ybQ" = (
 /obj/decal/cleanable/blood,
 /obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
@@ -132035,7 +132030,7 @@ aTs
 aTs
 aTs
 aTs
-aOm
+blB
 aTs
 aIe
 aIe
@@ -135052,7 +135047,7 @@ aKv
 aJX
 aJW
 aTs
-aMp
+jcC
 aMS
 aNx
 aNx
@@ -135354,7 +135349,7 @@ aJX
 aKV
 aLe
 aTs
-aMp
+jcC
 kCa
 aKS
 aKS
@@ -135656,7 +135651,7 @@ aJX
 aKV
 aLf
 aTs
-aMp
+jcC
 aMS
 aNy
 aNy
@@ -135958,7 +135953,7 @@ aJX
 aKa
 aKa
 aTs
-aMp
+ybN
 aTs
 czN
 aOr
@@ -139588,8 +139583,8 @@ aTs
 aTs
 aTs
 aTs
-aQO
-aQO
+ybN
+obB
 aQO
 aTs
 aTs
@@ -150926,9 +150921,9 @@ dkY
 aaa
 aaa
 aaa
-oSO
-oSO
-oSO
+fjo
+fjo
+fjo
 gJi
 wcT
 wcT
@@ -151228,7 +151223,7 @@ dkY
 aaa
 aaa
 aaa
-oSO
+fjo
 xxJ
 mKt
 mKt
@@ -151530,7 +151525,7 @@ dkY
 aaa
 aaa
 aaa
-oSO
+fjo
 hEq
 mKt
 mKt
@@ -151832,7 +151827,7 @@ dkY
 aaa
 aaa
 aaa
-oSO
+fjo
 ygm
 mKt
 dEv
@@ -152134,7 +152129,7 @@ dkY
 aaa
 aaa
 aaa
-oSO
+fjo
 dKU
 mKt
 dEv
@@ -152436,7 +152431,7 @@ dkY
 aaa
 aaa
 aaa
-oSO
+fjo
 vqe
 mKt
 mKt
@@ -152738,7 +152733,7 @@ dkY
 aaa
 aaa
 aaa
-oSO
+fjo
 pQB
 mKt
 mKt
@@ -153040,8 +153035,8 @@ dkY
 aaa
 aaa
 aaa
-oSO
-oSO
+fjo
+fjo
 gIe
 fjo
 wcT
@@ -154559,17 +154554,17 @@ fVo
 fVo
 fVo
 fVo
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
 aaa
 "}
 (249,1,1) = {"
@@ -154861,7 +154856,7 @@ txF
 txF
 jzk
 fVo
-oSO
+fjo
 hNm
 tHg
 fsA
@@ -154871,7 +154866,7 @@ vlj
 eif
 iDk
 pwe
-oSO
+fjo
 aaa
 "}
 (250,1,1) = {"
@@ -155163,7 +155158,7 @@ jzk
 txF
 txF
 fVo
-oSO
+fjo
 hVz
 pyI
 vCV
@@ -155173,7 +155168,7 @@ isZ
 gsZ
 tLq
 jvX
-oSO
+fjo
 aaa
 "}
 (251,1,1) = {"
@@ -155465,7 +155460,7 @@ fVo
 fVo
 txF
 fVo
-oSO
+fjo
 tHO
 jog
 isZ
@@ -155475,7 +155470,7 @@ iDk
 tGw
 wOX
 fBX
-oSO
+fjo
 aaa
 "}
 (252,1,1) = {"
@@ -155767,7 +155762,7 @@ wbY
 jzk
 txF
 fVo
-oSO
+fjo
 tFx
 jog
 nHE
@@ -155777,7 +155772,7 @@ fNM
 nrU
 isZ
 mFv
-oSO
+fjo
 aaa
 "}
 (253,1,1) = {"
@@ -156069,7 +156064,7 @@ fVo
 fVo
 txF
 fVo
-oSO
+fjo
 vfY
 jog
 iDk
@@ -156079,7 +156074,7 @@ iDk
 hQP
 iDk
 wnl
-oSO
+fjo
 aaa
 "}
 (254,1,1) = {"
@@ -156371,7 +156366,7 @@ wbY
 jzk
 txF
 fVo
-oSO
+fjo
 eTe
 jog
 fNM
@@ -156381,7 +156376,7 @@ fNM
 fNM
 gsZ
 oJA
-oSO
+fjo
 aaa
 "}
 (255,1,1) = {"
@@ -156673,7 +156668,7 @@ fVo
 fVo
 txF
 fVo
-oSO
+fjo
 wxM
 qEK
 iDk
@@ -156683,7 +156678,7 @@ iDk
 oIH
 iDk
 nXX
-oSO
+fjo
 aaa
 "}
 (256,1,1) = {"
@@ -156985,7 +156980,7 @@ naR
 uaH
 fNM
 llH
-oSO
+fjo
 aaa
 "}
 (257,1,1) = {"
@@ -157277,17 +157272,17 @@ fVo
 fVo
 fVo
 fVo
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
-oSO
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
+fjo
 aaa
 "}
 (258,1,1) = {"
