@@ -865,7 +865,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
 		return effects.Remove(effect.id)
 
-	proc/RemoveAllEffects(var/type = null, var/ignoreMagic = TRUE)
+	///ignoreMagic means "do not remove magical bioeffects"
+	proc/RemoveAllEffects(var/type = null, var/ignoreMagic = FALSE)
 		for(var/D as anything in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
