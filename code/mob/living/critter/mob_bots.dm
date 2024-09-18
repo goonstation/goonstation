@@ -439,6 +439,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/robotic/securitron, proc/change_hand_it
 	ai_type = /datum/aiHolder/patroller/packet_based/securitron
 	is_npc = TRUE
 	ai_attacks_neutral = TRUE
+	reagent_capacity = 0
 	var/random_name = TRUE
 	var/control_freq = FREQ_BOT_CONTROL
 	var/chase_speed_bonus = 0.9
