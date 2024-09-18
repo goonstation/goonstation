@@ -1294,3 +1294,18 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
 	logTheThing(LOG_DIARY, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
 	message_admins("[key_name(usr)] [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+
+/client/proc/toggle_ghost_invisibility()
+	set name = "Toggle Ghost Invisibility"
+	set desc = "Toggle whether ghosts are invisible or not mid-round"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (ghost_invisibility == INVIS_GHOST)
+		change_ghost_invisibility(INVIS_NONE)
+		message_admins("[key_name(usr)] made ghosts visible.")
+	else
+		change_ghost_invisibility(INVIS_GHOST)
+		message_admins("[key_name(usr)] made ghosts invisible.")
+	logTheThing(LOG_ADMIN, usr, "toggled ghost (in)visibility")

@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/obj/item)
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
 
-			tooltip_rebuild = 0
+				tooltip_rebuild = 0
 
 		usr.moused_over(src)
 
