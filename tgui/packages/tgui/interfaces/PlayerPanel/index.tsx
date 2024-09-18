@@ -135,7 +135,7 @@ export const PlayerPanel = () => {
   const { act, data } = useBackend<PlayerPanelData>();
   const { players } = data;
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState<SortConfig>(null);
+  const [sort, setSort] = useState<SortConfig | null>(null);
   let resolvedPlayers = Object.keys(players).map((ckey) => players[ckey]);
 
   // generate all values up front (to avoid having to generate multiple times)
@@ -147,6 +147,7 @@ export const PlayerPanel = () => {
     prevPlayerValues[currPlayer.ckey] = columns.reduce(
       (prevValues, currColumn) => {
         const { id, valueSelector } = currColumn;
+        // @ts-ignore TODO-REACT strictNullChecks issue
         prevValues[id] = valueSelector({
           column: currColumn,
           row: currPlayer,
@@ -172,6 +173,7 @@ export const PlayerPanel = () => {
     const sortColumn = columns.find((column) => column.id === sort.id);
     if (sortColumn) {
       resolvedPlayers.sort((a, b) => {
+        // @ts-ignore TODO-REACT strictNullChecks issue
         let comparison = sortColumn.sorter(
           playerValues[a.ckey][sortColumn.id],
           playerValues[b.ckey][sortColumn.id],
@@ -211,7 +213,7 @@ export const PlayerPanel = () => {
                                 : SortDirection.Asc,
                               id: column.id,
                             })
-                        : null
+                        : undefined
                     }
                     sortDirection={columnSort?.dir}
                   >
@@ -229,12 +231,15 @@ export const PlayerPanel = () => {
                   const { id, template } = column;
                   return (
                     <Table.Cell key={id}>
-                      {template({
-                        act,
-                        column,
-                        row: player,
-                        value: playerValues[ckey][id],
-                      })}
+                      {
+                        // @ts-ignore TODO-REACT strictNullChecks issue
+                        template({
+                          act,
+                          column,
+                          row: player,
+                          value: playerValues[ckey][id],
+                        })
+                      }
                     </Table.Cell>
                   );
                 })}

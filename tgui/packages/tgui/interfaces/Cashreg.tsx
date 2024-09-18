@@ -46,7 +46,9 @@ export const Cashreg = () => {
               disabled={active_transaction}
               onClick={
                 owner
-                  ? (is_authorised || is_owner) && (() => act('reset'))
+                  ? is_authorised || is_owner
+                    ? () => act('reset')
+                    : undefined
                   : () => act('swipe_owner')
               }
               tooltip={

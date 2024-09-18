@@ -32,7 +32,10 @@ interface MixingDeskData {
 export const MixingDesk = () => {
   const { act, data } = useBackend<MixingDeskData>();
   const { voices, selected_voice, say_popup } = data;
-  const [message, setMessage] = useSharedState<string | null>('message', null);
+  const [message, setMessage] = useSharedState<string | undefined>(
+    'message',
+    undefined,
+  );
 
   const sayPopup = () => (
     <Modal>
