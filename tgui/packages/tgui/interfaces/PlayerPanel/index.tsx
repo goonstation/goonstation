@@ -147,11 +147,12 @@ export const PlayerPanel = () => {
     prevPlayerValues[currPlayer.ckey] = columns.reduce(
       (prevValues, currColumn) => {
         const { id, valueSelector } = currColumn;
-        // @ts-ignore TODO-REACT strictNullChecks issue
-        prevValues[id] = valueSelector({
-          column: currColumn,
-          row: currPlayer,
-        });
+        if (valueSelector) {
+          prevValues[id] = valueSelector({
+            column: currColumn,
+            row: currPlayer,
+          });
+        }
         return prevValues;
       },
       {},
@@ -171,10 +172,10 @@ export const PlayerPanel = () => {
   }
   if (sort) {
     const sortColumn = columns.find((column) => column.id === sort.id);
-    if (sortColumn) {
+    const sorter = sortColumn?.sorter;
+    if (sorter) {
       resolvedPlayers.sort((a, b) => {
-        // @ts-ignore TODO-REACT strictNullChecks issue
-        let comparison = sortColumn.sorter(
+        let comparison = sorter(
           playerValues[a.ckey][sortColumn.id],
           playerValues[b.ckey][sortColumn.id],
         );
@@ -231,15 +232,13 @@ export const PlayerPanel = () => {
                   const { id, template } = column;
                   return (
                     <Table.Cell key={id}>
-                      {
-                        // @ts-ignore TODO-REACT strictNullChecks issue
+                      {template &&
                         template({
                           act,
                           column,
                           row: player,
                           value: playerValues[ckey][id],
-                        })
-                      }
+                        })}
                     </Table.Cell>
                   );
                 })}
