@@ -149,9 +149,14 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 	New()
 		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
 		src.weed_prefixes = list()
 		// stupid bullshit because apparently icon_state depends on the plant's name
 		src.override_icon_state = initial(src.name)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
 
 	HYPharvested_proc(obj/machinery/plantpot/POT, mob/user)
 		// check if we need to add a suffix
