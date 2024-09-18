@@ -300,7 +300,8 @@
 	var/image/head
 	amount = 1
 	max_stack = 50
-	appearance_flags = RESET_COLOR | RESET_ALPHA | LONG_GLIDE | PIXEL_SCALE
+	appearance_flags = LONG_GLIDE | PIXEL_SCALE | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	move_triggered = 1
 
 	New()
@@ -607,6 +608,7 @@
 	var/spread_base = 40
 	var/max_draw = 3
 	recoil_enabled = FALSE
+	pickup_sfx = null
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
@@ -637,29 +639,38 @@
 				var/obj/item/quiver/Q = H.back
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
-					loaded = I
-					I.set_loc(src)
-					overlays += I
+					src.loadArrow(I, user)
 					Q.updateAppearance()
 			if(istype(H.belt, /obj/item/quiver))
 				var/obj/item/quiver/Q = H.belt
 				var/obj/item/arrow/I = Q.getArrow(user)
 				if(I)
-					loaded = I
-					I.set_loc(src)
-					overlays += I
+					src.loadArrow(I, user)
 					Q.updateAppearance()
 		return
 
+	proc/loadArrow(obj/item/arrow/arrow, mob/user)
+		if (arrow.amount > 1)
+			arrow.change_stack_amount(-1)
+			arrow = arrow.clone(src)
+		else
+			user.drop_item(arrow)
+		arrow.plane = initial(arrow.plane)
+		arrow.layer = initial(arrow.layer)
+		src.loaded = arrow
+		arrow.set_loc(src)
+		src.vis_contents += arrow
+		playsound(get_turf(src), 'sound/effects/bow_nock.ogg', 60, FALSE)
+
 	attack_hand(var/mob/user)
-		if (!loaded && user.is_in_hands(src))
-			loadFromQuiver(user)
+		if (!src.loaded && user.is_in_hands(src))
+			src.loadFromQuiver(user)
 
 		if (loaded && user.is_in_hands(src))
-			user.put_in_hand_or_drop(loaded)
+			user.put_in_hand_or_drop(src.loaded)
 			boutput(user, SPAN_NOTICE("You unload the arrow from the bow."))
-			overlays.len = 0
-			loaded = null
+			src.vis_contents -= src.loaded
+			src.loaded = null
 		else
 			..()
 
@@ -711,7 +722,7 @@
 		if (!loaded)
 			boutput(user, SPAN_ALERT("Nothing is loaded in the bow!"))
 			return 0
-		overlays.len = 0
+		src.vis_contents -= src.loaded
 		var/obj/item/implant/projectile/body_visible/arrow/A = new
 		A.setMaterial(loaded.head_material, appearance = 0, setname = 0)
 		A.arrow = loaded
@@ -780,14 +791,5 @@
 			boutput(user, SPAN_ALERT("An arrow is already loaded onto the bow."))
 			return
 
-		if(I.amount > 1)
-			var/obj/item/arrow/C = I.clone(src)
-			I.change_stack_amount(-1)
-			overlays += C
-			loaded = C
-		else
-			overlays += I
-			user.u_equip(I)
-			loaded = I
-			I.set_loc(src)
-			playsound(user, 'sound/effects/bow_nock.ogg', 60, FALSE)
+		src.loadArrow(I, user)
+
