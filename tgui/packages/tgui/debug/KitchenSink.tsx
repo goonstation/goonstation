@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { Flex, Section, Tabs } from 'tgui-core/components';
 
+import { useSharedState } from '../backend';
 import { Pane, Window } from '../layouts';
 
 const r = require.context('../stories', false, /\.stories\.tsx$/);
@@ -23,8 +24,10 @@ const getStories = () => r.keys().map((path) => r(path));
 
 export const KitchenSink = (props) => {
   const { panel } = props;
-  // TODO-REACT: Find a way to use Themes.stories.tsx's theme
-  const [theme] = useState();
+  const [theme] = useSharedState<string | undefined>(
+    'kitchenSinkTheme',
+    undefined,
+  );
   const [pageIndex, setPageIndex] = useState(0);
   const stories = getStories();
   const story = stories[pageIndex];
