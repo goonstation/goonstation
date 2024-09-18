@@ -1052,7 +1052,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				continue
 			if (!I.inhand_image)
 				I.inhand_image = image(I.inhand_image_icon, "", HH.render_layer)
-			var/suffix = I.two_handed ? "-LR" : "[HH.suffix]"
+			var/suffix = I.two_handed ? "-LR" : HH.suffix
 			I.inhand_image.icon_state = I.item_state ? "[I.item_state][suffix]" : "[I.icon_state][suffix]"
 			I.inhand_image.pixel_x = HH.offset_x
 			I.inhand_image.pixel_y = HH.offset_y
