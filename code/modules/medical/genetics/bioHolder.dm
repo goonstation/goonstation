@@ -758,12 +758,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(power) newEffect.power = power
 			if(timeleft) newEffect.timeLeft = timeleft
 			if(magical)
-				newEffect.curable_by_mutadone = 0
+				newEffect.curable_by_mutadone = FALSE
 				newEffect.stability_loss = 0
-				newEffect.can_scramble = 0
-				newEffect.can_reclaim = 0
+				newEffect.can_scramble = FALSE
+				newEffect.can_reclaim = FALSE
 				newEffect.degrade_to = null
-				newEffect.can_copy = 0
+				newEffect.can_copy = FALSE
+				newEffect.is_magical = TRUE
 
 			if(safety && istype(newEffect, /datum/bioEffect/power))
 				// Only powers have safety ("synced" i.e. safe for user)
@@ -864,17 +865,18 @@ var/list/datum/bioEffect/mutini_effects = list()
 		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
 		return effects.Remove(effect.id)
 
-	proc/RemoveAllEffects(var/type = null)
+	///ignoreMagic means "do not remove magical bioeffects"
+	proc/RemoveAllEffects(var/type = null, var/ignoreMagic = FALSE)
 		for(var/D as anything in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				RemoveEffect(BE.id)
-				BE.owner = null
-				BE.holder = null
-				if(istype(BE, /datum/bioEffect/power))
-					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability?.owner = null
-				//qdel(BE)
+				if(!ignoreMagic || ignoreMagic && !BE.is_magical) // No removing hairy trait or job traits!
+					RemoveEffect(BE.id)
+					BE.owner = null
+					BE.holder = null
+					if(istype(BE, /datum/bioEffect/power))
+						var/datum/bioEffect/power/BEP = BE
+						BEP?.ability?.owner = null
 		return 1
 
 	proc/RemoveAllPoolEffects(var/type = null)
