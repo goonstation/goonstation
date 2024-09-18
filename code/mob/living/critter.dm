@@ -1039,7 +1039,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		handcount++
 		if (HH.object_for_inhand)
 			var/obj/item/I = new HH.object_for_inhand
-			var/suffix = I.two_handed ? "-LR" : "[HH.suffix]"
+			var/suffix = I.two_handed ? "-LR" : HH.suffix
 			var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][suffix]",
 									layer = HH.render_layer, pixel_x = HH.offset_x, pixel_y = HH.offset_y)
 			qdel(I)
