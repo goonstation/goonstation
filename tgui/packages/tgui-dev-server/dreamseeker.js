@@ -33,7 +33,8 @@ export class DreamSeeker {
     logger.log(
       `topic call at ${this.client.defaults.baseURL + '/dummy?' + query}`,
     );
-    return this.client.get('/dummy?' + query);
+    // TODO-REACT
+    // return this.client.get('/dummy?' + query);
   }
 }
 
