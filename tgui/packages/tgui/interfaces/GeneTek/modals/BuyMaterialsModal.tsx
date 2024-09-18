@@ -17,7 +17,7 @@ export const BuyMaterialsModal = (props) => {
   const maxBuyMats = props.maxAmount;
   const { budget, costPerMaterial } = data;
 
-  const resolvedBuyMats = Math.min(buyMats, maxBuyMats);
+  const resolvedBuyMats = Math.min(buyMats || maxBuyMats, maxBuyMats);
 
   return (
     <Modal full>
@@ -26,7 +26,7 @@ export const BuyMaterialsModal = (props) => {
           <Knob
             inline
             value={resolvedBuyMats}
-            onChange={(e, value) => setBuyMats(value)}
+            onChange={(_e, value) => setBuyMats(value)}
             minValue={1}
             maxValue={maxBuyMats}
           />

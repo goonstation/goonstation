@@ -45,10 +45,11 @@ export const Gameclock = () => {
             icon={helpModalOpen ? 'xmark' : 'question'}
             color={helpModalOpen && 'orange'}
             onClick={
-              !configModalOpen &&
-              (() => {
-                setHelpModalOpen(!helpModalOpen);
-              })
+              !configModalOpen
+                ? () => {
+                    setHelpModalOpen(!helpModalOpen);
+                  }
+                : undefined
             }
           />
         </Box>

@@ -23,8 +23,11 @@ export const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
   const [rotate, setRotate] = useState(0);
 
   const findStampPosition = (e: MouseEvent) => {
-    let rotating: boolean;
+    let rotating: boolean = false;
     const windowRef = document.querySelector('.Layout__content');
+    if (!windowRef) {
+      return;
+    }
     if (e.shiftKey) {
       rotating = true;
     }
@@ -132,7 +135,7 @@ const Stamp: React.FC<StampProps> = (props) => {
   };
   return props.image.sprite.match('stamp-.*') ? (
     <img
-      id={props.activeStamp && 'stamp'}
+      id={props.activeStamp ? 'stamp' : undefined}
       style={stampTransform}
       className="paper__stamp"
       src={resolveAsset(props.image.sprite)}

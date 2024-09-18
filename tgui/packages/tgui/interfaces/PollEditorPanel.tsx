@@ -29,11 +29,11 @@ interface PollEditorPanelState {
 
 interface SavePayload {
   alertPlayers: boolean;
-  expiryType: ExpiryType;
+  expiryType: ExpiryType | undefined;
   expiryValue: string;
   multipleChoice: boolean;
   options: string[];
-  servers: string;
+  servers: string | undefined;
   title: string;
 }
 

@@ -113,7 +113,7 @@ const Occupant = () => {
         </>
       }
     >
-      {!!occupant && (
+      {!!occupant && !!occupantStatus && (
         <>
           <LabeledList>
             <LabeledList.Item label="Status">

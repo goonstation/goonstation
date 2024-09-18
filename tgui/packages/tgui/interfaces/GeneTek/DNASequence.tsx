@@ -34,7 +34,7 @@ export const DNASequence = (props) => {
   const sequence = gene.dna;
   let allGood = true;
 
-  const blocks = [];
+  const blocks: any[][] = [];
   for (let i = 0; i < sequence.length; i++) {
     if (i % 4 === 0) {
       blocks.push([]);

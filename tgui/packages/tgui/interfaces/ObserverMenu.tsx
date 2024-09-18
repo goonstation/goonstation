@@ -31,7 +31,7 @@ interface Observables {
 const ObserverButton = (props) => {
   const { act } = useBackend();
   const { obsObject } = props;
-  let icon: string | null = null;
+  let icon: string | undefined;
   let displayed_name = obsObject.name;
   let extra: string | null = null;
   if (obsObject.dead) {

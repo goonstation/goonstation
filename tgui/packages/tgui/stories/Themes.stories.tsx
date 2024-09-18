@@ -13,8 +13,11 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
-  const [theme, setTheme] = useLocalState('kitchenSinkTheme', undefined);
+const Story = () => {
+  const [theme, setTheme] = useLocalState<string | undefined>(
+    'kitchenSinkTheme',
+    undefined,
+  );
   return (
     <Section>
       <LabeledList>
@@ -22,7 +25,7 @@ const Story = (props) => {
           <Input
             placeholder="theme_name"
             value={theme}
-            onInput={(e, value) => setTheme(value)}
+            onInput={(_e, value) => setTheme(value)}
           />
         </LabeledList.Item>
       </LabeledList>
