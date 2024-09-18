@@ -74,7 +74,7 @@ interface BioEffect {
   dna: BioEffectDNA[];
 }
 
-interface BioEffectDNA {
+export interface BioEffectDNA {
   pair: string;
   style: string;
   marker: string;
