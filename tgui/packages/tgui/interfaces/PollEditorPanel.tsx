@@ -29,11 +29,11 @@ interface PollEditorPanelState {
 
 interface SavePayload {
   alertPlayers: boolean;
-  expiryType: ExpiryType | undefined;
+  expiryType: ExpiryType;
   expiryValue: string;
   multipleChoice: boolean;
   options: string[];
-  servers: string | undefined;
+  servers: string;
   title: string;
 }
 
@@ -158,11 +158,11 @@ export const PollEditorPanel = () => {
     if (!newValidationWarning) {
       const payload: SavePayload = {
         alertPlayers: processedSettings.alertPlayers,
-        expiryType: processedSettings.expiry?.expiryType,
-        expiryValue: processedSettings.expiry?.expiryValue,
+        expiryType: processedSettings.expiry.expiryType!,
+        expiryValue: processedSettings.expiry.expiryValue,
         multipleChoice: processedSettings.multipleChoice,
         options: processedOptions,
-        servers: processedSettings.servers,
+        servers: processedSettings.servers!,
         title: processedSettings.title,
       };
       act('save', payload);
