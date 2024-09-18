@@ -498,7 +498,7 @@ export const Filteriffic = () => {
   const { act, data } = useBackend<FilterifficData>();
   const name = data.target_name || 'Unknown Object';
   const filters = data.target_filter_data || {};
-  const hasFilters = Object.keys(filters).length === 0;
+  const hasFilters = Object.keys(filters).length !== 0;
   const filterDefaults = data['filter_info'];
   const [massApplyPath, setMassApplyPath] = useState('');
   const [hiddenSecret, setHiddenSecret] = useState(false);
@@ -540,7 +540,7 @@ export const Filteriffic = () => {
               displayText="Add Filter"
               noChevron
               options={Object.keys(filterDefaults)}
-              selected={undefined} // TODO-REACT test this
+              selected={null} // TODO-REACT test this
               onSelected={(value) =>
                 act('add_filter', {
                   name: 'default',
