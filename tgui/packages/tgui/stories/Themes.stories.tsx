@@ -6,7 +6,7 @@
 
 import { Input, LabeledList, Section } from 'tgui-core/components';
 
-import { useLocalState } from '../backend';
+import { useSharedState } from '../backend';
 
 export const meta = {
   title: 'Themes',
@@ -14,7 +14,7 @@ export const meta = {
 };
 
 const Story = () => {
-  const [theme, setTheme] = useLocalState<string | undefined>(
+  const [theme, setTheme] = useSharedState<string | undefined>(
     'kitchenSinkTheme',
     undefined,
   );
