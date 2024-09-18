@@ -1,4 +1,4 @@
-import { Box, Divider, Flex } from 'tgui-core/components';
+import { Box, Divider, Flex, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -7,7 +7,7 @@ import {
   PortableHoldingTank,
 } from '../common/PortableAtmos';
 import { ReleaseValve } from '../common/ReleaseValve';
-// import { PaperSheetView } from '../PaperSheet'; TODO-REACT
+import { PaperSheetView } from '../PaperSheet/Stamps';
 import { Detonator } from './Detonator';
 
 interface GasCanisterData {
@@ -134,35 +134,25 @@ export const GasCanister = () => {
               />
             )}
           </Flex.Item>
-          {!!hasPaper && (
-            <Flex.Item width="410px">{/* <PaperView /> */}</Flex.Item>
-          )}
+          {!!hasPaper && <Flex.Item width="410px">{<PaperView />}</Flex.Item>}
         </Flex>
       </Window.Content>
     </Window>
   );
 };
 
-// TODO-REACT
-// class PaperView extends Component {
-//   constructor(props) {
-//     super(props);
-//     this.el = document.createElement('div');
-//   }
+const PaperView = () => {
+  const { data } = useBackend<GasCanisterData>();
+  const { text, stamps } = data.paperData;
 
-//   render() {
-//     const { data } = useBackend<GasCanisterData>();
-//     const { text, stamps } = data.paperData;
-//     return (
-//       <Section
-//         scrollable
-//         width="400px"
-//         height="518px"
-//         backgroundColor="white"
-//         style={{ overflowWrap: 'break-word' }}
-//       >
-//         <PaperSheetView value={text ? text : ''} stamps={stamps} readOnly />
-//       </Section>
-//     );
-//   }
-// }
+  return (
+    <Section
+      id="paperSection"
+      scrollable
+      backgroundColor="white"
+      style={{ overflowWrap: 'break-word' }}
+    >
+      <PaperSheetView value={text ? text : ''} stamps={stamps} readOnly />
+    </Section>
+  );
+};

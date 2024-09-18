@@ -370,7 +370,6 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             backgroundColor="white"
             icon="question-circle-o"
             onMouseOver={() => setShowingHelpTip(true)}
-            // @ts-ignore TODO-REACT
             onMouseLeave={() => setShowingHelpTip(false)}
           >
             Help
@@ -464,7 +463,6 @@ export const PaperSheet = () => {
       height={sizeY || 500}
     >
       <Window.Content backgroundColor={paperColor} scrollable={scrollbar}>
-        {/* @ts-ignore TODO-REACT */}
         <Box id="page" fillPositionedParent>
           {decideMode(editModeState)}
         </Box>
