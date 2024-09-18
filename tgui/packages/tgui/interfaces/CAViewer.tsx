@@ -44,7 +44,7 @@ export const CAViewer = () => {
               displayText="CA Type"
               width={20}
               options={Object.keys(typeData)}
-              selected={undefined} // TODO-REACT: is this okay?
+              selected={undefined}
               onSelected={(value) =>
                 act('set_ca', {
                   name: 'default',

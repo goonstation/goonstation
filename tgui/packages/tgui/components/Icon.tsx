@@ -40,7 +40,7 @@ export const Icon = (props: IconProps) => {
   let iconClass = '';
   if (name.startsWith('tg-')) {
     // tgfont icon
-    // TODO-REACT: uhh idk
+    // todo: implement tgfont (but less shit)
     iconClass = name;
   } else {
     // font awesome icon
