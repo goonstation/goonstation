@@ -24,7 +24,6 @@ export const Cell = <T extends object, V>(props: CellProps<T, V>) => {
   const value = hasValue ? config.getValue(data) : undefined;
   const tooltipText = getValueTooltip?.(data);
   const contents = renderContents ? (
-    // @ts-ignore TODO-REACT strictNullChecks issue
     renderContents({ data, rowId, value })
   ) : (
     <Box>{value as ReactNode}</Box>
