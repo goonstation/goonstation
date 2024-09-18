@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
 			return 1
 
-		if(isghostcritter(owner) && !isghostcritter(recipient))
+		if(isghostcritter(owner))
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind with your spectral brain!"))
 			return 1
 
