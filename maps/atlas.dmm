@@ -16196,6 +16196,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "mqJ" = (
