@@ -279,16 +279,17 @@
 
 
 	onUpdate()
-		if (moved)
-			progress += 0.5
+		if (src.moved)
+			src.progress += 0.5
 		else
-			progress += 1
-		progress = min(draw_target,progress)
-		moved = 0
+			src.progress += 1
+		src.progress = min(src.draw_target, src.progress)
+		src.moved = 0
 
-		var/completion_fraction = progress/draw_target
-		bar.color = "#0000FF"
-		animate(bar, transform = matrix(completion_fraction, 1, MATRIX_SCALE), time = ACTION_CONTROLLER_INTERVAL)
+		var/completion_fraction = src.progress/src.draw_target
+		bow.UpdateIcon(completion_fraction)
+		src.bar.color = "#0000FF"
+		animate(src.bar, transform = matrix(completion_fraction, 1, MATRIX_SCALE), time = ACTION_CONTROLLER_INTERVAL)
 		animate(pixel_x = -nround( ((30 - (30 * completion_fraction)) / 2) ), time = ACTION_CONTROLLER_INTERVAL, flags = ANIMATION_PARALLEL)
 
 /obj/item/arrow
@@ -599,7 +600,7 @@
 	name = "bow"
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	icon_state = "bow"
+	icon_state = "bow0"
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
 	var/datum/action/bar/aim/aim = null
@@ -612,10 +613,14 @@
 	var/max_draw = 3
 	recoil_enabled = FALSE
 	pickup_sfx = null
+	var/const/draw_states = 3
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
 		. = ..()
+
+	update_icon(draw_fraction)
+		src.icon_state = "bow[round(draw_fraction * (src.draw_states - 1), 1)]"
 
 	onMaterialChanged()
 		. = ..()
