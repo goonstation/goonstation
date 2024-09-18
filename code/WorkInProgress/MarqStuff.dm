@@ -256,6 +256,8 @@
 		..()
 		playsound(owner, 'sound/effects/bow_pull.ogg', 80, TRUE)
 		owner.visible_message(SPAN_ALERT("[owner] pulls the string on [bow]!"), SPAN_NOTICE("You pull the string on [bow]!"))
+		src.bar.transform = matrix(0, 1, MATRIX_SCALE)
+		src.bar.pixel_x = -15
 
 	onDelete()
 		if (bow)
@@ -263,7 +265,8 @@
 		..()
 
 	onEnd()
-		boutput(owner, SPAN_ALERT("You let go of the string."))
+		if (src.state != ACTIONSTATE_FINISH)
+			boutput(owner, SPAN_ALERT("You let go of the string."))
 		if (bow)
 			bow.aim = null
 		..()
@@ -285,8 +288,8 @@
 
 		var/completion_fraction = progress/draw_target
 		bar.color = "#0000FF"
-		bar.transform = matrix(completion_fraction, 1, MATRIX_SCALE)
-		bar.pixel_x = -nround( ((30 - (30 * completion_fraction)) / 2) )
+		animate(bar, transform = matrix(completion_fraction, 1, MATRIX_SCALE), time = ACTION_CONTROLLER_INTERVAL)
+		animate(pixel_x = -nround( ((30 - (30 * completion_fraction)) / 2) ), time = ACTION_CONTROLLER_INTERVAL, flags = ANIMATION_PARALLEL)
 
 /obj/item/arrow
 	name = "steel-headed arrow"
