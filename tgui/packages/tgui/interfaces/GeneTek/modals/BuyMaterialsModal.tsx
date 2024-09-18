@@ -17,8 +17,7 @@ export const BuyMaterialsModal = (props) => {
   const maxBuyMats = props.maxAmount;
   const { budget, costPerMaterial } = data;
 
-  const resolvedBuyMats =
-    buyMats !== null ? Math.min(buyMats, maxBuyMats) : maxBuyMats;
+  const resolvedBuyMats = buyMats !== null ? Math.min(buyMats, maxBuyMats) : 1;
 
   return (
     <Modal full>
