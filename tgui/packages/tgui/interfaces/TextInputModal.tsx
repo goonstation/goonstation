@@ -15,6 +15,7 @@ type TextInputData = {
   placeholder: string;
   timeout: number;
   title: string;
+  theme: string;
 };
 
 export const sanitizeMultiline = (toSanitize: string) => {
@@ -35,6 +36,7 @@ export const TextInputModal = () => {
     placeholder = '',
     timeout,
     title,
+    theme,
   } = data;
 
   const [input, setInput] = useState(placeholder || '');
@@ -57,7 +59,7 @@ export const TextInputModal = () => {
     (message.length && large_buttons ? 5 : 0);
 
   return (
-    <Window title={title} width={325} height={windowHeight}>
+    <Window title={title} width={325} height={windowHeight} theme={theme}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
