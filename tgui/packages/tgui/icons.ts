@@ -8,7 +8,7 @@ export function loadIconRefMap() {
   }
   return;
 
-  // fetchRetry(resolveAsset('icon_ref_map.json')) // TODO-REACT: yeah this would be sick
+  // fetchRetry(resolveAsset('icon_ref_map.json')) // ZEWAKA TODO: yeah this would be sick
   //   .then((res) => res.json())
   //   .then((data) => (Byond.iconRefMap = data))
   //   .catch((error) => logger.log(error));
