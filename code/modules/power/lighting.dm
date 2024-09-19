@@ -202,6 +202,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
 
+	pass_unstable = TRUE
+
 	New()
 		..()
 		inserted_lamp = new light_type()
@@ -267,7 +269,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
+	Cross(atom/movable/mover)
+		. = ..()
+		if(istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if(P.called_target == src && P.proj_data?.damage > 5)
+				. = FALSE
 
+	bullet_act(obj/projectile/P)
+		. = ..()
+		src.do_break()
 
 //big standing lamps
 /obj/machinery/light/flamp
@@ -1052,6 +1063,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 			boutput(user, "You hit the light, and it smashes!")
 			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
+
+			var/datum/gang/gang = user.get_gang()
+			gang?.do_vandalism(GANG_VANDALISM_LIGHT_BREAK_POINTS, src.loc)
+
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue

@@ -1157,6 +1157,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		..()
 		setProperty("coldprot", 10)
 
+/obj/item/clothing/suit/scarf/cozy
+	name = "scarf"
+	desc = "A cozy scarf. A beautiful adornment to any outfit."
+	icon_state = "shortscarf"
+	item_state = "shortscarf"
+
+/obj/item/clothing/suit/scarf/long
+	name = "long scarf"
+	desc = "A long luxurious scarf. A perfect addition to any look."
+	icon_state = "longscarf"
+	item_state = "longscarf"
+
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"
 	desc = "An important mime accessory, you don't want your trousers falling down mid-performance, do you?"

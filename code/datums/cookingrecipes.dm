@@ -346,27 +346,27 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/waffles
 
 /datum/cookingrecipe/oven/spaghetti_p
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_t
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/sauce
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_s
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_m
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/meatball
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/meatball
@@ -382,14 +382,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/alfredo
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/alfredo
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/chickenparm
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	cookbonus = 16
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/chickenalfredo
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	cookbonus = 16
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_pg
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	item3 = /obj/item/reagent_containers/food/snacks/pizza
 	cookbonus = 16
@@ -497,6 +497,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item2 = /obj/item/organ/brain
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/breadloaf/brain
+	category = "Bread"
+
+/datum/cookingrecipe/oven/toast_bread
+	item1 = /obj/item/reagent_containers/food/snacks/breadloaf
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/breadloaf/toast
 	category = "Bread"
 
 /datum/cookingrecipe/oven/toast
@@ -1738,14 +1744,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 = /obj/item/reagent_containers/food/snacks/yuck/burn
 	item2 = /obj/item/reagent_containers/food/snacks/yuck
 	cookbonus = 14
-	output = /obj/item/reagent_containers/food/snacks/fruit_cake
+	output = /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 	category = "Cakes"
 
 	specialOutput(var/obj/submachine/ourCooker)
 		if (!ourCooker)
 			return null
 
-		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
+		var/fruitcake = new /obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake
 		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		return fruitcake

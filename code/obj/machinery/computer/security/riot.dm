@@ -130,6 +130,7 @@
 			return
 
 		logTheThing(LOG_STATION, usr, "authorized armory access")
+		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
 		command_announcement("<br><b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg')
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
