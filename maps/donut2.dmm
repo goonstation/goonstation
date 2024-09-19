@@ -20844,6 +20844,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/chair/comfy,
+/obj/machinery/bot/guardbot/old/tourguide,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/quarters)
 "exF" = (
@@ -29170,6 +29171,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/machinery/bot/guardbot/gunner,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -38728,6 +38730,7 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/stool/chair/comfy,
+/obj/machinery/bot/guardbot,
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/quarters)
 "pyf" = (
@@ -52317,6 +52320,7 @@
 "xWQ" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/small/floor/purpleish,
+/mob/living/carbon/human/npc/monkey/mr_muggles,
 /turf/simulated/floor/wood/five,
 /area/station/crew_quarters/cafeteria)
 "xWR" = (
