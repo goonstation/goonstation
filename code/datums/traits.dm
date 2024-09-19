@@ -363,7 +363,7 @@
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
 /datum/trait/stinky
-	name = "Hyperhidrosis"
+	name = "Stinky"
 	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
 	id = "stinky"
 	icon_state = "stinky"
