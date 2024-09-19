@@ -54,6 +54,12 @@ export const ListInputModal = (props: ListInputModalProps) => {
   const [searchBarVisible, setSearchBarVisible] = useState(start_with_search);
   const [searchQuery, setSearchQuery] = useState('');
 
+  const getSearchBar = () => {
+    return searchBarVisible
+      ? document.getElementById('search_bar').getElementsByTagName('input')[0]
+      : null;
+  };
+
   // User presses up or down on keyboard
   // Simulates clicking an item
   const onArrowKey = (key: number) => {
@@ -91,9 +97,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
   // User presses a letter key and searchbar is visible
   // |goonstation-change| send any text input to the search bar
   const onFocusSearch = (letter) => {
-    let searchBarInput = searchBarVisible
-      ? document.getElementById('search_bar').getElementsByTagName('input')[0]
-      : null;
+    let searchBarInput = getSearchBar();
     searchBarInput.focus();
     searchBarInput.value += letter;
     onSearch(searchBarInput.value);
@@ -158,11 +162,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
     <Section
       onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;
-        const searchBarInput = searchBarVisible
-          ? document
-              .getElementById('search_bar')
-              .getElementsByTagName('input')[0]
-          : null;
+        const searchBarInput = getSearchBar();
         const searchBarFocused = document.activeElement === searchBarInput;
         const len = filteredItems.length - 1;
 
@@ -182,10 +182,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
               setSearchQuery('');
               event.preventDefault();
               if (searchBarVisible) {
-                document
-                  .getElementById('search_bar')
-                  .getElementsByTagName('input')[0]
-                  .focus();
+                getSearchBar().focus();
               }
               return;
             }
