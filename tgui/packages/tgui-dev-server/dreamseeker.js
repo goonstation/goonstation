@@ -33,8 +33,7 @@ export class DreamSeeker {
     logger.log(
       `topic call at ${this.client.defaults.baseURL + '/dummy?' + query}`,
     );
-    // TODO-REACT
-    // return this.client.get('/dummy?' + query);
+    return this.client.get('/dummy?' + query);
   }
 }
 
@@ -58,7 +57,9 @@ DreamSeeker.getInstancesByPids = async (pids) => {
   }
   if (pidsToResolve.length > 0) {
     try {
-      const command = 'netstat -ano | findstr TCP | findstr 0.0.0.0:0';
+      // We blacklist 8086 because byond-tracy opens that port
+      const command =
+        'netstat -ano -p TCP | findstr 0.0.0.0:0 | findstr /V ":8086"';
       const { stdout } = await promisify(exec)(command, {
         // Max buffer of 1MB (default is 200KB)
         maxBuffer: 1024 * 1024,
