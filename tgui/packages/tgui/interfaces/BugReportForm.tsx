@@ -6,7 +6,7 @@
  * @license MIT
  */
 
-import { ChangeEventHandler, useCallback, useState } from 'react';
+import { ChangeEventHandler, createRef, useCallback, useState } from 'react';
 import { Flex, Input, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -50,6 +50,7 @@ export const BugReportFormTextArea = (props: BugReportFormTextAreaProps) => {
     (e) => onChange(e.target.value),
     [onChange],
   );
+  const ref = createRef<HTMLTextAreaElement>();
   return (
     <textarea
       rows={4}
@@ -60,14 +61,17 @@ export const BugReportFormTextArea = (props: BugReportFormTextAreaProps) => {
         border: 'solid 1px #6992c2',
         color: 'white',
       }}
-      // TODO-REACT Make this auto-size again
-      // onInput={(e) => {
-      //  e.target.style.height = 'auto';
-      //  e.target.style.height = e.target.scrollHeight + 'px';
-      // }}
+      onInput={() => {
+        if (!ref.current) {
+          return;
+        }
+        ref.current.style.height = 'auto';
+        ref.current.style.height = ref.current.scrollHeight + 'px';
+      }}
       onChange={handleChange}
       placeholder={placeholder}
       value={value || ''}
+      ref={ref}
     />
   );
 };
