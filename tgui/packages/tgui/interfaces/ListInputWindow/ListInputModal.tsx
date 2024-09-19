@@ -14,8 +14,14 @@ import { Autofocus, Button, Input, Section, Stack } from 'tgui-core/components';
 import {
   KEY_A,
   KEY_DOWN,
+  KEY_END,
   KEY_ENTER,
   KEY_ESCAPE,
+  KEY_F,
+  KEY_HOME,
+  KEY_PAGEDOWN,
+  KEY_PAGEUP,
+  KEY_TAB,
   KEY_UP,
   KEY_Z,
 } from '../../../common/keycodes';
@@ -28,36 +34,52 @@ type ListInputModalProps = {
   message: string;
   on_selected: (entry: string) => void;
   on_cancel: () => void;
+  start_with_search: boolean;
+  capitalize: boolean;
 };
 
 export const ListInputModal = (props: ListInputModalProps) => {
-  const { items = [], default_item, message, on_selected, on_cancel } = props;
+  const {
+    items = [],
+    default_item,
+    message,
+    on_selected,
+    on_cancel,
+    start_with_search,
+    capitalize,
+  } = props;
 
   const [selected, setSelected] = useState(items.indexOf(default_item));
-  const [searchBarVisible, setSearchBarVisible] = useState(items.length > 9);
+  // |goonstation-change| start_with_search option
+  const [searchBarVisible, setSearchBarVisible] = useState(start_with_search);
   const [searchQuery, setSearchQuery] = useState('');
 
   // User presses up or down on keyboard
   // Simulates clicking an item
   const onArrowKey = (key: number) => {
     const len = filteredItems.length - 1;
-    if (key === KEY_DOWN) {
-      if (selected === null || selected === len) {
-        setSelected(0);
-        document!.getElementById('0')?.focus();
-      } else {
-        setSelected(selected + 1);
-        document!.getElementById((selected + 1).toString())?.focus();
-      }
-    } else if (key === KEY_UP) {
-      if (selected === null || selected === 0) {
-        setSelected(len);
-        document!.getElementById(len.toString())?.focus();
-      } else {
-        setSelected(selected - 1);
-        document!.getElementById((selected - 1).toString())?.focus();
-      }
+    let direction = -1;
+    switch (key) {
+      case KEY_UP:
+        direction = -1;
+        break;
+      case KEY_DOWN:
+        direction = 1;
+        break;
+      case KEY_PAGEUP:
+        direction = -10;
+        break;
+      case KEY_PAGEDOWN:
+        direction = 10;
+        break;
     }
+    let newSelected = selected + direction;
+    if (newSelected < 0 && Math.abs(direction) === 1) newSelected = len;
+    if (newSelected > len && Math.abs(direction) === 1) newSelected = 0;
+    if (newSelected < 0) newSelected = 0;
+    if (newSelected > len) newSelected = len;
+    setSelected(newSelected);
+    document!.getElementById(newSelected.toString())?.focus();
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
@@ -109,21 +131,77 @@ export const ListInputModal = (props: ListInputModalProps) => {
     <Section
       onKeyDown={(event) => {
         const keyCode = window.event ? event.which : event.keyCode;
-        if (keyCode === KEY_DOWN || keyCode === KEY_UP) {
-          event.preventDefault();
-          onArrowKey(keyCode);
+        const searchBarInput = searchBarVisible
+          ? document
+              .getElementById('search_bar')
+              .getElementsByTagName('input')[0]
+          : null;
+        const searchBarFocused = document.activeElement === searchBarInput;
+        const len = filteredItems.length - 1;
+
+        switch (keyCode) {
+          // |goonstation-change| Page Up/Down support
+          case KEY_DOWN:
+          case KEY_UP:
+          case KEY_PAGEUP:
+          case KEY_PAGEDOWN:
+            event.preventDefault();
+            onArrowKey(keyCode);
+            break;
+          // |goonstation-change| Ctrl+F support
+          case KEY_F:
+            if (event.ctrlKey) {
+              setSearchBarVisible(!searchBarVisible);
+              setSearchQuery('');
+              event.preventDefault();
+              if (searchBarVisible) {
+                document
+                  .getElementById('search_bar')
+                  .getElementsByTagName('input')[0]
+                  .focus();
+              }
+              return;
+            }
+            break;
+          case KEY_ENTER:
+            event.preventDefault();
+            on_selected(filteredItems[selected]);
+            break;
+          case KEY_ESCAPE:
+            event.preventDefault();
+            on_cancel();
+            break;
+          // |goonstation-change| Home support
+          case KEY_HOME:
+            setSelected(0);
+            document!.getElementById('0')?.focus();
+            event.preventDefault();
+            break;
+          // |goonstation-change| End support
+          case KEY_END:
+            setSelected(len);
+            document!.getElementById(len.toString())?.focus();
+            event.preventDefault();
+            break;
+          // |goonstation-change| Tab support
+          case KEY_TAB:
+            if (searchBarVisible) {
+              let selectedButtonElement = document.getElementById(
+                selected.toString(),
+              );
+              if (searchBarFocused && selectedButtonElement) {
+                selectedButtonElement.focus();
+              } else if (searchBarInput && !searchBarFocused) {
+                searchBarInput.focus();
+              }
+              event.preventDefault();
+            }
+            break;
         }
-        if (keyCode === KEY_ENTER) {
-          event.preventDefault();
-          on_selected(filteredItems[selected]);
-        }
-        if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
+
+        if (!searchBarVisible && KEY_A <= keyCode && keyCode <= KEY_Z) {
           event.preventDefault();
           onLetterSearch(keyCode);
-        }
-        if (keyCode === KEY_ESCAPE) {
-          event.preventDefault();
-          on_cancel();
         }
       }}
       buttons={
@@ -152,6 +230,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
             onFocusSearch={onFocusSearch}
             searchBarVisible={searchBarVisible}
             selected={selected}
+            capitalize={capitalize}
           />
         </Stack.Item>
         {searchBarVisible && (
@@ -180,8 +259,14 @@ export const ListInputModal = (props: ListInputModalProps) => {
  */
 const ListDisplay = (props) => {
   const { act } = useBackend();
-  const { filteredItems, onClick, onFocusSearch, searchBarVisible, selected } =
-    props;
+  const {
+    filteredItems,
+    onClick,
+    onFocusSearch,
+    searchBarVisible,
+    selected,
+    capitalize,
+  } = props;
 
   return (
     <Section fill scrollable>
@@ -191,7 +276,9 @@ const ListDisplay = (props) => {
           <Button
             color="transparent"
             fluid
+            id={index}
             key={index}
+            className="search-item"
             onClick={() => onClick(index)}
             onDoubleClick={(event) => {
               event.preventDefault();
@@ -210,7 +297,10 @@ const ListDisplay = (props) => {
               transition: 'none',
             }}
           >
-            {item} {/* |goonstation-change| */}
+            {
+              // |goonstation-change| capitalize option
+              capitalize ? item.replace(/^\w/, (c) => c.toUpperCase()) : item
+            }
           </Button>
         );
       })}
@@ -231,6 +321,7 @@ const SearchBar = (props) => {
       autoFocus
       autoSelect
       fluid
+      id="search_bar"
       onEnter={(event) => {
         event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
