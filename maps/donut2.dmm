@@ -20482,7 +20482,9 @@
 	dir = 4
 	},
 /turf/simulated/floor/grey/checker{
-	dir = 4
+	dir = 8;
+	name = "misplaced tile";
+	desc = "GODDAMMIT"
 	},
 /area/station/crew_quarters/kitchen)
 "eod" = (
@@ -23093,6 +23095,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
+/obj/machinery/firealarm/north,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "gak" = (
@@ -39968,10 +39971,10 @@
 	},
 /area/station/solar/zeta)
 "qkD" = (
-/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe{
 	dir = 5
 	},
+/obj/machinery/chem_heater,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "qkO" = (
@@ -46024,7 +46027,6 @@
 /turf/space,
 /area/space)
 "tSc" = (
-/obj/machinery/chem_heater,
 /obj/machinery/light_switch/west{
 	pixel_y = 7
 	},
@@ -46048,6 +46050,7 @@
 	icon_state = "blind0"
 	},
 /obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
 "tSw" = (
