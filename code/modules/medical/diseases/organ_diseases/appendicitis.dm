@@ -8,6 +8,7 @@
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
+	can_be_asymptomatic = FALSE
 	var/robo_restart = 0
 
 /datum/ailment/disease/appendicitis/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)

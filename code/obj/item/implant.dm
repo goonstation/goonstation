@@ -522,8 +522,8 @@ THROWING DARTS
 
 	deactivate()
 		. = ..()
-		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
-		C?.RemoveComponent(/datum/component/minimap_marker)
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker/minimap)
+		C?.RemoveComponent(/datum/component/minimap_marker/minimap)
 
 	on_death()
 		src.deactivate()
@@ -532,13 +532,13 @@ THROWING DARTS
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 /obj/item/implant/pod_wars/syndicate
 
 	activate()
 		. = ..()
-		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+		src.owner.AddComponent(/datum/component/minimap_marker/minimap, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
 
 
 /** Deprecated **/

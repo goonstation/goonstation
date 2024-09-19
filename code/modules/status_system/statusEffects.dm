@@ -156,6 +156,9 @@
 		getTooltip()
 			. = "You've been zapped in a way your heart seems to like!<br>You feel more resistant to cardiac arrest, and more likely for subsequent defibrillating shocks to restart your heart if it stops!"
 
+		preCheck(atom/A)
+			return ..() && !issilicon(A) && !isrobocritter(A) //heartless borgs
+
 		onAdd(optional=null) // added so strange reagent can be triggered by shocking someone's heart to restart it
 			..()
 			var/mob/M = owner
@@ -2733,6 +2736,58 @@
 			var/mob/living/M = src.owner
 			M.bioHolder.RemoveEffectInstance(src.added_accent)
 		UnregisterSignal(src.owner, COMSIG_MOB_SAY)
+
+/datum/statusEffect/graffiti
+	id = "graffiti_blind"
+	name = "Tagged!"
+	desc = "You've been tagged! <br>Movement speed is reduced. Eyesight reduced. "
+	icon_state = "tagged"
+	unique = TRUE
+	maxDuration = 15 SECONDS
+	var/emote_delay_counter = 0
+	var/sound = 'sound/effects/electric_shock_short.ogg'
+	var/emote_cooldown = 7
+	var/list/tag_images = list()
+	var/list/tag_filters = list()
+	movement_modifier = /datum/movement_modifier/tagged
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/datum/hud/vision_impair_tag/hud = new
+
+	onAdd(optional)
+		..()
+		if (ismob(owner))
+			var/mob/victim = owner
+			victim.attach_hud(src.hud)
+
+	onRemove()
+		qdel(hud)
+		hud = null
+		. = ..()
+		if (ismob(owner))
+			var/mob/victim = owner
+			victim.detach_hud(src.hud)
+		for (var/i in 1 to length(tag_images))
+			owner.ClearSpecificOverlays("graffitisplat[i]")
+		owner.UpdateIcon()
+
+	onUpdate(timePassed)
+		emote_delay_counter += timePassed
+		if (duration < 4 SECONDS)
+			for (var/i in 1 to length(tag_images))
+				var/image/tag = tag_images[i]
+				var/target_alpha = duration * 5
+				if (tag.alpha > target_alpha)
+					tag.alpha = target_alpha
+					owner.UpdateOverlays(tag,"graffitisplat[i]")
+					owner.UpdateIcon()
+		if (emote_delay_counter >= emote_cooldown && owner && !owner.hasStatus(list("knockdown", "unconscious")) )
+			emote_delay_counter -= emote_cooldown
+			if (prob(10) && ismob(owner))
+				var/mob/victim = owner
+				victim.emote(pick("cough", "blink"))
+			playsound(owner, sound, 17, TRUE, 0.4, 1.6)
+			violent_twitch(owner)
+		. = ..(timePassed)
 
 /datum/statusEffect/patches_applied
 	id = "patches_applied"

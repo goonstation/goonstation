@@ -62,7 +62,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 			var/obj/item/gun/sprayer/sprayer = W
 			sprayer.clogged = FALSE
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			boutput(user, SPAN_NOTICE("You clean out the clogged nozzle."))
+			boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else
@@ -661,6 +661,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/banana_bread_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
+			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/donut(src)
@@ -743,7 +744,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_jaffa(src)
@@ -1351,7 +1351,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/condiment/mayo(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet)
-					new/obj/item/reagent_containers/food/snacks/ingredient/spaghetti(src.loc)
+					new/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen(src.loc)

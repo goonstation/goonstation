@@ -122,6 +122,8 @@
 	if (istype(C.mob, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = C.mob
 		force_hair = H.hair_override
+	else if ("mutant_hair" in P.traitPreferences.traits_selected) //ooughh
+		force_hair = TRUE
 
 	if (!is_mutantrace || force_hair || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
 		src.AddOverlays(hair, "hair")
