@@ -1384,7 +1384,7 @@ var/list/removed_jobs = list(
 				if (!J_Fav.has_rounds_needed(user.client.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
 					var/needed_rounds = J_Fav.rounds_needed_to_play
-					var/allowed_rounds J_Fav.rounds_allowed_to_play
+					var/allowed_rounds = J_Fav.rounds_allowed_to_play
 					var/reason_msg = ""
 					if (allowed_rounds && !needed_rounds)
 						reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
