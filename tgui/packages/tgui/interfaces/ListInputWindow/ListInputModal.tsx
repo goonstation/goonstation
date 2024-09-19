@@ -134,10 +134,10 @@ export const ListInputModal = (props: ListInputModalProps) => {
     let newSelected = newDisplayed.indexOf(currentSelectedText);
     if (newSelected === -1 && newDisplayed.length > 0) {
       setSelected(0);
-      document!.getElementById('0')?.focus();
+      document!.getElementById('0')?.scrollIntoView();
     } else if (newDisplayed.length !== 0) {
       setSelected(newSelected);
-      document!.getElementById(newSelected.toString())?.focus();
+      document!.getElementById(newSelected.toString())?.scrollIntoView();
     }
     setSearchQuery(query);
   };
