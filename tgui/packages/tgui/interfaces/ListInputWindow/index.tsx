@@ -1,4 +1,4 @@
-import { getTextWidth } from 'common/string';
+import { getCanvasFont, getTextWidth } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../../backend';
@@ -40,8 +40,9 @@ export const ListInputWindow = () => {
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
   if (windowWidth === null) {
     let biggestWidth = 325;
+    const font = getCanvasFont();
     for (const item of items) {
-      biggestWidth = Math.max(biggestWidth, getTextWidth(item));
+      biggestWidth = Math.max(biggestWidth, getTextWidth(item, font));
     }
     setWindowWidth(biggestWidth);
   }
