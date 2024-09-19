@@ -89,30 +89,57 @@ export const ListInputModal = (props: ListInputModalProps) => {
     setSelected(index);
   };
   // User presses a letter key and searchbar is visible
-  const onFocusSearch = () => {
-    setSearchBarVisible(false);
-    setSearchBarVisible(true);
+  // |goonstation-change| send any text input to the search bar
+  const onFocusSearch = (letter) => {
+    let searchBarInput = searchBarVisible
+      ? document.getElementById('search_bar').getElementsByTagName('input')[0]
+      : null;
+    searchBarInput.focus();
+    searchBarInput.value += letter;
+    onSearch(searchBarInput.value);
   };
   // User presses a letter key with no searchbar visible
+  // |goonstation-change| improve the way items are selected after key presses
   const onLetterSearch = (key: number) => {
     const keyChar = String.fromCharCode(key);
-    const foundItem = items.find((item) => {
-      return item?.toLowerCase().startsWith(keyChar?.toLowerCase());
+    let foundIndex = items.findIndex((item, index) => {
+      return (
+        item?.toLowerCase().startsWith(keyChar?.toLowerCase()) &&
+        index > selected
+      );
     });
-    if (foundItem) {
-      const foundIndex = items.indexOf(foundItem);
+    if (foundIndex === -1) {
+      foundIndex = items.findIndex((item, index) => {
+        return (
+          item?.toLowerCase().startsWith(keyChar?.toLowerCase()) &&
+          index <= selected
+        );
+      });
+    }
+    if (foundIndex !== -1) {
       setSelected(foundIndex);
       document!.getElementById(foundIndex.toString())?.focus();
     }
   };
   // User types into search bar
+  // |goonstation-change| Only change selection when necessary
   const onSearch = (query: string) => {
     if (query === searchQuery) {
       return;
     }
+    let currentSelectedText = filteredItems[selected];
+    let newDisplayed = items.filter((val) =>
+      val.toLowerCase().includes(query.toLowerCase()),
+    );
+    let newSelected = newDisplayed.indexOf(currentSelectedText);
+    if (newSelected === -1 && newDisplayed.length > 0) {
+      setSelected(0);
+      document!.getElementById('0')?.focus();
+    } else if (newDisplayed.length !== 0) {
+      setSelected(newSelected);
+      document!.getElementById(newSelected.toString())?.focus();
+    }
     setSearchQuery(query);
-    setSelected(0);
-    document!.getElementById('0')?.focus();
   };
   // User presses the search button
   const onSearchBarToggle = () => {
@@ -286,9 +313,14 @@ const ListDisplay = (props) => {
             }}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
-              if (searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
+              if (searchBarVisible && event.key.length === 1) {
+                let char = String.fromCharCode(keyCode);
+                if (!event.shiftKey) {
+                  char = char.toLowerCase();
+                }
                 event.preventDefault();
-                onFocusSearch();
+                event.stopPropagation();
+                onFocusSearch(char);
               }
             }}
             selected={index === selected}
