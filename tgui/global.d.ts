@@ -42,6 +42,16 @@ type ByondType = {
   windowId: string;
 
   /**
+   * The major version of byond.
+   */
+  BYOND_MAJOR: string;
+
+  /**
+   * The minor (build) version of byond.
+   */
+  BYOND_MINOR: string;
+
+  /**
    * If `true`, unhandled errors and common mistakes result in a blue screen
    * of death, which stops this window from handling incoming messages and
    * closes the active instance of tgui datum if there was one.
