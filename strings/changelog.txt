@@ -1,4 +1,9 @@
 
+(t)thu sep 19 24
+(u)JORJ949
+(p)20656
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Added two new "Experimental" law modules that may appear in a round.
 (t)wed sep 18 24
 (u)Jan.antilles
 (p)20742
