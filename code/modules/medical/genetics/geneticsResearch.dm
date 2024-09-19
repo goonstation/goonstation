@@ -167,7 +167,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	proc/onFinish()
 		SHOULD_CALL_PARENT(TRUE)
 		for_by_tcl(computer, /obj/machinery/computer/genetics)
-			src.update_static_data_for_all_viewers()
+			computer.update_static_data_for_all_viewers()
 
 	proc/onBegin()
 		return
