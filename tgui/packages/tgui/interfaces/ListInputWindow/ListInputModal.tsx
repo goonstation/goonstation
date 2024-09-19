@@ -5,9 +5,6 @@
  * @license ISC
  */
 
-// TODO-REACT uhh, https://github.com/goonstation/goonstation/commits/7a67a8fb99c6f9d01be5c91316a62267e2a0cff8/tgui/packages/tgui/interfaces/ListInputModal.tsx
-// idk man
-
 import { useState } from 'react';
 import { Autofocus, Button, Input, Section, Stack } from 'tgui-core/components';
 
