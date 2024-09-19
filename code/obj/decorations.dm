@@ -692,6 +692,20 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "blindsH-R-o"
 		base_state = "blindsH-R"
 
+	closed
+		open = 0
+		opacity = 1
+		icon_state = "blindsH-c"
+		left
+			icon_state = "blindsH-L-c"
+			base_state = "blindsH-L"
+		middle
+			icon_state = "blindsH-M-c"
+			base_state = "blindsH-M"
+		right
+			icon_state = "blindsH-R-o"
+			base_state = "blindsH-R"
+
 	vertical
 		icon_state = "blindsV-o"
 		base_state = "blindsV"
@@ -706,6 +720,21 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			icon_state = "blindsV-R-o"
 			base_state = "blindsV-R"
 
+		closed
+			open = 0
+			opacity = 1
+			icon_state = "blindsV-c"
+
+			left
+				icon_state = "blindsV-L-c"
+				base_state = "blindsV-L"
+			middle
+				icon_state = "blindsV-M-c"
+				base_state = "blindsV-M"
+			right
+				icon_state = "blindsV-R-c"
+				base_state = "blindsV-R"
+
 	cog2
 		icon_state = "blinds_cog2-o"
 		base_state = "blinds_cog2"
@@ -719,6 +748,21 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		right
 			icon_state = "blinds_cog2-R-o"
 			base_state = "blinds_cog2-R"
+
+		closed
+			open = 0
+			opacity = 1
+			icon_state = "blindsV-c"
+
+			left
+				icon_state = "blinds_cog2-L-o"
+				base_state = "blinds_cog2-L"
+			middle
+				icon_state = "blinds_cog2-M-o"
+				base_state = "blinds_cog2-M"
+			right
+				icon_state = "blinds_cog2-R-o"
+				base_state = "blinds_cog2-R"
 
 /obj/blind_switch
 	name = "blind switch"
@@ -780,21 +824,37 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "N blind switch"
 	dir = NORTH
 	pixel_y = 24
+	
+	off
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/east
 	name = "E blind switch"
 	dir = EAST
 	pixel_x = 24
 
+	off
+		on = 1
+		icon_state = "blind0"
+
 /obj/blind_switch/south
 	name = "S blind switch"
 	dir = SOUTH
 	pixel_y = -24
+		
+	off
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/west
 	name = "W blind switch"
 	dir = WEST
 	pixel_x = -24
+		
+	off
+		on = 1
+		icon_state = "blind0"
 
 // left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
 /obj/blind_switch/area
@@ -803,21 +863,37 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "N blind switch"
 	dir = NORTH
 	pixel_y = 24
+		
+	off
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/east
 	name = "E blind switch"
 	dir = EAST
 	pixel_x = 24
+		
+	off
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/south
 	name = "S blind switch"
 	dir = SOUTH
 	pixel_y = -24
+		
+	off
+		on = 1
+		icon_state = "blind0"
 
 /obj/blind_switch/area/west
 	name = "W blind switch"
 	dir = WEST
 	pixel_x = -24
+		
+	off
+		on = 1
+		icon_state = "blind0"
 
 /obj/sign_switch
 	name = "sign switch"
