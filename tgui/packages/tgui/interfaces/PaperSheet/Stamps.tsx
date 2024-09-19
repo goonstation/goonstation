@@ -142,8 +142,7 @@ const Stamp: React.FC<StampProps> = (props) => {
     />
   ) : (
     <Box
-      // @ts-ignore TODO-REACT
-      id={props.activeStamp && 'stamp'}
+      id={props.activeStamp ? 'stamp' : undefined}
       style={stampTransform}
       className="paper__stamp-text"
     >
