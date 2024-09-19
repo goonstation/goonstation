@@ -100,8 +100,10 @@
 		options += "titlebar=1;can_resize=1;"
 	// Generate page html
 	var/html = tgui_process.basehtml
-	html = replacetextEx(html, "\[tgui:windowId]", id)
-	html = replacetextEx(html, "\[tgui:strictMode]", strict_mode)
+	html = replacetextEx(html, "\[tgui:windowId\]", id)
+	html = replacetextEx(html, "\[tgui:strictMode\]", strict_mode)
+	html = replacetextEx(html, "\[tgui:byondMajor\]", client.byond_version)
+	html = replacetextEx(html, "\[tgui:byondMinor\]", client.byond_build)
 
 	// Inject assets
 	var/inline_assets_str = ""

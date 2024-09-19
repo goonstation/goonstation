@@ -8,6 +8,8 @@
 	<!-- Inlined metadata -->
 	<meta id="tgui:windowId" content="[tgui:windowId]">
 	<meta id="tgui:strictMode" content="[tgui:strictMode]">
+	<meta id="tgui:byondMajor" content="[tgui:byondMajor]">
+	<meta id="tgui:byondMinor" content="[tgui:byondMinor]">
 
 	<!-- Early setup -->
 	<script type="text/javascript">
@@ -40,6 +42,8 @@
 
 			// Expose inlined metadata
 			Byond.windowId = parseMetaTag('tgui:windowId');
+			Byond.BYOND_MAJOR = parseMetaTag('tgui:byondMajor');
+			Byond.BYOND_MINOR = parseMetaTag('tgui:byondMinor');
 
 			// Backwards compatibility
 			window.__windowId__ = Byond.windowId;
