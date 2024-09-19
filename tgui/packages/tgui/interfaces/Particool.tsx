@@ -169,7 +169,7 @@ const ParticleFloatNonGenEntry = (props: ParticleFloatNonGenEntryProps) => {
   return (
     <Tooltip position="bottom" content={tooltip}>
       <NumberInput
-        value={value}
+        value={value ?? 0}
         stepPixelSize={4}
         step={particleFloatStep}
         maxValue={Infinity}
