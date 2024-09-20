@@ -1204,6 +1204,7 @@ ABSTRACT_TYPE(/area/adventure)
 	sound_environment = 8
 	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
+#elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif
 
@@ -2345,6 +2346,10 @@ ABSTRACT_TYPE(/area/station/mining)
 /area/station/bridge/customs
 	name = "Customs"
 	icon_state = "yellow"
+
+/area/station/bridge/execrestroom
+	name = "Executive Restroom"
+	icon_state = "blue"
 
 ABSTRACT_TYPE(/area/station/crew_quarters)
 /area/station/crew_quarters
