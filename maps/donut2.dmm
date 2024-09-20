@@ -24208,8 +24208,7 @@
 	pixel_x = 5
 	},
 /obj/item/paper{
-	info = "<span style="color:null;
-	 = "><p>I know that Remy prefers the kitchen, but he’s an adventurous soul; if you don’t keep an eye on him he’ll go out and run into Jones again. :( </p> <p>Please, put our son in the crate if you can’t be bothered to watch him, Spacelord knows I didn’t buy this for decoration</p> </span>";
+	info = "<span style='color:null;= '><p>I know that Remy prefers the kitchen, but he’s an adventurous soul; if you don’t keep an eye on him he’ll go out and run into Jones again. :( </p> <p>Please, put our son in the crate if you can’t be bothered to watch him, Spacelord knows I didn’t buy this for decoration</p> </span>";
 	name = "crate for Remy";
 	pixel_y = -4;
 	pixel_x = 5;
