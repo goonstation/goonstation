@@ -1,4 +1,4 @@
-
+git
 /obj/random_item_spawner
 	name = "random item spawner"
 	icon = 'icons/obj/objects.dmi'
@@ -80,19 +80,9 @@
 	icon_state = "rand_snacks"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/candy/chocolate,
-	/obj/item/reagent_containers/food/snacks/candy/nougat,
-	/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch,
-	/obj/item/reagent_containers/food/snacks/sandwich/meat_h,
-	/obj/item/reagent_containers/food/snacks/sandwich/meat_m,
-	/obj/item/reagent_containers/food/snacks/sandwich/meat_s,
-	/obj/item/reagent_containers/food/snacks/sandwich/pb,
-	/obj/item/reagent_containers/food/snacks/sandwich/pbh,
-	/obj/item/reagent_containers/food/snacks/sandwich/cheese,
-	/obj/item/reagent_containers/food/snacks/cookie,
-	/obj/item/reagent_containers/food/snacks/cookie/oatmeal,
-	)
-
+	New()
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
+			. = ..()
 	one
 		amt2spawn = 1
 
@@ -470,11 +460,9 @@
 	min_amt2spawn = 2
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/storage/firstaid/regular,
-	/obj/item/storage/firstaid/brute,
-	/obj/item/storage/firstaid/fire,
-	/obj/item/storage/firstaid/toxin,
-	/obj/item/storage/firstaid/oxygen,
-	/obj/item/storage/firstaid/brain)
+	New()
+		items2spawn = concrete_typesof(/obj/item/storage/firstaid)
+		. = ..()
 
 	one
 		amt2spawn = 1
@@ -891,10 +879,9 @@
 	name = "random land mine spawner"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation/armed,
-	/obj/item/mine/incendiary/armed,
-	/obj/item/mine/stun/armed,
-	/obj/item/mine/blast/armed)
+	New()
+		items2spawn = concrete_typesof(/obj/item/mine)
+		. = ..()
 
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
@@ -1217,17 +1204,9 @@
 	icon_state = "rand_circuit"
 	min_amt2spawn = 2
 	max_amt2spawn = 4
-	items2spawn = list(/obj/item/circuitboard/security,
-					/obj/item/circuitboard/atmospherealerts,
-					/obj/item/circuitboard/air_management,
-					/obj/item/circuitboard/general_alert,
-					/obj/item/circuitboard/atm,
-					/obj/item/circuitboard/solar_control,
-					/obj/item/circuitboard/arcade,
-					/obj/item/circuitboard/powermonitor,
-					/obj/item/circuitboard/barcode,
-					/obj/item/circuitboard/operating)
-
+	New()
+		items2spawn = concrete_typesof(/obj/item/circuitboard)
+		. = ..()
 	one
 		amt2spawn = 1
 
@@ -1274,10 +1253,9 @@
 	icon_state = "rand_btool"
 	min_amt2spawn = 1
 	max_amt2spawn = 2
-	items2spawn = list (/obj/item/device/guardbot_tool/medicator,
-						/obj/item/device/guardbot_tool/smoker,
-						/obj/item/device/guardbot_tool/taser,
-						/obj/item/device/guardbot_tool/flash)
+	New()
+		items2spawn = concrete_typesof(/obj/item/device/guardbot_tool)
+		. = ..()
 
 	one
 		amt2spawn = 1
@@ -1325,58 +1303,9 @@
 	icon_state = "rand_gimmick"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(
-		/obj/item/clothing/under/gimmick/macho,
-		/obj/item/clothing/under/gimmick/bowling,
-		/obj/item/clothing/under/gimmick/hunter,
-		/obj/item/clothing/under/gimmick/owl,
-		/obj/item/clothing/under/gimmick/waldo,
-		/obj/item/clothing/under/gimmick/odlaw,
-		/obj/item/clothing/under/gimmick/fake_waldo,
-		/obj/item/clothing/under/gimmick/johnny,
-		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/donk,
-		/obj/item/clothing/under/gimmick/duke,
-		/obj/item/clothing/under/gimmick/mj_clothes,
-		/obj/item/clothing/under/gimmick/viking,
-		/obj/item/clothing/under/gimmick/merchant,
-		/obj/item/clothing/under/gimmick/spiderman,
-		/obj/item/clothing/under/gimmick/birdman,
-		/obj/item/clothing/under/gimmick/dawson,
-		/obj/item/clothing/under/gimmick/chav,
-		/obj/item/clothing/under/gimmick/safari,
-		/obj/item/clothing/under/gimmick/utena,
-		/obj/item/clothing/under/gimmick/anthy,
-		/obj/item/clothing/under/gimmick/butler,
-		/obj/item/clothing/under/gimmick/maid,
-		/obj/item/clothing/under/gimmick/kilt,
-		/obj/item/clothing/under/gimmick/wedding_dress,
-		/obj/item/clothing/under/gimmick/psyche,
-		/obj/item/clothing/under/gimmick/dolan,
-		/obj/item/clothing/under/gimmick/jetson,
-		/obj/item/clothing/under/gimmick/princess,
-		/obj/item/clothing/under/gimmick/sweater,
-		/obj/item/clothing/suit/chaps,
-		/obj/item/clothing/under/gimmick/vault13,
-		/obj/item/clothing/under/gimmick/murph,
-		/obj/item/clothing/under/gimmick/sealab,
-		/obj/item/clothing/under/gimmick/rainbow,
-		/obj/item/clothing/under/gimmick/yay,
-		/obj/item/clothing/under/gimmick/cloud,
-		/obj/item/clothing/under/gimmick/mario/luigi,
-		/obj/item/clothing/under/gimmick/mario/wario,
-		/obj/item/clothing/under/gimmick/mario/waluigi,
-		/obj/item/clothing/under/gimmick/mario,
-		/obj/item/clothing/under/gimmick/shirtnjeans,
-		/obj/item/clothing/under/gimmick/hakama/random,
-		/obj/item/clothing/under/gimmick/eightiesmens,
-		/obj/item/clothing/under/gimmick/eightieswomens,
-		/obj/item/clothing/under/gimmick/ziggy,
-		/obj/item/clothing/under/gimmick/jcdenton,
-		/obj/item/clothing/under/misc/mobster,
-		/obj/item/clothing/under/misc/mobster/alt,
-		/obj/item/clothing/under/gimmick/guybrush)
-
+	New()
+		items2spawn = concrete_typesof(/obj/item/clothing/under/gimmick)
+		. = ..()
 	one
 		amt2spawn = 1
 
@@ -1423,31 +1352,9 @@
 	icon_state = "rand_mask"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/mask/owl_mask,
-						/obj/item/clothing/mask/smile,
-						/obj/item/clothing/mask/batman,
-						/obj/item/clothing/mask/clown_hat,
-						/obj/item/clothing/mask/clown_hat/blue,
-						/obj/item/clothing/mask/balaclava,
-						/obj/item/clothing/mask/spiderman,
-						/obj/item/clothing/mask/horse_mask,
-						/obj/item/clothing/mask/gas/plague,
-						/obj/item/clothing/mask/skull,
-						/obj/item/clothing/mask/niccage,
-						/obj/item/clothing/mask/waltwhite,
-						/obj/item/clothing/mask/mmyers,
-						/obj/item/clothing/mask/mime,
-						/obj/item/clothing/mask/moustache,
-						/obj/item/clothing/mask/melons,
-						/obj/item/clothing/mask/wrestling,
-						/obj/item/clothing/mask/wrestling/black,
-						/obj/item/clothing/mask/wrestling/green,
-						/obj/item/clothing/mask/wrestling/blue,
-						/obj/item/clothing/mask/anime,
-						/obj/item/paper_mask,
-						/obj/item/clothing/mask/kitsune,
-						/obj/item/clothing/head/minotaurmask,
-						/obj/item/clothing/mask/tengu)
+	New()
+		items2spawn = concrete_typesof(/obj/item/clothing/mask)
+		. = ..()
 
 	one
 		amt2spawn = 1
@@ -1492,23 +1399,74 @@
 
 /obj/random_item_spawner/pizza
 	name = "random pizza spawner"
-	icon_state = "rand_pizza"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "pizzacrust"
 	min_amt2spawn = 2
 	max_amt2spawn = 2
 	rare_chance = 1
-	items2spawn = list(/obj/item/reagent_containers/food/snacks/pizza/cargo/cheese,
-						/obj/item/reagent_containers/food/snacks/pizza/cargo/pepperoni,
-						/obj/item/reagent_containers/food/snacks/pizza/cargo/mushroom)
-	rare_items2spawn = list(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza)
-
+	New()
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/pizza/cargo)
+		. = ..()
 	one
 		amt2spawn = 1
 
+/obj/random_item_spawner/booze
+	name = "random booze spawner"
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "moonshine"
+	min_amt2spawn = 1
+	max_amt2spawn = 10
+	rare_chance = 2
+	New()
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/drinks/bottle)
+		. = ..()
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
 /obj/random_item_spawner/cola
 	name = "random cola spawner"
-	icon_state = "rand_pizza"
-	min_amt2spawn = 2
-	max_amt2spawn = 2
+	icon = 'icons/obj/foodNdrink/can.dmi'
+	icon_state = "cola-1"
+	min_amt2spawn = 1
+	max_amt2spawn = 10
 	rare_chance = 2
 	items2spawn = list(/obj/item/reagent_containers/food/drinks/cola,
 						/obj/item/reagent_containers/food/drinks/cola/random,
@@ -1519,6 +1477,44 @@
 
 	one
 		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
 
 /obj/random_item_spawner/hat
 	name = "random hat spawner"
@@ -1631,32 +1627,9 @@
 	icon_state = "rand_shoes"
 	min_amt2spawn = 5
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/clothing/shoes/bootsblk,
-						/obj/item/clothing/shoes/bootsblu,
-						/obj/item/clothing/shoes/cowboy,
-						/obj/item/clothing/shoes/cyborg,
-						/obj/item/clothing/shoes/dress_shoes,
-						/obj/item/clothing/shoes/heels/dancin,
-						/obj/item/clothing/shoes/flippers,
-						/obj/item/clothing/shoes/fuzzy,
-						/obj/item/clothing/shoes/gogo,
-						/obj/item/clothing/shoes/heels,
-						/obj/item/clothing/shoes/macho,
-						/obj/item/clothing/shoes/mj_shoes,
-						/obj/item/clothing/shoes/mjblack,
-						/obj/item/clothing/shoes/mjwhite,
-						/obj/item/clothing/shoes/moon,
-						/obj/item/clothing/shoes/rocket,
-						/obj/item/clothing/shoes/rollerskates,
-						/obj/item/clothing/shoes/sailormoon,
-						/obj/item/clothing/shoes/swat,
-						/obj/item/clothing/shoes/thong,
-						/obj/item/clothing/shoes/tourist,
-						/obj/item/clothing/shoes/utenashoes,
-						/obj/item/clothing/shoes/virtual,
-						/obj/item/clothing/shoes/witchfinder,
-						/obj/item/clothing/shoes/ziggy)
-
+	New()
+		items2spawn = concrete_typesof(/obj/item/clothing/shoes)
+		. = ..()
 	one
 		amt2spawn = 1
 
@@ -1772,38 +1745,9 @@
 	icon_state = "rand_furniture"
 	min_amt2spawn = 8
 	max_amt2spawn = 10
-	items2spawn = list(/obj/item/furniture_parts/IVstand,
-						/obj/item/furniture_parts/surgery_tray,
-						/obj/item/furniture_parts/table/desk,
-						/obj/item/furniture_parts/table/wood/round,
-						/obj/item/furniture_parts/table/wood/desk,
-						/obj/item/furniture_parts/table/wood,
-						/obj/item/furniture_parts/table/round,
-						/obj/item/furniture_parts/table/glass/frame,
-						/obj/item/furniture_parts/table/glass/reinforced,
-						/obj/item/furniture_parts/table/glass,
-						/obj/item/furniture_parts/table/reinforced/bar,
-						/obj/item/furniture_parts/table/reinforced/chemistry,
-						/obj/item/furniture_parts/table/reinforced,
-						/obj/item/furniture_parts/table,
-						/obj/item/furniture_parts/rack,
-						/obj/item/furniture_parts/stool/bar,
-						/obj/item/furniture_parts/stool,
-						/obj/item/furniture_parts/bench/red,
-						/obj/item/furniture_parts/bench/blue,
-						/obj/item/furniture_parts/bench/green,
-						/obj/item/furniture_parts/bench/yellow,
-						/obj/item/furniture_parts/bench,
-						/obj/item/furniture_parts/dining_chair/wood,
-						/obj/item/furniture_parts/office_chair,
-						/obj/item/furniture_parts/office_chair/red,
-						/obj/item/furniture_parts/office_chair/green,
-						/obj/item/furniture_parts/office_chair/blue,
-						/obj/item/furniture_parts/office_chair/yellow,
-						/obj/item/furniture_parts/office_chair/purple,
-						/obj/item/furniture_parts/bed/roller,
-						/obj/item/furniture_parts/bed)
-
+	New()
+		items2spawn = concrete_typesof(/obj/item/furniture_parts)
+		. = ..()
 	one
 		amt2spawn = 1
 
@@ -1866,6 +1810,7 @@
 	icon_state = "rand_gun"
 	min_amt2spawn = 1
 	max_amt2spawn = 4
+	New()
 	items2spawn = list(/obj/item/gun/kinetic/clock_188,
 	/obj/item/gun/kinetic/clock_188/boomerang,
 	/obj/item/gun/kinetic/derringer,
@@ -1877,16 +1822,12 @@
 	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
-	/obj/item/gun/kinetic/pumpweapon/riotgun,
-	/obj/item/gun/kinetic/pumpweapon/riotgun,
-	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,
 	/obj/item/gun/kinetic/single_action/flintlock,
 	/obj/item/gun/kinetic/zipgun,
 	/obj/item/gun/kinetic/makarov,
 	/obj/item/gun/kinetic/single_action/mts_255,
-	/obj/item/gun/kinetic/survival_rifle,
 	/obj/item/gun/kinetic/survival_rifle)
 
 	one
@@ -1925,9 +1866,7 @@
 	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
 
 	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
-						/obj/item/aiModule/experimental/equality/b,
-						/obj/item/aiModule/experimental/corrupted,
-						/obj/item/aiModule/experimental/historic)
+						/obj/item/aiModule/experimental/equality/b)
 
 	one
 		amt2spawn = 1
@@ -2095,7 +2034,7 @@
 			/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
 			/obj/item/reagent_containers/food/snacks/plant/melon/bowling,
 			/obj/item/reagent_containers/food/snacks/plant/apple/stick
-		)
+	)
 
 	one
 		amt2spawn = 1
