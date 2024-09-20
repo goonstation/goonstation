@@ -11302,7 +11302,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "faQ" = (
@@ -20149,7 +20149,7 @@
 /obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -33911,7 +33911,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "ohY" = (
@@ -44711,7 +44711,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "sZX" = (
@@ -48686,7 +48686,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "uMd" = (
@@ -51621,7 +51621,7 @@
 /obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "wbj" = (
