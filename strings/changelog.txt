@@ -1,4 +1,9 @@
 
+(t)fri sep 20 24
+(u)444explorer
+(p)20753
+(e)🔄📦|C-Rework, A-Game-Objects
+(+)Renamed the "pickpocket grapple gun" to the "Super! Grapple Friend", uplink entry is unchanged.
 (t)thu sep 19 24
 (u)JORJ949
 (p)20656
