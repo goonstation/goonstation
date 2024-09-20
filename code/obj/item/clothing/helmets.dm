@@ -1062,6 +1062,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		..()
 		setProperty("meleeprot_head", 7)
 		setProperty("space_movespeed", 0)
+		setProperty("disorient_resist_eye", 100)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	mats = list("metal_superdense" = 20,

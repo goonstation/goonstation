@@ -1599,6 +1599,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
+		setProperty("disorient_resist", 40)
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
