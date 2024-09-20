@@ -51831,7 +51831,8 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door_control/table{
 	id = "qm_dock";
-	name = "Outer Door Toggle"pixel_x = -1;
+	name = "Outer Door Toggle";
+	pixel_x = -1;
 	pixel_y = 3
 	},
 /turf/simulated/floor/plating,
