@@ -41544,10 +41544,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
-"fGf" = (
-/obj/machinery/computer/announcement/station/catering,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "fGA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -57987,6 +57983,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer/announcement/station/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "sDi" = (
@@ -113497,7 +113494,7 @@ atA
 avZ
 aqP
 hbN
-fGf
+asl
 asl
 aDd
 bOP
