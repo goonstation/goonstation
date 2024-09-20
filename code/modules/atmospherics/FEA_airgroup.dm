@@ -90,13 +90,6 @@
 	for(var/turf/simulated/member as anything in members)
 		member.air?.copy_from(src.air)
 
-#ifdef ATMOS_ARCHIVING
-/datum/air_group/proc/archive()
-	if (air)
-		air.archive()
-	archived_cycle = air_master.current_cycle
-#endif
-
 /** If individually processing tiles, checks all member tiles to see if they are close enough that the group may resume group processing.
  *  Returns: False if group should not continue processing, TRUE if it should.
  * Warning: Do not call, called by air_master.process() */
@@ -141,7 +134,8 @@
 
 #ifdef ATMOS_ARCHIVING
 		if(archived_cycle < air_master.current_cycle)
-			archive()
+			src.air?.archive()
+			src.archived_cycle = air_master.current_cycle
 				//Archive air data for use in calculations
 				//But only if another group didn't store it for us
 #endif
@@ -184,7 +178,8 @@
 #ifdef ATMOS_ARCHIVING
 				if(AG.archived_cycle < archived_cycle)
 					//archive other groups information if it has not been archived yet this cycle
-					AG.archive()
+					AG.air?.archive()
+					AG.archived_cycle = air_master.current_cycle
 #endif
 				if(AG.current_cycle < src.current_cycle)
 					//This if statement makes sure two groups only process their individual connections once!
@@ -227,7 +222,9 @@
 				if(issimulatedturf(enemy_tile)) //blahhh danger
 #ifdef ATMOS_ARCHIVING
 					if(enemy_tile.archived_cycle < src.archived_cycle) //archive tile information if not already done
-						enemy_tile.archive()
+						enemy_tile.air?.archive()
+						enemy_tile.ARCHIVED(temperature) = enemy_tile.temperature
+						enemy_tile.archived_cycle = air_master.current_cycle
 #endif
 					if(enemy_tile.current_cycle < src.current_cycle)
 						if(src.air.check_gas_mixture(enemy_tile.air))

@@ -260,14 +260,6 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	return TRUE
 
-#ifdef ATMOS_ARCHIVING
-/turf/simulated/proc/archive()
-	if(src.air) //For open space like floors
-		src.air.archive()
-
-	src.ARCHIVED(temperature) = src.temperature
-	src.archived_cycle = air_master.current_cycle
-#endif
 
 /// Returns air mixture of turf or air group, if we have one. If we don't, return [/turf/return_air].
 /turf/simulated/return_air(direct = FALSE)
@@ -361,7 +353,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 	if(src.processing && src.air)
 		#ifdef ATMOS_ARCHIVING
 		if(archived_cycle < air_master.current_cycle) //archive self if not already done
-			archive()
+			src.air?.archive()
+			src.ARCHIVED(temperature) = src.temperature
+			src.archived_cycle = air_master.current_cycle
 		#endif
 		src.current_cycle = air_master.current_cycle
 
@@ -373,7 +367,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 				if (issimulatedturf(enemy_tile))
 					#ifdef ATMOS_ARCHIVING
 					if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
-						enemy_tile.archive()
+						enemy_tile.air?.archive()
+						enemy_tile.ARCHIVED(temperature) = enemy_tile.temperature
+						enemy_tile.archived_cycle = air_master.current_cycle
 					#endif
 					var/datum/air_group/sharegroup = enemy_tile.parent //move tile's group to a new variable so we're not referencing multiple layers deep
 					if(sharegroup?.group_processing)
@@ -449,7 +445,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 		#ifdef ATMOS_ARCHIVING
 		if(archived_cycle < air_master.current_cycle)
-			archive()
+			src.air?.archive()
+			src.ARCHIVED(temperature) = src.temperature
+			src.archived_cycle = air_master.current_cycle
 		#endif
 
 	else
@@ -468,7 +466,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 					#ifdef ATMOS_ARCHIVING
 					if(modeled_neighbor.archived_cycle < air_master.current_cycle)
-						modeled_neighbor.archive()
+						modeled_neighbor.air?.archive()
+						modeled_neighbor.ARCHIVED(temperature) = modeled_neighbor.temperature
+						modeled_neighbor.archived_cycle = air_master.current_cycle
 					#endif
 
 					if(modeled_neighbor.air)
