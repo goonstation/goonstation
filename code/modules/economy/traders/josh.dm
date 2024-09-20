@@ -208,4 +208,4 @@
 	comtype = /obj/item/spray_paint_graffiti
 	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
 	possible_names = list("All the up-and-coming artists are buzzing over this!",
-	"Show off your vast, oceanic soul with some wicked sick art, bro!")
+	"Show off your vast, oceanic soul with some ART, bro!")
