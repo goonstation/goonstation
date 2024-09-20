@@ -1254,9 +1254,10 @@ git
 	icon_state = "rand_btool"
 	min_amt2spawn = 1
 	max_amt2spawn = 2
-	New()
-		items2spawn = concrete_typesof(/obj/item/device/guardbot_tool)
-		. = ..()
+	items2spawn = list (/obj/item/device/guardbot_tool/medicator,
+						/obj/item/device/guardbot_tool/smoker,
+						/obj/item/device/guardbot_tool/taser,
+						/obj/item/device/guardbot_tool/flash)
 
 	one
 		amt2spawn = 1
