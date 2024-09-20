@@ -608,8 +608,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
 			return 1
 
+		if(isghostcritter(owner))
+			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind with your spectral brain!"))
+			return 1
+
 		if(!recipient.client || recipient.stat)
-			boutput(recipient, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
+			boutput(owner, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
 			return 1
 
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)

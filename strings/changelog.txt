@@ -1,4 +1,23 @@
 
+(t)thu sep 19 24
+(u)JORJ949
+(p)20656
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Added two new "Experimental" law modules that may appear in a round.
+(t)wed sep 18 24
+(u)Jan.antilles
+(p)20742
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Four new sweaters have been added as knitting projects.
+(t)tue sep 17 24
+(u)aloe
+(+)You can once again suffer from multiple kinds of allergies. If you really want to. For whatever reason.
+(+)Epinephrine is a bit better at purging histamine.
+(u)BatElite
+(p)19483
+(e)🆕💅🤖|C-Feature, C-QoL, A-Silicons
+(+)You can now swap out heads on cyborgs by using an empty head on a cyborg with its wiring exposed, or using a wrench with the replacement in your other hand.
+(+)The brain/interface inside the borg transfers to the new head automatically. This way you don't have to de-brain or take apart a cyborg just to change their head.
 (t)sun sep 15 24
 (u)Lord_Earthfire
 (p)20665

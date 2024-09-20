@@ -387,6 +387,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_all_artifacts,
 		/client/proc/spawn_tons_of_artifacts,
 		/client/proc/toggle_radio_maptext,
+		/client/proc/toggle_ghost_invisibility,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
