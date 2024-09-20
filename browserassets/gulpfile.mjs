@@ -100,7 +100,7 @@ function javascript(cb) {
 }
 
 function images(cb) {
-	return src(sources.images)
+	return src(sources.images, { encoding: false })
 		.pipe(imagemin([
 			optipng({ optimizationLevel: 2 })
 		]))
@@ -110,7 +110,7 @@ function images(cb) {
 function copy(cb) {
 	return src(
 		["vendor/**/*", "css/fonts/**/*", "misc/**/*", "tgui/**/*"],
-		{ base: dirs.src },
+		{ base: dirs.src, encoding: false },
 	)
 		.pipe(replace(resourceMacroRegex, `${cdn}/$1?v=${rev}`))
 		.pipe(dest(dirs.dest));
