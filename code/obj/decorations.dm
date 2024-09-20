@@ -824,8 +824,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "N blind switch"
 	dir = NORTH
 	pixel_y = 24
-	
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -834,7 +834,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	dir = EAST
 	pixel_x = 24
 
-	off
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -842,8 +842,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "S blind switch"
 	dir = SOUTH
 	pixel_y = -24
-		
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -851,8 +851,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "W blind switch"
 	dir = WEST
 	pixel_x = -24
-		
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -863,8 +863,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "N blind switch"
 	dir = NORTH
 	pixel_y = 24
-		
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -872,8 +872,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "E blind switch"
 	dir = EAST
 	pixel_x = 24
-		
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -881,8 +881,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "S blind switch"
 	dir = SOUTH
 	pixel_y = -24
-		
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
@@ -890,8 +890,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "W blind switch"
 	dir = WEST
 	pixel_x = -24
-		
-	off
+
+	on
 		on = 1
 		icon_state = "blind0"
 
