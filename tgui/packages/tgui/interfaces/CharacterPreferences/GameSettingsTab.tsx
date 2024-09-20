@@ -81,7 +81,7 @@ export const GameSettingsTab = (_props, context) => {
             <Button onClick={() => act('update-hudTheme')}>Change</Button>
           </Box>
           <Box>
-            <Image pixelated src={`data:image/png;base64,${data.hudThemePreview}`} width="32px" height="32px" />
+            <Image src={`data:image/png;base64,${data.hudThemePreview}`} width="32px" height="32px" />
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Targeting Cursor">
@@ -89,7 +89,7 @@ export const GameSettingsTab = (_props, context) => {
             <Button onClick={() => act('update-targetingCursor')}>Change</Button>
           </Box>
           <Box>
-            <Image pixelated src={`data:image/png;base64,${data.targetingCursorPreview}`} width="32px" height="32px" />
+            <Image src={`data:image/png;base64,${data.targetingCursorPreview}`} width="32px" height="32px" />
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Tooltips">

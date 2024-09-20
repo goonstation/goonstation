@@ -196,7 +196,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		if (currentlocation.z == Z_LEVEL_STATION && station_repair.station_generator)
 			var/list/turf/turfs_to_fix = get_area_turfs(currentlocation)
 			if(length(turfs_to_fix))
-				station_repair.repair_turfs(turfs_to_fix)
+				station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
 
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
@@ -295,7 +295,7 @@ var/bombini_saved
 			sleep(3 SECONDS)
 			Console.visible_message(SPAN_ALERT("The shuttle engine alarms start blaring!"))
 			playsound(T, 'sound/machines/pod_alarm.ogg', 60, TRUE)
-			var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(Console)
+			var/obj/fakeobject/shuttleengine/smokyEngine = locate() in get_area(Console)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(5, 0, smokyEngine)
 			smoke.start()
@@ -314,29 +314,28 @@ var/bombini_saved
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndiepc4"
 
-/obj/machinery/computer/shuttle/emag_act(var/mob/user, var/obj/item/card/emag/E)
-	if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
-		return
-	for (var/datum/flock/flock in flocks)
-		if (flock.relay_in_progress)
-			boutput(user, SPAN_ALERT("[src] emits a pained burst of static, but nothing happens!"))
-			return
-
-	if (user)
-		var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
-		if(BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
-		if (choice == "Launch")
-			boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
-			emergency_shuttle.settimeleft( 10 )
-			logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
-	else
-		boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
-		emergency_shuttle.settimeleft( 10 )
-	return TRUE
-
 /obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
-	if(status & (BROKEN|NOPOWER))
-		return
+	if(!(istype(W, /obj/item/disk/data/floppy/read_only/authentication) || istype(W, /obj/item/card/id)) || (status & (BROKEN|NOPOWER)))
+		return ..()
+
+	if (istype(W, /obj/item/disk/data/floppy/read_only/authentication))
+		if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
+			return
+		for (var/datum/flock/flock in flocks)
+			if (flock.relay_in_progress)
+				boutput(user, SPAN_ALERT("[src] emits a pained burst of static, but nothing happens!"))
+				return
+
+		if (user)
+			var/choice = tgui_alert(user, "Would you like to launch the escape shuttle early?", "Shuttle control", list("Launch", "Cancel"))
+
+			if (BOUNDS_DIST(user, src) > 0 || emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+
+			if (choice == "Launch")
+				boutput(world, SPAN_NOTICE("<B>Alert: Shuttle launch time shortened to 10 seconds!</B>"))
+				emergency_shuttle.settimeleft( 10 )
+				logTheThing(LOG_ADMIN, user, "shortens Emergency Shuttle launch time to 10 seconds.")
+
 
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
@@ -390,7 +389,7 @@ var/bombini_saved
 				boutput(world, SPAN_NOTICE("<B>All authorizations to shorting time for shuttle launch have been revoked!</B>"))
 				src.authorized.len = 0
 				src.authorized = list(  )
-	return
+
 
 ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 /obj/machinery/computer/elevator
@@ -405,6 +404,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	var/endTurfToLeave = /turf/simulated/floor/plating
 	var/logBioeleAccident = FALSE
 	var/adminOnly = FALSE
+
 
 /obj/machinery/computer/elevator/icebase
 	machine_registry_idx = MACHINES_ELEVATORICEBASE
@@ -424,6 +424,16 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	areaLower = /area/shuttle/sea_elevator/lower
 	areaUpper = /area/shuttle/sea_elevator/upper
 	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
+	circuit_type = /obj/item/circuitboard/sea_elevator
+
+	New()
+		..()
+		var/area/top = locate(areaUpper)
+		var/turf/topshaft = top.find_middle()
+		if(topshaft && topshaft?.type == endTurfToLeave)
+			location = 0
+		else
+			location = 1
 
 /obj/machinery/computer/elevator/centcomm
 	machine_registry_idx = MACHINES_ELEVATORCENTCOM
@@ -510,7 +520,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	name = "Elevator Safety Sign"
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "accidents_sign"
-	flags = FPRINT
 	density = 0
 	anchored = ANCHORED
 

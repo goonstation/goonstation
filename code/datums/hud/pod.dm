@@ -31,16 +31,16 @@
 		..()
 		master = P
 		missing = image('icons/mob/hud_pod.dmi', "marker")
-		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off (you probably don't want to turn it off)")
+		engine = create_screen("engine", "Engine", 'icons/mob/hud_pod.dmi', "engine-off", "NORTH+1,WEST", tooltipTheme = "pod-alt", desc = "Turn the pod's engine on or off.")
 		wormhole = create_screen("wormhole", "Create Wormhole", 'icons/mob/hud_pod.dmi', "wormhole", "NORTH+1,WEST+1", tooltipTheme = "pod", desc = "Open a wormhole to a beacon that you can fly through")
 		life_support = create_screen("life_support", "Life Support", 'icons/mob/hud_pod.dmi', "life_support-off", "NORTH+1,WEST+2", tooltipTheme = "pod-alt", desc = "Turn life support on or off")
 		comms = create_screen("comms", "Comms", 'icons/mob/hud_pod.dmi', "comms-off", "NORTH+1,WEST+3", tooltipTheme = "pod-alt", desc = "Turn the pod's communications system on or off")
 		use_comms = create_screen("comms_system", "Use Comms System", 'icons/mob/hud_pod.dmi', "comms_system", "NORTH+1,WEST+4", tooltipTheme = "pod", desc = "Use the communications system to talk or whatever")
 		sensors = create_screen("sensors", "Sensors", 'icons/mob/hud_pod.dmi', "sensors-off", "NORTH+1,WEST+5", tooltipTheme = "pod-alt", desc = "Turn the pod's sensors on or off")
-		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltipTheme = "pod", desc = "Use the pod's sensors to search for drones and lifeforms nearby")
+		sensors_use = create_screen("sensors_use", "Activate Sensors", 'icons/mob/hud_pod.dmi', "sensors-use", "NORTH+1,WEST+6", tooltipTheme = "pod", desc = "Use the pod's sensors to search for vehicles and lifeforms nearby")
 		weapon = create_screen("weapon", "Main Weapon", 'icons/mob/hud_pod.dmi', "weapon-off", "NORTH+1,WEST+7", tooltipTheme = "pod-alt", desc = "Turn the main weapon on or off, if the pod is equipped with one")
-		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights_off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
-		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Enable or disable the secondary system installed in the pod, if there is one")
+		lights = create_screen("lights", "Toggle Lights", 'icons/mob/hud_pod.dmi', "lights-off", "NORTH+1, WEST+8", tooltipTheme = "pod", desc = "Turn the pod's external lights on or off")
+		secondary = create_screen("secondary", "Secondary System", 'icons/mob/hud_pod.dmi', "blank", "NORTH+1,WEST+9", tooltipTheme = "pod", desc = "Activate the secondary system installed in the pod, if there is one")
 		lock = create_screen("lock", "Lock", 'icons/mob/hud_pod.dmi', "lock-locked", "NORTH+1,WEST+10", tooltipTheme = "pod-alt", desc = "LOCK YOUR PODS YOU DOOFUSES")
 		set_code = create_screen("set_code", "Set Lock code", 'icons/mob/hud_pod.dmi', "set-code", "NORTH+1,WEST+11", tooltipTheme = "pod", desc = "Set the code used to unlock the pod")
 		rts = create_screen("return_to_station", "Return To [capitalize(station_or_ship())]", 'icons/mob/hud_pod.dmi', "return-to-station", "NORTH+1,WEST+12", tooltipTheme = "pod", desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level")
@@ -157,11 +157,12 @@
 				lock.icon_state = "lock-locked"
 			else
 				lock.icon_state = "lock-unlocked"
+
 		if (master.lights)
 			if (master.lights.active)
-				lights.icon_state = "lights_on"
+				lights.icon_state = "[master.lights.hud_state]-on"
 			else
-				lights.icon_state = "lights_off"
+				lights.icon_state = "[master.lights.hud_state]-off"
 
 		if (master.rcs)
 			rcs.icon_state = "rcs-on"
@@ -262,6 +263,10 @@
 			if (!lights.overlays.len)
 				lights.overlays += missing
 
+	proc/switch_sound()
+		for (var/mob/M in src.master)
+			M.playsound_local(src.master, 'sound/machines/pod_switch.ogg', 60, TRUE, ignore_flag = SOUND_IGNORE_SPACE)
+
 	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
 			boutput(user, SPAN_ALERT("You're not in the pod doofus. (Call 1-800-CODER.)"))
@@ -285,12 +290,15 @@
 						boutput(user, SPAN_ALERT("Only the pilot may do that!"))
 						return
 					master.engine.toggle()
+					src.switch_sound()
 			if ("life_support")
 				if (master.life_support)
 					master.life_support.toggle()
+					src.switch_sound()
 			if ("comms")
 				if (master.com_system)
 					master.com_system.toggle()
+					src.switch_sound()
 					update_systems()
 			if ("comms_system")
 				if(master.com_system)
@@ -303,12 +311,15 @@
 			if ("weapon")
 				if (master.m_w_system)
 					master.m_w_system.toggle()
+					src.switch_sound()
 			if ("secondary")
 				if (master.sec_system)
 					master.sec_system.toggle()
+					src.switch_sound()
 			if ("sensors")
 				if (master.sensors)
 					master.sensors.toggle()
+					src.switch_sound()
 			if ("sensors_use")
 				if (master.sensors && master.sensors.active)
 					master.sensors.opencomputer(user)
@@ -358,8 +369,10 @@
 			if ("lights")
 				if (master.lights)
 					master.lights.toggle()
+					src.switch_sound()
 			if ("rcs")
 				master.rcs = !master.rcs
+				src.switch_sound()
 
 
 		update_states()

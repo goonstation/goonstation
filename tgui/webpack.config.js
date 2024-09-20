@@ -26,10 +26,11 @@ const createStats = verbose => ({
 
 module.exports = (env = {}, argv) => {
   const mode = argv.mode === 'production' ? 'production' : 'development';
+  const bench = env.TGUI_BENCH;
   const config = {
     mode,
     context: path.resolve(__dirname),
-    target: ['web', 'es3', 'browserslist:ie 8'],
+    target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
       'tgui': [
         './packages/tgui-polyfill',
@@ -60,7 +61,9 @@ module.exports = (env = {}, argv) => {
           use: [
             {
               loader: require.resolve('babel-loader'),
-              options: createBabelConfig({ mode }),
+              options: createBabelConfig({
+                removeConsole: !bench,
+              }),
             },
           ],
         },
@@ -125,28 +128,23 @@ module.exports = (env = {}, argv) => {
     ],
   };
 
-  // Add a bundle analyzer to the plugins array
-  if (argv.analyze) {
-    const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-    config.plugins = [
-      ...config.plugins,
-      new BundleAnalyzerPlugin(),
-    ];
+  if (bench) {
+    config.entry = {
+      'tgui-bench': [
+        './packages/tgui-polyfill',
+        './packages/tgui-bench/entrypoint',
+      ],
+    };
   }
 
   // Production build specific options
   if (argv.mode === 'production') {
-    const TerserPlugin = require('terser-webpack-plugin');
+    const { EsbuildPlugin } = require('esbuild-loader');
     config.optimization.minimizer = [
-      new TerserPlugin({
-        extractComments: false,
-        terserOptions: {
-          ie8: true,
-          output: {
-            ascii_only: true,
-            comments: false,
-          },
-        },
+      new EsbuildPlugin({
+        target: 'ie11',
+        css: true,
+        legalComments: 'none', // We're open source, these are in the original source files
       }),
     ];
   }

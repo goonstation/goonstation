@@ -366,29 +366,26 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
+/// Adds zeroes to the beginning of a string until it reaches the desired length
 /proc/add_zero(text, desired_length)
-	text = "[text]" // ensure it's a string
-	if ((desired_length - length(text)) <= 0)
-		return text
-	return (num2text(0, desired_length - length(text), 10) + text)
+	. = "[text]" // We stringify this because the input might be a number
+	if ((desired_length - length(.)) <= 0)
+		return .
+	return (num2text(0, desired_length - length(.), 10) + .)
 
-/proc/add_lspace(t, u)
-	// why????? because if you pass this a number,
-	// then -- surprise -- length(t) is ZERO. because it's not text.
-	// so step one is to just. do that.
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	// *scream *scream *scream *scream *scream *scream *scream *scream *scream
-	t = "[t]"
-	while(length(t) < u)
-		t = " [t]"
-	. = t
+/// Adds `char` ahead of `text` until it reaches `length` characters total
+/proc/pad_leading(text, length, char = " ")
+	. = "[text]" // We stringify this because the input might be a number
+	var/count = length - length_char(.)
+	var/list/chars_to_add[max(count + 1, 0)]
+	return jointext(chars_to_add, char) + .
 
-/proc/add_tspace(t, u)
-	t = "[t]"
-	while(length(t) < u)
-		t = "[t] "
-	. = t
+/// Adds `char` after `text` until it reaches `length` characters total
+/proc/pad_trailing(text, length, char = " ")
+	. = "[text]" // We stringify this because the input might be a number
+	var/count = length - length_char(.)
+	var/list/chars_to_add[max(count + 1, 0)]
+	return . + jointext(chars_to_add, char)
 
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
@@ -397,7 +394,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		. = file_path
 	else
 		. = file(file_path)
-	. = trim(file2text(.))
+	. = trimtext(file2text(.))
 	if(can_escape)
 		. = replacetext(., "\\[separator]", "") // To be complete we should also replace \\ with \ etc. but who cares
 	. = splittext(., separator)
@@ -454,7 +451,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		else if(delta % 2)
 			. = " " + message
 		delta--
-		var/spaces = add_lspace("",delta/2-1)
+		var/spaces = pad_leading("",delta/2-1)
 		. = spaces + . + spaces
 
 /proc/dd_limittext(message, length)
@@ -465,12 +462,12 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 		.= copytext(message, 1, length + 1)
 
 /**
-	* Returns the given degree converted to a text string in the form of a direction
-	*/
-/proc/angle2text(var/degree)
+ * Returns the given degree converted to a text string in the form of a direction
+ */
+/proc/angle2text(degree)
 	. = dir2text(angle2dir(degree))
 
-/proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
+/proc/text_input(Message, Title, var/Default, var/length=MAX_MESSAGE_LEN)
 	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
@@ -614,15 +611,15 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 			. += T
 
 /**
-	* Returns true if the given key is a guest key
-	*/
+ * Returns true if the given key is a guest key
+ */
 /proc/IsGuestKey(key)
 	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
 
 /**
-	* Returns f, ensured that it's a valid frequency
-	*/
+ * Returns f, ensured that it's a valid frequency
+ */
 /proc/sanitize_frequency(var/f)
 	. = round(f)
 	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
@@ -845,11 +842,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 
 		// Note diagonal directions won't usually be accurate
 	if(direction & NORTH)
-		target = locate(target.x, world.maxy-1, target.z)
+		target = locate(target.x, world.maxy, target.z)
 	if(direction & SOUTH)
 		target = locate(target.x, 1, target.z)
 	if(direction & EAST)
-		target = locate(world.maxx-1, target.y, target.z)
+		target = locate(world.maxx, target.y, target.z)
 	if(direction & WEST)
 		target = locate(1, target.y, target.z)
 
@@ -925,7 +922,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 
 
 // extends pick() to associated lists
-/proc/alist_pick(var/list/L)
+/proc/alist_pick(list/L)
 	if(!L || !length(L))
 		return null
 	return L[pick(L)]
@@ -1022,25 +1019,29 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
-/proc/shake_camera(mob/M, duration, strength=1, delay=0.2)
-	SPAWN(1 DECI SECOND)
-		if(!M || !M.client || M.shakecamera)
-			return
-		M.shakecamera = 1
-		var/client/client = M.client
+/proc/shake_camera(mob/M, duration, strength=1, delay=0.4)
+	if(!M || !M.client)
+		return
+	var/client/client = M.client
+	var/initial_x = client.pixel_x
+	var/initial_y = client.pixel_y
+	for(var/i=0, i<duration, i++)
+		var/magnitude = randfloat(0, strength)
+		var/angle = randfloat(0, 360)
+		var/target_x = magnitude * cos(angle) + initial_x
+		var/target_y = magnitude * sin(angle) + initial_y
+		var/offset_x = target_x - client.pixel_x
+		var/offset_y = target_y - client.pixel_y
+		animate(client, pixel_x = offset_x, pixel_y = offset_y, easing = LINEAR_EASING, time = delay, flags = ANIMATION_RELATIVE | (i != 0 ? ANIMATION_CONTINUE : ANIMATION_PARALLEL))
+	var/offset_x = initial_x - client.pixel_x
+	var/offset_y = initial_y - client.pixel_y
+	animate(pixel_x = offset_x, pixel_y = offset_y, easing = LINEAR_EASING, time = delay, flags = ANIMATION_RELATIVE)
 
-		for(var/i=0, i<duration, i++)
-			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
-			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			if(client)
-				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
-			sleep(delay)
+/proc/recoil_camera(mob/M, dir, strength=1, spread=3)
+	if(!M || !M.client || !M.client.recoil_controller)
+		return
+	M.client.recoil_controller.recoil_camera(dir,strength,spread)
 
-		if (client)
-			client.pixel_x = 0
-			client.pixel_y = 0
-			M.shakecamera = 0
 
 /proc/get_cardinal_step_away(atom/start, atom/finish) //returns the position of a step from start away from finish, in one of the cardinal directions
 	//returns only NORTH, SOUTH, EAST, or WEST
@@ -1130,8 +1131,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			O.hear_talk(M,text,real_name, lang_id)
 
 /**
-  * Returns true if given value is a hex value
-  */
+ * Returns true if given value is a hex value
+ */
 /proc/is_hex(hex)
 	if (!( istext(hex) ))
 		return FALSE
@@ -1273,7 +1274,7 @@ proc/outermost_movable(atom/movable/target)
 
 /proc/all_range(var/range,var/centre) //above two are blocked by opaque objects
 	. = list()
-	for (var/atom/A as anything in range(range,centre))
+	for (var/atom/A in range(range,centre))
 		if (ismob(A))
 			. += A
 		else if (isobj(A))
@@ -1287,20 +1288,22 @@ proc/outermost_movable(atom/movable/target)
 			. += M
 
 /proc/weightedprob(choices[], weights[])
-	if(!choices || !weights) return null
-
+	if(!choices || !weights)
+		return null
 	//Build a range of weights
 	var/max_num = 0
-	for(var/X in weights) if(isnum(X)) max_num += X
-
+	for(var/X in weights)
+		if(isnum(X))
+			max_num += X
 	//Now roll in the range.
-	var/weighted_num = rand(1,max_num)
+	var/weighted_num = rand(1, max_num)
 
-	var/running_total, i
+	var/running_total
 
 	//Loop through all possible choices
-	for(i = 1; i <= choices.len; i++)
-		if(i > weights.len) return null
+	for(var/i in 1 to length(choices))
+		if(i > length(weights))
+			return null
 
 		running_total += weights[i]
 
@@ -1309,12 +1312,13 @@ proc/outermost_movable(atom/movable/target)
 		if(weighted_num <= running_total)
 			return choices[i]
 
-/* Get the highest ancestor of this object in the tree that is an immediate child of
-   a given ancestor.
-   Usage:
-   var/datum/fart/sassy/F = new
-   get_top_parent(F, /datum) //returns a path to /datum/fart
-   */
+/**
+ * Get the highest ancestor of this object in the tree that is an immediate child of a given ancestor.
+ *
+ * Usage:
+ * var/datum/fart/sassy/F = new
+ * get_top_parent(F, /datum) //returns a path to /datum/fart
+ */
 /proc/get_top_ancestor(var/datum/object, var/ancestor_of_ancestor=/datum)
 	if(!object || !ancestor_of_ancestor)
 		CRASH("Null value parameters in get top ancestor.")
@@ -1446,7 +1450,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	if (!A || !isnum(size) || size <= 0)
 		return list()
 
-	var/list/turfs = list()
+	. = list()
 	var/turf/center = get_turf(A)
 
 	var/corner_range = round(size * 1.5)
@@ -1461,9 +1465,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 				total_distance = abs(center.x - T.x) + abs(center.y - T.y) + (current_range / 2)
 				if (total_distance > corner_range)
 					continue
-				turfs += T
-
-	return turfs
+				. += T
 
 /proc/get_fraction_of_percentage_and_whole(var/perc,var/whole)
 	if (!isnum(perc) || !isnum(whole) || perc == 0 || whole == 0)
@@ -1912,7 +1914,7 @@ proc/countJob(rank)
 	return 1
 
 /proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
-	var/is_immune = FALSE
+	. = FALSE
 
 	var/area/a = get_area(target)
 	if(a?.sanctuary)
@@ -1920,27 +1922,23 @@ proc/countJob(rank)
 
 	if (isliving(target))
 		var/mob/living/L = target
-
 		if (!isdead(L))
 			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = TRUE
+					. = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = TRUE
-
-		if (source && istype(source,/obj/projectile) && ishuman(target))
+					. = TRUE
+		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = TRUE
-
-	return is_immune
+				. = TRUE
 
 /**
-  * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
-  */
+ * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
+ */
 /proc/whois(target, limit = null, admin)
-	target = trim(ckey(target))
+	target = trimtext(ckey(target))
 	if (!target)
 		return null
 	. = list()
@@ -2001,8 +1999,8 @@ proc/countJob(rank)
 				return M
 
 /**
-  * Finds whoever's dead.
-	*/
+ * Finds whoever's dead.
+ */
 /proc/whodead()
 	. = list()
 	for (var/mob/M in mobs)
@@ -2022,12 +2020,13 @@ proc/countJob(rank)
 //A global cooldown on this so it doesnt destroy the external server
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
-/proc/dectalk(msg)
+///dectalk SAYS its default volume is 5 but it seems to actually be more like 100
+/proc/dectalk(msg, volume = 80)
 	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
-
+		msg = "\[:volume set [volume]\][msg]"
 		var/datum/apiModel/DectalkPlayResource/playDectalkResource
 		try
 			var/datum/apiRoute/dectalk/play/playDectalk = new
@@ -2074,18 +2073,13 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
 
-	if (M && isblob(M))
+	if (isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
 		if (B.tutorial)
 			return TRUE
 
-	var/area/A
-	if (T && istype(T, /area))
-		A = T
-	else if (T && isturf(T))
-		A = get_area(T)
-
-	if (A && istype(A) && A.allowed_restricted_z)
+	var/area/A = get_area(T)
+	if (A?.allowed_restricted_z)
 		return TRUE
 
 /**
@@ -2458,7 +2452,8 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 proc/is_incapacitated(mob/M)
 	return (M &&(\
 		M.hasStatus("stunned") || \
-		M.hasStatus("weakened") || \
+		M.hasStatus("knockdown") || \
+		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
@@ -2601,3 +2596,174 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 	for (var/client/C in clients)
 		if (C.ckey == ckey)
 			return C
+
+/// Return a list of station-level storage objects that are safe to spawn things into
+/// * closed: if TRUE, only include storage objects that are closed
+/// * breathable: if TRUE, only include storage on breathable turfs
+/// * no_others: if TRUE, do not include multiple storage objects on the same turf
+/proc/get_random_station_storage_list(closed=FALSE, breathable=FALSE, no_others=FALSE)
+	RETURN_TYPE(/list/obj/storage)
+	. = list()
+	for_by_tcl(container, /obj/storage)
+		if (container.z != Z_LEVEL_STATION)
+			continue
+		if (closed && container.open)
+			continue
+		if (container.locked || container.welded || container.crunches_contents || container.needs_prying)
+			continue
+		if (istype(container, /obj/storage/secure) || istype(container, /obj/storage/crate/loot))
+			continue
+		// listening posts everywhere or martian ship (in station Z-level on Oshan)
+		if (istype(get_area(container), /area/listeningpost) || istype(get_area(container), /area/evilreaver))
+			continue
+
+		if (breathable)
+			var/turf/simulated/T = container.loc
+			if(!istype(T) || (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature <= T0C || T.air?.temperature >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
+				continue
+
+		if (no_others)
+			var/turf/container_turf = get_turf(container)
+			var/duplicate_containers = FALSE
+			for (var/obj/storage/container_on_turf in container_turf)
+				if (container != container_on_turf)
+					duplicate_containers = TRUE
+					break
+			if (duplicate_containers)
+				continue
+
+		. += container
+
+/// returns the position of the last matching needle in haystack, case sensitive
+/proc/findLastMatch(haystack, needle)
+	var/last_index = length(haystack)  // Start at the end of the data
+	var/last_match_found = 0
+
+	// Search from the end towards the beginning
+	while(last_index > 0)
+	{
+		last_index = findtext(haystack, needle, -last_index)  // Search from near the end
+		if(last_index > last_match_found)
+		{
+			last_match_found = last_index  // Update the last valid match
+			last_index = length(haystack) - last_index  // Adjust search start closer to the beginning
+		}
+		else
+		{
+			break  // Exit the loop if no further matches are found
+		}
+	}
+
+	return last_match_found
+
+/// returns the position of the last matching needle in haystack, case insensitive
+/proc/findLastMatchEx(haystack, needle)
+	var/last_index = length(haystack)  // Start at the end of the data
+	var/last_match_found = 0
+
+	// Search from the end towards the beginning
+	while(last_index > 0)
+	{
+		last_index = findtextEx(haystack, needle, -last_index)  // Search from near the end
+		if(last_index > last_match_found)
+		{
+			last_match_found = last_index  // Update the last valid match
+			last_index = length(haystack) - last_index  // Adjust search start closer to the beginning
+		}
+		else
+		{
+			break  // Exit the loop if no further matches are found
+		}
+	}
+
+	return last_match_found
+
+/// returns the maxx value of a TGM formatted map. Accepts either a map file or preread map text data
+/proc/get_tgm_maxx(map_data)
+	if (isfile(map_data))
+		map_data = file2text(map_data)
+	var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+	var/x_max = 0
+
+	// Extract X from the last valid match
+	if(idx > 0)
+	{
+		var/end_of_tuple = findtextEx(map_data, ")", idx)  // Find the end of the tuple
+		x_max = text2num(copytext(map_data, idx + 1, end_of_tuple))  // Extract the X value
+	}
+	return x_max
+
+/// returns the maxy value of a TGM formatted map. Accepts either a map file or preread map text data
+/proc/get_tgm_maxy(map_data)
+	if (isfile(map_data))
+		map_data = file2text(map_data)
+	var/idx = findLastMatchEx(map_data, regex(@"\((\d+),1,1\)"))
+	var/y_max = 0
+
+	// Start counting newlines from the first newline after the last match
+	if(idx > 0)
+	{
+		var/line_start = findtextEx(map_data, "\n", idx) + 1
+		while(line_start > 0 && line_start < length(map_data))
+		{
+			line_start = findtextEx(map_data, "\n", line_start + 1)  // Find the next newline
+			if(line_start)
+				y_max++
+		}
+		// Decrement Y count if there's an extra newline at the end of the data
+		if(map_data[length(map_data)] == "\n")
+			y_max--
+	}
+	return y_max
+
+/**
+ * Converts a list into a string, placing a delimiter in between entries in the list.
+ *
+ * @param list/l		The list to be textified.
+ *
+ * @param d	The string/delimiter to place inbetween list entries.
+ *
+ * @return the string form of the list.
+ *
+ * IE: list2text(list("this", "is", "a", "test"), " ") would return "this is a test".
+ */
+/proc/list2text(list/l, d = "")
+	#ifdef DEBUG
+	ASSERT(istype(l))
+	#endif
+	if(d)
+		if(length(l) <= 10)
+			return "[(length(l) >= 1) ? l[1] : ""][(length(l) > 1) ? d : ""][(length(l) >= 2) ? l[2] : ""][(length(l) > 2) ? d : ""][(length(l) >= 3) ? l[3] : ""][(length(l) > 3) ? d : ""][(length(l) >= 4) ? l[4] : ""][(length(l) > 4) ? d : ""][(length(l) >= 5) ? l[5] : ""][(length(l) > 5) ? d : ""][(length(l) >= 6) ? l[6] : ""][(length(l) > 6) ? d : ""][(length(l) >= 7) ? l[7] : ""][(length(l) > 7) ? d : ""][(length(l) >= 8) ? l[8] : ""][(length(l) > 8) ? d : ""][(length(l) >= 9) ? l[9] : ""][(length(l) > 9) ? d : ""][(length(l) >= 10) ? l[10] : ""][(length(l) > 10) ? d : ""]"
+		else if(length(l) <= 20)
+			var/list/remainder = l.Copy(11)
+			return "[l[1]][d][l[2]][d][l[3]][d][l[4]][d][l[5]][d][l[6]][d][l[7]][d][l[8]][d][l[9]][d][l[10]][d][list2text(remainder, d)]"
+		else if(length(l) <= 40)
+			var/list/remainder = l.Copy(21)
+			return "[l[1]][d][l[2]][d][l[3]][d][l[4]][d][l[5]][d][l[6]][d][l[7]][d][l[8]][d][l[9]][d][l[10]][d][l[11]][d][l[12]][d][l[13]][d][l[14]][d][l[15]][d][l[16]][d][l[17]][d][l[18]][d][l[19]][d][l[20]][d][list2text(remainder, d)]"
+		else if(length(l) <= 80)
+			var/list/remainder = l.Copy(41)
+			return "[l[1]][d][l[2]][d][l[3]][d][l[4]][d][l[5]][d][l[6]][d][l[7]][d][l[8]][d][l[9]][d][l[10]][d][l[11]][d][l[12]][d][l[13]][d][l[14]][d][l[15]][d][l[16]][d][l[17]][d][l[18]][d][l[19]][d][l[20]][d][l[21]][d][l[22]][d][l[23]][d][l[24]][d][l[25]][d][l[26]][d][l[27]][d][l[28]][d][l[29]][d][l[30]][d][l[31]][d][l[32]][d][l[33]][d][l[34]][d][l[35]][d][l[36]][d][l[37]][d][l[38]][d][l[39]][d][l[40]][d][list2text(remainder, d)]"
+		else if(length(l) <= 160)
+			var/list/remainder = l.Copy(81)
+			return "[l[1]][d][l[2]][d][l[3]][d][l[4]][d][l[5]][d][l[6]][d][l[7]][d][l[8]][d][l[9]][d][l[10]][d][l[11]][d][l[12]][d][l[13]][d][l[14]][d][l[15]][d][l[16]][d][l[17]][d][l[18]][d][l[19]][d][l[20]][d][l[21]][d][l[22]][d][l[23]][d][l[24]][d][l[25]][d][l[26]][d][l[27]][d][l[28]][d][l[29]][d][l[30]][d][l[31]][d][l[32]][d][l[33]][d][l[34]][d][l[35]][d][l[36]][d][l[37]][d][l[38]][d][l[39]][d][l[40]][d][l[41]][d][l[42]][d][l[43]][d][l[44]][d][l[45]][d][l[46]][d][l[47]][d][l[48]][d][l[49]][d][l[50]][d][l[51]][d][l[52]][d][l[53]][d][l[54]][d][l[55]][d][l[56]][d][l[57]][d][l[58]][d][l[59]][d][l[60]][d][l[61]][d][l[62]][d][l[63]][d][l[64]][d][l[65]][d][l[66]][d][l[67]][d][l[68]][d][l[69]][d][l[70]][d][l[71]][d][l[72]][d][l[73]][d][l[74]][d][l[75]][d][l[76]][d][l[77]][d][l[78]][d][l[79]][d][l[80]][d][list2text(remainder, d)]"
+		else
+			var/list/remainder = l.Copy(161)
+			return "[l[1]][d][l[2]][d][l[3]][d][l[4]][d][l[5]][d][l[6]][d][l[7]][d][l[8]][d][l[9]][d][l[10]][d][l[11]][d][l[12]][d][l[13]][d][l[14]][d][l[15]][d][l[16]][d][l[17]][d][l[18]][d][l[19]][d][l[20]][d][l[21]][d][l[22]][d][l[23]][d][l[24]][d][l[25]][d][l[26]][d][l[27]][d][l[28]][d][l[29]][d][l[30]][d][l[31]][d][l[32]][d][l[33]][d][l[34]][d][l[35]][d][l[36]][d][l[37]][d][l[38]][d][l[39]][d][l[40]][d][l[41]][d][l[42]][d][l[43]][d][l[44]][d][l[45]][d][l[46]][d][l[47]][d][l[48]][d][l[49]][d][l[50]][d][l[51]][d][l[52]][d][l[53]][d][l[54]][d][l[55]][d][l[56]][d][l[57]][d][l[58]][d][l[59]][d][l[60]][d][l[61]][d][l[62]][d][l[63]][d][l[64]][d][l[65]][d][l[66]][d][l[67]][d][l[68]][d][l[69]][d][l[70]][d][l[71]][d][l[72]][d][l[73]][d][l[74]][d][l[75]][d][l[76]][d][l[77]][d][l[78]][d][l[79]][d][l[80]][d][l[81]][d][l[82]][d][l[83]][d][l[84]][d][l[85]][d][l[86]][d][l[87]][d][l[88]][d][l[89]][d][l[90]][d][l[91]][d][l[92]][d][l[93]][d][l[94]][d][l[95]][d][l[96]][d][l[97]][d][l[98]][d][l[99]][d][l[100]][d][l[101]][d][l[102]][d][l[103]][d][l[104]][d][l[105]][d][l[106]][d][l[107]][d][l[108]][d][l[109]][d][l[110]][d][l[111]][d][l[112]][d][l[113]][d][l[114]][d][l[115]][d][l[116]][d][l[117]][d][l[118]][d][l[119]][d][l[120]][d][l[121]][d][l[122]][d][l[123]][d][l[124]][d][l[125]][d][l[126]][d][l[127]][d][l[128]][d][l[129]][d][l[130]][d][l[131]][d][l[132]][d][l[133]][d][l[134]][d][l[135]][d][l[136]][d][l[137]][d][l[138]][d][l[139]][d][l[140]][d][l[141]][d][l[142]][d][l[143]][d][l[144]][d][l[145]][d][l[146]][d][l[147]][d][l[148]][d][l[149]][d][l[150]][d][l[151]][d][l[152]][d][l[153]][d][l[154]][d][l[155]][d][l[156]][d][l[157]][d][l[158]][d][l[159]][d][l[160]][d][list2text(remainder, d)]"
+	else
+		if(length(l) <= 10)
+			return "[(length(l) >= 1) ? l[1] : ""][(length(l) >= 2) ? l[2] : ""][(length(l) >= 3) ? l[3] : ""][(length(l) >= 4) ? l[4] : ""][(length(l) >= 5) ? l[5] : ""][(length(l) >= 6) ? l[6] : ""][(length(l) >= 7) ? l[7] : ""][(length(l) >= 8) ? l[8] : ""][(length(l) >= 9) ? l[9] : ""][(length(l) >= 10) ? l[10] : ""]"
+		else if(length(l) <= 20)
+			var/list/remainder = l.Copy(11)
+			return "[l[1]][l[2]][l[3]][l[4]][l[5]][l[6]][l[7]][l[8]][l[9]][l[10]][list2text(remainder)]"
+		else if(length(l) <= 40)
+			var/list/remainder = l.Copy(21)
+			return "[l[1]][l[2]][l[3]][l[4]][l[5]][l[6]][l[7]][l[8]][l[9]][l[10]][l[11]][l[12]][l[13]][l[14]][l[15]][l[16]][l[17]][l[18]][l[19]][l[20]][list2text(remainder)]"
+		else if(length(l) <= 80)
+			var/list/remainder = l.Copy(41)
+			return "[l[1]][l[2]][l[3]][l[4]][l[5]][l[6]][l[7]][l[8]][l[9]][l[10]][l[11]][l[12]][l[13]][l[14]][l[15]][l[16]][l[17]][l[18]][l[19]][l[20]][l[21]][l[22]][l[23]][l[24]][l[25]][l[26]][l[27]][l[28]][l[29]][l[30]][l[31]][l[32]][l[33]][l[34]][l[35]][l[36]][l[37]][l[38]][l[39]][l[40]][list2text(remainder)]"
+		else if(length(l) <= 160)
+			var/list/remainder = l.Copy(81)
+			return "[l[1]][l[2]][l[3]][l[4]][l[5]][l[6]][l[7]][l[8]][l[9]][l[10]][l[11]][l[12]][l[13]][l[14]][l[15]][l[16]][l[17]][l[18]][l[19]][l[20]][l[21]][l[22]][l[23]][l[24]][l[25]][l[26]][l[27]][l[28]][l[29]][l[30]][l[31]][l[32]][l[33]][l[34]][l[35]][l[36]][l[37]][l[38]][l[39]][l[40]][l[41]][l[42]][l[43]][l[44]][l[45]][l[46]][l[47]][l[48]][l[49]][l[50]][l[51]][l[52]][l[53]][l[54]][l[55]][l[56]][l[57]][l[58]][l[59]][l[60]][l[61]][l[62]][l[63]][l[64]][l[65]][l[66]][l[67]][l[68]][l[69]][l[70]][l[71]][l[72]][l[73]][l[74]][l[75]][l[76]][l[77]][l[78]][l[79]][l[80]][list2text(remainder)]"
+		else
+			var/list/remainder = l.Copy(161)
+			return "[l[1]][l[2]][l[3]][l[4]][l[5]][l[6]][l[7]][l[8]][l[9]][l[10]][l[11]][l[12]][l[13]][l[14]][l[15]][l[16]][l[17]][l[18]][l[19]][l[20]][l[21]][l[22]][l[23]][l[24]][l[25]][l[26]][l[27]][l[28]][l[29]][l[30]][l[31]][l[32]][l[33]][l[34]][l[35]][l[36]][l[37]][l[38]][l[39]][l[40]][l[41]][l[42]][l[43]][l[44]][l[45]][l[46]][l[47]][l[48]][l[49]][l[50]][l[51]][l[52]][l[53]][l[54]][l[55]][l[56]][l[57]][l[58]][l[59]][l[60]][l[61]][l[62]][l[63]][l[64]][l[65]][l[66]][l[67]][l[68]][l[69]][l[70]][l[71]][l[72]][l[73]][l[74]][l[75]][l[76]][l[77]][l[78]][l[79]][l[80]][l[81]][l[82]][l[83]][l[84]][l[85]][l[86]][l[87]][l[88]][l[89]][l[90]][l[91]][l[92]][l[93]][l[94]][l[95]][l[96]][l[97]][l[98]][l[99]][l[100]][l[101]][l[102]][l[103]][l[104]][l[105]][l[106]][l[107]][l[108]][l[109]][l[110]][l[111]][l[112]][l[113]][l[114]][l[115]][l[116]][l[117]][l[118]][l[119]][l[120]][l[121]][l[122]][l[123]][l[124]][l[125]][l[126]][l[127]][l[128]][l[129]][l[130]][l[131]][l[132]][l[133]][l[134]][l[135]][l[136]][l[137]][l[138]][l[139]][l[140]][l[141]][l[142]][l[143]][l[144]][l[145]][l[146]][l[147]][l[148]][l[149]][l[150]][l[151]][l[152]][l[153]][l[154]][l[155]][l[156]][l[157]][l[158]][l[159]][l[160]][list2text(remainder)]"

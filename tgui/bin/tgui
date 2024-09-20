@@ -120,30 +120,27 @@ task-validate-build() {
 
 ## Installs merge drivers and git hooks
 task-install-git-hooks() {
-  cd "${base_dir}"
-  local git_root
-  local git_base_dir
-  git_root="$(git rev-parse --show-toplevel)"
-  git_base_dir="${base_dir/${git_root}/.}"
+  cd "${root_dir}"
   git config --replace-all merge.tgui-merge-bundle.driver \
-    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
+    "${root_dir}/tgui/bin/tgui --merge=bundle %P %O %A %B %L"
   echo "tgui: Merge drivers have been successfully installed!"
   exit 0
 }
 
 ## Bundle merge driver
 task-merge-bundle() {
-  local file_ancestor="${1}"
-  local file_current="${2}"
-  local file_other="${3}"
-  local conflict_marker_size="${4}"
-  local file_target="${5}"
-  echo "tgui: Rebuilding tgui bundle"
-  pushd .
+  local file_path="${1}"
+  local file_ancestor="${2}"
+  local file_current="${3}"
+  local file_other="${4}"
+  local conflict_marker_size="${5}"
+  echo "----------------------"
+  echo "tgui: rebuilding a conflicted tgui bundle, ${file_path}"
   task-install
   task-webpack --mode=production
-  popd
-  cp "$file_target" "$file_current"
+  echo "tgui: replacing conflicted bundle with newly compiled bundle"
+  cd ../
+  cat $file_path > $file_current
   exit 0
 }
 

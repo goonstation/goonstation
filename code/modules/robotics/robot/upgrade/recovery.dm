@@ -9,9 +9,7 @@
 		if (..())
 			return
 		boutput(user, "<b>REBOOTING...</b>")
-		user.delStatus("stunned")
-		user.delStatus("weakened")
-		user.delStatus("paralysis")
+		user.remove_stuns()
 		user.blinded = 0
 		user.take_eye_damage(-INFINITY)
 		user.take_eye_damage(-INFINITY, 1)

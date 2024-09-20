@@ -19,7 +19,7 @@
 	src.air2 = null
 	qdel(src.air3)
 	src.air3 = null
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/manifold_valve/update_icon(animation)
 	if(animation)

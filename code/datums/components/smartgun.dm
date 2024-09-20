@@ -184,7 +184,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 					src.mouse_target.y + round(src.target_poy / 32 + 0.5),\
 					src.mouse_target.z)
 				if(T)
-					for(var/atom/A as anything in range(2, T))
+					for(var/atom/A in range(2, T))
 						ON_COOLDOWN(A, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
 						if(tracked_targets[A] < src.maxlocks && src.is_valid_target(user, A) && shotcount < src.checkshots(parent, user))
 							tracked_targets[A] += 1

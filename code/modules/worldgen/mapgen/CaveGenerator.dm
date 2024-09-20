@@ -36,7 +36,7 @@
 	var/smol_caves = null
 	var/rock_wall_biome = /datum/biome/mountain/cave
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/cave
-	floor_turf_type = /turf/unsimulated/floor/cave/asteroid
+	floor_turf_type = /turf/unsimulated/floor/cave/asteroid/earthen
 
 /datum/map_generator/cave_generator/adventure
 	///2D list of all biomes based on heat and humidity combos.
@@ -71,6 +71,63 @@
 	floor_turf_type = /turf/unsimulated/floor/cave
 
 
+/datum/biome/asteroid
+	turf_type = /turf/unsimulated/floor/cave/asteroid
+
+/datum/biome/asteroid/wall
+	turf_type = /turf/simulated/wall/auto/asteroid
+
+/datum/biome/asteroid/fermid
+	flora_types = list(/obj/overlay/tile_effect/cracks/spawner/fermid/random=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid=1)
+	flora_density = 0.1
+
+	fauna_types = list(/mob/living/critter/fermid=100, /obj/overlay/tile_effect/cracks/spawner/fermid=50, /mob/living/critter/fermid/spitter=5, /mob/living/critter/fermid/worker=25, /mob/living/critter/fermid/worker/green=25, /mob/living/critter/fermid/spitter/blue=1, /mob/living/critter/fermid/spitter/orange=1, /mob/living/critter/fermid/hulk=10, /mob/living/critter/fermid/hulk/purple=1)
+	fauna_density = 1
+	minimum_fauna_distance = 5
+
+/datum/biome/asteroid/fermid/hive
+	fauna_density = 2
+	minimum_fauna_distance = 4
+
+/datum/biome/asteroid/fermid/nest
+	flora_types = list(/obj/overlay/tile_effect/cracks/spawner/fermid=10, /obj/overlay/tile_effect/cracks/spawner/fermid/random=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid=5, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/fermid/random=1)
+	flora_density = 4
+
+	fauna_types = list(/mob/living/critter/fermid=100, /obj/overlay/tile_effect/cracks/spawner/fermid=25, /mob/living/critter/fermid/worker=25, /mob/living/critter/fermid/hulk=10, /mob/living/critter/fermid/queen=5, /mob/living/critter/fermid/grub=5)
+	fauna_density = 2
+	minimum_fauna_distance = 2
+
+/datum/map_generator/cave_generator/asteroid
+	///2D list of all biomes based on heat and humidity combos.
+	possible_biomes = list(
+	BIOME_LOW_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/asteroid/fermid,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid,
+		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid
+		),
+	BIOME_LOWMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid,
+		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid/hive
+		),
+	BIOME_HIGHMEDIUM_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid/hive,
+		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid/nest
+		),
+	BIOME_HIGH_HEAT = list(
+		BIOME_LOW_HUMIDITY = /datum/biome/asteroid,
+		BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid,
+		BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/asteroid/fermid/hive,
+		BIOME_HIGH_HUMIDITY = /datum/biome/asteroid/fermid/nest
+		)
+	)
+	rock_wall_biome = /datum/biome/asteroid/wall
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid
+	floor_turf_type = /turf/unsimulated/floor/cave/asteroid
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/cave_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -138,10 +195,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 
 /turf/simulated/wall/auto/asteroid/mountain/cave
@@ -153,9 +207,9 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = 330
 	default_ore = null
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/cave
+	replace_type = /turf/unsimulated/floor/plating/asteroid/cave
 
-/turf/simulated/floor/plating/airless/asteroid/cave
+/turf/unsimulated/floor/plating/asteroid/cave
 	name = "cave"
 	desc = "cave floor"
 	color = "#7c5855"
@@ -166,12 +220,14 @@
 	fullbright = 0
 
 /datum/biome/mountain/cave/floor
-	turf_type = /turf/unsimulated/floor/cave/asteroid
+	turf_type = /turf/unsimulated/floor/cave/asteroid/earthen
+
+/turf/unsimulated/floor/cave/asteroid/earthen
+	color = "#7c5855"
 
 /turf/unsimulated/floor/cave/asteroid
 	name = "cave"
 	desc = "cave floor"
-	color = "#7c5855"
 	icon = 'icons/turf/walls/asteroid.dmi'
 	icon_state = "astfloor1"
 	fullbright = 0

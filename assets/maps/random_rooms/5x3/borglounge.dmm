@@ -29,7 +29,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/decal/fakeobjects/robot{
+/obj/fakeobject/robot{
 	anchored = 1;
 	desc = "How long has this been down here?"
 	},

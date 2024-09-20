@@ -78,7 +78,7 @@
 
 	disposing()
 		src._light_turf?.remove_medium_light("turbine_light")
-		new /obj/decal/fakeobjects/turbine_destroyed(src.loc)
+		new /obj/fakeobject/turbine_destroyed(src.loc)
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
@@ -230,7 +230,7 @@
 
 			src.network1?.update = TRUE
 			src.network2?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&stator=[src.stator_load]&power=[src.lastgen]&powerfmt=[engineering_notation(src.lastgen)]W")
 
 	suicide(mob/user)
 		user.visible_message(SPAN_ALERT("<b>[user] puts their head into blades of \the [src]!</b>"))
@@ -248,7 +248,7 @@
 				user.visible_message(SPAN_ALERT("<b>The blades of \the [src] hit [user] with some force, giving them a nasty cut.</b>"))
 				user.TakeDamageAccountArmor("head", src.RPM, 0, 0, DAMAGE_STAB)
 				user.changeStatus("stunned", 6 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
 				return FALSE
 			if(100 to INFINITY)
 				user.visible_message(SPAN_ALERT("<b>The blades of \the [src] decapitate [user] instantly!</b>"))
@@ -261,7 +261,7 @@
 					user.TakeDamage("head", 200, 0, 0, DAMAGE_CRUSH)
 				return TRUE
 
-	return_air()
+	return_air(direct = FALSE)
 		return air_contents
 
 	ui_interact(mob/user, datum/tgui/ui)

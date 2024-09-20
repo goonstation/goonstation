@@ -30,8 +30,15 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 			return COMPONENT_INCOMPATIBLE
 		RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(start_fall))
 		RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(update_targets))
+		RegisterSignal(src.parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 		src.BruteDamageMax	= BruteDamageMax
 		src.FallTime		= FallTime
+
+	UnregisterFromParent()
+		. = ..()
+		UnregisterSignal(src.parent, COMSIG_ATOM_ENTERED)
+		UnregisterSignal(src.parent, COMSIG_ATTACKBY)
+		UnregisterSignal(src.parent, COMSIG_TURF_REPLACED)
 
 	/// returns the .parent but typecasted as a turf
 	proc/typecasted_parent()
@@ -60,7 +67,8 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 		// if the fall has coyote time, then delay it
 		if (src.FallTime)
 			SPAWN(src.FallTime)
-				AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
+				if (!QDELETED(AM))
+					AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
 		else
 			src.try_fall(signalsender, AM)
 
@@ -93,13 +101,13 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 				var/mob/M = A
 				random_brute_damage(M, brutedamage)
 				if (brutedamage >= 50)
-					M.changeStatus("paralysis", 7 SECONDS)
+					M.changeStatus("unconscious", 7 SECONDS)
 				else if (brutedamage >= 30)
 					M.changeStatus("stunned", 10 SECONDS)
 				else if (brutedamage >= 20)
-					M.changeStatus("weakened", 5 SECONDS)
+					M.changeStatus("knockdown", 5 SECONDS)
 				else
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
 				M.emote("scream")
 			A.set_loc(T)

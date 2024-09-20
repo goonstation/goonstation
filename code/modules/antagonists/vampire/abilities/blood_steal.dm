@@ -26,6 +26,7 @@
 			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return 1
 
+		. = ..()
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
 
 		return 0
@@ -144,6 +145,8 @@
 	pierces = -1
 	max_range = 10
 	shot_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	shot_volume = 50 //why was this 100 :screm:
+	shot_sound_extrarange = -10
 
 	on_launch(var/obj/projectile/P)
 		if (!("victim" in P.special_data))
@@ -161,8 +164,8 @@
 		if (("vamp" in P.special_data))
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
 			if (vampire.owner == hit && !P.special_data["returned"])
-				P.travelled = 0
-				P.max_range = 4
+				P.travelled = 16
+				P.max_range = 1
 				P.special_data["returned"] = TRUE
 			..()
 

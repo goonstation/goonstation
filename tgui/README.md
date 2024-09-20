@@ -100,6 +100,7 @@ You can double-click these batch files to achieve the same thing:
 
 - `bin\tgui.bat` - Build the project in production mode.
 - `bin\tgui-dev-server.bat` - Launch a development server.
+- `bin\tgui-bench.cmd` - Run benchmarks.
 
 > Remember to always run a full build before submitting a PR. It creates
 > a compressed javascript bundle which is then referenced from DM code.

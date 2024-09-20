@@ -59,7 +59,7 @@ chui/window/keybind_menu
 					boutput(who, SPAN_NOTICE("Your custom keybinding data has been saved."))
 			else if (id == "reset")
 				changed_keys = new/list()
-				owner.player.cloudSaves.putData("custom_keybind_data", null)
+				owner.player.cloudSaves.deleteData("custom_keybind_data")
 				who.keymap = null //To prevent merge() from not overwriting old keybinds
 				who.mob.reset_keymap() //Does successive calls to rebuild the keymap
 				boutput(who, SPAN_NOTICE("Your keybinding data has been reset. Please re-open the window."))

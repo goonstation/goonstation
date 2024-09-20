@@ -10,6 +10,7 @@
 	buildBody(
 		map,
 		server_id,
-		rp_mode
+		rp_mode,
+		test_merges
 	)
 		. = ..(args)

@@ -494,6 +494,7 @@
 	var/exhibit_id = "ex_0"
 	/// cost to purchase this exhibit space
 	var/spacebux_cost = 0
+	var/datum/exhibit_data/data
 
 	lowend
 		spacebux_cost = 5000
@@ -503,4 +504,7 @@
 		spacebux_cost = 25000
 	premium
 		spacebux_cost = 50000
+
+/datum/exhibit_data
+	var/icon/art
 #endif

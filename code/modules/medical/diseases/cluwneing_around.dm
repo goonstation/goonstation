@@ -92,7 +92,7 @@
 							if (DS2 == 0 && !T2.density && !isrestrictedz(T2.z))
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
-								affected_mob.changeStatus("weakened", 2 SECONDS)
+								affected_mob.changeStatus("knockdown", 2 SECONDS)
 								boutput(affected_mob, SPAN_ALERT("You feel clumsy and suddenly slip!"))
 
 			if(probmult(10))
@@ -200,7 +200,7 @@
 							if (DS2 == 0 && !T2.density && !isrestrictedz(T2.z))
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
-								affected_mob.changeStatus("weakened", 2 SECONDS)
+								affected_mob.changeStatus("knockdown", 2 SECONDS)
 								boutput(affected_mob, SPAN_ALERT("You feel clumsy and suddenly slip!"))
 
 

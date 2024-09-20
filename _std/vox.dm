@@ -67,6 +67,7 @@ var/global/datum/voxdbg/VoxDebug = new
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Debug VOX"
 	set desc = "Fuck me."
+	SHOW_VERB_DESC
 
 	VoxDebug.voxtokens = voxtokens
 	VoxDebug.voxsounds_flag_sorted = voxsounds_flag_sorted
@@ -79,10 +80,8 @@ var/global/datum/voxdbg/VoxDebug = new
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Help"
 	set desc = "WOOP WOOP ASS DAY"
-
-	if(!isadmin(src))
-		boutput(src, "Only administrators may use this command.")
-		return
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	vox_help(usr)
 
@@ -92,7 +91,10 @@ proc/vox_help(var/mob/user)
 
 		var/list/sorted = list()
 		var/initial
-		voxhelp_cache = "<html><head><title=\"VOX Help\"></head><body><b>Valid VOX sounds:</b><hr>"
+
+		var/list/voxhelp_list = list()
+
+		voxhelp_list += "<html><head><title=\"VOX Help\"></head><body><b>Valid VOX sounds:</b><hr>"
 
 		sorted["pauses"] = list(". for long or , for short")
 		for(var/t in voxsounds)
@@ -103,46 +105,39 @@ proc/vox_help(var/mob/user)
 				sorted[initial] = list()
 			sorted[initial] += t
 
-		var/buf = null
 		for(initial in sorted)
 			var/list/sounds = sorted[initial]
-			voxhelp_cache += "<font size=+1>[initial]:</font> "
-			for(var/sound in sounds)
-				if (buf)
-					buf = "[buf], [sound]"
-				else
-					buf = "[sound]"
-			voxhelp_cache += "[buf]<br><br>"
-			buf = null
+			voxhelp_list += "<font size=+1>[initial]:</font> "
+			var/list/sound_list = list()
 
-		voxhelp_cache += "<hr>"
+			for(var/sound in sounds)
+				sound_list += "<a href='byond://winset?command=Intercom-Announcement \"[sound]'>[sound]</a>"
+			voxhelp_list += "[sound_list.Join(", ")]<br><br>"
+
+		voxhelp_list += "<hr>"
 
 		for(initial in voxtokens)
 			var/list/sounds = voxsounds_flag_sorted[initial]
-			voxhelp_cache += "<font size=+1>[initial]:</font> "
+			voxhelp_list += "<font size=+1>[initial]:</font> "
+			var/list/sound_list = list()
 			for(var/datum/VOXsound/vx in sounds)
-				if (buf)
-					buf = "[buf], [vx.id]"
-				else
-					buf = "[vx.id]"
-			voxhelp_cache += "[buf]<br><br>"
-			buf = null
+				sound_list += "<a href='byond://winset?command=Intercom-Announcement \"[vx.id]'>[vx.id]</a>"
+			voxhelp_list += "[sound_list.Join(", ")]<br><br>"
 
-		voxhelp_cache += "</body></html>"
+		voxhelp_list += "</body></html>"
+		voxhelp_cache = voxhelp_list.Join()
 
 	user.Browse(voxhelp_cache, "window=voxhelp;size=300x600")
 
-/client/proc/cmd_admin_intercom_announce()
+/client/proc/cmd_admin_intercom_announce(input as text)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Announcement"
-	set desc = "ABOUT THAT BEER I OWED YA, GORDON"
-	if(!isadmin(src))
-		boutput(src, "Only administrators may use this command.")
-		return
+	set desc = "See 'Intercom Help' for words"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	vox_reinit_check()
 
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as text
 	if(!input)
 		return
 
@@ -156,11 +151,8 @@ proc/vox_help(var/mob/user)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Intercom Announcement (Pitch Shifted)"
 	set desc = "ABOUT that BEER I owed YA, NODROG"
-	if(!isadmin(src))
-		boutput(src, "Only administrators may use this command.")
-		return
-
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	vox_reinit_check()
 
@@ -500,7 +492,6 @@ proc/init_vox()
 "birdwell" = new/datum/VOXsound("birdwell", "sound/vox/birdwell.ogg", NOUN | FLAG),
 "birthday" = new/datum/VOXsound("birthday", "sound/vox/birthday.ogg", NOUN),
 "biscuit" = new/datum/VOXsound("biscuit", "sound/vox/biscuit.ogg", NOUN),
-"bitch" = new/datum/VOXsound("bitch", "sound/vox/bitch.ogg", NOUN | VERB),
 "bitter" = new/datum/VOXsound("bitter", "sound/vox/bitter.ogg", ADJECTIVE),
 "bizwarn" = new/datum/VOXsound("bizwarn", "sound/vox/bizwarn.ogg", FX),
 "black" = new/datum/VOXsound("black", "sound/vox/black.ogg", ADJECTIVE),
@@ -1766,7 +1757,6 @@ proc/init_vox()
 "peace" = new/datum/VOXsound("peace", "sound/vox/peace.ogg", NOUN),
 "peanut" = new/datum/VOXsound("peanut", "sound/vox/peanut.ogg", NOUN | ADJECTIVE),
 "peasant" = new/datum/VOXsound("peasant", "sound/vox/peasant.ogg", NOUN),
-"penis" = new/datum/VOXsound("penis", "sound/vox/penis.ogg", NOUN),
 "people" = new/datum/VOXsound("people", "sound/vox/people.ogg", NOUN | VERB),
 "pepperoni" = new/datum/VOXsound("pepperoni", "sound/vox/pepperoni.ogg", NOUN),
 "percent" = new/datum/VOXsound("percent", "sound/vox/percent.ogg", NOUN | ADJECTIVE),
@@ -2459,7 +2449,6 @@ proc/init_vox()
 "welcome" = new/datum/VOXsound("welcome", "sound/vox/welcome.ogg", NOUN|VERB|ADJECTIVE),
 "welcomes" = new/datum/VOXsound("welcomes", "sound/vox/welcomes.ogg", VERB),
 "well" = new/datum/VOXsound("well", "sound/vox/well.ogg", VERB | ADVERB | NOUN),
-"wendigo" = new/datum/VOXsound("wendigo", "sound/vox/wendigo.ogg", NOUN),
 "wepon" = new/datum/VOXsound("wepon", "sound/vox/wepon.ogg", NOUN),
 "werewolf" = new/datum/VOXsound("werewolf", "sound/vox/werewolf.ogg", NOUN),
 "west" = new/datum/VOXsound("west", "sound/vox/west.ogg", NOUN),

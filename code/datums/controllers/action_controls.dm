@@ -206,7 +206,10 @@ var/datum/action_controller/actions
 	var/bar_on_owner = TRUE
 	/// Does bar fill or empty?
 	var/fill_bar = TRUE
-
+	/// How far should the bar be offset horizontally?
+	var/bar_x_offset = 0
+	/// How far should the bar be offset horizontally?
+	var/bar_y_offset = 5
 
 	onStart()
 		..()
@@ -216,9 +219,10 @@ var/datum/action_controller/actions
 			border = new /obj/actions/border
 			border.set_icon_state(src.border_icon_state)
 			bar.set_icon_state(src.bar_icon_state)
-			bar.pixel_y = 5
-			bar.pixel_x = 0
-			border.pixel_y = 5
+			bar.pixel_x = src.bar_x_offset
+			bar.pixel_y = src.bar_y_offset
+			border.pixel_x = src.bar_x_offset
+			border.pixel_y = src.bar_y_offset
 			if (bar_on_owner)
 				A.vis_contents += bar
 				A.vis_contents += border
@@ -373,6 +377,9 @@ var/datum/action_controller/actions
 	/// Is the icon also on the target if we have one? if this is TRUE, make sure the target only handles overlays by using the UpdateOverlays proc.
 	var/icon_on_target = FALSE
 
+	/// Apply a an outline filter to the icon to be displayed. Default: TRUE
+	var/apply_outline_filter = TRUE
+
 	onStart()
 		..()
 		if (icon && owner)
@@ -384,16 +391,17 @@ var/datum/action_controller/actions
 			icon_image.pixel_x = icon_x_off
 			icon_image.plane = icon_plane
 			icon_image.layer = 10
-			icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
-			border.UpdateOverlays(icon_image, "action_icon")
+			if (apply_outline_filter)
+				icon_image.filters += filter(type="outline", size=0.5, color=rgb(255,255,255))
+			border.AddOverlays(icon_image, "action_icon")
 			if (icon_on_target && place_to_put_bar)
-				target_border.UpdateOverlays(icon_image, "action_icon")
+				target_border.AddOverlays(icon_image, "action_icon")
 
 	onDelete()
 		if (icon_on_target && place_to_put_bar && target_border)
-			target_border.UpdateOverlays(null, "action_icon")
+			target_border.ClearSpecificOverlays("action_icon")
 		if (border)
-			border.UpdateOverlays(null, "action_icon")
+			border.ClearSpecificOverlays("action_icon")
 		if (icon_image)
 			qdel(icon_image)
 		..()

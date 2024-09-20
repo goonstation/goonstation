@@ -37,7 +37,7 @@ export type ApcData = {
   lastused_environ;
   lastused_equip;
   lastused_light;
-  lastused_total;
+  lastused_total: number;
   lighting;
   locked: BooleanLike;
   main_status;

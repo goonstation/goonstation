@@ -122,7 +122,7 @@
 		start_location.color = OCEAN_COLOR
 		#endif
 
-		station_repair.repair_turfs(dest_turfs)
+		station_repair.repair_turfs(dest_turfs, force_floor=TRUE)
 
 /proc/get_hiding_jerk(var/atom/movable/container)
 	for(var/atom/movable/AM in container)

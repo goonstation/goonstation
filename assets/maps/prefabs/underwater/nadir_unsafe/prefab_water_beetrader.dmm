@@ -194,7 +194,7 @@
 /turf/simulated/floor/white,
 /area/bee_trader)
 "A" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/marker/supplymarker,
 /turf/simulated/floor{
 	icon_state = "hive"
@@ -260,7 +260,7 @@
 	},
 /area/bee_trader)
 "J" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "An older biopod for the creation of space bee eggs.";

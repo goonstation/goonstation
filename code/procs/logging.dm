@@ -74,7 +74,6 @@ var/global/logLength = 0
 			if (LOG_PDAMSG) logs[LOG_PDAMSG] += ingameLog
 			if (LOG_SIGNALERS) logs[LOG_SIGNALERS] += ingameLog
 			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
-			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
 			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
@@ -89,6 +88,10 @@ var/global/logLength = 0
 		if ((!diaryLogging || forceNonDiaryLoggingToo) && config.allowRotatingFullLogs)
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
+
+		if (!diaryLogging)
+			var/datum/eventRecord/Log/logEvent = new()
+			logEvent.send(type, source && source != "<span class='blank'>(blank)</span>" ? source : null, text)
 	return
 
 ///Check config for whether a message should be logged to the diary
@@ -121,16 +124,17 @@ var/global/logLength = 0
 /proc/log_tgui(user, message, context,
 		datum/tgui_window/window,
 		datum/src_object)
-	var/entry = "\[tgui\] " // |GOONSTATION-CHANGE| (tgui:->\[tgui\])
+	var/entry = "" // |GOONSTATION-CHANGE| (tgui:->)
 	// Insert user info
+	var/source = null // |GOONSTATION-CHANGE| -> split source out of entry to send to logTheThing
 	if(!user)
-		entry += "(nobody)" // |GOONSTATION-CHANGE| (<nobody>->(nobody))
+		source = "(nobody)" // |GOONSTATION-CHANGE| (entry +->source ) (<nobody>->(nobody))
 	else if(istype(user, /mob))
 		var/mob/mob = user
-		entry += "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])"
+		source = "[mob.ckey] (as [mob] at [mob.x],[mob.y],[mob.z])" // |GOONSTATION-CHANGE| (entry +->source )
 	else if(istype(user, /client))
 		var/client/client = user
-		entry += "[client.ckey]"
+		source = "[client.ckey]" // |GOONSTATION-CHANGE| (entry +->source )
 	// Insert context
 	if(context)
 		entry += " in [context]"
@@ -146,7 +150,7 @@ var/global/logLength = 0
 	if(message)
 		entry += "<br>[message]" // |GOONSTATION-CHANGE| (\n->br)
 	entry += "<br>" // |GOONSTATION-CHANGE| (br)
-	WRITE_LOG(roundLog_name, entry)
+	logTheThing(LOG_TGUI, source, entry) // |GOONSTATION-CHANGE| (WRITE_LOG(roundLog_name, entry)->logTheThing(LOG_TGUI, source, entry))
 	logLength++
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */

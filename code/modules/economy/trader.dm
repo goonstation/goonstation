@@ -38,6 +38,11 @@
 	var/doing_a_thing = 0
 	var/log_trades = TRUE
 
+	///A business card or other item type to occasionally include with orders
+	///copy pasted from /datum/trader because we have two separate trader types APPARENTLY
+	var/business_card = null
+	var/business_card_chance = 20
+
 	var/datum/dialogueMaster/dialogue = null //dialogue will open on click if available. otherwise open trade directly.
 	var/lastWindowName = ""
 	var/angrynope = "Not interested." //What the trader says when he declines trade because angry.
@@ -112,7 +117,7 @@
 					boutput(user, SPAN_NOTICE("Card authorized."))
 					src.scan = id_card
 				else
-					boutput(user, SPAN_ALERT("Pin number incorrect."))
+					boutput(user, SPAN_ALERT("PIN incorrect."))
 					src.scan = null
 			else
 				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
@@ -412,7 +417,7 @@
 						boutput(usr, SPAN_NOTICE("Card authorized."))
 						src.scan = id_card
 					else
-						boutput(usr, SPAN_ALERT("Pin number incorrect."))
+						boutput(usr, SPAN_ALERT("PIN incorrect."))
 						src.scan = null
 				else
 					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
@@ -472,6 +477,8 @@
 		var/obj/storage/crate/A = new /obj/storage/crate(pickedloc)
 		showswirl(pickedloc)
 		A.name = "Goods Crate ([src.name])"
+		if (src.business_card && prob(src.business_card_chance))
+			new src.business_card(A)
 		if (!custom)
 			for(var/atom/movable/purchased as anything in shopping_cart)
 				purchased.set_loc(A)
@@ -700,10 +707,6 @@
 		/datum/commodity/bodyparts,
 		/datum/commodity/medical)
 
-		#ifdef CREATE_PATHOGENS //Don't need this when there's no pathology
-		commercetypes += /datum/commodity/synthmodule
-		#endif
-
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
 
@@ -725,7 +728,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"Get 'em boys!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/N = pick(1,2)
 				var/mob/living/critter/martian/P = null
 				if (N == 1)
@@ -796,7 +799,7 @@
 		for(var/mob/M in AIviewers(src))
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
-			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
+			for(var/obj/fakeobject/teleport_pad/D in T)
 				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
@@ -934,7 +937,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
 			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
 
-		src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
 		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
@@ -944,6 +946,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 		src.goods_sell += new /datum/commodity/podparts/artillery(src)
 		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
+		src.goods_sell += new /datum/commodity/clothing_restock(src)
 #ifdef UNDERWATER_MAP
 		src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
@@ -989,7 +992,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/salvage/electronic_debris(src)
 		src.goods_buy += new /datum/commodity/relics/gnome(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 
@@ -1036,7 +1038,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	New()
 		..()
 		src.goods_sell += new /datum/commodity/diner/mysteryburger(src)
-		src.goods_sell += new /datum/commodity/diner/monster(src)
 		src.goods_sell += new /datum/commodity/diner/sloppyjoe(src)
 		src.goods_sell += new /datum/commodity/diner/mashedpotatoes(src)
 		src.goods_sell += new /datum/commodity/diner/waffles(src)
@@ -1045,6 +1046,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/diner/slurrypie(src)
 		src.goods_sell += new /datum/commodity/diner/daily_special(src)
 
+		src.goods_buy += new /datum/commodity/diner/monster(src)
 		src.goods_buy += new /datum/commodity/produce/special/gmelon(src)
 		src.goods_buy += new /datum/commodity/produce/special/greengrape(src)
 		src.goods_buy += new /datum/commodity/produce/special/ghostchili(src)
@@ -1126,7 +1128,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		if (istype(W, /obj/item/coin/bombini))
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
-				M.unlock_medal("Bombini is missing!", 1)
+				M.unlock_medal("Bombini is Missing!", 1)
 				M.add_karma(15) // This line originally tried to give the karma to Bombini. Definitely a bug but I like to imagine that she just managed to pickpocket your karma or something.
 			user.u_equip(W)
 			qdel(W)
@@ -1144,6 +1146,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	name = "Geoff Honkington"
 	angrynope = "HO--nngh. Leave me alone."
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
+	business_card = /obj/item/paper/businesscard/clowntown
 	var/honk = 0
 
 	New()
@@ -1157,6 +1160,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/waltwhite(src)
 		src.goods_sell += new /datum/commodity/costume/spiderman(src)
 		src.goods_sell += new /datum/commodity/costume/wonka(src)
+		src.goods_sell += new /datum/commodity/costume/goku(src)
 		src.goods_sell += new /datum/commodity/costume/light_borg(src)
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)
@@ -1186,6 +1190,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_mime(src)
 		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
+		src.goods_sell += new /datum/commodity/costume/rabbitsuit(src)
 
 
 

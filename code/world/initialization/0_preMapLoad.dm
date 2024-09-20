@@ -2,11 +2,13 @@
 /datum/preMapLoad
 	New()
 		global.current_state = GAME_STATE_PRE_MAP_LOAD
-#ifdef TRACY_PROFILER_HOOK
-		prof_init()
-#endif
 #ifdef LIVE_SERVER
 		world.log = file("data/errors.log")
+#endif
+#ifdef TRACY_PROFILER_HOOK
+		prof_init()
+#else
+		check_tracy_toggle()
 #endif
 		enable_auxtools_debugger()
 
@@ -50,6 +52,10 @@
 			roundLog << "<br>"
 			logLength += 4
 
+		// Global handlers that should be highly available
+		apiHandler = new()
+		eventRecorder = new()
+
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
 		abandon_allowed = config.respawn
@@ -82,6 +88,8 @@
 		buildMaterialPropertyCache()	//Order is important.
 		Z_LOG_DEBUG("Preload", "Building material cache...")
 		buildMaterialCache()			//^^
+		Z_LOG_DEBUG("Preload", "Building manufacturing requirement cache...")
+		buildManufacturingRequirementCache() // ^^
 
 		// no log because this is functionally instant
 		global_signal_holder = new
@@ -125,9 +133,6 @@
 		cargo_pad_manager = new /datum/cargo_pad_manager()
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
-
-		Z_LOG_DEBUG("Preload", "Generating minimaps...")
-		minimap_renderer = new
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -197,9 +202,6 @@
 			if (E.acceptable_in_mutini) // for the drink reagent  :T
 				mutini_effects[E.id] = E
 
-		Z_LOG_DEBUG("Preload", "  zoldorf")
-		zoldorfsetup()
-
 		Z_LOG_DEBUG("Preload", "  fluid turf misc setup")
 		fluid_turf_setup(first_time=TRUE)
 
@@ -224,14 +226,20 @@
 			var/datum/material/M = new mat()
 			material_cache[M.getID()] = M.getImmutable()
 
-#ifdef TRACY_PROFILER_HOOK
-/proc/prof_init()
-	var/lib
-	switch(world.system_type)
-		if(MS_WINDOWS) lib = "prof.dll"
-		if(UNIX) lib = "libprof.so"
-		else CRASH("unsupported platform")
-
-	var/init = LIBCALL(lib, "init")()
-	if("0" != init) CRASH("[lib] init error: [init]")
-#endif
+/proc/buildManufacturingRequirementCache()
+	requirement_cache = list()
+	var/requirementList = concrete_typesof(/datum/manufacturing_requirement) - /datum/manufacturing_requirement/match_material
+	for (var/datum/manufacturing_requirement/R_path as anything in requirementList)
+		var/datum/manufacturing_requirement/R = new R_path()
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.getID() in requirement_cache)
+			CRASH("ID conflict: [R.getID()] from [R]")
+		#endif
+		requirement_cache[R.getID()] = R
+	for (var/datum/material/mat as anything in material_cache)
+		var/datum/manufacturing_requirement/match_material/R = new /datum/manufacturing_requirement/match_material(mat)
+		#ifdef CHECK_MORE_RUNTIMES
+		if (R.getID() in requirement_cache)
+			CRASH("ID conflict: [R.getID()] from [R]")
+		#endif
+		requirement_cache[R.getID()] = R

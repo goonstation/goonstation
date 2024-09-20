@@ -48,7 +48,8 @@
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/skin_process = list() //digesting patches
+	/// all applied patches (ex. medical patches)
+	var/list/applied_patches = list()
 
 	var/sound_burp = 'sound/voice/burp.ogg'
 	var/sound_scream = 'sound/voice/screams/robot_scream.ogg' // for silicon mobs
@@ -86,7 +87,7 @@
 
 	var/stance = "normal"
 
-	var/special_sprint = SPRINT_NORMAL
+	var/datum/special_sprint/special_sprint = null
 	var/next_step_delay = 0
 	var/next_sprint_boost = 0
 	var/sustained_moves = 0
@@ -102,6 +103,9 @@
 	var/bleeding_internal = 0
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
+
+	/// completely immune to catching and spreading disease/medical-like ailments
+	var/ailment_immune = FALSE
 
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
@@ -123,7 +127,7 @@
 	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
-/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
@@ -152,7 +156,7 @@
 	SPAWN(0)
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
-			init_preferences?.apply_post_new_stuff(src)
+			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 
 /mob/living/flash(duration)
@@ -172,9 +176,9 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in skin_process)
+	for (var/atom/A as anything in src.applied_patches)
 		qdel(A)
-	skin_process = null
+	src.applied_patches = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
@@ -296,7 +300,7 @@
 
 /mob/living/Logout()
 	. = ..()
-	src.UpdateOverlays(null, "speech_bubble")
+	src.ClearSpecificOverlays("speech_bubble")
 	src.is_npc = initial(src.is_npc)
 
 
@@ -346,7 +350,7 @@
 	return ..()
 
 /mob/living/detach_hud(datum/hud/hud)
-	if (observers.len) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
+	if (length(observers)) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
 		for (var/mob/dead/target_observer/observer in observers)
 			observer.detach_hud(hud)
 	return ..()
@@ -381,7 +385,7 @@
 	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target.loc))
+			if (istype(target, /atom/movable) && (isturf(target.loc) || !reach))
 				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
@@ -401,7 +405,7 @@
 /mob/living/onMouseMove(object,location,control,params)
 	var/obj/item/W = src.equipped()
 	if(W.needOnMouseMove)
-		if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+		if (!src.stat && !src.restrained() && !src.getStatusDuration("knockdown") && !src.getStatusDuration("unconscious") && !src.getStatusDuration("stunned"))
 			if (W && istype(W))
 				W.onMouseMove(object,location,control,params)
 	return
@@ -508,11 +512,7 @@
 			if (istype(movable))
 				movable.pull(src)
 
-				if (mob_flags & AT_GUNPOINT)
-					for(var/obj/item/grab/gunpoint/G in grabbed_by)
-						G.shoot()
-
-				return
+				SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 		else
 			var/reach = can_reach(src, target)
 			if (src.pre_attack_modify())
@@ -595,7 +595,7 @@
 	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
-	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
+	if (src.hasStatus("paralysis"))
 		src.show_text("You are completely paralysed and can't point!", "red")
 		return
 
@@ -619,7 +619,7 @@
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()
-	. = src.bioHolder.mobAppearance.customization_first_color
+	. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -686,7 +686,7 @@
 	// shittery that breaks text or worse
 	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
 	message = replacetext(message, shittery_regex, "")
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = strip_html(trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	var/client/my_client = src.client
 	if(isAI(src))
@@ -696,6 +696,7 @@
 	if (!message)
 		return
 
+	..()
 	// Zam note: this is horrible
 	if (forced_desussification)
 		// "Surely this goes somewhere else, right, Zam?"
@@ -711,7 +712,7 @@
 			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
 			arcFlash(src, src, forced_desussification)
 			if (issilicon(src))
-				src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
+				src.apply_flash(20, knockdown = 2, stamina_damage = 20, disorient_time = 3)
 			if (forced_desussification_worse)
 				forced_desussification *= 1.1
 
@@ -741,7 +742,7 @@
 
 	if(src.z == 2 && istype(get_area(src),/area/afterlife)) //check zlevel before doing istype
 		if (dd_hasprefix(message, ":d"))
-			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
+			message = trimtext(copytext(message, 3, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
 	// wtf?
@@ -749,7 +750,9 @@
 		return
 
 	// emotes
-	if (dd_hasprefix(message, "*") && !src.stat)
+	if (dd_hasprefix(message, "*"))
+		if (src.stat || src.hasStatus("paralysis"))
+			return
 		return src.emote(copytext(message, 2),1)
 
 	// Mute disability
@@ -768,7 +771,7 @@
 			H.whisper(message, forced=TRUE)
 			return
 
-	message = trim(message)
+	message = trimtext(message)
 
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
@@ -787,7 +790,10 @@
 			message_mode = "headset"
 	// Special message handling
 	else if (copytext(message, 1, 2) == ";")
-		message_mode = "headset"
+		if(isAI(src))
+			message_mode = "internal 1"
+		else
+			message_mode = "headset"
 		message = copytext(message, 2)
 
 	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
@@ -841,7 +847,7 @@
 
 	forced_language = get_special_language(secure_headset_mode)
 
-	message = trim(message)
+	message = trimtext(message)
 
 	// check for singing prefix after radio prefix
 	if (!singing)
@@ -909,15 +915,15 @@
 
 	if(my_client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("sing", message, user = my_client.mob, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("radio", message, user = my_client.mob, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
+			phrase_log.log_phrase("say", message, user = my_client.mob, strip_html = TRUE)
 
 	last_words = message
 
-	if (src.stuttering)
+	if (src.stuttering && !isrobot(src))
 		message = stutter(message)
 
 	if (src.get_brain_damage() >= 60)
@@ -1029,7 +1035,7 @@
 
 			switch (message_mode)
 				if ("internal 1")
-					if (R1 && !(A.stat || A.hasStatus(list("stunned", "weakened")))) // Mainframe may be stunned when the shell isn't.
+					if (R1 && !(A.stat || A.hasStatus(list("stunned", "knockdown")))) // Mainframe may be stunned when the shell isn't.
 						R1.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
@@ -1037,7 +1043,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("internal 2")
-					if (R2 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
+					if (R2 && !(A.stat || A.hasStatus(list("stunned", "knockdown"))))
 						R2.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1
@@ -1045,7 +1051,7 @@
 					else
 						src.show_text("Mainframe radio inoperable or unavailable.", "red")
 				if ("monitor")
-					if (R3 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
+					if (R3 && !(A.stat || A.hasStatus(list("stunned", "knockdown"))))
 						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
 						italics = 1
 						skip_open_mics_in_range = 1
@@ -1404,10 +1410,13 @@
 		boutput(usr,SPAN_ALERT("You can't give items to yourself!"))
 		return
 
-	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
-		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
-			var/mob/living/L = usr
-			L.give_to(src)
+	if(!ON_COOLDOWN(usr, "give_item", 1 SECOND)) // cooldown to stop space&click spam-gives
+		SPAWN(0.7 SECONDS) //secret spawn delay, so you can't use this during combat for a free "stun"
+			if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
+				var/mob/living/L = usr
+				L.give_to(src)
+	else
+		boutput(usr, SPAN_ALERT("You just tried handing something off, wait a moment!"))
 
 /mob/living/proc/give_to(var/mob/living/M)
 	if (!M || M == src || !isalive(M))
@@ -1456,7 +1465,7 @@
 		return
 
 	if (thing)
-
+		boutput(src, SPAN_NOTICE("You offer [thing] to [M]."))
 		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS, autofocus = FALSE) == "Yes" || M.ai_active)
 			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
@@ -1490,6 +1499,10 @@
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
 	if (!isalive(src)) //can't resist when dead or unconscious
+		return
+
+	if (src.hasStatus("paralysis"))
+		src.show_text("You are completely paralysed and can't resist!", "red")
 		return
 
 	if (src.last_resist > world.time)
@@ -1578,9 +1591,7 @@
 		actions.interrupt(src, INTERRUPT_ATTACKED)
 		src.was_harmed(M, intent = M.a_intent)
 
-		if (M.mob_flags & AT_GUNPOINT)
-			for(var/obj/item/grab/gunpoint/G in M.grabbed_by)
-				G.shoot()
+		SEND_SIGNAL(M, COMSIG_MOB_TRIGGER_THREAT)
 
 	var/obj/item/clothing/gloves/gloves
 	if (ishuman(M))
@@ -1604,7 +1615,7 @@
 			L.help(src, M)
 
 		if (INTENT_DISARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
@@ -1626,7 +1637,7 @@
 			message_admin_on_attack(M, "grabs")
 
 		if (INTENT_HARM)
-			if (src.mind && (M.mind?.get_master() == src.mind))
+			if (src.mind && (M.mind?.get_master(ROLE_VAMPTHRALL) == src.mind))
 				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
@@ -1746,10 +1757,7 @@
 	if (m_intent == "walk")
 		. += WALK_DELAY_ADD
 
-	if (src.nodamage)
-		return .
-
-	if (src.do_hurt_slowdown)
+	if (src.do_hurt_slowdown && !src.nodamage)
 		var/health_deficiency = 0
 		if (src.max_health > 0)
 			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
@@ -1763,7 +1771,7 @@
 
 	. = min(., maximum_slowdown)
 
-	if (pushpull_multiplier != 0) // if we're not completely ignoring pushing/pulling
+	if (pushpull_multiplier != 0 && !src.nodamage) // if we're not completely ignoring pushing/pulling
 		if (src.pulling)
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
@@ -1788,6 +1796,11 @@
 							// if the storage object contains mobs, use its p_class (updated within storage to reflect containing mobs or not)
 							if (locate(/mob) in A.contents)
 								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+							else if (locate(/obj/item/gang_loot) in A.contents)
+								. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+						else if (A.always_slow_pull)
+							. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
+
 			. = lerp(1, . , pushpull_multiplier)
 
 
@@ -1821,6 +1834,9 @@
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
 
+	if (src.nodamage)
+		return .
+
 	var/turf/T = get_turf(src)
 	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
 		. = max(., base_speed)
@@ -1850,34 +1866,35 @@
 	var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_SPRINT)
 	if (stop_here)
 		return
+	if (src.client && src.special_sprint?.can_sprint(src))
+		src.special_sprint.do_sprint(src)
+		src.do_sprint_boost()
+		return
+	if (src.special_sprint?.overrides_sprint)
+		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 		return
-	if (special_sprint && src.client)
-		if (special_sprint & SPRINT_BAT)
-			spell_batpoof(src, cloak = 0)
-		if (special_sprint & SPRINT_FIRE)
-			spell_firepoof(src)
-		if (special_sprint & SPRINT_BAT_CLOAKED)
-			spell_batpoof(src, cloak = 1)
 	else if (src.use_stamina)
-		if (!next_step_delay && world.time >= next_sprint_boost)
-			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
-				//if (src.hasStatus("blocking"))
-				//	for (var/obj/item/grab/block/G in src.equipped_list(check_for_magtractor = 0)) //instant break blocks when we start a sprint
-				//		qdel(G)
+		src.do_sprint_boost()
+		return
 
-				var/last = src.loc
-				var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
+/mob/living/proc/do_sprint_boost()
+	if (!src.special_sprint?.no_sprint_boost && !next_step_delay && world.time >= src.next_sprint_boost)
+		if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
 
-				next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
-				src.next_move = world.time
-				attempt_move(src)
-				next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+			var/last = src.loc
+			var/force_puff = world.time < src.next_move + 0.5 SECONDS //assume we are still in a movement mindset even if we didnt change tiles
 
-				if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
-					sprint_particle(src, last)
-					if (!isFlying)
-						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
+			next_step_delay = max(src.next_move - world.time,0) //slows us on the following step by the amount of movement we just skipped over with our instant-step
+			src.next_move = world.time
+			attempt_move(src)
+
+			src.next_sprint_boost = world.time + max(src.next_move - world.time,BASE_SPEED) * 2
+
+			if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
+				sprint_particle(src, last)
+				if (!isFlying)
+					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -1949,7 +1966,7 @@
 		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
-			if(src != V && !V.reagents?.has_reagent("CBD"))
+			if(src != V && !V.reagents?.has_reagent("CBD") && !V.hasStatus("paralysis"))
 				V.emote("scream")
 				V.changeStatus("stunned", 2 SECONDS)
 
@@ -1971,15 +1988,8 @@
 
 
 		var/list/shield_amt = list()
-		var/shield_multiplier = 1
 
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC, D_SLASHING, D_TOXIC)
-				shield_multiplier = 0.5
-			if(D_ENERGY, D_RADIOACTIVE)
-				shield_multiplier = 2
-
-		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power * shield_multiplier, shield_amt)
+		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power, shield_amt)
 		damage *= max(0, (1-shield_amt["shield_strength"]))
 		stun *= max(0, (1-shield_amt["shield_strength"]))
 
@@ -1993,7 +2003,7 @@
 			if (D_KINETIC)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / max(1, rangedprot_mod*0.75)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
@@ -2001,7 +2011,7 @@
 
 			if (D_PIERCING)
 				if (stun > 0) //kinetic weapons don't disorient
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
@@ -2010,7 +2020,7 @@
 			if (D_SLASHING)
 				if (stun > 0) //kinetic weapons don't disorient
 					stun = stun / rangedprot_mod
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (rangedprot_mod > 1)
 					src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
@@ -2019,7 +2029,7 @@
 
 			if (D_ENERGY)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = min(stun,  80), remove_stamina_below_zero = 0) //only energy stunners apply disorient and are resisted
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = min(stun,  80), remove_stamina_below_zero = 0) //only energy stunners apply disorient and are resisted
 
 				if (isalive(src)) lastgasp()
 
@@ -2029,7 +2039,7 @@
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
@@ -2040,7 +2050,7 @@
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
 				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
@@ -2052,13 +2062,13 @@
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
+					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), knockdown = stun*2, stunned = 0, disorient = 0, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
 
 				if (!P.reagents)
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
+		boutput(src, SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
@@ -2112,14 +2122,7 @@
 	else
 		shock_damage = 1 * prot
 
-	if (H)
-		for (var/uid in H.pathogens)
-			var/datum/pathogen/P = H.pathogens[uid]
-			shock_damage = P.onshocked(shock_damage, wattage)
-			if (!shock_damage)
-				return 0
-
-	if (src.bioHolder.HasEffect("resist_electric_heal"))
+	if (src.bioHolder?.HasEffect("resist_electric_heal"))
 		var/healing = 0
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)
@@ -2141,7 +2144,7 @@
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
@@ -2149,7 +2152,7 @@
 			src.flash(60)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 
 			var/turf/T = get_turf(src)
@@ -2176,7 +2179,7 @@
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
 	var/stun = (min((shock_damage/5), 12) * stun_multiplier)* 10
-	src.do_disorient(100 * stun_multiplier + stun, weakened = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
+	src.do_disorient(100 * stun_multiplier + stun, knockdown = stun, stunned = stun, disorient = stun + 40 * stun_multiplier, remove_stamina_below_zero = 1)
 
 	return shock_damage
 
@@ -2287,6 +2290,12 @@
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
 
+
+/// Returns a multiplier for how much chems to deplete from their reagent holder per Life()
+/// This will be multiplied by that chems corresponding depletion rate
+/mob/living/proc/get_chem_depletion_multiplier()
+	return 1
+
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
 	return 1 + GET_ATOM_PROPERTY(src, PROP_MOB_BLOOD_ABSORPTION_RATE) // that's the standard absorption rate
@@ -2299,3 +2308,56 @@
 	for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
 		if(RE.include_latejoin && RE.is_crew_affected(src))
 			RE.apply_to_player(src)
+
+/mob/living/proc/staunch_wound(mob/helper)
+	if (src.bleeding <= 0)
+		boutput(helper, SPAN_NOTICE("[src]'s bleeding has already stopped!"))
+		return
+
+	var/old_bleed = src.bleeding
+	repair_bleeding_damage(src, 20, rand(1, 2))
+
+	if (src.bleeding - old_bleed >= 0)
+		helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> fails to stop [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You fail to stop [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You fail" : "<b>[helper]</b> fails"] to stop your bleeding!"))
+		return
+
+	switch (src.bleeding)
+		if (-INFINITY to 0)
+			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> stops [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You stop [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding!"))
+		if (1 to 3)
+			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You slow" : "<b>[helper]</b> slows"] your bleeding!"))
+		if (4 to INFINITY)
+			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> barely slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
+				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
+
+///helper proc to return a new bioholder to be used for blood reagent data
+/mob/living/proc/get_blood_bioholder()
+	var/datum/bioHolder/unlinked/bloodHolder = new/datum/bioHolder/unlinked(null)
+	bloodHolder.CopyOther(src.bioHolder)
+	bloodHolder.ownerName = src.real_name
+	bloodHolder.ownerType = src.type
+	bloodHolder.weak_owner = get_weakref(src)
+	return bloodHolder
+
+/mob/living/proc/meson(atom/source)
+	if (!source)
+		CRASH("meson proc called without a source!!")
+	src.vision.set_scan(1)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+
+/mob/living/proc/unmeson(atom/source)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
+			return
+	src.vision.set_scan(0)

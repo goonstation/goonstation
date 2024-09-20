@@ -139,6 +139,36 @@ ABSTRACT_TYPE(/datum/plant)
 			special_proc = 0
 		return lasterr
 
+
+	proc/HYPget_growth_stage(var/datum/plantgenes/passed_plantgenes, var/growth)
+		//! This proc returns the theoretical growth stage of the plant with (optional) passed_plantgenes and a given growth
+		if (!growth)
+			return
+		if(growth >= src.HYPget_growth_to_harvestable(passed_plantgenes))
+			return HYP_GROWTH_HARVESTABLE
+		else if(growth >= src.HYPget_growth_to_matured(passed_plantgenes))
+			return HYP_GROWTH_MATURED
+		else if(growth >= src.HYPget_growth_to_growing(passed_plantgenes))
+			return HYP_GROWTH_GROWING
+		else if(growth <= 0)
+			return HYP_GROWTH_DEAD
+		else
+			return HYP_GROWTH_PLANTED
+
+	proc/HYPget_growth_to_growing(var/datum/plantgenes/passed_plantgenes)
+		//! this proc returns the time needed for the plant with (optional) passed_plantgenes to reach the "growing"-stage
+		return (src.growtime - passed_plantgenes?.get_effective_value("growtime")) / 2
+
+	proc/HYPget_growth_to_matured(var/datum/plantgenes/passed_plantgenes)
+		//! this proc returns the time needed for the plant with (optional) passed_plantgenes to reach the "matured"-stage
+		return src.growtime - passed_plantgenes?.get_effective_value("growtime")
+
+	proc/HYPget_growth_to_harvestable(var/datum/plantgenes/passed_plantgenes)
+		//! this proc returns the time needed for the plant with (optional) passed_plantgenes to reach the "harvestable"-stage
+		return src.harvtime - passed_plantgenes?.get_effective_value("harvtime")
+
+
+
 	proc/HYPattacked_proc(var/obj/machinery/plantpot/POT,var/mob/user)
 		// If it returns 0, it should halt the proc that called it also
 		lasterr = 0

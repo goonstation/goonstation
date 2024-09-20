@@ -15,7 +15,8 @@ const getMagnetCondition = (condition) => {
   else if (condition >= 70) return <Box inline color="olive">Mild Structural Damage</Box>;
   else if (condition >= 40) return <Box inline color="yellow">Heavy Structural Damage</Box>;
   else if (condition >= 10) return <Box inline color="average">Extreme Structural Damage</Box>;
-  else return <Box inline color="bad">Destruction Imminent</Box>;
+  else if (condition > 0) return <Box inline color="bad">Destruction Imminent</Box>;
+  else return <Box inline color="bad">Connection Lost</Box>;
 };
 
 export const MineralMagnet = (_props, context) => {

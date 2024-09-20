@@ -10,6 +10,7 @@
 	not_when_in_an_object = FALSE
 	when_stunned = 2
 	not_when_handcuffed = 0
+	interrupt_action_bars = FALSE
 
 	proc/remove_stuns(var/message_type = 1)
 		if (!holder)
@@ -23,9 +24,7 @@
 		if (is_incapacitated(M) && M.stamina < 40)
 			M.set_stamina(40)
 
-		M.delStatus("stunned")
-		M.delStatus("weakened")
-		M.delStatus("paralysis")
+		M.remove_stuns()
 		M.delStatus("slowed")
 		M.delStatus("disorient")
 		M.change_misstep_chance(-INFINITY)
@@ -61,7 +60,8 @@
 		if (!M)
 			return 1
 
-		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("weakened"),M.getStatusDuration("paralysis"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
+		. = ..()
+		var/greatest_stun = max(3, M.getStatusDuration("stunned"),M.getStatusDuration("knockdown"),M.getStatusDuration("unconscious"),M.getStatusDuration("slowed")/4,M.getStatusDuration("disorient")/2)
 		greatest_stun = round(greatest_stun / 20)
 
 		M.TakeDamage("All", greatest_stun, 0)
@@ -89,6 +89,7 @@
 		if (!M)
 			return 1
 
+		. = ..()
 		if (M.get_burn_damage() > 0 || M.get_toxin_damage() > 0 || M.get_brute_damage() > 0 || M.get_oxygen_deprivation() > 0 || M.losebreath > 0)
 			M.HealDamage("All", 40, 40)
 			M.take_toxin_damage(-40)

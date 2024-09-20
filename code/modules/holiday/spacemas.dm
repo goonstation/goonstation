@@ -288,12 +288,12 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			boutput(O, "Brrr!")
 
 		if (!O.is_hulk())
-			O.changeStatus("weakened", 10 SECONDS)
+			O.changeStatus("knockdown", 10 SECONDS)
 
 #ifdef USE_STAMINA_DISORIENT
-			O.do_disorient(120, weakened = 100, disorient = 80)
+			O.do_disorient(120, knockdown = 100, disorient = 80)
 #else
-			O.changeStatus("weakened", 10 SECONDS)
+			O.changeStatus("knockdown", 10 SECONDS)
 #endif
 
 		O.bodytemperature = max(0, O.bodytemperature - 5)
@@ -792,12 +792,12 @@ proc/compare_ornament_score(list/a, list/b)
 		HS.addAbility(/datum/targetable/santa/banish)
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/short/balding
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/eyebrows/eyebrows
-		bioHolder.mobAppearance.customization_first_color = "#FFFFFF"
-		bioHolder.mobAppearance.customization_second_color = "#FFFFFF"
-		bioHolder.mobAppearance.customization_third_color = "#FFFFFF"
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/short/balding
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/eyebrows/eyebrows
+		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#FFFFFF"
+		bioHolder.mobAppearance.customizations["hair_middle"].color = "#FFFFFF"
+		bioHolder.mobAppearance.customizations["hair_top"].color = "#FFFFFF"
 		. = ..()
 
 
@@ -841,9 +841,9 @@ proc/compare_ornament_score(list/a, list/b)
 		bioHolder.AddEffect("cold_resist")
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/none
+		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/none
 		. = ..()
 
 
@@ -869,7 +869,7 @@ proc/compare_ornament_score(list/a, list/b)
 					shake_camera(C, 8, 16)
 					C.show_message(SPAN_ALERT("<B>[src] tramples right over [M]!</B>"), 1)
 				M.changeStatus("stunned", 8 SECONDS)
-				M.changeStatus("weakened", 5 SECONDS)
+				M.changeStatus("knockdown", 5 SECONDS)
 				random_brute_damage(M, 10,1)
 				M.take_brain_damage(rand(5,10))
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', attack_volume, 1, -1)
@@ -1074,7 +1074,7 @@ proc/compare_ornament_score(list/a, list/b)
 							return
 						random_brute_damage(H, 10,1)
 						H.changeStatus("stunned", 8 SECONDS)
-						H.changeStatus("weakened", 5 SECONDS)
+						H.changeStatus("knockdown", 5 SECONDS)
 						if (H.health < 0)
 							src.visible_message(SPAN_ALERT("<B>[H] bursts like a ripe melon! Holy shit!</B>"))
 							H.gib()
@@ -1167,7 +1167,7 @@ proc/compare_ornament_score(list/a, list/b)
 			boutput(user, SPAN_ALERT("There is a pissed off snake in the stocking! It bites you! What the hell?!"))
 			modify_christmas_cheer(-5)
 			if (user.reagents)
-				user.reagents.add_reagent("venom", 5)
+				user.reagents.add_reagent("cytotoxin", 5)
 		else
 			modify_christmas_cheer(2)
 			var/dangerous = 0

@@ -79,14 +79,14 @@ interface ReagentGraphProps extends ReagentInfoProps {}
 
 export const ReagentGraph = (props: ReagentGraphProps) => {
   const {
-    className = '',
+    className: _className,
     height,
     sort,
     ...rest
   } = props;
   const container = props.container ?? NoContainer;
-  const { maxVolume, totalVolume, finalColor } = container;
-  const contents = sort ? container.contents.slice().sort(sort): container.contents || [];
+  const { contents = [], maxVolume, totalVolume, finalColor } = container;
+  const maybeSortedContents = sort ? [...contents].sort(sort): contents;
   rest.height = height || "50px";
 
   return (
@@ -94,7 +94,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
       <Flex height="100%" direction="column">
         <Flex.Item grow>
           <Flex height="100%">
-            {contents.map(reagent => (
+            {maybeSortedContents.map(reagent => (
               <Flex.Item grow={reagent.volume/maxVolume} key={reagent.id}>
                 <Tooltip content={`${reagent.name} (${reagent.volume}u)`} position="bottom">
                   <Box
@@ -127,7 +127,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
             }
             position="bottom">
             <Box height="14px" // same height as a Divider
-              backgroundColor={contents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
+              backgroundColor={maybeSortedContents.length ? finalColor : "rgba(0, 0, 0, 0.1)"}
               textAlign="center">
               {container.fake || (
                 <Box
@@ -171,18 +171,19 @@ export const ReagentList = (props: ReagentListProps) => {
     ...rest
   } = props;
   const container = props.container ?? NoContainer;
-  const contents = sort ? container.contents.slice().sort(sort): container.contents || [];
+  const { contents = [] } = container;
+  const maybeSortedContents = sort ? [...contents].sort(sort): contents;
   rest.height = height || 6;
 
   return (
     <Section scrollable={height !== "auto"}>
       <Box {...rest}>
-        {contents.length ? contents.map(reagent => (
+        {maybeSortedContents.length ? contents.map(reagent => (
           <Flex key={reagent.id} mb={0.2} align="center">
             <Flex.Item grow>
               <Icon
-                pr={showState ? MatterStateIconMap[reagent.state].pr : 0.9}
-                name={showState ? MatterStateIconMap[reagent.state].icon : "circle"}
+                pr={showState && reagent.state ? MatterStateIconMap[reagent.state].pr : 0.9}
+                name={showState && reagent.state ? MatterStateIconMap[reagent.state].icon : "circle"}
                 style={{
                   "text-shadow": "0 0 3px #000;",
                 }}
@@ -214,6 +215,7 @@ export const ReagentList = (props: ReagentListProps) => {
 
 const reagentCheck = (a: Reagent, b: Reagent): boolean => {
   if (a === b) return false;
+  // eslint-disable-next-line sonarjs/prefer-single-boolean-return
   if (!a
       || !b
       || a.volume !== b.volume
@@ -232,8 +234,10 @@ const containerCheck = (a: ReagentContainer | null, b: ReagentContainer| null): 
       || a.finalColor !== b.finalColor
       || a.maxVolume !== b.maxVolume) return true; // a property used by ReagentGraph/List has changed, update
   if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
-  for (const i in a) {
-    if (reagentCheck(a.contents[i], b.contents[i])) return true; // one of the reagents has changed, update
+  if (a.contents && b.contents) {
+    for (let i = 0; i < a.contents.length; i++) {
+      if (reagentCheck(a.contents[i], b.contents[i])) return true; // one of the reagents has changed, update
+    }
   }
   return false;
 };
@@ -299,6 +303,9 @@ export const ReagentBar = (props: ReagentInfoProps) => {
     container,
     ...rest
   } = props;
+  if (!container) {
+    return null;
+  }
   const { maxVolume, totalVolume, finalColor } = container;
   return (
     <Stack align="center" pb={1}>

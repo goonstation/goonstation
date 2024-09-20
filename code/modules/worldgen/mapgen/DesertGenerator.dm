@@ -31,7 +31,7 @@
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/desert
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/desert
+	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/desert
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/desert_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -81,10 +81,7 @@
 
 		gen_turf.temperature = 330 // 56.9C
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 
 ///for the mapgen mountains, temp until we get something better
@@ -97,9 +94,9 @@
 	nitrogen = MOLES_N2STANDARD
 	temperature = 330
 	default_ore = null
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
+	replace_type = /turf/unsimulated/floor/plating/asteroid/desert
 
-/turf/simulated/floor/plating/airless/asteroid/desert
+/turf/unsimulated/floor/plating/asteroid/desert
 	name = "mountain"
 	desc = "a sandy mountain"
 	color = "#957a59"

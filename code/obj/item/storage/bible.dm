@@ -10,7 +10,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
 	var/heal_amt = 5
@@ -149,7 +148,7 @@
 			user.visible_message(SPAN_ALERT("<B>[user] tries to take the [src], but their hand bursts into flames!</B>"), SPAN_ALERT("<b>Your hand bursts into flames as you try to take the [src]! It burns!</b>"))
 			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 25)
 			user.changeStatus("stunned", 15 SECONDS)
-			user.changeStatus("weakened", 15 SECONDS)
+			user.changeStatus("knockdown", 15 SECONDS)
 			return
 		return ..()
 

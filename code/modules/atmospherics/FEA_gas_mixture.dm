@@ -161,8 +161,8 @@ What are the archived variables for?
 	if(neutron_count && src.carbon_dioxide > 1) //CO2 acts like a gaseous control rod
 		var/co2_react_count = round((src.carbon_dioxide - (src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume))
 		co2_react_count = rand(0, co2_react_count) //make it a little probabilistic
-		src.temperature += 5*co2_react_count
-		neutron_count -= co2_react_count
+		src.temperature += 5*min(neutron_count, co2_react_count)
+		neutron_count -= min(neutron_count, co2_react_count)
 
 	if(neutron_count && src.radgas > 1)
 		//rare chance for radgas to decompose into a random gas when hit by a neutron
@@ -408,6 +408,9 @@ What are the archived variables for?
 /// * Similar to [/datum/gas_mixture/proc/share], except the model is not modified.
 /// * Return: Moles of gas exchanged.
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier = 1)
+	if (!model)
+		return FALSE
+
 	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((src.ARCHIVED(GAS) - model.GAS)/5)*border_multiplier/src.group_multiplier);
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS

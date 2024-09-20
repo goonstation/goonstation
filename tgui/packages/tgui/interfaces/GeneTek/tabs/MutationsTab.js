@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../../backend";
 import { Button, Section } from "../../../components";
 import { BioEffect } from "../BioEffect";
@@ -33,7 +32,7 @@ export const MutationsTab = (props, context) => {
   }
 
   return (
-    <Fragment>
+    <>
       <Section>
         <Button
           icon={sortMode === "time" ? "clock" : "sort-alpha-down"}
@@ -53,6 +52,6 @@ export const MutationsTab = (props, context) => {
           gene={be}
           showSequence={showSequence} />
       ))}
-    </Fragment>
+    </>
   );
 };

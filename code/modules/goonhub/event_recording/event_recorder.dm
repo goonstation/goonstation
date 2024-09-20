@@ -33,7 +33,7 @@ var/global/datum/eventRecorder/eventRecorder
 		addr += "[config.goonhub_events_endpoint]:[config.goonhub_events_port]"
 		var/res = rustg_redis_connect_rq(addr)
 
-		if (res)
+		if (isnull(res) || (json_decode(res)["success"] == FALSE))
 			src.connected = FALSE
 			var/logMsg = "Failed to connect to Goonhub Event Recording service. Reason: [res]"
 			logTheThing(LOG_DEBUG, null, "<b>Event Recorder:</b> [logMsg]")
@@ -88,7 +88,8 @@ var/global/datum/eventRecorder/eventRecorder
 		var/list/data = event.body.ToList()
 		data["type"] = event.eventType
 		data["round_id"] = roundId
-		data["created_at"] = "[time2text(world.realtime, "YYYY-MM-DD")] [time2text(world.timeofday, "hh:mm:ss")]"
+		// data["created_at"] = "[time2text(world.realtime, "YYYY-MM-DD")] [time2text(world.timeofday, "hh:mm:ss")]"
+		data["created_at_unix"] = "[rustg_unix_timestamp()]"
 
 		if (roundId)
 			src.events += list(data)
@@ -111,4 +112,5 @@ var/global/datum/eventRecorder/eventRecorder
 	set name = "Debug Event Recorder"
 	set desc = "Display debug information about the event recorder"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 	eventRecorder.debug()

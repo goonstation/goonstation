@@ -13,8 +13,7 @@
 	desc = "A little fire-fighting robot!  He looks so darn chipper."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "firebot0"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
+	flags =  FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
@@ -62,6 +61,7 @@
 	SPAWN(0.5 SECONDS)
 		if (src)
 			src.icon_state = "firebot[src.on]"
+			src.AddComponent(/datum/component/proximity)
 
 //		if(radio_connection)
 //			radio_controller.add_object(src, "[beacon_freq]")
@@ -282,7 +282,7 @@
 		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
 
 //Oh no, we may or may not be emagged! Better hope someone crossing us is on fire!
-/obj/machinery/bot/firebot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/bot/firebot/EnteredProximity(atom/movable/AM)
 	if(!on || stunned)
 		return
 
@@ -329,7 +329,7 @@
 
 		var/mob/living/carbon/Ctarget = target
 		boutput(Ctarget, SPAN_ALERT("<b>[src] knocks you back!</b>"))
-		Ctarget.changeStatus("weakened", 2 SECONDS)
+		Ctarget.changeStatus("knockdown", 2 SECONDS)
 		Ctarget.throw_at(targetTurf, 200, 4)
 
 	if (iscarbon(src.target)) //Check if this is a mob and we can stop spraying when they are no longer on fire.
@@ -410,6 +410,7 @@
 	extinguish_flags = EXTINGUISH_MOBS
 	water_amt = 0
 	foam_amt = 10
+	health = 100 //thicc
 
 /obj/machinery/bot/firebot/firebrand/valid_target(mob/M)
 	return istype(M.get_id(), /obj/item/card/id/syndicate)

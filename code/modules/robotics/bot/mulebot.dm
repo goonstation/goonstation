@@ -86,8 +86,8 @@
 			cell.maxcharge = 2000
 		setup_wires()
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", control_freq)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "beacon", beacon_freq)
 
 	// set up the wire colours in random order
 	// and the random wire display order
@@ -713,7 +713,7 @@
 					src.visible_message(SPAN_ALERT("[src] knocks over [M]!"))
 					M.remove_pulling()
 					M.changeStatus("stunned", 8 SECONDS)
-					M.changeStatus("weakened", 5 SECONDS)
+					M.changeStatus("knockdown", 5 SECONDS)
 					M.lying = 1
 					M.set_clothing_icon_dirty()
 		..()

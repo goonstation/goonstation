@@ -1,7 +1,14 @@
-#define GANG_MAX_MEMBERS 4
+#define GANG_MAX_MEMBERS 3
 
 /// How long the leader must cryo before gang members can take their role
-#define GANG_CRYO_LOCKOUT 15 MINUTES
+#define GANG_CRYO_LOCKOUT 7.5 MINUTES
+
+/// How long into the shift gang leadership is transferable, in the case of the leader's suicide/death.
+// Note: this makes a member REPLACE the dead leader. The leader remains a member.
+#define GANG_LEADER_SOFT_DEATH_TIME 20 MINUTES
+/// If a gang locker exists, how long to wait before picing a new leader
+// This is for the use case where the leader has done the bare minimum.
+#define GANG_LEADER_SOFT_DEATH_DELAY 5 MINUTES
 
 // -------------------------
 // GANG ECONOMY
@@ -23,8 +30,10 @@
 // Having 10% of the top heat is level '1'
 // Having less than 10% is level '0'
 
+/// Amount of points a gang member starts with
+#define GANG_STARTING_POINTS 1500
 
-/// /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
+/// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
 /// time in seconds between gangs gaining spray bottles
 #define GANG_SPRAYPAINT_REGEN 7.5 MINUTES
@@ -35,11 +44,13 @@
 /// Drug points:
 
 /// /// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
-#define GANG_DRUG_BONUS_CAP 200
+#define GANG_DRUG_BONUS_CAP 300
+/// How many weed leaves provide a points bonus
+#define GANG_WEED_LIMIT 200 //gang weed
 /// Each drug then has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
-#define GANG_DRUG_LIMIT 1000
+#define GANG_DRUG_LIMIT 300
 /// The multiplier for drugs that a gang has handed in less than GANG_DRUG_BONUS_CAP units of
-#define GANG_DRUG_BONUS_MULT 5
+#define GANG_DRUG_BONUS_MULT 3
 
 #define GANG_DRUG_SCORE_BATHSALTS  3
 #define GANG_DRUG_SCORE_MORPHINE  1
@@ -67,8 +78,8 @@
 #define GANG_CRATE_INITIAL_DROP  30 MINUTES //!  when the first gang crate drops on RP
 #define GANG_CRATE_DROP_FREQUENCY 40 MINUTES //! how often gang crates are dropped on RP
 #else
-#define GANG_CRATE_INITIAL_DROP  25 MINUTES //!  when the first gang crate drops on classic
-#define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
+#define GANG_CRATE_INITIAL_DROP  15 MINUTES //!  when the first gang crate drops on classic
+#define GANG_CRATE_DROP_FREQUENCY 20 MINUTES //! how often gang crates are dropped on classic
 #endif
 
 
@@ -76,7 +87,7 @@
 #define GANG_LOOT_INITIAL_DROP 10 MINUTES //! when the first gang duffel bag spawns on RP
 #define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on RP
 #else
-#define GANG_LOOT_INITIAL_DROP 7.5 MINUTES //! when the first gang duffel bag spawns on classic
+#define GANG_LOOT_INITIAL_DROP 5 MINUTES //! when the first gang duffel bag spawns on classic
 #define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on classic
 #endif
 #define GANG_LOOT_DROP_VOLUME_PER_GANG 2 //! how many duffel bags spawn, per gang
@@ -100,10 +111,11 @@
 
 
 // CRATE DROP DEFINES
-#define GANG_CRATE_SCORE 500 //! how many points gang crates grant to each member, when opened
-#define GANG_CRATE_LOCK_TIME 300 SECONDS //! how long gang crates stay locked to the floor, in seconds
+#define GANG_CRATE_SCORE 5000 //! how many points gang crates grant to each member, when opened
+#define GANG_CRATE_DROP_TIME 300 SECONDS //! How long it takes for gang crates to arrive after being announced
+#define GANG_CRATE_LOCK_TIME 10 SECONDS //! How long it takes for gang crates to unlock after arriving
 
-#define GANG_LOOT_SCORE 300 //! how many points gang duffel bags grant to each member when opened
+#define GANG_LOOT_SCORE 1500 //! how many points gang duffel bags grant to each member when opened
 
 
 // GANG TAG DEFINES:
@@ -116,18 +128,38 @@
 /// how often tags calculate their heat & score
 #define GANG_TAG_SCORE_INTERVAL 15 SECONDS
 /// How many points a tag gives for each heat rating it has
-#define GANG_TAG_POINTS_PER_HEAT 1.5
+#define GANG_TAG_POINTS_PER_HEAT 1
 /// How much heat gang tags retain every score interval
 // Higher means gang tags stay hot for longer
 // If popular gang tags are staying too hot for too long after players leave, consider setting it lower.
 #define GANG_TAG_HEAT_DECAY_MUL 0.9
 
 
+// GANG VANDALISM DEFINES:
+// Occasionally, gangs are told to do vandalism instead of duffle bags.
+// They must deface departments enough to recieve a duffle bag on their location.
+
+/// The total vandalism 'score' required to complete the objective.
+#define GANG_VANDALISM_REQUIRED_SCORE 500
+/// How much graffiti is worth, per tile
+#define GANG_VANDALISM_PER_GRAFFITI_TILE 20
+/// How many tiles of graffiti spawns in graffiti bottles
+#define GANG_VANDALISM_GRAFFITI_MAX 20
+/// How many points light breaks are worth
+#define GANG_VANDALISM_LIGHT_BREAK_POINTS 10
+/// How many points throwing a person into a vending machine is worth
+#define GANG_VANDALISM_VENDOR_KO 10
+/// How many points throwing a person into a glass table
+#define GANG_VANDALISM_TABLING 10
+/// How many points ripped up floor tiles are worth
+#define GANG_VANDALISM_FLOORTILE_POINTS 2
+/// How many points each point of damage is worth, for violence
+#define GANG_VANDALISM_VIOLENCE_NPC_MULTIPLIER 0.5
+/// How many points each point of damage is worth, for violence
+#define GANG_VANDALISM_VIOLENCE_PLAYER_MULTIPLIER 0
+
 
 // GANG TAG SIZES:
-
-
-
 
 /// Radius of the circle that tags claim
 #define GANG_TAG_INFLUENCE_LOCKER 4

@@ -15,7 +15,7 @@
 	density = 0
 	canmove = 1
 	use_stamina = FALSE
-	flags = FPRINT | NO_MOUSEDROP_QOL
+	flags = NO_MOUSEDROP_QOL
 	gender = NEUTER
 
 	blinded = FALSE
@@ -24,7 +24,9 @@
 	can_bleed = FALSE
 	var/name_prefix = "living "
 
-	faction = FACTION_WRAITH
+	faction = list(FACTION_WRAITH)
+
+	ailment_immune = TRUE
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc)
@@ -91,7 +93,6 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
 
 		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
@@ -183,7 +184,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
+			boutput(src, SPAN_ALERT("You are hit by the [P]!"))
 
 	blob_act(var/power)
 		logTheThing(LOG_COMBAT, src, "is hit by a blob")
@@ -305,8 +306,9 @@
 		else
 			return SPAN_ALERT("<B>[src] attacks [T]!</B>")
 
-	return_air()
-		return loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return loc?.return_air()
 
 	assume_air(datum/air_group/giver)
 		return loc?.assume_air(giver)
@@ -374,9 +376,13 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
+		if (src.valid_target(H))
 			humans += H
 	return humans
+
+/datum/aiTask/timed/targeted/living_object/proc/valid_target(mob/living/carbon/human/H)
+	return istype(H) && isalive(H) && !H.nodamage && !(FACTION_WRAITH in H.faction)
+
 
 /datum/aiTask/timed/targeted/living_object/evaluate() //always attack if we can see a person
 	return length(get_targets()) ? 999 : 0
@@ -385,8 +391,7 @@
 	. = ..()
 	// see if we can find someone
 	var/mob/mobtarget = holder.target
-	ENSURE_TYPE(mobtarget)
-	if (!mobtarget || isdead(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10 || frustration > 8) //slightly higher chase range than acquisition range
+	if (!src.valid_target(mobtarget) || GET_DIST(holder.owner, mobtarget) > 10 || frustration > 8) //slightly higher chase range than acquisition range
 		holder.target = null
 		frustration = 0
 		var/list/possible = get_targets()

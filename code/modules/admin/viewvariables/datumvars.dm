@@ -6,7 +6,8 @@
 /client/proc/debug_global_variable(var/S as text)
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Global Variable"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if( !src.holder || src.holder.level < LEVEL_ADMIN)
 		boutput( src, SPAN_ALERT("Get down from there!!") )
 		return
@@ -67,7 +68,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "View Ref Variables"
 	set desc = "(reference) Enter a ref to view its variables"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (src.holder?.level < LEVEL_ADMIN)
 		src.audit(AUDIT_ACCESS_DENIED, "tried to call debug_ref_variables while being below Administrator rank.")
 		tgui_alert(src.mob, "You must be at least an Administrator to use this command.", "Access Denied")
@@ -116,7 +118,9 @@
 		return
 	#endif
 
-	if(D != "GLOB")
+	if (D == world)
+		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on world")
+	else if (D != "GLOB")
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on [D]: [D.type] [istype(D, /atom) ? "at [D:x], [D:y], [D:z]" : ""]")
 	else
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing global variables")
@@ -137,6 +141,8 @@
 		#endif
 	if(D == "GLOB")
 		title = "Global Variables"
+	else if (D == world)
+		title = "World Variables"
 	else
 		title = "[D][src.holder.level >= LEVEL_ADMIN ? " (\ref[D])" : ""] = [D.type]"
 
@@ -232,7 +238,6 @@
 		html += "<br><a href='byond://?src=\ref[src];CheckReactions=\ref[D]'>Check Possible Reactions</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ReplaceExplosive=\ref[D]'>Replace with Explosive</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];Possess=\ref[D]'>Possess</a>"
-		html += " &middot; <a href='byond://?src=\ref[src];AddPathogen=\ref[D]'>Add Random Pathogens Reagent</a>"
 
 
 		if (isitem(D))
@@ -637,14 +642,6 @@
 				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
-		return
-	if (href_list["AddPathogen"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_PA)
-			var/obj/O = locate(href_list["AddPathogen"])
-			O.addpathogens()
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to add random pathogens all rude-like.")
 		return
 	if (href_list["KillCritter"])
 		USR_ADMIN_ONLY

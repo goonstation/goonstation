@@ -26,7 +26,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "A" = (
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/powered/drill,
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "C" = (
@@ -41,7 +41,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "F" = (
-/obj/decal/fakeobjects/beacon{
+/obj/fakeobject/beacon{
 	desc = "A small tracking beacon in fairly poor condition. Nothing in the surroundings should have disturbed it - what broke it?"
 	},
 /turf/space/fluid/acid/clear,

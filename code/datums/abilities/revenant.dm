@@ -16,7 +16,7 @@
 			return relay.deductPoints(cost)
 		return 1
 
-	pointCheck(cost)
+	pointCheck(cost, quiet = FALSE)
 		if (!relay)
 			return 1
 		if (!relay.usesPoints)
@@ -25,7 +25,8 @@
 			logTheThing(LOG_DEBUG, usr, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
 			relay.points = 0
 		if (cost > relay.points)
-			boutput(owner, relay.notEnoughPointsMessage)
+			if (!quiet)
+				boutput(owner, relay.notEnoughPointsMessage)
 			return 0
 		return 1
 
@@ -88,6 +89,7 @@
 		owner.attach_hud(hud)
 
 		animate_levitate(owner)
+		LAZYLISTADDUNIQUE(owner.faction, FACTION_WRAITH)
 
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant", 100)
@@ -97,6 +99,7 @@
 
 	OnRemove()
 		if (owner)
+			owner.faction -= FACTION_WRAITH
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
@@ -114,7 +117,7 @@
 				poorSob.TakeDamage(def_zone, 4, 4, 0, DAMAGE_BLUNT)
 			else
 				poorSob.TakeDamage("All", 4, 4, 0, DAMAGE_BLUNT)
-			poorSob.changeStatus("weakened", 2 SECONDS)
+			poorSob.changeStatus("knockdown", 2 SECONDS)
 			step_away(poorSob, owner, 15)
 			sleep(0.3 SECONDS)
 			step_away(poorSob, owner, 15)
@@ -253,7 +256,7 @@
 		var/on_cooldown = round((owner.last_cast - world.time) / 10)
 
 		if (owner.pointCost)
-			if (owner.pointCost > owner.holder.relay.points)
+			if (!owner.holder.pointCheck(owner.pointCost, quiet = TRUE))
 				newcolor = rgb(64, 64, 64)
 				point_overlay.maptext = "<span class='sh vb r ps2p' style='color: #cc2222;'>[owner.pointCost]</span>"
 			else
@@ -277,6 +280,7 @@
 	icon = 'icons/mob/wraith_ui.dmi'
 	preferred_holder_type = /datum/abilityHolder/revenant
 	theme = "wraith"
+	interrupt_action_bars = FALSE
 
 	New()
 		var/atom/movable/screen/ability/topBar/revenant/B = new /atom/movable/screen/ability/topBar/revenant(null)
@@ -288,7 +292,7 @@
 		src.object = B
 
 	cast(atom/target)
-		return
+		return ..()
 
 	castcheck()
 		if (holder?.owner)
@@ -316,6 +320,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
+		. = ..()
 		playsound(target.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
@@ -333,9 +338,9 @@
 			else if( check_target_immunity(T) )
 				holder.owner.show_message( SPAN_ALERT("That target seems to be warded from the effects!") )
 			else
-				T.changeStatus("stunned", max(max(T.getStatusDuration("weakened"), T.getStatusDuration("stunned")), 3))
+				T.changeStatus("stunned", max(max(T.getStatusDuration("knockdown"), T.getStatusDuration("stunned")), 3))
 				T.lying = 0
-				T.delStatus("weakened")
+				T.delStatus("knockdown")
 				T.show_message(SPAN_ALERT("A ghostly force compels you to be still on your feet."))
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
@@ -365,12 +370,12 @@
 		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
-					M.changeStatus("weakened", 2 SECONDS)
+					M.changeStatus("knockdown", 2 SECONDS)
 			animate_revenant_shockwave(T, 1, 3)
 			sleep(0.3 SECONDS)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
-					M.changeStatus("weakened", 6 SECONDS)
+					M.changeStatus("knockdown", 6 SECONDS)
 					M.show_message(SPAN_ALERT("A shockwave sweeps you off your feet!"))
 			for (var/obj/machinery/light/L in T)
 				L.broken()
@@ -394,6 +399,7 @@
 		var/turf/origin = get_turf(holder.owner)
 		if (!origin)
 			return 1
+		. = ..()
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -438,6 +444,7 @@
 	cooldown = 30 SECONDS
 
 	cast()
+		. = ..()
 		playsound(usr.loc, 'sound/voice/wraith/revtouch.ogg', 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
@@ -462,6 +469,7 @@
 		if (isturf(target))
 			holder.owner.show_message(SPAN_ALERT("You must target an object or mob with this ability."))
 			return 1
+		. = ..()
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -496,7 +504,6 @@
 	cooldown = 1 MINUTE
 
 	cast(atom/target)
-		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message(SPAN_ALERT("You must target a human with this ability."))
 			return TRUE
@@ -507,6 +514,8 @@
 		if (holder.owner.equipped())
 			holder.owner.show_message(SPAN_ALERT("You require a free hand to cast this ability."))
 			return TRUE
+		. = ..()
+		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			holder.owner.show_message(SPAN_ALERT("Some mysterious force shields [target] from your influence."))
 			JOB_XP(H, "Chaplain", 2)
@@ -516,7 +525,7 @@
 			return TRUE
 
 		holder.owner.visible_message(SPAN_ALERT("[holder.owner] reaches out towards [H], making a crushing motion."), SPAN_NOTICE("You reach out towards [H]."))
-		H.changeStatus("weakened", 2 SECONDS)
+		H.changeStatus("knockdown", 2 SECONDS)
 		actions.start(new/datum/action/bar/crush(holder.owner, H), holder.owner)
 		return FALSE
 
@@ -542,7 +551,7 @@
 		if (src.casting_mob == null || src.target_mob == null || !isalive(src.casting_mob) || !can_act(src.casting_mob) || (GET_DIST(src.casting_mob, src.target_mob) > 7))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.target_mob.changeStatus("weakened", 2 SECONDS)
+		src.target_mob.changeStatus("knockdown", 2 SECONDS)
 		src.target_mob.TakeDamage("chest", 5, 0, 0, DAMAGE_CRUSH)
 		if (prob(25))
 			src.target_mob.visible_message(SPAN_ALERT("[src.target_mob]'s bones crack loudly!"), SPAN_ALERT("You feel like you're about to be [pick("crushed", "destroyed", "vaporized")]."))
@@ -565,6 +574,7 @@
 	targeted = 0
 	cooldown = 0
 	helpable = 0
+	do_logs = FALSE
 
 	cast(atom/target)
 		if (..())

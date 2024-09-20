@@ -224,8 +224,9 @@ TYPEINFO(/obj/item/remote/porter)
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
-	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
-
+	mats = list("metal" = 5,
+				"conductive" = 5,
+				"telecrystal" = 10)
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -365,13 +366,16 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		var/req = unlock_timer_req - (world.timeofday - unlock_timer_start)
 		if (req <= 0)
 			locked = 0
+			playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
 			go_out()
 			.= 0
 		.= req
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-
+		if (!src.locked)
+			src.go_out()
+			return
 		if (!processing)
 			SubscribeToProcess()
 
@@ -379,6 +383,9 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (req)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]. Somehow, you know that it will unlock in [req/10] seconds."))
 
+	Click(location, control, params)
+		if(!src.ghost_observe_occupant(usr, src.occupant))
+			. = ..()
 
 	// Could be useful (Convair880).
 	mouse_drop(over_object, src_location, over_location)
@@ -387,7 +394,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (is_incapacitated(usr))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -410,7 +417,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		return 0
 
 	relaymove(mob/user as mob)
-		if(!user || !isalive(user) || user.getStatusDuration("stunned") != 0)
+		if(!user || !isalive(user) || is_incapacitated(user))
 			return
 		src.go_out()
 		return
@@ -432,6 +439,10 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
+				if (src.locked)
+					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
+				else
+					playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
 				if (src.occupant)
 					logTheThing(LOG_STATION, user, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 			else
@@ -470,13 +481,14 @@ TYPEINFO(/obj/machinery/port_a_brig)
 			return
 		if(src.occupant)
 			src.occupant.set_loc(src.loc)
-			src.occupant.changeStatus("weakened", 2 SECONDS)
+			src.occupant.changeStatus("knockdown", 2 SECONDS)
+			playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
+		if (!src.can_eject_occupant(usr))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -517,7 +529,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
+		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0) || !isturf(src.victim.loc) || !isturf(src.owner.loc))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.brig.visible_message(SPAN_ALERT("[owner] shoves [victim] into [src.brig]!"))
@@ -526,11 +538,13 @@ TYPEINFO(/obj/machinery/port_a_brig)
 		for(var/obj/O in src.brig)
 			O.set_loc(src.brig.loc)
 		src.brig.build_icon()
+		playsound(brig.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 		qdel(G)
 
 /obj/machinery/port_a_brig/proc/pry_open()
 	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
 	src.locked = FALSE
+	playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -600,7 +614,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			return
 		if (usr == src.occupant || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -700,6 +714,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	density = 1
 	anchored = UNANCHORED
 	p_class = 6
+	can_leghole = FALSE
 	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
 	var/homeloc = null
 
@@ -738,7 +753,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 			return
 		if ((usr in src.contents) || !isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
@@ -831,7 +846,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 						var/list/temp = src.contents.Copy()
 						src.open()
 						src.visible_message(SPAN_ALERT("<B>\the [src]'s door flies open and a gout of flame erupts from within!"))
-						fireflash(src, 2)
+						fireflash(src, 2, chemfire = CHEM_FIRE_RED)
 						for(var/mob/living/carbon/M in temp)
 							M.update_burning(100)
 							var/turf/T = get_edge_target_turf(M, turn(NORTH, rand(0,7) * 45))
@@ -928,7 +943,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 			return
 		if (!isturf(usr.loc))
 			return
-		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened"))
+		if (usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("knockdown"))
 			return
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")

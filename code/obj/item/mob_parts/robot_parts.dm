@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ROBOT)
+	fingertip_color = "#4e5263"
 
 	decomp_affected = FALSE
 	var/robot_movement_modifier
@@ -388,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			src.UpdateOverlays(null, "smashed")
 
 	ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
-		..() //parent calls del if we get destroyed so no need to handle not doing this
+		. = ..() //parent calls del if we get destroyed so no need to handle not doing this
 		if (!src.smashed && (bluntdmg > 10 || bluntdmg > 3 && prob(20)))
 			src.smashed = TRUE
 			src.UpdateIcon()
@@ -563,6 +564,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		attach(H,user)
 
 		return
+
+	can_arm_attach()
+		return ..() && !(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
 
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
@@ -909,7 +913,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		T?.hotspot_expose(700, 50)
+		if(src.holder && (src.holder.loc == T))
+			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
@@ -925,7 +930,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		if(src.holder.loc == T)
+		if(src.holder && (src.holder.loc == T))
 			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame

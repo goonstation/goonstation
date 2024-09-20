@@ -10,6 +10,19 @@
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
+#ifdef LIVE_SERVER
+	if (roundId == 0) //oh no
+		SPAWN(0)
+			var/counter = 0
+			while (roundId == 0)
+				message_admins("Roundstart API query failed, this is very bad, trying again in 5 seconds.")
+				logTheThing(LOG_DEBUG, src, "Roundstart API query failed, this is very bad, trying again in 5 seconds.")
+				sleep(5 SECONDS)
+				roundManagement.recordStart()
+				counter++
+			message_admins("Roundstart API query succeeded after [counter] failed attempts.")
+			logTheThing(LOG_DEBUG, src, "Roundstart API query succeeded after [counter] failed attempts.")
+#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading MOTD...")
 	src.load_motd()//GUH
@@ -110,6 +123,7 @@
 
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
+	spawn_kitchen_note()
 
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
@@ -145,6 +159,11 @@
 		signal_loss = 80 // heh
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
+
+	UPDATE_TITLE_STATUS("Generating minimaps")
+	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")

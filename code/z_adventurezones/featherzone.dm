@@ -26,7 +26,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/feather)
 
 // DECALS/FAKEOBJS
 
-/obj/decal/fakeobjects/brokendrone
+/obj/fakeobject/brokendrone
 	name = "broken heap"
 	desc = "A pile of metal and glass fibre that seems to have... congealed? Weird. Also gross."
 	icon = 'icons/misc/featherzone.dmi'
@@ -34,7 +34,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/feather)
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/permanentcage
+/obj/fakeobject/permanentcage
 	name = "sturdy energy cage"
 	desc = "A permanent cage used for keeping things in one place."
 	icon = 'icons/misc/featherzone.dmi'

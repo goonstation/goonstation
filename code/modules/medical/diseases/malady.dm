@@ -3,10 +3,15 @@
 	name = "Malady"
 	scantype = "Medical Malady"
 	cure_flags = CURE_UNKNOWN
+	strain_type = /datum/ailment_data/malady
 
 /datum/ailment_data/malady
 	var/robo_restart = 0 // used for cyberheart stuff
 	var/affected_area = null // used for bloodclots, can be chest (heart, eventually lung), head (brain), limb
+
+	copy_other(datum/ailment_data/malady/other)
+		..()
+		src.affected_area = other.affected_area
 
 	New()
 		..()
@@ -180,7 +185,7 @@
 				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 				boutput(affected_mob, SPAN_ALERT("You feel [pick("tired", "exhausted", "sluggish")]."))
 			if (probmult(5))
-				affected_mob.changeStatus("weakened", 12 SECONDS)
+				affected_mob.changeStatus("knockdown", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, SPAN_ALERT("You feel [pick("numb", "confused", "dizzy", "lightheaded")]."))
 				affected_mob.emote("collapse")
@@ -188,7 +193,7 @@
 			if(probmult(8))
 				affected_mob.contract_disease(/datum/ailment/malady/shock,null,null,1)
 			if(probmult(12))
-				affected_mob.changeStatus("weakened", 12 SECONDS)
+				affected_mob.changeStatus("knockdown", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
 				boutput(affected_mob, SPAN_ALERT("You feel [pick("numb", "confused", "dizzy", "lightheaded")]."))
 				affected_mob.emote("collapse")
@@ -556,6 +561,6 @@
 			else if (prob(10))
 				H.take_brain_damage(1 * mult)
 
-		H.changeStatus("weakened", 6 * mult SECONDS)
+		H.changeStatus("knockdown", 6 * mult SECONDS)
 		H.losebreath+=20 * mult
 		H.take_oxygen_deprivation(20 * mult)

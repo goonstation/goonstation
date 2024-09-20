@@ -23,6 +23,9 @@
 
 /datum/movement_modifier/equipment // per-mob instanced thing proxying an equip/unequip updated tally from equipment
 
+/datum/movement_modifier/mechboots
+	pushpull_multiplier = 0
+
 /datum/movement_modifier/hulkstrong
 	pushpull_multiplier = 0
 
@@ -47,11 +50,16 @@
 /datum/movement_modifier/disoriented
 	additive_slowdown = 7
 
+/datum/movement_modifier/tagged
+	additive_slowdown = 3
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
 
 /datum/movement_modifier/death_march
 	additive_slowdown = -0.4
+
+/datum/movement_modifier/gang_trapped
+	additive_slowdown = 2
 
 /datum/movement_modifier/janktank
 	health_deficiency_adjustment = -50
@@ -285,10 +293,14 @@
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
 
-// pathogen stuff
+/datum/movement_modifier/slither
+	ask_proc = 1
 
-/datum/movement_modifier/patho_oxygen
-	multiplicative_slowdown = 0.75
+/datum/movement_modifier/slither/modifiers(mob/living/user, move_target, running)
+	if (user.lying)
+		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
+		return list(0-(applied_modifier),1)
+	else return list(0, 1)
 
 // shivering
 

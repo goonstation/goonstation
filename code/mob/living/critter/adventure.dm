@@ -25,6 +25,7 @@
 	health_burn = 25
 	health_burn_vuln = 1
 	speech_void = 1
+	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
@@ -127,6 +128,7 @@
 	health_burn = 10
 	health_burn_vuln = 0
 	speech_void = 1
+	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
@@ -285,6 +287,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	faction = list(FACTION_DERELICT)
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
@@ -324,7 +327,7 @@
 		ghostize()
 		qdel(src)
 
-	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
+	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
 		return
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -403,7 +406,7 @@
 	health_burn_vuln = 0.6
 	var/activated = FALSE
 
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 
 	active
 		New()

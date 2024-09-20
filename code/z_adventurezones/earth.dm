@@ -48,6 +48,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	//force_fullbright = 1
 	ambient_light = CENTCOM_LIGHT
 
+/area/meadow
+	name = "Meadow"
+	icon_state = "nothing_earth"
+	ambient_light = CENTCOM_LIGHT
+	sanctuary = TRUE
+
 /area/centcom/gallery
 	name = "NT Art Gallery"
 	icon_state = "green"
@@ -94,6 +100,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	cal
 		ckey = "mexicat"
 		name = "Office of Cal"
+		active = 2
 	cogwerks
 		ckey = "drcogwerks"
 		name = "Office of Cogwerks"
@@ -241,6 +248,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	tarmunora
 		ckey = "tarmunora"
 		name = "Office of yass"
+		active = 2
 	tterc
 		ckey = "tterc"
 		name = "Office of Caroline Audibert"
@@ -253,6 +261,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	walpvrgis
 		ckey = "walpvrgis"
 		name = "Office of Walpvrgis"
+	wander
+		ckey = "rogerclementine"
+		name = "Office of Wander"
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
@@ -397,8 +408,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	name = "Cathara"
 	desc = "...is this really her?? Do they let cats be admins??"
 	icon_state = "cat1"
-	randomize_name = FALSE
-	randomize_look = FALSE
+	random_name = FALSE
+	random_look = FALSE
+	player_can_spawn_with_pet = FALSE
 
 	New()
 		..()

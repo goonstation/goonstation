@@ -137,7 +137,7 @@ type PowerMonitorApcTableRowProps = {
 const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps, context) => {
   const { apc, search } = props;
   // Indexed array to lower data transfer between byond and the window.
-  const [ref, equipment, lighting, environment, load, cellCharge, cellCharging] = apc;
+  const [ref, equipment, lighting, environment, load, cellCharge, cellCharging = 0] = apc;
   const { data } = useBackend<PowerMonitorApcData>(context);
   const name = data.apcNames[ref] ?? 'N/A';
 
@@ -159,7 +159,9 @@ const PowerMonitorApcTableRow = (props: PowerMonitorApcTableRowProps, context) =
           <Table.Cell textAlign="right" nowrap>
             {cellCharge}%
           </Table.Cell>
-          <Table.Cell color={cellCharging > 0 ? (cellCharging === 1 ? 'average' : 'good') : 'bad'} nowrap>
+          <Table.Cell
+            color={cellCharging > 0 ? (cellCharging === 1 ? 'average' : 'good') : 'bad'}
+            nowrap>
             {apcCellState[cellCharging]}
           </Table.Cell>
         </>

@@ -194,7 +194,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	commuts = list(/datum/plant_gene_strain/mutations,/datum/plant_gene_strain/terminator)
 	mutations = list(/datum/plantmutation/eggplant/literal)
 	assoc_reagents = list("nicotine")
-	mutations = list(/datum/plantmutation/eggplant/literal)
 
 /datum/plant/fruit/strawberry
 	name = "Strawberry"

@@ -216,9 +216,9 @@
 		if(..()) return
 		if (isdead(owner))
 			return
-		if (probmult(1) && !owner.getStatusDuration("paralysis"))
+		if (probmult(1) && !owner.getStatusDuration("unconscious"))
 			owner:visible_message(SPAN_ALERT("<B>[owner] looks totally stupefied!"), SPAN_ALERT("You feel totally stupefied!"))
-			owner.setStatusMin("paralysis", 2 SECONDS * mult)
+			owner.setStatusMin("unconscious", 2 SECONDS * mult)
 		return
 
 /datum/bioEffect/thermal_vuln
@@ -289,7 +289,7 @@
 		if(..()) return
 		if (isdead(owner))
 			return
-		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
+		if ((probmult(5) && !owner.getStatusDuration("unconscious")))
 			owner:drop_item()
 			SPAWN(0)
 				owner:emote("cough")
@@ -337,7 +337,7 @@
 				owner.emote("slap")
 			else if (probmult(2))
 				owner.visible_message(SPAN_ALERT("<B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B>"))
-				owner.changeStatus("weakened", 5 SECONDS)
+				owner.changeStatus("knockdown", 5 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(1))
 				owner.visible_message(SPAN_ALERT("[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!"))
@@ -352,10 +352,10 @@
 				owner.visible_message(SPAN_ALERT("[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "strangely", "offensively", "cruelly", "furiously")]!"))
 			else if (probmult(3))
 				owner.visible_message(SPAN_ALERT("<B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B>"))
-				owner.changeStatus("weakened", 2 SECONDS)
+				owner.changeStatus("knockdown", 2 SECONDS)
 			else if (probmult(2))
 				owner.visible_message(SPAN_ALERT("<B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B>"))
-				owner.changeStatus("paralysis", 7 SECONDS)
+				owner.changeStatus("unconscious", 7 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(2))
 				owner.visible_message(SPAN_ALERT("<B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B>"))
@@ -956,3 +956,31 @@
 			else
 				owner:emote("sneeze")
 		return
+
+/datum/bioEffect/lazy_eye
+	name = "Ego Dislocation"
+	desc = "The subject's sense of self may not always align with their physical location."
+	id = "lazy_eye"
+	effectType = EFFECT_TYPE_DISABILITY
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	msgGain = "You feel strangly disjointed."
+	msgLose = "You feel grounded."
+	isBad = 1
+	icon_state  = "bad"
+
+	OnAdd()
+		. = ..()
+		src.owner.client?.lazy_eye = 5
+
+	OnRemove()
+		. = ..()
+		src.owner.client?.lazy_eye = 0
+
+	OnLife(mult)
+		if(..()) return
+		src.owner.client?.lazy_eye = 5

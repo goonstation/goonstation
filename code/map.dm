@@ -44,8 +44,6 @@ var/global/list/mapNames = list(
 	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",		"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
-	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
-	//"Gehenna" =			list("id" = "GEHENNA",		"settings" = "gehenna",			"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
 	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
 	"DevTest" =				list("id" = "DEVTEST",		"settings" = "devtest",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 69)
@@ -84,7 +82,7 @@ var/global/list/mapNames = list(
 	var/display_name = MAP_NAME_RANDOM
 	var/style = "station"
 	var/default_gamemode = "secret"
-	var/goonhub_map = "https://goonhub.com/maps/cogmap"
+	var/goonhub_map = "/maps/cogmap"
 	var/arrivals_type = MAP_SPAWN_SHUTTLE
 	var/dir_fore = null
 
@@ -102,6 +100,9 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/quadriga,
+		/atom/movable/screen/parallax_render_source/planet/channel,
+		/atom/movable/screen/parallax_render_source/planet/amantes,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -111,6 +112,7 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/regina,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -239,7 +241,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
 	default_gamemode = "pod_wars"
-	goonhub_map = "https://goonhub.com/maps/pod_wars"
+	goonhub_map = "/maps/pod_wars"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
@@ -247,6 +249,7 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/planet/fortuna,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
@@ -281,7 +284,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/pamgoc
 	name = "PAMGOC"
-	goonhub_map = "https://goonhub.com/maps/cogmap"
+	goonhub_map = "/maps/cogmap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -312,7 +315,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
-	goonhub_map = "https://goonhub.com/maps/wrestlemap"
+	goonhub_map = "/maps/wrestlemap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -352,7 +355,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/cogmap
 	name = "COGMAP"
-	goonhub_map = "https://goonhub.com/maps/cogmap"
+	goonhub_map = "/maps/cogmap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -360,7 +363,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/cogmap,
-		/atom/movable/screen/parallax_render_source/planet/mundus,
+		/atom/movable/screen/parallax_render_source/planet/fortuna,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -419,16 +422,16 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
-	goonhub_map = "https://goonhub.com/maps/cogmap2"
+	goonhub_map = "/maps/cogmap2"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/cogmap2,
+		/atom/movable/screen/parallax_render_source/planet/mundus,
 		/atom/movable/screen/parallax_render_source/planet/iustitia,
-		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		/atom/movable/screen/parallax_render_source/planet/iudicium,
 		)
 
 	windows = /obj/window/auto
@@ -475,7 +478,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut2
 	name = "DONUT2"
-	goonhub_map = "https://goonhub.com/maps/donut2"
+	goonhub_map = "/maps/donut2"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -484,6 +487,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/donut2,
+		/atom/movable/screen/parallax_render_source/planet/fatuus,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -520,7 +524,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/donut3
 	name = "DONUT3"
-	goonhub_map = "http://goonhub.com/maps/donut3"
+	goonhub_map = "/maps/donut3"
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
@@ -528,7 +532,8 @@ var/global/list/mapNames = list(
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/donut3,
+		/atom/movable/screen/parallax_render_source/planet/mors,
+		/atom/movable/screen/parallax_render_source/planet/regis,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -572,7 +577,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/kondaru
 	name = "KONDARU"
-	goonhub_map = "https://goonhub.com/maps/kondaru"
+	goonhub_map = "/maps/kondaru"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -580,6 +585,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/kondaru,
+		/atom/movable/screen/parallax_render_source/planet/magus,
 		/atom/movable/screen/parallax_render_source/asteroids_far/kondaru,
 		)
 
@@ -633,7 +639,7 @@ var/global/list/mapNames = list(
 	name = "ATLAS"
 	display_name = "NCS Atlas"
 	style = "ship"
-	goonhub_map = "https://goonhub.com/maps/atlas"
+	goonhub_map = "/maps/atlas"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
@@ -679,7 +685,7 @@ var/global/list/mapNames = list(
 	display_name = "NSS Destiny"
 	style = "ship"
 	default_gamemode = "extended"
-	goonhub_map = "https://goonhub.com/maps/destiny"
+	goonhub_map = "/maps/destiny"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
@@ -729,7 +735,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/destiny/clarion
 	name = "CLARION"
 	display_name = "NSS Clarion"
-	goonhub_map = "https://goonhub.com/maps/clarion"
+	goonhub_map = "/maps/clarion"
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -748,21 +754,21 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
+		"the nuclear reactor room" = list(/area/station/engine/core/nuclear),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 		"the artifact lab" = list(/area/station/science/artifact),
 		"the bridge" = list(/area/station/bridge),
-		"the community center (chapel)" = list(/area/station/chapel/sanctuary),
-		"the aviary" = list(/area/station/garden/aviary),
-		"the quartermaster's storage room" = list(/area/station/quartermaster/storage))
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the aviary" = list(/area/station/garden/aviary)
 		//"the robotics lab" = list(/area/station/medical/robotics))
+	)
 
 /datum/map_settings/oshan
 	name = "OSHAN"
 	display_name = "Oshan Laboratory, Abzu"
-	goonhub_map = "https://goonhub.com/maps/oshan"
+	goonhub_map = "/maps/oshan"
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
@@ -798,7 +804,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	shipping_destinations = list("North", "South")
+	shipping_destinations = list("North Carousel", "South Carousel")
 
 	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
@@ -822,7 +828,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/nadir
 	name = "NADIR"
 	display_name = "Nadir Extraction Site"
-	goonhub_map = "https://goonhub.com/maps/nadir"
+	goonhub_map = "/maps/nadir"
 
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
@@ -861,10 +867,10 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the engineering staff room" = list(/area/station/engine/engineering),
 		"the medical bay's central room" = list(/area/station/medical/medbay),
-		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
-		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the extraction nexus" = list(/area/station/science/construction),
+		"the cafeteria" = list(/area/station/crew_quarters/cafeteria, /area/station/crew_quarters/bar),
 		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the radio lab" = list(/area/station/crew_quarters/radio/lab),
+		"the hydroponics bay" = list(/area/station/hydroponics),
 		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
@@ -872,7 +878,7 @@ var/global/list/mapNames = list(
 /datum/map_settings/manta
 	name = "MANTA"
 	display_name = "NSS Manta"
-	goonhub_map = "https://goonhub.com/maps/manta"
+	goonhub_map = "/maps/manta"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -921,7 +927,7 @@ var/global/list/mapNames = list(
 	name = "HORIZON"
 	display_name = "NSS Horizon"
 	style = "ship"
-	goonhub_map = "https://goonhub.com/maps/horizon"
+	goonhub_map = "/maps/horizon"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -985,7 +991,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/mushroom
 	name = "MUSHROOM"
-	goonhub_map = "https://goonhub.com/maps/mushroom"
+	goonhub_map = "/maps/mushroom"
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -1003,11 +1009,15 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 	escape_dir = EAST
 
 /datum/map_settings/trunkmap
 	name = "TRUNKMAP"
-	goonhub_map = "https://goonhub.com/maps/trunkmap"
+	goonhub_map = "/maps/trunkmap"
 	escape_dir = NORTH
 	walls = /turf/simulated/wall
 	rwalls = /turf/simulated/wall/r_wall
@@ -1020,7 +1030,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/density // I just copied cog2 for now, ok????
 	name = "density"
-	goonhub_map = "https://goonhub.com/maps/density"
+	goonhub_map = "/maps/density"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -1087,7 +1097,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
-	goonhub_map = "https://i.imgur.com/COYgNvN.jpg"
+	goonhub_map = "/maps/ozymandias"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -1095,8 +1105,8 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
 		/datum/job/special/hairdresser = 1,
-		/datum/job/special/research_assistant = 2,
-		/datum/job/special/medical_assistant = 2
+		/datum/job/research/research_assistant = 2,
+		/datum/job/research/medical_assistant = 2
 	)
 
 	windows = /obj/window/auto
@@ -1135,7 +1145,7 @@ var/global/list/mapNames = list(
 	name = "FLEET"
 	display_name = "Bellerophon Fleet"
 	style = "ship"
-	goonhub_map = "https://goonhub.com/maps/bellerophon fleet"
+	goonhub_map = "/maps/bellerophon fleet"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 

@@ -21,13 +21,7 @@ export const RandomEvent = (props, context) => {
       width={700}
       height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              {eventName}
-            </Box>
-          }>
+        <Section title={eventName}>
           <Flex direction="row">
             <Flex.Item ml={1}>
               <DataInputOptions

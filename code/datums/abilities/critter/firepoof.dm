@@ -8,6 +8,7 @@
 	cooldown = 0
 	pointCost = 0
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
+	var/datum/special_sprint/sprint_datum = new /datum/special_sprint/poof/fire
 
 	cast(mob/target)
 		if (!holder)
@@ -19,11 +20,12 @@
 		if (!M)
 			return 1
 
-		if (M.special_sprint & SPRINT_FIRE)
-			M.special_sprint &= ~SPRINT_FIRE
+		. = ..()
+		if (istype(M.special_sprint, /datum/special_sprint/poof/fire))
+			M.special_sprint = null
 		else
-			M.special_sprint |= SPRINT_FIRE
+			M.special_sprint = src.sprint_datum
 
-		boutput(M, SPAN_NOTICE("Fire Form toggled [(M.special_sprint & SPRINT_FIRE ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
+		boutput(M, SPAN_NOTICE("Fire Form toggled [M.special_sprint ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
 
 		return 0

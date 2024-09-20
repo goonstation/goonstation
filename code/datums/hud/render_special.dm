@@ -25,12 +25,12 @@
 			if ("default")
 				center_light.icon = 'icons/effects/vision_default.dmi'
 				center_light.screen_loc = "CENTER-1, CENTER-1"
-			if ("cateyes")
-				center_light.icon = 'icons/effects/vision_cateyes.dmi'
-				center_light.screen_loc = "CENTER-2, CENTER-2"
 			if ("thermal")
 				center_light.icon = 'icons/effects/vision_thermal.dmi'
 				center_light.screen_loc = "CENTER-4.375, CENTER-4.375"
+			if ("cateyes")
+				center_light.icon = 'icons/effects/vision_cateyes.dmi'
+				center_light.screen_loc = "CENTER-4.5, CENTER-4.5"
 			else
 				if (wide)
 					center_light.icon = 'icons/effects/vision_wide.dmi'

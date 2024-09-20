@@ -23,13 +23,7 @@ export const GimmickObject = (props, context) => {
       width={675}
       height={600}>
       <Window.Content scrollable>
-        <Section
-          title={
-            <Box
-              inline>
-              Edit Interactive Steps
-            </Box>
-          }>
+        <Section title="Edit Interactive Steps">
           <Flex direction="column">
             {Object.keys(eventList).map((event, eventIndex) => (
               <Flex.Item key={eventIndex}>

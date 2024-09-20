@@ -55,7 +55,6 @@ $primary-color: color.scale($bg-color, $lightness: -20%) !default;
 @include meta.load-css('../components/Section.scss', $with: (
   'background-color': rgba(0, 0, 0, 0.1),
 ));
-@include meta.load-css('../components/goonstation/SectionEx.scss');
 @include meta.load-css('../components/Button.scss', $with: (
   'color-default': base.$color-bg,
   'color-disabled': #777777,

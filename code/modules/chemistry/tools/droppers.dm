@@ -13,6 +13,7 @@
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	item_function_flags = OBVIOUS_INTERACTION_BAR
 	var/icon_empty = "dropper0"
 	var/icon_filled = "dropper1"
 	var/image/fluid_image

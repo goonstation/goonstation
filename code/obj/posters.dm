@@ -205,7 +205,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 /mob/living/carbon/human/build_flat_icon(var/direction)
 	var/icon/return_icon
 	if (src.mutantrace) //TODO: #14465
-		return_icon = icon(src.mutantrace.icon, src.mutantrace.icon_state, direction ? direction : null)
+		return_icon = icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state, direction ? direction : null)
 	else
 		return_icon = icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", direction ? direction : null)
 
@@ -404,7 +404,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 		. += "There's [src.papers] paper[s_es(src.papers)] loaded into it."
 
 	attack_ai(mob/user as mob)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)

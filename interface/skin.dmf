@@ -118,6 +118,13 @@ menu "menu"
 		can-check = true
 		group = "size"
 		saved-params = "is-checked"
+	elem "icon88"
+		name = "&88x88"
+		command = ".winset \"mapwindow.map.icon-size=88\""
+		category = "&Icon Settings"
+		can-check = true
+		group = "size"
+		saved-params = "is-checked"
 	elem "icon96"
 		name = "&96x96"
 		command = ".winset \"mapwindow.map.icon-size=96\""
@@ -278,6 +285,13 @@ menu "menu"
 	elem "set_tint"
 		name = "&View Tint"
 		command = "apply-view-tint"
+		category = "&Effects"
+		is-checked = true
+		can-check = true
+		saved-params = "is-checked"
+	elem "toggle_camera_recoil"
+		name = "&Camera Recoil"
+		command = "toggle-camera-recoil"
 		category = "&Effects"
 		is-checked = true
 		can-check = true

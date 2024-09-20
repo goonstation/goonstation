@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../../backend";
 import { Box, Button, ByondUi, Flex, LabeledList, Modal, Section } from "../../../components";
 import { AppearanceEditor } from "../AppearanceEditor";
@@ -53,7 +52,7 @@ export const ScannerTab = (props, context) => {
   }
 
   return (
-    <Fragment>
+    <>
       {!!changingMutantRace && (
         <Modal full>
           <Box bold width={20} mb={0.5}>
@@ -93,7 +92,7 @@ export const ScannerTab = (props, context) => {
       {modifyAppearance ? (
         <AppearanceEditor {...modifyAppearance} />
       ) : (
-        <Fragment>
+        <>
           <Section title="Occupant">
             <Flex>
               <Flex.Item mr={1}>
@@ -114,7 +113,7 @@ export const ScannerTab = (props, context) => {
                   <LabeledList.Item
                     label="Body Type"
                     buttons={!!human && (
-                      <Fragment>
+                      <>
                         <Button
                           icon="user"
                           color="blue"
@@ -127,7 +126,7 @@ export const ScannerTab = (props, context) => {
                           color="average"
                           disabled={!canAppearance}
                           onClick={() => act("editappearance")} />
-                      </Fragment>
+                      </>
                     )}>
                     {mutantRace}
                   </LabeledList.Item>
@@ -150,7 +149,7 @@ export const ScannerTab = (props, context) => {
                 </LabeledList>
               </Flex.Item>
               {human && showPreview && (
-                <Flex.Item grow={0} shrink={0}>
+                <Flex.Item shrink={0}>
                   <ByondUi
                     params={{
                       id: preview,
@@ -177,8 +176,8 @@ export const ScannerTab = (props, context) => {
               noGenes="Subject has no detected mutations."
               isActive />
           </Section>
-        </Fragment>
+        </>
       )}
-    </Fragment>
+    </>
   );
 };

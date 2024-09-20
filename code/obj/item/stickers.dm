@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH | SUPPRESSATTACK
+	flags = TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH | SUPPRESSATTACK
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -113,7 +113,7 @@
 
 	mouse_drop(atom/over_object)
 		if (over_object.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
-			src.afterattack(over_object, usr)
+			src.AfterAttack(over_object, usr)
 		else
 			..()
 
@@ -516,7 +516,7 @@
 	proc/set_internal_radio(mob/user as mob)
 		if (!ishuman(user) || !src.radio)
 			return
-		src.radio.attack_self(user)
+		src.radio.AttackSelf(user)
 
 	proc/set_internal_camera(mob/user)
 		if (!ishuman(user) || !src.camera)
@@ -733,14 +733,16 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	stick_to(atom/A)
 		. = ..()
 		APPLY_ATOM_PROPERTY(A, PROP_MOVABLE_CONTRABAND_OVERRIDE, src, contraband_value)
-		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+		if(ismovable(A) && !A.GetComponent(/datum/component/contraband))
+			A.AddComponent(/datum/component/contraband, 0, 0)
+		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 
 	disposing()
 		REMOVE_ATOM_PROPERTY(src.attached, PROP_MOVABLE_CONTRABAND_OVERRIDE, src)
-		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 		..()
 
 	fall_off()
 		REMOVE_ATOM_PROPERTY(src.attached, PROP_MOVABLE_CONTRABAND_OVERRIDE, src)
-		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED)
+		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED, TRUE)
 		. = ..()

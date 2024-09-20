@@ -3,6 +3,7 @@
 	set name = "CA Viewer"
 	set desc = "Cellular Automata Viewer"
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if(holder)
 		var/datum/ca_viewer/E = new /datum/ca_viewer(src.mob)
@@ -116,7 +117,6 @@ ABSTRACT_TYPE(/datum/ca_type)
 
 /datum/ca_viewer/ui_data()
 	var/list/data = list()
-	//data["locked"] = !isnull(terrains[1].terrainify_lock)
 	return data
 
 /datum/ca_viewer/ui_act(action, list/params, datum/tgui/ui)

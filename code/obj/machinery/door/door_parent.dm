@@ -10,7 +10,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	opacity = 1
 	#endif
 	density = 1
-	flags = FPRINT | ALWAYS_SOLID_FLUID
+	flags = FLUID_DENSE
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
 	pass_unstable = TRUE
@@ -26,6 +26,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/last_used = 0
 	var/cant_emag = FALSE
 	var/hardened = FALSE // Can't be hacked, RCD'd or controlled by silicon mobs.
+	var/cant_hack = FALSE //Like the above but can be RCD'd and controlled by silicons
 	var/locked = FALSE
 	var/icon_base = "door"
 	var/brainloss_stumble = FALSE // Can a mob stumble into this door if they have enough brain damage? Won't work if you override Bumped() or attackby() and don't check for it separately.
@@ -43,6 +44,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/next_timeofday_opened = 0 //high tier jank
 
 	var/ignore_light_or_cam_opacity = FALSE
+
+	var/obj/forcefield/energyshield/linked_forcefield = null
 
 	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
 	var/atom/movable/bumper = null
@@ -111,7 +114,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				src.visible_message(SPAN_ALERT("<b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!"))
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
-					H.changeStatus("weakened", 1 SECOND)
+					H.changeStatus("knockdown", 1 SECOND)
 				else
 					boutput(H, SPAN_NOTICE("Your helmet protected you from injury!"))
 				return 1
@@ -120,7 +123,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 /obj/machinery/door/Cross(atom/movable/mover)
 	if(istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
-		if(P.proj_data.window_pass)
+		if(P.proj_data.window_pass && !P.proj_data.always_hits_structures)
 			return !opacity
 	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
 		if (ismob(mover))
@@ -194,7 +197,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/toggleinput()
 	if(src.cant_emag || (src.req_access && !(src.operating == -1)))
-		play_animation("deny")
+		if (src.density) //only play if it's closed
+			play_animation("deny")
 		return
 	if(density)
 		open()
@@ -300,7 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
-	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
+	if (user.getStatusDuration("stunned") || user.getStatusDuration("knockdown") || user.stat || user.restrained())
 		return
 	if(istype(I, /obj/item/grab))
 		return ..() // handled in grab.dm + Bumped
@@ -395,7 +399,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(1)
 			qdel(src)
 		if(2)
-			if(prob(25))
+			if(prob(66))
 				qdel(src)
 			else
 				take_damage(health_max/2)
@@ -501,15 +505,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1
-	if (src.linked_forcefield)
-		src.linked_forcefield.setactive(1)
+	if (src.linked_forcefield && (src.powered() || !src.linked_forcefield.powered_locally))
+		src.linked_forcefield.setactive(TRUE)
+		if(src.linked_forcefield.powered_locally)
+			SubscribeToProcess()
 
 	SPAWN(-1)
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
 			src.set_opacity(0)
-		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
 		src.UpdateIcon(/*/toggling*/ 0)
@@ -518,7 +523,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time / 2)
 		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
 		src.bumper = null
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
+		if(!(src.status & NOPOWER))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
 			src.operating = 0
@@ -546,8 +552,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 				if (--max <= 0) break
 
-	if (src.linked_forcefield)
-		src.linked_forcefield.setactive(0)
+	if (src.linked_forcefield?.isactive)
+		src.linked_forcefield.setactive(FALSE)
+		if(src.linked_forcefield.powered_locally)
+			UnsubscribeProcess()
 
 	src.operating = 1
 	close_trys = 0
@@ -572,7 +580,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-					L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("knockdown", 3 SECONDS)
+					logTheThing(LOG_COMBAT, L, "gets horribly crushed in a door at [log_loc(L)]")
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)
@@ -605,7 +614,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			autoclose()
 
 /obj/machinery/door/proc/closed()
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
+	if(!(src.status & NOPOWER))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorClosed")
 
 /obj/machinery/door/proc/autoclose()
 	if (!density && !operating && !locked)
@@ -628,6 +638,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 /obj/machinery/door/proc/set_unlocked()
 	src.locked = FALSE
 	src.UpdateIcon()
+
+/obj/machinery/door/power_change()
+	. = ..()
+	if (src.linked_forcefield)
+		if (src.linked_forcefield.isactive && !powered() && src.linked_forcefield.powered_locally)
+			//forcefield active, we don't have local power, field isn't from a generator? deactivate, and door is no longer using field power
+			src.linked_forcefield.setactive(FALSE)
+			UnsubscribeProcess()
+			src.update_nearby_tiles()
+		else if(!src.linked_forcefield.isactive && !density && (powered() || !src.linked_forcefield.powered_locally))
+			//forcefield inactive - if we have local power, or field is from a generator, bring it online if our airlock's open
+			src.linked_forcefield.setactive(TRUE)
+			//and only start using power if door is providing field power
+			if(src.linked_forcefield.powered_locally)
+				SubscribeToProcess()
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy

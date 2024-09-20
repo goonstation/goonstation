@@ -111,11 +111,11 @@
 		var/mob/MT = target
 		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 		MT.changeStatus("stunned", 2 SECONDS)
-		MT.changeStatus("weakened", 2 SECONDS)
+		MT.changeStatus("knockdown", 2 SECONDS)
 		if (prob(25))
 			holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> weaves around [MT]'s legs and trips [him_or_her(MT)]!"),\
 			SPAN_COMBAT("You weave around [MT]'s legs and trip [him_or_her(MT)]!"))
-			MT.changeStatus("weakened", 2 SECONDS)
+			MT.changeStatus("knockdown", 2 SECONDS)
 			return 0
 		else
 			holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> pounces on [MT]!"),\
@@ -149,7 +149,7 @@
 		var/tostun = rand(0,3)
 		var/toweak = rand(0,3)
 		MT.changeStatus("stunned", tostun SECONDS)
-		MT.changeStatus("weakened", toweak SECONDS)
+		MT.changeStatus("knockdown", toweak SECONDS)
 		holder.owner.visible_message(SPAN_COMBAT("<B>[holder.owner]</B> weaves around [MT]'s legs!"),\
 		SPAN_COMBAT("You weave around [MT]'s legs!"))
 		if (toweak)
@@ -207,9 +207,9 @@
 		name = "Bite"
 		desc = "Bite a mob, injecting them with venom."
 		icon_state = "snake_bite"
-		cooldown = 12 SECONDS
+		cooldown = 8 SECONDS
 		attack_verb = "bite"
-		venom1 = "viper_venom"
+		venom1 = "hemotoxin"
 		amt1 = 12
 		amt2 = 0
 

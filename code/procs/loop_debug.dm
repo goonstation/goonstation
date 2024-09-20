@@ -9,6 +9,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Main Loop Context"
 	set desc = "Displays the current main loop context information (lastproc: lasttask \[world.timeofday\])"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(src.holder)
 		if(!src.mob)
 			return
@@ -19,6 +21,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Main Loop Tick Detail"
 	set desc = "Displays detailed tick information for the main loops that support it."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(src.holder)
 		if(!src.mob)
 			return

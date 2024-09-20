@@ -114,14 +114,14 @@
 
 	try
 		var/datum/apiRoute/jobbans/delete/deleteJobBan = new
-		deleteJobBan.buildBody(null, checkey, rank)
+		deleteJobBan.buildBody(akey, null, checkey, rank)
 		apiHandler.queryAPI(deleteJobBan)
 
 		// Wire note: Hi this is super dumb
 		if(rank == "Security Department")
 			if(cache.Find("Security Officer"))
 				var/datum/apiRoute/jobbans/delete/secDeleteJobBan = new
-				secDeleteJobBan.buildBody(null, checkey, "Security Officer")
+				secDeleteJobBan.buildBody(akey, null, checkey, "Security Officer")
 				apiHandler.queryAPI(secDeleteJobBan)
 
 		var/ircmsg[] = new()

@@ -23,7 +23,7 @@
 				I.color = src.color
 			var/md5hasho = "tile_edge_[md5("[rand(1,10000)]_[rand(1,10000)]")]"
 			//world.log << md5hasho
-			if (T.UpdateOverlays(I, md5hasho))
+			if (T.AddOverlays(I, md5hasho))
 				qdel(src)
 			else
 				return ..()

@@ -151,8 +151,13 @@ const SavesAndProfile = (_props: any, context: any) => {
               buttons={
                 activeProfileIndex > -1 ? (
                   <>
+                    <Button onClick={() => act('profile-file-import', { index: activeProfileIndex + 1 })}>
+                      Import
+                    </Button>
+                    <Button onClick={() => act('profile-file-export', { index: activeProfileIndex + 1 })}>
+                      Export
+                    </Button>
                     <Button onClick={() => act('load', { index: activeProfileIndex + 1 })}>Reload</Button>
-                    {' - '}
                     <Button
                       onClick={() => act('save', { index: activeProfileIndex + 1 })}
                       icon={data.profileModified ? 'exclamation-triangle' : undefined}

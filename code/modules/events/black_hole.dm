@@ -35,7 +35,7 @@
 		lighting_overlay.blend_mode = BLEND_ADD
 		lighting_overlay.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 		lighting_overlay.color = list(0.2,0.1,0.1,  0.1,0.2,0.1,  0.1,0.1,0.2,  -0.03, -0.03, -0.03)
-		src.UpdateOverlays(lighting_overlay, "lighting_overlay")
+		src.AddOverlays(lighting_overlay, "lighting_overlay")
 
 		feedings_required = rand(15,40)
 		//spatial interdictor: can't stop the black hole, but it can mitigate it

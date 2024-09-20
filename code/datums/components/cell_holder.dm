@@ -11,10 +11,11 @@ TYPEINFO(/datum/component/cell_holder)
 		ARG_INFO("new_cell", DATA_INPUT_REF, "ref to cell that will be first used"),
 		ARG_INFO("chargable", DATA_INPUT_BOOL, "If it can be placed in a recharger", TRUE),
 		ARG_INFO("max_cell", DATA_INPUT_NUM, "Maximum size of cell that can be held", INFINITY),
-		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE)
+		ARG_INFO("swappable", DATA_INPUT_BOOL, "If the cell can be swapped out", TRUE),
+		ARG_INFO("restrict_cell", DATA_INPUT_TYPE, "Path to restrict cell types to", null)
 	)
 
-/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE, restrict_cell = FALSE)
+/datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE, restrict_cell = null)
 	. = ..()
 	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_CELL_IS_CELL))
 		return COMPONENT_INCOMPATIBLE

@@ -7,6 +7,8 @@
 	var/data = list()
 	///Set to the error message displayed when sniffing the encrypted packet
 	var/encryption
+	///How obfuscated is this encryption, if sniffed by things that can read it?
+	var/encryption_obfuscation = 15
 	var/datum/computer/file/data_file
 
 	var/mob/author

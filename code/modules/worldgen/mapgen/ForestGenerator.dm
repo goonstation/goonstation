@@ -32,7 +32,7 @@
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mountain
+	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/mountain
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/forest_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -80,10 +80,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 /datum/biome/forest/generate_turf(turf/gen_turf, flags)
 	. = ..()

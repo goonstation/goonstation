@@ -325,6 +325,7 @@ mob/verb/checkrewards()
 		LG.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
+		LG.assign_name(C.mob)
 		C.mob.put_in_hand_or_drop(LGP)
 		boutput(C.mob, SPAN_EMOTE("A pamphlet flutters out."))
 		return

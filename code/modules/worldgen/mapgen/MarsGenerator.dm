@@ -56,8 +56,9 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	var/floor_only_biome = /datum/biome/mars
 	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
-	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
+	floor_turf_type = /turf/unsimulated/floor/plating/asteroid/mars
 
 /datum/map_generator/mars_generator/duststorm
 	///2D list of all biomes based on heat and humidity combos.
@@ -87,6 +88,8 @@
 		BIOME_HIGH_HUMIDITY = /datum/biome/mars/martian_area/duststorm
 		)
 	)
+	floor_only_biome = /datum/biome/mars/duststorm
+	floor_turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -103,7 +106,9 @@
 		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[drift_x]", "[drift_y]"))
 
 		var/datum/biome/selected_biome
-		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
+		if(flags & MAPGEN_FLOOR_ONLY)
+			selected_biome = floor_only_biome
+		else if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
 			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[drift_x]", "[drift_y]"))
 			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[drift_x]", "[drift_y]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
@@ -133,10 +138,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
@@ -155,13 +157,12 @@
 					if(jerk.protected_from_space()) // Be kind around station...
 						return
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
-					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
+					jerk.do_disorient(stamina_damage = 100, knockdown = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
 						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, TRUE)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
-
-/turf/simulated/floor/plating/airless/asteroid/mars
+/turf/unsimulated/floor/plating/asteroid/mars
 	stone_color = "#c96433"
 	color = "#c96433"
 	carbon_dioxide = 500
@@ -177,7 +178,7 @@
 	fullbright = 0
 	color = "#c96433"
 	stone_color = "#c96433"
-	replace_type = /turf/simulated/floor/plating/airless/asteroid/mars
+	replace_type = /turf/unsimulated/floor/plating/asteroid/mars
 
 	destroy_asteroid(var/dropOre=1)
 		var/image/ambient_light = src.GetOverlayImage("ambient")

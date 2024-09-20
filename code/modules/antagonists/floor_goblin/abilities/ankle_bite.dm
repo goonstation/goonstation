@@ -38,7 +38,7 @@
 			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && (BOUNDS_DIST(holder.owner, target) == 0))
 					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
-					target_human.changeStatus("weakened", 2 SECONDS)
+					target_human.changeStatus("knockdown", 2 SECONDS)
 					target_human.force_laydown_standup()
 					holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] bites at [target_human]'s ankles!</b>"),\
 					SPAN_COMBAT("<b>You bite at [target_human]'s ankles!</b>"))
@@ -51,7 +51,7 @@
 					animate_slide(floorturf, 0, 0, 4)
 		else
 			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
-			target_human.changeStatus("weakened", 2 SECONDS)
+			target_human.changeStatus("knockdown", 2 SECONDS)
 			target_human.force_laydown_standup()
 			holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner] bites at [target_human]'s ankles!</b>"),\
 			SPAN_COMBAT("<b>You bite at [target_human]'s ankles!</b>"))

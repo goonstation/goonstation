@@ -19,6 +19,7 @@ var/flock_signal_unleashed = FALSE
 var/datum/flock/default_flock = null
 ///Gimmick flock with infinite compute that lone structures and units automatically connect to
 proc/get_default_flock()
+	RETURN_TYPE(/datum/flock)
 	if (!default_flock)
 		default_flock = new
 		default_flock.relay_allowed = FALSE
@@ -53,7 +54,7 @@ proc/get_default_flock()
 	var/current_egg_cost = FLOCK_LAY_EGG_COST
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
-	var/list/enemies = list()
+	var/list/atom/movable/enemies = list()
 	var/list/atom/movable/ignores = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()

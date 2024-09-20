@@ -446,7 +446,7 @@ obj/machinery/embedded_controller
 
 		New()
 			..()
-			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 
 		post_signal(datum/signal/signal)
 			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
@@ -665,7 +665,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		return
 
 	attack_ai(mob/user)
-		return attack_hand(user)
+		return src.Attackhand(user)
 
 	attack_hand(mob/user)
 		if (src.status & NOPOWER)

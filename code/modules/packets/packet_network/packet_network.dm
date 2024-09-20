@@ -73,7 +73,9 @@
 	if(is_analog(device?.parent))
 		src.analog_devices -= device.parent
 
-/datum/packet_network/proc/draw_packet(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal, params=null)
+/datum/packet_network/proc/draw_packet(datum/component/packet_connected/target, datum/component/packet_connected/source, datum/signal/signal,\
+	params, datum/client_image_group/img_group)
+
 	var/turf/sourceT = get_turf(source?.parent)
 	var/turf/targetT = get_turf(target?.parent)
 	if(!sourceT || !targetT || sourceT.z != targetT.z)
@@ -89,7 +91,7 @@
 		animate(img, alpha = 30, time = 0.1 SECOND, easing = SINE_EASING | EASE_IN)
 		animate(alpha = 50, time = 0.9 SECOND, easing = SINE_EASING | EASE_OUT)
 		animate(alpha = 0, time = 1 SECONDS, easing = SINE_EASING)
-		get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).add_image(img)
+		img_group.add_image(img)
 
 /datum/packet_network/disposing()
 	src.in_disposing = TRUE
@@ -145,7 +147,8 @@
 	var/target_address = signal.data["address_1"]
 	var/is_broadcast = target_address == "ping" || target_address == "00000000" || (isnull(target_tag) && isnull(target_address))
 	var/use_can_receive = src.can_receive_necessary(source, signal, params)
-	var/draw_packet = length(global.client_image_groups?[CLIENT_IMAGE_GROUP_PACKETVISION]?.subscribed_mobs_with_subcount)
+	var/datum/client_image_group/img_group = get_image_group("[CLIENT_IMAGE_GROUP_PACKETVISION][src.channel_name]")
+	var/draw_packet = length(img_group?.subscribed_mobs_with_subcount)
 	if(!draw_packet)
 		if(use_can_receive)
 			POST_PACKET_INTERNAL( \
@@ -162,7 +165,7 @@
 			#define RECEIVE_PACKET \
 				if(src.can_receive(target, source, signal, params)) { \
 					target.receive_packet(signal, src.transmission_method, params); \
-					var/image/img = src.draw_packet(target, source, signal, params); \
+					var/image/img = src.draw_packet(target, source, signal, params, img_group); \
 					if(img) \
 						images += img; \
 				} // don't ask, it has to be like this
@@ -171,13 +174,13 @@
 		else
 			POST_PACKET_INTERNAL( \
 				target.receive_packet(signal, src.transmission_method, params); \
-				var/image/img = src.draw_packet(target, source, signal, params); \
+				var/image/img = src.draw_packet(target, source, signal, params, img_group); \
 				if(img) \
 					images += img; \
 			)
 		SPAWN(2 SECONDS)
 			for(var/image/img as anything in images)
-				get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_image(img)
+				img_group.remove_image(img)
 				qdel(img)
 	qdel(signal)
 

@@ -38,11 +38,13 @@
 
 [form.data["additional"]]
 
-Reported by: [user_client.key]
+Reported by: [user_client.ckey]
+Client version: [user_client.byond_version].[user_client.byond_build]
 On server: [global.config.server_name]
 Active test merges: [english_list(testmerges)]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
+Round ID: [global.roundId]
 Map: [global.map_setting]
 "}
 	var/list/success = ircbot.export("issue", list(

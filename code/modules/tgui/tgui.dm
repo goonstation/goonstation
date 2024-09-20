@@ -65,7 +65,7 @@
  * Open this UI (and initialize it with data).
  */
 /datum/tgui/proc/open()
-	if(!user.client)
+	if(!user?.client)
 		return null
 	if(window)
 		return null
@@ -282,9 +282,10 @@
 	// Pass act type messages to ui_act
 	if(type && copytext(type, 1, 5) == "act/")
 		var/act_type = copytext(type, 5)
-		log_tgui(user, "Action: [act_type] [href_list["payload"]]",
-			window = window,
-			src_object = src_object)
+		if(act_type != "play_note")
+			log_tgui(user, "Action: [act_type] [href_list["payload"]]",
+				window = window,
+				src_object = src_object)
 		process_status()
 		if(src_object.ui_act(act_type, payload, src, state))
 			tgui_process.update_uis(src_object)

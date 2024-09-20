@@ -22,6 +22,7 @@ TRAYS
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 2
+	c_flags = ONBELT
 
 	New()
 		..()
@@ -43,7 +44,7 @@ TRAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 10
@@ -61,6 +62,7 @@ TRAYS
 
 	attack_self(mob/user as mob)
 		src.rotate()
+		..()
 
 	proc/rotate()
 		if(rotatable)
@@ -131,6 +133,10 @@ TRAYS
 	dir = NORTH
 	throwforce = 7
 
+	New()
+		..()
+		setItemSpecial(/datum/item_special/jab)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)]."))
@@ -152,7 +158,7 @@ TRAYS
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -371,6 +377,7 @@ TRAYS
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	c_flags = ONBELT
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iscarbon(A))
@@ -724,10 +731,14 @@ TRAYS
 
 		src.UpdateIcon()
 
-	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
-	proc/indirect_pickup(var/food, mob/user, atom/over_object)
-		if (user == over_object && in_interact_range(src, user) && can_act(user))
+	/// Handles food being dragged around
+	proc/indirect_pickup(var/obj/item/food, mob/user, atom/over_object)
+		if (!in_interact_range(src, user) || !can_act(user))
+			return
+		if (user == over_object)
 			src.Attackhand(user)
+		else if (over_object == src || isturf(over_object))
+			src.remove_contents(food)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere(depth = 1)
@@ -826,9 +837,9 @@ TRAYS
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target
 				if(istype(H.head, /obj/item/clothing/head/helmet))
-					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else if(ismobcritter(target))
 				var/mob/living/critter/L = target
@@ -838,12 +849,12 @@ TRAYS
 						has_helmet = TRUE
 						break
 				if(has_helmet)
-					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					target.changeStatus("weakened", 1 SECONDS)
+					target.changeStatus("knockdown", 1 SECONDS)
 					target.force_laydown_standup()
 			else //borgs, ghosts, whatever
-				target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				target.do_disorient(stamina_damage = 150, knockdown = 0.1 SECONDS, disorient = 1 SECOND)
 		else
 			target.visible_message(SPAN_ALERT("[user] taps [target] over the head with [src]."))
 			playsound(src, src.hit_sound, 30, 1)
@@ -884,6 +895,8 @@ TRAYS
 	space_left = INFINITY
 	initial_foods = list(/obj/item/reagent_containers/food/snacks/scotch_egg = 6)
 
+TYPEINFO(/obj/item/plate/pizza_box)
+	mat_appearances_to_ignore = "cardboard"
 /obj/item/plate/pizza_box
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
@@ -897,6 +910,7 @@ TRAYS
 	max_space = 6
 	space_left = 6
 	can_headsmash = FALSE
+	default_material = "cardboard"
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -1010,6 +1024,16 @@ TRAYS
 		toggle_box(user)
 		return TRUE
 
+	attackby(obj/item/W, mob/user, params)
+		if (iswrenchingtool(W) && !length(src.contents))
+			var/obj/item/sheet/sheets = new(src.loc)
+			sheets.amount = 2
+			sheets.setMaterial(src.material)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			qdel(src)
+			return
+		. = ..()
+
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"
 	desc = "It's a big flat tray for serving food upon."
@@ -1093,7 +1117,6 @@ TRAYS
 	desc = "A wire-mesh rack that lets food items cool down for safe(er?) consumption."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "coolingrack"
-	flags = FPRINT | TABLEPASS
 	force = 3
 	throwforce = 5
 	throw_speed = 3

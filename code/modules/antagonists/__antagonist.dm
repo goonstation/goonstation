@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// The objectives assigned to the player by this specific antagonist role.
 	var/list/datum/objective/objectives = list()
 	/// The faction given to the player by this antagonist role for AI targeting purposes.
-	var/faction = 0
+	var/faction = list()
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -81,6 +81,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
 		remove_self(take_gear, source)
 		owner.former_antagonist_roles.Add(owner.special_role)
+
 		owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 		UnregisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB)
 		UnregisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB)
@@ -160,7 +161,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.add_to_image_groups()
 
 		if (src.faction)
-			src.owner.current?.faction |= src.faction
+			LAZYLISTADDUNIQUE(src.owner.current?.faction, src.faction)
 
 		if (!src.silent)
 			src.announce()
@@ -223,6 +224,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/assign_objectives()
 		return
 
+	/// Handle this antagonist entering cryogenic storage, possibly temporarily.
+	proc/handle_cryo()
+		return
 	/// Handle this antagonist entering cryogenic storage permanently
 	proc/handle_perma_cryo()
 		return

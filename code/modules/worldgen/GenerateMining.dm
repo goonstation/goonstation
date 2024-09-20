@@ -171,7 +171,7 @@ TYPEINFO(/turf/variableTurf/clear)
 			for(var/x in 1 to width)
 				for(var/y in 1 to height)
 					mapnew[x][y] = CAGetSolid(map, x, y, i)
-					sleep(-1)
+					LAGCHECK_IF_LIVE(LAG_INIT)
 			map = mapnew
 
 		for(var/x in 1 to width)
@@ -181,11 +181,10 @@ TYPEINFO(/turf/variableTurf/clear)
 				var/turf/T = locate(min_x+x-1,min_y+y-1,z_level)
 				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate) || isgenplanet(T)) )
 					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
-					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
-				sleep(-1)
+				LAGCHECK_IF_LIVE(LAG_INIT)
 
 		var/list/used = list()
 		for(var/s in 0 to 19)
@@ -259,11 +258,10 @@ TYPEINFO(/turf/variableTurf/clear)
 		#endif
 		for(var/i in 0 to numAsteroidSeed-1)
 			var/turf/X = pick(miningZ)
-			var/quality = rand(-101,101)
 
 			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate) && !isgenplanet(X)))
 				X = pick(miningZ)
-				sleep(-1)
+				LAGCHECK(LAG_REALTIME)
 
 			var/list/solidTiles = list()
 			var/list/edgeTiles = list(X)
@@ -294,15 +292,14 @@ TYPEINFO(/turf/variableTurf/clear)
 				if(decideSolid(west, X, sizeMod))
 					solidTiles.Add(west)
 					edgeTiles.Add(west)
-				sleep(-1)
+				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate) || isgenplanet(T))
 					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
-					AST.quality = quality
-				sleep(-1)
+				LAGCHECK_IF_LIVE(LAG_INIT)
 
 			if(prob(15))
 				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))
@@ -403,6 +400,13 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 	var/perlin_zoom = 65
 	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
 	var/const/color_alpha = 30
+	/// percentage of map to cover, used as salinity cutoff
+	var/coverage = 0.25
+
+	New(coverage_override)
+		. = ..()
+		if (coverage_override)
+			src.coverage = coverage_override
 
 	proc/setup()
 		seeds = list()
@@ -416,7 +420,7 @@ var/global/datum/bioluminescent_algae/bioluminescent_algae
 		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
 		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
-		if (salinity > 0.25) // no algae for you :(
+		if (salinity > coverage) // no algae for you :(
 			return
 		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
 		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))

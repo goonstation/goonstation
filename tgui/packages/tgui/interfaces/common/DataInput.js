@@ -99,9 +99,7 @@ const DataInputListEntry = (props, context) => {
   const { value, tooltip, name, type, list } = props;
   const { act } = useBackend(context);
   return (
-    <Section fill scrollable
-      height={15}
-    >
+    <Section fill scrollable height={15}>
       {list.map((item, buttonIndex) => (
         <Button fluid key={buttonIndex}
           selected={item === value}

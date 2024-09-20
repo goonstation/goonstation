@@ -110,80 +110,37 @@
 	can_burn = FALSE
 	can_break = FALSE
 
-	Entered(var/mob/M)
+	Crossed(atom/movable/AM)
 		. = ..()
-		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
-			return
+		if (do_lava_burn(AM))
+			SPAWN (5 SECONDS)
+				while(AM.loc == src)
+					if (!do_lava_burn(AM))
+						break
+					sleep(5 SECONDS)
+
+	proc/do_lava_burn(mob/M)
 		if(!ismob(M))
 			return
-		return_if_overlay_or_effect(M)
-
-
-		SPAWN(0)
-			if(M.loc == src)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					M.canmove = 0
-					M.changeStatus("weakened", 6 SECONDS)
-					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
-					H.set_burning(500)
-					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					M.emote("scream")
-				if (isrobot(M))
-					M.canmove = 0
-					M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
-					M.emote("scream")
-					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
-					M.changeStatus("stunned", 6 SECONDS)
-			sleep(5 SECONDS)
-			if(M.loc == src)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					M.changeStatus("weakened", 10 SECONDS)
-					M.set_body_icon_dirty()
-					H.set_burning(1000)
-					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					M.emote("scream")
-					if (H.limbs.l_leg && H.limbs.r_leg)
-						if (H.limbs.l_leg)
-							H.limbs.l_leg.delete()
-						if (H.limbs.r_leg)
-							H.limbs.r_leg.delete()
-						boutput(M, "You can feel how both of your legs melt away!")
-						visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
-					else
-						boutput(M, "You can feel intense heat on the lower part of your torso.")
-						visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
-
-				if (isrobot(M))
-					var/mob/living/silicon/robot/R = M
-					R.canmove = 0
-					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
-					R.emote("scream")
-					playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					R.changeStatus("stunned", 10 SECONDS)
-					R.part_leg_r.holder = null
-					qdel(R.part_leg_r)
-					if (R.part_leg_r.slot == "leg_both")
-						R.part_leg_l = null
-						R.update_bodypart("l_leg")
-					R.part_leg_r = null
-					R.update_bodypart("r_leg")
-					R.part_leg_l.holder = null
-					qdel(R.part_leg_l)
-					if (R.part_leg_l.slot == "leg_both")
-						R.part_leg_r = null
-						R.update_bodypart("r_leg")
-					R.part_leg_l = null
-					R.update_bodypart("l_leg")
-					visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
-					boutput(M, "You can feel how both of your legs melt away!")
-				else
-					boutput(M, "You can feel intense heat on the lower part of your torso.")
-					visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
+		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible))
+			return
+		if (isdead(M))
+			return
+		if (isrobot(M))
+			M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
+			M.changeStatus("stunned", 2 SECONDS)
+			M.emote("scream")
+			playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+			visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
+		else
+			M.changeStatus("burning", 30 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
+			M.emote("scream",)
+			playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+			visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
+		return TRUE
 
 	corners
 		icon_state = "lava_corners"
@@ -474,7 +431,7 @@
 	corners
 		icon_state = "cave_wall_corners"
 
-/obj/decal/fakeobjects/bedrolls
+/obj/fakeobject/bedrolls
 	name = "bedrolls"
 	desc = "TEMP"
 	icon = 'icons/misc/AzungarAdventure.dmi'
@@ -482,14 +439,14 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/shrooms
+/obj/fakeobject/shrooms
 	name = "weird looking mushrooms"
 	desc = "What the hell are these..?"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "shrooms"
 	anchored = ANCHORED
 
-/obj/decal/fakeobjects/smallrocks
+/obj/fakeobject/smallrocks
 	name = "small rocks"
 	desc = "Some small rocks."
 	icon = 'icons/misc/AzungarAdventure.dmi'
@@ -512,7 +469,7 @@
 				return src.Attackby(gauntlets.tool, user)
 		. = ..()
 
-/obj/decal/fakeobjects/bigrocks
+/obj/fakeobject/bigrocks
 	name = "big rocks"
 	desc = "Those are some big rocks, they are probably from the ceiling..?"
 	icon = 'icons/misc/AzungarAdventure.dmi'
@@ -525,7 +482,7 @@
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message(SPAN_NOTICE("<b>After a few hits [src] crumbles into smaller rocks.</b>"))
 			playsound(src.loc, 'sound/items/mining_pick.ogg', 80,1)
-			new /obj/decal/fakeobjects/smallrocks(src.loc)
+			new /obj/fakeobject/smallrocks(src.loc)
 			qdel(src)
 
 	attack_hand(mob/user)
@@ -536,7 +493,7 @@
 				return src.Attackby(gauntlets.tool, user)
 		. = ..()
 
-/obj/decal/fakeobjects/biggerrock
+/obj/fakeobject/biggerrock
 	name = "big rock"
 	desc = "Seriously big rocks."
 	icon = 'icons/obj/large/32x64.dmi'
@@ -544,7 +501,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/azarakrocks
+/obj/fakeobject/azarakrocks
 	name = "rock"
 	desc = "Some lil' rocks."
 	icon = 'icons/misc/AzungarAdventure.dmi'
@@ -578,7 +535,7 @@
 		icon_state = "rock9"
 
 
-/obj/decal/fakeobjects/cultiststatue
+/obj/fakeobject/cultiststatue
 	name = "statue of a hooded figure"
 	desc = "TEMP"
 	icon = 'icons/obj/large/32x64.dmi'
@@ -587,7 +544,7 @@
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
-/obj/decal/fakeobjects/crossinverted
+/obj/fakeobject/crossinverted
 	name = "inverted cross"
 	desc = "TEMP"
 	icon = 'icons/obj/large/32x64.dmi'
@@ -595,7 +552,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/bookcase
+/obj/fakeobject/bookcase
 	name = "bookcase"
 	desc = "It's a bookcase. Full of books."
 	icon = 'icons/misc/AzungarAdventure.dmi'
@@ -604,7 +561,7 @@
 	density = 0
 	layer = DECAL_LAYER
 
-/obj/decal/fakeobjects/creepytv
+/obj/fakeobject/creepytv
 	name = "broken old television"
 	desc = "TEMP"
 	icon = 'icons/misc/AzungarAdventure.dmi'
@@ -612,7 +569,7 @@
 	anchored = ANCHORED
 	density = 1
 
-/obj/decal/fakeobjects/circle
+/obj/fakeobject/circle
 	name = "summoning circle"
 	desc = "TEMP"
 	icon = 'icons/effects/224x224.dmi'
@@ -622,7 +579,7 @@
 	opacity= 0
 	layer = FLOOR_EQUIP_LAYER1
 
-/obj/decal/fakeobjects/Azarakcandleswall
+/obj/fakeobject/Azarakcandleswall
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "candles"
 	name = "candles"
@@ -643,7 +600,7 @@
 		light.attach(src)
 		light.enable()
 
-/obj/decal/fakeobjects/Azarakcandles
+/obj/fakeobject/Azarakcandles
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle"
 	name = "candle"
@@ -668,7 +625,7 @@
 	desc = "A compact holo emitter pre-loaded with a holographic image."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "emitter-on"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	anchored = ANCHORED_ALWAYS
 
 /obj/juggleplaque/manta
@@ -749,7 +706,7 @@
 		else
 			boutput(user, SPAN_ALERT("There's no handcuffs left in the [src]!"))
 
-/obj/decal/fakeobjects/mantacontainer
+/obj/fakeobject/mantacontainer
 	name = "container"
 	desc = "These huge containers are used to transport goods from one place to another."
 	icon = 'icons/obj/large/64x96.dmi'
@@ -770,7 +727,7 @@
 	blue
 		icon_state = "mantablue"
 
-/obj/decal/fakeobjects/mantacontainer/upwards
+/obj/fakeobject/mantacontainer/upwards
 		name = "container"
 		desc = "These huge containers are used to transport goods from one place to another."
 		icon = 'icons/obj/large/96x64.dmi'
@@ -781,7 +738,7 @@
 		bound_width = 64
 		layer = EFFECTS_LAYER_BASE
 
-/obj/decal/fakeobjects/mantacontainer/upwards/yellow
+/obj/fakeobject/mantacontainer/upwards/yellow
 	icon_state = "mantayellow"
 
 /obj/roulette_table_w //Big thanks to Haine for the sprite and parts of the code!
@@ -852,7 +809,7 @@
 			src.maptext = ""
 
 
-/obj/decal/fakeobjects/turbinetest
+/obj/fakeobject/turbinetest
 		name = "TEMP"
 		desc = "TEMP"
 		icon = 'icons/obj/large/96x160.dmi'
@@ -862,7 +819,7 @@
 		bound_height = 160
 		bound_width = 96
 
-/obj/decal/fakeobjects/nuclearcomputertest
+/obj/fakeobject/nuclearcomputertest
 		name = "TEMP"
 		desc = "TEMP"
 		icon = 'icons/obj/large/32x96.dmi'
@@ -912,8 +869,8 @@
 				user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
+				user.changeStatus("knockdown", 3 SECONDS)
+				user.changeStatus("unconscious", 2 SECONDS)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(usr)
@@ -925,7 +882,7 @@
 				if(hos)
 					var/mob/living/carbon/human/H = hit_atom
 					H.changeStatus("stunned", 9 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
+					H.changeStatus("knockdown", 2 SECONDS)
 					H.force_laydown_standup()
 					//H.paralysis++
 					playsound(H.loc, "swing_hit", 50, 1)
@@ -1020,7 +977,7 @@
 
 	ChaseAttack(mob/M)
 		src.visible_message(SPAN_COMBAT("<B>[src]</B> launches itself at [M]!"))
-		if (prob(30)) M.changeStatus("weakened", 2 SECONDS)
+		if (prob(30)) M.changeStatus("knockdown", 2 SECONDS)
 
 	CritterAttack(mob/M)
 		src.attacking = 1

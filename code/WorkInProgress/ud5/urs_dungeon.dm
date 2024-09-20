@@ -150,7 +150,7 @@
 					return
 				if(!target)
 					return
-				var/obj/perm_portal/P = new /obj/perm_portal(get_turf(src))
+				var/obj/laser_sink/perm_portal/P = new /obj/laser_sink/perm_portal(get_turf(src))
 				P.target = get_turf(target)
 				if(src.invisible_portal)
 					P.invisibility = 20
@@ -167,9 +167,8 @@
 /obj/item/clothing/glasses/urs_dungeon_entry
 	name = "\improper VR goggles"
 	desc = "On the side it says \"A game for 2-4 Players\". Guess you'll need some friends to play with you."
-	icon_state = "vr"
-	item_state = "sunglasses"
-	color = "#550000"
+	icon_state = "vr_dungeon"
+	item_state = "vr_dungeon"
 	var/target = null
 	var/doing_login = 0
 	var/turf/origin = null
@@ -177,10 +176,9 @@
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
-			for(var/obj/adventurepuzzle/invisible/target_link/T)
+			for_by_tcl(T, /obj/adventurepuzzle/invisible/target_link)
 				if (T.id == "UD-LANDING-ZONE")
 					target = get_turf(T)
-
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -235,9 +233,8 @@
 /obj/item/clothing/glasses/urs_dungeon_exit
 	name = "\improper VR goggles"
 	desc = "About goddamn time."
-	icon_state = "vr"
-	item_state = "sunglasses"
-	color = "#00CCCC"
+	icon_state = "vr_dungeon_exit"
+	item_state = "vr_dungeon_exit"
 	var/turf/origin = null
 
 	New()

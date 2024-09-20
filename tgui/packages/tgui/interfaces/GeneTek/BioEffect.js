@@ -5,7 +5,6 @@
  * @license ISC
  */
 
-import { Fragment } from "inferno";
 import { useBackend, useSharedState } from "../../backend";
 import { Box, Button, Flex, Icon, Input, LabeledList, Modal, NumberInput, Section } from "../../components";
 import { UnlockModal } from "./modals/UnlockModal";
@@ -337,7 +336,7 @@ export const GeneList = (props, context) => {
   };
 
   return (
-    <Fragment>
+    <>
       <Flex wrap mb={1}>
         {genes.map(g => (
           <Flex.Item
@@ -363,6 +362,6 @@ export const GeneList = (props, context) => {
           showSequence
           {...rest} />
       )}
-    </Fragment>
+    </>
   );
 };

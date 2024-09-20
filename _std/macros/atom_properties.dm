@@ -227,6 +227,7 @@ To remove:
 #define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // doesn't work without PROP_MOB_EXAMINE_HEALTH; TODO rename this to further reduce confusion
 //movement properties
 #define PROP_MOB_CANTMOVE(x) x("cantmove", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_CANTTURN(x) x("cantturn", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTSPRINT(x) x("cantsprint", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_NO_MOVEMENT_PUFFS(x) x("nomovementpuffs", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_STAMINA_REGEN_BONUS(x) x("stamina_regen", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
@@ -237,6 +238,7 @@ To remove:
 #define PROP_MOB_AI_UNTRACKABLE(x) x("aiuntrackable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_BLOOD_TRACKING_ALWAYS(x) x("bloodtrackingalways", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_VAULT_SPEED(x) x("vaultspeed", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
+#define PROP_MOB_MOVESPEED_ASSIST(x) x("movespeed_assist", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM) //what fraction (0-1) of movespeed penalty (from equipment only) to negate
 //armour properties
 #define PROP_MOB_MELEEPROT_HEAD(x) x("meleeprot_head", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
 #define PROP_MOB_MELEEPROT_BODY(x) x("meleeprot_body", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
@@ -310,6 +312,8 @@ To remove:
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 /// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
 #define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+///for tracking if a borg/cyborg frame was a roundstart one, for stats purposes
+#define PROP_ATOM_ROUNDSTART_BORG(x) x("rounstart_borg", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.

@@ -37,14 +37,15 @@
 
 	new_network.normal_members += src
 
-/obj/machinery/atmospherics/unary/initialize()
+/obj/machinery/atmospherics/unary/initialize(player_caused_init)
 	var/node_connect = dir
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 		if(target.initialize_directions & get_dir(target,src))
 			node = target
 			break
-
+	if(player_caused_init)
+		src.node?.initialize(FALSE)
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/build_network()
@@ -73,7 +74,7 @@
 
 	return results
 
-/obj/machinery/atmospherics/unary/return_air()
+/obj/machinery/atmospherics/unary/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/atmospherics/unary/disconnect(obj/machinery/atmospherics/reference)

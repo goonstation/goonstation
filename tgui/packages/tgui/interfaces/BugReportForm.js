@@ -55,14 +55,15 @@ export const BugReportForm = (props, context) => {
   ];
 
   const submit = () => {
-    let data = {};
-    data.secret = isSecret;
-    data.tags = [chosenTag];
-    data.steps = document.getElementById("steps").value;
-    data.additional = document.getElementById("additional").value;
-    data.title = document.getElementById("title").getElementsByTagName('input')[0].value;
-    data.description = document.getElementById("description").getElementsByTagName('input')[0].value;
-    data.expected_behavior = document.getElementById("expected_behavior").getElementsByTagName('input')[0].value;
+    let data = {
+      secret: isSecret,
+      tags: [chosenTag],
+      steps: document.getElementById("steps").value,
+      additional: document.getElementById("additional").value,
+      title: document.getElementById("title").getElementsByTagName('input')[0].value,
+      description: document.getElementById("description").getElementsByTagName('input')[0].value,
+      expected_behavior: document.getElementById("expected_behavior").getElementsByTagName('input')[0].value,
+    };
     if (!data.title || !data.description || !data.expected_behavior || !data.steps) {
       alert("Please fill out all required fields!");
       return;

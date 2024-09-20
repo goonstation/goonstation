@@ -45,13 +45,7 @@
 /datum/game_mode/revolution/pre_setup()
 
 	var/list/revs_possible = get_possible_enemies(ROLE_HEAD_REVOLUTIONARY, 1)
-	var/num_players = 0
-	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-
-		if(player.ready)
-			num_players++
+	var/num_players = src.roundstart_player_count()
 
 	if (!revs_possible.len)
 		return 0

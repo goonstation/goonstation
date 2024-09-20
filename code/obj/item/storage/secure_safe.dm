@@ -273,7 +273,6 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 	desc = "A large briefcase with a digital locking system."
-	flags = FPRINT | TABLEPASS
 	force = 8
 	throw_speed = 1
 	throw_range = 4
@@ -291,7 +290,6 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	icon_open = "safe0"
 	icon_locking = "safeb"
 	icon_sparking = "safespark"
-	flags = FPRINT | TABLEPASS
 	force = 8
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED
@@ -300,7 +298,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	mechanics_type_override = /obj/item/storage/secure/ssafe
 
 	attack_hand(mob/user)
-		return attack_self(user)
+		return src.AttackSelf(user)
 
 /obj/item/storage/secure/ssafe/loot
 	configure_mode = FALSE
@@ -627,7 +625,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 /obj/item/storage/secure/ssafe/larrys
 	configure_mode = FALSE
 	random_code = TRUE
-	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/spacecash/buttcoin, /obj/item/currency/spacecash/buttcoin)
+	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/buttcoin, /obj/item/currency/buttcoin)
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET

@@ -454,6 +454,7 @@ var/global/list/atomTooltips = list()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/holderCount = 0
 	var/tooltipCount = 0

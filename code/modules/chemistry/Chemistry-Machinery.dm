@@ -35,11 +35,12 @@ TYPEINFO(/obj/machinery/chem_heater)
 		output_target = src.loc
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
-
-		if(istype(B, /obj/item/reagent_containers/glass))
-			tryInsert(B, user)
+		if (!tryInsert(B, user))
+			return ..()
 
 	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
+		if(!istypes(B, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks/cocktailshaker))) //container paths are so baaad
+			return
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -71,6 +72,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 		if(src.beaker || roboworking)
 			boutput(user, "You add the beaker to the machine!")
 			src.ui_interact(user)
+			. = TRUE
 		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
@@ -168,9 +170,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 			if("insert")
 				if (container)
 					return
-				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
-				if(istype(inserting))
-					tryInsert(inserting, usr)
+				tryInsert(usr.equipped(), usr)
 			if("adjustTemp")
 				src.target_temp = clamp(params["temperature"], 0, 1000)
 				src.UpdateIcon()
@@ -490,11 +490,11 @@ TYPEINFO(/obj/machinery/chem_shaker/large)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#define CHEMMASTER_MINIMUM_REAGENT 5 // mininum reagent for pills, bottles and patches
-#define CHEMMASTER_CONTAINER_TRESHOLD 10 // equal or above this amount use container
-#define CHEMMASTER_ITEMNAME_MAXSIZE 16 // chosen by fair dice roll
-#define CHEMMASTER_MAX_PILL 22 // 22 pill icons
-#define CHEMMASTER_MAX_CANS 26 // 26 flavours of cans
+#define CHEMMASTER_MINIMUM_REAGENT 5 //!mininum reagent for pills, bottles and patches
+#define CHEMMASTER_NO_CONTAINER_MAX 10 //!maximum number of unboxed pills/patches
+#define CHEMMASTER_ITEMNAME_MAXSIZE 16 //!chosen by fair dice roll
+#define CHEMMASTER_MAX_PILL 22 //!22 pill icons
+#define CHEMMASTER_MAX_CANS 26 //!26 flavours of cans
 
 TYPEINFO(/obj/machinery/chem_master)
 	mats = 15
@@ -755,7 +755,7 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	proc/manufacture_name(var/param_name)
 		var/name = param_name
-		name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
+		name = trimtext(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
 		if(isnull(name) || !length(name) || name == " ")
 			name = null
 			if(src.beaker)
@@ -943,7 +943,9 @@ TYPEINFO(/obj/machinery/chem_master)
 				logTheThing(LOG_COMBAT, usr, "used [src] to create [pillcount] [item_name] pills containing [log_reagents(src.beaker)] at [log_loc(src)].")
 
 				var/obj/item/chem_pill_bottle/pill_bottle = null
-				if(use_pill_bottle || pillcount >= CHEMMASTER_CONTAINER_TRESHOLD)
+				if(use_pill_bottle || pillcount > CHEMMASTER_NO_CONTAINER_MAX)
+					if(!use_pill_bottle && pillcount > CHEMMASTER_NO_CONTAINER_MAX)
+						src.visible_message(SPAN_ALERT("The [src]'s output limit beeps sternly, and a pill bottle is automatically dispensed!"))
 					pill_bottle = new(src)
 					pill_bottle.name = "[item_name] [pill_bottle.name]"
 
@@ -1068,7 +1070,9 @@ TYPEINFO(/obj/machinery/chem_master)
 
 				var/is_medical_patch = src.check_patch_whitelist()
 				var/obj/item/item_box/medical_patches/patch_box = null
-				if(use_box || patchcount >= CHEMMASTER_CONTAINER_TRESHOLD)
+				if(use_box || patchcount > CHEMMASTER_NO_CONTAINER_MAX)
+					if(!use_box && patchcount > CHEMMASTER_NO_CONTAINER_MAX)
+						src.visible_message("The [src]'s output limit beeps sternly, and a patch box is automatically dispensed!")
 					patch_box = new(src)
 					patch_box.name = "box of [item_name] patches"
 					if (is_medical_patch)
@@ -1158,7 +1162,7 @@ TYPEINFO(/obj/machinery/chem_master)
 			src.UpdateIcon()
 			global.tgui_process.update_uis(src)
 
-#undef CHEMMASTER_CONTAINER_TRESHOLD
+#undef CHEMMASTER_NO_CONTAINER_MAX
 #undef CHEMMASTER_ITEMNAME_MAXSIZE
 #undef CHEMMASTER_MAX_PILL
 #undef CHEMMASTER_MAX_CANS
@@ -1228,16 +1232,30 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		if (status & BROKEN || !powered())
 			boutput( user, SPAN_ALERT("You can't seem to power it on!") )
 			return
-		src.add_dialog(user)
-		executor.panel()
-		onclose(user, "chemicompiler")
+		ui_interact(user)
 		return
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 		if (isrobot(user)) return attack_ai(user)
-		return attack_hand(user)
+		return src.Attackhand(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemiCompiler", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = executor.get_ui_data()
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+
+		return executor.execute_ui_act(action, params)
 
 	power_change()
 
@@ -1266,13 +1284,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			src.executor.on_process()
 
 	proc
-		topicPermissionCheck(action)
-			if (!(src in range(1)))
-				return 0
-			if(executor.core.running)
-				return action in list("getUIState", "reportError", "abortCode")
-			return 1
-
 		statusChange(oldStatus, newStatus)
 			power_change()
 
@@ -1675,7 +1686,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			return ..()
 
 	attack_self(mob/user)
-		attack_hand(user)
+		src.Attackhand(user)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		return

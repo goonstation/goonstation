@@ -574,6 +574,29 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/pool/lightblue
+	icon_state = "pooltiles_lightblue"
+
+/turf/unsimulated/floor/pool/white
+	icon_state = "pooltiles_white"
+
+/turf/unsimulated/floor/pool/blue
+	icon_state = "pooltiles_blue"
+
+/turf/unsimulated/floor/pool/bluewhite
+	icon_state = "pooltiles_bluew"
+
+/turf/unsimulated/floor/pool/lightbluewhite
+	icon_state = "pooltiles_lightbluew"
+
+/turf/unsimulated/floor/pool/bluewhitecorner
+	icon_state = "pooltiles_bluewcorner"
+
+/turf/unsimulated/floor/pool/lightbluewhitecorner
+	icon_state = "pooltiles_lightbluewcorner"
+
+////////////////////////////////////////
+
 /turf/unsimulated/floor/sanitary
 	icon_state = "freezerfloor"
 
@@ -1062,22 +1085,23 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		if (current_state > GAME_STATE_WORLD_NEW)
+		if( current_state == GAME_STATE_PREGAME && station_repair.station_generator)
+			worldgenCandidates[src] = null
+		else if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				UpdateIcon()
 				if(istype(src))
 					update_neighbors()
 		else
-			worldgenCandidates += src
+			worldgenCandidates[src] = null
 
 	generate_worldgen()
 		src.UpdateIcon()
-		if(istype(src))
-			update_neighbors()
 
 	update_icon()
 		. = ..()
 		src.edge_overlays()
+
 		if(src.mod)
 			var/typeinfo/turf/unsimulated/floor/auto/typinfo = get_typeinfo()
 			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, typinfo.connect_across_areas, typinfo.connect_diagonal)
@@ -1104,17 +1128,23 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 
 	proc/edge_overlays()
 		if(src.icon_state_edge)
-			for (var/turf/T in orange(src,1))
-				if (istype(T, /turf/unsimulated/floor/auto))
-					var/turf/unsimulated/floor/auto/TA = T
-					if (TA.edge_priority_level >= src.edge_priority_level)
+			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE, turf_only=TRUE)
+			for (var/direction in alldirs)
+				var/turf/T = get_step(src, turn(direction, 180))
+				if(T)
+					if (istype(T, /turf/unsimulated/floor/auto))
+						var/turf/unsimulated/floor/auto/TA = T
+						if (TA.edge_priority_level >= src.edge_priority_level)
+							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+							continue
+					if(turn(direction, 180) & connectdir)
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
 						continue
-				var/direction = get_dir(T,src)
-				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-				edge_overlay.plane = PLANE_FLOOR
-				T.UpdateOverlays(edge_overlay, "edge_[direction]")
+					var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+					edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+					edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+					edge_overlay.plane = PLANE_FLOOR
+					T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"

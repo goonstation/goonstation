@@ -99,7 +99,7 @@ TYPEINFO(/obj/item/device/audio_log)
 		max_lines = 30
 
 		attack_hand(mob/user)
-			return attack_self(user)
+			return src.AttackSelf(user)
 
 		updateSelfDialog()
 			return updateUsrDialog()
@@ -327,8 +327,7 @@ TYPEINFO(/obj/item/device/audio_log)
 			name_colours[unique_names[1]] = text_colour
 			return
 
-		var/list/text_rgb = hex_to_rgb_list(text_colour)
-		var/list/text_hsl = rgb2hsl(text_rgb[1], text_rgb[2], text_rgb[3])
+		var/list/text_hsl = hex_to_hsl_list(text_colour)
 		var/lightness_part = 60 / (length(unique_names) + 1)
 
 		for (var/i in 1 to length(unique_names))

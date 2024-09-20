@@ -51,7 +51,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 			lastpct = thispct
 			game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
 
-		sleep(-1)
+		LAGCHECK_IF_LIVE(LAG_INIT)
 
 	game_start_countdown?.update_status("Updating cameras...\nCoverage...")
 	src.update_all_emitters()

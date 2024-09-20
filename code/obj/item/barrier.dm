@@ -8,7 +8,6 @@ TYPEINFO(/obj/item/barrier)
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
-	flags = FPRINT | TABLEPASS
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6
@@ -139,7 +138,6 @@ TYPEINFO(/obj/item/barrier)
 	icon_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
-	flags = FPRINT | TABLEPASS
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
 	throwforce = 6

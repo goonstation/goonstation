@@ -271,7 +271,7 @@
 /turf/simulated/floor/grey,
 /area/prefab/deserted_outpost)
 "W" = (
-/obj/decal/fakeobjects/robot{
+/obj/fakeobject/robot{
 	desc = "The robot stares at you through lifeless eyes.";
 	name = "deactivated robot"
 	},

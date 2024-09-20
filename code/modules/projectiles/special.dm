@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_pointblank(obj/projectile/O, mob/target)
 		if(split_type) //don't multihit on pointblank unless we'd be splitting on launch
 			return
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(O)
 		var/pellets = pellets_to_fire
@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 	proc/split(var/obj/projectile/P)
-		var/datum/projectile/F = new spread_projectile_type()
+		var/datum/projectile/F = ispath(spread_projectile_type) ? new spread_projectile_type() : spread_projectile_type
 		F.shot_volume = pellet_shot_volume //optional anti-ear destruction
 		var/turf/PT = get_turf(P)
 		var/pellets = pellets_to_fire
@@ -299,6 +299,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = /obj/item/casing/shotgun/red
 	shot_sound = 'sound/weapons/birdshot.ogg'
 
+/datum/projectile/special/spreader/uniform_burst/kuvalda_shrapnel
+	name = "buckshot"
+	sname = "buckshot"
+	spread_angle = 13
+	cost = 1
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/bullet/kuvalda_shrapnel
+	casing = /obj/item/casing/shotgun/gray
+	shot_sound = 'sound/weapons/kuvalda.ogg'
+
 
 /datum/projectile/special/spreader/buckshot_burst/foamdarts
 	name = "foam dart"
@@ -392,11 +402,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/temperature = 800
 
 	tick(var/obj/projectile/P)
-		fireflash_melting(get_turf(P), burn_range, temperature)
+		fireflash_melting(get_turf(P), burn_range, temperature, chemfire = CHEM_FIRE_RED)
 
 	on_hit(var/atom/A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
-		fireflash_melting(get_turf(A), blast_size, temperature)
+		fireflash_melting(get_turf(A), blast_size, temperature, chemfire = CHEM_FIRE_RED)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -426,7 +436,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/T1 = get_turf(P)
 		if((!istype(T1,/turf/space))) // so uh yeah this will be pretty mean
-			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE)
+			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE, chemfire = CHEM_FIRE_RED)
 			new /obj/effects/explosion/dangerous(get_step(P.loc,P.dir))
 
 
@@ -747,7 +757,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		. = ..()
 		if(isliving(A)) // pre_hit should filter out any spacemagic people
 			var/mob/living/M = A
-			M.changeStatus("weakened", src.weaken_length)
+			M.changeStatus("knockdown", src.weaken_length)
 			M.force_laydown_standup()
 			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
@@ -863,7 +873,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				targetTurf = get_edge_target_turf(hit, P.dir)
 
-			L.changeStatus("weakened", 2 SECONDS)
+			L.changeStatus("knockdown", 2 SECONDS)
 			L.force_laydown_standup()
 			L.throw_at(targetTurf, rand(5,7), rand(1,2), throw_type = THROW_GUNIMPACT)
 
@@ -1078,7 +1088,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/machinery/bot/secbot/beepsky = ..()
 		if(istype(beepsky) && ismob(hit))
 			var/mob/hitguy = hit
-			hitguy.do_disorient(15, weakened = 20 * 10, disorient = 80)
+			hitguy.do_disorient(15, knockdown = 20 * 10, disorient = 80)
 			beepsky.emagged = 1
 			if(istype(hitguy, /mob/living/carbon))
 				beepsky.target = hitguy
@@ -1120,6 +1130,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
 	fullauto_valid = 0
+	var/can_spawn_fluid = FALSE
 
 
 	/// Releases some of the projectile's gas into the turf
@@ -1150,13 +1161,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(!T.reagents) // first get the turf
 			T.create_reagents(100)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
-		copied.reaction(T, TOUCH, 0, 0)
+		copied.reaction(T, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Heat if needed
 			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
-			copied.reaction(A, TOUCH, 0, 0)
+			copied.reaction(A, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Reduce the temperature per turf crossed
 			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
 			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
@@ -1170,7 +1181,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_launch(obj/projectile/O)
 		if(length(O.special_data))
-			O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
+			if(O.special_data["speed_mult"])
+				O.internal_speed = src.projectile_speed * O.special_data["speed_mult"]
 			src.color_icon = O.special_data["proj_color"]
 		O.AddComponent(/datum/component/gaseous_projectile) // Pierce anything that doesn't block LoS - if you can see it you can burn it
 
@@ -1187,14 +1199,21 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for (var/i = 1, i < cross2.len, i++)
 			var/turf/T = cross2[i]
 			if (cross2[T] < O.curr_t)
-				src.emit_chems(T, O)
-				src.emit_gas(T, 0)
-				if(O.reagents?.total_volume < 0.01)
-					O.die()
+				src.cross_turf(O, T)
 				cross2.Cut(1,2)
 				i--
 			else
 				break
+
+	proc/cross_turf(obj/projectile/O, turf/T)
+		src.turf_effect(O, T)
+
+	proc/turf_effect(obj/projectile/O, turf/T)
+		src.emit_chems(T, O)
+		src.emit_gas(T, 0)
+		T.active_liquid?.try_connect_to_adjacent()
+		if(O.reagents?.total_volume < 0.01)
+			O.die()
 
 	on_pointblank(var/obj/projectile/O, var/mob/target)
 		var/turf/T = get_turf(O)

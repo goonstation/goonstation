@@ -40,15 +40,18 @@ const nextTick
 *
 * @see https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
 */
-const getTextWidth = (text, font) => {
+const getTextWidth = (text, font, defaultWidth: number) => {
   // re-use canvas object for better performance
   const canvas = textWidthCanvas || (textWidthCanvas = document.createElement("canvas"));
   const context = canvas.getContext("2d");
+  if (!context) {
+    return defaultWidth;
+  }
   context.font = font;
   const metrics = context.measureText(text);
   return metrics.width;
 };
-let textWidthCanvas = null;
+let textWidthCanvas: HTMLCanvasElement | null = null;
 
 const getCssStyle = (element, prop) => {
   return window.getComputedStyle(element, null).getPropertyValue(prop);
@@ -80,7 +83,7 @@ export const ListInputModal = (_, context) => {
     'searchQuery',
     ''
   );
-  const [windowWidth, setWindowWidth] = useLocalState<number>(
+  const [windowWidth, setWindowWidth] = useLocalState<number | null>(
     context,
     'windowWidth',
     null
@@ -114,7 +117,10 @@ export const ListInputModal = (_, context) => {
   };
   // User presses a letter key and searchbar is visible
   const onFocusSearch = (letter) => {
-    let searchBarInput = searchBarVisible ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    let searchBarInput = searchBarVisible ? document.getElementById("search_bar")?.getElementsByTagName('input')[0] : null;
+    if (!searchBarInput) {
+      return;
+    }
     searchBarInput.focus();
     searchBarInput.value += letter;
     onSearch(searchBarInput.value);
@@ -171,7 +177,7 @@ export const ListInputModal = (_, context) => {
   }
 
   const handleKey = (event) => {
-    let searchBarInput = searchBarVisible ? document.getElementById("search_bar").getElementsByTagName('input')[0] : null;
+    let searchBarInput = searchBarVisible ? document.getElementById("search_bar")?.getElementsByTagName('input')[0] : null;
     let searchBarFocused = document.activeElement === searchBarInput;
     const len = filteredItems.length - 1;
     const keyCode = window.event ? event.which : event.keyCode;
@@ -182,7 +188,7 @@ export const ListInputModal = (_, context) => {
     }
     else if (charCode === "f" && event.ctrlKey) {
       if (!searchBarVisible) {
-        nextTick(() => document.getElementById("search_bar").getElementsByTagName('input')[0].focus());
+        nextTick(() => document.getElementById("search_bar")?.getElementsByTagName('input')[0].focus());
       }
       setSearchBarVisible(!searchBarVisible);
       setSearchQuery('');
@@ -229,7 +235,7 @@ export const ListInputModal = (_, context) => {
     let maxWidth = 325;
     const font = getCanvasFont();
     for (const item of items) {
-      maxWidth = Math.max(maxWidth, getTextWidth(item, font));
+      maxWidth = Math.max(maxWidth, getTextWidth(item, font, maxWidth));
     }
     // No clue why the nextTick is necessary but it seems like if you do it directly then there's about
     // 50% chance something in Inferno will race condition and crash. Pls help.

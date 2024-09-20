@@ -8,11 +8,13 @@
 	cooldown_staff = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	maptext_colors = list("#39ffba", "#05bd82", "#038463", "#05bd82")
+	voice_on_cast_start = FALSE
 
 	cast()
 		if (!holder)
 			return 1
 
+		. = ..()
 		if (holder.owner && ismob(holder.owner) && holder.owner.teleportscroll(1, 3, spell=src) == 1)
 			return 0
 
@@ -24,7 +26,7 @@
 	var/voice_fem = 'sound/voice/wizard/TeleportFem.ogg'
 	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
 
-	if (src.getStatusDuration("paralysis") || !isalive(src))
+	if (src.getStatusDuration("unconscious") || !isalive(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 
@@ -111,7 +113,7 @@
 			if (src.wizard_castcheck(spell) == 0)
 				return 0 // Has own user feedback.
 
-	if (src.getStatusDuration("paralysis") || !isalive(src))
+	if (src.getStatusDuration("unconscious") || !isalive(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 

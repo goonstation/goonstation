@@ -14,7 +14,7 @@
 	..()
 	SPAWN(1 SECOND)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
-	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 	AddComponent(/datum/component/mechanics_holder)
 
 /obj/machinery/meter/process()
@@ -65,8 +65,11 @@
 		signal.data["pressure"] = round(env_pressure)
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "pressure=[env_pressure]&temperature=[environment.temperature]")
+	var/list/signal = list("pressure=[env_pressure]&temperature=[environment.temperature]")
+	#define COMPILE_GAS_MOLES(GAS, ...) if(environment.GAS) {signal += "&[#GAS]=[environment.GAS]"}
+	APPLY_TO_GASES(COMPILE_GAS_MOLES)
+	#undef COMPILE_GAS_MOLES
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, signal.Join())
 
 
 /obj/machinery/meter/get_desc(dist, mob/user)

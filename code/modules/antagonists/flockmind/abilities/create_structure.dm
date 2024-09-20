@@ -19,7 +19,7 @@
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("There is already a flock structure on this flocktile!"))
 		return TRUE
-
+	. = ..()
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	if (!length(F.flock.unlockableStructures))

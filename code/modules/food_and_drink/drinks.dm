@@ -441,51 +441,37 @@
 /obj/item/reagent_containers/food/drinks/milk
 	name = "Creaca's Space Milk"
 	desc = "A bottle of fresh space milk from happy, free-roaming space cows."
-	icon_state = "milk"
+	icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	icon_state = "milk_bottle"
 	item_state = "milk"
-	var/icon_style = "milk"
-	var/glass_style = "milk"
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = "milk"
-	var/canberandom = 1
-
-	var/image/fluid_image
-
-	on_reagent_change()
-		..()
-		src.UpdateIcon()
-
-	update_icon()
-		src.underlays = null
-		if (src.icon_state == "milk_calcium")
-			return
-		if (reagents.total_volume)
-			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 3 + 1), 1, 3))
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-milk[fluid_state]", -1)
-			else
-				src.fluid_image.icon_state = "fluid-milk[fluid_state]"
-			src.icon_state = "milk[fluid_state]"
-			var/datum/color/average = reagents.get_average_color()
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += fluid_image
-		else
-			src.icon_state = "milk"
+	var/canberandom = TRUE
 
 	New()
-		..()
-		if(canberandom == 1)
-			if(prob(10))
-				name = "Mootimer's Calcium Drink"
-				desc = "Blue-ribbon winning secret family recipe."
-				icon_state = "milk_calcium"
+		. = ..()
+
+		if (src.canberandom && prob(10))
+			src.name = "Mootimer's Calcium Drink"
+			src.desc = "Blue-ribbon winning secret family recipe."
+			src.icon = 'icons/obj/foodNdrink/drinks.dmi'
+			src.icon_state = "milk_calcium"
+
+		else
+			src.AddComponent( \
+				/datum/component/reagent_overlay, \
+				reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi', \
+				reagent_overlay_icon_state = "milk_bottle", \
+				reagent_overlay_states = 14, \
+				reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
+			)
 
 /obj/item/reagent_containers/food/drinks/milk/rancid
 	name = "Rancid Space Milk"
 	desc = "A bottle of rancid space milk. Better not drink this stuff."
-	icon_state = "milk"
+	icon_state = "milk_bottle"
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("yoghurt"=25,"yuck"=25)
@@ -493,7 +479,7 @@
 /obj/item/reagent_containers/food/drinks/milk/clownspider
 	name = "Honkey Gibbersons - Clownspider Milk"
 	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this evokes the same thrill as wanting to drink paint!"
-	icon_state = "milk"
+	icon_state = "milk_bottle"
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("rainbow fluid" = 7, "milk" = 19)
@@ -502,7 +488,7 @@
 /obj/item/reagent_containers/food/drinks/milk/cluwnespider
 	name = "Honkey Gibbersons - Cluwnespider Milk"
 	desc = "A bottle of ... oh no! Do not look at it! Better never drink this colorful milk?!"
-	icon_state = "milk"
+	icon_state = "milk_bottle"
 	heal_amt = 1
 	initial_volume = 50
 	initial_reagents = list("painbow fluid" = 13, "milk" = 20)
@@ -528,7 +514,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 		reagents.add_reagent("VHFCS", 5)
 		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
-			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","nicotine","weedkiller","venom","ectoplasm"), 5)
+			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","nicotine","weedkiller","cytotoxin","ectoplasm"), 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/contest
 	name = "Grones Soda Call 1-800-IMCODER flavour"

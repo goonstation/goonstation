@@ -105,18 +105,27 @@
 					D.source.changeling = antag_datum.ability_holder
 					logTheThing(LOG_COMBAT, D.source.mind, "became a changeling by infecting [affected_mob] as [D.source].")
 				// Absorb their DNA. Copies identities and DNA points automatically if victim was another changeling. This also inserts them into the hivemind.
-				D.source.changeling.addDna(affected_mob, TRUE)
 				// Remove changeling AH (if any) and copy our own.
 				if (ischangeling(affected_mob))
 					D.source.show_text("[affected_mob] was a changeling! We have incorporated their entire genetic structure.", "blue")
 					affected_mob.remove_ability_holder(/datum/abilityHolder/changeling)
 
+				//transfer mind first
+				var/datum/mind/M = affected_mob.mind
+				D.source.changeling.addDna(affected_mob, TRUE)
+				if (affected_mob.mind && affected_mob.mind != D.source.changeling.owner.mind)
+					logTheThing(LOG_DEBUG, src, "headspider somehow failed to transfer victim [key_name(affected_mob)]'s mind properly, panicking and ghosting them because it's better than ghosting the ling [D.source.changeling.owner] (screm) (fuck) (hepl).")
+					affected_mob.ghostize()
+				D.source.mind.transfer_to(affected_mob)
+
 				affected_mob.add_existing_ability_holder(D.source.changeling)
+				if (M)
+					D.source.changeling.insert_into_hivemind(M.current) //aaa aaa aaaaaaaahhhhhhhhhhhhh
+
 				D.source.changeling.reassign_hivemind_target_mob()
 
-				// Transfer player control.
+
 				D.source.changeling = null //so the spider doesn't have a ref to our holder as well
-				D.source.mind.transfer_to(affected_mob)
 				affected_mob.change_misstep_chance(-INFINITY)
 				affected_mob.show_text("<h3>We have assumed control of the new host.</h3>", "blue")
 				logTheThing(LOG_COMBAT, affected_mob, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
@@ -132,8 +141,9 @@
 	if(!QDELETED(D?.source))
 		if(isalive(D.source))
 			D.source.death(FALSE)
+		if (D.source.mind) //if they're still here then they should probably die
+			D.source.ghostize()
 		//the headspider gets fully absorbed
-		D.source?.set_loc(null)
 		qdel(D.source)
 		D.source = null
 	. = ..()

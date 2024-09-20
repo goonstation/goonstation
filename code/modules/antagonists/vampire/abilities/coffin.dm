@@ -74,6 +74,7 @@
 			boutput(M, SPAN_ALERT("You cannot place your coffin there."))
 			return 1
 
+		. = ..()
 		V.coffin_turf = target
 		boutput(M, SPAN_NOTICE("You plant your coffin on [target]."))
 
@@ -113,6 +114,7 @@
 			return 1
 
 
+		. = ..()
 		var/obj/storage/closet/coffin/vampire/coffin = new(spawnturf)
 		animate_buff_in(coffin)
 

@@ -149,3 +149,9 @@
 #define COMSIG_SCOPE_TOGGLED "sniper_scope_toggled"
 /// Sent to a mob when its client pixel offset is changed by a scope (delta_x, delta_y)
 #define COMSIG_MOB_SCOPE_MOVED "sniper_scope_toggled"
+
+// ---- Client Signals ----
+/// When a client logs into a mob. (client, mob)
+#define COMSIG_CLIENT_LOGIN "client_login"
+/// When a client logs out of a mob. (client, mob)
+#define COMSIG_CLIENT_LOGOUT "client_logout"

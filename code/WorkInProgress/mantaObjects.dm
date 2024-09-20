@@ -710,13 +710,14 @@ var/obj/manta_speed_lever/mantaLever = null
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
 	max_stack = 5
 	item_state = "cone_1"
 	wear_state = "cone_hat_1"
+	hat_offset_y = 8
 
 	setupProperties()
 		..()
@@ -765,7 +766,7 @@ var/obj/manta_speed_lever/mantaLever = null
 				if(isrobot(user))
 					boutput(user, SPAN_NOTICE("You add [success] cones to the stack. It now has [I.amount] cones."))
 				else
-					boutput(user, SPAN_NOTICE("You add [success] cones to the stack. It now has [src.amount] cones."))
+					boutput(user, SPAN_NOTICE("You add [src.amount - success] cones to the stack. It now has [src.amount] cones."))
 
 	_update_stack_appearance()
 		src.amount = clamp(src.amount, 1, src.max_stack)

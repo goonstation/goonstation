@@ -7,6 +7,7 @@
 	correct_response = /datum/apiModel/Message
 
 	buildBody(
+		game_admin_ckey,
 		server_id,
 		ckey,
 		job

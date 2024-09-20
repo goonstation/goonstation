@@ -112,9 +112,9 @@ proc/filtered_concrete_typesof(type, filter)
 /// Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 proc/get_singleton(type)
 	RETURN_TYPE(type)
-	if(!(type in singletons))
-		singletons[type] = new type
-	return singletons[type]
+	. = singletons[type]
+	if(isnull(.))
+		. = singletons[type] = new type
 
 var/global/list/singletons = list()
 
@@ -147,10 +147,7 @@ proc/maximal_subtype(var/list/L)
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
 // to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
-#ifdef SPACEMAN_DMM // just don't ask
-	#define START_TRACKING
-	#define STOP_TRACKING
-#elif defined(OPENDREAM) // Yay, actual sanity!
+#if DM_VERSION >= 515 || defined(OPENDREAM) || defined(SPACEMAN_DMM) // Yay, actual sanity!
 	#define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
 	#define STOP_TRACKING by_type[__TYPE__].Remove(src)
 #else
@@ -219,6 +216,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
 #define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
 #define TR_CAT_STAMINA_MOBS "stamina_mobs"
+#define TR_CAT_BUGS "bugs"
 // powernets? processing_items?
 // mobs? ai-mobs?
 

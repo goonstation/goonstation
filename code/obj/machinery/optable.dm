@@ -5,6 +5,7 @@ TYPEINFO(/obj/machinery/optable)
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	layer = OBJ_LAYER - 0.1
 	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
@@ -118,25 +119,15 @@ TYPEINFO(/obj/machinery/optable)
 		boutput(user, SPAN_ALERT("Your target needs to be near you to put [him_or_her(O)] on the operating table."))
 		return
 
-	var/mob/living/carbon/C = O
-	if (user == C)
+	var/mob/living/carbon/human/H = O
+	if (user == H)
 		src.visible_message(SPAN_ALERT("<b>[user.name]</b> lies down on [src]."))
 		user.setStatus("resting", INFINITE_STATUS)
 		user.force_laydown_standup()
-		if (ishuman(user))
-			var/mob/living/carbon/human/H = user
-			H.hud.update_resting()
+		H.hud.update_resting()
 		user.set_loc(get_turf(src))
 		src.victim = user
 	else
-		src.visible_message(SPAN_ALERT("<b>[user.name]</b> starts to move [C.name] onto the operating table."))
-		if (do_mob(user,C,30))
-			C.setStatus("resting", INFINITE_STATUS)
-			C.force_laydown_standup()
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				H.hud.update_resting()
-			C.set_loc(get_turf(src))
-			src.victim = C
-		else
-			boutput(user, SPAN_ALERT("You were interrupted!"))
+		src.visible_message(SPAN_ALERT("<b>[user.name]</b> starts to move [H.name] onto the operating table."))
+		SETUP_GENERIC_ACTIONBAR(user, H, 3 SECONDS, /mob/living/carbon/human/proc/drag_onto_op_table, list(src), src.icon, src.icon_state, null, \
+			list(INTERRUPT_MOVE, INTERRUPT_ATTACKED, INTERRUPT_STUNNED, INTERRUPT_ACTION))

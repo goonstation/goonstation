@@ -20,7 +20,7 @@
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
 	anchored = ANCHORED
-	flags = FPRINT | CONDUCT | USEDELAY
+	flags = CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
 	event_handler_flags = USE_FLUID_ENTER

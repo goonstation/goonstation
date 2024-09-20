@@ -179,6 +179,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	ircbot.toggleDebug(src)
 	return 1

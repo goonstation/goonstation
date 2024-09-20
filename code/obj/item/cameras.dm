@@ -24,7 +24,7 @@ TYPEINFO(/obj/item/camera/large)
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	flags = TABLEPASS | EXTRADELAY | CONDUCT
 	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
@@ -229,7 +229,7 @@ TYPEINFO(/obj/item/camera_film/large)
 		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
 		IM.pixel_y = 1
 		IM.layer = layer
-		src.UpdateOverlays(IM, "photo")
+		src.AddOverlays(IM, "photo")
 
 	// Update overlay layer for photo to show in hand/backpack
 	pickup()
@@ -239,7 +239,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	// Update overlay layer for photo when dropping on floor or in belt/bag/container
 	dropped()
 		..()
-		render_photo_image(src.layer)
+		render_photo_image(initial(src.layer))
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)

@@ -142,12 +142,12 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 /obj/ladder/attack_hand(mob/user)
 	if (src.unclimbable) return
-	if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+	if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0)
 		return
 	src.climb(user)
 
 /obj/ladder/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/ladder/Click(location, control, params)
 	if (isobserver(usr))
@@ -216,3 +216,8 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		AM.set_loc(get_turf(lower))
 	else
 		AM.set_loc(get_turf(src))
+
+/obj/ladder/ex_act(severity)
+	if(isrestrictedz(get_z(src))) //maybe don't strand people in adventure zones? Ought to be a better way to do this kind of thing
+		return
+	. = ..()

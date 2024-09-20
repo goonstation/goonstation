@@ -131,7 +131,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", "")
+					C.player.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
@@ -143,7 +143,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", "")
+					C.player.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
@@ -155,7 +155,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", "")
+					C.player.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -243,6 +243,18 @@ var/global/noir = 0
 		if ("toggle_topic_log")
 			if (src.level >= LEVEL_MOD)
 				src.show_topic_log = !show_topic_log
+				src.show_pref_window(usr)
+		if ("toggle_skip_manifest")
+			if (src.level >= LEVEL_MOD)
+				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
+				src.show_pref_window(usr)
+		if ("toggle_slow_stat")
+			if (src.level >= LEVEL_MOD)
+				src.slow_stat = !slow_stat
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
@@ -1486,24 +1498,47 @@ var/global/noir = 0
 				if (A)
 					usr.client.check_reagents_internal(A, refresh = 1)
 
+		if ("checkreagent_add")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.addreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
+		if ("checkreagent_flush")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.flushreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
 		if ("removereagent")
-			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
-				var/mob/M = locate(href_list["target"])
+			// similar to /client/proc/addreagents, but in a different place.
+			// originally limited to mobs, but i made it any atoms
+			if (src.level < LEVEL_SA)
+				tgui_alert(usr, "You need to be at least a Secondary Administrator to remove reagents.")
+				return
 
-				if (!M.reagents) // || !target.reagents.total_volume)
-					boutput(usr, SPAN_NOTICE("<b>[M] contains no reagents.</b>"))
-					return
-				var/datum/reagents/reagents = M.reagents
+			var/atom/A = locate(href_list["target"])
 
+			if (!A.reagents) // || !target.reagents.total_volume)
+				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
+				return
+			var/datum/reagents/reagents = A.reagents
+
+			var/pick_id
+			var/pick
+			if (href_list["skip_pick"])
+				pick_id = href_list["skip_pick"]
+				pick = href_list["skip_pick"]
+			else
 				var/list/target_reagents = list()
-				var/pick
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 					target_reagents += current_reagent.name
 				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
-				var/pick_id
 				if(!isnull(reagents.reagent_list[pick]))
 					pick_id = pick
 				else
@@ -1513,24 +1548,24 @@ var/global/noir = 0
 							pick_id = current_reagent.id
 							break
 
-				if (pick_id)
-					var/string_version
+			if (!pick_id)
+				return
 
-					var/amt = input("How much of [pick]?","Remove Reagent") as null|num
-					if(!amt || amt < 0)
-						return
+			var/amt = input("How much of [pick]?", "Remove Reagent") as null|num
+			if (!amt || amt < 0)
+				return
 
-					if (M.reagents)
-						M.reagents.remove_reagent(pick_id,amt)
+			if (A.reagents)
+				if (!A.reagents.remove_reagent(pick_id,amt))
+					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
+					return
 
-					if (string_version)
-						string_version = "[string_version], [amt] \"[pick]\""
-					else
-						string_version = "[amt] \"[pick]\""
+			boutput(usr, SPAN_SUCCESS("Removed [amt] units of [pick_id] from [A]."))
 
-					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
-			else
-				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
+			// Brought in line with adding reagents via the player panel (Convair880).
+			logTheThing(LOG_ADMIN, src, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
+			if (ismob(A))
+				message_admins("[key_name(src)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -1684,7 +1719,7 @@ var/global/noir = 0
 				if (!trait_to_add_name)
 					return // user canceled
 				M.onProcCalled("addTrait", list(all_traits[trait_to_add_name]))
-				M.traitHolder.addTrait(all_traits[trait_to_add_name])
+				M.traitHolder.addTrait(all_traits[trait_to_add_name], force_trait=TRUE)
 				message_admins("[key_name(usr)] added the trait [trait_to_add_name] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added the trait [trait_to_add_name] to [constructTarget(M,"admin")].")
 				if (origin == "managetraits")//called via trait management panel
@@ -1875,6 +1910,8 @@ var/global/noir = 0
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue]")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue]")
 				if (length(custom_objective))
 					new /datum/objective/regular(custom_objective, M.mind, M.mind.get_antagonist(antag_options[selected_keyvalue]))
 					tgui_alert(M, "Your objective is: [custom_objective]", "Objective")
@@ -1924,6 +1961,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "made [key_name(M)] \a [selected_keyvalue] antagonist")
+				message_admins("[key_name(usr)] made [key_name(M)] \a [selected_keyvalue] antagonist")
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
 			else
 				boutput(usr, SPAN_ALERT("Addition failed with return code [success]. The mob may be incompatible. Report this to a coder."))
@@ -1941,6 +1980,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.remove_antagonist(antag)
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed [antag.id] antagonist from [key_name(M)]")
+				message_admins("[key_name(usr)] removed [antag.id] antagonist from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]"))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -1957,6 +1998,8 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
+				logTheThing(LOG_ADMIN, usr, "removed all antagonists from [key_name(M)]")
+				message_admins("[key_name(usr)] removed all antagonists from [key_name(M)]")
 				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
@@ -2107,9 +2150,13 @@ var/global/noir = 0
 									if(ispath(path, /turf))
 										var/turf/T = locate(0 + X,0 + Y,0 + Z)
 										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+										thing.set_dir(direction ? direction : SOUTH)
 									else
-										thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.set_dir(direction ? direction : SOUTH)
+										new /dmm_suite/preloader(locate(X, Y, Z), list("dir" = direction ? direction : SOUTH))
+										thing = new path(locate(X, Y, Z))
+										if(isobj(thing))
+											var/obj/O = thing
+											O.initialize(TRUE)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
@@ -2119,9 +2166,13 @@ var/global/noir = 0
 										if(ispath(path, /turf))
 											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
 											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+											thing.set_dir(direction ? direction : SOUTH)
 										else
+											new /dmm_suite/preloader(locate(loc.x + X,loc.y + Y,loc.z + Z), list("dir" = direction ? direction : SOUTH))
 											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.set_dir(direction ? direction : SOUTH)
+											if(isobj(thing))
+												var/obj/O = thing
+												O.initialize(TRUE)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -2366,7 +2417,7 @@ var/global/noir = 0
 							if(loc.z > 1 || prisonwarped.Find(H))
 								//don't warp them if they aren't ready or are already there
 								continue
-							H.changeStatus("paralysis", 7 SECONDS)
+							H.changeStatus("unconscious", 7 SECONDS)
 							if(H.wear_id)
 								for(var/A in H.wear_id:access)
 									if(A == access_security)
@@ -2509,13 +2560,23 @@ var/global/noir = 0
 					// FUN SECRETS CODE
 					if ("randomguns")
 						if (src.level >= LEVEL_PA)
-							if (tgui_alert(usr,"Do you want to give everyone a gun?", "Confirmation", list("Yes", "No")) != "Yes")
-								return
-							for (var/mob/living/L in mobs)
-								new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
-							message_admins("[key_name(usr)] gave everyone a random firearm.")
-							logTheThing(LOG_ADMIN, usr, "gave everyone a random firearm.")
-							logTheThing(LOG_DIARY, usr, "gave everyone a random firearm.", "admin")
+							switch(tgui_alert(usr, "What kind of guns do you want to give everyone?", "Guns2Give", list("Safe-ish Guns", "ANY GUN", "Cancel")))
+								if("Cancel")
+									return
+								if("Safe-ish Guns")
+									message_admins("[key_name(usr)] gave everyone a random safe firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a random safe firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a random safe firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/safer/one(get_turf(L))
+								if("ANY GUN")
+									message_admins("[key_name(usr)] gave everyone a completely random firearm.")
+									logTheThing(LOG_ADMIN, usr, "gave everyone a completely random firearm.")
+									logTheThing(LOG_DIARY, usr, "gave everyone a completely random firearm.", "admin")
+									for (var/mob/living/L in mobs)
+										new /obj/random_item_spawner/kineticgun/fullrandom(get_turf(L))
+
+
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -2551,6 +2612,20 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] bricked all radios forever")
 								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
 								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+					if ("airlock_safety")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Disable all station airlocks safeties?", "Cronch?", list("Yes", "Oops misclick")) == "Yes")
+								for (var/obj/machinery/door/airlock/D in by_type[/obj/machinery/door/airlock])
+									if (D.z != 1)
+										break
+									D.safety = 0
+									LAGCHECK(LAG_LOW)
+								message_admins("[key_name(usr)] disabled the safeties on all station airlocks.")
+								logTheThing(LOG_ADMIN, usr, "disabled the safeties on all station airlocks.")
+								logTheThing(LOG_DIARY, usr, "disabled the safeties on all station airlocks.", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3044,7 +3119,7 @@ var/global/noir = 0
 								SPAWN(0)
 									shake_camera(M, time * 10, intensity)
 								if (intensity >= 64)
-									M.changeStatus("weakened", 2 SECONDS)
+									M.changeStatus("knockdown", 2 SECONDS)
 
 						else
 							tgui_alert(usr,"You need to be at least a Administrator to shake the camera.")
@@ -3278,29 +3353,17 @@ var/global/noir = 0
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
-						if (isnull(src.job_manager))
-							src.job_manager = new
-
-						src.job_manager.ui_interact(src.owner.mob)
+						usr.client.cmd_job_controls()
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
-					if("pathology")
-						pathogen_controller.cdc_main(src)
 					if("motives")
 						simsController.showControls(usr)
+					if("regionallocator")
+						usr.client.region_allocator_panel()
 					if("artifacts")
 						artifact_controls.config()
-					if("ghostnotifier")
-						ghost_notifier.config()
-					if("unelectrify_all")
-						for(var/obj/machinery/door/airlock/D)
-							D.secondsElectrified = 0
-							LAGCHECK(LAG_LOW)
-						message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
-						logTheThing(LOG_ADMIN, usr, "de-electrified all airlocks.")
-						logTheThing(LOG_DIARY, usr, "de-electrified all airlocks.", "admin")
 					if("DNA")
 						var/dat = "<B>Showing DNA from blood.</B><HR>"
 						dat += "<table cellspacing=5><tr><th>Name</th><th>DNA</th><th>Blood Type</th></tr>"
@@ -3337,7 +3400,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("http://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
+				usr << link("[goonhub_href("/admin/logs/[roundId]")]")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3357,17 +3420,6 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=[logType]_log_[gettxt];size=750x500")
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
-
-		if ("view_logs_pathology_strain")
-			if (src.level >= LEVEL_MOD)
-				var/gettxt
-				if (href_list["presearch"])
-					gettxt = href_list["presearch"]
-				else
-					gettxt = input("Which pathogen tree?", "Pathogen tree") in pathogen_controller.pathogen_trees
-
-				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
-				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
@@ -3652,11 +3704,11 @@ var/global/noir = 0
 		switch(emergency_shuttle.location)
 			if(0)// centcom
 				if (emergency_shuttle.direction == 1)
-					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft())] sec)"
 				if (emergency_shuttle.direction == -1)
-					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft())] sec)"
 			if(1)// ss13
-				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft()/60)])"
+				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft())] sec)"
 			if(2)// evacuated
 				shuttletext = "Evacuated to Centcom"
 			else
@@ -3697,11 +3749,9 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=regionallocator'>Region Allocator</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=motives'>Motive Control</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=ghostnotifier'>Ghost Notification Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=unelectrify_all'>De-electrify all Airlocks</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
@@ -3771,9 +3821,6 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_BOMBING]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log'>Signaler Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log_string'><small>(Search)</small></A><BR>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log'>Pathology Log</A>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log_string'><small>(Search)</small></A>
-				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log'>Chemistry Log</A>
@@ -3822,6 +3869,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=airlock_safety'>Disable all airlock's safeties.</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>
@@ -3850,6 +3898,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Restart"
 	set desc= "Restarts the world"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/confirm = alert("Restart the game world?", "Restart", "Yes", "Cancel")
 	if(confirm == "Cancel")
@@ -3874,6 +3924,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Announce"
 	set desc="Announce your desires to the world"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
 	if (message)
 		if(usr.client.holder.rank != "Coder" && usr.client.holder.rank != "Host")
@@ -3886,6 +3938,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Start the round RIGHT NOW"
 	set name="Start Now"
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	if(!ticker)
 		tgui_alert(usr,"Unable to start the game as it is not set up.")
 		return
@@ -3904,7 +3958,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the game start"
 	set name="Delay Round Start"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (current_state > GAME_STATE_PREGAME)
 		return tgui_alert(usr,"Too late... The game has already started!")
 	game_start_delayed = !(game_start_delayed)
@@ -3924,7 +3979,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set desc="Delay the server restart"
 	set name="Delay Round End"
-
+	USR_ADMIN_ONLY
+	SHOW_VERB_DESC
 	// If the game end is delayed AT ALL, confirm removing the delay
 	// so that mutiple admins don't end up cancelling their own delays
 	if (game_end_delayed)
@@ -4083,6 +4139,9 @@ var/global/noir = 0
 					A = new chosen(usr.loc)
 				else
 					A = new chosen(get_turf(usr))
+				if(isobj(A))
+					var/obj/O = A
+					O.initialize(TRUE)
 				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(usr)])")
@@ -4207,11 +4266,12 @@ var/global/noir = 0
 	usr.Browse(built, "window=chatban;size=500x100")
 
 /client/proc/cmd_admin_managebioeffect(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Bioeffects"
 	set desc = "Select a mob to manage its bioeffects."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (isnull(holder.bioeffectmanager))
 		holder.bioeffectmanager = new
@@ -4219,11 +4279,12 @@ var/global/noir = 0
 	holder.bioeffectmanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_manageabils(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Abilities"
 	set desc = "Select a mob to manage its abilities."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (isnull(holder.abilitymanager))
 		holder.abilitymanager = new
@@ -4231,12 +4292,12 @@ var/global/noir = 0
 	holder.abilitymanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_managetraits(var/mob/M in mobs)
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Manage Traits"
 	set desc = "Select a mob to manage its traits."
 	set popup_menu = 0
 	ADMIN_ONLY
-
+	SHOW_VERB_DESC
 	var/list/dat = list()
 	dat += {"
 		<html>
@@ -4319,6 +4380,7 @@ var/global/noir = 0
 	set desc = "Select a mob to manage its mind's objectives."
 	set popup_menu = 0
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	var/list/dat = list()
 	dat += {"
@@ -4395,6 +4457,8 @@ var/global/noir = 0
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "Respawn a mob"
 	set popup_menu = 0
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	if (!M) return
 
 	if (!forced && tgui_alert(src, "Respawn [M]?", "Confirmation", list("Yes", "No")) != "Yes")
@@ -4423,7 +4487,8 @@ var/global/noir = 0
 	set name = "Respawn Self"
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set desc = "Respawn yourself"
-
+	ADMIN_ONLY
+	SHOW_VERB_DESC
 	logTheThing(LOG_ADMIN, src, "respawned themselves.")
 	logTheThing(LOG_DIARY, src, "respawned themselves.", "admin")
 	message_admins("[key_name(src)] respawned themselves.")

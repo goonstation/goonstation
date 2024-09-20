@@ -37,7 +37,7 @@
 			playsound(ow.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)
-			ow.changeStatus("weakened", 1 SECOND)
+			ow.changeStatus("knockdown", 1 SECOND)
 
 			switch (ow.smash_through(O, list("window", "grille", "table"), 0))
 				if (0)
@@ -80,7 +80,7 @@
 			playsound(M.loc, "swing_hit", 60, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)
-			ow.changeStatus("weakened", 1 SECOND)
+			ow.changeStatus("knockdown", 1 SECOND)
 
 			var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 			if (T && isturf(T))

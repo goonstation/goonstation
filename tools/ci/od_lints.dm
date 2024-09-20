@@ -12,7 +12,6 @@
 #pragma SoftReservedKeyword error
 #pragma DuplicateVariable error
 #pragma DuplicateProcDefinition error
-#pragma TooManyArguments error
 #pragma PointlessParentCall error
 #pragma PointlessBuiltinCall error
 #pragma SuspiciousMatrixCall error
@@ -24,6 +23,7 @@
 #pragma MissingInterpolatedExpression error
 #pragma AmbiguousResourcePath error
 #pragma SuspiciousSwitchCase error
+#pragma InvalidIndexOperation error
 
 //3000-3999
 #pragma EmptyBlock notice // Set to error when it supports {} blocks

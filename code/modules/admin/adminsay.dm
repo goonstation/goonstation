@@ -4,6 +4,7 @@
 	set hidden = 1
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.ismuted())
 		return
@@ -35,6 +36,7 @@
 	set name = "forceallsay"
 	set hidden = 1
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.ismuted())
 		return
@@ -62,6 +64,7 @@
 	set hidden = 1
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.ismuted())
 		return
@@ -90,6 +93,7 @@
 	set hidden = 1
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.ismuted())
 		return
@@ -124,6 +128,7 @@
 	set hidden = 1
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.ismuted())
 		return
@@ -148,6 +153,7 @@
 	set hidden = 1
 
 	ADMIN_ONLY
+	SHOW_VERB_DESC
 
 	if (src.ismuted())
 		return

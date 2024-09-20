@@ -161,7 +161,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		qdel(src.fryitem)
 		src.fryitem = null
 		src.visible_message(SPAN_ALERT("The ice reacts violently with the hot oil!"))
-		fireflash(src, 3)
+		fireflash(src, 3, chemfire = CHEM_FIRE_RED)
 		UnsubscribeProcess()
 		return
 
@@ -176,7 +176,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	else if(src.cooktime >= 120)
 		if((src.cooktime % 5) == 0 && prob(10))
 			src.visible_message(SPAN_ALERT("[src] sprays burning oil all around it!"))
-			fireflash(src, 1)
+			fireflash(src, 1, chemfire = CHEM_FIRE_RED)
 
 /obj/machinery/deep_fryer/custom_suicide = TRUE
 /obj/machinery/deep_fryer/suicide(var/mob/user as mob)

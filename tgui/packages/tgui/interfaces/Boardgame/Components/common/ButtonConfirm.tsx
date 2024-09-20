@@ -36,7 +36,7 @@ export class ButtonConfirm extends Component<ButtonConfirmProps, ButtonConfirmSt
         onMouseOut={() => this.setConfirmState(false)}
         onClick={() => {
           if (this.state.confirmState) {
-            onConfirm();
+            onConfirm?.();
             this.setConfirmState(false);
           } else {
             this.setConfirmState(true);

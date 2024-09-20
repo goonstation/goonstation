@@ -12,8 +12,9 @@
 
 // -------------------grenades-------------
 TYPEINFO(/obj/item/old_grenade/sawfly)
-	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
-
+	mats = list("metal_dense" = 7,
+				"conductive" = 7,
+				"energy" = 5)
 /obj/item/old_grenade/sawfly
 
 	name = "Compact sawfly"
@@ -44,14 +45,15 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		..()
 
 	detonate()
-		var/turf/T =  get_turf(src)
+		var/turf/T =  ..()
 		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
 			heldfly.ai = new /datum/aiHolder/aggressive(heldfly)
 
 		qdel(src)
-/obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version
+
+/obj/item/old_grenade/sawfly/firsttime //super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
@@ -60,6 +62,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		..()
 
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
+	mechanics_type_override = /obj/item/old_grenade/sawfly/firsttime //prevents remote clutter if you're making an army
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
@@ -93,7 +96,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			icon_state_armed = "clusterflyB1"
 
 // -------------------controller---------------
-
+TYPEINFO(/obj/item/remote/sawflyremote)
+	mats = list("conductive"=2)
 /obj/item/remote/sawflyremote
 	name = "Sawfly remote"
 	desc = "A small device that can be used to fold or deploy sawflies in range."
@@ -101,8 +105,8 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	icon_state = "sawfly_remote"
 
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER
+	is_syndicate = TRUE
 
 	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to activate/deactivate any sawflies within a 5 tile radius."})
 
@@ -138,6 +142,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 // ---------------limb---------------
 /datum/limb/sawfly_blades
+	can_beat_up_robots = TRUE
 
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not

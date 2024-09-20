@@ -112,7 +112,7 @@
 
 	var/turf/simulated/sample = pick(members)
 	for(var/turf/simulated/member as anything in members)
-		if(member.active_hotspot)
+		if(length(member.active_hotspots))
 			return FALSE
 		if(member.air && member.air.compare(sample.air))
 			continue
@@ -381,7 +381,7 @@
 		minDist = member.dist_to_space
 
 		// Don't space hotspots, it breaks them
-		if(member.active_hotspot)
+		if(length(member.active_hotspots))
 			return FALSE
 
 		if (member.air && !isnull(minDist))

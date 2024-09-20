@@ -1,6 +1,6 @@
 /datum/targetable/vampire/blood_tracking
 	name = "Toggle blood tracking"
-	desc = "Toggles blood gain/loss messages."
+	desc = "Toggles tracking the blood of the last victim you drank from."
 	icon_state = "bloodtrack"
 	targeted = 0
 	target_nodamage_check = 0
@@ -12,25 +12,35 @@
 	not_when_handcuffed = 0
 	lock_holder = FALSE
 	ignore_holder_lock = 1
+	do_logs = FALSE
+	interrupt_action_bars = FALSE
+	var/active = FALSE
 
 	cast(mob/target)
-		if (!holder)
+		if (!src.holder?.owner)
 			return 1
 
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
-
-		if (!M)
-			return 1
-
-		if (ismobcritter(M) && !istype(H))
-			boutput(M, SPAN_ALERT("Critter mobs currently don't have to worry about blood. Lucky you."))
-			return 1
-
-		if (H.vamp_blood_tracking == 1)
-			H.vamp_blood_tracking = 0
+		. = ..()
+		var/datum/abilityHolder/vampire/vamp_holder = src.holder
+		if (vamp_holder.last_victim && QDELETED(vamp_holder.last_victim))
+			boutput(src.holder.owner, SPAN_ALERT("Your victim has left this plane."))
+			vamp_holder.last_victim = null
+			src.active = FALSE
+			return
+		if (!src.active)
+			if (!vamp_holder.last_victim)
+				boutput(src.holder.owner, SPAN_ALERT("You have yet to drink the blood of an innocent."))
+				return
+			src.holder.owner.AddComponent(/datum/component/tracker_hud/vampire, vamp_holder.last_victim)
+			boutput(src.holder.owner, SPAN_ALERT("You start tracking the blood of your latest victim."))
+			src.active = TRUE
 		else
-			H.vamp_blood_tracking = 1
+			src.holder.owner.RemoveComponentsOfType(/datum/component/tracker_hud/vampire)
+			boutput(src.holder.owner, SPAN_ALERT("You suppress your bloodlust. For now."))
+			src.active = FALSE
 
-		boutput(M, SPAN_NOTICE("Blood tracking turned [H.vamp_blood_tracking == 1 ? "on" : "off"]."))
-		return 0
+	proc/update_target(mob/target)
+		if (!active)
+			return
+		var/datum/component/tracker_hud/vampire/tracker = src.holder.owner.GetComponent(/datum/component/tracker_hud/vampire)
+		tracker.target = target

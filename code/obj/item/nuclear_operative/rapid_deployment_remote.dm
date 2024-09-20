@@ -134,7 +134,7 @@
 				if(target && !L.buckled)
 					L.throw_at(target, 3, 1)
 					L.changeStatus("stunned", 2 SECONDS)
-					L.changeStatus("weakened", 2 SECONDS)
+					L.changeStatus("knockdown", 2 SECONDS)
 			var/num_players = 0
 			for(var/client/C)
 				var/mob/new_player/player = C.mob

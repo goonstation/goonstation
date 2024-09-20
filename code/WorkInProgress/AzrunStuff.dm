@@ -43,20 +43,20 @@
 
 /datum/manufacture/sub/treads
 	name = "Vehicle Treads"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
+	item_requirements = list("metal_dense" = 5,
+							 "conductive" = 2)
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
-	time = 5 SECONDS
 	create = 1
+	time = 5 SECONDS
 	category = "Component"
 
 
@@ -91,7 +91,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 10))
 			for (var/mob/living/X in view(1,POT.loc))
 				if(isalive(X) && !iskudzuman(X))
 					poof(X, POT)
@@ -101,12 +101,13 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 10))
 			if(!iskudzuman(user))
 				poof(user, POT)
 
 	proc/poof(atom/movable/AM, obj/machinery/plantpot/POT)
 		if(!ON_COOLDOWN(src,"spore_poof", 2 SECONDS))
+			var/datum/plant/P = POT.current
 			var/datum/plantgenes/DNA = POT.plantgenes
 			var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
 			reagents_temp.my_atom = POT
@@ -118,7 +119,7 @@
 				reagents_temp.smoke_start()
 				qdel(reagents_temp)
 
-			POT.growth = clamp(POT.growth/2, src.growtime, src.harvtime-10)
+			POT.growth = clamp(POT.growth/2, P.HYPget_growth_to_matured(DNA), P.HYPget_growth_to_harvestable(DNA)-10)
 			POT.UpdateIcon()
 
 	getIconState(grow_level, datum/plantmutation/MUT)
@@ -175,7 +176,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 5))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 5))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -313,7 +314,7 @@
 /obj/gimmick_obj
 	var/list/gimmick_events
 	var/active_stage
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	New()
 		..()
@@ -618,6 +619,7 @@
 	cooldown = 2 SECONDS
 
 	cast(atom/target)
+		. = ..()
 		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
 		expansion.turret.lasers = !expansion.turret.lasers
 		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
@@ -991,7 +993,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	inventory_counter_enabled = 1
 

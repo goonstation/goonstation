@@ -293,7 +293,14 @@
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)
+	if (!isobserver(usr))
+		playsound(src, 'sound/machines/sleeper_close.ogg', 50, 1)
 	return
+
+/obj/machinery/sim/vr_bed/MouseDrop_T(mob/living/target, mob/user)
+	if (BOUNDS_DIST(user, src) > 0 || !in_interact_range(src,user)) return
+	if (target == user)
+		move_inside()
 
 /obj/machinery/sim/vr_bed/verb/move_eject()
 	set src in oview(1)
@@ -339,12 +346,13 @@
 		O.set_loc(get_turf(src.loc))
 //	src.verbs -= /mob/proc/jack_in
 	src.occupant?.set_loc(get_turf(src.loc))
-	src.occupant?.changeStatus("weakened", 2 SECONDS)
+	src.occupant?.changeStatus("knockdown", 2 SECONDS)
 	src.occupant?.network_device = null
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
 	src.UpdateIcon()
+	playsound(src, 'sound/machines/sleeper_open.ogg', 50, 1)
 	return
 
 /obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)

@@ -17,7 +17,7 @@
 		return 1
 
 	say(var/message)
-		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
+		message = trimtext(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)
 			return
@@ -30,14 +30,14 @@
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
 			return
-
+		SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
 		. = src.say_hive(message, hivemind_owner)
 
 	stop_observing()
 		set hidden = 1
 
 	disposing()
-		observers -= src
+		LAZYLISTREMOVE(observers, src)
 		hivemind_owner?.hivemind -= src
 		..()
 

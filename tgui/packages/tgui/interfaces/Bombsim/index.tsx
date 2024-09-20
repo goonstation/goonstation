@@ -25,10 +25,6 @@ const MaintenencePanel = (props, context) => {
   if (connection === "NO CONNECTION" && data.host_id !== null) {
     setConnection("OK CONNECTION");
   }
-  let configSwitches = [];
-  for (let i = 0; i < 4; i++) {
-    configSwitches.push(<Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={i} /></Stack.Item>);
-  }
   return (
     <Section title="Maintenence Panel" buttons={resetButton}>
       <LabeledList.Item label="Host Connection">
@@ -36,7 +32,10 @@ const MaintenencePanel = (props, context) => {
       </LabeledList.Item>
       <LabeledList.Item label="Configuration Switches" verticalAlign="middle">
         <Stack>
-          {configSwitches}
+          <Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={0} /></Stack.Item>
+          <Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={1} /></Stack.Item>
+          <Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={2} /></Stack.Item>
+          <Stack.Item><ConfigSwitch local_bits={bits} setter={setBits} bit_pos={3} /></Stack.Item>
         </Stack>
       </LabeledList.Item>
     </Section>

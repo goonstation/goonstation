@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (doAlert)
 			var/area/A = get_area(O)
 			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
+		message_ghosts("<b>An artifact bomb</b> has just been triggered in [log_loc(T, ghostjump=TRUE)].")
 		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
@@ -207,6 +208,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			O.ArtifactDestroyed()
 
 // chemical bombs
+// different types of bombs for "payload_type"
+#define CHEMBOMB_FOAMY 0
+#define CHEMBOMB_SMOKEY 1
+#define CHEMBOMB_CLASSICAL_GAS 2
+#define CHEMBOMB_FLUIDY 3
+
 
 /obj/machinery/artifact/bomb/chemical
 	name = "artifact chemical bomb"
@@ -236,13 +243,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		payload_type = rand(0,3)
 		var/payload_type_name = "unknown"
 		switch (payload_type)
-			if (0)
-				payload_type_name = "smoke"
-			if (1)
+			if (CHEMBOMB_FOAMY)
 				payload_type_name = "foam"
-			if (2)
+			if (CHEMBOMB_SMOKEY)
+				payload_type_name = "smoke"
+			if (CHEMBOMB_CLASSICAL_GAS)
 				payload_type_name = "propellant"
-			if (3)
+			if (CHEMBOMB_FLUIDY)
 				payload_type_name = "fluid"
 
 		var/list/potential_reagents = list()
@@ -263,8 +270,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
 				"phlogiston","thermite","infernite","foof","fuel","blackpowder","acid","amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pacid","pancuronium","polonium",
-				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","saxitoxin","viper_venom","ricin")
+				"sodium_thiopental","ketamine","sulfonal","toxin","cytotoxin","neurotoxin","mutagen","wolfsbane",
+				"toxic_slurry","histamine","saxitoxin","hemotoxin","ricin","tetrodotoxin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
@@ -279,7 +286,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 						continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -303,15 +310,17 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		var/turf/location = get_turf(O)
 		switch(payload_type)
-			if(0)
+			if(CHEMBOMB_FOAMY)
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(O.reagents.total_volume, location, O.reagents, 0)
 				s.start()
-			if(1)
+			if(CHEMBOMB_SMOKEY)
+				// normal smoke
 				O.reagents.smoke_start(50)
-			if(2)
+			if(CHEMBOMB_CLASSICAL_GAS)
+				// "classic" smoke
 				O.reagents.smoke_start(50,1)
-			if(3)
+			if(CHEMBOMB_FLUIDY)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
 				var/datum/fluid_group/FG = location.active_liquid?.group
 				if(FG)
@@ -325,6 +334,12 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		SPAWN(recharge_delay)
 			if (O)
 				O.ArtifactDeactivated()
+
+// undef chembomb payload_type types
+#undef CHEMBOMB_FOAMY
+#undef CHEMBOMB_SMOKEY
+#undef CHEMBOMB_CLASSICAL_GAS
+#undef CHEMBOMB_FLUIDY
 
 // matter transmutation bomb
 
@@ -378,7 +393,6 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					100;"silver",
 					100;"cobryl",
 					50;"miracle",
-					50;"soulsteel",
 					50;"hauntium",
 					50;"ectoplasm",
 					10;"ectofibre",
