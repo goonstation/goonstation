@@ -4712,7 +4712,7 @@ datum
 			reagent_state = LIQUID
 			taste = "biting"
 
-		fooddrink/alcoholic/spicedrumfake
+		fooddrink/alcoholic/spicedrum
 			name = "spiced rum"
 			id = "spicedrum"
 			fluid_r = 205
