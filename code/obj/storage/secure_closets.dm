@@ -381,7 +381,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/extinguisher,
 		/obj/item/clothing/suit/space/light/engineer,
 		/obj/item/clothing/head/helmet/space/light/engineer,
-		/obj/item/device/pda2/chiefengineer,
+		/obj/item/device/pda2/chiefengineer
 	)
 
 /* ==================== */
