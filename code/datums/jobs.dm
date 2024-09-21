@@ -655,6 +655,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Research Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
+	trait_list = list("training_scientist")
 	access_string = "Scientist"
 	rounds_allowed_to_play = ROUNDS_MAX_RESASS
 	slot_back = list(/obj/item/storage/backpack/research)
@@ -706,6 +707,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Medical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
+	trait_list = list("training_medical")
 	access_string = "Medical Doctor"
 	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -813,6 +815,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	name = "Technical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
+	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
 	slot_back = list(/obj/item/storage/backpack/engineering)
