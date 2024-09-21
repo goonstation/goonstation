@@ -1447,7 +1447,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		spraycan.clear_targets()
-		playsound(spraycan.loc, 'sound/effects/graffiti_hit.ogg', 10, TRUE)
+		playsound(spraycan.loc, 'sound/effects/graffiti_hit.ogg', 20, TRUE)
 		if (spraycan.charges == 0)
 			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
