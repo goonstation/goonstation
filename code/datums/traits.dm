@@ -936,7 +936,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "randomallergy"
 	icon_state = "allergy"
 	points = 0
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	var/allergen = null
@@ -966,7 +965,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "medicalallergy"
 	icon_state = "medallergy"
 	points = 1
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -1206,7 +1204,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "allergic"
 	icon_state = "hypeallergy"
 	points = 1
-	category = list("allergy")
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Anaphylactic"
 	disability_desc = "Acute response to allergens"
@@ -1337,7 +1334,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "hair"
 
 	onAdd(mob/owner)
-		owner.bioHolder.AddEffect("hair_growth")
+		owner.bioHolder.AddEffect("hair_growth", magical = TRUE)
 
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")
