@@ -49618,7 +49618,9 @@
 /obj/item/device/radio/intercom/catering{
 	dir = 8
 	},
-/obj/table/auto,
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "mmZ" = (
@@ -57983,7 +57985,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/announcement/station/catering,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "sDi" = (
