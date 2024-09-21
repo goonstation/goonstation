@@ -40174,7 +40174,7 @@
 /area/station/security/checkpoint)
 "eFF" = (
 /obj/stool/chair/yellow,
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "eFK" = (
@@ -40743,7 +40743,7 @@
 /obj/stool/chair/couch{
 	dir = 4
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -44986,7 +44986,7 @@
 /area/station/security/brig)
 "ipJ" = (
 /obj/stool/chair/comfy/blue,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "ipZ" = (
@@ -51004,7 +51004,7 @@
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "nkK" = (
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "nlf" = (
@@ -54320,7 +54320,7 @@
 /area/station/hydroponics/bay)
 "pJe" = (
 /obj/disposalpipe/segment/mail,
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "pJv" = (
@@ -65357,7 +65357,7 @@
 /area/station/storage/primary)
 "yiI" = (
 /obj/stool/chair/yellow,
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "yiM" = (
