@@ -1,4 +1,9 @@
+
 (t)sat sep 21 24
+(u)JORJ949
+(p)20669
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Armory door health increased from 600 to 800
 (u)LeahTheTech
 (+)Luminol traces are now much more visible.
 (+)Breaching charges now damage lockers.
