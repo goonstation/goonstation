@@ -40134,7 +40134,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "mac" = (
@@ -54930,7 +54930,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm/south,
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering)
 "qBc" = (
@@ -57033,7 +57033,7 @@
 "rib" = (
 /obj/stool/chair/office,
 /obj/disposalpipe/segment/mail,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/carpet/green/fancy/narrow,
 /area/station/medical/medbay/lobby)
 "rig" = (
@@ -63514,7 +63514,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/medical/breakroom)
 "tiX" = (
@@ -71391,7 +71391,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "vBq" = (
@@ -77210,7 +77210,7 @@
 /area/station/crew_quarters/quarters)
 "xhY" = (
 /obj/stool/chair/couch/purple,
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "xhZ" = (

@@ -69739,7 +69739,7 @@
 /area/station/chapel/sanctuary)
 "rAl" = (
 /obj/stool/chair/comfy,
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -74192,7 +74192,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "woU" = (
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "wpW" = (

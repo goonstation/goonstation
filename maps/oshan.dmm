@@ -34293,7 +34293,7 @@
 /area/diner/dining)
 "flf" = (
 /obj/stool/chair/yellow,
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -39740,7 +39740,7 @@
 /area/station/security/processing)
 "mXI" = (
 /obj/stool/bench/blue/auto,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "mXZ" = (
@@ -40785,7 +40785,7 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/cool,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/blue/corner{
 	dir = 8
 	},
@@ -43027,7 +43027,7 @@
 /obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "rCV" = (
@@ -43532,7 +43532,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "szG" = (
@@ -46919,7 +46919,7 @@
 /obj/stool/chair/office/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "xOk" = (
