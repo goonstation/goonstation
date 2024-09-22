@@ -254,7 +254,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
             capitalize={capitalize}
           />
         </Stack.Item>
-        {searchBarVisible === true && (
+        {searchBarVisible !== false && (
           <SearchBar
             filteredItems={filteredItems}
             onSearch={onSearch}
