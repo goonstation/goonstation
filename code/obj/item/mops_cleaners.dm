@@ -1171,6 +1171,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "janitor_sprayer"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	w_class = W_CLASS_POCKET_SIZED
 	shoot_delay = 2 SECONDS
 	recoil_enabled = FALSE
 	click_sound = 'sound/effects/tinyhiss.ogg'
@@ -1298,7 +1299,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			reagent_overlay_states = 6, reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, queue_updates = TRUE,\
 			worn_overlay_icon = src.wear_image_icon, worn_overlay_icon_state = src.icon_state, worn_overlay_states = 1)
 
-		src.create_storage(/datum/storage, max_wclass = W_CLASS_SMALL, slots = 3, opens_if_worn = TRUE)
+		src.create_storage(/datum/storage, max_wclass = W_CLASS_POCKET_SIZED, slots = 3, opens_if_worn = TRUE)
 
 	is_open_container(input)
 		return input
