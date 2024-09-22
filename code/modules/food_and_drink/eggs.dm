@@ -91,7 +91,7 @@ proc/save_intraround_eggs()
 		var/turf/egg_turf = get_turf(egg)
 		if (egg_turf.z != Z_LEVEL_STATION)
 			continue
-		if (prob(0)) //TODO: random chance for centuriness
+		if (prob(50))
 			continue
 		var/coord_string = "[egg_turf.x],[egg_turf.y]"
 		if (egglist[coord_string]) //don't replace older eggs
