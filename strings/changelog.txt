@@ -1,5 +1,9 @@
 
 (t)sun sep 22 24
+(u)Flappybat
+(p)20790
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)Oshan HoS medal moved from armory to HoS office.
 (u)TDHooligan
 (p)20769
 (e)⚖🧛|C-Balance, A-Gamemodes
