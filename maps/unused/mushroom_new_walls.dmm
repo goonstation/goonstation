@@ -17130,7 +17130,8 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/simulated/floor/engine,
+/obj/mapping_helper/access/hos,
+/turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "dZi" = (
 /obj/cable{
@@ -36794,12 +36795,10 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/turretid{
-	pixel_x = -24;
-	pixel_y = 1;
-	req_access = null
-	},
 /obj/mapping_helper/access/hos,
+/obj/machinery/turretid/armory{
+	pixel_x = -24
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "vaL" = (
