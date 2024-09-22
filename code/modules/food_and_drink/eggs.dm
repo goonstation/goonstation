@@ -65,7 +65,12 @@
 
 	heal(mob/living/M)
 		. = ..()
-		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.timestamp_created ? approx_time_text(world.realtime - src.timestamp_created) : "not very long"]."))
+		var/age = world.realtime - src.timestamp_created
+		if (age > 1 WEEK)
+			M.reagents?.add_reagent("msg", 5)
+		else if (age > 1 MONTH)
+			M.reagents?.add_reagent("omnizine", 5)
+		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.timestamp_created ? approx_time_text(age) : "not very long"]."))
 
 //mostly adapted from pickle jars because imcargoculter and it's not really generalizable
 
