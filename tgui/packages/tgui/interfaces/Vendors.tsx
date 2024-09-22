@@ -63,7 +63,7 @@ export const Vendors = () => {
 
   return (
     <Window title={windowName} width={500} height={600}>
-      <Window.Content style={{ fontSize: '10pt' }}>
+      <Window.Content>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
           {wiresOpen && (
             <Stack.Item>
