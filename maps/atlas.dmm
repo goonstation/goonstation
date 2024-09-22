@@ -12476,7 +12476,7 @@
 	dir = 4;
 	level = -1
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "eWF" = (
@@ -13859,7 +13859,7 @@
 /obj/stool/chair/blue{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "hPj" = (
@@ -15564,7 +15564,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -16196,6 +16196,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "mqJ" = (
@@ -16921,7 +16922,7 @@
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "nOs" = (
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "nOy" = (

@@ -30342,7 +30342,7 @@
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "czr" = (
@@ -34831,7 +34831,7 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -37956,7 +37956,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "hOA" = (
@@ -48759,7 +48759,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "hot reserve tank valve";
 	dir = 1;
-	
+
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -54404,7 +54404,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "tOr" = (
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -58849,7 +58849,7 @@
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "wXQ" = (
@@ -59433,7 +59433,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "xsj" = (

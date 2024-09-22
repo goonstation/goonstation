@@ -16,6 +16,7 @@
 	anchored = ANCHORED
 	animate_movement = FALSE
 	event_handler_flags = IMMUNE_TRENCH_WARP
+	pass_unstable = FALSE
 
 	/// Projectile data; almost all specific projectile information and functionality lives here
 	var/datum/projectile/proj_data = null

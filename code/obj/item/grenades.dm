@@ -1462,6 +1462,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					var/obj/machinery/door/firedoor/firelock = O
 					qdel(firelock)
 					continue
+				if (istype(O, /obj/storage))
+					O.ex_act(2)
+					continue
 		qdel(src)
 		return
 

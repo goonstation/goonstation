@@ -557,7 +557,7 @@
 				var/datum/bioEffect/mutantrace = H.mutantrace.race_mutation
 				if (mutantrace && GetBioeffectResearchLevelFromGlobalListByID(initial(mutantrace.id)) >= EFFECT_RESEARCH_ACTIVATED)
 					addEffect = initial(mutantrace.id)
-			subject.bioHolder.RemoveAllEffects()
+			subject.bioHolder.RemoveAllEffects(null, TRUE)
 			subject.bioHolder.BuildEffectPool()
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
