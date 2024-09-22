@@ -1774,6 +1774,20 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
+// god help us
+/datum/job/special/random/influencer
+	name = "Influencer"
+	wages = PAY_UNTRAINED
+	change_name_on_spawn = TRUE
+	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeanspurp)
+	slot_head = list(/obj/item/clothing/head/basecap/purple)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/device/audio_log)
+	slot_poc2 = list(/obj/item/camera)
+	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
 #ifdef HALLOWEEN
 /*
  * Halloween jobs
