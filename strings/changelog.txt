@@ -1,5 +1,9 @@
 
 (t)sun sep 22 24
+(u)LeahTheTech
+(p)20794
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Eggs left under floor tiles may become century eggs that can be unearthed in future rounds.
 (u)TealSeer
 (p)20701
 (e)🆕🐣|C-Feature, A-Respawning
