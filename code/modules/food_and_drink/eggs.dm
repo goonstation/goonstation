@@ -92,8 +92,6 @@ proc/save_intraround_eggs()
 	for_by_tcl(egg, /obj/item/reagent_containers/food/snacks/ingredient/egg)
 		if (length(egglist) >= MAX_EGGS) //finite eggs
 			break
-		if (istype(egg, /obj/item/reagent_containers/food/snacks/ingredient/egg/century)) //already pickled
-			continue
 		if (!istype(egg.loc, /obj/effects/hidden_contents_holder)) //this means "is hidden under a floor tile"
 			continue
 		var/turf/egg_turf = get_turf(egg)
