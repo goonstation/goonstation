@@ -27709,6 +27709,10 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_x = -28;
+	pixel_y = -4
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bWb" = (
@@ -45047,9 +45051,6 @@
 /area/station/security/interrogation)
 "vex" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
-/obj/decal/poster/wallsign/framed_award/hos_medal{
-	pixel_y = 28
-	},
 /obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
