@@ -1,5 +1,9 @@
 
 (t)sat sep 21 24
+(u)Kapu1178
+(p)20787
+(e)|
+(+)Flocktraces can now use flockchat links to jump to targets like the Flockmind.
 (u)JORJ949
 (p)20669
 (e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
