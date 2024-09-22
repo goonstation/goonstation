@@ -1006,7 +1006,9 @@
 /obj/machinery/door_control{
 	id = "nadir_bhull_ne";
 	name = "Emergency Re-Entry";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -1097,7 +1099,10 @@
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "eastcc_room1"
+	id = "eastcc_room1";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/quarters_east)
@@ -1951,7 +1956,9 @@
 	icon_state = "bedsheet-pink"
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "cc_bdr2"
+	id = "cc_bdr2";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/red/standard/narrow/south,
 /area/station/crew_quarters/quarters_west)
@@ -2480,7 +2487,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "eastcc_stall3"
+	id = "eastcc_stall3";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -2720,7 +2729,9 @@
 /obj/machinery/door_control{
 	id = "nadir_diploshut";
 	name = "Quarters Shutters";
-	pixel_x = 22
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
 	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
@@ -3398,7 +3409,10 @@
 "bxL" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "maint_crimeroom1"
+	id = "maint_crimeroom1";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -3727,7 +3741,8 @@
 "bFf" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "maint_shower1"
+	id = "maint_shower1";
+	dir = 2
 	},
 /turf/simulated/floor/sanitary,
 /area/station/maintenance/storage{
@@ -6473,7 +6488,9 @@
 /obj/machinery/door_control{
 	id = "ai_core";
 	name = "AI Core Shield";
-	pixel_y = -26
+	pixel_y = -21;
+	dir = 1;
+	pixel_x = -1
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -6743,7 +6760,9 @@
 	icon_state = "bedsheet-blue"
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "cc_bdr1"
+	id = "cc_bdr1";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/blue/standard/narrow/south,
 /area/station/crew_quarters/quarters_west)
@@ -8425,7 +8444,9 @@
 /obj/machinery/door_control{
 	id = "nadir_bhull_nw";
 	name = "Emergency Re-Entry";
-	pixel_x = 24
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -9701,7 +9722,10 @@
 /area/station/medical/medbay)
 "esW" = (
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "decon1"
+	id = "decon1";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/science/lobby{
@@ -9782,7 +9806,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "cc_stall1"
+	id = "cc_stall1";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -10012,14 +10038,16 @@
 "ezP" = (
 /obj/machinery/light,
 /obj/blind_switch/area/east{
-	pixel_y = 6
+	pixel_y = 6;
+	pixel_x = 23
 	},
 /obj/storage/secure/closet/brig_automatic/solitary2,
 /obj/machinery/door_control{
 	id = "secfoy_out";
 	name = "Exit Control";
-	pixel_x = 24;
-	pixel_y = -6
+	pixel_x = 23;
+	pixel_y = -6;
+	dir = 4
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/sec_foyer{
@@ -10028,7 +10056,10 @@
 "eAk" = (
 /obj/reagent_dispensers/still,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "maint_crimeroom2"
+	id = "maint_crimeroom2";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
@@ -11302,7 +11333,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "faQ" = (
@@ -12866,7 +12897,9 @@
 "fHm" = (
 /obj/machinery/crema_switch{
 	id = "crematorium";
-	pixel_x = 28
+	pixel_x = 24;
+	dir = 4;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -13942,7 +13975,9 @@
 	},
 /obj/item/clothing/suit/bedsheet,
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "cc_bdr3"
+	id = "cc_bdr3";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/south,
 /area/station/crew_quarters/quarters_west)
@@ -14379,7 +14414,10 @@
 	},
 /obj/stool/bench/blue/auto,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "cc_stall3"
+	id = "cc_stall3";
+	dir = 2;
+	pixel_x = 0;
+	pixel_y = 25
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -14552,7 +14590,9 @@
 /obj/machinery/door_control{
 	id = "nadir_exnex";
 	name = "Shielding Control";
-	pixel_x = 24
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -15185,7 +15225,7 @@
 /obj/machinery/door_control{
 	id = "scienceteleporter2";
 	name = "Pad Access Door";
-	pixel_x = -8;
+	pixel_x = -7;
 	pixel_y = 26
 	},
 /obj/machinery/door_control{
@@ -16103,7 +16143,9 @@
 /obj/machinery/door_control{
 	id = "nadir_bhull_sw";
 	name = "Emergency Re-Entry";
-	pixel_x = 24
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -17445,7 +17487,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "eastcc_stall4"
+	id = "eastcc_stall4";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -20149,7 +20193,7 @@
 /obj/stool/chair/purple{
 	dir = 8
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -21359,7 +21403,9 @@
 /obj/machinery/door_control{
 	id = "armory";
 	name = "Armory Window";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /turf/simulated/floor/engine/caution,
 /area/station/ai_monitored/armory)
@@ -22729,7 +22775,9 @@
 "jBb" = (
 /obj/storage/secure/closet/command/hos,
 /obj/machinery/door_control/bolter/new_walls/west{
-	id = "quarters_hos"
+	id = "quarters_hos";
+	pixel_x = -23;
+	pixel_y = 1
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -23246,7 +23294,9 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/machinery/door_control/bolter/new_walls/west{
-	id = "eastcc_room2"
+	id = "eastcc_room2";
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/crew_quarters/quarters_east)
@@ -25839,13 +25889,15 @@
 /area/pasiphae/crew)
 "kNA" = (
 /obj/machinery/door_timer/solitary2/new_walls/west{
-	pixel_y = -9
+	pixel_y = -10;
+	pixel_x = -22
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
 /obj/machinery/door_timer/solitary/new_walls/west{
-	pixel_y = 9
+	pixel_y = 9;
+	pixel_x = -22
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -27996,7 +28048,8 @@
 /obj/machinery/door_control{
 	id = "cargo_swapabout";
 	name = "Cargo Shutters";
-	pixel_y = 26
+	pixel_y = 24;
+	pixel_x = 0
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
@@ -29199,7 +29252,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "eastcc_stall4"
+	id = "eastcc_stall4";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -29287,7 +29342,9 @@
 	tag = ""
 	},
 /obj/machinery/door_control/bolter/new_walls/west{
-	id = "quarters_rd"
+	id = "quarters_rd";
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -33911,7 +33968,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/bent/west,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "ohY" = (
@@ -35551,7 +35608,9 @@
 	pixel_x = -32
 	},
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "cc_stall2"
+	id = "cc_stall2";
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
@@ -37168,7 +37227,10 @@
 	},
 /obj/landmark/start/job/assistant,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "maint_cc2"
+	id = "maint_cc2";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/storage{
@@ -37994,7 +38056,8 @@
 	pixel_x = -12
 	},
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "eastcc_stall1"
+	id = "eastcc_stall1";
+	dir = 2
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -38502,7 +38565,9 @@
 	},
 /obj/machinery/drainage,
 /obj/machinery/door_control/bolter/new_walls/west{
-	id = "decon2"
+	id = "decon2";
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/science/lobby{
@@ -39781,7 +39846,9 @@
 /obj/machinery/door_control{
 	id = "nadir_exnex";
 	name = "Shielding Control";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -40971,7 +41038,9 @@
 "rrj" = (
 /obj/machinery/computer/arcade,
 /obj/machinery/door_control/bolter/new_walls/east{
-	id = "quarters_cap"
+	id = "quarters_cap";
+	pixel_x = 23;
+	pixel_y = 1
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
@@ -41955,7 +42024,9 @@
 /obj/machinery/door_control/podbay{
 	id = "pasibay";
 	name = "Pasiphae pod bay door control";
-	pixel_x = 24
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/simulated/floor,
 /area/pasiphae/hangar)
@@ -42389,7 +42460,8 @@
 	pixel_x = -12
 	},
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "eastcc_stall2"
+	id = "eastcc_stall2";
+	dir = 2
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -43466,12 +43538,13 @@
 /obj/machinery/door_control{
 	id = "PTLDOOR";
 	name = "Transmission Laser Confinement";
-	pixel_x = -24;
-	pixel_y = -8
+	pixel_x = -23;
+	pixel_y = -7;
+	dir = 8
 	},
 /obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24;
+	dir = 4;
+	pixel_x = -22;
 	pixel_y = 8
 	},
 /obj/table/auto,
@@ -43844,7 +43917,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "quarters_mdir"
+	id = "quarters_mdir";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
@@ -44711,7 +44787,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "sZX" = (
@@ -45672,7 +45748,10 @@
 	},
 /area/station/crew_quarters/lounge)
 "tuT" = (
-/obj/machinery/door_control/podbay/security/new_walls/west,
+/obj/machinery/door_control/podbay/security/new_walls/west{
+	pixel_x = -23;
+	pixel_y = 1
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/hangar/sec)
 "tvh" = (
@@ -45796,7 +45875,9 @@
 /obj/machinery/door_control{
 	id = "nadirclomp";
 	name = "Cloning Bay Door Control";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /obj/machinery/manufacturer/uniform{
 	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5)
@@ -48580,7 +48661,9 @@
 /obj/stool/chair/red,
 /obj/disposalpipe/junction/left/east,
 /obj/machinery/door_timer/genpop/new_walls/north{
-	pixel_x = 6
+	pixel_x = 0;
+	dir = 2;
+	pixel_y = 24
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -48686,7 +48769,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "uMd" = (
@@ -49224,7 +49307,10 @@
 /obj/item/storage/wall/random,
 /obj/landmark/start/job/assistant,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "maint_cc1"
+	id = "maint_cc1";
+	dir = 1;
+	pixel_x = -1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/storage{
@@ -49484,7 +49570,9 @@
 /obj/machinery/door_control{
 	id = "nadir_barchem";
 	name = "Bar Chem-Safety Shutters";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /obj/table/reinforced/chemistry/auto{
 	name = "prep counter"
@@ -50675,7 +50763,9 @@
 	},
 /obj/machinery/door_control/bolter/new_walls/north{
 	pixel_x = 8;
-	id = "quarters_hop"
+	id = "quarters_hop";
+	dir = 2;
+	pixel_y = 25
 	},
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 1
@@ -51201,7 +51291,9 @@
 /obj/machinery/door_control{
 	id = "dwaine_core";
 	name = "DWAINE Core Shield";
-	pixel_x = 25
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
@@ -51621,7 +51713,7 @@
 /obj/stool/chair/purple{
 	dir = 4
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "wbj" = (
@@ -51952,7 +52044,8 @@
 "wjr" = (
 /obj/machinery/light_switch/west{
 	pixel_x = -8;
-	pixel_y = 24
+	pixel_y = 24;
+	dir = 1
 	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
@@ -53968,7 +54061,9 @@
 /obj/machinery/door_control{
 	id = "nadir_bhull_se";
 	name = "Emergency Re-Entry";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /turf/space/fluid/acid,
 /area/space)
@@ -55017,7 +55112,9 @@
 /obj/machinery/door_control{
 	id = "nadir_disposalock";
 	name = "Emergency Re-Entry";
-	pixel_x = -24
+	pixel_x = -23;
+	dir = 8;
+	pixel_y = 1
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
@@ -55429,7 +55526,10 @@
 	icon_state = "bedsheet-yellow"
 	},
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "quarters_ce"
+	id = "quarters_ce";
+	pixel_x = -1;
+	dir = 1;
+	pixel_y = -21
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/engineering/ce)
@@ -55652,7 +55752,9 @@
 /obj/machinery/door_control{
 	id = "nadirmed";
 	name = "Medbay Door Control";
-	pixel_x = 24
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 0
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1

@@ -19941,7 +19941,7 @@
 	dir = 8
 	},
 /obj/item/storage/wall/office,
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "gXP" = (
@@ -20733,7 +20733,7 @@
 /obj/stool/chair/office{
 	dir = 1
 	},
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -22299,7 +22299,7 @@
 	},
 /area/station/crew_quarters/bar)
 "iDb" = (
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -28733,7 +28733,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/engine/engineering)
 "nwl" = (
@@ -37881,7 +37881,7 @@
 /area/station/crew_quarters/quarters_west)
 "ulP" = (
 /obj/stool/chair/office,
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/carpet,
 /area/station/science/lobby)
 "ulV" = (
@@ -39241,7 +39241,7 @@
 	anchored = 0;
 	dir = 8
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "yellowblack"

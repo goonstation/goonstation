@@ -16638,7 +16638,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bXr" = (
@@ -23318,7 +23318,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/carpet/blue,
 /area/station/medical/staff)
 "goU" = (
@@ -37269,7 +37269,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -38353,7 +38353,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "pDG" = (
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "pDR" = (
@@ -38677,7 +38677,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "pQx" = (
@@ -45169,7 +45169,7 @@
 /area/station/maintenance/southwest)
 "tUx" = (
 /obj/stool,
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "tUA" = (

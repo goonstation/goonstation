@@ -15810,7 +15810,7 @@
 	},
 /area/station/medical/staff)
 "emH" = (
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/greenblack{
 	dir = 5
 	},
@@ -21428,7 +21428,7 @@
 /area/station/security/equipment)
 "fIM" = (
 /obj/disposalpipe/segment/vertical,
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -25222,7 +25222,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "gGI" = (
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -25987,7 +25987,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering/private)
 "gPK" = (
@@ -57243,7 +57243,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor,
 /area/station/engine/engineering/private)
 "paJ" = (
@@ -91021,7 +91021,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},

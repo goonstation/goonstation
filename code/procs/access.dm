@@ -256,7 +256,7 @@
 			return list(access_morgue, access_maint_tunnels)
 
 		///////////////////////////// Medical
-		if("Medical Doctor")
+		if("Medical Doctor", "Medical Trainee")
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
 			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
@@ -267,8 +267,6 @@
 		if("Pharmacist")
 			return list(access_research,access_tech_storage, access_maint_tunnels, access_chemistry,
 						access_medical_lockers, access_medical, access_morgue, access_researchfoyer)
-		if("Medical Assistant")
-			return list(access_maint_tunnels, access_tech_storage, access_medical, access_morgue)
 		if("Psychiatrist")
 			return list(access_medical, access_maint_tunnels)
 		if("Medical Specialist")
@@ -277,20 +275,18 @@
 						access_medlab) //Mdir minus head stuff
 
 		///////////////////////////// Science
-		if("Scientist")
+		if("Scientist", "Research Trainee")
 			return list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 		if("Chemist")
 			return list(access_research, access_chemistry, access_researchfoyer)
 		if("Toxins Researcher")
 			return list(access_research, access_tox, access_tox_storage, access_researchfoyer)
-		if("Research Assistant")
-			return list(access_maint_tunnels, access_tech_storage, access_research, access_chemistry, access_tox, access_researchfoyer, access_artlab, access_telesci, access_robotdepot) //notably not tox_storage, which is also the sci locker access for some fucking reason
 
 		//////////////////////////// Engineering
 		if("Atmospheric Technician")
 			return list(access_maint_tunnels, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
-		if("Engineer")
+		if("Engineer", "Technical Trainee")
 			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
 						access_tech_storage, access_engineering_mechanic)
@@ -321,7 +317,7 @@
 			return list(access_bar, access_kitchen)
 		if("Clown", "Boxer", "Barber", "Mime", "Dungeoneer")
 			return list(access_maint_tunnels)
-		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host")
+		if("Assistant", "Staff Assistant", "Radio Show Host")
 			return list(access_maint_tunnels, access_tech_storage)
 		if("Mail Courier")
 			return list(access_mail, access_heads, access_cargo, access_medical, access_researchfoyer, access_research, access_tech_storage)
