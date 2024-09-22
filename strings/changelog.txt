@@ -1,5 +1,9 @@
 
 (t)sun sep 22 24
+(u)TealSeer
+(p)20701
+(e)🆕🐣|C-Feature, A-Respawning
+(+)"Influencer" has been added to the gimmick job pool.
 (u)Flappybat
 (p)20790
 (e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
