@@ -10815,7 +10815,6 @@
 "aWb" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
-	tag = "icon-fblue2";
 	dir = 10
 	},
 /area/afterlife/bar/sanctuary)
@@ -29671,11 +29670,7 @@
 "cmj" = (
 /obj/machinery/vending/jobclothing/engineering/afterlife,
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
 "cmm" = (
 /obj/iomoon_puzzle/meat_ganglion{
@@ -43574,7 +43569,6 @@
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
-	tag = "icon-fblue2";
 	dir = 9
 	},
 /area/afterlife/bar/sanctuary)
@@ -43634,7 +43628,6 @@
 /obj/random_item_spawner/formalclothes/few,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
-	tag = "icon-fblue2";
 	dir = 5
 	},
 /area/afterlife/bar/sanctuary)
@@ -47906,6 +47899,7 @@
 /area/centcom/offices/shotgunbill)
 "dwo" = (
 /obj/map/light/brightwhite,
+/obj/submachine/laundry_machine,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dwp" = (
@@ -57131,7 +57125,6 @@
 "fVi" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
-	tag = "icon-fblue2";
 	dir = 9
 	},
 /area/afterlife/bar/sanctuary)
@@ -60919,7 +60912,6 @@
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
-	tag = "icon-fblue2";
 	dir = 10
 	},
 /area/afterlife/bar/sanctuary)
@@ -61782,11 +61774,7 @@
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "jEc" = (
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
 /area/afterlife/bar/sanctuary)
 "jEp" = (
 /turf/unsimulated/floor/stairs,
@@ -62820,11 +62808,7 @@
 /area/crypt/sigma/storage)
 "kxB" = (
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
 /area/afterlife/bar/sanctuary)
 "kxS" = (
 /obj/stool/chair/comfy/shuttle/red{
@@ -69135,11 +69119,7 @@
 "pKi" = (
 /obj/machinery/clothingbooth,
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
 "pKM" = (
 /obj/shrub/dead,
@@ -70531,8 +70511,7 @@
 "qOB" = (
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet{
-	icon_state = "blue1";
-	tag = "icon-blue1"
+	icon_state = "blue1"
 	},
 /area/afterlife/bar/sanctuary)
 "qOO" = (
@@ -73495,11 +73474,7 @@
 	},
 /area/titlescreen)
 "tox" = (
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
 "toK" = (
 /obj/indestructible/shuttle_corner{
@@ -73540,6 +73515,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
+"tqO" = (
+/obj/map/light/brightwhite,
+/obj/table/auto,
+/obj/towelbin,
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "trc" = (
 /obj/fakeobject/firelock_broken{
 	dir = 8;
@@ -74572,11 +74553,7 @@
 /area/iomoon/base)
 "urS" = (
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
 "use" = (
 /obj/overlay{
@@ -77348,11 +77325,7 @@
 /obj/storage/crate/packing,
 /obj/random_item_spawner/dressup/lots,
 /obj/map/light/brighterwhite,
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fblue1";
-	tag = "icon-fblue2 (NORTHWEST)"
-	},
+/turf/unsimulated/floor/carpet/blue/fancy/narrow/eastwest,
 /area/afterlife/bar/sanctuary)
 "wyH" = (
 /obj/critter/moonspy,
@@ -106853,7 +106826,7 @@ dSF
 dTv
 daN
 dwo
-dwo
+tqO
 ddz
 dTJ
 ekl
