@@ -100,6 +100,7 @@
 /atom/movable/hotspot
 	mouse_opacity = 0
 	anchored = ANCHORED_ALWAYS
+	pass_unstable = FALSE
 	flags = UNCRUSHABLE
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_ABOVE_LIGHTING
