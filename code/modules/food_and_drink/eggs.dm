@@ -60,6 +60,9 @@
 	heal_amt = 5 //tasty treat
 	var/timestamp_created = null
 
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		src.visible_message(SPAN_ALERT("[src] flops onto the floor!"))
+
 	heal(mob/living/M)
 		. = ..()
 		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.timestamp_created ? approx_time_text(world.realtime - src.timestamp_created) : "not very long"]."))
