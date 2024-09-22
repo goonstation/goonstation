@@ -123,6 +123,7 @@
 
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
+	load_intraround_eggs()
 	spawn_kitchen_note()
 
 	//SpyStructures and caches live here
