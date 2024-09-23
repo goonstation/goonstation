@@ -1710,6 +1710,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				access.access = get_access("Chef")
 
+		head_of_security
+
+			New()
+				..()
+				access.access = get_access("Head of Security") + access_centcom
+
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
