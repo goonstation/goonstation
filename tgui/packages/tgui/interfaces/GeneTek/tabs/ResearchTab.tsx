@@ -84,28 +84,25 @@ export const ResearchTab = (props) => {
         {availableResearch.map((ar, tier) => (
           <Section key={tier} title={`Tier ${tier + 1}`}>
             {ar.length
-              ? ar.map(
-                  (r) =>
-                    r.ref &&
-                    r.cost && (
-                      <Section
-                        key={r.ref}
-                        title={researchTree[r.ref]?.name}
-                        buttons={
-                          <Button
-                            icon="flask"
-                            disabled={materialCur < r.cost}
-                            onClick={() => act('research', { ref: r.ref })}
-                            color="teal"
-                          >
-                            {'Research (' + r.cost + ' mat, ' + r.time + 's)'}
-                          </Button>
-                        }
+              ? ar.map((r) => (
+                  <Section
+                    key={r.ref}
+                    title={researchTree[r.ref]?.name}
+                    buttons={
+                      <Button
+                        icon="flask"
+                        /** the cost property is always set for available researches */
+                        disabled={materialCur < r.cost!}
+                        onClick={() => act('research', { ref: r.ref })}
+                        color="teal"
                       >
-                        <Description text={researchTree[r.ref]?.desc} />
-                      </Section>
-                    ),
-                )
+                        {'Research (' + r.cost + ' mat, ' + r.time + 's)'}
+                      </Button>
+                    }
+                  >
+                    <Description text={researchTree[r.ref]?.desc} />
+                  </Section>
+                ))
               : 'No research is currently available at this tier.'}
           </Section>
         ))}
@@ -114,18 +111,14 @@ export const ResearchTab = (props) => {
         {finishedResearch.map((fr, tier) => (
           <Section key={tier} title={`Tier ${tier + 1}`}>
             {fr.length
-              ? fr.map(
-                  (r) =>
-                    r.ref &&
-                    r.cost && (
-                      <Section
-                        key={researchTree[r.ref].name}
-                        title={researchTree[r.ref].name}
-                      >
-                        <Description text={researchTree[r.ref].desc} />
-                      </Section>
-                    ),
-                )
+              ? fr.map((r) => (
+                  <Section
+                    key={researchTree[r.ref].name}
+                    title={researchTree[r.ref].name}
+                  >
+                    <Description text={researchTree[r.ref].desc} />
+                  </Section>
+                ))
               : 'No research has been completed at this tier.'}
           </Section>
         ))}

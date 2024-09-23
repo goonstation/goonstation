@@ -38,7 +38,7 @@ export interface GeneTekData {
 }
 
 interface ResearchEntry {
-  ref?: Ref;
+  ref: Ref;
   name: string;
   desc: string;
   cost?: number;
