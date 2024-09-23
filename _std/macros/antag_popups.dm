@@ -44,6 +44,7 @@
 	<a href='?src=\ref[src];action=spy'>Spy</a> |
 	<a href='?src=\ref[src];action=spythief'>Spy Thief</a> |
 	<a href='?src=\ref[src];action=conspiracy'>Conspiracy</a> |
+	<a href='?src=\ref[src];action=gang_leader'>Gang Leader</a> |
 	<a href='?src=\ref[src];action=gang_member'>Gang Member</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Vampire/Changeling</b>
@@ -51,6 +52,7 @@
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
 	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
+	<a href='?src=\ref[src];action=changeling_leave'>Leaving Hivemind</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |
 	<a href='?src=\ref[src];action=eyespider'>Eyespider</a> |
 	<a href='?src=\ref[src];action=legworm'>Legworm</a> |
@@ -74,7 +76,8 @@
 	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
 	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
 	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
-	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
+	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a> |
+	<a href='?src=\ref[src];action=zombie'>Zombie</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
 	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
@@ -83,12 +86,16 @@
 	<a href='?src=\ref[src];action=ghostcritter_mentor'>Mentor ghostcritter</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
+	<a href='?src=\ref[src];action=syndieborg'>Rogue Borg</a> |
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
 	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
 	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a> |
-	<a href='?src=\ref[src];action=souldorf'>Souldorf</a>
+	<a href='?src=\ref[src];action=souldorf'>Souldorf</a> |
+	<a href='?src=\ref[src];action=zoldorf'>Zoldorf</a> |
+	<a href='?src=\ref[src];action=football'>Football</a> |
+	<a href='?src=\ref[src];action=podwars'>Podwars</a>
 </div>
 "}
 
