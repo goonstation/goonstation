@@ -642,26 +642,6 @@
 		food_effects.Add("food_fireburp")
 		food_effects.Add("food_deep_burp")
 
-#ifdef XMAS
-
-/obj/item/reagent_containers/food/snacks/fruit_cake
-	name = "fruitcake"
-	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
-	icon_state = "cake_fruit"
-	bites_left = 12
-	heal_amt = 3
-	initial_volume = 50
-	initial_reagents = "yuck"
-	festivity = 10
-
-	on_finish(mob/eater)
-		..()
-		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
-		random_brute_damage(eater, 3)
-
-#endif
-
 /obj/item/cake_item
 	name = "cream sponge cake"
 	desc = "Mmm! A delicious-looking cream sponge cake! There's a lump in it..."

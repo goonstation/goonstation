@@ -28,7 +28,7 @@
 #define FACTION_FERMID			"fermid"
 
 /// Returns TRUE if ourguy is enemies with otherguy FALSE otherwise
-proc/faction_check(var/mob/ourguy, var/mob/otherguy, var/attack_neutral)
+proc/faction_check(mob/ourguy, mob/otherguy, attack_neutral)
 	if (length(ourguy.faction & otherguy.faction)) // Same faction
 		return FALSE
 	if ((FACTION_NEUTRAL in otherguy.faction) && !attack_neutral) // If neutral and we don't want to attack them, don't attack

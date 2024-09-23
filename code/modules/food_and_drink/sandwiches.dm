@@ -418,7 +418,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	heal(var/mob/M)
-		if(prob(20))
+		if(prob(20) && !(isghostcritter(M) && ON_COOLDOWN(src, "critter_gibs_\ref[M]", INFINITY)))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
 			boutput(M, SPAN_ALERT("You drip some meat on the floor"))
@@ -573,10 +573,19 @@
 	icon_state = "chilifries"
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 5
-	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	initial_volume = 25
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"=10)
 	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+	poutine
+		name = "poutine"
+		desc = "Lightly salted potato fingers, topped with gravy and cheese curds. Oh Canada!"
+		icon_state = "poutine"
+		bites_left = 6
+		heal_amt = 2
+		initial_volume = 25
+		initial_reagents = list("cholesterol"=1, "cheese"=10, "gravy"=10)
 
 /obj/item/reagent_containers/food/snacks/macguffin
 	name = "sausage macguffin"

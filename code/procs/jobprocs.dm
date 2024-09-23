@@ -69,6 +69,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			player.mind.assigned_role = "Construction Worker"
 		return
 
+	#ifdef I_WANNA_BE_THE_JOB
+	for (var/mob/new_player/player in unassigned)
+		player.mind.assigned_role = I_WANNA_BE_THE_JOB
+	UNLINT(return)
+	#endif
+
 	var/list/pick1 = list()
 	var/list/pick2 = list()
 	var/list/pick3 = list()
@@ -329,7 +335,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
+	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -343,16 +349,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
-			H.spawnId(JOB)
-		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
-			//Has the stowaway trait - they're hiding in a random locker
-			var/list/obj/storage/SL = get_random_station_storage_list(closed=TRUE, breathable=TRUE)
-
-			if(length(SL) > 0)
-				src.set_loc(pick(SL))
-				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
-
+		H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			SPAWN(0) //pod creation sleeps for... reasons
 				#define MAX_ALLOWED_ITERATIONS 300
@@ -576,7 +573,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
 
-	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
+	if (src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
@@ -593,8 +590,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
-
-	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
 		qdel(pda)
@@ -606,10 +601,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
 		trinket = src.create_wig()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))

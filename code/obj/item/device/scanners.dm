@@ -41,6 +41,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 			var/datum/contextAction/t_scanner/action = new actionType(src)
 			actions += action
 
+	dropped(mob/user)
+		. = ..()
+		user?.closeContextActions()
+
 	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
 		on = new_on

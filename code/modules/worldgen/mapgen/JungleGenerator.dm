@@ -80,10 +80,7 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 
 ///for the mapgen mountains, temp until we get something better
@@ -116,6 +113,9 @@
 #undef _TRANSFER_GAS_TO_AIR
 
 				air.temperature = temperature
+
+		if(station_repair.allows_vehicles)
+			src.allows_vehicles = station_repair.allows_vehicles
 
 		return src
 

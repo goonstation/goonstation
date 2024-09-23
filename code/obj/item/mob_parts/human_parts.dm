@@ -241,11 +241,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
+						colorheck = AH_piece.customizations["hair_bottom"].color
 					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
+						colorheck = AH_piece.customizations["hair_middle"].color
 					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
+						colorheck = AH_piece.customizations["hair_top"].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -269,11 +269,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
+					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
+					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
+					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -282,11 +282,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else
@@ -865,6 +865,7 @@
 	/// Plants are pretty unnatural
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -885,6 +886,7 @@
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_PLANT)
+	fingertip_color = "#3fb54f"
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1626,6 +1628,7 @@
 	partIcon = 'icons/mob/werewolf.dmi'
 	limb_type = /datum/limb/abomination/werewolf
 	kind_of_limb = (LIMB_MUTANT | LIMB_WOLF)
+	fingertip_color = "#895d37"
 
 	sever(mob/user)
 		. = ..()
@@ -1749,6 +1752,7 @@
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
 	force = 10
 	throw_return = TRUE
+	fingertip_color = "#aa9987"
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
@@ -1800,6 +1804,7 @@
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
 	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
+	fingertip_color = "#745136"
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'

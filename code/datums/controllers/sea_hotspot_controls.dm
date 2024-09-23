@@ -828,7 +828,7 @@ TYPEINFO(/obj/item/vent_capture_unbuilt)
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(last_gen), 50)]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
@@ -1002,7 +1002,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			if (isliving(M))
+			if (isliving(M) && !isintangible(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("knockdown", 1 SECOND)
 				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
@@ -1100,7 +1100,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 			for (var/mob/M in get_turf(src))
-				if (isliving(M) && M != jumper)
+				if (isliving(M) && !isintangible(M) && M != jumper)
 					random_brute_damage(M, src.stomp_damage, TRUE)
 					M.changeStatus("knockdown", 1 SECOND)
 					playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)

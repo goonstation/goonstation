@@ -177,7 +177,7 @@
 	},
 /area/space)
 "aB" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-door0 (WEST)";
 	icon_state = "door0";
 	dir = 8
@@ -233,7 +233,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "aK" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	tag = "icon-door0 (EAST)";
 	icon_state = "door0";
 	dir = 4
@@ -559,7 +559,7 @@
 	},
 /area/space)
 "bC" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 1;
 	icon = 'icons/obj/doors/blastdoor.dmi';
@@ -1375,7 +1375,7 @@
 /area/space)
 "dh" = (
 /obj/stomachacid,
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This blast door looks rusted over.  Junk.";
 	dir = 1;
 	icon = 'icons/obj/doors/blastdoor.dmi';

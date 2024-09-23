@@ -155,8 +155,8 @@
 							X.show_text("The stunhat has [hat.uses] charges left!", "red")
 
 
-						src.do_disorient(140, knockdown = 40, stunned = 20, disorient = 80)
-						src.stuttering = max(target.stuttering,5)
+						src.do_disorient(280, knockdown = 80, stunned = 40, disorient = 160)
+						src.stuttering = max(target.stuttering,30)
 					else
 						src.visible_message(SPAN_NOTICE("[src] gently pats [target] on the head."))
 					return
@@ -222,7 +222,7 @@
 		else
 			qdel(G)
 
-		src.next_click = world.time + (COMBAT_CLICK_DELAY)
+		src.next_click = world.time + src.combat_click_delay
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
 	if (src.grabbed_by && length(src.grabbed_by) > 0)
@@ -245,7 +245,7 @@
 		SEND_SIGNAL(I, COMSIG_ITEM_BLOCK_BEGIN, G)
 		src.setStatus("blocking", duration = INFINITE_STATUS)
 		block_begin(src)
-		src.next_click = world.time + (COMBAT_CLICK_DELAY)
+		src.next_click = world.time + src.combat_click_delay
 
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
@@ -1001,7 +1001,7 @@
 			target.TakeDamage(def_zone, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 
 			if ((damage_type & (DAMAGE_CUT | DAMAGE_STAB)) || bleed_always)
-				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type)
+				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type, is_crit=stamina_crit)
 				target.spread_blood_clothes(target)
 				owner.spread_blood_hands(target)
 				if (prob(15))

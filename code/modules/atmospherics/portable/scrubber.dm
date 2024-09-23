@@ -107,7 +107,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		src.updateDialog()
 	src.UpdateIcon()
 
-/obj/machinery/portable_atmospherics/scrubber/return_air()
+/obj/machinery/portable_atmospherics/scrubber/return_air(direct = FALSE)
 	return air_contents
 
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)

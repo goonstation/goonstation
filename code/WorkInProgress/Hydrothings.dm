@@ -282,12 +282,6 @@
 
 // setpiece decals
 
-/obj/fakeobject/sealed_door/owlery
-	name = "Busted Airlock"
-	desc = "This airlock is all shot up. The control panel seems to have taken several hits and is beyond repair."
-	icon = 'icons/misc/Owlzone.dmi'
-	icon_state = "airlock_broken"
-
 /obj/fakeobject/pipe/radioactive
 	desc = "This pipe is kinda warm. Huh."
 	interesting = "Radiological decay detected."
@@ -690,7 +684,6 @@
 	desc = "A disabled robot owl."
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "smallowl"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	anchored = ANCHORED
 	density = 1
 	flash_prob = 80
