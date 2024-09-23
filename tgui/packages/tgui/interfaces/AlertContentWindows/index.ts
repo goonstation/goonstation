@@ -6,7 +6,7 @@
  */
 import type { AlertContentWindow } from './types';
 
-const r = require.context('.', false, /\.AlertContentWindow\.tsx$/);
+const r = require.context('./acw', false, /\.AlertContentWindow\.tsx$/);
 
 export const getAlertContentWindow = (
   alertContentWindowName: string,
