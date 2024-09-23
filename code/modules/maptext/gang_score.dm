@@ -11,7 +11,7 @@
 	return text
 
 
-/// Displays gang score maptext on a specified target to all members of a gang.
+/// Displays gang score maptext on a specified target to all specified recipients.
 /proc/display_gang_score_maptext(atom/target, list/datum/mind/recipients, amount)
 	target.maptext_manager ||= new /atom/movable/maptext_manager(target)
 

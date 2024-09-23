@@ -72,27 +72,27 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	set name = ".start_typing"
 	set hidden = 1
 
-	create_typing_indicator()
+	src.create_typing_indicator()
 
 /// Hide the typing indicator. The source signifies what action the user was typing for.
 /mob/verb/cancel_typing(source as text)
 	set name = ".cancel_typing"
 	set hidden = 1
 
-	remove_typing_indicator()
+	src.remove_typing_indicator()
 
 // The same but for custom emotes.
 /mob/verb/start_emote_typing(source as text)
 	set name = ".start_emote_typing"
 	set hidden = 1
 
-	create_emote_typing_indicator()
+	src.create_emote_typing_indicator()
 
 /mob/verb/cancel_emote_typing(source as text)
 	set name = ".cancel_emote_typing"
 	set hidden = 1
 
-	remove_emote_typing_indicator()
+	src.remove_emote_typing_indicator()
 
 ////Wrappers////
 //Keybindings were updated to change to use these wrappers. If you ever remove this file, revert those keybind changes
@@ -102,37 +102,37 @@ The say/whisper/me wrappers and cancel_typing remove the typing indicator.
 	set hidden = 1
 	set instant = 1
 
-	remove_typing_indicator()
-	if(message)
-		say_verb(message)
+	src.remove_typing_indicator()
+	if (message)
+		src.say_verb(message)
 
 /mob/verb/whisper_wrapper(message as text)
 	set name = ".Whisper"
 	set hidden = 1
 	set instant = 1
 
-	remove_typing_indicator()
-	if(message)
-		whisper_verb(message)
+	src.remove_typing_indicator()
+	if (message)
+		src.whisper_verb(message)
 
 /mob/verb/emote_wrapper(message as text)
 	set name = ".Emote"
 	set hidden = 1
 	set instant = 1
 
-	remove_emote_typing_indicator()
-	if(message)
+	src.remove_emote_typing_indicator()
+	if (message)
 		var/emote_verb = winget(src, "emotewindow.say-input", "saved-params")
-		say_verb("[emote_verb] [message]")
+		src.say_verb("[emote_verb] [message]")
 
 /mob/verb/me_wrapper(message as text)
 	set name = ".Me"
 	set hidden = 1
 	set instant = 1
 
-	remove_typing_indicator()
-	if(message)
-		me_verb(message)
+	src.remove_typing_indicator()
+	if (message)
+		src.me_verb(message)
 
 
 // -- Human Typing Indicators -- //

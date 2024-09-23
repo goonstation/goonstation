@@ -268,6 +268,8 @@
 	var/tiles_controlled = 0
 	/// Associative list between Gang members -> their points
 	var/gang_points = list()
+	/// Associative list of tracked vandalism zones to the remaining score needed.
+	var/vandalism_tracker = list()
 
 #ifdef BONUS_POINTS
 	street_cred = 99999
@@ -287,6 +289,8 @@
 	var/score_drug = 0
 	/// Points gained by this gang from completing events.
 	var/score_event = 0
+	/// Total score. may not be perfectly up to date
+	var/score_total = 0
 	var/static/list/first_names = strings("gangwar.txt", "part1")
 	var/static/list/second_names = strings("gangwar.txt", "part2")
 
@@ -592,8 +596,42 @@
 		score += score_gun
 		score += score_drug
 		score += score_event
+		score_total = round(score)
+		return score_total
 
-		return round(score)
+	/// Shows maptext to the gang, with formatting for score increases.
+	proc/show_vandal_maptext(score, area/targetArea, turf/location, notable)
+		if (isnull(src.vandalism_tracker[targetArea]))
+			return
+
+		var/content
+		if (!notable)
+			content = "+[score]"
+		else
+			content = "+[score]\n [GANG_VANDALISM_REQUIRED_SCORE - src.vandalism_tracker[targetArea]]/[GANG_VANDALISM_REQUIRED_SCORE]"
+
+		global.display_gang_vandalism_maptext(location, (src.members + src.leader), content)
+
+	/// Checks to see if <location> is one the gang has to vandalise. If so, adds <amount> progress.
+	proc/do_vandalism(amount, turf/location)
+		if (amount == 0) return
+		var/area/area = get_area(location)
+		for (var/area/targetArea as anything in vandalism_tracker)
+			if (istype(area,targetArea))
+				var/notable_value_prior = vandalism_tracker[targetArea]
+				vandalism_tracker[targetArea] -= amount
+				var/notable_value_steps = round(notable_value_prior/50)-round(vandalism_tracker[targetArea]/50)
+				if (amount >= 10 || notable_value_steps > 0 )
+					show_vandal_maptext(amount, targetArea, location, TRUE)
+				else
+					show_vandal_maptext(amount, targetArea, location, FALSE)
+
+				if (vandalism_tracker[targetArea] <= 0)
+					src.announcer_say_source.say("You've successfully ruined \the [targetArea.name]! The duffle bag has been delivered to where the last act of vandalism occurred.")
+					var/obj/item/loot = new/obj/item/gang_loot/guns_and_gear(location)
+					showswirl(loot)
+					vandalism_tracker -= targetArea
+				break
 
 	/// add points to this gang, bonusMob optionally getting a bonus
 	/// if location is defined, maptext will come from that location, for all members.
@@ -602,19 +640,20 @@
 		var/datum/mind/bonusMind = bonusMob?.mind
 		if (leader)
 			if (gang_points[leader] == null)
-				gang_points[leader] = 0
+				gang_points[leader] = GANG_STARTING_POINTS
 			if (leader == bonusMind)
 				gang_points[leader] += round(amount * 1.25) //give a 25% reward for the one providing
 			else
 				gang_points[leader] += amount
 		for (var/datum/mind/M in members)
 			if (gang_points[M] == null)
-				gang_points[M] = 0
+				gang_points[M] = GANG_STARTING_POINTS
 			if (M == bonusMind)
 				gang_points[M] += round(amount * 1.25)
 			else
 				gang_points[M] += amount
 
+		gang_score()
 		if (!showText)
 			return
 		if (location)
@@ -720,9 +759,6 @@
 		"mail courier's hat" = /obj/item/clothing/head/mailcap,
 		"turban" = /obj/item/clothing/head/turban,
 		"formal turban" = /obj/item/clothing/head/formal_turban,
-		"constable's helmet" = /obj/item/clothing/head/helmet/bobby,
-		"viking helmet" = /obj/item/clothing/head/helmet/viking,
-		"batcowl" = /obj/item/clothing/head/helmet/batman,
 		"welding helmet" = /obj/item/clothing/head/helmet/welding,
 		"biker cap" = /obj/item/clothing/head/biker_cap,
 		"NT beret" = /obj/item/clothing/head/NTberet,
@@ -879,12 +915,11 @@
 
 		return message
 
-
-/obj/item/spray_paint
-	name = "spraypaint can"
-	desc = "A can of spray paint."
+/obj/item/spray_paint_gang
+	name = "'Red X' Xtra Heavy Spray Paint"
+	desc = "The bane of janitors everywhere. Red X is an extra thick, toxic brand of spray paint, infamous for permanently marking spots all over the galaxy. No points for guessing their slogan."
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "spraycan"
+	icon_state = "spraycan_gang"
 	item_state = "spraycan"
 	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
@@ -892,6 +927,17 @@
 	var/in_use = FALSE
 	var/empty = FALSE
 
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/graffiti)
+
+	attack_self(mob/user)
+		if (ON_COOLDOWN(src,"shake",1 SECOND))
+			user.visible_message(SPAN_ALERT("[user] shakes the [src.name]!"))
+			playsound(user.loc, 'sound/items/graffitishake.ogg', 50, FALSE)
+
+	afterattack(target, mob/user)
+		do_gang_tag(target,user)
 	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
 		// check it's far enough from another tag to claim
@@ -976,7 +1022,7 @@
 
 		return validLocation
 
-	afterattack(target, mob/user)
+	proc/do_gang_tag(target, mob/user)
 		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
 
 		if (!user)
@@ -1001,6 +1047,138 @@
 		if (check_tile_unclaimed(turftarget, user))
 			user.visible_message(SPAN_ALERT("[user] begins to paint a gang tag on the [turftarget.name]!"))
 			actions.start(new/datum/action/bar/icon/spray_gang_tag(turftarget, src), user)
+/obj/item/spray_paint_graffiti
+	name = "'ProPaint' spray paint can"
+	desc = "A can of gloss spray paint. Great for doing wicked sick art. Not so great when the janitor shows up."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "spraycan"
+	item_state = "spraycan"
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
+	w_class = W_CLASS_SMALL
+	object_flags = NO_GHOSTCRITTER
+	var/in_use = FALSE
+	var/list/turf/graffititargets = list()
+	var/list/image/targetoverlay = list()
+	var/charges = GANG_VANDALISM_GRAFFITI_MAX
+	var/tagging_horizontally = FALSE
+	var/tagging_vertically = FALSE
+	var/tagging_direction
+	var/list/tags_single
+	var/list/tags_double
+	var/list/tags_triple
+
+	w_class = W_CLASS_TINY
+
+	update_icon()
+		if (charges > 0 )
+			inventory_counter?.update_number(charges)
+		else
+			inventory_counter?.update_text("-")
+		..()
+
+	New()
+		inventory_counter_enabled = TRUE
+		refresh_single_tags()
+		refresh_double_tags()
+		refresh_triple_tags()
+		..()
+		src.setItemSpecial(/datum/item_special/graffiti)
+	attack_self(mob/user)
+		if (ON_COOLDOWN(src,"shake",1 SECOND))
+			user.visible_message(SPAN_ALERT("[user] shakes the [src.name]!"))
+			playsound(user.loc, 'sound/items/graffitishake.ogg', 50, FALSE)
+
+	afterattack(target, mob/user)
+		do_graffiti(target,user)
+
+	proc/clear_targets()
+		graffititargets = list()
+		tagging_horizontally = FALSE
+		tagging_vertically = FALSE
+		for (var/image/image in targetoverlay)
+			targetoverlay -= image
+			qdel(image)
+	proc/add_target(mob/user, turf/turftarget)
+		graffititargets += turftarget
+		var/image/target_image = image('icons/effects/effects.dmi', turftarget)
+		targetoverlay += target_image
+		target_image.icon_state = "tile_channel_target"
+		target_image.layer = NOLIGHT_EFFECTS_LAYER_BASE
+		user << target_image
+
+
+
+	proc/refresh_single_tags()
+		tags_single = list()
+		for (var/i=1 to 9)
+			tags_single += i
+	proc/refresh_double_tags()
+		tags_double = list()
+		for (var/i=1 to 7)
+			tags_double += i
+	proc/refresh_triple_tags()
+		tags_triple = list()
+		for (var/i=1 to 11)
+			tags_triple += i
+
+	proc/do_graffiti(target, mob/user)
+		if(!istype(target,/turf) && !istype(target,/obj/decal/gangtag)) return
+
+		if (!user)
+			return
+		if (length(graffititargets) + 1 > charges)
+			return
+		var/turf/turftarget = get_turf(target)
+
+		if(BOUNDS_DIST(src, target) > 0 || (turftarget in graffititargets) || turftarget == get_turf(user)) //spraying at your feet messes with math
+			return
+		if(in_use)
+			var/valid = FALSE
+			for (var/turf/sprayedturf in graffititargets)
+				var/relative_dir = get_dir(turftarget,sprayedturf)
+				if (BOUNDS_DIST(sprayedturf, turftarget) == 0 && (relative_dir in cardinal))
+					if (tagging_horizontally && (relative_dir == WEST || relative_dir == EAST))
+						valid = TRUE
+						break
+					if (tagging_vertically && (relative_dir == NORTH || relative_dir == SOUTH))
+						valid = TRUE
+						break
+					if (!tagging_horizontally && !tagging_vertically)
+						valid = TRUE
+						break
+			if (!valid)
+				boutput(user, SPAN_ALERT("You are already tagging elsewhere!"))
+				return
+
+		user.visible_message(SPAN_ALERT("[user] begins to spray graffiti on the [turftarget.name]!"))
+		if (!actions.hasAction(user,/datum/action/bar/icon/spray_graffiti,FALSE))
+			actions.start(new/datum/action/bar/icon/spray_graffiti(src), user)
+			clear_targets()
+			add_target(user, turftarget)
+			var/chosen_dir = get_dir(turftarget,user)
+			if (chosen_dir)
+				tagging_direction = chosen_dir
+			else
+				tagging_direction = SOUTH
+		else if (length(graffititargets) == 1)
+			var/chosen_dir = get_dir(turftarget,user)
+			var/direction_check = get_dir(turftarget,graffititargets[1])
+			if (direction_check == NORTH || direction_check == SOUTH)
+				tagging_vertically = TRUE
+				if (chosen_dir == 0)
+					tagging_direction = turn(direction_check,-90) & (EAST | WEST)
+				else
+					tagging_direction = chosen_dir & (EAST | WEST)
+
+			else if (direction_check == EAST || direction_check == WEST)
+				tagging_horizontally = TRUE
+				if (chosen_dir == 0)
+					tagging_direction = turn(direction_check,-90) & (NORTH | SOUTH)
+				else
+					tagging_direction = chosen_dir & (NORTH | SOUTH)
+			add_target(user, turftarget)
+		else if (length(graffititargets) < 3)
+			add_target(user, turftarget)
 
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
@@ -1009,7 +1187,7 @@
 	icon_state = "spraycan"
 	var/turf/target_turf
 	var/area/target_area
-	var/obj/item/spray_paint/S
+	var/obj/item/spray_paint_gang/spraycan
 	/// the mob spraying this tag
 	var/mob/M
 	/// the gang we're spraying for
@@ -1017,10 +1195,10 @@
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
 
-	New(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
+	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can)
 		src.target_turf = target_turf
 		src.target_area = get_area(target_turf)
-		src.S = S
+		src.spraycan = can
 		..()
 
 	onStart()
@@ -1031,7 +1209,7 @@
 				M = owner
 				src.gang = M?.get_gang()
 			if (gang)
-				icon = 'icons/obj/decals/graffiti.dmi'
+				icon = 'icons/obj/decals/gang_tags.dmi'
 				icon_state = "gangtag[src.gang.gang_tag]"
 				var/speedup = src.gang.gear_worn(M)
 				switch (speedup)
@@ -1050,13 +1228,13 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = TRUE
+		spraycan.in_use = TRUE
 		playsound(target_turf, 'sound/items/graffitishake.ogg', 50, FALSE)
 		next_spray += rand(10,15) DECI SECONDS
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(spraycan in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
@@ -1065,20 +1243,21 @@
 
 	onInterrupt(var/flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
-		if (S)
-			S.in_use = FALSE
+		if (spraycan)
+			spraycan.in_use = FALSE
 		..()
 
 	onEnd()
+		var/mob/M = owner
 		..()
-		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(S in M.equipped_list()))
+		if(BOUNDS_DIST(owner, target_turf) > 0 || target_turf == null || !owner || !(spraycan in M.equipped_list()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if(!S.check_tile_unclaimed(target_turf, owner))
+		if(!spraycan.check_tile_unclaimed(target_turf, owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = FALSE
+		spraycan.in_use = FALSE
 		target_area.being_captured = FALSE
 		var/sprayOver = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
@@ -1086,14 +1265,157 @@
 			sprayOver = TRUE
 
 		src.gang.make_tag(target_turf)
-		S.empty = TRUE
-		S.icon_state = "spraycan_crushed"
+		spraycan.empty = TRUE
+		spraycan.icon_state = "spraycan_crushed_gang"
+		spraycan.setItemSpecial(/datum/item_special/simple)
+		spraycan.tooltip_rebuild = 1
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
 		else
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area]")
 		boutput(M, SPAN_NOTICE("You have claimed this area for your gang and gained bonus points!"))
+
+
+/datum/action/bar/icon/spray_graffiti
+	duration = 100 SECONDS
+	interrupt_flags = INTERRUPT_STUNNED
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "spraycan"
+	var/obj/item/spray_paint_graffiti/spraycan
+	/// the mob spraying this tag
+	var/mob/M
+	/// the gang we're spraying for
+	var/datum/gang/gang
+	/// when our next spray sound can beplayed
+	var/next_spray = 0 DECI SECONDS
+
+	New(obj/item/spray_paint_graffiti/S)
+		src.spraycan = S
+		..()
+
+	onStart()
+		if (ismob(owner))
+			M = owner
+			var/ownerGang = M?.get_gang()
+			if (ownerGang)
+				gang = ownerGang
+		..()
+
+		for (var/turf/sprayedturf in spraycan.graffititargets)
+			if (BOUNDS_DIST(owner, sprayedturf) > 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+		spraycan.in_use = TRUE
+		next_spray += rand(10,15) DECI SECONDS
+
+	onUpdate()
+		..()
+		for (var/turf/sprayedturf in spraycan.graffititargets)
+			if (BOUNDS_DIST(owner, sprayedturf) > 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		if(src.time_spent() > next_spray)
+			next_spray += rand(18,26) DECI SECONDS
+			playsound(owner.loc, 'sound/items/graffitispray3.ogg', 100, TRUE)
+		var/new_duration = duration
+		switch (length(spraycan.graffititargets))
+			if (1)
+				new_duration = 4 SECONDS
+			if (2)
+				new_duration = 6 SECONDS
+			if (3)
+				new_duration = 8 SECONDS
+		if (new_duration != duration)
+			duration = new_duration
+			updateBar()
+
+	onInterrupt(flag)
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
+		if (spraycan)
+			spraycan.in_use = FALSE
+			spraycan.clear_targets()
+		..()
+
+	onEnd()
+		..()
+		for (var/turf/sprayedturf in spraycan.graffititargets)
+			if (BOUNDS_DIST(owner, sprayedturf) > 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		if(!owner)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		spraycan.in_use = FALSE
+		var/iconstate
+		var/targets = length(spraycan.graffititargets)
+		switch (targets)
+			if (1)
+				var/result = pick(spraycan.tags_single)
+				spraycan.tags_single -= result
+				iconstate = "graffiti-single-[result]"
+				if (length(spraycan.tags_single) == 0)
+					spraycan.refresh_single_tags()
+			if (2)
+				var/result = pick(spraycan.tags_double)
+				spraycan.tags_double -= result
+				iconstate = "graffiti-dbl-[result]-"
+				if (length(spraycan.tags_double) == 0)
+					spraycan.refresh_double_tags()
+			if (3)
+				var/result = pick(spraycan.tags_triple)
+				spraycan.tags_triple -= result
+				iconstate = "graffiti-trpl-[result]-"
+				if (length(spraycan.tags_triple) == 0)
+					spraycan.refresh_triple_tags()
+		spraycan.charges -= targets
+		spraycan.UpdateIcon()
+		if (targets == 1)
+			var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(spraycan.graffititargets[1])
+			tag.icon_state = iconstate
+			tag.dir = spraycan.tagging_direction
+			gang?.do_vandalism(GANG_VANDALISM_PER_GRAFFITI_TILE, spraycan.graffititargets[1])
+		else
+			var/list/turf/turfs_ordered = new/list(length(spraycan.graffititargets))
+			var/spraydirection = dir_to_angle(spraycan.tagging_direction)
+			var/vec = angle_to_vector(spraydirection)
+			var/min_distance = 1000
+			// the smallest X/Y coord, depending on if X/Y used
+			for (var/i = 1 to targets)
+				min_distance = min(vec[2] * spraycan.graffititargets[i].y - vec[1] * spraycan.graffititargets[i].x , min_distance)
+
+			//sorts tags by their distance from min_distance, 1-3
+			for (var/sorting = 1 to targets)
+				var/dist = (vec[2] * spraycan.graffititargets[sorting].y -vec[1] * spraycan.graffititargets[sorting].x ) - min_distance
+				turfs_ordered[dist+1] = spraycan.graffititargets[sorting]
+
+			var/vandal_score = 0
+			var/turf/chosenTurf
+			for (var/i = 1 to targets)
+				var/obj/decal/cleanable/gang_graffiti/tag = new/obj/decal/cleanable/gang_graffiti(turfs_ordered[i])
+				var/area = get_area(turfs_ordered[i])
+				tag.icon_state = "[iconstate][i]"
+				tag.dir = spraycan.tagging_direction
+				vandal_score += GANG_VANDALISM_PER_GRAFFITI_TILE
+
+				if (gang && !chosenTurf)
+					for (var/area/targetArea as anything in gang.vandalism_tracker)
+						if (istype(area,targetArea))
+							chosenTurf = turfs_ordered[i]
+							break
+			gang?.do_vandalism(vandal_score, chosenTurf)
+
+
+		spraycan.clear_targets()
+		playsound(spraycan.loc, 'sound/effects/graffiti_hit.ogg', 20, TRUE)
+		if (spraycan.charges == 0)
+			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
+			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
+			spraycan.icon_state = "spraycan_crushed"
+			spraycan.setItemSpecial(/datum/item_special/simple)
+			spraycan.tooltip_rebuild = 1
+
 
 /obj/ganglocker
 	desc = "Gang locker."
@@ -1145,17 +1467,19 @@
 		buyable_items = list(
 			new/datum/gang_item/consumable/medkit,
 			new/datum/gang_item/consumable/omnizine,
-			new/datum/gang_item/misc/armor,
-			new/datum/gang_item/consumable/tipoff,
 			new/datum/gang_item/consumable/quickhack,
-			new/datum/gang_item/misc/ratstick,
-			new/datum/gang_item/street/switchblade,
-			// new/datum/gang_item/ninja/nunchucks, removed for stunning too many secoffs
-			new/datum/gang_item/ninja/throwing_knife,
-			new/datum/gang_item/ninja/shuriken,
-			new/datum/gang_item/ninja/discount_katana,
-			new/datum/gang_item/space/discount_csaber,
-			new/datum/gang_item/street/cop_car)
+			new/datum/gang_item/consumable/tipoff,
+			new/datum/gang_item/equipment/graffiti,
+			new/datum/gang_item/equipment/armor,
+			new/datum/gang_item/weapon/throwing_knife,
+			new/datum/gang_item/weapon/shuriken,
+			new/datum/gang_item/weapon/ratstick,
+			new/datum/gang_item/weapon/switchblade,
+			new/datum/gang_item/weapon/baseball,
+			new/datum/gang_item/weapon/machete,
+			new/datum/gang_item/weapon/discount_katana,
+			new/datum/gang_item/weapon/discount_csaber,
+			new/datum/gang_item/special/cop_car)
 
 	disposing(var/uncapture = 1)
 		STOP_TRACKING
@@ -1178,7 +1502,7 @@
 		// if (!src.HTML)
 		var/page = src.generate_HTML(user)
 
-		user.Browse(page, "window=gang_locker;size=650x630")
+		user.Browse(page, "window=gang_locker;size=650x670")
 		//onclose(user, "gang_locker")
 
 	ex_act()
@@ -1201,41 +1525,63 @@
 		var/datum/mind/M = user.mind
 		var/dat = {"<HTML>
 		<div style="width: 100%; overflow: hidden;">
-			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
-				<center><font size="5"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
-				<center><font size="5"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
+			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
+				<center style="padding-top: 25px;"><font size="5"><a href='byond://?src=\ref[src];get_gear=1'>Get gear</a></font></center><br>
 				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
-				<center><font size="3"><a href='byond://?src=\ref[src];get_drugs=1'>list drug prices</a></font></center><br>
+				<center><font size="5"><a href='byond://?src=\ref[src];get_spray=1'>Grab spraypaint</a></font></center><br>
 			</div>
-			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
+			<div>
+			<div style="height: 72px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
 				[(is_leader_cryod() || src.gang.leader_claimable) ? {"<font size="3"><a href='byond://?src=\ref[src];claim_leader=1'>Become the leader!</a></font>"}: {"
 				<font size="3">[src.gang.leader == user.mind ? {"You have [gang.street_cred] street cred!"} : {"You aren't the leader!"} ] </font><br>
 				<font size="3"><a href='byond://?src=\ref[src];respawn_new=1'>Recruit a new member:</a></font> [src.gang.current_newmember_price] cred<br>
 				<font size="3"><a href='byond://?src=\ref[src];respawn_syringe=1'>Buy a revival stim:</a></font> [src.gang.current_revival_price] cred<br>
 				"}]
 			</div>
+			<div style="height: 72px;width: 290px;padding-left: 5px;; float: left;border-style: solid; text-align: center;">
+				<center><font size="3"><a href='byond://?src=\ref[src];get_drugs=1'>List drug prices</a></font></center><br>
+				<center><font size="3"><a href='byond://?src=\ref[src];get_scoreboard=1'>Scoreboard</a></font></center><br>
+			</div>
+			</div>
 		</div>
+		<HR>
+		<font size="3">You have [src.gang.gang_points[M]] points to spend! These aren't shared with your gang.</font>
 		<HR>
 		"}
 
 
 		dat += {"
-		<font size="3">You have [src.gang.gang_points[M]] points to spend! These aren't shared with your gang.</font>
 		<table>
-		<tr>
-			<th></th>
-			<th>Name</th>
-			<th>Price</th>
-			<th>Desc</th>
-		</tr>
 		"}
-		for (var/datum/gang_item/GI in buyable_items)
-			var/icon_rsc = getItemIcon(GI.item_path, C = user.client)
-			if (istype(GI, /datum/gang_item/misc/janktank))
-				var/datum/gang_item/misc/janktank/JT = GI
-				JT.price = src.janktank_price
 
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Consumables</b></font></td></tr>"
+		var/list/items = list()
+		for (var/datum/gang_item/consumable/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Equipment</b></font></td></tr>"
+		for (var/datum/gang_item/equipment/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Weapons</b></font></td></tr>"
+		for (var/datum/gang_item/weapon/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+
+		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Special</b></font></td></tr>"
+		for (var/datum/gang_item/special/GI in buyable_items)
+			if (items[GI.category] == null)
+				items[GI.category] = list()
+			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
+
 
 		dat += "</table></HTML>"
 
@@ -1247,7 +1593,7 @@
 		if(user.get_gang() == src.gang)
 			if (gang.spray_paint_remaining > 0)
 				gang.spray_paint_remaining--
-				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
+				user.put_in_hand_or_drop(new /obj/item/spray_paint_gang(user.loc))
 				boutput(user, SPAN_ALERT("You grab a bottle of spray paint from the locker."))
 		else
 			boutput(user, SPAN_ALERT("The locker's screen briefly displays the message \"Access Denied\"."))
@@ -1272,6 +1618,8 @@
 			handle_get_spraypaint(usr)
 		if (href_list["get_drugs"])
 			print_drug_prices(usr)
+		if (href_list["get_scoreboard"])
+			print_scoreboard(usr)
 		if (href_list["claim_leader"])
 			claim_leadership(usr)
 		if (href_list["buy_item"])
@@ -1295,7 +1643,7 @@
 		src.janktank_price = round(src.janktank_price * 1.1)
 
 		for (var/datum/gang/gang in get_all_gangs())
-			var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in gang.locker.buyable_items
+			var/datum/gang_item/equipment/janktank/JT = locate(/datum/gang_item/equipment/janktank) in gang.locker.buyable_items
 			JT.price = janktank_price
 
 	proc/is_leader_cryod()
@@ -1549,11 +1897,11 @@
 
 		//cash score
 		if (istype(item, /obj/item/currency/spacecash))
-			var/obj/item/currency/spacecash/S = item
+			var/obj/item/currency/spacecash/cash = item
 
-			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, S.amount))
+			var/cash_to_take = max(0,min(GANG_LAUNDER_CAP-stored_cash, cash.amount))
 
-			if (S.hasStatus("freshly_laundered"))
+			if (cash.hasStatus("freshly_laundered"))
 				superlaunder_stacks += round(cash_to_take/(GANG_LAUNDER_RATE*1.5))
 
 			if (cash_to_take == 0)
@@ -1561,13 +1909,13 @@
 				return
 			if (stored_cash == 0)
 				boutput(user, SPAN_ALERT("The [src] boots up and starts laundering the money. This will take some time, so defend it!"))
-			if (cash_to_take < S.amount)
+			if (cash_to_take < cash.amount)
 				stored_cash += cash_to_take
-				S.amount -= cash_to_take
+				cash.amount -= cash_to_take
 				boutput(user, SPAN_ALERT("<b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b>"))
-				S.UpdateStackAppearance()
+				cash.UpdateStackAppearance()
 				return
-			stored_cash += S.amount
+			stored_cash += cash.amount
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
@@ -1723,12 +2071,21 @@
 		There is additional demand for [GANG_WEED_LIMIT-gang_weed] leaves of cannabis, for 10 points each."}
 		boutput(user, SPAN_ALERT(text))
 
+	proc/print_scoreboard(var/mob/living/carbon/human/user)
+		var/text = {"The current scores are:</br>"}
+		var/list/datum/gang/scores
+		var/datum/game_mode/gang/gamemode = ticker.mode
+		scores = sortListCopy(gamemode.gangs, /proc/cmp_gang_score_desc)
+		for (var/i=1 to length(scores))
+			text += "<b>[i]: [scores[i].gang_name]</b></br>"
+		boutput(user, SPAN_ALERT(text))
+
 
 	proc/cash_amount()
 		var/number = 0
 
-		for(var/obj/item/currency/spacecash/S in contents)
-			number += S.amount
+		for(var/obj/item/currency/spacecash/cash in contents)
+			number += cash.amount
 
 		return round(number)
 
@@ -1756,19 +2113,19 @@
 				return
 
 		if(istype(W,/obj/item/satchel))
-			var/obj/item/satchel/S = W
+			var/obj/item/satchel/satchel = W
 			var/hadcannabis = 0
 
-			for(var/obj/item/plant/herb/cannabis/C in S.contents)
-				insert_item(C,user)
-				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+			for(var/obj/item/plant/herb/cannabis/herb in satchel.contents)
+				insert_item(herb,user)
+				satchel.UpdateIcon()
+				satchel.tooltip_rebuild = 1
 				hadcannabis = 1
 
 			if(hadcannabis)
-				boutput(user, SPAN_NOTICE("You empty the cannabis from [S] into the [src]."))
+				boutput(user, SPAN_NOTICE("You empty the cannabis from [satchel] into the [src]."))
 			else
-				boutput(user, SPAN_NOTICE("[S] doesn't contain any cannabis."))
+				boutput(user, SPAN_NOTICE("[satchel] doesn't contain any cannabis."))
 			return
 
 		user.lastattacked = src
@@ -2003,10 +2360,13 @@
 	object_flags = NO_GHOSTCRITTER
 	throwforce = 1
 	force = 1
-	inventory_counter_enabled = 1
 	w_class = W_CLASS_TINY
 	var/max_charges = 5
 	var/charges = 5
+
+	New()
+		inventory_counter_enabled = TRUE
+		..()
 
 	syndicate
 		max_charges = 10
@@ -2046,7 +2406,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 
-	spawn_contents = list(/obj/item/gang_flyer = 4, /obj/item/spray_paint = 2, /obj/item/tool/quickhack = 1)
+	spawn_contents = list(/obj/item/gang_flyer = 4, /obj/item/spray_paint_gang = 2, /obj/item/tool/quickhack = 1)
 	var/datum/gang/gang = null
 
 	New(turf/newloc, datum/gang/gang)
@@ -2057,7 +2417,7 @@
 
 	random_gangs
 		name = "gang equipment case"
-		spawn_contents = list(/obj/item/spray_paint = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
+		spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
 		New(turf/newloc, datum/gang/gang)
 			..()
 			src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
@@ -2075,7 +2435,7 @@
 /datum/gang_item
 	var/name = "commodity"	// Name of the item
 	var/desc = "item"		//Description for item
-	var/class1 = ""			//This should be general category: weapon, clothing/armor, misc
+	var/category = ""			//This should be general category: weapon, clothing/armor, misc
 	var/class2 = ""			//This should be the gang item style: Street Gang, Western Gang, Space Gang
 	var/item_path = null 		// Type Path of the item
 	var/price = 100 			//
@@ -2084,53 +2444,73 @@
 	proc/on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		return FALSE
 /datum/gang_item/street
-	class1 = "Street Gang"
+	category = "Street Gang"
 /datum/gang_item/thirties_chicago
-	class1 = "30s Chicago Gang"
+	category = "30s Chicago Gang"
 /datum/gang_item/kung_fu
-	class1 = "Kung Fu"
+	category = "Kung Fu"
 /datum/gang_item/ninja
-	class1 = "Ninja"
+	category = "Ninja"
 /datum/gang_item/country_western
-	class1 = "Country Western"
+	category = "Country Western"
 /datum/gang_item/space
-	class1 = "Space Gang"
-/datum/gang_item/misc
-	class1 = "Misc Gang"
-	class1 = "Consumable"
+	category = "Space Gang"
+/datum/gang_item/space
+	category = "Weapon"
+/datum/gang_item/equipment
+	category = "Consumable"
 
-/datum/gang_item/misc/ratstick
+/datum/gang_item/equipment/graffiti
+	name = "'ProPaint' Spray Can"
+	desc = "Non-permanent graffiti, great for vandalism & blinding the fuzz. Not able to claim territory."
+	class2 = "consumable"
+	price = 300
+	item_path = /obj/item/spray_paint_graffiti
+
+/datum/gang_item/weapon/ratstick
 	name = "Rat Stick"
-	desc = "A stick for killing rats. Deals both blunt and slashing damage."
+	desc = "A stick for killing rats. Can deal both blunt and slashing damage."
 	class2 = "weapon"
-	price = 1400
+	price = 1200
 	item_path = /obj/item/ratstick
-/datum/gang_item/misc/armor
+/datum/gang_item/equipment/armor
 	name = "Armored Vest"
-	desc = "Grants you protection without cramping your style!"
+	desc = "Grants you protection, and lets you keep your wicked style bonus!"
 	class2 = "clothing"
 	price = 7500
 	item_path = /obj/item/clothing/suit/armor/gang
 
-/datum/gang_item/street/lead_pipe
+/datum/gang_item/weapon/lead_pipe
 	name = "Lead Pipe"
 	desc = "A pipe made of lead... Probably."
 	class2 = "weapon"
 	price = 500
 	// item_path = /obj/item/lead_pipe
-/datum/gang_item/ninja/nunchucks
+/datum/gang_item/weapon/nunchucks
 	name = "Nunchucks"
 	desc = "A pair of nunchucks, trading some raw lethality for pain compliance."
 	class2 = "weapon"
 	price = 1200
 	item_path = /obj/item/nunchucks
-/datum/gang_item/street/switchblade
+/datum/gang_item/weapon/switchblade
 	name = "Switchblade"
-	desc = "A stylish knife you can hide in your clothes. Special attacks are exceptional at causing heavy bleeding."
-	price = 2000
+	desc = "A stylish knife you can hide in your clothes. Special attacks do extreme bleeding damage."
+	price = 1700
 	class2 = "weapon"
 	item_path = /obj/item/switchblade
-/datum/gang_item/street/Shiv
+/datum/gang_item/weapon/baseball
+	name = "Baseball Bat"
+	desc = "A wooden baseball bat. Deflects thrown weapons while equipped. Special attacks can launch enemies."
+	price = 2000
+	class2 = "weapon"
+	item_path = /obj/item/bat
+/datum/gang_item/weapon/machete
+	name = "Machete"
+	desc = "A sharp, heavy machete for the real sadists. Special attacks start a flurry of attacks."
+	price = 10000
+	class2 = "weapon"
+	item_path = /obj/item/gang_machete
+/datum/gang_item/weapon/Shiv
 	name = "Shiv"
 	desc = "A single-use stabbing implement, dealing heavy damage and constant BLEED."
 	class2 = "weapon"
@@ -2155,7 +2535,7 @@
 	class2 = "misc"
 	price = 10000
 	// item_path = /obj/item/clothing/gloves/brass_knuckles
-/datum/gang_item/street/cop_car				//let gang members enter cars faster wearing their clothes
+/datum/gang_item/special/cop_car				//let gang members enter cars faster wearing their clothes
 	name = "Stolen Cop Car"
 	desc = "An enterprising member of your gang stole this from the fuzz. Hopefully it doesn't have lojack."
 	class2 = "misc"
@@ -2165,34 +2545,35 @@
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////////NINJA////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/datum/gang_item/ninja/discount_katana
+/datum/gang_item/weapon/discount_katana
 	name = "Katana"
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
-	price = 7000
+	price = 10000
 	item_path = /obj/item/swords_sheaths/katana/reverse
-/datum/gang_item/ninja/katana
+
+/datum/gang_item/weapon/katana
 	name = "Katana"
 	desc = "It's the real McCoy. Folded so many times."
 	class2 = "weapon"
 	price = 25000
 	item_path = /obj/item/swords_sheaths/katana
 
-/datum/gang_item/ninja/shuriken
+/datum/gang_item/weapon/shuriken
 	name = "Shuriken"
-	desc = "A pouch of 4 Shuriken throwing stars."
+	desc = "A pouch of 4 Shuriken throwing stars that embed on hit."
 	class2 = "weapon"
-	price = 1200
+	price = 800
 	item_path = /obj/item/storage/pouch/shuriken
 
-/datum/gang_item/ninja/throwing_knife
+/datum/gang_item/weapon/throwing_knife
 	name = "Throwing Knife"
-	desc = "A weighty throwable knife that stuns & causes bleed."
+	desc = "A weighty, throwable knife that disorients & causes bleed. Makes for a capable melee weapon in a pinch."
 	class2 = "weapon"
-	price = 2000
+	price = 700
 	item_path = /obj/item/dagger/throwing_knife
 
-/datum/gang_item/ninja/headband
+/datum/gang_item/weapon/headband
 	name = "Ninja Headband"
 	desc = "A silly headband with a bit of metal on the front."
 	class2 = "clothing"
@@ -2201,11 +2582,11 @@
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////SPACE////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-/datum/gang_item/space/discount_csaber
+/datum/gang_item/weapon/discount_csaber
 	name = "Faux C-Saber"
 	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It looks pretty dangerous."
 	class2 = "weapon"
-	price = 9000
+	price = 10000
 	item_path = /obj/item/sword/discount/gang
 /datum/gang_item/space/csaber
 	name = "C-Saber"
@@ -2248,26 +2629,26 @@
 	item_path = /obj/item/ammo/bullets/c_45
 
 
-/datum/gang_item/misc/bathsalts
+/datum/gang_item/equipment/bathsalts
 	name = "Bathsalts Pill Bottle"
 	desc = "5 pills, 10u each of bathsalts."
 	class2 = "drug"
 	price = 200
 	item_path = /obj/item/storage/pill_bottle/bathsalts
-/datum/gang_item/misc/crank
+/datum/gang_item/equipment/crank
 	name = "Crank Pill Bottle"
 	desc = "5 pills, 10u each of crank."
 	class2 = "drug"
 	price = 300
 	item_path = /obj/item/storage/pill_bottle/crank
-/datum/gang_item/misc/methamphetamine
+/datum/gang_item/equipment/methamphetamine
 	name = "Methamphetamine Pill Bottle"
 	desc = "5 pills, 10u each of methamphetamine."
 	class2 = "drug"
 	price = 500
 	item_path = /obj/item/storage/pill_bottle/methamphetamine
 
-/datum/gang_item/misc/janktank
+/datum/gang_item/equipment/janktank
 	name = "JankTank Implant"
 	desc = "Cartel approved synaptic implant for the common gang footsoldier."
 	class2 = "drug"
@@ -2281,26 +2662,26 @@
 	name = "First Aid Kit"
 	desc = "A simple box of medicine for those expecting to be beaten up."
 	class2 = "Healing"
-	price = 1200
+	price = 800
 	item_path = /obj/item/storage/firstaid/regular
 
 /datum/gang_item/consumable/omnizine
 	name = "Omnizine Injector"
 	desc = "A single, convenient dose of omnizine."
 	class2 = "Healing"
-	price = 1800
+	price = 1100
 	item_path = /obj/item/reagent_containers/emergency_injector/omnizine
 
 /datum/gang_item/consumable/quickhack
 	name = "Quickhack"
 	desc = "An illegal, home-made tool able to fake up to 5 AI 'open' signals to unbolted doors."
 	class2 = "Tools"
-	price = 1000
+	price = 800
 	item_path = /obj/item/tool/quickhack
 
 /datum/gang_item/consumable/tipoff
 	name = "Tip off"
-	desc = "Schedule an early duffle bag drop. A random civilian will be informed of the drop location."
+	desc = "Schedule an immediate duffle bag drop. A random civilian will be informed of the drop location."
 	class2 = "Tools"
 	price = 8000
 	item_path = /obj/item/gang_loot/guns_and_gear
@@ -2344,6 +2725,11 @@
 		..()
 		return
 
+// GRAFFITI
+/obj/decal/cleanable/gang_graffiti
+	name = "graffiti"
+	desc = "A mural, of some kind. Made with cheap paint."
+	icon = 'icons/obj/decals/graffiti.dmi'
 // GANG TAGS
 
 /obj/decal/gangtag
@@ -2352,7 +2738,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = TAG_LAYER
-	icon = 'icons/obj/decals/graffiti.dmi'
+	icon = 'icons/obj/decals/gang_tags.dmi'
 	icon_state = "gangtag0"
 	var/exploded = FALSE
 	var/datum/gang/owners = null

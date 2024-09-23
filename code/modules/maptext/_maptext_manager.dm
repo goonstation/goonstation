@@ -64,10 +64,10 @@
 
 /// Notifies this maptext manager that a maptext holder is nonempty, requiring it to register the `XSIG_OUTERMOST_MOVABLE_CHANGED` complex signal if not already done so.
 /atom/movable/maptext_manager/proc/notify_nonempty()
-	if (src.registered)
+	if (src.registered || !ismovable(src.parent))
 		return
 
-	src.update_outermost_movable(null, null, global.outermost_movable(src.parent) || src.parent)
+	src.update_outermost_movable(null, null, global.outermost_movable(src.parent))
 	RegisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
 	src.registered = TRUE
 

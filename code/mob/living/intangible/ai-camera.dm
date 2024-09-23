@@ -63,7 +63,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
 
 	Login()
 		.=..()
@@ -504,6 +504,12 @@
 		set name = "Change Designation"
 		set desc = "Change your name."
 		mainframe?.rename_self()
+
+	verb/go_offline()
+		set category = "AI Commands"
+		set name = "Go Offline"
+		set desc = "Disconnect your brain such that a new AI can take your place."
+		mainframe?.go_offline()
 
 	stopObserving()
 		src.set_loc(get_turf(src))

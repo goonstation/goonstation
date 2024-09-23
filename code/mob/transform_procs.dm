@@ -151,6 +151,7 @@
 	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
 	O.verbs += /mob/living/silicon/ai/verb/rename_self
+	O.verbs += /mob/living/silicon/ai/verb/go_offline
 	O.job = "AI"
 
 	SPAWN(0)

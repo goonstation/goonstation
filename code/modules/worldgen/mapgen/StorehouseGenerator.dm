@@ -255,10 +255,7 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 /datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]

@@ -1033,3 +1033,45 @@
 	OnRemove()
 		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 		. = ..()
+
+// hair_override gene
+/datum/bioEffect/hair_growth
+	name = "Androgen Booster"
+	desc = "A boost of androgens causes a subject to sprout hair, even if they are normally incapable of it."
+	id = "hair_growth"
+	msgGain = "Your scalp itches."
+	msgLose = "Your scalp stops itching."
+	occur_in_genepools = 0 // this shouldn't be available outside of admin shenanigans
+	probability = 0
+	scanner_visibility = 0 // nor should it be visible
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	acceptable_in_mutini = 0
+	curable_by_mutadone = FALSE
+	effectType = EFFECT_TYPE_POWER
+
+	OnAdd()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/M = owner
+			if (M.AH_we_spawned_with)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
+				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
+				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
+				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
+				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
+
+			M.hair_override = 1
+			M.bioHolder.mobAppearance.UpdateMob()
+			M.update_colorful_parts()
+		..()
+
+	OnRemove()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/M = owner
+
+			M.hair_override = 0
+			M.bioHolder.mobAppearance.UpdateMob()
+			M.update_colorful_parts()
+		..()

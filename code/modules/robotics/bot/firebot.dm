@@ -410,6 +410,7 @@
 	extinguish_flags = EXTINGUISH_MOBS
 	water_amt = 0
 	foam_amt = 10
+	health = 100 //thicc
 
 /obj/machinery/bot/firebot/firebrand/valid_target(mob/M)
 	return istype(M.get_id(), /obj/item/card/id/syndicate)

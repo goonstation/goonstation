@@ -346,27 +346,27 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/waffles
 
 /datum/cookingrecipe/oven/spaghetti_p
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_t
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/sauce
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_s
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/spicy
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_m
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/meatball
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/meatball
@@ -382,14 +382,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/alfredo
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	cookbonus = 16
 	output = /obj/item/reagent_containers/food/snacks/spaghetti/alfredo
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/chickenparm
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	cookbonus = 16
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/chickenalfredo
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	cookbonus = 16
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	category = "Pasta"
 
 /datum/cookingrecipe/oven/spaghetti_pg
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/spaghetti
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	item3 = /obj/item/reagent_containers/food/snacks/pizza
 	cookbonus = 16

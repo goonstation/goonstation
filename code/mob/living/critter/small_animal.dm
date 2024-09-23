@@ -73,6 +73,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
 	has_genes = TRUE
+	p_class = 1
 
 	var/aggressive = FALSE
 	var/random_name = FALSE

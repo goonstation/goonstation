@@ -1,3 +1,4 @@
+
 /obj/machinery/door_timer
 	name = "Door Timer"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -37,12 +38,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	solitary2
@@ -51,12 +56,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	solitary3
@@ -65,12 +74,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	solitary4
@@ -79,12 +92,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	minibrig
@@ -93,12 +110,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	minibrig2
@@ -107,12 +128,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	minibrig3
@@ -121,12 +146,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	genpop
@@ -135,12 +164,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	genpop_n
@@ -149,12 +182,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 	genpop_s
@@ -163,12 +200,16 @@
 
 		new_walls
 			north
+				dir = NORTH
 				pixel_y = 24
 			east
+				dir = EAST
 				pixel_x = 22
 			south
+				dir = SOUTH
 				pixel_y = -19
 			west
+				dir = WEST
 				pixel_x = -22
 
 /obj/machinery/door_timer/examine()
@@ -389,3 +430,23 @@
 			SPAWN(5 SECONDS)
 				icon_state = "doortimer0"
 			icon_state = "doortimer2"
+
+/obj/machinery/door_timer/north
+	name = "N Door Timer"
+	dir = NORTH
+	pixel_y = 24
+
+/obj/machinery/door_timer/east
+	name = "E Door Timer"
+	dir = EAST
+	pixel_x = 22
+
+/obj/machinery/door_timer/south
+	name = "S Door Timer"
+	dir = SOUTH
+	pixel_y = -19
+
+/obj/machinery/door_timer/west
+	name = "W Door Timer"
+	dir = WEST
+	pixel_x = -22

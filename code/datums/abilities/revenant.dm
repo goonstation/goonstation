@@ -90,6 +90,7 @@
 		owner.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_REVENANT)
 
 		animate_levitate(owner)
+		LAZYLISTADDUNIQUE(owner.faction, FACTION_WRAITH)
 
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant", 100)
@@ -99,6 +100,7 @@
 
 	OnRemove()
 		if (owner)
+			owner.faction -= FACTION_WRAITH
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)

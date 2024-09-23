@@ -292,7 +292,7 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	for_by_tcl(M, /mob/dead/target_observer)
 		if(!M.client)
 			continue
-		if(M.target in . || M.target == center)
+		if((M.target in .) || (M.target == center))
 			. += M
 
 /proc/AIviewers(Depth=world.view,Center=usr)

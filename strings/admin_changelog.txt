@@ -1,3 +1,6 @@
+(t)wed sep 18 24
+(u)Sord
+(+)You can now toggle ghost invisibility mid-round easily. "toggle-ghost-invisibility"
 (t)wed aug 08 24
 (u)LeahTheTech
 (*)New buildmode "Spawn Object" effect: "Fling" - spawns the object on you and immediately throws it at the target location.
