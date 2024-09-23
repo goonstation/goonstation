@@ -19,7 +19,7 @@
 	<a href='?src=\ref[src];action=traitorhard'>Hard Mode</a> |
 	<a href='?src=\ref[src];action=omnitraitor'>Omnitraitor</a> |
 	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
-	<a href='?src=\ref[src];action=sleeper'>Sleeper agent</a>
+	<a href='?src=\ref[src];action=[ROLE_SLEEPER_AGENT]'>Sleeper agent</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>
 	<a href='?src=\ref[src];action=mindhack'>Implanted</a> |
@@ -36,7 +36,7 @@
 	<a href='?src=\ref[src];action=nukeop'>Nuke Op</a> |
 	<a href='?src=\ref[src];action=nukeop_commander'>Nuke Op Commander</a> |
 	<a href='?src=\ref[src];action=nukeop_gunbot'>Nuke Op Gunbot</a> |
-	<a href='?src=\ref[src];action=revhead'>Rev Head</a> |
+	<a href='?src=\ref[src];action=[ROLE_HEAD_REVOLUTIONARY]'>Rev Head</a> |
 	<a href='?src=\ref[src];action=revved'>Revved</a> |
 	<a href='?src=\ref[src];action=derevved'>De-Revved</a>
 </div>
@@ -49,7 +49,6 @@
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Vampire/Changeling</b>
 	<a href='?src=\ref[src];action=vampire'>Vampire</a> |
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
-	<a href='?src=\ref[src];action=vampzombie'>Vamp Zombie</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
 	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |

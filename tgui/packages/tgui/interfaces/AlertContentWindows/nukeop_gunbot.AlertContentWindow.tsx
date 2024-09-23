@@ -8,6 +8,7 @@ import { AlertContentWindow } from './types';
 
 export const acw: AlertContentWindow = {
   title: 'Nuclear Gun-Bot Basics',
+  theme: 'syndicate',
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a loyal Syndicate gunbot!</h1>
