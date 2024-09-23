@@ -89,7 +89,7 @@ export const AlertModal = () => {
           : title
       }
       width={windowWidth}
-      theme={typedContentWindow.theme ?? theme ?? 'nanotrasen'}
+      theme={typedContentWindow?.theme ?? theme ?? 'nanotrasen'}
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
