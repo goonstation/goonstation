@@ -335,11 +335,11 @@ datum
 					var/mob/living/carbon/human/H = M
 					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_first = new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_second = new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new hair_type
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customization_third = new hair_type
+					H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
 					H.update_colorful_parts()
 					boutput(H, SPAN_NOTICE("Your scalp feels itchy!"))
 				..()
@@ -363,11 +363,11 @@ datum
 				if (ishuman(M))
 					var/somethingchanged = 0
 					var/mob/living/carbon/human/H = M
-					if (H.bioHolder.mobAppearance.customization_first.id != "80s")
-						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/eighties
+					if (H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "80s")
+						H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/eighties
 						somethingchanged = 1
-					if (H.gender == MALE && H.bioHolder.mobAppearance.customization_second.id != "longbeard")
-						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/longbeard
+					if (H.gender == MALE && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
+						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/longbeard
 						somethingchanged = 1
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1
@@ -1078,18 +1078,6 @@ datum
 			hygiene_value = -0.5
 			viscosity = 0.55
 
-			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume)
-				. = ..()
-				if (method == INGEST)
-					var/ranchance = rand(1,10)
-					if (ranchance == 1)
-						boutput(M, SPAN_ALERT("You feel very sick."))
-						M.reagents.add_reagent("toxin", rand(1,5))
-					else if (ranchance <= 5)
-						boutput(M, SPAN_ALERT("That tasted absolutely FOUL."))
-						M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
-					else boutput(M, SPAN_ALERT("Yuck!"))
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.endurance_bonus += 0.5
@@ -2206,7 +2194,7 @@ datum
 				return
 
 			proc/replace_organ(var/mob/living/carbon/human/H)
-				var/organ_name = pick("stomach", "pancreas", "liver", "spleen", "left_lung", "right_lung", "left_kidney", "right_kidney", "appendix")
+				var/organ_name = pick(non_vital_organ_strings)
 				var/obj/item/organ/organ = H.get_organ(organ_name)
 				if (istype(organ, /obj/item/organ/flock_crystal))
 					return
@@ -3193,7 +3181,6 @@ datum
 
 			on_plant_life(var/obj/machinery/plantpot/P, var/datum/plantgrowth_tick/growth_tick)
 				growth_tick.growth_rate += 2.4
-				growth_tick.growth_rate += 2.4
 				growth_tick.potency_bonus += 0.5
 				var/datum/plantgenes/DNA = P.plantgenes
 				if (DNA.cropsize > 1)
@@ -3265,9 +3252,9 @@ datum
 								if (prob(33))
 									boutput(M, SPAN_ALERT("Fresh blood would be better..."))
 								var/bloodget = volume_passed / 3
-								M.change_vampire_blood(bloodget, 1) // vamp_blood
-								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
-								V.blood_tracking_output()
+								var/datum/bioHolder/unlinked/bioHolder = src.data
+								M.change_vampire_blood(bloodget, 1, victim = bioHolder?.weak_owner?.deref()) // vamp_blood
+								M.change_vampire_blood(bloodget, 0, victim = bioHolder?.weak_owner?.deref()) // vamp_blood_remaining
 								V.check_for_unlocks()
 								holder.del_reagent(src.id)
 								return 0

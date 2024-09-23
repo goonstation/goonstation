@@ -165,8 +165,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabPath = "assets/maps/prefabs/planet/prefab_syndicate_taken_factory.dmm"
 		prefabSizeX = 20
 		prefabSizeY = 20
-		maxNum = 2
-		probability = 30
+		maxNum = 1
+		probability = 15
 
 	rogue_syndicate
 		maxNum = 1

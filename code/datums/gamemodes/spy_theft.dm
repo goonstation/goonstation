@@ -350,7 +350,7 @@
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
 	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
 	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
-	station_bounties[/obj/item/captaingun] = 3
+	station_bounties[/obj/item/gun/energy/antique] = 3
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
 	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
@@ -389,6 +389,7 @@
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
+	station_bounties[/obj/item/clothing/glasses/packetvision] = 2
 
 	#ifdef UNDERWATER_MAP
 	station_bounties[/obj/item/clothing/suit/space/diving/security] = 2

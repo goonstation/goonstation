@@ -502,6 +502,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//You can only pick this up if you're on the correct team, otherwise it explodes.
 	//exactly the same as /obj/item/card/id/pod_wars. Copy paste bad, but these two things I don't want people stealing, would be real lame... Might get rid of in the future if this structure isn't required.
+#if defined(MAP_OVERRIDE_POD_WARS)
 	attack_hand(mob/user)
 		if (get_pod_wars_team_num(user) == team)
 			..()
@@ -511,6 +512,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			user.u_equip(src)
 			src.dropped(user)
 			qdel(src)
+#endif
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
 	name = "radio headset"

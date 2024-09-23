@@ -8,7 +8,7 @@
 
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE | LONG_GLIDE
 
-	var/datum/mind/mind
+	var/tmp/datum/mind/mind
 	var/mob/boutput_relay_mob = null
 
 	var/datacore_id = null
@@ -2456,7 +2456,7 @@
 		if (thr?.get_throw_travelled() <= 410)
 			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-				if (!src.hasStatus("knockdown"))
+				if (!src.hasStatus("knockdown") && !(thr.throw_type & THROW_BASEBALL))
 					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()
@@ -2926,7 +2926,7 @@
 
 /mob/proc/is_hulk()
 	. = FALSE
-	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
+	if (src.bioHolder && src.bioHolder.HasAnyEffect(list("hulk", "hulk_hidden")))
 		. = TRUE
 
 /mob/proc/update_equipped_modifiers()
@@ -3376,3 +3376,14 @@
 	src.delStatus("knockdown")
 	src.delStatus("unconscious")
 	src.delStatus("paralysis")
+
+/mob/proc/has_genetics()
+	return FALSE
+
+/mob/proc/get_genetic_traits()
+	return list(0,0,0)
+
+/mob/proc/get_fingertip_color()
+	if (src.bioHolder?.mobAppearance)
+		return src.bioHolder.mobAppearance.s_tone
+	return "#042069"

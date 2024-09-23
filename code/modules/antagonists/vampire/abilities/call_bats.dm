@@ -59,9 +59,6 @@
 			boutput(M, SPAN_ALERT("The bats did not respond to your call!"))
 			return 1 // No cooldown here, though.
 
-		if (src.pointCost && istype(H))
-			H.blood_tracking_output(src.pointCost)
-
 		playsound(M.loc, 'sound/effects/gust.ogg', 60, 1)
 
 		logTheThing(LOG_COMBAT, M, "uses call bats at [log_loc(M)].")
@@ -88,7 +85,6 @@
 			return 1
 
 		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
 
 		if (!M)
 			return 1
@@ -96,7 +92,6 @@
 		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
 			boutput(M, SPAN_ALERT("How do you expect this to work? You're muzzled!"))
 			M.visible_message(SPAN_ALERT("<b>[M]</b> makes a loud noise."))
-			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
 		. = ..()
@@ -112,6 +107,5 @@
 			boutput(M, SPAN_ALERT("The bats did not respond to your call!"))
 			return 1 // No cooldown here, though.
 
-		if (istype(H)) H.blood_tracking_output(src.pointCost)
 		logTheThing(LOG_COMBAT, M, "uses call bats at [log_loc(M)].")
 		return 0

@@ -166,6 +166,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			if (client) winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
 			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 			if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
+		#ifndef NO_PREGAME_HTML
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
@@ -173,6 +174,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
+		#endif
 
 	Stat()
 		..()
@@ -769,9 +771,10 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences)
+			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences, FALSE, src.mind?.assigned_role)
 		else
-			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
+			// fallback
+			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences, FALSE, src.mind?.assigned_role)
 		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
 		if (!J || J.uses_character_profile)//borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)

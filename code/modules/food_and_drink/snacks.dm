@@ -2775,6 +2775,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("THC"=10,"CBD"=10)
 	food_effects = list("food_brute","food_burn")
 
+/obj/item/reagent_containers/food/snacks/danish_cheese
+	name = "cheese danish"
+	desc = "A delicious little parcel of pastry and cheese."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "danish_cheese"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#ffc758"
+	initial_volume = 15
+	food_effects = list("food_burn","food_energized")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
 /obj/item/reagent_containers/food/snacks/cinnamonbun
 	name = "cinnamon bun"
 	desc = "A delicious little pastry roll with a swirl of cinnamon."
@@ -2786,6 +2798,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = list("sugar"=10, "cinnamon"=10)
 	food_effects = list("food_burn","food_warm")
+	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
+
+/obj/item/reagent_containers/food/snacks/chocolate_cherry
+	name = "chocolate covered cherry"
+	desc = "A cherry lovingly covered in chocolate with a cream filling."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "chocolate_cherry"
+	bites_left = 2
+	heal_amt = 2
+	food_color = "#492b21"
+	initial_volume = 15
+	food_effects = list("food_burn","food_energized")
 	meal_time_flags = MEAL_TIME_SNACK | MEAL_TIME_BREAKFAST
 
 /obj/item/reagent_containers/food/snacks/tandoorichicken

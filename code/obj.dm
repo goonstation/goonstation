@@ -106,7 +106,6 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.getQuality()
 			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
@@ -196,8 +195,8 @@
 		else
 			return null
 
-	return_air()
-		if (loc)
+	return_air(direct = FALSE)
+		if (loc && !direct)
 			return loc.return_air()
 		else
 			return null
@@ -217,7 +216,8 @@
 		else
 			return null
 
-	proc/initialize()
+	proc/initialize(player_caused_init) // Did a player cause the init of this object? Currently needed so atmos knows whether or not to call its neighbors, avoiding infinite loops.
+
 
 	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE

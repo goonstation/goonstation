@@ -27794,9 +27794,7 @@
 /area/shuttle/arrival/station)
 "bqX" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/grime,
@@ -32849,7 +32847,6 @@
 /area/station/science/bot_storage)
 "bFM" = (
 /obj/machinery/light,
-/obj/storage/secure/closet/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -33018,7 +33015,6 @@
 /area/station/crew_quarters/quarters)
 "bGn" = (
 /obj/machinery/light/emergency,
-/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bGo" = (
@@ -36970,7 +36966,7 @@
 /area/station/garden/owlery)
 "bOR" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -41962,9 +41958,7 @@
 /area/station/crew_quarters/captain)
 "bZL" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -41972,9 +41966,7 @@
 /area/station/security/brig)
 "bZM" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/flasher/solitary{
 	pixel_x = 24
 	},
@@ -41982,16 +41974,12 @@
 /area/station/security/brig)
 "bZN" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZO" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "bZP" = (
@@ -43794,57 +43782,23 @@
 /area/station/ranch)
 "cer" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ces" = (
@@ -44271,9 +44225,6 @@
 /obj/storage/crate{
 	desc = "A crate of confiscated items.";
 	name = "Contraband"
-	},
-/obj/machinery/light{
-	dir = 8
 	},
 /obj/item/item_box/no{
 	pixel_x = -8;
@@ -54982,9 +54933,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "fdV" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -58559,9 +58508,7 @@
 /area/station/crew_quarters/toilets)
 "kEM" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
@@ -58794,6 +58741,15 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"lie" = (
+/obj/storage/secure/closet/brig,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/main)
 "ljx" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -124926,7 +124882,7 @@ axX
 cAL
 niB
 cAR
-cfg
+lie
 avD
 bTX
 cAM
