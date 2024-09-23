@@ -4,6 +4,7 @@
  */
 
 @use '../base.scss';
+@use '../functions.scss' as *;
 
 $separator-color: base.$color-bg-section;
 $background-color: base.$color-bg !default;

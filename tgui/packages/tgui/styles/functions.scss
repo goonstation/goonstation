@@ -37,6 +37,17 @@
   @return color.mix($scaled, $mixed, 75%);
 }
 
+// Decreases perceptual color lightness.
+@function darken($color, $percent) {
+  $scaled: hsl(
+    color.hue($color),
+    color.saturation($color),
+    color.lightness($color) * (1 - num($percent))
+  );
+  $mixed: color.mix(#000000, $color, 100% * num($percent));
+  @return color.mix($scaled, $mixed, 75%);
+}
+
 // Returns the NTSC luminance of `$color` as a float (between 0 and 1).
 // 1 is pure white, 0 is pure black.
 @function luminance($color) {
