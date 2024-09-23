@@ -1710,11 +1710,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				access.access = get_access("Chef")
 
-		head_of_security
-
+		admin_mouse
 			New()
 				..()
-				access.access = get_access("Head of Security")
+				access.access = get_access("Captain") + get_access("Head of Security") + access_centcom
 
 
 /* ============================================================ */
