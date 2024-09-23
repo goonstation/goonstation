@@ -83,7 +83,11 @@ export const AlertModal = () => {
   return (
     <Window
       height={windowHeight}
-      title={typedContentWindow ? typedContentWindow.title : title}
+      title={
+        typedContentWindow
+          ? typedContentWindow.title ?? 'Antagonist Tips'
+          : title
+      }
       width={windowWidth}
       theme={typedContentWindow.theme ?? theme ?? 'nanotrasen'}
     >
