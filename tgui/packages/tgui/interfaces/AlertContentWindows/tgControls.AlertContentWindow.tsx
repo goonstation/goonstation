@@ -4,11 +4,11 @@
  * @author garash2k
  * @license ISC
  */
-import { Box } from 'tgui-core/components';
+import { Box, Image } from 'tgui-core/components';
 
 import type { AlertContentWindow } from './types';
 
-export const tgControls: AlertContentWindow = {
+export const acw: AlertContentWindow = {
   width: 470,
   height: 320,
   title: 'Use /tg/ style interface?',
@@ -21,7 +21,7 @@ export const tgControls: AlertContentWindow = {
       <Box my={1.5}>
         Save your profile in Character Setup to dismiss this alert.
       </Box>
-      {/* <Image src="images/tg_control_info.png" /> */}
+      <Image src="tg_control_info.png" />
     </>
   ),
 };

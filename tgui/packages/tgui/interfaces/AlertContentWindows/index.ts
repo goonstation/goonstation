@@ -4,24 +4,22 @@
  * @author garash2k
  * @license ISC
  */
-import { nukeop } from './nukeop';
-import { rpRules } from './rpRules';
-import { tgControls } from './tgControls';
 import type { AlertContentWindow } from './types';
+
+const r = require.context('.', false, /\.AlertContentWindow\.tsx$/);
 
 export const getAlertContentWindow = (
   alertContentWindowName: string,
 ): AlertContentWindow => {
-  switch (alertContentWindowName) {
-    case 'tgControls':
-      return tgControls;
-    case 'rpRules':
-      return rpRules;
-    case 'nukeop':
-      return nukeop;
-    default:
-      throw new Error(
-        `Unrecognized alert content window name: ${alertContentWindowName}`,
-      );
+  const acwKey = r
+    .keys()
+    .find((k) =>
+      k.endsWith(`${alertContentWindowName}.AlertContentWindow.tsx`),
+    );
+  if (!acwKey) {
+    throw new Error(
+      `Unrecognized alert content window name: ${alertContentWindowName}`,
+    );
   }
+  return r(acwKey).acw;
 };

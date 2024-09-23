@@ -9,7 +9,7 @@ import { Section } from 'tgui-core/components';
 
 import type { AlertContentWindow } from './types';
 
-export const rpRules: AlertContentWindow = {
+export const acw: AlertContentWindow = {
   width: 800,
   height: 600,
   title: 'Goonstation RP Server Guidelines and Rules',

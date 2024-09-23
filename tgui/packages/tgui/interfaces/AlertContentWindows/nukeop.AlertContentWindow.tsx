@@ -6,7 +6,7 @@
  */
 import { AlertContentWindow } from './types';
 
-export const nukeop: AlertContentWindow = {
+export const acw: AlertContentWindow = {
   title: 'Nuclear Operative Basics',
   theme: 'syndicate',
   content: (
