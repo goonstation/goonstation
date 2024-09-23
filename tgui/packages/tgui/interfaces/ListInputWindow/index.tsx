@@ -15,7 +15,7 @@ type ListInputData = {
   title: string;
   start_with_search: boolean;
   capitalize: boolean;
-  theme: string;
+  theme: string | null;
 };
 
 export const ListInputWindow = () => {
@@ -53,7 +53,7 @@ export const ListInputWindow = () => {
       title={title}
       width={windowWidth || 325}
       height={windowHeight}
-      theme={theme}
+      theme={theme ?? 'nanotrasen'}
     >
       {timeout && <Loader value={timeout} />}
       <Window.Content>
