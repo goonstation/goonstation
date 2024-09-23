@@ -2235,7 +2235,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 /// Repeat a gradient between two colors across text.
 /// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
-/proc/gradientText(message, color_1, color_2)
+/proc/gradientText(color_1, color_2, message)
 	var/list/color_list_1 = rgb2num(color_1)
 	var/list/color_list_2 = rgb2num(color_2)
 
