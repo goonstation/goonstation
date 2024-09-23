@@ -50,7 +50,7 @@ function task-webpack {
 
 ## Runs a development server
 function task-dev-server {
-  yarn node --experimental-modules "packages/tgui-dev-server/index.js" @Args
+  yarn run tgui:dev @Args
 }
 
 ## Runs benchmarking tests
@@ -65,24 +65,22 @@ function task-bench {
 function task-lint {
   yarn run tsc
   Write-Output "tgui: type check passed"
-  yarn run eslint packages --ext ".js,.cjs,.ts,.tsx" @Args
+  yarn run tgui:eslint @Args
   Write-Output "tgui: eslint check passed"
-}
-
-## Installs merge drivers and git hooks
-function task-install-git-hooks() {
-  Set-Location $basedir
-  $git_root = "$(git rev-parse --show-toplevel)"
-  Set-Location $git_root
-  $git_base_dir = Resolve-Path -Path "$basedir" -Relative
-  $git_base_dir = "${git_base_dir}".replace("\", "/")
-  Set-Location $basedir
-  git config --replace-all merge.tgui-merge-bundle.driver "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
-  Write-Output "tgui: Merge drivers have been successfully installed!"
+  yarn run tgui:prettier @Args
+  Write-Output "tgui: prettier check passed"
 }
 
 function task-test {
-  yarn run jest
+  yarn run tgui:test
+}
+
+function task-test-ci {
+  yarn run tgui:test-ci
+}
+
+function task-sonar {
+  yarn run tgui:sonar
 }
 
 ## Mr. Proper
@@ -134,11 +132,6 @@ function task-install-git-hooks () {
 ## --------------------------------------------------------
 
 if ($Args.Length -gt 0) {
-  if ($Args[0] -eq "--clean") {
-    task-clean
-    exit 0
-  }
-
   if ($Args[0] -eq "--install-git-hooks") {
     task-install-git-hooks
     exit 0
@@ -165,24 +158,24 @@ if ($Args.Length -gt 0) {
     exit 0
   }
 
-  if ($Args[0] -eq "--lint-harder") {
-    $Rest = $Args | Select-Object -Skip 1
-    task-install
-    task-lint -c ".eslintrc-harder.yml" @Rest
-    exit 0
-  }
-
-  if ($Args[0] -eq "--fix") {
-    $Rest = $Args | Select-Object -Skip 1
-    task-install
-    task-lint --fix @Rest
-    exit 0
-  }
-
   if ($Args[0] -eq "--test") {
     $Rest = $Args | Select-Object -Skip 1
     task-install
     task-test @Rest
+    exit 0
+  }
+
+  if ($Args[0] -eq "--test-ci") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-test-ci @Rest
+    exit 0
+  }
+
+  if ($Args[0] -eq "--sonar") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-install
+    task-sonar @Rest
     exit 0
   }
 
@@ -196,6 +189,22 @@ if ($Args.Length -gt 0) {
   ## Hook install
   if ($Args[0] -eq "--install-git-hooks") {
     task-install-git-hooks
+    exit 0
+  }
+
+  if ($Args[0] -eq "--clean") {
+    task-clean
+    exit 0
+  }
+
+  if ($Args[0] -eq "--ci") {
+    $Rest = $Args | Select-Object -Skip 1
+    task-clean
+    task-install
+    task-test-ci
+    task-lint @Rest
+    task-webpack --mode=production
+    task-validate-build
     exit 0
   }
 }
