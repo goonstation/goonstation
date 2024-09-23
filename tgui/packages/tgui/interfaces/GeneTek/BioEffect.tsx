@@ -50,7 +50,7 @@ export const onCooldown = (equipmentCooldown, name) => {
   return true;
 };
 
-interface booth {
+interface Booth {
   ref: string;
   price: number;
   desc: string;
@@ -58,7 +58,7 @@ interface booth {
 
 export const BioEffect = (props) => {
   const { data, act } = useBackend<GeneTekData>();
-  const [booth, setBooth] = useSharedState<booth | null>('booth', null);
+  const [booth, setBooth] = useSharedState<Booth | null>('booth', null);
   const {
     materialCur,
     researchCost,

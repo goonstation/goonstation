@@ -35,6 +35,12 @@ export const Cashreg = () => {
     tip_proportion,
   } = data;
 
+  const ownerButtonClick = owner
+    ? is_authorised || is_owner
+      ? () => act('reset')
+      : undefined
+    : () => act('swipe_owner');
+
   return (
     <Window title={name} theme="ntos" height={240} width={300}>
       <Window.Content>
@@ -44,13 +50,7 @@ export const Cashreg = () => {
               className="cashreg__ownerbutton"
               color="blue"
               disabled={active_transaction}
-              onClick={
-                owner
-                  ? is_authorised || is_owner
-                    ? () => act('reset')
-                    : undefined
-                  : () => act('swipe_owner')
-              }
+              onClick={ownerButtonClick}
               tooltip={
                 owner &&
                 (is_authorised || is_owner) &&

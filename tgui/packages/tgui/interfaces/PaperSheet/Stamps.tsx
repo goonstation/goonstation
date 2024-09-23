@@ -23,11 +23,11 @@ export const PaperSheetStamper: React.FC<PaperSheetStamperProps> = ({
   const [rotate, setRotate] = useState(0);
 
   const findStampPosition = (e: MouseEvent) => {
-    let rotating = false;
     const windowRef = document.querySelector('.Layout__content');
     if (!windowRef) {
       return;
     }
+    let rotating = false;
     if (e.shiftKey) {
       rotating = true;
     }

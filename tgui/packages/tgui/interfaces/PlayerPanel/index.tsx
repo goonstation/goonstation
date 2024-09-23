@@ -232,13 +232,12 @@ export const PlayerPanel = () => {
                   const { id, template } = column;
                   return (
                     <Table.Cell key={id}>
-                      {template &&
-                        template({
-                          act,
-                          column,
-                          row: player,
-                          value: playerValues[ckey][id],
-                        })}
+                      {template?.({
+                        act,
+                        column,
+                        row: player,
+                        value: playerValues[ckey][id],
+                      })}
                     </Table.Cell>
                   );
                 })}

@@ -158,7 +158,7 @@ export const GeneTek = () => {
                   <Box position="absolute">{r.name}</Box>
                   <TimeDisplay
                     auto
-                    value={r.current || 0}
+                    value={r.current ?? 0}
                     format={formatSeconds}
                   />
                 </ProgressBar>
