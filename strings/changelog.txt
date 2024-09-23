@@ -1,5 +1,9 @@
 
 (t)sun sep 22 24
+(u)TDHooligan
+(p)20699
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The second gang crate of a shift always contains a top-tier firearm.
 (u)ZeWaka, Mordent, Garash2k, pgmzeta, Romayne, cringe, and upstream TGUI contributors
 (p)20060
 (e)🪲🆕🔧🔎💅🔄❗📄📜|C-Bug, C-Feature, A-Tooling, C-Code-Quality, C-QoL, C-Rework, E-FUCK, A-UI, C-Documentation
