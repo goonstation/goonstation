@@ -493,7 +493,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				qdel(seed1)
 				qdel(seed2)
 				src.mode = "seedlist"
-				. = TRUE
+				update_static_data(ui.user, ui)
 
 
 
