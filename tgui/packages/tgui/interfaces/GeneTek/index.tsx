@@ -33,7 +33,7 @@ const formatSeconds = (v) => (v > 0 ? (v / 10).toFixed(0) + 's' : 'Ready');
 export const GeneTek = () => {
   const { data, act } = useBackend<GeneTekData>();
   const [menu, setMenu] = useSharedState('menu', 'research');
-  const [buyMats, setBuyMats] = useSharedState<number | null>('buymats', null);
+  const [buyMats, setBuyMats] = useSharedState('buymats', 0);
   const [isCombining] = useSharedState('iscombining', false);
   const {
     materialCur,
@@ -242,7 +242,7 @@ export const GeneTek = () => {
                   </Tabs.Tab>
                 )}
               </Tabs>
-              {buyMats !== null && <BuyMaterialsModal maxAmount={maxBuyMats} />}
+              {buyMats > 0 && <BuyMaterialsModal maxAmount={maxBuyMats} />}
               {!!isCombining && <CombineGenesModal />}
               {menu === 'research' && (
                 <ResearchTab maxBuyMats={maxBuyMats} setBuyMats={setBuyMats} />
