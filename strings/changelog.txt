@@ -1,4 +1,9 @@
 
+(t)mon sep 23 24
+(u)444explorer
+(p)20780
+(e)💅🔬|C-QoL, A-Science
+(+)Renamed the Telescience Disks "Moon x15" and "Moon x05" to "Senex" and "Fatuus" respectively
 (t)sun sep 22 24
 (u)Jan.antilles
 (p)20796
