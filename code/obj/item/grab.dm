@@ -57,7 +57,7 @@
 
 		if(assailant)	//drop that grab to avoid the sticky behavior
 			REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
-			if (src in assailant.equipped_list() && !dropped)
+			if ((src in assailant.equipped_list()) && !dropped)
 				if (assailant.equipped() == src)
 					assailant.drop_item()
 				else
@@ -948,6 +948,7 @@
 							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						dive_attack_hit.was_harmed(user)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
 						for (var/mob/O in AIviewers(user))
 							O.show_message(SPAN_ALERT("<B>[user] slides into [dive_attack_hit]!</B>"), 1)
@@ -981,7 +982,7 @@
 							if (throw_target)
 								item_num_to_throw--
 								playsound(itm, "swing_hit", 50, 1)
-								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8, thrown_by=user) // Range: 1-4, Speed: 1-2
 
 							if (!item_num_to_throw)
 								break

@@ -705,6 +705,7 @@
 		.["time"] = TIME
 
 	ui_act(action, params)
+		. = ..()
 		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
 		switch(action)
 			if ("geoscan")
@@ -874,7 +875,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	light_mod = "wall-"
 	plane = PLANE_NOSHADOW_BELOW
 	layer = ASTEROID_LAYER
-	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
 	color = "#D1E6FF"
 
@@ -896,7 +897,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/weakened = 0
 	var/amount = 2
 	var/invincible = 0
-	var/quality = 0
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
@@ -993,7 +993,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			stone_color = "#2070CC"
 			default_ore = /obj/item/raw_material/ice
 			hardness = 5
-			quality = 15
 			amount = 6
 
 		ice_char
@@ -1363,24 +1362,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create(src)
-
-				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
-				if(ore_to_create ==  /obj/item/raw_material/rock)
-					continue
-
-				if(MAT.material)
-					//If we don't use quality anymore, remove this
-					MAT.material = MAT.material.getMutable()
-					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.getQuality(), src.quality)
-						MAT.material.setQuality(newQual)
-						MAT.quality = newQual
-					else
-						MAT.material.setQuality(src.quality)
-						MAT.quality = src.quality
-
-				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
+				new ore_to_create(src)
 		if(!icon_old)
 			icon_old = icon_state
 
@@ -2043,6 +2025,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
+	fingertip_color = "#535353"
 	var/obj/item/mining_tool/tool = new /obj/item/mining_tool/concussive_gloves_internal
 
 	setupProperties()
@@ -2102,7 +2085,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 					if (\
 						(\
 							istype(target, /turf/simulated/wall/auto/asteroid/) ||\
-							istype(target, /obj/geode) && istypes(get_turf(target), list(/turf/space, /turf/simulated/floor/plating/airless, /turf/simulated/floor/airless/plating))\
+							istype(target, /obj/geode)\
 						) && !src.hacked)
 						boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 						user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))

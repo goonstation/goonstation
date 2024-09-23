@@ -148,13 +148,13 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > T0C+200)
-				src.visible_message(SPAN_ALERT("The [src] ignites!"), group = "cig_ignite")
+				src.visible_message(SPAN_ALERT("[src] ignites!"), group = "cig_ignite")
 				src.light()
 
 	ex_act(severity)
 		. = ..()
 		if (src.on == 0)
-			src.visible_message(SPAN_ALERT("The [src] ignites!"), group = "cig_ignite")
+			src.visible_message(SPAN_ALERT("[src] ignites!"), group = "cig_ignite")
 			src.light()
 
 	attackby(obj/item/W, mob/user)
@@ -984,7 +984,7 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == MATCH_UNLIT)
 			if (temperature > T0C+200)
-				src.visible_message(SPAN_ALERT("The [src] ignites!"))
+				src.visible_message(SPAN_ALERT("[src] ignites!"))
 				src.light()
 
 	ex_act(severity)
@@ -992,7 +992,7 @@
 		if (QDELETED(src))
 			return
 		if (src.on == MATCH_UNLIT)
-			src.visible_message(SPAN_ALERT("The [src] ignites!"))
+			src.visible_message(SPAN_ALERT("[src] ignites!"))
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)

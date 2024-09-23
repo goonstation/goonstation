@@ -1,5 +1,6 @@
 @use '../base.scss';
 @use '../colors.scss';
+@use '../functions.scss' as *;
 
 .clothingbooth {
   &__dropdown {

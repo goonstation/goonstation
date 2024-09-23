@@ -5284,7 +5284,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -6779,7 +6779,7 @@
 /turf/simulated/floor/orangeblack,
 /area/h7/storage)
 "aJG" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1
 	},
 /obj/cable{
@@ -6792,7 +6792,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aJH" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1
 	},
 /obj/cable{
@@ -7537,7 +7537,7 @@
 /turf/space,
 /area/space)
 "aMe" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -7619,7 +7619,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/overlay{
@@ -9028,7 +9028,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/machinery/door/airlock/pyro{
 	name = "Storage"
 	},
@@ -9309,7 +9309,6 @@
 /area/abandonedship)
 "aRL" = (
 /obj/machinery/light_switch/west{
-	dir = 4;
 	pixel_x = -22
 	},
 /turf/simulated/floor/sanitary,
@@ -9433,7 +9432,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "aSh" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	desc = "This airlock seems to be badly damaged.";
 	icon = 'icons/obj/doors/Doorext.dmi';
@@ -9804,9 +9803,7 @@
 "aTj" = (
 /obj/stool/bed,
 /obj/decal/cleanable/cobweb,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/airless/grime,
 /area/abandonedship)
 "aTk" = (
@@ -9842,7 +9839,7 @@
 	},
 /area/h7)
 "aTp" = (
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -10341,7 +10338,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/overlay{
@@ -10354,7 +10351,7 @@
 /turf/simulated/floor,
 /area/h7)
 "aUM" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 8
 	},
 /obj/cable{
@@ -10411,7 +10408,7 @@
 	},
 /area/fermid_hive)
 "aUU" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/cable{
@@ -10858,7 +10855,7 @@
 /turf/simulated/floor/plating,
 /area/h7)
 "aWj" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -10949,7 +10946,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -11835,7 +11832,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/security{
@@ -12234,7 +12231,7 @@
 	},
 /area/h7/lab)
 "baY" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 4
 	},
 /obj/cable{
@@ -12707,7 +12704,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1
 	},
 /obj/machinery/door/airlock/pyro/medical{
@@ -12750,7 +12747,7 @@
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcQ" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	dir = 1
 	},
 /obj/cable{
@@ -12933,7 +12930,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/fakeobject/firelock_broken,
+/obj/fakeobject/airlock_broken/firelock,
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "bdz" = (
@@ -13370,7 +13367,7 @@
 	},
 /area/hollowasteroid)
 "bfP" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	density = 1;
 	icon = 'icons/obj/doors/Doorclassic.dmi';
 	icon_state = "door_closed";
@@ -13448,7 +13445,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedship)
 "bgl" = (
-/obj/item/spraybottle/cleaner/tsunami,
+/obj/item/spraybottle/cleaner/robot,
 /turf/simulated/floor/airless/damaged5,
 /area/abandonedship)
 "bgm" = (
@@ -14139,7 +14136,7 @@
 /turf/simulated/floor/yellow/side,
 /area/derelict_ai_sat/core)
 "biz" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -15635,7 +15632,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "bGL" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -18247,7 +18244,7 @@
 	},
 /area/diner/jucer_trader)
 "jcK" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -19860,7 +19857,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/abandonedship)
 "nuL" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -20654,7 +20651,7 @@
 	},
 /area/space)
 "pIn" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -20671,7 +20668,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "pKb" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
 	name = "rusted hatch"
@@ -20837,7 +20834,7 @@
 	name = "gross refrigerator"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/spaghetti,
+/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/yuck,
 /obj/item/reagent_containers/food/snacks/mushroom/amanita,
@@ -22624,7 +22621,7 @@
 /turf/unsimulated/floor/black,
 /area/space_hive)
 "uNg" = (
-/obj/item/clothing/head/helmet/space/donk,
+/obj/item/clothing/head/helmet/space/fishbowl,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "uNi" = (

@@ -310,7 +310,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 	src.resistances -= /datum/ailment/disability/memetic_madness
 	// just going to have to set it up manually i guess
-	var/datum/ailment_data/memetic_madness/AD = new /datum/ailment_data/memetic_madness
+	var/datum/ailment_data/memetic_madness/AD = get_disease_from_path(/datum/ailment/disability/memetic_madness).setup_strain()
 
 	if(istype(newprogenitor,/obj/item/storage/toolbox/memetic/))
 		AD.progenitor = newprogenitor
@@ -374,6 +374,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	affected_species = list("Human")
 	max_stages = 4
 	stage_prob = 8
+	strain_type = /datum/ailment_data/memetic_madness
 
 	stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D,mult,var/obj/item/storage/toolbox/memetic/progenitor)
 		if (..())

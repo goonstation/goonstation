@@ -173,6 +173,11 @@
 			src.add_fingerprint(user)
 			return
 
+		if (istype(W, /obj/item/sheet))
+			if (src.m_w_system && istype(src.m_w_system,/obj/item/shipcomponent/mainweapon/constructor))
+				src.m_w_system.Attackby(W,user)
+				return
+
 		if (istype(W, /obj/item/tank/plasma))
 			src.open_parts_panel(user)
 			return
@@ -1886,7 +1891,7 @@
 	health = 150
 	maxhealth = 150
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()

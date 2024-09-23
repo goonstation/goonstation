@@ -1,6 +1,9 @@
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, Knob } from '../components';
+import { useState } from 'react';
+import { Box, Button, Flex, Input } from 'tgui-core/components';
+
+import { useBackend } from '../backend';
+import { Knob } from '../components';
 import { Window } from '../layouts';
 
 type MusicInstrumentData = {
@@ -12,18 +15,15 @@ type MusicInstrumentData = {
   noteKeysString: string;
 };
 
-export const MusicInstrument = (_props, context) => {
-  const { act, data } = useBackend<MusicInstrumentData>(context);
-  const { name, notes, volume, transpose, keybindToggle, noteKeysString } = data;
+export const MusicInstrument = () => {
+  const { act, data } = useBackend<MusicInstrumentData>();
+  const { name, notes, volume, transpose, keybindToggle, noteKeysString } =
+    data;
 
-  const [noteKeysOrder, setNoteKeysOrder] = useLocalState(
-    context,
-    'keyboardBindingsOrder',
-    noteKeysString.split('')
-  );
+  const [noteKeysOrder, setNoteKeysOrder] = useState(noteKeysString.split(''));
 
-  const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', {}); // new Array(notes.length)
-  const [keyOffset, setKeyOffset] = useLocalState(context, 'keyOffset', 0);
+  const [activeKeys, setActiveKeys] = useState({}); // new Array(notes.length)
+  const [keyOffset, setKeyOffset] = useState(0);
 
   const setVolume = (value: number) => {
     act('set_volume', { value });
@@ -45,7 +45,8 @@ export const MusicInstrument = (_props, context) => {
     setKeybindToggle(!keybindToggle);
   };
 
-  const keyIndexWithinRange = (index: number) => index + transpose >= 0 && index + transpose < notes.length;
+  const keyIndexWithinRange = (index: number) =>
+    index + transpose >= 0 && index + transpose < notes.length;
 
   const playNote = (index: number) => {
     if (keyIndexWithinRange(index) && !activeKeys[index]) {
@@ -67,7 +68,8 @@ export const MusicInstrument = (_props, context) => {
   };
 
   const getKeyboardIndex = (key: string) => {
-    const keyboardIndex = keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
+    const keyboardIndex =
+      keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
     if (keyboardIndex >= 0) return keyboardIndex;
     return -1;
   };
@@ -90,7 +92,8 @@ export const MusicInstrument = (_props, context) => {
           if (ev.key === 'Control') {
             toggleKeybind();
           }
-        }}>
+        }}
+      >
         <Box className="instrument__keyboardwrapper">
           <Box className="instrument__outerpanel">
             <Box className="instrument__speaker" />
@@ -99,15 +102,15 @@ export const MusicInstrument = (_props, context) => {
                 <Box className="instrument__keyboardsupport">
                   <Button
                     className="instrument__toggle-keyboard-button"
-                    title="Toggle keyboard support (toggle with ctrl)"
+                    tooltip="Toggle keyboard support (toggle with ctrl)"
                     onClick={toggleKeybind}
                     icon="keyboard"
                   />
                   <Box
                     className="instrument__keybind-indicator"
                     style={{
-                      'box-shadow': `0px 0px 5px ${keybindToggle ? '#1b9b37' : '#5a1919'}`,
-                      'background': `${keybindToggle ? '#1b9b37' : '#5a1919'}`,
+                      boxShadow: `0px 0px 5px ${keybindToggle ? '#1b9b37' : '#5a1919'}`,
+                      background: `${keybindToggle ? '#1b9b37' : '#5a1919'}`,
                     }}
                   />
                 </Box>
@@ -119,12 +122,12 @@ export const MusicInstrument = (_props, context) => {
                     maxValue={24}
                     value={keyOffset}
                     onDrag={(e, v) => setKeyOffset(v)}
-                    title={'Keybind offset'}
+                    title="Keybind offset"
                   />
                   <span>Offset</span>
                 </Box>
                 <Box className="instrument_panel-info">
-                  <h1 style={{ 'text-align': 'center' }}>{name.toUpperCase()}</h1>
+                  <h1 style={{ textAlign: 'center' }}>{name.toUpperCase()}</h1>
                 </Box>
                 <Box className="instrument__panel-input">
                   <Knob
@@ -171,9 +174,16 @@ export const MusicInstrument = (_props, context) => {
             {notes.map((note, index) => {
               const isBlackKey = note.includes('-');
               const keybind = noteKeysOrder[index - keyOffset];
-              const keyClass = isBlackKey ? 'instruments__piano-key-black' : 'instruments__piano-key-white';
-              const isWhiteOffsetKey = ['d', 'e', 'g', 'a', 'b'].includes(note.split('')[0]);
-              const whiteKeyOffsetClass = isWhiteOffsetKey && !isBlackKey ? 'instruments__piano-key-white-offset' : '';
+              const keyClass = isBlackKey
+                ? 'instruments__piano-key-black'
+                : 'instruments__piano-key-white';
+              const isWhiteOffsetKey = ['d', 'e', 'g', 'a', 'b'].includes(
+                note.split('')[0],
+              );
+              const whiteKeyOffsetClass =
+                isWhiteOffsetKey && !isBlackKey
+                  ? 'instruments__piano-key-white-offset'
+                  : '';
 
               return (
                 <li
@@ -190,10 +200,15 @@ export const MusicInstrument = (_props, context) => {
                   ])}
                   onMouseDown={() => playNote(index)}
                   onMouseLeave={() => playNoteRelease(index)}
-                  onMouseUp={() => playNoteRelease(index)}>
+                  onMouseUp={() => playNoteRelease(index)}
+                >
                   <Box className="instruments__notedetails">
-                    {keybind && <Box className="instruments__notekey">{keybind}</Box>}
-                    <Box className="instruments__notename">{note.replace('-', '#')}</Box>
+                    {keybind && (
+                      <Box className="instruments__notekey">{keybind}</Box>
+                    )}
+                    <Box className="instruments__notename">
+                      {note.replace('-', '#')}
+                    </Box>
                   </Box>
                 </li>
               );

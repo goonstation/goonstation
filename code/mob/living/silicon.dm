@@ -563,6 +563,7 @@ var/global/list/module_editors = list()
 
 	if (src.syndicate || src.syndicate_possible)
 		if (src.mind.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED))
+			src.botcard.access += access_syndicate_shuttle
 			logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 			logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 			return TRUE

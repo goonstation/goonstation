@@ -704,7 +704,7 @@
 		src.set_loc(H)
 		H.setStatusMin("unconscious", 10 SECONDS)
 
-		var/datum/ailment_data/parasite/ailment_data = new /datum/ailment_data/parasite
+		var/datum/ailment_data/parasite/ailment_data = get_disease_from_path(/datum/ailment/parasite/headspider).setup_strain()
 		ailment_data.affected_mob = H
 		ailment_data.source = src
 		H.contract_disease(/datum/ailment/parasite/headspider, null, ailment_data, TRUE)

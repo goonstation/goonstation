@@ -26,16 +26,16 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		#else
 		switch(src.name)
 		#endif
-			if("choice")
+			if("choice", "choicedevtest")
 				comp1type = /obj/machinery/engine_selector //type select computer
 				comp2type = /obj/landmark/engine_computer/two
-			if("nuclear")
+			if("nuclear", "nucleardevtest")
 				comp1type = /obj/machinery/power/nuclear/reactor_control
 				comp2type = /obj/machinery/power/nuclear/turbine_control
-			if("TEG")
+			if("TEG", "TEGdevtest")
 				comp1type = /obj/machinery/computer/power_monitor/smes
 				comp2type = /obj/machinery/power/reactor_stats
-			if("singularity")
+			if("singularity", "singularitydevtest")
 				comp1type = /obj/machinery/computer3/generic/engine
 				comp2type = /obj/machinery/computer/power_monitor/smes
 			else
@@ -48,12 +48,12 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 			else
 				comp.replaceWith(comp2type)
 
-		for(var/turf/T in block(target, locate(props.maxX, props.maxY, target.z)))
+		for(var/turf/T as anything in block(target, locate(props.maxX, props.maxY, target.z)))
 			leaveresidual(T)
 
-		for(var/turf/T in block(locate(target.x-1, target.y-1, target.z), locate(props.maxX+2, props.maxY+2, target.z)))
+		for(var/turf/T as anything in block(locate(target.x-1, target.y-1, target.z), locate(props.maxX+2, props.maxY+2, target.z)))
 			for(var/obj/O in T)
-				O.initialize()
+				O.initialize(FALSE)
 				O.UpdateIcon()
 		makepowernets()
 
@@ -90,13 +90,22 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 				if(!type_force)
 					room_prefabs[prefab] = prefab.probability
 				else if(prefab.name == type_force)
-					room_prefabs[prefab] = prefab.probability
+					room_prefabs[prefab] = TRUE //so we can have prefabs that only spawn when chosen and don't otherwise
 		if(!length(room_prefabs))
 			CRASH("No engine room prefab found for map: [lowertext(map_settings.name)] [type_force ? "and forced type [type_force]" : ""]")
 		var/datum/mapPrefab/engine_room/room_prefab = weighted_pick(room_prefabs)
 		room_prefab.applyTo(src.loc, DMM_OVERWRITE_OBJS)
 		logTheThing(LOG_DEBUG, null, "Applied engine room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
+
+/obj/landmark/engine_room/devtest
+	#ifdef IN_MAP_EDITOR
+	icon = 'icons/effects/mapeditor/engine_room_devtest.dmi'
+	icon_state = "19x19engine_room"
+#else
+	icon = null
+	icon_state = null
+#endif
 
 /obj/landmark/engine_computer
 	deleted_on_start = FALSE
@@ -140,7 +149,7 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		for(var/name in prefab_list)
 			var/datum/mapPrefab/prefab = prefab_list[name]
 			if(lowertext(map_settings.name) in prefab.tags)
-				if(prefab.name == "choice")
+				if(prefab.name == "choice" || prefab.name == "choicedevtest")
 					continue
 				choices += prefab.name
 		var/engine_choice = tgui_input_list(user, "Choose an engine type!", "Engine Selector", choices)

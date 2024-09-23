@@ -469,6 +469,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
+		message_ghosts("<b>[src]</b> has been VIOLENTLY DESTROYED at [log_loc(src, ghostjump=TRUE)].")
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
 		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
 		if(length(afterlife_turfs))
@@ -723,7 +724,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	name = "blind switch"
 	desc = "A switch for opening the blinds."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "light1"
+	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
 	var/on = 0
@@ -757,7 +758,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 	proc/toggle(var/new_state)
 		src.on = new_state
-		src.icon_state = "light[!(src.on)]"
+		src.icon_state = "blind[!(src.on)]"
 		src.UpdateIcon()
 
 	proc/toggle_group()
@@ -777,18 +778,22 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 /obj/blind_switch/north
 	name = "N blind switch"
+	dir = NORTH
 	pixel_y = 24
 
 /obj/blind_switch/east
 	name = "E blind switch"
+	dir = EAST
 	pixel_x = 24
 
 /obj/blind_switch/south
 	name = "S blind switch"
+	dir = SOUTH
 	pixel_y = -24
 
 /obj/blind_switch/west
 	name = "W blind switch"
+	dir = WEST
 	pixel_x = -24
 
 // left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
@@ -796,18 +801,22 @@ TYPEINFO(/obj/shrub/syndicateplant)
 
 /obj/blind_switch/area/north
 	name = "N blind switch"
+	dir = NORTH
 	pixel_y = 24
 
 /obj/blind_switch/area/east
 	name = "E blind switch"
+	dir = EAST
 	pixel_x = 24
 
 /obj/blind_switch/area/south
 	name = "S blind switch"
+	dir = SOUTH
 	pixel_y = -24
 
 /obj/blind_switch/area/west
 	name = "W blind switch"
+	dir = WEST
 	pixel_x = -24
 
 /obj/sign_switch
@@ -1813,3 +1822,59 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 
 	proc/off()
 		return
+/obj/decoration/paperstack/massive
+	name = "Pile of papers"
+	desc = "The pile of papers is so overwhelming it crush you."
+	icon = 'icons/obj/large/48x48.dmi'
+	icon_state = "paperstack-massive"
+	anchored = ANCHORED
+	density = 1
+
+/obj/decoration/paperstack/large
+	name = "Pile of papers"
+	desc = "The pile towers over you, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-large"
+	anchored = ANCHORED
+	density = 1
+
+/obj/decoration/paperstack/tall
+	name = "Pile of papers"
+	desc = "The pile towers over you, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-tall"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/paperstack/mid
+	name = "Pile of papers"
+	desc = "The pile looks impressive, it may collapse at any moment."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-mid"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/paperstack/small
+	name = "Pile of papers"
+	desc = "A small pile of papers neatly stacked."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "paperstack-small"
+	anchored = ANCHORED
+	density = 0
+
+/obj/decoration/ritual
+	name = "Strange drawing"
+	desc = "Looks like someone made a fancy design here, how cool! Wonder what the candles are for."
+	icon_state = "ritual"
+	icon = 'icons/misc/wander_stuff.dmi'
+	anchored = ANCHORED_ALWAYS
+	density = 0
+	plane = PLANE_NOSHADOW_BELOW
+
+/obj/decoration/wineholder
+	name = "Wall mounted wine holder"
+	desc = "A shelf attached to the wall holding several bottles of wine."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "wineholder"
+	anchored = ANCHORED
+	density = 0

@@ -422,10 +422,10 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 						O.orderedby = usr.name
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-						if (isnull(O.comment))
+						if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
-						O.comment = html_encode(O.comment)
+						O.comment = html_encode(trimtext(O.comment))
 						wagesystem.shipping_budget -= P.cost
 						if (O.address)
 							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
@@ -461,9 +461,9 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 							O.orderedby = usr.name
 							var/default_comment = ""
 							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
-							if (isnull(O.comment))
+							if (isnull(O.comment) || P.cost > wagesystem.shipping_budget)
 								return .("list") // The user cancelled the order
-							O.comment = html_encode(O.comment)
+							O.comment = html_encode(trimtext(O.comment))
 							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)

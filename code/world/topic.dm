@@ -873,7 +873,7 @@
 					response["last_seen"] = player.last_seen
 				player.cloudSaves.fetch()
 				for(var/kkey in player.cloudSaves.data)
-					if(kkey in list("admin_preferences", "buildmode"))
+					if((kkey in list("admin_preferences", "buildmode")) || findtext(kkey, regex(@"^custom_job_\d+$")))
 						continue
 					response[kkey] = player.cloudSaves.data[kkey]
 				response["cloudsaves"] = player.cloudSaves.saves

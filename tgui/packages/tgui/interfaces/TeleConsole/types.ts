@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { BooleanLike } from "common/react";
+import { BooleanLike } from 'common/react';
 
 export interface TeleConsoleData {
   xTarget: number;

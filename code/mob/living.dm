@@ -37,7 +37,6 @@
 
 	var/move_laying = null
 	var/has_typing_indicator = FALSE
-	var/has_offline_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
@@ -128,7 +127,7 @@
 	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
 	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
-/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+/mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
@@ -157,7 +156,7 @@
 	SPAWN(0)
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
-			init_preferences?.apply_post_new_stuff(src)
+			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
 
 /mob/living/flash(duration)
@@ -351,7 +350,7 @@
 	return ..()
 
 /mob/living/detach_hud(datum/hud/hud)
-	if (observers.len) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
+	if (length(observers)) //Wire note: Attempted fix for BUG: Bad ref (f:410976) in IncRefCount(DM living.dm:132)
 		for (var/mob/dead/target_observer/observer in observers)
 			observer.detach_hud(hud)
 	return ..()
@@ -386,7 +385,7 @@
 	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target.loc))
+			if (istype(target, /atom/movable) && (isturf(target.loc) || !reach))
 				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
@@ -620,7 +619,7 @@
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()
-	. = src.bioHolder.mobAppearance.customization_first_color
+	. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -924,7 +923,7 @@
 
 	last_words = message
 
-	if (src.stuttering)
+	if (src.stuttering && !isrobot(src))
 		message = stutter(message)
 
 	if (src.get_brain_damage() >= 60)
@@ -1989,15 +1988,8 @@
 
 
 		var/list/shield_amt = list()
-		var/shield_multiplier = 1
 
-		switch(P.proj_data.damage_type)
-			if(D_KINETIC, D_SLASHING, D_TOXIC)
-				shield_multiplier = 0.5
-			if(D_ENERGY, D_RADIOACTIVE)
-				shield_multiplier = 2
-
-		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power * shield_multiplier, shield_amt)
+		SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, P.power, shield_amt)
 		damage *= max(0, (1-shield_amt["shield_strength"]))
 		stun *= max(0, (1-shield_amt["shield_strength"]))
 
@@ -2152,7 +2144,7 @@
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
@@ -2160,7 +2152,7 @@
 			src.flash(60)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 
 			var/turf/T = get_turf(src)
@@ -2344,3 +2336,28 @@
 			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> barely slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
+
+///helper proc to return a new bioholder to be used for blood reagent data
+/mob/living/proc/get_blood_bioholder()
+	var/datum/bioHolder/unlinked/bloodHolder = new/datum/bioHolder/unlinked(null)
+	bloodHolder.CopyOther(src.bioHolder)
+	bloodHolder.ownerName = src.real_name
+	bloodHolder.ownerType = src.type
+	bloodHolder.weak_owner = get_weakref(src)
+	return bloodHolder
+
+/mob/living/proc/meson(atom/source)
+	if (!source)
+		CRASH("meson proc called without a source!!")
+	src.vision.set_scan(1)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+
+/mob/living/proc/unmeson(atom/source)
+	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
+			return
+	src.vision.set_scan(0)

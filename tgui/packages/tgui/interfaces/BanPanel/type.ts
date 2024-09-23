@@ -60,5 +60,5 @@ export enum BanPanelSearchFilter {
   Admin = 'admin_ckey',
   Reason = 'reason',
   CID = 'comp_id',
-  IP_Address = 'ip'
+  IP_Address = 'ip',
 }

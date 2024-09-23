@@ -183,7 +183,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	return output
 
 
-/obj/machinery/plantpot/HasProximity(atom/movable/AM as mob|obj)
+/obj/machinery/plantpot/EnteredProximity(atom/movable/AM)
 	if(!src.current || src.dead)
 		return
 	src.current?.ProximityProc(src, AM)
@@ -267,6 +267,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			// If there's no mutation we just use the base special proc, obviously!
 			growing.HYPspecial_proc(src)
+
+	if(src.current == null) //synthcats can just get up and walk away. check for that
+		return
 
 	// Have we lost all health or growth, or used up all available harvests? If so, this plant
 	// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
@@ -436,7 +439,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					if(growing.HYPattacked_proc(src,user,W)) return
 
 			if(src.dead)
-				src.visible_message(SPAN_ALERT("[src] is is destroyed by [user.name]'s [W]!"))
+				src.visible_message(SPAN_ALERT("[src] is destroyed by [user.name]'s [W.name]!"))
 				src.HYPdestroyplant()
 				return
 			else
@@ -1233,7 +1236,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		// plant's starting health.
 
 	if(growing.proximity_proc) // Activate proximity proc for any tray where a plant that uses it is planted
-		setup_use_proximity()
+		src.AddComponent(/datum/component/proximity)
 
 	src.health += SEED.planttype.endurance + SDNA?.get_effective_value("endurance")
 	// Add the plant's total endurance score to the health.
@@ -1298,7 +1301,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.health_warning = 0
 	src.harvest_warning = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()// If there's no plant here, there doesn't need to be a check
+	src.RemoveComponentsOfType(/datum/component/proximity) // If there's no plant here, there doesn't need to be a check
 	src.update_name()
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it
 	qdel(src.current_tick)
@@ -1321,7 +1324,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	src.generation = 0
 	src.UpdateIcon()
-	src.remove_use_proximity()
+	src.RemoveComponentsOfType(/datum/component/proximity)
 	src.update_name()
 	src.post_alert(list("event" = "cleared"))
 	//we also get rid of the current plantgrowth_tick, since there is no plant to access it

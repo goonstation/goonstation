@@ -3028,7 +3028,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "akN" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "akO" = (
@@ -12901,10 +12901,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aLa" = (
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
 /obj/table/wood/round/auto,
 /obj/item/pen/crayon/red,
 /obj/item/pen/crayon/blue,
@@ -14852,9 +14848,7 @@
 /area/station/security/brig/genpop)
 "aRj" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/paper/mantasecscanners,
 /obj/decal/poster/wallsign/cdnp{
 	pixel_y = 32
@@ -15076,9 +15070,7 @@
 /area/station/security/brig/genpop)
 "aRQ" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decoration/clock{
 	pixel_x = 32
 	},
@@ -15433,9 +15425,7 @@
 /area/station/security/brig/genpop)
 "aTa" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/cleanable/dirt,
 /obj/submachine/ATM/atm_alt{
 	dir = 8
@@ -20710,22 +20700,12 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "bgW" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/storage/cart/medcart,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/yellow/checker{
 	dir = 1
 	},
@@ -22025,9 +22005,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bku" = (
@@ -22052,9 +22030,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bky" = (
@@ -31319,7 +31295,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bLg" = (
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office_manta/detectives_bedroom)
 "bLh" = (
@@ -34283,9 +34259,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	pixel_x = 10
@@ -34687,18 +34661,12 @@
 	},
 /area/station/crewquarters/garbagegarbs)
 "gnS" = (
-/obj/storage/cart/mechcart,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
 	nostick = 1;
 	pixel_x = 10
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 6
-	},
-/obj/item/electronics/soldering,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
 "goo" = (
@@ -35726,8 +35694,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "isu" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -42205,9 +42172,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10

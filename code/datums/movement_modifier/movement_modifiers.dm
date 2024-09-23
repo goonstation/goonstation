@@ -50,6 +50,8 @@
 /datum/movement_modifier/disoriented
 	additive_slowdown = 7
 
+/datum/movement_modifier/tagged
+	additive_slowdown = 3
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
 
@@ -290,6 +292,15 @@
 		// apply a negative modifier to balance out what movement_delay would set, times half times the number of arms
 		// (2 arms get full negation, 1 negates half, 0 would get nothing except hardcoded to be 100 earlier)
 		return list(0-(applied_modifier*((2-missing_arms)*0.5)),1)
+
+/datum/movement_modifier/slither
+	ask_proc = 1
+
+/datum/movement_modifier/slither/modifiers(mob/living/user, move_target, running)
+	if (user.lying)
+		var/applied_modifier = (0.9) * (7*2) // Counteract most of the effect of laying down if.. laying down
+		return list(0-(applied_modifier),1)
+	else return list(0, 1)
 
 // shivering
 

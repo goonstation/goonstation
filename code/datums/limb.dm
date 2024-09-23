@@ -429,6 +429,15 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
+	martian_ray
+		proj = new/datum/projectile/energy_bolt/raybeam
+		shots = 3
+		current_shots = 9
+		cooldown = 1 SECONDS
+		reload_time = 3 SECONDS
+		spread_angle = 3
+
+
 /datum/limb/gun/spawner
 	proj = new/datum/projectile/special/spawner
 	shots = 1
@@ -618,6 +627,7 @@
 	miss_prob = 90
 	stam_damage_mult = 0
 	harm_intent_delay = COMBAT_CLICK_DELAY
+	can_beat_up_robots = TRUE
 	var/human_stam_damage = 50 //! how much stam damage this limb should deal to living mobs
 	var/human_desorient_duration = 2 SECONDS //! how much desorient this limb should apply to living mobs
 	var/human_stun_duration = 5 SECONDS //! how much stun this limb should apply to living mobs
@@ -783,6 +793,7 @@
 /datum/limb/zombie
 	///Legally distinct from can_pickup_item, determines whether we use the thrall behaviour of pickup actionbars
 	var/can_reach = FALSE
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
 			return
@@ -1142,6 +1153,7 @@
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
 /datum/limb/abomination
+	can_beat_up_robots = TRUE
 	var/weak = 0
 
 	werewolf

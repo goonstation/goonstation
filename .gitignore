@@ -12,7 +12,6 @@
 cfg/admin.txt
 
 # Build files
-/_stdlib/__build.dm
 /testmerges
 z_build_opts.dm
 
@@ -74,6 +73,10 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
+
+# Local define usage
+/_std/__build.local.dm
+/code/WorkInProgress/__development.local.dm
 
 # OpenDream compiled bytecode
 goonstation.json

@@ -341,6 +341,10 @@
 /obj/machinery/proc/is_disabled()
 	return src.is_broken() || src.has_no_power()
 
+/// Called when contents are added to the machine so it can do any special things it needs to
+/obj/machinery/proc/on_add_contents(obj/item/I)
+	return
+
 /obj/machinery/sec_lock
 	name = "Security Pad"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -395,6 +399,14 @@
 	var/list/signals = list()
 	var/list/transmitters = list()
 
+/obj/machinery/bug_reporter
+	name = "bug reporter"
+	desc = "Creates bug reports."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "moduler-on"
+	density = TRUE
+	anchored = ANCHORED
+
 /obj/machinery/set_loc(atom/target)
 	var/area/A1 = get_area(src)
 	. = ..()
@@ -413,6 +425,10 @@
 		A1.machines -= src
 		A2.machines += src
 		src.power_change()
+
+/// check if a mob is allowed to eject occupants from various machines
+/obj/machinery/proc/can_eject_occupant(mob/user)
+	return !(isintangible(user) || isghostcritter(user) || isghostdrone(user) || !can_act(user))
 
 /datum/action/bar/icon/rotate_machinery
 	duration = 3 SECONDS
@@ -446,3 +462,4 @@
 	onEnd()
 		..()
 		src.machine.set_dir(turn(src.machine.dir, -90))
+

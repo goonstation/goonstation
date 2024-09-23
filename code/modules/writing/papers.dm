@@ -96,6 +96,13 @@
 	name = "'Cargo Bay Setup Instructions'"
 	info = "In order to properly set up the cargo computer, both the incoming and outgoing supply pads must be directly or diagonally adjacent to the computer."
 
+/obj/item/paper/efif_disclaimer
+	name = "'EFIF-1 Operational Disclaimer'"
+	info = {"Congratulations on your new EFIF-1 Construction System!<BR>\n<BR>\n
+	Operational modes and EZ Sheet Loading may be accessed from the "EFIF-1 Construction System" entry in your pod's computer console.<BR>\n<BR>\n
+	Please be aware that non-repair assembly of walls and standard floors may be restricted within your workplace's vicinity for safety reasons.<BR>\n<BR>\n
+	<B>LOAD ONLY STANDARD, NON-REINFORCED NT-SPEC STEEL SHEETS. EFIF-1 IS CALIBRATED FOR NT-SPEC STEEL. EFIF-1 DOES NOT AND SHOULD NOT ACCEPT OTHER METALS.</B>"}
+
 /obj/item/paper/courtroom
 	name = "'A Crash Course in Legal SOP on SS13'"
 	info = {"<B>Roles:</B><BR>\nThe Detective is basically the investigator and prosecutor.<BR>\nThe Staff Assistant can perform these functions with written
@@ -598,7 +605,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<tr>
 	<td><b>"Execute" / "Exterminate"</b></td>
 	<td>30 PU</td>
-	<td>Turn your Lawbringer™ into your favourite sidearm with these .38 Full Metal Jacket rounds!</td>
+	<td>Turn your Lawbringer™ into your favourite sidearm with these only slightly radioactive blaster rounds!</td>
 	</tr>
 	<tr>
 	<td><b>"Hotshot" / "Incendiary"</b></td>
@@ -616,9 +623,9 @@ Only trained personnel should operate station systems. Follow all procedures car
 	<td>When you just can't get things to slow down, <i>make 'em</i> slow down with these handy haloperidol tranquilizer darts!</td>
 	</tr>
 	<tr>
-	<td><b>"Bigshot" / "High Explosive" / "HE"</b></td>
+	<td><b>"Bigshot" / "High Power" / "Assault"</b></td>
 	<td>170 PU</td>
-	<td>You'll be the talk of the station when you bust down a wall with one of these explosive rounds! May cause loss of limbs or life.</td>
+	<td>You'll be the talk of the station when you bust down a wall with one of these high power assault lasers! May cause small fires and molten metal puddles.</td>
 	</tr>
 	<tr>
 	<td><b>"Clownshot" / "Clown"</b></td>
@@ -1044,6 +1051,17 @@ proc/spawn_kitchen_note()
 		..()
 		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
 
+/obj/item/paper/businesscard/mabinogi
+	name = "business card - Mabinogi"
+	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
+	icon_state = "businesscard-mabinogi"
+	sizey = 343 + IMAGE_OFFSET_Y
+
+	New()
+		..()
+		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
+
+
 /obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
 	icon_state = "paper"
@@ -1202,6 +1220,49 @@ proc/spawn_kitchen_note()
 	napalm-phlogiston-thermite """hell mix."""
 	"}
 
+/obj/item/paper/watchful_eye
+	name = "MEMO: Deployment Notice"
+	icon_state = "paper_caution_bloody"
+	info ={"
+	TO: WATCHFUL-EYE SENSOR ARRAY MAINTENANCE <br>
+	FROM: OUTPOST OMICRON, NANOTRASEN-THINKTRONIC JOINT PROJECT <br>
+	SUBJECT: SCHEDULED MAINTAINENCE <br>
+	MESSAGE: <br>
+	Reports show that one of the satellites in the array is acting up.
+	The eye clusters there are allegedly behaving oddly, reporting
+	false events, and there are rumours that someone has recalibrated
+	them to track individuals instead of Typhon. Please investigate the
+	source of the anomalous readings and let us know whether to decommission
+	that satellite. The previous team didn't return, so proceed with caution.
+	<br>
+
+	We can still operate the array with only 15 out of the 30 satellites,
+	due to safety (redundancy) policy. Still, we'd rather keep as many
+	satellites in operation as we can. If the problem can be repaired, do so.
+
+	<br> <br>
+	Signed, <br>
+	The office of Commodore Roland Yee
+	"}
+
+/obj/item/paper/watchful_eye/rev
+	name = "Plan of attack."
+	icon_state = "paper_singed"
+	info ={"
+	Steps: <br>
+	1. assume control of eye sat 13. murder optional but probably required. implant <br>
+	the maintainence crew tooo so we can ask them how it works.<br>
+	2. hack the sensors to track non revs. figure it out when we get there with maint crew.<br>
+	3. await further instuctions <br> <br>
+
+	PS: turns out the eyes are ACTUAL eyes. Like weird space eyes?? no one told us that!!<br>
+	How do you hack an eye?? <br> <br>
+
+	PSS: we hacked the eye. hell yeah. okay technically we just hacked the satellite and <br>
+	made the eye point at certain things but that's good enough for me. management can <br>
+	do it themselves if they want it done properly. Fight me.<br>
+	"}
+
 /obj/item/paper/marionette_implant_readme
 	name = "marionette implant readme"
 	icon_state = "paper"
@@ -1292,3 +1353,35 @@ proc/spawn_kitchen_note()
 
 #undef IMAGE_OFFSET_X
 #undef IMAGE_OFFSET_Y
+
+/obj/item/paper/wanderpoem
+	name = "A freshly written poem"
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "paper-red"
+	info = {"
+	<span style="color:red;font-family:Lucida Handwriting;">
+	<p> Winter arrived. <p> <br>
+	<p>Winter arrived years ago, <p> <br>
+	<p>its frost creeping into that well churned soil. <p> <br>
+	<p>My world grew silent as the crystalline cold silenced the birds, <p> <br>
+	<p>made fallow the fields. <p> <br>
+	<p>Is winter not what one would wish for when aggrieved by that summer of sweltering hysteria. <p> <br>
+	<p>Those that bound me to then had wilted into the soil, their flowers turning to drifting dust. <p> <br>
+	<p>The fields of chance further grew only that which could harm me, <p> <br>
+	<p>the cacophonous cries surrounding served only to create doubt where none could be left. <p> <br>
+	<p>Quietus came and offered its hand to me, <p> <br>
+	<p>I took it. <p> <br> <br>
+
+	<p>Its hand froze all in perfect peace, <p> <br>
+	<p>I looked out into a world of pure white. <p> <br>
+	<p>In contradiction, I embraced this death with one hand, <p> <br>
+	<p>yet could not tear another from the only warmth that remained. <p> <br>
+	<p>That dithering flame wandered among the kindling I had set for it, <p> <br>
+	<p>it leaped to and fro from precious branch to branch. <p> <br>
+	<p>I came to understand more of myself then, <p> <br>
+	<p>I understood that this part of myself could not be excised. <p> <br>
+	<p>Peace was more than an end, <p> <br>
+	<p>more than the winter of a soul. <p> <br>
+	<p>Spring came, <p> <br>
+	<p>spring came at last. <p> <br>
+	"}

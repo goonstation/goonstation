@@ -469,7 +469,7 @@
 /area/station/bridge/captain)
 "abW" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
@@ -526,8 +526,7 @@
 	})
 "ack" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent{
@@ -21478,9 +21477,7 @@
 	dir = 4
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -21667,57 +21664,23 @@
 /area/station/hallway/primary/north)
 "eAx" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -21744,6 +21707,10 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"eBx" = (
+/obj/machinery/status_display,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/secondary/construction)
 "eBK" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/yellow{
@@ -23149,7 +23116,6 @@
 	},
 /area/station/chapel/sanctuary)
 "fdn" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -23157,6 +23123,7 @@
 /obj/machinery/light_switch/west{
 	dir = 4
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fdA" = (
@@ -29001,6 +28968,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
+"hXN" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/artifact)
 "hXP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -36580,15 +36551,9 @@
 	pixel_y = 2
 	},
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -37272,9 +37237,7 @@
 /area/station/hangar/qm)
 "mlY" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/disposal/mail/small{
 	dir = 1;
 	mail_tag = "brig";
@@ -44039,16 +44002,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
-"pOY" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/status_display{
-	pixel_y = 32
-	},
-/turf/simulated/floor/yellow,
-/area/station/hallway/secondary/construction)
 "pPB" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -49542,7 +49495,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "sMG" = (
-/obj/fakeobject/pathology_computer{
+/obj/fakeobject/pathogen_computer{
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -50831,6 +50784,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
+"ttu" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/elect)
 "ttC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51728,9 +51685,7 @@
 	pixel_x = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -54570,6 +54525,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "vgU" = (
+/obj/machinery/status_display/market,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southeast)
 "vgX" = (
@@ -55678,9 +55634,7 @@
 /area/station/crew_quarters/lounge)
 "vLx" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -11
@@ -56976,9 +56930,6 @@
 	},
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
-	},
-/obj/machinery/status_display{
-	pixel_y = 30
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/hallway/primary/east)
@@ -113216,7 +113167,7 @@ dsA
 mub
 sPw
 nOV
-nYu
+ttu
 wsT
 psH
 tDL
@@ -115948,8 +115899,8 @@ kmN
 bil
 xQd
 uCi
-qPl
-pOY
+eBx
+pMQ
 pBg
 pMQ
 qPl
@@ -117449,7 +117400,7 @@ mAZ
 wXo
 wXo
 wXo
-wXo
+hXN
 gvb
 brW
 xQd

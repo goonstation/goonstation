@@ -1009,6 +1009,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	anchored = ANCHORED
 	speaker_range = 0
 	chat_class = RADIOCL_INTERCOM
+	locked_frequency = TRUE
 	//Best I can figure, you need broadcasting and listening to both be TRUE for it to make a signal and send the words spoken next to it. Why? Fuck whoever named these, that's why.
 	broadcasting = 0
 	listening = 0		//maybe this doesn't need to be on. It shouldn't be relaying signals.
@@ -1028,18 +1029,24 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	. = ..()
 	. += "[src] is[src.broadcasting ? " " : " not "]active!\nIt is tuned to [format_frequency(src.frequency)]Hz."
 
-/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+/obj/item/device/radio/intercom/loudspeaker/proc/toggle_broadcast_mode(mob/user)
 	if (!broadcasting)
 		broadcasting = 1
 		src.icon_state = "transmitter-on"
-		boutput(user, "Now transmitting.")
+		src.visible_message("The [src] clicks on and begins transmitting.")
 	else
 		broadcasting = 0
 		src.icon_state = "transmitter"
-		boutput(user, "No longer transmitting.")
+		src.visible_message("The [src] whirrs down and stops transmitting.")
+
+/obj/item/device/radio/intercom/loudspeaker/attack_hand(mob/user)
+	. = ..()
+	src.toggle_broadcast_mode(user)
+
+/obj/item/device/radio/intercom/loudspeaker/attack_self(mob/user as mob)
+	src.toggle_broadcast_mode(user)
 
 /obj/item/device/radio/intercom/loudspeaker/initialize()
-
 	set_frequency(frequency)
 	if(src.secure_frequencies)
 		set_secure_frequencies()
@@ -1057,6 +1064,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	listening = 1
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
+	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0
 	desc = "A Loudspeaker."
@@ -1086,8 +1094,6 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 //You can't talk into it to send a message
 /obj/item/device/radio/intercom/loudspeaker/speaker/hear_talk()
 	return
-
-	//listening seems to refer to the device listening to the signals, not listening to voice
 
 /obj/item/device/radio/intercom/loudspeaker/speaker/send_hear()
 	var/list/hear = ..()

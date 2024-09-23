@@ -7,7 +7,9 @@
 
 /datum/cloudSaves
 	var/datum/player/player = null
+	///generic cloud data
 	var/list/data = list()
+	///cloudsaves. ONLY FOR CHARACTER PROFILE CLOUD SAVES. NOTHING ELSE.
 	var/list/saves = list()
 	var/loaded = FALSE // Have we performed an initial fetch
 	var/simulating = FALSE
@@ -103,7 +105,7 @@
 	/// Save new cloud data for this player
 	proc/putData(key, value)
 		if(value == src.data[key]) //don't bother sending data if we'd be making no change
-			return TRUE //but treat it as a success I guess
+			return TRUE
 
 		if (src.simulating)
 			// Local fallback, update JSON file
@@ -127,10 +129,10 @@
 		src.data[key] = value
 		return TRUE
 
-	/// Save a new cloud file for this player
+	/// Save a new cloud file for this player. ONLY FOR CHARACTER PROFILE CLOUD SAVES. USE putData FOR ANYTHING ELSE.
 	proc/putSave(name, data)
 		if(data == src.saves[name]) //don't bother sending save if we'd be making no change
-			return TRUE //but treat it as a success I guess
+			return TRUE
 
 		if (src.simulating)
 			// Local fallback, update JSON file

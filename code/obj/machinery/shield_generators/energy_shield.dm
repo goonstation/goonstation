@@ -126,7 +126,7 @@
 			display_active.color = "#00FF00"
 		else
 			display_active.color = "#FA0000"
-		build_icon()
+		update_icon()
 
 	//Changes shield orientation based on direction the generator is facing
 	proc/update_orientation()
@@ -206,7 +206,7 @@
 			display_active.color = "#00FF00"
 		else
 			display_active.color = "#FA0000"
-		build_icon()
+		update_icon()
 
 	get_draw()
 		var/shield_draw = 0
@@ -225,6 +225,7 @@
 
 		S.layer = 2
 		S.set_dir(D.dir)
+		S.powered_locally = FALSE
 		if(!src.emagged)
 			S.linked_door = D
 			D.linked_forcefield = S
@@ -261,7 +262,7 @@
 
 		playsound(src.loc, src.sound_on, 50, 1)
 		display_active.color = "#00FF00"
-		build_icon()
+		update_icon()
 
 #undef SHIELD_BLOCK_GAS
 #undef SHIELD_BLOCK_FLUID

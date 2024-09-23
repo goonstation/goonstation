@@ -11385,7 +11385,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "azM" = (
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -11539,7 +11539,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -11558,7 +11558,7 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "bloodydoor";
@@ -20234,6 +20234,7 @@
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "aVl" = (
@@ -21942,6 +21943,7 @@
 /area/station/hallway/primary/central)
 "ban" = (
 /obj/grille/steel,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bao" = (
@@ -27792,9 +27794,7 @@
 /area/shuttle/arrival/station)
 "bqX" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable,
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/grime,
@@ -32847,7 +32847,6 @@
 /area/station/science/bot_storage)
 "bFM" = (
 /obj/machinery/light,
-/obj/storage/secure/closet/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -33016,7 +33015,6 @@
 /area/station/crew_quarters/quarters)
 "bGn" = (
 /obj/machinery/light/emergency,
-/obj/storage/secure/closet/brig,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bGo" = (
@@ -36968,7 +36966,7 @@
 /area/station/garden/owlery)
 "bOR" = (
 /obj/machinery/portableowl/attached{
-	name = "The Sexiest Owl"
+	name = "The Coolest Owl"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -39413,7 +39411,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "bUm" = (
-/obj/machinery/vending/standard,
+/obj/machinery/vending/standard/toxins,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "bUn" = (
@@ -41960,9 +41958,7 @@
 /area/station/crew_quarters/captain)
 "bZL" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -41970,9 +41966,7 @@
 /area/station/security/brig)
 "bZM" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/flasher/solitary{
 	pixel_x = 24
 	},
@@ -41980,16 +41974,12 @@
 /area/station/security/brig)
 "bZN" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "bZO" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "bZP" = (
@@ -42648,20 +42638,11 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "cbu" = (
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/electronics/soldering{
-	pixel_x = 4;
-	pixel_y = -2
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "cbv" = (
@@ -43380,7 +43361,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ccX" = (
-/obj/storage/cart/forensic,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	icon_state = "pipe-c";
@@ -43389,6 +43369,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ccY" = (
@@ -43801,57 +43782,23 @@
 /area/station/ranch)
 "cer" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ces" = (
@@ -44278,9 +44225,6 @@
 /obj/storage/crate{
 	desc = "A crate of confiscated items.";
 	name = "Contraband"
-	},
-/obj/machinery/light{
-	dir = 8
 	},
 /obj/item/item_box/no{
 	pixel_x = -8;
@@ -49200,11 +49144,6 @@
 /area/station/crew_quarters/info)
 "cnm" = (
 /obj/table/wood/auto,
-/obj/item/device/detective_scanner,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
 /obj/item/storage/secure/ssafe{
 	pixel_y = -30
 	},
@@ -53930,6 +53869,10 @@
 /obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"dwm" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/quartermaster/cargooffice)
 "dwR" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/toggleable/meson{
@@ -54990,9 +54933,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "fdV" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun
-	},
+/obj/displaycase/captain,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -55444,7 +55385,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/fakeobject/firelock_broken{
+/obj/fakeobject/airlock_broken/firelock{
 	desc = "Rust has rendered this airlock useless.";
 	dir = 8;
 	icon = 'icons/obj/junk.dmi';
@@ -58567,9 +58508,7 @@
 /area/station/crew_quarters/toilets)
 "kEM" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
@@ -58802,6 +58741,15 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"lie" = (
+/obj/storage/secure/closet/brig,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/main)
 "ljx" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -99337,7 +99285,7 @@ cCO
 tXA
 flf
 oBU
-cLr
+dwm
 buF
 ban
 buA
@@ -124934,7 +124882,7 @@ axX
 cAL
 niB
 cAR
-cfg
+lie
 avD
 bTX
 cAM
