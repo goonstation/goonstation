@@ -32,7 +32,7 @@ This project uses React. Take your time to read the guide:
 You will need these programs to start developing in tgui:
 
 - [Node v**20**.15+](https://nodejs.org/en/download/)
-  - This page will show the latest version, you will need to go to 'Previous Releases'
+  - Using either the prebuilt installer or a package manager works.
   - **LTS v20** release is recommended instead of latest, as well as the x64 arch.
   - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v4.1.1+](https://yarnpkg.com/getting-started/install) (optional)
@@ -40,7 +40,7 @@ You will need these programs to start developing in tgui:
 ## Usage
 
 Run `bin/tgui --install-git-hooks` to install merge drivers which will
-assist you in conflict resolution when rebasing your branches. Only has
+assist you in conflict resolution when rebasing your branches. This only has
 to be done once.
 
 **For Git Bash, MSys2, WSL, Linux or macOS users:**
