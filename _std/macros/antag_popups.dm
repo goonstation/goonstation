@@ -102,15 +102,9 @@
 
 		usr.Browse(html, "window=adminAntagPopups;size=600x400")
 
-	//this is definitely not a massive security hole or anything. I think
-	proc/searchWiki(mob/M, var/phrase)
-		M << link("https://wiki.ss13.co/index.php?search=[phrase]")
-
 	Topic(href, href_list)
 		if (href_list["action"])
 			usr.show_antag_popup(href_list["action"], FALSE)
-		if (href_list["wiki"])
-			searchWiki(usr, href_list["wiki"])
 
 	//show antag popup to a mob
 	proc/show_popup(mob/M, var/popup_name)
