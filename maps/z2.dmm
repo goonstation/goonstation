@@ -29687,8 +29687,8 @@
 	},
 /area/sim/area2)
 "cmj" = (
-/obj/machinery/vending/jobclothing/engineering/afterlife,
 /obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/engineering,
 /turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
 "cmm" = (
@@ -43582,10 +43582,8 @@
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/bar/sanctuary)
 "dcs" = (
-/obj/machinery/vending/jobclothing/research/afterlife{
-	pixel_x = 3
-	},
 /obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/medical,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
 	dir = 9
@@ -44002,11 +44000,8 @@
 	},
 /area/afterlife/bar)
 "ddE" = (
-/obj/machinery/vending/jobclothing/security/afterlife{
-	pixel_x = -3;
-	pixel_y = 8
-	},
 /obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/research,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -60925,11 +60920,8 @@
 /turf/unsimulated/floor/sand,
 /area/centcom/offices/azrun)
 "jag" = (
-/obj/machinery/vending/jobclothing/medical/afterlife{
-	pixel_x = 3;
-	pixel_y = 8
-	},
 /obj/map/light/brighterwhite,
+/obj/machinery/vending/jobclothing/afterlife/security,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
 	dir = 10
@@ -67338,7 +67330,7 @@
 /area/upper_arctic/exterior/surface)
 "ohZ" = (
 /obj/decal/cleanable/glitter/harmless,
-/obj/machinery/vending/jobclothing/catering/afterlife,
+/obj/machinery/vending/jobclothing/afterlife/catering,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue1";
