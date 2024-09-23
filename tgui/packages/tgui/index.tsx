@@ -16,7 +16,6 @@ import './styles/themes/paper.scss';
 import './styles/themes/retro-dark.scss';
 import './styles/themes/syndicate.scss';
 import './styles/themes/flock.scss';
-import './styles/theme-modes/base-light.scss';
 import './styles/theme-modes/nanotrasen-light.scss';
 import './styles/theme-modes/ntos-light.scss';
 
