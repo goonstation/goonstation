@@ -5,7 +5,9 @@
  * @license ISC
  */
 
-import { Button, Table } from 'tgui-core/components';
+import { Button, LabeledList } from 'tgui-core/components';
+
+import { asCreditsString } from './stringUtils';
 
 interface VendorCashTableProps {
   cardname: string;
@@ -17,38 +19,36 @@ interface VendorCashTableProps {
 
 export const VendorCashTable = (props: VendorCashTableProps) => {
   const { cardname, onCardClick, bankMoney, cash, onCashClick } = props;
-
+  const hasAccount = !!cardname;
+  const hasCash = cash > 0;
   return (
-    <Table style={{ fontSize: '9pt', maxWidth: '100%', tableLayout: 'fixed' }}>
-      <Table.Row>
-        <Table.Cell bold>
-          {cardname && (
-            <Button
-              icon="id-card"
-              mr="100%"
-              tooltip={cardname ? cardname : ''}
-              onClick={onCardClick}
-              ellipsis
-              maxWidth="100%"
-            >
+    <LabeledList>
+      <LabeledList.Item
+        label="Account"
+        buttons={
+          hasAccount ? (
+            <Button icon="id-card" onClick={onCardClick}>
               {cardname}
             </Button>
-          )}
-          {cardname && bankMoney >= 0 && 'Money on account: ' + bankMoney + '⪽'}
-        </Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell bold>
-          {cash > 0 && (
-            <>
-              {'Cash: ' + cash + '⪽ '}
-              <Button icon="eject" onClick={onCashClick}>
-                Eject
-              </Button>
-            </>
-          )}
-        </Table.Cell>
-      </Table.Row>
-    </Table>
+          ) : (
+            <Button icon="id-card" disabled>
+              Swipe ID Card
+            </Button>
+          )
+        }
+      >
+        {hasAccount ? asCreditsString(bankMoney) : 'No card inserted'}
+      </LabeledList.Item>
+      <LabeledList.Item
+        label="Cash"
+        buttons={
+          <Button icon="eject" disabled={!hasCash} onClick={onCashClick}>
+            Eject
+          </Button>
+        }
+      >
+        {hasCash ? asCreditsString(cash) : 'No cash inserted'}
+      </LabeledList.Item>
+    </LabeledList>
   );
 };

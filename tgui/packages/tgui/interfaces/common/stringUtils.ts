@@ -31,3 +31,5 @@ export const glitch = (text: string, amount: number) => {
   }
   return chars.join('');
 };
+
+export const asCreditsString = (amount: number) => `${amount}⪽`;
