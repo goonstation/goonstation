@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
 #endif
 
-/obj/machinery/vending/jobclothing/security/afterlife
+/obj/machinery/vending/jobclothing/afterlife/security
 	name = "Security Apparel"
 	desc = "A vending machine that vends Security clothing."
 	icon_state = "secclothing"
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/nurse, 2)
 #endif
 
-/obj/machinery/vending/jobclothing/medical/afterlife
+/obj/machinery/vending/jobclothing/afterlife/medical
 	name = "Medical Apparel"
 	desc = "A vending machine that vends Medical clothing."
 	icon_state = "medclothing"
@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 #endif
 
-/obj/machinery/vending/jobclothing/engineering/afterlife
+/obj/machinery/vending/jobclothing/afterlife/engineering
 	name = "Engineering Apparel"
 	desc = "A vending machine that vends Engineering clothing."
 	icon_state = "engclothing"
@@ -332,7 +332,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1, hidden=1)
 		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1, hidden = 1) //Silly headbands (?)
 
-/obj/machinery/vending/jobclothing/catering/afterlife
+/obj/machinery/vending/jobclothing/afterlife/catering
 	name = "Catering Apparel"
 	desc = "A vending machine that vends Catering clothing."
 	icon_state = "catclothing"
@@ -414,7 +414,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
 #endif
 
-/obj/machinery/vending/jobclothing/research/afterlife
+/obj/machinery/vending/jobclothing/afterlife/research
 	name = "Research Apparel"
 	desc = "A vending machine that vends Research clothing."
 	icon_state = "sciclothing"
