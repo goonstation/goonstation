@@ -395,7 +395,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/datum/projectile/bullet/rpg = 0.5,
 			/datum/projectile/bullet/assault_rifle = 5,
 			/datum/projectile/bullet/grenade_round/explosive = 0.5,
-			/obj/machinery/bot/secbot = 2,
+			/mob/living/critter/robotic/securitron = 2,
 			/obj/machinery/bot/guardbot = 2,
 			/obj/barricade = 1,
 			/obj/item/deployer/barricade = 0.5,
@@ -648,8 +648,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/datum/projectile/special/spawner/handcuff = 5,
 			/obj/item/handcuffs = 2,
 			/obj/itemspecialeffect/barrier = 3,
-			/obj/machinery/bot/secbot = 1,
-			/obj/machinery/bot/secbot/emagged = 3,
+			/mob/living/critter/robotic/securitron = 1,
+			/mob/living/critter/robotic/securitron/emagged = 3,
 			/obj/item/reagent_containers/food/snacks/donut/custom/random = 15,
 			/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1,
 			/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1,
@@ -1189,6 +1189,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				M.real_name = phrase_log.random_phrase("name-ai")
 			else if(istype(M, /mob/living/silicon/robot) && prob(80))
 				M.real_name = phrase_log.random_phrase("name-cyborg")
+			else if(istype(M, /mob/living/critter/robotic/securitron) && prob(50))
+				M.real_name = phrase_log.random_phrase("name-secbot")
 			else if(istype(M, /mob/living/carbon/human/normal/clown) && prob(80))
 				M.real_name = phrase_log.random_phrase("name-clown")
 			else if(istype(M, /mob/living/carbon/human) && prob(80))
@@ -1202,8 +1204,6 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			var/obj/machinery/bot/B = .
 			if(istype(B, /obj/machinery/bot/firebot) && prob(33))
 				B.name = phrase_log.random_phrase("name-firebot")
-			else if(istype(B, /obj/machinery/bot/secbot) && prob(33))
-				B.name = phrase_log.random_phrase("name-secbot")
 			else if(istype(B, /obj/machinery/bot/cleanbot) && prob(33))
 				B.name = phrase_log.random_phrase("name-cleanbot")
 			else if(istype(B, /obj/machinery/bot/mulebot) && prob(33))

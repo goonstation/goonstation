@@ -478,10 +478,6 @@
 				cancel_fleeing = TRUE
 			else if(ismob(src.ai_target) && !isalive(src.ai_target))
 				cancel_fleeing = TRUE
-			else if(istype(src.ai_target, /obj/machinery/bot/secbot))
-				var/obj/machinery/bot/secbot/securitron = src.ai_target
-				if(securitron.target != src)
-					cancel_fleeing = TRUE
 			else if(istype(src.ai_target, /obj/machinery/bot/guardbot))
 				var/obj/machinery/bot/guardbot/guardbuddy = src.ai_target
 				if(guardbuddy.arrest_target != src)

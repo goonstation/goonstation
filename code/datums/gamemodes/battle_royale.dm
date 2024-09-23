@@ -80,6 +80,9 @@ var/global/area/current_battle_spawn = null
 	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
 		qdel(monke)
 
+	for_by_tcl(secbot, /mob/living/critter/robotic/securitron)
+		qdel(secbot)
+
 	for_by_tcl(submachine, /obj/submachine)
 		if (istype(submachine, /obj/submachine/weapon_vendor/security))
 			qdel(submachine)
@@ -135,10 +138,6 @@ var/global/area/current_battle_spawn = null
 			if (/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 				qdel(machine)
 			if (/obj/machinery/teleport/portal_generator)
-				qdel(machine)
-			if (/obj/machinery/bot/secbot)
-				qdel(machine)
-			if (/obj/machinery/bot/secbot/beepsky)
 				qdel(machine)
 			if (/obj/machinery/flasher/portable)
 				qdel(machine)

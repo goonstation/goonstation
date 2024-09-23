@@ -14587,6 +14587,16 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"baw" = (
+/mob/living/critter/robotic/securitron{
+	control_freq = 1441;
+	desc = "A tattered and rusted security bot,  powered only by nicotine and fury at those who abandoned him here.";
+	emagged = 2;
+	name = "Mr. Beepsky";
+	no_camera = 1
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
 "bax" = (
 /obj/item/photo/beepsky1{
 	desc = "You can see a securitron on the photo.  Looks kinda familiar. It appears to be holding a \"#1 Son\" mug.  Is...is that a young Officer Beepsky?"
@@ -25510,7 +25520,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bOG" = (
-/obj/machinery/bot/secbot/formal,
+/mob/living/critter/robotic/securitron/formal,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bOH" = (
@@ -26439,7 +26449,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /obj/machinery/light_switch/auto,
 /obj/item/gun/energy/phaser_small{
 	pixel_x = -6;
@@ -33420,13 +33430,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ely" = (
-/obj/machinery/bot/secbot{
-	control_freq = 1441;
-	desc = "A tattered and rusted security bot,  powered only by nicotine and fury at those who abandoned him here.";
-	emagged = 2;
-	name = "Mr. Beepsky";
-	no_camera = 1
-	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "elF" = (

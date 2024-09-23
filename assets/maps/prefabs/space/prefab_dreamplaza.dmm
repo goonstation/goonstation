@@ -486,9 +486,10 @@
 /area/prefab/dreamplaza)
 "qa" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/machinery/bot/secbot/neon{
+/mob/living/critter/robotic/securitron/neon{
 	emagged = 2;
-	control_freq = 0
+	control_freq = 0;
+	no_camera = 1
 	},
 /turf/simulated/floor/terrazzo/white,
 /area/prefab/dreamplaza)

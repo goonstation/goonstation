@@ -324,7 +324,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			else
 				src.wake_from_hibernation()
 		// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-		if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src && src.is_npc)
+		if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate(M, weapon) && M != src && src.is_npc)
 			var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
 			task_instance.targetted_mob = M
 			task_instance.start_time = TIME
@@ -733,8 +733,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			hand_range_attack(target, params)
 			return
 	if (HH.can_attack)
-		L.attack_hand(target, src)
-		HH.set_cooldown_overlay()
+		var/obj/item/equipped = src.equipped()
+		if(equipped && src.next_click <= world.time)
+			src.next_click = world.time + max(equipped.click_delay,src.combat_click_delay)
+			target.Attackby(equipped, src, params)
+		else
+			L.attack_hand(target, src)
+			HH.set_cooldown_overlay()
 	else
 		boutput(src, SPAN_ALERT("You cannot attack with your [HH.name]!"))
 
@@ -1034,7 +1039,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		handcount++
 		if (HH.object_for_inhand)
 			var/obj/item/I = new HH.object_for_inhand
-			var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][HH.suffix]",
+			var/suffix = I.two_handed ? "-LR" : HH.suffix
+			var/image/inhand = image(icon = I.inhand_image_icon, icon_state = "[I.item_state][suffix]",
 									layer = HH.render_layer, pixel_x = HH.offset_x, pixel_y = HH.offset_y)
 			qdel(I)
 			src.UpdateOverlays(inhand, "inhands_[handcount]")
@@ -1046,7 +1052,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				continue
 			if (!I.inhand_image)
 				I.inhand_image = image(I.inhand_image_icon, "", HH.render_layer)
-			I.inhand_image.icon_state = I.item_state ? "[I.item_state][HH.suffix]" : "[I.icon_state][HH.suffix]"
+			var/suffix = I.two_handed ? "-LR" : HH.suffix
+			I.inhand_image.icon_state = I.item_state ? "[I.item_state][suffix]" : "[I.icon_state][suffix]"
 			I.inhand_image.pixel_x = HH.offset_x
 			I.inhand_image.pixel_y = HH.offset_y
 			I.inhand_image.layer = HH.render_layer
@@ -1072,6 +1079,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				qdel(HH.item)
 				continue
 			var/obj/item/I = HH.item
+			if(I.cant_drop)
+				continue
 			I.set_loc(src.loc)
 			I.layer = initial(I.layer)
 			u_equip(I)
@@ -1422,7 +1431,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 /// How the critter should attack normally
 /mob/living/critter/proc/critter_basic_attack(var/mob/target)
-	src.set_a_intent(INTENT_HARM)
+	if(src.intent == INTENT_HELP)
+		src.set_a_intent(INTENT_HARM)
 	src.hand_attack(target)
 	return TRUE
 
@@ -1462,7 +1472,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	return can_act(src,TRUE)
 
 /// Used for generic critter mobAI - returns TRUE when the mob should retaliate to this attack. Only used if ai_retaliates = TRUE
-/mob/living/critter/proc/should_critter_retaliate(var/mob/attcker, var/obj/attcked_with)
+/mob/living/critter/proc/should_critter_retaliate(var/mob/attacker, var/obj/attacked_with)
 	return src.ai_retaliates && (src._ai_patience_count <= 0)
 
 

@@ -10503,7 +10503,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aED" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /turf/simulated/floor,
 /area/station/hallway/starboardupperhallway)
 "aEE" = (

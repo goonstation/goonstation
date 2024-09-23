@@ -63,7 +63,7 @@
 
 				if (isnpcmonkey(affected_mob) || jobban_isbanned(affected_mob, "Cyborg") || isvirtual(affected_mob))
 					//affected_mob.ghostize()
-					var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/secbot,/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,/obj/machinery/bot/floorbot)
+					var/robopath = pick(/obj/machinery/bot/guardbot,/obj/machinery/bot/medbot,/obj/machinery/bot/firebot,/obj/machinery/bot/cleanbot,/obj/machinery/bot/floorbot)
 					var/obj/machinery/bot/X = new robopath (T)
 					X.name = affected_mob.real_name //heh
 					affected_mob.gib()

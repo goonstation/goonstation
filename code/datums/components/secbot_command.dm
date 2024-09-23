@@ -1,9 +1,9 @@
 /datum/component/secbot_command
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	/// A list of bots listening to this command
-	var/list/obj/machinery/bot/secbot/secbots = null
+	var/list/mob/living/critter/robotic/securitron/secbots = null
 
-/datum/component/secbot_command/Initialize(list/obj/machinery/bot/secbot/secbots, duration = -1)
+/datum/component/secbot_command/Initialize(list/mob/living/critter/robotic/securitron/secbots, duration = -1)
 	. = ..()
 	src.secbots = secbots
 	if (duration >= 0)
@@ -21,8 +21,18 @@
 	src.secbots = null
 
 /datum/component/secbot_command/proc/on_point(mob/pointer, atom/target)
-	for (var/obj/machinery/bot/secbot/secbot as anything in src.secbots)
+	for (var/mob/living/critter/robotic/securitron/secbot as anything in src.secbots)
 		if (QDELETED(secbot))
 			continue
-		if (iscarbon(target) && target != secbot.target)
-			secbot.EngageTarget(target, FALSE, FALSE, TRUE)
+		if (isliving(target) && secbot.ai.enabled && !istype(target, /mob/living/critter/robotic/securitron) && target != secbot.ai.target)
+			var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron/task = \
+				secbot.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/securitron, list(secbot.ai, secbot.ai.default_task, target))
+			secbot.ai.target = target
+			task.fixed_target = target
+			task.transition_task = task
+			secbot.ai.interrupt_to_task(task)
+			secbot.accuse_perp(target, rand(5,8)) // id rather excess emotes than non-telegraphed securitrons, so this has no emote cooldown check
+			if(!ON_COOLDOWN(secbot, "SECURITRON_EMOTE", secbot.emote_cooldown))
+				secbot.siren()
+			if (src.parent)
+				src.RemoveComponent()

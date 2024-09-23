@@ -1600,7 +1600,7 @@
 /obj/stool/chair/office/syndie{
 	dir = 8
 	},
-/obj/machinery/bot/secbot/warden{
+/mob/living/critter/robotic/securitron/formal{
 	desc = "He will not tolerate any tomfoolery in this club.";
 	name = "Mr. Bounceski"
 	},

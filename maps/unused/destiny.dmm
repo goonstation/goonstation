@@ -3562,7 +3562,7 @@
 	},
 /area/station/bridge/captain)
 "apE" = (
-/obj/machinery/bot/secbot/formal,
+/mob/living/critter/robotic/securitron/formal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "apF" = (
@@ -25876,7 +25876,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/bot/secbot,
+/mob/living/critter/robotic/securitron,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "gqw" = (
@@ -33717,7 +33717,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/obj/machinery/bot/secbot/beepsky,
+/mob/living/critter/robotic/securitron/beepsky,
 /obj/cable{
 	icon_state = "1-2"
 	},

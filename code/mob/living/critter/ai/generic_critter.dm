@@ -62,17 +62,12 @@
 	var/mob/living/critter/C = holder.owner
 	return C.can_critter_attack()
 
-/datum/aiTask/sequence/goalbased/critter/attack/on_reset()
-	..()
-	var/mob/living/critter/C = holder.owner
-	if(C)
-		C.set_a_intent(INTENT_HARM)
-
 /datum/aiTask/sequence/goalbased/critter/attack/get_targets()
 	var/mob/living/critter/C = holder.owner
 	return C.seek_target(src.max_dist)
 
-/datum/aiTask/tsequence/goalbased/critter/attack/on_tick()
+/datum/aiTask/sequence/goalbased/critter/attack/on_tick()
+	..()
 	if(length(holder.owner.grabbed_by))
 		holder.owner.resist()
 
@@ -95,15 +90,14 @@
 	return has_started && C.can_critter_attack() //if we've started an attack, and can attack again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/attack/on_tick()
-	if(length(holder.owner.grabbed_by))
-		holder.owner.resist()
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			C.critter_attack(holder.target)
-			has_started = TRUE
+			if(holder.owner.next_click <= world.time) // prevents ai with handheld items from spamclicking
+				C.critter_attack(holder.target)
+				has_started = TRUE
 
 /datum/aiTask/succeedable/critter/attack/on_reset()
 	has_started = FALSE
@@ -116,7 +110,6 @@
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/New(parentHolder, transTask, atom/fixed_target)
 	..(parentHolder, transTask)
-	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/attack, list(holder)))
 	src.fixed_target = fixed_target
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/get_targets()

@@ -2494,7 +2494,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 		var/tmp/state = 0
 		var/tmp/party_counter = 90
 		var/tmp/party_idle_counter = 0
-		var/tmp/obj/machinery/bot/secbot/its_beepsky = null
+		var/tmp/mob/living/critter/robotic/securitron/its_beepsky = null
 
 		var/rumpus_emotion = "joy" //Emotion to express during buddytime.
 		var/rumpus_location_tag = "buddytime" //Tag of the bar beacon
@@ -2657,7 +2657,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if (src.its_beepsky) //Huh? We haven't lost him.
 				return
 
-			for (var/obj/machinery/bot/secbot/possibly_beepsky in machine_registry[MACHINES_BOTS])
+			for_by_tcl(possibly_beepsky, /mob/living/critter/robotic/securitron)
 				if (ckey(possibly_beepsky.name) == "officerbeepsky")
 					src.its_beepsky = possibly_beepsky //Definitely beepsky in this case.
 					break
@@ -3900,6 +3900,22 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.speak_with_maptext("Why, if it isn't beloved station canine, George!  Who's a good doggy?  You are!  Yes, you!")
 						END_NEAT
 
+				else if (istype(AM, /mob/living/critter/robotic/securitron))
+					if (AM.name == "Officer Beepsky" && !(src.neat_things & NT_BEEPSKY))
+						FOUND_NEAT(NT_BEEPSKY)
+							src.speak_with_maptext("And here comes Officer Beepsky, the proud guard of this station. Proud.")
+							sleep(5 SECONDS)
+							src.speak_with_maptext("Not at all terrible.  No Sir.  Not at all.")
+							if (prob(10))
+								sleep(6.5 SECONDS)
+								src.speak_with_maptext("Well okay, maybe a little.")
+							END_NEAT
+
+					else if (!(src.neat_things & NT_SECBOT))
+						FOUND_NEAT(NT_SECBOT)
+							src.speak_with_maptext("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
+							END_NEAT
+
 				else if (istype(AM, /obj/critter/gunbot/drone) && !(src.neat_things & NT_DRONE))
 					FOUND_NEAT(NT_DRONE)
 						src.speak_with_maptext( pick("Oh dear, a syndicate autonomous drone!  These nasty things have been shooting up innocent space-folk for a couple of years now.", "Watch out, folks!  That's a syndicate drone, they're nasty buggers!", "Ah, a syhndicate drone!  They're made in a secret factory, one located at--oh dear, we better get hurrying before it becomes upset.", "Watch out, that's a syndicate drone!  They're made in a secret factory. There was a guy who knew where it was on my first tour, but he took the secret...to his grave!!  Literally.  It's with him.  In his crypt.") )
@@ -3913,75 +3929,58 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						src.speak_with_maptext(.)
 						END_NEAT
 
-				else if (istype(AM, /obj/machinery/bot))
-					if (istype(AM, /obj/machinery/bot/secbot))
-						if (AM.name == "Officer Beepsky" && !(src.neat_things & NT_BEEPSKY))
-							FOUND_NEAT(NT_BEEPSKY)
-								src.speak_with_maptext("And here comes Officer Beepsky, the proud guard of this station. Proud.")
+				else if (istype(AM, /obj/machinery/bot/guardbot) && AM != src.master)
+					var/obj/machinery/bot/guardbot/otherBuddy = AM
+					if (!(src.neat_things & NT_CAPTAIN) && istype(otherBuddy.hat, /obj/item/clothing/head/caphat))
+						FOUND_NEAT(NT_CAPTAIN)
+							src.speak_with_maptext("Good day, Captain!  You look a little different today, did you get a haircut?")
+							var/otherBuddyID = otherBuddy.net_id
+							//Notify other buddy
+							sleep(1 SECOND)
+							if (src.master)
+								src.master.post_status("[otherBuddyID]", "command", "captain_greet")
+							END_NEAT
+
+					else if (!(src.neat_things & NT_WIZARD) && istype(otherBuddy.hat, /obj/item/clothing/head/wizard))
+						FOUND_NEAT(NT_WIZARD)
+							src.speak_with_maptext("Look, a space wizard!  Please stand back, I am going to attempt to communicate with it.")
+							sleep(5 SECONDS)
+							src.speak_with_maptext("Hello, Mage, Seer, Wizard, Wizzard, or other magic-user.  We mean you no harm!  We ask you humbly for your WIZARDLY WIZ-DOM.")
+							if (prob(25))
+								sleep(6 SECONDS)
+								src.speak_with_maptext("We hope that we aren't disrupting any sort of wiz-biz or wizness deal.")
+							//As before, notify the other buddy
+							var/otherBuddyID = otherBuddy.net_id
+							if (src.master)
+								src.master.post_status("[otherBuddyID]", "command", "wizard_greet")
+							END_NEAT
+
+					else if (!(src.neat_things & NT_OTHERBUDDY))
+						FOUND_NEAT(NT_OTHERBUDDY)
+							if (istype(otherBuddy, /obj/machinery/bot/guardbot/future))
+								src.speak_with_maptext("The PR line of personal robot has been--wait! Hold the phone! Is that a PR-7? Oh man, I feel old!")
+
+							else if (istype(otherBuddy, /obj/machinery/bot/guardbot/old/tourguide))
+								src.master.visible_message("<b>[master]</b> waves at [otherBuddy].")
+
+							else if (istype(otherBuddy, /obj/machinery/bot/guardbot/soviet))
+								src.speak_with_maptext("That's...that's one of those eastern bloc robuddies.  Um...hello?")
+								src.master.visible_message("<b>[master]</b> gives [otherBuddy] a slow, confused wave.")
+
+							else
+								src.speak_with_maptext("The PR line of personal robot has been Thinktronic Data Systems' flagship robot line for over 15 years.  It's easy to see their appeal!")
 								sleep(5 SECONDS)
-								src.speak_with_maptext("Not at all terrible.  No Sir.  Not at all.")
-								if (prob(10))
-									sleep(6.5 SECONDS)
-									src.speak_with_maptext("Well okay, maybe a little.")
-								END_NEAT
-
-						else if (!(src.neat_things & NT_SECBOT))
-							FOUND_NEAT(NT_SECBOT)
-								src.speak_with_maptext("And if you look over now, you'll see a securitron, an ace security robot originally developed \"in the field\" from spare parts in a security office!")
-								END_NEAT
-
-					else if (istype(AM, /obj/machinery/bot/guardbot) && AM != src.master)
-						var/obj/machinery/bot/guardbot/otherBuddy = AM
-						if (!(src.neat_things & NT_CAPTAIN) && istype(otherBuddy.hat, /obj/item/clothing/head/caphat))
-							FOUND_NEAT(NT_CAPTAIN)
-								src.speak_with_maptext("Good day, Captain!  You look a little different today, did you get a haircut?")
-								var/otherBuddyID = otherBuddy.net_id
-								//Notify other buddy
-								sleep(1 SECOND)
-								if (src.master)
-									src.master.post_status("[otherBuddyID]", "command", "captain_greet")
-								END_NEAT
-
-						else if (!(src.neat_things & NT_WIZARD) && istype(otherBuddy.hat, /obj/item/clothing/head/wizard))
-							FOUND_NEAT(NT_WIZARD)
-								src.speak_with_maptext("Look, a space wizard!  Please stand back, I am going to attempt to communicate with it.")
+								switch (rand(1,4))
+									if (1)
+										src.speak_with_maptext("Buddy Fact: In 2051, Robuddies were conclusively determined to have a[prob(40) ? "t least three-fourths of a" : ""] soul.")
+									if (2)
+										src.speak_with_maptext("Buddy Fact: Robuddies cannot jump.  We just can't, sorry!")
+									if (3)
+										src.speak_with_maptext("Buddy Fact: Our hug protocols have been extensively revised through thousands of rounds of testing and simulation to deliver Peak Cuddle.")
+									if (4)
+										src.speak_with_maptext("Buddy Fact: Robuddies are programmed to be avid fans of hats and similar headgear.")
 								sleep(5 SECONDS)
-								src.speak_with_maptext("Hello, Mage, Seer, Wizard, Wizzard, or other magic-user.  We mean you no harm!  We ask you humbly for your WIZARDLY WIZ-DOM.")
-								if (prob(25))
-									sleep(6 SECONDS)
-									src.speak_with_maptext("We hope that we aren't disrupting any sort of wiz-biz or wizness deal.")
-								//As before, notify the other buddy
-								var/otherBuddyID = otherBuddy.net_id
-								if (src.master)
-									src.master.post_status("[otherBuddyID]", "command", "wizard_greet")
-								END_NEAT
-
-						else if (!(src.neat_things & NT_OTHERBUDDY))
-							FOUND_NEAT(NT_OTHERBUDDY)
-								if (istype(otherBuddy, /obj/machinery/bot/guardbot/future))
-									src.speak_with_maptext("The PR line of personal robot has been--wait! Hold the phone! Is that a PR-7? Oh man, I feel old!")
-
-								else if (istype(otherBuddy, /obj/machinery/bot/guardbot/old/tourguide))
-									src.master.visible_message("<b>[master]</b> waves at [otherBuddy].")
-
-								else if (istype(otherBuddy, /obj/machinery/bot/guardbot/soviet))
-									src.speak_with_maptext("That's...that's one of those eastern bloc robuddies.  Um...hello?")
-									src.master.visible_message("<b>[master]</b> gives [otherBuddy] a slow, confused wave.")
-
-								else
-									src.speak_with_maptext("The PR line of personal robot has been Thinktronic Data Systems' flagship robot line for over 15 years.  It's easy to see their appeal!")
-									sleep(5 SECONDS)
-									switch (rand(1,4))
-										if (1)
-											src.speak_with_maptext("Buddy Fact: In 2051, Robuddies were conclusively determined to have a[prob(40) ? "t least three-fourths of a" : ""] soul.")
-										if (2)
-											src.speak_with_maptext("Buddy Fact: Robuddies cannot jump.  We just can't, sorry!")
-										if (3)
-											src.speak_with_maptext("Buddy Fact: Our hug protocols have been extensively revised through thousands of rounds of testing and simulation to deliver Peak Cuddle.")
-										if (4)
-											src.speak_with_maptext("Buddy Fact: Robuddies are programmed to be avid fans of hats and similar headgear.")
-									sleep(5 SECONDS)
-								END_NEAT
+							END_NEAT
 
 				else if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
 					FOUND_NEAT(NT_CHEGET)

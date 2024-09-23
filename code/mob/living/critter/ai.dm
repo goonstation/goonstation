@@ -452,6 +452,7 @@ var/list/ai_move_scheduled = list()
 
 	next_task()
 		if(terminated)
+			src.reset()
 			return transition_task
 		else
 			return null

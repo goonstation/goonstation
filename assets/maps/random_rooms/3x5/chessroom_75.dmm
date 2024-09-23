@@ -72,7 +72,7 @@
 /obj/stool/chair/dining/regal{
 	dir = 4
 	},
-/obj/machinery/bot/secbot{
+/mob/living/critter/robotic/securitron{
 	name = "Bird"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,

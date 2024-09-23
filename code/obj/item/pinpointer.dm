@@ -636,7 +636,7 @@ TYPEINFO(/obj/item/pinpointer/secweapons)
 
 /obj/item/pinpointer/category/securitrons
 	name = "securitron pinpointer"
-	category = /obj/machinery/bot/secbot
+	category = /mob/living/critter/robotic/securitron
 	thing_name = "securitron"
 
 /obj/item/pinpointer/category/gnomes

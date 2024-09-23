@@ -309,7 +309,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 	prob_of_happening = 20
 
 	valid_instance(obj/machinery/bot/bot)
-		. = ..() && !bot.emagged && (!istype(bot, /obj/machinery/bot/guardbot) && !istype(bot, /obj/machinery/bot/secbot) || prob(50))
+		. = ..() && !bot.emagged && (!istype(bot, /obj/machinery/bot/guardbot) || prob(50))
 
 	build_targets()
 		for_by_tcl(bot, /obj/machinery/bot)
@@ -318,6 +318,22 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(obj/machinery/bot/bot)
 		bot.emp_act()
+
+/datum/ion_category/secbots
+	amount_min = 1
+	amount_max = 1
+	prob_of_happening = 10
+
+	valid_instance(var/mob/living/critter/robotic/securitron/secbot)
+		. = ..() && !secbot.emagged
+
+	build_targets()
+		for_by_tcl(secbot, /mob/living/critter/robotic/securitron)
+			if(valid_instance(secbot))
+				targets += secbot
+
+	action(var/mob/living/critter/robotic/securitron/secbot)
+		secbot.emp_act()
 
 /datum/ion_category/cameras
 	amount_min = 2

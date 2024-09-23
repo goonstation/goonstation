@@ -61,7 +61,7 @@
 		setProperty("movespeed", 0.4)
 
 	afterattack(atom/A, mob/user as mob)
-		if(istype(A, /obj/machinery/bot/secbot))
+		if(istype(A, /mob/living/critter/robotic/securitron))
 			src.ammo.amount_left += 1
 			user.visible_message(SPAN_ALERT("[user] loads \the [A] into \the [src]."), SPAN_ALERT("You load \the [A] into \the [src]."))
 			qdel(A)

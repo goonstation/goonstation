@@ -8,7 +8,6 @@
 	name = "bot control base"
 
 	var/list/botlist = list()		// list of bots
-	var/obj/machinery/bot/active 	// the active bot; if null, show bot list
 	var/list/botstatus			// the status signal sent by the bot
 
 	var/control_freq = FREQ_BOT_CONTROL //Just for sending, adjust what the actual pda hooks to for receive
@@ -42,7 +41,7 @@
 		pda.AddComponent(
 			/datum/component/packet_connected/radio, \
 			"bot_control",\
-			control_freq, \
+			src.control_freq, \
 			pda.net_id, \
 			null, \
 			FALSE, \
@@ -70,7 +69,7 @@
 	var/all_guard = 0
 	var/lockdown = 0
 	var/can_summon_all = 0
-	var/can_force_proc = 0
+	var/mob/living/critter/robotic/securitron/active 	// the active secbot; if null, show bot list
 
 	return_text()
 		if(..())
@@ -87,40 +86,25 @@
 					. += "No bots found.<BR>"
 
 				else
-					for(var/obj/machinery/bot/secbot/B in src.botlist)
+					for(var/mob/living/critter/robotic/securitron/B in src.botlist)
 						. += "[B] at [get_area(B)]</A><BR>"
-						. += "Mode: "
-						switch(B.mode)
-							if(0)
-								. += "Ready."
-							if(1, 8)
-								. += "Apprehending target."
-							if(3)
-								. += "On Patrol."
-							if(4)
-								. += "Responding to summons."
-							if(5, 6)
-								. += "Starting guard duty."
-							if(7)
-								. += "Starting guard duty."
+						. += "Health: " + "[round(B.health)]/[B.max_health]"
 						. += "<br>"
-						switch(B.mode)
-							if(0) // Not doing something?
+						switch(B.patrolling)
+							if(FALSE) // Not doing something?
 								. += "<A href='byond://?src=\ref[src];op=go;active=\ref[B]'>Patrol</A> " // Go patrol!
 							else
 								. += "<A href='byond://?src=\ref[src];op=stop;active=\ref[B]'>Halt</A> " // Stop patrol!
 						. += "<A href='byond://?src=\ref[src];op=summon;active=\ref[B]'>Summon</A> "
 						. += "<A href='byond://?src=\ref[src];op=guardhere;active=\ref[B]'>Guard</A> "
 						. += "<A href='byond://?src=\ref[src];op=lockdown;active=\ref[B]'>Lockdown</A> "
-						if(src.can_force_proc)
-							. += "<A href='byond://?src=\ref[src];op=proc;active=\ref[B]'>Act</A> "
 						. += "<hr>"
 
 					if(src.can_summon_all)
-						. += "<A href='byond://?src=\ref[src];op=summonall'>Summon All Active Bots</A><br><br>"
+						. += "<A href='byond://?src=\ref[src];op=summonall'>Summon all active bots</A><br><br>"
 						. += "<A href='byond://?src=\ref[src];op=allguardhere'>Set all bots to guard</A><br><br>"
 						. += "<A href='byond://?src=\ref[src];op=alllockdown'>Set all bots to lockdown</A><br><br>"
-						. += "<A href='byond://?src=\ref[src];op=getareas'>Get list of valid areas</A><br><br>"
+				. += "<A href='byond://?src=\ref[src];op=getareas'>Get list of valid areas</A><br><br>"
 				. += "<A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A>"
 
 	Topic(href, href_list)
@@ -148,7 +132,7 @@
 				self_text("Scanning for security robots...")
 				post_status("bot_control", "command", "bot_status")
 
-			if("guardhere", "allguardhere", "lockdown", "alllockdown")
+			if("guardhere", "allguardhere", "lockdown", "alllockdown") // not spoofable because god no
 				var/list/stationAreas = get_accessible_station_areas()
 				if(href_list["op"] == "allguardhere" || href_list["op"] == "alllockdown")
 					src.all_guard = 1
@@ -169,92 +153,96 @@
 					else if(guardthis in stationAreas)
 						guardthis = stationAreas[guardthis]
 					else
-						guardthis = null
 						self_text("Unknown area: [guardthis].")
+						guardthis = null
 				if(guardthis)
 					if(!src.all_guard)
 						if(src.lockdown)
-							post_status("bot_control", "command", "lockdown", "active", active, "target", guardthis)
+							post_status("bot_control", "command", "lockdown", "address_1", active.net_id, "target", guardthis)
 							self_text("[active] ordered to lockdown [guardthis].")
 						else
-							post_status("bot_control", "command", "guard", "active", active, "target", guardthis)
+							post_status("bot_control", "command", "guard", "address_1", active.net_id, "target", guardthis)
 							self_text("[active] ordered to guard [guardthis].")
-						post_status("bot_control", "command", "bot_status", "active", active)
+						post_status("bot_control", "command", "bot_status", "address_1", active.net_id)
 					else
 						src.all_guard = 0
 						if (!botlist.len)
 							PDA.updateSelfDialog()
 							return
+						var/stored_lockdown = src.lockdown
 						SPAWN(0)
-							// yeah its cheating, but holy heck is it laggy to send a zillion signals via PDA
+							// we are gonna try to do this for real, but with a sleep - mylie
 							var/list/bots = list()
-							for(var/obj/machinery/bot/secbot/bot in src.botlist)
-								bot.guard_the_area(guardthis, src.lockdown)
-								bots[bot] = 1
+							for(var/mob/living/critter/robotic/securitron/bot in src.botlist)
+								if(stored_lockdown)
+									post_status("bot_control", "command", "lockdown", "address_1", bot.net_id, "target", guardthis)
+									self_text("[bot] ordered to lockdown [guardthis].")
+								else
+									post_status("bot_control", "command", "guard", "address_1", bot.net_id, "target", guardthis)
+									self_text("[bot] ordered to guard [guardthis].")
+								sleep(2 DECI SECONDS)
 							if(length(bots) >= 1)
 								self_text("[english_list(bots)] ordered to guard [guardthis].")
 
 			if("stop", "go")
-				post_status("bot_control", "command", href_list["op"], "active", active)
-				post_status("bot_control", "command", "bot_status", "active", active)
+				post_status("bot_control", "command", href_list["op"], "address_1", active.net_id)
+				post_status("bot_control", "command", "bot_status", "address_1", active.net_id)
 				if(href_list["op"] == "go")
 					self_text("[active] set to patrol.")
 				else
 					self_text("[active] set to not patrol.")
 
-			if("summon")
-				post_status("bot_control", "command", "summon", "active", active, "target", summon_turf )
-				post_status("bot_control", "command", "bot_status", "active", active)
+			if("summon") // not spoofable
+				post_status("bot_control", "command", "summon", "address_1", active.net_id, "target", summon_turf)
+				post_status("bot_control", "command", "bot_status", "address_1", active.net_id)
 				self_text("[active] summoned to [summon_turf.loc].")
 
-			if("proc")
-				post_status("bot_control", "command", "proc", "active", active)
-				post_status("bot_control", "command", "bot_status", "active", active)
-				self_text("[active] action request sent.")
-
-			if("summonall")
+			if("summonall") // also not spoofable
 				if (!botlist.len)
 					PDA.updateSelfDialog()
 					return
 				SPAWN(0)
+					// trying this for real - mylie
 					var/list/bots = list()
-					// again, yeah, cheating, but let's just pretend it isnt
-					for(var/obj/machinery/bot/secbot/bot in src.botlist)
-						if(isturf(summon_turf))
-							bot.summon_bot(summon_turf)
-							bots[bot] = 1
-						else
-							self_text("Summon failed.")
-							break
+					for(var/mob/living/critter/robotic/securitron/bot in src.botlist)
+						post_status("bot_control", "command", "summon", "address_1", bot.net_id, "target", summon_turf)
+						post_status("bot_control", "command", "bot_status", "address_1", bot.net_id)
+						self_text("[bot] summoned to [summon_turf.loc].")
+						sleep(2 DECI SECONDS)
 					if(length(bots) >= 1)
 						self_text("[english_list(bots)] summoned to [summon_turf.loc].")
+
 		src.lockdown = 0
 		src.all_guard = 0
 		PDA.updateSelfDialog()
 
 	receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
-		if(connection_id == "bot_control" && signal.data["type"] == "secbot" && !signal.encryption)
+		if(signal.data["type"] == "secbot" && !signal.encryption)
 			if(!botlist)
 				botlist = new()
 
-			botlist |= signal.source
-
-			if(active == signal.source)
-				var/list/b = signal.data
-				botstatus = b.Copy()
+			if(istype(signal.source,/mob/living/critter/robotic/securitron)) // avoid putting random shit in the list
+				botlist |= signal.source
 
 			src.master.updateSelfDialog()
+
+	post_signal(datum/signal/signal, newfreq)
+		signal.encryption = "ERR_12845_NT_SECURE_PACKET:"
+		signal.encryption_obfuscation = 97
+		signal.data["auth_code"] = netpass_security
+		. = ..()
+
 /datum/computer/file/pda_program/bot_control/secbot/pro
 	name = "Securitron Access PRO"
 	size = 8
 	header_thing = "Securitron Interlink PRO"
 	can_summon_all = 1
-	can_force_proc = 1
 
 /datum/computer/file/pda_program/bot_control/mulebot
 	name = "MULE Bot Control"
 	size = 16
 	var/list/beacons
+	var/obj/machinery/bot/mulebot/active
 
 	return_text()
 		if(..())
