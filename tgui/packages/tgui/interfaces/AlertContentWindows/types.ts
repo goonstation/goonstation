@@ -11,4 +11,5 @@ export type AlertContentWindow = {
   height?: number; // Defaults to 480
   title: string;
   content: React.ReactNode;
+  theme?: string;
 };

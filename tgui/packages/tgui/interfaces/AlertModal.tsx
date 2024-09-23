@@ -36,7 +36,7 @@ type AlertModalData = {
   content_window: string;
   timeout: number;
   title: string;
-  theme: string;
+  theme: string | null;
 };
 
 const KEY_DECREMENT = -1;
@@ -85,7 +85,7 @@ export const AlertModal = () => {
       height={windowHeight}
       title={typedContentWindow ? typedContentWindow.title : title}
       width={windowWidth}
-      theme={theme || 'nanotrasen'}
+      theme={typedContentWindow.theme ?? theme ?? 'nanotrasen'}
     >
       {!!timeout && <Loader value={timeout} />}
       <Window.Content

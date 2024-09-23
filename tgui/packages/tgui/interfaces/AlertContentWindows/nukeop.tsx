@@ -8,6 +8,7 @@ import { AlertContentWindow } from './types';
 
 export const nukeop: AlertContentWindow = {
   title: 'Nuclear Operative Basics',
+  theme: 'syndicate',
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Syndicate operative!</h1>
