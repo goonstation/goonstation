@@ -169,8 +169,7 @@
 			if ("nukeop")
 				tguiPopup = TRUE
 			if ("nukeop_commander")
-				window_title = "Nuclear Commander Basics"
-				filename = "html/traitorTips/nukeopcommanderTips.html"
+				tguiPopup = TRUE
 			if ("nukeop_gunbot")
 				window_title = "Nuclear Gun-Bot Basics"
 				filename = "html/traitorTips/nukeopgunbotTips.html"
