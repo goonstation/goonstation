@@ -1714,7 +1714,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 			New()
 				..()
-				access.access = get_access("Head of Security") + access_centcom
+				access.access = get_access("Head of Security")
 
 
 /* ============================================================ */
