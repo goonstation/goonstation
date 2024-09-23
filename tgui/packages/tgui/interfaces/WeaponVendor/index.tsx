@@ -136,7 +136,7 @@ const Stock = ({ stock }: StockProps) => {
       <Table.Cell className="WeaponVendor__Cell" py="5px" textAlign="right">
         <Button
           disabled={stock.cost > data.credits[stock.category]}
-          color={stock.category}
+          className={`Button__${stock.category}`}
           onClick={() => act('redeem', { ref: stock.ref })}
         >
           Redeem {stock.cost} {pluralize('credit', stock.cost)}
