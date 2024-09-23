@@ -1,5 +1,9 @@
 
 (t)sun sep 22 24
+(u)ZeWaka, Mordent, Garash2k, pgmzeta, Romayne, cringe, and upstream TGUI contributors
+(p)20060
+(e)🪲🆕🔧🔎💅🔄❗📄📜|C-Bug, C-Feature, A-Tooling, C-Code-Quality, C-QoL, C-Rework, E-FUCK, A-UI, C-Documentation
+(*)A large portion of the game's UI interfaces have been reworked internally. Be sure to report any bugs!
 (u)Retrino
 (p)19879
 (e)🗺|A-Mapping
