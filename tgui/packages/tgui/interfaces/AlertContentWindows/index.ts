@@ -14,7 +14,7 @@ export const getAlertContentWindow = (
   const acwKey = r
     .keys()
     .find((k) =>
-      k.endsWith(`${alertContentWindowName}.AlertContentWindow.tsx`),
+      k.endsWith(`/${alertContentWindowName}.AlertContentWindow.tsx`),
     );
   if (!acwKey) {
     throw new Error(
