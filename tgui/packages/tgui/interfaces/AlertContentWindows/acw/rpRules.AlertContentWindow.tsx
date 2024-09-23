@@ -4,7 +4,6 @@
  * @author garash2k
  * @license ISC
  */
-/* eslint-disable max-len */
 import { Section } from 'tgui-core/components';
 
 import type { AlertContentWindow } from '../types';
