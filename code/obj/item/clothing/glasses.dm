@@ -741,6 +741,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		.["frequency"] = src.freq
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
 		if (action == "set-frequency" && params["finish"])
 			var/old_freq = src.freq
 			src.freq = sanitize_frequency_diagnostic(params["value"])
