@@ -18875,6 +18875,14 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/storage/crate{
+	name = "footlocker"
+	},
+/obj/item/clothing/suit/space/nanotrasen,
+/obj/item/clothing/head/NTberet{
+	pixel_y = 4;
+	pixel_x = -1
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_fenrir)
 "bxz" = (
@@ -47196,10 +47204,6 @@
 "dtw" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
-"dtx" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor/plating,
-/area/syndicate_fenrir)
 "dty" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
@@ -54911,11 +54915,6 @@
 /area/afterlife/bar)
 "ean" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/door_control/bolter/new_walls/east{
-	id = "fenrir_ai_override";
-	name = "fenrir ai override";
-	pixel_x = -22
-	},
 /turf/unsimulated/floor/circuit/off,
 /area/syndicate_fenrir)
 "eau" = (
@@ -58281,13 +58280,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
-"gAj" = (
-/obj/item/old_grenade/emp{
-	pixel_x = -8;
-	pixel_y = -4
-	},
-/turf/unsimulated/floor/black,
-/area/syndicate_fenrir)
 "gAq" = (
 /obj/railing/yellow/reinforced{
 	dir = 1
@@ -58608,11 +58600,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
-"gKs" = (
-/obj/decal/cleanable/dirt,
-/obj/storage/closet/fire,
-/turf/unsimulated/floor/plating,
-/area/syndicate_fenrir)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-19"
@@ -65306,11 +65293,17 @@
 /turf/space,
 /area/space)
 "lyJ" = (
+/obj/fakeobject/airlock_broken/firelock{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "maint_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small,
 /turf/unsimulated/floor/plating,
 /area/syndicate_fenrir)
 "lzl" = (
@@ -65407,7 +65400,8 @@
 	icon = 'icons/obj/vending.dmi';
 	icon_state = "syndieclothing";
 	name = "experimental clothing vendor";
-	desc = "A syndicate apparel vendor, it seems nonfunctional."
+	desc = "A syndicate apparel vendor, it seems nonfunctional.";
+	density = 1
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_fenrir)
@@ -68817,6 +68811,9 @@
 	icon_state = "8-10"
 	},
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/unsimulated/floor/plating,
 /area/syndicate_fenrir)
 "oiq" = (
@@ -68834,18 +68831,6 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/offices/varshie)
-"oiS" = (
-/obj/storage/crate{
-	name = "footlocker"
-	},
-/obj/item/clothing/suit/space/nanotrasen,
-/obj/item/clothing/head/NTberet{
-	pixel_y = 4;
-	pixel_x = -1
-	},
-/obj/machinery/light_switch/north,
-/turf/unsimulated/floor/darkblue,
-/area/syndicate_fenrir)
 "ojn" = (
 /obj/cable,
 /obj/cable{
@@ -70602,10 +70587,6 @@
 "pAv" = (
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/watertank,
-/turf/unsimulated/floor/plating,
-/area/syndicate_fenrir)
-"pBg" = (
-/obj/random_item_spawner/junk/one_or_zero,
 /turf/unsimulated/floor/plating,
 /area/syndicate_fenrir)
 "pBs" = (
@@ -74227,6 +74208,7 @@
 "sbf" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
+/obj/machinery/light_switch/north,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_fenrir)
 "sbi" = (
@@ -74325,7 +74307,6 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/dirt,
-/obj/machinery/light/small,
 /turf/unsimulated/floor/plating,
 /area/syndicate_fenrir)
 "sen" = (
@@ -75664,6 +75645,8 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
 /area/syndicate_fenrir)
 "tja" = (
@@ -114817,7 +114800,7 @@ bMw
 aaa
 nVH
 meM
-gAj
+gQT
 gQT
 nVH
 naA
@@ -116628,12 +116611,12 @@ aab
 bMw
 aaa
 nVH
-pBg
+nVH
 tza
 jDB
-jDB
 nVH
-oiS
+nVH
+nVH
 kNF
 qnV
 nVH
@@ -116930,7 +116913,7 @@ aab
 bMw
 aaa
 nVH
-jDB
+nVH
 gJS
 nTB
 umi
@@ -117533,7 +117516,7 @@ aab
 aab
 bMw
 aaa
-nVH
+lyJ
 oSv
 sem
 nVH
@@ -118138,10 +118121,10 @@ aab
 bMw
 aaa
 nVH
-pbU
+nVH
 rNF
 pbU
-jDB
+mtO
 nVH
 wix
 wix
@@ -118440,7 +118423,7 @@ aab
 bMw
 aaa
 nVH
-jDB
+nVH
 vQn
 rZZ
 adm
@@ -118742,10 +118725,10 @@ aab
 bMw
 aaa
 nVH
-gKs
+nVH
 ohZ
 poI
-dtx
+nVH
 nVH
 wix
 wix
@@ -119045,8 +119028,8 @@ bMw
 aaa
 nVH
 nVH
-nVH
-nVH
+pUB
+pUB
 nVH
 nVH
 nVH

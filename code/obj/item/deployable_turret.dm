@@ -546,6 +546,15 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		..(src.loc, src.dir)
 		src.toggle_activated()
 
+/obj/deployable_turret/syndicate/active/no_interacting
+	attackby(obj/item/W, mob/user)
+		user.lastattacked = src
+		if (isweldingtool(W) || iswrenchingtool(W) || isscrewingtool(W))
+			user.show_message(SPAN_ALERT("Your tools won't work on the proprietary bolts."))
+			return
+		else
+			..()
+
 /obj/deployable_turret/riot
 	name = "N.A.R.C.S."
 	desc = "A Nanotrasen Automatic Riot Control System."
