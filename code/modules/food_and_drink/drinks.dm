@@ -543,3 +543,10 @@ obj/item/reagent_containers/food/drinks/covfefe
 		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
 		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
 		"capsaicin"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
+
+/obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte
+	name = "Discount Dan's Pumpkin Spice Latte"
+	desc = "\"Discount Dan's brings you a fresh take on the classic pumpkin spice latte.\""
+	icon_state = "coffee_fall"
+	initial_volume = 50
+	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10)
