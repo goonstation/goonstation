@@ -7,20 +7,20 @@
  */
 
 import { useState } from 'react';
-import { useBackend } from '../../backend';
 import { Button, Section, Stack } from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { CharacterPreview } from './CharacterPreview';
-import { StockList } from './StockList';
 import { PurchaseInfo } from './PurchaseInfo';
+import { StockList } from './StockList';
 import { TagsModal } from './TagsModal';
 import type { ClothingBoothData } from './type';
-import { LocalStateKey } from './utils/enum';
 
 export const ClothingBooth = () => {
   const { act, data } = useBackend<ClothingBoothData>();
   const { name, accountBalance, cash, scannedID } = data;
-  const [tagModal] = useState(LocalStateKey.TagModal, false);
+  const [tagModal] = useState(false);
 
   return (
     <Window title={name} width={500} height={600}>
@@ -33,27 +33,34 @@ export const ClothingBooth = () => {
                 <Stack fill vertical>
                   {!!cash && (
                     <Stack.Item>
-                      <Stack fluid align="center" justify="space-between">
+                      <Stack align="center" justify="space-between">
                         <Stack.Item bold>Cash: {cash}⪽</Stack.Item>
                         <Stack.Item>
-                          <Button icon="eject" content="Eject Cash" onClick={() => act('eject_cash')} />
+                          <Button
+                            icon="eject"
+                            content="Eject Cash"
+                            onClick={() => act('eject_cash')}
+                          />
                         </Stack.Item>
                       </Stack>
                     </Stack.Item>
                   )}
                   {!!scannedID && (
                     <Stack.Item>
-                      <Stack fluid align="center" justify="space-between">
-                        <Stack.Item bold>Money In Account: {accountBalance}⪽</Stack.Item>
+                      <Stack align="center" justify="space-between">
+                        <Stack.Item bold>
+                          Money In Account: {accountBalance}⪽
+                        </Stack.Item>
                         <Stack.Item>
                           <Button
                             ellipsis
                             icon="id-card"
-                            content={scannedID}
                             onClick={() => {
                               act('logout');
                             }}
-                          />
+                          >
+                            {scannedID}
+                          </Button>
                         </Stack.Item>
                       </Stack>
                     </Stack.Item>

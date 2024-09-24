@@ -6,15 +6,26 @@
  * @license ISC
  */
 
-import { useBackend } from '../../backend';
 import { Button, Flex, Stack } from 'tgui-core/components';
-import type { ClothingBoothData, ClothingBoothItemData, ClothingBoothSlotKey } from './type';
+
+import { useBackend } from '../../backend';
 import { GroupingTags as GroupingTags } from './GroupingTags';
 import { ItemSwatch as ItemSwatch } from './ItemSwatch';
+import type {
+  ClothingBoothData,
+  ClothingBoothItemData,
+  ClothingBoothSlotKey,
+} from './type';
 
 export const PurchaseInfo = () => {
   const { act, data } = useBackend<ClothingBoothData>();
-  const { catalogue, accountBalance, cash, selectedGroupingName, selectedItemName } = data;
+  const {
+    catalogue,
+    accountBalance,
+    cash,
+    selectedGroupingName,
+    selectedItemName,
+  } = data;
 
   const selectedGrouping = catalogue[selectedGroupingName];
   let selectedGroupingSlot: ClothingBoothSlotKey | undefined;
@@ -43,7 +54,10 @@ export const PurchaseInfo = () => {
               <Stack justify="center">
                 <Stack.Item bold>Tags: </Stack.Item>
                 <Stack.Item style={{ opacity: '0.5' }}>
-                  <GroupingTags slot={selectedGroupingSlot} grouping_tags={selectedGroupingTags} />
+                  <GroupingTags
+                    slot={selectedGroupingSlot}
+                    grouping_tags={selectedGroupingTags}
+                  />
                 </Stack.Item>
               </Stack>
             </Stack.Item>
@@ -52,25 +66,34 @@ export const PurchaseInfo = () => {
           {Object.values(selectedGrouping.clothingbooth_items).length > 1 && (
             <Stack.Item>
               <Flex justify="center" wrap="wrap">
-                {Object.values(selectedGrouping.clothingbooth_items).map((item) => (
-                  <Flex.Item key={item.name}>
-                    <ItemSwatch
-                      {...item}
-                      selected={selectedItemName === item.name}
-                      onSelect={() => handleSelectItem(item.name)}
-                    />
-                  </Flex.Item>
-                ))}
+                {Object.values(selectedGrouping.clothingbooth_items).map(
+                  (item) => (
+                    <Flex.Item key={item.name}>
+                      <ItemSwatch
+                        {...item}
+                        selected={selectedItemName === item.name}
+                        onSelect={() => handleSelectItem(item.name)}
+                      />
+                    </Flex.Item>
+                  ),
+                )}
               </Flex>
             </Stack.Item>
           )}
           <Stack.Item bold>
             <Button
               color="good"
-              disabled={selectedItem.cost > cash + accountBalance && !data.everythingIsFree}
-              onClick={handlePurchase}>
+              disabled={
+                selectedItem.cost > cash + accountBalance &&
+                !data.everythingIsFree
+              }
+              onClick={handlePurchase}
+            >
               {`${
-                selectedItem.cost > cash + accountBalance && !data.everythingIsFree ? 'Insufficent Money' : 'Purchase'
+                selectedItem.cost > cash + accountBalance &&
+                !data.everythingIsFree
+                  ? 'Insufficent Money'
+                  : 'Purchase'
               } (${selectedItem.cost}⪽)`}
             </Button>
           </Stack.Item>

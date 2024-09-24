@@ -35,8 +35,8 @@ export interface ClothingBoothItemData {
   name: string;
   cost: number;
   swatch_background_color?: string;
-	swatch_foreground_shape?: string;
-	swatch_foreground_color?: string;
+  swatch_foreground_shape?: string;
+  swatch_foreground_color?: string;
 }
 
 export interface SwatchForegroundProps {
@@ -51,19 +51,19 @@ export interface ClothingBoothGroupingTagsData {
 
 // Keep in sync with `\_std\defines\clothing.dm` `SLOT_` defines.
 export enum ClothingBoothSlotKey {
-  Mask = "wear_mask",
-  Glasses = "glasses",
-  Gloves = "gloves",
-  Headwear = "head",
-  Shoes = "shoes",
-  Suit = "wear_suit",
-  Uniform = "w_uniform",
+  Mask = 'wear_mask',
+  Glasses = 'glasses',
+  Gloves = 'gloves',
+  Headwear = 'head',
+  Shoes = 'shoes',
+  Suit = 'wear_suit',
+  Uniform = 'w_uniform',
 }
 
 export enum ClothingBoothSortType {
-  Name = "Name",
-  Price = "Price",
-  Variants = "Variants",
+  Name = 'Name',
+  Price = 'Price',
+  Variants = 'Variants',
 }
 
 export enum ClothingBoothSortComparatorType {

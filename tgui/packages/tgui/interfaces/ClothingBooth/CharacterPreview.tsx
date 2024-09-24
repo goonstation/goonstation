@@ -6,8 +6,10 @@
  * @license ISC
  */
 
+import { Button, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Image, Stack } from 'tgui-core/components';
+import { Image } from '../../components';
 import type { ClothingBoothData } from './type';
 
 interface PreviewImageProps {
@@ -18,7 +20,13 @@ interface PreviewImageProps {
 const PreviewImage = (props: PreviewImageProps) => {
   const DEFAULT_PREVIEW_HEIGHT = 64;
   const { height = DEFAULT_PREVIEW_HEIGHT, icon } = props;
-  return <Image height={`${height * 2}px`} pixelated src={`data:image/png;base64,${icon}`} />;
+  return (
+    <Image
+      pixelated
+      height={`${height * 2}px`}
+      src={`data:image/png;base64,${icon}`}
+    />
+  );
 };
 
 export const CharacterPreview = () => {
@@ -30,7 +38,12 @@ export const CharacterPreview = () => {
         <PreviewImage height={previewHeight} icon={previewIcon} />
       </Stack.Item>
       <Stack.Item>
-        <Button icon="rotate-right" tooltip="Clockwise" tooltipPosition="bottom" onClick={() => act('rotate-cw')} />
+        <Button
+          icon="rotate-right"
+          tooltip="Clockwise"
+          tooltipPosition="bottom"
+          onClick={() => act('rotate-cw')}
+        />
         <Button
           icon="rotate-left"
           tooltip="Counter-clockwise"
@@ -39,7 +52,11 @@ export const CharacterPreview = () => {
         />
       </Stack.Item>
       <Stack.Item>
-        <Button.Checkbox checked={!previewShowClothing} color="transparent" onClick={() => act('toggle-clothing')}>
+        <Button.Checkbox
+          checked={!previewShowClothing}
+          color="transparent"
+          onClick={() => act('toggle-clothing')}
+        >
           Hide Clothing
         </Button.Checkbox>
       </Stack.Item>

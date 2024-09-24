@@ -7,67 +7,105 @@
  */
 
 import { Fragment, useState } from 'react';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Dropdown, Input, Section, Stack } from 'tgui-core/components';
 import { BoothGrouping } from './BoothGrouping';
 import { SlotFilters } from './SlotFilters';
-import { buildFieldComparator, numberComparator, stringComparator } from './utils/comparator';
-import { pluralize } from 'tgui-core/string';
-import type { ComparatorFn } from './utils/comparator';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
-import { LocalStateKey } from './utils/enum';
+import type { ComparatorFn } from './utils/comparator';
+import {
+  buildFieldComparator,
+  numberComparator,
+  stringComparator,
+} from './utils/comparator';
 
-const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<ClothingBoothGroupingData>> = {
-  [ClothingBoothSortType.Name]: buildFieldComparator((itemGrouping) => itemGrouping.name, stringComparator),
-  [ClothingBoothSortType.Price]: buildFieldComparator((itemGrouping) => itemGrouping.cost_min, numberComparator),
+const clothingBoothItemComparators: Record<
+  ClothingBoothSortType,
+  ComparatorFn<ClothingBoothGroupingData>
+> = {
+  [ClothingBoothSortType.Name]: buildFieldComparator(
+    (itemGrouping) => itemGrouping.name,
+    stringComparator,
+  ),
+  [ClothingBoothSortType.Price]: buildFieldComparator(
+    (itemGrouping) => itemGrouping.cost_min,
+    numberComparator,
+  ),
   [ClothingBoothSortType.Variants]: buildFieldComparator(
     (itemGrouping) => Object.values(itemGrouping.clothingbooth_items).length,
-    numberComparator
+    numberComparator,
   ),
 };
 
-const getClothingBoothGroupingSortComparator
-  = (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
-    (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
-      clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
+const getClothingBoothGroupingSortComparator =
+  (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
+  (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
+    clothingBoothItemComparators[usedSortType](a, b) *
+    (usedSortDirection ? 1 : -1);
 
 export const StockList = (_props: unknown) => {
   const { act, data } = useBackend<ClothingBoothData>();
   const { catalogue, accountBalance, cash, selectedGroupingName } = data;
   const catalogueItems = Object.values(catalogue);
 
-  const [hideUnaffordable, setHideUnaffordable] = useState(LocalStateKey.HideUnaffordable, false);
-  const [slotFilters] = useState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
-    LocalStateKey.SlotFilters,
-    {}
-  );
-  const [searchText, setSearchText] = useState(LocalStateKey.SearchText, '');
-  const [sortType, setSortType] = useState(LocalStateKey.SortType, ClothingBoothSortType.Name);
-  const [sortAscending, setSortAscending] = useState(LocalStateKey.SortAscending, true);
+  const [hideUnaffordable, setHideUnaffordable] = useState(false);
+  const [slotFilters] = useState<
+    Partial<Record<ClothingBoothSlotKey, boolean>>
+  >({});
+  const [searchText, setSearchText] = useState('');
+  const [sortType, setSortType] = useState(ClothingBoothSortType.Name);
+  const [sortAscending, setSortAscending] = useState(true);
 
-  const [tagFilters] = useState<Partial<Record<string, boolean>>>(LocalStateKey.TagFilters, {});
+  const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
 
-  const handleSelectGrouping = (name: string) => act('select-grouping', { name });
+  const handleSelectGrouping = (name: string) =>
+    act('select-grouping', { name });
 
   const affordableItemGroupings = hideUnaffordable
-    ? catalogueItems.filter((catalogueGrouping) => cash + accountBalance >= catalogueGrouping.cost_min)
+    ? catalogueItems.filter(
+        (catalogueGrouping) =>
+          cash + accountBalance >= catalogueGrouping.cost_min,
+      )
     : catalogueItems;
-  const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter)
-    ? affordableItemGroupings.filter((itemGrouping) => slotFilters[itemGrouping.slot])
+  const slotFilteredItemGroupings = Object.values(slotFilters).some(
+    (filter) => filter,
+  )
+    ? affordableItemGroupings.filter(
+        (itemGrouping) => slotFilters[itemGrouping.slot],
+      )
     : affordableItemGroupings;
-  const tagFiltersApplied = !!tagFilters && Object.values(tagFilters).includes(true);
+  const tagFiltersApplied =
+    !!tagFilters && Object.values(tagFilters).includes(true);
   const tagFilteredItemGroupings = tagFiltersApplied
     ? slotFilteredItemGroupings.filter((itemGrouping) =>
-      itemGrouping.grouping_tags.some((groupingTag) => !!tagFilters[groupingTag])
-    )
+        itemGrouping.grouping_tags.some(
+          (groupingTag) => !!tagFilters[groupingTag],
+        ),
+      )
     : slotFilteredItemGroupings;
   const searchTextLower = searchText.toLocaleLowerCase();
   const searchFilteredItemGroupings = searchText
-    ? tagFilteredItemGroupings.filter((itemGrouping) => itemGrouping.name.toLocaleLowerCase().includes(searchTextLower))
+    ? tagFilteredItemGroupings.filter((itemGrouping) =>
+        itemGrouping.name.toLocaleLowerCase().includes(searchTextLower),
+      )
     : tagFilteredItemGroupings;
-  const sortComparator = getClothingBoothGroupingSortComparator(sortType, sortAscending);
-  const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
+  const sortComparator = getClothingBoothGroupingSortComparator(
+    sortType,
+    sortAscending,
+  );
+  const sortedStockInformationList =
+    searchFilteredItemGroupings.sort(sortComparator);
 
   return (
     <Stack fill>
@@ -78,28 +116,37 @@ export const StockList = (_props: unknown) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section>
-              <Stack fluid align="center" justify="space-between">
+              <Stack align="center" justify="space-between">
                 <Stack.Item grow>
                   <Input
                     fluid
-                    onInput={(_e: unknown, value: string) => setSearchText(value)}
+                    onInput={(_e: unknown, value: string) =>
+                      setSearchText(value)
+                    }
                     placeholder="Search by name..."
                   />
                 </Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
-                    noscroll
                     className="clothingbooth__dropdown"
                     displayText={`Sort: ${sortType}`}
                     onSelected={(value) => setSortType(value)}
-                    options={[ClothingBoothSortType.Name, ClothingBoothSortType.Price, ClothingBoothSortType.Variants]}
+                    options={[
+                      ClothingBoothSortType.Name,
+                      ClothingBoothSortType.Price,
+                      ClothingBoothSortType.Variants,
+                    ]}
                     selected={sortType}
                     width="100%"
                   />
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    icon={sortAscending ? 'arrow-down-short-wide' : 'arrow-down-wide-short'}
+                    icon={
+                      sortAscending
+                        ? 'arrow-down-short-wide'
+                        : 'arrow-down-wide-short'
+                    }
                     onClick={() => setSortAscending(!sortAscending)}
                     tooltip={`Sort Direction: ${sortAscending ? 'Ascending' : 'Descending'}`}
                   />
@@ -109,17 +156,19 @@ export const StockList = (_props: unknown) => {
           </Stack.Item>
           <Stack.Item>
             <Section>
-              <Stack fluid align="center" justify="space-between">
+              <Stack align="center" justify="space-between">
                 <Stack.Item>
                   <Box as="span" style={{ opacity: '0.5' }}>
-                    {sortedStockInformationList.length} {pluralize('grouping', sortedStockInformationList.length)}{' '}
+                    {sortedStockInformationList.length}{' '}
+                    {pluralize('grouping', sortedStockInformationList.length)}{' '}
                     available
                   </Box>
                 </Stack.Item>
                 <Stack.Item>
                   <Button.Checkbox
                     checked={hideUnaffordable}
-                    onClick={() => setHideUnaffordable(!hideUnaffordable)}>
+                    onClick={() => setHideUnaffordable(!hideUnaffordable)}
+                  >
                     Hide Unaffordable
                   </Button.Checkbox>
                 </Stack.Item>

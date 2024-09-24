@@ -8,16 +8,15 @@
 
 import { useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
+
 import { ClothingBoothSlotKey } from './type';
-import { LocalStateKey } from './utils/enum';
 
 export const SlotFilters = () => {
-  const [tagFilters] = useState<Partial<Record<string, boolean>>>(LocalStateKey.TagFilters, {});
-  const [tagModal, setTagModal] = useState(LocalStateKey.TagModal, false);
-  const [slotFilters, setSlotFilters] = useState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
-    'slotFilters',
-    {}
-  );
+  const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
+  const [tagModal, setTagModal] = useState(false);
+  const [slotFilters, setSlotFilters] = useState<
+    Partial<Record<ClothingBoothSlotKey, boolean>>
+  >({});
   const mergeSlotFilter = (filter: ClothingBoothSlotKey) =>
     setSlotFilters({
       ...slotFilters,
@@ -36,18 +35,26 @@ export const SlotFilters = () => {
           <Button
             fluid
             align="center"
-            color={Object.values(tagFilters).some((tagFilter) => tagFilter === true) && 'good'}
-            onClick={() => setTagModal(!tagModal)}>
+            color={
+              Object.values(tagFilters).some(
+                (tagFilter) => tagFilter === true,
+              ) && 'good'
+            }
+            onClick={() => setTagModal(!tagModal)}
+          >
             Tags{' '}
-            {!!Object.values(tagFilters).some((tagFilter) => tagFilter === true)
-              && `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length})`}
+            {!!Object.values(tagFilters).some(
+              (tagFilter) => tagFilter === true,
+            ) &&
+              `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length})`}
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Mask]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Mask)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Mask)}
+          >
             Mask
           </Button.Checkbox>
         </Stack.Item>
@@ -55,7 +62,8 @@ export const SlotFilters = () => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Glasses]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Glasses)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Glasses)}
+          >
             Glasses
           </Button.Checkbox>
         </Stack.Item>
@@ -63,7 +71,8 @@ export const SlotFilters = () => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Gloves]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Gloves)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Gloves)}
+          >
             Gloves
           </Button.Checkbox>
         </Stack.Item>
@@ -71,7 +80,8 @@ export const SlotFilters = () => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Headwear]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Headwear)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Headwear)}
+          >
             Headwear
           </Button.Checkbox>
         </Stack.Item>
@@ -79,7 +89,8 @@ export const SlotFilters = () => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Shoes]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Shoes)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Shoes)}
+          >
             Shoes
           </Button.Checkbox>
         </Stack.Item>
@@ -87,7 +98,8 @@ export const SlotFilters = () => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Suit]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Suit)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Suit)}
+          >
             Suit
           </Button.Checkbox>
         </Stack.Item>
@@ -95,7 +107,8 @@ export const SlotFilters = () => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Uniform]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Uniform)}>
+            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Uniform)}
+          >
             Uniform
           </Button.Checkbox>
         </Stack.Item>

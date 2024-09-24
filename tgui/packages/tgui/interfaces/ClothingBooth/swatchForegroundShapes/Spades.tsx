@@ -6,11 +6,17 @@
  * @license ISC
  */
 
-import { SwatchForegroundProps } from "../type";
+import { SwatchForegroundProps } from '../type';
 
 export const SwatchSpade = (props: SwatchForegroundProps) => {
   return (
-    <svg width="auto" height="100%" fill={props.color} viewBox="0 0 6 6" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="auto"
+      height="100%"
+      fill={props.color}
+      viewBox="0 0 6 6"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path
         d="M7.1516194 26.160332a1.0171414.92993586 89.999977 0 1-.0002404-1.438369l1.3152876-1.43863 1.315048 1.438368a.92993586 1.0171414.000022 0 1 0 1.438631.92993586 1.0171414.000022 0 1-1.3152885-.000001 1.0171414.92993586 89.999977 0 1-1.3148067.000001z"
         transform="translate(-5.644446 -22.577778)"

@@ -40,11 +40,20 @@
   // If any swatch foreground shapes need custom styling, this is where it lives.
   &__swatch-icon {
     &--rainbow {
-      background-image: linear-gradient(45deg, red,orange,yellow,green,blue,indigo,violet);
+      background-image: linear-gradient(
+        45deg,
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        indigo,
+        violet
+      );
     }
-}
+  }
 
   &__groupingtag {
-      border-radius: base.$border-radius;
+    border-radius: base.$border-radius;
   }
 }

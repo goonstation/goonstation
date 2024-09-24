@@ -7,9 +7,14 @@
  */
 
 import { Box, Stack } from 'tgui-core/components';
-import { buildFieldComparator, numberComparator } from './utils/comparator';
-import { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothSlotKey } from './type';
+
 import { useBackend } from '../../backend';
+import {
+  ClothingBoothData,
+  ClothingBoothGroupingTagsData,
+  ClothingBoothSlotKey,
+} from './type';
+import { buildFieldComparator, numberComparator } from './utils/comparator';
 
 interface GroupingTagContainerProps {
   slot: ClothingBoothSlotKey;
@@ -21,10 +26,13 @@ interface ClothingBoothSlotDetail {
   name: string;
 }
 
-const clothingBoothSlotLookup = Object.entries(ClothingBoothSlotKey).reduce((acc, [name, id]) => {
-  acc[id] = { id, name };
-  return acc;
-}, {} as Record<ClothingBoothSlotKey, ClothingBoothSlotDetail>);
+const clothingBoothSlotLookup = Object.entries(ClothingBoothSlotKey).reduce(
+  (acc, [name, id]) => {
+    acc[id] = { id, name };
+    return acc;
+  },
+  {} as Record<ClothingBoothSlotKey, ClothingBoothSlotDetail>,
+);
 
 export const GroupingTags = (props: GroupingTagContainerProps) => {
   const { data } = useBackend<ClothingBoothData>();
@@ -32,11 +40,14 @@ export const GroupingTags = (props: GroupingTagContainerProps) => {
   const { slot, grouping_tags } = props;
   const groupingTagsObject = Object.values(grouping_tags);
   const sortedGroupingTags = groupingTagsObject.sort(
-    buildFieldComparator((groupingTag) => tags[groupingTag].display_order, numberComparator)
+    buildFieldComparator(
+      (groupingTag) => tags[groupingTag].display_order,
+      numberComparator,
+    ),
   );
 
   return (
-    <Stack fluid>
+    <Stack>
       {sortedGroupingTags.map((groupingTag) => (
         <Stack.Item key={tags[groupingTag].name}>
           <GroupingTag {...tags[groupingTag]} />
@@ -59,7 +70,8 @@ const GroupingTag = (props: GroupingTagProps) => {
       className="clothingbooth__groupingtag"
       color={color}
       style={{ border: `1px solid ${color ? color : 'currentColor'}` }}
-      px={0.5}>
+      px={0.5}
+    >
       {name}
     </Box>
   );
