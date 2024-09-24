@@ -1713,7 +1713,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		admin_mouse
 			New()
 				..()
-				access.access = get_access("Captain") + get_access("Head of Security") + access_centcom
+				access.access = get_access("Admin")
 
 
 /* ============================================================ */
