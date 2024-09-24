@@ -55960,7 +55960,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/deployable_turret/syndicate/active,
+/obj/deployable_turret/syndicate/active/no_interacting,
 /turf/unsimulated/floor/black,
 /area/syndicate_fenrir)
 "eSc" = (
@@ -58908,7 +58908,11 @@
 /area/titlescreen)
 "gYw" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical/empty,
+/obj/item/storage/firstaid/brute{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/storage/toolbox/mechanical,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_fenrir)
 "gYN" = (
@@ -60763,7 +60767,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/deployable_turret/syndicate/active,
+/obj/deployable_turret/syndicate/active/no_interacting,
 /turf/unsimulated/floor/black,
 /area/syndicate_fenrir)
 "itY" = (
@@ -71941,6 +71945,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"qyf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/storage/firstaid/brute,
+/turf/unsimulated/floor/plating,
+/area/syndicate_fenrir)
 "qyO" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -79220,6 +79231,7 @@
 /area/iomoon/base)
 "vUU" = (
 /obj/table/syndicate/auto,
+/obj/item/storage/firstaid/brute,
 /turf/unsimulated/floor/carpet/red,
 /area/syndicate_fenrir)
 "vVf" = (
@@ -114200,7 +114212,7 @@ khh
 gQT
 nVH
 mrH
-umi
+qyf
 umi
 jEc
 mOY
