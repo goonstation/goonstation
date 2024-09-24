@@ -361,7 +361,7 @@
 
 	// fire puff effects that will rise over vertically adjacent fires, for a nicer appearance
 	var/image/im1 = image(src.icon, src, chemfire + "_fx-[under_state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.01)
-	src.UpdateOverlays(im1, "fire-fx")
+	src.AddOverlays(im1, "fire-fx")
 
 	UpdateIcon()
 	src.update_neighbors()
@@ -392,7 +392,7 @@
 
 	im2.plane = PLANE_NOSHADOW_ABOVE
 	im2.filters += filter(type="alpha", icon=icon('icons/effects/fire_chemical.dmi', "alpha"), y=-10)
-	src.UpdateOverlays(im2, "fire-over")
+	src.AddOverlays(im2, "fire-over")
 
 	if(third_row)
 		var/image/im3
@@ -406,10 +406,10 @@
 
 
 		//Seperate overlay into two parts, one that overlays this one and one that is below
-		src.UpdateOverlays(im3, "fire-under2")
+		src.AddOverlays(im3, "fire-under2")
 		im4.plane = PLANE_NOSHADOW_ABOVE
 		im4.filters += filter(type="alpha", icon=icon('icons/effects/fire_chemical.dmi', "alpha"), y=20)
-		src.UpdateOverlays(im4, "fire-over2")
+		src.AddOverlays(im4, "fire-over2")
 	else
 		src.ClearSpecificOverlays("fire-under2")
 
