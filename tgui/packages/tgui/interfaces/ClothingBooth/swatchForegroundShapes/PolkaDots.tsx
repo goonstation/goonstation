@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
 import { SwatchForegroundProps } from "../type";
 
 export const SwatchPolkaDots = (props: SwatchForegroundProps) => {

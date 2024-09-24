@@ -1,10 +1,18 @@
-import { Fragment } from 'inferno';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Input, Section, Stack } from '../../components';
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
+import { Fragment, useState } from 'react';
+import { useBackend } from '../../backend';
+import { Box, Button, Divider, Dropdown, Input, Section, Stack } from 'tgui-core/components';
 import { BoothGrouping } from './BoothGrouping';
 import { SlotFilters } from './SlotFilters';
 import { buildFieldComparator, numberComparator, stringComparator } from './utils/comparator';
-import { pluralize } from '../common/stringUtils';
+import { pluralize } from 'tgui-core/string';
 import type { ComparatorFn } from './utils/comparator';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
@@ -24,22 +32,21 @@ const getClothingBoothGroupingSortComparator
     (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
       clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
 
-export const StockList = (_props: unknown, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+export const StockList = (_props: unknown) => {
+  const { act, data } = useBackend<ClothingBoothData>();
   const { catalogue, accountBalance, cash, selectedGroupingName } = data;
   const catalogueItems = Object.values(catalogue);
 
-  const [hideUnaffordable, setHideUnaffordable] = useLocalState(context, LocalStateKey.HideUnaffordable, false);
-  const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
-    context,
+  const [hideUnaffordable, setHideUnaffordable] = useState(LocalStateKey.HideUnaffordable, false);
+  const [slotFilters] = useState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
     LocalStateKey.SlotFilters,
     {}
   );
-  const [searchText, setSearchText] = useLocalState(context, LocalStateKey.SearchText, '');
-  const [sortType, setSortType] = useLocalState(context, LocalStateKey.SortType, ClothingBoothSortType.Name);
-  const [sortAscending, setSortAscending] = useLocalState(context, LocalStateKey.SortAscending, true);
+  const [searchText, setSearchText] = useState(LocalStateKey.SearchText, '');
+  const [sortType, setSortType] = useState(LocalStateKey.SortType, ClothingBoothSortType.Name);
+  const [sortAscending, setSortAscending] = useState(LocalStateKey.SortAscending, true);
 
-  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
+  const [tagFilters] = useState<Partial<Record<string, boolean>>>(LocalStateKey.TagFilters, {});
 
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
 

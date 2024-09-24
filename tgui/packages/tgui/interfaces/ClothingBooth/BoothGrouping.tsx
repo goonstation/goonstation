@@ -1,5 +1,13 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
 import { classes } from 'common/react';
-import { Image, Stack } from '../../components';
+import { Image, Stack } from 'tgui-core/components';
 import { GroupingTags as GroupingTags } from './GroupingTags';
 import type { ClothingBoothGroupingData } from './type';
 

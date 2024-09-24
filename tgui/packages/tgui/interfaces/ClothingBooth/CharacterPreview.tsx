@@ -1,5 +1,13 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
 import { useBackend } from '../../backend';
-import { Button, Image, Stack } from '../../components';
+import { Button, Image, Stack } from 'tgui-core/components';
 import type { ClothingBoothData } from './type';
 
 interface PreviewImageProps {
@@ -13,8 +21,8 @@ const PreviewImage = (props: PreviewImageProps) => {
   return <Image height={`${height * 2}px`} pixelated src={`data:image/png;base64,${icon}`} />;
 };
 
-export const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+export const CharacterPreview = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   const { previewHeight, previewIcon, previewShowClothing } = data;
   return (
     <Stack vertical align="center">

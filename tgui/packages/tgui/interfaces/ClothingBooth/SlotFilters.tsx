@@ -1,13 +1,20 @@
-import { useLocalState } from '../../backend';
-import { Button, Section, Stack } from '../../components';
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
+import { useState } from 'react';
+import { Button, Section, Stack } from 'tgui-core/components';
 import { ClothingBoothSlotKey } from './type';
 import { LocalStateKey } from './utils/enum';
 
-export const SlotFilters = (_, context) => {
-  const [tagFilters] = useLocalState<Partial<Record<string, boolean>>>(context, LocalStateKey.TagFilters, {});
-  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
-  const [slotFilters, setSlotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
-    context,
+export const SlotFilters = () => {
+  const [tagFilters] = useState<Partial<Record<string, boolean>>>(LocalStateKey.TagFilters, {});
+  const [tagModal, setTagModal] = useState(LocalStateKey.TagModal, false);
+  const [slotFilters, setSlotFilters] = useState<Partial<Record<ClothingBoothSlotKey, boolean>>>(
     'slotFilters',
     {}
   );

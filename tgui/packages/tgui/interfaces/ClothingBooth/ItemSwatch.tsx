@@ -1,5 +1,13 @@
-import { classes } from 'common/react';
-import { Box, Tooltip } from '../../components';
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
+import { classes } from 'react';
+import { Box, Tooltip } from 'tgui-core/components';
 import { SwatchBisectLeft, SwatchBisectRight, SwatchClub, SwatchDiamond, SwatchHearts, SwatchPolkaDots, SwatchSpade } from './swatchForegroundShapes';
 import type { ClothingBoothItemData } from './type';
 

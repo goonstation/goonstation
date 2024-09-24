@@ -1,4 +1,10 @@
-import { BooleanLike } from "common/react";
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
 
 export interface ClothingBoothData {
   accountBalance?: number;
@@ -8,7 +14,7 @@ export interface ClothingBoothData {
   name: string;
   previewHeight: number;
   previewIcon: string;
-  previewShowClothing: BooleanLike;
+  previewShowClothing: Boolean;
   scannedID?: string;
   selectedGroupingName: string | null;
   selectedItemName: string | null;

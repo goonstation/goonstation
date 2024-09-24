@@ -1,13 +1,14 @@
 /**
  * @file
- * @copyright 2023
+ * @copyright 2024
  * @author DisturbHerb (https://github.com/disturbherb)
  * @author Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Button, Section, Stack } from '../../components';
+import { useState } from 'react';
+import { useBackend } from '../../backend';
+import { Button, Section, Stack } from 'tgui-core/components';
 import { Window } from '../../layouts';
 import { CharacterPreview } from './CharacterPreview';
 import { StockList } from './StockList';
@@ -16,10 +17,10 @@ import { TagsModal } from './TagsModal';
 import type { ClothingBoothData } from './type';
 import { LocalStateKey } from './utils/enum';
 
-export const ClothingBooth = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+export const ClothingBooth = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   const { name, accountBalance, cash, scannedID } = data;
-  const [tagModal] = useLocalState(context, LocalStateKey.TagModal, false);
+  const [tagModal] = useState(LocalStateKey.TagModal, false);
 
   return (
     <Window title={name} width={500} height={600}>

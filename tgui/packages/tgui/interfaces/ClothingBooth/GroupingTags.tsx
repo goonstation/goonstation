@@ -1,4 +1,12 @@
-import { Box, Stack } from '../../components';
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
+import { Box, Stack } from 'tgui-core/components';
 import { buildFieldComparator, numberComparator } from './utils/comparator';
 import { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothSlotKey } from './type';
 import { useBackend } from '../../backend';
@@ -18,8 +26,8 @@ const clothingBoothSlotLookup = Object.entries(ClothingBoothSlotKey).reduce((acc
   return acc;
 }, {} as Record<ClothingBoothSlotKey, ClothingBoothSlotDetail>);
 
-export const GroupingTags = (props: GroupingTagContainerProps, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
+export const GroupingTags = (props: GroupingTagContainerProps) => {
+  const { data } = useBackend<ClothingBoothData>();
   const { tags } = data;
   const { slot, grouping_tags } = props;
   const groupingTagsObject = Object.values(grouping_tags);

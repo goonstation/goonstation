@@ -1,11 +1,19 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
 import { useBackend } from '../../backend';
-import { Button, Flex, Stack } from '../../components';
+import { Button, Flex, Stack } from 'tgui-core/components';
 import type { ClothingBoothData, ClothingBoothItemData, ClothingBoothSlotKey } from './type';
 import { GroupingTags as GroupingTags } from './GroupingTags';
 import { ItemSwatch as ItemSwatch } from './ItemSwatch';
 
-export const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
+export const PurchaseInfo = () => {
+  const { act, data } = useBackend<ClothingBoothData>();
   const { catalogue, accountBalance, cash, selectedGroupingName, selectedItemName } = data;
 
   const selectedGrouping = catalogue[selectedGroupingName];

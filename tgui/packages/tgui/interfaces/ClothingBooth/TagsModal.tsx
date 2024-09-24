@@ -1,13 +1,21 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Button, Dimmer, Section, Stack } from '../../components';
+/**
+ * @file
+ * @copyright 2024
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
+import { useState } from 'react';
+import { useBackend } from '../../backend';
+import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 import { ClothingBoothData, ClothingBoothGroupingTagsData, TagDisplayOrderType } from './type';
 import { buildFieldComparator, stringComparator } from './utils/comparator';
 import { LocalStateKey } from './utils/enum';
 
-export const TagsModal = (_, context) => {
-  const [tagModal, setTagModal] = useLocalState(context, LocalStateKey.TagModal, false);
-  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(
-    context,
+export const TagsModal = () => {
+  const [tagModal, setTagModal] = useState(LocalStateKey.TagModal, false);
+  const [tagFilters, setTagFilters] = useState<Partial<Record<string, boolean>>>(
     LocalStateKey.TagFilters,
     {}
   );
@@ -52,8 +60,8 @@ interface TagStackContainerProps {
   typeToDisplay: number;
 }
 
-const TagStackContainer = (props: TagStackContainerProps, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
+const TagStackContainer = (props: TagStackContainerProps) => {
+  const { data } = useBackend<ClothingBoothData>();
   const { tagType, typeToDisplay } = props;
   const groupingTags = Object.values(data.tags).filter((groupingTag) => groupingTag.display_order === typeToDisplay);
   const sortedTags = groupingTags.sort(buildFieldComparator((groupingTag) => groupingTag.name, stringComparator));
@@ -72,11 +80,10 @@ const TagStackContainer = (props: TagStackContainerProps, context) => {
   );
 };
 
-const TagCheckbox = (props: ClothingBoothGroupingTagsData, context) => {
+const TagCheckbox = (props: ClothingBoothGroupingTagsData) => {
   const { name } = props;
 
-  const [tagFilters, setTagFilters] = useLocalState<Partial<Record<string, boolean>>>(
-    context,
+  const [tagFilters, setTagFilters] = useState<Partial<Record<string, boolean>>>(
     LocalStateKey.TagFilters,
     {}
   );
