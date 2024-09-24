@@ -93,7 +93,6 @@ export const ChemDispenser = () => {
 
 const sectionTitleResetProps = {
   style: {
-    fontSize: 1,
     fontWeight: 'normal',
   },
 };
