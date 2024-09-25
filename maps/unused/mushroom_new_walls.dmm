@@ -17130,7 +17130,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/mapping_helper/access/hos,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "dZi" = (
@@ -17639,6 +17639,17 @@
 /obj/mapping_helper/access/mining,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
+"eyb" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/turretid/armory{
+	pixel_x = -24
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/armory_outside)
 "eyZ" = (
 /obj/stool/chair{
 	dir = 8;
@@ -19951,6 +19962,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"gBa" = (
+/obj/machinery/light/small/sticky/frostedred,
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/mini_oxygen,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "gBh" = (
 /obj/decal/poster/wallsign/medbay_right,
 /turf/simulated/wall/auto/supernorn,
@@ -36795,7 +36815,6 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/mapping_helper/access/hos,
 /obj/machinery/turretid/armory{
 	pixel_x = -24
 	},
@@ -37588,6 +37607,9 @@
 	dir = 6
 	},
 /obj/machinery/light/incandescent/warm/very,
+/obj/machinery/turretid/armory_perimeter{
+	pixel_y = -25
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "vJu" = (
@@ -87752,7 +87774,7 @@ acq
 ahD
 abq
 ahc
-ahc
+gBa
 afC
 apq
 aqt
@@ -92388,7 +92410,7 @@ pRv
 pRv
 nlV
 ucV
-aoP
+eyb
 aoP
 gqe
 qPb
