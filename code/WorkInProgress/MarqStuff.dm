@@ -506,21 +506,32 @@
 	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 
-	attackby(var/obj/item/arrow/I, var/mob/user)
-		if (!istype(I))
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/arrow))
+			src.loadArrow(I, user)
+		if (istype(I, /obj/item/gun/bow))
+			var/obj/item/gun/bow/bow = I
+			if (isnull(bow.loaded))
+				var/obj/item/arrow = src.getArrow(user)
+				if (isnull(arrow))
+					return // no arrows
+				bow.loadArrow(arrow, user)
+				src.updateAppearance()
+		else
 			boutput(user, SPAN_ALERT("That cannot be placed in [src]!"))
 			return
 
-		if(I.amount > 1)
-			var/amountinitial = I.amount
+	proc/loadArrow(obj/item/arrow/arrow, mob/user)
+		if(arrow.amount > 1)
+			var/amountinitial = arrow.amount
 			for(var/i=0, i<amountinitial, i++)
-				I.clone(src)
-				I.change_stack_amount(-1)
+				arrow.clone(src)
+				arrow.change_stack_amount(-1)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
 		else
-			user.u_equip(I)
-			I.set_loc(src)
+			user.u_equip(arrow)
+			arrow.set_loc(src)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
 
