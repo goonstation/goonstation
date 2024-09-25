@@ -686,6 +686,10 @@
 		if (istype(loaded))
 			loaded.move_trigger(M, kindof)
 
+	dropped(mob/user)
+		. = ..()
+		src.aim = null
+		src.UpdateIcon(0)
 
 	attack(var/mob/target, var/mob/user)
 		user.lastattacked = target
