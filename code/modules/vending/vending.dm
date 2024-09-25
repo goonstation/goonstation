@@ -1499,9 +1499,9 @@ TYPEINFO(/obj/machinery/vending/medical)
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
 	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
-	icon_state = "sec"
+	icon_state = "ammo"
 	icon_panel = "standard-panel"
-	icon_deny = "sec-deny"
+	icon_deny = "ammo-deny"
 	req_access = list(access_armory)
 	acceptcard = 0
 	light_r =1
