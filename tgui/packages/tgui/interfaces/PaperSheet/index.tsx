@@ -11,6 +11,7 @@
 import { useEffect, useState } from 'react';
 import { Remarkable } from 'remarkable';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
+import { KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -309,7 +310,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   };
 
   const onKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === KEY.Enter) {
       event.preventDefault();
       const textarea = event.target as HTMLTextAreaElement;
       const start = textarea.selectionStart;
