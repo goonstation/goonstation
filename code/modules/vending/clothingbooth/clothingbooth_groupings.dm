@@ -63,6 +63,12 @@
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
 
+/datum/clothingbooth_grouping/sailormoon
+	item_paths = list(/datum/clothingbooth_item/head/sailormoon)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
 /datum/clothingbooth_grouping/butterfly_hairclip
 	name = "Butterfly Hairclip"
 	item_paths = list(

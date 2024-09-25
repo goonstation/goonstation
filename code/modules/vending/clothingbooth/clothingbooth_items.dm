@@ -180,6 +180,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 	cost = PAY_TRADESMAN/5
 	item_path = /obj/item/clothing/head/mime_bowler
 
+/datum/clothingbooth_item/head/sailormoon
+	cost = PAY_TRADESMAN/5
+	item_path = /obj/item/clothing/head/sailormoon
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/head/butterfly_hairclip)
 /datum/clothingbooth_item/head/butterfly_hairclip
 	cost = PAY_TRADESMAN/5
