@@ -513,6 +513,7 @@
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/arrow))
 			src.loadArrow(I, user)
+			return
 		if (istype(I, /obj/item/gun/bow))
 			var/obj/item/gun/bow/bow = I
 			if (isnull(bow.loaded))
@@ -521,9 +522,8 @@
 					return // no arrows
 				bow.loadArrow(arrow, user)
 				src.updateAppearance()
-		else
-			boutput(user, SPAN_ALERT("That cannot be placed in [src]!"))
 			return
+		boutput(user, SPAN_ALERT("That cannot be placed in [src]!"))
 
 	proc/loadArrow(obj/item/arrow/arrow, mob/user)
 		if(arrow.amount > 1)
