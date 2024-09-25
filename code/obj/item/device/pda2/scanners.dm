@@ -69,11 +69,10 @@
 			if (..())
 				return
 			. = scan_reagents(A, visible = TRUE)
-			if (iscarbon(user) || ismobcritter(user))
-				if (user.mind && user.mind.assigned_role == "Bartender")
-					var/eth_eq = get_ethanol_equivalent(user, A.reagents)
-					if (eth_eq)
-						. += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
+			if (user.traitHolder.hasTrait("training_bartender"))
+				var/eth_eq = get_ethanol_equivalent(user, A.reagents)
+				if (eth_eq)
+					. += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
 
 	//Plant scanner
 	plant_scan

@@ -747,6 +747,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
 
+/datum/trait/job/bartender
+	name = "Bartender Training"
+	desc = "Subject has a keen mind for all things alcoholic."
+	id = "training_bartender"
+
 // bartender, detective, HoS
 /datum/trait/job/drinker
 	name = "Professional Drinker"
