@@ -119,11 +119,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
+			//the hacky place_on zone of sadness
+			var/obj/surgery_tray/tray = locate() in src.loc
+			if (!tray || !(src in tray.attached_objs))
+				tray = null
+			var/obj/item/plate/plate = src.loc
+			if (istype(plate))
+				plate.remove_contents(src)
+			else
+				plate = null
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
+				//try to put it on the plate/tray if we're on one
+				if (tray && tray.place_on(slice_result))
+					tray.attach(slice_result)
+				else if (plate)
+					plate.add_contents(slice_result)
 			qdel (src)
 		else
 			..()
