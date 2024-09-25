@@ -13,3 +13,5 @@
 #define COMMAND_TARGETING_MAIN_SERVER 2
 /// command is always ran on all servers at once
 #define COMMAND_TARGETING_ALL_SERVERS 3
+/// command is run on each of the 1-4 live servers
+#define COMMAND_TARGETING_LIVE_SERVERS 4

@@ -751,7 +751,7 @@
 	name = "vpnwhitelist"
 	help_message = "Whitelists a given ckey from the VPN checker."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
-	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	server_targeting = COMMAND_TARGETING_LIVE_SERVERS
 
 	execute(user, ckey)
 		try
@@ -980,7 +980,7 @@
 
 /datum/spacebee_extension_command/egg_stats
 	name = "eggstats"
-	server_targeting = COMMAND_TARGETING_ALL_SERVERS
+	server_targeting = COMMAND_TARGETING_LIVE_SERVERS
 	help_message = "Return the state of all live server's oldest century eggs"
 	argument_types = list()
 
