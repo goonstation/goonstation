@@ -31,8 +31,8 @@
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
 
 	// crappy hack because you can't do \his[src] etc
-	var/t_his = his_or_her(src)
-	var/t_him = him_or_her(src)
+	var/t_his  = his_or_her(src)
+	var/t_him  = him_or_her(src)
 
 	. +=  "<br>[SPAN_NOTICE("*---------*")]"
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
@@ -409,6 +409,30 @@
 			items += ", [O]"
 		items = copytext(items, 3)
 		. += "<br>[SPAN_NOTICE("[src] is juggling [items]!")]"
+
+	if (src.reagents.has_reagent("ethanol"))
+		if (usr.mind && usr.mind.assigned_role == "Bartender")
+			var/et_amt = src.reagents.get_reagent_amount("ethanol")
+			var/drunk_assess = ""
+			if (!isalcoholresistant(src) || src.reagents.has_reagent("moonshine"))
+				if (src.reagents.has_reagent("moonshine"))
+					et_amt *= 7
+				switch (et_amt)
+					if (0 to 10)
+						drunk_assess = "[capitalize("[he_or_she(src)]")] seem[blank_or_s(src)] <b>buzzed.</b>"
+					if (10 to 20)
+						drunk_assess = "[capitalize("[he_or_she(src)]")] look[blank_or_s(src)] a little <b>tipsy.</b>"
+					if (20 to 40)
+						drunk_assess = "[capitalize("[hes_or_shes(src)]")] pretty <b>[prob(10)? "stewed" : "drunk"].</b>"
+					if (40 to 70)
+						drunk_assess = "[capitalize("[hes_or_shes(src)]")] totally <b>smashed.</b>"
+					if (70 to 100)
+						drunk_assess = SPAN_ALERT("[capitalize("[hes_or_shes(src)]")] <b>[prob(3)? " zonked</b> off [his_or_her(src)] <b>rocker" : "badly inebriated"].</b>")
+					if (100 to INFINITY)
+						drunk_assess = SPAN_ALERT("[capitalize("[hes_or_shes(src)]")] <b>dying of drink.</b>")
+			else
+				drunk_assess = "[capitalize("[his_or_her(src)]")] inebriaton is almost <b>imperceptible</b> to you."
+			. += "<br> [drunk_assess]"
 
 	. += "<br>[SPAN_NOTICE("*---------*")]"
 

@@ -530,9 +530,15 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		if (isnull(src.scan_results))
 			boutput(user, SPAN_ALERT("\The [src] encounters an error and crashes!"))
 		else
-			boutput(user, "[src.scan_results]")
+			var/scan_output = "[src.scan_results]"
+			if (iscarbon(user) || ismobcritter(user))
+				if (user.mind && user.mind.assigned_role == "Bartender")
+					var/eth_eq = get_ethanol_equivalent(user, A.reagents)
+					if (eth_eq)
+						scan_output += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
+			boutput(user, scan_output)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user as mob) // no eth_eq here cuz then we'd have to save how the reagent container used to be
 		if (isnull(src.scan_results))
 			boutput(user, SPAN_NOTICE("No previous scan results located."))
 			return

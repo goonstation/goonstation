@@ -971,6 +971,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
 				. += "<br>[SPAN_ALERT("[current_reagent.volume] units of [current_reagent.name]")]"
+
+			if (iscarbon(user) || ismobcritter(user))
+				if (user.mind && user.mind.assigned_role == "Bartender")
+					var/eth_eq = get_ethanol_equivalent(user, src)
+					if (eth_eq)
+						. += "<br> [SPAN_REGULAR("You estimate there's the equivalent of <b>[eth_eq] units of ethanol</b> here.")]"
 		return
 
 	proc/get_reagents_fullness()
@@ -1096,11 +1102,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		for (var/i in 1 to num_val)
 			.[result_name[i]] = result_amount[i]
 
-	/// Gets a string of what something tastes like (as shown to the drinker/eater/whatever)
+	/// Gets a string of what something tastes like (as shown to the drinker/eater/whate ver)
 	proc/get_taste_string(mob/taster)
 		if (iscarbon(taster) || ismobcritter(taster))
 			if (taster.mind && taster.mind.assigned_role == "Bartender")
 				var/reag_list = ""
+				var/eth_eq = get_ethanol_equivalent(taster, src)
 				for (var/current_id in src.reagent_list)
 					var/datum/reagent/current_reagent = src.reagent_list[current_id]
 					if (length(src.reagent_list) > 1 && src.reagent_list[src.reagent_list.len] == current_id)
@@ -1109,6 +1116,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					reag_list += ", [current_reagent.name]"
 				reag_list = copytext(reag_list, 3)
 				. = "Tastes like there might be some [reag_list] in this. "
+				if (eth_eq)
+					. += "[SPAN_REGULAR("This should be about <b>[eth_eq / src.total_volume * 100]% ethanol by volume.</b> <br>")]"
 			var/tastes = src.get_prevalent_tastes(3)
 			switch (length(tastes))
 				if (0)
