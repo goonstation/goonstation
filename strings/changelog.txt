@@ -1,4 +1,9 @@
 
+(t)wed sep 25 24
+(u)Egregorious
+(p)20489
+(e)💅📦⚙|C-QoL, A-Game-Objects, A-Internal
+(+)Keep hold of satchels when dumping their contents onto tables.
 (t)tue sep 24 24
 (u)TDHooligan
 (p)20845
