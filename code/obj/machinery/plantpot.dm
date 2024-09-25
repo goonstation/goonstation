@@ -268,6 +268,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			// If there's no mutation we just use the base special proc, obviously!
 			growing.HYPspecial_proc(src)
 
+	if(src.current == null) //synthcats can just get up and walk away. check for that
+		return
+
 	// Have we lost all health or growth, or used up all available harvests? If so, this plant
 	// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
 	if((src.health < 1 || src.growth < 0) || (growing.harvestable && src.harvests < 1))

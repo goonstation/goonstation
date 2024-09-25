@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/obj/item)
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
 
-			tooltip_rebuild = 0
+				tooltip_rebuild = 0
 
 		usr.moused_over(src)
 
@@ -1502,6 +1502,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			. = 1
 		if ("inhand_image")
 			. = 1
+		if ("name", "desc", "force", "hit_type", "throwforce", "w_class", "combat_click_delay", "click_delay")
+			src.tooltip_rebuild = TRUE
 	if (. && src.loc && ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inhands()

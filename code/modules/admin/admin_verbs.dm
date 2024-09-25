@@ -387,6 +387,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_all_artifacts,
 		/client/proc/spawn_tons_of_artifacts,
 		/client/proc/toggle_radio_maptext,
+		/client/proc/toggle_ghost_invisibility,
 
 		/datum/admins/proc/toggleaprilfools,
 		/client/proc/cmd_admin_pop_off_all_the_limbs_oh_god,
@@ -428,6 +429,7 @@ var/list/admin_verbs = list(
 		/client/proc/region_allocator_panel,
 		/datum/admins/proc/toggle_pcap_kick_messages,
 		/client/proc/set_round_req_bypass,
+		/client/proc/test_spacebee_command,
 		),
 
 	7 = list(
@@ -1761,6 +1763,7 @@ var/list/fun_images = list()
 	if(src.holder.respawn_as_self_mob)
 		qdel(src.holder.respawn_as_self_mob)
 	src.holder.respawn_as_self_mob = O
+	animate(src.holder.respawn_as_self_mob, transform = null)
 
 /client/proc/removeOther(var/mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2642,7 +2645,7 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	ADMIN_ONLY
 	SHOW_VERB_DESC
-	for(var/obj/machinery/door/airlock/airlock)
+	for_by_tcl(airlock, /obj/machinery/door/airlock)
 		airlock.secondsElectrified = 0
 		LAGCHECK(LAG_LOW)
 	message_admins("Admin [key_name(usr)] de-electrified all airlocks.")
@@ -2678,3 +2681,12 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "[key_name(src)] sets [ckey]'s bypass round requirement flag to [value]")
 	else
 		boutput(src, SPAN_ALERT("Unable to put cloud data, uh oh!"))
+
+/client/proc/test_spacebee_command(command as text)
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Test spacebee command"
+	set desc = "Run a discord/IRC bot command on the current server, omit the ;;. Local servers are considered server 0 for server targeted commands."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	spacebee_extension_system.process_raw_command(command, usr.key)

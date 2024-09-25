@@ -183,7 +183,10 @@ proc/is_music_playing()
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-200. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	var/max = 200
+	if (channel_name == "admin")
+		max = 100
+	var/vol = input("Goes from 0-[max]. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = clamp(vol, 0, 200)
 	src.setVolume(channel_id, vol/100 )
@@ -259,7 +262,31 @@ proc/is_music_playing()
 
 
 /proc/play_youtube_remote_url(mob/M, video_url)
+	var/static/datum/cobalt_tools/cobalt_tools
+	if (!cobalt_tools)
+		cobalt_tools = new
 	message_admins(SPAN_NOTICE("[key_name(M)] started loading remote music: [video_url]"))
+	try
+		var/list/filename_and_url = cobalt_tools.request_tunnel(video_url)
+		var/filename = filename_and_url[1]
+		var/url = filename_and_url[2]
+		// Check if the first character is a !, which means the request failed
+		if (url[1] == "!")
+			message_admins(SPAN_ALERT("Error returned from cobalt tools remote music thing: [url]."))
+			return
+		var/mock_data = list()
+		mock_data["admin_ckey"] = M.ckey
+		mock_data["file"] = url
+		mock_data["title"] = filename
+		mock_data["filesize"] = "?"
+		mock_data["duration_human"] = "?"
+		play_music_remote(mock_data)
+	catch (var/exception/e)
+		message_admins(SPAN_ALERT("Error returned from cobalt tools remote music thing: [json_encode(e)]."))
+		return
+
+
+/* rip yt-dlg
 	try
 		var/datum/apiRoute/remoteMusic/playRemoteMusic = new
 		playRemoteMusic.buildBody(video_url, roundId, M.ckey)
@@ -269,6 +296,7 @@ proc/is_music_playing()
 		message_admins(SPAN_NOTICE("Error returned from youtube server thing: [error.message]."))
 		boutput(M, "<span class='bold' class='notice'>Error returned from youtube server thing: [error.message].</span>")
 		return
+*/
 
 	// prevent radio station from interrupting us
 	// Wire note: This essentially means "extend the duration by the time we think it will take the API to download the song and get back to us"
