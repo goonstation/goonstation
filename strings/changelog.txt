@@ -1,5 +1,7 @@
 
 (t)wed sep 25 24
+(u)LeahTheTech
+(+)Food sliced up on plates, trays or kitchen islands will now stay on the thing it was placed on.
 (u)glowbold
 (p)20681
 (e)🆕🗺|C-Feature, A-Mapping
