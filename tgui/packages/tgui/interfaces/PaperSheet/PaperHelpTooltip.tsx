@@ -15,8 +15,7 @@ export const HelpToolip = () => {
       <Table>
         <Table.Row>
           <Table.Cell>
-            <Box>Heading</Box>
-            =====
+            <Box># Heading</Box>
           </Table.Cell>
           <Table.Cell>
             <h2>Heading</h2>
@@ -25,8 +24,7 @@ export const HelpToolip = () => {
 
         <Table.Row>
           <Table.Cell>
-            <Box>Sub Heading</Box>
-            ------
+            <Box>## Sub Heading</Box>
           </Table.Cell>
           <Table.Cell>
             <h4>Sub Heading</h4>
@@ -60,7 +58,11 @@ export const HelpToolip = () => {
             <s>Strikethrough Text</s>
           </Table.Cell>
         </Table.Row>
-
+        <Table.Row>
+          <Table.Cell>
+            <br />
+          </Table.Cell>
+        </Table.Row>
         <Table.Row>
           <Table.Cell>
             <Box>Horizontal Rule</Box>
@@ -103,6 +105,13 @@ export const HelpToolip = () => {
               <li>List Element 2</li>
               <li>Etc...</li>
             </ol>
+          </Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell>%sign</Table.Cell>
+          <Table.Cell>
+            <i>Your Name Here</i>
           </Table.Cell>
         </Table.Row>
       </Table>
