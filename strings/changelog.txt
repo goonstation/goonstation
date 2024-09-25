@@ -1,5 +1,9 @@
 
 (t)wed sep 25 24
+(u)glowbold
+(p)20681
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Oshan now has carousel destinations by the cafeteria ("West Carousel") and technical storage ("East Carousel")
 (u)Lord_Earthfire
 (p)20497
 (e)🆕📦⚙|C-Feature, A-Game-Objects, A-Internal
