@@ -175,6 +175,13 @@
 		src.UpdateIcon()
 		tooltip_rebuild = 1
 
+	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
+	should_place_on(obj/target, params)
+		if (istype(target, /obj/table) && islist(params) && params["dragged"] && length(src.contents) > 0)
+			return FALSE
+		. = ..()
+
+
 	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
 		// This proc splits an object with multiple stacks and stuff it into the satchel until either
 		// The satchel is full
