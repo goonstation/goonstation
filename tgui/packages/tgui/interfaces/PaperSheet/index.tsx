@@ -8,9 +8,10 @@
  * @license MIT
  */
 
-import { marked } from 'marked';
 import { useEffect, useState } from 'react';
+import { Remarkable } from 'remarkable';
 import { Box, Flex, Tabs, TextArea } from 'tgui-core/components';
+import { KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -82,16 +83,15 @@ const createInputField = (length, width, font, fontsize, color, id) => {
     'max-width:' +
     width +
     ';' +
-    '" ' +
-    'id="' +
-    id +
-    '" ' +
     'maxlength=' +
     length +
     ' ' +
     'size=' +
     length +
-    ' ' +
+    '" ' +
+    'id="' +
+    id +
+    '" ' +
     '/>]'
   );
 };
@@ -120,32 +120,28 @@ const signDocument = (txt: string, color: string, user: string) => {
   });
 };
 
-const runMarkedDefault = (value: string) => {
-  // Override function, any links and images should
-  // kill any other marked tokens we don't want here
-  const walkTokens = (token) => {
-    switch (token.type) {
-      case 'url':
-      case 'autolink':
-      case 'reflink':
-      case 'link':
-      case 'image':
-        token.type = 'text';
-        // Once asset system is up change to some default image
-        // or rewrite for icon images
-        token.href = '';
-        break;
-    }
-  };
-  const markedOptions: marked.MarkedOptions = {
-    breaks: true,
-    smartypants: true,
-    smartLists: true,
-    walkTokens,
-    // Once assets are fixed might need to change this for them
-    baseUrl: 'thisshouldbreakhttp',
-  };
-  return marked(value, markedOptions);
+const customLinkRule = (remarkable: Remarkable) => {
+  remarkable.core.ruler.push('custom_link_rule', (state) => {
+    state.tokens.forEach((blockToken) => {
+      if (blockToken.type === 'inline' && blockToken.children) {
+        blockToken.children.forEach((token) => {
+          switch (token.type) {
+            case 'link_open':
+            case 'link_close':
+            case 'image':
+              token.type = 'text';
+              token.tag = '';
+              token.attrs = null;
+              token.map = null;
+              token.nesting = 0;
+              token.markup = '';
+              token.content = token.content || token.href || '';
+              break;
+          }
+        });
+      }
+    });
+  });
 };
 
 /*
@@ -169,7 +165,7 @@ const checkAllFields = (txt, font, color, userName, bold = false) => {
   // for nothing, if nothing is entered, txt is just returned
   while ((matches = fieldTagRegex.exec(txt)) !== null) {
     const fullMatch = matches[0];
-    const id = matches.groups.id;
+    const id = matches[2];
     if (id) {
       const dom = document.getElementById(id) as HTMLInputElement;
       // make sure we got data, and kill any html that might
@@ -241,6 +237,15 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
   const [textAreaText, setTextAreaText] = useState('');
   const [combinedText, setCombinedText] = useState(value || '');
   const [showingHelpTip, setShowingHelpTip] = useState(false);
+  const [remarkable] = useState<Remarkable>(() => {
+    const rm = new Remarkable('full', {
+      typographer: true,
+      breaks: true,
+      html: true,
+    });
+    customLinkRule(rm);
+    return rm;
+  });
 
   const { data } = useBackend<PaperSheetEditData>();
   const { text, penColor, penFont, isCrayon, fieldCounter, editUsr } = data;
@@ -258,7 +263,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
         penColor,
         fieldCounter,
       );
-      const formattedText = runMarkedDefault(fieldedText.text);
+      const formattedText = remarkable.render(fieldedText.text);
       const fontedText = setFontinText(
         formattedText,
         penFont,
@@ -282,8 +287,8 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     return out;
   };
 
-  const onInputHandler = (e) => {
-    let value = e.target.value;
+  const onInputHandler = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    let value = (event.target as HTMLTextAreaElement).value;
     if (value !== textAreaText) {
       const combinedLength = oldText.length + textAreaText.length;
       if (combinedLength > MAX_PAPER_LENGTH) {
@@ -301,6 +306,18 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
       }
       setTextAreaText(value);
       setCombinedText(createPreview(value).text);
+    }
+  };
+
+  const onKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === KEY.Enter) {
+      event.preventDefault();
+      const textarea = event.target as HTMLTextAreaElement;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const value = textarea.value;
+      textarea.value = value.substring(0, start) + '\n' + value.substring(end);
+      textarea.selectionStart = textarea.selectionEnd = start + 1;
     }
   };
 
@@ -385,6 +402,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             height={window.innerHeight - 60 + 'px'}
             backgroundColor={backgroundColor}
             onInput={onInputHandler}
+            onKeyDown={onKeyDownHandler}
           />
         ) : (
           <PaperSheetView
