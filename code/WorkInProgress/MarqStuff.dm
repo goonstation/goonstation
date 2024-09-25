@@ -351,7 +351,6 @@
 		return O
 
 	attackby(obj/item/W, mob/user, params)
-		. = ..()
 		if(W.type == src.type && src.check_valid_stack(W))
 			stack_item(W)
 			return
@@ -363,6 +362,8 @@
 			var/obj/item/gun/bow/bow = W
 			if(isnull(bow.loaded))
 				bow.loadArrow(src, user)
+			return
+		. = ..()
 /*
 	attack_hand(var/mob/user)
 		if (amount > 1)
