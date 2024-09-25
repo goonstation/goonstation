@@ -665,6 +665,8 @@
 			user.drop_item(arrow)
 		arrow.plane = initial(arrow.plane)
 		arrow.layer = initial(arrow.layer)
+		arrow.pixel_x = 0
+		arrow.pixel_y = 0
 		src.loaded = arrow
 		arrow.set_loc(src)
 		src.vis_contents += arrow
