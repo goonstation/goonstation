@@ -392,7 +392,7 @@
 		replica.set_dir(O.dir)
 		qdel(O)
 
-/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
+/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params, imprecise = FALSE)
 	. = FALSE
 	if (!islist(params)) params = params2list(params)
 	if (W && !isghostdrone(user) && W.should_place_on(src, params)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
@@ -405,7 +405,10 @@
 		if(W.dir != dirbuffer)
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
-		if (islist(params) && params["icon-y"] && params["icon-x"])
+		if (imprecise) // place item imprecisely by randomising offset
+			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
+			W.pixel_y = rand(-10, 10)
+		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
 		if(W.layer < src.layer)
