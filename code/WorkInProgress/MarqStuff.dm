@@ -703,7 +703,9 @@
 		if(isliving(target))
 			if(loaded)
 				if(loaded.AfterAttack(target,user,1))
-					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
+					src.vis_contents -= src.loaded
+					loaded = null //arrow isnt consumed otherwise, for some inexplicable reason.
+					src.UpdateIcon(0)
 			else
 				boutput(user, SPAN_ALERT("Nothing is loaded in the bow!"))
 		else
