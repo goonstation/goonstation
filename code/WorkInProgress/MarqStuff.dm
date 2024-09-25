@@ -349,6 +349,20 @@
 		O.setHeadMaterial(head_material)
 		O.setShaftMaterial(shaft_material)
 		return O
+
+	attackby(obj/item/W, mob/user, params)
+		. = ..()
+		if(W.type == src.type && src.check_valid_stack(W))
+			stack_item(W)
+			return
+		if(istype(W, /obj/item/quiver))
+			var/obj/item/quiver/quiver = W
+			quiver.loadArrow(src, user)
+			return
+		if(istype(W, /obj/item/gun/bow))
+			var/obj/item/gun/bow/bow = W
+			if(isnull(bow.loaded))
+				bow.loadArrow(src, user)
 /*
 	attack_hand(var/mob/user)
 		if (amount > 1)
