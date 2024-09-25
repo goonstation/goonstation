@@ -506,6 +506,10 @@
 	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 
+	New()
+		. = ..()
+		src.create_inventory_counter()
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/arrow))
 			src.loadArrow(I, user)
@@ -527,13 +531,10 @@
 			for(var/i=0, i<amountinitial, i++)
 				arrow.clone(src)
 				arrow.change_stack_amount(-1)
-			maptext = "[contents.len]"
-			icon_state = "quiver-[min(contents.len, 4)]"
 		else
 			user.u_equip(arrow)
 			arrow.set_loc(src)
-			maptext = "[contents.len]"
-			icon_state = "quiver-[min(contents.len, 4)]"
+		src.updateAppearance()
 
 	proc/getArrow(var/mob/user)
 		if (src in user)
@@ -543,10 +544,7 @@
 			else return null
 
 	proc/updateAppearance()
-		if (contents.len)
-			maptext = "[contents.len]"
-		else
-			maptext = null
+		src.inventory_counter.update_number(length(contents))
 		icon_state = "quiver-[min(contents.len, 4)]"
 		return
 
@@ -596,6 +594,10 @@
 			for (var/obj/O in contents)
 				if (O.move_triggered)
 					O.move_trigger(M, kindof)
+
+	equipped(mob/user, slot)
+		. = ..()
+		src.inventory_counter.show_count()
 
 /datum/projectile/arrow
 	name = "arrow"
