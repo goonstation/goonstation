@@ -286,8 +286,8 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
     return out;
   };
 
-  const onInputHandler = (e) => {
-    let value = e.target.value;
+  const onInputHandler = (event: React.FormEvent<HTMLTextAreaElement>) => {
+    let value = (event.target as HTMLTextAreaElement).value;
     if (value !== textAreaText) {
       const combinedLength = oldText.length + textAreaText.length;
       if (combinedLength > MAX_PAPER_LENGTH) {
@@ -305,6 +305,18 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
       }
       setTextAreaText(value);
       setCombinedText(createPreview(value).text);
+    }
+  };
+
+  const onKeyDownHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const textarea = event.target as HTMLTextAreaElement;
+      const start = textarea.selectionStart;
+      const end = textarea.selectionEnd;
+      const value = textarea.value;
+      textarea.value = value.substring(0, start) + '\n' + value.substring(end);
+      textarea.selectionStart = textarea.selectionEnd = start + 1;
     }
   };
 
@@ -389,6 +401,7 @@ const PaperSheetEdit: React.FC<PaperSheetEditProps> = ({
             height={window.innerHeight - 60 + 'px'}
             backgroundColor={backgroundColor}
             onInput={onInputHandler}
+            onKeyDown={onKeyDownHandler}
           />
         ) : (
           <PaperSheetView
