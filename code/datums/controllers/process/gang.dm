@@ -117,7 +117,11 @@
 		objective_image.plane = PLANE_WALL
 		objective_image.alpha = 180
 		imgroup.add_image(objective_image)
-		broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off weapons & ammunition at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
+
+		if (crate_spawn_repeats == 3)
+			broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off specialist firearms at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
+		else
+			broadcast_to_all_gangs("<span style='font-size:24px'> We're dropping off weapons & ammunition at <b>\the [drop_zone.name]!</b> It'll arrive in [GANG_CRATE_DROP_TIME/(1 MINUTE)] minute[s_es(GANG_CRATE_DROP_TIME/(1 MINUTE))] so get fortifying!</span>")
 
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
@@ -126,17 +130,26 @@
 				abil.last_cast = world.time + GANG_CRATE_DROP_TIME + 5 MINUTES
 				targetGang.leader.current.abilityHolder?.updateButtons()
 
+		var/crate_repeat = crate_spawn_repeats // in case, for some reason, this is spawning more than once a minute...
 		SPAWN(GANG_CRATE_DROP_TIME - 30 SECONDS)
-			if(drop_zone != null)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] will arrive in 30 seconds!")
-				logTheThing(LOG_GAMEMODE, src, "The crate in [drop_zone.name] will arrive in 30 seconds. Location: [location.x],[location.y].")
+			if(drop_zone == null)
+				logTheThing(LOG_GAMEMODE, src, "A crate just tried to spawn, but had no drop zone.")
+				return
+			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] will arrive in 30 seconds!")
+			logTheThing(LOG_GAMEMODE, src, "The crate in [drop_zone.name] will arrive in 30 seconds. Location: [location.x],[location.y].")
+
 			sleep(30 SECONDS)
-			if(drop_zone != null)
-				imgroup.remove_image(objective_image)
-				qdel(indicator)
-				var/obj/storage/crate/gang_crate/guns_and_gear/crate = new(location)
-				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
-				logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
+
+			imgroup.remove_image(objective_image)
+			qdel(indicator)
+			var/obj/storage/crate/gang_crate/crate
+			if (crate_repeat == 3)
+				crate = new/obj/storage/crate/gang_crate/guns_and_gear_bonus(location)
+			else
+				crate = new/obj/storage/crate/gang_crate/guns_and_gear(location)
+			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] has arrived! Drag it to your locker.")
+			logTheThing(LOG_GAMEMODE, crate, "The crate in [drop_zone.name] arrives on station. Location: [location.x],[location.y].")
+
 
 /datum/controller/process/gang_duffle_objectives
 	var/repeats = 1

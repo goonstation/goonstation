@@ -1,5 +1,153 @@
 
+(t)wed sep 25 24
+(u)LeahTheTech
+(+)Food sliced up on plates, trays or kitchen islands will now stay on the thing it was placed on.
+(u)glowbold
+(p)20681
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Oshan now has carousel destinations by the cafeteria ("West Carousel") and technical storage ("East Carousel")
+(u)Lord_Earthfire
+(p)20497
+(e)🆕📦⚙|C-Feature, A-Game-Objects, A-Internal
+(+)The upgraded fishing hook is able to fish in hot places now. But it is insufficient to catch lava fish.
+(+)Clown shoes can now be fished in. But only the clown knows the ins and outs of these dangerous waters.
+(u)Egregorious
+(p)20489
+(e)💅📦⚙|C-QoL, A-Game-Objects, A-Internal
+(+)Keep hold of satchels when dumping their contents onto tables.
+(t)tue sep 24 24
+(u)TDHooligan
+(p)20845
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Birdshot does less raw damage.
+(t)mon sep 23 24
+(u)444explorer
+(p)20780
+(e)💅🔬|C-QoL, A-Science
+(+)Renamed the Telescience Disks "Moon x15" and "Moon x05" to "Senex" and "Fatuus" respectively
+(t)sun sep 22 24
+(u)Jan.antilles
+(p)20796
+(e)|
+(+)Swedish Meatball lunchbox contents replaced with an assortment of bagels.
+(u)TDHooligan
+(p)20699
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The second gang crate of a shift always contains a top-tier firearm.
+(u)ZeWaka, Mordent, Garash2k, pgmzeta, Romayne, cringe, and upstream TGUI contributors
+(p)20060
+(e)🪲🆕🔧🔎💅🔄❗📄📜|C-Bug, C-Feature, A-Tooling, C-Code-Quality, C-QoL, C-Rework, E-FUCK, A-UI, C-Documentation
+(*)A large portion of the game's UI interfaces have been reworked internally. Be sure to report any bugs!
+(u)Retrino
+(p)19879
+(e)🗺|A-Mapping
+(+)The afterlife bar now has an expanded dress-up parlor.
+(u)JORJ949
+(p)20325
+(e)⛔📦|C-Removal, A-Game-Objects
+(*)Removed Anti-Biological Hazard Supply crate from cargo's orderable crates
+(u)LeahTheTech
+(p)20794
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Eggs left under floor tiles may become century eggs that can be unearthed in future rounds.
+(+)Properly aged century eggs contain a small amount of omnizine.
+(u)TealSeer
+(p)20701
+(e)🆕🐣|C-Feature, A-Respawning
+(+)"Influencer" has been added to the gimmick job pool.
+(u)Flappybat
+(p)20790
+(e)🗺⚖📦|A-Mapping, C-Balance, A-Game-Objects
+(+)Oshan HoS medal moved from armory to HoS office.
+(u)TDHooligan
+(p)20769
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Josh now sells ProPaint graffiti.
+(t)sat sep 21 24
+(u)Kapu1178
+(p)20787
+(e)|
+(+)Flocktraces can now use flockchat links to jump to targets like the Flockmind.
+(u)JORJ949
+(p)20669
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Armory door health increased from 600 to 800
+(u)LeahTheTech
+(+)Luminol traces are now much more visible.
+(+)Breaching charges now damage lockers.
+(t)fri sep 20 24
+(u)444explorer
+(p)20753
+(e)🔄📦|C-Rework, A-Game-Objects
+(+)Renamed the "pickpocket grapple gun" to the "Super! Grapple Friend", uplink entry is unchanged.
+(t)thu sep 19 24
+(u)JORJ949
+(p)20656
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Added two new "Experimental" law modules that may appear in a round.
+(t)wed sep 18 24
+(u)Jan.antilles
+(p)20742
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Four new sweaters have been added as knitting projects.
+(t)tue sep 17 24
+(u)aloe
+(+)You can once again suffer from multiple kinds of allergies. If you really want to. For whatever reason.
+(+)Epinephrine is a bit better at purging histamine.
+(u)BatElite
+(p)19483
+(e)🆕💅🤖|C-Feature, C-QoL, A-Silicons
+(+)You can now swap out heads on cyborgs by using an empty head on a cyborg with its wiring exposed, or using a wrench with the replacement in your other hand.
+(+)The brain/interface inside the borg transfers to the new head automatically. This way you don't have to de-brain or take apart a cyborg just to change their head.
+(t)sun sep 15 24
+(u)Lord_Earthfire
+(p)20665
+(e)⚖🌱|C-Balance, A-Hydroponics
+(+)Man-eating plants gain additional endurance from eating humans seasoned with various condiments such as mustard, salt or pepper.
+(t)sat sep 14 24
+(u)Lord_Earthfire
+(p)20695
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Space fungus cannot cause food poisoning anymore.
+(t)thu sep 12 24
+(u)JORJ949
+(p)20674
+(e)🪲💡|C-Bug, A-Station-Systems
+(*)The automated alert for the engine not being setup has been fixed.
+(u)LeahTheTech
+(p)20661
+(e)🗺|A-Mapping
+(*)The Oshan belt carousel stations have been improved and a chute has been added from cargo onto the belt.
+(u)JORJ949
+(p)20658
+(e)🆕🤖🐣|C-Feature, A-Silicons, A-Respawning
+(*)AIs now have a "Go Offline" command to replace themselves with a latejoin AI, this is also announced to the crew.
+(u)TealSeer
+(p)20205
+(e)⛔🎭|C-Removal, A-RP
+(*)The hygiene motive has been disabled.
+(t)wed sep 11 24
+(u)KakoLookiyuam
+(p)20647
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Fixed the grep shell utility from appending an extra newline to output.
 (t)tue sep 10 24
+(u)cringe
+(p)20614
+(e)🆕💨|C-Feature, A-Atmospherics
+(*)Expect to see the gods playing with constructible atmos.
+(u)Carton171
+(p)20435
+(e)🔄🔊|C-Rework, C-Sound
+(*)Introduced a new sound for the Lawbringer "Assault" mode.
+(u)LeahTheTech
+(p)20654
+(e)🪲🔊|C-Bug, C-Sound
+(+)Using a wrench on a WA-V3 tank will now empty the contents.
+(u)JORJ949
+(p)20605
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(+)The AI's "Emergency" law module has been rewritten.
 (u)444explorer
 (p)20587
 (e)⚖💅🧱📦|C-Balance, C-QoL, A-Materials, A-Game-Objects

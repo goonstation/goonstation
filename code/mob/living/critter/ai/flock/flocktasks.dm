@@ -837,27 +837,31 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
 	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(!F?.flock)
+	if(!F?.flock || !length(F.flock.enemies))
 		return
 
-	var/list/surroundings = view(holder.owner, target_range)
+	// We need to check if any enemies are in range (or hiding in a car)
+	var/list/obj/machinery/vehicle/nearby_vehicles = list()
+	for (var/obj/machinery/vehicle/car in view(target_range - 2, holder.owner)) // view() expensive
+		nearby_vehicles += car
 
-	for(var/atom/A as anything in F.flock.enemies)
-		if(istype(A.loc, /obj/flock_structure/cage))
+	var/list/atom/movable/nearby_mobs_and_cars = viewers(target_range, holder.owner) | nearby_vehicles
+
+	for(var/atom/movable/AM as anything in F.flock.enemies)
+		if (istype(AM?.loc, /obj/flock_structure/cage))
 			continue
-		if (isvehicle(A.loc))
-			if(A.loc in surroundings)
-				F.flock.updateEnemy(A)
-				F.flock.updateEnemy(A.loc)
-				. += A.loc
-		else if(A in surroundings)
-			F.flock.updateEnemy(A)
-			if(isliving(A))
-				var/mob/living/M = A
-				if(is_incapacitated(M))
+		if (isvehicle(AM.loc))
+			if(AM.loc in nearby_vehicles)
+				F.flock.updateEnemy(AM)
+				F.flock.updateEnemy(AM.loc)
+				. += AM.loc
+		else if(AM in nearby_mobs_and_cars)
+			F.flock.updateEnemy(AM)
+			if(isliving(AM))
+				var/mob/living/L = AM
+				if(is_incapacitated(L))
 					continue
-			. += A
-
+			. += AM
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE-SPECIFIC CAPTURE TASK
@@ -901,11 +905,11 @@ stare
 	. = list()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F?.flock)
-		for(var/atom/T in F.flock.enemies)
-			if(IN_RANGE(T,holder.owner,max_dist))
-				if (valid_target(T))
-					. += T
-					F.flock.updateEnemy(T)
+		for(var/mob/M in F.flock.enemies) // we don't capture pods
+			if(IN_RANGE(M, holder.owner,max_dist))
+				if (valid_target(M))
+					. += M
+					F.flock.updateEnemy(M)
 
 /datum/aiTask/succeedable/capture
 	name = "capture subtask"
