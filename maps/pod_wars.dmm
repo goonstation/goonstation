@@ -649,7 +649,6 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "cc" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/corner,
 /area/pod_wars/team2/hangar)
 "cd" = (
@@ -1723,6 +1722,7 @@
 /area/pod_wars/spacejunk/memorial_stats)
 "fM" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
 	dir = 6
 	},
@@ -4370,6 +4370,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "oG" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/side{
 	dir = 9
 	},
@@ -6106,6 +6107,10 @@
 	dir = 1
 	},
 /area/pod_wars/team2/foreprimaryhall)
+"ua" = (
+/obj/cryotron,
+/turf/unsimulated/floor/black,
+/area/pod_wars/team2/equipmentroom)
 "ub" = (
 /obj/mopbucket,
 /obj/item/reagent_containers/glass/bucket,
@@ -6619,6 +6624,10 @@
 	dir = 8
 	},
 /area/pod_wars/spacejunk/fstation/power)
+"vL" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
+/area/pod_wars/team1/equipmentroom)
 "vM" = (
 /obj/storage/crate,
 /obj/machinery/light/incandescent/netural,
@@ -8261,6 +8270,10 @@
 	dir = 1
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
+"Bn" = (
+/obj/cryotron,
+/turf/unsimulated/floor/black,
+/area/pod_wars/team1/equipmentroom)
 "Bo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9657,6 +9670,7 @@
 /area/pod_wars/team2/bar)
 "Gd" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 10
 	},
@@ -10058,7 +10072,6 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/equipmentroom)
 "Hu" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -10627,7 +10640,6 @@
 /turf/space,
 /area/space)
 "Jo" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -10856,7 +10868,6 @@
 	},
 /area/pod_wars/team2/mining)
 "Kf" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
 /turf/unsimulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -12440,6 +12451,9 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
+"PE" = (
+/turf/unsimulated/floor/black,
+/area/pod_wars/team2/equipmentroom)
 "PF" = (
 /obj/lattice,
 /obj/cable{
@@ -12517,6 +12531,7 @@
 /area/pod_wars/team1/mining)
 "PT" = (
 /obj/machinery/light/incandescent/netural,
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/yellow/side{
 	dir = 5
 	},
@@ -51065,7 +51080,7 @@ DU
 wf
 wf
 Ht
-qw
+iJ
 zr
 uY
 jI
@@ -51566,7 +51581,7 @@ wf
 hR
 wf
 Ht
-qw
+Bn
 JP
 Ud
 uY
@@ -52068,7 +52083,7 @@ wf
 DU
 wf
 Ht
-Vd
+vL
 zr
 uY
 uY
@@ -52570,7 +52585,7 @@ NL
 NL
 NL
 Ht
-qw
+uY
 Mq
 LY
 uH
@@ -223148,7 +223163,7 @@ JW
 JW
 eg
 Oj
-iO
+ua
 sT
 hj
 lQ
@@ -223650,7 +223665,7 @@ JW
 eg
 rC
 Ff
-AV
+PE
 vX
 bJ
 lQ
@@ -224152,7 +224167,7 @@ JW
 Ff
 zI
 Ff
-iO
+PE
 vX
 zY
 lQ
@@ -225156,7 +225171,7 @@ Ff
 Ff
 zI
 Ff
-AV
+iO
 vX
 bJ
 Eu
