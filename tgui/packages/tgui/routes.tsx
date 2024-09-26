@@ -6,7 +6,6 @@
 
 import { useBackend } from './backend';
 import { useDebug } from './debug';
-import { LoadingScreen } from './interfaces/common/LoadingToolbox';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
@@ -40,6 +39,7 @@ const SuspendedWindow = () => {
   );
 };
 
+/* |GOONSTATION-CHANGE| - we add a spinner to the top right instead
 // Displays a loading screen with a spinning icon
 const RefreshingWindow = () => {
   return (
@@ -50,6 +50,7 @@ const RefreshingWindow = () => {
     </Window>
   );
 };
+*/
 
 // Get the component for the current route
 export const getRoutedComponent = () => {

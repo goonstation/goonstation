@@ -249,6 +249,7 @@ const TitleBar = (props: TitleBarProps) => {
           <Icon name="bug" />
         </div>
       )}
+      {/* GOONSTATION-ADD */}
       {props.refreshing === true && (
         <Icon
           className="TitleBar__refreshSpinner"
