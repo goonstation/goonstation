@@ -349,6 +349,21 @@
 		O.setHeadMaterial(head_material)
 		O.setShaftMaterial(shaft_material)
 		return O
+
+	attackby(obj/item/W, mob/user, params)
+		if(W.type == src.type && src.check_valid_stack(W))
+			stack_item(W)
+			return
+		if(istype(W, /obj/item/quiver))
+			var/obj/item/quiver/quiver = W
+			quiver.loadArrow(src, user)
+			return
+		if(istype(W, /obj/item/gun/bow))
+			var/obj/item/gun/bow/bow = W
+			if(isnull(bow.loaded))
+				bow.loadArrow(src, user)
+			return
+		. = ..()
 /*
 	attack_hand(var/mob/user)
 		if (amount > 1)
@@ -492,23 +507,35 @@
 	c_flags = ONBACK | ONBELT
 	move_triggered = 1
 
-	attackby(var/obj/item/arrow/I, var/mob/user)
-		if (!istype(I))
-			boutput(user, SPAN_ALERT("That cannot be placed in [src]!"))
-			return
+	New()
+		. = ..()
+		src.create_inventory_counter()
 
-		if(I.amount > 1)
-			var/amountinitial = I.amount
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/arrow))
+			src.loadArrow(I, user)
+			return
+		if (istype(I, /obj/item/gun/bow))
+			var/obj/item/gun/bow/bow = I
+			if (isnull(bow.loaded))
+				var/obj/item/arrow = src.getArrow(user)
+				if (isnull(arrow))
+					return // no arrows
+				bow.loadArrow(arrow, user)
+				src.updateAppearance()
+			return
+		boutput(user, SPAN_ALERT("That cannot be placed in [src]!"))
+
+	proc/loadArrow(obj/item/arrow/arrow, mob/user)
+		if(arrow.amount > 1)
+			var/amountinitial = arrow.amount
 			for(var/i=0, i<amountinitial, i++)
-				I.clone(src)
-				I.change_stack_amount(-1)
-			maptext = "[contents.len]"
-			icon_state = "quiver-[min(contents.len, 4)]"
+				arrow.clone(src)
+				arrow.change_stack_amount(-1)
 		else
-			user.u_equip(I)
-			I.set_loc(src)
-			maptext = "[contents.len]"
-			icon_state = "quiver-[min(contents.len, 4)]"
+			user.u_equip(arrow)
+			arrow.set_loc(src)
+		src.updateAppearance()
 
 	proc/getArrow(var/mob/user)
 		if (src in user)
@@ -518,10 +545,7 @@
 			else return null
 
 	proc/updateAppearance()
-		if (contents.len)
-			maptext = "[contents.len]"
-		else
-			maptext = null
+		src.inventory_counter.update_number(length(contents))
 		icon_state = "quiver-[min(contents.len, 4)]"
 		return
 
@@ -571,6 +595,10 @@
 			for (var/obj/O in contents)
 				if (O.move_triggered)
 					O.move_trigger(M, kindof)
+
+	equipped(mob/user, slot)
+		. = ..()
+		src.inventory_counter.show_count()
 
 /datum/projectile/arrow
 	name = "arrow"
@@ -665,6 +693,8 @@
 			user.drop_item(arrow)
 		arrow.plane = initial(arrow.plane)
 		arrow.layer = initial(arrow.layer)
+		arrow.pixel_x = 0
+		arrow.pixel_y = 0
 		src.loaded = arrow
 		arrow.set_loc(src)
 		src.vis_contents += arrow
@@ -686,6 +716,10 @@
 		if (istype(loaded))
 			loaded.move_trigger(M, kindof)
 
+	dropped(mob/user)
+		. = ..()
+		src.aim = null
+		src.UpdateIcon(0)
 
 	attack(var/mob/target, var/mob/user)
 		user.lastattacked = target
@@ -697,7 +731,9 @@
 		if(isliving(target))
 			if(loaded)
 				if(loaded.AfterAttack(target,user,1))
-					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
+					src.vis_contents -= src.loaded
+					loaded = null //arrow isnt consumed otherwise, for some inexplicable reason.
+					src.UpdateIcon(0)
 			else
 				boutput(user, SPAN_ALERT("Nothing is loaded in the bow!"))
 		else
