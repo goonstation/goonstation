@@ -107,15 +107,16 @@
 					return FALSE
 				usr.drop_item(src) // this is just to prevent an item ghost in the inventory, but there might be a better way to do that.
 				usr.put_in_hand(src)
-			eat_pill_from_bottle(usr)
+			try_consume_from_bottle(usr)
 			return
 		..()
-	/// returns true if a pill was successfully swallowed
-	proc/eat_pill_from_bottle(mob/user)
+
+	/// Returns true if a pill was successfully swallowed.
+	proc/consume_next_pill(mob/user)
 		if (!contents.len)
-			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return FALSE
-		var/obj/item/reagent_containers/pill/Pill = contents[contents.len] // take the last pill, because it makes it easier to poison someone
+		// take the last pill in the list because it'll be the most recent pill added, and that makes it easier to spike pill bottles.
+		var/obj/item/reagent_containers/pill/Pill = contents[contents.len]
 		if (!Pill)
 			user.visible_message(
 				SPAN_NOTICE("[user] chokes on something from [src]!"),
@@ -123,10 +124,33 @@
 				SPAN_NOTICE("Someone chokes on something.")
 			)
 			user.drop_item(contents[contents.len])
-			return
-		user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+			return FALSE
 		Pill.pill_action(user, user)
-		playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+		return TRUE
+
+	/// consume_next_pill() wrapper that handles sounds, clumsiness and majority of messaging.
+	/// Returns true if a pill was successfully swallowed.
+	proc/try_consume_from_bottle(mob/user)
+		if (!contents.len)
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return FALSE
+		// clumsy and braindamaged people have a chance to consume multiple pills and spill the rest onto the floor.
+		if(contents.len > 1 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > 40) && prob(20))
+			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+			user.visible_message(SPAN_NOTICE("[user] throws the contents of [src] at their own face!"),
+								null, SPAN_NOTICE("Someone pops some pills."))
+			var pillSwallowed = FALSE
+			for(var/i = 0; i < rand(1, max(contents.len, 3)); i++)
+				if (consume_next_pill(user)) pillSwallowed = TRUE
+			while (contents.len > 0)
+				user.drop_item(contents[contents.len])
+			return pillSwallowed
+		else
+			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
+			user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+			return consume_next_pill(user)
+
+
 
 
 /obj/item/storage/briefcase
