@@ -49,7 +49,7 @@ export const PurchaseInfo = () => {
               <Stack.Item>{selectedGroupingName}</Stack.Item>
             </Stack>
           </Stack.Item>
-          {Object.values(selectedGroupingTags).length && (
+          {selectedGroupingTags.length && (
             <Stack.Item>
               <Stack justify="center">
                 <Stack.Item bold>Tags: </Stack.Item>

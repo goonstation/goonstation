@@ -38,8 +38,7 @@ export const GroupingTags = (props: GroupingTagContainerProps) => {
   const { data } = useBackend<ClothingBoothData>();
   const { tags } = data;
   const { slot, grouping_tags } = props;
-  const groupingTagsObject = Object.values(grouping_tags);
-  const sortedGroupingTags = groupingTagsObject.sort(
+  const sortedGroupingTags = grouping_tags.sort(
     buildFieldComparator(
       (groupingTag) => tags[groupingTag].display_order,
       numberComparator,

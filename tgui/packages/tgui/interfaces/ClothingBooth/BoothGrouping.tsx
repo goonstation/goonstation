@@ -53,21 +53,20 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          {Object.values(grouping_tags).length > 0 ||
-            (itemsCount > 1 && (
-              <Stack.Item>
-                <Stack style={{ opacity: '0.5' }}>
-                  {Object.values(grouping_tags).length > 0 && (
-                    <Stack.Item grow>
-                      <GroupingTags slot={slot} grouping_tags={grouping_tags} />
-                    </Stack.Item>
-                  )}
-                  {itemsCount > 1 && (
-                    <Stack.Item>{itemsCount} variants</Stack.Item>
-                  )}
-                </Stack>
-              </Stack.Item>
-            ))}
+          {(grouping_tags.length || itemsCount > 1) && (
+            <Stack.Item>
+              <Stack style={{ opacity: '0.5' }}>
+                {grouping_tags.length && (
+                  <Stack.Item grow>
+                    <GroupingTags slot={slot} grouping_tags={grouping_tags} />
+                  </Stack.Item>
+                )}
+                {itemsCount > 1 && (
+                  <Stack.Item>{itemsCount} variants</Stack.Item>
+                )}
+              </Stack>
+            </Stack.Item>
+          )}
         </Stack>
       </Stack.Item>
     </Stack>

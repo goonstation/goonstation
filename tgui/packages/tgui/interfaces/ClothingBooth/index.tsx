@@ -38,9 +38,10 @@ export const ClothingBooth = () => {
                         <Stack.Item>
                           <Button
                             icon="eject"
-                            content="Eject Cash"
                             onClick={() => act('eject_cash')}
-                          />
+                          >
+                            Eject Cash
+                          </Button>
                         </Stack.Item>
                       </Stack>
                     </Stack.Item>
