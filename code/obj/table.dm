@@ -332,7 +332,7 @@ TYPEINFO_NEW(/obj/table)
 			return TRUE
 		return FALSE
 
-	MouseDrop_T(atom/O, mob/user as mob)
+	MouseDrop_T(atom/O, mob/user as mob, src_location, over_location, over_control, src_control, params)
 		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
@@ -360,9 +360,7 @@ TYPEINFO_NEW(/obj/table)
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
-		user.drop_item()
-		if (I.loc != src.loc)
-			step(I, get_dir(I, src))
+		src.place_on(I, user, params)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)

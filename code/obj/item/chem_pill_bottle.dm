@@ -99,14 +99,14 @@
 		if (istype(P))
 			var/i = rand(3,8)
 			while(istype(P) && i > 0)
-				P.set_loc(location)
+				P.set_loc(location.loc)
 				P = src.create_pill()
 				i--
 			if (!skip_messages)
 				if (src.pcount + length(src.contents) > 0)
-					boutput(user, SPAN_NOTICE("You tip out a bunch of pills from [src] into [location]."))
+					boutput(user, SPAN_NOTICE("You tip out a bunch of pills from [src] onto [location]."))
 				else
-					boutput(user, SPAN_NOTICE("You tip out all the pills from [src] into [location]."))
+					boutput(user, SPAN_NOTICE("You tip out all the pills from [src] onto [location]."))
 			rebuild_desc()
 		else
 			if (!skip_messages)
@@ -164,30 +164,40 @@
 			eat_pill_from_bottle(usr)
 			return
 
-		else if (istype(over_object,/obj/table))
-			// Is it bad form to use params like this? It is pretty useful for communicating between mouse_drop() and MouseDrop_T(),
-			// the alternatives in this situation are putting the tip_out() call into the table's MouseDrop_T() - but I would personally prefer item logic
+		else if (istype(over_object,/obj/table) && total_pills() > 0)
+			// Perhaps it is bad form to use params like this, but it is pretty useful for communicating between mouse_drop() and MouseDrop_T().
+			// The alternatives in this situation are putting the tip_out() call into the table's MouseDrop_T() - but I would personally prefer item logic
 			// to remain in said item's class - or use a SPAWN(0) to wait out MouseDrop_T().
 			if (!islist(params)) params = params2list(params)
-			if (params) params["dumped"] = TRUE
-			tip_out(usr, over_object.loc)
+			if (params) params["dumped"] = 1
+			tip_out(usr, over_object)
 			return
 		..()
 
+	/// Returns true if a pill was successfully swallowed.
 	proc/eat_pill_from_bottle(mob/user)
-	/// returns true if a pill was successfully swallowed
-		var/obj/item/reagent_containers/pill/pill = src.create_pill()
-		if (isnull(pill))
+		if (total_pills() < 1)
 			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return FALSE
-		// clumsy people have a chance to spill pills on the floor when popping one
-		if(total_pills() > 0 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(25))
-			user.visible_message(SPAN_NOTICE("[user] tips [src], spilling pills on their face - one even manages to land in their mouth!"),
-								null, SPAN_NOTICE("Someone spills some pills."))
-			tip_out(user, user.loc)
-		else user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"), null, SPAN_NOTICE("Someone pops a pill."))
+
 		playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
-		pill.pill_action(user, user)
+
+		// clumsy and braindamaged people have a chance to consume multiple pills at once and drop others on the floor.
+		if(total_pills() > 0 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > 40) && prob(20))
+			user.visible_message(SPAN_NOTICE("[user] throws the contents of [src] at their own face!"),
+								null, SPAN_NOTICE("Someone pops some pills."))
+			for(var/i = 1; i <= rand(1, 4); i++) // pop multiple pills at once
+				var/obj/item/reagent_containers/pill/newPill = src.create_pill()
+				if (isnull(newPill)) break
+				newPill.pill_action(user, user)
+			if (total_pills() > 0)
+				tip_out(user, user.loc, TRUE)
+		else
+			var/obj/item/reagent_containers/pill/pill = src.create_pill()
+			if (isnull(pill)) return FALSE
+			user.visible_message(SPAN_NOTICE("[user] pops a pill from [src]!"),
+								null, SPAN_NOTICE("Someone pops a pill."))
+			pill.pill_action(user, user)
 		rebuild_desc()
 		return TRUE
 
