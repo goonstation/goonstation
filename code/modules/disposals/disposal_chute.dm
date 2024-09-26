@@ -523,8 +523,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.suiciding = 0
 		return 1
 
-	return_air()
-		return src.loc?.return_air()
+	return_air(direct = FALSE)
+		if (!direct)
+			return src.loc?.return_air()
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
@@ -806,8 +807,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	process()
 		if (src.static_data_invalid)
 			src.static_data_invalid = FALSE
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
-				src.update_static_data(null, ui)
+			src.update_static_data_for_all_viewers()
 
 /datum/action/bar/icon/shoveMobIntoChute
 	duration = 0.2 SECONDS

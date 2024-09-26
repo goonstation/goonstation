@@ -91,6 +91,9 @@
 		Z_LOG_DEBUG("Preload", "Building manufacturing requirement cache...")
 		buildManufacturingRequirementCache() // ^^
 
+		Z_LOG_DEBUG("Preload", "Generating access name lookup") // ^^
+		generate_access_name_lookup()
+
 		// no log because this is functionally instant
 		global_signal_holder = new
 
@@ -133,9 +136,6 @@
 		cargo_pad_manager = new /datum/cargo_pad_manager()
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
-
-		Z_LOG_DEBUG("Preload", "Generating minimaps...")
-		minimap_renderer = new
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()

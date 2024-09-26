@@ -17,8 +17,8 @@ var/datum/job_controller/job_controls
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
 			new /datum/job/security/security_officer/derelict {limit = 6; name = "NT-SO Officer";} (),
-			new /datum/job/research/medical_doctor/derelict {limit = 6; name = "Salvage Medic";} (),
-			new /datum/job/engineering/engineer/derelict {limit = 6; name = "Salvage Engineer";} (),
+			new /datum/job/research/medical_doctor/derelict {limit = 8; name = "Salvage Medic";} (),
+			new /datum/job/engineering/engineer/derelict {limit = 10; name = "Salvage Engineer";} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
 			new /datum/job/civilian/bartender (),
@@ -82,14 +82,13 @@ var/datum/job_controller/job_controls
 		if (!valid_jobs.Find(job))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but it was not found in list of valid jobs! (Flag value: [valid_categories]).")
 			return
-		var/datum/preferences/P = player.client.preferences
 		// antag job exemptions
 		if(player.mind?.is_antagonist())
 			if ((!job.allow_traitors && player.mind.special_role))
 				return
 			else if (!job.allow_spy_theft && (player.mind.special_role == ROLE_SPY_THIEF))
 				return
-			else if (istype(ticker?.mode, /datum/game_mode/revolution) && (job.cant_spawn_as_rev || ("loyalist" in P?.traitPreferences.traits_selected)))
+			else if (istype(ticker?.mode, /datum/game_mode/revolution) && job.cant_spawn_as_rev)
 				return
 			else if ((istype(ticker?.mode, /datum/game_mode/conspiracy)) && job.cant_spawn_as_con)
 				return

@@ -873,6 +873,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
 
+	proc/has_any(list/reagents, amount)
+		for (var/reagent_id in reagents)
+			if (src.has_reagent(reagent_id, amount))
+				return TRUE
+		return FALSE
+
 	proc/has_active_reaction(var/reaction_id, var/amount=0)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if(C.id == reaction_id)

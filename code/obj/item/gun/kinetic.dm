@@ -103,9 +103,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo.use(current_projectile.cost))
 				return 1
-		boutput(user, SPAN_ALERT("*click* *click*"))
-		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
+		if (src.click_sound)
+			boutput(user, SPAN_ALERT(src.click_msg))
+			if (!src.silenced)
+				playsound(user, click_sound, 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -554,7 +555,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/survival_rifle
 	name = "\improper Efnysien survival rifle"
-	desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company."
+	desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. Popular with pilots and scouts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "survival_rifle_22"
 	item_state = "survival_rifle"
@@ -630,7 +631,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.22
 /obj/item/gun/kinetic/faith
 	name = "Faith"
-	desc = "'Cause ya gotta have Faith."
+	desc = "'Cause ya gotta have Faith. A custom upgrade to the the Auklet .22 pocket pistol from Cormorant Precision Arms."
 	icon_state = "faith"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_22)
@@ -650,7 +651,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/silenced_22
 	name = "\improper Orion silenced pistol"
-	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
+	desc = "A small pistol with an integrated flash and noise suppressor, bearing the emblem of Sceptre Tactical Laboratories. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = W_CLASS_SMALL
 	silenced = 1
@@ -677,7 +678,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.308
 /obj/item/gun/kinetic/minigun // it is now STRONK
 	name = "\improper Alpha Hydrae minigun"
-	desc = "The M134 Alpha Hydrae Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+	desc = "The Almagest M134 Alpha Hydrae is a six-barrel rotary machine gun chambered in 7.62×51mm NATO. The nuclear option for suppressive fire."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "minigun"
 	item_state = "heavy"
@@ -710,7 +711,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"
-	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted."
+	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted. Vast numbers were brought back into service for the Martian war."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
@@ -742,7 +743,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"
-	desc = "A powerful antique hunting rifle."
+	desc = "The Kittiwake .308 from Cormorant Precision Arms, a classic high-powered hunting and police rifle, reliable in almost any environment. This one shows years of use."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
@@ -798,7 +799,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //9mm/0.355
 /obj/item/gun/kinetic/clock_188
-	desc = "A reliable weapon used the world over... 50 years ago. Uses 9mm NATO rounds."
+	desc = "A NATO-surplus 9mm sidearm, still popular with Frontier military-police and peacekeeping forces. Highly customizable, often issued with frangible rounds for use in pressurized compartments."
 	name = "\improper Clock 188"
 	icon_state = "glock"
 	item_state = "glock"
@@ -896,7 +897,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			UpdateIcon()
 
 /obj/item/gun/kinetic/uzi
-	desc = "A stamped metal PDW."
+	desc = "A stamped metal PDW, produced to respond to Mortian raids. A favorite of armed bodyguards, hired muscle, henchmen, and gangsters."
 	name = "\improper MOR-30"
 	icon_state = "uzi"
 	item_state = "uzi"
@@ -957,7 +958,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/greasegun
 	name = "\improper Grease Gun"
-	desc = "A stamped metal SMG, cheaply produced years ago, and found in the weirdest places today."
+	desc = "A really clunky stamped-metal SMG. Tons of these were mass-produced in Mars colony machine shops during the War, and many have ended up in the Frontier."
 	icon_state = "grease"
 	item_state = "grease"
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -1180,8 +1181,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 /obj/item/gun/kinetic/american180
-	name = "\improper American-180"
-	desc = "A .22 machine gun, loaded with a huge triple-stack pancake mag. It's a shame you can't see the sights through it."
+	name = "\improper Razorbill-180"
+	desc = "A .22 submachine gun from Cormorant Precision Arms loaded with a huge pancake magazine, marketed towards max-security prison guards and security forces facing massed wave attacks."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "american180"
 	item_state = "a180"
@@ -1313,7 +1314,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "secure"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
-	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it. Odd."
+	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it and the emblem of Sceptre Tactical Laboratories. Odd."
 	force = MELEE_DMG_SMG
 	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
@@ -1391,7 +1392,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //0.357
 /obj/item/gun/kinetic/revolver
-	name = "\improper Predator revolver"
+	name = "\improper Kestrel revolver"
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
 	item_state = "revolver"
@@ -1411,8 +1412,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //0.38
 /obj/item/gun/kinetic/detectiverevolver
-	name = "\improper Detective Special revolver"
-	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds."
+	name = "\improper Piper .38 revolver"
+	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds. A favorite of the Detective's Union, always reliable in times of strife."
 	icon_state = "detective"
 	item_state = "detective"
 	w_class = W_CLASS_SMALL
@@ -1431,7 +1432,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //0.393
 /obj/item/gun/kinetic/foamdartgun
-	name = "foam dart gun"
+	name = "\improper Super! Gun Friend"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "foamdartgun"
@@ -1532,7 +1533,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 /obj/item/gun/kinetic/foamdartrevolver
-	name = "foam dart revolver"
+	name = "\improper Super! Revolver Friend"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
 	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "foamdartrevolver"
@@ -1553,8 +1554,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
 /obj/item/gun/kinetic/foamdartshotgun
-	name = "foam dart shotgun"
-	desc = "The more powerful, older brother of the dart gun. Kicks like a horse, a foam horse. A horse made of foam."
+	name = "\improper Super! Shotgun Friend"
+	desc = "An even more powerful, bigger brother of the dart gun. Kicks like a horse, a foam horse. A horse made of foam."
 	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "foamdartshotgun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1584,7 +1585,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "blowgun"
-	item_state = "cane-f"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "c_tube"
 	force = MELEE_DMG_PISTOL
 	contraband = 2
 	ammo_cats = list(AMMO_DART_ALL)
@@ -1594,18 +1596,22 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/blow_darts/single
+	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
 	recoil_strength = 4
+	click_sound = null
+
+	tranq
+		default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine/single
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/blow_dart)
+		set_current_projectile(src.ammo.ammo_type)
 		..()
 
 //0.41
 /obj/item/gun/kinetic/derringer
 	name = "derringer"
-	desc = "A small and easy-to-hide gun that comes with 2 shots."
+	desc = "The Deadlock .41, a small and easy-to-hide gun from Cormorant Precision Arms. Loaded with 2 shots, brutal at close range."
 	icon_state = "derringer"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_41)
@@ -1650,7 +1656,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.45
 
 /obj/item/gun/kinetic/single_action/colt_saa
-	name = "colt saa revolver"
+	name = "single action army revolver"
 	desc = "A nearly adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so."
 	icon_state = "colt_saa"
 	item_state = "colt_saa"
@@ -1713,7 +1719,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.72
 /obj/item/gun/kinetic/spes
 	name = "SPES-12"
-	desc = "Multi-purpose high-grade military shotgun. Very spiffy."
+	desc = "An expensive imported combat shotgun, popular with frontier militias and private military operators."
 	icon_state = "spas"
 	item_state = "spas"
 	force = MELEE_DMG_RIFLE
@@ -1730,7 +1736,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		if(prob(10))
-			name = pick("SPEZZ-12", "SPESS-12", "SPETZ-12", "SPOCK-12", "SCHPATZL-12", "SABRINA-12", "SAURUS-12", "SABER-12", "SOSIG-12", "DINOHUNTER-12", "PISS-12", "ASS-12", "SPES-12", "SHIT-12", "SHOOT-12", "SHOTGUN-12", "FAMILYGUY-12", "SPAGOOTER-12")
+			name = pick("SPEZZ-12", "SPESS-12", "SPETZ-12", "SPOCK-12", "SCHPATZL-12", "SABRINA-12", "SAURUS-12", "SABER-12", "SOSIG-12", "DINOHUNTER-12", "COMBAT-12", "SHOTASS-12", "SPES-12", "SHOOTY-12", "BLAM-12", "SPICY-12", "ANTKILLER-12", "SLAPS-12", "SPAGOOTER-12", "MARTIANSLAYER-12")
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/a12)
 		..()
@@ -1864,8 +1870,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
 
 /obj/item/gun/kinetic/pumpweapon/riotgun
-	name = "riot shotgun"
-	desc = "A police-issue shotgun meant for suppressing riots."
+	name = "\improper Guillemot riot shotgun"
+	desc = "A police-issue shotgun from Cormorant Precision Arms, customized for riot suppression and prison guard duty."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
@@ -2025,8 +2031,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			src.transform = src.transform.Turn(45)
 
 /obj/item/gun/kinetic/flaregun
-	desc = "A 12-gauge flaregun."
-	name = "flare gun"
+	desc = "A 12-gauge signal launcher from Cormorant Precision Arms. A perennial lifesaver at sea, on land, and in space."
+	name = "\improper Pelican flare gun"
 	icon_state = "flare"
 	item_state = "flaregun"
 	force = MELEE_DMG_PISTOL
@@ -2424,8 +2430,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //1.57
 /obj/item/gun/kinetic/riot40mm
-	desc = "A 40mm riot control gun. It can accept standard 40mm rounds and hand-thrown grenades."
-	name = "riot launcher"
+	desc = "A classic 40mm riot-control launcher from Cormorant Precision Arms. It can accept standard 40mm rounds and hand-thrown grenades."
+	name = "\improper Puffin 40mm riot launcher"
 	icon_state = "40mm"
 	item_state = "40mm"
 	force = MELEE_DMG_SMG
@@ -2744,8 +2750,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //4.6
 /obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
-	name = "airzooka"
-	desc = "The new double action air projection device from Donk Co!"
+	name = "Super! Bazooka Friend"
+	desc = "The new double action air projection device from Super! Friend."
 	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "airzooka"
 	force = MELEE_DMG_PISTOL
@@ -2911,7 +2917,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		UpdateIcon()
 
 /obj/item/gun/kinetic/tranq_pistol
-	name = "\improper Gwydion tranquilizer pistol"
+	name = "\improper Ceridwen tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
 	item_state = "tranq_pistol"
@@ -3148,7 +3154,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/cannon
 	name = "\improper Alphard 20mm cannon"
-	desc = "A 20mm anti-materiel recoiling cannon. Slow but enormously powerful."
+	desc = "A 20mm anti-materiel recoiling cannon from Almagest. Slow but enormously powerful."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
@@ -3375,8 +3381,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 0.3)*/
 
 /obj/item/gun/kinetic/sawnoff
-	name = "double-barreled shotgun"
-	desc = "A double-barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
+	name = "\improper Fulmar 1881 coach gun"
+	desc = "A stylish historic-reproduction short-barreled shotgun from Cormorant Precision Arms, a favorite of the Bartender's Guild."
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "coachgun"
 	icon_state = "coachgun"

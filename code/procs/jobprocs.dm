@@ -69,6 +69,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			player.mind.assigned_role = "Construction Worker"
 		return
 
+	#ifdef I_WANNA_BE_THE_JOB
+	for (var/mob/new_player/player in unassigned)
+		player.mind.assigned_role = I_WANNA_BE_THE_JOB
+	UNLINT(return)
+	#endif
+
 	var/list/pick1 = list()
 	var/list/pick2 = list()
 	var/list/pick3 = list()
@@ -595,10 +601,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
 		trinket = src.create_wig()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))

@@ -133,6 +133,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	///The product currently being vended
 	var/datum/data/vending_product/currently_vending = null // zuh
 
+	var/uses_mechcomp = TRUE //Can this vending machine take mechcomp inputs?
+
 	power_usage = 50
 
 	New()
@@ -146,8 +148,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 		AddComponent(/datum/component/mechanics_holder)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
+		if (uses_mechcomp)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -437,6 +440,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		var/area/T = get_area(src)
 		if(T?.sanctuary)
 			return
+		if (isliving(thr.thrown_by))
+			var/mob/living/dude = thr.thrown_by
+			var/datum/gang/gang = dude.get_gang()
+			gang?.do_vandalism(GANG_VANDALISM_VENDOR_KO, src.loc)
 		src.fall(M)
 		return
 
@@ -1311,6 +1318,43 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
 
+TYPEINFO(/obj/machinery/vending/chemistry)
+	mats = 10
+
+/obj/machinery/vending/chemistry
+	name = "IgniChem"
+	desc = "An ID-selective dispenser for chemical equippment and intermediates"
+	icon_state = "ignichem"
+	icon_panel = "standard-panel"
+	icon_deny = "ignichem-deny"
+	req_access = list(access_chemistry)
+	acceptcard = 0
+	light_r = 0.9
+	light_g = 0.6
+	light_b = 0.9
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper/mechanical, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 15)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/large, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser/fractional, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bunsen_burner, 2)
+		product_list += new/datum/data/vending_product(/obj/item/beaker_lid, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/reagentscanner, 5)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cytotoxin, amount= 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pill_bottle/cyberpunk, amount= 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/crank, amount=rand(0, 6), hidden=1)
+
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		return
+
+
 TYPEINFO(/obj/machinery/vending/medical)
 	mats = 10
 
@@ -1450,9 +1494,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 2)
 		product_list += new/datum/data/vending_product(/obj/item/implantcase/counterrev, 3)
 		product_list += new/datum/data/vending_product(/obj/item/implanter, 1)
-#ifdef RP_MODE
-		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 1)
-#endif
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/space_law, 3)
 		product_list += new/datum/data/vending_product(/obj/item/device/flash/turbo, rand(1, 6), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, rand(1, 2), hidden=1) // Obtaining a backpack full of lethal ammo required no effort whatsoever, hence why nobody ordered AP speedloaders from the Syndicate (Convair880).
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/donut, rand(2, 4), hidden=1) // emergency snack
@@ -1460,9 +1502,9 @@ TYPEINFO(/obj/machinery/vending/medical)
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
 	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
-	icon_state = "sec"
+	icon_state = "ammo"
 	icon_panel = "standard-panel"
-	icon_deny = "sec-deny"
+	icon_deny = "ammo-deny"
 	req_access = list(access_armory)
 	acceptcard = 0
 	light_r =1
@@ -1841,7 +1883,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/rice, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/sugar, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/butter, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/spaghetti, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/meatball, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
@@ -2092,6 +2134,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	player_list = list()
 	var/lastPlayerPrice = 0
 	icon_panel = "standard-panel"
+	uses_mechcomp = FALSE //Player vending machines can't take mechcomp inputs
 
 	New()
 		. = ..()
@@ -2287,8 +2330,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		. = ..()
 		if (src.static_data_invalid)
 			src.static_data_invalid = FALSE
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
-				src.update_static_data(null, ui)
+			src.update_static_data_for_all_viewers()
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()

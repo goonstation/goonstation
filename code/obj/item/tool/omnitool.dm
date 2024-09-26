@@ -103,7 +103,7 @@
 
 			if (OMNI_MODE_SCREWING)
 				set_icon_state("[prefix]-screwing")
-				src.setItemSpecial(/datum/item_special/simple)
+				src.setItemSpecial(/datum/item_special/jab)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)

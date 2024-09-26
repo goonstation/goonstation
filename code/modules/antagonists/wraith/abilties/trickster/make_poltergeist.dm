@@ -23,6 +23,7 @@
 			boutput(src.holder.owner, SPAN_ALERT("You can't summon a poltergeist here!"))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
+		src.doCooldown()
 		make_poltergeist(src.holder.owner, get_turf(src.holder.owner))
 		return CAST_ATTEMPT_SUCCESS
 

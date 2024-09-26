@@ -176,7 +176,14 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	while (src.cycle == WASH || src.cycle == DRY)
 		animate_storage_thump(src, 11)
 		if (prob(50))
-			step(src, pick(cardinal))
+			var/dir = pick(cardinal)
+			for (var/mob/living/M in get_step(src, dir))
+				if (!isintangible(M))
+					random_brute_damage(M, 5)
+					M.setStatus("knockdown", 2 SECONDS)
+					M.force_laydown_standup()
+					M.throw_at(get_steps(src, dir, 5), 5, 1, null, get_turf(src))
+			step(src, dir)
 			src.visible_message(SPAN_ALERT("[src] [pick("rattles", "shudders", "judders", "complains", "grumps")]"), group = "angry_laundry")
 		if (prob(1))
 			if (prob(20))
@@ -247,6 +254,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			W.affecting.set_loc(src)
 			src.open = 0
 			src.on = 1
+			src.cycle = PRE
 			var/mob/M = W.affecting
 			src.occupant = M
 			UpdateIcon()

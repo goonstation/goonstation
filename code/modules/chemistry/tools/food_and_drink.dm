@@ -17,7 +17,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
 	var/tmp/made_ants = FALSE 					//! Has this food already spawned ants
 	var/ant_amnt = 5 							//! How many ants are added to food / how much reagents removed?
-	var/sliceable = FALSE 						//! Can this food be sliced with a knife
+	var/sliceable = FALSE						//! Can this food be sliced
+	var/slice_tools = TOOL_CUTTING | TOOL_SAWING	//! Which tools can be used to slice this food
 	var/slice_product = null 					//! Type to spawn when we slice this food
 	var/slice_amount = 1						//! How many slices to spawn after slicing
 	var/slice_inert = FALSE						//! If the food is inert while slicing (ie chemical reactions won't occur)
@@ -104,9 +105,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			M.HealDamage("All", healing, healing)
 
-	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
+	//slicing food can be done here using sliceable == TRUE, slice_amount and slice_product; slice_tools can be overridden if needed (e.g. snipping food)
 	attackby(obj/item/W, mob/user)
-		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (src.sliceable && istool(W, slice_tools))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
@@ -114,15 +115,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				JOB_XP(user, "Clown", 2)
 				return
 			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
+			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", group = "slicing")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
+			//the hacky place_on zone of sadness
+			var/obj/surgery_tray/tray = locate() in src.loc
+			if (!tray || !(src in tray.attached_objs))
+				tray = null
+			var/obj/item/plate/plate = src.loc
+			if (istype(plate))
+				plate.remove_contents(src)
+			else
+				plate = null
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
+				//try to put it on the plate/tray if we're on one
+				if (tray && tray.place_on(slice_result))
+					tray.attach(slice_result)
+				else if (plate)
+					plate.add_contents(slice_result)
 			qdel (src)
 		else
 			..()
@@ -1426,7 +1441,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 
 	Crossed(obj/projectile/mover) //Makes barfights cooler
-		if(istype(mover) && !istype(mover.proj_data, /datum/projectile/bullet/foamdart))
+		if(istype(mover) && mover.proj_data?.smashes_glasses)
 			if(prob(30))
 				src.smash()
 		. = ..()
@@ -1637,6 +1652,16 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_x_offset = -1
 	wedge_y_offset = 3
 
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine/crystal //wander office item
+	name = "crystal wine glass"
+	desc = "What is a man? A miserable little pile of secrets."
+	icon = 'icons/misc/wander_stuff.dmi'
+	icon_state = "crystal-wine"
+	shard_amt = 3
+	reagent_overlay_icon = 'icons/obj/foodNdrink/bartending_glassware.dmi'
+	reagent_overlay_icon_state = "wine"
+	reagent_overlay_states = 6
+
 /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail
 	name = "cocktail glass"
 	icon_state = "cocktail"
@@ -1674,6 +1699,18 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	decoration_y_offset = -3
 	wedge_x_offset = -2
 	wedge_y_offset = 2
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pint
+	name = "pint glass"
+	icon_state = "pint"
+	initial_volume = 80
+	reagent_overlay_states = 15
+	umbrella_x_offset = 3
+	umbrella_y_offset = 10
+	decoration_x_offset = 0
+	decoration_y_offset = -2
+	wedge_x_offset = -2
+	wedge_y_offset = 3
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing
 	name = "icing tube"
