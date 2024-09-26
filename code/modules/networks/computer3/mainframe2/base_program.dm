@@ -413,8 +413,9 @@
 				continue
 
 			// Return the current folder if the end of the filepath has been reached.
-			else if (!separated_filepath[1] && !create_if_missing)
-				return current_folder
+			else
+				if (!separated_filepath[1] && !create_if_missing)
+					return current_folder
 
 		var/folder_found = FALSE
 		var/folder_name = ckey(separated_filepath[1])
