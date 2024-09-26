@@ -213,6 +213,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/additional_options = list()
 	var/additional_toggles = list()
 	var/static/datum/terrainify/terrainify_lock
+	var/road_turf_type = /turf/unsimulated/floor/auto/dirt
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
 	var/ambient_color
@@ -277,9 +278,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 		return
 
 	proc/post_convert(params, mob/user)
-		if(params["Prefabs"])
-			place_prefabs(10)
-
 		if(current_state >= GAME_STATE_PREGAME)
 			initialize_worldgen()
 
@@ -376,7 +374,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/i in 1 to ore/2)
 			Turfspawn_Asteroid_SeedEvents(turfs)
 
-	proc/place_prefabs(prefabs_to_place, flags)
+	proc/place_prefabs(prefabs_to_place, flags, params)
 		var/failsafe = 800
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
@@ -402,7 +400,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 							if(!istype(T, /turf/space))
 								space_turfs -= T
 						station_repair.repair_turfs(space_turfs, force_floor=TRUE)
-
+						LAZYLISTADD(params["prefabs_loaded"], ret)
 						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 						n++
 						stop = 1
@@ -432,18 +430,73 @@ ABSTRACT_TYPE(/datum/terrainify)
 					new station_repair.weather_effect(T)
 			T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
+		LAZYLISTINIT(params["prefabs_loaded"])
 		if(params["Prefabs"])
-			place_prefabs(10)
+			place_prefabs(10, params=params)
+
+		if(params["Roads"])
+			build_roads(turfs, params)
 
 		station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, season=params["Season"])
 
 		handle_mining(params, turfs)
 
+	proc/build_roads(list/turfs, params)
+		var/datum/cell_grid/cell_grid = new(world.maxx,world.maxy)
+		var/road_noise = rustg_cnoise_generate("60", "10", "5", "2", "[world.maxx]", "[world.maxy]")
+
+		var/last_x = rand(5,250)
+		var/last_y = rand(5,250)
+		for(var/i in 1 to 12-length(params["prefabs_loaded"]))
+			var/next_x = rand(5,250)
+			var/next_y = rand(5,250)
+			if(prob(50))
+				cell_grid.drawLShape(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+			else
+				cell_grid.draw_line(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+			last_x = next_x
+			last_y = next_y
+
+		for(var/datum/loadedProperties/prefab in params["prefabs_loaded"])
+			if(prob((prefab.maxX-prefab.sourceX)*(prefab.maxY-prefab.sourceY))*5)
+				if(prob(20))
+					var/next_x = rand(5,250)
+					var/next_y = rand(5,250)
+					if(prob(50))
+						cell_grid.drawLShape(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+					else
+						cell_grid.draw_line(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+					last_x = next_x
+					last_y = next_y
+
+				if(prob(80))
+					cell_grid.drawLShape(last_x, last_y, prefab.sourceX, prefab.sourceY, TRUE, TRUE)
+				else
+					cell_grid.draw_line(last_x, last_y, prefab.sourceX, prefab.sourceY, TRUE, TRUE)
+				last_x = prefab.maxX
+				last_y = prefab.maxY
+
+		for(var/datum/loadedProperties/prefab in params["prefabs_loaded"])
+			cell_grid.draw_box(prefab.sourceX, prefab.sourceY,   prefab.maxX, prefab.maxY, null, null, TRUE)
+
+		for(var/x in 1 to world.maxx)
+			for(var/y in 1 to world.maxy)
+				if(cell_grid.grid[x][y])
+					var/road_value
+					var/index = x * world.maxx + y
+					if(index <= length(road_noise))
+						road_value = text2num(road_noise[index])
+					if(road_value)
+						var/turf/new_road = locate(x, y, Z_LEVEL_STATION)
+						if(!istype(new_road, /turf/simulated/wall/auto/asteroid) && (new_road in turfs))
+							new_road.ReplaceWith(road_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+
+
 /datum/terrainify/desertify
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Re-Entry"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#cfcfcf"
 
 	New()
@@ -764,7 +817,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("No", "Yes", "Particles"), "Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Re-Entry"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#222222"
 
 	New()
@@ -955,7 +1008,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Winter Station"
 	desc = "Turns space into a colder snowy place"
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"), "Season"=list("None", "Winter"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Re-Entry"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#222222"
 
 	New()
@@ -985,7 +1038,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Forest Station"
 	desc = "Turns space into a lush and wooden place"
 	additional_options = list("Mining"=list("None", "Normal", "Rich"), "Season"=list("None", "Autumn"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Spooky"=FALSE, "Re-Entry"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Spooky"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#211"
 
 	New()
