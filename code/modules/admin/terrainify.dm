@@ -213,6 +213,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/additional_options = list()
 	var/additional_toggles = list()
 	var/static/datum/terrainify/terrainify_lock
+	var/parallax_render_source_group = null
 	var/road_turf_type = /turf/unsimulated/floor/auto/dirt
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
@@ -223,6 +224,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 		..()
 		if(length(syndi_camo_color))
 			additional_toggles["Syndi Camo"] = FALSE
+		if(parallax_render_source_group)
+			additional_toggles["Parallax"] = FALSE
 
 	proc/special_repair(list/turf/TS)
 		return FALSE
@@ -272,7 +275,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 				var/mob/player_mob = C.mob
 				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
 					SPAWN(0)
-						shake_camera(player_mob, 20 SECONDS, rand(20,40))
+						shake_camera(player_mob, 35 SECONDS, rand(20,40))
 					player_mob.changeStatus("knockdown", 2 SECONDS)
 
 		return
@@ -290,6 +293,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 					player_mob.changeStatus("knockdown", 5 SECONDS)
 
 			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry), 10 SECONDS)
+
+		if(params["Parallax"])
+			var/datum/parallax_render_source_group/render_group = new parallax_render_source_group()
+			ADD_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION, render_group, 5 SECONDS)
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
 		return
@@ -498,6 +505,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#cfcfcf"
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/desert
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#efc998", nuke_op_color_matrix[3])
@@ -776,6 +784,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Lava Moon Station"
 	desc = "Turns space into... CO2 + Lava."
 	additional_options = list("Mining"=list("None","Normal","Rich"), "Lava"=list("Normal","Extra","Less"))
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/lava_moon
 
 	convert_station_level(params, mob/user)
 		if(..())
@@ -1010,6 +1019,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"), "Season"=list("None", "Winter"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#222222"
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/snow
 
 	New()
 		syndi_camo_color = list("#50587a", "#bbdbdd", nuke_op_color_matrix[3])
@@ -1040,6 +1050,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Mining"=list("None", "Normal", "Rich"), "Season"=list("None", "Autumn"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Spooky"=FALSE, "Re-Entry"=FALSE)
 	ambient_color = "#211"
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/forest
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#3d8f29", nuke_op_color_matrix[3])
