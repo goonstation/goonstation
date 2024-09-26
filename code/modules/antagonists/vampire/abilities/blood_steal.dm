@@ -164,8 +164,8 @@
 		if (("vamp" in P.special_data))
 			var/datum/abilityHolder/vampire/vampire = P.special_data["vamp"]
 			if (vampire.owner == hit && !P.special_data["returned"])
-				P.travelled = 0
-				P.max_range = 4
+				P.travelled = 16
+				P.max_range = 1
 				P.special_data["returned"] = TRUE
 			..()
 

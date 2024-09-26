@@ -11,6 +11,7 @@
 //some holder stuff i dont understand
 #define MAX_TEMP_REACTION_VARIANCE 8
 #define CHEM_EPSILON 0.0001
+#define APPLY_CHEM_EPSILON(x) (x <= CHEM_EPSILON ? 0 : x)
 
 //makes sure we cant have too many critters
 #define CRITTER_REACTION_LIMIT 50
@@ -42,3 +43,5 @@
 #define THRESHOLD_OVER 1
 #define THRESHOLD_INIT THRESHOLD_UNDER
 
+/// This contains a list with organ strings that not instantly kill someone when lost.
+var/global/list/non_vital_organ_strings =  list("left_lung", "right_lung", "left_kidney", "stomach", "right_kidney", "liver", "intestines", "spleen", "pancreas", "appendix")

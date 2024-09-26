@@ -216,7 +216,8 @@
 		else
 			return null
 
-	proc/initialize()
+	proc/initialize(player_caused_init) // Did a player cause the init of this object? Currently needed so atmos knows whether or not to call its neighbors, avoiding infinite loops.
+
 
 	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
 		return FALSE

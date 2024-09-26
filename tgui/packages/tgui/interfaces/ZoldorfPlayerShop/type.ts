@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export interface ZoldorfCommonProductData {
   name: string;
@@ -22,10 +22,13 @@ export interface ZoldorfCreditProductData extends ZoldorfCommonProductData {
   price: number;
 }
 
-export type ZoldorfProductData = ZoldorfSoulProductData | ZoldorfCreditProductData;
+export type ZoldorfProductData =
+  | ZoldorfSoulProductData
+  | ZoldorfCreditProductData;
 
-export const isSoulProductData = (value: ZoldorfProductData): value is ZoldorfSoulProductData =>
-  'soul_percentage' in value;
+export const isSoulProductData = (
+  value: ZoldorfProductData,
+): value is ZoldorfSoulProductData => 'soul_percentage' in value;
 
 export interface ZoldorfPlayerShopData {
   products: ZoldorfProductData[];

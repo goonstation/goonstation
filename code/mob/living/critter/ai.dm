@@ -217,6 +217,7 @@ var/list/ai_move_scheduled = list()
 
 	proc/enable()
 		src.enabled = TRUE
+		src.owner.ClearSpecificOverlays("offline_indicator") //fucking stoppp
 		src.interrupt()
 
 /datum/aiTask

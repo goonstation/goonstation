@@ -103,6 +103,7 @@ TYPEINFO(/datum/component/proximity)
 /datum/component/proximity/proc/Detect(atom/owner, atom/movable/sensed_object)
 	if(src.parent == sensed_object)
 		return
-
+	if (!src.parent) //I guess we're disposed or something??
+		return
 	var/atom/sensing_object = src.parent
 	sensing_object.EnteredProximity(sensed_object)

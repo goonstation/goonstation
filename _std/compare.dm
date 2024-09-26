@@ -55,3 +55,6 @@
 
 /proc/cmp_job_order_priority(datum/job/a, datum/job/b)
 	return cmp_numeric_asc(a.order_priority, b.order_priority)
+
+/proc/cmp_gang_score_desc(datum/gang/a, datum/gang/b)
+	return cmp_numeric_dsc(a.score_total, b.score_total)
