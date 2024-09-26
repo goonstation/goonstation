@@ -398,6 +398,13 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
+/datum/clothingbooth_grouping/guards_coat
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/guards_coat)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume,
+	)
+
 /datum/clothingbooth_grouping/hoodie
 	name = "Hoodie"
 	item_paths = list(
@@ -810,7 +817,7 @@
 		/datum/clothingbooth_grouping_tag/season/autumn,
 	)
 
-/datum/clothingbooth_grouping/
+/datum/clothingbooth_grouping/leaf_wreath
 	item_paths = list(/datum/clothingbooth_item/head/leaf_wreath)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
