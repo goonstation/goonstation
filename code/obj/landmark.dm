@@ -510,13 +510,13 @@ var/global/list/job_start_locations = list()
 	name = "Void Diner"
 
 /obj/landmark/lrt/icemoon
-	name = "Moon X15"
+	name = "Senex"
 
 /obj/landmark/lrt/solarium
 	name = "Sol"
 
 /obj/landmark/lrt/biodome
-	name = "Moon X05"
+	name = "Fatuus"
 
 /obj/landmark/lrt/mars_outpost
 	name = "Mars"
