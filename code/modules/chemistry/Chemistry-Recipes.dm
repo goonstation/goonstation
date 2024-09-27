@@ -2152,6 +2152,17 @@
 		mix_phrase = "A minty and refreshing smell drifts from the effervescent mixture."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		does_react(var/datum/reagents/holder) //will react in spite of phenol being present, if in a mob (thus blocking the "efficient" recipe)
+			return (ismob(holder.my_atom) || !holder.has_reagent("phenol"))
+
+	antihol/efficient
+		id = "antihol_efficient"
+		required_reagents = list("ethanol" = 8, "charcoal" = 1, "phenol" = 0.1)
+		result_amount = 9
+
+		does_react(var/datum/reagents/holder)
+			return !ismob(holder.my_atom)
+
 	ectocooler
 		name = "Ecto Cooler"
 		id = "ectocooler"
