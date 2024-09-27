@@ -53,12 +53,12 @@
 	src.ambient_light.attach(src)
 	src.ambient_light.set_brightness(0.6)
 	src.ambient_light.set_height(1.5)
+
 	// Preview stuff.
 	src.preview = new()
 	src.preview.add_background()
 
-	if (istype(get_area(src), /area/afterlife))
-		src.everything_is_free = TRUE
+	if (src.everything_is_free)
 		src.maptext_y = 34
 		src.maptext = "<span class='pixel c vb'>FREE</span>"
 		src.name = "completely free [src.name]"
@@ -68,6 +68,11 @@
 	src.eject_contents()
 	src.clear_preview_item()
 	qdel(src.preview)
+	src.preview = null
+	qdel(src.ambient_light)
+	src.ambient_light = null
+	src.accessed_record = null
+	src.scanned_id = null
 	..()
 
 /obj/machinery/clothingbooth/power_change()
@@ -82,20 +87,24 @@
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
 		src.process_card(user, id_card)
-	else if (istype(W, /obj/item/currency/spacecash))
+		return
+	if (istype(W, /obj/item/currency/spacecash))
 		var/obj/item/currency/spacecash/cash_to_add = W
 		src.add_cash(user, cash_to_add)
-	else if (istype(W, /obj/item/grab))
+		return
+	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
-		if (ismob(G.affecting))
-			var/mob/GM = G.affecting
-			if (!src.occupant)
-				src.add_occupant(GM)
-				qdel(G)
-				user.visible_message(SPAN_ALERT("<b>[user] stuffs [GM.name] into [src]!</b>"), SPAN_ALERT("<b>You stuff [GM.name] into [src]!</b>"))
-				logTheThing(LOG_COMBAT, user, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
-	else
-		..()
+		if (!ismob(G.affecting))
+			return
+		var/mob/GM = G.affecting
+		if (src.occupant)
+			return
+		src.add_occupant(GM)
+		qdel(G)
+		user.visible_message(SPAN_ALERT("<b>[user] stuffs [GM.name] into [src]!</b>"), SPAN_ALERT("<b>You stuff [GM.name] into [src]!</b>"))
+		logTheThing(LOG_COMBAT, user, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
+		return
+	..()
 
 /obj/machinery/clothingbooth/attack_hand(mob/user)
 	if (!ishuman(user))
@@ -417,12 +426,21 @@
 /obj/machinery/clothingbooth/proc/update_preview()
 	src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.current_preview_direction, src.occupant.real_name)
 
+/obj/machinery/clothingbooth/free
+	everything_is_free = TRUE
+
 /obj/machinery/clothingbooth/clothingboothgbr
 	name = "Strange Clothing Booth"
 	color = list(0,1,0,1,0,1,1,1,0)
 	dye = list(0,1,0,0,0,1,1,0,0)
 
+/obj/machinery/clothingbooth/clothingboothbr/free
+	everything_is_free = TRUE
+
 /obj/machinery/clothingbooth/clothingboothbrg
 	name = "Unusual Clothing Booth"
 	color = list(1,0,1,1,1,0,0,1,1)
 	dye = list(0,0,1,1,0,0,0,1,0)
+
+/obj/machinery/clothingbooth/clothingboothbrg/free
+	everything_is_free = TRUE

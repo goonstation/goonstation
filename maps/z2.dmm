@@ -69207,7 +69207,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "pKi" = (
-/obj/machinery/clothingbooth,
+/obj/machinery/clothingbooth/free,
 /obj/map/light/brighterwhite,
 /turf/unsimulated/floor/carpet/blue/fancy/narrow/northsouth,
 /area/afterlife/bar/sanctuary)
