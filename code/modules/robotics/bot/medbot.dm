@@ -421,7 +421,7 @@
 
 		if (src.assess_patient(C))
 			if(C.traitHolder.hasTrait("wasitsomethingisaid") && !src.emagged && !src.terrifying) //they still try to kill you if they can
-				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C?.name)]", src.last_patient_cooldown * 1) //don't bother insulting them for a good while
+				ON_COOLDOWN(src, "[MEDBOT_LASTPATIENT_COOLDOWN]-[ckey(C?.name)]", src.last_patient_cooldown * 10) //don't bother insulting them for a good while
 				if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam this either!
 					src.point(C, 1)
 					var/message = pick("I've seen worse, don't be such a baby!","That looks bad. You should find a doctor who cares.","Injured? Good.","I don't think your insurance covers THAT.","Just... walk that off.","You'll be fine. You want a second opinion? You're ugly!")
