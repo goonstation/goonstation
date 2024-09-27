@@ -1234,7 +1234,10 @@
 		if(user.a_intent == "help" && !user.using_dialog_of(src) && (BOUNDS_DIST(user, src) == 0))
 			var/affection = pick("hug","cuddle","snuggle")
 			user.visible_message(SPAN_NOTICE("[user] [affection]s [src]!"),SPAN_NOTICE("You [affection] [src]!"), group="buddyhug")
-			src.task?.task_input("hugged")
+			if(user.traitHolder?.hasTrait("wasitsomethingisaid"))
+				src.task?.task_input("hugged_annoying")
+			else
+				src.task?.task_input("hugged")
 			return
 
 		if(BOUNDS_DIST(user, src) > 0)
@@ -2346,6 +2349,8 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (prob(25))
 							master.visible_message(SPAN_NOTICE("[master.name] reciprocates the hug!"))
 				return 1
+			if(input == "hugged_annoying")
+				master.set_emotion("ugh")
 
 			return 0
 
@@ -2759,6 +2764,11 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if(BOUNDS_DIST(master, hug_target) == 0)
+							if(hug_target.traitHolder?.hasTrait("wasitsomethingisaid"))
+								master.bot_attack(hug_target, TRUE) //betrayal!!
+								master.speak(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
+								drop_hug_target()
+								return
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
 								hug_target.reagents.add_reagent("hugs", 10)
@@ -3035,7 +3045,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							last_cute_action = world.time
 							switch(rand(1,5))
 								if (1)
-									master.visible_message("<b>[master]</b> waves at [C.name].")
+									if(C.traitHolder?.hasTrait("wasitsomethingisaid"))
+										master.visible_message("<b>[master]</b> gestures rudely at [C.name].") //they can't really flip you off with two hooks so
+									else
+										master.visible_message("<b>[master]</b> waves at [C.name].")
 								if (2)
 									master.visible_message("<b>[master]</b> rotates slowly around in a circle.")
 								if (3,4)
