@@ -548,7 +548,8 @@
 		/datum/manufacture/hat_green,
 		/datum/manufacture/hat_blue,
 		/datum/manufacture/hat_purple,
-		/datum/manufacture/hat_tophat)
+		/datum/manufacture/hat_tophat,
+		/datum/manufacture/handkerchief,)
 
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
