@@ -965,17 +965,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Can be dyed with hair dye. Obviously."
 	icon_state = "beret_base"
 	item_state = "dye_beret"
-	var/new_color
 
 	New()
 		..()
-		src.color = "FFFFFF"
+		src.color = "#FFFFFF"
 
 	attackby(obj/item/dye_bottle/W, mob/user)
 		. = ..()
 		if (istype(W, /obj/item/dye_bottle))
-			new_color = W.customization_first_color
-			src.color = new_color
+			src.color = W.customization_first_color
 			src.UpdateIcon()
 			user.update_clothing()
 			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [his_or_her(user)] beret."))
