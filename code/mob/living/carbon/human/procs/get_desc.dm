@@ -31,8 +31,8 @@
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
 
 	// crappy hack because you can't do \his[src] etc
-	var/t_his  = his_or_her(src)
-	var/t_him  = him_or_her(src)
+	var/t_his = his_or_her(src)
+	var/t_him = him_or_her(src)
 
 	. +=  "<br>[SPAN_NOTICE("*---------*")]"
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
@@ -414,8 +414,6 @@
 		var/et_amt = src.reagents.get_reagent_amount("ethanol")
 		var/drunk_assess = ""
 		if (!isalcoholresistant(src) || src.reagents.has_reagent("moonshine"))
-			if (src.reagents.has_reagent("moonshine"))
-				et_amt *= 7
 			switch (et_amt)
 				if (0 to 10)
 					drunk_assess = "[capitalize("[he_or_she(src)]")] seem[blank_or_s(src)] <b>buzzed.</b>"
