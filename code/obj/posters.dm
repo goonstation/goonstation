@@ -96,12 +96,13 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		message_admins("[key_name(usr)] created a poster[print_or_place == "Print" ? " at all printers" : null]")
 
 /proc/create_jailbird_wanted_poster(mob/living/carbon/human/H)
-	var/reason = "Previous criminal activity"
+	var/reason = "Previous criminal activity."
 	if (H.job == "Stowaway")
-		reason = "Unauthorized boarding of a Nanotrasen vessel."
+		reason = "Unauthorized boarding of a Nanotrasen [station_or_ship()]."
 	else
 		var/datum/db_record/sec_record = data_core.security.find_record("id", H.datacore_id)
-		reason = "[sec_record["ma_crim"]] [sec_record["mi_crim"]]"
+		if (sec_record)
+			reason = "[sec_record["ma_crim"]] [sec_record["mi_crim"]]"
 	mass_print_wanted_poster(
 		uppertext(H.real_name),
 		H.build_flat_icon(),
