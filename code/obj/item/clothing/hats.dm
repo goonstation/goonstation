@@ -951,7 +951,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			..()
 			src.color = random_saturated_hex_color(1)
 
-
 /obj/item/clothing/head/beret/prisoner
 	name = "prisoner's beret"
 	desc = "This is a prisoner's beret. <i>Allons enfants de la Patrie, Le jour de gloire est arrivé!</i>"
