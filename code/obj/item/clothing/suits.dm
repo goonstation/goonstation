@@ -1121,17 +1121,15 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		dyeable
 			name = "dyeable cardigan sweater"
 			desc = "A warm cardigan sweater that can be dyed with hair dye. Obviously."
-			var/new_color
 
 			New()
 				..()
-				src.color = "FFFFFF"
+				src.color = "#FFFFFF"
 
 			attackby(obj/item/dye_bottle/W, mob/user)
 				. = ..()
 				if (istype(W, /obj/item/dye_bottle))
-					new_color = W.customization_first_color
-					src.color = new_color
+					src.color = W.customization_first_color
 					src.UpdateIcon()
 					user.update_clothing()
 					user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [his_or_her(user)] cardigan."))
