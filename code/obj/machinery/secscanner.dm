@@ -207,10 +207,6 @@ TYPEINFO(/obj/machinery/secscanner)
 		else if (istype(perp.mutantrace, /datum/mutantrace/cat))
 			threatcount += 3
 
-		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
-			if(isnull(data_core.security.find_record("name", perp.name)))
-				threatcount += 5
-
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()
 		if (!istype(perp_id))

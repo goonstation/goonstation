@@ -948,10 +948,6 @@
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
-			if(isnull(data_core.security.find_record("name", perp.name)))
-				threatcount += 5
-
 		// we have grounds to make an arrest, don't bother with further analysis
 		if(threatcount >= 4)
 			return threatcount

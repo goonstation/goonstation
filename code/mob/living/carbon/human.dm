@@ -3606,8 +3606,6 @@
 		if(criminal == ARREST_STATE_ARREST || criminal == ARREST_STATE_DETAIN || criminal == ARREST_STATE_SUSPECT || criminal == ARREST_STATE_PAROLE || criminal == ARREST_STATE_INCARCERATED || criminal == ARREST_STATE_RELEASED || \
 				criminal == ARREST_STATE_CLOWN)
 			arrestState = criminal
-	else if(src.traitHolder.hasTrait("stowaway") && src.traitHolder.hasTrait("jailbird"))
-		arrestState = ARREST_STATE_ARREST
 	if (arrestState != ARREST_STATE_ARREST) // Contraband overrides non-arrest statuses, now check for contraband
 		if (locate(/obj/item/implant/counterrev) in src.implant)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
