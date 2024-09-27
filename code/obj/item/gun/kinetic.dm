@@ -1593,7 +1593,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
 	hide_attack = ATTACK_FULLY_HIDDEN
-	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
