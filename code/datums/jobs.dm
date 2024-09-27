@@ -1248,7 +1248,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Stowaway"
 	limit = 2
 	wages = 0
-	trait_list = list("stowaway")
 	add_to_manifest = FALSE
 	low_priority_job = TRUE
 	slot_card = null

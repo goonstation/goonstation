@@ -827,15 +827,6 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 //Category: Background.
 
-/datum/trait/stowaway
-	name = "Stowaway"
-	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
-	id = "stowaway"
-	icon_state = "stowaway"
-	category = list("background")
-	points = 0
-	unselectable = TRUE
-
 /datum/trait/pilot
 	name = "Pilot"
 	desc = "You spawn in a pod off-station with a Space GPS, Emergency Oxygen Tank, Breath Mask and proper protection, but you have no PDA and your pod cannot open wormholes."
