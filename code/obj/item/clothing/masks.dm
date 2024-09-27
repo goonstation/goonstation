@@ -224,7 +224,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	syndicate
 		name = "syndicate field protective mask"
-		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
+		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Has a built-in voice changer."
 		icon_state = "gas_mask_syndicate"
 		item_state = "gas_mask_syndicate"
 		color_r = 0.8 //this one's also green
@@ -235,6 +235,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		New()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+			src.vchange = new(src)
 
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
