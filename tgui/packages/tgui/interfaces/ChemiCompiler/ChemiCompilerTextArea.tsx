@@ -34,7 +34,7 @@ export const ChemiCompilerTextArea = () => {
       fontSize="13px"
       style={{
         wordBreak: 'break-all',
-        borderColor: theme === 'syndicate' ? '#397439' : null,
+        borderColor: theme === 'syndicate' ? '#397439' : undefined,
       }}
     />
   );
