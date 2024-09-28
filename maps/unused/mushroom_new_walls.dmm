@@ -15542,13 +15542,15 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "cyU" = (
-/obj/mapping_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/weapons/secure{
-	dir = 4
+	dir = 4;
+	aiControlDisabled = 1
 	},
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "czk" = (
@@ -17564,6 +17566,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
+"esW" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	name = "Upload Space";
+	enter_id = "inner";
+	cycle_id = "upload"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "esX" = (
 /obj/critter/parrot/random,
 /obj/cable{
@@ -17639,17 +17650,6 @@
 /obj/mapping_helper/access/mining,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
-"eyb" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/machinery/turretid/armory{
-	pixel_x = -24
-	},
-/turf/simulated/floor/plating,
-/area/station/turret_protected/armory_outside)
 "eyZ" = (
 /obj/stool/chair{
 	dir = 8;
@@ -23351,6 +23351,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"jPM" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	name = "Upload Space";
+	enter_id = "outer";
+	cycle_id = "upload"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "jPN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -92410,7 +92419,7 @@ pRv
 pRv
 nlV
 ucV
-eyb
+aoP
 aoP
 gqe
 qPb
@@ -96876,9 +96885,9 @@ aaa
 aaa
 aaa
 abm
-bbl
+esW
 bbZ
-bbl
+jPM
 rRn
 aYL
 arN
