@@ -14,6 +14,9 @@
 	var/pcount
 	var/datum/reagents/reagents_internal
 	var/average
+	var/consume_input_buffer
+	/// A reference to the action currently in use if eating pills from the bottle.
+	var/datum/action/bar/icon/consume_pill_from_bottle_chemmaster/consumption_action
 
 	// setup this pill bottle from some reagents
 	proc/create_from_reagents(var/datum/reagents/R, var/pillname, var/pillvol, var/pillcount)
@@ -161,7 +164,7 @@
 					return FALSE
 				usr.drop_item(src) // this is just to prevent an item ghost in the inventory, but there might be a better way to do that.
 				usr.put_in_hand(src)
-			eat_pill_from_bottle(usr)
+			start_eating_from_bottle(usr)
 			return
 
 		else if (istype(over_object,/obj/table) && total_pills() > 0)
@@ -173,6 +176,18 @@
 			tip_out(usr, over_object)
 			return
 		..()
+
+	proc/start_eating_from_bottle(mob/user)
+		if (total_pills() <= 0)
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return
+		if (!consumption_action)
+			consumption_action = new /datum/action/bar/icon/consume_pill_from_bottle_chemmaster(user, src)
+			actions.start(consumption_action, user)
+		else
+			consumption_action.consume_input_buffer++
+
+
 
 	/// Returns true if a pill was successfully swallowed.
 	proc/eat_pill_from_bottle(mob/user)
@@ -201,8 +216,76 @@
 		rebuild_desc()
 		return TRUE
 
+
+
 	// Don't dump the bottle onto the table if using drag-and-drop to dump out pills.
 	should_place_on(obj/target, params)
 		if (istype(target, /obj/table) && islist(params) && params["dumped"])
 			return FALSE
 		. = ..()
+
+
+/datum/action/bar/icon/consume_pill_from_bottle_chemmaster
+	duration = 0.75 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	var/mob/bottleholder
+	var/mob/target
+	var/obj/item/chem_pill_bottle/bottle
+	var/consume_input_buffer = 1
+
+	New(mob/Target, obj/item/chem_pill_bottle/Bottle)
+		..()
+		target = Target
+		bottle = Bottle
+		icon = bottle.icon
+		icon_state = bottle.icon_state
+
+	proc/checkContinue()
+		if (bottle.total_pills() <= 0 || !isalive(bottleholder) || !bottleholder.find_in_hand(bottle))
+			return FALSE
+		return TRUE
+
+	onStart()
+		..()
+		bottleholder = src.owner
+		loopStart()
+		return
+
+	loopStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onUpdate()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onInterrupt(flag)
+		..()
+		// if attacked or stunned while trying to take a pill, drop the pill you would take
+		if (flag & (INTERRUPT_ATTACKED | INTERRUPT_STUNNED))
+			var/pill = bottle.create_pill()
+			if (!isnull(pill)) bottleholder.drop_item(pill)
+			bottle.rebuild_desc()
+		bottle.consumption_action = null
+
+	onEnd()
+		consume_input_buffer--
+		if (bottle.eat_pill_from_bottle(target))
+			eat_twitch(target)
+		else // if a pill was not successfully swallowed something is probably wrong, so don't let the loop restart
+			bottle.consumption_action = null
+			..()
+			return
+		var/pillsRemainingInBottle = bottle.total_pills()
+		if (pillsRemainingInBottle > 0 && consume_input_buffer > 0)
+			onRestart()
+			return
+		if(pillsRemainingInBottle <= 0)
+			boutput(usr, SPAN_ALERT("The [src] is empty."))
+		bottle.consumption_action = null
+		..()
+		return
+
+

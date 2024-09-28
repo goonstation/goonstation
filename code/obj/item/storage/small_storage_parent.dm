@@ -95,6 +95,8 @@
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_TINY
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
+	/// A reference to the action currently in use if eating pills from the bottle.
+	var/datum/action/bar/icon/consume_pill_from_bottle_regular/consumption_action
 
 	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 		if (usr == over_object && istype(usr, /mob/living/carbon) && (src.loc == usr || src.loc?.loc == usr))
@@ -107,9 +109,19 @@
 					return FALSE
 				usr.drop_item(src) // this is just to prevent an item ghost in the inventory, but there might be a better way to do that.
 				usr.put_in_hand(src)
-			try_consume_from_bottle(usr)
+			start_consuming_pills(usr)
 			return
 		..()
+
+	proc/start_consuming_pills(mob/user)
+		if (!contents.len)
+			boutput(user, SPAN_ALERT("[src] is empty!"))
+			return
+		if (!consumption_action)
+			consumption_action = new /datum/action/bar/icon/consume_pill_from_bottle_regular(user, src)
+			actions.start(consumption_action, user)
+		else
+			consumption_action.consume_input_buffer++
 
 	/// Returns true if a pill was successfully swallowed.
 	proc/consume_next_pill(mob/user)
@@ -151,6 +163,65 @@
 			return consume_next_pill(user)
 
 
+/datum/action/bar/icon/consume_pill_from_bottle_regular
+	duration = 0.75 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED
+	var/mob/bottleholder
+	var/mob/target
+	var/obj/item/storage/pill_bottle/bottle
+	var/consume_input_buffer = 1
+
+	New(mob/Target, obj/item/storage/pill_bottle/Bottle)
+		..()
+		target = Target
+		bottle = Bottle
+		icon = bottle.icon
+		icon_state = bottle.icon_state
+
+	proc/checkContinue()
+		if (bottle.contents.len <= 0 || !isalive(bottleholder) || !bottleholder.find_in_hand(bottle))
+			return FALSE
+		return TRUE
+
+	onStart()
+		..()
+		bottleholder = src.owner
+		loopStart()
+		return
+
+	loopStart()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onUpdate()
+		..()
+		if(!checkContinue()) interrupt(INTERRUPT_ALWAYS)
+		return
+
+	onInterrupt(flag)
+		..()
+		if (flag & (INTERRUPT_ATTACKED | INTERRUPT_STUNNED))
+			if (bottle.contents.len > 0) bottleholder.drop_item(bottle.contents[bottle.contents.len])
+		bottle.consumption_action = null
+
+	onEnd()
+		consume_input_buffer--
+		if (bottle.try_consume_from_bottle(target))
+			eat_twitch(target)
+		else // if a pill was not successfully swallowed something is probably wrong, so don't let the loop restart
+			bottle.consumption_action = null
+			..()
+			return
+		var/pillsRemainingInBottle = bottle.contents.len
+		if (pillsRemainingInBottle > 0 && consume_input_buffer > 0)
+			onRestart()
+			return
+		if(pillsRemainingInBottle <= 0)
+			boutput(usr, SPAN_ALERT("The [src] is empty."))
+		bottle.consumption_action = null
+		..()
+		return
 
 
 /obj/item/storage/briefcase
