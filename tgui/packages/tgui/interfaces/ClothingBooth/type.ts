@@ -76,3 +76,8 @@ export enum TagDisplayOrderType {
   Formality = 2,
   Collection = 3,
 }
+
+export interface UiState {
+  showTagsModal: boolean;
+  setShowTagsModal: React.Dispatch<React.SetStateAction<boolean>>;
+}

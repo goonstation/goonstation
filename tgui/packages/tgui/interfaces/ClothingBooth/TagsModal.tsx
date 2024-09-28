@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -15,10 +15,11 @@ import {
   ClothingBoothGroupingTagsData,
   TagDisplayOrderType,
 } from './type';
+import { UiStateContext } from './uiState';
 import { buildFieldComparator, stringComparator } from './utils/comparator';
 
 export const TagsModal = () => {
-  const [tagModal, setTagModal] = useState(false);
+  const { setShowTagsModal } = useContext(UiStateContext);
   const [tagFilters, setTagFilters] = useState<
     Partial<Record<string, boolean>>
   >({});
@@ -39,7 +40,7 @@ export const TagsModal = () => {
               </Button>
             </Stack.Item>
             <Stack.Item>
-              <Button icon="xmark" onClick={() => setTagModal(!tagModal)}>
+              <Button icon="xmark" onClick={() => setShowTagsModal(false)}>
                 Close
               </Button>
             </Stack.Item>
