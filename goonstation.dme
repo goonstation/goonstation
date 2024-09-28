@@ -1152,6 +1152,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\start\viscera_cleanup.dm"
 #include "code\modules\fishing\fish.dm"
 #include "code\modules\fishing\fishing_gear.dm"
+#include "code\modules\fishing\fishing_lootpools.dm"
 #include "code\modules\fishing\fishing_spots.dm"
 #include "code\modules\fluids\air.dm"
 #include "code\modules\fluids\fluid_commands.dm"

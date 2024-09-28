@@ -170,7 +170,7 @@ const AccessPanelOnly = () => {
   const { name } = data;
 
   return (
-    <Window width={354} height={465} title={`Airlock - ${truncate(name, 19)}`}>
+    <Window width={360} height={465} title={`Airlock - ${truncate(name, 19)}`}>
       <Window.Content>
         <AccessPanel />
       </Window.Content>
