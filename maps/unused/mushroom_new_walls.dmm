@@ -4768,6 +4768,10 @@
 	c_tag = "Waste Disposal";
 	dir = 9
 	},
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "azg" = (
@@ -4913,10 +4917,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "azS" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
 /obj/machinery/conveyor_switch{
 	id = "garbage"
 	},
@@ -24111,6 +24111,16 @@
 	dir = 6
 	},
 /area/station/science/lab)
+"kFU" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door{
+	layer = 3
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "kGv" = (
 /obj/lattice,
 /obj/machinery/light/runway_light,
@@ -26272,6 +26282,10 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"mNh" = (
+/obj/item/space_thing,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "mNs" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/carpet/arcade,
@@ -75111,7 +75125,7 @@ aue
 aaa
 aaa
 aaa
-aaa
+aMD
 aaa
 aaa
 aaa
@@ -89004,7 +89018,7 @@ auB
 auB
 xcn
 auB
-auB
+ayi
 auB
 auB
 aBS
@@ -89303,12 +89317,12 @@ ath
 aua
 arn
 avL
-axg
+kFU
 axg
 azg
 gzn
 azg
-axg
+kFU
 axg
 aCs
 aDy
@@ -89608,7 +89622,7 @@ avM
 auB
 iHG
 auB
-auB
+ayi
 auB
 auB
 auB
@@ -125171,7 +125185,7 @@ aaa
 aaa
 aaa
 aaa
-abm
+mNh
 aaa
 aaa
 aaa
