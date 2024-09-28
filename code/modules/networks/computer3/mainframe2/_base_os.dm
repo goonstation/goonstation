@@ -734,7 +734,7 @@ var/global/list/generic_exit_list = list("command" = DWAINE_COMMAND_EXIT)
 				return ESIG_GENERIC
 
 			var/datum/computer/file/mainframe_program/task_model = src.parse_file_directory(data["path"], src.holder.root, FALSE)
-			if (!task_model || !task_model.executable)
+			if (!task_model?.executable)
 				return ESIG_NOTARGET
 
 			task_model = src.master.run_program(task_model, (pass_user ? caller.useracc : null), caller, data["args"])
