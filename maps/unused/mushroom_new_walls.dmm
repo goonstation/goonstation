@@ -38646,6 +38646,15 @@
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "wKh" = (
