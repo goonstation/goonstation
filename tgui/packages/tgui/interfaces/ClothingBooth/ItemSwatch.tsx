@@ -53,7 +53,8 @@ export const ItemSwatch = (props: ItemSwatchProps) => {
     'clothingbooth__swatch-icon',
     `clothingbooth__swatch-icon--${swatch_foreground_shape}`,
   ]);
-  const SwatchForegroundShape = SwatchLookup[swatch_foreground_shape] || null;
+  const SwatchForegroundShape =
+    (swatch_foreground_shape && SwatchLookup[swatch_foreground_shape]) ?? null;
 
   return (
     <Tooltip content={`${name} (${cost}⪽)`} position="bottom">

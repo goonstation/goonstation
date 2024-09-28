@@ -27,29 +27,35 @@ export const PurchaseInfo = () => {
     selectedItemName,
   } = data;
 
-  const selectedGrouping = catalogue[selectedGroupingName];
+  const selectedGrouping = selectedGroupingName
+    ? catalogue[selectedGroupingName]
+    : undefined;
   let selectedGroupingSlot: ClothingBoothSlotKey | undefined;
   let selectedGroupingTags: string[] | undefined;
   let selectedItem: ClothingBoothItemData | undefined;
-  if (selectedGrouping) {
+  if (selectedGrouping && selectedItemName) {
     selectedGroupingSlot = selectedGrouping.slot;
     selectedGroupingTags = selectedGrouping.grouping_tags;
     selectedItem = selectedGrouping.clothingbooth_items[selectedItemName];
   }
+  const selectedGroupingClothingBoothItems = Object.values(
+    selectedGrouping?.clothingbooth_items ?? {},
+  );
+  const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
   const handlePurchase = () => act('purchase');
   const handleSelectItem = (name: string) => act('select-item', { name });
 
   return (
     <Stack vertical textAlign="center">
-      {selectedItemName ? (
+      {selectedGrouping && selectedItem && selectedItemName ? (
         <>
           <Stack.Item bold>
             <Stack align="center" justify="center">
               <Stack.Item>{selectedGroupingName}</Stack.Item>
             </Stack>
           </Stack.Item>
-          {selectedGroupingTags.length && (
+          {selectedGroupingTags?.length && selectedGroupingSlot && (
             <Stack.Item>
               <Stack justify="center">
                 <Stack.Item bold>Tags: </Stack.Item>
@@ -63,7 +69,7 @@ export const PurchaseInfo = () => {
             </Stack.Item>
           )}
           <Stack.Item bold>Selected: {selectedItemName}</Stack.Item>
-          {Object.values(selectedGrouping.clothingbooth_items).length > 1 && (
+          {selectedGroupingClothingBoothItems.length > 1 && (
             <Stack.Item>
               <Flex justify="center" wrap="wrap">
                 {Object.values(selectedGrouping.clothingbooth_items).map(
@@ -84,13 +90,13 @@ export const PurchaseInfo = () => {
             <Button
               color="good"
               disabled={
-                selectedItem.cost > cash + accountBalance &&
+                selectedItem.cost > resolvedCashAvailable &&
                 !data.everythingIsFree
               }
               onClick={handlePurchase}
             >
               {`${
-                selectedItem.cost > cash + accountBalance &&
+                selectedItem.cost > resolvedCashAvailable &&
                 !data.everythingIsFree
                   ? 'Insufficent Money'
                   : 'Purchase'

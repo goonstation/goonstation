@@ -58,6 +58,7 @@ export const StockList = (_props: unknown) => {
   const { act, data } = useBackend<ClothingBoothData>();
   const { catalogue, accountBalance, cash, selectedGroupingName } = data;
   const catalogueItems = Object.values(catalogue);
+  const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
   const [hideUnaffordable, setHideUnaffordable] = useState(false);
   const [slotFilters] = useState<
@@ -75,7 +76,7 @@ export const StockList = (_props: unknown) => {
   const affordableItemGroupings = hideUnaffordable
     ? catalogueItems.filter(
         (catalogueGrouping) =>
-          cash + accountBalance >= catalogueGrouping.cost_min,
+          resolvedCashAvailable >= catalogueGrouping.cost_min,
       )
     : catalogueItems;
   const slotFilteredItemGroupings = Object.values(slotFilters).some(

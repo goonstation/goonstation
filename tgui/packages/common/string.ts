@@ -185,11 +185,14 @@ export const getTextWidth = (text, font) => {
   const canvas =
     textWidthCanvas || (textWidthCanvas = document.createElement('canvas'));
   const context = canvas.getContext('2d');
+  if (!context) {
+    return null;
+  }
   context.font = font;
   const metrics = context.measureText(text);
   return metrics.width;
 };
-let textWidthCanvas = null;
+let textWidthCanvas: HTMLCanvasElement | null = null;
 
 const getCssStyle = (element, prop) => {
   return window.getComputedStyle(element, null).getPropertyValue(prop);
