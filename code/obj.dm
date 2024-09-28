@@ -394,7 +394,7 @@
 
 /obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
 	. = FALSE
-	if (W && !isghostdrone(user)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
+	if (W && !isghostdrone(user) && W.should_place_on(src, params)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
 		if (user)
@@ -407,7 +407,7 @@
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
-		if(W.layer < src.layer)
+		if(W.layer <= src.layer)
 			W.layer = src.layer + 0.1
 		. = TRUE
 

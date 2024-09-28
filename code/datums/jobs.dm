@@ -655,6 +655,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Research Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
+	trait_list = list("training_scientist")
 	access_string = "Scientist"
 	rounds_allowed_to_play = ROUNDS_MAX_RESASS
 	slot_back = list(/obj/item/storage/backpack/research)
@@ -706,6 +707,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	name = "Medical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
+	trait_list = list("training_medical")
 	access_string = "Medical Doctor"
 	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
 	slot_back = list(/obj/item/storage/backpack/medic)
@@ -813,6 +815,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	name = "Technical Trainee"
 	limit = 2
 	wages = PAY_UNTRAINED
+	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -852,7 +855,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
-	trait_list = list("training_drinker")
+	trait_list = list("training_drinker", "training_bartender")
 	access_string = "Bartender"
 	slot_belt = list(/obj/item/device/pda2/bartender)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
@@ -1058,7 +1061,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/helmet/space/light/engineer)
 	slot_suit = list(/obj/item/clothing/suit/space/light/engineer)
 	slot_back = list(/obj/item/storage/backpack)
-	slot_mask = list(/obj/item/clothing/mask/gas)
+	// slot_mask = list(/obj/item/clothing/mask/gas)
 	items_in_backpack = list(
 		/obj/item/rcd/construction/safe/admin_crimes,
 		/obj/item/device/analyzer/atmospheric/upgraded,
@@ -1399,8 +1402,27 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
 	slot_poc1 = list(/obj/item/device/pda2/medical_director)
-	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
-	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
+	alt_names = list(
+		"Acupuncturist",
+	  	"Anesthesiologist",
+		"Cardiologist",
+		"Dental Specialist",
+		"Dermatologist",
+		"Emergency Medicine Specialist",
+		"Hematology Specialist",
+		"Hepatology Specialist",
+		"Immunology Specialist",
+		"Internal Medicine Specialist",
+		"Maxillofacial Specialist",
+		"Medical Director's Assistant",
+		"Neurological Specialist",
+		"Ophthalmic Specialist",
+		"Orthopaedic Specialist",
+		"Otorhinolaryngology Specialist",
+		"Plastic Surgeon",
+		"Thoracic Specialist",
+		"Vascular Specialist",
+	)
 
 /datum/job/special/random/vip
 	name = "VIP"
@@ -1750,6 +1772,20 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	slot_poc1 = list(/obj/item/electronics/soldering)
 	items_in_backpack = list(/obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone, /obj/item/electronics/frame/phone)
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
+
+// god help us
+/datum/job/special/random/influencer
+	name = "Influencer"
+	wages = PAY_UNTRAINED
+	change_name_on_spawn = TRUE
+	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
+	slot_jump = list(/obj/item/clothing/under/misc/casualjeanspurp)
+	slot_head = list(/obj/item/clothing/head/basecap/purple)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_poc1 = list(/obj/item/device/audio_log)
+	slot_poc2 = list(/obj/item/camera)
+	items_in_backpack = list(/obj/item/storage/box/random_colas, /obj/item/clothing/head/helmet/camera, /obj/item/device/camera_viewer/public)
 	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 #ifdef HALLOWEEN

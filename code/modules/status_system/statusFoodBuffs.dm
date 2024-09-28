@@ -48,7 +48,7 @@
 /datum/statusEffect/simplehot/foodBrute
 	id = "food_brute"
 	name = "Food HoT (Brute)"
-	icon_state = "foodbuff"
+	icon_state = "hot_brute"
 	exclusiveGroup = "Food"
 	heal_brute = 0.26
 	maxDuration = 6000
@@ -63,7 +63,7 @@
 /datum/statusEffect/simplehot/foodTox
 	id = "food_tox"
 	name = "Food HoT (Toxin)"
-	icon_state = "foodbuff"
+	icon_state = "hot_tox"
 	exclusiveGroup = "Food"
 	heal_tox = 0.26
 	maxDuration = 6000
@@ -79,7 +79,7 @@
 /datum/statusEffect/simplehot/foodBurn
 	id = "food_burn"
 	name = "Food HoT (Burn)"
-	icon_state = "foodbuff"
+	icon_state = "hot_burn"
 	exclusiveGroup = "Food"
 	heal_burn = 0.26
 	maxDuration = 6000
@@ -95,7 +95,7 @@
 /datum/statusEffect/simplehot/foodAll
 	id = "food_all"
 	name = "Food HoT (All)"
-	icon_state = "foodbuff"
+	icon_state = "hot_all"
 	exclusiveGroup = "Food"
 	heal_burn = 0.086
 	heal_tox = 0.086

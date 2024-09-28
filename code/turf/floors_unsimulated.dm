@@ -1178,6 +1178,8 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"

@@ -5,13 +5,12 @@
  * @license ISC
  */
 
-
 .MapPanel {
   &--voted {
-    background-color: #023301;
+    background-color: #023301 !important;
   }
   &--won {
-    background-color: #8E6F19;
+    background-color: #8e6f19 !important;
   }
 
   .mode-light & {
@@ -19,7 +18,7 @@
       background-color: lightgreen !important;
     }
     &--won {
-      background-color: #F9F998 !important;
+      background-color: #f9f998 !important;
     }
   }
 }
