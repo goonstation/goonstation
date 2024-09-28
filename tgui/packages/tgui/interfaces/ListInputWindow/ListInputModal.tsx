@@ -52,9 +52,12 @@ export const ListInputModal = (props: ListInputModalProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const getSearchBar = () => {
-    return searchBarVisible
-      ? document.getElementById('search_bar')?.getElementsByTagName('input')[0]
-      : null;
+    if (!searchBarVisible) {
+      return undefined;
+    }
+    return document
+      .getElementById('search_bar')
+      ?.getElementsByTagName('input')[0];
   };
 
   // User presses up or down on keyboard
