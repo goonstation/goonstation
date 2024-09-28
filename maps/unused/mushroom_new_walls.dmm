@@ -10786,6 +10786,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/hangar/engine)
 "bfa" = (
@@ -17715,6 +17721,11 @@
 	},
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "eyZ" = (
@@ -31817,6 +31828,7 @@
 	pixel_x = 14;
 	pixel_y = -3
 	},
+/obj/item/shipcomponent/mainweapon/foamer,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "qYO" = (
@@ -33942,6 +33954,12 @@
 /area/station/security/main)
 "sHS" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/engineering_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/hangar/engine)
 "sHW" = (
@@ -37141,6 +37159,11 @@
 "vbR" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/mining,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/mining/magnet)
 "vcE" = (
