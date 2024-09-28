@@ -361,6 +361,16 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"ace" = (
+/obj/machinery/door_control{
+	id = "engi";
+	name = "Engine Room Shield Control";
+	pixel_x = -24
+	},
+/turf/simulated/floor/yellow/corner{
+	dir = 4
+	},
+/area/station/engine/inner)
 "acj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -10224,6 +10234,15 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/reinforced{
 	icon_state = "0-2-thick"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -23397,6 +23416,17 @@
 	dir = 1
 	},
 /area/station/engine/engineering/ce)
+"jQL" = (
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
+/obj/machinery/door_control{
+	id = "engi";
+	name = "Engine Room Shield Control";
+	pixel_x = 24
+	},
+/turf/simulated/floor,
+/area/station/engine/inner)
 "jRq" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility,
@@ -34541,6 +34571,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"tkx" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "pdoor0";
+	id = "engi";
+	layer = 4;
+	name = "Engine Room Shield";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/engineering)
 "tkC" = (
 /obj/item/currency/spacecash,
 /obj/item/coin,
@@ -73648,7 +73691,7 @@ aga
 baw
 agV
 rMS
-awl
+ace
 ajG
 azo
 azo
@@ -74858,7 +74901,7 @@ aiR
 ajj
 asG
 aZT
-dUN
+tkx
 axu
 axL
 iVl
@@ -75160,7 +75203,7 @@ aiR
 ajk
 jCK
 aZT
-dUN
+tkx
 axu
 axL
 iVl
@@ -75462,7 +75505,7 @@ aiR
 ajj
 asG
 aZT
-dUN
+tkx
 axu
 axL
 iVl
@@ -75764,7 +75807,7 @@ aiR
 ajk
 jCK
 aZT
-dUN
+tkx
 axu
 axL
 lNm
@@ -76066,7 +76109,7 @@ aiR
 ajj
 asG
 aZT
-dUN
+tkx
 axu
 akZ
 alp
@@ -76368,7 +76411,7 @@ bbv
 ajk
 jCK
 aZT
-dUN
+tkx
 axu
 axL
 lWf
@@ -76972,7 +77015,7 @@ bbx
 ajm
 ajA
 aZT
-dUN
+tkx
 axu
 axu
 bhZ
@@ -77574,9 +77617,9 @@ aZR
 aVY
 aWQ
 bcg
-rYB
+jQL
 dgM
-dUN
+tkx
 bfF
 bgP
 bic
