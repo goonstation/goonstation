@@ -113,10 +113,12 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		"<center><i>NANOTRASEN AUTOMATED NOTICE</i></center>"
 	)
 
-/// Print a wanted poster to all printers
+/// Print a wanted poster to all station-level printers
 /proc/mass_print_wanted_poster(name, wanted_image, subtitle, dead_or_alive, bounty, wanted_for, notes)
 	for_by_tcl(P, /obj/machinery/networked/printer)
 		if (P.status & (NOPOWER|BROKEN))
+			continue
+		if (P.z != Z_LEVEL_STATION)
 			continue
 		flick("printer-printing",P)
 		playsound(P.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
