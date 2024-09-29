@@ -5,8 +5,8 @@
  * @license ISC
  */
 
-import { clamp } from 'common/math';
-import { Button, Icon, Slider, Stack } from '../../components';
+import { Button, Icon, Slider, Stack } from 'tgui-core/components';
+import { clamp } from 'tgui-core/math';
 
 // slice of props that are unchanged from standard Slider component
 interface SliderProps {
@@ -50,7 +50,7 @@ export const SteppedSlider = (props: SteppedSliderProps) => {
     onChange(clamp(value + adjust, minValue, maxValue));
   };
   return (
-    <Stack inline width="100%">
+    <Stack width="100%">
       <Stack.Item>
         <Button
           icon="backward-fast"
@@ -76,7 +76,8 @@ export const SteppedSlider = (props: SteppedSliderProps) => {
           <Button
             onClick={() => handleAdjust(-nudgeAmount)}
             tooltip={`Nudge Down (${-nudgeAmount})`}
-            tooltipPosition="bottom">
+            tooltipPosition="bottom"
+          >
             <Icon name="play" rotation={180} />
           </Button>
         )}

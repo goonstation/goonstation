@@ -407,6 +407,12 @@
 		reagents.add_reagent("VHFCS, 10")
 		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
+/obj/item/storage/box/random_colas
+	name = "bulk-purchase space cola"
+	desc = "A box of dubiously sourced carbonated drinks."
+	icon_state = "beer"
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/cola/random = 7)
+
 /obj/item/reagent_containers/food/drinks/cola/custom
 	name = "beverage can"
 	desc = "An aluminium can with custom branding."

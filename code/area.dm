@@ -4204,6 +4204,16 @@ ABSTRACT_TYPE(/area/mining)
 	teleport_blocked = 1
 	icon_state = "purple"
 
+/// Syndicate base that is radproof and not Hadar-blocked, for Trench Warfare
+
+/area/syndicate_base
+	name = "Syndicate Base"
+	icon_state = "yellow"
+	requires_power = 0
+	sound_environment = 2
+	teleport_blocked = 1
+	do_not_irradiate = TRUE
+
 /// For Devtest testing purposes
 /area/station/devzone
 	name = "Dev Zone"
