@@ -491,7 +491,7 @@ TYPEINFO(/obj/machinery/chem_shaker/large)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CHEMMASTER_MINIMUM_REAGENT 5 //!mininum reagent for pills, bottles and patches
-#define CHEMMASTER_NO_CONTAINER_MAX 20 //!maximum number of unboxed pills/patches
+#define CHEMMASTER_NO_CONTAINER_MAX 24 //!maximum number of unboxed pills/patches
 #define CHEMMASTER_ITEMNAME_MAXSIZE 16 //!chosen by fair dice roll
 #define CHEMMASTER_MAX_PILL 22 //!22 pill icons
 #define CHEMMASTER_MAX_CANS 26 //!26 flavours of cans
