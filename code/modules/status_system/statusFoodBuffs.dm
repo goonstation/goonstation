@@ -217,7 +217,6 @@
 	id = "food_hp_up"
 	name = "Food (HP++)"
 	desc = ""
-	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
