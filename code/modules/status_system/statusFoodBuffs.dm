@@ -250,7 +250,7 @@
 	id = "food_deep_fart"
 	name = "Food (Gassy)"
 	desc = "You feel gassy."
-	icon_state = "foodbuff"
+	icon_state = null
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -262,7 +262,7 @@
 	id = "food_deep_burp"
 	name = "Food (Gross Burps)"
 	desc = "Your stomach feels gassy."
-	icon_state = "foodbuff"
+	icon_state = null
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
