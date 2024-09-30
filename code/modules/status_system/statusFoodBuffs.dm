@@ -274,7 +274,7 @@
 	id = "food_cateyes"
 	name = "Food (Night Vision)"
 	desc = "Your vision feels improved."
-	icon_state = "foodbuff"
+	icon_state = "cateyes"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
