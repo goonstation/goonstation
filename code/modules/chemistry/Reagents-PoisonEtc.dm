@@ -1949,7 +1949,7 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
-			depletion_rate = 0.3
+			depletion_rate = 0.1
 			var/progression_speed = 1
 			var/counter = 1
 
