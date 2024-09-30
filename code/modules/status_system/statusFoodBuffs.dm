@@ -286,7 +286,7 @@
 	id = "food_fireburp"
 	name = "Food (Fire Burps)"
 	desc = "Your stomach is flaming hot!"
-	icon_state = "foodbuff"
+	icon_state = "fireburp"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
