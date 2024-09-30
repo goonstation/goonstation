@@ -436,7 +436,7 @@
 	id = "food_sweaty"
 	name = "Food (Sweaty)"
 	desc = "You feel sweaty!"
-	icon_state = "foodbuff"
+	icon_state = "sweaty"
 	exclusiveGroup = "Food"
 	maxDuration = 3000
 	unique = 1
