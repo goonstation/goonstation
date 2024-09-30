@@ -69,23 +69,15 @@
 		return 0
 
 	neurotoxin
-		name = "Neurotoxic Sting"
+		name = "Neurotoxin Sting"
 		desc = "Transfer neurotoxin into your target. Very good at ambushing a single target."
 		icon_state = "stingneuro"
 		venom_id = "neurotoxin"
 
-	//neuro replacement for RP
-	capulettium
-		name = "Capulettium Sting"
-		desc = "Transfer some capulettium into your target."
-		icon_state = "stingneuro"
-		venom_id = "capulettium"
-		inject_amount = 20
-
 	neurodepressant
 		name = "Neurodepressant Sting"
 		desc = "Transfer neurodepressant into your target. Good for escaping chases and disorienting targets."
-		icon_state = "stingneuro"
+		icon_state = "stingdepres"
 		venom_id = "neurodepressant"
 		inject_amount = 10
 		cooldown = 200
@@ -93,25 +85,26 @@
 	hemotoxin
 		name = "Hemotoxin Sting"
 		desc = "Transfer hemotoxin into your target. Drains target's blood, may need multiple stings to be lethal."
-		icon_state = "stingneuro"
+		icon_state = "stinghemot"
 		venom_id = "hemotoxin"
-		inject_amount = 10
+		inject_amount = 12
 		cooldown = 200
 
 	tetrodotoxin
 		name = "Tetrodotoxin Sting"
 		desc = "Transfer tetrodotoxin into your target. Slow, but stealthy and potentially very lethal."
-		icon_state = "stingneuro"
+		icon_state = "stingtetro"
 		venom_id = "tetrodotoxin"
-		inject_amount = 15
+		inject_amount = 20
 		cooldown = 1400
 
 	madness
 		name = "Madness Toxin Sting"
-		desc = "Transfer Rajaijah into your target. Causes a target to attack all nearby, but has a long cooldown."
-		icon_state = "stingneuro"
+		desc = "Transfer Rajaijah into your target. Causes a target to attack all nearby, but has a long cooldown and DNA cost."
+		icon_state = "stingmadness"
 		venom_id = "madness_toxin"
 		inject_amount = 15
+		pointCost = 5
 		cooldown = 2400
 
 	lsd
@@ -163,7 +156,7 @@
 
 	chemical
 		name = "Neurotoxic Sting"
-		desc = "Transfer neurotoxin into your target. Very good at ambushing a single target."
+		desc = "Transfer chemicals into your target."
 		icon_state = "stingneuro"
 		venom_id = "neurotoxin"
 		inject_amount = 50
@@ -180,7 +173,7 @@
 /datum/targetable/changeling/sting_chem_select
 	name = "Cycle Stings"
 	desc = "Cycle through available sting toxins"
-	icon_state = "stingneuro"
+	icon_state = "stingcycle"
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
@@ -219,6 +212,7 @@
 			chemical.venom_id = chosen_sting.venom_id
 			chemical.inject_amount = chosen_sting.inject_amount
 			chemical.cooldown = chosen_sting.cooldown
+			chemical.pointCost = chosen_sting.pointCost
 
 		return 0
 
