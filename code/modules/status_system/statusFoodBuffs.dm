@@ -340,7 +340,7 @@
 	id = "food_explosion_resist"
 	name = "Food (Sturdy)"
 	desc = "Your joints feel sturdy, as if they are more resistant to popping off. Uh."
-	icon_state = "foodbuff"
+	icon_state = "explosion_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -364,7 +364,7 @@
 	id = "food_disease_resist"
 	name = "Food (Cleanse)"
 	desc = "You are more resistant to disease."
-	icon_state = "foodbuff"
+	icon_state = "disease_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -376,7 +376,7 @@
 	id = "food_rad_resist"
 	name = "Food (Rad-Wick)"
 	desc = "You are more resistant to radiation."
-	icon_state = "foodbuff"
+	icon_state = "rad_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
