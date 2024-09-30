@@ -90,7 +90,9 @@ export const TextInputModal = () => {
             <Stack.Item>
               <InputButtons
                 input={input}
-                message={max_length ? `${input.length}/${max_length}` : null} // We don't want '7/null'
+                message={
+                  max_length ? `${input.length}/${max_length}` : undefined
+                } // We don't want '7/null'
               />
             </Stack.Item>
           </Stack>

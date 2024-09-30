@@ -2908,6 +2908,23 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 
+/datum/job/special/performer
+	name = "Performer"
+	access_string = "Staff Assistant"
+	limit = 0
+	change_name_on_spawn = TRUE
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_jump = list(/obj/item/clothing/under/gimmick/black_wcoat)
+	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
+	slot_belt = list(/obj/item/device/pda2)
+	items_in_backpack = list(/obj/item/storage/box/box_o_laughs, /obj/item/item_box/assorted/stickers/stickers_limited, /obj/item/currency/spacecash/twothousandfivehundred)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("accent_goodmin", magical=1)
+
 /*---------------------------------------------------------------*/
 
 /datum/job/created
