@@ -1085,18 +1085,18 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	New()
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
-		if (current_state > GAME_STATE_WORLD_NEW)
+		if( current_state == GAME_STATE_PREGAME && station_repair.station_generator)
+			worldgenCandidates[src] = null
+		else if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				UpdateIcon()
 				if(istype(src))
 					update_neighbors()
 		else
-			worldgenCandidates += src
+			worldgenCandidates[src] = null
 
 	generate_worldgen()
 		src.UpdateIcon()
-		if(istype(src))
-			update_neighbors()
 
 	update_icon()
 		. = ..()
@@ -1128,22 +1128,23 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 
 	proc/edge_overlays()
 		if(src.icon_state_edge)
-			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE)
+			var/connectdir = get_connected_directions_bitflag(list(src.type=TRUE), list(), TRUE, FALSE, turf_only=TRUE)
 			for (var/direction in alldirs)
 				var/turf/T = get_step(src, turn(direction, 180))
-				if (istype(T, /turf/unsimulated/floor/auto))
-					var/turf/unsimulated/floor/auto/TA = T
-					if (TA.edge_priority_level >= src.edge_priority_level)
-						T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+				if(T)
+					if (istype(T, /turf/unsimulated/floor/auto))
+						var/turf/unsimulated/floor/auto/TA = T
+						if (TA.edge_priority_level >= src.edge_priority_level)
+							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
+							continue
+					if(turn(direction, 180) & connectdir)
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
 						continue
-				if(turn(direction, 180) & connectdir)
-					T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
-					continue
-				var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-				edge_overlay.plane = PLANE_FLOOR
-				T.UpdateOverlays(edge_overlay, "edge_[direction]")
+					var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+					edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+					edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+					edge_overlay.plane = PLANE_FLOOR
+					T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
@@ -1177,6 +1178,8 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"

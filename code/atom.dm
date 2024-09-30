@@ -958,6 +958,10 @@ TYPEINFO(/atom/movable)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(!isatom(over_object))
 		return
+	// it can be useful for subsequent procs that receive params to know they are the result of a click-drag
+	if (isnull(params) || params == "") params = "dragged=1"
+	else params += ";dragged=1"
+
 	if (ismovable(src) && isobserver(usr) && usr.client?.holder?.ghost_interaction)
 		var/atom/movable/movablesrc = src
 		var/list/params_list = params2list(params)
@@ -1229,7 +1233,7 @@ TYPEINFO(/atom/movable)
 
 // auto-connecting sprites
 /// Check a turf and its contents to see if they're a valid auto-connection target
-/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE)
+/atom/proc/should_auto_connect(turf/T, connect_to = list(), list/exceptions = list(), cross_areas = TRUE, turf_only = FALSE)
 	if (!T) // nothing to connect to
 		return FALSE
 	if (!cross_areas && (get_area(T) != get_area(src))) // don't connect across areas
@@ -1240,11 +1244,12 @@ TYPEINFO(/atom/movable)
 		return TRUE
 
 	// slow 😩
-	for (var/atom/movable/AM in T)
-		if (!AM.anchored)
-			continue
-		if (connect_to[AM.type] && !exceptions[AM.type])
-			return TRUE
+	if(!turf_only)
+		for (var/atom/movable/AM in T)
+			if (!AM.anchored)
+				continue
+			if (connect_to[AM.type] && !exceptions[AM.type])
+				return TRUE
 	return FALSE
 
 /**
@@ -1259,7 +1264,7 @@ TYPEINFO(/atom/movable)
  *
  * connect_diagonals 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
  */
-/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0)
+/atom/proc/get_connected_directions_bitflag(list/valid_atoms = list(), list/exceptions = list(), cross_areas = TRUE, connect_diagonal = 0, turf_only = FALSE)
 	var/ordir = null
 	var/connected_directions = 0
 	if (!valid_atoms || !islist(valid_atoms))
@@ -1268,7 +1273,7 @@ TYPEINFO(/atom/movable)
 	// cardinals first
 	for (var/dir in cardinal)
 		var/turf/CT = get_step(src, dir)
-		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas))
+		if (should_auto_connect(CT, valid_atoms, exceptions, cross_areas, turf_only))
 			connected_directions |= dir
 
 	if (connect_diagonal)
@@ -1277,7 +1282,7 @@ TYPEINFO(/atom/movable)
 			if (connect_diagonal < 2 && (ordir & connected_directions) != ordir)
 				continue
 			var/turf/OT = get_step(src, ordir)
-			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas))
+			if (should_auto_connect(OT, valid_atoms, exceptions, cross_areas, turf_only))
 				connected_directions |= 8 << i
 	return connected_directions
 

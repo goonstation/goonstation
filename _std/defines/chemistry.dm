@@ -43,3 +43,5 @@
 #define THRESHOLD_OVER 1
 #define THRESHOLD_INIT THRESHOLD_UNDER
 
+/// This contains a list with organ strings that not instantly kill someone when lost.
+var/global/list/non_vital_organ_strings =  list("left_lung", "right_lung", "left_kidney", "stomach", "right_kidney", "liver", "intestines", "spleen", "pancreas", "appendix")

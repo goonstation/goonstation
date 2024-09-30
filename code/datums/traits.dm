@@ -24,6 +24,8 @@
 		"nopug",
 		"cloner_stuff",
 		"hemophilia",
+		"nohair",
+		"nowig",
 	)
 
 	var/list/traitData = list()
@@ -636,7 +638,7 @@
 	id = "bald"
 	icon_state = "bald"
 	points = 0
-	category = list("trinkets", "nopug")
+	category = list("trinkets", "nopug","nowig")
 
 
 // Skill - White Border
@@ -744,6 +746,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Kitchen Training"
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
+
+/datum/trait/job/bartender
+	name = "Bartender Training"
+	desc = "Subject has a keen mind for all things alcoholic."
+	id = "training_bartender"
 
 // bartender, detective, HoS
 /datum/trait/job/drinker
@@ -934,7 +941,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "randomallergy"
 	icon_state = "allergy"
 	points = 0
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	var/allergen = null
@@ -964,7 +970,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "medicalallergy"
 	icon_state = "medallergy"
 	points = 1
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -1204,7 +1209,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "allergic"
 	icon_state = "hypeallergy"
 	points = 1
-	category = list("allergy")
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Anaphylactic"
 	disability_desc = "Acute response to allergens"
@@ -1260,7 +1264,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -1
-	category = list("species", "cloner_stuff")
+	category = list("species", "cloner_stuff", "nohair")
 	mutantRace = /datum/mutantrace/skeleton
 
 /datum/trait/roach
@@ -1278,7 +1282,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Should a pug really be on a space station? They aren't suited for space at all. They're practically a liability to the compan... Aw, look at those little ears!"
 	id = "pug"
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
-	category = list("species", "nopug")
+	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
 /datum/trait/super_slips
@@ -1325,6 +1329,20 @@ TYPEINFO(/datum/trait/partyanimal)
 					explanation_text += "[ingredient], "
 				else
 					explanation_text += "and [ingredient]<br/>"
+
+/datum/trait/mutant_hair
+	name = "Hairy"
+	desc = "You will grow hair even if you usually would not (due to being a lizard or something)."
+	id = "mutant_hair"
+	points = 0
+	category = list("body", "nohair","nowig")
+	icon_state = "hair"
+
+	onAdd(mob/owner)
+		owner.bioHolder.AddEffect("hair_growth", magical = TRUE)
+
+	onRemove(mob/owner)
+		owner.bioHolder.RemoveEffect("hair_growth")
 
 //Infernal Contract Traits
 /datum/trait/hair

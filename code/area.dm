@@ -2704,6 +2704,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 
 ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine
+	name = "Engineering Department"
 	sound_environment = 5
 	workplace = 1
 	station_map_colour = MAPC_ENGINEERING
@@ -2858,7 +2859,7 @@ TYPEINFO(/area/station/engine/substation)
 
 ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical
-	name = "Medical area"
+	name = "Medbay"
 	icon_state = "medbay"
 	workplace = 1
 	station_map_colour = MAPC_MEDICAL
@@ -4202,6 +4203,16 @@ ABSTRACT_TYPE(/area/mining)
 	sound_environment = 2
 	teleport_blocked = 1
 	icon_state = "purple"
+
+/// Syndicate base that is radproof and not Hadar-blocked, for Trench Warfare
+
+/area/syndicate_base
+	name = "Syndicate Base"
+	icon_state = "yellow"
+	requires_power = 0
+	sound_environment = 2
+	teleport_blocked = 1
+	do_not_irradiate = TRUE
 
 /// For Devtest testing purposes
 /area/station/devzone

@@ -418,7 +418,7 @@
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
 	heal(var/mob/M)
-		if(prob(20))
+		if(prob(20) && !(isghostcritter(M) && ON_COOLDOWN(src, "critter_gibs_\ref[M]", INFINITY)))
 			var/obj/decal/cleanable/blood/gibs/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(src) )
 			gib.streak_cleanable(M.dir)
 			boutput(M, SPAN_ALERT("You drip some meat on the floor"))

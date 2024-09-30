@@ -1925,7 +1925,9 @@
 	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
 
 	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
-						/obj/item/aiModule/experimental/equality/b)
+						/obj/item/aiModule/experimental/equality/b,
+						/obj/item/aiModule/experimental/corrupted,
+						/obj/item/aiModule/experimental/historic)
 
 	one
 		amt2spawn = 1
@@ -2009,7 +2011,9 @@
 		max_amt2spawn = 3
 
 
-/obj/random_item_spawner/armory_breaching_supplies //random
+/obj/random_item_spawner/armory_breaching_supplies //"random"
+	name = "armory breaching supplies"
+	icon_state = "breachspawn"
 	spawn_items()
 		new /obj/rack(src.loc)
 		new /obj/item/breaching_charge{

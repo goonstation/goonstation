@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/flour = 6,
 					/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig = 4,
-					/obj/item/reagent_containers/food/snacks/ingredient/spaghetti = 3,
+					/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/sugar = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/tortilla = 3,
@@ -1147,17 +1147,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_TRADESMAN*4
 	containertype = /obj/storage/crate/packing
 	containername = "Utility Belt Crate"
-
-/datum/supply_packs/antibio
-	name = "Anti-Biological Hazard Supplies"
-	desc = " A couple of tools for combatting rogue biological lifeforms."
-	category = "Security Department"
-	contains = list(/obj/item/gun/flamethrower/assembled/loaded,
-					/obj/item/storage/box/flaregun)
-	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate
-	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
-	access = access_securitylockers
 
 /datum/supply_packs/counterrevimplant
 	name = "Counter-Revolutionary Kit"

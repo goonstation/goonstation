@@ -1999,6 +1999,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/ak47shot.ogg" = 'sound/weapons/ak47shot.ogg',\
  	"sound/weapons/akm.ogg" = 'sound/weapons/akm.ogg',\
  	"sound/weapons/armbomb.ogg" = 'sound/weapons/armbomb.ogg',\
+ 	"sound/weapons/asslaser.ogg" = 'sound/weapons/asslaser.ogg',\
  	"sound/weapons/assrifle.ogg" = 'sound/weapons/assrifle.ogg',\
  	"sound/weapons/birdshot.ogg" = 'sound/weapons/birdshot.ogg',\
  	"sound/weapons/blaster_a.ogg" = 'sound/weapons/blaster_a.ogg',\

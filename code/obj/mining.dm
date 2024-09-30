@@ -705,6 +705,7 @@
 		.["time"] = TIME
 
 	ui_act(action, params)
+		. = ..()
 		var/magnetNotReady = src.active || (src.last_used > TIME && !src.cooldown_override) || src.last_use_attempt > TIME
 		switch(action)
 			if ("geoscan")
