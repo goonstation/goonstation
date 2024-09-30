@@ -412,7 +412,7 @@
 	id = "food_bad_breath"
 	name = "Food (Bad Breath)"
 	desc = "You have extremely smelly breath."
-	icon_state = "foodbuff"
+	icon_state = "badbreath"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
