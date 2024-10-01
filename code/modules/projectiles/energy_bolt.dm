@@ -224,7 +224,8 @@ toxic - poisons
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 0
 	//Can we pass windows
-	window_pass = 0
+	window_pass = 1
+	goes_through_walls = 1
 	brightness = 0.8
 	color_red = 0.2
 	color_green = 0.8
