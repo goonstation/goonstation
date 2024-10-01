@@ -442,7 +442,7 @@
 	var/list/motives = list()
 	var/list/datum/simsHolder/simsHolders = list()
 	var/list/datum/simsMotive/simsMotives = list()
-	var/provide_plumbobs = 0 // I don't think this is still relevant? Maybe for gimmicks
+	var/provide_plumbobs = 0
 
 	New()
 		..()
