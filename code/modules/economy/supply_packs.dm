@@ -1961,7 +1961,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/item/golf_ball,
 					/obj/item/storage/golf_goal)
 	cost = PAY_TRADESMAN*1.5
-	containertype = obj/storage/crate
+	containertype = /obj/storage/crate
 	containername = "Golf Caddy Crate"
 
 /datum/supply_packs/ink_refill
