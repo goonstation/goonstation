@@ -1343,6 +1343,8 @@
 				actions.Add("Remove Left Leg")
 			if (src.part_head)
 				actions.Add("Remove Head")
+				if (user.find_type_in_hand(/obj/item/parts/robot_parts/head))
+					actions.Add("Swap Head With Held Head")
 			if (src.part_chest)
 				actions.Add("Remove Chest")
 
@@ -1372,6 +1374,14 @@
 			if(action == "Remove Head" && !src.part_head)
 				boutput(user, SPAN_ALERT("There's no head to remove!"))
 				return
+			if(action == "Swap Head With Held Head")
+				var/obj/item/parts/robot_parts/head/held_head = user.find_type_in_hand(/obj/item/parts/robot_parts/head)
+				if (!held_head)
+					boutput(user, SPAN_ALERT("You're not holding a replacement head anymore!"))
+					return
+				if (held_head.brain || held_head.ai_interface)
+					boutput(user, SPAN_ALERT("The replacement head needs to be empty!"))
+					return
 
 			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			switch(action)
@@ -1389,6 +1399,9 @@
 					src.part_head.holder = null
 					src.part_head = null
 					update_bodypart("head")
+				if("Swap Head With Held Head")
+					var/new_head = user.find_type_in_hand(/obj/item/parts/robot_parts/head) //should be guaranteed and empty after checks above
+					swap_heads(new_head, user)
 				if("Remove Right Arm")
 					if(src.part_arm_r.robot_movement_modifier)
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_r.robot_movement_modifier, src.part_arm_r.type)
@@ -1446,17 +1459,13 @@
 					boutput(user, SPAN_ALERT("You can't attach a chest piece to a constructed cyborg. You'll need to put it on a frame."))
 					return
 				if("head")
-					if(src.part_head)
-						boutput(user, SPAN_ALERT("[src] already has a head part."))
+					var/obj/item/parts/robot_parts/head/held_head = W
+					if (held_head.brain || held_head.ai_interface)
+						boutput(user, SPAN_ALERT("The replacement head needs to be empty!"))
 						return
-					src.part_head = RP
-					if (src.part_head.brain)
-						if(src.part_head.brain.owner)
-							if(src.part_head.brain.owner.current)
-								src.gender = src.part_head.brain.owner.current.gender
-								if(src.part_head.brain.owner.current.client)
-									src.lastKnownIP = src.part_head.brain.owner.current.client.address
-							src.part_head.brain.owner.transfer_to(src)
+					playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
+					swap_heads(held_head, user)
+					return //swap_heads handles all the rest
 				if("l_arm")
 					if(src.part_arm_l)
 						boutput(user, SPAN_ALERT("[src] already has a left arm part."))
@@ -1692,6 +1701,37 @@
 
 		src.part_head.brain = null
 		src.update_appearance()
+
+	//There's really nothing technical stopping us from swapping out filled heads for one another, and have players switch out accordingly.
+	//Except I'm not ready to deal with mind swapping bugs, so not for now. This is just a shortcut for borg vanity.
+	///Take new_head from user, put whatever's in the current head and slap it in, equip new_head and give the empty old one to user.
+	proc/swap_heads(obj/item/parts/robot_parts/head/new_head, mob/user)
+		if (!istype(new_head) || !user)
+			return
+		var/obj/item/parts/robot_parts/head/old_head = src.part_head
+		//update movement speed
+		if(old_head.robot_movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(src, old_head.robot_movement_modifier, old_head.type)
+		if(new_head.robot_movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(src, new_head.robot_movement_modifier, new_head.type)
+		//transfer head contents
+		if (old_head.brain)
+			old_head.brain.set_loc(new_head)
+			new_head.brain = old_head.brain
+			old_head.brain = null
+		else if (old_head.ai_interface) //note we may also swap two empty heads for each other and that's fine too
+			old_head.ai_interface.set_loc(new_head)
+			new_head.ai_interface = old_head.ai_interface
+			old_head.ai_interface = null
+		//transfer head references
+		old_head.holder = null
+		new_head.holder = src
+		user.drop_item(new_head)
+		new_head.set_loc(src)
+		src.part_head = new_head //since we're not doing mind swaps, I don't think the mob's mind/client needs to know what happened here
+		user.put_in_hand_or_drop(old_head)
+		boutput(user, SPAN_NOTICE("You swap out [src]'s [old_head] for [new_head]."))
+		update_bodypart("head")
 
 	Topic(href, href_list)
 		..()

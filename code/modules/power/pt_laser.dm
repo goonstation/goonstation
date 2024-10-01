@@ -585,10 +585,6 @@
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1
 
-/*	L:head:up broke for no reason so I had to rewrite it.
-		if (istype(L:head, /obj/item/clothing/head/helmet/welding))
-			if(!L:head:up)
-				safety = 8*/
 		var/mob/living/carbon/human/newL = L
 		if (istype(newL.glasses, /obj/item/clothing/glasses/thermal) || newL.eye_istype(/obj/item/organ/eye/cyber/thermal))
 			safety = 0.5

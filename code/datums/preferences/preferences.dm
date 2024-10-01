@@ -1382,7 +1382,15 @@ var/list/removed_jobs = list(
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				if (!J_Fav.has_rounds_needed(user.client.player))
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[J_Fav.rounds_needed_to_play].</b>"))
+					var/played_rounds = user.client.player.get_rounds_participated()
+					var/needed_rounds = J_Fav.rounds_needed_to_play
+					var/allowed_rounds = J_Fav.rounds_allowed_to_play
+					var/reason_msg = ""
+					if (allowed_rounds && !needed_rounds)
+						reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
+					else if (needed_rounds)
+						reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> [reason_msg]"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else

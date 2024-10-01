@@ -6,23 +6,40 @@
  * @license ISC
  */
 
+import { Button, LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../../backend';
-import { Button, LabeledList, Section } from '../../../components';
-import { AvailableCellsSection } from './AvailableCellsSection';
 import type { CyborgDockingStationData } from '../type';
+import { AvailableCellsSection } from './AvailableCellsSection';
 import { StandardAvailableSection } from './StandardAvailableSection';
 
-export const SuppliesSection = (_props: unknown, context) => {
-  const { act, data } = useBackend<CyborgDockingStationData>(context);
-  const { allow_self_service, cabling, cells, clothes, fuel, modules, upgrades, viewer_is_robot } = data;
+export const SuppliesSection = () => {
+  const { act, data } = useBackend<CyborgDockingStationData>();
+  const {
+    allow_self_service,
+    cabling,
+    cells,
+    clothes,
+    fuel,
+    modules,
+    upgrades,
+    viewer_is_robot,
+  } = data;
   const handleToggleSelfService = () => act('self-service');
-  const handleInstallModule = (moduleRef: string) => act('module-install', { moduleRef });
-  const handleEjectModule = (moduleRef: string) => act('module-eject', { moduleRef });
-  const handleInstallClothing = (clothingRef: string) => act('clothing-install', { clothingRef });
-  const handleEjectClothing = (clothingRef: string) => act('clothing-eject', { clothingRef });
-  const handleInstallUpgrade = (upgradeRef: string) => act('upgrade-install', { upgradeRef });
-  const handleEjectUpgrade = (upgradeRef: string) => act('upgrade-eject', { upgradeRef });
-  const handleInstallCell = (cellRef: string) => act('cell-install', { cellRef });
+  const handleInstallModule = (moduleRef: string) =>
+    act('module-install', { moduleRef });
+  const handleEjectModule = (moduleRef: string) =>
+    act('module-eject', { moduleRef });
+  const handleInstallClothing = (clothingRef: string) =>
+    act('clothing-install', { clothingRef });
+  const handleEjectClothing = (clothingRef: string) =>
+    act('clothing-eject', { clothingRef });
+  const handleInstallUpgrade = (upgradeRef: string) =>
+    act('upgrade-install', { upgradeRef });
+  const handleEjectUpgrade = (upgradeRef: string) =>
+    act('upgrade-eject', { upgradeRef });
+  const handleInstallCell = (cellRef: string) =>
+    act('cell-install', { cellRef });
   const handleEjectCell = (cellRef: string) => act('cell-eject', { cellRef });
   return (
     <Section title="Supplies">
@@ -34,7 +51,8 @@ export const SuppliesSection = (_props: unknown, context) => {
             tooltip="Toggle self-service."
             checked={allow_self_service}
             disabled={viewer_is_robot}
-            onClick={handleToggleSelfService}>
+            onClick={handleToggleSelfService}
+          >
             {allow_self_service ? 'Enabled' : 'Disabled'}
           </Button.Checkbox>
         </LabeledList.Item>
@@ -51,7 +69,11 @@ export const SuppliesSection = (_props: unknown, context) => {
         onEject={handleEjectUpgrade}
         title="Upgrades"
       />
-      <AvailableCellsSection items={cells} onInstall={handleInstallCell} onEject={handleEjectCell} />
+      <AvailableCellsSection
+        items={cells}
+        onInstall={handleInstallCell}
+        onEject={handleEjectCell}
+      />
       <StandardAvailableSection
         items={clothes}
         onInstall={handleInstallClothing}

@@ -736,18 +736,25 @@ body
 	var/selected = input("Select scenario", "Do not use on a live server for the love of god", "Cancel") in list("Cancel", "Disco Inferno", "Chemist's Delight", "Viscera Cleanup Detail", "Brighter Bonanza", "Monkey Business","Monkey Chemistry","Monkey Gear","Clothing Dummies")
 	switch (selected)
 		if ("Disco Inferno")
-			for (var/turf/T in landmarks[LANDMARK_BLOBSTART])
+			for (var/turf/T as anything in landmarks[LANDMARK_BLOBSTART]+landmarks[LANDMARK_HALLOWEEN_SPAWN]+landmarks[LANDMARK_PESTSTART])
 				var/datum/gas_mixture/gas = new /datum/gas_mixture
-				gas.toxins = 10000
-				gas.oxygen = 10000
-				gas.temperature = 10000
+				gas.toxins = 33333
+				gas.oxygen = 66666
+				gas.temperature = 100000
 				T.assume_air(gas)
-			for (var/obj/machinery/door/door in by_type[/obj/machinery/door])
-				if (istype(door, /obj/machinery/door/airlock/pyro/maintenance) || istype(door, /obj/machinery/door/airlock/maintenance))
-					LAGCHECK(LAG_LOW)
-					qdel(door)
-			for (var/obj/machinery/door/firedoor/door in by_type[/obj/machinery/door])
-				LAGCHECK(LAG_LOW)
+			for_by_tcl(door, /obj/machinery/door)
+				var/turf/T = get_step(door, NORTH)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
+				T = get_step(door, SOUTH)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
+				T = get_step(door, EAST)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
+				T = get_step(door, WEST)
+				if(istype(T, /turf/space) || istype(T, /turf/simulated/floor/airless/plating/catwalk))
+					continue
 				qdel(door)
 		if ("Chemist's Delight")
 			for (var/turf/simulated/floor/T in world)

@@ -1148,17 +1148,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Utility Belt Crate"
 
-/datum/supply_packs/antibio
-	name = "Anti-Biological Hazard Supplies"
-	desc = " A couple of tools for combatting rogue biological lifeforms."
-	category = "Security Department"
-	contains = list(/obj/item/gun/flamethrower/assembled/loaded,
-					/obj/item/storage/box/flaregun)
-	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/secure/crate
-	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
-	access = access_securitylockers
-
 /datum/supply_packs/counterrevimplant
 	name = "Counter-Revolutionary Kit"
 	desc = "Implanters and counter-revolutionary implants to suppress rebellion against Nanotrasen."

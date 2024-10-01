@@ -120,8 +120,8 @@
 		src.root.add_file( place )
 
 	icemoon
-		name = "galactic coordinate disk - 'Moon X15'"
-		target_name = "Moon X15"
+		name = "galactic coordinate disk - 'Senex'"
+		target_name = "Senex"
 
 	solarium
 		name = "galactic coordinate disk - 'Sol'"
@@ -129,8 +129,8 @@
 		target_name = "Sol"
 
 	biodome
-		name = "galactic coordinate disk - 'Moon X05'"
-		target_name = "Moon X05"
+		name = "galactic coordinate disk - 'Fatuus'"
+		target_name = "Fatuus"
 
 	mars_outpost
 		name = "galactic coordinate disk - 'Mars'"
