@@ -1,4 +1,12 @@
 
+(t)mon sep 30 24
+(u)Lord_Earthfire
+(p)20449
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Most non-instant chemical reactions react faster the higher their corresponding volume of reacting chemicals is. Barrel-chemists rejoice!
+(u)LeahTheTech
+(*)All food buffs now have unique icons.
+(*)Sawflies now cost 1TC, down from 2.
 (t)sun sep 29 24
 (u)TealSeer
 (p)20894
