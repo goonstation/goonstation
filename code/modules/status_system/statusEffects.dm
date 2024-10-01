@@ -2225,7 +2225,7 @@
 		. = ..()
 		if(ishuman(owner))
 			H = owner
-			H.add_stam_mod_max("stam_filthy", -10)
+			H.add_stam_mod_max("stam_filthy", -5)
 
 	onUpdate(timePassed)
 		. = ..()
@@ -2250,7 +2250,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
-			M.add_stam_mod_max("stam_rancid", -20)
+			M.add_stam_mod_max("stam_rancid", -35)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
