@@ -104,6 +104,7 @@
 		)
 
 	ui_act(action, params)
+		. = ..()
 		switch(action)
 			if ("set_turn")
 				if (src.timing) return

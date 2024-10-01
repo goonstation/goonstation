@@ -174,6 +174,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			if (client) winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
 			if (client) winset(src, "joinmenu.button_cancel", "is-disabled=false;is-visible=true")
 			if (client) winset(src, "joinmenu.button_ready_antag", "is-disabled=true")
+		#ifndef NO_PREGAME_HTML
 		if(pregameHTML && client)
 			winshow(client, "pregameBrowser", 1)
 			client << browse(pregameHTML, "window=pregameBrowser")
@@ -181,6 +182,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		else if(client)
 			winshow(src.last_client, "pregameBrowser", 0)
 			src.last_client << browse("", "window=pregameBrowser")
+		#endif
 
 	Stat()
 		..()

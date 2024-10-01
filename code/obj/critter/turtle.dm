@@ -31,6 +31,11 @@
 	New(loc)
 		. = ..()
 		START_TRACKING
+		#ifdef HALLOWEEN
+		var r = rand(1,4)
+		costume_name = "sylv_costume_[r]"
+		#endif
+
 		if (costume_name)
 			costume_alive = image(src.icon, "[costume_name]")
 			costume_shell = image(src.icon, "[costume_name]-shell")
@@ -240,6 +245,7 @@
 
 	New()
 		..()
+
 		UpdateIcon()
 	ai_think()
 		..()

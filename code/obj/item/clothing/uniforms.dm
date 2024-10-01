@@ -16,7 +16,7 @@
 	burn_possible = TRUE
 	health = 10
 	var/team_num
-	var/cutting_product
+	var/cutting_product = /obj/item/material_piece/cloth
 
 	duration_remove = 7.5 SECONDS
 
@@ -28,7 +28,7 @@
 		setProperty("chemprot", 10)
 
 	attackby(obj/item/W, mob/user)
-		if (issnippingtool(W) && src.cutting_product)
+		if ((issnippingtool(W) || iscuttingtool(W)) && src.cutting_product)
 			if (istype(src.loc, /mob))
 				boutput(user, SPAN_ALERT("You can't cut that unless it's on a flat surface!"))
 				return

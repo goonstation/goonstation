@@ -19083,6 +19083,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/hand_labeler{
+	pixel_y = 10;
+	pixel_x = 5
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},

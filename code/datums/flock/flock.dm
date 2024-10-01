@@ -135,7 +135,8 @@ proc/get_default_flock()
 		ui.open()
 
 /datum/flock/ui_act(action, list/params, datum/tgui/ui)
-	var/mob/user = ui.user;
+	. = ..()
+	var/mob/user = ui.user
 	if (!istype(user, /mob/living/intangible/flock/flockmind))
 		var/mob/living/critter/flock/drone/F = user
 		if (!istype(F) || !istype(F.controller, /mob/living/intangible/flock/flockmind))

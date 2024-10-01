@@ -1203,6 +1203,7 @@
 /obj/grille/catwalk{
 	dir = 9
 	},
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -1898,6 +1899,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -2838,6 +2840,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -3535,6 +3538,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -4979,6 +4983,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -5986,7 +5991,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
 "tE" = (
-/obj/machinery/manufacturer/pod_wars/syndicate,
+/obj/machinery/manufacturer/pod_wars/nanotrasen,
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
@@ -6453,7 +6458,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "vj" = (
-/obj/table/wood/round/champagne,
+/obj/machinery/manufacturer/general/pod_wars,
 /turf/unsimulated/floor/red/side{
 	dir = 9
 	},
@@ -6692,6 +6697,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -9577,6 +9583,7 @@
 /obj/grille/catwalk{
 	dir = 1
 	},
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -10670,6 +10677,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -12451,6 +12459,12 @@
 	},
 /turf/space,
 /area/space)
+"PG" = (
+/obj/machinery/manufacturer/general/pod_wars,
+/turf/unsimulated/floor/red/side{
+	dir = 5
+	},
+/area/pod_wars/team2/hangar)
 "PH" = (
 /obj/machinery/deep_fryer{
 	dir = 4
@@ -14671,6 +14685,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/table/wood/round/champagne,
 /turf/unsimulated/floor/red/side{
 	dir = 6
 	},
@@ -14897,10 +14912,13 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "Yl" = (
+/obj/grille/catwalk,
+/obj/machinery/magnet_chassis{
+	dir = 4
+	},
 /obj/machinery/mining_magnet{
 	dir = 4
 	},
-/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -15064,6 +15082,15 @@
 	dir = 5
 	},
 /area/pod_wars/team1/primaryhall)
+"YT" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/landmark/magnet_shield,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/space)
 "YV" = (
 /obj/stool/chair{
 	dir = 8
@@ -15285,6 +15312,7 @@
 /obj/grille/catwalk{
 	dir = 1
 	},
+/obj/landmark/magnet_shield,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -24961,7 +24989,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -24977,7 +25005,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -25463,7 +25491,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -25479,7 +25507,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -25965,7 +25993,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -25981,7 +26009,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -26467,7 +26495,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -26969,7 +26997,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -26985,7 +27013,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -27471,7 +27499,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -27487,7 +27515,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -27973,7 +28001,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -27989,7 +28017,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -28475,7 +28503,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -28491,7 +28519,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -28977,7 +29005,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -28993,7 +29021,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -29479,7 +29507,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -29495,7 +29523,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -29981,7 +30009,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -29997,7 +30025,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -30483,7 +30511,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -30985,7 +31013,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -31001,7 +31029,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -31487,7 +31515,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -31503,7 +31531,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -31989,7 +32017,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -32005,7 +32033,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -235203,7 +235231,7 @@ TT
 Ml
 tJ
 mv
-rq
+PG
 qU
 xh
 Xw
@@ -253263,7 +253291,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -253279,7 +253307,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -253765,7 +253793,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -253781,7 +253809,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -254267,7 +254295,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -254283,7 +254311,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -254769,7 +254797,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -255271,7 +255299,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -255287,7 +255315,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -255773,7 +255801,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -255789,7 +255817,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -256275,7 +256303,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -256291,7 +256319,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -256777,7 +256805,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -256793,7 +256821,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -257279,7 +257307,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -257295,7 +257323,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -257781,7 +257809,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -257797,7 +257825,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -258283,7 +258311,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -258299,7 +258327,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -258785,7 +258813,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -259287,7 +259315,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -259303,7 +259331,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -259789,7 +259817,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -259805,7 +259833,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -260291,7 +260319,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW
@@ -260307,7 +260335,7 @@ JW
 JW
 JW
 JW
-gZ
+YT
 JW
 JW
 JW

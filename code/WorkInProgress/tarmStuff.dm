@@ -796,3 +796,34 @@ TYPEINFO(/obj/item/device/geiger)
 			user.u_equip(src)
 			qdel(src)
 		. = ..()
+
+//vacation satan
+// Come to collect a poor unfortunate soul. Or just have a drink. One or the other
+/mob/living/carbon/human/vacation_satan
+	nodamage = 1
+	anchored = ANCHORED
+	New()
+		..()
+		src.add_ability_holder(/datum/abilityHolder/gimmick)
+		abilityHolder.addAbility(/datum/targetable/gimmick/go2hell)
+		abilityHolder.addAbility(/datum/targetable/gimmick/highway2hell)
+		abilityHolder.addAbility(/datum/targetable/gimmick/reveal)
+		abilityHolder.addAbility(/datum/targetable/gimmick/movefloor)
+
+		SPAWN(0)
+			abilityHolder.updateButtons()
+			src.gender = "male"
+			src.real_name = "Satan"
+			src.name = "Satan"
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/tourist/max_payne, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/sandal/magic, SLOT_SHOES)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/tanning, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/storage/fanny, SLOT_BELT)
+			src.put_in_hand_or_drop(new /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/fruity)
+			src.bioHolder.AddEffect("demon_horns", 0, 0, 1)
+			src.bioHolder.AddEffect("hell_fire", 0, 0, 1)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/fruity
+	rand_pos = FALSE
+	glass_types = list(/obj/item/reagent_containers/food/drinks/drinkingglass/cocktail)
+	whitelist = list("schnapps", "cider", "sangria", "maitai", "planter", "cosmo")
