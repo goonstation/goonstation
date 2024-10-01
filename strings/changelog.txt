@@ -1,4 +1,11 @@
-
+(t)mon sep 30 24
+(u)LeahTheTech
+(*)All food buffs now have unique icons.
+(t)sun sep 29 24
+(u)TealSeer
+(p)20894
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Using a screwdriver on a table now requires you be on harm intent.
 (t)fri sep 27 24
 (u)LeahTheTech
 (+)Food heal over time effects now have unique icons.

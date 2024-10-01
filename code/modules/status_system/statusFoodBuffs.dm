@@ -217,7 +217,6 @@
 	id = "food_hp_up"
 	name = "Food (HP++)"
 	desc = ""
-	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -250,7 +249,7 @@
 	id = "food_deep_fart"
 	name = "Food (Gassy)"
 	desc = "You feel gassy."
-	icon_state = "foodbuff"
+	icon_state = null
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -262,7 +261,7 @@
 	id = "food_deep_burp"
 	name = "Food (Gross Burps)"
 	desc = "Your stomach feels gassy."
-	icon_state = "foodbuff"
+	icon_state = null
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -274,7 +273,7 @@
 	id = "food_cateyes"
 	name = "Food (Night Vision)"
 	desc = "Your vision feels improved."
-	icon_state = "foodbuff"
+	icon_state = "cateyes"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -286,7 +285,7 @@
 	id = "food_fireburp"
 	name = "Food (Fire Burps)"
 	desc = "Your stomach is flaming hot!"
-	icon_state = "foodbuff"
+	icon_state = "fireburp"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -340,7 +339,7 @@
 	id = "food_explosion_resist"
 	name = "Food (Sturdy)"
 	desc = "Your joints feel sturdy, as if they are more resistant to popping off. Uh."
-	icon_state = "foodbuff"
+	icon_state = "explosion_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -364,7 +363,7 @@
 	id = "food_disease_resist"
 	name = "Food (Cleanse)"
 	desc = "You are more resistant to disease."
-	icon_state = "foodbuff"
+	icon_state = "disease_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -376,7 +375,7 @@
 	id = "food_rad_resist"
 	name = "Food (Rad-Wick)"
 	desc = "You are more resistant to radiation."
-	icon_state = "foodbuff"
+	icon_state = "rad_resist"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -412,7 +411,7 @@
 	id = "food_bad_breath"
 	name = "Food (Bad Breath)"
 	desc = "You have extremely smelly breath."
-	icon_state = "foodbuff"
+	icon_state = "badbreath"
 	exclusiveGroup = "Food"
 	maxDuration = 6000
 	unique = 1
@@ -436,7 +435,7 @@
 	id = "food_sweaty"
 	name = "Food (Sweaty)"
 	desc = "You feel sweaty!"
-	icon_state = "foodbuff"
+	icon_state = "sweaty"
 	exclusiveGroup = "Food"
 	maxDuration = 3000
 	unique = 1
