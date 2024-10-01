@@ -2768,6 +2768,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 								master.bot_attack(hug_target, TRUE) //betrayal!!
 								master.speak(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
 								drop_hug_target()
+								master.moving = FALSE
 								return
 							master.visible_message("<b>[master]</b> hugs [hug_target]!")
 							if (hug_target.reagents)
@@ -3855,7 +3856,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							END_NEAT
 						return
 
-					if (!(src.neat_things & NT_DORK) && (H.client && H.client.IsByondMember() && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
+					if (!(src.neat_things & NT_DORK) && (H.client && (H.client.IsByondMember() || H.traitHolder?.hasTrait("wasitsomethingisaid")) && prob(5)))// || (H.ckey in Dorks))) //If this is too mean to clarks, remove that part I guess
 						FOUND_NEAT(NT_DORK)
 							var/insult = pick("dork","nerd","weenie","doofus","loser","dingus","dorkus")
 							var/insultphrase = "And if you look to--[insult] alert!  [pick("Huge","Total","Mega","Complete")] [insult] detected! Alert! Alert! [capitalize(insult)]! "
