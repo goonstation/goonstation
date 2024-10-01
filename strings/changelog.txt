@@ -1,6 +1,7 @@
 (t)mon sep 30 24
 (u)LeahTheTech
 (*)All food buffs now have unique icons.
+(*)Sawflies now cost 1TC, down from 2.
 (t)sun sep 29 24
 (u)TealSeer
 (p)20894
