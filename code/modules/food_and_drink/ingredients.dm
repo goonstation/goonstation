@@ -259,48 +259,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	attack_self(mob/user as mob)
 		attack(user, user)
 
-/obj/item/reagent_containers/food/snacks/ingredient/egg
-	name = "egg"
-	desc = "An egg!"
-	icon_state = "egg"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	initial_reagents = list("egg"=5)
-	fill_amt = 0.5
-	doants = 0 // They're protected by a shell
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		var/turf/T = get_turf(A)
-		src.visible_message(SPAN_ALERT("[src] splats onto the floor messily!"))
-		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-		make_cleanable(/obj/decal/cleanable/eggsplat,T)
-		qdel (src)
-
-/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
-	name = "hard-boiled egg"
-	desc = "You're a loose cannon, egg. I'm taking you off the menu."
-	icon_state = "egg-hardboiled"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	food_effects = list("food_brute", "food_cateyes")
-
-	New()
-		..()
-		reagents.add_reagent("egg", 5)
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		src.visible_message(SPAN_ALERT("[src] flops onto the floor!"))
-
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-			boutput(user, SPAN_NOTICE("You cut [src] in half"))
-			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
-			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
-			if (prob(25))
-				JOB_XP(user, "Chef", 1)
-			qdel(src)
-		else ..()
-
 /obj/item/reagent_containers/food/snacks/ingredient/yerba
 	name = "yerba mate packet"
 	desc = "A packet of yerba mate."

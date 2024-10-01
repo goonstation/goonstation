@@ -143,8 +143,8 @@ var/global/list/job_start_locations = list()
 	name = "Engineer"
 	icon_state = "engineer"
 
-/obj/landmark/start/job/technical_assistant
-	name = "Technical Assistant"
+/obj/landmark/start/job/technical_trainee
+	name = "Technical Trainee"
 	icon_state = "engineer"
 /obj/landmark/start/job/miner
 	name = "Miner"
@@ -160,8 +160,8 @@ var/global/list/job_start_locations = list()
 	name = "Medical Doctor"
 	icon_state = "medical_doctor"
 
-/obj/landmark/start/job/medical_assistant
-	name = "Medical Assistant"
+/obj/landmark/start/job/medical_trainee
+	name = "Medical Trainee"
 	icon_state = "medical_doctor"
 
 /obj/landmark/start/job/geneticist
@@ -176,8 +176,8 @@ var/global/list/job_start_locations = list()
 	name = "Scientist"
 	icon_state = "scientist"
 
-/obj/landmark/start/job/research_assistant
-	name = "Research Assistant"
+/obj/landmark/start/job/research_trainee
+	name = "Research Trainee"
 	icon_state = "scientist"
 
 // Security
@@ -510,13 +510,13 @@ var/global/list/job_start_locations = list()
 	name = "Void Diner"
 
 /obj/landmark/lrt/icemoon
-	name = "Moon X15"
+	name = "Senex"
 
 /obj/landmark/lrt/solarium
 	name = "Sol"
 
 /obj/landmark/lrt/biodome
-	name = "Moon X05"
+	name = "Fatuus"
 
 /obj/landmark/lrt/mars_outpost
 	name = "Mars"

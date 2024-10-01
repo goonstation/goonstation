@@ -8,12 +8,14 @@
 #define UI_CLOSE -1
 
 /// Maximum number of windows that can be suspended/reused
-#define TGUI_WINDOW_SOFT_LIMIT 4
+#define TGUI_WINDOW_SOFT_LIMIT 5
 /// Maximum number of open windows
-#define TGUI_WINDOW_HARD_LIMIT 8
+#define TGUI_WINDOW_HARD_LIMIT 9
 
 /// Maximum ping timeout allowed to detect zombie windows
-#define TGUI_PING_TIMEOUT 4 SECONDS
+#define TGUI_PING_TIMEOUT (4 SECONDS)
+/// Used for rate-limiting to prevent DoS by excessively refreshing a TGUI window
+#define TGUI_REFRESH_FULL_UPDATE_COOLDOWN (0.75 SECONDS) // |GOONSTATION-CHANGE| from 1
 
 /// Window does not exist
 #define TGUI_WINDOW_CLOSED 0
@@ -28,8 +30,9 @@
 #define TGUI_WINDOW_INDEX(window_id) text2num(copytext(window_id, 13))
 
 /// Creates a message packet for sending via output()
+// This is {"type":type,"payload":payload}, but pre-encoded. This is much faster
+// than doing it the normal way.
+// To ensure this is correct, this is unit tested in tgui_create_message.
 #define TGUI_CREATE_MESSAGE(type, payload) ( \
-	url_encode(json_encode(list( \
-		"type" = type, \
-		"payload" = payload, \
-	))))
+	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
+)

@@ -45,7 +45,7 @@
 		for(var/turf/T in list(one, two, three))
 			for(var/atom/movable/A in T)
 				if(A in attacked) continue
-				if(!isliving(A)) continue
+				if(!isliving(A) || isintangible(A)) continue
 				var/mob/living/loser = A
 				var/tag_int = pick(1,2,3)
 				var/image/tag = image('icons/effects/effects.dmi',"graffiti_mask_[tag_int]")
