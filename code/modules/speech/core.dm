@@ -60,7 +60,7 @@
  */
 /atom/proc/say(message as text, flags = 0, list/message_params = null, list/atom/atom_listeners_override = null)
 	RETURN_TYPE(/datum/say_message)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	// SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (dd_hasprefix(message, "*"))
 		src.emote(copytext(message, 2), 1)
