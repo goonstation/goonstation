@@ -44,9 +44,8 @@ const ReactorRow = (shape) => {
         } else {
           const { x, y, name, img, temp, extra, flux } = c;
           return (
-            <Table.Cell key={name}>
+            <Table.Cell key={index}>
               <Button
-                key={name}
                 fluid
                 tooltip={
                   <>
