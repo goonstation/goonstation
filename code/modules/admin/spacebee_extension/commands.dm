@@ -751,7 +751,7 @@
 	name = "vpnwhitelist"
 	help_message = "Whitelists a given ckey from the VPN checker."
 	argument_types = list(/datum/command_argument/string/ckey="ckey")
-	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	server_targeting = COMMAND_TARGETING_LIVE_SERVERS
 
 	execute(user, ckey)
 		try
@@ -977,3 +977,20 @@
 		logTheThing(LOG_DIARY, "[user] (Discord)", "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
 		message_admins("[user] (Discord) [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
 		system.reply("[enabled ? "Enabled" : "Disabled"] Tracy profiling for the next round.", user)
+
+/datum/spacebee_extension_command/egg_stats
+	name = "eggstats"
+	server_targeting = COMMAND_TARGETING_LIVE_SERVERS
+	help_message = "Return the state of all live server's oldest century eggs"
+	argument_types = list()
+
+	execute(user)
+		var/obj/item/reagent_containers/food/snacks/ingredient/egg/century/oldest = null
+		for_by_tcl(egg, /obj/item/reagent_containers/food/snacks/ingredient/egg/century)
+			if (!oldest || (egg.timestamp_created && egg.timestamp_created < oldest.timestamp_created))
+				oldest = egg
+		if (!oldest)
+			system.reply("No century eggs :(")
+			return
+		var/turf/T = get_turf(oldest)
+		system.reply("Map: [global.map_settings.name]. Oldest egg found at ([T.x], [T.y]) in [get_area(T)] - aged for [oldest.get_age_string()]")

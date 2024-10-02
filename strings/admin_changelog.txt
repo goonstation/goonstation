@@ -1,3 +1,6 @@
+(t)mon sep 23 24
+(u)Kyle
+(+)Added a "set status effect for all mobs" button to the secrets panel.
 (t)wed sep 18 24
 (u)Sord
 (+)You can now toggle ghost invisibility mid-round easily. "toggle-ghost-invisibility"

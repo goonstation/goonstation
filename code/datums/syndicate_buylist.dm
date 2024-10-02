@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/sawfly
 	name = "Compact Sawfly"
 	item = /obj/item/old_grenade/sawfly/firsttime/withremote
-	cost = 2
+	cost = 1
 	vr_allowed = FALSE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF

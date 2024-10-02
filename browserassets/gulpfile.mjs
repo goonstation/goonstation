@@ -87,7 +87,7 @@ function javascript(cb) {
 			uglify({
 				ecma: 5,
 				mangle: {
-					reserved: ['$', 'exports', 'require']
+					reserved: ["$", "exports", "require"],
 				},
 				compress: true,
 				ie8: true,
@@ -101,17 +101,15 @@ function javascript(cb) {
 
 function images(cb) {
 	return src(sources.images, { encoding: false })
-		.pipe(imagemin([
-			optipng({ optimizationLevel: 2 })
-		]))
+		.pipe(imagemin([optipng({ optimizationLevel: 2 })]))
 		.pipe(dest(dirs.dest + "/images"));
 }
 
 function copy(cb) {
-	return src(
-		["vendor/**/*", "css/fonts/**/*", "misc/**/*", "tgui/**/*"],
-		{ base: dirs.src, encoding: false },
-	)
+	return src(["vendor/**/*", "css/fonts/**/*", "misc/**/*", "tgui/**/*"], {
+		base: dirs.src,
+		encoding: false,
+	})
 		.pipe(replace(resourceMacroRegex, `${cdn}/$1?v=${rev}`))
 		.pipe(dest(dirs.dest));
 }

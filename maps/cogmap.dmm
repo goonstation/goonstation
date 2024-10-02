@@ -41595,10 +41595,6 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/cafeteria)
-"fGf" = (
-/obj/machinery/computer/announcement/station/catering,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/bar)
 "fGA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -49686,7 +49682,9 @@
 /obj/item/device/radio/intercom/catering{
 	dir = 8
 	},
-/obj/table/auto,
+/obj/machinery/computer/announcement/station/catering{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "mmZ" = (
@@ -113580,7 +113578,7 @@ atA
 avZ
 aqP
 hbN
-fGf
+asl
 asl
 aDd
 bOP

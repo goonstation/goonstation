@@ -58,7 +58,16 @@
 	icon_state = "century-egg"
 	food_color = "#68634B" //eww
 	heal_amt = 5 //tasty treat
+	food_effects = list("food_all", "food_cateyes")
 	var/timestamp_created = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		src.visible_message(SPAN_ALERT("[src] flops onto the floor!"))
@@ -70,7 +79,12 @@
 			M.reagents?.add_reagent("msg", 5)
 		if (age > 1 MONTH)
 			M.reagents?.add_reagent("omnizine", 5)
-		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.timestamp_created ? approx_time_text(age) : "not very long"]."))
+		boutput(M, SPAN_NOTICE("[src] tastes like it has been aged for [src.get_age_string()]."))
+
+	proc/get_age_string()
+		if (!src.timestamp_created)
+			return "not very long"
+		return approx_time_text(world.realtime - src.timestamp_created)
 
 //mostly adapted from pickle jars because imcargoculter and it's not really generalizable
 
