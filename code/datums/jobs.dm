@@ -2105,6 +2105,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	name = "Space Cowboy"
 	limit = 1
 	wages = PAY_UNTRAINED
+	starting_mutantrace = /datum/mutantrace/cow
 	receives_badge = TRUE
 	change_name_on_spawn = TRUE
 	access_string = "Rancher" // it didnt actually have a unique string
