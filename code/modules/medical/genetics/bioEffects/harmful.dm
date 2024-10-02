@@ -433,7 +433,7 @@
 	blockGaps = 3
 	isBad = 1
 	stability_loss = 10
-	msgGain = "You feel a strange  radiate from your bowels."
+	msgGain = "You feel a strange energy radiate from your bowels."
 	msgLose = "Your intestines are no longer glowing."
 	reclaim_fail = 15
 	icon_state  = "bad"
