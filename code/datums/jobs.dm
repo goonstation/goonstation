@@ -2087,7 +2087,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	trait_list = list("training_security")
 	access_string = "Staff Assistant"
-	limit = 1
+	limit = 0
 	change_name_on_spawn = TRUE
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
