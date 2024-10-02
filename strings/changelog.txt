@@ -1,4 +1,9 @@
 
+(t)wed oct 02 24
+(u)Flaborized
+(p)20880
+(e)🎨|C-Sprites
+(*)New Trait: "Was It Something I Said?".
 (t)tue oct 01 24
 (u)LeahTheTech
 (+)Radioactive waste is now more radioactive.
