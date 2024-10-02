@@ -25,6 +25,9 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 	var/list/datum/manufacture/temp_recipe_string = list()
 	/// -1 Means it can be used unlimited time, its a lazy solution yet an effective one, numbers above 0 can only have things fabricated from those manudrives x amount of times.
 	var/fablimit = -1
+	var/emagged = FALSE
+	/// List of recipes that only show up when emagged
+	var/list/datum/manufacture/emag_recipes = list()
 
 	New(var/loc)
 		..()
@@ -37,6 +40,16 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 				MD.drivestored += get_schematic_from_path(X)
 				MD.fablimit = src.fablimit
 		src.read_only = 1
+
+	emag_act(var/mob/user)
+		if (!src.emagged)
+			src.emagged = TRUE
+			boutput(user, SPAN_ALERT("[src]'s encrypted recipes have been unlocked."))
+			for (var/X in src.emag_recipes)
+				for (var/datum/computer/file/manudrive/MD in src.root.contents)
+					MD.drivestored += get_schematic_from_path(X)
+			return TRUE
+		return FALSE
 
 	ai //AI core frame limiting
 		name = "Command ManuDrive: Artificial Intelligence License"
@@ -53,6 +66,19 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 
 		singleuse
 			fablimit = 1
+
+	aiLaws //In case you want to make your own laws in the case the original ones are stolen/blown up
+		name = "Command ManuDrive: Artificial Intelligence Laws Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture the AI laws found on each NT station."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/aiModule/makeCaptain,
+		/datum/manufacture/aiModule/oneHuman,
+		/datum/manufacture/aiModule/notHuman,
+		/datum/manufacture/aiModule/emergency,
+		/datum/manufacture/aiModule/removeCrew,
+		/datum/manufacture/aiModule/freeform)
+		emag_recipes = list(/datum/manufacture/syndicate_laws)
+
 
 	interdictor_parts //Compacts the parts into a single manudrive
 		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprints"
