@@ -1,5 +1,9 @@
 
 (t)wed oct 02 24
+(u)glowbold
+(p)20876
+(e)🆕🔄💪|C-Feature, C-Rework, A-Traits
+(+)Joining the round as a jailbird prints a wanted poster at all printers. Keep an eye out!
 (u)Studenterhue
 (p)20914
 (e)🎨📦|C-Sprites, A-Game-Objects
