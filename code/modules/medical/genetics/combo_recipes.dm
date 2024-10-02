@@ -340,4 +340,4 @@
 
 /datum/geneticsrecipe/radioactive_farts
 	required_effects = list("radioactive","farty")
-	result = /datum/bioEffect/reversedSounds
+	result = /datum/bioEffect/radioactive_farts
