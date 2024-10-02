@@ -337,3 +337,7 @@
 /datum/geneticsrecipe/reversed_sounds
 	required_effects = list("slow_sounds","fast_sounds")
 	result = /datum/bioEffect/reversedSounds
+
+/datum/geneticsrecipe/radioactive_farts
+	required_effects = list("radioactive","farty")
+	result = /datum/bioEffect/reversedSounds
