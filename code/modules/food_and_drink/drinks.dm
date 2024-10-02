@@ -669,4 +669,8 @@ obj/item/reagent_containers/food/drinks/covfefe
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie/pumpinspies
 	name = "Pumpin' Spies Latte"
 	desc = "How did this get in the coffee machine? It doesn't look safe. There's not even a lid!"
+#ifdef SECRETS_ENABLED
 	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10, "strychnine"=7, "orange_crime"=18)
+#else
+	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10, "strychnine"=7, "juice_orange"=18)
+#endif
