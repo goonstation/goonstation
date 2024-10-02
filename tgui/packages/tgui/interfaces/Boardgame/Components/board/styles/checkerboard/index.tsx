@@ -15,7 +15,7 @@ export const CheckerBoard = () => {
   const { width, height } = tileSize;
   const { piecePlace } = useActions(act);
 
-  const boardRef = useRef<HTMLDivElement>();
+  const boardRef = useRef<HTMLDivElement>(null);
 
   const boardPos = () => {
     const { x, y } = mouseCoords;
