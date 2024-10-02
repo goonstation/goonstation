@@ -113,17 +113,15 @@
 
 		var/image/I1 = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = rand(24, 48), pixel_x = rand(8, 24)) // left
 		I1.alpha = 180
-		I1.transform = matrix(I1.transform, rand(1.1, 1.2), rand(1.2, 1.5), MATRIX_SCALE)
+		I1.transform = matrix(I1.transform, randfloat(1.1, 1.2), randfloat(1.2, 1.5), MATRIX_SCALE)
 		src.UpdateOverlays(I1, "main_ignition1")
-		// src.add_simple_light("main_ignition1", list(255, 110, 135, 110))
 		var/image/I2 = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = rand(32, 70), pixel_x = rand(24, 48)) // center
 		I2.alpha = 180
-		I2.transform = matrix(I2.transform, rand(1.1, 1.2), rand(1.2, 1.5), MATRIX_SCALE)
+		I2.transform = matrix(I2.transform, randfloat(1.1, 1.2), randfloat(1.2, 1.5), MATRIX_SCALE)
 		src.UpdateOverlays(I2, "main_ignition2")
-		// src.add_simple_light("main_ignition2", list(255, 110, 135, 110))
 		var/image/I3 = image('icons/effects/fire.dmi', null, "item_fire", pixel_y = rand(16, 50), pixel_x = rand(48, 56)) // right
 		I3.alpha = 180
-		I3.transform = matrix(I3.transform, rand(1.1, 1.2), rand(1.2, 1.5), MATRIX_SCALE)
+		I3.transform = matrix(I3.transform, randfloat(1.1, 1.2), randfloat(1.2, 1.5), MATRIX_SCALE)
 		src.UpdateOverlays(I3, "main_ignition3")
 
 		src.add_simple_light("tree_ignition", list(255, 110, 135, 110))
