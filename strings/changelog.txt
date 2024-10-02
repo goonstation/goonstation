@@ -1,5 +1,9 @@
 
 (t)tue oct 01 24
+(u)JORJ949
+(p)20670
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Added 3 new jobs to the Spooktober lineup; Discount Wizard, Super Spy, and Space Cowboy.
 (u)RubberRats
 (p)20916
 (e)🆕📦|C-Feature, A-Game-Objects
