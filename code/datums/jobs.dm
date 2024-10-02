@@ -2121,12 +2121,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/device/light/zippo/gold)
 	slot_back = list(/obj/item/storage/backpack/satchel/brown)
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.bioHolder.AddEffect("cow", magical=1)
-
 /datum/job/special/halloween/wizard
 	name = "Discount Wizard"
 	limit = 1
