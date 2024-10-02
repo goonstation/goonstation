@@ -1958,8 +1958,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	name = "Golf Caddy Crate"
 	desc ="x1 Golf Club, x1 Golf Ball, x1 Golf Goal"
 	contains = list(/obj/item/golf_club,
-					/obj/item/golf_ball,
-					/obj/item/storage/golf_goal)
+			/obj/item/golf_ball,
+			/obj/item/storage/golf_goal)
 	cost = PAY_TRADESMAN*1.5
 	containertype = /obj/storage/crate
 	containername = "Golf Caddy Crate"
