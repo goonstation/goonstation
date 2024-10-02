@@ -22,15 +22,11 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	..()
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
+	src.initialize_dir_vars()
 	src.refresh_connections()
 
 /obj/fluid_pipe/onDestroy()
 	src.network.remove_pipe(src)
-
-/obj/fluid_pipe/disposing()
-	src.network.pipes -= src
-	src.network = null
-	..()
 
 /// Accepts a reagents datum to start with.
 /// Replaces our network with a new one and relooks for pipes to connect to.
@@ -43,7 +39,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 			for(var/obj/fluid_pipe/target in get_step(src,direction))
 				if(target.initialize_directions & get_dir(target,src))
 					if(target.network != src.network)
-						src.network.merge_network(target.network)
+						src.network.merge_pipe(target)
 					connect_directions &= ~direction
 					break
 	if(connect_directions) ///If we have any remaining directions, look for machines.
@@ -53,6 +49,8 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 					if(target.initialize_directions & get_dir(target,src))
 						target.refresh_network()
 						break
+
+/obj/fluid_pipe/proc/initialize_dir_vars()
 
 /obj/fluid_pipe/hide(var/intact)
 	var/hide_pipe = CHECKHIDEPIPE(src)
@@ -65,13 +63,12 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/straight/overfloor
 	level = OVERFLOOR
 
-/obj/fluid_pipe/straight/New()
+/obj/fluid_pipe/straight/initialize_dir_vars()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = SOUTH|NORTH
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
-	..()
 
 /obj/fluid_pipe/straight/see_fluid
 	icon_state = "straight-viewable"
@@ -79,13 +76,15 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/straight/see_fluid/overfloor
 	level = OVERFLOOR
 
-/obj/fluid_pipe/straight/see_fluid/New()
+/obj/fluid_pipe/straight/see_fluid/refresh_connections(datum/reagents/flow_network/leftover)
 	..()
 	src.AddComponent( \
-		/datum/component/reagent_overlay/fluid_pipe, \
+		/datum/component/reagent_overlay/other_target, \
 		reagent_overlay_icon = src.icon, \
 		reagent_overlay_icon_state = src.icon_state, \
-		reagent_overlay_states = 1)
+		reagent_overlay_states = 1, \
+		queue_updates = FALSE, \
+		target = src.network)
 
 /obj/fluid_pipe/straight/see_fluid/get_desc(dist, mob/user)
 	if (dist > 2)
@@ -98,7 +97,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/t_junction/overfloor
 	level = OVERFLOOR
 
-/obj/fluid_pipe/t_junction/New()
+/obj/fluid_pipe/t_junction/initialize_dir_vars()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = NORTH|EAST|WEST
@@ -108,7 +107,6 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 			initialize_directions = EAST|NORTH|SOUTH
 		if(WEST)
 			initialize_directions = WEST|NORTH|SOUTH
-	..()
 
 /obj/fluid_pipe/elbow
 	icon_state = "elbow"
@@ -116,7 +114,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /obj/fluid_pipe/elbow/overfloor
 	level = OVERFLOOR
 
-/obj/fluid_pipe/elbow/New()
+/obj/fluid_pipe/elbow/initialize_dir_vars()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = NORTH|WEST
@@ -126,7 +124,6 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 			initialize_directions = EAST|NORTH
 		if(WEST)
 			initialize_directions = WEST|SOUTH
-	..()
 
 /obj/fluid_pipe/quad
 	icon_state = "quad"
@@ -144,24 +141,25 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	level = OVERFLOOR
 	capacity = LARGE_FLUID_CAPACITY
 
-/obj/fluid_pipe/fluid_tank/New()
+/obj/fluid_pipe/fluid_tank/initialize_dir_vars()
 	switch(dir)
 		if(NORTH, SOUTH)
 			initialize_directions = SOUTH|NORTH
 		if(EAST, WEST)
 			initialize_directions = EAST|WEST
-	..()
 
 /obj/fluid_pipe/fluid_tank/see_fluid
 	icon_state = "tank-viewable"
 
-/obj/fluid_pipe/fluid_tank/see_fluid/New()
+/obj/fluid_pipe/fluid_tank/see_fluid/refresh_connections(datum/reagents/flow_network/leftover)
 	..()
 	src.AddComponent( \
-		/datum/component/reagent_overlay/fluid_pipe, \
+		/datum/component/reagent_overlay/other_target, \
 		reagent_overlay_icon = src.icon, \
 		reagent_overlay_icon_state = src.icon_state, \
-		reagent_overlay_states = 10)
+		reagent_overlay_states = 10, \
+		queue_updates = FALSE, \
+		target = src.network)
 
 /obj/fluid_pipe/fluid_tank/see_fluid/get_desc(dist, mob/user)
 	if (dist > 2)
@@ -178,8 +176,6 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	var/list/obj/machinery/fluid_pipe_machinery/machines
 	/// We're gonna destroy ourselves, discard further attempts to destroy. Currently used to prevent network deletion and creation spam during booms.
 	var/awaiting_removal = FALSE
-	/// Delaying reagent overlay updates. Tries to prevent multiple unseeable updates during a reaction.
-	var/delaying_reagent_overlay = FALSE
 
 /datum/flow_network/New(var/obj/fluid_pipe/startpipe)
 	..()
@@ -194,41 +190,59 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 	src.reagents = null
 	..()
 
-/// Accepts a network to merge into us.
-/// Merges all machines and pipes in network into us then deletes network.
-/datum/flow_network/proc/merge_network(var/datum/flow_network/network)
+/// Accepts a pipe to merge into us.
+/// Merges all machines and pipes in it's network into us then deletes that network.
+/datum/flow_network/proc/merge_pipe(var/obj/fluid_pipe/fluid_pipe)
+	if(isnull(fluid_pipe.network))
+		fluid_pipe.network = src
+		var/datum/component/reagent_overlay/other_target/fluid_component = fluid_pipe.GetComponent(/datum/component/reagent_overlay/other_target)
+		if(fluid_component)
+			var/states = fluid_component.reagent_overlay_states
+			fluid_component.RemoveComponent()
+			fluid_pipe.AddComponent( \
+				/datum/component/reagent_overlay/other_target, \
+				reagent_overlay_icon = fluid_pipe.icon, \
+				reagent_overlay_icon_state = fluid_pipe.icon_state, \
+				reagent_overlay_states = states, \
+				queue_updates = FALSE, \
+				target = src)
+		return
+
+	var/datum/flow_network/network = fluid_pipe.network
 	if(src == network)
 		return
+	src.reagents.maximum_volume += network.reagents.maximum_volume
+	network.reagents.trans_to_direct(src.reagents, network.reagents.total_volume)
 	for(var/obj/fluid_pipe/pipe as anything in network.pipes)
-		var/datum/component/reagent_overlay/fluid_pipe/fluid_component = pipe.GetComponent(/datum/component/reagent_overlay)
+		pipe.network = src
+		var/datum/component/reagent_overlay/other_target/fluid_component = pipe.GetComponent(/datum/component/reagent_overlay/other_target)
 		if(fluid_component)
-			fluid_component.unregister_signals()
-			pipe.network = src
-			fluid_component.register_signals()
-		else
-			pipe.network = src
-
+			var/states = fluid_component.reagent_overlay_states
+			fluid_component.RemoveComponent()
+			pipe.AddComponent( \
+				/datum/component/reagent_overlay/other_target, \
+				reagent_overlay_icon = pipe.icon, \
+				reagent_overlay_icon_state = pipe.icon_state, \
+				reagent_overlay_states = states, \
+				queue_updates = FALSE, \
+				target = src)
 	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in network.machines)
 		machine.refresh_network(src)
 	src.pipes += network.pipes
 	network.pipes.len = 0
-	src.reagents.maximum_volume += network.reagents.maximum_volume
-	network.reagents.trans_to_direct(src.reagents, network.reagents.total_volume)
 	qdel(network)
 
 /// Refreshes all machines and pipes and removes ourself. Delays during explosions.
 /datum/flow_network/proc/rebuild_network()
-	if(src.awaiting_removal == TRUE)
+	if(src.awaiting_removal)
 		return
 	src.awaiting_removal = TRUE
 	UNTIL(!explosions.exploding) //not best but fine for explosions
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
 		pipe.network = null
-	var/datum/reagents/fluid
 	for(var/obj/fluid_pipe/pipe as anything in src.pipes)
-		fluid = src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume))
+		pipe.refresh_connections(src.reagents.remove_any_to(src.reagents.total_volume * (pipe.capacity/src.reagents.maximum_volume)))
 		src.reagents.maximum_volume -= pipe.capacity
-		pipe.refresh_connections(fluid)
 	for(var/obj/machinery/fluid_pipe_machinery/machine as anything in src.machines)
 		machine.refresh_network(src)
 	src.awaiting_removal = FALSE
@@ -238,22 +252,20 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 /datum/flow_network/proc/remove_pipe(var/obj/fluid_pipe/node)
 	var/turf/T = get_turf(node)
 	var/datum/reagents/fluid = src.reagents.remove_any_to(src.reagents.total_volume * (node.capacity/src.reagents.maximum_volume))
-	fluid.trans_to(T, fluid.total_volume)
+	fluid?.trans_to(T, fluid.total_volume)
 	src.reagents.maximum_volume -= node.capacity
+	src.pipes -= node
+	node.network = null
 	qdel(node)
 	src.rebuild_network()
 
 /datum/flow_network/proc/on_reagent_changed()
-	if(src.delaying_reagent_overlay)
-		return
-	src.delaying_reagent_overlay = TRUE
-	SPAWN(0)
-		SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
-		delaying_reagent_overlay = FALSE
+	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 
 // Whenever I put the flow network in reagents/var/my_atom, it disappears for some reason and therefore it cant update, so i made this instead -cringe
 /datum/reagents/flow_network
 	var/datum/flow_network/fluid_network
+	inert = TRUE //you can do that somewhere else
 
 /datum/reagents/flow_network/reagents_changed(var/add = 0)
 	fluid_network.on_reagent_changed()

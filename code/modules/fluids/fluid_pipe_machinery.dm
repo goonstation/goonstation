@@ -7,12 +7,6 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery)
 	/// What directions are valid for connections.
 	var/initialize_directions
 
-/obj/machinery/fluid_pipe_machinery/New()
-	..()
-	if(current_state >= GAME_STATE_PREGAME) //this is for machinery made after obj init such as during round.
-		src.initialize()
-		return
-
 /// Accepts an input network and an ideal amount of fluid to pull from network.
 /// Returns a reagents datum containing a scaled amount of fluid linear to fullness of network or null if no fluid in network. Quantized to 0.1 units.
 /obj/machinery/fluid_pipe_machinery/proc/pull_from_network(var/datum/flow_network/network, var/maximum = 100)
@@ -38,10 +32,10 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/unary)
 	level = UNDERFLOOR
 
 /obj/machinery/fluid_pipe_machinery/unary/New()
+	..()
 	src.initialize_directions = src.dir
 	var/turf/T = get_turf(src)
 	src.hide(T.intact)
-	..()
 
 /obj/machinery/fluid_pipe_machinery/unary/disposing()
 	src.network?.machines -= src
@@ -123,8 +117,8 @@ ABSTRACT_TYPE(/obj/machinery/fluid_pipe_machinery/binary)
 	var/datum/flow_network/network2
 
 /obj/machinery/fluid_pipe_machinery/binary/New()
-	src.initialize_directions = src.dir | turn(src.dir, 180)
 	..()
+	src.initialize_directions = src.dir | turn(src.dir, 180)
 
 /obj/machinery/fluid_pipe_machinery/binary/disposing()
 	src.network1?.machines -= src
