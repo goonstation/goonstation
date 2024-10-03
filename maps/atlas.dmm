@@ -13385,6 +13385,15 @@
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"icY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/science/teleporter)
 "iea" = (
 /obj/machinery/turret,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -18048,6 +18057,7 @@
 /obj/item/device/radio/intercom/science{
 	dir = 1
 	},
+/obj/cable,
 /turf/simulated/floor/purple/checker,
 /area/station/science/teleporter)
 "pwt" = (
@@ -64128,7 +64138,7 @@ nDi
 aGG
 alJ
 fIx
-eQw
+icY
 pwd
 aDa
 peS
