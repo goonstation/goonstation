@@ -1,5 +1,9 @@
 
 (t)wed oct 02 24
+(u)Cherman0
+(p)20634
+(e)🗺🔄🔬|A-Mapping, C-Rework, A-Science
+(+)Atlas's research wing has undergone major renovations. The atmospherics lab was moved to the dedicated support ship NCS Hesperis.
 (u)glowbold
 (p)20876
 (e)🆕🔄💪|C-Feature, C-Rework, A-Traits
