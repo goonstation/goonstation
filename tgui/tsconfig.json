@@ -19,7 +19,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": false,
-    // "strictNullChecks": true, TODO-REACT: uhh maybe revisit this
+    "strictNullChecks": true,
     "target": "ES5"
   },
   "include": [

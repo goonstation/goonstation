@@ -1211,3 +1211,246 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	New(newLoc)
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
+
+/datum/cell_grid
+	var/grid
+
+	New(width, height)
+		. = ..()
+		grid = new/list(width,height)
+
+	proc/get_manhattan_distance(x1, y1, x2, y2)
+		return abs(x1 - x2) + abs(y1 - y2)
+
+	proc/get_distance(x1, y1, x2, y2)
+		return max(abs(x1 - x2), abs(y1 - y2))
+
+	proc/draw_area(min_x, min_y, max_x, max_y, value, override)
+		for(var/x in min_x to max_x)
+			for(var/y in min_y to max_y)
+				if(!src.grid[x][y] || override) src.grid[x][y] = value
+
+	proc/drawLShape(x1, y1, x2, y2, value1, value2, override)
+		var/corner_x = x1
+		var/corner_y = y2
+		if(prob(50))
+			corner_x = x2
+			corner_y = y1
+
+		draw_line(x1, y1, corner_x, corner_y, value1, override)
+		draw_line(corner_x, corner_y, x2, y2, value2, override)
+
+	proc/drawLBox(x1, y1, x2, y2, value1, value2, border_value1, border_value2, internal_size=1, override)
+		var/corner_x = x1
+		var/corner_y = y2
+		if(prob(50) )
+			corner_x = x2
+			corner_y = y1
+
+			draw_box(x1, y1-internal_size+1, corner_x, corner_y+internal_size-1, value1, value1, override)
+			draw_box(corner_x-internal_size+1, corner_y, x2+internal_size-1, y2, value2, value2, override)
+		else
+			draw_box(x1-internal_size+1, y1, corner_x+internal_size-1, corner_y, value1, value1, override)
+			draw_box(corner_x, corner_y-internal_size+1, x2, y2+internal_size-1, value2, value2, override)
+
+	proc/draw_box(min_x, min_y,   max_x, max_y, inner_value, border_value, override)
+		draw_line(min_x, max_y,   max_x, max_y, border_value, override)
+		draw_line(max_x, max_y-1, max_x, min_y+1, border_value, override)
+		draw_line(max_x, min_y,   min_x, min_y, border_value, override)
+		draw_line(min_x, min_y+1, min_x, max_y-1, border_value, override)
+		draw_area(min_x+1, min_y+1, max_x-1, max_y-1, inner_value, override)
+
+	proc/get_line(x1, y1, x2, y2, contigious=TRUE)
+		. = list()
+		var/px=x1		//starting x
+		var/py=y1
+		var/dx=x2-px	//x distance
+		var/dy=y2-py
+		var/dxabs=abs(dx)//Absolute value of x distance
+		var/dyabs=abs(dy)
+		var/sdx=sign(dx)	//Sign of x distance (+ or -)
+		var/sdy=sign(dy)
+		var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
+		var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+		var/j			//Generic integer for counting
+		if(dxabs>=dyabs)	//x distance is greater than y
+			for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
+				y+=dyabs
+				if(y>=dxabs)	//Every dyabs steps, step once in y direction
+					y-=dxabs
+					py+=sdy
+					if(contigious)
+						. += list(list(px,py)) // contigious please!
+				px+=sdx		//Step on in x direction
+				. += list(list(px,py))
+		else
+			for(j=0;j<dyabs;j++)
+				x+=dxabs
+				if(x>=dyabs)
+					x-=dyabs
+					px+=sdx
+					if(contigious)
+						. = list(list(px,py)) // contigious please!
+				py+=sdy
+				. += list(list(px,py))
+
+	proc/box_has_border(x1, y1, x2, y2)
+		var/point
+		//NORTH
+		for(point in get_line(x1, y2+1, x2, y2+1))
+			if(grid[point[1]][point[2]])
+				. |= NORTH
+				break
+
+		//SOUTH
+		for(point in get_line(x1, y1-1, x2, y1-1))
+			if(grid[point[1]][point[2]])
+				. |= SOUTH
+				break
+
+		//EAST
+		for(point in get_line(x2+1, y1, x2+1, y2))
+			if(grid[point[1]][point[2]])
+				. |= EAST
+				break
+
+		//WEST
+		for(point in get_line(x1-1, y1, x1-1, y2))
+			if(grid[point[1]][point[2]])
+				. |= WEST
+				break
+
+	proc/get_box_border(x1, y1, x2, y2, dir, exclude_edges)
+		. = list()
+		var/point
+		if(dir & NORTH)
+			for(point in get_line(x1+exclude_edges, y2+1, x2-exclude_edges, y2+1))
+				if(grid[point[1]][point[2]])
+					. |= list(point)
+
+		if(dir & SOUTH)
+			for(point in get_line(x1+exclude_edges, y1-1, x2-exclude_edges, y1-1))
+				if(grid[point[1]][point[2]])
+					. |= list(point)
+
+		if(dir & EAST)
+			for(point in get_line(x2+1, y1+exclude_edges, x2+1, y2-exclude_edges))
+				if(grid[point[1]][point[2]])
+					. |= list(point)
+
+		if(dir & WEST)
+			for(point in get_line(x1-1, y1+exclude_edges, x1-1, y2-exclude_edges))
+				if(grid[point[1]][point[2]])
+					. |= list(point)
+
+	proc/fill_points(list/points, value, override)
+		for(var/point in points)
+			if(length(point)!=2)
+				break
+			if(point[1] > 0 && point[1] < length(grid) \
+			&& point[2] > 0 && point[2] < length(grid[1]) )
+				continue
+			if(!src.grid[point[1]][point[2]] || override)
+				src.grid[point[1]][point[2]] = value
+
+	proc/draw_line(x1, y1, x2, y2, value, override, contigious=TRUE) // Bresenham Line Drawing
+		var/px=x1		//starting x
+		var/py=y1
+		var/dx=x2-px	//x distance
+		var/dy=y2-py
+		var/dxabs=abs(dx)//Absolute value of x distance
+		var/dyabs=abs(dy)
+		var/sdx=sign(dx)	//Sign of x distance (+ or -)
+		var/sdy=sign(dy)
+		var/x=dxabs>>1	//Counters for steps taken, setting to distance/2
+		var/y=dyabs>>1	//Bit-shifting makes me l33t.  It also makes getline() unnessecarrily fast.
+		var/j			//Generic integer for counting
+		if(!src.grid[px][py] || override)  src.grid[px][py] = value
+		if(dxabs>=dyabs)	//x distance is greater than y
+			for(j=0;j<dxabs;j++)//It'll take dxabs steps to get there
+				y+=dyabs
+				if(y>=dxabs)	//Every dyabs steps, step once in y direction
+					y-=dxabs
+					py+=sdy
+					if(contigious)
+						if(!src.grid[px][py] || override)  src.grid[px][py] = value // contigious please!
+				px+=sdx		//Step on in x direction
+				if(!src.grid[px][py] || override) src.grid[px][py] = value
+		else
+			for(j=0;j<dyabs;j++)
+				x+=dxabs
+				if(x>=dyabs)
+					x-=dyabs
+					px+=sdx
+					if(contigious)
+						if(!src.grid[px][py] || override) src.grid[px][py] = value // contigious please!
+				py+=sdy
+				if(!src.grid[px][py] || override) src.grid[px][py] = value
+
+	proc/get_cell_attribute(x, y, attribute)
+		if(length(grid[x][y]) == 3)
+			. = grid[x][y][attribute]
+
+	proc/generate_maze(x1, y1, x2, y2, floor_value, override)
+		var/list/valid_grid = new/list(length(src.grid),length(src.grid[1]))
+
+		var/list/unvisited_cells = list()
+		var/list/frontier_cells = list()
+
+		for(var/x in x1 to x2)
+			if(x % 2)
+				continue
+			for(var/y in y1 to y2)
+				if(!((y) % 2) && (!src.grid[x][y] || override) )
+					valid_grid[x][y] = TRUE
+					unvisited_cells += list(list(x,y))
+
+		frontier_cells += list(pick(unvisited_cells))
+
+		while(length(frontier_cells))
+			var/point = pick(frontier_cells)
+			var/list/neighbors = get_cell_neighbors(point[1],point[2], cardinal, 2)
+
+			for(var/neighbor_point in neighbors)
+				// exclude used neighbors and invalid neighbors
+				if(src.grid[neighbor_point[1]][neighbor_point[2]] \
+					|| !valid_grid[neighbor_point[1]][neighbor_point[2]] )
+					neighbors -= list(neighbor_point)
+
+			if(!length(neighbors))
+				frontier_cells -= list(point)
+				continue
+
+			var/visit_point = pick(neighbors)
+			var/offset_x = (visit_point[1] - point[1])/2
+			var/offset_y = (visit_point[2] - point[2])/2
+
+			frontier_cells += list(visit_point)
+
+			if(!src.grid[visit_point[1]][visit_point[2]] || override)
+				src.grid[visit_point[1]][visit_point[2]] = floor_value
+
+			visit_point = list(point[1]+offset_x,point[2]+offset_y)
+			if(!src.grid[visit_point[1]][visit_point[2]] || override)
+				src.grid[visit_point[1]][visit_point[2]] = floor_value
+
+	proc/get_cell_neighbors(x, y, neighbors, offset=1)
+		var/adj_x
+		var/adj_y
+		. = list()
+		for(var/dir in neighbors)
+			adj_x = x
+			adj_y = y
+
+			if(dir & NORTH)
+				adj_y += offset
+			if(dir & EAST)
+				adj_x += offset
+			if(dir & SOUTH)
+				adj_y -= offset
+			if(dir & WEST)
+				adj_x -= offset
+
+			if(adj_x > 0 && adj_x < length(grid) \
+			&& adj_y > 0 && adj_y < length(grid[1]))
+				. += list(list(adj_x, adj_y))

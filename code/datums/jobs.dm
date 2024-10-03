@@ -855,7 +855,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alias_names = list("Barman")
 	limit = 1
 	wages = PAY_UNTRAINED
-	trait_list = list("training_drinker")
+	trait_list = list("training_drinker", "training_bartender")
 	access_string = "Bartender"
 	slot_belt = list(/obj/item/device/pda2/bartender)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
@@ -1224,25 +1224,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	items_in_backpack = list(/obj/item/tank/mini_oxygen,/obj/item/crowbar)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
-
-/datum/job/special/space_cowboy
-	name = "Space Cowboy"
-	linkcolor = "#FF99FF"
-	limit = 0
-	wages = PAY_UNTRAINED
-	access_string = "Space Cowboy" // holy heck why does this have a unique string
-	slot_jump = list(/obj/item/clothing/under/rank/det)
-	slot_belt = list(/obj/item/gun/kinetic/single_action/colt_saa)
-	slot_head = list(/obj/item/clothing/head/cowboy)
-	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_foot = list(/obj/item/clothing/shoes/cowboy)
-	slot_poc1 = list(/obj/item/cigpacket/random)
-	slot_poc2 = list(/obj/item/device/light/zippo/gold)
-	slot_lhan = list(/obj/item/whip)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	// missing wiki link
-
 
 /datum/job/special/stowaway
 	name = "Stowaway"
@@ -2087,7 +2068,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	trait_list = list("training_security")
 	access_string = "Staff Assistant"
-	limit = 1
+	limit = 0
 	change_name_on_spawn = TRUE
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
@@ -2155,6 +2136,61 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.bioHolder.RemoveEffect("midas") //just in case mildly mutated has given us midas I guess?
 		M.bioHolder.AddEffect("pickle", magical=TRUE)
 		M.blood_id = "juice_pickle"
+
+/datum/job/special/halloween/cowboy
+	name = "Space Cowboy"
+	limit = 1
+	wages = PAY_UNTRAINED
+	starting_mutantrace = /datum/mutantrace/cow
+	receives_badge = TRUE
+	change_name_on_spawn = TRUE
+	access_string = "Rancher" // it didnt actually have a unique string
+	slot_jump = list(/obj/item/clothing/under/rank/det)
+	slot_suit = list(/obj/item/clothing/suit/poncho)
+	slot_belt = list(/obj/item/storage/belt/rancher/cowboy)
+	slot_head = list(/obj/item/clothing/head/cowboy)
+	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_foot = list(/obj/item/clothing/shoes/cowboy)
+	slot_card = /obj/item/card/id/civilian
+	slot_poc1 = list(/obj/item/device/pda2/botanist)
+	slot_poc2 = list(/obj/item/device/light/zippo/gold)
+	slot_back = list(/obj/item/storage/backpack/satchel/brown)
+
+/datum/job/special/halloween/wizard
+	name = "Discount Wizard"
+	limit = 1
+	wages = PAY_UNTRAINED
+	change_name_on_spawn = TRUE
+	access_string = "Staff Assistant"
+	slot_jump = list(/obj/item/clothing/under/shorts/black)
+	slot_suit = list(/obj/item/clothing/suit/bathrobe)
+	slot_head = list(/obj/item/clothing/head/apprentice)
+	slot_foot = list(/obj/item/clothing/shoes/fuzzy)
+	items_in_backpack = list(/obj/item/mop)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("melt", magical=1)
+
+/datum/job/special/halloween/spy
+	name = "Super Spy"
+	wages = PAY_UNTRAINED
+	limit = 1
+	access_string = "Staff Assistant"
+	slot_jump = list(/obj/item/clothing/under/suit/black)
+	slot_eyes = list(/obj/item/clothing/glasses/eyepatch)
+	slot_suit = list(/obj/item/clothing/suit/armor/sneaking_suit/costume)
+	slot_foot = list(/obj/item/clothing/shoes/swat)
+	items_in_backpack = list(/obj/item/clothing/suit/cardboard_box )
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("chameleon", magical=1)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
@@ -2907,6 +2943,23 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pathology)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
+
+/datum/job/special/performer
+	name = "Performer"
+	access_string = "Staff Assistant"
+	limit = 0
+	change_name_on_spawn = TRUE
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_jump = list(/obj/item/clothing/under/gimmick/black_wcoat)
+	slot_foot = list(/obj/item/clothing/shoes/dress_shoes)
+	slot_belt = list(/obj/item/device/pda2)
+	items_in_backpack = list(/obj/item/storage/box/box_o_laughs, /obj/item/item_box/assorted/stickers/stickers_limited, /obj/item/currency/spacecash/twothousandfivehundred)
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.bioHolder.AddEffect("accent_goodmin", magical=1)
 
 /*---------------------------------------------------------------*/
 
