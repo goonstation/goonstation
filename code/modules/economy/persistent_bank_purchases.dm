@@ -52,6 +52,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/gold_that,\
 	new /datum/bank_purchaseable/dancin_shoes,\
 	new /datum/bank_purchaseable/frog,\
+	new /datum/bank_purchaseable/dye_beret,\
+	new /datum/bank_purchaseable/dye_cardigan,\
+
 
 	new /datum/bank_purchaseable/alohamaton,\
 	new /datum/bank_purchaseable/ai_hat)
@@ -730,6 +733,20 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		path = /obj/item/clothing/shoes/heels/dancin
 		icon = 'icons/obj/clothing/item_shoes.dmi'
 		icon_state = "wheels"
+
+	dye_cardigan
+		name = "Dyeable Cardigan"
+		cost = 1200
+		path = /obj/item/clothing/suit/knitsweater/cardigan/dyeable
+		icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+		icon_state = "cardigan"
+
+	dye_beret
+		name = "Dyeable Beret"
+		cost = 1200
+		path = /obj/item/clothing/head/beret/dyeable
+		icon = 'icons/obj/clothing/item_hats.dmi'
+		icon_state = "dye_beret"
 
 	////////////////////////
 	//CYBORG PURCHASEABLES//
