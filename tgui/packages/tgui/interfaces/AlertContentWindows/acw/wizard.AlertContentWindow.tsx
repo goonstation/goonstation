@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Wizard!</h1>
-      <img src="wizard-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/wizard-image.png')}
+        className="center"
+      />
 
       <p>
         1. As a wizard, you use a <em>variety of spells</em> to accomplish your
@@ -28,14 +32,20 @@ export const acw: AlertContentWindow = {
         3. For detailed information about each spell,
         <br />
         click the <em>question mark</em> in your spellbook.
-        <img src="grimoire.png" className="right" />
+        <img
+          src={resource('images/antagTips/grimoire.png')}
+          className="right"
+        />
       </p>
 
       <p>
         4. To teleport back to the wizard shuttle,
         <br />
         use the <em>teleportation scroll</em> you start with in your pocket.
-        <img src="teleportscroll.png" className="right" />
+        <img
+          src={resource('images/antagTips/teleportscroll.png')}
+          className="right"
+        />
       </p>
 
       <p>

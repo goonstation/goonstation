@@ -6,6 +6,7 @@
  */
 import { Image } from 'tgui-core/components';
 
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -14,7 +15,12 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Flockmind!</h1>
-      <Image src="flockmind.gif" className="center" width="64" height="64" />
+      <Image
+        src={resource('images/antagTips/flockmind.gif')}
+        className="center"
+        width="64"
+        height="64"
+      />
       <p>
         1. Command the army of Flockdrones that make up your collective
         consciousness.

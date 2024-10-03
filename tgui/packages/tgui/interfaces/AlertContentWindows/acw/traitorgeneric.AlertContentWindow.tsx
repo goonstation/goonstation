@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -12,7 +13,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are an antagonist!</h1>
-      <img src="unknown-traitor-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/unknown-traitor-image.png')}
+        className="center"
+      />
 
       <p>
         1. The rules on griefing and murdering no longer apply to you. Use your

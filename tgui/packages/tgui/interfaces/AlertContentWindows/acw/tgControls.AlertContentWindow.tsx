@@ -6,6 +6,7 @@
  */
 import { Box, Image } from 'tgui-core/components';
 
+import { resource } from '../../../cdn';
 import type { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -21,7 +22,7 @@ export const acw: AlertContentWindow = {
       <Box my={1.5}>
         Save your profile in Character Setup to dismiss this alert.
       </Box>
-      <Image src="tg_control_info.png" />
+      <Image src={resource('images/tg_control_info.png')} />
     </>
   ),
 };

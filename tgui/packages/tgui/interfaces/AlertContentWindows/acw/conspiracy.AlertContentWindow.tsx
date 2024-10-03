@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a conspirator!</h1>
-      <img src="traitor-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/traitor-image.png')}
+        className="center"
+      />
 
       <p>
         You and some of the other crew have entered into forbidden collusion!

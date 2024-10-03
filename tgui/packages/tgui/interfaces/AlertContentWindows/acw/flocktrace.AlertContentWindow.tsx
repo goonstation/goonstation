@@ -6,6 +6,7 @@
  */
 import { Image } from 'tgui-core/components';
 
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -14,7 +15,12 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Flocktrace!</h1>
-      <Image src="flocktrace.gif" className="center" width="64" height="64" />
+      <Image
+        src={resource('images/antagTips/flocktrace.gif')}
+        className="center"
+        width="64"
+        height="64"
+      />
       <p>
         1. Assist your <em>Flockmind</em> in converting the station and
         constructing the <em>relay</em>.

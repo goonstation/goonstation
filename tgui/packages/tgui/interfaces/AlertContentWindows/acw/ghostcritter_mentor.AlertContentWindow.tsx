@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,7 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="ghostcritter">
       <h1 className="center">You have been revived as a mentor mouse!</h1>
-      <img src="mentor_mouse.png" className="center" />
+      <img src={resource('images/mentor_mouse.png')} className="center" />
 
       <p>
         By now you probably know how ghost critters work. But just to reiterate:

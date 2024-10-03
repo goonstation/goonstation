@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -12,7 +13,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Syndicate operative!</h1>
-      <img src="nuke-operative-image-2.png" className="center" />
+      <img
+        src={resource('images/antagTips/nuke-operative-image-2.png')}
+        className="center"
+      />
 
       <p>
         1. <em>Your goal</em> is to move the nuke onto the station and activate
@@ -33,7 +37,10 @@ export const acw: AlertContentWindow = {
           Insert it in to a <em>weapons vendor</em> and select a{' '}
           <em>sidearm, loadout and storage</em> option from the list.
           <br />
-          <img src="weaponvendor.png" className="right" />
+          <img
+            src={resource('images/antagTips/weaponvendor.png')}
+            className="right"
+          />
           It is often worthwhile to plan your loadout purchases with your fellow
           operatives!
         </span>
@@ -74,7 +81,7 @@ export const acw: AlertContentWindow = {
       <p className="image-right">
         6. To trigger the nuke:
         <br />
-        <img src="nuke-2.png" className="right" />
+        <img src={resource('images/antagTips/nuke-2.png')} className="right" />
         <span className="small indent">
           1. Load the nuke into one of your pods and drop it off near the
           station.

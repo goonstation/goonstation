@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -13,7 +14,7 @@ export const acw: AlertContentWindow = {
       <h1 className="center">
         You are a member of the Kudzu hivemind! Not an antagonist!
       </h1>
-      <img src="kudzuman.png" className="center" />
+      <img src={resource('images/antagTips/kudzuman.png')} className="center" />
 
       <p>
         1. Your new goal is very straightforward, protect and grow the kudzu so

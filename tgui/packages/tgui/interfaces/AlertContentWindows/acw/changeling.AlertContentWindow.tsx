@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a changeling!</h1>
-      <img src="changeling-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/changeling-image.png')}
+        className="center"
+      />
 
       <p>
         1. <em>Your goal</em> is to absorb the DNA of a certain amount of crew
@@ -86,7 +90,11 @@ export const acw: AlertContentWindow = {
 
       <p className="image-right">
         3. <em>To absorb a human&apos;s DNA:</em>
-        <br /> <img src="changeling-absorb-HUD.png" className="right" />
+        <br />{' '}
+        <img
+          src={resource('images/antagTips/changeling-absorb-HUD.png')}
+          className="right"
+        />
         <span className="small indent">
           1. Set your intent to GRAB.
           <br />

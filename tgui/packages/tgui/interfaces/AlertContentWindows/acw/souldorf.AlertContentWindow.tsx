@@ -4,13 +4,14 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Souldorf!</h1>
-      <img src="zoldorf.png" className="center" />
+      <img src={resource('images/antagTips/zoldorf.png')} className="center" />
 
       <p>
         As a Souldorf, you are the remnants of the past Zoldorf and the eyes and

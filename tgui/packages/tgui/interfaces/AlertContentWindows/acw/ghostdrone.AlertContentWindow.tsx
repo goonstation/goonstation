@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,7 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="ghostdrone">
       <h1 className="center">You have become a Ghostdrone!</h1>
-      <img src="Ghostdrone.png" className="center" />
+      <img src={resource('images/Ghostdrone.png')} className="center" />
 
       <p>
         Ghostdrones are little robots that have a few tools to help maintain and

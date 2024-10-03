@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -12,7 +13,10 @@ export const acw: AlertContentWindow = {
       <h1 className="center">
         You are a <s>pirate</s> salvager!
       </h1>
-      <img src="unknown-traitor-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/unknown-traitor-image.png')}
+        className="center"
+      />
 
       <p>
         1. You are an antagonist. Work with your fellow salvagers to do what you

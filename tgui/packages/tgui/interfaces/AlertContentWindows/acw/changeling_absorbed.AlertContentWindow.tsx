@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You have been absorbed by a changeling!</h1>
-      <img src="changeling-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/changeling-image.png')}
+        className="center"
+      />
 
       <p>
         This is <em>not</em> the end, you are now a part of the changeling
@@ -33,7 +37,10 @@ export const acw: AlertContentWindow = {
         </p>
         <p className="image-right">
           <em>Be animated</em> as a sentient body part.
-          <img src="handspider.png" className="right" />
+          <img
+            src={resource('images/antagTips/handspider.png')}
+            className="right"
+          />
         </p>
         <p>
           <em>Spit acid</em> by clicking while your master is in horror form.

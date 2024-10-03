@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a vampire!</h1>
-      <img src="vampire-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/vampire-image.png')}
+        className="center"
+      />
 
       <p>
         1. To drink blood, use the <em>Bite Victim</em> ability. Remove their

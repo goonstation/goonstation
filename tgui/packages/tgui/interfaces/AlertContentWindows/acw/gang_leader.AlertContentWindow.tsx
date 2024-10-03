@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a gang leader!</h1>
-      <img src="gangmember-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/gangmember-image.png')}
+        className="center"
+      />
 
       <p>
         1. Work together with your subordinates to rack up as many points as you

@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -12,9 +13,18 @@ export const acw: AlertContentWindow = {
     <div className="traitor-tips pod-wars-tips">
       <h1 className="center">You are a pod pilot!</h1>
       <div className="image-bar">
-        <img src="pw-sy.png" style={{ width: '128px', height: '200%' }} />
-        <img src="pw-system.png" style={{ width: '96px', height: '300%' }} />
-        <img src="pw-nt.png" style={{ width: '128px', height: '200%;' }} />
+        <img
+          src={resource('images/antagTips/pw-sy.png')}
+          style={{ width: '128px', height: '200%' }}
+        />
+        <img
+          src={resource('images/antagTips/pw-system.png')}
+          style={{ width: '96px', height: '300%' }}
+        />
+        <img
+          src={resource('images/antagTips/pw-nt.png')}
+          style={{ width: '128px', height: '200%;' }}
+        />
       </div>
       <h2>How to Play (The Basics)</h2>
       <p>

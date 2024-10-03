@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -14,7 +15,10 @@ export const acw: AlertContentWindow = {
       <h1 className="center">
         You are the commander of a Nuclear operative team!
       </h1>
-      <img src="nukeop-commander.png" className="center" />
+      <img
+        src={resource('images/antagTips/nukeop-commander.png')}
+        className="center"
+      />
 
       <p>
         Since you are the commander, you start with an extra piece of gear, a{' '}
@@ -37,12 +41,18 @@ export const acw: AlertContentWindow = {
 
       <p className="image-right">
         2. Each operative starts with a <em>requisition token</em>.<br />
-        <img src="syndie-radio.png" className="right" />
+        <img
+          src={resource('images/antagTips/syndie-radio.png')}
+          className="right"
+        />
         <span className="small">
           Insert it in to a <em>weapons vendor</em> and select a{' '}
           <em>sidearm, loadout and storage</em> option from the list.
           <br />
-          <img src="weaponvendor.png" className="right" />
+          <img
+            src={resource('images/antagTips/weaponvendor.png')}
+            className="right"
+          />
           It is often worthwhile to plan your loadout purchases with your fellow
           operatives!
         </span>
@@ -83,7 +93,7 @@ export const acw: AlertContentWindow = {
       <p className="image-right">
         6. To trigger the nuke:
         <br />
-        <img src="nuke-2.png" className="right" />
+        <img src={resource('images/antagTips/nuke-2.png')} className="right" />
         <span className="small indent">
           1. Load the nuke into one of your pods and drop it off near the
           station.

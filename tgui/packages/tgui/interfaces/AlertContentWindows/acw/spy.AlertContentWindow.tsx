@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a Spy!</h1>
-      <img src="spy-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/spy-image.png')}
+        className="center"
+      />
 
       <p>
         1. <em>Your mission</em> is to identify and kill the other spies on the

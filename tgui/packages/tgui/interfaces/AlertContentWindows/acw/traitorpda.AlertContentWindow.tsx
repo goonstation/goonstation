@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -12,7 +13,10 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="traitor-tips">
       <h1 className="center">You are a traitor!</h1>
-      <img src="traitor-image.png" className="center" />
+      <img
+        src={resource('images/antagTips/traitor-image.png')}
+        className="center"
+      />
 
       <p>
         1. The Syndicate has provided you with a disguised uplink. It should be
