@@ -1,5 +1,9 @@
 
 (t)thu oct 03 24
+(u)LeahTheTech
+(p)20954
+(e)|
+(*)Getting hit by a heavy thrown object now applies melee hit stagger.
 (u)Sovexe
 (p)20949
 (e)🪲⚙|C-Bug, A-Internal
