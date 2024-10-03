@@ -10683,6 +10683,9 @@
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
+"dHa" = (
+/turf/space,
+/area/station/shield_zone)
 "dHY" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
@@ -11366,6 +11369,9 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/science,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -12830,6 +12836,14 @@
 /area/station/security/hos)
 "hnn" = (
 /obj/machinery/light_switch/north,
+/obj/machinery/shield_generator/console_lower{
+	name = "blast propulsion shield generator";
+	cooldown = 150
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -15163,6 +15177,9 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -17430,9 +17447,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/research_outpost/chamber{
-	requires_power = 0
-	})
+/area/station/shield_zone)
 "oAM" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -20326,6 +20341,9 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -20506,9 +20524,7 @@
 "tTJ" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
-/area/research_outpost/chamber{
-	requires_power = 0
-	})
+/area/station/shield_zone)
 "tUb" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -20762,11 +20778,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"urE" = (
-/turf/space,
-/area/research_outpost/chamber{
-	requires_power = 0
-	})
 "urK" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -22800,9 +22811,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/research_outpost/chamber{
-	requires_power = 0
-	})
+/area/space)
 "xDr" = (
 /obj/cable/yellow{
 	icon_state = "2-4"
@@ -49295,9 +49304,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -49597,9 +49606,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -49899,9 +49908,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -50201,9 +50210,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -50503,9 +50512,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -50805,9 +50814,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -51107,9 +51116,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -51409,9 +51418,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -51711,9 +51720,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -52013,9 +52022,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -52315,9 +52324,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -52617,9 +52626,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -52919,9 +52928,9 @@ aaa
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
@@ -53214,23 +53223,23 @@ aaa
 aaa
 aaa
 aaa
+dHa
+dHa
 aaa
 aaa
 aaa
 aaa
 aaa
+bWg
 aaa
-aaa
-tTJ
-urE
-tTJ
-aaa
+bWg
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
+dHa
+dHa
 aaa
 aaa
 aaa
@@ -53517,21 +53526,21 @@ aaa
 aaa
 aaa
 aaa
+dHa
+dHa
+dHa
 aaa
 aaa
 aaa
+bWg
+aaa
+bWg
 aaa
 aaa
 aaa
-tTJ
-urE
-tTJ
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+dHa
+dHa
+dHa
 aaa
 aaa
 aaa
@@ -53821,17 +53830,17 @@ aaa
 aaa
 aaa
 aaa
+dHa
+dHa
+dHa
 aaa
-aaa
-aaa
-aaa
-tTJ
+bWg
 xCm
-tTJ
+bWg
 aaa
-aaa
-aaa
-aaa
+dHa
+dHa
+dHa
 aaa
 aaa
 aaa
@@ -54125,13 +54134,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
+dHa
+dHa
 tTJ
 oze
 tTJ
-aaa
-aaa
+dHa
+dHa
 aaa
 aaa
 aaa
