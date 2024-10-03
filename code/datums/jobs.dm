@@ -1785,8 +1785,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Clown"
 	limit = 1
 	change_name_on_spawn = TRUE
+	slot_back = list()
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
-	slot_ears = list(/obj/item/device/radio/headset)
+	slot_ears = list(/obj/item/device/radio/headset/clown)
 	slot_jump = list(/obj/item/clothing/under/misc/clown/blue)
 	slot_card = /obj/item/card/id/clown
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
