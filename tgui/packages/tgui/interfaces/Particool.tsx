@@ -117,7 +117,7 @@ interface ParticleFloatEntryProps {
 const ParticleFloatEntry = (props: ParticleFloatEntryProps) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend<ParticoolData>();
-  let entry = null;
+  let entry: React.JSX.Element | null = null;
   let isGen = typeof value === 'string';
   if (isGen) {
     entry = <ParticleGeneratorEntry {...props} />;
@@ -201,7 +201,7 @@ interface ParticleVectorEntryProps {
 const ParticleVectorEntry = (props: ParticleVectorEntryProps) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend<ParticoolData>();
-  let entry = null;
+  let entry: React.JSX.Element | null = null;
   let isGen = typeof value === 'string';
   if (isGen) {
     entry = <ParticleGeneratorEntry {...props} />;
@@ -286,7 +286,7 @@ const ParticleVectorNonGenEntry = ParticleVectorNonGenEntryVarLen(3);
 const ParticleVector2Entry = (props) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend<ParticoolData>();
-  let entry = null;
+  let entry: React.JSX.Element | null = null;
   let isGen = typeof value === 'string';
   if (isGen) {
     entry = ParticleGeneratorEntry(props);
@@ -523,7 +523,7 @@ const ParticleColorNonGenEntry = (props) => {
 const ParticleColorEntry = (props) => {
   const { value, tooltip, name } = props;
   const { act } = useBackend<ParticoolData>();
-  let entry = null;
+  let entry: React.JSX.Element | null = null;
   let isGen = typeof value === 'string' && value.charAt(0) !== '#';
   if (isGen) {
     entry = ParticleGeneratorEntry(props);

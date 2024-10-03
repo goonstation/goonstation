@@ -4,7 +4,11 @@ export type RowId = string;
 
 interface ValuedColumnConfig<T extends object, V> {
   getValue: (data: T) => V;
-  renderContents?: (options: { data: T; rowId: RowId; value: V }) => ReactNode;
+  renderContents?: (options: {
+    data: T;
+    rowId: RowId;
+    value: V | unknown;
+  }) => ReactNode;
 }
 type ValuelessColumnConfig<T extends object> = {
   renderContents: (options: { data: T; rowId: RowId }) => ReactNode;

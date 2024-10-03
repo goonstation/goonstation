@@ -571,7 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("togglechute")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					P.loading = !P.loading
 		if("togglelock")
 			if(istype(src,/obj/machinery/vending/player))
@@ -583,7 +583,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
@@ -592,12 +592,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					P.name = params["name"]
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(ref(R) == params["target"])
 							P.promoimage = R.icon
@@ -673,15 +673,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 							qdel(product)
 						product.product_amount--
 					if(src.pay && vended)
+						var/obj/machinery/vending/player/vMachine = src
 						if (src.acceptcard && account)
 							account["current_money"] -= product.product_cost
 						else
 							src.credit -= product.product_cost
-						if (!player_list)
+						if (!player_list || !vMachine.owneraccount)
 							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 						else
 							//Players get 90% of profit from player vending machines QMs get 10%
-							var/obj/machinery/vending/player/vMachine = src
 							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
 							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
@@ -1250,6 +1250,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/fruitmilk, 10, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=PAY_TRADESMAN, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/5, hidden=1)
+
+#ifdef SEASON_AUTUMN
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte, 15, cost=PAY_TRADESMAN/10)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie/pumpinspies, 2, cost=PAY_TRADESMAN)
+#endif
 
 /obj/machinery/vending/snack
 	name = "snack machine"

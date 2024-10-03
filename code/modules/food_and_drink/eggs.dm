@@ -58,6 +58,7 @@
 	icon_state = "century-egg"
 	food_color = "#68634B" //eww
 	heal_amt = 5 //tasty treat
+	food_effects = list("food_all", "food_cateyes")
 	var/timestamp_created = null
 
 	New()

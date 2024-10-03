@@ -122,6 +122,7 @@ export const ScannerTab = () => {
                           icon="radiation"
                           disabled={
                             onCooldown(equipmentCooldown, 'Emitter') ||
+                            !health ||
                             health <= 0
                           }
                           color="bad"
