@@ -1,4 +1,9 @@
 
+(t)thu oct 03 24
+(u)Sovexe
+(p)20949
+(e)🪲⚙|C-Bug, A-Internal
+(+)Attempt at preventing ambient sound loops from breaking
 (t)wed oct 02 24
 (u)Cherman0
 (p)20634
