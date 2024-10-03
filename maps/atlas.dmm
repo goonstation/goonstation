@@ -8882,11 +8882,6 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicate_teleporter)
-"aXc" = (
-/obj/disposalpipe/segment,
-/obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor,
-/area/station/hallway/primary/north)
 "aXe" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -16816,7 +16811,6 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/secondary/exit)
 "mfb" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow,
 /area/station/hangar/engine)
@@ -79166,7 +79160,7 @@ aat
 aat
 aat
 prE
-aXc
+aat
 aat
 aat
 aat
