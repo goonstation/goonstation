@@ -16026,7 +16026,7 @@
 	name = "Technical Storage"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/tech_storage,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "dPw" = (
