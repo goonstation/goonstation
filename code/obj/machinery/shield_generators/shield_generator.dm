@@ -202,7 +202,7 @@ TYPEINFO(/area/station/shield_zone)
 /obj/machinery/shield_generator/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine1"
-
+	bound_height = 32
 	update_icon()
 
 		return
@@ -210,7 +210,7 @@ TYPEINFO(/area/station/shield_zone)
 /obj/machinery/shield_generator/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "engine2"
-
+	bound_height = 32
 	update_icon()
 
 		return
