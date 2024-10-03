@@ -351,6 +351,17 @@
 	is_open_container()
 		return TRUE
 
+	Crossed(atom/movable/M as mob)
+		..()
+		if(!src.on) //can't move our mop in the way of they legs if we're damn off
+			return
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.traitHolder.hasTrait("wasitsomethingisaid") && prob(7)) //not too common... but not too uncommon
+				src.visible_message(SPAN_COMBAT("[src] [pick("sneakily","slyly","guilefully","deviously","rudely","devilishly","cleanly","delightfully devilishly","duplicitously","dastardly","connivingly","fucking rudely")] trips [M.name] with their mop!"))
+				H.setStatus("resting", duration = INFINITE_STATUS)
+				H.force_laydown_standup()
+
 	red
 		icon_state = "cleanbot-red0"
 		idle_delay = 175 // DA RED WUNZ GO FASTA

@@ -15,7 +15,7 @@ type ListInputData = {
   title: string;
   start_with_search: boolean;
   capitalize: boolean;
-  theme: string;
+  theme: string | null;
 };
 
 export const ListInputWindow = () => {
@@ -42,7 +42,7 @@ export const ListInputWindow = () => {
     let biggestWidth = 325;
     const font = getCanvasFont();
     for (const item of items) {
-      biggestWidth = Math.max(biggestWidth, getTextWidth(item, font));
+      biggestWidth = Math.max(biggestWidth, getTextWidth(item, font) || 0);
     }
     setWindowWidth(biggestWidth);
   }
@@ -53,7 +53,7 @@ export const ListInputWindow = () => {
       title={title}
       width={windowWidth || 325}
       height={windowHeight}
-      theme={theme}
+      theme={theme ?? 'nanotrasen'}
     >
       {timeout && <Loader value={timeout} />}
       <Window.Content>

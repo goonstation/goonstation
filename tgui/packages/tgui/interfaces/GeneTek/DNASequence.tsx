@@ -8,6 +8,7 @@
 import { Button, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { BioEffectDNA } from './type';
 
 const letterColor = {
   '?': 'grey',
@@ -34,7 +35,7 @@ export const DNASequence = (props) => {
   const sequence = gene.dna;
   let allGood = true;
 
-  const blocks = [];
+  const blocks: BioEffectDNA[][] = [];
   for (let i = 0; i < sequence.length; i++) {
     if (i % 4 === 0) {
       blocks.push([]);

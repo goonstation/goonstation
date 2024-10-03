@@ -15,7 +15,7 @@ type TextInputData = {
   placeholder: string;
   timeout: number;
   title: string;
-  theme: string;
+  theme: string | null;
 };
 
 export const sanitizeMultiline = (toSanitize: string) => {
@@ -59,7 +59,12 @@ export const TextInputModal = () => {
     (message.length && large_buttons ? 5 : 0);
 
   return (
-    <Window title={title} width={325} height={windowHeight} theme={theme}>
+    <Window
+      title={title}
+      width={325}
+      height={windowHeight}
+      theme={theme ?? 'nanotrasen'}
+    >
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
@@ -85,7 +90,9 @@ export const TextInputModal = () => {
             <Stack.Item>
               <InputButtons
                 input={input}
-                message={max_length ? `${input.length}/${max_length}` : null} // We don't want '7/null'
+                message={
+                  max_length ? `${input.length}/${max_length}` : undefined
+                } // We don't want '7/null'
               />
             </Stack.Item>
           </Stack>
