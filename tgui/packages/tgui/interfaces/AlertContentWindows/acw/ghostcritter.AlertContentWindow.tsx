@@ -4,6 +4,7 @@
  * @author garash2k
  * @license ISC
  */
+import { resource } from '../../../cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {
@@ -11,7 +12,7 @@ export const acw: AlertContentWindow = {
   content: (
     <div className="ghostcritter">
       <h1 className="center">You have been revived as a ghost critter!</h1>
-      <img src="ghostcritter.png" className="center" />
+      <img src={resource('images/ghostcritter.png')} className="center" />
 
       <p>
         You&apos;ve miraculously found another chance at life. What do you do?
