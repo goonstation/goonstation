@@ -14620,7 +14620,6 @@
 /obj/machinery/firealarm/north,
 /obj/submachine/chef_oven,
 /obj/machinery/firealarm/north,
-/obj/machinery/deep_fryer,
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
