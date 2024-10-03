@@ -43390,6 +43390,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/mapping_helper/access/bar,
 /turf/simulated/floor/marble/black,
 /area/station/crew_quarters/catering)
 "ssc" = (
