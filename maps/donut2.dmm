@@ -46093,9 +46093,6 @@
 	dir = 4
 	},
 /obj/table/auto,
-/obj/item/machineboard/vending/player{
-	pixel_x = -4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/kitchen,
 /obj/window_blinds/cog2/left{
