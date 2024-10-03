@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/sawfly
 	name = "Compact Sawfly"
 	item = /obj/item/old_grenade/sawfly/firsttime/withremote
-	cost = 2
+	cost = 1
 	vr_allowed = FALSE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -278,6 +278,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/swords_sheaths/katana
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
+	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/wrestling
@@ -285,6 +286,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/belt/wrestling
 	cost = 7
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/spy_sticker_kit

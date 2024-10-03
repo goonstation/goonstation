@@ -127,9 +127,13 @@ TYPEINFO(/datum/component/reagent_overlay)
 
 	var/reagent_state = src.get_reagent_state(src.worn_overlay_states)
 
-	var/image/reagent_image = image(src.worn_overlay_icon, "f-worn-[src.worn_overlay_icon_state]-[reagent_state]", layer = FLOAT_LAYER - 1)
-	reagent_image.color = average_color.to_rgba()
 	var/atom/parent = src.parent
+	var/layer = parent.layer
+	if (istype(parent, /obj/item/clothing))
+		var/obj/item/clothing/clothing = parent
+		layer = clothing.wear_layer
+	var/image/reagent_image = image(src.worn_overlay_icon, "f-worn-[src.worn_overlay_icon_state]-[reagent_state]", layer = layer)
+	reagent_image.color = average_color.to_rgba()
 	parent.loc.AddOverlays(reagent_image, "worn_reagent_overlay\ref[src.parent]")
 
 //shut up

@@ -6,54 +6,65 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
-import { Button, Input, Table } from '../../components';
-import { Window } from '../../layouts';
-import { Header } from './Header';
-import { Action, SortDirection } from './constant';
-import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig } from './type';
+import { useState } from 'react';
+import { Button, Input, Table } from 'tgui-core/components';
 
-const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<Row, Value>) => `${config.value}`;
+import { useBackend } from '../../backend';
+import { Window } from '../../layouts';
+import { Action, SortDirection } from './constant';
+import { Header } from './Header';
+import {
+  CellTemplateConfig,
+  CellValueSelectorConfig,
+  Column,
+  PlayerData,
+  PlayerPanelData,
+  SortConfig,
+} from './type';
+
+const defaultTemplate = <Row extends object, Value>(
+  config: CellTemplateConfig<Row, Value>,
+) => `${config.value}`;
 const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
-  const {
-    act,
-    row,
-    value,
-  } = config;
+  const { act, row, value } = config;
   return (
     <>
       <Button
-        onClick={() => act(Action.OpenPlayerOptions, {
-          ckey: value,
-          mobRef: row.mobRef,
-        })}
+        onClick={() =>
+          act(Action.OpenPlayerOptions, {
+            ckey: value,
+            mobRef: row.mobRef,
+          })
+        }
       >
         {value}
       </Button>
       <Button
         icon="envelope"
         color="bad"
-        onClick={() => act(Action.PrivateMessagePlayer, {
-          ckey: value,
-          mobRef: row.mobRef,
-        })}
+        onClick={() =>
+          act(Action.PrivateMessagePlayer, {
+            ckey: value,
+            mobRef: row.mobRef,
+          })
+        }
       />
     </>
   );
 };
 
-const playerLocationTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
-  const {
-    act,
-    row,
-    value,
-  } = config;
+const playerLocationTemplate = (
+  config: CellTemplateConfig<PlayerData, string>,
+) => {
+  const { act, row, value } = config;
   return (
     <Button
-      onClick={() => act(Action.JumpToPlayerLocation, {
-        ckey: row.ckey,
-        mobRef: row.mobRef,
-      })}
+      onClick={() =>
+        act(Action.JumpToPlayerLocation, {
+          ckey: row.ckey,
+          mobRef: row.mobRef,
+        })
+      }
     >
       {value}
     </Button>
@@ -63,26 +74,31 @@ const playerLocationTemplate = (config: CellTemplateConfig<PlayerData, string>) 
 const alphabeticalSorter = (a: string, b: string) => a.localeCompare(b);
 
 // https://stackoverflow.com/a/68147012
-const makeIpNumber = (ip: string) => Number(
-  ip.split('.')
-    .map((subString) => (`00${subString}`).slice(-3))
-    .join('')
-);
+const makeIpNumber = (ip: string) =>
+  Number(
+    ip
+      .split('.')
+      .map((subString) => `00${subString}`.slice(-3))
+      .join(''),
+  );
 const ipSorter = (a: string, b: string) => makeIpNumber(a) - makeIpNumber(b);
 
 const numberSorter = (a: number, b: number) => a - b;
 
 const dateStringSorter = (a: string, b: string) => {
-  let aArray = a.split("-").map(parseFloat);
-  let bArray = b.split("-").map(parseFloat);
+  let aArray = a.split('-').map(parseFloat);
+  let bArray = b.split('-').map(parseFloat);
   return aArray > bArray ? 1 : aArray < bArray ? -1 : 0;
 };
 
-const createDefaultValueSelector = <Row extends object, Value>(field: string) => (
-  (config: CellValueSelectorConfig<Row, Value>): Value => config.row[field]
-);
+const createDefaultValueSelector =
+  <Row extends object, Value>(field: string) =>
+  (config: CellValueSelectorConfig<Row, Value>): Value =>
+    config.row[field];
 
-const createDefaultColumnConfig = <Row extends object, Value>(field: string) => ({
+const createDefaultColumnConfig = <Row extends object, Value>(
+  field: string,
+) => ({
   id: field,
   sorter: alphabeticalSorter,
   template: defaultTemplate,
@@ -90,7 +106,11 @@ const createDefaultColumnConfig = <Row extends object, Value>(field: string) => 
 });
 
 const columns: Column<PlayerData, unknown>[] = [
-  { ...createDefaultColumnConfig('ckey'), name: 'CKey', template: ckeyTemplate },
+  {
+    ...createDefaultColumnConfig('ckey'),
+    name: 'CKey',
+    template: ckeyTemplate,
+  },
   { ...createDefaultColumnConfig('name'), name: 'Name' },
   { ...createDefaultColumnConfig('realName'), name: 'Real Name' },
   { ...createDefaultColumnConfig('assignedRole'), name: 'Assigned Role' },
@@ -98,47 +118,64 @@ const columns: Column<PlayerData, unknown>[] = [
   { ...createDefaultColumnConfig('playerType'), name: 'Player Type' },
   { ...createDefaultColumnConfig('computerId'), name: 'CID' },
   { ...createDefaultColumnConfig('ip'), name: 'IP', sorter: ipSorter },
-  { ...createDefaultColumnConfig('joined'), name: 'Join Date', sorter: dateStringSorter },
-  { ...createDefaultColumnConfig('playerLocation'), name: 'Player Location', template: playerLocationTemplate },
+  {
+    ...createDefaultColumnConfig('joined'),
+    name: 'Join Date',
+    sorter: dateStringSorter,
+  },
+  {
+    ...createDefaultColumnConfig('playerLocation'),
+    name: 'Player Location',
+    template: playerLocationTemplate,
+  },
   { ...createDefaultColumnConfig('ping'), name: 'Ping', sorter: numberSorter },
 ];
 
-export const PlayerPanel = (props, context) => {
-  const { act, data } = useBackend<PlayerPanelData>(context);
+export const PlayerPanel = () => {
+  const { act, data } = useBackend<PlayerPanelData>();
   const { players } = data;
-  const [search, setSearch] = useLocalState(context, 'search', '');
-  const [sort, setSort] = useLocalState<SortConfig>(context, 'sort', null);
-  let resolvedPlayers = Object.keys(players).map(ckey => players[ckey]);
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState<SortConfig | null>(null);
+  let resolvedPlayers = Object.keys(players).map((ckey) => players[ckey]);
 
   // generate all values up front (to avoid having to generate multiple times)
-  const playerValues: { [ckey: string]: {
-    [id: string]: unknown,
-  } } = resolvedPlayers.reduce((prevPlayerValues, currPlayer) => {
-    prevPlayerValues[currPlayer.ckey] = columns.reduce((prevValues, currColumn) => {
-      const {
-        id,
-        valueSelector,
-      } = currColumn;
-      prevValues[id] = valueSelector({
-        column: currColumn,
-        row: currPlayer,
-      });
-      return prevValues;
-    }, {});
+  const playerValues: {
+    [ckey: string]: {
+      [id: string]: unknown;
+    };
+  } = resolvedPlayers.reduce((prevPlayerValues, currPlayer) => {
+    prevPlayerValues[currPlayer.ckey] = columns.reduce(
+      (prevValues, currColumn) => {
+        const { id, valueSelector } = currColumn;
+        if (valueSelector) {
+          prevValues[id] = valueSelector({
+            column: currColumn,
+            row: currPlayer,
+          });
+        }
+        return prevValues;
+      },
+      {},
+    );
     return prevPlayerValues;
   }, {});
   if (search) {
     const lowerSearch = search.toLowerCase();
-    resolvedPlayers = resolvedPlayers.filter(player => {
+    resolvedPlayers = resolvedPlayers.filter((player) => {
       const values = Object.values(playerValues[player.ckey]);
-      return values.some(value => typeof value === 'string' && value.toLowerCase().includes(lowerSearch));
+      return values.some(
+        (value) =>
+          typeof value === 'string' &&
+          value.toLowerCase().includes(lowerSearch),
+      );
     });
   }
   if (sort) {
-    const sortColumn = columns.find(column => column.id === sort.id);
-    if (sortColumn) {
+    const sortColumn = columns.find((column) => column.id === sort.id);
+    const sorter = sortColumn?.sorter;
+    if (sorter) {
       resolvedPlayers.sort((a, b) => {
-        let comparison = sortColumn.sorter(
+        let comparison = sorter(
           playerValues[a.ckey][sortColumn.id],
           playerValues[b.ckey][sortColumn.id],
         );
@@ -161,17 +198,24 @@ export const PlayerPanel = (props, context) => {
         />
         <Table>
           <Table.Row header>
-            {columns.map(column => {
+            {columns.map((column) => {
               const columnSort = sort?.id === column.id ? sort : null;
               return (
                 <Table.Cell key={column.field}>
                   <Header
-                    onSortClick={column.sorter ? () => setSort({
-                      dir: columnSort?.dir
-                        ? (columnSort.dir === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc)
-                        : SortDirection.Asc,
-                      id: column.id,
-                    }) : null}
+                    onSortClick={
+                      column.sorter
+                        ? () =>
+                            setSort({
+                              dir: columnSort?.dir
+                                ? columnSort.dir === SortDirection.Asc
+                                  ? SortDirection.Desc
+                                  : SortDirection.Asc
+                                : SortDirection.Asc,
+                              id: column.id,
+                            })
+                        : undefined
+                    }
                     sortDirection={columnSort?.dir}
                   >
                     {column.name}
@@ -180,18 +224,15 @@ export const PlayerPanel = (props, context) => {
               );
             })}
           </Table.Row>
-          {resolvedPlayers.map(player => {
+          {resolvedPlayers.map((player) => {
             const { ckey } = player;
             return (
               <Table.Row key={ckey}>
-                {columns.map(column => {
-                  const {
-                    id,
-                    template,
-                  } = column;
+                {columns.map((column) => {
+                  const { id, template } = column;
                   return (
                     <Table.Cell key={id}>
-                      {template({
+                      {template?.({
                         act,
                         column,
                         row: player,

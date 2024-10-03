@@ -338,7 +338,7 @@
 		if (the_item.temp_flags & IS_LIMB_ITEM)
 			boutput(usr, SPAN_ALERT("The saw is already attached as an arm."))
 			return
-		switch (alert(usr, "Which arm would you like to replace with [the_item]?",,"Left","Right","Cancel"))
+		switch (tgui_alert(usr, "Which arm would you like to replace with [the_item]?", "Replace Arm", list("Left", "Right", "Cancel"), theme = "syndicate"))
 			if ("Cancel")
 				return
 			if ("Right")

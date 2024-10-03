@@ -1234,8 +1234,8 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 				"conductive_high" = 5,
 				"energy_high" = 10)
 /obj/item/gun/energy/pickpocket
-	name = "pickpocket grapple gun" // absurdly shitty name
-	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It steals shit."
+	name = "\improper Super! Grapple Friend" // like foam dart guns
+	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It's definitely not just a repurposed janky toy that steals shit."
 	icon_state = "pickpocket"
 	w_class = W_CLASS_SMALL
 	item_state = "pickpocket"
