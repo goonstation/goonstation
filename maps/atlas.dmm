@@ -7264,6 +7264,13 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
+"aNI" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 9
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/airless,
+/area/station/science/lab)
 "aNL" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicate_teleporter)
@@ -10126,9 +10133,8 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "cUW" = (
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 2;
-	name = "Chamber One Radiator"
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	can_rupture = 1
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -11447,6 +11453,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/brig)
+"eUC" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 5;
+	can_rupture = 1
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
 "eVC" = (
 /obj/mapping_helper/access/forensics,
 /obj/mapping_helper/firedoor_spawn,
@@ -12830,6 +12843,9 @@
 /area/station/security/hos)
 "hnn" = (
 /obj/machinery/light_switch/north,
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot radiator purge valve"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -13607,6 +13623,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"isy" = (
+/obj/machinery/atmospherics/unary/vent,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "isW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14449,6 +14469,10 @@
 /area/station/science/teleporter)
 "jEH" = (
 /obj/landmark/gps_waypoint,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
 /turf/simulated/floor,
 /area/station/science/lab)
 "jEN" = (
@@ -19453,6 +19477,12 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"svi" = (
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 6
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
 "sxH" = (
 /obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/red,
@@ -21855,6 +21885,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"wdz" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8;
+	name = "Chamber One Radiator"
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
 "weY" = (
 /obj/machinery/light/small/netural{
 	dir = 1;
@@ -55936,9 +55973,9 @@ aaa
 aaa
 aaa
 aaa
-aIR
+svi
 hnn
-uCu
+eUC
 ijy
 iFG
 sxY
@@ -56237,8 +56274,8 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aIR
+isy
+aNI
 tFL
 jEH
 cUW
@@ -56247,7 +56284,7 @@ mno
 bKU
 lmB
 aIR
-aaa
+quP
 aaa
 aaa
 aaa
@@ -56542,7 +56579,7 @@ aaa
 aaa
 aIR
 eRp
-uCu
+wdz
 nzl
 iNe
 vWx
