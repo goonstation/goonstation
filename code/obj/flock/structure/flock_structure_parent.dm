@@ -21,6 +21,12 @@ TYPEINFO(/obj/flock_structure)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
+
+	start_speech_modifiers = null
+	start_speech_outputs = null
+	default_speech_output_channel = SAY_CHANNEL_FLOCK
+	say_language = LANGUAGE_FEATHER
+
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -293,7 +299,7 @@ TYPEINFO(/obj/flock_structure)
 
 /obj/flock_structure/proc/report_attack()
 	if (!ON_COOLDOWN(src, "attack_alert", 10 SECONDS))
-		flock_speak(src, "ALERT: Under attack", flock)
+		src.say("ALERT: Under attack!")
 
 /obj/flock_structure/ex_act(severity)
 	src.report_attack()

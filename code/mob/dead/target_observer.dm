@@ -3,6 +3,7 @@
 	name = "spooky ghost"
 	icon = null
 	event_handler_flags = 0
+	use_speech_bubble = FALSE
 	var/atom/target
 	var/is_respawnable = TRUE
 	/// Is this observer locked to one particular owner?
@@ -138,6 +139,14 @@
 	name = "spooky not-quite ghost"
 	is_respawnable = FALSE
 	locked = TRUE
+
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_EARS)
+	start_listen_languages = list(LANGUAGE_ENGLISH)
+	start_speech_modifiers = null
+	start_speech_outputs = null
+	default_speech_output_channel = null
+
 	var/start_time
 
 	New()

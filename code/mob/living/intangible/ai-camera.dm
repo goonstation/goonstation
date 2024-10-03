@@ -26,6 +26,20 @@
 	metabolizes = FALSE
 	blood_id = null
 
+	speech_verb_say = "states"
+	speech_verb_ask = "queries"
+	speech_verb_exclaim = "declares"
+
+	start_listen_modifiers = null
+	start_listen_inputs = null
+	start_listen_languages = null
+	start_speech_modifiers = null
+	start_speech_outputs = null
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
+	speech_bubble_icon_sing = "noterobot"
+	speech_bubble_icon_sing_bad = "noterobot"
+
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 
@@ -245,26 +259,6 @@
 			return 0.4 + movement_delay_modifier
 		else
 			return 0.75 + movement_delay_modifier
-
-	say_understands(var/other)
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace.exclusive_language)
-				return 1
-		if (isrobot(other))
-			return 1
-		if (isshell(other))
-			return 1
-		if (ismainframe(other))
-			return 1
-		return ..()
-
-	say(var/message)
-		if (src.mainframe)
-			src.mainframe.say(message)
-		else
-			SEND_SIGNAL(src, COMSIG_MOB_SAY, message)
-			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()
 		src.mainframe.say_radio()
