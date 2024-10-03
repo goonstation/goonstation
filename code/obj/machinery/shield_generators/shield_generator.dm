@@ -29,7 +29,7 @@ TYPEINFO(/area/station/shield_zone)
 	var/image/image_shower_dir = null
 	var/sound_startup = 'sound/machines/shieldgen_startup.ogg' // 40
 	var/sound_shutoff = 'sound/machines/shieldgen_shutoff.ogg' // 35
-	var/lastuse = 0
+	var/cooldown = 150 SECONDS
 
 	New()
 		..()
@@ -130,11 +130,7 @@ TYPEINFO(/area/station/shield_zone)
 			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
 			return
 
-		var/diff = world.timeofday - lastuse
-		if(diff < 0) diff += 864000 //Wrapping protection.
-
-		if(diff > 1500)
-			lastuse = world.timeofday
+		if(!ON_COOLDOWN(src, "toggle_shields", src.cooldown))
 			visible_message("[src] beeps loudly.","You hear a loud beep.")
 			if (src.active)
 				src.deactivate()
