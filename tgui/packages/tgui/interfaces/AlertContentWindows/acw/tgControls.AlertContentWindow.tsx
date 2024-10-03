@@ -6,7 +6,7 @@
  */
 import { Box, Image } from 'tgui-core/components';
 
-import { resource } from '../../../cdn';
+import { resource } from '../../../goonstation/cdn';
 import type { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {

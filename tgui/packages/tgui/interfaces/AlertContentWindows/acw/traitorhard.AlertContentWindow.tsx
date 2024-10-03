@@ -4,7 +4,7 @@
  * @author garash2k
  * @license ISC
  */
-import { resource } from '../../../cdn';
+import { resource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 export const acw: AlertContentWindow = {

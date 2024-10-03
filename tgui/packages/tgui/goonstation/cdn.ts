@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend } from './backend';
+import { useBackend } from '../backend';
 
 interface CDNData {
   cdn: string;

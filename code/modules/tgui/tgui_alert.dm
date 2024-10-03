@@ -129,6 +129,7 @@
 		"items" = items,
 		"autofocus" = autofocus,
 		"theme" = theme,
+		// |GOONSTATION-ADD|
 		"cdn" = cdn,
 		"VCS_REVISION" = VCS_REVISION,
 	)
