@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/health = null //!How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
 	var/burn_point = 15000 KELVIN //!Ambient temperature at which the item may spontaneously ignite
 	var/burn_output = 1500 KELVIN //!How hot does the item burn once on fire
-	var/burn_remains = BURN_REMAINS_ASH	///!What is left when it's burnt up
+	var/burn_remains = BURN_REMAINS_ASH	//!What is left when it's burnt up
 	var/burning_last_process = 0
 	var/firesource = FALSE //! Is this a valid source for lighting fires
 
