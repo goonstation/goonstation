@@ -7407,7 +7407,7 @@
 	icon_state = "6-8"
 	},
 /obj/machinery/activation_button/driver_button{
-	desc = "An way to depart the dead.";
+	desc = "A way to depart the dead.";
 	id = "chapelgun";
 	name = "Chapel Ejection Button";
 	pixel_y = 26
