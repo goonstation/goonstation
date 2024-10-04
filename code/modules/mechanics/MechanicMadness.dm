@@ -220,6 +220,7 @@
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
 		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
+		throwforce = 10
 		num_f_icons=3
 		density=1
 		anchored = UNANCHORED
@@ -1019,12 +1020,18 @@
 				src.set_loc(target)
 		return
 
+
+#define GRAVITON_ITEM_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN 35
+#define GRAVITON_CONTAINER_FAIL_SOUND_VOLUME 30
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN 10
+#define GRAVITON_CONTAINER_COOLDOWN_ID "Graviton container cooldown"
+#define GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID "Graviton container fail sound cooldown"
 /obj/item/mechanics/accelerator
 	name = "Graviton accelerator"
 	desc = ""
 	icon_state = "comp_accel"
 	can_rotate = 1
-	cabinet_banned = TRUE // non-functional
 	var/active = 0
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -1032,39 +1039,51 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activateproc))
 
-	proc/drivecurrent()
+	proc/drivecurrent(var/obj/item/storage/mechanics/container = null)
 		if(level == OVERFLOOR) return
 		LIGHT_UP_HOUSING
-		var/count = 0
-		for(var/atom/movable/M in src.loc)
-			if(M.anchored) continue
-			count++
-			if(M == src) continue
-			throwstuff(M)
-			if(count > 50) return
-			if(APPROX_TICK_USE > 100) return //fuck it, failsafe
+
+		if(container)
+			if(ON_COOLDOWN(container, GRAVITON_CONTAINER_COOLDOWN_ID, GRAVITON_CONTAINER_COOLDOWN) || container.anchored) // Cooldown is shared between all gravitons in locker
+				if(ON_COOLDOWN(container, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID, GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN)) // cooldown in a cooldown
+					playsound(src, 'sound/machines/buzz-sigh.ogg', GRAVITON_CONTAINER_FAIL_SOUND_VOLUME, 0, 0)
+				return
+			throwstuff(container, 3)
+		else
+			var/count = 0
+			for(var/atom/movable/M in src.loc)
+				if(M.anchored) continue
+				count++
+				if(M == src) continue
+				throwstuff(M)
+				if(count > 50) return
+				if(APPROX_TICK_USE > GRAVITON_ITEM_COOLDOWN * 10) return //fuck it, failsafe
 
 	proc/activateproc(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR) return
 		if(input)
 			if(active) return
 			particleMaster.SpawnSystem(new /datum/particleSystem/gravaccel(src.loc, src.dir))
+
+			var/obj/item/storage/mechanics/container  = src.stored?.linked_item
+			var/in_container = istype(container,/obj/item/storage/mechanics)
 			SPAWN(0)
 				icon_state = "[under_floor ? "u":""]comp_accel1"
 				active = 1
-				drivecurrent()
+				drivecurrent(container)
 				sleep(0.5 SECONDS)
-				drivecurrent()
+				if (!in_container)
+					drivecurrent() // Gravitons in lockers only bonk once
 				sleep(2.5 SECONDS)
 				icon_state = "[under_floor ? "u":""]comp_accel"
 				active = 0
 		return
 
-	proc/throwstuff(atom/movable/AM as mob|obj)
+	proc/throwstuff(atom/movable/AM as mob|obj, range = 50)
 		if(level == OVERFLOOR || AM.anchored || AM == src) return
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
-		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
+		var/datum/thrown_thing/thr = AM.throw_at(target, range, 1)
 		thr?.user = (owner)
 		return
 
@@ -1078,6 +1097,12 @@
 	update_icon()
 		icon_state = "[under_floor ? "u":""]comp_accel"
 		return
+#undef GRAVITON_ITEM_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN
+#undef GRAVITON_CONTAINER_FAIL_SOUND_VOLUME
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN
+#undef GRAVITON_CONTAINER_COOLDOWN_ID
+#undef GRAVITON_CONTAINER_FAIL_SOUND_COOLDOWN_ID
 
 /// Tesla Coil mechanics component - zaps people
 /obj/item/mechanics/zapper
@@ -2452,7 +2477,8 @@
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
-				count_sent++
+				if(count_sent++ > 50) break //ratelimit
+
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
@@ -2817,6 +2843,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		var/new_label = input(user, "Button label", "Button Panel") as text
 		var/new_signal = input(user, "Button signal", "Button Panel") as text
+		new_label = trimtext(new_label)
+		new_signal = trimtext(new_signal)
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(new_label) && length(new_signal))
@@ -2844,6 +2872,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return 0
 		var/new_label = input(user, "Button label", "Button Panel", to_edit) as text
 		var/new_signal = input(user, "Button signal", "Button Panel", src.active_buttons[to_edit]) as text
+		new_label = trimtext(new_label)
+		new_signal = trimtext(new_signal)
 		if(!length(new_label) || !length(new_signal))
 			return 0
 		new_label = adminscrub(new_label)
@@ -2890,9 +2920,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		var/list/work_list = list()
 		var/button_count = 0
 		for (var/index in splittext(inputted_text, ";"))
-			var/list/split = splittext(index, "=")
-			if (length(split) != 2) continue
-			work_list[split[1]] = split[2]
+			var/first_equal_pos = findtext(index, "=")
+			if (!first_equal_pos) continue
+			var/new_label = trimtext(copytext(index, 1, first_equal_pos))
+			var/new_signal = trimtext(copytext(index, first_equal_pos + 1))
+			if (!new_label || !new_signal) continue
+			work_list[new_label] = new_signal
 			button_count++
 			if (button_count >= 10) break
 		if (!length(work_list)) return FALSE

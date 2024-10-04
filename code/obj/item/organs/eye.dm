@@ -45,12 +45,12 @@
 
 	proc/update_color(datum/appearanceHolder/AH, side)
 		if(src.change_iris)
-			if (AH.customization_first.id == "hetcro[side]")
-				src.iris_color = AH.customization_first_color
-			else if (AH.customization_second.id == "hetcro[side]")
-				src.iris_color = AH.customization_second_color
-			else if (AH.customization_third.id == "hetcro[side]")
-				src.iris_color = AH.customization_third_color
+			if (AH.customizations["hair_bottom"].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations["hair_bottom"].color
+			else if (AH.customizations["hair_middle"].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations["hair_middle"].color
+			else if (AH.customizations["hair_top"].style.id == "hetcro[side]")
+				src.iris_color = AH.customizations["hair_top"].color
 			else
 				src.iris_color = AH.e_color
 			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")

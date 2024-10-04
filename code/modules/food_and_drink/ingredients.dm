@@ -259,48 +259,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	attack_self(mob/user as mob)
 		attack(user, user)
 
-/obj/item/reagent_containers/food/snacks/ingredient/egg
-	name = "egg"
-	desc = "An egg!"
-	icon_state = "egg"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	initial_reagents = list("egg"=5)
-	fill_amt = 0.5
-	doants = 0 // They're protected by a shell
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		var/turf/T = get_turf(A)
-		src.visible_message(SPAN_ALERT("[src] splats onto the floor messily!"))
-		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-		make_cleanable(/obj/decal/cleanable/eggsplat,T)
-		qdel (src)
-
-/obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
-	name = "hard-boiled egg"
-	desc = "You're a loose cannon, egg. I'm taking you off the menu."
-	icon_state = "egg-hardboiled"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	food_effects = list("food_brute", "food_cateyes")
-
-	New()
-		..()
-		reagents.add_reagent("egg", 5)
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		src.visible_message(SPAN_ALERT("[src] flops onto the floor!"))
-
-	attackby(obj/item/W, mob/user)
-		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-			boutput(user, SPAN_NOTICE("You cut [src] in half"))
-			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
-			new /obj/item/reagent_containers/food/snacks/deviledegg(get_turf(src))
-			if (prob(25))
-				JOB_XP(user, "Chef", 1)
-			qdel(src)
-		else ..()
-
 /obj/item/reagent_containers/food/snacks/ingredient/yerba
 	name = "yerba mate packet"
 	desc = "A packet of yerba mate."
@@ -425,6 +383,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	name = "peeled banana"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-fruit"
+	item_state = "banana-fruit"
 
 /obj/item/reagent_containers/food/snacks/ingredient/cheese
 	name = "cheese"
@@ -688,21 +647,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		src.pixel_x = rand(-8, 8)
 		src.pixel_y = rand(-8, 8)
 
-/obj/item/reagent_containers/food/snacks/ingredient/pasta
-	// generic uncooked pasta parent
-	name = "pasta sheet"
-	desc = "Uncooked pasta."
-	heal_amt = 0
-
-	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("... You must be really hungry."))
-		..()
-
-/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet
-	name = "pasta sheet"
-	desc = "An uncooked sheet of pasta."
-	icon_state = "pasta-sheet"
-
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 /obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles
 	name = "wheat noodles"
@@ -746,43 +690,58 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 		..()
 		boutput(M, SPAN_ALERT("Raw potato tastes pretty nasty...")) // does it?
 
-
+// this is cursed on multiple levels, both the placement and the function
 /obj/item/reagent_containers/food/snacks/proc/random_spaghetti_name()
 	.= pick(list("spagtetti","splaghetti","spaghetty","spagtti","spagheti","spaghettie","spahetti","spetty","pisketti","spagoody","spaget","spagherti","spaceghetti"))
 
-/obj/item/reagent_containers/food/snacks/ingredient/spaghetti
-	name = "spaghetti noodles"
-	desc = "Original italian noodles."
-	icon_state = "spaghetti"
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/pasta)
+/obj/item/reagent_containers/food/snacks/ingredient/pasta
+	// generic uncooked pasta parent
+	name = "pasta sheet"
+	desc = "Uncooked pasta."
 	heal_amt = 0
 
-	New()
-		..()
-		name = "[random_spaghetti_name()] noodles"
-
-	get_desc()
-		..()
-		.= "Original italian [name]."
-
-
-	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
-			boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
-			var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
-			if (user.mob_flags & IS_BONEY)
-				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
-				boutput(user, SPAN_ALERT("... whoa, that felt good. Like really good."))
-				user.reagents.add_reagent("boneyjuice",20)
-			else
-				D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
-			user.u_equip(W)
-			user.put_in_hand_or_drop(D)
-			qdel(W)
-			qdel(src)
-
 	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("The noodles taste terrible uncooked..."))
+		boutput(M, SPAN_ALERT("... You must be really hungry."))
 		..()
+
+	spaghetti
+		name = "spaghetti noodles"
+		desc = "Original italian noodles."
+		icon_state = "spaghetti"
+		heal_amt = 0
+
+		New()
+			..()
+			name = "[random_spaghetti_name()] noodles"
+
+		get_desc()
+			..()
+			.= "Original italian [src.name]."
+
+		attackby(obj/item/W, mob/user)
+			if(istype(W,/obj/item/reagent_containers/food/snacks/condiment/ketchup))
+				boutput(user, SPAN_NOTICE("You create [random_spaghetti_name()] with tomato sauce..."))
+				var/obj/item/reagent_containers/food/snacks/spaghetti/sauce/D
+				if (user.mob_flags & IS_BONEY)
+					D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce/skeletal(W.loc)
+					boutput(user, SPAN_ALERT("... whoa, that felt good. Like really good."))
+					user.reagents.add_reagent("boneyjuice",20)
+				else
+					D = new/obj/item/reagent_containers/food/snacks/spaghetti/sauce(W.loc)
+				user.u_equip(W)
+				user.put_in_hand_or_drop(D)
+				qdel(W)
+				qdel(src)
+
+		heal(var/mob/M)
+			boutput(M, SPAN_ALERT("The noodles taste terrible uncooked..."))
+			..()
+
+	sheet
+		name = "pasta sheet"
+		desc = "An uncooked sheet of pasta."
+		icon_state = "pasta-sheet"
 
 /obj/item/reagent_containers/food/snacks/ingredient/butter //its actually margarine
 	name = "butter"

@@ -88,13 +88,20 @@ input. The input's `action` and `params` are passed to the proc.
 ```
 
 The `..()` (parent call) is very important here, as it is how we check that the
-user is allowed to use this interface (to avoid so-called href exploits). It is
-also very important to clamp and sanitize all input here. Always assume the user
-is attempting to exploit the game.
+user is allowed to use this interface (to avoid so-called href exploits). When
+any event has been handled `..()` will return `TRUE`. It is important to clamp
+and sanitize all input here. Always assume the user is attempting to exploit the
+game.
+
+When `..()` has returned `TRUE` your interface can safely assume that the user's
+action has been handled already by some parent proc and you should not continue
+to handle this, instead preserving and returning the parent proc's return value.
 
 Also note the use of `. = TRUE` (or `FALSE`), which is used to notify the UI
-that this input caused an update. This is especially important for UIs that do
-not auto-update, as otherwise the user will never see their change.
+that this input has been handled. When `ui_act` eventually returns, a value of
+`TRUE` indicates that the input has been handled and that the UI should update.
+This is important for UIs that do not auto-update, as otherwise the user will
+not be able to see the interface update based on thier actions.
 
 ### Frontend
 
@@ -106,8 +113,7 @@ recommend getting yourself introduced to
 
 A React component is not a regular HTML template. A component is a
 javascript function, which accepts a `props` object (that contains
-properties passed to a component) and a `context` object (which is
-necessary to access UI data) as arguments, and outputs an HTML-like
+properties passed to a component) as an argument, and outputs an HTML-like
 structure.
 
 So let's create our first React Component. Create a file with a name
@@ -116,18 +122,18 @@ snippet (make sure component name matches the file name):
 
 ```jsx
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
-export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
+export const SampleInterface = (props) => {
+  const { act, data } = useBackend();
   // Extract `health` and `color` variables from the `data` object.
   const {
     health,
     color,
   } = data;
   return (
-    <Window>
+    <Window resizable>
       <Window.Content scrollable>
         <Section title="Health status">
           <LabeledList>
@@ -248,12 +254,12 @@ JSX code, and wrap it into a second, smaller React component:
 
 ```jsx
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
   return (
-    <Window>
+    <Window resizable>
       <Window.Content scrollable>
         <HealthStatus user="Jerry" />
       </Window.Content>
@@ -320,7 +326,7 @@ And the template:
 
 ```jsx
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
+import { Button, LabeledList, Section } from 'tgui-core/components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
@@ -331,7 +337,7 @@ export const SampleInterface = (props, context) => {
     color,
   } = data;
   return (
-    <Window>
+    <Window resizable>
       <Window.Content scrollable>
         <Section title="Health status">
           <LabeledList>

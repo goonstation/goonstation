@@ -423,6 +423,22 @@
 		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 
+/datum/bioEffect/radioactive_farts
+	name = "Radioactive Farts"
+	desc = "The subject's flatulence is contaminated with radioactive isotopes."
+	id = "radioactive_farts"
+	effectType = EFFECT_TYPE_DISABILITY
+	probability = 66
+	blockCount = 3
+	blockGaps = 3
+	isBad = 1
+	stability_loss = 10
+	msgGain = "You feel a strange energy radiate from your bowels."
+	msgLose = "Your intestines are no longer glowing."
+	reclaim_fail = 15
+	icon_state  = "bad"
+	effect_group = "rad"
+
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
 	desc = "The subject emits low-level radiation that may cause themselves to mutate."
@@ -956,3 +972,31 @@
 			else
 				owner:emote("sneeze")
 		return
+
+/datum/bioEffect/lazy_eye
+	name = "Ego Dislocation"
+	desc = "The subject's sense of self may not always align with their physical location."
+	id = "lazy_eye"
+	effectType = EFFECT_TYPE_DISABILITY
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	msgGain = "You feel strangly disjointed."
+	msgLose = "You feel grounded."
+	isBad = 1
+	icon_state  = "bad"
+
+	OnAdd()
+		. = ..()
+		src.owner.client?.lazy_eye = 5
+
+	OnRemove()
+		. = ..()
+		src.owner.client?.lazy_eye = 0
+
+	OnLife(mult)
+		if(..()) return
+		src.owner.client?.lazy_eye = 5

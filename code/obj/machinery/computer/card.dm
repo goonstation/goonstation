@@ -640,18 +640,10 @@
 	department = 4
 	req_access = list(access_maxsec)
 
-	#ifdef RP_MODE // fuckin RP mode giving secoffs more access *grumble grumble*
-	civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
-	engineering_access_list = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
-	supply_access_list = list(access_cargo, access_mining, access_mining_outpost)
-	research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
-	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
-	command_access_list = list(access_eva)
-	#else
 	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage, access_bar, access_crematorium, access_kitchen, access_hydro)
 	engineering_access_list = list(access_engineering, access_engineering_control)
 	supply_access_list = list(access_cargo)
 	research_access_list = list(access_medical, access_research, access_chemistry, access_researchfoyer)
 	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_armory, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	command_access_list = list(access_eva)
-	#endif
+

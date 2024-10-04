@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/obj/item)
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
 
-			tooltip_rebuild = 0
+				tooltip_rebuild = 0
 
 		usr.moused_over(src)
 
@@ -730,7 +730,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 #define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 
-/obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+/obj/item/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	..()
 
 	if (!src.anchored)
@@ -770,7 +770,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 						//src.pixel_y = text2num(params["icon-y"]) - 16
 						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
 					return
-			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite.
+																				// Consider replacing the storage check with should_place_on() for flexibility.
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
 				return
@@ -1019,10 +1020,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	SHOULD_CALL_PARENT(TRUE)
+	src.equipped_in_slot = slot
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
-	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop], slot)
 	user.update_equipped_modifiers()
@@ -1501,6 +1502,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			. = 1
 		if ("inhand_image")
 			. = 1
+		if ("name", "desc", "force", "hit_type", "throwforce", "w_class", "combat_click_delay", "click_delay")
+			src.tooltip_rebuild = TRUE
 	if (. && src.loc && ismob(src.loc))
 		var/mob/M = src.loc
 		M.update_inhands()
@@ -1792,3 +1795,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 			src.pixel_x = gridx + offsetx - 16 // -16 to center the sprite
 			src.pixel_y = gridy + offsety - 16
 		. = TRUE
+
+/// Override to implement custom logic for determining whether the item should be placed onto a target object
+/obj/item/proc/should_place_on(obj/target, params)
+	return TRUE

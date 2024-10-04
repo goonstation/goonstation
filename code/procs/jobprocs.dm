@@ -72,7 +72,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	#ifdef I_WANNA_BE_THE_JOB
 	for (var/mob/new_player/player in unassigned)
 		player.mind.assigned_role = I_WANNA_BE_THE_JOB
-	return
+	UNLINT(return)
 	#endif
 
 	var/list/pick1 = list()
@@ -492,6 +492,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if(!QDELETED(current_mob))
 				current_mob.update_icons_if_needed()
 
+		if (src.traitHolder?.hasTrait("jailbird"))
+			create_jailbird_wanted_poster(H)
+
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
@@ -601,10 +604,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
 		trinket = src.create_wig()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))

@@ -52,6 +52,8 @@
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 	/// when this atom has clean_forensic called, send this signal.
 	#define COMSIG_ATOM_CLEANED "atom_cleaned"
+	/// sent to the parent object when its handset retracts, see /datum/component/cord
+	#define COMSIG_CORD_RETRACT "cord_retract"
 
 // ---- minimap ----
 
@@ -65,7 +67,7 @@
 	/// when an AM moves on the map (thing, previous_loc, direction)
 	#define COMSIG_MOVABLE_MOVED "mov_moved"
 	/// when a movable is about to move, return true to prevent (thing, new_loc, direction)
-	#define COMSIG_MOVABLE_BLOCK_MOVE "mov_block_moved"
+	#define COMSIG_MOVABLE_PRE_MOVE "mov_pre_move"
 	/// when an AM changes its loc (thing, previous_loc)
 	#define COMSIG_MOVABLE_SET_LOC "mov_set_loc"
 	/// when an AM ends throw (thing, /datum/thrown_thing)
