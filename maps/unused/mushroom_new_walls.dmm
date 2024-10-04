@@ -15490,9 +15490,8 @@
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -16927,8 +16926,8 @@
 	},
 /area/station/medical/medbay)
 "dKO" = (
-/obj/machinery/atmospherics/pipe/manifold,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dKZ" = (
