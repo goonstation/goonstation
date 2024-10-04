@@ -22599,6 +22599,14 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"iYe" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 6
+	},
+/area/station/ranch)
 "iYx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -25035,6 +25043,12 @@
 "ltL" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/railing/orange/reinforced{
+	dir = 3
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
@@ -30528,6 +30542,9 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -31693,6 +31710,9 @@
 "qSX" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -37701,6 +37721,12 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/railing/orange/reinforced{
+	dir = 3
+	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "vAd" = (
@@ -37781,9 +37807,6 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "vDy" = (
-/obj/railing/orange/reinforced{
-	dir = 1
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 7
 	},
@@ -38120,13 +38143,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"vQb" = (
-/obj/chicken_nesting_box,
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "vQl" = (
 /obj/stool/bed/brig,
 /obj/machinery/camera{
@@ -39291,9 +39307,6 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "xbm" = (
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "xbn" = (
@@ -40261,9 +40274,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "xKg" = (
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -82743,7 +82753,7 @@ uSK
 eRb
 jvN
 jvN
-vQb
+vFW
 qdu
 jvN
 jvN
@@ -84557,7 +84567,7 @@ avF
 pdJ
 fBn
 ltL
-caU
+iYe
 idz
 jvN
 btY
