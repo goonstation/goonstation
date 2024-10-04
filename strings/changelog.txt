@@ -1,5 +1,7 @@
 
 (t)fri oct 04 24
+(u)LeahTheTech
+(*)Zombie arms and legs can now break apart cuffs and shackles respectively.
 (u)Amylizzle
 (p)20943
 (e)🆕💨|C-Feature, A-Atmospherics
