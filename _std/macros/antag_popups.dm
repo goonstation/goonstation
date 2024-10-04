@@ -115,6 +115,7 @@
 
 	//show antag popup to a mob
 	proc/show_popup(mob/M, var/popup_name)
+		set waitfor = FALSE
 		tgui_alert(M, content_window = popup_name, do_wait = FALSE)
 
 /mob
