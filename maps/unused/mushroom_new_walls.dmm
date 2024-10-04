@@ -18924,9 +18924,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 5
 	},
@@ -22612,6 +22609,9 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 6
 	},
@@ -22835,9 +22835,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "jiN" = (
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -25055,9 +25052,6 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/obj/railing/orange/reinforced{
-	dir = 3
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
@@ -37733,9 +37727,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "vAd" = (
@@ -37816,6 +37807,9 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/west)
 "vDy" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 7
 	},
