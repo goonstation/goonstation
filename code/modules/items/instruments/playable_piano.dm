@@ -12,7 +12,7 @@
 #define MAX_CONCURRENT_NOTES 8
 
 // Defines for the Dense Format (DF)
-#define DF_DELIMITER 32        // space character
+#define DF_DELIMITER 32        // space character (reserved char)
 #define DF_BOUND_LOWER 33      // !
 #define DF_BOUND_UPPER 120     // x
 #define DF_REST 121            // y
@@ -20,7 +20,7 @@
 #define DF_OFFSET_DYNAMIC -13  // shift dynamic from 33 to 20
 #define DF_OFFSET_NOTE -12     // shift note    from 33 to 21
 #define DF_OFFSET_DELAY -33    // shift delay   from 33 to 0
-#define DF_OFFSET_REST -33    //
+#define DF_OFFSET_REST -33     // shift rest    from 33 to 0
 #define DF_OFFSET_OCTAVE 1     //
 #define DF_NOTE_TYPE_AMOUNT 12 // the amount of note types there in an octave
 #define DF_DYNAMIC_MIN 20      // lowest  sound volume
@@ -337,31 +337,15 @@ TYPEINFO(/obj/player_piano)
 
 			note_index += 3
 
-		// for (var/note_index = 1, note_index <= length(src.note_input))
 		while (note_index <= length(piano_notes))
 			var/note    = text2ascii(piano_notes[note_index++])
 			var/dynamic = text2ascii(piano_notes[note_index++])
 			var/delay   = text2ascii(piano_notes[note_index++])
-			// var/test = piano_notes[note_index - 3] + piano_notes[note_index - 2] + piano_notes[note_index - 1]
 
 			if (note    < DF_BOUND_LOWER || note    > DF_REST ||\
 				dynamic < DF_BOUND_LOWER || dynamic > DF_BOUND_UPPER ||\
 				delay   < DF_BOUND_LOWER || delay   > DF_BOUND_UPPER)
 				break
-
-			// if (dynamic < DF_BOUND_LOWER || dynamic > DF_BOUND_UPPER)
-			// 	break
-
-			// if (delay < DF_BOUND_LOWER || delay > DF_BOUND_UPPER)
-			// 	break
-
-			// if (note == REST)
-			// 	src.note_names += "r"
-			// 	src.note_octaves += "r"
-			// 	src.note_accidentals += "r"
-			// 	src.note_volumes += 0
-			// 	note_index++
-			// 	continue
 
 			if (note == DF_REST)
 				src.note_names       += "r"
@@ -380,33 +364,16 @@ TYPEINFO(/obj/player_piano)
 
 			delay = delay + DF_OFFSET_DELAY
 
-			// if (note >= REST_1 && note <= REST_3)
-			// 	var/offset = 122
-			// 	var/consume_amount = note - offset
-			// 	var/rest_length = text2num_safe(copytext(src.note_input, note_index+1, note_index + consume_amount))
-			// 	note_index += consume_amount
-			// 	for (var/rest_amount = 0, rest_amount < rest_length, rest_amount++)
-			// 		src.note_names += "r"
-			// 		src.note_octaves += "r"
-			// 		src.note_accidentals += "r"
-			// 		src.note_volumes += 0
-			// 	continue
-
 			var/translated_index = note % DF_NOTE_TYPE_AMOUNT
-			// src.note_names += name_translation_list[note_translated_index+1][1]
-			// +1 to convert from 0-indexed to 1-indexed
 			src.note_names += translation_list_name[translated_index + 1]
 
 			src.note_octaves += ((note - translated_index) / DF_NOTE_TYPE_AMOUNT) - DF_OFFSET_OCTAVE
 
-			// src.note_accidentals += (length(note_translation_list[note_translated_index+1]) == 2) ? "-" : ""
 			src.note_accidentals += translation_list_accidental[translated_index + 1]
 
 			src.note_volumes += dynamic
 
 			src.note_delays += delay
-
-			// note_index += 3
 
 			LAGCHECK(LAG_LOW)
 
