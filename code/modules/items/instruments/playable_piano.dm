@@ -7,8 +7,24 @@
 
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
-// #define MAX_NOTE_INPUT 15360
-#define MAX_NOTE_INPUT 999999
+
+#define MAX_NOTE_INPUT 15360
+#define MAX_CONCURRENT_NOTES 8
+
+// Defines for the Dense Format (DF)
+#define DF_DELIMITER 32        // space character
+#define DF_BOUND_LOWER 33      // !
+#define DF_BOUND_UPPER 120     // x
+#define DF_REST 121            // y
+#define DF_SET_TIMING 122      // z
+#define DF_OFFSET_DYNAMIC -13  // shift dynamic from 33 to 20
+#define DF_OFFSET_NOTE -12     // shift note    from 33 to 21
+#define DF_OFFSET_DELAY -33    // shift delay   from 33 to 0
+#define DF_OFFSET_REST -33    //
+#define DF_OFFSET_OCTAVE 1     //
+#define DF_NOTE_TYPE_AMOUNT 12 // the amount of note types there in an octave
+#define DF_DYNAMIC_MIN 20      // lowest  sound volume
+#define DF_DYNAMIC_MAX 60      // highest sound volume
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
@@ -232,12 +248,22 @@ TYPEINFO(/obj/player_piano)
 				piano_notes += string
 		is_busy = 0
 
-	proc/build_notes(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
-		is_busy = 1
-		note_volumes = list()
-		note_octaves = list()
-		note_names = list()
-		note_accidentals = list()
+	proc/build_notes_classic_format(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
+		is_busy = TRUE
+		src.note_volumes     = list()
+		src.note_octaves     = list()
+		src.note_names       = list()
+		src.note_accidentals = list()
+		src.note_delays      = list()
+
+		// e.g. timing,20
+		if (lowertext(copytext(piano_notes[1], 1, 8)) == "timing,")
+			var/timing = text2num(copytext(piano_notes[1], 8, 10)) / 100
+			if (timing < MIN_TIMING || timing > MAX_TIMING)
+				return
+			src.timing = timing
+
+			piano_notes.Remove(piano_notes[1])
 
 		for (var/string in piano_notes)
 			var/list/curr_notes = splittext("[string]", ",")
@@ -249,11 +275,11 @@ TYPEINFO(/obj/player_piano)
 					curr_notes[1] = "g"
 				else
 					curr_notes[1] = ascii2text(text2ascii(curr_notes[1]) - 1)
-			note_names += curr_notes[1]
+			src.note_names += curr_notes[1]
 			switch(lowertext(curr_notes[4]))
 				if ("r")
 					curr_notes[4] = "r"
-			note_octaves += curr_notes[4]
+			src.note_octaves += curr_notes[4]
 			switch(lowertext(curr_notes[2]))
 				if ("s", "b")
 					curr_notes[2] = "-"
@@ -261,7 +287,7 @@ TYPEINFO(/obj/player_piano)
 					curr_notes[2] = ""
 				if ("r")
 					curr_notes[2] = "r"
-			note_accidentals += curr_notes[2]
+			src.note_accidentals += curr_notes[2]
 			switch(lowertext(curr_notes[3]))
 				if ("p")
 					curr_notes[3] = 20
@@ -275,12 +301,116 @@ TYPEINFO(/obj/player_piano)
 					curr_notes[3] = 60
 				if ("r")
 					curr_notes[3] = 0
-			note_volumes += curr_notes[3]
+			src.note_volumes += curr_notes[3]
 			if (curr_notes_length == 5)
 				src.note_delays += text2num_safe(curr_notes[5])
 			else
 				src.note_delays += 1
-		is_busy = 0
+			LAGCHECK(LAG_LOW)
+		is_busy = FALSE
+
+	/**
+	 * **Arguments**
+	 *
+	 * **str** piano_notes - The notes to convert.
+	 * Must **not** be processed like `build_notes_classic_format` is.
+	 */
+	proc/build_notes_dense_format(var/piano_notes)
+		src.is_busy = TRUE
+
+		src.note_volumes     = list()
+		src.note_octaves     = list()
+		src.note_names       = list()
+		src.note_accidentals = list()
+		src.note_delays      = list()
+
+		var/translation_list_name       = list("c", "c", "d", "d", "e", "f", "f", "g", "g", "a", "a", "b")
+		var/translation_list_accidental = list( "", "-",  "", "-",  "",  "", "-",  "", "-",  "", "-",  "")
+
+		var/note_index = 1
+
+		if (text2ascii(piano_notes[note_index]) == DF_SET_TIMING)
+			var/timing = (text2ascii(piano_notes[note_index + 2]) - DF_BOUND_LOWER) / 100
+			if (timing < MIN_TIMING || timing > MAX_TIMING)
+				return
+			src.timing = timing
+
+			note_index += 3
+
+		// for (var/note_index = 1, note_index <= length(src.note_input))
+		while (note_index <= length(piano_notes))
+			var/note    = text2ascii(piano_notes[note_index++])
+			var/dynamic = text2ascii(piano_notes[note_index++])
+			var/delay   = text2ascii(piano_notes[note_index++])
+			// var/test = piano_notes[note_index - 3] + piano_notes[note_index - 2] + piano_notes[note_index - 1]
+
+			if (note    < DF_BOUND_LOWER || note    > DF_REST ||\
+				dynamic < DF_BOUND_LOWER || dynamic > DF_BOUND_UPPER ||\
+				delay   < DF_BOUND_LOWER || delay   > DF_BOUND_UPPER)
+				break
+
+			// if (dynamic < DF_BOUND_LOWER || dynamic > DF_BOUND_UPPER)
+			// 	break
+
+			// if (delay < DF_BOUND_LOWER || delay > DF_BOUND_UPPER)
+			// 	break
+
+			// if (note == REST)
+			// 	src.note_names += "r"
+			// 	src.note_octaves += "r"
+			// 	src.note_accidentals += "r"
+			// 	src.note_volumes += 0
+			// 	note_index++
+			// 	continue
+
+			if (note == DF_REST)
+				src.note_names       += "r"
+				src.note_octaves     += "r"
+				src.note_accidentals += "r"
+				src.note_volumes     +=  0
+				// base88 to base10
+				src.note_delays      += ((dynamic + DF_OFFSET_REST) * (88**1)) + ((delay + DF_OFFSET_REST) * (88**0))
+				continue
+
+			note = note + DF_OFFSET_NOTE
+
+			dynamic = dynamic + DF_OFFSET_DYNAMIC
+			if (dynamic < DF_DYNAMIC_MIN || dynamic > DF_DYNAMIC_MAX)
+				break
+
+			delay = delay + DF_OFFSET_DELAY
+
+			// if (note >= REST_1 && note <= REST_3)
+			// 	var/offset = 122
+			// 	var/consume_amount = note - offset
+			// 	var/rest_length = text2num_safe(copytext(src.note_input, note_index+1, note_index + consume_amount))
+			// 	note_index += consume_amount
+			// 	for (var/rest_amount = 0, rest_amount < rest_length, rest_amount++)
+			// 		src.note_names += "r"
+			// 		src.note_octaves += "r"
+			// 		src.note_accidentals += "r"
+			// 		src.note_volumes += 0
+			// 	continue
+
+			var/translated_index = note % DF_NOTE_TYPE_AMOUNT
+			// src.note_names += name_translation_list[note_translated_index+1][1]
+			// +1 to convert from 0-indexed to 1-indexed
+			src.note_names += translation_list_name[translated_index + 1]
+
+			src.note_octaves += ((note - translated_index) / DF_NOTE_TYPE_AMOUNT) - DF_OFFSET_OCTAVE
+
+			// src.note_accidentals += (length(note_translation_list[note_translated_index+1]) == 2) ? "-" : ""
+			src.note_accidentals += translation_list_accidental[translated_index + 1]
+
+			src.note_volumes += dynamic
+
+			src.note_delays += delay
+
+			// note_index += 3
+
+			LAGCHECK(LAG_LOW)
+
+		src.is_busy = FALSE
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
 		if (is_busy || is_stored)
@@ -311,6 +441,7 @@ TYPEINFO(/obj/player_piano)
 		play_notes(1)
 
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
+		var/concurrent_notes_played = 0
 		if (length(linked_pianos) > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
 				SPAWN(0)
@@ -330,25 +461,36 @@ TYPEINFO(/obj/player_piano)
 				return
 			if (!curr_note) // else we get runtimes when the piano is reset while playing
 				return
+
+			if (concurrent_notes_played >= MAX_CONCURRENT_NOTES)
+				continue
+
 			var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 			var/delays_left = src.note_delays[curr_note]
+
 			if (delays_left == 0)
+				concurrent_notes_played++
 				continue
+
+			concurrent_notes_played = 0
 
 			while (delays_left > 0)
 				delays_left--
 				sleep((timing * 10)) //to get delay into 10ths of a second
 
 	proc/set_notes(var/given_notes)
-		if (is_busy || is_stored)
+		if (src.is_busy || src.is_stored)
 			return FALSE
-		if (length(note_input) > MAX_NOTE_INPUT)
+		if (length(given_notes) > MAX_NOTE_INPUT)
 			return FALSE
 		src.note_input = given_notes
-		clean_input()
-		build_notes(piano_notes)
+		if (findtext(src.note_input, "|"))
+			src.clean_input()
+			src.build_notes_classic_format(src.piano_notes)
+		else
+			src.build_notes_dense_format(src.note_input)
 		return TRUE
 
 	proc/set_timing(var/time_sel)
@@ -428,3 +570,17 @@ TYPEINFO(/obj/player_piano)
 #undef MIN_TIMING
 #undef MAX_TIMING
 #undef MAX_NOTE_INPUT
+#undef MAX_CONCURRENT_NOTES
+
+#undef DF_DELIMITER
+#undef DF_BOUND_LOWER
+#undef DF_BOUND_UPPER
+#undef DF_REST
+#undef DF_SET_TIMING
+#undef DF_OFFSET_DYNAMIC
+#undef DF_OFFSET_NOTE
+#undef DF_OFFSET_DELAY
+#undef DF_OFFSET_OCTAVE
+#undef DF_NOTE_TYPE_AMOUNT
+#undef DF_DYNAMIC_MIN
+#undef DF_DYNAMIC_MAX
