@@ -9948,6 +9948,11 @@
 /area/station/maintenance/east)
 "bbl" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "medsps";
+	enter_id = "outer";
+	name = "Medical Space"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bbm" = (
@@ -21785,6 +21790,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Upload Space";
+	enter_id = "inner";
+	cycle_id = "uploadsps"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ijy" = (
@@ -23487,9 +23497,9 @@
 "jPM" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	name = "Upload Space";
+	cycle_id = "medsps";
 	enter_id = "inner";
-	cycle_id = "uploadsps"
+	name = "Medical Space"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -92992,7 +93002,7 @@ aTr
 aqj
 aaa
 aaa
-bbl
+esW
 bdm
 aYR
 bdu
@@ -97220,7 +97230,7 @@ aaa
 aaa
 aaa
 abm
-esW
+bbl
 bbZ
 jPM
 rRn
