@@ -36837,7 +36837,8 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
