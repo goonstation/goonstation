@@ -25,6 +25,8 @@
 #define DF_NOTE_TYPE_AMOUNT 12 // the amount of note types there in an octave
 #define DF_DYNAMIC_MIN 20      // lowest  sound volume
 #define DF_DYNAMIC_MAX 60      // highest sound volume
+#define DF_MIN_REST 1          // the least a rest note can delay for
+#define DF_MAX_REST 500        // the most  a rest note can delay for
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
@@ -352,8 +354,11 @@ TYPEINFO(/obj/player_piano)
 				src.note_octaves     += "r"
 				src.note_accidentals += "r"
 				src.note_volumes     +=  0
+
 				// base88 to base10
-				src.note_delays      += ((dynamic + DF_OFFSET_REST) * (88**1)) + ((delay + DF_OFFSET_REST) * (88**0))
+				var/delay = ((dynamic + DF_OFFSET_REST) * (88**1)) + ((delay + DF_OFFSET_REST) * (88**0))
+				src.note_delays += clamp(delay, DF_MIN_REST, DF_MAX_REST)
+
 				continue
 
 			note = note + DF_OFFSET_NOTE
@@ -551,3 +556,5 @@ TYPEINFO(/obj/player_piano)
 #undef DF_NOTE_TYPE_AMOUNT
 #undef DF_DYNAMIC_MIN
 #undef DF_DYNAMIC_MAX
+#undef DF_MIN_REST
+#undef DF_MAX_REST
