@@ -7406,6 +7406,12 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/machinery/activation_button/driver_button{
+	desc = "An way to depart the dead.";
+	id = "chapelgun";
+	name = "Chapel Ejection Button";
+	pixel_y = 26
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -22593,16 +22599,6 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"iYe" = (
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "iYx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -86974,7 +86970,7 @@ uSK
 rKV
 qPI
 uSK
-iYe
+yjo
 uSK
 uSK
 uSK
