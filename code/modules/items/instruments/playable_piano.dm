@@ -356,7 +356,7 @@ TYPEINFO(/obj/player_piano)
 				src.note_volumes     +=  0
 
 				// base88 to base10
-				var/delay = ((dynamic + DF_OFFSET_REST) * (88**1)) + ((delay + DF_OFFSET_REST) * (88**0))
+				delay = ((dynamic + DF_OFFSET_REST) * (88**1)) + ((delay + DF_OFFSET_REST) * (88**0))
 				src.note_delays += clamp(delay, DF_MIN_REST, DF_MAX_REST)
 
 				continue
