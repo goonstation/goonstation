@@ -11,31 +11,31 @@
 <p>You can enable looping on the piano by using the piano key!</p>
 <p>The piano key will also let you reset everything on the piano (like a factory reset) if something goes really crazy.</p>
 
-<h3>Classic Format</h3>
+<h2>Classic Format</h2>
 
-<h4>Note</h4>
+<h3>Note</h3>
 
-<p>A Classic Format "note" has four parts, each separated by a comma:</p>
+<p>Has four parts, each separated by a comma.</p>
 
 <code>A,B,F,3</code>
 
-Note Name,Accidentals,Dynamics,Octave[,Delay]
+<p>Name,Accidentals,Dynamics,Octave[,Delay]</p>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>Note Name</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>A, B, C, D, E, F, or G</li>
 		<li>R for a silent note</li>
 	</ul>
 	<li>Accidentals</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>B for flat</li>
 		<li>S for sharp</li>
 		<li>N for natural</li>
 		<li>R for a silent note</li>
 	</ul>
 	<li>Dynamics</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>P for piano (quietest)</li>
 		<li>MP for mezzo piano</li>
 		<li>N for neutral</li>
@@ -44,13 +44,13 @@ Note Name,Accidentals,Dynamics,Octave[,Delay]
 		<li>R for a silent note</li>
 	</ul>
 	<li>Octave</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>Goes from 1 to 7</li>
 		<li>A0, B0, & C8 are exceptions</li>
 		<li>R for a silent note</li>
 	</ul>
 	<li>Delay</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li><i>Optional</i></li>
 		<li>How long the note should rest for after playing</li>
 		<li>This is <b>NOT</b> the same as note length/duration</li>
@@ -59,21 +59,21 @@ Note Name,Accidentals,Dynamics,Octave[,Delay]
 	</ul>
 </ul>
 
-<h4>Set Timing</h4>
+<h3>Set Timing</h3>
 
 <p>Must be at the start of a song, it's not allowed anywhere else.</p>
 
 <code>timing,15</code>
 
-timing,Timing
+<p>timing,Timing</p>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>timing</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>Must be the literal word <code>timing</code></li>
 	</ul>
 	<li>Timing</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>The new timing</li>
 		<li>Measured in centiseconds</li>
 		<li>Must be between 10 and 50</li>
@@ -84,31 +84,31 @@ timing,Timing
 
 <p>If you want a note to be a rest, you'll need to put an R in for every field on the note (e.g. R,R,R,R).</p>
 
-<h3>Dense Format</h3>
+<h2>Dense Format</h2>
 
 <p>All types have no delimiter and are always three characters long.</p>
 
-<p>Unlike Classic Format's <code>|</code> delimiter, there are no delimiters for this format.</p>
+<p>Unlike Classic Format's pipe (|) delimiter, there are no delimiters for this format.</p>
 
-<h4>Note</h4>
+<h3>Note</h3>
 
 <code>Q5!</code>
 
-Note Name + Accidentals + Octave,Dynamics,Delay
+<p>Note Name + Accidentals + Octave,Dynamics,Delay</p>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>Note Name + Accidentals + Octave</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
 		<li><code>!</code> corresponds to MIDI note number 21 (A0) while <code>x</code> to 108 (C8)</li>
 	</ul>
 	<li>Dynamics</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>Goes from char <code>!</code> (33) to char <code>I</code> (73)</li>
 		<li>Resulting loudness goes from 20 to 60</li>
 	</ul>
 	<li>Delay</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li><b>Required</b></li>
 		<li>How long the note should rest for after playing</li>
 		<li>This is <b>NOT</b> the same as note length/duration</li>
@@ -119,20 +119,20 @@ Note Name + Accidentals + Octave,Dynamics,Delay
 	</ul>
 </ul>
 
-<h4>Rest</h4>
+<h3>Rest</h3>
 
 <code>y!q</code>
 
-y,2nd Digit,1st Digit
+<p>y,2nd Digit,1st Digit</p>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>y</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>An indicator that this is a rest note</li>
 		<li>Must <b>not</b> be another character</li>
 	</ul>
 	<li>Delay</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li><b>Required</b></li>
 		<li>How long to rest for</li>
 		<li>The first digit and last digit (base88) are used to get a base10 number</li>
@@ -140,27 +140,27 @@ y,2nd Digit,1st Digit
 	</ul>
 </ul>
 
-<h4>Set Timing</h4>
+<h3>Set Timing</h3>
 
 <p>Must be at the start of a song, it's not allowed anywhere else.</p>
 
 <code>z!,</code>
 
-z,Filler,Timing
+<p>z,Filler,Timing</p>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>z</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>An indicator that this sets the time</li>
 		<li>Must <b>not</b> be another character</li>
 	</ul>
 	<li>Filler</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>It can be any allowed character</li>
 		<li>Is not used</li>
 	</ul>
 	<li>Timing</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>The new timing</li>
 		<li>Measured in centiseconds</li>
 		<li>Value goes from 0 to 87</li>
@@ -170,7 +170,7 @@ z,Filler,Timing
 
 <h2>Limitations</h2>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>You cannot change the duration of a note.</li>
 	<li>If you want to play notes at the same time, you will need to link multiple pianos together. Input notes, make one piano play, and electronics will handle the rest.</li>
 	<li>BE SURE TO LINK ALL PIANOS TOGETHER. IF YOU HAVE THREE, YOU WILL NEED TO LINK THE FIRST AND SECOND, SECOND AND THIRD, AND FIRST AND THIRD.</li>
@@ -179,9 +179,9 @@ z,Filler,Timing
 
 <h2>Maintenance</h2>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>You can use your piano's key to:</li>
-	<ul style="padding: 10px;">
+	<ul style="padding-left: 20px;">
 		<li>Activate a built in factory reset.</li>
 		<li>Enable or disable the looping circuit.</li>
 		<li>Set the interval of notes from 0.1 to 0.5 seconds. The default timing is 0.5 seconds.</li>
@@ -205,7 +205,7 @@ z,Filler,Timing
 
 <p>Your piano will often make noises. But don't worry! It's just communicating with you. And if you can't speak piano, you have this handy little book to help.</p>
 
-<ul style="padding: 10px;">
+<ul style="padding-left: 20px;">
 	<li>An angry sounding beep means that the piano is busy and you can't interface with it.</li>
 	<li>Whirring followed by a complete shutdown means that your note input was too long for the piano.</li>
 	<li>A lot of horrible mechanical noise followed by a complete shutdown means that the tempo you tried to input was too fast or slow.</li>
