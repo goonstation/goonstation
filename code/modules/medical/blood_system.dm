@@ -771,7 +771,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	throwforce = 0
 	throw_range = 16
 	flags = TABLEPASS | NOSHIELD
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 
 	New()
 		..()

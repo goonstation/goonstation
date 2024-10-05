@@ -7406,6 +7406,12 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/machinery/activation_button/driver_button{
+	desc = "A way to depart the dead.";
+	id = "chapelgun";
+	name = "Chapel Ejection Button";
+	pixel_y = 26
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -9942,6 +9948,11 @@
 /area/station/maintenance/east)
 "bbl" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler{
+	cycle_id = "medsps";
+	enter_id = "outer";
+	name = "Medical Space"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bbm" = (
@@ -15484,9 +15495,8 @@
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	level = 2
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -16921,8 +16931,8 @@
 	},
 /area/station/medical/medbay)
 "dKO" = (
-/obj/machinery/atmospherics/pipe/manifold,
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dKZ" = (
@@ -18913,9 +18923,6 @@
 "fBn" = (
 /obj/railing/orange/reinforced{
 	dir = 8
-	},
-/obj/railing/orange/reinforced{
-	dir = 3
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 5
@@ -21780,6 +21787,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/cycler{
+	name = "Upload Space";
+	enter_id = "inner";
+	cycle_id = "uploadsps"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ijy" = (
@@ -22594,15 +22606,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "iYe" = (
-/obj/machinery/light/incandescent{
-	dir = 4
+/obj/railing/orange/reinforced{
+	dir = 8
 	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	autoclose = 0;
+/obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
+/turf/simulated/floor/grasstodirt{
+	dir = 6
+	},
+/area/station/ranch)
 "iYx" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -22822,9 +22835,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "jiN" = (
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -23484,9 +23494,9 @@
 "jPM" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/airlock/cycler{
-	name = "Upload Space";
+	cycle_id = "medsps";
 	enter_id = "inner";
-	cycle_id = "uploadsps"
+	name = "Medical Space"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -25040,6 +25050,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "ltR" = (
@@ -26469,6 +26482,10 @@
 "mOy" = (
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/central)
+"mOB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "mOX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -27685,6 +27702,15 @@
 /obj/machinery/door/airlock/pyro/glass/sci,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"nQB" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 6
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "nQP" = (
 /obj/storage/secure/closet/brig_automatic/solitary2,
 /obj/cable{
@@ -30532,6 +30558,9 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -31697,6 +31726,9 @@
 "qSX" = (
 /obj/disposalpipe/segment/produce{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -36818,7 +36850,8 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "cloning_exit"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -37705,6 +37738,9 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "vAd" = (
@@ -38124,13 +38160,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
-"vQb" = (
-/obj/chicken_nesting_box,
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "vQl" = (
 /obj/stool/bed/brig,
 /obj/machinery/camera{
@@ -39295,9 +39324,6 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "xbm" = (
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "xbn" = (
@@ -40265,9 +40291,6 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/Zeta)
 "xKg" = (
-/obj/railing/orange/reinforced{
-	dir = 3
-	},
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -82747,7 +82770,7 @@ uSK
 eRb
 jvN
 jvN
-vQb
+vFW
 qdu
 jvN
 jvN
@@ -84561,7 +84584,7 @@ avF
 pdJ
 fBn
 ltL
-caU
+iYe
 idz
 jvN
 btY
@@ -85465,7 +85488,7 @@ fqT
 eRb
 jvN
 nbe
-jiN
+nQB
 vzP
 vDy
 hAu
@@ -85768,7 +85791,7 @@ nEc
 jvN
 jvN
 jvN
-jvN
+mOB
 jvN
 jvN
 jvN
@@ -86974,7 +86997,7 @@ uSK
 rKV
 qPI
 uSK
-iYe
+yjo
 uSK
 uSK
 uSK
@@ -92987,7 +93010,7 @@ aTr
 aqj
 aaa
 aaa
-bbl
+esW
 bdm
 aYR
 bdu
@@ -97215,7 +97238,7 @@ aaa
 aaa
 aaa
 abm
-esW
+bbl
 bbZ
 jPM
 rRn
