@@ -1,5 +1,15 @@
 
 (t)fri oct 04 24
+(u)JORJ949
+(p)20881
+(e)💅🎩|C-QoL, A-Clothing
+(+)Nuclear Operative gasmasks now come with built-in voice changers.
+(u)JORJ949
+(p)20418
+(e)💅🐣|C-QoL, A-Respawning
+(+)HoSes can now play halloween critters (when its halloween of course).
+(u)LeahTheTech
+(*)Zombie arms and legs can now break apart cuffs and shackles respectively.
 (u)Amylizzle
 (p)20943
 (e)🆕💨|C-Feature, A-Atmospherics

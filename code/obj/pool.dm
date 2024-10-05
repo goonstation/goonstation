@@ -42,6 +42,7 @@
 	var/in_use = 0
 	var/suiciding = 0
 	var/deadly = 0
+	var/buckled_guy // a a aaaaaaa aa aaaaaaaa
 
 	attackby(obj/item/W, mob/user)
 		return src.Attackhand(user)
