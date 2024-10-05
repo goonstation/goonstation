@@ -11,12 +11,18 @@
 <p>You can enable looping on the piano by using the piano key!</p>
 <p>The piano key will also let you reset everything on the piano (like a factory reset) if something goes really crazy.</p>
 
-<p>A "note" in the player piano has four parts, each separated by a comma:</p>
+<h3>Classic Format</h3>
 
-A,B,F,3
+<h4>Note</h4>
+
+<p>A Classic Format "note" has four parts, each separated by a comma:</p>
+
+<code>A,B,F,3</code>
+
+Note Name,Accidentals,Dynamics,Octave[,Delay]
 
 <ul style="padding: 10px;">
-	<li>The Note Name</li>
+	<li>Note Name</li>
 	<ul style="padding: 10px;">
 		<li>A, B, C, D, E, F, or G</li>
 		<li>R for a silent note</li>
@@ -45,7 +51,7 @@ A,B,F,3
 	</ul>
 	<li>Delay</li>
 	<ul style="padding: 10px;">
-		<li>Optional</li>
+		<li><i>Optional</i></li>
 		<li>How long the note should rest for after playing</li>
 		<li>This is <b>NOT</b> the same as note length/duration</li>
 		<li>0 to play a concurrent note</li>
@@ -53,9 +59,114 @@ A,B,F,3
 	</ul>
 </ul>
 
-<p>Each note "cluster" needs to be separated by a vertical pipe, like so: A,B,F,3|B,B,F,3</p>
+<h4>Set Timing</h4>
 
-<p>If you want a note to be a rest, you'll need to put an R in for every field on the note (e.g. R,R,R,R)</p>
+<p>Must be at the start of a song, it's not allowed anywhere else.</p>
+
+<code>timing,15</code>
+
+timing,Timing
+
+<ul style="padding: 10px;">
+	<li>timing</li>
+	<ul style="padding: 10px;">
+		<li>Must be the literal word <code>timing</code></li>
+	</ul>
+	<li>Timing</li>
+	<ul style="padding: 10px;">
+		<li>The new timing</li>
+		<li>Measured in centiseconds</li>
+		<li>Must be between 10 and 50</li>
+	</ul>
+</ul>
+
+<p>Each note "cluster" needs to be separated by a vertical pipe, like so: <code>A,B,F,3|B,B,F,3</code>.</p>
+
+<p>If you want a note to be a rest, you'll need to put an R in for every field on the note (e.g. R,R,R,R).</p>
+
+<h3>Dense Format</h3>
+
+<p>All types have no delimiter and are always three characters long.</p>
+
+<p>Unlike Classic Format's <code>|</code> delimiter, there are no delimiters for this format.</p>
+
+<h4>Note</h4>
+
+<code>Q5!</code>
+
+Note Name + Accidentals + Octave,Dynamics,Delay
+
+<ul style="padding: 10px;">
+	<li>Note Name + Accidentals + Octave</li>
+	<ul style="padding: 10px;">
+		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
+		<li><code>!</code> corresponds to MIDI note number 21 (A0) while <code>x</code> to 108 (C8)</li>
+	</ul>
+	<li>Dynamics</li>
+	<ul style="padding: 10px;">
+		<li>Goes from char <code>!</code> (33) to char <code>I</code> (73)</li>
+		<li>Resulting loudness goes from 20 to 60</li>
+	</ul>
+	<li>Delay</li>
+	<ul style="padding: 10px;">
+		<li><b>Required</b></li>
+		<li>How long the note should rest for after playing</li>
+		<li>This is <b>NOT</b> the same as note length/duration</li>
+		<li><code>!</code> to play a concurrent note</li>
+		<li><code>"</code> is the default</li>
+		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
+		<li>Value goes from 0 to 87</li>
+	</ul>
+</ul>
+
+<h4>Rest</h4>
+
+<code>y!q</code>
+
+y,2nd Digit,1st Digit
+
+<ul style="padding: 10px;">
+	<li>y</li>
+	<ul style="padding: 10px;">
+		<li>An indicator that this is a rest note</li>
+		<li>Must <b>not</b> be another character</li>
+	</ul>
+	<li>Delay</li>
+	<ul style="padding: 10px;">
+		<li><b>Required</b></li>
+		<li>How long to rest for</li>
+		<li>The first digit and last digit (base88) are used to get a base10 number</li>
+		<li>Value goes from 1 to 500</li>
+	</ul>
+</ul>
+
+<h4>Set Timing</h4>
+
+<p>Must be at the start of a song, it's not allowed anywhere else.</p>
+
+<code>z!,</code>
+
+z,Filler,Timing
+
+<ul style="padding: 10px;">
+	<li>z</li>
+	<ul style="padding: 10px;">
+		<li>An indicator that this sets the time</li>
+		<li>Must <b>not</b> be another character</li>
+	</ul>
+	<li>Filler</li>
+	<ul style="padding: 10px;">
+		<li>It can be any allowed character</li>
+		<li>Is not used</li>
+	</ul>
+	<li>Timing</li>
+	<ul style="padding: 10px;">
+		<li>The new timing</li>
+		<li>Measured in centiseconds</li>
+		<li>Value goes from 0 to 87</li>
+		<li>Must be between 10 and 50</li>
+	</ul>
+</ul>
 
 <h2>Limitations</h2>
 
