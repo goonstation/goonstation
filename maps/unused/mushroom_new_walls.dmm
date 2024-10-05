@@ -6399,7 +6399,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aHE" = (
-/obj/stool/chair/pew{
+/obj/stool/chair/pew/left{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel,
@@ -6630,9 +6630,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aIT" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "6-8"
 	},
@@ -6642,6 +6639,9 @@
 	},
 /obj/cable{
 	icon_state = "1-10"
+	},
+/obj/stool/chair/pew/center{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 5
@@ -6660,18 +6660,18 @@
 	},
 /area/station/chapel/sanctuary)
 "aIV" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/stool/chair/pew/center{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
 "aIX" = (
-/obj/stool/chair/pew{
+/obj/stool/chair/pew/center{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -6788,9 +6788,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aJE" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -6799,6 +6796,9 @@
 	},
 /obj/cable{
 	icon_state = "4-9"
+	},
+/obj/stool/chair/pew/center{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 6
@@ -6822,7 +6822,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aJI" = (
-/obj/stool/chair/pew{
+/obj/stool/chair/pew/left{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -7118,9 +7118,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aLi" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -7133,6 +7130,9 @@
 	},
 /obj/cable{
 	icon_state = "5-6"
+	},
+/obj/stool/chair/pew/right{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -7156,21 +7156,21 @@
 	},
 /area/station/chapel/sanctuary)
 "aLk" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-9"
 	},
 /obj/cable{
 	icon_state = "8-9"
 	},
+/obj/stool/chair/pew/right{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/chapel{
 	dir = 5
 	},
 /area/station/chapel/sanctuary)
 "aLm" = (
-/obj/stool/chair/pew{
+/obj/stool/chair/pew/right{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel{
@@ -18020,9 +18020,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "eKn" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /mob/living/critter/small_animal/dog/george,
 /obj/cable{
 	icon_state = "2-10"
@@ -18032,6 +18029,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/stool/chair/pew/center{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -20820,12 +20820,13 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "hmW" = (
-/obj/machinery/door/airlock/syndicate{
-	desc = "Seems to be a pretty sturdy door.";
-	name = "Listening Post"
-	},
 /obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/syndicate{
+	desc = "Seems to be a pretty sturdy door.";
+	name = "Listening Post";
+	id = "Sleeper_Access"
+	},
 /turf/simulated/floor,
 /area/listeningpost)
 "hnc" = (
@@ -23632,6 +23633,14 @@
 "jTk" = (
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
+"jUS" = (
+/obj/stool/chair/pew/center{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 6
+	},
+/area/station/chapel/sanctuary)
 "jXg" = (
 /obj/machinery/mass_driver{
 	desc = "A device that launches objects, like ANCIENT SIRENS, for example, on it at great velocity when activated.";
@@ -23967,6 +23976,15 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"knT" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=market";
+	location = "chapel"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 10
+	},
+/area/station/chapel/sanctuary)
 "knV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24552,11 +24570,11 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "kRY" = (
-/obj/stool/chair/pew{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/stool/chair/pew/left{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
@@ -32374,15 +32392,15 @@
 	},
 /area/station/science/lobby)
 "rsR" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=market";
-	location = "chapel"
+/obj/machinery/door/airlock/syndicate{
+	desc = "Seems to be a pretty sturdy door.";
+	name = "Listening Post";
+	id = "Sleeper_Access"
 	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 8
-	},
-/area/station/chapel/sanctuary)
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/listeningpost)
 "rsV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -34032,6 +34050,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/computer/tetris,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "sIR" = (
@@ -48467,7 +48486,7 @@ bla
 bkZ
 bln
 blw
-hmW
+rsR
 blw
 blH
 blH
@@ -86365,7 +86384,7 @@ wlC
 aLd
 anE
 aNf
-rsR
+aOi
 aPB
 aMl
 aNf
@@ -88173,7 +88192,7 @@ aCs
 aGO
 aEZ
 aII
-aHA
+knT
 aEq
 aMr
 aCs
@@ -88475,7 +88494,7 @@ aEY
 aGG
 aHE
 aIX
-aJI
+jUS
 aLm
 aDy
 aNz
