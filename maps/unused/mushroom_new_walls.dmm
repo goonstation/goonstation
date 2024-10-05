@@ -37497,6 +37497,13 @@
 "voG" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/reagent_dispensers/fueltank,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "vpg" = (
@@ -40632,6 +40639,12 @@
 	},
 /obj/machinery/computer/ordercomp{
 	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
