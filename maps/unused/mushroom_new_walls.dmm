@@ -26482,6 +26482,10 @@
 "mOy" = (
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/central)
+"mOB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "mOX" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -27698,6 +27702,15 @@
 /obj/machinery/door/airlock/pyro/glass/sci,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"nQB" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 6
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/station/ranch)
 "nQP" = (
 /obj/storage/secure/closet/brig_automatic/solitary2,
 /obj/cable{
@@ -85475,7 +85488,7 @@ fqT
 eRb
 jvN
 nbe
-jiN
+nQB
 vzP
 vDy
 hAu
@@ -85778,7 +85791,7 @@ nEc
 jvN
 jvN
 jvN
-jvN
+mOB
 jvN
 jvN
 jvN
