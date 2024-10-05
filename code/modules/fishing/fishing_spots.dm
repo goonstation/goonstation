@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	var/fishing_atom_type = null
 	/// associative list with the format (fish_type = probability), doesnt need to be ordered in descending probability
 	/// these are the fishing results that are ALWAYS avaiable at the spot. These won't get modified by conditionals like fishing loottables are.
-	var/list/fish_available = null
+	var/list/fish_available = list()
 	/// for wip fishing spots that shouldnt be automatically added to the global list of fishing spots
 	var/do_not_generate = 0
 	/// what tier of rod do you need to fish here? current rods are tier 1,2 & 3
