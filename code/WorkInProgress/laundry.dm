@@ -111,6 +111,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 							sec_record["criminal"] = ARREST_STATE_ARREST
 							sec_record["mi_crim"] = "Money laundering."
 							criminal.update_arrest_icon()
+			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
