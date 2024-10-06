@@ -22,6 +22,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	var/cycle_current = 0
 	var/cycle_max = CYCLE_TIME
 	var/mob/occupant = null
+	var/mob/activator = null
 	var/image/image_door = null
 	var/image/image_light = null
 	//var/image/image_panel = null
@@ -101,6 +102,15 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
 						newcash.changeStatus("freshly_laundered", INFINITE_STATUS)
 						newcash.set_loc(src)
+					//Money laundering is a crime!
+					var/mob/living/carbon/human/criminal = src.activator
+					if (ishuman(criminal))
+						var/perpname = criminal.name
+						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
+							sec_record["criminal"] = ARREST_STATE_ARREST
+							sec_record["mi_crim"] = "Money laundering."
+							criminal.update_arrest_icon()
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
@@ -324,6 +334,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				src.on = !src.on
 				. = TRUE
 				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+				src.activator = usr
 				if (src.on)
 					src.cycle = PRE
 					src.open = 0
