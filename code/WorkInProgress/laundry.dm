@@ -104,7 +104,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						newcash.set_loc(src)
 					//Money laundering is a crime!
 					var/mob/living/carbon/human/criminal = src.activator
-					if (ishuman(criminal))
+					if (ishuman(criminal) && seen_by_camera(criminal))
 						var/perpname = criminal.name
 						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
 						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
