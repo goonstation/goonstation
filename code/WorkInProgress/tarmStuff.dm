@@ -833,7 +833,7 @@ TYPEINFO(/obj/item/device/geiger)
 /datum/projectile/bullet/optio/hitscan/temporal
 	name = "temporal bolt"
 	sname = "temporal bolt"
-	damage = 65
+	damage = 35
 	shot_sound = 'sound/weapons/railgun.ogg'
 	shot_volume = 50
 	impact_image_state = "bullethole-large"
@@ -841,9 +841,7 @@ TYPEINFO(/obj/item/device/geiger)
 	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			M.do_disorient(50, knockdown = 20, stunned = 20, disorient = 40, remove_stamina_below_zero = 0)
-			var/turf/target = get_edge_target_turf(M, dirflag)
-			M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
+			M.do_disorient(30, knockdown = 20, stunned = 20, disorient = 30, remove_stamina_below_zero = 0)
 		..()
 
 /datum/projectile/special/timegun
