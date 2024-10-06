@@ -1,16 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"af" = (
-/obj/table/reinforced/auto,
-/obj/item/room_planner,
-/obj/item/room_planner,
-/obj/item/room_planner,
-/obj/item/room_planner,
-/obj/item/room_planner,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
 "ap" = (
 /obj/lattice{
 	dir = 4;
@@ -77,6 +65,18 @@
 /obj/item/extinguisher,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"cZ" = (
+/obj/table/reinforced/auto,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/obj/item/room_planner,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "dz" = (
 /obj/window/reinforced/west,
 /obj/table/reinforced/auto,
@@ -87,6 +87,12 @@
 /obj/item/device/gps,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"dE" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "dI" = (
 /obj/window/reinforced/west{
 	dir = 4;
@@ -103,17 +109,6 @@
 	id = "artlabgun";
 	name = "Sell Button";
 	pixel_y = -28
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
-"eE" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -154,6 +149,13 @@
 	name = "steel plating"
 	},
 /area/built_zone)
+"gd" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "gs" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	icon_state = "wall_trans";
@@ -161,12 +163,6 @@
 	tag = "icon-wall_trans"
 	},
 /area/shuttle/arrival/station)
-"gE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/turf/simulated/floor/industrial,
-/area/built_zone)
 "gL" = (
 /obj/machinery/lawrack,
 /obj/machinery/light/small/floor/harsh/very,
@@ -201,6 +197,15 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
+"hT" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "iQ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -242,21 +247,23 @@
 	name = "steel plating"
 	},
 /area/built_zone)
-"jT" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
-"kh" = (
-/obj/table/reinforced/auto,
-/obj/item/lamp_manufacturer/organic,
-/obj/item/lamp_manufacturer/organic,
-/obj/item/lamp_manufacturer/organic,
-/obj/item/lamp_manufacturer/organic,
-/obj/item/lamp_manufacturer/organic,
+"jG" = (
+/obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
+/area/built_zone)
+"jT" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"kr" = (
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	id = "construction_storeroom"
+	},
+/turf/simulated/floor/plating,
 /area/built_zone)
 "ky" = (
 /obj/stool/chair,
@@ -377,28 +384,6 @@
 	name = "steel shuttle bay plating"
 	},
 /area/shuttle/escape/station)
-"ob" = (
-/obj/item/device/light/floodlight,
-/obj/item/device/light/floodlight,
-/obj/item/device/light/floodlight,
-/obj/item/device/light/floodlight,
-/obj/item/device/light/floodlight,
-/obj/rack,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/obj/item/device/light/flashlight,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
 "oo" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -432,12 +417,15 @@
 	name = "steel shuttle bay plating"
 	},
 /area/shuttle/escape/station)
-"oY" = (
-/obj/decal/stripe_caution,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
+"oS" = (
+/obj/cable{
+	icon_state = "4-8"
 	},
+/obj/machinery/door_control/north{
+	dir = 2;
+	id = "construction_storeroom"
+	},
+/turf/simulated/floor/industrial,
 /area/built_zone)
 "pq" = (
 /obj/indestructible/shuttle_corner{
@@ -465,18 +453,6 @@
 	},
 /obj/item/seed/cannabis,
 /obj/item/clothing/mask/cigarette/dryjoint,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
-"qu" = (
-/obj/table/reinforced/auto,
-/obj/item/room_marker,
-/obj/item/room_marker,
-/obj/item/room_marker,
-/obj/item/room_marker,
-/obj/item/room_marker,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -524,22 +500,19 @@
 	name = "steel plating"
 	},
 /area/built_zone)
-"rE" = (
+"rQ" = (
+/turf/space,
+/area/supply/sell_point)
+"rY" = (
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
+	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/built_zone)
-"rQ" = (
-/turf/space,
-/area/supply/sell_point)
-"sc" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/industrial,
 /area/built_zone)
 "si" = (
 /obj/machinery/shuttle/engine/heater{
@@ -552,6 +525,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/shuttle/arrival/station)
+"sr" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "sG" = (
 /obj/window/reinforced/west{
 	dir = 4;
@@ -607,6 +584,36 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
+"ui" = (
+/obj/storage/crate/wooden,
+/obj/item/sheet/plastic/fullstack,
+/obj/item/sheet/plastic/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/steel/fullstack,
+/obj/item/sheet/glass/fullstack,
+/obj/item/sheet/glass/fullstack,
+/obj/item/rods/steel/fullstack,
+/obj/item/rods/steel/fullstack,
+/obj/item/tile/steel/fullstack,
+/obj/item/tile/steel/fullstack,
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/item/sheet/wood{
+	amount = 50
+	},
+/obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -817,6 +824,18 @@
 "Dm" = (
 /turf/space,
 /area/supply/delivery_point)
+"Du" = (
+/obj/table/reinforced/auto,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/obj/item/lamp_manufacturer/organic,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "DL" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -903,6 +922,13 @@
 	name = "steel shuttle bay plating"
 	},
 /area/shuttle/escape/station)
+"EH" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "EO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -910,6 +936,10 @@
 	},
 /turf/space,
 /area/shuttle/arrival/station)
+"EV" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/built_zone)
 "Fg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1024,24 +1054,6 @@
 	name = "steel plating"
 	},
 /area/built_zone)
-"IX" = (
-/obj/machinery/door_control/east{
-	id = "construction_storeroom"
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
-"Jp" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
 "JL" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -1076,6 +1088,12 @@
 	name = "steel shuttle bay plating"
 	},
 /area/space)
+"Ko" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor/industrial,
+/area/built_zone)
 "Kq" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
@@ -1132,13 +1150,6 @@
 	drive_range = 100;
 	id = "artlabgun"
 	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
-"Nq" = (
-/obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -1240,12 +1251,9 @@
 	},
 /turf/space,
 /area/shuttle/arrival/station)
-"PQ" = (
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	id = "construction_storeroom"
-	},
-/turf/simulated/floor/plating,
+"Px" = (
+/obj/decal/stripe_caution,
+/turf/simulated/floor/industrial,
 /area/built_zone)
 "PR" = (
 /obj/lattice{
@@ -1324,12 +1332,6 @@
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"RU" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/industrial,
-/area/built_zone)
 "Sl" = (
 /obj/machinery/atmospherics/unary/tank/air,
 /turf/simulated/floor/shuttle,
@@ -1360,13 +1362,17 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"Tg" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/built_zone)
-"Ti" = (
-/obj/decal/stripe_caution,
-/turf/simulated/floor/industrial,
+"TX" = (
+/obj/table/reinforced/auto,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/obj/item/room_marker,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
 /area/built_zone)
 "Ud" = (
 /obj/window/reinforced/west{
@@ -1404,6 +1410,16 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"UF" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "UK" = (
 /obj/landmark/start/latejoin,
 /obj/cable{
@@ -1437,45 +1453,6 @@
 /obj/item/storage/box/cablesbox,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"VB" = (
-/obj/storage/crate/wooden,
-/obj/item/sheet/plastic/fullstack,
-/obj/item/sheet/plastic/fullstack,
-/obj/item/sheet/steel/fullstack,
-/obj/item/sheet/steel/fullstack,
-/obj/item/sheet/glass/fullstack,
-/obj/item/sheet/glass/fullstack,
-/obj/item/rods/steel/fullstack,
-/obj/item/rods/steel/fullstack,
-/obj/item/tile/steel/fullstack,
-/obj/item/tile/steel/fullstack,
-/obj/item/sheet/wood{
-	amount = 50
-	},
-/obj/item/sheet/wood{
-	amount = 50
-	},
-/obj/item/sheet/wood{
-	amount = 50
-	},
-/obj/item/sheet/wood{
-	amount = 50
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/built_zone)
-"VO" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door_control/north{
-	dir = 2;
-	id = "construction_storeroom"
-	},
-/turf/simulated/floor/industrial,
-/area/built_zone)
 "VU" = (
 /obj/machinery/nanofab/mining,
 /turf/simulated/floor/shuttle,
@@ -1487,8 +1464,24 @@
 /obj/item/kitchen/utensil/knife,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"Wi" = (
-/obj/decal/tile_edge/stripe/extra_big,
+"Xi" = (
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/item/device/light/floodlight,
+/obj/rack,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/item/device/light/flashlight,
+/obj/machinery/light/small/sticky,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -1548,12 +1541,14 @@
 	},
 /area/space)
 "YO" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_floor";
-	tag = "icon-wall_floor (WEST)"
+/obj/machinery/door_control/east{
+	id = "construction_storeroom"
 	},
-/area/shuttle/arrival/station)
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "YP" = (
 /obj/lattice{
 	dir = 6;
@@ -44195,8 +44190,8 @@ ay
 ay
 ay
 HK
-Tg
-Tg
+EV
+EV
 HK
 HK
 ps
@@ -44497,12 +44492,12 @@ ay
 ay
 ay
 HK
-ob
+Xi
 zH
-Nq
+jG
 HK
-RU
-gE
+dE
+Ko
 ap
 ay
 ay
@@ -44798,13 +44793,13 @@ ay
 ay
 ay
 ay
-Tg
-kh
+EV
+Du
 zH
-oY
-PQ
-Ti
-sc
+gd
+kr
+Px
+sr
 ap
 ay
 ay
@@ -45100,13 +45095,13 @@ ay
 ay
 ay
 ay
-Tg
-qu
+EV
+TX
 zH
-oY
-PQ
-Ti
-sc
+gd
+kr
+Px
+sr
 ap
 ay
 ay
@@ -45403,12 +45398,12 @@ ay
 ay
 ay
 HK
-af
+cZ
 zH
-oY
-PQ
+gd
+kr
 UN
-sc
+sr
 ap
 ay
 ay
@@ -45705,12 +45700,12 @@ ay
 ay
 ay
 HK
-VB
-IX
+ui
+YO
 zH
 HK
-VO
-sc
+oS
+sr
 ap
 ay
 ay
@@ -46009,7 +46004,7 @@ ay
 HK
 HK
 HK
-Jp
+hT
 HK
 Oz
 HK
@@ -47823,7 +47818,7 @@ HK
 fU
 Fg
 jn
-rE
+UF
 HK
 HK
 ay
@@ -47839,7 +47834,7 @@ xY
 xY
 xY
 tK
-YO
+SL
 SL
 SL
 jp
@@ -48125,7 +48120,7 @@ UQ
 pT
 Fg
 zH
-Wi
+EH
 MN
 UQ
 ay
@@ -48427,7 +48422,7 @@ HK
 HK
 Oz
 UQ
-eE
+rY
 Ok
 HK
 ps
