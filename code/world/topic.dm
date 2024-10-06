@@ -735,7 +735,7 @@
 			if ("youtube")
 				if (!plist["data"]) return 0
 
-				play_music_remote(json_decode(plist["data"]), from_topic = TRUE)
+				play_music_remote(json_decode(plist["data"]))
 
 				// trigger cooldown so radio station doesn't interrupt our cool music
 				var/duration = text2num(plist["duration"])
