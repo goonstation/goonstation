@@ -35,6 +35,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	stamina_damage = 40
 	stamina_cost = 23
 	stamina_crit_chance = 5
+	breaks_cuffs = TRUE
 
 	New()
 		..()
@@ -685,6 +686,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
+	breaks_cuffs = FALSE
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right
@@ -739,6 +741,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
+	breaks_cuffs = FALSE
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 /obj/item/parts/robot_parts/leg
@@ -848,6 +851,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
+	breaks_cuffs = FALSE
 
 /obj/item/parts/robot_parts/leg/left/treads
 	name = "left cyborg tread"
@@ -885,6 +889,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
+	breaks_cuffs = FALSE
 
 /obj/item/parts/robot_parts/leg/right/treads
 	name = "right cyborg tread"

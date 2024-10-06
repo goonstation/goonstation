@@ -1391,6 +1391,73 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		if(length(grid[x][y]) == 3)
 			. = grid[x][y][attribute]
 
+	proc/draw_from_string(cell_string, value_alive, value_dead, override)
+		for(var/x in 1 to length(grid))
+			for(var/y in 1 to length(grid[1]))
+				var/index = x * length(grid) + y
+				var/cell_value
+				if(index <= length(cell_string))
+					cell_value = text2num(cell_string[index])
+				if(cell_value)
+					if(!src.grid[x][y] || override) src.grid[x][y] = value_alive
+				else
+					if(!src.grid[x][y] || override) src.grid[x][y] = value_dead
+
+	proc/find_contigious_cells()
+		var/visited = new/list(length(src.grid),length(src.grid[1]))
+
+		var/connected_cells = list()
+		var/group_id = 0
+		var/current_group = list()
+		var/list/to_visit = list()
+		for(var/x in 1 to length(visited))
+			for(var/y in 1 to length(visited[1]))
+				if(!visited[x][y])
+					if(src.grid[x][y])
+						to_visit = list(list(x,y))
+						current_group = list()
+						while(length(to_visit))
+							var/cell_x = to_visit[1][1]
+							var/cell_y = to_visit[1][2]
+							if(!visited[cell_x][cell_y] && src.grid[cell_x][cell_y])
+								if((cell_x-1 >= 1) && !visited[cell_x-1][cell_y] ) //WEST
+									to_visit += list(list(cell_x-1,cell_y))
+								if((cell_x+1 <= length(grid))&& !visited[cell_x+1][cell_y]) //EAST
+									to_visit += list(list(cell_x+1,cell_y))
+								if((cell_y+1 <= length(grid[1]))&& !visited[cell_x][cell_y+1])  //NORTH
+									to_visit += list(list(cell_x, cell_y+1))
+								if((cell_y-1 >= 1) && !visited[cell_x][cell_y-1])  //SOUTH
+									to_visit += list(list(cell_x, cell_y-1))
+
+								current_group += list(list(to_visit[1][1],to_visit[1][2]))
+							visited[cell_x][cell_y] = TRUE
+							to_visit.Cut(1,2)
+						connected_cells["[group_id++]"] += current_group
+					else
+						visited[x][y] = TRUE
+		return connected_cells
+
+	proc/has_empty_neighbor(x, y, diagonals=FALSE)
+		if((x-1 >= 1) && !src.grid[x-1][y] ) //WEST
+			. = TRUE
+		else if((x+1 <= length(grid))&& !src.grid[x+1][y]) //EAST
+			. = TRUE
+		else if((y+1 <= length(grid[1]))&& !src.grid[x][y+1])  //NORTH
+			. = TRUE
+		else if((y-1 >= 1) && !src.grid[x][y-1])  //SOUTH
+			. = TRUE
+
+		if(diagonals)
+			if((x-1 >= 1) && (y-1 >= 1) && !src.grid[x-1][y-1] ) //SW
+				. = TRUE
+			else if((x+1 <= length(grid)) && (y-1 >= 1) && !src.grid[x+1][y-1]) //SE
+				. = TRUE
+			else if((x-1 >= 1) && (y+1 <= length(grid[1]))&& !src.grid[x-1][y+1])  //NW
+				. = TRUE
+			else if((x+1 <= length(grid)) && (y+1 <= length(grid[1])) && !src.grid[x+1][y+1])  //NE
+				. = TRUE
+
+
 	proc/generate_maze(x1, y1, x2, y2, floor_value, override)
 		var/list/valid_grid = new/list(length(src.grid),length(src.grid[1]))
 

@@ -1,4 +1,50 @@
 
+(t)fri oct 04 24
+(u)JORJ949
+(p)20881
+(e)💅🎩|C-QoL, A-Clothing
+(+)Nuclear Operative gasmasks now come with built-in voice changers.
+(u)JORJ949
+(p)20418
+(e)💅🐣|C-QoL, A-Respawning
+(+)HoSes can now play halloween critters (when its halloween of course).
+(u)LeahTheTech
+(*)Zombie arms and legs can now break apart cuffs and shackles respectively.
+(u)Amylizzle
+(p)20943
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Adds a new gene combination: Radioactive + Farty
+(t)thu oct 03 24
+(u)Glamurio (Ryou)
+(p)20775
+(e)💅🍝|C-QoL, A-Catering
+(+)"Spiced Rum", "Hot Toddy", and "Pumpkin Spiced Latte" are now made with cinnamon.
+(u)LeahTheTech
+(p)20954
+(e)|
+(*)Getting hit by a heavy thrown object now applies melee hit stagger.
+(u)Sovexe
+(p)20949
+(e)🪲⚙|C-Bug, A-Internal
+(+)Attempt at preventing ambient sound loops from breaking
+(t)wed oct 02 24
+(u)Cherman0
+(p)20634
+(e)🗺🔄🔬|A-Mapping, C-Rework, A-Science
+(+)Atlas's research wing has undergone major renovations. The atmospherics lab was moved to the dedicated support ship NCS Hesperis.
+(u)glowbold
+(p)20876
+(e)🆕🔄💪|C-Feature, C-Rework, A-Traits
+(+)Joining the round as a jailbird prints a wanted poster at all printers. Keep an eye out!
+(u)Studenterhue
+(p)20914
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)The coffee machine now sells a novelty pumpkin spice latte from Discount Dan's, available exclusively during the autumn season! It comes in 13 flavors from the September 2024 contest. Congrats to Garash, Snoid, Frank Stein, JORJ949, crunchwarp, Isane, YoLemons, Finassar, Whele, medsal15, and Sydne66 for winning this contest. Solenoid and SteveRooley didn't win, but their entries were so cool they got in anyways.
+(+)Emagging the coffee machine unlocks a crunchy, crimey, orangey, VHFCS-y, fall-exclusive pumpkin spice latte. This contest winner comes from Balarak.
+(u)Flaborized
+(p)20880
+(e)🎨|C-Sprites
+(*)New Trait: "Was It Something I Said?".
 (t)tue oct 01 24
 (u)LeahTheTech
 (+)Radioactive waste is now more radioactive.
