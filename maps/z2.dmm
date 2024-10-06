@@ -32526,16 +32526,17 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/se,
 /area/syndicate_station/battlecruiser)
 "cvV" = (
-/obj/stool/chair/office/red{
-	dir = 1
-	},
+/obj/storage/crate/wooden,
+/obj/item/storage/box/record/radio/host,
+/obj/item/radio_tape/audio_book/commander_support,
+/obj/item/radio_tape/audio_book/commander_resignation,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvW" = (
-/obj/storage/crate/wooden,
-/obj/item/storage/box/record/radio/host,
-/obj/item/radio_tape/audio_book/commander_resignation,
-/obj/item/radio_tape/audio_book/commander_support,
+/obj/table/wood/auto,
+/obj/submachine/record_player/portable{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvZ" = (
@@ -111057,7 +111058,7 @@ dir
 lzl
 cvJ
 cvQ
-cvQ
+cvV
 lzl
 dje
 djj
@@ -111359,7 +111360,7 @@ dis
 lzl
 cgS
 cvR
-cvV
+cvQ
 lzl
 djg
 djj
