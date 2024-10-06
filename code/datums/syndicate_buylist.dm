@@ -1039,6 +1039,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
 
+/datum/syndicate_buylist/traitor/record_player
+	name = "Portable Record player"
+	item = /obj/submachine/record_player/portable
+	cost = 2
+	desc = "A portable record player, so you can play tunes while committing crimes!"
+	job = list("Radio Show Host")
+
 /datum/syndicate_buylist/traitor/chicken_grenade
 	name = "Chicken Grenade"
 	item = /obj/item/old_grenade/chicken
