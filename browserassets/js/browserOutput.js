@@ -531,9 +531,7 @@ function ehjaxCallback(data) {
                     triggerError("PlayMusic: " + e + ". " + JSON.stringify(data));
                 }
             } else {
-                output(
-                    '<span class="internal boldnshit">Your IE version is too old for this music. Please upgrade to IE 9+.</span>',
-                );
+                output('<span class="internal boldnshit">Your IE version is too old for this music. Please upgrade to IE 9+.</span>');
             }
         } else if (typeof data.adjustVolume !== undefined) {
             if (typeof data.adjustVolume !== 'number' || data.adjustVolume < 0 || data.adjustVolume > 1) {
