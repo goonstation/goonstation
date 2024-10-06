@@ -569,36 +569,46 @@ function ehjaxCallback(data) {
 					) {
 						data.volume = opts.volume;
 					}
-					var xhr = new XMLHttpRequest();
-					xhr.open("GET", data.playMusic, true);
-					xhr.responseType = "blob";
-
-					xhr.onload = function () {
-						if (xhr.status === 200) {
-							var blob = xhr.response;
-							var url = URL.createObjectURL(blob);
-							$playMusic.attr("src", url);
-							$playMusic.attr("youtube", true);
-							var music = $playMusic.get(0);
-							music.volume =
-								data.volume *
-								0.4; /* Added the multiplier here because youtube is consistently */
-							if (music.paused) {
-								/* louder than admin music, which makes people lower the volume. */
-								music.play();
-							}
-						} else {
-							triggerError(
-								"PlayMusic: Failed to download music. Status: " + xhr.status,
-							);
+					var fromTopic = data.fromTopic;
+					if (fromTopic) {
+						// Play youtube-dl style
+						$playMusic.attr("src", data.playMusic);
+						$playMusic.attr("youtube", true);
+						var music = $playMusic.get(0);
+						/* Added the multiplier here because youtube is consistently louder than admin music, which makes people lower the volume. */
+						music.volume = data.volume * 0.4;
+						if (music.paused) {
+							music.play();
 						}
-					};
+					} else {
+						// Play cobalt-tools style
+						var xhr = new XMLHttpRequest();
+						xhr.open("GET", data.playMusic, true);
+						xhr.responseType = "blob";
 
-					xhr.onerror = function () {
-						triggerError("PlayMusic: Network error.");
-					};
-
-					xhr.send();
+						xhr.onload = function () {
+							if (xhr.status === 200) {
+								var blob = xhr.response;
+								var url = URL.createObjectURL(blob);
+								$playMusic.attr("src", url);
+								$playMusic.attr("youtube", true);
+								var music = $playMusic.get(0);
+								/* Added the multiplier here because youtube is consistently louder than admin music, which makes people lower the volume. */
+								music.volume = data.volume * 0.4;
+								if (music.paused) {
+									music.play();
+								}
+							} else {
+								triggerError(
+									"PlayMusic: Failed to download music. Status: " + xhr.status,
+								);
+							}
+						};
+						xhr.onerror = function () {
+							triggerError("PlayMusic: Network error.");
+						};
+						xhr.send();
+					}
 				} catch (e) {
 					triggerError("PlayMusic: " + e + ". " + JSON.stringify(data));
 				}
