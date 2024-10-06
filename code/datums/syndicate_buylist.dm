@@ -1043,8 +1043,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Portable Record player"
 	item = /obj/submachine/record_player/portable
 	cost = 2
+	vr_allowed = FALSE
+	not_in_crates = TRUE
 	desc = "A portable record player, so you can play tunes while committing crimes!"
 	job = list("Radio Show Host")
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/chicken_grenade
 	name = "Chicken Grenade"
