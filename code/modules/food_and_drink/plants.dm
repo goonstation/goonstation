@@ -1077,8 +1077,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	var/obj/item/ai_plating_kit/snip_result = /obj/item/ai_plating_kit/pumpkin
 
 	attackby(obj/item/W, mob/user)
-		if (issnippingtool(W))
-			user.visible_message(SPAN_NOTICE("[user] carefully snips up the [src]!"))
+		if (istype(W, /obj/item/cable_coil))
+			user.visible_message(SPAN_NOTICE("[user] adds wiring to the [src]!"))
 			var/obj/item/clothing/head/result = new src.snip_result(user.loc)
 			user.put_in_hand_or_drop(result)
 			qdel(src)
