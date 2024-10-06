@@ -519,9 +519,7 @@ function ehjaxCallback(data) {
                                     music.play();
                                 }
                             } else {
-                                triggerError(
-                                    "PlayMusic: Failed to download music. Status: " + xhr.status,
-                                );
+                                triggerError("PlayMusic: Failed to download music. Status: " + xhr.status);
                             }
                         };
                         xhr.onerror = function () {
