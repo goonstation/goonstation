@@ -43,7 +43,7 @@
 	name = "strange machine"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
@@ -67,14 +67,14 @@
 	tag = "icon-reinf_tabledir"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
 /area/space)
 "ak" = (
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
@@ -86,7 +86,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
@@ -105,7 +105,7 @@
 /area/space)
 "ap" = (
 /obj/machinery/door/supernorn,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "aq" = (
 /turf/unsimulated/wall/adaptive/concrete{
@@ -129,7 +129,7 @@
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
 "au" = (
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "av" = (
 /turf/unsimulated/floor/stairs{
@@ -182,7 +182,7 @@
 	icon_state = "door0";
 	dir = 8
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "aC" = (
 /turf/unsimulated/floor/stairs{
@@ -238,7 +238,7 @@
 	icon_state = "door0";
 	dir = 4
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "aL" = (
 /turf/unsimulated/floor/stairs{
@@ -327,11 +327,11 @@
 /area/space)
 "aY" = (
 /obj/machinery/door/supernorn/engineering,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "aZ" = (
 /obj/machinery/door/supernorn/command,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "ba" = (
 /turf/simulated/floor/shuttle{
@@ -364,21 +364,21 @@
 	icon_state = "reinf_tabledir";
 	tag = "icon-reinf_tabledir"
 	},
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "white";
 	name = "lab floor"
 	},
 /area/space)
 "be" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "white";
 	name = "lab floor"
 	},
 /area/space)
 "bf" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (NORTHWEST)";
 	name = "carpet";
 	icon = 'icons/turf/carpet.dmi';
@@ -387,7 +387,7 @@
 	},
 /area/space)
 "bg" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (NORTH)";
 	name = "carpet";
 	icon = 'icons/turf/carpet.dmi';
@@ -396,7 +396,7 @@
 	},
 /area/space)
 "bh" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (NORTHEAST)";
 	name = "carpet";
 	icon = 'icons/turf/carpet.dmi';
@@ -409,10 +409,10 @@
 	tag = "icon-windowsouth (NORTH)";
 	icon_state = "windowsouth"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bj" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (SOUTHWEST)";
 	name = "carpet";
 	icon = 'icons/turf/carpet.dmi';
@@ -421,14 +421,14 @@
 	},
 /area/space)
 "bk" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon = 'icons/turf/carpet.dmi';
 	icon_state = "fgreen2";
 	name = "carpet"
 	},
 /area/space)
 "bl" = (
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	tag = "icon-fgreen2 (SOUTHEAST)";
 	name = "carpet";
 	icon = 'icons/turf/carpet.dmi';
@@ -444,7 +444,7 @@
 /obj/stool/chair/office/moveable{
 	dir = 8
 	},
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "white";
 	name = "lab floor"
@@ -452,7 +452,7 @@
 /area/space)
 "bo" = (
 /obj/item/instrument/large/jukebox,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bp" = (
 /obj/stool/chair{
@@ -460,11 +460,11 @@
 	icon_state = "chair";
 	dir = 4
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bq" = (
 /obj/table/woodentable/single,
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "br" = (
 /obj/stool/chair{
@@ -472,19 +472,19 @@
 	icon_state = "chair";
 	dir = 8
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bs" = (
 /obj/fakeobject/sink{
 	name = "Rusty Sink"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bt" = (
 /obj/fakeobject/oven{
 	name = "broken oven"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bu" = (
 /turf/simulated/floor/shuttle{
@@ -527,7 +527,7 @@
 	icon_state = "vclosed";
 	vertical = 1
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bz" = (
 /obj/grille/catwalk{
@@ -553,7 +553,7 @@
 	name = "unusual machine"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
@@ -566,7 +566,7 @@
 	icon_state = "bdoorbroken";
 	name = "rusty blastdoor"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "bD" = (
 /turf/unsimulated/wall/adaptive/concrete{
@@ -1079,7 +1079,7 @@
 	name = "Toilets";
 	vertical = 1
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "cy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -1159,7 +1159,7 @@
 	name = "Air Scrubber"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
@@ -1173,7 +1173,7 @@
 	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/unsimulated/floor/concrete{
+/turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
@@ -1187,7 +1187,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "cK" = (
 /obj/stomachacid,
@@ -1215,7 +1215,7 @@
 	icon_state = "off-map";
 	name = "filter"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "cN" = (
 /obj/fakeobject/pipe{
@@ -1225,7 +1225,7 @@
 	icon_state = "off-map";
 	name = "filter"
 	},
-/turf/unsimulated/floor/concrete,
+/turf/unsimulated/outdoors/concrete,
 /area/space)
 "cO" = (
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
