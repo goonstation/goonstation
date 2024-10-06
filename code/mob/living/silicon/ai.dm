@@ -181,6 +181,7 @@ or don't if it uses a custom topopen overlay
 		"tactical" = "The casing is made out of a dark grey plastic and is covered in clearly purposeless grooves and fans and whatelse. Very tacticool.",
 		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
 		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
+		"pumpkin" = "The casing is made out of a pumpkin. Spooky!",
 		"crt" = "The core appears to be a... CRT television. Huh.",
 		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
 		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
@@ -2301,7 +2302,7 @@ or don't if it uses a custom topopen overlay
 
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
-		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
+		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock"|| coreSkin == "pumpkin")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")

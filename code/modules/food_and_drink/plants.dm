@@ -1074,8 +1074,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	brew_result = list("juice_pumpkin"= 40)
 	var/obj/item/clothing/head/carving_result = /obj/item/clothing/head/pumpkin
 	var/obj/item/reagent_containers/food/spoon_result = /obj/item/reagent_containers/food/drinks/bowl/pumpkin
+	var/obj/item/ai_plating_kit/snip_result = /obj/item/ai_plating_kit/pumpkin
 
 	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W))
+			user.visible_message(SPAN_NOTICE("[user] carefully snips up the [src]!"))
+			var/obj/item/clothing/head/result = new src.snip_result(user.loc)
+			user.put_in_hand_or_drop(result)
+			qdel(src)
 		if (iscuttingtool(W))
 			src.carving_message(W, user)
 			var/obj/item/clothing/head/result = new src.carving_result(user.loc)
