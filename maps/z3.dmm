@@ -9309,7 +9309,6 @@
 /area/abandonedship)
 "aRL" = (
 /obj/machinery/light_switch/west{
-	dir = 4;
 	pixel_x = -22
 	},
 /turf/simulated/floor/sanitary,

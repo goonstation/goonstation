@@ -57,7 +57,7 @@
 
 		if(assailant)	//drop that grab to avoid the sticky behavior
 			REMOVE_ATOM_PROPERTY(src.assailant, PROP_MOB_CANTMOVE, src)
-			if (src in assailant.equipped_list() && !dropped)
+			if ((src in assailant.equipped_list()) && !dropped)
 				if (assailant.equipped() == src)
 					assailant.drop_item()
 				else

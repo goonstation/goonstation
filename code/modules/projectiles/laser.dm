@@ -119,7 +119,7 @@ toxic - poisons
 	max_range = 30
 	projectile_speed = 20
 	sname = "assault laser"
-	shot_sound = 'sound/weapons/Laser.ogg'
+	shot_sound = 'sound/weapons/asslaser.ogg'
 	color_red = 0
 	color_green = 0
 	color_blue = 1

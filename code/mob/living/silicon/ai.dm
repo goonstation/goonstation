@@ -94,6 +94,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/network = "SS13"
 	var/classic_move = 1 //Ordinary AI camera movement
 	var/obj/machinery/camera/current = null
+	var/obj/machinery/camera/camera = null //Our internal camera for seeing from core while in eye
 	var/list/connected_robots = list()
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
@@ -383,6 +384,10 @@ or don't if it uses a custom topopen overlay
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.update_name_tag()
 
+		src.camera = new /obj/machinery/camera(src)
+		src.camera.c_tag = src.real_name
+		src.camera.network = "Robots"
+
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
 	RETURN_TYPE(/mob)
@@ -563,6 +568,7 @@ or don't if it uses a custom topopen overlay
 				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
 				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
 				src.verbs += /mob/living/silicon/ai/verb/rename_self
+				src.verbs += /mob/living/silicon/ai/verb/go_offline
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -2105,6 +2111,20 @@ or don't if it uses a custom topopen overlay
 	else
 		src.show_text("This ability is still on cooldown for [round(GET_COOLDOWN(src, "ai_self_rename") / 10)] seconds!", "red")
 
+/mob/living/silicon/ai/verb/go_offline()
+	set category = "AI Commands"
+	set name = "Go Offline"
+	set desc = "Disconnect your brain such that a new AI can take your place."
+
+	var/mob/message_mob = src.get_message_mob()
+	if (!message_mob.client || isdead(src))
+		return
+	var/confirm = tgui_alert(message_mob, "Become a ghost and allow other players to join into your core? (WARNING: YOU CANNOT BE LAWED OR ORDERED TO DO THIS AND YOU CANNOT BE REVIVED.)", "Permanently Shut Down?", list("Yes", "Cancel"))
+	if (confirm != "Yes")
+		return
+
+	become_latejoin(TRUE)
+
 // CALCULATIONS
 
 /mob/living/silicon/ai/proc/set_face(var/emotion)
@@ -2579,6 +2599,30 @@ proc/get_mobs_trackable_by_AI()
 	src.eyecam.UpdateName()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
+
+// For if an AI needs to disconnect, make their core a latejoin one
+/mob/living/silicon/ai/proc/become_latejoin(var/announce = FALSE)
+	if (deployed_to_eyecam)
+		eyecam.return_mainframe()
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+	if (src.mind)
+		src.mind.register_death()
+		src.mind.get_player()?.dnr = TRUE
+	src.ghostize()
+
+	//Tell the crew the AI is gone
+	if(announce)
+		command_alert("Station AI unit [pick("crash", "kernel panic", "unrecoverable error")] detected, attempting automated download of new personality from Central Command database...","Artificial Intelligence Update", alert_origin = ALERT_STATION)
+	logTheThing(LOG_COMBAT, src, "is replaced with a latejoin AI at [log_loc(src)].")
+
+	qdel(src.brain)
+	src.brain = new /obj/item/organ/brain/latejoin(src)
+	src.set_color(000000)
+	src.faceEmotion = "ai_blank"
+	src.update_appearance()
+	src.name = "AI"
+	src.UpdateName()
 
 /*-----Core-Creation---------------------------------------*/
 

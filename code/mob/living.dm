@@ -2193,6 +2193,8 @@
 			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
+	if (AM.throwforce > 5) //number
+		src.changeStatus("staggered", 5 SECONDS)
 	..()
 
 /mob/living/proc/check_singing_prefix(var/message)

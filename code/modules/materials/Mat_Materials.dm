@@ -951,7 +951,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	name = "quartz"
 	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
-	alpha = 220
+	alpha = 180
 	var/gem_tier = 3
 
 	New()

@@ -205,7 +205,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40

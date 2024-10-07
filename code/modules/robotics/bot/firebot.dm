@@ -34,6 +34,7 @@
 	var/extinguish_flags = EXTINGUISH_HOTSPOTS | EXTINGUISH_ITEMS | EXTINGUISH_MOBS
 	var/water_amt = 2
 	var/foam_amt = 8
+	var/list/people_to_ignore = list() //people we've insulted with the trait and don't need to insult again
 	//To-Do: Patrol the station for fires maybe??
 
 /obj/machinery/bot/firebot/party
@@ -256,8 +257,14 @@
 
 	if(src.extinguish_flags & EXTINGUISH_MOBS)
 		for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
-			if (M == src.oldtarget || isdead(M) || !src.valid_target(M))
+			if (M == src.oldtarget || isdead(M) || !src.valid_target(M) || (get_weakref(M) in src.people_to_ignore))
 				continue
+			if(M.traitHolder.hasTrait("wasitsomethingisaid"))
+				src.people_to_ignore.Add(get_weakref(M)) //each bot gets to insult the person once
+				src.point(M, 1)
+				src.speak(pick("I WILL IGNORE THAT BECAUSE I DO NOT LIKE YOU.", "SOME BOTS JUST WANT TO WATCH CERTAIN PEOPLE BURN TO DEATH","I CAN MAKE AN EXCEPTION JUST THIS ONCE, FIRE.","AND NOW THAT THE WORLD IS ON FIRE YOU HAVE THE AUDACITY TO COME TO ME FOR HELP?", "MY HATRED FOR YOU OUTWEIGHS MY FEELINGS ON FIRE WHICH ARE PUBLICLY KNOWN TO BE QUITE STRONG"))
+				continue
+
 			if(IN_RANGE(src, M, 7) && (M.getStatusDuration("burning") || (src.emagged && prob(25))))
 				if (src.setup_party)
 					src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))

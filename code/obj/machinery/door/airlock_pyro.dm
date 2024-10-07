@@ -81,6 +81,8 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	hardened = FALSE
 	cant_hack = TRUE
 	aiControlDisabled = FALSE
+	health = 800
+	health_max = 800
 
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"

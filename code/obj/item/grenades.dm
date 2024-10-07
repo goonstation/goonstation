@@ -1384,6 +1384,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
+					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"
@@ -1461,6 +1462,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					var/obj/machinery/door/firedoor/firelock = O
 					qdel(firelock)
 					continue
+				if (istype(O, /obj/storage))
+					O.ex_act(2)
+					continue
 		qdel(src)
 		return
 
@@ -1505,6 +1509,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
+					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"
