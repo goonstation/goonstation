@@ -1089,7 +1089,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			else
 				boutput(user, "You need at least three lengths of cable to add to [src]!")
 				return
-			var/obj/item/clothing/head/result = new src.snip_result(user.loc)
+			var/obj/item/clothing/head/result = new src.wire_result(user.loc)
 			user.put_in_hand_or_drop(result)
 			qdel(src)
 		if (iscuttingtool(W))
