@@ -438,6 +438,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	syndicate
 		icon_state = "pda-syn"
+		desc = "A cheap knockoff looking portable microcomputer claiming to be made by ElecTek LTD. It has a slot for an ID card, and a hole to put a pen into."
+		locked_bg_color = TRUE
+		bg_color = "#A33131"
+		r_tone = /datum/ringtone/basic/ring10
+		screen_x = 2
+		window_title = "Personnel Data Actuator"
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
 		team_num = TEAM_SYNDICATE
 
