@@ -1,5 +1,28 @@
 
+(t)fri oct 04 24
+(u)JORJ949
+(p)20881
+(e)💅🎩|C-QoL, A-Clothing
+(+)Nuclear Operative gasmasks now come with built-in voice changers.
+(u)JORJ949
+(p)20418
+(e)💅🐣|C-QoL, A-Respawning
+(+)HoSes can now play halloween critters (when its halloween of course).
+(u)LeahTheTech
+(*)Zombie arms and legs can now break apart cuffs and shackles respectively.
+(u)Amylizzle
+(p)20943
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Adds a new gene combination: Radioactive + Farty
 (t)thu oct 03 24
+(u)Glamurio (Ryou)
+(p)20775
+(e)💅🍝|C-QoL, A-Catering
+(+)"Spiced Rum", "Hot Toddy", and "Pumpkin Spiced Latte" are now made with cinnamon.
+(u)LeahTheTech
+(p)20954
+(e)|
+(*)Getting hit by a heavy thrown object now applies melee hit stagger.
 (u)Sovexe
 (p)20949
 (e)🪲⚙|C-Bug, A-Internal

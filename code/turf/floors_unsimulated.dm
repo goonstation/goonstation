@@ -1138,7 +1138,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 							T.ClearSpecificOverlays("edge_[direction]") // Cull overlaps
 							continue
 					if(turn(direction, 180) & connectdir)
-						T.ClearSpecificOverlays("edge_[direction]") // Cull diagnals
+						T.ClearSpecificOverlays("edge_[direction]") // Cull diagonals
 						continue
 					var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
 					edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
