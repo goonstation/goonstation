@@ -1080,12 +1080,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			src.carving_message(W, user)
 			var/obj/item/clothing/head/result = new src.carving_result(user.loc)
 			result.name = "carved [src.name]"
+			result.transform = src.transform
 			qdel(src)
 		else if (isspooningtool(W))
 			src.spoon_message(W, user)
 			var/obj/item/reagent_containers/result = new src.spoon_result(user.loc)
 			result.reagents.maximum_volume = max(result.reagents.maximum_volume, src.reagents.total_volume)
 			src.reagents.trans_to(result, src.reagents.maximum_volume)
+			result.transform = src.transform
 			qdel(src)
 
 	proc/carving_message(obj/item/knife, mob/user)
