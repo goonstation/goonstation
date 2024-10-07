@@ -1,4 +1,9 @@
 
+(t)mon oct 07 24
+(u)JORJ949
+(p)20983
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added a Pumpkin AI plating kit. Add wires to a pumpkin to get it!
 (t)fri oct 04 24
 (u)JORJ949
 (p)20881
