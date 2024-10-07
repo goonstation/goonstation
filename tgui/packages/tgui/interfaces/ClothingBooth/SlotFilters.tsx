@@ -6,14 +6,15 @@
  * @license ISC
  */
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { ClothingBoothSlotKey } from './type';
+import { UiStateContext } from './uiState';
 
 export const SlotFilters = () => {
   const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
-  const [tagModal, setTagModal] = useState(false);
+  const { showTagsModal, setShowTagsModal } = useContext(UiStateContext);
   const [slotFilters, setSlotFilters] = useState<
     Partial<Record<ClothingBoothSlotKey, boolean>>
   >({});
@@ -40,7 +41,7 @@ export const SlotFilters = () => {
                 (tagFilter) => tagFilter === true,
               ) && 'good'
             }
-            onClick={() => setTagModal(!tagModal)}
+            onClick={() => setShowTagsModal(!showTagsModal)}
           >
             Tags{' '}
             {!!Object.values(tagFilters).some(

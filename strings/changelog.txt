@@ -1,4 +1,12 @@
 
+(t)fri sep 27 24
+(u)LeahTheTech
+(+)Food heal over time effects now have unique icons.
+(+)Jumpsuits can now be cut up into cloth.
+(u)Mintyphresh
+(p)20856
+(e)🆕🍝|C-Feature, A-Catering
+(+)Bartenders can now intuit much more about the alcohol contents of drinks.
 (t)wed sep 25 24
 (u)LeahTheTech
 (+)Food sliced up on plates, trays or kitchen islands will now stay on the thing it was placed on.

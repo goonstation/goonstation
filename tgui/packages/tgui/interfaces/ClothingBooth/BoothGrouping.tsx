@@ -10,7 +10,7 @@ import { classes } from 'common/react';
 import { Stack } from 'tgui-core/components';
 
 import { Image } from '../../components';
-import { GroupingTags as GroupingTags } from './GroupingTags';
+import { GroupingTags } from './GroupingTags';
 import type { ClothingBoothGroupingData } from './type';
 
 interface BoothGroupingProps extends ClothingBoothGroupingData {

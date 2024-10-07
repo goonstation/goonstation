@@ -52,9 +52,12 @@ export const ListInputModal = (props: ListInputModalProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const getSearchBar = () => {
-    return searchBarVisible
-      ? document.getElementById('search_bar').getElementsByTagName('input')[0]
-      : null;
+    if (!searchBarVisible) {
+      return undefined;
+    }
+    return document
+      .getElementById('search_bar')
+      ?.getElementsByTagName('input')[0];
   };
 
   // User presses up or down on keyboard
@@ -95,6 +98,9 @@ export const ListInputModal = (props: ListInputModalProps) => {
   // |goonstation-change| send any text input to the search bar
   const onFocusSearch = (letter) => {
     let searchBarInput = getSearchBar();
+    if (!searchBarInput) {
+      return;
+    }
     searchBarInput.focus();
     searchBarInput.value += letter;
     onSearch(searchBarInput.value);
@@ -178,8 +184,8 @@ export const ListInputModal = (props: ListInputModalProps) => {
               setSearchBarVisible(!searchBarVisible);
               setSearchQuery('');
               event.preventDefault();
-              if (searchBarVisible) {
-                getSearchBar().focus();
+              if (searchBarVisible && searchBarInput) {
+                searchBarInput.focus();
               }
               return;
             }

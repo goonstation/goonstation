@@ -33,6 +33,12 @@ export const Gameclock = () => {
     false,
   );
 
+  const helpButtonClick = !configModalOpen
+    ? () => {
+        setHelpModalOpen(!helpModalOpen);
+      }
+    : undefined;
+
   return (
     <Window title={name} width={220} height={380}>
       <Window.Content className="gameclock__window" fitted>
@@ -44,12 +50,7 @@ export const Gameclock = () => {
             tooltip={helpModalOpen ? 'Close' : 'Help'}
             icon={helpModalOpen ? 'xmark' : 'question'}
             color={helpModalOpen && 'orange'}
-            onClick={
-              !configModalOpen &&
-              (() => {
-                setHelpModalOpen(!helpModalOpen);
-              })
-            }
+            onClick={helpButtonClick}
           />
         </Box>
         <TeamIcon team={swap ? 'white' : 'black'} />

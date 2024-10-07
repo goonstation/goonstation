@@ -50,9 +50,15 @@ export const onCooldown = (equipmentCooldown, name) => {
   return true;
 };
 
+interface Booth {
+  ref: string;
+  price: number;
+  desc: string;
+}
+
 export const BioEffect = (props) => {
   const { data, act } = useBackend<GeneTekData>();
-  const [booth, setBooth] = useSharedState('booth', null);
+  const [booth, setBooth] = useSharedState<Booth | null>('booth', null);
   const {
     materialCur,
     researchCost,
@@ -255,7 +261,8 @@ export const BioEffect = (props) => {
             <Button
               icon="radiation"
               disabled={
-                onCooldown(equipmentCooldown, 'Emitter') || subject.stat > 0
+                onCooldown(equipmentCooldown, 'Emitter') ||
+                (subject && subject.stat > 0)
               }
               color="bad"
               onClick={() => act('precisionemitter', { ref })}

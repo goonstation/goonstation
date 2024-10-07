@@ -26,6 +26,9 @@ const textWidth = (text: string, font: string, fontsize: string) => {
   font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
+  if (!ctx) {
+    return;
+  }
   ctx.font = font;
   return ctx.measureText(text).width;
 };
@@ -158,7 +161,7 @@ const customLinkRule = (remarkable: Remarkable) => {
 const checkAllFields = (txt, font, color, userName, bold = false) => {
   let matches;
   let values = {};
-  let replace = [];
+  let replace: { rawText; value }[] = [];
   // I know its tempting to wrap ALL this in a .replace
   // HOWEVER the user might not of entered anything
   // if thats the case we are rebuilding the entire string
