@@ -1617,6 +1617,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\projectiles\40mm.dm"
 #include "code\modules\projectiles\bfg.dm"
 #include "code\modules\projectiles\bioeffect.dm"
+#include "code\modules\projectiles\bubble.dm"
 #include "code\modules\projectiles\bullet.dm"
 #include "code\modules\projectiles\crabber.dm"
 #include "code\modules\projectiles\disruptor_bolt.dm"
