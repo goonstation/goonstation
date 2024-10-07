@@ -1825,8 +1825,12 @@ or don't if it uses a custom topopen overlay
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
+	src.deploy_to_shell(target_shell)
 
+/mob/living/silicon/ai/proc/deploy_to_shell(var/mob/living/silicon/target_shell)
 	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
+		return
+	if (!target_shell.shell || target_shell.dependent || isdead(src))
 		return
 
 	if (src.deployed_to_eyecam)
