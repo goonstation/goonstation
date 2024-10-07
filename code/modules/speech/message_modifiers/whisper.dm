@@ -1,3 +1,12 @@
+/datum/message_modifier/preprocessing/whisper
+	sayflag = SAYFLAG_WHISPER
+
+/datum/message_modifier/preprocessing/whisper/process(datum/say_message/message)
+	. = message
+
+	message.say_sound = ""
+
+
 /datum/message_modifier/postprocessing/whisper
 	sayflag = SAYFLAG_WHISPER
 

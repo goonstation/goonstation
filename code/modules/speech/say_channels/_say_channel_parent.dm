@@ -191,9 +191,11 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 				if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
 					if (!visible_turfs[GET_INPUT_OUTERMOST_LISTENER_LOC(input)])
 						continue
-				// If the outermost listener's loc is the speaker, they may hear the message.
-				else if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
-					continue
+				// If the outermost listener of the listener and the speaker match, the listener may hear the message.
+				else if (GET_INPUT_OUTERMOST_LISTENER(input) != GET_MESSAGE_OUTERMOST_LISTENER(message))
+					// If the outermost listener's loc is the speaker, the listener may hear the message.
+					if (GET_INPUT_OUTERMOST_LISTENER_LOC(input) != message.message_origin)
+						continue
 
 				listen_modules_by_type[type] += input
 

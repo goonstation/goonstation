@@ -1,9 +1,9 @@
-/datum/speech_module/prefix/radio
+/datum/speech_module/prefix/postmodifier/radio
 	id = SPEECH_PREFIX_RADIO
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT
 	prefix_id = ":"
 
-/datum/speech_module/prefix/radio/process(datum/say_message/message)
+/datum/speech_module/prefix/postmodifier/radio/process(datum/say_message/message)
 	. = message
 
 	if (message.output_module_channel != SAY_CHANNEL_OUTLOUD)
@@ -20,7 +20,6 @@
 	if (!istype(radio))
 		return
 
-	message.say_sound = 'sound/misc/talk/radio.ogg'
 	message.atom_listeners_to_be_excluded ||= list()
 	message.atom_listeners_to_be_excluded[radio] = TRUE
 
@@ -29,8 +28,9 @@
 	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
 
 	message.flags |= SAYFLAG_WHISPER
+	message.say_sound = 'sound/misc/talk/radio.ogg'
 
-/datum/speech_module/prefix/radio/get_prefix_choices()
+/datum/speech_module/prefix/postmodifier/radio/get_prefix_choices()
 	var/obj/item/device/radio/radio
 	if (ismob(src.parent_tree.speaker_origin))
 		var/mob/mob_speaker = src.parent_tree.speaker_origin
@@ -51,12 +51,12 @@
 		.["[channel_name]: \[[channel_frequency]\]"] = ":[prefix]"
 
 
-/datum/speech_module/prefix/radio/general
+/datum/speech_module/prefix/postmodifier/radio/general
 	id = SPEECH_PREFIX_RADIO_GENERAL
 	priority = SPEECH_PREFIX_PRIORITY_DEFAULT + 1
 	prefix_id = ";"
 
-/datum/speech_module/prefix/radio/general/get_prefix_choices()
+/datum/speech_module/prefix/postmodifier/radio/general/get_prefix_choices()
 	var/obj/item/device/radio/radio
 	if (ismob(src.parent_tree.speaker_origin))
 		var/mob/mob_speaker = src.parent_tree.speaker_origin

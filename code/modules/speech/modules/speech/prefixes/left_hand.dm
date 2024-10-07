@@ -1,8 +1,8 @@
-/datum/speech_module/prefix/left_hand
+/datum/speech_module/prefix/postmodifier/left_hand
 	id = SPEECH_PREFIX_LEFT_HAND
 	prefix_id = ":lh"
 
-/datum/speech_module/prefix/left_hand/process(datum/say_message/message)
+/datum/speech_module/prefix/postmodifier/left_hand/process(datum/say_message/message)
 	. = message
 
 	if (message.output_module_channel != SAY_CHANNEL_OUTLOUD)
@@ -27,7 +27,6 @@
 	if (!listener)
 		return
 
-	message.say_sound = 'sound/misc/talk/radio.ogg'
 	message.atom_listeners_to_be_excluded ||= list()
 	message.atom_listeners_to_be_excluded[listener] = TRUE
 
@@ -36,3 +35,4 @@
 	src.parent_tree.GetOutputByID(SPEECH_OUTPUT_EQUIPPED)?.process(radio_message)
 
 	message.flags |= SAYFLAG_WHISPER
+	message.say_sound = 'sound/misc/talk/radio.ogg'

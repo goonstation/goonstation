@@ -25,6 +25,7 @@
 
 
 //------------ Listen Inputs ------------//
+#define LISTEN_INPUT_PRIORITY_HIGH 10
 #define LISTEN_INPUT_PRIORITY_DEFAULT 0
 #define LISTEN_INPUT_PRIORITY_DISTORTED -20
 #define LISTEN_INPUT_PRIORITY_GLOBAL -10

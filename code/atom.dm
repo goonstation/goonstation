@@ -39,9 +39,6 @@ TYPEINFO(/atom)
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
 
-	/// If hear_talk is triggered on this object, make my contents hear_talk as well
-	var/open_to_sound = 0
-
 	var/interesting = ""
 	var/stops_space_move = 0
 

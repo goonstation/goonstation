@@ -44,6 +44,10 @@
 		STOP_TRACKING
 		..()
 
+	Login()
+		. = ..()
+		src.toggle_hearing_all(FALSE)
+
 	// Observer Life() only runs for admin ghosts (Convair880).
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

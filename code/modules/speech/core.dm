@@ -1,5 +1,5 @@
 /// This atom's listen module tree. May be null if no input modules are registered.
-/atom/var/datum/listen_module_tree/listen_tree
+/atom/var/datum/listen_module_tree/listen_tree = null
 /// The listen modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_listen_modifiers = null
 /// The listen inputs that this atom *starts* with. It will not be updated nor used again after initialisation.
@@ -25,7 +25,7 @@
 
 
 /// This atom's speech module tree. Lazy loaded on the first `say()` call.
-/atom/var/datum/speech_module_tree/speech_tree
+/atom/var/datum/speech_module_tree/speech_tree = null
 /// The speech prefixes that this atom *starts* with. It will not be updated nor used again after initialisation.
 /atom/var/list/start_speech_prefixes = null
 /// The speech modifiers that this atom *starts* with. It will not be updated nor used again after initialisation.
@@ -63,7 +63,7 @@
 	// SHOULD_NOT_OVERRIDE(TRUE)
 
 	if (dd_hasprefix(message, "*"))
-		src.emote(copytext(message, 2), 1)
+		src.emote(copytext(message, 2), TRUE)
 		return
 
 	src.ensure_speech_tree()
@@ -75,6 +75,9 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
 
 	return src.speech_tree.process(said)
+
+/// Whether objects inside of this atom should be able to hear messages that could be heard by this atom.
+/atom/var/open_to_sound = FALSE
 
 /// The world time that this atom last played a voice sound effect.
 /atom/var/last_voice_sound = 0

@@ -6,7 +6,7 @@
 	use_speech_bubble = TRUE
 
 	start_listen_modifiers = null
-	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_BLOBCHAT)
+	start_listen_inputs = list(LISTEN_INPUT_DEADCHAT, LISTEN_INPUT_BLOBCHAT, LISTEN_INPUT_FLOCK_GLOBAL)
 	start_listen_languages = list(LANGUAGE_ALL)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_DEADCHAT_GHOST)

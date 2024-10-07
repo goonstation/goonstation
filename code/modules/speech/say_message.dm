@@ -163,10 +163,15 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 
 	// Determine whether this message has a radio prefix, and adjust the content accordingly.
 	if (length(src.content) >= 2)
-		var/first_character = copytext(src.content, 1, 2)
+		var/cut_position = 0
 
-		if ((first_character == ";") || (first_character == ":"))
-			var/cut_position = findtext(src.content, " ", 1) + 1
+		switch (copytext(src.content, 1, 2))
+			if (";")
+				cut_position = 2
+			if (":")
+				cut_position = findtext(src.content, " ", 1) + 1
+
+		if (cut_position)
 			src.prefix = trimtext(copytext(src.content, 1, cut_position))
 			src.content = copytext(src.content, cut_position, MAX_MESSAGE_LEN)
 
@@ -236,6 +241,9 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (world.time < src.speaker.last_voice_sound + VOICE_SOUND_COOLDOWN)
 		return
 
+	if (src.say_sound == "")
+		return
+
 	if (!src.say_sound && !src.speaker.voice_type && !src.speaker.voice_sound_override)
 		return
 
@@ -244,14 +252,13 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	if (!src.say_sound)
 		var/voice_type = src.speaker.voice_type
 
-		if (voice_type != "radio")
-			switch (src.last_character)
-				if ("?")
-					voice_type = "[voice_type]?"
-				if ("!")
-					voice_type = "[voice_type]!"
+		switch (src.last_character)
+			if ("?")
+				voice_type = "[voice_type]?"
+			if ("!")
+				voice_type = "[voice_type]!"
 
-		src.say_sound = sounds_speak["[voice_type]"]
+		src.say_sound = global.sounds_speak["[voice_type]"]
 
 	var/voice_pitch = src.speaker.voice_pitch
 	if (ismob(src.speaker))
