@@ -679,6 +679,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\throw.dm"
 #include "code\modules\admin\buildmodes\transmute.dm"
 #include "code\modules\admin\buildmodes\varedit.dm"
+#include "code\modules\admin\buildmodes\visual_mirror.dm"
 #include "code\modules\admin\buildmodes\adventure\adventure_critter.dm"
 #include "code\modules\admin\buildmodes\adventure\adventure_decal.dm"
 #include "code\modules\admin\buildmodes\adventure\adventure_emitter.dm"
