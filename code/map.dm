@@ -686,7 +686,8 @@ var/global/list/mapNames = list(
 		var/list/terrainify_options = list(/datum/terrainify/caveify,
 										/datum/terrainify/swampify,
 										/datum/terrainify/winterify,
-										/datum/terrainify/forestify)
+										/datum/terrainify/forestify,
+										/datum/terrainify/desertify)
 		var/datum/terrainify/T = pick(terrainify_options)
 		T = new T()
 		var/terrain_params = T.get_default_params()
