@@ -1,4 +1,9 @@
 
+(t)tue oct 08 24
+(u)Colossus
+(p)20912
+(e)⚖⚗🍝|C-Balance, A-Chemistry, A-Catering
+(+)Tetrodotoxin now has a smaller(0.2) depletion, and slightly altered timing, but pufferfish only carry half the amount in them, and can only be caught by tier 2 rods or higher.
 (t)mon oct 07 24
 (u)tarmunora
 (+)you can now walk out of cargo carts
