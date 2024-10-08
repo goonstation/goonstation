@@ -682,7 +682,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/atlas/init()
 	. = ..()
-	if(prob(66))
+	if(!station_repair.station_generator && prob(66))
 		var/list/terrainify_options = list(/datum/terrainify/caveify,
 										/datum/terrainify/swampify,
 										/datum/terrainify/winterify,
