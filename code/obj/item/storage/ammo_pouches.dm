@@ -199,6 +199,9 @@
 	empty
 		spawn_contents = list()
 
+	get_help_message(dist, mob/user)
+		return "Can be attached to an armor vest, at the cost of reduced protection, by clicking the vest with the pouch."
+
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\

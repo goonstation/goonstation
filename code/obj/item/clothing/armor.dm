@@ -32,6 +32,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	hides_from_examine = 0
 	mat_changename = FALSE
 	default_material = "carbonfibre"
+	var/has_pouch = FALSE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/assembly/anal_ignite))
@@ -54,10 +55,29 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 			AI.add_fingerprint(user)
 			R.add_fingerprint(user)
 			user.put_in_hand_or_drop(R)
+		else if (istype(W, /obj/item/storage/security_pouch) && src.type == /obj/item/clothing/suit/armor/vest)
+			if (tgui_alert(user, "Attach [W] to [src]? This cannot be undone.", "Security Vest Attachment", list("Yes", "No")) != "Yes")
+				return
+			user.tri_message(null, SPAN_NOTICE("[user] attaches [W] to [src]."), SPAN_NOTICE("You attach [W] to [src]."))
+			playsound(src.loc, 'sound/items/zipper.ogg', 20, 0.2, pitch = 2)
+			src.create_storage_from(W)
+			for (var/atom/A as anything in W.storage.get_contents())
+				W.storage.transfer_stored_item(A, src, TRUE, user)
+			qdel(W)
+			src.icon_state = "armorvest-pouched"
+			src.item_state = "armorvest-pouched"
+			src.UpdateIcon() // used for if attaching the pouch while wearing the vest
+			src.setProperty("meleeprot", src.getProperty("meleeprot") * 0.85)
+			src.setProperty("rangedprot", src.getProperty("rangedprot") * 0.85)
+			src.has_pouch = TRUE
+			src.name = "pouched armor vest"
+			src.desc += " Pouches are attached on the front."
 		else
 			return ..()
 
 	attack_self(mob/user)
+		if (src.has_pouch)
+			return ..()
 		user.show_text("You change the armor vest's style.")
 		if (src.icon_state == "armorvest")
 			src.icon_state = "armorvest-old"

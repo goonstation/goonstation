@@ -15,6 +15,12 @@
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
+/// adds a storage to an atom with the same type and variables of another storage on atom A
+/atom/proc/create_storage_from(atom/A)
+	var/datum/storage/held = A.storage
+	src.create_storage(A.storage.type, null, held.can_hold, held.can_hold_exact, held.prevent_holding, held.check_wclass, held.max_wclass, held.slots,
+		held.sneaky, held.stealthy_storage, held.opens_if_worn, held.params)
+
 /// remove atom's storage
 /atom/proc/remove_storage()
 	qdel(src.storage)
@@ -48,6 +54,8 @@
 	var/atom/linked_item = null
 	/// All items stored
 	var/list/stored_items = null
+	/// Passed special parameters
+	var/list/params = null
 
 /datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
 		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
@@ -65,6 +73,7 @@
 	src.sneaky = sneaky
 	src.stealthy_storage = stealthy_storage
 	src.opens_if_worn = opens_if_worn
+	src.params = params
 
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/I = src.linked_item
