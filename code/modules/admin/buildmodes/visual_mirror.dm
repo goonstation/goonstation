@@ -87,7 +87,7 @@ Shift-LMB on turf                      = Cleanup mirror zone
 		else
 			switch (src.calibration_stage)
 				if(1)
-					source_turf = get_turf(object)
+					src.source_turf = get_turf(object)
 					if (!istype(src.source_turf))
 						update_button_text("An error occured")
 						return
@@ -97,7 +97,7 @@ Shift-LMB on turf                      = Cleanup mirror zone
 					src.holder.owner.images += marker
 					blink(get_turf(object))
 				if (2)
-					target_turf = get_turf(object)
+					src.target_turf = get_turf(object)
 					if (!istype(src.target_turf))
 						update_button_text("An error occured")
 						return
