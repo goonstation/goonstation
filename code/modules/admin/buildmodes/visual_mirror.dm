@@ -54,7 +54,7 @@ Shift-LMB on turf                      = Cleanup mirror zone
 			return
 		else
 			src.calibration_stage = 1
-			update_button_text("Left click the source turf")
+			update_button_text("Left click the mirror source / warp exit turf")
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift) //cleanup
@@ -91,7 +91,7 @@ Shift-LMB on turf                      = Cleanup mirror zone
 					if (!istype(src.source_turf))
 						update_button_text("An error occured")
 						return
-					update_button_text("Left click the destination turf")
+					update_button_text("Left click the mirror display / warp enterance turf")
 					src.calibration_stage = 2
 					src.marker.loc = src.source_turf
 					src.holder.owner.images += marker
