@@ -11,7 +11,7 @@
 
 	var/welding = FALSE
 	var/status = 0 // flamethrower construction :shobon:
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_WELDING
 	force = 3

@@ -1,3 +1,5 @@
+#define JUMPSUIT_COST 10
+
 /datum/manufacture
 	/// Player-read name of the blueprint
 	var/name = null
@@ -32,7 +34,7 @@
 		src.setup_manufacturing_requirements()
 		if (!length(src.item_names))
 			for (var/datum/manufacturing_requirement/R as anything in src.item_requirements)
-				src.item_names += R.name
+				src.item_names += R.getName()
 
 	/// Setup the manufacturing requirements for this datum, using the cache instead of init() on each
 	proc/setup_manufacturing_requirements()
@@ -41,7 +43,7 @@
 			return
 		var/list/R = list()
 		for (var/R_path in src.item_requirements)
-			R[getRequirement(R_path)] = src.item_requirements[R_path]
+			R[getManufacturingRequirement(R_path)] = src.item_requirements[R_path]
 		src.item_requirements = R
 
 	proc/use_generated_costs(obj/item_type)
@@ -58,7 +60,6 @@
 		// use this if you want the outputted item to be customised in any way by the manufacturer
 		if (M.malfunction && length(M.text_bad_output_adjective) > 0 && prob(66))
 			A.name = "[pick(M.text_bad_output_adjective)] [A.name]"
-			//A.quality -= rand(25,50)
 		if (src.apply_material && length(materials) > 0)
 			var/obj/item/material_piece/applicable_material = locate(materials[materials[1]])
 			var/datum/material/mat = applicable_material?.material
@@ -77,10 +78,10 @@
 	var/generate_costs = FALSE
 
 	New()
-		. = ..()
 		if(src.generate_costs)
 			src.item_requirements = list()
 			src.use_generated_costs(frame_path)
+		. = ..()
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		if (!(..()))
@@ -638,7 +639,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		var/obj/item/sheet/S = A
 		..()
-		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("metal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("metal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/glass
@@ -663,7 +664,7 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
 		..()
 		var/obj/item/sheet/S = A
-		var/obj/item/material_piece/applicable_material = locate(materials[getRequirement("crystal")])
+		var/obj/item/material_piece/applicable_material = locate(materials[getManufacturingRequirement("crystal")])
 		S.set_reinforcement(applicable_material.material)
 
 /datum/manufacture/rods2
@@ -700,13 +701,16 @@
 	name = "Chemical Barrel"
 	item_requirements = list("metal_dense" = 6,
 							 "cobryl" = 9)
-	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
 	create = 1
 	time = 30 SECONDS
 	category = "Machinery"
 
 	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+
 	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
 
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
@@ -892,8 +896,8 @@
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		var/obj/item/material_piece/applicable_insulator = locate(materials[getRequirement("insulated")])
-		var/obj/item/material_piece/applicable_conductor = locate(materials[getRequirement("conductive")])
+		var/obj/item/material_piece/applicable_insulator = locate(materials[getManufacturingRequirement("insulated")])
+		var/obj/item/material_piece/applicable_conductor = locate(materials[getManufacturingRequirement("conductive")])
 		coil.setInsulator(applicable_insulator.material)
 		coil.setConductor(applicable_conductor.material)
 		return 1
@@ -961,7 +965,7 @@
 
 /datum/manufacture/jumpsuit_assistant
 	name = "Staff Assistant Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/rank/assistant)
 	create = 1
 	time = 5 SECONDS
@@ -969,7 +973,7 @@
 
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/grey)
 	create = 1
 	time = 5 SECONDS
@@ -2630,7 +2634,7 @@
 
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/white)
 	create = 1
 	time = 5 SECONDS
@@ -2638,7 +2642,7 @@
 
 /datum/manufacture/jumpsuit_red
 	name = "Red Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/red)
 	create = 1
 	time = 5 SECONDS
@@ -2646,7 +2650,7 @@
 
 /datum/manufacture/jumpsuit_yellow
 	name = "Yellow Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/yellow)
 	create = 1
 	time = 5 SECONDS
@@ -2654,7 +2658,7 @@
 
 /datum/manufacture/jumpsuit_green
 	name = "Green Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/green)
 	create = 1
 	time = 5 SECONDS
@@ -2662,7 +2666,7 @@
 
 /datum/manufacture/jumpsuit_pink
 	name = "Pink Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/pink)
 	create = 1
 	time = 5 SECONDS
@@ -2670,7 +2674,7 @@
 
 /datum/manufacture/jumpsuit_blue
 	name = "Blue Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/blue)
 	create = 1
 	time = 5 SECONDS
@@ -2679,7 +2683,7 @@
 
 /datum/manufacture/jumpsuit_purple
 	name = "Purple Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/purple)
 	create = 1
 	time = 5 SECONDS
@@ -2687,7 +2691,7 @@
 
 /datum/manufacture/jumpsuit_brown
 	name = "Brown Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/brown)
 	create = 1
 	time = 5 SECONDS
@@ -2695,7 +2699,7 @@
 
 /datum/manufacture/jumpsuit_black
 	name = "Black Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color)
 	create = 1
 	time = 5 SECONDS
@@ -2703,7 +2707,7 @@
 
 /datum/manufacture/jumpsuit_orange
 	name = "Orange Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/color/orange)
 	create = 1
 	time = 5 SECONDS
@@ -2711,7 +2715,7 @@
 
 /datum/manufacture/tricolor
 	name = "Tricolor Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
 	create = 1
 	time = 5 SECONDS
@@ -2719,7 +2723,7 @@
 
 /datum/manufacture/pride_lgbt
 	name = "LGBT Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride)
 	create = 1
 	time = 5 SECONDS
@@ -2727,7 +2731,7 @@
 
 /datum/manufacture/pride_ace
 	name = "Asexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/ace)
 	create = 1
 	time = 5 SECONDS
@@ -2735,7 +2739,7 @@
 
 /datum/manufacture/pride_aro
 	name = "Aromantic Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/aro)
 	create = 1
 	time = 5 SECONDS
@@ -2743,7 +2747,7 @@
 
 /datum/manufacture/pride_bi
 	name = "Bisexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/bi)
 	create = 1
 	time = 5 SECONDS
@@ -2751,7 +2755,7 @@
 
 /datum/manufacture/pride_inter
 	name = "Intersex Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/inter)
 	create = 1
 	time = 5 SECONDS
@@ -2759,7 +2763,7 @@
 
 /datum/manufacture/pride_lesb
 	name = "Lesbian Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/lesb)
 	create = 1
 	time = 5 SECONDS
@@ -2767,7 +2771,7 @@
 
 /datum/manufacture/pride_gay
 	name = "Gay Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/gaymasc)
 	create = 1
 	time = 5 SECONDS
@@ -2775,7 +2779,7 @@
 
 /datum/manufacture/pride_nb
 	name = "Non-binary Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/nb)
 	create = 1
 	time = 5 SECONDS
@@ -2783,7 +2787,7 @@
 
 /datum/manufacture/pride_pan
 	name = "Pansexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/pan)
 	create = 1
 	time = 5 SECONDS
@@ -2791,7 +2795,7 @@
 
 /datum/manufacture/pride_poly
 	name = "Polysexual Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/poly)
 	create = 1
 	time = 5 SECONDS
@@ -2799,7 +2803,7 @@
 
 /datum/manufacture/pride_trans
 	name = "Trans Pride Jumpsuit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/pride/trans)
 	create = 1
 	time = 5 SECONDS
@@ -2807,7 +2811,7 @@
 
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/suit/black)
 	create = 1
 	time = 5 SECONDS
@@ -2815,7 +2819,7 @@
 
 /datum/manufacture/dress_black
 	name = "Fancy Black Dress"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/suit/black/dress)
 	create = 1
 	time = 5 SECONDS
@@ -2831,7 +2835,7 @@
 
 /datum/manufacture/scrubs_white
 	name = "White Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub)
 	create = 1
 	time = 5 SECONDS
@@ -2839,7 +2843,7 @@
 
 /datum/manufacture/scrubs_teal
 	name = "Teal Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/teal)
 	create = 1
 	time = 5 SECONDS
@@ -2847,7 +2851,7 @@
 
 /datum/manufacture/scrubs_maroon
 	name = "Maroon Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/maroon)
 	create = 1
 	time = 5 SECONDS
@@ -2855,7 +2859,7 @@
 
 /datum/manufacture/scrubs_blue
 	name = "Navy Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
 	create = 1
 	time = 5 SECONDS
@@ -2863,7 +2867,7 @@
 
 /datum/manufacture/scrubs_purple
 	name = "Violet Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
 	create = 1
 	time = 5 SECONDS
@@ -2871,7 +2875,7 @@
 
 /datum/manufacture/scrubs_orange
 	name = "Orange Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/orange)
 	create = 1
 	time = 5 SECONDS
@@ -2879,7 +2883,7 @@
 
 /datum/manufacture/scrubs_pink
 	name = "Hot Pink Scrubs"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
 	create = 1
 	time = 5 SECONDS
@@ -2887,7 +2891,7 @@
 
 /datum/manufacture/medical_backpack
 	name = "Medical Backpack"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/storage/backpack/medic)
 	create = 1
 	time = 5 SECONDS
@@ -2895,7 +2899,7 @@
 
 /datum/manufacture/patient_gown
 	name = "Gown"
-	item_requirements = list("fabric" = 4)
+	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/patient_gown)
 	create = 1
 	time = 5 SECONDS
@@ -3077,6 +3081,16 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser)
 	create = 1
 	time = 20 SECONDS
+	category = "Tool"
+
+/datum/manufacture/pod/weapon/efif1
+	name = "EFIF-1 Construction System"
+	item_requirements = list("metal_superdense" = 50,
+							 "claretine" = 20,
+							 "electrum" = 10)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/constructor)
+	create = 1
+	time = 60 SECONDS
 	category = "Tool"
 
 /datum/manufacture/pod/lock
@@ -3420,7 +3434,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/riot_shotgun	//
 	name = "Riot Shotgun"
 	item_requirements = list("metal" = 20)
-	item_outputs = list(/obj/item/gun/kinetic/riotgun)
+	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	create = 1
 	time = 20 SECONDS
 	category = "Weapon"
@@ -3613,3 +3627,5 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	time = 8 SECONDS
 	category = "Tool"
+
+#undef JUMPSUIT_COST

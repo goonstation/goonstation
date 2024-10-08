@@ -130,53 +130,6 @@
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
-	buttcoin
-		name = "buttcoin"
-		desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
-		icon_state = "cashblue"
-
-		New()
-			..()
-			processing_items |= src
-
-		_update_stack_appearance()
-			return
-
-		UpdateName()
-			src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
-
-		process()
-			src.amount = rand(1, 1000) / rand(10, 1000)
-			if (prob(25))
-				src.amount *= (rand(1,100)/100)
-
-			if (prob(5))
-				src.amount *= 10000
-
-			src.UpdateName()
-
-		attack_hand(mob/user)
-			if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-				var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
-				if (isnum_safe(amt))
-					if (amt > src.amount || amt < 1)
-						boutput(user, SPAN_ALERT("You wish!"))
-						return
-
-					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
-			else
-				..()
-
-		attackby(var/obj/item/I, mob/user)
-			if (istype(I, /obj/item/currency/spacecash/buttcoin) && src.amount < src.max_stack)
-				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
-			else
-				..(I, user)
-
-		disposing()
-			processing_items.Remove(src)
-			..()
-
 	five
 		default_min_amount = 5
 		default_max_amount = 5
@@ -243,6 +196,55 @@
 			icon_state = "moneybag"
 			item_state = "moneybag"
 			inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+/obj/item/currency/buttcoin
+	name = "buttcoin"
+	real_name = "credit"
+	desc = "The crypto-currency of the future (If you don't pay for your own electricity and got in early and don't lose the file and don't want transactions to be faster than half an hour and . . .)"
+	icon_state = "cashblue"
+	stack_type = /obj/item/currency/buttcoin
+	display_name = "cash"
+
+	New()
+		..()
+		processing_items |= src
+
+	_update_stack_appearance()
+		return
+
+	UpdateName()
+		src.name = "[src.amount] [name_prefix(null, 1)][pick("bit","butt","shitty-bill ","bart", "bat", "bet", "bot")]coin[s_es(src.amount)][name_suffix(null, 1)]"
+
+	process()
+		src.amount = rand(1, 1000) / rand(10, 1000)
+		if (prob(25))
+			src.amount *= (rand(1,100)/100)
+		if (prob(5))
+			src.amount *= 10000
+
+		src.UpdateName()
+
+	attack_hand(mob/user)
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
+			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
+			if (isnum_safe(amt))
+				if (amt > src.amount || amt < 1)
+					boutput(user, SPAN_ALERT("You wish!"))
+					return
+
+				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+		else
+			..()
+
+	attackby(var/obj/item/I, mob/user)
+		if (istype(I, /obj/item/currency/buttcoin) && src.amount < src.max_stack)
+			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+		else
+			..(I, user)
+
+	disposing()
+		processing_items.Remove(src)
+		..()
 
 /obj/item/currency/spacebux // Not space cash. Actual spacebux. Wow.
 	name = "\improper Spacebux token"

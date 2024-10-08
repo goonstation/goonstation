@@ -14,7 +14,6 @@ TYPEINFO(/obj/item/baton)
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton-A"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 10
 	throwforce = 7
@@ -360,11 +359,11 @@ TYPEINFO(/obj/item/baton/cane)
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
 	icon_state = "stuncane"
-	item_state = "cane"
+	item_state = "cane-A"
 	icon_on = "stuncane_active"
 	icon_off = "stuncane"
-	item_on = "cane"
-	item_off = "cane"
+	item_on = "cane-A"
+	item_off = "cane-D"
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging
 	can_swap_cell = 0

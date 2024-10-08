@@ -38,7 +38,7 @@
 		time_between_paydays = 5 MINUTES
 		time_between_lotto = 8 MINUTES
 
-		station_budget = 0
+		station_budget = PAY_IMPORTANT
 		shipping_budget = PAY_EXECUTIVE*5
 		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
@@ -193,12 +193,14 @@
 		else if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
-
-				if(istype(I, /obj/item/currency/spacecash/buttcoin))
-					boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
-				else
-					src.accessed_record["current_money"] += I.amount
-
+				src.accessed_record["current_money"] += I.amount
+				I.amount = 0
+				qdel(I)
+			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
+		else if(istype(I, /obj/item/currency/buttcoin/))
+			if (src.accessed_record)
+				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
+				boutput(user, SPAN_SUCCESS("Your transaction will complete anywhere within 10 to 10e27 minutes from now."))
 				I.amount = 0
 				qdel(I)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))

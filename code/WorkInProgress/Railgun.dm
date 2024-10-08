@@ -1,3 +1,8 @@
+/obj/line_obj
+	anchored = ANCHORED
+	density = 0
+	opacity = 0
+
 /obj/line_obj/railgun
 	name = "Energy"
 	desc = ""
@@ -20,7 +25,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "railgun"
 	item_state = "gun"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	health = 10
 	w_class = W_CLASS_SMALL
 

@@ -284,10 +284,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				if(T)
 					border_area.contents += T
 
-			if (current_state >= GAME_STATE_PLAYING)
-				LAGCHECK(LAG_LOW)
-			else
-				LAGCHECK(LAG_HIGH)
+			generator.lag_check()
 
 	//Lighten' Up the Place
 	var/image/ambient_light = new /image/ambient
@@ -483,6 +480,6 @@ obj/decal/teleport_mark
 		..()
 		for(var/obj/O in location)
 			if(O == src) continue
-			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/decal/fakeobjects/teleport_pad) )
+			if(istype(O, /obj/decal/teleport_mark) || istype(O,/obj/machinery/lrteleporter) || istype(O,/obj/fakeobject/teleport_pad) )
 				qdel(src)
 				return

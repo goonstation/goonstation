@@ -24,6 +24,7 @@ var/datum/station_zlevel_repair/station_repair = new
 	var/overlay_delay
 	var/datum/gas_mixture/default_air
 	var/allows_vehicles = FALSE
+	var/list/turf/preconvert_turfs = list()
 
 	New()
 		..()
@@ -32,10 +33,11 @@ var/datum/station_zlevel_repair/station_repair = new
 		default_air.nitrogen = MOLES_N2STANDARD
 		default_air.temperature = T20C
 
-	proc/repair_turfs(turf/turfs, clear=FALSE)
+	proc/repair_turfs(turf/turfs, clear=FALSE, force_floor=FALSE)
 		if(src.station_generator)
-			var/gen_flags = MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA
+			var/gen_flags = MAPGEN_IGNORE_FLORA | MAPGEN_IGNORE_FAUNA
 			gen_flags |= MAPGEN_ALLOW_VEHICLES * src.allows_vehicles
+			gen_flags |= MAPGEN_FLOOR_ONLY * force_floor
 			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=gen_flags)
 
 			if(clear)
@@ -48,24 +50,69 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(src.ambient_obj)
 					T.vis_contents |= src.ambient_obj
 				if(src.weather_img)
-					T.AddOverlays(src.weather_img, "weather")
+					if(islist(src.weather_img))
+						T.AddOverlays(pick(src.weather_img), "weather")
+					else
+						T.AddOverlays(src.weather_img, "weather")
 				if(src.weather_effect)
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
 						new src.weather_effect(T)
 				T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
-	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
+	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE, season=null)
 		var/list/turfs_to_fix = get_turfs_to_fix()
 		clear_out_turfs(turfs_to_fix)
-
-		clear_around_beacons()
+		clear_out_turfs(get_beacon_turfs(), by_type[/obj/warp_beacon])
 
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
 
+		set_station_season(season)
+
 		if (remove_parallax)
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+
+
+	proc/set_station_season(season)
+		switch(season)
+			if("Winter")
+#ifndef SEASON_WINTER
+				for(var/turf/simulated/floor/grass/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					T.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+
+				for_by_tcl(V, /obj/machinery/vending)
+					if(V.z != Z_LEVEL_STATION)
+						continue
+
+					if(istype(V,/obj/machinery/vending/jobclothing/research))
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
+					else if(istype(V,/obj/machinery/vending/jobclothing/engineering))
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
+					else if(istype(V,/obj/machinery/vending/jobclothing/medical))
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/genetics, 2)
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/nurse, 2)
+					else if(istype(V,/obj/machinery/vending/jobclothing/security))
+						V.product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
+#endif
+			if("Autumn")
+#ifndef SEASON_AUTUMN
+				for(var/turf/simulated/floor/grass/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					T.try_set_icon_state(T.icon_state + "_autumn", T.icon)
+					if(istype(T, /turf/simulated/floor/auto/grass/leafy))
+						var/turf/simulated/floor/auto/grass/leafy/edgy_turf = T
+						edgy_turf.icon_state_edge = "leafy_edge_autumn"
+
+				for(var/turf/simulated/floor/grasstodirt/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+					T.try_set_icon_state("autumntodirt", T.icon)
+
+				for_by_tcl(S, /obj/shrub)
+					if(S.z != Z_LEVEL_STATION)
+						continue
+					S.try_set_icon_state(S.icon_state + "_autumn", S.icon)
+#endif
 
 	proc/get_turfs_to_fix()
 		. = list()
@@ -87,12 +134,12 @@ var/datum/station_zlevel_repair/station_repair = new
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
-	proc/clear_around_beacons()
+	proc/get_beacon_turfs()
 		var/list/turfs_to_fix = list()
 		for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
-			for(var/turf/T in range(4,W))
+			for(var/turf/T in range(5, W))
 				turfs_to_fix |= T
-		clear_out_turfs(turfs_to_fix, by_type[/obj/warp_beacon])
+		return turfs_to_fix
 
 	proc/get_ptl_beams()
 		. = list()
@@ -149,6 +196,16 @@ var/datum/station_zlevel_repair/station_repair = new
 			ST.update_nearby_tiles(need_rebuild=TRUE)
 			LAGCHECK(LAG_MED)
 
+/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry
+	color = list(
+		1, 0, 0, -0.1,
+		0, 1, 0, -0.1,
+		0, 0, 1, -0.1,
+		0, 0, 0, 1,
+		0, 0, 0, 0)
+
+/atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry
+
 ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify
 	var/name
@@ -156,18 +213,26 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/additional_options = list()
 	var/additional_toggles = list()
 	var/static/datum/terrainify/terrainify_lock
+	var/parallax_render_source_group = null
+	var/road_turf_type = /turf/unsimulated/floor/auto/dirt
 	var/allow_underwater = FALSE
 	var/syndi_camo_color = null
+	var/ambient_color
+	var/startTime
 
 	New()
 		..()
 		if(length(syndi_camo_color))
 			additional_toggles["Syndi Camo"] = FALSE
+		if(parallax_render_source_group)
+			additional_toggles["Parallax"] = FALSE
 
 	proc/special_repair(list/turf/TS)
 		return FALSE
 
 	proc/log_terrainify(mob/user, text)
+		if(src.startTime)
+			text += "Took [(world.timeofday - src.startTime)/10] seconds."
 		logTheThing(LOG_ADMIN, user, "[text]")
 		logTheThing(LOG_DIARY, user, "[text]", "admin")
 		message_admins("[key_name(user)] [text]")
@@ -180,6 +245,61 @@ ABSTRACT_TYPE(/datum/terrainify)
 			.[option] = src.additional_options[option][1]
 		.["vehicle"] = TERRAINIFY_ALLOW_VEHCILES
 
+	proc/perform_terrainify(params, mob/user)
+		USR_ADMIN_ONLY
+		pre_convert(params, user)
+		convert_station_level(params, user)
+		post_convert(params, user)
+
+	proc/pre_convert(params, mob/user)
+		log_terrainify(user, "started Terrainify: [name]")
+		src.startTime = world.timeofday
+
+		if(src.ambient_color)
+			if(params["Ambient Light Obj"])
+				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
+				station_repair.ambient_obj.color = src.ambient_color
+			else
+				station_repair.ambient_light = new /image/ambient
+				station_repair.ambient_light.color = src.ambient_color
+
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			station_repair.preconvert_turfs += S
+
+		if(current_state >= GAME_STATE_PLAYING && params["Re-Entry"])
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			var/list/parallax_layers = list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry)
+			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, parallax_layers, 2 SECONDS)
+
+			for (var/client/C in clients)
+				var/mob/player_mob = C.mob
+				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
+					SPAWN(0)
+						shake_camera(player_mob, 35 SECONDS, rand(20,40))
+					player_mob.changeStatus("knockdown", 2 SECONDS)
+
+		return
+
+	proc/post_convert(params, mob/user)
+		if(current_state >= GAME_STATE_PREGAME)
+			initialize_worldgen()
+
+		if(current_state >= GAME_STATE_PLAYING && params["Re-Entry"])
+			for (var/client/C in clients)
+				var/mob/player_mob = C.mob
+				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
+					SPAWN(0)
+						shake_camera(player_mob, 4 SECONDS, rand(55,85))
+					player_mob.changeStatus("knockdown", 5 SECONDS)
+
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry), 10 SECONDS)
+
+		if(params["Parallax"])
+			var/datum/parallax_render_source_group/render_group = new parallax_render_source_group()
+			ADD_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION, render_group, 5 SECONDS)
+
+		log_terrainify(user, "has turned space and the station into [src.name].")
+		return
 
 	proc/convert_station_level(params, mob/user)
 		USR_ADMIN_ONLY
@@ -217,7 +337,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
 					A.color = color_matrix
 
-			message_admins("[key_name(user)] started Terrainify: [name].")
 			terrainify_lock = src
 			. = TRUE
 		else
@@ -262,7 +381,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		for(var/i in 1 to ore/2)
 			Turfspawn_Asteroid_SeedEvents(turfs)
 
-	proc/place_prefabs(prefabs_to_place, flags)
+	proc/place_prefabs(prefabs_to_place, flags, params)
 		var/failsafe = 800
 		for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 			var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
@@ -287,8 +406,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 						for(var/turf/T in space_turfs)
 							if(!istype(T, /turf/space))
 								space_turfs -= T
-						station_repair.repair_turfs(space_turfs)
-
+						station_repair.repair_turfs(space_turfs, force_floor=TRUE)
+						LAZYLISTADD(params["prefabs_loaded"], ret)
 						logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 						n++
 						stop = 1
@@ -299,14 +418,94 @@ ABSTRACT_TYPE(/datum/terrainify)
 					logTheThing(LOG_DEBUG, null, "Prefab Z1 placement #[n] [P.type] failed due to maximum tries [maxTries][P.required?" WARNING: REQUIRED FAILED":""].")
 			else break
 
-	proc/convert_turfs(list/turfs)
+	proc/convert_turfs(list/turfs, params)
 		station_repair.station_generator.generate_terrain(turfs, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+
+		for(var/turf/T as anything in turfs)
+			if(station_repair.ambient_light)
+				T.AddOverlays(station_repair.ambient_light, "ambient")
+			if(station_repair.ambient_obj)
+				T.vis_contents |= station_repair.ambient_obj
+			if(station_repair.weather_img)
+				if(islist(station_repair.weather_img))
+					T.AddOverlays(pick(station_repair.weather_img), "weather")
+				else
+					T.AddOverlays(station_repair.weather_img, "weather")
+			if(station_repair.weather_effect)
+				var/obj/effects/E = locate(station_repair.weather_effect) in T
+				if(!E)
+					new station_repair.weather_effect(T)
+			T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
+
+		LAZYLISTINIT(params["prefabs_loaded"])
+		if(params["Prefabs"])
+			place_prefabs(10, params=params)
+
+		if(params["Roads"])
+			build_roads(turfs, params)
+
+		station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, season=params["Season"])
+
+		handle_mining(params, turfs)
+
+	proc/build_roads(list/turfs, params)
+		var/datum/cell_grid/cell_grid = new(world.maxx,world.maxy)
+		var/road_noise = rustg_cnoise_generate("60", "10", "5", "2", "[world.maxx]", "[world.maxy]")
+
+		var/last_x = rand(5,250)
+		var/last_y = rand(5,250)
+		for(var/i in 1 to 12-length(params["prefabs_loaded"]))
+			var/next_x = rand(5,250)
+			var/next_y = rand(5,250)
+			if(prob(50))
+				cell_grid.drawLShape(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+			else
+				cell_grid.draw_line(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+			last_x = next_x
+			last_y = next_y
+
+		for(var/datum/loadedProperties/prefab in params["prefabs_loaded"])
+			if(prob((prefab.maxX-prefab.sourceX)*(prefab.maxY-prefab.sourceY))*5)
+				if(prob(20))
+					var/next_x = rand(5,250)
+					var/next_y = rand(5,250)
+					if(prob(50))
+						cell_grid.drawLShape(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+					else
+						cell_grid.draw_line(last_x, last_y, next_x, next_y, TRUE, TRUE, TRUE)
+					last_x = next_x
+					last_y = next_y
+
+				if(prob(80))
+					cell_grid.drawLShape(last_x, last_y, prefab.sourceX, prefab.sourceY, TRUE, TRUE)
+				else
+					cell_grid.draw_line(last_x, last_y, prefab.sourceX, prefab.sourceY, TRUE, TRUE)
+				last_x = prefab.maxX
+				last_y = prefab.maxY
+
+		for(var/datum/loadedProperties/prefab in params["prefabs_loaded"])
+			cell_grid.draw_box(prefab.sourceX, prefab.sourceY,   prefab.maxX, prefab.maxY, null, null, TRUE)
+
+		for(var/x in 1 to world.maxx)
+			for(var/y in 1 to world.maxy)
+				if(cell_grid.grid[x][y])
+					var/road_value
+					var/index = x * world.maxx + y
+					if(index <= length(road_noise))
+						road_value = text2num(road_noise[index])
+					if(road_value)
+						var/turf/new_road = locate(x, y, Z_LEVEL_STATION)
+						if(!istype(new_road, /turf/simulated/wall/auto/asteroid) && (new_road in turfs))
+							new_road.ReplaceWith(road_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+
 
 /datum/terrainify/desertify
 	name = "Desert Station"
 	desc = "Turn space into into a nice desert full of sand and stones."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
+	ambient_color = "#cfcfcf"
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/desert
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#efc998", nuke_op_color_matrix[3])
@@ -314,28 +513,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			var/const/ambient_light = "#cfcfcf"
 			station_repair.station_generator = new/datum/map_generator/desert_generator
-			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = ambient_light
-			else
-				station_repair.ambient_light = new /image/ambient
-				station_repair.ambient_light.color = ambient_light
 			station_repair.default_air.temperature = 330
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
-			for (var/turf/S in space)
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
-					S.AddOverlays(station_repair.ambient_light, "ambient")
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
-			handle_mining(params, space)
+			convert_turfs(space, params)
 
 			log_terrainify(user, "turned space into a desert.")
 
@@ -343,26 +527,19 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Underground Station"
 	desc = "Turns space into a cave system"
 	additional_options = list("Mining"=list("None","Normal","Rich"), "Bioluminescent Algae Coverage"=list("None", "Normal", "Heavy", "Extreme", "All"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Asteroid"=FALSE, "Re-Entry"=FALSE)
+	ambient_color = "#222222"
 
 	New()
 		..()
 
 	convert_station_level(params, mob/user)
 		if(..())
-			var/const/ambient_light = "#222222"
 
 			if(params["Asteroid"])
 				station_repair.station_generator = new/datum/map_generator/cave_generator/asteroid
 			else
 				station_repair.station_generator = new/datum/map_generator/cave_generator
-
-			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = ambient_light
-			else
-				station_repair.ambient_light = new /image/ambient
-				station_repair.ambient_light.color = ambient_light
 
 			var/algae_coverage = 0
 			switch(params["Bioluminescent Algae Coverage"])
@@ -394,24 +571,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
-			for (var/turf/S in space)
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
-					S.AddOverlays(station_repair.ambient_light, "ambient")
-
-			if(params["Prefabs"])
-				place_prefabs(10)
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
-			handle_mining(params, space)
+			convert_turfs(space, params)
 
 			log_terrainify(user, "turned space into a caves.")
 
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
+	additional_toggles = list("Void Bubbles"=FALSE, "Void Worley"=FALSE)
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
@@ -419,19 +586,26 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			generate_void()
+			generate_void(params=params)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, FALSE)
 
-			log_terrainify( "turned space into an THE VOID.")
+			log_terrainify(user, "turned space into an THE VOID.")
 
-
-
-/proc/generate_void(all_z_levels = FALSE)
+/proc/generate_void(all_z_levels = FALSE, params = null)
 	station_repair.ambient_light = new /image/ambient
 	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
-
 	station_repair.station_generator = new/datum/map_generator/void_generator
+
+	var/blacklist_generators = list(/datum/map_generator/icemoon_generator,
+									/datum/map_generator/mars_generator,
+									/datum/map_generator/void_generator,
+									/datum/map_generator/asteroids,
+									/datum/map_generator/sea_caves,
+									/datum/map_generator/storehouse_generator,
+									/datum/map_generator/room_maze_generator,
+									/datum/map_generator/room_maze_generator/random,
+									/datum/map_generator/room_maze_generator/spatial)
 
 	var/list/space = list()
 	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -445,6 +619,155 @@ ABSTRACT_TYPE(/datum/terrainify)
 	station_repair.station_generator.generate_terrain(space, flags = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 	for (var/turf/S in space)
 		S.AddOverlays(station_repair.ambient_light, "ambient")
+
+	if(params && params["Void Worley"])
+		var/worley_bubbles = rustg_worley_generate("32", "10", "50", "300", "1", "8")
+		var/datum/cell_grid/cell_grid = new(world.maxx,world.maxy)
+		cell_grid.draw_from_string(worley_bubbles, TRUE, FALSE, override=TRUE)
+		var/groups = cell_grid.find_contigious_cells()
+		for(var/group_id in groups)
+			var/group = groups[group_id]
+			if(length(group) > 20)
+				var/list/turfs_to_convert = list()
+				var/list/edges_to_convert = list()
+				for(var/node in group)
+					var/turf/T = locate(node[1], node[2], Z_LEVEL_STATION)
+					var/edge = cell_grid.has_empty_neighbor(node[1],node[2],diagonals=TRUE)
+					if(istype(T, /turf/unsimulated/floor/void))
+						if(edge)
+							edges_to_convert += T
+						else
+							turfs_to_convert += T
+
+				if(length(turfs_to_convert) > 50)
+					var/datum/map_generator/generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
+					generator = new generator()
+					generator.generate_terrain(turfs_to_convert, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+
+					//Place Prefab or just Terrain
+					if((length(turfs_to_convert) > 100) && prob(85))
+						var/count= 0
+						var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
+						var/maxTries = (P.required ? 35 : 20)
+						while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+							var/turf/target = pick(turfs_to_convert)
+							if(istype(target.loc, /area/station))
+								count = maxTries
+								continue
+
+							var/datum/loadedProperties/ret = P.applyTo(target)
+							if (ret)
+								var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+								for(var/turf/T in space_turfs)
+									if(!istype(T, /turf/space))
+										space_turfs -= T
+								generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+								logTheThing(LOG_DEBUG, null, "Void Worley placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+								break
+							else
+								count++
+
+					for(var/turf/edge_turf in edges_to_convert )
+						edge_turf.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
+						edge_turf.allows_vehicles = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles
+						var/turf/unsimulated/floor/auto/AT = edge_turf
+						if(istype(AT))
+							AT.edge_overlays()
+
+					logTheThing(LOG_DEBUG, null, "Void Worley Bubble: [generator] [log_loc(pick(turfs_to_convert), Z_LEVEL_STATION)]")
+
+
+
+	if(params && params["Void Bubbles"])
+		var/datum/bsp_tree/tree = new(width=world.maxx, height=world.maxy, min_width=30, min_height=25)
+		var/edge_noise = rustg_cnoise_generate("60", "5", "6", "3", "[world.maxx]", "[world.maxy]")
+		var/bubble_count = rand(8, 15)
+		var/list/bubble_nodes = list()
+		var/datum/bsp_node/room
+		var/list/bubble_edges = list()
+		for(var/x in 1 to bubble_count)
+			var/list/bubble_turfs = list()
+			if(length(tree.leaves))
+				room = pick(tree.leaves)
+			else
+				break
+
+			tree.leaves -= room
+			for(var/datum/bsp_node/leaf in bubble_nodes)
+				if(tree.are_nodes_adjacent(room, leaf))
+					room = null
+					break
+			if(!room)
+				continue
+
+			var/list/branch = tree.get_leaves(room.parent.parent)
+			tree.leaves -= branch
+
+			var/datum/map_generator/generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
+			generator = new generator()
+
+			//Place Prefab or just Terrain
+			if(prob(85))
+				var/count= 0
+				var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
+				var/maxTries = (P.required ? 5 : 2)
+				while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+					var/turf/target = locate(rand(room.x+room.width/3, room.x+room.width-room.width/3), rand(room.y+room.height/3, room.y+room.height-room.height/3), Z_LEVEL_STATION)
+					if(istype(target.loc, /area/station))
+						count = maxTries
+						continue
+
+					var/datum/loadedProperties/ret = P.applyTo(target)
+					if (ret)
+						var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+						for(var/turf/T in space_turfs)
+							if(!istype(T, /turf/space))
+								space_turfs -= T
+						generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+						logTheThing(LOG_DEBUG, null, "Void Bubble placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+						break
+					else
+						count++
+
+
+			for(var/turf/unsimulated/floor/void/V in block(locate(room.x, room.y, Z_LEVEL_STATION), locate(room.x + room.width-1, room.y + room.height-1, Z_LEVEL_STATION)))
+				bubble_turfs += V
+
+			if(length(bubble_turfs) > 50)
+				// Rough up the edges so it is less blocky
+				var/edge_turfs = list()
+				var/edge_size = 4
+				edge_turfs += block(locate(room.x,                          room.y, 						  Z_LEVEL_STATION), locate(room.x + edge_size, 				room.y + room.height-1, Z_LEVEL_STATION))
+				edge_turfs += block(locate(room.x + edge_size,              room.y,                           Z_LEVEL_STATION), locate(room.x + room.width-edge_size, 	room.y + edge_size,     Z_LEVEL_STATION))
+				edge_turfs += block(locate(room.x + room.width - edge_size, room.y,                           Z_LEVEL_STATION), locate(room.x + room.width-1, 			room.y + room.height-1, Z_LEVEL_STATION))
+				edge_turfs += block(locate(room.x + edge_size,              room.y + room.height - edge_size, Z_LEVEL_STATION), locate(room.x + room.width-edge_size, 	room.y + room.height-1, Z_LEVEL_STATION))
+
+				for(var/turf/BT in edge_turfs)
+					if(istype(BT, /turf/unsimulated/floor/void))
+						var/bubble_value
+						var/index = BT.x * world.maxx + BT.y
+						if(index <= length(edge_noise))
+							bubble_value = text2num(edge_noise[index])
+						var/on_edge = (BT.x == room.x)  			    \
+								   || (BT.x == (room.x + room.width-1)) \
+								   || (BT.y == room.y)                  \
+								   || (BT.y == (room.y + room.height-1))
+						if(!bubble_value || on_edge)
+							bubble_turfs -= BT
+							bubble_edges += BT
+							BT.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
+							BT.allows_vehicles = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles
+
+				generator.generate_terrain(bubble_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+				bubble_nodes += room
+
+			logTheThing(LOG_DEBUG, null, "Void Bubble: [generator] [log_loc(locate(room.x, room.y, Z_LEVEL_STATION))]")
+
+		SPAWN(10 SECONDS)
+			for(var/turf/unsimulated/floor/auto/void/BE in bubble_edges)
+				BE.edge_overlays()
+
+
 
 	station_repair.clean_up_station_level()
 
@@ -465,6 +788,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into the Outpost Theta... CO2 + Ice. Ice Spiders, Seal Pups, Brullbar, and the occasional Yeti."
 	additional_options = list("Snowing"=list("Yes","No","Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Pitch Black"=FALSE)
+	ambient_color = "#222222"
 
 	convert_station_level(params, mob/user)
 		if(..())
@@ -484,12 +808,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.default_air.oxygen = 0
 			station_repair.default_air.temperature = 100
 
-			if(!params["Pitch Black"])
-				station_repair.ambient_light = new /image/ambient
+			if(params["Pitch Black"])
+				station_repair.ambient_light = null
 
 			station_repair.station_generator = new/datum/map_generator/icemoon_generator
 
+			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
 			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
+			traveling_crate_turfs += station_repair.get_beacon_turfs()
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
 				if(station_repair.allows_vehicles)
@@ -503,20 +829,14 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
+			convert_turfs(space, params)
 			for (var/turf/S in space)
-				if(snow)
-					if(snow == "Yes")
-						S.AddOverlays(station_repair.weather_img, "rain")
-					else
-						new station_repair.weather_effect(S)
 				if(station_repair.ambient_light)
 					ambient_value = lerp(10,50,min(1-S.x/300,0.8))
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 					S.AddOverlays(station_repair.ambient_light, "ambient")
-			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
+
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
-			handle_mining(params, space)
 
 			log_terrainify(user, "turned space into an another outpost on Theta.")
 
@@ -524,6 +844,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Lava Moon Station"
 	desc = "Turns space into... CO2 + Lava."
 	additional_options = list("Mining"=list("None","Normal","Rich"), "Lava"=list("Normal","Extra","Less"))
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/lava_moon
 
 	convert_station_level(params, mob/user)
 		if(..())
@@ -541,6 +862,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					LG.lava_percent = 25
 
 			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
+			traveling_crate_turfs += station_repair.get_beacon_turfs()
 			for(var/turf/space/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/auto/iomoon)
 				if(station_repair.allows_vehicles)
@@ -551,13 +873,11 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
+			convert_turfs(space, params)
 
 			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
 			var/list/parallax_layers = list(/atom/movable/screen/parallax_render_source/foreground/embers)
 			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, parallax_layers, 0 SECONDS)
-
-			handle_mining(params, space)
 
 			log_terrainify(user, "turned space into an another outpost on Io.")
 
@@ -566,7 +886,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Swamp Station"
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("No", "Yes", "Particles"), "Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
+	ambient_color = "#222222"
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#6f7026", nuke_op_color_matrix[3])
@@ -574,50 +895,38 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			var/const/ambient_light = "#222222"
 			var/rain = params["Rain"]
 			rain = (rain == "No") ? null : rain
 
 			station_repair.station_generator = new/datum/map_generator/jungle_generator
 
 			if(rain == "Yes")
-				station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
-				station_repair.weather_img.alpha = 200
-				station_repair.weather_img.plane = PLANE_NOSHADOW_ABOVE
+				//station_repair.weather_img = image('icons/turf/water.dmi',"fast_rain", layer = EFFECTS_LAYER_BASE)
+				station_repair.weather_img = list()
+				for(var/idx in 1 to 4)
+					station_repair.weather_img += image('icons/effects/64x64.dmi',"rain_[idx]", layer = EFFECTS_LAYER_BASE)
+					station_repair.weather_img[idx].alpha
+					station_repair.weather_img[idx].alpha = 200
+					station_repair.weather_img[idx].plane = PLANE_NOSHADOW_ABOVE
 			else if(rain)
 				station_repair.weather_effect = /obj/effects/precipitation/rain/sideways/tile
-
-
-			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = ambient_light
-			else
-				station_repair.ambient_light = new /image/ambient
-				station_repair.ambient_light.color = ambient_light
-
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
-			for (var/turf/S in space)
-				if(rain)
+			convert_turfs(space, params)
+			if(rain)
+				for (var/turf/S in space)
 					if(istype(S,/turf/unsimulated/floor/auto/swamp))
 						S.ReplaceWith(/turf/unsimulated/floor/auto/swamp/rain, force=TRUE)
-					if(rain == "Yes")
-						S.AddOverlays(station_repair.weather_img, "rain")
-					else
-						new station_repair.weather_effect(S)
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
-					S.AddOverlays(station_repair.ambient_light, "ambient")
-
-			if(params["Prefabs"])
-				place_prefabs(10)
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
-			handle_mining(params, space)
+						if(rain == "Yes")
+							S.AddOverlays(pick(station_repair.weather_img), "weather")
+						else
+							new station_repair.weather_effect(S)
+						if(params["Ambient Light Obj"])
+							S.vis_contents |= station_repair.ambient_obj
+						else
+							S.AddOverlays(station_repair.ambient_light, "ambient")
 
 			log_terrainify(user, "turned space into a swamp.")
 
@@ -627,24 +936,16 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into Mars.  A sprawl of stand, stone, and an unyielding wind."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=FALSE, "Duststorm"=TRUE, "Prefabs"=FALSE)
+	ambient_color = "#222222"
 
 	convert_station_level(params, mob/user)
 		if(..())
-			var/ambient_value
-
 			if(params["Duststorm"])
 				station_repair.station_generator = new/datum/map_generator/mars_generator/duststorm
 				station_repair.weather_img = image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
 			else
 				station_repair.station_generator = new/datum/map_generator/mars_generator
 			station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
-
-			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				var/const/ambient_light = "#222222"
-				station_repair.ambient_obj.color = ambient_light
-			else
-				station_repair.ambient_light = new /image/ambient
 
 			station_repair.default_air.carbon_dioxide = 500
 			station_repair.default_air.nitrogen = 0
@@ -654,9 +955,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
+			convert_turfs(space, params)
 			sleep(3 SECONDS) // Let turfs initialize and re-orient before applying overlays
 
+			var/ambient_value
 			for (var/turf/S in space)
 				S.UpdateOverlays(station_repair.weather_img, "weather")
 
@@ -675,18 +977,23 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 
 			var/list/turf/traveling_crate_turfs = station_repair.get_turfs_to_fix()
+			traveling_crate_turfs += station_repair.get_beacon_turfs()
 			for(var/turf/unsimulated/wall/setpieces/martian/auto/T in traveling_crate_turfs)
 				T.ReplaceWith(/turf/unsimulated/floor/setpieces/martian/station_duststorm, force=TRUE)
 				if(station_repair.allows_vehicles)
 					T.allows_vehicles = station_repair.allows_vehicles
 				T.UpdateOverlays(station_repair.weather_img, "weather")
-				ambient_value = lerp(20,80,T.x/300)
-				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
-				T.AddOverlays(station_repair.ambient_light, "ambient")
 
-			ambient_value = lerp(20,80,0.5)
-			station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
-			handle_mining(params, space)
+				if(params["Ambient Light Obj"])
+					T.vis_contents |= station_repair.ambient_obj
+				else
+					ambient_value = lerp(20,80,T.x/300)
+					station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value) //randomly shift red to reduce vertical banding
+					T.AddOverlays(station_repair.ambient_light, "ambient")
+
+			if(station_repair.ambient_light)
+				ambient_value = lerp(20,80,0.5)
+				station_repair.ambient_light.color = rgb(ambient_value+((rand()*3)),ambient_value,ambient_value)
 
 			log_terrainify(user, "turned space into Mars.")
 
@@ -701,7 +1008,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/trenchify
 	name = "Trench Station"
 	desc = "Generates trench caves on the station Z"
-	additional_toggles = list("Hostile Mobs"=TRUE)
+	additional_toggles = list("Hostile Mobs"=TRUE, "Re-Entry"=FALSE)
 	allow_underwater = TRUE
 
 	convert_station_level(params, mob/user)
@@ -769,8 +1076,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/winterify
 	name = "Winter Station"
 	desc = "Turns space into a colder snowy place"
-	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"), "Season"=list("None", "Winter"))
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Re-Entry"=FALSE)
+	ambient_color = "#222222"
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/snow
 
 	New()
 		syndi_camo_color = list("#50587a", "#bbdbdd", nuke_op_color_matrix[3])
@@ -778,16 +1087,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			var/const/ambient_light = "#222"
 			station_repair.station_generator = new/datum/map_generator/snow_generator
-
-			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = ambient_light
-			else
-				station_repair.ambient_light = new /image/ambient
-				station_repair.ambient_light.color = ambient_light
-
 			station_repair.default_air.temperature = 235
 
 			var/snow = params["Weather"]
@@ -800,28 +1100,17 @@ ABSTRACT_TYPE(/datum/terrainify)
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
-			for (var/turf/S as anything in space)
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
-					S.AddOverlays(station_repair.ambient_light, "ambient")
-				if(snow)
-					new station_repair.weather_effect(S)
-
-			if(params["Prefabs"])
-				place_prefabs(10)
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
-			handle_mining(params, space)
+			convert_turfs(space, params)
 
 			log_terrainify(user, "turned space into a snowscape.")
 
 /datum/terrainify/forestify
 	name = "Forest Station"
 	desc = "Turns space into a lush and wooden place"
-	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Spooky"=FALSE)
+	additional_options = list("Mining"=list("None", "Normal", "Rich"), "Season"=list("None", "Autumn"))
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Roads"=FALSE, "Spooky"=FALSE, "Re-Entry"=FALSE)
+	ambient_color = "#211"
+	parallax_render_source_group = /datum/parallax_render_source_group/planet/forest
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#3d8f29", nuke_op_color_matrix[3])
@@ -829,35 +1118,15 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			var/const/ambient_light = "#211"
-
 			if(params["Spooky"])
 				station_repair.station_generator = new/datum/map_generator/forest_generator/dark
 			else
 				station_repair.station_generator = new/datum/map_generator/forest_generator
 
-			if(params["Ambient Light Obj"])
-				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
-				station_repair.ambient_obj.color = ambient_light
-			else
-				station_repair.ambient_light = new /image/ambient
-				station_repair.ambient_light.color = ambient_light
-
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 				space += S
-			convert_turfs(space)
-			for (var/turf/S as anything in space)
-				if(params["Ambient Light Obj"])
-					S.vis_contents |= station_repair.ambient_obj
-				else
-					S.AddOverlays(station_repair.ambient_light, "ambient")
-
-			if(params["Prefabs"])
-				place_prefabs(10)
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
-			handle_mining(params, space)
+			convert_turfs(space, params)
 
 			if(params["Spooky"])
 				// The following should be removed iff Caustics Parallax #16477 is merged
@@ -889,7 +1158,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		var/list/turf/space = list()
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
-		convert_turfs(space)
+		convert_turfs(space, params)
 
 		log_terrainify(user, "turned space into a plasma space.")
 
@@ -920,6 +1189,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			generator.generate_map()
 
 		var/list/turf/turfs_to_clear = station_repair.get_turfs_to_fix()
+		turfs_to_clear += station_repair.get_beacon_turfs()
 		generator.clear_walls(turfs_to_clear)
 
 		generator.generate_terrain(space, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
@@ -1033,7 +1303,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			convert_params["vehicle"] = (TERRAINIFY_VEHICLE_CARS * cars) + (TERRAINIFY_VEHICLE_FABS * fabricator) + (TERRAINIFY_ALLOW_VEHCILES * allowVehicles)
 			var/datum/terrainify/T = locate(terrain) in terrains
 			if(T)
-				T.convert_station_level(convert_params, ui.user)
+				T.perform_terrainify(convert_params, ui.user)
 				tgui_process.close_uis(src)
 				T.terrainify_lock = null
 				. = TRUE
@@ -1041,3 +1311,63 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 #undef TERRAINIFY_VEHICLE_FABS
 #undef TERRAINIFY_VEHICLE_CARS
+
+
+client/proc/unterrainify()
+	set name = "Unterrainify"
+	set desc = "Get off the planet"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	logTheThing(LOG_ADMIN, src, "began to convert all terrain tiles into space.")
+	message_admins("[key_name(src)] began to convert all terrain tiles into space.")
+
+	var/list/types_to_remove = list(/obj/stone, /obj/fakeobject/smallrocks, /obj/shrub, /obj/tree, /obj/machinery/plantpot/bareplant, /obj/decal/cleanable, /mob/living/critter)
+
+	var/response = tgui_alert(src, "Do you want to shake and cover the ground?", "Enter Atmosphere?", list("Yes","No"))
+
+	SPAWN(0)
+		station_repair.station_generator = null
+
+		if(response == "Yes")
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			var/list/parallax_layers = list(/atom/movable/screen/parallax_render_source/foreground/embers/atmosphere_entry, /atom/movable/screen/parallax_render_source/foreground/snow/atmosphere_entry)
+			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, parallax_layers, 2 SECONDS)
+
+			for (var/client/C in clients)
+				var/mob/player_mob = C.mob
+				if(istype(player_mob) && player_mob.z == Z_LEVEL_STATION)
+					SPAWN(0)
+						shake_camera(player_mob, 20 SECONDS, rand(20,40))
+					player_mob.changeStatus("knockdown", 2 SECONDS)
+
+		for(var/turf/T in station_repair.preconvert_turfs)
+			var/turf/orig = locate(T.x, T.y, T.z)
+			orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+
+			if(station_repair.weather_effect)
+				var/obj/effects/E = locate(station_repair.weather_effect) in T
+				qdel(E)
+
+			for(var/type in types_to_remove)
+				var/atom/movable/AM = locate(type) in T
+				if(ismob(AM))
+					var/mob/M = AM
+					if(M.client)
+						continue
+					else
+						qdel(AM)
+				else
+					qdel(AM)
+
+			LAGCHECK(LAG_REALTIME)
+
+		var/list/turf/preconvert_turfs = station_repair.preconvert_turfs
+		station_repair = new
+		station_repair.preconvert_turfs = preconvert_turfs
+
+		RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+
+		message_admins("Finished returning the station to space!")
+

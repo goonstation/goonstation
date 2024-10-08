@@ -58,7 +58,11 @@ TYPEINFO(/obj/submachine/chef_sink)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
 					GRAB.affecting.lastgasp() // --BLUH
-
+		else if (istype(W, /obj/item/gun/sprayer))
+			var/obj/item/gun/sprayer/sprayer = W
+			sprayer.clogged = FALSE
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+			boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))
 		else if (W.burning)
 			W.combust_ended()
 		else
@@ -86,12 +90,12 @@ TYPEINFO(/obj/submachine/chef_sink)
 			if (H.gloves)
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message(SPAN_NOTICE("[user] cleans [his_or_her(user)] gloves."))
-				if (H.sims)
+				if (H.sims?.getValue("Hygiene"))
 					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				if(H.sims)
+				if(H.sims?.getValue("Hygiene"))
 					if (H.sims.getValue("Hygiene") >= SIMS_HYGIENE_THRESHOLD_MESSY)
 						user.visible_message(SPAN_NOTICE("[user] starts washing [his_or_her(user)] hands."))
 						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
@@ -633,6 +637,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/chili(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries_alt(src)
+			src.recipes += new /datum/cookingrecipe/oven/poutine(src)
+			src.recipes += new /datum/cookingrecipe/oven/poutine_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/queso(src)
 			src.recipes += new /datum/cookingrecipe/oven/creamofamanita(src)
@@ -655,7 +661,9 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/banana_bread_alt(src)
 			src.recipes += new /datum/cookingrecipe/oven/honeywheat_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/eggnog(src)
+			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/brain_bread(src)
+			src.recipes += new /datum/cookingrecipe/oven/toast_bread(src)
 			src.recipes += new /datum/cookingrecipe/oven/donut(src)
 			src.recipes += new /datum/cookingrecipe/oven/bagel(src)
 			src.recipes += new /datum/cookingrecipe/oven/crumpet(src)
@@ -694,11 +702,14 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/baguette(src)
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread_ch(src)
 			src.recipes += new /datum/cookingrecipe/oven/garlicbread(src)
+			src.recipes += new /datum/cookingrecipe/oven/cinnamonbun(src)
 			src.recipes += new /datum/cookingrecipe/oven/fairybread(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_apple(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_blueb(src)
 			src.recipes += new /datum/cookingrecipe/oven/danish_weed(src)
+			src.recipes += new /datum/cookingrecipe/oven/danish_cheese(src)
 			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
 
@@ -733,7 +744,6 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/cake_fruit(src)
 			#endif
 			src.recipes += new /datum/cookingrecipe/oven/cake_custom(src)
-			src.recipes += new /datum/cookingrecipe/oven/meatloaf(src)
 			src.recipes += new /datum/cookingrecipe/oven/stroopwafel(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_spooky(src)
 			src.recipes += new /datum/cookingrecipe/oven/cookie_jaffa(src)
@@ -1292,21 +1302,25 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "brain meatball"
 					F.desc = "Oh jesus, brain meatballs? That's just nasty."
+					F.icon_state = "meatball_brain"
 					qdel( P )
 				if (/obj/item/clothing/head/butt)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "buttball"
 					F.desc = "The best you can hope for is that the meat was lean..."
+					F.icon_state = "meatball_butt"
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "synthetic meatball"
 					F.desc = "Let's be honest, this is probably as good as these things are going to get."
+					F.icon_state = "meatball_plant"
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
 					F.name = "mystery meatball"
 					F.desc = "A meatball of even more dubious quality than usual."
+					F.icon_state = "meatball_mystery"
 					qdel( P )
 				if (/obj/item/plant/wheat/metal)
 					new/obj/item/reagent_containers/food/snacks/condiment/ironfilings/(src.loc)
@@ -1337,7 +1351,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/condiment/mayo(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/pasta/sheet)
-					new/obj/item/reagent_containers/food/snacks/ingredient/spaghetti(src.loc)
+					new/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/sheet)
 					new/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles/ramen(src.loc)

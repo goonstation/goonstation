@@ -168,6 +168,8 @@
 		var/datum/biome/selected_biome
 		if(length(near_station?.get_nearby(gen_turf, range=6)))
 			selected_biome = /datum/biome/lavamoon
+		else if(flags & MAPGEN_FLOOR_ONLY)
+			selected_biome = /datum/biome/lavamoon
 		else if(lava_value)
 			selected_biome = /datum/biome/lavamoon/lava
 		else if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
@@ -200,18 +202,12 @@
 		selected_biome = biomes[selected_biome]
 		selected_biome.generate_turf(gen_turf, flags)
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 	for(var/turf/unsimulated/floor/lava/L in turfs)
 		L.update_neighbors()
 
-		if (current_state >= GAME_STATE_PLAYING)
-			LAGCHECK(LAG_LOW)
-		else
-			LAGCHECK(LAG_HIGH)
+		src.lag_check()
 
 ///for the mapgen mountains, temp until we get something better
 /turf/simulated/wall/auto/asteroid/mountain/lavamoon

@@ -44,6 +44,9 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
+			if ((src.equipped_in_slot == SLOT_SHOES) && (src.cant_self_remove || src.cant_other_remove))
+				return
+
 			var/uses = 0
 
 			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
@@ -189,12 +192,14 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 		src.setProperty("movespeed", 0.5)
 		src.setProperty("disorient_resist", 10)
 		step_sound = "step_lattice"
+		step_lots = TRUE
 		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	proc/deactivate()
 		src.magnetic = 0
 		src.delProperty("movespeed")
 		src.delProperty("disorient_resist")
 		step_sound = "step_plating"
+		step_lots = FALSE
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
 TYPEINFO(/obj/item/clothing/shoes/hermes)
@@ -351,6 +356,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 
 	New()
 		..()
+		src.item_function_flags |= IMMUNE_TO_ACID
 		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
@@ -381,8 +387,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
-	icon_state = "cowboy"
-	color = "#FF0000"
+	icon_state = "boomboots"
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999

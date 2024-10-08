@@ -84,7 +84,7 @@
 /obj/var/tmp/is_submerged = 0
 
 //submachine - i cant find the parents for these. just define here ok
-/obj/submachine/flags = FPRINT | FLUID_SUBMERGE
+/obj/submachine/flags = FLUID_SUBMERGE
 
 
 /obj/New()

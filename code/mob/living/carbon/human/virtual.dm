@@ -9,10 +9,13 @@
 		..()
 		sound_burp = 'sound/voice/virtual_gassy.ogg'
 		//sound_malescream = 'sound/voice/virtual_scream.ogg'
-		sound_scream = 'sound/voice/virtual_scream.ogg'
-		sound_fart = 'sound/voice/virtual_gassy.ogg'
+		src.bioHolder.mobAppearance.screamsounds["virtual"] = 'sound/voice/virtual_scream.ogg'
+		src.bioHolder.mobAppearance.screamsound = "virtual"
+		src.bioHolder.mobAppearance.fartsounds["virtual"] = 'sound/voice/virtual_gassy.ogg'
+		src.bioHolder.mobAppearance.fartsound = "virtual"
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
+		src.sims = null
 		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 

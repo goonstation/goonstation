@@ -191,7 +191,7 @@
 /turf/simulated/floor/longtile,
 /area/station/bridge)
 "aaA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -222,7 +222,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/fakeobjects/console_radar{
+/obj/fakeobject/console_radar{
 	anchored = 2
 	},
 /turf/simulated/floor/longtile,
@@ -266,7 +266,7 @@
 /turf/simulated/floor/carpet/purple/fancy/narrow/sw,
 /area/station/communications/bedroom)
 "aaN" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -758,7 +758,7 @@
 /turf/simulated/floor/wood/five,
 /area/station/chapel/sanctuary)
 "ace" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? Yes?  Oh, good...wait, where's the outlet?.";
 	icon = 'icons/obj/computer.dmi';
@@ -795,7 +795,7 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "acm" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "An old computer that doesn't appear to be plugged in.  Do you see the cord anywhere? No? Dang.";
 	icon = 'icons/obj/computer.dmi';
@@ -807,7 +807,7 @@
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "acn" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/fakeobject/lighttube_broken,
 /turf/simulated/floor/grime,
 /area/diner/backroom)
 "aco" = (
@@ -979,7 +979,7 @@
 /area/diner/bathroom)
 "ade" = (
 /obj/decal/cleanable/cobweb2,
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /turf/simulated/floor/damaged2,
 /area/diner/bathroom)
@@ -1400,7 +1400,7 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "aeP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
@@ -1738,7 +1738,7 @@
 /turf/space/fluid/manta,
 /area/abandonedmedicalship/robot_trader)
 "agh" = (
-/obj/decal/fakeobjects/firealarm_broken{
+/obj/fakeobject/firealarm_broken{
 	pixel_y = 28
 	},
 /turf/simulated/floor/grime,
@@ -1915,7 +1915,7 @@
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "agO" = (
-/obj/decal/fakeobjects/teleport_pad,
+/obj/fakeobject/teleport_pad,
 /obj/marker/supplymarker,
 /obj/machinery/light/small/floor/cool,
 /turf/simulated/floor/white/grime,
@@ -2590,7 +2590,7 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ajC" = (
-/obj/decal/fakeobjects/apc_broken,
+/obj/fakeobject/apc_broken,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
 "ajD" = (
@@ -3028,7 +3028,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "akN" = (
-/obj/machinery/computer/announcement/syndie,
+/obj/machinery/computer/announcement/syndicate/console,
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "akO" = (
@@ -3244,7 +3244,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "alt" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -3255,7 +3255,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicateassaultvessel)
 "alu" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -3293,7 +3293,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "aly" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -3322,7 +3322,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alE" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3545,7 +3545,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amj" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -3560,7 +3560,7 @@
 /area/listeningpost/syndicateassaultvessel)
 "aml" = (
 /obj/machinery/optable,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -3770,7 +3770,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -4045,7 +4045,7 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/reagent_containers/iv_drip/blood,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -4202,7 +4202,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/furnace,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 4;
@@ -4306,7 +4306,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/furnace,
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 8;
@@ -6177,7 +6177,7 @@
 /turf/simulated/floor,
 /area/abandonedship)
 "asL" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -6193,7 +6193,7 @@
 /turf/simulated/floor,
 /area/abandonedship)
 "asO" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -6542,7 +6542,7 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "atU" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -9663,7 +9663,7 @@
 /turf/simulated/floor/longtile/black,
 /area/station/turret_protected/port)
 "aCf" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It appears to be in a low-power idle state.";
@@ -12901,10 +12901,6 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aLa" = (
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
 /obj/table/wood/round/auto,
 /obj/item/pen/crayon/red,
 /obj/item/pen/crayon/blue,
@@ -13838,7 +13834,7 @@
 	},
 /area/station/security/hos)
 "aNZ" = (
-/obj/decal/fakeobjects/operatorconsole,
+/obj/fakeobject/operatorconsole,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
 "aOa" = (
@@ -14852,9 +14848,7 @@
 /area/station/security/brig/genpop)
 "aRj" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/paper/mantasecscanners,
 /obj/decal/poster/wallsign/cdnp{
 	pixel_y = 32
@@ -15076,9 +15070,7 @@
 /area/station/security/brig/genpop)
 "aRQ" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decoration/clock{
 	pixel_x = 32
 	},
@@ -15433,9 +15425,7 @@
 /area/station/security/brig/genpop)
 "aTa" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/decal/cleanable/dirt,
 /obj/submachine/ATM/atm_alt{
 	dir = 8
@@ -20710,22 +20700,12 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "bgW" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/storage/cart/medcart,
 /obj/decal/tile_edge/line/green{
 	dir = 1;
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/yellow/checker{
 	dir = 1
 	},
@@ -21576,7 +21556,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bjo" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "A fake skeleton, used to teach about human bone structure. At least, it's probably fake. The Medical Director probably didn't slowly collect bones until they had a full skeleton to use as decoration for their office. Probably.";
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "skeleton_stand";
@@ -22025,9 +22005,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bku" = (
@@ -22052,9 +22030,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bky" = (
@@ -22328,7 +22304,7 @@
 /area/station/medical/medbay/lobby)
 "blg" = (
 /obj/item/clothing/mask/cigarette/random,
-/obj/decal/fakeobjects/bookcase{
+/obj/fakeobject/bookcase{
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/eight{
@@ -25938,7 +25914,7 @@
 	dir = 5;
 	icon_state = "line4"
 	},
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/greenwhite/corner{
 	dir = 4
@@ -26114,6 +26090,7 @@
 /area/station/quartermaster/cargobay)
 "bvp" = (
 /obj/decal/stripe_caution,
+/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bvq" = (
@@ -27449,7 +27426,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bzo" = (
@@ -27548,7 +27525,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
@@ -28077,7 +28054,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/pathology,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/orange,
 /area/station/medical/cdc)
 "bAR" = (
@@ -28114,7 +28091,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
@@ -28723,7 +28700,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 8
 	},
 /obj/machinery/power/data_terminal,
@@ -29142,7 +29119,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /obj/machinery/light_switch/auto{
 	pixel_x = -24
 	},
@@ -29158,7 +29135,7 @@
 	icon_state = "line3"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/greenwhite{
 	dir = 1
@@ -29276,7 +29253,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEn" = (
-/obj/decal/fakeobjects/mantacontainer/blue,
+/obj/fakeobject/mantacontainer/blue,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bEo" = (
@@ -29579,7 +29556,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bFy" = (
-/obj/decal/fakeobjects/mantacontainer,
+/obj/fakeobject/mantacontainer,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bFB" = (
@@ -29979,7 +29956,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bGP" = (
-/obj/decal/fakeobjects/mantacontainer{
+/obj/fakeobject/mantacontainer{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -30224,7 +30201,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "bHS" = (
-/obj/decal/fakeobjects/mantacontainer/blue{
+/obj/fakeobject/mantacontainer/blue{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -31318,7 +31295,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bLg" = (
-/obj/storage/cart/forensic,
+/obj/storage/cart/forensic/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office_manta/detectives_bedroom)
 "bLh" = (
@@ -31857,7 +31834,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "bMA" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -31885,7 +31862,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "bMD" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -31898,7 +31875,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "bME" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	dir = 1;
@@ -33024,7 +33001,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "cUA" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicateassaultvessel)
 "cUH" = (
@@ -34282,9 +34259,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	pixel_x = 10
@@ -34686,18 +34661,12 @@
 	},
 /area/station/crewquarters/garbagegarbs)
 "gnS" = (
-/obj/storage/cart/mechcart,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;
 	nostick = 1;
 	pixel_x = 10
 	},
-/obj/item/storage/toolbox/electrical{
-	pixel_y = 6
-	},
-/obj/item/electronics/soldering,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/caution/south,
 /area/station/engine/elect)
 "goo" = (
@@ -35725,8 +35694,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/ce)
 "isu" = (
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 8
 	},
 /obj/table/wood/auto,
@@ -35843,7 +35811,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A security camera that is not on but, instead, off.";
 	icon = 'icons/obj/monitors.dmi';
@@ -36241,7 +36209,7 @@
 	nostick = 1;
 	pixel_y = 20
 	},
-/obj/machinery/incubator{
+/obj/fakeobject/incubator{
 	dir = 1
 	},
 /turf/simulated/floor/greenwhite,
@@ -36683,7 +36651,7 @@
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/listeningpost/syndicateassaultvessel)
 "kRd" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -36691,7 +36659,7 @@
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 4;
 	icon_state = "tube0";
@@ -36762,7 +36730,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
 "len" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
@@ -36770,7 +36738,7 @@
 	icon_state = "dterm0";
 	name = "broken computer"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/fakeobject/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;
 	icon_state = "tube0";
@@ -39018,7 +38986,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -39641,7 +39609,7 @@
 	},
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar)
 "rRP" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -39782,7 +39750,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /obj/machinery/light/incandescent/cool{
 	dir = 4;
 	nostick = 1;
@@ -40000,7 +39968,7 @@
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "sOt" = (
-/obj/decal/fakeobjects/mantacontainer/upwards,
+/obj/fakeobject/mantacontainer/upwards,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "sTs" = (
@@ -40171,7 +40139,7 @@
 "tlH" = (
 /obj/decal/cleanable/blood,
 /obj/decal/cleanable/dirt/dirt4,
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/fakeobject/lightbulb_broken{
 	dir = 8;
 	pixel_x = -10
 	},
@@ -40830,7 +40798,7 @@
 	},
 /area/station/crewquarters/cryotron)
 "vfw" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "Under construction";
 	dir = 1;
 	icon = 'icons/obj/junk.dmi';
@@ -42204,9 +42172,7 @@
 	name = "VR simulation pod";
 	network = "arcadevr"
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
 	pixel_x = -10

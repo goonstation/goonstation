@@ -744,12 +744,12 @@
 	</table>
 	<br>
 	<table class = "keypad">
-		<tr><td><a href='javascript:keypadIn(7);'>7</a></td><td><a href='javascript:keypadIn(8);'>8</a></td><td><a href='javascript:keypadIn(9);'>9</a></td></td><td><a href='javascript:keypadIn("A");'>A</a></td></tr>
-		<tr><td><a href='javascript:keypadIn(4);'>4</a></td><td><a href='javascript:keypadIn(5);'>5</a></td><td><a href='javascript:keypadIn(6)'>6</a></td></td><td><a href='javascript:keypadIn("B");'>B</a></td></tr>
-		<tr><td><a href='javascript:keypadIn(1);'>1</a></td><td><a href='javascript:keypadIn(2);'>2</a></td><td><a href='javascript:keypadIn(3)'>3</a></td></td><td><a href='javascript:keypadIn("C");'>C</a></td></tr>
-		<tr><td><a href='javascript:keypadIn(0);'>0</a></td><td><a href='javascript:keypadIn("F");'>F</a></td><td><a href='javascript:keypadIn("E");'>E</a></td></td><td><a href='javascript:keypadIn("D");'>D</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(7); return false;'>7</a></td><td><a href='#' onclick='keypadIn(8); return false;'>8</a></td><td><a href='#' onclick='keypadIn(9); return false;'>9</a></td></td><td><a href='#' onclick='keypadIn("A"); return false;'>A</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(4); return false;'>4</a></td><td><a href='#' onclick='keypadIn(5); return false;'>5</a></td><td><a href='#' onclick='keypadIn(6); return false;'>6</a></td></td><td><a href='#' onclick='keypadIn("B"); return false;'>B</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(1); return false;'>1</a></td><td><a href='#' onclick='keypadIn(2); return false;'>2</a></td><td><a href='#' onclick='keypadIn(3); return false;'>3</a></td></td><td><a href='#' onclick='keypadIn("C"); return false;'>C</a></td></tr>
+		<tr><td><a href='#' onclick='keypadIn(0); return false;'>0</a></td><td><a href='#' onclick='keypadIn("F"); return false;'>F</a></td><td><a href='#' onclick='keypadIn("E"); return false;'>E</a></td></td><td><a href='#' onclick='keypadIn("D"); return false;'>D</a></td></tr>
 
-		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='javascript:keypadIn("reset");'>RESET</a></td></tr>
+		<tr><td colspan=2 width = 100px><a id = "enterkey" href='?src=\ref[src];enter=0;'>ENTER</a></td><td colspan = 2 width = 100px><a href='#' onclick='keypadIn("reset"); return false;'>RESET</a></td></tr>
 	</table>
 
 <script language="JavaScript">

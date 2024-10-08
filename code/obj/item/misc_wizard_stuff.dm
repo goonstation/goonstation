@@ -10,7 +10,6 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
 	var/uses = 4
-	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -73,7 +72,7 @@
 	throw_range = 5
 	health = 8
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD
+	flags = TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
 	var/eldritch = 0	//was for robe and wizard hat, now nothing.

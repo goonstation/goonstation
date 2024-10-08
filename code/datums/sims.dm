@@ -56,11 +56,6 @@
 		simsController.simsMotives -= src
 		..()
 
-	disposing()
-		if (hud)
-			qdel(hud)
-		..()
-
 	proc/updateHud()
 		var/change = 0
 		if (value > last_life_value)
@@ -268,29 +263,8 @@
 			if (value < SIMS_HYGIENE_THRESHOLD_FILTHY && prob(33))
 				if (holder.owner.bioHolder && !(holder.owner.bioHolder.HasEffect("sims_stinky")) && !holder.owner.hasStatus("filthy"))
 					holder.owner.setStatus("filthy", 3 MINUTES)
-			else if ((value >= SIMS_HYGIENE_THRESHOLD_CLEAN ) && holder.owner.hasStatus("rancid"))
+			else if ((value >= SIMS_HYGIENE_THRESHOLD_FILTHY) && holder.owner.hasStatus("rancid"))
 				holder.owner.delStatus("rancid")
-			/*
-			if (value < 10 && prob((10 - value) * 1.5))
-				for (var/mob/living/carbon/human/H in viewers(2, holder.owner))
-					if (H != holder.owner && prob(30 - value) * 2)
-						//H.stunned = max(holder.owner.stunned, 1) <- Let's not punish others for our poor choices in life - unrealistic but more fun
-						H.vomit()
-						H.visible_message(SPAN_ALERT("[H] throws up all over \himself. Gross!"))
-						boutput(H, SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by [holder.owner]'s [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-				holder.owner.changeStatus("stunned", 1 SECOND)
-				holder.owner.visible_message(SPAN_ALERT("[holder.owner] throws up all over \himself. Gross!"))
-				holder.owner.vomit()
-				showOwner(SPAN_ALERT("You are [pick("disgusted", "revolted", "repelled", "sickened", "nauseated")] by your own [pick("smell", "odor", "body odor", "scent", "fragrance", "bouquet", "savour", "tang", "whiff")]!"))
-			*/
-			#ifdef CREATE_PATHOGENS //PATHOLOGY_REMOVAL
-			if (value < 5 && prob(1) && prob(25))
-				var/datum/pathogen/P = new /datum/pathogen
-				P.create_weak()
-				P.spread = 0
-				holder.owner.infected(P)
-				showOwner(SPAN_ALERT("You feel really sick.")) // in a bad way
-			#endif
 
 		getWarningMessage()
 			if (value < 25)
@@ -611,7 +585,7 @@ var/global/datum/simsControl/simsController = new()
 		make_motives()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
-			addMotive(/datum/simsMotive/hygiene)
+			//addMotive(/datum/simsMotive/hygiene)
 			//addMotive(/datum/simsMotive/bladder)
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
@@ -620,7 +594,7 @@ var/global/datum/simsControl/simsController = new()
 			make_motives()
 				addMotive(/datum/simsMotive/hunger/wolfy)
 				addMotive(/datum/simsMotive/hunger/thirst)
-				addMotive(/datum/simsMotive/hygiene)
+				//addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()

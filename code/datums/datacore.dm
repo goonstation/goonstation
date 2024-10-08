@@ -253,7 +253,7 @@
 	src.medical.add_record(M)
 	src.security.add_record(S)
 	src.bank.add_record(B)
-	wagesystem.payroll_stipend += B["wage"]
+	wagesystem.payroll_stipend += B["wage"] * 1.1
 
 	//Add email group
 	if ("[H.mind.assigned_role]" in job_mailgroup_list)

@@ -162,7 +162,7 @@
 
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a Salvager.</h3>", "blue")
-			message_admins("[key_name(lucky_dude.key)] respawned as a random event Salvager. Source: [source ? "[source]" : "random"]")
+			message_admins("[key_name(lucky_dude)] respawned as a random event Salvager. Source: [source ? "[source]" : "random"]")
 		src.post_event()
 
 	proc/post_event()

@@ -6,7 +6,7 @@
 #define access_fuck_all 0 // Because completely empty access lists can make things grump
 #define access_security 1
 #define access_brig 2
-#define access_armory 3 // Unused and replaced by maxsec (HoS-exclusive).
+#define access_armory 3 // The HoS' armory
 #define access_forensics_lockers 4
 #define access_medical 5
 #define access_morgue 6
@@ -16,8 +16,8 @@
 #define access_medical_lockers 10
 #define access_research_director 11
 #define access_maint_tunnels 12
-#define access_external_airlocks 13 // Unused. Most are all- or maintenance access these days.
-#define access_emergency_storage 14
+#define access_external_airlocks 13 // Unused
+#define access_emergency_storage 14 // Unused
 #define access_change_ids 15
 #define access_ai_upload 16
 #define access_teleporter 17
@@ -40,7 +40,7 @@
 #define access_dwaine_superuser 34 // So it's not the same as the RD's office and locker.
 #define access_hydro 35
 #define access_mail 36 // Unused.
-#define access_maxsec 37 // The HoS' armory.
+#define access_maxsec 37 // The HoS' office
 #define access_securitylockers 38
 #define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned. Contraband permit defined at 75.
 #define access_engineering 40 // General engineering area and substations.
@@ -53,7 +53,7 @@
 #define access_engineering_control 48 // Engine control room.
 #define access_engineering_chief 49 // CE's office.
 
-#define access_mining_shuttle 47
+#define access_mining_shuttle 47 // Unused.
 #define access_mining 50
 #define access_mining_outpost 51
 
@@ -68,6 +68,8 @@
 #define access_centcom 57 // self-explanatory?  :v
 
 #define access_supply_console 58 // QM Console
+
+#define access_money 59 //bank computer, because having bridge door access should not let you empty the budget
 
 // skipping a few here to reserve a block
 // for terra 8 and syndicate security clearances

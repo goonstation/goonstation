@@ -547,7 +547,8 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			else if (!src.book_cover)
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
-		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+		if(!findtext(src.info, "<span style=\"color:[src.ink_color]\">", 1, 50))
+			src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
 
 /obj/item/paper/spaceodyssey
 	name = "strange printout"

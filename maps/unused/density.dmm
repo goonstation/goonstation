@@ -194,9 +194,7 @@
 /area/station/security/main)
 "aB" = (
 /obj/stool/bed,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aC" = (
@@ -520,15 +518,9 @@
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -5332,7 +5324,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mr" = (
-/obj/machinery/vending/pathology,
+/obj/fakeobject/pathology_vendor,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ms" = (
@@ -5403,7 +5395,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mA" = (
-/obj/machinery/autoclave,
+/obj/fakeobject/autoclave,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mB" = (
@@ -5413,7 +5405,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mC" = (
-/obj/machinery/pathogen_manipulator,
+/obj/fakeobject/pathogen_manipulator,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mD" = (
@@ -5496,7 +5488,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mM" = (
-/obj/machinery/centrifuge,
+/obj/fakeobject/centrifuge,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1";
@@ -5614,7 +5606,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mX" = (
-/obj/machinery/synthomatic,
+/obj/fakeobject/synthomatic,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mY" = (
@@ -5723,7 +5715,7 @@
 /area/station/medical/cdc)
 "nj" = (
 /obj/table/reinforced/auto,
-/obj/machinery/microscope,
+/obj/fakeobject/microscope,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nk" = (
@@ -6108,7 +6100,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/computer/pathology{
+/obj/fakeobject/pathogen_computer{
 	dir = 8
 	},
 /obj/machinery/camera{
@@ -6449,7 +6441,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "uX" = (
-/obj/decal/fakeobjects/sink,
+/obj/fakeobject/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
 "vP" = (

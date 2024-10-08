@@ -3,7 +3,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "gib2"
 	},
-/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+/obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "clowncorpse"
 	},
 /mob/living/critter/spider/clown,

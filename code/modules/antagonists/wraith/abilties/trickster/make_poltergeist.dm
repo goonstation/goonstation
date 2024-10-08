@@ -2,34 +2,34 @@
 	name = "Make Poltergeist"
 	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
 	icon_state = "make_poltergeist"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 600
 	cooldown = 5 MINUTES
-	ignore_holder_lock = 0
-	var/in_use = 0
-	var/ghost_confirmation_delay  = 30 SECONDS
+	ignore_holder_lock = TRUE
+	var/in_use = FALSE
+	var/ghost_confirmation_delay = 30 SECONDS
 
-	// cast(turf/target, params)
 	cast(atom/target, params)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 #ifdef RP_MODE
-		var/mob/living/intangible/wraith/wraith = holder.owner
+		var/mob/living/intangible/wraith/wraith = src.holder.owner
 		if (istype(wraith) && length(wraith.poltergeists) >= 2)
 			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
-			return 1
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 #endif
-		var/turf/T = get_turf(holder.owner)
-		if (isturf(T) && !istype(T, /turf/space))
-			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")
-			src.doCooldown()
-			make_poltergeist(holder.owner, T)
-			return 0
-		else
-			boutput(holder.owner, SPAN_ALERT("You can't cast this spell on your current tile!"))
-			return 1
+		var/turf/T = get_turf(src.holder.owner)
+		if (!isturf(T) || istype(T, /turf/space))
+			boutput(src.holder.owner, SPAN_ALERT("You can't summon a poltergeist here!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		boutput(holder.owner, SPAN_NOTICE("You begin to channel power to call a spirit to this realm..."))
+		src.doCooldown()
+		make_poltergeist(src.holder.owner, get_turf(src.holder.owner))
+		return CAST_ATTEMPT_SUCCESS
 
-	proc/make_poltergeist(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
+	proc/make_poltergeist(mob/living/intangible/wraith/W, turf/T, tries = 0)
+		if (QDELETED(W))
+			return
 		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
@@ -42,18 +42,18 @@
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50, 0)
+		W.playsound_local(T, 'sound/voice/wraith/wraithportal.ogg', 50)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 		if (!islist(candidates) || length(candidates) <= 0)
-			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
-			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
+			message_admins("Couldn't set up poltergeist; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist; no ghosts responded. [tries < 1 ? "Trying again in 3 minutes." : "Aborting."] Source: [src.holder]")
 			if (tries >= 1)
-				boutput(W, "No spirits responded. The portal closes.")
+				boutput(W, SPAN_ALERT("No spirits responded. The portal closes."))
 				qdel(marker)
 				return
 			else
-				boutput(W, "Couldn't set up poltergeist ; no spirits responded. Trying again in 3 minutes.")
+				boutput(W, SPAN_ALERT("No spirits responded to your call. Trying again in three minutes..."))
 				qdel(marker)
 				SPAWN(3 MINUTES)
 					make_poltergeist(W, T, tries++)
@@ -62,7 +62,9 @@
 		if (lucky_dude.add_subordinate_antagonist(ROLE_POLTERGEIST, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "poltergeist", src.holder.owner)
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
-			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			P.marker = marker
+			message_ghosts("<b>[P]</b>, a poltergeist, has manifested at [log_loc(P, ghostjump = TRUE)].")
+			boutput(W, SPAN_NOTICE("The poltergeist you called has entered this realm. Its name is <b>[P]</b>."))
 		W.spawn_marker = null

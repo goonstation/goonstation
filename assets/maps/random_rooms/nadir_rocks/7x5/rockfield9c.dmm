@@ -13,7 +13,7 @@
 /turf/space/fluid,
 /area/space)
 "S" = (
-/obj/decal/fakeobjects/beacon,
+/obj/fakeobject/beacon,
 /turf/space/fluid,
 /area/space)
 "X" = (

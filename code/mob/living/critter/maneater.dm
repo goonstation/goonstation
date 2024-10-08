@@ -52,9 +52,11 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/maneater_devour)
 	planttype = /datum/plant/maneater
+	can_bleed = FALSE
 	var/baseline_health = 120 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
+	var/list/preferred_spices = list("mustard", "soysauce", "msg", "salt", "enriched_msg", "ketchup", "pepper", "butter") //! a list of chems the maneater enjoys in its food (humans)
 
 /mob/living/critter/plant/maneater/New()
 	src.devoured_items = list()

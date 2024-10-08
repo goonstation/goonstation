@@ -105,7 +105,7 @@
 		qdel(src)
 
 	bullet_act(var/obj/projectile/P)
-		if (istype(P, /datum/projectile/energy_bolt_antighost))
+		if (istype(P.proj_data, /datum/projectile/energy_bolt_antighost))
 			src.CritterDeath()
 			return
 		else
@@ -303,7 +303,7 @@
 			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			doomedMob.ghostize()
-			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)
+			new /obj/fakeobject/skeleton(doomedMob.loc)
 			doomedMob.gib()
 			src.target = null
 

@@ -21,7 +21,7 @@
 	var/slots = 7
 	var/list/spawn_contents = list()
 	move_triggered = 1
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
@@ -39,6 +39,22 @@
 	// override this with specific additions to add to the storage
 	proc/make_my_stuff()
 		return
+
+	combust()
+		..()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			I.temperature_expose(null, src.burn_output)
+
+	process_burning()
+		for (var/obj/item/I as anything in src.storage.get_contents())
+			I.temperature_expose(null, src.burn_output)
+		. = ..()
+
+	combust_ended()
+		if (src.health <= 0) // okay lets make sure it actually fully burned and not just got extinguished
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, get_turf(src))
+		. = ..()
 
 /obj/item/storage/box
 	name = "box"
@@ -85,7 +101,7 @@
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS| CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4
@@ -118,7 +134,7 @@
 	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "rockit"
 	item_state = "gun"
-	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
 	var/fire_delay = 0.4 SECONDS

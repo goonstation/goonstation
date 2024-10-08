@@ -44,363 +44,475 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		syndicate
 			id = "hangar_syndicate"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		catering
 			id = "hangar_catering"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		arrivals
 			id = "hangar_arrivals"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		escape
 			id = "hangar_escape"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		mainpod1
 			id = "hangar_podbay1"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		mainpod2
 			id = "hangar_podbay2"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		engineering
 			id = "hangar_engineering"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		security
 			id = "hangar_security"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		medsci
 			id = "hangar_medsci"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		research
 			id = "hangar_research"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		medbay
 			id = "hangar_medbay"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		qm
 			id = "hangar_qm"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		mining
 			id = "hangar_mining"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		miningoutpost
 			id = "hangar_miningoutpost"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		diner1
 			id = "hangar_spacediner1"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		diner2
 			id = "hangar_spacediner2"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		soviet
 			id = "hangar_soviet"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 		t1d1
 			id = "hangar_t1d1"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t1d2
 			id = "hangar_t1d2"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t1d3
 			id = "hangar_t1d3"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t1d4
 			id = "hangar_t1d4"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t1condoor
 			id = "hangar_t1condoor"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t2d1
 			id = "hangar_t2d1"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t2d2
 			id = "hangar_t2d2"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t2d3
 			id = "hangar_t2d3"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t2d4
 			id = "hangar_t2d4"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 		t2condoor
 			id = "hangar_t2condoor"
 
 			new_walls
 				north
+					dir = NORTH
 					pixel_y = 24
 				east
-					pixel_x = 24
+					dir = EAST
+					pixel_x = 22
 				south
+					dir = SOUTH
 					pixel_y = -19
 				west
-					pixel_x = -24
+					dir = WEST
+					pixel_x = -22
 
 /obj/machinery/door_control/New()
 	..()
@@ -520,12 +632,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 				if (I != speak_text)
 					I.bump_up(speak_text.measured_height)
 
+// for buttons sitting on tables
+/obj/machinery/door_control/table
+	name = "Remote Door Control"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "doorctrl0-t"
+	unpressed_icon = "doorctrl0-t"
+	pressed_icon = "doorctrl1-t"
+	unpowered_icon = "doorctrl-p-t"
+
 /// for sleepers entering listening post
 /obj/machinery/door_control/antagscanner
 	/// For the front door having a flying chat message or not.
 	var/entrance_scanner = 0
 	name = "Dubious Hand Scanner"
 	id = "Sleeper_Access"
+	flags = FLUID_SUBMERGE | NOFPRINT
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "antagscanner"
 	unpressed_icon = "antagscanner"
@@ -1169,10 +1291,35 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 
 	new_walls
 		north
+			dir = NORTH
 			pixel_y = 24
 		east
+			dir = EAST
 			pixel_x = 22
 		south
+			dir = SOUTH
 			pixel_y = -19
 		west
+			dir = WEST
 			pixel_x = -22
+
+
+/obj/machinery/door_control/north
+	name = "N Remote Door Control"
+	dir = NORTH
+	pixel_y = 24
+
+/obj/machinery/door_control/east
+	name = "E Remote Door Control"
+	dir = EAST
+	pixel_x = 24
+
+/obj/machinery/door_control/south
+	name = "S Remote Door Control"
+	dir = SOUTH
+	pixel_y = -24
+
+/obj/machinery/door_control/west
+	name = "W Remote Door Control"
+	dir = WEST
+	pixel_x = -24

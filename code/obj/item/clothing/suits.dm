@@ -12,13 +12,14 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
 	var/over_hair = FALSE
-	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_NORMAL
 	var/restrain_wearer = 0
 	var/bloodoverlayimage = 0
 	var/team_num
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
+	/// Used for hoodies (and anything that uses the toggle_hood component)
+	var/hooded = FALSE
 
 
 	setupProperties()
@@ -486,6 +487,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	setupProperties()
 		..()
 		setProperty("heatprot", 10)
+
+	april_fools
+		icon_state = "chef-alt"
+		item_state = "chef-alt"
 
 /obj/item/clothing/suit/apron
 	name = "apron"
@@ -1076,6 +1081,42 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		New()
 			..()
 			src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
+
+/obj/item/clothing/suit/knitsweater
+	name = "cozy knit sweater"
+	desc = "A pretty warm-looking knit sweater. Handmade with love, probably."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "sweatercozy"
+	item_state = "sweatercozy"
+	body_parts_covered = TORSO|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+
+	cable
+		name = "cable-knit sweater"
+		desc = "A warm cable-knit sweater. Made of wool, not electrical cables."
+		icon_state = "sweatercable"
+		item_state = "sweatercable"
+
+	bubble
+		name = "bubble-knit sweater"
+		desc = "A warm bubble-knit sweater. Made of wool, not bubbles."
+		icon_state = "sweaterbubble"
+		item_state = "sweaterbubble"
+
+	cardigan
+		name = "cardigan sweater"
+		desc = "A warm cardigan sweater. Handmade with love, probably."
+		icon_state = "cardigan"
+		item_state = "cardigan"
+		coat_style = "cardigan"
+
+		New()
+			..()
+			src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
 // LONG SHIRTS
 // No they're not sweaters
@@ -1975,6 +2016,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		setProperty("chemprot", 70)
 
+#define BADGE_SHOWOFF_COOLDOWN 2 SECONDS
+
 /obj/item/clothing/suit/security_badge
 	name = "Security Badge"
 	desc = "An official badge for a Nanotrasen Security Worker."
@@ -1997,10 +2040,32 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
 	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
 		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		actions.start(new /datum/action/show_item(user, src, "badge"), user)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
 		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
+		actions.start(new /datum/action/show_item(user, src, "badge"), user)
+
+/obj/item/clothing/suit/security_badge/shielded
+	name = "NTSO Tactical Badge"
+	desc = "An official badge for an NTSO operator, with a miniaturized shield projector. Small enough to be used as a backup power cell in a pinch."
+	tooltip_flags = REBUILD_ALWAYS
+
+	get_desc()
+		. = ..()
+		var/ret = list()
+		if ((SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST))
+			. += " It has [ret["charge"]]/[ret["max_charge"]] PUs left!"
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
+		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

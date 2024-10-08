@@ -115,6 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	name = "fucked up abstract turret that should never exist"
 	desc = "why did you do this"
 	icon = 'icons/obj/deployableturret.dmi'
+	icon_state = "maphelper" //this gets set properly in new
 	anchored = UNANCHORED
 	density = 1
 	var/health = 250
@@ -537,7 +538,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && (FACTION_SYNDICATE in C.faction)) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (FACTION_SYNDICATE in C.faction) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED

@@ -9,6 +9,8 @@
 	chance_leave = 8
 	chance_arrive = 35
 
+	business_card = /obj/item/paper/businesscard/josh
+
 	max_goods_buy = 3
 	max_goods_sell = 5
 
@@ -26,7 +28,8 @@
 	/datum/commodity/trader/josh/flyswatter,
 	/datum/commodity/trader/josh/robustris,
 	/datum/commodity/trader/josh/foamgun,
-	/datum/commodity/trader/josh/paintgun,)
+	/datum/commodity/trader/josh/paintgun,
+	/datum/commodity/trader/josh/spraypaint,)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",
 	"Sup bro, what's shakin' the bacon? Ho boy, I got some blazing hot items today.",
@@ -200,3 +203,9 @@
 	"Load this bad boy up with some paint and you'll be seeing colors!",
 	"Dude, paintball's season's here!")
 
+/datum/commodity/trader/josh/spraypaint
+	comname = "Wicked Spray Can"
+	comtype = /obj/item/spray_paint_graffiti
+	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
+	possible_names = list("All the up-and-coming artists are buzzing over this!",
+	"Show off your vast, oceanic soul with some ART, bro!")

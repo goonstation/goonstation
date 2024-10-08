@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	fill_amt = 0.3 //You can eat a lot of candy
 	real_name = "candy"
 	var/sugar_content = 50
-	var/razor_blade = 0 //Is this BOOBYTRAPPED CANDY?
+	var/has_razor_blade = FALSE //!Is this BOOBYTRAPPED CANDY?
 	festivity = 1
 
 	New()
@@ -18,9 +18,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/razor_blade))
-			boutput(user, "You add the razor blade to [src]")
+			if (src.has_razor_blade)
+				boutput(user, "There's already a razor blade in [src]!")
+				return
+			boutput(user, "You add the razor blade to [src].")
 			qdel(W)
-			src.razor_blade = 1
+			src.has_razor_blade = TRUE
 			return
 
 		else
@@ -28,13 +31,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		return
 
 	heal(var/mob/M)
-		if(src.razor_blade && ishuman(M))
+		if(src.has_razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
 			boutput(H, SPAN_ALERT("You bite down into a razor blade!"))
 			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			H.changeStatus("knockdown", 3 SECONDS)
 			H.UpdateDamageIcon()
-			src.razor_blade = 0
+			src.has_razor_blade = FALSE
 			new /obj/item/razor_blade( get_turf(src) )
 		..()
 
@@ -284,6 +287,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_random = TRUE
+	name = "medical lollipop"
+	real_name = "medical lollipop"
+	desc = "It's good for you! Probably. It's actually mostly sugar."
 	var/list/flavors = list("omnizine", "saline", "salicylic_acid", "epinephrine", "mannitol", "synaptizine", "anti_rad", "oculine", "salbutamol", "charcoal")
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical/New()
@@ -443,6 +449,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It says: [phrase]")]"
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy)
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy
 	name = "wrapped candy"
 	desc = "A piece of wrapped candy."
@@ -476,6 +483,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
 		icon_state = icon_state + "-unwrapped"
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy)
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 	name = "saltwater taffy"
 	desc = "Produced in small artisanal batches, straight from someone's kitchen. "
@@ -492,15 +500,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			R.add_reagent(F, 10)
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry
+	name = "red saltwater taffy"
 	flavor = "This one is cherry flavored."
 	flavors = list("juice_cherry", "psilocybin")
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon
+	name = "pink saltwater taffy"
 	icon_state = "pink"
 	flavor = "This one is watermelon flavored."
 	flavors = list("juice_watermelon", "love")
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry
+	name = "blue saltwater taffy"
 	icon_state = "blue"
 	flavor = "This one is blue raspberry flavored."
 	flavors = list("juice_raspberry", "LSD")

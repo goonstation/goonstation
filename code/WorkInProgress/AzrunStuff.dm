@@ -314,7 +314,7 @@
 /obj/gimmick_obj
 	var/list/gimmick_events
 	var/active_stage
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE
 
 	New()
 		..()
@@ -745,7 +745,7 @@
 		color_shift_lights(list(color), list(3 SECONDS))
 
 
-ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color)
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color, proc/lightning)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()
@@ -993,7 +993,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	inventory_counter_enabled = 1
 
@@ -1211,3 +1211,4 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	New(newLoc)
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
+

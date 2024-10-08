@@ -61,6 +61,8 @@
 	var/list/stamps = null
 	var/list/form_fields = list()
 	var/field_counter = 1
+	///Some subtypes might want to hide the scrollbar
+	var/scrollbar = TRUE
 
 /obj/item/paper/New()
 	..()
@@ -223,6 +225,7 @@
 		"stamps" = src.stamps,
 		"stampable" = src.stampable,
 		"sealed" = src.sealed,
+		"scrollbar" = src.scrollbar,
 	)
 
 /obj/item/paper/ui_data(mob/user)
@@ -671,7 +674,6 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
-	flags = FPRINT | TABLEPASS
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
@@ -950,6 +952,7 @@
 	sealed = TRUE
 	two_handed = TRUE
 	info = ""
+	hitsound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	var/headline = ""
 	var/publisher = ""
 

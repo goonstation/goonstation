@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
 	payout = PAY_IMPORTANT*10
-	weight = 60
+	weight = 40
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
 	var/list/desc_origin = list(" Nanotrasen"," Martian"," freelancing"," frontier"," - if only barely -"," retired")
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		var/task = pick(desc_task) //subvariation
 		src.flavor_desc = "An affiliated [task] [pick(desc_place)] requires sets of attire for newly [pick(desc_hiring)] [pick(desc_noobs)]."
 
-		var/crewcount = rand(4,12)
+		var/crewcount = rand(3,8)
 		src.payout += rand(3,4) * 10 * crewcount
 
 		//uniform pickin
@@ -269,14 +269,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/water
 	name = "water"
 	chem_ids = "water"
-	feemod = PAY_UNTRAINED/10
+	feemod = PAY_UNTRAINED/15
 
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
 	payout = PAY_TRADESMAN*10*2
 	hide_item_payouts = TRUE
-	weight = 70
+	weight = 60
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
 
@@ -651,12 +651,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/cell
 	feemod = PAY_IMPORTANT
 
-	rc_eval(atom/eval_item)
-		. = ..()
-		if(!.)
-			return
+	extra_eval(atom/eval_item)
+		. = FALSE
 		var/obj/item/cell/cell = eval_item
-		return cell.maxcharge >= 15000
+		if(cell.maxcharge >= 15000)
+			return TRUE
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"

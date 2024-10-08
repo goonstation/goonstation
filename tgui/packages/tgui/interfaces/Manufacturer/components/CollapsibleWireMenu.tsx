@@ -1,31 +1,32 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
-import { Button, Divider, LabeledList, Section } from "../../../components";
-import { WireIndicatorsData } from "../type";
+import { Button, Divider, LabeledList, Section } from 'tgui-core/components';
+
 import { is_set } from '../../common/bitflag';
 import { WIRE_PANEL_BUTTONS_WIDTH } from '../constant';
+import { WireIndicatorsData } from '../type';
 
 const ManufacturerWireData = [
-  { name: "Teal", colorName: "teal" },
-  { name: "Red", colorName: "red" },
-  { name: "Gold", colorName: "gold" },
-  { name: "Lime", colorName: "lime" },
+  { name: 'Teal', colorName: 'teal' },
+  { name: 'Red', colorName: 'red' },
+  { name: 'Gold', colorName: 'gold' },
+  { name: 'Lime', colorName: 'lime' },
 ];
 
 export type MaintenanceProps = {
-  actionWirePulse: (index:number) => void
-  actionWireCutOrMend: (index:number) => void
+  actionWirePulse: (index: number) => void;
+  actionWireCutOrMend: (index: number) => void;
   indicators: WireIndicatorsData;
   wires: number[];
-  wire_bitflags:number;
-}
+  wire_bitflags: number;
+};
 
-export const CollapsibleWireMenu = (props:MaintenanceProps) => {
+export const CollapsibleWireMenu = (props: MaintenanceProps) => {
   const {
     actionWirePulse,
     actionWireCutOrMend,
@@ -35,12 +36,9 @@ export const CollapsibleWireMenu = (props:MaintenanceProps) => {
   } = props;
 
   return (
-    <Section
-      textAlign="center"
-      title="Maintenance Panel"
-    >
+    <Section textAlign="center" title="Maintenance Panel">
       <LabeledList>
-        {wires.map((_, i: number) => (
+        {wires?.map((_, i: number) => (
           <LabeledList.Item
             key={i}
             label={ManufacturerWireData[i].name}
@@ -51,16 +49,18 @@ export const CollapsibleWireMenu = (props:MaintenanceProps) => {
                   width={WIRE_PANEL_BUTTONS_WIDTH}
                   textAlign="center"
                   key={i}
-                  content="Pulse"
                   onClick={() => actionWirePulse(i)}
-                />
+                >
+                  Pulse
+                </Button>
                 <Button
                   width={WIRE_PANEL_BUTTONS_WIDTH}
                   textAlign="center"
                   key={i}
-                  content={is_set(wire_bitflags, wires[i]-1) ? "Cut" : "Mend"}
                   onClick={() => actionWireCutOrMend(i)}
-                />
+                >
+                  {is_set(wire_bitflags, wires[i] - 1) ? 'Cut' : 'Mend'}
+                </Button>
               </>
             }
           />
@@ -68,25 +68,17 @@ export const CollapsibleWireMenu = (props:MaintenanceProps) => {
       </LabeledList>
       <Divider />
       <LabeledList>
-        <LabeledList.Item
-          label="Electrification Risk"
-        >
-          {indicators.electrified ? "High" : "None"}
+        <LabeledList.Item label="Electrification Risk">
+          {indicators?.electrified ? 'High' : 'None'}
         </LabeledList.Item>
-        <LabeledList.Item
-          label="System Stability"
-        >
-          {indicators.malfunctioning ? "Unstable" : "Stable"}
+        <LabeledList.Item label="System Stability">
+          {indicators?.malfunctioning ? 'Unstable' : 'Stable'}
         </LabeledList.Item>
-        <LabeledList.Item
-          label="Inventory"
-        >
-          {indicators.hacked ? "Expanded" : "Standard"}
+        <LabeledList.Item label="Inventory">
+          {indicators?.hacked ? 'Expanded' : 'Standard'}
         </LabeledList.Item>
-        <LabeledList.Item
-          label="Power"
-        >
-          {indicators.hasPower ? "Sufficient" : "Insufficient"}
+        <LabeledList.Item label="Power">
+          {indicators?.hasPower ? 'Sufficient' : 'Insufficient'}
         </LabeledList.Item>
       </LabeledList>
     </Section>

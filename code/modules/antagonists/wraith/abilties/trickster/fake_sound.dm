@@ -1,14 +1,14 @@
 /datum/targetable/wraithAbility/fake_sound
-	name = "Fake sound"
+	name = "Fake Sound"
 	icon_state = "fake_sound"
-	desc = "Play a fake sound at a location of your choice"
+	desc = "Play a fake sound at a location of your choice."
 	pointCost = 5
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 4 SECONDS
 	var/list/sound_list = list("Death gasp",
 	"Gasp",
-	"Gunshot",
+	"Revolver",
 	"AK477",
 	"Csaber unsheathe",
 	"Csaber attack",
@@ -25,7 +25,7 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/sound_choice = null
 		if (length(src.sound_list) > 1)
@@ -71,6 +71,6 @@
 			if("Gibs")
 				sound_choice = "sound/impact_sounds/Flesh_Break_2.ogg"
 
-		playsound(target, sound_choice, 70, FALSE)
-		boutput(holder.owner, "You use your powers to create a sound.")
-		return 0
+		playsound(target, sound_choice, 70)
+		boutput(holder.owner, SPAN_NOTICE("You use your powers to create a sound."))
+		return CAST_ATTEMPT_SUCCESS
