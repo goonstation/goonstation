@@ -680,6 +680,29 @@ var/global/list/mapNames = list(
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
 
+/datum/map_settings/atlas/init()
+	. = ..()
+	if(prob(66))
+		var/list/terrainify_options = list(/datum/terrainify/caveify,
+										/datum/terrainify/swampify,
+										/datum/terrainify/winterify,
+										/datum/terrainify/forestify)
+		var/datum/terrainify/T = pick(terrainify_options)
+		T = new T()
+		var/terrain_params = T.get_default_params()
+
+		if( ("Prefabs" in terrain_params) && prob(80) )
+			terrain_params["Prefabs"] = TRUE
+		if(("Parallax" in terrain_params) && prob(75))
+			terrain_params["Parallax"] = TRUE
+		if( ("Syndi Camo" in terrain_params) && prob(33) )
+			terrain_params["Syndi Camo"] = TRUE
+		if("Mining" in terrain_params)
+			terrain_params["Mining"] = weighted_pick(list("None"=5,"Normal"=50,"Rich"=45))
+
+		T.perform_terrainify(terrain_params, src)
+
+
 /datum/map_settings/destiny
 	name = "DESTINY"
 	display_name = "NSS Destiny"
