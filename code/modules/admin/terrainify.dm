@@ -575,6 +575,64 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			log_terrainify(user, "turned space into a caves.")
 
+/datum/terrainify/asteroid_field
+	name = "Asteroid Field"
+	desc = "Turns space into region filled with asteroids and debris."
+	additional_options = list("Mining"=list("None","Normal","Rich"))
+	additional_toggles = list("Prefabs"=FALSE)
+	ambient_color = "#222222"
+
+	New()
+		..()
+
+	convert_station_level(params, mob/user)
+		if(..())
+			var/area_restriction = /area/space
+			//var/regions = rustg_worley_generate("32", "10", "50", "300", "1", "8")
+			var/regions = rustg_cnoise_generate("33", "15", "3", "4", "300", "300")
+			var/datum/cell_grid/cell_grid = new(world.maxx,world.maxy)
+			cell_grid.draw_from_string(regions, TRUE, FALSE, override=TRUE)
+			var/groups = cell_grid.find_contigious_cells()
+			for(var/group_id in groups)
+				var/group = groups[group_id]
+				if(length(group) > 5)
+					var/list/turf/generated_turfs
+					var/node = pick(group)
+					var/turf/center = locate(node[1], node[2], Z_LEVEL_STATION)
+					if(prob(3))
+						Turfspawn_Wreckage(center, area_restriction=area_restriction)
+					else
+						var/size = max(2, round(sqrt(length(group))) + rand(-1+2))
+						var/rand_num = rand(1,3)
+						switch(rand_num)
+							if (1)
+								generated_turfs = Turfspawn_Asteroid_DegradeFromCenter(center, /turf/simulated/wall/auto/asteroid, size, 10, area_restriction)
+							if (2)
+								var/list/turfs_near_center = list()
+								for(var/turf/space/S in orange(4,center))
+									turfs_near_center += S
+
+								if (length(turfs_near_center) > 0) //Wire note: Fix for pick() from empty list
+									var/chunks = rand(2,6)
+									while(chunks > 0)
+										chunks--
+										generated_turfs = generated_turfs + Turfspawn_Asteroid_Round(pick(turfs_near_center), /turf/simulated/wall/auto/asteroid, rand(2,4), 0, area_restriction)
+							else
+								generated_turfs = Turfspawn_Asteroid_Round(center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
+
+						for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+							AST.space_overlays()
+
+						for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
+							AST.UpdateIcon()
+						Turfspawn_Asteroid_SeedOre(generated_turfs, rand(1,3), rand(0,5))
+						Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs), rand(0,9))
+					LAGCHECK(LAG_MED)
+
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, remove_parallax=FALSE, season=params["Season"])
+
+			log_terrainify(user, "turned space into a debris field.")
+
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
