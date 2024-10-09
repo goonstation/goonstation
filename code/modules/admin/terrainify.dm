@@ -578,8 +578,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/asteroid_field
 	name = "Asteroid Field"
 	desc = "Turns space into region filled with asteroids and debris."
-	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Prefabs"=FALSE)
+	additional_options = list()
+	additional_toggles = list()
 	ambient_color = "#222222"
 
 	New()
