@@ -5193,6 +5193,13 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/arrivals)
 "aCR" = (
@@ -6704,13 +6711,6 @@
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "aLB" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
