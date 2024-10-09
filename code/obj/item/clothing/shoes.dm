@@ -340,6 +340,17 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
 
+	military
+		name = "military shoes"
+		desc = ""
+		icon_state = "clown_military"
+		item_state = "clown_military"
+
+		get_desc(var/dist, var/mob/user)
+			if (user.mind?.assigned_role == "Head of Security")
+				. = "Extra long shoes to show the extra long reach of the law!"
+			else
+				. = "These are clearly just clown shoes covered in black spraypaint."
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
@@ -486,6 +497,18 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+/obj/item/clothing/shoes/swat/heavy/clown
+	name = "heavy clown boots"
+	desc = ""
+	icon_state = "swatclown"
+	item_state = "swatclown"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Your treasured boots covered in crayon. Someone's in trouble."
+		else
+			. = "Only the funniest of boots for the funniest of clowns."
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
