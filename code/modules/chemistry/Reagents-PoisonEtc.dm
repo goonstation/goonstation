@@ -1949,7 +1949,7 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
-			depletion_rate = 0.3
+			depletion_rate = 0.2
 			var/progression_speed = 1
 			var/counter = 1
 
@@ -1957,7 +1957,7 @@ datum
 				if (!M) M = holder.my_atom
 
 				switch(src.counter+= (mult * src.progression_speed))
-					if (10 to 27) // Small signs of trouble
+					if (10 to 28) // Small signs of trouble
 						if (prob(15))
 							M.change_misstep_chance(15 * mult)
 						if (probmult(13))
@@ -1966,7 +1966,7 @@ datum
 						if (probmult(13))
 							M.emote(pick("twitch","drool","tremble"))
 							M.change_eye_blurry(2, 2)
-					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
+					if (28 to 40) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
 						M.setStatusMin("slowed", 40 SECONDS)
@@ -1977,7 +1977,7 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
-					if (47 to INFINITY) // Heart effects kick in
+					if (40 to INFINITY) // Heart effects kick in
 						M.setStatusMin("slowed", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))

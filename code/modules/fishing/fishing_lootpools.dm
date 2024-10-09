@@ -66,6 +66,11 @@
 	if(!(user.bioHolder.HasEffect("clumsy")))
 		return FALSE
 
+///minimum T2 to get pufferfish from exotic sources
+/datum/fishing_lootpool/pufferfish
+	minimum_rod_tier = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/pufferfish = 25)
+
 ///tiny junk items you can find in vending machines and others.
 /datum/fishing_lootpool/tiny_junk
 	fish_available = list(/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
