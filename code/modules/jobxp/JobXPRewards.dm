@@ -279,6 +279,7 @@ mob/verb/checkrewards()
 		var/obj/item/I = new path_to_spawn()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand_or_drop(I)
+		playsound(C.mob, 'sound/items/graffitispray3.ogg', 100, TRUE)
 		boutput(C.mob, "You spraypaint the clown shoes in a sleek black!")
 
 /datum/jobXpReward/HeadofSecurity/mug
