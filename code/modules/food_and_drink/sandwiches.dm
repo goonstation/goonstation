@@ -556,6 +556,7 @@
 	desc = "Reeks of crime."
 	icon_state = "burgle"
 	food_effects = list("food_cateyes", "food_energized_big")
+	contraband = 3 //ILLEGAL
 
 	take_a_bite(mob/consumer, mob/feeder)
 		if (prob(35))
