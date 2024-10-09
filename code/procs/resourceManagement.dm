@@ -127,7 +127,7 @@
 		if (ext in list("jpg", "jpeg", "png", "svg", "bmp", "gif", "eot", "woff", "woff2", "ttf", "otf", "map", "mp4", "psd"))
 			return 0
 		// Is this file a bundled tgui file?
-		if ((length(parts) > 2) && (parts[length(parts) - 1] in list("bundle", "min", "hot-update")))
+		if ((length(parts) > 2) && (parts[length(parts) - 1] in list("bundle", "hot-update")))
 			return 0
 
 	//Look for resource placeholder tags. {{resource("path/to/file")}}
