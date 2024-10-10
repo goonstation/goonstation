@@ -925,8 +925,19 @@
 		/// Returns for this proc can be found in defines/abilities.dm.
 		cast(atom/target)
 			SHOULD_CALL_PARENT(TRUE)
-			if(do_logs)
-				logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src] on [constructTarget(target, "combat")] at [log_loc(target)]")
+			if (do_logs)
+				if (istype(src, /datum/targetable/geneticsAbility))
+					var/datum/bioEffect/power/linked_power = src:linked_power
+					if (target)
+						logTheThing(LOG_COMBAT, src.holder?.owner, "used the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
+					else if (!linked_power.ability_path:targeted)
+						logTheThing(LOG_COMBAT, src.holder?.owner, "used the [linked_power.name] power at [log_loc(src.holder?.owner)].")
+				else
+					if (src.targeted)
+						if (!isnull(target))
+							logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] on [constructTarget(target, "combat")] at [log_loc(target)]")
+					else
+						logTheThing(LOG_COMBAT, src.holder?.owner, "uses [src.name] at [log_loc(src.holder?.owner)]")
 			if(interrupt_action_bars)
 				actions.interrupt(holder.owner, INTERRUPT_ACT)
 

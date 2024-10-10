@@ -313,12 +313,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		..()
 
 	cast(atom/target)
-		if (ismob(target))
-			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [constructTarget(target,"combat")].")
-		else if (target)
-			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power on [target].")
-		else
-			logTheThing(LOG_COMBAT, owner, "used the [linked_power.name] power.")
 		if (!has_misfire)
 			return ..(target)
 		var/success_prob = 100
@@ -330,12 +324,10 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			return cast_misfire(target)
 
 	proc/cast_misfire(atom/target)
-		if (ismob(target))
-			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")].")
-		else if (target)
-			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [target].")
+		if (target)
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
 		else
-			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power.")
+			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power at [log_loc(owner)].")
 		return 0
 
 
