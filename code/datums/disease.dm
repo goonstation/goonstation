@@ -417,12 +417,12 @@
 
 		if (istype(A,/datum/ailment/disease/))
 			var/datum/ailment/disease/D = A
-			resist_prob = ((100 - resist_prob) / 100) * D.virulence
+			resist_prob = 100 - ((resist_prob / 100) * D.virulence)
 
 	if (prob(resist_prob))
-		return 1 // you caught the virus! do you want to give the captured virus a nickname? virus has been recorded in lurgydex
-	else
 		return 0
+	else
+		return 1 // you caught the virus! do you want to give the captured virus a nickname? virus has been recorded in lurgydex
 
 /// Contract the specified disease.
 /// @param ailment_path Path of the ailment to add. If both ailment_path and ailment_name are passed, this is used.
