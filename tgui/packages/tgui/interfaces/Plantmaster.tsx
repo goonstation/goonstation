@@ -303,7 +303,7 @@ const PlantRow = (props) => {
             bold={extractable.charges[1]}
             backgroundColor={extractable.charges[1] ? '#333333' : ''}
           >
-           {extractable.charges[0]}
+            {extractable.charges[0]}
           </Table.Cell>
         )}
         <Table.Cell
