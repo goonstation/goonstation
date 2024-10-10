@@ -1,0 +1,62 @@
+/**
+ * @file
+ * @copyright 2024
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+
+/* These styles are for compatibility with the old HTML markup, please use TGUI elements for new popups */
+.traitor-tips {
+  font-size: 1.2em;
+
+  h1 {
+    font-size: 2em;
+  }
+  p {
+    position: relative;
+  }
+  .small,
+  span.sub {
+    font-size: 0.8em;
+  }
+  em {
+    font-size: 1.1em;
+    color: rgb(255, 52, 52);
+    font-weight: bold;
+    font-style: normal;
+  }
+  .mode-light & em {
+    color: rgb(202, 0, 0);
+  }
+
+  .indent {
+    padding: 5px 0 5px 25px;
+    display: block;
+  }
+
+  .center {
+    text-align: center;
+  }
+  img.center {
+    display: block;
+    margin: 0 auto;
+  }
+
+  img.right {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+  }
+  .image-right {
+    padding-right: 55px;
+  }
+}
+
+.pod-wars-tips {
+  .image-bar {
+    text-align: center;
+  }
+  .image-bar img {
+    display: inline;
+  }
+}
