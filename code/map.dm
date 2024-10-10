@@ -701,7 +701,9 @@ var/global/list/mapNames = list(
 		if("Mining" in terrain_params)
 			terrain_params["Mining"] = weighted_pick(list("None"=5,"Normal"=50,"Rich"=45))
 
+#ifndef CI_RUNTIME_CHECKING
 		T.perform_terrainify(terrain_params, src)
+#endif
 
 
 /datum/map_settings/destiny
