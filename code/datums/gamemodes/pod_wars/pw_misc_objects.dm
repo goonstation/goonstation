@@ -447,6 +447,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		setup_default_module = /obj/item/device/pda_module/flashlight/sy_red
 		team_num = TEAM_SYNDICATE
 
+		New()
+			..()
+			var/datum/computer/file/text/pda2manual/old_manual = locate() in src.hd.root.contents
+			src.hd.root.remove_file(old_manual)
+			var/datum/computer/file/pda_program/emergency_alert/crisis = locate() in src.hd.root.contents
+			src.hd.root.remove_file(crisis)
+			src.hd.root.add_file(new /datum/computer/file/text/pda2manual/knockoff)
+
 /obj/item/device/pda_module/flashlight/nt_blue
 	name = "\improper NanoTrasen blue flashlight module"
 	desc = "Love (or work for) NanoTrasen? This'll be your favorite flashlight!"
