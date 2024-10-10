@@ -1599,12 +1599,19 @@ datum
 			var/list/flushed_reagents = list("ethanol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				var/ethanol_multiplier = floor(holder.get_reagent_amount("ethanol") / 10)
 				if(!M) M = holder.my_atom
-				flush(holder, 8 * mult, flushed_reagents)
+				flush(holder, (1 + 1 * ethanol_multiplier) * mult, flushed_reagents)
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-2 * mult)
 				..()
 				return
+
+			calculate_depletion_rate(var/mob/affected_mob, var/mult = 1)
+				. = ..()
+				var/ethanol_multiplier = floor(holder.get_reagent_amount("ethanol") / 10)
+				. += 0.2 * ethanol_multiplier
+				return .
 
 		medical/ipecac
 			name = "space ipecac"
