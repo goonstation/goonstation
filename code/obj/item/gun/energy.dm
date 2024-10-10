@@ -2390,5 +2390,31 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		UpdateIcon()
 		M.update_inhands()
 
+/obj/item/gun/energy/bubble_gun
+	name = "Bubble Max XSTREAM"
+	icon_state = "phaser-tiny"
+	item_state = "phaser"
+	force = 4
+	desc = "The foremost name in bubble based warfare."
+	muzzle_flash = "muzzle_flash_launch"
+	cell_type = /obj/item/ammo/power_cell
+	w_class = W_CLASS_SMALL
+	var/bubble_type = /datum/projectile/special/bubble
+
+	New()
+		. = ..()
+		color = list(0,0,1,1,0,0,0,1,0)
+		set_current_projectile(new bubble_type)
+		projectiles = list(current_projectile)
+
+/obj/item/gun/energy/bubble_gun/bomb
+	name = "Bubble Bomb Max ULTRAimpact"
+	desc = "Looks to be a modified Bubble Max XSTREAM. There appears to be a warning label on the side, \"Fire at a distance.\""
+	bubble_type = /datum/projectile/special/bubble/bomb
+	shoot_delay = 50
+
+/obj/item/gun/energy/bubble_gun/bomb/turf_safe
+	bubble_type = /datum/projectile/special/bubble/bomb/turf_safe
+
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD
