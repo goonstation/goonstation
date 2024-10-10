@@ -171,6 +171,11 @@
 		//var/inrange = in_interact_range(target, src)
 		//var/obj/item/equipped = src.equipped()
 
+		if(src.client.check_any_key(KEY_OPEN) && istype(target, /mob/living/silicon))
+			var/mob/living/silicon/S = target
+			src.mainframe.deploy_to_shell(S)
+			return
+
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			if (src.targeting_ability)
 				..()
