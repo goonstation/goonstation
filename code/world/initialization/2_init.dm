@@ -208,13 +208,13 @@
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
 
-	UPDATE_TITLE_STATUS("Initializing worldgen setup")
-	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
-	initialize_worldgen()
-
 	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
+
+	UPDATE_TITLE_STATUS("Initializing worldgen setup")
+	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
+	initialize_worldgen()
 
 	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
