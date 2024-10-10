@@ -23,8 +23,8 @@
 	locked = 1
 	access_lookup = "Captain"
 	bot_move_delay = FIREBOT_MOVE_SPEED
-	var/obj/hotspot/target = null
-	var/obj/hotspot/oldtarget = null
+	var/atom/movable/hotspot/target = null
+	var/atom/movable/hotspot/oldtarget = null
 	var/oldloc = null
 	var/found_cooldown = 5 SECONDS
 	var/spray_cooldown = 3 SECONDS
@@ -204,7 +204,7 @@
 				src.speak(pick("ONE FIRE, ONE EXTINGUISHER.", "HEAT DEATH: DELAYED.", "TARGET FIRE TRIANGLE: DISRUPTED.", "FIRE DESTROYED.",
 											"AN EXTINGUISHER TO THE FACE KEEPS ME AWAY.", "YOU HAVE OUTRUN AN INFERNO", "GOD MADE TOMORROW FOR THE FIRES WE DON'T KILL TODAY."))
 				src.KillPathAndGiveUp(1)
-		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/obj/hotspot]))
+		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/atom/movable/hotspot]))
 			src.speak(pick("FIRE: [pick("ENDED", "MURDERED", "STARVED", "KILLED", "DEAD", "DESTROYED")].", "FIRE SAFETY PROTOCOLS: OBSERVED.",
 										 "TARGET CREATURE, OBJECT, OR REGION OF FLAME: EXTINGUISHED.","YOU ARE NO LONGER ON FIRE."))
 			src.KillPathAndGiveUp(1) // Cus they used to keep trying to put someone out, even if they arent on fire. Or are dead.
@@ -232,7 +232,7 @@
 	if(ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown))
 		return
 	if(src.extinguish_flags & EXTINGUISH_HOTSPOTS)
-		for_by_tcl(H, /obj/hotspot) // First search for burning tiles
+		for_by_tcl(H, /atom/movable/hotspot) // First search for burning tiles
 			if ((H == src.oldtarget))
 				continue
 			if(IN_RANGE(src, H, 7))
