@@ -276,6 +276,7 @@ var/global/list/soundCache = list(
  	"sound/effects/polaris_crateopening.ogg" = 'sound/effects/polaris_crateopening.ogg',\
  	"sound/effects/poof.ogg" = 'sound/effects/poof.ogg',\
  	"sound/effects/pop.ogg" = 'sound/effects/pop.ogg',\
+ 	"sound/effects/pop_pills.ogg" = 'sound/effects/pop_pills.ogg',\
  	"sound/effects/power_charge.ogg" = 'sound/effects/power_charge.ogg',\
  	"sound/effects/pump.ogg" = 'sound/effects/pump.ogg',\
  	"sound/effects/radio_sweep1.ogg" = 'sound/effects/radio_sweep1.ogg',\
