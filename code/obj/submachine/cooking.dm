@@ -406,7 +406,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/list/recipes = null
 	//var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain/obj/item)
 	var/allowed = list(/obj/item)
-	var/static/tmp/recipe_html = null
+	var/static/tmp/recipe_html = null // see: create_oven_recipe_html()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!emagged)
@@ -808,13 +808,6 @@ table#cooktime a#start {
 
 			// store the list for later
 			oven_recipes = src.recipes
-
-		// ZEWAKA/INIT
-		SPAWN(3 SECONDS)
-			if (!src.recipe_html)
-				if (processScheduler.hasProcess("World"))
-					var/datum/controller/process/world/W = processScheduler.nameToProcessMap["World"]
-					src.recipe_html = W.oven_recipe_html
 
 	Topic(href, href_list)
 		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
