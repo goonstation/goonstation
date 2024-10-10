@@ -1,5 +1,10 @@
 
 (t)thu oct 10 24
+(u)JORJ949
+(p)20959
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Added a second smaller "ship" to atlas on the northwest side of the ship, on board is a PTL and CE office.
+(+)Added a Port-A-Medbay and MDir office to atlas.
 (u)Azrun
 (p)21014
 (e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
