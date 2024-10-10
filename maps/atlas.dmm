@@ -6464,11 +6464,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
-"aKc" = (
-/obj/machinery/firealarm/east,
-/obj/machinery/vending/air_vendor,
-/turf/simulated/floor/purple,
-/area/research_outpost/hangar)
 "aKg" = (
 /obj/xmastree/ephemeral,
 /turf/simulated/floor/specialroom/chapel{
@@ -13101,12 +13096,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
-"gZG" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/purple,
-/area/research_outpost/hangar)
 "hab" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
@@ -13472,12 +13461,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
-"hzS" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor/shuttlebay,
-/area/research_outpost/hangar)
 "hCC" = (
 /obj/machinery/conveyor/WE{
 	id = "trash";
@@ -13687,10 +13670,8 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "hRo" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/purple,
 /area/research_outpost/hangar)
 "hTZ" = (
 /obj/rack,
@@ -14011,12 +13992,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"ipa" = (
-/obj/storage/closet/fire,
-/turf/simulated/floor/purple/side{
-	dir = 6
-	},
-/area/research_outpost/hangar)
 "ipv" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -14573,6 +14548,9 @@
 	dir = 4
 	},
 /area/station/security/hos)
+"iXg" = (
+/turf/space,
+/area/shuttle/merchant_shuttle/left_station/cogmap)
 "iXn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14983,6 +14961,14 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"jxE" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/research_outpost)
 "jxZ" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -15333,14 +15319,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/computer/airbr{
-	density = 0;
-	id = "ai2medbay";
-	pixel_x = -32;
-	dir = 2
-	},
 /turf/simulated/floor/purple/side{
-	dir = 9
+	dir = 1
 	},
 /area/research_outpost)
 "jXK" = (
@@ -16356,6 +16336,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/storage/closet/fire,
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
 "lCp" = (
@@ -16411,6 +16392,17 @@
 /obj/machinery/vending/kitchen,
 /turf/simulated/floor/white/side,
 /area/station/crew_quarters/kitchen)
+"lEi" = (
+/obj/machinery/computer/airbr{
+	density = 0;
+	id = "ai2medbay";
+	pixel_x = -32;
+	dir = 2
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/research_outpost)
 "lEo" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -16446,9 +16438,6 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "lHv" = (
-/obj/machinery/light/incandescent/harsh{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -16457,9 +16446,7 @@
 	icon_state = "0-4"
 	},
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/purple/side{
-	dir = 8
-	},
+/turf/simulated/floor,
 /area/research_outpost)
 "lIS" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -18580,6 +18567,15 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/science/lab)
+"oTM" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/purple,
+/area/research_outpost)
 "oTN" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -19210,10 +19206,8 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
 "pTy" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/floor/shuttlebay,
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/purple,
 /area/research_outpost/hangar)
 "pTF" = (
 /obj/cable{
@@ -20234,6 +20228,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/artifact)
+"rJO" = (
+/obj/machinery/firealarm/south{
+	pixel_x = -6
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = 6
+	},
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/research_outpost)
 "rKF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20975,15 +20980,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/firealarm/south{
-	pixel_x = -6
-	},
-/obj/machinery/light_switch/south{
-	pixel_x = 6
-	},
-/turf/simulated/floor/purple/side{
-	dir = 10
-	},
+/turf/simulated/floor/purple/side,
 /area/research_outpost)
 "sYl" = (
 /obj/machinery/weapon_stand/rifle_rack/recharger,
@@ -21689,16 +21686,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"tOR" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/research_foyer,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/purple,
-/area/research_outpost)
 "tQm" = (
 /obj/machinery/light,
 /turf/simulated/floor/carpet{
@@ -22398,13 +22385,6 @@
 	dir = 9
 	},
 /area/listeningpost)
-"uUk" = (
-/obj/machinery/light/incandescent/harsh{
-	dir = 4
-	},
-/obj/machinery/vending/air_vendor/plasma,
-/turf/simulated/floor/purple,
-/area/research_outpost/hangar)
 "uUE" = (
 /obj/machinery/conveyor/WE{
 	id = "delivery";
@@ -61972,7 +61952,7 @@ fOk
 jRr
 feJ
 baL
-cpN
+juF
 aaa
 aaa
 aaa
@@ -62268,13 +62248,13 @@ aaa
 aaa
 aaa
 aaa
-rwZ
-hzS
+cpN
+cpN
 pTy
 hRo
 uvc
-ipa
-juF
+cpN
+cpN
 aaa
 aaa
 aaa
@@ -62508,13 +62488,13 @@ aaa
 aaa
 aaa
 aaa
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
 aFe
 dTw
 aCX
@@ -62570,19 +62550,19 @@ aEq
 aaa
 aaa
 aaa
-cpN
-cpN
-uUk
-aKc
-gZG
-cpN
-cpN
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+vmf
+vcn
+vcn
+mah
+vmf
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
 aaa
 aaa
 aaa
@@ -62810,13 +62790,13 @@ aaa
 aaa
 aaa
 aaa
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
 aFe
 qEy
 nwA
@@ -62874,17 +62854,17 @@ aaa
 aaa
 aaa
 vmf
-vcn
-vcn
-mah
+lEi
+jxE
+rJO
 vmf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
 aaa
 aaa
 aaa
@@ -63112,13 +63092,13 @@ aaa
 aaa
 aaa
 aaa
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
 lRd
 oib
 mJG
@@ -63175,18 +63155,18 @@ vjI
 aaa
 aaa
 vjI
-tOR
+oTM
 jWZ
 lHv
 sXy
-vmf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+oTM
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
 aaa
 aaa
 aaa
@@ -63414,13 +63394,13 @@ aaa
 aaa
 aaa
 aaa
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
 aFe
 vpV
 wgd
@@ -63482,13 +63462,13 @@ dgh
 fwI
 uCW
 vmf
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
 aaa
 aaa
 aaa
@@ -63716,13 +63696,13 @@ aaa
 aaa
 aaa
 aaa
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
-aaE
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
+iXg
 aFe
 rXQ
 xBS
@@ -63784,13 +63764,13 @@ wPV
 uiU
 wPV
 wPV
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
+aaE
 aaa
 aaa
 aaa
