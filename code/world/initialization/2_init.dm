@@ -253,18 +253,23 @@
 
 	sortList(by_type[/area], /proc/cmp_name_asc)
 
+	lincolnshire = new
+
+
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
 #ifdef RANDOM_ROOM_CHECKING
 	placeAllRandomRooms()
 #endif
+
 #ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
 	SPAWN(15 SECONDS)
 		Reboot_server()
 #endif
+
 #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
 	SPAWN(10 SECONDS)
 		Reboot_server()

@@ -1230,6 +1230,8 @@ input:checked + div { display: block; }
 			// collapse all the list elements into one table row
 			recipies[R.category] += tmp2.Join("\n")
 
+		LAGCHECK(LAG_HIGH)
+
 		for (var/cat in recipies)
 			var/list/tmp = recipies[cat]
 			dat += tmp.Join("\n\n")
