@@ -201,7 +201,7 @@
  * optional force bool Send an update even if UI is not interactive.
  */
 /datum/tgui/proc/send_full_update(custom_data, force)
-	if(!user.client || !initialized || closing)
+	if(!user?.client || !initialized || closing)
 		return
 	if(ON_COOLDOWN(src, "TGUI_REFRESH_COOLDOWN", TGUI_REFRESH_FULL_UPDATE_COOLDOWN))
 		refreshing = TRUE

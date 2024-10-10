@@ -198,19 +198,25 @@ ABSTRACT_TYPE(/datum/plant)
 		switch (reagent)
 			if ("phlogiston","infernite","pyrosium","sorium")
 				damage_amt = rand(80,100)
+				S.charges = 1
 			if ("pacid")
 				damage_amt = rand(75,80)
+				S.charges = 1
 			if ("acid")
 				damage_amt = rand(40,50)
+				S.charges = 1
 			if ("weedkiller")
 				if (!HYPCheckCommut(DNA,/datum/plant_gene_strain/immunity_toxin) && src.growthmode == "weed")
 					damage_amt = rand(50,60)
+					S.charges = 1
 			if ("toxin","mercury","chlorine","fluorine","fuel","oil","cleaner")
 				if (!HYPCheckCommut(DNA,/datum/plant_gene_strain/immunity_toxin))
 					damage_amt = rand(15,30)
+					S.charges--
 			if ("plasma")
 				if (!HYPCheckCommut(DNA,/datum/plant_gene_strain/immunity_toxin))
 					damage_amt = rand(15,30)
+					S.charges--
 			if ("blood","bloodc")
 				if (src.growthmode == "carnivore")
 					DNA.growtime += rand(4,6)
@@ -242,6 +248,7 @@ ABSTRACT_TYPE(/datum/plant)
 					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
+				S.charges -= 2
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
@@ -273,6 +280,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if (reagent in mutation.infusion_reagents)
 				if (HYPmutationcheck_full(DNA, mutation) && prob(mutation.infusion_chance))
 					DNA.mutation = mutation
+					S.charges = 1
 					break
 
 		if (damage_amt)
