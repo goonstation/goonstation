@@ -36,7 +36,9 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/disposing()
+	src.unload()
 	src.activator = null
+	src.occupant = null
 	..()
 
 /obj/submachine/laundry_machine/update_icon()
