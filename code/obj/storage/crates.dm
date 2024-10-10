@@ -177,6 +177,12 @@
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
 	/obj/item/gun/russianrevolver)
 
+/obj/storage/crate/golf
+	name = "golf crate"
+	spawn_contents = list(/obj/item/golf_ball, \
+	/obj/item/golf_club, \
+	/obj/item/storage/golf_goal)
+
 /obj/storage/crate/bin
 	name = "large bin"
 	desc = "A large bin."
