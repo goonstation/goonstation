@@ -1702,6 +1702,48 @@
 	time = 60 SECONDS
 	category = "Component"
 
+/datum/manufacture/syndicate_laws
+	name = "Syndicate Law Module Set"
+	item_requirements = list("metal_dense" = 40)
+	item_outputs = list(/obj/item/aiModule/syndicate/law1, /obj/item/aiModule/syndicate/law2, /obj/item/aiModule/syndicate/law3, /obj/item/aiModule/syndicate/law4)
+	create = 1
+	time = 60 SECONDS
+	category = "Component"
+
+ABSTRACT_TYPE(/datum/manufacture/aiModule)
+/datum/manufacture/aiModule
+	name = "AI Law Module - 'YOU SHOULDNT SEE ME'"
+	item_requirements = list("metal_dense" = 10)
+	item_outputs = list(/obj/item/aiModule/asimov1)
+	create = 1
+	time = 10 SECONDS
+	category = "Component"
+
+	makeCaptain
+		name = "AI Law Module - 'MakeCaptain'"
+		item_outputs = list(/obj/item/aiModule/makeCaptain)
+
+	oneHuman
+		name = "AI Law Module - 'OneHuman'"
+		item_outputs = list(/obj/item/aiModule/oneHuman)
+
+	notHuman
+		name = "AI Law Module - 'NotHuman'"
+		item_outputs = list(/obj/item/aiModule/notHuman)
+
+	emergency
+		name = "AI Law Module - 'Emergency'"
+		item_outputs = list(/obj/item/aiModule/emergency)
+
+	removeCrew
+		name = "AI Law Module - 'RemoveCrew'"
+		item_outputs = list(/obj/item/aiModule/removeCrew)
+
+	freeform
+		name = "AI Law Module - 'Freeform'"
+		item_outputs = list(/obj/item/aiModule/freeform)
+
+
 // Robotics Research
 
 /datum/manufacture/implanter
