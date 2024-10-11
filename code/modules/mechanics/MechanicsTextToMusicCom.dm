@@ -30,14 +30,14 @@
 #define DF_BASE88 88           // how many characters there are in base88
 
 #define STANDARD_INSTRUMENT_PATH(instrument_name) "sound/musical_instruments/[instrument_name]/notes"
-#define MAX_ERROR_MESSAGES 5
+#define MAX_ERROR_MESSAGES 5 // the most error messages allowed before older messages are deleted
 
 TYPEINFO(/obj/item/mechanics/text_to_music)
 	mats = list("metal"      = 20,
 				"conductive" = 10,
 				"crystal"    = 10)
 
-/obj/item/mechanics/text_to_music //this is the big boy im pretty sure all this code is garbage
+/obj/item/mechanics/text_to_music // modified from playable_piano.dm and PR #21051 (Player Piano Notes Rework V2)
 	name = "Text to Music Component"
 	desc = "Converts text to music."
 	icon_state = "comp_text_to_music"
@@ -139,11 +139,11 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 	proc/clean_input() //breaks our big input string into chunks
 		src.is_busy = 1
-		piano_notes = list()
+		src.piano_notes = list()
 		var/list/split_input = splittext("[note_input]", "|")
 		for (var/string in split_input)
 			if (string)
-				piano_notes += string
+				src.piano_notes += string
 		src.is_busy = 0
 
 	proc/build_notes_classic_format(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
@@ -300,21 +300,21 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		if (src.is_busy)
 			return
 		src.is_busy = 1
-		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
+		if (src.note_volumes.len + src.note_octaves.len - src.note_names.len - src.note_accidentals.len)
 			src.log_error_message("A piece  of an event was missing somewhere.")
 			src.is_busy = 0
-		song_length = length(note_names)
-		compiled_notes = list()
-		for (var/i = 1, i <= note_names.len, i++)
-			var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
-			compiled_notes += string
-		for (var/i = 1, i <= compiled_notes.len, i++)
+		src.song_length = length(note_names)
+		src.compiled_notes = list()
+		for (var/i = 1, i <= src.note_names.len, i++)
+			var/string = lowertext("[src.note_names[i]][src.note_accidentals[i]][src.note_octaves[i]]")
+			src.compiled_notes += string
+		for (var/i = 1, i <= src.compiled_notes.len, i++)
 			var/string = "[instrument_sound_path]/[compiled_notes[i]].ogg"
 			if (!(string in soundCache))
 				src.log_error_message("The note at position [i] doesn't exist for this insturment.")
 				src.is_busy = 0
 				return
-		play_notes()
+		src.play_notes()
 
 	proc/play_notes() //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
 		src.UpdateIcon(1)
@@ -324,7 +324,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			if (src.curr_note > song_length)
 				if (src.is_looping == 1)
 					src.curr_note = 0
-					play_notes()
+					src.play_notes()
 					return
 				src.is_busy = 0
 				src.curr_note = 0
@@ -348,7 +348,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 
 			while (delays_left > 0)
 				delays_left--
-				sleep((timing * 10)) //to get delay into 10ths of a second
+				sleep((src.timing * 10)) //to get delay into 10ths of a second
 
 	proc/set_notes(var/given_notes)
 		if (src.is_busy)
