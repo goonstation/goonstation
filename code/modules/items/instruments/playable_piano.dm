@@ -588,6 +588,7 @@ TYPEINFO(/obj/player_piano)
 #undef DF_OFFSET_DYNAMIC
 #undef DF_OFFSET_NOTE
 #undef DF_OFFSET_DELAY
+#undef DF_OFFSET_REST
 #undef DF_OFFSET_OCTAVE
 #undef DF_NOTE_TYPE_AMOUNT
 #undef DF_DYNAMIC_MIN
