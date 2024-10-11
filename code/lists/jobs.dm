@@ -87,7 +87,7 @@ var/list/service_jobs = list("Head of Personnel", "Bartender", "Chef", "Botanist
 
 // we have to include alt names for jobs or they won't be sorted into categories correctly
 var/list/command_gimmicks = list("Head of Mining", "Nanotrasen Security Consultant" /* NTSC isn't a gimmick role, but for the sake of sorting, it practically is*/)
-var/list/security_gimmicks = list("Vice Officer", "Forensic Technician")
+var/list/security_gimmicks = list("Vice Officer", "Forensic Technician", "Hall Monitor")
 var/list/engineering_gimmicks = list("Head of Mining", "Station Builder", "Atmospherish Technician", "Technical Assistant")
 var/list/medical_gimmicks = list("Medical Specialist", "Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
 	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant", "Medical Assistant", "Pharmacist", "Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor")

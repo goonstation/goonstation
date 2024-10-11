@@ -1046,8 +1046,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		return T.target_byond_key
 
-
-
+/obj/item/device/ticket_writer/crust
+	name = "crusty old security TicketWriter 1000"
+	desc = "An old TicketWriter model held together by hopes and dreams alone."
 
 TYPEINFO(/obj/item/device/appraisal)
 	mats = 5
