@@ -40,6 +40,9 @@
 		if(length(mutantrace_emote_stuff) >= 2)
 			maptext_out = mutantrace_emote_stuff[2]
 
+	if (!src.emote_check(voluntary, 0))
+		return
+
 	if (!message)
 		switch (act)
 			// most commonly used emotes first for minor performance improvements

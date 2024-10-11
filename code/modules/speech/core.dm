@@ -196,6 +196,7 @@ Follow-Up PRs:
 		src.holder.admin_speech_tree.update_target_speech_tree(src.speech_tree)
 		src.holder.admin_listen_tree.update_target_listen_tree(src.listen_tree)
 
+/// Toggle hearing OOC for this client.
 /client/proc/toggle_ooc(ooc_enabled)
 	if (src.preferences.listen_ooc == ooc_enabled)
 		return
@@ -214,6 +215,7 @@ Follow-Up PRs:
 		else
 			src.listen_tree.RemoveListenInput(LISTEN_INPUT_OOC)
 
+/// Toggle hearing LOOC for this client.
 /client/proc/toggle_looc(looc_enabled)
 	if (src.preferences.listen_looc == looc_enabled)
 		return
