@@ -1,5 +1,7 @@
 
 (t)fri oct 11 24
+(u)LeahTheTech
+(*)Vampiric thrall ability cost no longer scales up with more thralls.
 (u)JORJ949
 (p)20986
 (e)🆕🔨|C-Feature, A-Player-Actions
