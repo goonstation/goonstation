@@ -44,6 +44,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	var/timing = 0.5 //values from 0.25 to 0.5 please
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
 	var/is_busy = 0 //stops people from messing about with it when its working
+	var/is_stop_requested = FALSE
 	var/song_length = 0 //the number of notes in the song
 	var/curr_note = 0 //what note is the song on?
 	var/instrument_sound_path = null // where are the note sounds located?
@@ -75,18 +76,21 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", PROC_REF(mechcompNotes))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", PROC_REF(mechcompTiming))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set instrument", PROC_REF(mechcompInstrument))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "stop", PROC_REF(mechcompStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", PROC_REF(mechcompReset))
 
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "play", PROC_REF(mechcompConfigPlay))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set notes", PROC_REF(mechcompConfigNotes))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set timing", PROC_REF(mechcompConfigTiming))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set instrument", PROC_REF(mechcompConfigInstrument))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "stop", PROC_REF(mechcompConfigStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset", PROC_REF(mechcompConfigReset))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view errors", PROC_REF(mechcompConfigViewErrors))
 
 	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
-		src.ready_piano()
+		if (src.anchored)
+			src.ready_piano()
 
 	proc/mechcompNotes(var/datum/mechanicsMessage/input)
 		if (input.signal)
@@ -101,13 +105,18 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		if (input.signal)
 			src.set_instrument(input.signal)
 
+	proc/mechcompStop(var/datum/mechanicsMessage/input)
+		if (src.is_busy)
+			src.is_stop_requested = TRUE
+
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
 		src.reset_piano(0)
 
 	// ------------------------------------------------
 
 	proc/mechcompConfigPlay(obj/item/W as obj, mob/user as mob)
-		src.ready_piano()
+		if (src.anchored)
+			src.ready_piano()
 
 	proc/mechcompConfigNotes(obj/item/W as obj, mob/user as mob)
 		var/given_notes = tgui_input_text(user, "Input notes to play.", "Set Notes", src.note_input)
@@ -121,6 +130,10 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		var/new_instrument = tgui_input_list(user, "Input new instrument.", "Set Instrument", src.allow_list, src.instrument_sound_path)
 		src.set_instrument(new_instrument)
 
+	proc/mechcompConfigStop(obj/item/W as obj, mob/user as mob)
+		if (src.is_busy)
+			src.is_stop_requested = TRUE
+
 	proc/mechcompConfigReset(obj/item/W as obj, mob/user as mob)
 		src.reset_piano(0)
 
@@ -131,6 +144,11 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)
 		..()
+
+	attackby(obj/item/W, mob/user)
+		if(iswrenchingtool(W) && src.anchored && src.is_busy)
+			src.is_stop_requested = TRUE
+		return ..()
 
 	proc/log_error_message(var/error_message)
 		src.error_messages.Insert(1, error_message)
@@ -317,19 +335,21 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		src.play_notes()
 
 	proc/play_notes() //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
-		src.UpdateIcon(1)
+		src.UpdateIcon(TRUE)
 		var/concurrent_notes_played = 0
 		while (src.curr_note <= song_length)
 			src.curr_note++
-			if (src.curr_note > song_length)
-				if (src.is_looping == 1)
+			if (src.curr_note > song_length || src.is_stop_requested)
+				if (src.is_looping == 1 && !(src.is_stop_requested))
 					src.curr_note = 0
 					src.play_notes()
 					return
 				src.is_busy = 0
 				src.curr_note = 0
-				src.UpdateIcon(0)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
+				if (!(src.is_stop_requested))
+					SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
+				src.is_stop_requested = FALSE
+				src.UpdateIcon(FALSE)
 				return
 			if (!src.curr_note) // else we get runtimes when the piano is reset while playing
 				return
@@ -379,7 +399,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(instrument)
 
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
-		src.UpdateIcon(0)
+		src.UpdateIcon(FALSE)
 		if (src.is_looping != 2 || disposing)
 			src.is_looping = 0
 		src.song_length = 0
