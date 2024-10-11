@@ -880,6 +880,8 @@ var/global/in_replace_with = 0
 		else if (air_master)
 			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 			air_master.active_singletons -= src
+			if (length(air_master.tiles_to_update))
+				air_master.tiles_to_update -= src
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.

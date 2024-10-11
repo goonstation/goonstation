@@ -680,6 +680,32 @@ var/global/list/mapNames = list(
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
 
+/datum/map_settings/atlas/init()
+	. = ..()
+	if(!station_repair.station_generator && prob(66))
+		var/list/terrainify_options = list(/datum/terrainify/caveify,
+										/datum/terrainify/swampify,
+										/datum/terrainify/winterify,
+										/datum/terrainify/forestify,
+										/datum/terrainify/desertify)
+		var/datum/terrainify/T = pick(terrainify_options)
+		T = new T()
+		var/terrain_params = T.get_default_params()
+
+		if( ("Prefabs" in terrain_params) && prob(80) )
+			terrain_params["Prefabs"] = TRUE
+		if(("Parallax" in terrain_params) && prob(75))
+			terrain_params["Parallax"] = TRUE
+		if( ("Syndi Camo" in terrain_params) && prob(33) )
+			terrain_params["Syndi Camo"] = TRUE
+		if("Mining" in terrain_params)
+			terrain_params["Mining"] = weighted_pick(list("None"=5,"Normal"=50,"Rich"=45))
+
+#if defined(LIVE_SERVER)
+		T.perform_terrainify(terrain_params, src)
+#endif
+
+
 /datum/map_settings/destiny
 	name = "DESTINY"
 	display_name = "NSS Destiny"
@@ -804,7 +830,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	shipping_destinations = list("North Carousel", "South Carousel")
+	shipping_destinations = list("North Carousel", "South Carousel", "East Carousel", "West Carousel")
 
 	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),

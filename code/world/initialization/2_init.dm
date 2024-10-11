@@ -123,6 +123,7 @@
 
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
+	load_intraround_eggs()
 	spawn_kitchen_note()
 
 	//SpyStructures and caches live here
@@ -207,13 +208,13 @@
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
 
-	UPDATE_TITLE_STATUS("Initializing worldgen setup")
-	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
-	initialize_worldgen()
-
 	UPDATE_TITLE_STATUS("Reticulating splines")
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
+
+	UPDATE_TITLE_STATUS("Initializing worldgen setup")
+	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
+	initialize_worldgen()
 
 	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
@@ -252,18 +253,23 @@
 
 	sortList(by_type[/area], /proc/cmp_name_asc)
 
+	lincolnshire = new
+
+
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
 #ifdef RANDOM_ROOM_CHECKING
 	placeAllRandomRooms()
 #endif
+
 #ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
 	SPAWN(15 SECONDS)
 		Reboot_server()
 #endif
+
 #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
 	SPAWN(10 SECONDS)
 		Reboot_server()

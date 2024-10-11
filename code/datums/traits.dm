@@ -505,6 +505,13 @@
 	points = -1
 	category = list("vision")
 
+/datum/trait/wasitsomethingisaid
+	name = "Was It Something I Said?"
+	desc = "You did something to attract their ire, and the small robots of the station hate your guts!"
+	id = "wasitsomethingisaid"
+	icon_state = "wasitsomethingisaid"
+	points = 2
+
 /datum/trait/shortsighted
 	name = "Short-sighted"
 	desc = "Spawn with permanent short-sightedness and glasses."
@@ -767,6 +774,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Kitchen Training"
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
+
+/datum/trait/job/bartender
+	name = "Bartender Training"
+	desc = "Subject has a keen mind for all things alcoholic."
+	id = "training_bartender"
 
 // bartender, detective, HoS
 /datum/trait/job/drinker
