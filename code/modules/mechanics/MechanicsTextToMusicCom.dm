@@ -160,7 +160,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			// convert from centiseconds to seconds
 			timing = text2num(timing) / 100
 			if (timing < MIN_TIMING || timing > MAX_TIMING)
-				// src.visible_message(SPAN_ALERT("\The [src] makes a loud grinding noise, followed by a boop and a beep!"))
 				src.log_error_message("Given timing ([timing]) is outside of range [MIN_TIMING]-[MAX_TIMING].")
 				return
 			src.timing = timing
@@ -240,7 +239,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			// convert centiseconds to seconds
 			var/timing = (text2ascii(piano_notes[note_index + 2]) - DF_BOUND_LOWER) / 100
 			if (timing < MIN_TIMING || timing > MAX_TIMING)
-				// src.visible_message(SPAN_ALERT("\The [src] makes a loud grinding noise, followed by a boop and [note_index] beeps!"))
 				src.log_error_message("Given timing ([timing]) is outside of range [MIN_TIMING]-[MAX_TIMING].")
 				return
 			src.timing = timing
@@ -255,7 +253,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			if (note    < DF_BOUND_LOWER || note    > DF_REST ||\
 				dynamic < DF_BOUND_LOWER || dynamic > DF_BOUND_UPPER ||\
 				delay   < DF_BOUND_LOWER || delay   > DF_BOUND_UPPER)
-				// src.visible_message(SPAN_ALERT("\The [src] makes a loud grinding noise, followed by 2 boops and [note_index - 3] beeps!"))
 				src.log_error_message("A character in event starting at column [note_index - 3] is outside the allowed range.")
 				break
 
@@ -304,7 +301,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			return
 		src.is_busy = 1
 		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
-			// src.visible_message(SPAN_ALERT("\The [src] makes a grumpy ratchetting noise and shuts down!"))
 			src.log_error_message("A piece  of an event was missing somewhere.")
 			src.is_busy = 0
 		song_length = length(note_names)
@@ -315,11 +311,9 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		for (var/i = 1, i <= compiled_notes.len, i++)
 			var/string = "[instrument_sound_path]/[compiled_notes[i]].ogg"
 			if (!(string in soundCache))
-				// src.visible_message(SPAN_ALERT("\The [src] makes an atrocious racket and beeps [i] times."))
 				src.log_error_message("The note at position [i] doesn't exist for this insturment.")
 				src.is_busy = 0
 				return
-		// src.visible_message(SPAN_NOTICE("\The [src] starts playing music!"))
 		play_notes()
 
 	proc/play_notes() //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
@@ -334,7 +328,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 					return
 				src.is_busy = 0
 				src.curr_note = 0
-				// src.visible_message(SPAN_NOTICE("\The [src] stops playing music."))
 				src.UpdateIcon(0)
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "musicStopped")
 				return
@@ -386,7 +379,6 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(instrument)
 
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
-		// src.visible_message(SPAN_NOTICE("\The [src] grumbles and shuts down completely."))
 		src.UpdateIcon(0)
 		if (src.is_looping != 2 || disposing)
 			src.is_looping = 0
