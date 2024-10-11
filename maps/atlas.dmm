@@ -9206,7 +9206,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/computer/airbr{
 	density = 0;
-	id = "ai2medbay";
+	id = "sciship";
 	pixel_x = 32;
 	starts_established = 1
 	},
@@ -9911,6 +9911,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/purple,
 /area/research_outpost/hangar)
 "bXo" = (
@@ -13918,11 +13919,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/tox_storage,
-/obj/mapping_helper/access/tox,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/purple,
 /area/station/science/storage)
 "iiP" = (
@@ -16395,7 +16396,7 @@
 "lEi" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	id = "ai2medbay";
+	id = "sciship";
 	pixel_x = -32;
 	dir = 2
 	},
@@ -20235,6 +20236,9 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 6
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
@@ -22601,7 +22605,7 @@
 /area/station/mining/magnet)
 "vjI" = (
 /obj/airbridge_controller{
-	id = "ai2medbay"
+	id = "sciship"
 	},
 /turf/space,
 /area/space)
