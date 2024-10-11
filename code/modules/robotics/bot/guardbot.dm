@@ -2766,7 +2766,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if(BOUNDS_DIST(master, hug_target) == 0)
 							if(hug_target.traitHolder?.hasTrait("wasitsomethingisaid"))
 								master.bot_attack(hug_target, TRUE) //betrayal!!
-								master.speak(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
+								master.say(pick("As if!", "You know what you did.", "Level [rand(32,80)] dork alert!"))
 								drop_hug_target()
 								master.moving = FALSE
 								return

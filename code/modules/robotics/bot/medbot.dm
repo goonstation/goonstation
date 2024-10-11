@@ -425,7 +425,7 @@
 				if (!ON_COOLDOWN(src, "[MEDBOT_POINT_COOLDOWN]-[ckey(src.patient?.name)]", src.point_cooldown)) //Don't spam this either!
 					src.point(C, 1)
 					var/message = pick("I've seen worse, don't be such a baby!","That looks bad. You should find a doctor who cares.","Injured? Good.","I don't think your insurance covers THAT.","Just... walk that off.","You'll be fine. You want a second opinion? You're ugly!")
-					src.speak(message)
+					src.say(message)
 				return
 
 			src.patient = C
