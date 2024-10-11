@@ -458,11 +458,9 @@ TYPEINFO(/obj/player_piano)
 			if (!curr_note) // else we get runtimes when the piano is reset while playing
 				return
 
-			if (concurrent_notes_played >= MAX_CONCURRENT_NOTES)
-				continue
-
-			var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
-			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
+			if (concurrent_notes_played < MAX_CONCURRENT_NOTES)
+				var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
+				playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 			var/delays_left = src.note_delays[curr_note]
 
