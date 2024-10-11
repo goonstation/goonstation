@@ -117,8 +117,8 @@ var/global/current_state = GAME_STATE_INVALID
 #endif
 #endif
 
-
-	SPAWN(0) setup()
+	SPAWN(0)
+		setup()
 
 /datum/controller/gameticker/proc/setup()
 	set background = 1
@@ -307,6 +307,7 @@ var/global/current_state = GAME_STATE_INVALID
 	if(!countJob("AI")) // There is no roundstart AI, spawn in a Latejoin AI on the spawn landmark.
 		for(var/turf/T in job_start_locations["AI"])
 			new /mob/living/silicon/ai/latejoin(T)
+
 	if(!processScheduler.isRunning)
 		processScheduler.start()
 

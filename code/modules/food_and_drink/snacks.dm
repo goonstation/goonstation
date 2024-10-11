@@ -2541,7 +2541,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "nigiri roll"
 	desc = "A ball of sticky rice with a slice of freshly caught fish on top."
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
-	icon_state = "nigiri"
+	icon_state = "nigiri1"
 	bites_left = 2
 	heal_amt = 2
 	food_effects = list("food_energized_big")

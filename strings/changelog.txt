@@ -1,5 +1,23 @@
 
+(t)thu oct 10 24
+(u)Egregorious
+(p)20998
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Pumpkins will now retain their size when carved.
+(u)JORJ949
+(p)20959
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Added a second smaller "ship" to atlas on the northwest side of the ship, on board is a PTL and CE office.
+(+)Added a Port-A-Medbay and MDir office to atlas.
+(u)Azrun
+(p)21014
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(*)NCS Atlas will sometimes be on a planet.  Let's go on an adventure!
 (t)wed oct 09 24
+(u)JORJ949 & Mr. Moriarty
+(p)20997
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Wizard headsets now have unique icons.
 (u)LeahTheTech
 (p)21022
 (e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering

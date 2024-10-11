@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 #endif
 		if(terrainify_lock)
 			boutput(user, "Terrainify has already begone!")
-		else if(user.client?.holder.level >= LEVEL_ADMIN)
+		else
 			if(!check_param(params, "vehicle"))
 				return
 
@@ -339,8 +339,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			terrainify_lock = src
 			. = TRUE
-		else
-			boutput(user, "You must be at least an Administrator to use this command.")
 
 	proc/check_param(params, key)
 		if(isnull(params[key]))
