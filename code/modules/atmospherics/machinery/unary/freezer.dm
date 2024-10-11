@@ -16,7 +16,7 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/process()
 	..()
 	if(prob(5) && src.on)
-		playsound(src.loc, ambience_atmospherics, 30, 1)
+		playsound(src.loc, pick(ambience_atmospherics), 30, 1)
 
 /obj/machinery/atmospherics/unary/cold_sink/freezer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

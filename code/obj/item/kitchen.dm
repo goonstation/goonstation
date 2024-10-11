@@ -862,7 +862,7 @@ TRAYS
 
 	dropped(mob/user)
 		..()
-		if(user.lying)
+		if(user?.lying)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (!H.limbs.r_leg && !H.limbs.l_leg)
