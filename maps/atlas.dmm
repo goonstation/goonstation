@@ -9911,6 +9911,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/purple,
 /area/research_outpost/hangar)
 "bXo" = (
@@ -13922,6 +13923,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/purple,
 /area/station/science/storage)
 "iiP" = (
