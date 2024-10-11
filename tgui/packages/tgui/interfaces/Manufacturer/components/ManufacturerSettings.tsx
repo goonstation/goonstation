@@ -1,25 +1,31 @@
 /**
  * @file
  * @copyright 2024
- * @author Romayne (https://github.com/MeggalBozale)
- * @license ISC
+ * @author Romayne (https://github.com/MyNameIsRomayne)
+ * @license ISC (https://choosealicense.com/licenses/isc/)
  */
 
-import { Button, LabeledList, Section, Slider, Stack } from "../../../components";
-import { BooleanLike } from "common/react";
+import { BooleanLike } from 'common/react';
+import {
+  Button,
+  LabeledList,
+  Section,
+  Slider,
+  Stack,
+} from 'tgui-core/components';
 
 type ManufacturerSettingsProps = {
   repeat: BooleanLike;
   hacked: BooleanLike;
   speed: number;
   max_speed_normal: number;
-  max_speed_hacked:number;
+  max_speed_hacked: number;
   mode: 'working' | 'halt' | 'ready';
-  actionSetSpeed: (speed:number) => void;
+  actionSetSpeed: (speed: number) => void;
   actionRepeat: () => void;
 };
 
-export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
+export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
   const {
     repeat,
     hacked,
@@ -35,21 +41,20 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
 
   return (
     <Stack.Item>
-      <Section
-        textAlign="center"
-        title="Fabricator Settings"
-      >
+      <Section textAlign="center" title="Fabricator Settings">
         <LabeledList>
           <LabeledList.Item
             label="Repeat"
-            buttons={<Button icon="repeat" onClick={() => actionRepeat()}>Toggle Repeat</Button>}
+            buttons={
+              <Button icon="repeat" onClick={() => actionRepeat()}>
+                Toggle Repeat
+              </Button>
+            }
             textAlign="center"
           >
-            {repeat ? "On" : "Off"}
+            {repeat ? 'On' : 'Off'}
           </LabeledList.Item>
-          <LabeledList.Item
-            label="Speed"
-          >
+          <LabeledList.Item label="Speed">
             <Stack>
               <Stack.Item>
                 <Button
@@ -64,7 +69,6 @@ export const ManufacturerSettings = (props:ManufacturerSettingsProps) => {
                   maxValue={max_speed}
                   step={1}
                   stepPixelSize={50}
-                  disabled={mode === "working"}
                   onChange={(_e: any, value: number) => actionSetSpeed(value)}
                 />
               </Stack.Item>

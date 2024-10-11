@@ -235,6 +235,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				logTheThing(LOG_BOMBING, usr, "[openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				if (src.tank_one && src.tank_two)
 					message_admins("[key_name(usr)] [openorclose] the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+					message_ghosts("<b>A tank transfer valve</b> has been [openorclose] at [log_loc(bombturf, ghostjump=TRUE)].")
 				toggle_valve()
 			if ("remove_device")
 				src.attached_device.set_loc(get_turf(src))
@@ -568,7 +569,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	var/broken = FALSE
 	name = "pressure crystal"
 	desc = "A mysterious gadget that measures the power of bombs detonated over it. \
-		High measurements within the crystal can be very valuable on the shipping market."
+		Certain measurements within the crystal can be very valuable on the shipping market."
 	HELP_MESSAGE_OVERRIDE("Place this where the epicenter of a bomb would be, then detonate the bomb. \
 		Afterwards, place the crystal in a pressure sensor to determine the explosion power.<br>\
 		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power.")

@@ -110,80 +110,37 @@
 	can_burn = FALSE
 	can_break = FALSE
 
-	Entered(var/mob/M)
+	Crossed(atom/movable/AM)
 		. = ..()
-		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
-			return
+		if (do_lava_burn(AM))
+			SPAWN (5 SECONDS)
+				while(AM.loc == src)
+					if (!do_lava_burn(AM))
+						break
+					sleep(5 SECONDS)
+
+	proc/do_lava_burn(mob/M)
 		if(!ismob(M))
 			return
-		return_if_overlay_or_effect(M)
-
-
-		SPAWN(0)
-			if(M.loc == src)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					M.canmove = 0
-					M.changeStatus("knockdown", 6 SECONDS)
-					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
-					H.set_burning(500)
-					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					M.emote("scream")
-				if (isrobot(M))
-					M.canmove = 0
-					M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
-					M.emote("scream")
-					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
-					visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
-					M.changeStatus("stunned", 6 SECONDS)
-			sleep(5 SECONDS)
-			if(M.loc == src)
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
-					M.changeStatus("knockdown", 10 SECONDS)
-					M.set_body_icon_dirty()
-					H.set_burning(1000)
-					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					M.emote("scream")
-					if (H.limbs.l_leg && H.limbs.r_leg)
-						if (H.limbs.l_leg)
-							H.limbs.l_leg.delete()
-						if (H.limbs.r_leg)
-							H.limbs.r_leg.delete()
-						boutput(M, "You can feel how both of your legs melt away!")
-						visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
-					else
-						boutput(M, "You can feel intense heat on the lower part of your torso.")
-						visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
-
-				if (isrobot(M))
-					var/mob/living/silicon/robot/R = M
-					R.canmove = 0
-					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
-					R.emote("scream")
-					playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
-					R.changeStatus("stunned", 10 SECONDS)
-					R.part_leg_r.holder = null
-					qdel(R.part_leg_r)
-					if (R.part_leg_r.slot == "leg_both")
-						R.part_leg_l = null
-						R.update_bodypart("l_leg")
-					R.part_leg_r = null
-					R.update_bodypart("r_leg")
-					R.part_leg_l.holder = null
-					qdel(R.part_leg_l)
-					if (R.part_leg_l.slot == "leg_both")
-						R.part_leg_r = null
-						R.update_bodypart("r_leg")
-					R.part_leg_l = null
-					R.update_bodypart("l_leg")
-					visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, their legs literally melting away!"))
-					boutput(M, "You can feel how both of your legs melt away!")
-				else
-					boutput(M, "You can feel intense heat on the lower part of your torso.")
-					visible_message(SPAN_ALERT("[M] continues to remain too close to the lava, if they had any legs, they would have melted away!"))
+		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible))
+			return
+		if (isdead(M))
+			return
+		if (isrobot(M))
+			M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
+			M.changeStatus("stunned", 2 SECONDS)
+			M.emote("scream")
+			playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+			visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!"))
+		else
+			M.changeStatus("burning", 30 SECONDS)
+			M.changeStatus("knockdown", 2 SECONDS)
+			M.emote("scream",)
+			playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
+			visible_message(SPAN_ALERT("[M] gets too close to the edge of the lava and spontaniously combusts from the heat!"))
+		return TRUE
 
 	corners
 		icon_state = "lava_corners"

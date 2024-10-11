@@ -4,14 +4,14 @@ import { useBackend } from '../../../backend';
 import { useActions, useStates } from '.';
 import { BoardgameData } from './types';
 
-export const adjustSizes = (context) => {
-  adjustTileSizeType(context);
-  adjustWindowSize(context);
+export const adjustSizes = () => {
+  adjustTileSizeType();
+  adjustWindowSize();
 };
 
-const adjustTileSizeType = (context) => {
-  const { data } = useBackend<BoardgameData>(context);
-  const { setTileSizeType, tileSize } = useStates(context);
+const adjustTileSizeType = () => {
+  const { data } = useBackend<BoardgameData>();
+  const { setTileSizeType, tileSize } = useStates();
 
   const board = document.getElementsByClassName('boardgame__board-inner')[0];
   let tileWidth: number = 0;
@@ -33,8 +33,8 @@ const adjustTileSizeType = (context) => {
   }
 };
 
-const adjustWindowSize = (context) => {
-  const { data } = useBackend<BoardgameData>(context);
+const adjustWindowSize = () => {
+  const { data } = useBackend<BoardgameData>();
   const { aspectRatio } = data.styling;
 
   const PaletteSetPadding = 100; // Add 100 pixels to the width
@@ -53,7 +53,8 @@ const adjustWindowSize = (context) => {
       return;
     }
 
-    let shortestSide = wrapperWidth < wrapperHeight ? wrapperWidth : wrapperHeight;
+    let shortestSide =
+      wrapperWidth < wrapperHeight ? wrapperWidth : wrapperHeight;
 
     // Set the width and height to the shortest side
     width = shortestSide + PaletteSetPadding;
@@ -71,8 +72,8 @@ const adjustWindowSize = (context) => {
   });
 };
 
-export const handleEvents = (context) => {
-  const { act, data } = useBackend<BoardgameData>(context);
+export const handleEvents = () => {
+  const { act, data } = useBackend<BoardgameData>();
   const { paletteClear, pieceDeselect } = useActions(act);
 
   document.body.oncontextmenu = (e) => {

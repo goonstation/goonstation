@@ -842,11 +842,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 
 		// Note diagonal directions won't usually be accurate
 	if(direction & NORTH)
-		target = locate(target.x, world.maxy-1, target.z)
+		target = locate(target.x, world.maxy, target.z)
 	if(direction & SOUTH)
 		target = locate(target.x, 1, target.z)
 	if(direction & EAST)
-		target = locate(world.maxx-1, target.y, target.z)
+		target = locate(world.maxx, target.y, target.z)
 	if(direction & WEST)
 		target = locate(1, target.y, target.z)
 
@@ -1902,6 +1902,8 @@ proc/countJob(rank)
 
 		if (istype(G, /mob/dead/target_observer))
 			var/mob/dead/target_observer/TO = G
+			if (!TO.is_respawnable)
+				return 0
 			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
 				the_ghost = TO.ghost
 
@@ -2208,7 +2210,7 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 			if (!strip)
 				special = SPAN_ALERT("[special]")
 
-			role += " \[[special]]"
+			role += " \[[special]\]"
 
 	else
 		role += M.job
@@ -2233,33 +2235,48 @@ proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 
 	return FALSE
 
-/// Returns span with a color gradient between two given colors of given message
-proc/gradientText(var/color1, var/color2, message)
-	var/color1hex = hex2num(copytext(color1, 2))
-	var/color2hex = hex2num(copytext(color2, 2))
-	var/r1 = (color1hex >> 16) & 0xFF
-	var/g1 = (color1hex >> 8) & 0xFF
-	var/b1 = color1hex & 0xFF
-	var/dr = ((color2hex >> 16) & 0xFF)- r1
-	var/dg = ((color2hex >> 8) & 0xFF) - g1
-	var/db = (color2hex & 0xFF) - b1
-	var/list/result = new/list()
-	var/n = rand(0,10)/10.0 // what a shitty name for a variable
+/// Repeat a gradient between two colors across text.
+/// Note: This is inaccurate because its a linear transformation, but human eyes do not perceive color this way.
+/proc/gradientText(color_1, color_2, message)
+	var/list/color_list_1 = rgb2num(color_1)
+	var/list/color_list_2 = rgb2num(color_2)
+
+	var/r1 = color_list_1[1]
+	var/g1 = color_list_1[2]
+	var/b1 = color_list_1[3]
+
+	// The difference in value between each color part
+	var/delta_r = color_list_2[1] - r1
+	var/delta_g = color_list_2[2] - g1
+	var/delta_b = color_list_2[3] - b1
+
+	var/list/result = list()
+
+	// Start at a random point between the two, in increments of 0.1
+	var/coeff = rand(0,10) / 10.0
 	var/dir = prob(50) ? -1 : 1
-	for(var/i=1, i<=length(message), i += 3)
-		n += dir * 0.2
+
+	for(var/i in 1 to length(message) step 3)
+		coeff += dir * 0.2
+		// 20% chance to start going in the opposite direction
 		if(prob(20))
-			dir = dir/abs(dir) * -1
-		if(n < 0)
-			n = 0
+			dir = -dir
+
+		// Wrap back around
+		if(coeff < 0)
+			coeff = 0
 			dir = 1
-		if(n > 1)
-			n = 1
+
+		else if(coeff > 1)
+			coeff = 1
 			dir = -1
-		var/col = rgb(r1 + dr*n, g1 + dg*n, b1 + db*n)
-		var/chars = copytext(message, i, i+3)
+
+		var/col = rgb(r1 + delta_r*coeff, g1 + delta_g*coeff, b1 + delta_b*coeff)
+		var/chars = copytext(message, i, i + 3)
 		result += "<span style='color:[col]'>[chars]</span>"
-	. = result.Join()
+
+	. = jointext(result, "")
+
 
 /**
  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis

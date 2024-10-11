@@ -1322,6 +1322,23 @@
 			return src.l_hand
 		else
 			return src.r_hand
+///Legally distinct from `equipped_list`, this gets all items from equipment slots and not hands!
+/mob/proc/equipment_list()
+	RETURN_TYPE(/list)
+	return list()
+
+/mob/living/critter/equipment_list()
+	. = list()
+	for (var/datum/equipmentHolder/holder as anything in src.equipment)
+		if (holder.item)
+			. += holder.item
+	return .
+
+/mob/living/carbon/human/equipment_list()
+	. = list()
+	for (var/obj/item/item in list(src.l_store, src.r_store, src.belt, src.back, src.wear_id, src.wear_mask, src.wear_suit, src.w_uniform, src.shoes, src.gloves, src.ears))
+		. += item //using byond type filtering this can't be null here
+	return .
 
 /mob/proc/equipped_list(check_for_magtractor = 1)
 	. = list()
@@ -2456,7 +2473,7 @@
 		if (thr?.get_throw_travelled() <= 410)
 			if (!((thr.throw_type & THROW_CHAIRFLIP) && ismob(hit)))
 				random_brute_damage(src, min((6 + (thr?.get_throw_travelled() / 5)), (src.health - 5) < 0 ? src.health : (src.health - 5)))
-				if (!src.hasStatus("knockdown"))
+				if (!src.hasStatus("knockdown") && !(thr.throw_type & THROW_BASEBALL))
 					src.lastgasp()
 					src.changeStatus("knockdown", 2 SECONDS)
 					src.force_laydown_standup()

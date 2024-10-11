@@ -387,8 +387,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
-	icon_state = "cowboy"
-	color = "#FF0000"
+	icon_state = "boomboots"
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
