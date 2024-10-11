@@ -12,6 +12,8 @@
 
 #define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
+#define hex_to_hsl_list(hex) rgb2num(hex, COLORSPACE_HSL)
+
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
 #define hex_to_rgb_list(hex) rgb2num(hex)

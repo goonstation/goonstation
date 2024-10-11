@@ -320,9 +320,41 @@ ABSTRACT_TYPE(/datum/contextAction/knit/amigurumi)
 
 /datum/contextAction/knit/big_scarf
 	name = "long wool scarf"
+	duration = 20 SECONDS
+	icon_state = "knit_big_scarf"
+	cost = 5
+	knitting_project = /obj/item/clothing/suit/scarf/long
 
 /obj/item/clothing/suit/scarf/long
 	name = "long scarf"
+
+/datum/contextAction/knit/sweatercozy
+	name = "cozy knit sweater"
+	duration = 30 SECONDS
+	icon_state = "sweatercozy"
+	cost = 10
+	knitting_project = /obj/item/clothing/suit/knitsweater
+
+/datum/contextAction/knit/sweaterbubble
+	name = "bubble-knit sweater"
+	duration = 30 SECONDS
+	icon_state = "sweaterbubble"
+	cost = 10
+	knitting_project = /obj/item/clothing/suit/knitsweater/bubble
+
+/datum/contextAction/knit/sweatercable
+	name = "cable-knit sweater"
+	duration = 30 SECONDS
+	icon_state = "sweatercable"
+	cost = 10
+	knitting_project = /obj/item/clothing/suit/knitsweater/cable
+
+/datum/contextAction/knit/cardigan
+	name = "cardigan sweater"
+	duration = 30 SECONDS
+	icon_state = "cardigan"
+	cost = 10
+	knitting_project = /obj/item/clothing/suit/knitsweater/cardigan
 
 /datum/contextAction/knit/amigurumi/bee
 	name = "amigurumi bee"

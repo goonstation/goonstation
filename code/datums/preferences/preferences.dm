@@ -353,7 +353,7 @@ var/list/removed_jobs = list(
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
-						if (istext(ret))
+						if (!ret)
 							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
 							boutput( usr, SPAN_NOTICE("Savefile saved!") )
@@ -361,7 +361,7 @@ var/list/removed_jobs = list(
 
 			if ("cloud-save")
 				var/ret = src.cloudsave_save(client, params["name"])
-				if (istext(ret))
+				if (!ret)
 					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
 					boutput(usr, SPAN_NOTICE("Savefile saved!"))
@@ -1382,7 +1382,15 @@ var/list/removed_jobs = list(
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				if (!J_Fav.has_rounds_needed(user.client.player))
-					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[J_Fav.rounds_needed_to_play].</b>"))
+					var/played_rounds = user.client.player.get_rounds_participated()
+					var/needed_rounds = J_Fav.rounds_needed_to_play
+					var/allowed_rounds = J_Fav.rounds_allowed_to_play
+					var/reason_msg = ""
+					if (allowed_rounds && !needed_rounds)
+						reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
+					else if (needed_rounds)
+						reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> [reason_msg]"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1573,7 +1581,15 @@ var/list/removed_jobs = list(
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
 		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[user.client.player.get_rounds_participated()]</b> rounds and need to play <b>[temp_job.rounds_needed_to_play].</b>"))
+			var/played_rounds = user.client.player.get_rounds_participated()
+			var/needed_rounds = temp_job.rounds_needed_to_play
+			var/allowed_rounds = temp_job.rounds_allowed_to_play
+			var/reason_msg = ""
+			if (allowed_rounds && !needed_rounds)
+				reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
+			else if (needed_rounds)
+				reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
+			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> [reason_msg]"))
 			if (occ != 4)
 				switch (occ)
 					if (1) src.job_favorite = null

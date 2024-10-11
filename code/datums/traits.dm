@@ -25,6 +25,7 @@
 		"cloner_stuff",
 		"hemophilia",
 		"nohair",
+		"nowig",
 	)
 
 	var/list/traitData = list()
@@ -483,6 +484,13 @@
 	points = -1
 	category = list("vision")
 
+/datum/trait/wasitsomethingisaid
+	name = "Was It Something I Said?"
+	desc = "You did something to attract their ire, and the small robots of the station hate your guts!"
+	id = "wasitsomethingisaid"
+	icon_state = "wasitsomethingisaid"
+	points = 2
+
 /datum/trait/shortsighted
 	name = "Short-sighted"
 	desc = "Spawn with permanent short-sightedness and glasses."
@@ -637,7 +645,7 @@
 	id = "bald"
 	icon_state = "bald"
 	points = 0
-	category = list("trinkets", "nopug")
+	category = list("trinkets", "nopug","nowig")
 
 
 // Skill - White Border
@@ -745,6 +753,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Kitchen Training"
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
+
+/datum/trait/job/bartender
+	name = "Bartender Training"
+	desc = "Subject has a keen mind for all things alcoholic."
+	id = "training_bartender"
 
 // bartender, detective, HoS
 /datum/trait/job/drinker
@@ -935,7 +948,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "randomallergy"
 	icon_state = "allergy"
 	points = 0
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	var/allergen = null
@@ -965,7 +977,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "medicalallergy"
 	icon_state = "medallergy"
 	points = 1
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -1205,7 +1216,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "allergic"
 	icon_state = "hypeallergy"
 	points = 1
-	category = list("allergy")
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Anaphylactic"
 	disability_desc = "Acute response to allergens"
@@ -1332,11 +1342,11 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "You will grow hair even if you usually would not (due to being a lizard or something)."
 	id = "mutant_hair"
 	points = 0
-	category = list("body", "nohair")
+	category = list("body", "nohair","nowig")
 	icon_state = "hair"
 
 	onAdd(mob/owner)
-		owner.bioHolder.AddEffect("hair_growth")
+		owner.bioHolder.AddEffect("hair_growth", magical = TRUE)
 
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")

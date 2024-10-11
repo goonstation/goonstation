@@ -15810,7 +15810,7 @@
 	},
 /area/station/medical/staff)
 "emH" = (
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/greenblack{
 	dir = 5
 	},
@@ -21428,7 +21428,7 @@
 /area/station/security/equipment)
 "fIM" = (
 /obj/disposalpipe/segment/vertical,
-/obj/landmark/start/job/research_assistant,
+/obj/landmark/start/job/research_trainee,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -25222,7 +25222,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "gGI" = (
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -25987,7 +25987,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering/private)
 "gPK" = (
@@ -28536,24 +28536,12 @@
 /area/station/security/brig)
 "hwh" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/machinery/light/small/warm/very{
 	dir = 4;
 	pixel_x = 12
@@ -57255,7 +57243,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark/start/job/technical_assistant,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor,
 /area/station/engine/engineering/private)
 "paJ" = (
@@ -80363,9 +80351,7 @@
 /area/station/hallway/primary/west)
 "uMO" = (
 /obj/table/wood/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/clothing/head/red{
 	pixel_x = -3;
 	pixel_y = 9
@@ -91035,7 +91021,7 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
 	},
-/obj/landmark/start/job/medical_assistant,
+/obj/landmark/start/job/medical_trainee,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
