@@ -84,7 +84,6 @@
 
 
 
-#define ITEMSPECIAL_PIXELDIST_SQUARED  (70 * 70) //lol i'm putting the define RIGHT HERE.
 // These two numbers will be compared later (pixeldist squared AND the result of this function). We don't need to do unnessecary sqrt cause this is just a simple < > comparison!
 /proc/get_dist_pixel_squared(var/atom/source, var/atom/target, params)
 	var/dx = (target.x - source.x) * 32
@@ -746,6 +745,17 @@
 			if(master)
 				overrideStaminaDamage = master.stamina_damage * 0.8
 			return
+
+	baseball
+		name = "Baseball Swing"
+		desc = "An AoE attack with a chance for a home run."
+
+		modify_attack_result(mob/user, mob/target, datum/attackResults/msgs)
+			if (msgs.damage > 0 && msgs.stamina_crit)
+				var/turf/target_turf = get_edge_target_turf(target, get_dir(user, target))
+				target.throw_at(target_turf, 4, 1, throw_type = THROW_BASEBALL)
+				msgs.played_sound = 'sound/impact_sounds/bat_wood_crit.ogg'
+			return msgs
 
 /datum/item_special/launch_projectile
 	cooldown = 3 SECONDS
@@ -2275,6 +2285,46 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		pixel_y = -32
 		can_clash = 1
 
+	graffiti
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti1"
+		pixel_x = -32
+		pixel_y = -32
+	graffiti_flipped
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "graffiti2"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop //vertical slash
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop1"
+		pixel_x = -32
+		pixel_y = -32
+
+	chop_flipped
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "chop2"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave //horizontal slash
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave1"
+		pixel_x = -32
+		pixel_y = -32
+
+	cleave_flipped
+		plane = PLANE_ABOVE_LIGHTING
+		icon = 'icons/effects/meleeeffects.dmi'
+		icon_state = "cleave2"
+		pixel_x = -32
+		pixel_y = -32
+
+
 	spear
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "spear"
@@ -2384,3 +2434,4 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(progress == 1)
 			state = ACTIONSTATE_FINISH
 			return
+

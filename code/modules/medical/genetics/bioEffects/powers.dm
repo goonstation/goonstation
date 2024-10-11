@@ -1,9 +1,7 @@
+ABSTRACT_TYPE(/datum/bioEffect/power)
 /datum/bioEffect/power
-	name = "Cryokinesis"
-	desc = "Allows the subject to control ice and cold."
-	id = "cryokinesis"
-	msgGain = "You notice a strange cold tingle in your fingertips."
-	msgLose = "Your fingers feel warmer."
+	name = "parent_power"
+	id = "power_parent_do_not_use"
 	effectType = EFFECT_TYPE_POWER
 	cooldown = 600
 	probability = 66
@@ -11,7 +9,7 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
+	var/ability_path = null
 	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
@@ -54,6 +52,20 @@
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()
+
+/datum/bioEffect/power/cryokinesis
+	name = "Cryokinesis"
+	desc = "Allows the subject to control ice and cold."
+	id = "cryokinesis"
+	msgGain = "You notice a strange cold tingle in your fingertips."
+	msgLose = "Your fingers feel warmer."
+	effectType = EFFECT_TYPE_POWER
+	cooldown = 600
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/cryokinesis
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -576,6 +588,12 @@
 		if (..())
 			return 1
 
+		if (istype(target, /obj/item/reagent_containers/food/snacks/pancake))
+			dothepixelthing(target)
+			src.holder.owner.visible_message(SPAN_ALERT(SPAN_BOLD("[src.holder.owner] blows up the pancakes with their mind!")), SPAN_ALERT("You blow up the pancakes with your mind!"))
+			src.holder.owner.bioHolder?.RemoveEffect("telepathy")
+			return
+
 		var/mob/living/carbon/recipient = null
 		if (iscarbon(target))
 			recipient = target
@@ -596,8 +614,12 @@
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
 			return 1
 
+		if(isghostcritter(owner))
+			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind with your spectral brain!"))
+			return 1
+
 		if(!recipient.client || recipient.stat)
-			boutput(recipient, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
+			boutput(owner, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
 			return 1
 
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
@@ -2306,6 +2328,7 @@
 						if (thrown_limb)
 							thrown_limb.throwforce = tmp_force
 
+ABSTRACT_TYPE(/datum/bioEffect/power/critter)
 /datum/bioEffect/power/critter
 	id = "critter_do_not_use"
 

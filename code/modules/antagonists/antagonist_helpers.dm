@@ -49,7 +49,7 @@ proc/get_all_gangs()
 			gang = gang_member_antagonist_role.gang
 
 		else
-			return FALSE
+			return null
 
 	return gang
 

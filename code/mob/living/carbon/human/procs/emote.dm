@@ -676,7 +676,7 @@
 								thing = src.l_hand
 							else if (src.r_hand)
 								thing = src.r_hand
-						if (thing)
+						if (thing && !(istype(thing, /obj/item/grab)))
 							SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED, src, thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
@@ -1641,7 +1641,7 @@
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 							drop_item()
-							D.set_loc(src)
+							D.set_loc(src.loc)
 							equip_if_possible(D, drophand)
 							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
 							playsound(src.loc, "rustle", 60, 1)
@@ -2327,6 +2327,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(src.bioHolder.HasEffect("radioactive_farts"))
+		gas.radgas = 2
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

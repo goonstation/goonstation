@@ -37,7 +37,7 @@ TYPEINFO_NEW(/obj/table)
 	var/drawer_locked = FALSE
 	/// id for key checks, keys with the same id can lock it
 	var/lock_id = null
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New(loc)
 		..()
@@ -69,6 +69,13 @@ TYPEINFO_NEW(/obj/table)
 		var/area/Ar = get_area(src)
 		if (Ar)
 			Ar.sims_score = min(Ar.sims_score + bonus, 100)
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it. \
+		You can also use a <b>screwdriver</b> on <span class='harm'>harm</span> intent to \
+		[(src.has_drawer && src.drawer_locked) ? "pick the drawer's lock." : "adjust the shape of it."]"
+
 
 	proc/xmasify()
 		var/in_cafeteria = istype(get_area(src), /area/station/crew_quarters/cafeteria)
@@ -246,7 +253,7 @@ TYPEINFO_NEW(/obj/table)
 		else if (istype(W, /obj/item/paint_can))
 			return
 
-		else if (isscrewingtool(W))
+		else if (isscrewingtool(W) && user.a_intent == INTENT_HARM)
 			if (src.has_drawer && src.drawer_locked)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_LOCKPICK), user)
 				return
@@ -254,7 +261,7 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_ADJUST), user)
 				return
 
-		else if (iswrenchingtool(W) && !src.status && user.a_intent == "harm") // shouldn't have status unless it's reinforced, maybe? hopefully?
+		else if (iswrenchingtool(W) && !src.status && user.a_intent == INTENT_HARM) // shouldn't have status unless it's reinforced, maybe? hopefully?
 			if (istype(src, /obj/table/folding))
 				actions.start(new /datum/action/bar/icon/fold_folding_table(src, W), user)
 			else
@@ -280,6 +287,9 @@ TYPEINFO_NEW(/obj/table)
 			user.visible_message(SPAN_NOTICE("[user] wipes down [src] with [W]."))
 
 		else if (istype(W) && src.place_on(W, user, params))
+			return
+		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
+		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= 40 && rand(1, 10) < 10))
 			return
 
 		else
@@ -1201,6 +1211,11 @@ TYPEINFO(/obj/table/glass)
 				random_brute_damage(user, rand(10,30),1)
 				take_bleeding_damage(user, user, rand(10,30))
 
+		if (isliving(user))
+			var/mob/living/dude = user
+			var/datum/gang/gang = dude.get_gang()
+			gang?.do_vandalism(GANG_VANDALISM_TABLING, src.loc)
+
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		..()
 		if (ismob(AM))
@@ -1210,6 +1225,10 @@ TYPEINFO(/obj/table/glass)
 				src.visible_message(SPAN_ALERT("[M] smashes through [src]!"))
 				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 				src.smash()
+				if (isliving(thr.thrown_by))
+					var/mob/living/dude = thr.thrown_by
+					var/datum/gang/gang = dude.get_gang()
+					gang?.do_vandalism(GANG_VANDALISM_TABLING, src.loc)
 				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
 				if (ishuman(M))

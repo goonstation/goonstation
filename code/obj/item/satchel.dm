@@ -3,6 +3,7 @@
 	desc = "A leather satchel for holding things."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "satchel"
+	item_state = "satchel"
 	c_flags = ONBELT
 	health = 6
 	w_class = W_CLASS_TINY
@@ -174,6 +175,13 @@
 		src.UpdateIcon()
 		tooltip_rebuild = 1
 
+	// Don't dump the satchel onto the table if using drag-and-drop to dump out other contents.
+	should_place_on(obj/target, params)
+		if (istype(target, /obj/table) && islist(params) && params["dragged"] && length(src.contents) > 0)
+			return FALSE
+		. = ..()
+
+
 	proc/split_stack_into_satchel(var/obj/item/item_to_split, mob/user)
 		// This proc splits an object with multiple stacks and stuff it into the satchel until either
 		// The satchel is full
@@ -245,7 +253,7 @@
 		name = "produce satchel"
 		desc = "A leather satchel for carrying around crops and seeds."
 		icon_state = "hydrosatchel"
-
+		item_state = "hydrosatchel"
 		itemstring = "items of produce"
 
 		New()
@@ -272,14 +280,23 @@
 					(inserted_seed.plantgenes.mutation?.type == template_seed.plantgenes.mutation?.type)
 
 		large
+			name = "large produce satchel"
 			desc = "A leather satchel for carrying around crops and seeds. This one happens to be <em>really</em> big."
+			icon_state = "hydrosatchel-large"
 			maxitems = 200
+
+		compressed
+			name = "spatially-compressed produce satchel"
+			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding crops and seeds."
+			icon_state = "hydrosatchel-compressed"
+			maxitems = 1000
 
 
 	mining
 		name = "mining satchel"
 		desc = "A leather satchel for holding various ores."
 		icon_state = "miningsatchel"
+		item_state = "miningsatchel"
 		itemstring = "ores"
 
 		New()
@@ -289,17 +306,20 @@
 		large
 			name = "large mining satchel"
 			desc = "A leather satchel for holding various ores. This one's pretty big."
+			icon_state = "miningsatchel-large"
 			maxitems = 100
 
 		compressed
 			name = "spatially-compressed mining satchel"
 			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding ores."
+			icon_state = "miningsatchel-compressed"
 			maxitems = 500
 
 	mail
 		name = "mail bag"
 		desc = "A leather bag for holding mail. It's totally not just a produce/mining satchel!"
 		icon_state = "mailsatchel"
+		item_state = "mailsatchel"
 		itemstring = "mail"
 
 		New()

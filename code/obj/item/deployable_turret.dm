@@ -115,6 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	name = "fucked up abstract turret that should never exist"
 	desc = "why did you do this"
 	icon = 'icons/obj/deployableturret.dmi'
+	icon_state = "maphelper" //this gets set properly in new
 	anchored = UNANCHORED
 	density = 1
 	var/health = 250

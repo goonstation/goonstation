@@ -202,6 +202,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	var/obj/dummy/light_overlay // Light overlay object to place in `src.vis_contents`
 
+	pass_unstable = TRUE
+
 	New()
 		..()
 		inserted_lamp = new light_type()
@@ -267,7 +269,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 						break
 				T = null
 
+	Cross(atom/movable/mover)
+		. = ..()
+		if(istype(mover, /obj/projectile))
+			var/obj/projectile/P = mover
+			if(P.called_target == src && P.proj_data?.damage > 5)
+				. = FALSE
 
+	bullet_act(obj/projectile/P)
+		. = ..()
+		src.broken(explode_rigged = TRUE)
 
 //big standing lamps
 /obj/machinery/light/flamp
@@ -1052,6 +1063,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 			boutput(user, "You hit the light, and it smashes!")
 			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
+
+			var/datum/gang/gang = user.get_gang()
+			gang?.do_vandalism(GANG_VANDALISM_LIGHT_BREAK_POINTS, src.loc)
+
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -1139,7 +1154,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // break the light and make sparks if was on
 
-/obj/machinery/light/proc/broken(var/nospark = 0)
+/obj/machinery/light/proc/broken(var/nospark = 0, explode_rigged = FALSE)
 	set name = "Break"
 
 	if(current_lamp.light_status == LIGHT_EMPTY || current_lamp.light_status == LIGHT_BROKEN)
@@ -1152,6 +1167,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		if(on)
 			logTheThing(LOG_STATION, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
 			elecflash(src,radius = 1, power = 2, exclude_center = 0)
+
+	if(explode_rigged && current_lamp.rigged)
+		if (current_lamp.rigger)
+			message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+			logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
+		explode()
+		return
+
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
 	SPAWN(0)

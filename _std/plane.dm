@@ -140,7 +140,7 @@ client
 
 		src.setup_special_screens()
 
-		SPAWN(5 SECONDS)
+		SPAWN(3 SECONDS)
 			apply_depth_filter()
 		..()
 

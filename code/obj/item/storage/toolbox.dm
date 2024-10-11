@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	//cogwerks - burn vars
 	burn_point = 4500
 	burn_output = 4800
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 50
 	stamina_cost = 20
 	stamina_crit_chance = 10

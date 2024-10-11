@@ -1891,7 +1891,7 @@
 	health = 150
 	maxhealth = 150
 	acid_damage_multiplier = 0
-	faction = FACTION_SYNDICATE
+	faction = list(FACTION_SYNDICATE)
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()

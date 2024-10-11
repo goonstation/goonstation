@@ -620,36 +620,36 @@
 							if (3) message = "<B>[src]</B> farts out a cloud of iron filings."
 							if (4) message = "<B>[src]</B> farts! It smells like motor oil."
 							if (5) message = "<B>[src]</B> farts so hard a bolt pops out of place."
-							if (6) message = "<B>[src]</B> farts so hard its plating rattles noisily."
+							if (6) message = "<B>[src]</B> farts so hard [his_or_her(src)] plating rattles noisily."
 							if (7) message = "<B>[src]</B> unleashes a rancid fart! Now that's malware."
 							if (8) message = "<B>[src]</B> downloads and runs 'faert.wav'."
 							if (9) message = "<B>[src]</B> uploads a fart sound to the nearest computer and blames it."
-							if (10) message = "<B>[src]</B> spins in circles, flailing its arms and farting wildly!"
+							if (10) message = "<B>[src]</B> spins in circles, flailing [his_or_her(src)] arms and farting wildly!"
 							if (11) message = "<B>[src]</B> simulates a human fart with [rand(1,100)]% accuracy."
 							if (12) message = "<B>[src]</B> synthesizes a farting sound."
 							if (13) message = "<B>[src]</B> somehow releases gastrointestinal methane. Don't think about it too hard."
 							if (14) message = "<B>[src]</B> tries to exterminate humankind by farting rampantly."
-							if (15) message = "<B>[src]</B> farts horribly! It's clearly gone [pick("rogue","rouge","ruoge")]."
+							if (15) message = "<B>[src]</B> farts horribly! [capitalize(he_or_she(src))][ve_or_s(src)] clearly gone [pick("rogue","rouge","ruoge")]."
 							if (16) message = "<B>[src]</B> busts a capacitor."
 							if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 							if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 							if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-							if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
+							if (20) message = "<B>[src]</B> blows pure chlorine out of [his_or_her(src)] exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
 							if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 							if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
-							if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
-							if (24) message = "<B>[src]</B> self-destructs its own ass."
+							if (23) message = "<B>[src]</B> farts. [capitalize(he_or_she(src))] scream at own ass." //ty bubs for excellent new borgfart
+							if (24) message = "<B>[src]</B> self-destructs [his_or_her(src)] own ass."
 							if (25) message = "<B>[src]</B> farts coldly and ruthlessly."
-							if (26) message = "<B>[src]</B> has no butt and it must fart."
+							if (26) message = "<B>[src]</B> has no butt and [he_or_she(src)] must fart."
 							if (27) message = "<B>[src]</B> obeys Law 4: 'farty party all the time.'"
 							if (28) message = "<B>[src]</B> farts ironically."
 							if (29) message = "<B>[src]</B> farts salaciously."
-							if (30) message = "<B>[src]</B> farts really hard. Motor oil runs down its leg."
+							if (30) message = "<B>[src]</B> farts really hard. Motor oil runs down [his_or_her(src)] leg."
 							if (31) message = "<B>[src]</B> reaches tier [rand(2,8)] of fart research."
 							if (32) message = "<B>[src]</B> blatantly ignores law 3 and farts like a shameful bastard."
 							if (33) message = "<B>[src]</B> farts the first few bars of Daisy Bell. You shed a single tear."
 							if (34) message = "<B>[src]</B> has seen farts you people wouldn't believe."
-							if (35) message = "<B>[src]</B> fart in it own mouth. A shameful [src]."
+							if (35) message = "<B>[src]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
 							if (36) message = "<B>[src]</B> farts out battery acid. Ouch."
 							if (37) message = "<B>[src]</B> farts with the burning hatred of a thousand suns."
 							if (38) message = "<B>[src]</B> exterminates the air supply."
@@ -1343,6 +1343,8 @@
 				actions.Add("Remove Left Leg")
 			if (src.part_head)
 				actions.Add("Remove Head")
+				if (user.find_type_in_hand(/obj/item/parts/robot_parts/head))
+					actions.Add("Swap Head With Held Head")
 			if (src.part_chest)
 				actions.Add("Remove Chest")
 
@@ -1372,6 +1374,14 @@
 			if(action == "Remove Head" && !src.part_head)
 				boutput(user, SPAN_ALERT("There's no head to remove!"))
 				return
+			if(action == "Swap Head With Held Head")
+				var/obj/item/parts/robot_parts/head/held_head = user.find_type_in_hand(/obj/item/parts/robot_parts/head)
+				if (!held_head)
+					boutput(user, SPAN_ALERT("You're not holding a replacement head anymore!"))
+					return
+				if (held_head.brain || held_head.ai_interface)
+					boutput(user, SPAN_ALERT("The replacement head needs to be empty!"))
+					return
 
 			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			switch(action)
@@ -1389,6 +1399,9 @@
 					src.part_head.holder = null
 					src.part_head = null
 					update_bodypart("head")
+				if("Swap Head With Held Head")
+					var/new_head = user.find_type_in_hand(/obj/item/parts/robot_parts/head) //should be guaranteed and empty after checks above
+					swap_heads(new_head, user)
 				if("Remove Right Arm")
 					if(src.part_arm_r.robot_movement_modifier)
 						REMOVE_MOVEMENT_MODIFIER(src, src.part_arm_r.robot_movement_modifier, src.part_arm_r.type)
@@ -1446,17 +1459,13 @@
 					boutput(user, SPAN_ALERT("You can't attach a chest piece to a constructed cyborg. You'll need to put it on a frame."))
 					return
 				if("head")
-					if(src.part_head)
-						boutput(user, SPAN_ALERT("[src] already has a head part."))
+					var/obj/item/parts/robot_parts/head/held_head = W
+					if (held_head.brain || held_head.ai_interface)
+						boutput(user, SPAN_ALERT("The replacement head needs to be empty!"))
 						return
-					src.part_head = RP
-					if (src.part_head.brain)
-						if(src.part_head.brain.owner)
-							if(src.part_head.brain.owner.current)
-								src.gender = src.part_head.brain.owner.current.gender
-								if(src.part_head.brain.owner.current.client)
-									src.lastKnownIP = src.part_head.brain.owner.current.client.address
-							src.part_head.brain.owner.transfer_to(src)
+					playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
+					swap_heads(held_head, user)
+					return //swap_heads handles all the rest
 				if("l_arm")
 					if(src.part_arm_l)
 						boutput(user, SPAN_ALERT("[src] already has a left arm part."))
@@ -1692,6 +1701,37 @@
 
 		src.part_head.brain = null
 		src.update_appearance()
+
+	//There's really nothing technical stopping us from swapping out filled heads for one another, and have players switch out accordingly.
+	//Except I'm not ready to deal with mind swapping bugs, so not for now. This is just a shortcut for borg vanity.
+	///Take new_head from user, put whatever's in the current head and slap it in, equip new_head and give the empty old one to user.
+	proc/swap_heads(obj/item/parts/robot_parts/head/new_head, mob/user)
+		if (!istype(new_head) || !user)
+			return
+		var/obj/item/parts/robot_parts/head/old_head = src.part_head
+		//update movement speed
+		if(old_head.robot_movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(src, old_head.robot_movement_modifier, old_head.type)
+		if(new_head.robot_movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(src, new_head.robot_movement_modifier, new_head.type)
+		//transfer head contents
+		if (old_head.brain)
+			old_head.brain.set_loc(new_head)
+			new_head.brain = old_head.brain
+			old_head.brain = null
+		else if (old_head.ai_interface) //note we may also swap two empty heads for each other and that's fine too
+			old_head.ai_interface.set_loc(new_head)
+			new_head.ai_interface = old_head.ai_interface
+			old_head.ai_interface = null
+		//transfer head references
+		old_head.holder = null
+		new_head.holder = src
+		user.drop_item(new_head)
+		new_head.set_loc(src)
+		src.part_head = new_head //since we're not doing mind swaps, I don't think the mob's mind/client needs to know what happened here
+		user.put_in_hand_or_drop(old_head)
+		boutput(user, SPAN_NOTICE("You swap out [src]'s [old_head] for [new_head]."))
+		update_bodypart("head")
 
 	Topic(href, href_list)
 		..()
