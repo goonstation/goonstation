@@ -8,6 +8,7 @@
 	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_CRYPTID_PLUSHIE)
 	can_use_say = FALSE
 
+	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
 	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")

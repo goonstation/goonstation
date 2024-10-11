@@ -34,6 +34,7 @@
 #include "defines\atom.dm"
 #include "defines\bioeffect.dm"
 #include "defines\blocking.dm"
+#include "defines\burning.dm"
 #include "defines\camera_coverage.dm"
 #include "defines\chemicompiler.dm"
 #include "defines\chemistry.dm"

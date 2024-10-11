@@ -681,7 +681,7 @@
 	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 50

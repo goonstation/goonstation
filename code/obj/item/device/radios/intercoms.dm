@@ -312,7 +312,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	device_color = "#3983C6" // for chat color
 
 	// burning stuff
-	burn_type = 1 // burn down to a glob
+	burn_remains = BURN_REMAINS_MELT // burn down to a glob
 	burn_possible = TRUE
 	burn_point = 300
 	health = 50 // same as a plank

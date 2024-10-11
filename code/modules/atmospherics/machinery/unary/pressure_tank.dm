@@ -16,6 +16,7 @@
 
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide
+	icon = 'icons/obj/atmospherics/tanks/black_pipe_tank.dmi'
 	name = "Pressure Tank (Carbon Dioxide)"
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide/New()
@@ -75,7 +76,7 @@
 // Experiment for improving the usefulness of air hookups. They have twice the capacity of portable
 // canisters and contain 4 times the volume of their default air mixture (Convair880).
 /obj/machinery/atmospherics/unary/tank/air_repressurization
-	icon = 'icons/obj/atmospherics/tanks/whitered_pipe_tank.dmi'
+	icon = 'icons/obj/atmospherics/tanks/white_red_pipe_tank.dmi'
 	name = "High-Pressure Tank (Air)"
 	desc = "Large vessel containing a pressurized air mixture for emergency purposes."
 	volume = 2000

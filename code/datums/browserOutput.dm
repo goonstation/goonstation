@@ -291,9 +291,9 @@ var/global
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", data)
 
-/datum/chatOutput/proc/playMusic(url, volume)
+/datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100))
+	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)

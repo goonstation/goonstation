@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 #endif
 		if(terrainify_lock)
 			boutput(user, "Terrainify has already begone!")
-		else if(user.client?.holder.level >= LEVEL_ADMIN)
+		else
 			if(!check_param(params, "vehicle"))
 				return
 
@@ -339,8 +339,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			terrainify_lock = src
 			. = TRUE
-		else
-			boutput(user, "You must be at least an Administrator to use this command.")
 
 	proc/check_param(params, key)
 		if(isnull(params[key]))
@@ -578,7 +576,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/void
 	name = "Void Station"
 	desc = "Turn space into the unknowable void? Space if filled with the void, inhibited by those departed, and chunks of scaffolding."
-	additional_toggles = list("Void Bubbles"=FALSE)
+	additional_toggles = list("Void Bubbles"=FALSE, "Void Worley"=FALSE)
 
 	New()
 		syndi_camo_color = list(nuke_op_color_matrix[1], "#a223d2", nuke_op_color_matrix[3])
@@ -597,6 +595,16 @@ ABSTRACT_TYPE(/datum/terrainify)
 	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
 	station_repair.station_generator = new/datum/map_generator/void_generator
 
+	var/blacklist_generators = list(/datum/map_generator/icemoon_generator,
+									/datum/map_generator/mars_generator,
+									/datum/map_generator/void_generator,
+									/datum/map_generator/asteroids,
+									/datum/map_generator/sea_caves,
+									/datum/map_generator/storehouse_generator,
+									/datum/map_generator/room_maze_generator,
+									/datum/map_generator/room_maze_generator/random,
+									/datum/map_generator/room_maze_generator/spatial)
+
 	var/list/space = list()
 	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 		space += S
@@ -609,6 +617,64 @@ ABSTRACT_TYPE(/datum/terrainify)
 	station_repair.station_generator.generate_terrain(space, flags = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 	for (var/turf/S in space)
 		S.AddOverlays(station_repair.ambient_light, "ambient")
+
+	if(params && params["Void Worley"])
+		var/worley_bubbles = rustg_worley_generate("32", "10", "50", "300", "1", "8")
+		var/datum/cell_grid/cell_grid = new(world.maxx,world.maxy)
+		cell_grid.draw_from_string(worley_bubbles, TRUE, FALSE, override=TRUE)
+		var/groups = cell_grid.find_contigious_cells()
+		for(var/group_id in groups)
+			var/group = groups[group_id]
+			if(length(group) > 20)
+				var/list/turfs_to_convert = list()
+				var/list/edges_to_convert = list()
+				for(var/node in group)
+					var/turf/T = locate(node[1], node[2], Z_LEVEL_STATION)
+					var/edge = cell_grid.has_empty_neighbor(node[1],node[2],diagonals=TRUE)
+					if(istype(T, /turf/unsimulated/floor/void))
+						if(edge)
+							edges_to_convert += T
+						else
+							turfs_to_convert += T
+
+				if(length(turfs_to_convert) > 50)
+					var/datum/map_generator/generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
+					generator = new generator()
+					generator.generate_terrain(turfs_to_convert, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+
+					//Place Prefab or just Terrain
+					if((length(turfs_to_convert) > 100) && prob(85))
+						var/count= 0
+						var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
+						var/maxTries = (P.required ? 35 : 20)
+						while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+							var/turf/target = pick(turfs_to_convert)
+							if(istype(target.loc, /area/station))
+								count = maxTries
+								continue
+
+							var/datum/loadedProperties/ret = P.applyTo(target)
+							if (ret)
+								var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+								for(var/turf/T in space_turfs)
+									if(!istype(T, /turf/space))
+										space_turfs -= T
+								generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+								logTheThing(LOG_DEBUG, null, "Void Worley placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+								break
+							else
+								count++
+
+					for(var/turf/edge_turf in edges_to_convert )
+						edge_turf.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
+						edge_turf.allows_vehicles = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles
+						var/turf/unsimulated/floor/auto/AT = edge_turf
+						if(istype(AT))
+							AT.edge_overlays()
+
+					logTheThing(LOG_DEBUG, null, "Void Worley Bubble: [generator] [log_loc(pick(turfs_to_convert), Z_LEVEL_STATION)]")
+
+
 
 	if(params && params["Void Bubbles"])
 		var/datum/bsp_tree/tree = new(width=world.maxx, height=world.maxy, min_width=30, min_height=25)
@@ -634,16 +700,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			var/list/branch = tree.get_leaves(room.parent.parent)
 			tree.leaves -= branch
-
-			var/blacklist_generators = list(/datum/map_generator/icemoon_generator,
-											/datum/map_generator/mars_generator,
-											/datum/map_generator/void_generator,
-											/datum/map_generator/asteroids,
-											/datum/map_generator/sea_caves,
-											/datum/map_generator/storehouse_generator,
-											/datum/map_generator/room_maze_generator,
-											/datum/map_generator/room_maze_generator/random,
-											/datum/map_generator/room_maze_generator/spatial)
 
 			var/datum/map_generator/generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)
 			generator = new generator()
@@ -708,6 +764,8 @@ ABSTRACT_TYPE(/datum/terrainify)
 		SPAWN(10 SECONDS)
 			for(var/turf/unsimulated/floor/auto/void/BE in bubble_edges)
 				BE.edge_overlays()
+
+
 
 	station_repair.clean_up_station_level()
 

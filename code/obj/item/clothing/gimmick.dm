@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		src.vchange = new(src) // Built-in voice changer (Convair880).
+		src.vchange = new /obj/item/voice_changer/permanent(src) // Built-in voice changer (Convair880).
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
