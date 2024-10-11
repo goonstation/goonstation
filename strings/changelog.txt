@@ -2,6 +2,7 @@
 (t)fri oct 11 24
 (u)LeahTheTech
 (*)Vampiric thrall ability cost no longer scales up with more thralls.
+(+)Merchant shuttles now announce the type of goods they will be selling and where on station they are going to dock.
 (u)JORJ949
 (p)20986
 (e)🆕🔨|C-Feature, A-Player-Actions
