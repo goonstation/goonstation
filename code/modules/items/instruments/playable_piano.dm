@@ -281,7 +281,7 @@ TYPEINFO(/obj/player_piano)
 		for (var/string in piano_notes)
 			var/list/curr_notes = splittext("[string]", ",")
 			var/curr_notes_length = length(curr_notes)
-			if (curr_notes_length < 4 || curr_notes_length != 5) // Music syntax not followed
+			if (curr_notes_length != 4 && curr_notes_length != 5) // Music syntax not followed
 				break
 			if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
 				if (lowertext(curr_notes[1]) == "a")
