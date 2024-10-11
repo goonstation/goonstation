@@ -82,7 +82,7 @@
 /area/station/crew_quarters/clown)
 "aaE" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
+/area/shuttle/merchant_shuttle/right_station/cogmap/atlas)
 "aaF" = (
 /obj/grille/catwalk{
 	dir = 8
@@ -14551,7 +14551,7 @@
 /area/station/security/hos)
 "iXg" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/atlas)
 "iXn" = (
 /obj/cable{
 	icon_state = "4-8"

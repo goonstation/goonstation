@@ -777,6 +777,11 @@ var/global/list/mapNames = list(
 	window_layer_south = FLY_LAYER+1
 	auto_windows = TRUE
 
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
@@ -1265,12 +1270,22 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_merch_l"
 	donut2
 		icon_state = "shuttle_merch_l-dnt2"
+		loc_string = "north"
 	cogmap
 		icon_state = "shuttle_merch_l-cog1"
+
+		atlas
+			loc_string = "north"
+		nadir
+			loc_string = "north"
+		wrestlemap
+			loc_string = "north"
 	cogmap2
 		icon_state = "shuttle_merch_l-cog2"
+		loc_string = "north"
 	destiny
 		icon_state = "shuttle_merch_l-dest"
+		loc_string = "north"
 	sealab
 		icon_state = "shuttle_merch_l-sealab"
 
@@ -1294,12 +1309,20 @@ var/global/list/mapNames = list(
 	icon_state = "shuttle_merch_r"
 	donut2
 		icon_state = "shuttle_merch_r-dnt2"
+		loc_string = "south"
 	cogmap
 		icon_state = "shuttle_merch_r-cog1"
+
+		atlas
+			loc_string = "south"
+		nadir
+			loc_string = "south"
 	cogmap2
 		icon_state = "shuttle_merch_r-cog2"
+		loc_string = "south"
 	destiny
 		icon_state = "shuttle_merch_r-dest"
+		loc_string = "south"
 	sealab
 		icon_state = "shuttle_merch_r-sealab"
 
