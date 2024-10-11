@@ -1447,6 +1447,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\mechanics\MechanicMadness.dm"
 #include "code\modules\mechanics\MechanicMC14500.dm"
 #include "code\modules\mechanics\MechanicsNetworkCon.dm"
+#include "code\modules\mechanics\MechanicsTextToMusicCom.dm"
 #include "code\modules\medals\rewardsAI.dm"
 #include "code\modules\medals\rewardsLocker.dm"
 #include "code\modules\medical\blood_system.dm"
