@@ -857,7 +857,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			target.changeStatus("slowed", 4 SECONDS)
 			target.TakeDamageAccountArmor("All", rand(1,2), 0, 0, DAMAGE_CUT)
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
 		if(ismob(mover))
 			var/mob/M = mover
 			if(M.m_intent != "walk")
