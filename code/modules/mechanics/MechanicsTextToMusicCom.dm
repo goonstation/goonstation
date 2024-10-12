@@ -47,6 +47,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	var/is_stop_requested = FALSE
 	var/song_length = 0 //the number of notes in the song
 	var/curr_note = 0 //what note is the song on?
+	var/instrument_name = "piano"
 	var/instrument_sound_path = null // where are the note sounds located?
 	var/list/note_input = "" //where input is stored
 	var/list/piano_notes = list() //after we break it up into chunks
@@ -70,7 +71,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	New()
 		..()
 
-		src.instrument_sound_path = STANDARD_INSTRUMENT_PATH("piano")
+		src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(src.instrument_name)
 
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", PROC_REF(mechcompPlay))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", PROC_REF(mechcompNotes))
@@ -86,6 +87,10 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "stop", PROC_REF(mechcompConfigStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset", PROC_REF(mechcompConfigReset))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view errors", PROC_REF(mechcompConfigViewErrors))
+
+	get_desc()
+		. = ..() // Please don't remove this again, thanks.
+		. += "<br>[SPAN_NOTICE("Instrument: [src.instrument_name] | Timing: [src.timing] | Has Notes: [length(src.note_input) ? "Yes" : "No"]")]"
 
 	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
@@ -123,8 +128,12 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		src.set_notes(given_notes)
 
 	proc/mechcompConfigTiming(obj/item/W as obj, mob/user as mob)
-		var/new_timing = tgui_input_number(user, "Input new timing.", "Set Timing", src.timing, MAX_TIMING, MIN_TIMING)
-		src.set_timing(new_timing)
+		// `tgui_input_number` behaves oddly when dealing with floats
+		// so I'm using the text input instead, unless timing is counted is centiseconds
+		var/new_timing = tgui_input_text(user, "Input a new timing between [MIN_TIMING] and [MAX_TIMING] seconds.", "Set Timing", src.timing)
+		new_timing = text2num(new_timing)
+		if (new_timing)
+			src.set_timing(new_timing)
 
 	proc/mechcompConfigInstrument(obj/item/W as obj, mob/user as mob)
 		var/new_instrument = tgui_input_list(user, "Input new instrument.", "Set Instrument", src.allow_list, src.instrument_sound_path)
@@ -148,12 +157,16 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W) && src.anchored && src.is_busy)
 			src.is_stop_requested = TRUE
+
 		return ..()
 
 	proc/log_error_message(var/error_message)
 		src.error_messages.Insert(1, error_message)
+
 		if (length(src.error_messages) > MAX_ERROR_MESSAGES)
 			src.error_messages.Cut(MAX_ERROR_MESSAGES + 1, 0)
+
+		animate_flash_color_fill(src,"#ff0000",2, 2)
 
 	proc/clean_input() //breaks our big input string into chunks
 		src.is_busy = 1
@@ -377,12 +390,14 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 			if ((length(given_notes) / CF_EVENT_LENGTH) > MAX_NOTE_INPUT)
 				return FALSE
 			src.note_input = given_notes
+			src.tooltip_rebuild = 1
 			src.clean_input()
 			src.build_notes_classic_format(src.piano_notes)
 		else
 			if ((length(given_notes) / DF_EVENT_LENGTH) > MAX_NOTE_INPUT)
 				return FALSE
 			src.note_input = given_notes
+			src.tooltip_rebuild = 1
 			src.build_notes_dense_format(src.note_input)
 		return TRUE
 
@@ -392,11 +407,14 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		if (time_sel < MIN_TIMING || time_sel > MAX_TIMING)
 			return FALSE
 		src.timing = time_sel
+		src.tooltip_rebuild = 1
 		return TRUE
 
 	proc/set_instrument(var/instrument)
 		if (instrument in src.allow_list)
+			src.instrument_name = instrument
 			src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(instrument)
+			src.tooltip_rebuild = 1
 
 	proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
 		src.UpdateIcon(FALSE)
@@ -413,6 +431,8 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		src.note_names = list()
 		src.note_accidentals = list()
 		src.compiled_notes = list()
+		src.is_stop_requested = FALSE
+		src.tooltip_rebuild = 1
 
 	update_icon(var/active) //1: active, 0: inactive
 		if (active)
