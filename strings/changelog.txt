@@ -1,4 +1,9 @@
 
+(t)sat oct 12 24
+(u)glowbold
+(p)21048
+(e)⚖💊|C-Balance, A-Medical
+(+)Disease resistance scales based on a percentage of the disease's virulence.
 (t)fri oct 11 24
 (u)LeahTheTech
 (*)Vampiric thrall ability cost no longer scales up with more thralls.
