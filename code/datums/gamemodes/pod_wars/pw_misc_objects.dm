@@ -864,8 +864,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				pokey(M, 98)
 			else
 				pokey(M, 30)
-
-		return (!density)
+		. = ..()
 
 //barricade deployer
 
