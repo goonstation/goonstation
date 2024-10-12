@@ -1104,7 +1104,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				// incase you couldn't get them otherwise, though.
 				seedcount++
 
-		HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src, seedcount)
+		if (seedcount > 0) HYPgenerateseedcopy(src.plantgenes, growing, src.generation, src, seedcount)
 
 		// Give XP based on base quality of crop harvest. Will make better later, like so more plants harvasted and stuff, this is just for testing.
 		// This is only reached if you actually got anything harvested.
