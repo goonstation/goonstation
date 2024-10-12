@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	stamina_crit_chance = 0
 
 	var/can_stain = 1
-	var/list/stains = null
+	var/list/datum/stain/stains = null
 
 	New()
 		..()
@@ -62,25 +62,41 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		src.name = src.real_name || initial(src.name)
 		if(src.material?.usesSpecialNaming())
 			src.name = src.material.specialNaming(src)
-		src.name = "[name_prefix(null, 1)][src.get_stains()][src.name][name_suffix(null, 1)]"
+		src.name = "[name_prefix(null, 1)][src.get_stain_names()][src.name][name_suffix(null, 1)]"
 
-	proc/add_stain(var/stn)
+	///Add a stain to this clothing piece
+	proc/add_stain(datum/stain/stn)
+		stn = get_singleton(stn)
 		if (!stn || !src.can_stain)
 			return
 		if (!islist(src.stains))
 			src.stains = list()
 		else if (stn in src.stains)
 			return
-		src.stains += stn
+		src.stains.Add(stn)
+		stn.add_to_clothing(src)
 		src.UpdateName()
 
-	proc/get_stains()
+	///Returns a space-concatenated string of stain names
+	proc/get_stain_names()
 		if (src.can_stain && islist(src.stains) && length(src.stains))
-			for (var/i in src.stains)
-				. += i + " "
+			for (var/datum/stain/stn in src.stains)
+				. += stn.name + " "
 
+	///Removes a stain from this clothing piece. Returns 1/TRUE if stain removed.
+	proc/remove_stain(datum/stain/stain)
+		stain = get_singleton(stain)
+		if(islist(src.stains))
+			for(var/datum/stain/stn in src.stains)
+				if (stn == stain)
+					stn.remove_from_clothing(src)
+					. = src.stains.Remove(stn)
+
+	///Removes all stains from this clothing piece
 	proc/clean_stains()
 		if (islist(src.stains) && length(src.stains))
+			for (var/datum/stain/stn in src.stains)
+				stn.remove_from_clothing(src)
 			src.stains = list()
 			src.UpdateName()
 
