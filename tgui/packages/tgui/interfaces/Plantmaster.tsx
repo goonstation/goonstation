@@ -229,7 +229,7 @@ const TitleRow = (props) => {
     <Table.Row>
       {headings.map(
         (heading, index) =>
-          (show_damage || (heading !== 'damage' && heading !== 'charges')) && (
+          (show_damage || (heading !== 'damage' && heading !== 'count')) && (
             <Table.Cell key={heading} textAlign="center">
               <Button
                 color="transparent"
