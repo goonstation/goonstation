@@ -247,9 +247,21 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/perform_terrainify(params, mob/user)
 		USR_ADMIN_ONLY
-		pre_convert(params, user)
-		convert_station_level(params, user)
-		post_convert(params, user)
+
+#ifdef UNDERWATER_MAP
+		if(!allow_underwater)
+			//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+			boutput(usr, "You cannot use this command on underwater maps. Sorry!")
+			return FALSE
+#endif
+		if(terrainify_lock)
+			boutput(user, "Terrainify has already begone!")
+		else
+			terrainify_lock = src
+			pre_convert(params, user)
+			convert_station_level(params, user)
+			post_convert(params, user)
+			src.terrainify_lock = null
 
 	proc/pre_convert(params, mob/user)
 		log_terrainify(user, "started Terrainify: [name]")
@@ -278,8 +290,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 						shake_camera(player_mob, 35 SECONDS, rand(20,40))
 					player_mob.changeStatus("knockdown", 2 SECONDS)
 
-		return
-
 	proc/post_convert(params, mob/user)
 		if(current_state >= GAME_STATE_PREGAME)
 			initialize_worldgen()
@@ -299,46 +309,35 @@ ABSTRACT_TYPE(/datum/terrainify)
 			ADD_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION, render_group, 5 SECONDS)
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
-		return
+
 
 	proc/convert_station_level(params, mob/user)
 		USR_ADMIN_ONLY
-#ifdef UNDERWATER_MAP
-		if(!allow_underwater)
-			//to prevent tremendous lag from the entire map flooding from a single ocean tile.
-			boutput(usr, "You cannot use this command on underwater maps. Sorry!")
-			return FALSE
-#endif
-		if(terrainify_lock)
-			boutput(user, "Terrainify has already begone!")
-		else
-			if(!check_param(params, "vehicle"))
+		if(!check_param(params, "vehicle"))
+			return
+
+		// Validate options
+		for(var/toggle in additional_toggles)
+			if(!check_param(params, toggle))
 				return
 
-			// Validate options
-			for(var/toggle in additional_toggles)
-				if(!check_param(params, toggle))
+		for(var/option in additional_options)
+			if(!check_param(params, option))
+				return
+			else
+				if(!(params[option] in additional_options[option]))
+					boutput(user, "[params[option]] is not a valid option for [option] for [name]! Call 1-800-CODER!")
 					return
 
-			for(var/option in additional_options)
-				if(!check_param(params, option))
-					return
-				else
-					if(!(params[option] in additional_options[option]))
-						boutput(user, "[params[option]] is not a valid option for [option] for [name]! Call 1-800-CODER!")
-						return
+		station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
 
-			station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
+		if(params["Syndi Camo"] && length(syndi_camo_color))
+			nuke_op_camo_matrix = syndi_camo_color
 
-			if(params["Syndi Camo"] && length(syndi_camo_color))
-				nuke_op_camo_matrix = syndi_camo_color
-
-				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
-				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
-					A.color = color_matrix
-
-			terrainify_lock = src
-			. = TRUE
+			var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+			for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+				A.color = color_matrix
+		. = TRUE
 
 	proc/check_param(params, key)
 		if(isnull(params[key]))
@@ -1303,7 +1302,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(T)
 				T.perform_terrainify(convert_params, ui.user)
 				tgui_process.close_uis(src)
-				T.terrainify_lock = null
 				. = TRUE
 
 
