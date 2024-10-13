@@ -1402,7 +1402,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						if (src)
 							src.boom()
 							if (target)
-								if (istype(target, /obj/machinery))
+								if (istype(target, /obj/machinery) && !istype(target, /obj/machinery/atmospherics/binary/nuclear_reactor))
 									target.ex_act(1) // Reliably blasts through doors.
 						return
 		return
