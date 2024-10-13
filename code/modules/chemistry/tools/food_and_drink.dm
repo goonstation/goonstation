@@ -59,12 +59,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE
 		return FALSE
 
-	proc/get_food_color()
-		if (food_color) // keep manually defined food colors
-			return food_color
-		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
-		food_color = get_average_color(I)
-		return food_color
+	get_average_color()
+		if (src.food_color) // keep manually defined food colors
+			return src.food_color
+		return ..()
 
 	proc/heal(var/mob/living/M)
 		SHOULD_CALL_PARENT(TRUE)

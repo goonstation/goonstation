@@ -588,6 +588,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (..())
 			return 1
 
+		if (istype(target, /obj/item/reagent_containers/food/snacks/pancake))
+			dothepixelthing(target)
+			src.holder.owner.visible_message(SPAN_ALERT(SPAN_BOLD("[src.holder.owner] blows up the pancakes with their mind!")), SPAN_ALERT("You blow up the pancakes with your mind!"))
+			src.holder.owner.bioHolder?.RemoveEffect("telepathy")
+			return
+
 		var/mob/living/carbon/recipient = null
 		if (iscarbon(target))
 			recipient = target
