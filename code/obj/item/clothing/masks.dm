@@ -235,6 +235,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_r = 1
 	color_g = 0.8
 	color_b = 0.8
+	low_visibility = FALSE // Listening post only item seems fair to have this
 
 	New()
 		. = ..()
@@ -268,6 +269,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_r = 0.8
 	color_g = 0.8
 	color_b = 1
+	low_visibility = TRUE // medal reward mask shouldn't be better than standard mask
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	mats = 6
