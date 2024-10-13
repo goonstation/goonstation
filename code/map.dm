@@ -683,6 +683,10 @@ var/global/list/mapNames = list(
 /datum/map_settings/atlas/init()
 	. = ..()
 	if(!station_repair.station_generator && prob(66))
+		if( !mapSwitcher.thisMapWasVotedFor )
+			logTheThing(LOG_DEBUG, null, "Automatic Atlas Terrainify skipped due to unvoted map change")
+			return
+
 		var/list/terrainify_options = list(/datum/terrainify/caveify,
 										/datum/terrainify/swampify,
 										/datum/terrainify/winterify,

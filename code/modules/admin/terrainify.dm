@@ -60,6 +60,29 @@ var/datum/station_zlevel_repair/station_repair = new
 						new src.weather_effect(T)
 				T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
+	proc/fix_atmos_dependence()
+		for(var/turf/chamber_turf in get_area_turfs(/area/station/engine/combustion_chamber))
+			if(locate(/obj/machinery/door/poddoor/pyro/shutters) in chamber_turf)
+				chamber_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+		for(var/turf/toxins_turf in get_area_turfs(/area/station/science/lab))
+			if((locate(/obj/machinery/door/poddoor/pyro/shutters) in toxins_turf) \
+			  || (locate(/obj/machinery/door/poddoor/blast/pyro) in toxins_turf ))
+				toxins_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+		var/turf/turf
+		for(var/obj/machinery/atmospherics/unary/vent/V in by_cat[TR_CAT_ATMOS_MACHINES])
+			if(V.z == Z_LEVEL_STATION && istype(get_area(V), /area/space))
+				turf = get_turf(V)
+				turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+		for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/HE in by_cat[TR_CAT_ATMOS_MACHINES])
+			if(HE.z == Z_LEVEL_STATION && istype(get_area(HE), /area/space))
+				turf = get_turf(HE)
+				turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+
+
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE, season=null)
 		var/list/turfs_to_fix = get_turfs_to_fix()
 		clear_out_turfs(turfs_to_fix)
@@ -67,6 +90,7 @@ var/datum/station_zlevel_repair/station_repair = new
 
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
+		fix_atmos_dependence()
 
 		set_station_season(season)
 
