@@ -271,6 +271,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 0
 		if (M == user)
 			//can this person eat this food?
+			if(H?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE) // eating with other masks is fine as QoL
+				boutput(M, SPAN_ALERT("You can't eat with that mask in the way!"))
+				return 0
 			if(!M.can_eat(src))
 				boutput(M, SPAN_ALERT("You can't eat [src]!"))
 				return 0
@@ -344,9 +347,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (check_target_immunity(M))
 			user.visible_message(SPAN_ALERT("[user] tries to feed [M] [src], but fails!"), SPAN_ALERT("You try to feed [M] [src], but fail!"))
 			return 0
+		else if(H?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE) // eating with other masks is fine as QoL
+			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but [he_or_she(M)] can't eat with that mask in the way!"),\
+			SPAN_ALERT("You try to feed [M] [src], but [he_or_she(M)] can't eat with that mask in the way!"),\
+			SPAN_ALERT("<b>[user]</b> tries to feed you [src], but you can't eat with that mask in the way!"))
+			return 0
 		else if(!M.can_eat(src))
-			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but they can't eat that!"),\
-				SPAN_ALERT("You try to feed [M] [src], but they can't eat that!"),\
+			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but [he_or_she(M)] can't eat that!"),\
+				SPAN_ALERT("You try to feed [M] [src], but [he_or_she(M)] can't eat that!"),\
 				SPAN_ALERT("<b>[user]</b> tries to feed you [src], but you can't eat that!"))
 			return 0
 		else
@@ -645,6 +653,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if(!can_chug)
 			boutput(C, SPAN_ALERT("You can't seem to chug from [src.name]! How odd."))
 			return
+
+		if(C?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE)
+			boutput(C, SPAN_ALERT("You can't chug with that mask in the way."))
+			return
+
 		if(C.bioHolder)
 			maybe_too_clumsy = C.bioHolder.HasEffect("clumsy") && prob(50)
 		if(C.reagents.reagent_list["ethanol"])
@@ -699,6 +712,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if(!target.can_drink(src))
 				boutput(target, SPAN_ALERT("You can't drink [src]!"))
 				return 0
+			if(H?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE)
+				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 2 SECONDS, src.take_a_drink, list(target, user), src.icon, src.icon_state, NONE,
+				 INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
+				return 1
 			src.take_a_drink(target, user)
 			return 1
 		else
@@ -708,8 +725,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				user.visible_message(SPAN_ALERT("[user] attempts to force [target] to drink from [src], but fails!."), SPAN_ALERT("You try to force [target] to drink [src], but fail!"))
 				return 0
 			else if(!target.can_drink(src))
-				user.tri_message(target, SPAN_ALERT("<b>[user]</b> tries to make [target] drink [src], but they can't drink that!"),\
-					SPAN_ALERT("You try to make [target] drink [src], but they can't drink that!"),\
+				user.tri_message(target, SPAN_ALERT("<b>[user]</b> tries to make [target] drink [src], but [he_or_she(target)] can't drink that!"),\
+					SPAN_ALERT("You try to make [target] drink [src], but [he_or_she(target)] can't drink that!"),\
 					SPAN_ALERT("<b>[user]</b> tries to give you a drink of [src], but you can't drink that!"))
 				return 0
 			if (!src.reagents || !src.reagents.total_volume)
