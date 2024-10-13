@@ -1,4 +1,6 @@
-
+(t)sun oct 13 24
+(u)LeahTheTech
+(+)Spy thief GPS will no longer take into account your current level of access.
 (t)sat oct 12 24
 (u)Azrun
 (e)⚖🗺💡|C-Balance, A-Mapping, A-Station-Systems
