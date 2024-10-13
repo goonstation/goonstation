@@ -43,14 +43,14 @@
 		solid = rgb(0, 0, 50),
 		station = rgb(255, 153, 58),
 		other = rgb(120, 200, 120),
-		transparant = rgb(0, 0, 0, 0))
+		transparant = null)
 	#else
 	var/list/map_colors = list(
 		empty = rgb(30, 30, 45),
 		solid = rgb(180,180,180),
 		station = rgb(27, 163, 186),
 		other = rgb(186, 0, 60),
-		transparant = rgb(0, 0, 0, 0))
+		transparant = null)
 	#endif
 
 	proc/generate_map()
