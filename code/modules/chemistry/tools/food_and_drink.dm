@@ -347,11 +347,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (check_target_immunity(M))
 			user.visible_message(SPAN_ALERT("[user] tries to feed [M] [src], but fails!"), SPAN_ALERT("You try to feed [M] [src], but fail!"))
 			return 0
-		else if(H?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE) // eating with other masks is fine as QoL
-			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but [he_or_she(M)] can't eat with that mask in the way!"),\
-			SPAN_ALERT("You try to feed [M] [src], but [he_or_she(M)] can't eat with that mask in the way!"),\
-			SPAN_ALERT("<b>[user]</b> tries to feed you [src], but you can't eat with that mask in the way!"))
-			return 0
 		else if(!M.can_eat(src))
 			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but [he_or_she(M)] can't eat that!"),\
 				SPAN_ALERT("You try to feed [M] [src], but [he_or_she(M)] can't eat that!"),\
@@ -713,9 +708,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(target, SPAN_ALERT("You can't drink [src]!"))
 				return 0
 			if(H?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE)
-				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 2 SECONDS, src.take_a_drink, list(target, user), src.icon, src.icon_state, NONE,
-				 INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ATTACKED)
-				return 1
+				boutput(target, SPAN_ALERT("You can't drink [src] with that mask in the way!"))
+				return 0
 			src.take_a_drink(target, user)
 			return 1
 		else
