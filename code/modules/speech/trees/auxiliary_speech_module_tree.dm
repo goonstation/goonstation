@@ -4,6 +4,7 @@
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/speech_module_tree/auxiliary
+	/// The speech module tree that this auxiliary speech module tree should add and remove its modules to and from.
 	var/datum/speech_module_tree/target_speech_tree
 
 /datum/speech_module_tree/auxiliary/New(atom/parent, list/outputs = list(), list/modifiers = list(), list/prefixes = list(), datum/speech_module_tree/target_speech_tree)

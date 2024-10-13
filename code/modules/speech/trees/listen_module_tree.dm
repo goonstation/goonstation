@@ -4,6 +4,10 @@
  *	the `/atom/proc/hear()` proc.
  */
 /datum/listen_module_tree
+	/// If disabled, this listen module tree will not receive any messages.
+	var/enabled = FALSE
+	/// The number of concurrent requests for this listen module tree to be enabled.
+	var/enable_requests = 0
 	/// The atom that should receive messages sent to this listen module tree.
 	var/atom/listener_parent
 	/// The atom that should act as the origin point for listening to messages.
@@ -151,6 +155,38 @@
 			src.signal_recipients -= message.signal_recipient
 
 	src.message_buffer = list()
+
+/// Enable this listen module tree, allowing it's modules to receive messages.
+/datum/listen_module_tree/proc/enable()
+	if (src.enabled)
+		return
+
+	src.enabled = TRUE
+	for (var/input_id in src.input_modules_by_id)
+		src.input_modules_by_id[input_id].enable()
+
+/// Disable this listen module tree, disallowing it's modules to receive messages.
+/datum/listen_module_tree/proc/disable()
+	if (!src.enabled)
+		return
+
+	src.enabled = FALSE
+	for (var/input_id in src.input_modules_by_id)
+		src.input_modules_by_id[input_id].disable()
+
+/// Add an enable request to this listen module tree.
+/datum/listen_module_tree/proc/request_enable()
+	src.enable_requests += 1
+
+	if (!src.enabled)
+		src.enable()
+
+/// Remove an enable request from this listen module tree.
+/datum/listen_module_tree/proc/unrequest_enable()
+	src.enable_requests -= 1
+
+	if (!src.enable_requests)
+		src.disable()
 
 /// Migrates this listen module tree to a new speaker parent and origin.
 /datum/listen_module_tree/proc/migrate_listen_tree(atom/new_parent, atom/new_origin, preserve_old_reference = FALSE)

@@ -116,6 +116,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\participation_recorder.dm"
 #include "code\datums\pda_ringtones.dm"
 #include "code\datums\powernet_data.dm"
+#include "code\datums\proc_ownership_cache.dm"
 #include "code\datums\pronouns.dm"
 #include "code\datums\rand.dm"
 #include "code\datums\recipes.dm"

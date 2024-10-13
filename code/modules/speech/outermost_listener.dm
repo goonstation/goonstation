@@ -13,8 +13,11 @@
  *	only required for atoms that speak or listen to a local delimited say channel.
  */
 /datum/outermost_listener_tracker
+	/// The atom that this outermost listener tracker belongs to.
 	var/atom/parent
+	/// The current outermost listener of the parent.
 	var/atom/outermost_listener
+	/// The number of concurrent requests for this outermost listener tracker to be enabled.
 	var/track_requests = 0
 
 /datum/outermost_listener_tracker/New(atom/parent)

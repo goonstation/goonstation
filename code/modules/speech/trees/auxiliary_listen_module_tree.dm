@@ -4,10 +4,12 @@
  *	frequently change between atoms with their own trees, such as clients or minds.
  */
 /datum/listen_module_tree/auxiliary
+	/// The listen module tree that this auxiliary listen module tree should add and remove its modules to and from.
 	var/datum/listen_module_tree/target_listen_tree
 
 /datum/listen_module_tree/auxiliary/New(atom/parent, list/inputs = list(), list/modifiers = list(), list/languages = list(), datum/listen_module_tree/target_listen_tree)
 	src.target_listen_tree = target_listen_tree
+	src.request_enable()
 	. = ..()
 
 /datum/listen_module_tree/auxiliary/disposing()
@@ -87,6 +89,7 @@
 			src.target_listen_tree.RemoveKnownLanguage(LANGUAGE_ALL)
 
 		src.target_listen_tree.auxiliary_trees -= src
+		src.target_listen_tree.unrequest_enable()
 
 	src.target_listen_tree = listen_tree
 	if (!src.target_listen_tree)
@@ -105,3 +108,4 @@
 		src.target_listen_tree.AddKnownLanguage(LANGUAGE_ALL)
 
 	src.target_listen_tree.auxiliary_trees += src
+	src.target_listen_tree.request_enable()

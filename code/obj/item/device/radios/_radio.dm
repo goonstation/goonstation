@@ -28,7 +28,7 @@ TYPEINFO(/obj/item/device/radio)
 	// Primary Channel Variables:
 	/// Determines the colour of messages sent by the radio and certain aspects of this device's sprite.
 	var/device_color = null
-	/// The CSS class that should be used for messages sent over the primary channel of this radio. Overriden by `device_color`.
+	/// The CSS class that should be used for messages sent over the primary channel of this radio. Overridden by `device_color`.
 	var/chat_class = RADIOCL_STANDARD
 	/// The frequency of the primary channel of this radio.
 	var/frequency = R_FREQ_DEFAULT
@@ -42,7 +42,7 @@ TYPEINFO(/obj/item/device/radio)
 	var/list/secure_frequencies = null
 	/// The colour that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single colour may be defined for all channels to use that colour. Overrides `secure_classes`.
 	var/list/secure_colors = list()
-	/// The CSS class that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single class may be defined for all channels to use that style. Overriden by `secure_colors`.
+	/// The CSS class that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single class may be defined for all channels to use that style. Overridden by `secure_colors`.
 	var/list/secure_classes = list(RADIOCL_STANDARD)
 
 	// Additional Message Styling Variables:

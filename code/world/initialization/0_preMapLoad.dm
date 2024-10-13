@@ -31,6 +31,9 @@
 		world.log << ""
 #endif
 
+		Z_LOG_DEBUG("Preload", "Generating proc ownership cache...")
+		proc_ownership_cache = new /datum/proc_ownership_cache()
+
 		Z_LOG_DEBUG("Preload", "  radio")
 		radio_controller = new /datum/controller/radio()
 
