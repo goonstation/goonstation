@@ -29186,6 +29186,7 @@
 	id = "ranch_flusher";
 	name = "Kitchen Chute"
 	},
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
