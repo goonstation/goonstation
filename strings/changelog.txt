@@ -1,6 +1,7 @@
 
 (t)sat oct 12 24
 (u)LeahTheTech
+(+)Custom cream pies can now be made with any item and behave the same as normal custom pies (like you'd expect)
 (p)21061
 (e)🔎⚙|C-Code-Quality, A-Internal
 (+)Removed [......]

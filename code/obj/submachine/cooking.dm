@@ -711,7 +711,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
 
-			src.recipes += new /datum/cookingrecipe/oven/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/oven/pie_anything/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_blueberry(src)
