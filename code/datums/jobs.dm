@@ -2780,6 +2780,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #endif
 	allow_traitors = FALSE
 	cant_spawn_as_rev = TRUE
+	wages = 0 //Who needs cash when theres a battle to win
 	var/team = 0 //1 = NT, 2 = SY
 	var/overlay_icon
 	wiki_link = "https://wiki.ss13.co/Game_Modes#Pod_Wars"
@@ -2835,11 +2836,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen)
-		slot_mask = list(/obj/item/clothing/mask/breath)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
-		items_in_backpack = list(/obj/item/survival_machete, /obj/item/currency/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2881,11 +2882,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/syndicate
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate)
-		slot_mask = list(/obj/item/clothing/mask/breath)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat)
 		slot_glov = list(/obj/item/clothing/gloves/swat)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
-		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/currency/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete/syndicate)
 
 		commander
 			name = "Syndicate Commander"

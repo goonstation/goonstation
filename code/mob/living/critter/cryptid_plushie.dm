@@ -5,6 +5,7 @@
 	canspeak = 0
 	health_brute = 40
 	health_burn = 40
+	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
 	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")

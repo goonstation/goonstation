@@ -60,6 +60,29 @@ var/datum/station_zlevel_repair/station_repair = new
 						new src.weather_effect(T)
 				T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
 
+	proc/fix_atmos_dependence()
+		for(var/turf/chamber_turf in get_area_turfs(/area/station/engine/combustion_chamber))
+			if(locate(/obj/machinery/door/poddoor/pyro/shutters) in chamber_turf)
+				chamber_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+		for(var/turf/toxins_turf in get_area_turfs(/area/station/science/lab))
+			if((locate(/obj/machinery/door/poddoor/pyro/shutters) in toxins_turf) \
+			  || (locate(/obj/machinery/door/poddoor/blast/pyro) in toxins_turf ))
+				toxins_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+		var/turf/turf
+		for(var/obj/machinery/atmospherics/unary/vent/V in by_cat[TR_CAT_ATMOS_MACHINES])
+			if(V.z == Z_LEVEL_STATION && istype(get_area(V), /area/space))
+				turf = get_turf(V)
+				turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+		for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/HE in by_cat[TR_CAT_ATMOS_MACHINES])
+			if(HE.z == Z_LEVEL_STATION && istype(get_area(HE), /area/space))
+				turf = get_turf(HE)
+				turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
+
+
+
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE, season=null)
 		var/list/turfs_to_fix = get_turfs_to_fix()
 		clear_out_turfs(turfs_to_fix)
@@ -67,6 +90,7 @@ var/datum/station_zlevel_repair/station_repair = new
 
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
+		fix_atmos_dependence()
 
 		set_station_season(season)
 
@@ -247,9 +271,21 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	proc/perform_terrainify(params, mob/user)
 		USR_ADMIN_ONLY
-		pre_convert(params, user)
-		convert_station_level(params, user)
-		post_convert(params, user)
+
+#ifdef UNDERWATER_MAP
+		if(!allow_underwater)
+			//to prevent tremendous lag from the entire map flooding from a single ocean tile.
+			boutput(usr, "You cannot use this command on underwater maps. Sorry!")
+			return FALSE
+#endif
+		if(terrainify_lock)
+			boutput(user, "Terrainify has already begone!")
+		else
+			terrainify_lock = src
+			pre_convert(params, user)
+			convert_station_level(params, user)
+			post_convert(params, user)
+			src.terrainify_lock = null
 
 	proc/pre_convert(params, mob/user)
 		log_terrainify(user, "started Terrainify: [name]")
@@ -278,8 +314,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 						shake_camera(player_mob, 35 SECONDS, rand(20,40))
 					player_mob.changeStatus("knockdown", 2 SECONDS)
 
-		return
-
 	proc/post_convert(params, mob/user)
 		if(current_state >= GAME_STATE_PREGAME)
 			initialize_worldgen()
@@ -299,48 +333,35 @@ ABSTRACT_TYPE(/datum/terrainify)
 			ADD_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION, render_group, 5 SECONDS)
 
 		log_terrainify(user, "has turned space and the station into [src.name].")
-		return
+
 
 	proc/convert_station_level(params, mob/user)
 		USR_ADMIN_ONLY
-#ifdef UNDERWATER_MAP
-		if(!allow_underwater)
-			//to prevent tremendous lag from the entire map flooding from a single ocean tile.
-			boutput(usr, "You cannot use this command on underwater maps. Sorry!")
-			return FALSE
-#endif
-		if(terrainify_lock)
-			boutput(user, "Terrainify has already begone!")
-		else if(user.client?.holder.level >= LEVEL_ADMIN)
-			if(!check_param(params, "vehicle"))
+		if(!check_param(params, "vehicle"))
+			return
+
+		// Validate options
+		for(var/toggle in additional_toggles)
+			if(!check_param(params, toggle))
 				return
 
-			// Validate options
-			for(var/toggle in additional_toggles)
-				if(!check_param(params, toggle))
+		for(var/option in additional_options)
+			if(!check_param(params, option))
+				return
+			else
+				if(!(params[option] in additional_options[option]))
+					boutput(user, "[params[option]] is not a valid option for [option] for [name]! Call 1-800-CODER!")
 					return
 
-			for(var/option in additional_options)
-				if(!check_param(params, option))
-					return
-				else
-					if(!(params[option] in additional_options[option]))
-						boutput(user, "[params[option]] is not a valid option for [option] for [name]! Call 1-800-CODER!")
-						return
+		station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
 
-			station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
+		if(params["Syndi Camo"] && length(syndi_camo_color))
+			nuke_op_camo_matrix = syndi_camo_color
 
-			if(params["Syndi Camo"] && length(syndi_camo_color))
-				nuke_op_camo_matrix = syndi_camo_color
-
-				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
-				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
-					A.color = color_matrix
-
-			terrainify_lock = src
-			. = TRUE
-		else
-			boutput(user, "You must be at least an Administrator to use this command.")
+			var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+			for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+				A.color = color_matrix
+		. = TRUE
 
 	proc/check_param(params, key)
 		if(isnull(params[key]))
@@ -1305,7 +1326,6 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(T)
 				T.perform_terrainify(convert_params, ui.user)
 				tgui_process.close_uis(src)
-				T.terrainify_lock = null
 				. = TRUE
 
 
