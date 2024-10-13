@@ -111,12 +111,25 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
+	var/low_visibility = TRUE
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (low_visibility)
+			user.addOverlayComposition(/datum/overlayComposition/gasmask)
+			user.updateOverlaysClient(user.client)
+
+	unequipped(mob/user)
+		. = ..()
+		if (low_visibility)
+			user.removeOverlayComposition(/datum/overlayComposition/gasmask)
+			user.updateOverlaysClient(user.client)
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
@@ -126,6 +139,7 @@
 	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
 	color_g = 0.8
 	color_b = 1
+	low_visibility = FALSE
 
 	setupProperties()
 		..()
@@ -186,6 +200,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
+		low_visibility = FALSE
 		see_face = TRUE
 		setupProperties()
 			..()
@@ -234,6 +249,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		color_g = 1
 		color_b = 0.8
 		item_function_flags = IMMUNE_TO_ACID
+		low_visibility = FALSE
 
 		New()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -411,6 +427,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "clown"
 	item_state = "clown_hat"
 	item_function_flags = IMMUNE_TO_ACID
+	low_visibility = FALSE
 	burn_possible = FALSE
 	color_r = 1
 	color_g = 1
