@@ -44,15 +44,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie/proc/item_pie(obj/item/contained_item, mob/user, atom/hit_atom)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 	//for Attackby, we specifically need any atom as target (TIL ID-pies to open doors are a thing and it fills me with joy)
-	hit_atom.Attackby(contained_item, user)
-	if (ismob(hit_atom))
-		var/mob/hit_mob = hit_atom
-		//for AfterAttack, we specifically need a mob as target
-		contained_item.AfterAttack(hit_mob, user)
-		if (hit_mob == user)
-			src.visible_message(SPAN_ALERT("[user] fumbles and smacks the [src] into [his_or_her(user)] own face!"))
-		else
-			src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
+	SPAWN(0)
+		hit_atom.Attackby(contained_item, user)
+		if (ismob(hit_atom))
+			var/mob/hit_mob = hit_atom
+			//for AfterAttack, we specifically need a mob as target
+			contained_item.AfterAttack(hit_mob, user)
+			if (hit_mob == user)
+				src.visible_message(SPAN_ALERT("[user] fumbles and smacks the [src] into [his_or_her(user)] own face!"))
+			else
+				src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
 
 ///Stick to a person's face comedically when thrown by a clown
 /obj/item/reagent_containers/food/snacks/pie/proc/clown_pie(mob/user, mob/living/carbon/human/target)
