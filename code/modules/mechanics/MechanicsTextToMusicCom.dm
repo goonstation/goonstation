@@ -57,7 +57,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	var/list/note_accidentals = list() //(s)harp,b(flat),N(none)
 	var/list/note_delays = list() // delay is measured as a multiple of timing
 	var/list/compiled_notes = list() //holds our compiled filenames for the note
-	var/list/error_messages = list("Test", "foo", "bar")
+	var/list/error_messages = list()
 	/// the instruments that can be played
 	var/list/allow_list = list("banjo",
 								"bass",
@@ -147,8 +147,9 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		src.reset_piano(0)
 
 	proc/mechcompConfigViewErrors(obj/item/W as obj, mob/user as mob)
-		var/message = jointext(src.error_messages, "<br><hr>")
-		tgui_message(user, message, "T2M Error Messages")
+		if (length(src.error_messages) > 0)
+			var/message = jointext(src.error_messages, "<br><hr>")
+			tgui_message(user, message, "T2M Error Messages")
 
 	disposing() //just to clear up ANY funkiness
 		reset_piano(1)
