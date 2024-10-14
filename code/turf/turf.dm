@@ -837,9 +837,9 @@ var/global/in_replace_with = 0
 			//it's just a datum
 			else
 				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
-					src.comp_lookup[signal_type] = old_comp_lookup[signal_type] + list(src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (old_comp_lookup[signal_type] | src.comp_lookup[signal_type])
 				else //the old one wasn't a list, make it so
-					src.comp_lookup[signal_type] = list(old_comp_lookup[signal_type], src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
 	//cleanup old overlay to prevent some Stuff
