@@ -1988,7 +1988,8 @@
 	name = "Gas Mask"
 	item_requirements = list("fabric" = 2,
 							 "metal_dense" = 4,
-							 "crystal" = 2)
+							 "crystal" = 2,
+							 "cobryl" = 4)
 	item_outputs = list(/obj/item/clothing/mask/gas)
 	create = 1
 	time = 5 SECONDS

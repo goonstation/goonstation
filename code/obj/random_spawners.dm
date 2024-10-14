@@ -790,7 +790,6 @@
 	/obj/item/casing/small,
 	/obj/item/cigbutt,
 	/obj/item/clothing/head/paper_hat,
-	/obj/item/clothing/mask/gas,
 	/obj/item/clothing/mask/medical,
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
