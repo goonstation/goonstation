@@ -833,6 +833,8 @@ var/global/in_replace_with = 0
 				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
 			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
 			else if (islist(comp_lookup[signal_type]))
+				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(comp_lookup)] + [json_encode(old_comp_lookup)]")
+
 				src.comp_lookup[signal_type] |= old_comp_lookup[signal_type]
 			//it's just a datum
 			else
