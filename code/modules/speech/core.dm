@@ -10,8 +10,9 @@
 /atom/New()
 	// This is some memory witchcraft used to check whether `/atom/proc/hear` has been overridden by the parent type.
 	// If `/atom/proc/hear` has been overridden, create the listen tree and enable it.
-	var/hear_ref = global.proc_ownership_cache.get_proc_ref(src.type, PROC_REF(hear))
-	if (hear_ref && (hear_ref != global.proc_ownership_cache.get_proc_ref(/atom, PROC_REF(hear))))
+	var/datum/proc_ownership_cache/proc_ownership_cache = global.get_singleton(/datum/proc_ownership_cache)
+	var/hear_ref = proc_ownership_cache.get_proc_ref(src.type, PROC_REF(hear))
+	if (hear_ref && (hear_ref != proc_ownership_cache.get_proc_ref(/atom, PROC_REF(hear))))
 		src.ensure_listen_tree().request_enable()
 
 	// Otherwise, if start listen inputs exist, create the listen tree, but don't enable it.

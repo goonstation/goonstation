@@ -39,7 +39,7 @@
 				var/blocking_procs = istype(blocking_procs_list) ? blocking_procs_list.Join(", ") : "forbidden procs"
 				Fail("[type] cannot possibly be stable because [unstable_parent] implements [blocking_procs]")
 
-		var/procs = global.proc_ownership_cache.procs_by_type[type]
+		var/procs = global.get_singleton(/datum/proc_ownership_cache).procs_by_type[type]
 		if(!procs)
 			continue
 		var/permitted_procs = src.permitted_instability[type]

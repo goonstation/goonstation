@@ -11,14 +11,16 @@ list(
 proc/list_procs(datum/target) // null for global
 	. = list()
 
+	var/datum/proc_ownership_cache/proc_ownership_cache = global.get_singleton(/datum/proc_ownership_cache)
+
 	if (isnull(target))
-		.[null] = global.proc_ownership_cache.procs_by_type[null]
+		.[null] = proc_ownership_cache.procs_by_type[null]
 		return
 
 	var/type = target.type
 	while (type)
-		if (global.proc_ownership_cache.procs_by_type[type])
-			.[type] = global.proc_ownership_cache.procs_by_type[type]
+		if (proc_ownership_cache.procs_by_type[type])
+			.[type] = proc_ownership_cache.procs_by_type[type]
 
 		type = type2parent(type)
 

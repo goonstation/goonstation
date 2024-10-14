@@ -1,5 +1,3 @@
-var/datum/proc_ownership_cache/proc_ownership_cache
-
 /**
  *	The proc ownership cache is responsible for handling the generation and storage of proc ownership data. This is necessary
  *	because BYOND offers no method to access or check which procs a type defines, overrides, or inherits.
