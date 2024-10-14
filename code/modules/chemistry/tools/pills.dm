@@ -100,8 +100,8 @@
 	proc/pill_action(mob/user, mob/target)
 		if (iscarbon(target) || ismobcritter(target))
 			if (target == user)
-				if(C?.wear_mask.c_flags & COVERSMOUTH | BLOCKSMOKE)
-					boutput(C, SPAN_ALERT("You can't swallow [src] with that mask in the way."))
+				if(target.wear_mask?.c_flags & BLOCKSMOKE)
+					boutput(target, SPAN_ALERT("You can't swallow [src] with that mask in the way."))
 					return
 				user.visible_message("[user] swallows [src].",\
 				SPAN_NOTICE("You swallow [src]."))
