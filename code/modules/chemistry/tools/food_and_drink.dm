@@ -271,7 +271,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 0
 		if (M == user)
 			//can this person eat this food?
-			if(M.wear_mask?.c_flags & BLOCKSMOKE) // eating with other masks is fine as QoL
+			if(M.wear_mask?.c_flags & BLOCKEATING) // eating with other masks is fine as QoL
 				boutput(M, SPAN_ALERT("You can't eat with that mask in the way!"))
 				return 0
 			if(!M.can_eat(src))
@@ -649,7 +649,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(C, SPAN_ALERT("You can't seem to chug from [src.name]! How odd."))
 			return
 
-		if(C?.wear_mask?.c_flags & BLOCKSMOKE)
+		if(C?.wear_mask?.c_flags & BLOCKEATING)
 			boutput(C, SPAN_ALERT("You can't chug with that mask in the way."))
 			return
 
@@ -707,7 +707,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if(!target.can_drink(src))
 				boutput(target, SPAN_ALERT("You can't drink [src]!"))
 				return 0
-			if(target.wear_mask?.c_flags & BLOCKSMOKE)
+			if(target.wear_mask?.c_flags & BLOCKEATING)
 				boutput(target, SPAN_ALERT("You can't drink [src] with that mask in the way!"))
 				return 0
 			src.take_a_drink(target, user)

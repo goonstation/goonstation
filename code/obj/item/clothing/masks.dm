@@ -104,7 +104,7 @@
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
-	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
+	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE | BLOCKEATING
 	w_class = W_CLASS_NORMAL
 	see_face = FALSE
 	item_state = "gas_mask"
@@ -227,13 +227,14 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	syndicate
 		name = "syndicate field protective mask"
-		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Has a built-in voice changer."
+		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants while still allowing the user to eat. Has a built-in voice changer."
 		icon_state = "gas_mask_syndicate"
 		item_state = "gas_mask_syndicate"
 		color_r = 0.8 //this one's also green
 		color_g = 1
 		color_b = 0.8
 		item_function_flags = IMMUNE_TO_ACID
+		c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE // doesn't prevent eating
 
 		New()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
