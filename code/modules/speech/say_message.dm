@@ -49,7 +49,7 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	/// The non-unique ID of this message. A listener may only hear one message of a specific ID at any time.
 	var/id = ""
 	/// The datum that should act as a signal recipient for every copy of this message.
-	var/datum/signal_recipient
+	var/datum/signal_recipient = null
 	/// The original contents of this message, uneditied, unsanitised.
 	var/original_content = ""
 	/// Message flags. See `_std/defines/speech_defines/sayflags.dm`.
@@ -388,15 +388,57 @@ var/regex/forbidden_character_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u2
 	RETURN_TYPE(/datum/say_message)
 
 	var/datum/say_message/copy = new(is_copy = TRUE)
-	for (var/V in src.vars)
-		if (!issaved(src.vars[V]))
-			continue
 
-		if (islist(src.vars[V]))
-			var/list/L = src.vars[V]
-			copy.vars[V] = L.Copy()
+	// Note that the below is ~5 times faster than a `for (var/V in src.vars)` loop.
 
-		else
-			copy.vars[V] = src.vars[V]
+	// Message Content & Format Variables:
+	copy.speaker_to_display = src.speaker_to_display
+	copy.speaker_location_text = src.speaker_location_text
+	copy.content = src.content
+	copy.say_verb = src.say_verb
+	copy.whisper_verb = src.whisper_verb
+	copy.format_speaker_prefix = src.format_speaker_prefix
+	copy.format_verb_prefix = src.format_verb_prefix
+	copy.format_content_prefix = src.format_content_prefix
+	copy.format_content_style_prefix = src.format_content_style_prefix
+	copy.format_content_style_suffix = src.format_content_style_suffix
+	copy.format_content_suffix = src.format_content_suffix
+
+	// Speaker Identification Variables:
+	copy.speaker = src.speaker
+	copy.original_speaker = src.original_speaker
+	copy.message_origin = src.message_origin
+	copy.voice_ident = src.voice_ident
+	copy.face_ident = src.face_ident
+	copy.card_ident = src.card_ident
+	copy.real_ident = src.real_ident
+
+	// Message Information Variables:
+	copy.id = src.id
+	copy.signal_recipient = src.signal_recipient
+	copy.original_content = src.original_content
+	copy.flags = src.flags
+	copy.say_sound = src.say_sound
+	copy.hear_sound = src.hear_sound
+	copy.language = src.language
+	copy.heard_range = src.heard_range
+	copy.loudness = src.loudness
+	copy.message_size_override = src.message_size_override
+	copy.prefix = src.prefix
+	copy.last_character = src.last_character
+	copy.output_module_channel = src.output_module_channel
+	copy.output_module_override = src.output_module_override
+	copy.received_module = src.received_module
+	copy.atom_listeners_override = src.atom_listeners_override?.Copy()
+	copy.atom_listeners_to_be_excluded = src.atom_listeners_to_be_excluded?.Copy()
+	copy.relay_flags = src.relay_flags
+	copy.can_relay = src.can_relay
+
+	// Maptext Variables:
+	copy.maptext_css_values = src.maptext_css_values?.Copy()
+	copy.maptext_variables = src.maptext_variables?.Copy()
+	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()
+	copy.maptext_prefix = src.maptext_prefix
+	copy.maptext_suffix = src.maptext_suffix
 
 	return copy
