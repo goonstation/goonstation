@@ -200,11 +200,7 @@
 	switch(job)
 		// --------------------------- Heads of staff
 		if("Captain")
-#if defined(I_WANNA_BE_THE_JOB)
-			return access_all_actually
-#else
 			return get_all_accesses()
-#endif
 		if("Head of Personnel")
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_brig, access_forensics_lockers,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
@@ -347,6 +343,9 @@
 			return list()
 
 /proc/get_all_accesses()  // not adding the special stuff to this
+#if defined(I_MEAN_ALL_ACCESS)
+			return access_all_actually
+#else
 	return list(access_security, access_brig, access_forensics_lockers,
 				access_medical, access_medlab, access_morgue, access_securitylockers,
 				access_tox, access_tox_storage, access_chemistry, access_carrypermit, access_contrabandpermit,
@@ -360,6 +359,7 @@
 				access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 				access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_medical_director, access_special_club,
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money)
+#endif
 
 /proc/syndicate_spec_ops_access() //syndie spec ops need to get out of the listening post.
 	return list(access_security, access_brig, access_forensics_lockers,
