@@ -411,6 +411,8 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 		return TRUE
 
 	proc/set_instrument(var/instrument)
+		if (src.is_busy)
+			return
 		if (instrument in src.allow_list)
 			src.instrument_name = instrument
 			src.instrument_sound_path = STANDARD_INSTRUMENT_PATH(instrument)
