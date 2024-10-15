@@ -180,6 +180,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
+				src.splicing1 = null
+				src.splicing2 = null
 				update_static_data(ui.user, ui)
 
 			if("ejectextractables")
