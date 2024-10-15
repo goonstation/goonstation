@@ -641,11 +641,18 @@ ABSTRACT_TYPE(/datum/terrainify)
 	for (var/turf/S in space)
 		S.AddOverlays(station_repair.ambient_light, "ambient")
 
+	var/list/turf/turfs_to_clear = station_repair.get_turfs_to_fix()
+	turfs_to_clear += station_repair.get_beacon_turfs()
+
 	if(params && params["Void Worley"])
 		var/worley_bubbles = rustg_worley_generate("32", "10", "50", "300", "1", "8")
 		var/datum/cell_grid/cell_grid = new(world.maxx,world.maxy)
 		cell_grid.draw_from_string(worley_bubbles, TRUE, FALSE, override=TRUE)
+		for(var/turf/T in turfs_to_clear)
+			cell_grid.grid[T.x][T.y] = null
+
 		var/groups = cell_grid.find_contigious_cells()
+
 		for(var/group_id in groups)
 			var/group = groups[group_id]
 			if(length(group) > 20)
@@ -667,26 +674,27 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 					//Place Prefab or just Terrain
 					if((length(turfs_to_convert) > 100) && prob(85))
-						var/count= 0
-						var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
-						var/maxTries = (P.required ? 35 : 20)
-						while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-							var/turf/target = pick(turfs_to_convert)
-							if(istype(target.loc, /area/station))
-								count = maxTries
-								continue
+						if(length(turfs_to_clear & turfs_to_convert) == 0)
+							var/count= 0
+							var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
+							var/maxTries = (P.required ? 35 : 20)
+							while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+								var/turf/target = pick(turfs_to_convert)
+								if(istype(target.loc, /area/station))
+									count = maxTries
+									continue
 
-							var/datum/loadedProperties/ret = P.applyTo(target)
-							if (ret)
-								var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
-								for(var/turf/T in space_turfs)
-									if(!istype(T, /turf/space))
-										space_turfs -= T
-								generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
-								logTheThing(LOG_DEBUG, null, "Void Worley placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
-								break
-							else
-								count++
+								var/datum/loadedProperties/ret = P.applyTo(target)
+								if (ret)
+									var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+									for(var/turf/T in space_turfs)
+										if(!istype(T, /turf/space))
+											space_turfs -= T
+									generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+									logTheThing(LOG_DEBUG, null, "Void Worley placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+									break
+								else
+									count++
 
 					for(var/turf/edge_turf in edges_to_convert )
 						edge_turf.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
@@ -732,27 +740,31 @@ ABSTRACT_TYPE(/datum/terrainify)
 				var/count= 0
 				var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet, wanted_tags_any=PREFAB_PLANET)
 				var/maxTries = (P.required ? 5 : 2)
-				while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
-					var/turf/target = locate(rand(room.x+room.width/3, room.x+room.width-room.width/3), rand(room.y+room.height/3, room.y+room.height-room.height/3), Z_LEVEL_STATION)
-					if(istype(target.loc, /area/station))
-						count = maxTries
-						continue
 
-					var/datum/loadedProperties/ret = P.applyTo(target)
-					if (ret)
-						var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
-						for(var/turf/T in space_turfs)
-							if(!istype(T, /turf/space))
-								space_turfs -= T
-						generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
-						logTheThing(LOG_DEBUG, null, "Void Bubble placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
-						break
-					else
-						count++
+				if(length(turfs_to_clear & block(locate(room.x, room.y, Z_LEVEL_STATION), locate(room.x + room.width-1, room.y + room.height-1, Z_LEVEL_STATION))) == 0)
+					while (count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+						var/turf/target = locate(rand(room.x+room.width/3, room.x+room.width-room.width/3), rand(room.y+room.height/3, room.y+room.height-room.height/3), Z_LEVEL_STATION)
+						if(istype(target.loc, /area/station))
+							count = maxTries
+							continue
+
+						var/datum/loadedProperties/ret = P.applyTo(target)
+						if (ret)
+							var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+							for(var/turf/T in space_turfs)
+								if(!istype(T, /turf/space))
+									space_turfs -= T
+							generator.generate_terrain(space_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+							logTheThing(LOG_DEBUG, null, "Void Bubble placement [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+							break
+						else
+							count++
 
 
 			for(var/turf/unsimulated/floor/void/V in block(locate(room.x, room.y, Z_LEVEL_STATION), locate(room.x + room.width-1, room.y + room.height-1, Z_LEVEL_STATION)))
 				bubble_turfs += V
+
+			bubble_turfs -= turfs_to_clear
 
 			if(length(bubble_turfs) > 50)
 				// Rough up the edges so it is less blocky

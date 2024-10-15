@@ -172,7 +172,7 @@ Now, save your changes. If we look at the Source Control tab, we'll see that we 
 
 ### Step 3: Testing your code :game_die:
 
-The easiest way to test your changes is to press <kbd>F5</kbd>. This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl + F5</kbd> instead. **Keep in mind that this can take anywhere from 2 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
+<u>The easiest way to test your changes is to press <kbd>F5</kbd>.</u> This compiles your code, runs the server and connects you to it, as well as automatically giving you admin permissions. It also starts a debugger that will let you examine what went wrong when a runtime error happens. If you want to avoid the debugger press <kbd>Ctrl + F5</kbd> instead. **Keep in mind that this can take anywhere from 1 to 10 minutes**. Be patient, and while waiting, you may want to pay attention to your pets, stand up and walk around, or drink some water.
 
 :::warning
 If you are on a version of BYOND different from the one specified in buildByond.conf the debugger might be somewhat unstable and not work properly.
@@ -195,7 +195,7 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related- Dream Maker is a very old and occasionally fickle language, and sometimes it happens that things will just refuse to work.
 
 :::info
-It's also recommended that you set up some build settings before you press <kbd>F5</kbd>. Within the `_std` folder, there exists the file `__build.dm`, which can provide many helpful options for your testing, such as picking certain maps and disabling certain features to make the game boot faster. Be careful to save the uncommented lines you want in your vsc workspace but **NOT** actually commit these changes to the branch. More information about building a server is provided [here](#Using-__build.dm).
+It's also recommended that you set up some build settings before you press <kbd>F5</kbd>. Within the `_std` folder, there exists the file `__build.dm`, which can provide many helpful options for your testing, such as picking certain maps and disabling certain features to make the game boot faster. Be careful to save the uncommented lines you want in your vsc workspace but **NOT** actually commit these changes to the branch. More information about building a server is provided [here](#Using-__builddm).
 :::
 :::info
 If you need to inspect exactly what the game is doing, the VS code debugger can be very useful- see [a guide to using it here](#How-to-use-the-VS-Code-Debugger).
