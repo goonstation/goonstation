@@ -38,7 +38,7 @@ export interface GeneTekData {
 }
 
 interface ResearchEntry {
-  ref?: Ref;
+  ref: Ref;
   name: string;
   desc: string;
   cost?: number;
@@ -74,7 +74,7 @@ interface BioEffect {
   dna: BioEffectDNA[];
 }
 
-interface BioEffectDNA {
+export interface BioEffectDNA {
   pair: string;
   style: string;
   marker: string;

@@ -1,3 +1,8 @@
+/obj/line_obj
+	anchored = ANCHORED
+	density = 0
+	opacity = 0
+
 /obj/line_obj/railgun
 	name = "Energy"
 	desc = ""

@@ -59,12 +59,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE
 		return FALSE
 
-	proc/get_food_color()
-		if (food_color) // keep manually defined food colors
-			return food_color
-		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
-		food_color = get_average_color(I)
-		return food_color
+	get_average_color()
+		if (src.food_color) // keep manually defined food colors
+			return src.food_color
+		return ..()
 
 	proc/heal(var/mob/living/M)
 		SHOULD_CALL_PARENT(TRUE)
@@ -225,6 +223,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.reagents.add_reagent("ants", src.ant_amnt)
 						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
+	process_sliced_products(obj/item/reagent_containers/food/snacks/slice, amount_to_transfer)
+		. = ..()
+		if (istype(slice))
+			slice.food_effects |= src.food_effects
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
@@ -623,9 +625,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					return
 			if(src.is_sealed)
 				return
-			if(user.mind.assigned_role == "Bartender")
+			if(user.traitHolder.hasTrait("training_bartender"))
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
-				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
+				if(user.mind.assigned_role == "Bartender" && !ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))
@@ -1101,11 +1103,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.traitHolder.hasTrait("training_bartender"))
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Bartender")
+		else if (user.traitHolder.hasTrait("training_bartender"))
 			success_prob = 50
 			hurt_prob = 10
 

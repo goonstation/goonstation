@@ -993,4 +993,4 @@
 			system.reply("No century eggs :(")
 			return
 		var/turf/T = get_turf(oldest)
-		system.reply("Oldest egg found at ([T.x], [T.y]) in [get_area(T)] - aged for [oldest.get_age_string()]")
+		system.reply("Map: [global.map_settings.name]. Oldest egg found at ([T.x], [T.y]) in [get_area(T)] - aged for [oldest.get_age_string()]")

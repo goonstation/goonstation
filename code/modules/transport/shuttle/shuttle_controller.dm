@@ -205,7 +205,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/display_time = round(src.timeleft()/60)
 						//if (display_time <= 0) // The Emergency Shuttle will be entering the wormhole to CentCom in 0 minutes!
 							//display_time = 1 // fuckofffffffffff
-						boutput(world, "<B>The Emergency Shuttle will be entering the wormhole to CentCom in [display_time] minute[s_es(display_time)]! Please prepare for wormhole traversal.</B>")
+						boutput(world, "<B>The Emergency Shuttle will be entering the Channel in [display_time] minute[s_es(display_time)]! Please prepare for Channel traversal.</B>")
 						src.announcement_done = SHUTTLE_ANNOUNCEMENT_WILL_DEPART_IN
 
 					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE && timeleft < 30)

@@ -111,6 +111,7 @@ TYPEINFO(/datum/component/mimic_item)
 	ai_type = /datum/aiHolder/spider_peaceful
 	is_npc = FALSE
 	flags = TABLEPASS
+	use_stunned_icon = FALSE
 	add_abilities = list(/datum/targetable/critter/bite,
 			/datum/targetable/gimmick/grow_legs_mimic,
 			/datum/targetable/critter/fadeout,
