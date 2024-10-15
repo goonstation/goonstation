@@ -57629,6 +57629,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
+"slD" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "slQ" = (
 /obj/machinery/firealarm/west,
 /obj/machinery/light{
@@ -114483,7 +114490,7 @@ erD
 auO
 ask
 ayR
-asl
+slD
 asl
 aBU
 mQx
