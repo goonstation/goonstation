@@ -42,15 +42,13 @@
 		empty = rgb(0, 0, 255),
 		solid = rgb(0, 0, 50),
 		station = rgb(255, 153, 58),
-		other = rgb(120, 200, 120),
-		transparant = null)
+		other = rgb(120, 200, 120))
 	#else
 	var/list/map_colors = list(
 		empty = rgb(30, 30, 45),
 		solid = rgb(180,180,180),
 		station = rgb(27, 163, 186),
-		other = rgb(186, 0, 60),
-		transparant = null)
+		other = rgb(186, 0, 60))
 	#endif
 
 	proc/generate_map()
@@ -65,7 +63,7 @@
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
-						turf_color = "transparant"
+						continue
 					else
 						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
