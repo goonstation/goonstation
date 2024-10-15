@@ -1,5 +1,9 @@
 
 (t)mon oct 14 24
+(u)JORJ949
+(p)20887
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Shuttle recalling is now disabled after the second automatic call.
 (u)gus
 (p)21087
 (e)|
