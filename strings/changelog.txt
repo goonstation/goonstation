@@ -1,5 +1,165 @@
 
+(t)mon oct 14 24
+(u)JORJ949
+(p)20887
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Shuttle recalling is now disabled after the second automatic call.
+(u)gus
+(p)21087
+(e)|
+(+)cyberkidneys can be emagged through damage again
+(u)Valtsu0
+(p)21001
+(e)💅🤖|C-QoL, A-Silicons
+(*)AI can now deploy to a shell by control clicking it
+(t)sun oct 13 24
+(u)Garash
+(p)21059
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Chief Engineer's aurora MKII utility belt now provides radiation protection while toggled on.
+(u)LeahTheTech
+(+)Spy thief GPS will no longer take into account your current level of access.
+(t)sat oct 12 24
+(u)Azrun
+(e)⚖🗺💡|C-Balance, A-Mapping, A-Station-Systems
+(+)Terrainify will make external vents and edges of burn chambers act more like space for atmospheric reliant areas. (Toxins and Engineering)
+(u)LeahTheTech
+(+)Custom cream pies can now be made with any item and behave the same as normal custom pies (like you'd expect)
+(p)21061
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Removed [......]
+(u)glowbold
+(p)21048
+(e)⚖💊|C-Balance, A-Medical
+(+)Disease resistance scales based on a percentage of the disease's virulence.
+(t)fri oct 11 24
+(u)LeahTheTech
+(*)Vampiric thrall ability cost no longer scales up with more thralls.
+(+)Merchant shuttles now announce the type of goods they will be selling and where on station they are going to dock.
+(u)JORJ949
+(p)20986
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Laundering money now automatically marks you for arrest if you are on camera.
+(t)thu oct 10 24
+(u)Egregorious
+(p)20998
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Pumpkins will now retain their size when carved.
+(u)JORJ949
+(p)20959
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Added a second smaller "ship" to atlas on the northwest side of the ship, on board is a PTL and CE office.
+(+)Added a Port-A-Medbay and MDir office to atlas.
+(u)Azrun
+(p)21014
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(*)NCS Atlas will sometimes be on a planet.  Let's go on an adventure!
+(t)wed oct 09 24
+(u)JORJ949 & Mr. Moriarty
+(p)20997
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Wizard headsets now have unique icons.
+(u)LeahTheTech
+(p)21022
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added the burgle, a highly illegal and belligerent treat made by cooking a burger with meat containing at least 5 units of crime.
+(t)tue oct 08 24
+(u)Colossus
+(p)20912
+(e)⚖⚗🍝|C-Balance, A-Chemistry, A-Catering
+(+)Tetrodotoxin now has a smaller(0.2) depletion, and slightly altered timing, but pufferfish only carry half the amount in them, and can only be caught by tier 2 rods or higher.
+(t)mon oct 07 24
+(u)tarmunora
+(+)you can now walk out of cargo carts
+(u)JORJ949
+(p)20983
+(e)🎨🤖|C-Sprites, A-Silicons
+(*)Added a Pumpkin AI plating kit. Add wires to a pumpkin to get it!
+(t)fri oct 04 24
+(u)JORJ949
+(p)20881
+(e)💅🎩|C-QoL, A-Clothing
+(+)Nuclear Operative gasmasks now come with built-in voice changers.
+(u)JORJ949
+(p)20418
+(e)💅🐣|C-QoL, A-Respawning
+(+)HoSes can now play halloween critters (when its halloween of course).
+(u)LeahTheTech
+(*)Zombie arms and legs can now break apart cuffs and shackles respectively.
+(u)Amylizzle
+(p)20943
+(e)🆕💨|C-Feature, A-Atmospherics
+(+)Adds a new gene combination: Radioactive + Farty
+(t)thu oct 03 24
+(u)Glamurio (Ryou)
+(p)20775
+(e)💅🍝|C-QoL, A-Catering
+(+)"Spiced Rum", "Hot Toddy", and "Pumpkin Spiced Latte" are now made with cinnamon.
+(u)LeahTheTech
+(p)20954
+(e)|
+(*)Getting hit by a heavy thrown object now applies melee hit stagger.
+(u)Sovexe
+(p)20949
+(e)🪲⚙|C-Bug, A-Internal
+(+)Attempt at preventing ambient sound loops from breaking
+(t)wed oct 02 24
+(u)Cherman0
+(p)20634
+(e)🗺🔄🔬|A-Mapping, C-Rework, A-Science
+(+)Atlas's research wing has undergone major renovations. The atmospherics lab was moved to the dedicated support ship NCS Hesperis.
+(u)glowbold
+(p)20876
+(e)🆕🔄💪|C-Feature, C-Rework, A-Traits
+(+)Joining the round as a jailbird prints a wanted poster at all printers. Keep an eye out!
+(u)Studenterhue
+(p)20914
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)The coffee machine now sells a novelty pumpkin spice latte from Discount Dan's, available exclusively during the autumn season! It comes in 13 flavors from the September 2024 contest. Congrats to Garash, Snoid, Frank Stein, JORJ949, crunchwarp, Isane, YoLemons, Finassar, Whele, medsal15, and Sydne66 for winning this contest. Solenoid and SteveRooley didn't win, but their entries were so cool they got in anyways.
+(+)Emagging the coffee machine unlocks a crunchy, crimey, orangey, VHFCS-y, fall-exclusive pumpkin spice latte. This contest winner comes from Balarak.
+(u)Flaborized
+(p)20880
+(e)🎨|C-Sprites
+(*)New Trait: "Was It Something I Said?".
+(t)tue oct 01 24
+(u)LeahTheTech
+(+)Radioactive waste is now more radioactive.
+(u)JORJ949
+(p)20670
+(e)🆕🐣|C-Feature, A-Respawning
+(*)Added 3 new jobs to the Spooktober lineup; Discount Wizard, Super Spy, and Space Cowboy.
+(u)RubberRats
+(p)20916
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The ectoplasmic destabilizer can now bust ghosts through walls..
+(t)mon sep 30 24
+(u)Lord_Earthfire
+(p)20449
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Most non-instant chemical reactions react faster the higher their corresponding volume of reacting chemicals is. Barrel-chemists rejoice!
+(u)LeahTheTech
+(*)All food buffs now have unique icons.
+(*)Sawflies now cost 1TC, down from 2.
+(t)sun sep 29 24
+(u)TealSeer
+(p)20894
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Using a screwdriver on a table now requires you be on harm intent.
+(t)fri sep 27 24
+(u)LeahTheTech
+(+)Food heal over time effects now have unique icons.
+(+)Jumpsuits can now be cut up into cloth.
+(u)Mintyphresh
+(p)20856
+(e)🆕🍝|C-Feature, A-Catering
+(+)Bartenders can now intuit much more about the alcohol contents of drinks.
 (t)wed sep 25 24
+(u)LeahTheTech
+(+)Food sliced up on plates, trays or kitchen islands will now stay on the thing it was placed on.
+(u)glowbold
+(p)20681
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Oshan now has carousel destinations by the cafeteria ("West Carousel") and technical storage ("East Carousel")
 (u)Lord_Earthfire
 (p)20497
 (e)🆕📦⚙|C-Feature, A-Game-Objects, A-Internal

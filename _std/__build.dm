@@ -69,6 +69,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
+//#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -193,6 +194,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
 #define FUCK_OFF_WITH_THE_MAIL
+#define GHOSTDRONES_ON_STRIKE
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

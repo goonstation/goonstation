@@ -81,7 +81,7 @@ TYPEINFO(/obj/tug_cart)
 				boutput(user, SPAN_ALERT("That tile is blocked by [O]."))
 				return
 		src.visible_message("<b>[user]</b> unloads [load] from [src].")
-		unload(over_object)
+		unload()
 
 	proc/load(var/atom/movable/C)
 		/*if ((wires & wire_loadcheck) && !istype(C,/obj/storage/crate))
@@ -116,22 +116,25 @@ TYPEINFO(/obj/tug_cart)
 					C.layer = layer + 0.1
 				src.UpdateOverlays(C, "load")
 
-	proc/unload(var/turf/T)//var/dirn = 0)
+	proc/unload()
 		if (!load)
 			return
-		if (!isturf(T))
-			T = get_turf(T)
+		var/turf/T = get_turf(src)
 
-		load.set_loc(src.loc)
+		load.set_loc(T)
 
 		// in case non-load items end up in contents, dump every else too
 		// this seems to happen sometimes due to race conditions
 		// with items dropping as mobs are loaded
 
 		for (var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(T)
 			AM.layer = initial(AM.layer)
 			AM.pixel_y = initial(AM.pixel_y)
+
+	relaymove(mob/user, direction, delay, running)
+		. = ..()
+		src.unload()
 
 	Exited(atom/movable/Obj, newloc)
 		. = ..()

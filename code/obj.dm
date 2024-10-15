@@ -411,7 +411,7 @@
 		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
-		if(W.layer < src.layer)
+		if(W.layer <= src.layer)
 			W.layer = src.layer + 0.1
 		. = TRUE
 

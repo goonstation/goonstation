@@ -1211,3 +1211,4 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	New(newLoc)
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
+

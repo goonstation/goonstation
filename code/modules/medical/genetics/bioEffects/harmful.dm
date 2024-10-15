@@ -423,6 +423,22 @@
 		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 
+/datum/bioEffect/radioactive_farts
+	name = "Radioactive Farts"
+	desc = "The subject's flatulence is contaminated with radioactive isotopes."
+	id = "radioactive_farts"
+	effectType = EFFECT_TYPE_DISABILITY
+	probability = 66
+	blockCount = 3
+	blockGaps = 3
+	isBad = 1
+	stability_loss = 10
+	msgGain = "You feel a strange energy radiate from your bowels."
+	msgLose = "Your intestines are no longer glowing."
+	reclaim_fail = 15
+	icon_state  = "bad"
+	effect_group = "rad"
+
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
 	desc = "The subject emits low-level radiation that may cause themselves to mutate."

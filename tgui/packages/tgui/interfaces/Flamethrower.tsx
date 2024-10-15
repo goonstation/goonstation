@@ -29,7 +29,7 @@ const PilotLight = (props) => {
           <Button
             icon="fire"
             color={lit ? 'orange' : null}
-            iconColor={lit ? 'yellow' : null}
+            iconColor={lit ? 'yellow' : undefined}
             onClick={() => act('light')}
             align="center"
             width="5em"
