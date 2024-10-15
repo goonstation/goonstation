@@ -1,4 +1,9 @@
 
+(t)mon oct 14 24
+(u)Valtsu0
+(p)21001
+(e)💅🤖|C-QoL, A-Silicons
+(*)AI can now deploy to a shell by control clicking it
 (t)sun oct 13 24
 (u)Garash
 (p)21059
