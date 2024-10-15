@@ -5,20 +5,35 @@
  * @license ISC
  */
 
-import { useBackend } from '../../backend';
-import { TerminalData, TerminalOutputSectionProps } from './types';
-import { Box, Section } from '../../components';
+import { useEffect } from 'react';
+import { Section } from 'tgui-core/components';
 
-export const TerminalOutputSection = (props: TerminalOutputSectionProps, context) => {
-  const { data } = useBackend<TerminalData>(context);
-  const {
-    fontColor,
-    bgColor,
-  } = data;
+import { useBackend } from '../../backend';
+import { Box } from '../../components';
+import { TerminalData, TerminalOutputSectionProps } from './types';
+
+export const TerminalOutputSection = (props: TerminalOutputSectionProps) => {
+  const { data } = useBackend<TerminalData>();
+  const { fontColor, bgColor } = data;
   const { displayHTML } = props;
 
+  useEffect(() => {
+    const terminalOutputScroll = document.querySelector(
+      "#terminalOutput div[class^='_content']",
+    );
+    if (!terminalOutputScroll) {
+      return;
+    }
+    terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
+  }, [displayHTML]);
+
   return (
-    <Section backgroundColor={bgColor} scrollable fill id="terminalOutput">
+    <Section
+      backgroundColor={bgColor}
+      scrollable
+      fill
+      container_id="terminalOutput"
+    >
       <Box
         fontFamily="Consolas"
         fill

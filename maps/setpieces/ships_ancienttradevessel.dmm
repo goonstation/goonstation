@@ -222,7 +222,7 @@
 	name = "Strange Vessel"
 	})
 "dZ" = (
-/obj/npc/trader/random{
+/obj/landmark/spawner/random_trader{
 	icon = 'icons/obj/trader.dmi';
 	icon_state = "bot";
 	trader_area = "/area/shuttle/merchant_shuttle/left_station"

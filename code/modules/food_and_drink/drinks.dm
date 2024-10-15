@@ -407,6 +407,12 @@
 		reagents.add_reagent("VHFCS, 10")
 		reagents.add_reagent(pick_string("chemistry_tools.txt", "COLA_flavors"), 5, 3)
 
+/obj/item/storage/box/random_colas
+	name = "bulk-purchase space cola"
+	desc = "A box of dubiously sourced carbonated drinks."
+	icon_state = "beer"
+	spawn_contents = list(/obj/item/reagent_containers/food/drinks/cola/random = 7)
+
 /obj/item/reagent_containers/food/drinks/cola/custom
 	name = "beverage can"
 	desc = "An aluminium can with custom branding."
@@ -543,3 +549,128 @@ obj/item/reagent_containers/food/drinks/covfefe
 		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
 		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
 		"capsaicin"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
+
+/obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte
+	name = "Discount Dan's Pumped-Up Pumpkin Spice Latte "
+	desc = {"\"Pump up your pumpkin spice latte game with this limited-run libation from Discount Dan's!
+			Each and every one of our handcrafted 13 flavors is guaranteed to spice up your fall season!\""}
+	icon_state = "coffee_fall"
+	initial_volume = 50
+	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10)
+
+	New()
+		switch(rand(1,13))
+			if (1)
+				src.name += "- Monster's Mash"
+				src.initial_reagents["spiders"] = 5
+				src.initial_reagents["ants"] = 5
+				src.initial_reagents["bee"] = 5
+				src.initial_reagents["krokodil"] = 3
+				src.initial_reagents["hunchback"] = 3
+				src.initial_reagents["fishoil"] = 2
+				src.initial_reagents["blood"] = 2
+			if (2)
+				src.name += "- Jack-O-Lantern Juice"
+				src.initial_reagents["lumen"] = 10
+				src.initial_reagents["radium"] = 5
+				src.initial_reagents["bojack"] = 5
+				src.initial_reagents["ectocooler"] = 5
+			if (3)
+				src.name += "- Fall I Want for Spacemas"
+				src.initial_reagents["eggnog"] = 10
+				src.initial_reagents["spacemas_spirit"] = 5
+				src.initial_reagents["chocolate"] = 5
+				src.initial_reagents["colors"] = 2.5
+				src.initial_reagents["cryostylane"] = 2.5
+			if (4)
+				src.name += "- Divine Daniel's Soul Cleansing Refresheverage"
+				src.desc = {"\"The fall and winter seasons are prime for festivities,
+							but many ignore the dangers of the restless spirits and wicked demons.
+							To help ward off seasonal fiends, we are proud to present this blessed brew!\""}
+				src.initial_reagents["water_holy"] = 10
+				src.initial_reagents["wolfsbane"] = 7
+				src.initial_reagents["lavender_essence"] = 5
+				src.initial_reagents["salt"] = 2
+				src.initial_reagents["mutadone"] = 0.5
+				src.initial_reagents["calomel"] = 0.5
+			if (5)
+				src.name += "- Sure, Grandpa"
+				src.desc = "\"Named for what you'll be saying after your pumpkin spice-hating old-timer takes a sip of this fine swill.\""
+				src.initial_reagents["pumpkinspicelatte"] = 20
+				src.initial_reagents["ageinium"] = 6
+				src.initial_reagents["caledonium"] = 2
+				src.initial_reagents["essenceofelvis"] = 2
+				src.initial_reagents["quebon"] = 2
+				src.initial_reagents["suomium"] = 2
+				src.initial_reagents["swedium"] = 2
+				src.initial_reagents["innitium"] = 2
+				src.initial_reagents["worcestershire_sauce"] = 2
+			if (6)
+				src.name += "- SUPER SPICED Pumpkin Latte"
+				src.desc = {"\"Discount Dan's is not responsible for any ignition, incineration,
+							or loss of life caused by the extreme heat of SUPER SPICED Pumpkin Latte.\""}
+				src.initial_reagents["capsaicin"] = 10
+				src.initial_reagents["silver_sulfadiazine"] = 10
+				src.initial_reagents["phlogiston"] = 4
+				src.initial_reagents["dbreath"] = 0.5
+				src.initial_reagents["death_spice"] = 0.5
+			if (7)
+				src.name += "- Back 2 School Latte"
+				src.initial_reagents["chalk"] = 10
+				src.initial_reagents["paper"] = 10
+				src.initial_reagents["mannitol"] = 2
+				src.initial_reagents["cold_medicine"] = 3
+			if (8)
+				src.name += "- Pumpkin Spice Supper"
+				src.initial_reagents["porktonium"] = 5
+				src.initial_reagents["gravy"] = 5
+				src.initial_reagents["bread"] = 5
+				src.initial_reagents["butter"] = 5
+				src.initial_reagents["capulettium"] = 5
+			if (9)
+				src.name += "- Genescan Dan's Pumpkin Splice Latte"
+				src.desc = "An ill-advised novelty coffee drink that MAY have temporary consequences for the integrity of your DNA."
+				src.initial_reagents["mutini"] =  10
+				src.initial_reagents["banana_milk"] = 8
+				src.initial_reagents["cinnamon"] = 5
+				src.initial_reagents["threemileislandicedtea"] = 2
+			if (10)
+				src.name += "- Important Message"
+				src.initial_reagents["bojack"] = 5
+				src.initial_reagents["curacao"] = 5
+				src.initial_reagents["sonic"] = 5
+				src.initial_reagents["reversium"] = 5
+				src.initial_reagents["cosmo"] = 5
+			if (11)
+				src.name += "- Howling Dan's Full Moon Latte"
+				src.initial_reagents["hairgrownium"] = 10
+				src.initial_reagents["triplepissed"] = 7
+				src.initial_reagents["moonshine"] = 3
+				src.initial_reagents["negroni"] = 2
+				src.initial_reagents["ectoplasm"] = 3
+			if (12)
+				src.name += "- Pumpkin Space Latte"
+				src.desc = {"\"Are you being constantly chased by ghouls? Spooked by skeletons? Ambushed by vampires?
+							Don't worry, escape to space with Discount Dan's coolest pumpkin spice flavor!\""}
+				src.initial_reagents["ldmatter"] = 6
+				src.initial_reagents["yobihodazine"] = 6
+				src.initial_reagents["teporone"] = 6
+				src.initial_reagents["salbutamol"] = 5
+				src.initial_reagents["lexorin"] = 2
+			if (13)
+				src.name += "- Pumpkin Ice Latte"
+				src.initial_reagents["mint_tea"] = 5
+				src.initial_reagents["cryostylane"] = 10
+				src.initial_reagents["cryoxadone"] = 5
+				src.initial_reagents["nicotine"] = 2
+				src.initial_reagents["freeze"] = 1
+		..()
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie/pumpinspies
+	name = "Pumpin' Spies Latte"
+	desc = "How did this get in the coffee machine? It doesn't look safe. There's not even a lid!"
+#ifdef SECRETS_ENABLED
+	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10, "strychnine"=7, "orange_crime"=18)
+#else
+	initial_reagents = list("pumpkinspicelatte"=15, "VHFCS"=10, "strychnine"=7, "juice_orange"=18)
+#endif
