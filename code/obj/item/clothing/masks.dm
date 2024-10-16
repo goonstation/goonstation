@@ -126,9 +126,10 @@
 
 	unequipped(mob/user)
 		. = ..()
-		if (internals_penalty && ishuman(user))
-			processing_items.Remove(src)
-		delProperty("stamregen")
+		if (internals_penalty)
+			if (ishuman(user))
+				processing_items.Remove(src)
+			delProperty("stamregen")
 
 	process()
 		. = ..()
