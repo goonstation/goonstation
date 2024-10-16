@@ -517,7 +517,7 @@ to say if there's demand for that.
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_ENCHANT_ARMOR)
 
 /datum/objectProperty/equipment/stamregen
-	name = "Stamina regen."
+	name = "Stamina regen"
 	id = "stamregen"
 	desc = "Affects stamina regenration." //Value is flat effective change to stamina regeneration.
 	tooltipImg = "stamregen.png"
