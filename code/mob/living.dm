@@ -153,8 +153,9 @@
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
+	sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
+
 	SPAWN(0)
-		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
@@ -167,6 +168,8 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
+
+	QDEL_NULL(src.vision)
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)

@@ -15,7 +15,9 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
+	/// Used to colorize things that need to be colorized before the player notices they aren't
+	/// Also things like ghost hair
+	var/datum/appearanceHolder/AH_we_spawned_with = null
 
 	var/targeting_ability = null
 
@@ -32,7 +34,6 @@
 
 	var/last_resist = 0
 
-	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
@@ -338,6 +339,8 @@
 	qdel(chat_text)
 	chat_text = null
 
+	QDEL_NULL(render_special)
+
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
 	if (src.ghost?.corpse == src)
@@ -382,9 +385,9 @@
 		H.mobs -= src
 
 
-	if (src.abilityHolder)
-		src.abilityHolder.dispose()
-		src.abilityHolder = null
+	QDEL_NULL(src.abilityHolder)
+	QDEL_NULL(src.zone_sel)
+	QDEL_NULL(src.contextLayout)
 
 	if (src.targeting_ability)
 		src.targeting_ability = null
@@ -393,23 +396,14 @@
 		src.item_abilities:len = 0
 		src.item_abilities = null
 
-	if (zone_sel)
-		if (zone_sel.master == src)
-			zone_sel.master = null
-	zone_sel = null
 
-	if(src.contextLayout)
-		src.contextLayout.dispose()
-		src.contextLayout = null
 
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
 
-	if (src.ai)
-		qdel(ai)
-		ai = null
+	QDEL_NULL(src.ai)
 
 	mind = null
 	ckey = null
@@ -434,6 +428,9 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
+
+	src.AH_we_spawned_with = null
 
 	for(var/x in src)
 		qdel(x)
