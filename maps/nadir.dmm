@@ -20104,7 +20104,7 @@
 /area/station/maintenance/north)
 "ium" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
+/area/shuttle/merchant_shuttle/right_station/cogmap/nadir)
 "iux" = (
 /obj/table/nanotrasen/auto,
 /obj/item/storage/box/cablesbox{
@@ -54108,7 +54108,7 @@
 /area/station/hallway/primary/southwest)
 "xgs" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/nadir)
 "xhb" = (
 /obj/decal/tile_edge/floorguide/engineering{
 	dir = 1

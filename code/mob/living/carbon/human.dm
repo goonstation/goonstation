@@ -261,7 +261,8 @@
 	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
-		if (holder && !ling) create(holder.AH_we_spawned_with)
+		if (holder && !ling)
+			create(holder.AH_we_spawned_with)
 
 	disposing()
 		if (l_arm)
@@ -512,8 +513,8 @@
 		hud.inventory_bg = null
 		hud.inventory_items = null
 		qdel(hud)
-	STOP_TRACKING
 
+	STOP_TRACKING
 
 	for(var/obj/item/implant/imp in src.implant)
 		imp.dispose()
@@ -536,24 +537,14 @@
 
 	src.chest_item = null
 
-	if (mutantrace)
-		mutantrace.dispose()
-		mutantrace = null
+	QDEL_NULL(src.mutantrace)
+
 	target = null
-	if (limbs)
-		limbs.dispose()
-		limbs = null
-	if (organHolder)
-		organHolder.dispose()
-		organHolder = null
 
-	if (src.cloner_defects)
-		qdel(src.cloner_defects)
-		src.cloner_defects = null
-
-	if (src.inventory)
-		src.inventory.dispose()
-		src.inventory = null
+	QDEL_NULL(src.limbs)
+	QDEL_NULL(src.organHolder)
+	QDEL_NULL(src.cloner_defects)
+	QDEL_NULL(src.inventory)
 
 	src.juggle_dummy = null
 

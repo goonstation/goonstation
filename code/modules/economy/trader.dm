@@ -632,16 +632,26 @@
 ///////////////THE TRADERS ///////////////////////////
 //////////////////////////////////////////////////////
 
+/obj/landmark/spawner/random_trader
+	spawn_the_thing()
+		var/type = pick(concrete_typesof(/obj/npc/trader/random))
+		new type(src.loc)
+		qdel(src)
+
 //////Generic Randomized visitor
+ABSTRACT_TYPE(/obj/npc/trader/random)
 /obj/npc/trader/random
 	icon_state = "welder"
 	picture = "generic.png"
 	angrynope = "Not right now..."
 	whotext = ""
+	var/commercetype = null
+	var/list/possible_icon_states = list("welder")
+	var/list/descriptions = list("Broken", "ohgodwhy", "1800-coder")
 
 	New()
 		..()
-		icon_state = pick("martian","martianP","martianW","martianSP","welder","petbee","lavacrab","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]") //"mars_bot" "boogie"
+		icon_state = pick(src.possible_icon_states)
 		if (icon_state in list("owl","goose","swan","gull"))
 			icon = 'icons/misc/bird.dmi'
 		else if (icon_state == "parrot")
@@ -697,18 +707,8 @@
 		var/items_for_sale = rand(5,8)
 		var/items_wanted = rand(2,5)
 
-		var/list/commercetypes = list(/datum/commodity/ore,
-		/datum/commodity/podparts,
-		/datum/commodity/drugs,
-		/datum/commodity/contraband,
-		/datum/commodity/salvage,
-		/datum/commodity/junk,
-		/datum/commodity/diner,
-		/datum/commodity/bodyparts,
-		/datum/commodity/medical)
-
-		var/list/selltypes = typesof(pick(commercetypes))
-		var/list/buytypes = typesof(pick(commercetypes))
+		var/list/selltypes = typesof(commercetype)
+		var/list/buytypes = typesof(commercetype)
 
 		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
@@ -738,6 +738,53 @@
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
+/obj/npc/trader/random/ore
+	commercetype = /datum/commodity/ore
+	possible_icon_states = list("lavacrab")
+	descriptions = list("raw materials", "ore", "rocks and stones")
+
+/obj/npc/trader/random/pod
+	commercetype = /datum/commodity/podparts
+	possible_icon_states = list("owl","gull","parrot")
+	descriptions = list("pod", "spare vehicle parts", "space catalytic converter")
+
+/obj/npc/trader/random/drugs
+	commercetype = /datum/commodity/drugs
+	possible_icon_states = list("petbee","possum","bumblespider")
+	descriptions = list("off-brand pharmaceutical", "recreational chemicals")
+
+/obj/npc/trader/random/contraband
+	commercetype = /datum/commodity/contraband
+	descriptions = list("legitimate goods", "perfectly legitimate goods", "extremely legitimate goods")
+
+	New()
+		src.possible_icon_states = list("big_spide[pick("","-red","-blue","-green")]")
+		..()
+
+//actually this just seems to be robotics upgrades and scrap metal?
+// /obj/npc/trader/random/salvage
+// 	commercetype = /datum/commodity/salvage
+// 	possible_icon_states = list("welder")
+
+/obj/npc/trader/random/junk
+	commercetype = /datum/commodity/junk
+	possible_icon_states = list("welder")
+	descriptions = list("space junk", "miscellanea", "surplus bargains")
+
+/obj/npc/trader/random/diner
+	commercetype = /datum/commodity/diner
+	possible_icon_states = list("walrus")
+	descriptions = list("catering", "fast food", "discount burger")
+
+/obj/npc/trader/random/bodyparts
+	commercetype = /datum/commodity/bodyparts
+	possible_icon_states = list("martian","martianP","martianW","martianSP")
+	descriptions = list("organ", "body parts", "biomatter")
+
+/obj/npc/trader/random/medical
+	commercetype = /datum/commodity/medical
+	possible_icon_states = list("goose","swan")
+	descriptions = list("medical supplies", "pharmaceutical")
 
 //////Martian
 /obj/npc/trader/martian
