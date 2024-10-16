@@ -440,6 +440,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	color_g = 1
 	color_b = 1
 	w_class = W_CLASS_SMALL
+	internals_penalty = FALSE
 	var/mob/living/carbon/human/victim
 	HELP_MESSAGE_OVERRIDE({"Wearing this mask as a clown traitor will allow it to be used as a gasmask.\n
 							You can force the mask directly onto someone's face by aiming at the head while they are lying down and click on them with the mask on any intent other than <span class='help'>help</span>."})
