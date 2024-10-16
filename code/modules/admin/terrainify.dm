@@ -62,12 +62,11 @@ var/datum/station_zlevel_repair/station_repair = new
 
 	proc/fix_atmos_dependence()
 		for(var/turf/chamber_turf in get_area_turfs(/area/station/engine/combustion_chamber))
-			if(locate(/obj/machinery/door/poddoor/pyro/shutters) in chamber_turf)
+			if(locate(/obj/machinery/door/poddoor) in chamber_turf)
 				chamber_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
 
 		for(var/turf/toxins_turf in get_area_turfs(/area/station/science/lab))
-			if((locate(/obj/machinery/door/poddoor/pyro/shutters) in toxins_turf) \
-			  || (locate(/obj/machinery/door/poddoor/blast/pyro) in toxins_turf ))
+			if(locate(/obj/machinery/door/poddoor))
 				toxins_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
 
 		var/turf/turf
