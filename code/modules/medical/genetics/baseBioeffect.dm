@@ -85,43 +85,55 @@ ABSTRACT_TYPE(/datum/bioEffect)
 			if (istype(global_instance, /datum/bioEffect/power))
 				global_instance_power = global_instance
 		dnaBlocks = new/datum/dnaBlocks(src)
-		return ..()
+		. = ..()
 
 	disposing()
+		src.global_instance = null
+		src.global_instance_power = null
 		if(src.holder)
 			src.holder.RemovePoolEffect(src)
 			src.holder.RemoveEffect(src.id)
 		if(!removed && src.owner)
 			src.OnRemove()
+		QDEL_NULL(src.dnaBlocks)
 		holder = null
 		owner = null
-		dnaBlocks?.dispose()
-		dnaBlocks = null
 		..()
 
-	proc/OnAdd()     //Called when the effect is added.
+	/// Called when the effect is added.
+	proc/OnAdd()
+		SHOULD_CALL_PARENT(TRUE)
 		removed = 0
 		if(overlay_image)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.AddOverlays(overlay_image, id)
 
-	proc/OnRemove()  //Called when the effect is removed.
+	/// Called when the effect is removed.
+	/// Returns FALSE if the holder is being deleted, TRUE otherwise.
+	proc/OnRemove()
+		SHOULD_CALL_PARENT(TRUE)
+		. = TRUE
 		removed = 1
 		if(overlay_image)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.ClearSpecificOverlays(id)
+		if (QDELETED(src.holder))
+			return FALSE
 
-	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
+	/// Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
+	proc/OnMobDraw()
 		return removed
 
-	proc/OnLife(var/mult)    //Called when the life proc of the mob is called. Children should NOT run when this returns 1
+	/// Called when the life proc of the mob is called. Children should NOT run when this returns 1
+	proc/OnLife(var/mult)
 		return removed || QDELETED(owner)
 
+	/// Gets a copy of this effect. Used to build local effect pool from global instance list.
+	/// Please don't use this for anything else as it might not work as you think it should.
 	proc/GetCopy()
-		//Gets a copy of this effect. Used to build local effect pool from global instance list.
-		//Please don't use this for anything else as it might not work as you think it should.
+
 		var/datum/bioEffect/E = new src.type()
 		E.dnaBlocks.blockList = src.dnaBlocks.blockList
 		//Since we assume that the effect being copied is the one in the global pool we copy
