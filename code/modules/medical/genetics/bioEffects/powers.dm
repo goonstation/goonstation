@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/turf/T = get_turf(target)
 
 		target.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(target.loc, 'sound/effects/bamf.ogg', 50, 0)
+		playsound(target, 'sound/effects/bamf.ogg', 50, 0)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
 
 		var/obj/decal/icefloor/B
