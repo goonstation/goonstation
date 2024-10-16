@@ -153,6 +153,10 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+	robust // for admin NTSOs
+		internals_penalty = FALSE
+
+
 /obj/item/clothing/mask/gas/respirator
 	name = "gas respirator"
 	desc = "A close-fitting gas mask with a custom particle filter."
