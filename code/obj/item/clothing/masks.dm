@@ -108,12 +108,37 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
+	//Does this mask have a stamina penalty without internals?
+	var/internals_penalty = TRUE
+	HELP_MESSAGE_OVERRIDE({"Gas masks prevent you from inhaling chemical smoke clouds, but are hard to breathe through, reducing stamina.
+	This can be alleviated by hooking up a remote air supply."})
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (internals_penalty && ishuman(user))
+			processing_items.Add(src)
+
+	unequipped(mob/user)
+		. = ..()
+		if (internals_penalty && ishuman(user))
+			processing_items.Remove(src)
+		setProperty("stamregen", 0)
+
+	process()
+		. = ..()
+		if (ishuman(loc))
+			var/mob/living/carbon/human/h = loc
+			if (!h.internal)
+				setProperty("stamregen", -2)
+			else
+				setProperty("stamregen", 0)
+
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
@@ -184,6 +209,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
 		see_face = TRUE
+		internals_penalty = FALSE
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -231,6 +257,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		color_g = 1
 		color_b = 0.8
 		item_function_flags = IMMUNE_TO_ACID
+		internals_penalty = FALSE
 
 		New()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -259,6 +286,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	item_state = "gas_alt"
 	//vchange = 1
 	is_syndicate = 1
+	internals_penalty = FALSE
 
 	New()
 		..()
