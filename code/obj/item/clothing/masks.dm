@@ -128,7 +128,7 @@
 		. = ..()
 		if (internals_penalty && ishuman(user))
 			processing_items.Remove(src)
-		setProperty("stamregen", 0)
+		delProperty("stamregen")
 
 	process()
 		. = ..()
@@ -137,7 +137,7 @@
 			if (!h.internal)
 				setProperty("stamregen", -2)
 			else
-				setProperty("stamregen", 0)
+				delProperty("stamregen")
 
 
 /obj/item/clothing/mask/gas/NTSO
