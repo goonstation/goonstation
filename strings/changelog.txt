@@ -2,6 +2,10 @@
 (t)wed oct 16 24
 (u)tarmunora
 (+)Breaching charges no longer apply a hardcoded extra explosion action on machinery in addition to their real explosion. Doors (if breakable) will still always get broken.
+(u)Egregorious
+(p)20872
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Can now pop pills directly from pill bottles via click-dragging them onto yourself.
 (t)tue oct 15 24
 (u)cringe
 (p)20788
