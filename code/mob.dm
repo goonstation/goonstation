@@ -15,7 +15,9 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
+	/// Used to colorize things that need to be colorized before the player notices they aren't
+	/// Also things like ghost hair
+	var/datum/appearanceHolder/AH_we_spawned_with = null
 
 	var/targeting_ability = null
 
@@ -32,7 +34,6 @@
 
 	var/last_resist = 0
 
-	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
@@ -427,6 +428,7 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
 
 	src.AH_we_spawned_with = null
 

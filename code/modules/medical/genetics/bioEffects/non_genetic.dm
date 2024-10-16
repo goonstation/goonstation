@@ -55,14 +55,18 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	can_copy = 0
 
 	OnMobDraw()
+		if (..())
+			return
 		if(ishuman(owner))
 			owner:body_standing:overlays += image('icons/mob/human.dmi', "husk")
 
 	OnAdd()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
 
@@ -75,18 +79,21 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	can_copy = 0
 
 	OnMobDraw()
+		if (..())
+			return
 		if (ishuman(owner) && !owner:decomp_stage)
 			if (isskeleton(owner))
 				owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp4")
 			else
 				owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp1")
-		return
 
 	OnAdd()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
+		. = ..()
 
 	OnRemove()
+		. = ..()
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
 
@@ -110,13 +117,14 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 	msgLose = "You are no longer rotting."
 
 	OnAdd()
+		. = ..()
 		owner.set_mutantrace(/datum/mutantrace/zombie)
-		return
+
 
 	OnRemove()
 		if (istype(owner:mutantrace, /datum/mutantrace/zombie))
 			owner.set_mutantrace(null)
-		return
+		. = ..()
 
 	OnLife()
 		if(..()) return

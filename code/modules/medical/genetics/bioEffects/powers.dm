@@ -1826,23 +1826,22 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	ability_path = /datum/targetable/geneticsAbility/telekinesis
 
 	OnMobDraw()
-		if (disposed)
+		if (..())
 			return
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
-		return
 
 	OnAdd()
-		..()
+		. = ..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.set_body_icon_dirty()
 
 	OnRemove()
-		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.set_body_icon_dirty()
+		. = ..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

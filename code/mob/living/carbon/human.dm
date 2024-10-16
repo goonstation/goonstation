@@ -261,7 +261,8 @@
 	New(mob/new_holder, var/ling) // to prevent lings from spawning a shitload of limbs in unspeakable locations
 		..()
 		holder = new_holder
-		if (holder && !ling) create(holder.AH_we_spawned_with)
+		if (holder && !ling)
+			create(holder.AH_we_spawned_with)
 
 	disposing()
 		if (l_arm)

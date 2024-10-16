@@ -124,10 +124,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 
 	/// Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 	proc/OnMobDraw()
+		SHOULD_CALL_PARENT(TRUE)
 		return removed
 
 	/// Called when the life proc of the mob is called. Children should NOT run when this returns 1
 	proc/OnLife(var/mult)
+		SHOULD_CALL_PARENT(TRUE)
 		return removed || QDELETED(owner)
 
 	/// Gets a copy of this effect. Used to build local effect pool from global instance list.
