@@ -125,8 +125,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
-	if (islist(soundin))
-		CRASH("List [json_encode(soundin)] passed to playsound, runtiming to prevent potential Byond client crash.")
+	if(isarea(source))
+		CRASH("playsound(): source is an area [source.name], sound is [soundin]")
 
 	var/turf/source_turf = get_turf(source)
 

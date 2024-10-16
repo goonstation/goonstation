@@ -7070,7 +7070,7 @@
 /area/space)
 "tW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

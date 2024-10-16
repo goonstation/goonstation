@@ -833,13 +833,15 @@ var/global/in_replace_with = 0
 				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
 			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
 			else if (islist(comp_lookup[signal_type]))
-				src.comp_lookup[signal_type] += old_comp_lookup[signal_type]
+				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(comp_lookup)] + [json_encode(old_comp_lookup)]")
+
+				src.comp_lookup[signal_type] |= old_comp_lookup[signal_type]
 			//it's just a datum
 			else
 				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
-					src.comp_lookup[signal_type] = old_comp_lookup[signal_type] + list(src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (old_comp_lookup[signal_type] | src.comp_lookup[signal_type])
 				else //the old one wasn't a list, make it so
-					src.comp_lookup[signal_type] = list(old_comp_lookup[signal_type], src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
 	//cleanup old overlay to prevent some Stuff

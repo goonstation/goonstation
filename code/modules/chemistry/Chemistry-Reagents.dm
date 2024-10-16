@@ -56,7 +56,7 @@ datum
 		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
 		var/boiling_point = T0C + 100
 		var/can_crack = 0 // used by organic chems
-		var/threshold_volume = null //defaults to not using threshold
+		var/threshold_volume = null //defaults to depletion rate of reagent if unspecified
 		var/threshold = null
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
