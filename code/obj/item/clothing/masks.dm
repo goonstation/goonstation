@@ -111,7 +111,7 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
-	//Does this mask have a stamina penalty without internals?
+	///Does this mask have a stamina penalty without internals?
 	var/internals_penalty = TRUE
 	HELP_MESSAGE_OVERRIDE({"Gas masks prevent you from inhaling chemical smoke clouds, but are hard to breathe through, reducing stamina.
 	This can be alleviated by hooking up a remote air supply."})
