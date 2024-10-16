@@ -66,7 +66,7 @@ var/datum/station_zlevel_repair/station_repair = new
 				chamber_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
 
 		for(var/turf/toxins_turf in get_area_turfs(/area/station/science/lab))
-			if(locate(/obj/machinery/door/poddoor))
+			if(locate(/obj/machinery/door/poddoor) in toxins_turf)
 				toxins_turf.ReplaceWith(/turf/unsimulated/floor/engine/vacuum)
 
 		var/turf/turf
