@@ -1,4 +1,7 @@
 
+(t)wed oct 16 24
+(u)tarmunora
+(+)Breaching charges no longer apply a hardcoded extra explosion action on machinery in addition to their real explosion. Doors (if breakable) will still always get broken.
 (t)tue oct 15 24
 (u)cringe
 (p)20788
