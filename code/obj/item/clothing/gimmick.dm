@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		src.vchange = new(src) // Built-in voice changer (Convair880).
+		src.vchange = new /obj/item/voice_changer/permanent(src) // Built-in voice changer (Convair880).
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -1156,6 +1156,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
+
+/obj/item/clothing/suit/scarf/cozy
+	name = "scarf"
+	desc = "A cozy scarf. A beautiful adornment to any outfit."
+	icon_state = "shortscarf"
+	item_state = "shortscarf"
+
+/obj/item/clothing/suit/scarf/long
+	name = "long scarf"
+	desc = "A long luxurious scarf. A perfect addition to any look."
+	icon_state = "longscarf"
+	item_state = "longscarf"
 
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"

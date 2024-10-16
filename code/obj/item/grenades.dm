@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	var/detonating = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
@@ -108,7 +109,8 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 			src.icon_state = initial(src.icon_state)
 
 	ex_act(severity)
-		src.detonate(null)
+		if(!src.detonating)
+			src.detonate(null)
 		. = ..()
 
 	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
@@ -116,7 +118,9 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		return new src.type
 
 	proc/detonate(mob/user) // Most grenades require a turf reference.
+		SHOULD_CALL_PARENT(TRUE)
 		var/turf/T = get_turf(src)
+		src.detonating = TRUE
 		if (!T || !isturf(T))
 			return null
 		else
@@ -1380,6 +1384,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
+					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"
@@ -1457,6 +1462,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					var/obj/machinery/door/firedoor/firelock = O
 					qdel(firelock)
 					continue
+				if (istype(O, /obj/storage))
+					O.ex_act(2)
+					continue
 		qdel(src)
 		return
 
@@ -1501,6 +1509,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						src.boom()
 						return
 				else
+					message_ghosts("[src] has been attached at [log_loc(target, ghostjump=TRUE)].")
 					boutput(user, SPAN_ALERT("You slap the charge on [target], [det_time/10] seconds!"))
 					user.visible_message(SPAN_ALERT("[user] has attached [src] to [target]."))
 					src.icon_state = "bcharge2"

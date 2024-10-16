@@ -10,9 +10,15 @@ TYPEINFO(/datum/component/buildable_turf)
 	if(!istype(parent, /turf))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(check_build_item))
+	RegisterSignal(parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 	var/turf/unsimulated/T = parent
 	if(istype(T))
 		T.can_replace_with_stuff = TRUE
+
+/datum/component/buildable_turf/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_TURF_REPLACED)
 
 /datum/component/buildable_turf/proc/do_build_floor(turf/location, mob/user, obj/item/rcd/RCD)
 	SPAWN(0.5)	// delay to not allow afterattack to trigger

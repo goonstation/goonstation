@@ -117,7 +117,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/forest
 	turf_type = /turf/unsimulated/floor/grasslush/thin
-	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=1, /obj/shrub/random{last_use=INFINITY} = 50)
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 55, /obj/tree/elm_random=1, /obj/shrub/random{last_use=INFINITY} = 50)
 	flora_density = 20
 	minimum_flora_distance = 2
 

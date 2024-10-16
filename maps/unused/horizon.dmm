@@ -27173,9 +27173,7 @@
 	pixel_y = 32
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/decoration/ashtray,
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/station/crew_quarters/fitness)
@@ -27891,21 +27889,11 @@
 /area/station/hallway/secondary/west)
 "bCU" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /obj/item/dice,
 /obj/item/dice,
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
@@ -50268,9 +50256,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -50882,9 +50868,7 @@
 /area/station/hallway/secondary/exit)
 "kmJ" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor,
 /area/station/security/checkpoint/arrivals)
 "kmQ" = (
@@ -53621,9 +53605,7 @@
 /area/station/crew_quarters/courtroom)
 "oGS" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "oGT" = (
@@ -58067,9 +58049,7 @@
 "vWv" = (
 /obj/table/reinforced/auto,
 /obj/item/instrument/harmonica,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "vWx" = (
@@ -58353,9 +58333,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "wsn" = (

@@ -153,8 +153,9 @@
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
+	sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
+
 	SPAWN(0)
-		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
@@ -167,6 +168,8 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
+
+	QDEL_NULL(src.vision)
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
@@ -2193,6 +2196,8 @@
 			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
+	if (AM.throwforce > 5) //number
+		src.changeStatus("staggered", 5 SECONDS)
 	..()
 
 /mob/living/proc/check_singing_prefix(var/message)
@@ -2336,6 +2341,15 @@
 			helper.tri_message(src, SPAN_NOTICE("<b>[helper]</b> barely slows [src == helper ? "[his_or_her(src)]" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
+
+///helper proc to return a new bioholder to be used for blood reagent data
+/mob/living/proc/get_blood_bioholder()
+	var/datum/bioHolder/unlinked/bloodHolder = new/datum/bioHolder/unlinked(null)
+	bloodHolder.CopyOther(src.bioHolder)
+	bloodHolder.ownerName = src.real_name
+	bloodHolder.ownerType = src.type
+	bloodHolder.weak_owner = get_weakref(src)
+	return bloodHolder
 
 /mob/living/proc/meson(atom/source)
 	if (!source)

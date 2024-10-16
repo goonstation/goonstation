@@ -522,6 +522,21 @@
 
 	return data
 
+/proc/get_ethanol_equivalent(mob/user, datum/reagents/R)
+	var/eth_eq = 0
+	var/should_we_output = FALSE //looks bad if we output this when it's just ethanol in there
+	for (var/current_id in R.reagent_list)
+		var/datum/reagent/current_reagent = R.reagent_list[current_id]
+		if (istype(current_reagent, /datum/reagent/fooddrink/alcoholic))
+			var/datum/reagent/fooddrink/alcoholic/alch_reagent = current_reagent
+			eth_eq += alch_reagent.alch_strength * alch_reagent.volume
+			should_we_output = TRUE
+		if (current_reagent.id == "ethanol")
+			eth_eq += current_reagent.volume
+	if (should_we_output == FALSE)
+		eth_eq = 0
+	return eth_eq
+
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).
 /proc/scan_forensic(var/atom/A as turf|obj|mob, visible = 0)
 	if (istype(A, /obj/ability_button)) // STOP THAT

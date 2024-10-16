@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		var/task = pick(desc_task) //subvariation
 		src.flavor_desc = "An affiliated [task] [pick(desc_place)] requires sets of attire for newly [pick(desc_hiring)] [pick(desc_noobs)]."
 
-		var/crewcount = rand(4,12)
+		var/crewcount = rand(3,8)
 		src.payout += rand(3,4) * 10 * crewcount
 
 		//uniform pickin

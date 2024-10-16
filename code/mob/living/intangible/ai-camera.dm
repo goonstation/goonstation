@@ -49,7 +49,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
-		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
 
 	Login()
 		.=..()
@@ -170,6 +170,11 @@
 
 		//var/inrange = in_interact_range(target, src)
 		//var/obj/item/equipped = src.equipped()
+
+		if(src.client.check_any_key(KEY_OPEN) && istype(target, /mob/living/silicon))
+			var/mob/living/silicon/S = target
+			src.mainframe.deploy_to_shell(S)
+			return
 
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			if (src.targeting_ability)
@@ -510,6 +515,12 @@
 		set name = "Change Designation"
 		set desc = "Change your name."
 		mainframe?.rename_self()
+
+	verb/go_offline()
+		set category = "AI Commands"
+		set name = "Go Offline"
+		set desc = "Disconnect your brain such that a new AI can take your place."
+		mainframe?.go_offline()
 
 	stopObserving()
 		src.set_loc(get_turf(src))

@@ -795,9 +795,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"mail courier's hat" = /obj/item/clothing/head/mailcap,
 		"turban" = /obj/item/clothing/head/turban,
 		"formal turban" = /obj/item/clothing/head/formal_turban,
-		"constable's helmet" = /obj/item/clothing/head/helmet/bobby,
-		"viking helmet" = /obj/item/clothing/head/helmet/viking,
-		"batcowl" = /obj/item/clothing/head/helmet/batman,
 		"welding helmet" = /obj/item/clothing/head/helmet/welding,
 		"biker cap" = /obj/item/clothing/head/biker_cap,
 		"NT beret" = /obj/item/clothing/head/NTberet,
@@ -1306,6 +1303,8 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.make_tag(target_turf)
 		spraycan.empty = TRUE
 		spraycan.icon_state = "spraycan_crushed_gang"
+		spraycan.setItemSpecial(/datum/item_special/simple)
+		spraycan.tooltip_rebuild = 1
 		gang.add_points(round(100), M, showText = TRUE)
 		if(sprayOver)
 			logTheThing(LOG_GAMEMODE, owner, "[owner] has successfully tagged the [target_area], spraying over another tag.")
@@ -1445,11 +1444,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		spraycan.clear_targets()
-		playsound(spraycan.loc, 'sound/effects/graffiti_hit.ogg', 10, TRUE)
+		playsound(spraycan.loc, 'sound/effects/graffiti_hit.ogg', 20, TRUE)
 		if (spraycan.charges == 0)
 			boutput(M, SPAN_ALERT("The graffiti can's empty!"))
 			playsound(M.loc, "sound/items/can_crush-[rand(1,3)].ogg", 50, 1)
 			spraycan.icon_state = "spraycan_crushed"
+			spraycan.setItemSpecial(/datum/item_special/simple)
+			spraycan.tooltip_rebuild = 1
 
 
 /obj/ganglocker

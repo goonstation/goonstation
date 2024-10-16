@@ -70,6 +70,12 @@
 		src.set_secure_frequencies()
 
 /obj/item/device/radio/headset/wizard
+	name = "wizard headset"
+	desc = "A headset reversed engineered by only the highest of archmages for use by wizards. Immune to EMPs."
+	icon_state = "wizard headset"
+	icon_override = "wizard"
+	icon_tooltip = "Wizard"
+
 	emp_act()
 		return //hax
 

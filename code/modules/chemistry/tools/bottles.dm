@@ -250,6 +250,13 @@
 	amount_per_transfer_from_this = 5
 	initial_reagents = "cyanide"
 
+/obj/item/reagent_containers/glass/bottle/cytotoxin
+	name = "cytotoxin bottle"
+	desc = "A small bottle of cytotoxin, a potent poison originating from lifeforms around the frontier system."
+	icon_state = "bottle_2"
+	amount_per_transfer_from_this = 5
+	initial_reagents = "cytotoxin"
+
 /obj/item/reagent_containers/glass/bottle/fluorosurfactant
 	name = "fluorosurfactant bottle"
 	desc = "A small bottle of fluorosurfactant, a chemical that foams rapidly when mixed with water."
