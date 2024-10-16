@@ -171,6 +171,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
+	disposing()
+		owner = null
+		if(src.parentHolder)
+			if(src.parentHolder.mobAppearance == src)
+				src.parentHolder.mobAppearance = null
+			src.parentHolder = null
+		src.mutant_race = null
+		src.original_mutant_race = null
+		src.customizations = null
+		..()
+
 	proc/CopyOther(var/datum/appearanceHolder/toCopy, skip_update_colorful = FALSE)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
@@ -255,14 +266,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			custom.style_original = customCopy.style_original
 			custom.style = customCopy.style
 			custom.offset_y = customCopy.offset_y
-
-	disposing()
-		owner = null
-		if(src.parentHolder)
-			if(src.parentHolder.mobAppearance == src)
-				src.parentHolder.mobAppearance = null
-			src.parentHolder = null
-		..()
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy

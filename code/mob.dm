@@ -384,9 +384,9 @@
 		H.mobs -= src
 
 
-	if (src.abilityHolder)
-		src.abilityHolder.dispose()
-		src.abilityHolder = null
+	QDEL_NULL(src.abilityHolder)
+	QDEL_NULL(src.zone_sel)
+	QDEL_NULL(src.contextLayout)
 
 	if (src.targeting_ability)
 		src.targeting_ability = null
@@ -395,23 +395,14 @@
 		src.item_abilities:len = 0
 		src.item_abilities = null
 
-	if (zone_sel)
-		if (zone_sel.master == src)
-			zone_sel.master = null
-	zone_sel = null
 
-	if(src.contextLayout)
-		src.contextLayout.dispose()
-		src.contextLayout = null
 
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
 
-	if (src.ai)
-		qdel(ai)
-		ai = null
+	QDEL_NULL(src.ai)
 
 	mind = null
 	ckey = null

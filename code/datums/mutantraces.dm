@@ -399,6 +399,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.set_clothing_icon_dirty()
 			src.mob = null
 
+		QDEL_NULL(src.AH)
 		..()
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
