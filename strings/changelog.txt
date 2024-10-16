@@ -1,4 +1,9 @@
 
+(t)wed oct 16 24
+(u)Egregorious
+(p)20872
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Can now pop pills directly from pill bottles via click-dragging them onto yourself.
 (t)tue oct 15 24
 (u)cringe
 (p)20788
