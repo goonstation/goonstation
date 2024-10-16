@@ -44,6 +44,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DISABLE_DEVFILE // Don't load things defined in '__local.development.dm'. Use if you have some breaking changes in there or whatnot
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define I_MEAN_ALL_ACCESS // Captain level ID's have EVERY access
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
@@ -69,6 +70,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
+//#define GHOSTDRONES_ON_STRIKE // prevents ghostdrone factory objs from doing stuff
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -193,6 +195,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
 #define FUCK_OFF_WITH_THE_MAIL
+#define GHOSTDRONES_ON_STRIKE
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

@@ -865,6 +865,16 @@
 		/obj/item/chicken_carrier,
 		/obj/item/fishing_rod/basic)
 
+	cowboy
+		name = "cowboy belt"
+		desc = "Yeehaw pardner."
+		icon_state = "hunterbelt"
+		item_state = "hunter"
+		spawn_contents = list(/obj/item/gun/kinetic/foamdartrevolver,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."

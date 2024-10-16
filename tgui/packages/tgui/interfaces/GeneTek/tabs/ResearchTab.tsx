@@ -91,7 +91,9 @@ export const ResearchTab = (props) => {
                     buttons={
                       <Button
                         icon="flask"
-                        disabled={materialCur < r.cost}
+                        /** unlike with finished researches below, the cost
+                         * property is always set for available researches */
+                        disabled={materialCur < r.cost!}
                         onClick={() => act('research', { ref: r.ref })}
                         color="teal"
                       >
