@@ -13,12 +13,20 @@
 	var/minimum_rod_tier = 0
 	/// what tier of rod is the highest to have access to the lootable?
 	var/maximum_rod_tier = INFINITY
+	/// what kind of item is needed as a lure
+	var/obj/item/required_lure = null
 
 /// This proc checks for all the conditionals that could apply to a fishing spot. Modify that for special conditions.
 /datum/fishing_lootpool/proc/check_conditionals(var/mob/user, var/obj/item/fishing_rod/fishing_rod)
 	. = TRUE
 	if(fishing_rod.tier < src.minimum_rod_tier || fishing_rod.tier > src.maximum_rod_tier)
 		return FALSE
+	if (required_lure != null)
+		var/obj/item/lure = null
+		if (length(fishing_rod.storage.stored_items))
+			lure = fishing_rod.storage.stored_items[1]
+		else return FALSE // if this requires a lure, you need to have one
+		if (!istype(lure, required_lure)) return FALSE
 
 /// This proc generates a new loottable out of a given current one
 /datum/fishing_lootpool/proc/generate_loot(var/list/current_loottable, var/mob/user, var/obj/item/fishing_rod/fishing_rod)
@@ -70,6 +78,11 @@
 /datum/fishing_lootpool/pufferfish
 	minimum_rod_tier = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/pufferfish = 25)
+
+///test for fishing lures
+/datum/fishing_lootpool/luretest
+	required_lure = /obj/item/reagent_containers/food/fish
+	fish_available = list(/obj/item/reagent_containers/food/fish/sardine = 2005)
 
 ///tiny junk items you can find in vending machines and others.
 /datum/fishing_lootpool/tiny_junk

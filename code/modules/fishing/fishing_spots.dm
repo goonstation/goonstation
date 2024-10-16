@@ -413,6 +413,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/watertank/New()
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/pufferfish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/luretest(src)
 
 /datum/fishing_spot/fueltank
 	fishing_atom_type = /obj/reagent_dispensers/fueltank
