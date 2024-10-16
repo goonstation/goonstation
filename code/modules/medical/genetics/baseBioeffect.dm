@@ -205,16 +205,16 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		//But at that point the mutation would be unsolvable.
 
 		if(src.owner.blockGaps > length(src.blockListCurr))
-			CRASH("bioEffect [owner.name] has [owner.blockGaps] block gaps but only [length(blockListCurr)] blocks")
+			CRASH("bioEffect [owner.name] has [owner.blockGaps] block gaps but only [length(blockListCurr)] blocks ([json_encode(blockListCurr)])")
 
-		for(var/i=0, i<owner.blockGaps, i++)
+		for(var/i=0, i < owner.blockGaps, i++)
 			var/datum/basePair/bp = pick(blockListCurr - gapList)
 			gapList.Add(bp)
 			bp.bpp1 = "?"
 			bp.bpp2 = "?"
 			bp.style = "X"
 
-		for(var/i=0, i<owner.lockedGaps, i++)
+		for(var/i=0, i < owner.lockedGaps, i++)
 			if (!prob(owner.lockProb))
 				continue
 			var/datum/basePair/bp = pick(blockListCurr - gapList)

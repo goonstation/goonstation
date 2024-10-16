@@ -168,6 +168,11 @@
 	ai_target_old.len = 0
 	move_laying = null
 
+	QDEL_NULL(src.sleep_bubble)
+	src.speech_bubble = null
+
+	QDEL_NULL(src.vision)
+
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
 

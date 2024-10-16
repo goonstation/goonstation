@@ -338,6 +338,8 @@
 	qdel(chat_text)
 	chat_text = null
 
+	QDEL_NULL(render_special)
+
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
 	if (src.ghost?.corpse == src)
@@ -434,6 +436,8 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
+
+	src.AH_we_spawned_with = null
 
 	for(var/x in src)
 		qdel(x)
