@@ -12,6 +12,10 @@
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+
+	start_listen_modifiers = list(LISTEN_MODIFIER_CHAT_CONTEXT_FLAGS)
+	start_listen_languages = list(LANGUAGE_ALL)
+
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
@@ -24,7 +28,6 @@
 	/// Observer menu TGUI datum. Can be null.
 	var/datum/observe_menu/observe_menu = null
 	var/last_words = null //! Last words of the mob before they died
-	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
 	corpse = null
@@ -647,9 +650,6 @@
 		OnMove()
 	else
 		boutput(usr, "Couldn't find anywhere in that area to go to!")
-
-/mob/dead/observer/say_understands(var/other)
-	return 1
 
 /* //dont need this anymores
 /mob/dead/observer/verb/toggle_wide()

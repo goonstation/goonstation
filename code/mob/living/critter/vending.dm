@@ -12,11 +12,11 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 	can_grab = 0
 	can_disarm = 0
 	blood_id = "oil"
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	metabolizes = 0
 	stepsound = 'sound/impact_sounds/Metal_Clang_3.ogg'
 	var/limb_name = "snack dispenser"

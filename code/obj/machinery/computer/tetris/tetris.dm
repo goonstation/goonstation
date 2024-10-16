@@ -36,6 +36,10 @@
 	desc = "Instructions:<ul style='margin: 0;'><li>Left/Right Arrows: Move</li><li>Up Arrow/Space: Hard Drop</li><li>Down Arrow/S: Soft Drop</li><li>W/E/R: Rotate CW</li><li>Q/Z: Rotate CCW</li></ul>"
 	machine_registry_idx = MACHINES_MISC
 	circuit_type = /obj/item/circuitboard/tetris
+
+	speech_verb_say = "beeps"
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+
 	var/datum/game/tetris/tetris
 
 /obj/machinery/computer/tetris/New()
@@ -115,7 +119,7 @@ ABSTRACT_TYPE(/datum/game)
 
 
 				if (src.owner && msg)
-					src.owner.obj_speak(msg)
+					src.owner.say(msg)
 					if (score >= highscore || score >= 30000)
 						// >= here becuase it was updated earlier
 						particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.owner.loc))

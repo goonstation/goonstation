@@ -1150,6 +1150,12 @@ TYPEINFO(/obj/item/peripheral)
 	icon_state = "std_mod"
 	func_tag = "LAR_SOUND"
 
+	speech_verb_say = "beeps"
+
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SOUND_CARD)
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	receive_command(obj/source,command, datum/signal/signal)
 		if(..())
 			return 1
@@ -1171,8 +1177,7 @@ TYPEINFO(/obj/item/peripheral)
 				if(!speak_name)
 					speak_name = src.host.name
 
-				for(var/mob/O in hearers(src.host, null))
-					O.show_message(SPAN_SAY("[SPAN_NAME("[speak_name]")] [bicon(src.host)] beeps, \"[speak_data]\""), 2)
+				src.say(speak_data, flags = SAYFLAG_IGNORE_POSITION, message_params = list("speaker_to_display" = speak_name))
 
 			else
 				return "Valid commands: beep, speak with signal containing name=X, data=Y"
