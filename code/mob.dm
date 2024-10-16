@@ -15,9 +15,7 @@
 
 	var/datum/abilityHolder/abilityHolder = null
 	var/datum/bioHolder/bioHolder = null
-	/// Used to colorize things that need to be colorized before the player notices they aren't
-	/// Also things like ghost hair
-	var/datum/appearanceHolder/AH_we_spawned_with = null
+	var/datum/appearanceHolder/AH_we_spawned_with = null	// Used to colorize things that need to be colorized before the player notices they aren't
 
 	var/targeting_ability = null
 
@@ -34,6 +32,7 @@
 
 	var/last_resist = 0
 
+	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 	var/atom/movable/name_tag/name_tag
 	var/atom/atom_hovered_over = null
@@ -339,8 +338,6 @@
 	qdel(chat_text)
 	chat_text = null
 
-	QDEL_NULL(render_special)
-
 	// this looks sketchy, but ghostize is fairly safe- we check for an existing ghost or NPC status, and only make a new ghost if we need to
 	src.ghost = src.ghostize()
 	if (src.ghost?.corpse == src)
@@ -385,9 +382,9 @@
 		H.mobs -= src
 
 
-	QDEL_NULL(src.abilityHolder)
-	QDEL_NULL(src.zone_sel)
-	QDEL_NULL(src.contextLayout)
+	if (src.abilityHolder)
+		src.abilityHolder.dispose()
+		src.abilityHolder = null
 
 	if (src.targeting_ability)
 		src.targeting_ability = null
@@ -396,14 +393,23 @@
 		src.item_abilities:len = 0
 		src.item_abilities = null
 
+	if (zone_sel)
+		if (zone_sel.master == src)
+			zone_sel.master = null
+	zone_sel = null
 
+	if(src.contextLayout)
+		src.contextLayout.dispose()
+		src.contextLayout = null
 
 	if (src.buckled)
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
 
-	QDEL_NULL(src.ai)
+	if (src.ai)
+		qdel(ai)
+		ai = null
 
 	mind = null
 	ckey = null
@@ -428,9 +434,6 @@
 	lastattacked = null
 	lastattacker = null
 	health_update_queue -= src
-
-
-	src.AH_we_spawned_with = null
 
 	for(var/x in src)
 		qdel(x)
@@ -2965,12 +2968,14 @@
 
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
-	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
-		return
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	SHOULD_CALL_PARENT(TRUE)
+	. = TRUE
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
+		return 0
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-	src.visible_message(flavorMessage)
+	src.visible_message(flavorMessage, selfMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)

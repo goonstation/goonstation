@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/bioEffect/hidden)
 				var/vomit_message = SPAN_ALERT("[owner.name] suddenly and violently vomits!")
 				owner.vomit(0, null, vomit_message)
 
-			else if (probmult(2) && !owner.reagents?.has_reagent("promethazine"))
+			else if (probmult(2) && !HAS_ATOM_PROPERTY(owner, PROP_MOB_CANNOT_VOMIT))
 				owner.visible_message(SPAN_ALERT("[owner.name] vomits blood!"))
 				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))

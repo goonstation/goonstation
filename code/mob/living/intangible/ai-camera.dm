@@ -47,6 +47,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
@@ -287,9 +288,6 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
-
-	vomit()
-		return 0 //can't puke
 
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope

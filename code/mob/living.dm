@@ -2366,3 +2366,11 @@
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
 			return
 	src.vision.set_scan(0)
+
+/mob/living/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	. = ..()
+	if(.)
+		var/returnItem = src.organHolder?.stomach?.vomit()
+		if(returnItem)
+			. = returnItem
+		src.lastgasp(FALSE, grunt = pick("BLARGH", "blblbl", "BLUH", "BLURGH"))
