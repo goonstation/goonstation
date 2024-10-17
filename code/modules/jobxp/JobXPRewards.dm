@@ -330,6 +330,43 @@ mob/verb/checkrewards()
 		boutput(C.mob, SPAN_EMOTE("A pamphlet flutters out."))
 		return
 
+/datum/jobXpReward/head_of_security_voice
+	name = "Voice of the Law"
+	desc = "Gain access to a high tech megaphone by sacrificing your egun."
+	required_levels = list("Head of Security"=0)
+	claimable = 1
+	claimPerRound = 1
+	icon_state = "?"
+	var/sacrifice_path = /obj/item/gun/energy/egun 		//Don't go lower than obj/item/gun/energy/egun
+	var/reward_path = /obj/item/megaphone/hos
+	var/sacrifice_name = "E-Gun"
+
+	activate(var/client/C)
+		var/found = 0
+		var/O = locate(sacrifice_path) in C.mob.contents
+		if (istype(O, sacrifice_path))
+			var/obj/item/gun/energy/E = O
+			C.mob.remove_item(E)
+			found = 1
+			qdel(E)
+
+		if (!found)
+			boutput(C.mob, "You need to be holding a [sacrifice_name] in order to claim this reward.")
+			//Remove used from list of claimed. I'll make this more elegant once I understand it all. No time for it now. -Kyle
+			src.claimedNumbers[usr.key] --
+			return
+
+		var/obj/item/megaphone/hos/VOTL = new reward_path()
+		if (!istype(VOTL))
+			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're the law, you dont need a megaphone to announce that!")
+			src.claimedNumbers[usr.key] --
+			return
+
+		VOTL.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(VOTL)
+		boutput(C.mob, "Your E-Gun vanishes and is replaced with [VOTL]!")
+		return
+
 //Captain
 
 /datum/jobXpReward/captainsword
