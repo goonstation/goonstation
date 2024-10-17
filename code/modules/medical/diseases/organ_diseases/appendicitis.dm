@@ -49,7 +49,7 @@
 			if (probmult(10))
 				var/vomit_message = SPAN_ALERT("[H] suddenly and violently vomits!")
 				H.vomit(0, null, vomit_message)
-			else if (probmult(2) && !H.reagents?.has_reagent("promethazine"))
+			else if (probmult(2) && HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 				H.visible_message(SPAN_ALERT("[H] vomits blood!"))
 				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))

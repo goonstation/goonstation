@@ -181,6 +181,7 @@ or don't if it uses a custom topopen overlay
 		"tactical" = "The casing is made out of a dark grey plastic and is covered in clearly purposeless grooves and fans and whatelse. Very tacticool.",
 		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
 		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
+		"pumpkin" = "The casing is made out of a pumpkin. Spooky!",
 		"crt" = "The core appears to be a... CRT television. Huh.",
 		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
 		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
@@ -1825,15 +1826,20 @@ or don't if it uses a custom topopen overlay
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
+	src.deploy_to_shell(target_shell)
 
-	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
+/mob/living/silicon/ai/proc/deploy_to_shell(var/mob/living/silicon/target_shell)
+	if (!target_shell || isdead(target_shell) || isdead(src) || !(isshell(target_shell) || isrobot(target_shell)))
+		return
+	if (!target_shell.shell)
+		boutput(src, SPAN_ALERT(SPAN_BOLD("That isn't a shell!")))
 		return
 
 	if (src.deployed_to_eyecam)
 		src.eyecam.return_mainframe()
 	if (!src.mind)
 		return
-	if (target_shell.mind)
+	if (target_shell.mind || target_shell.dependent)
 		boutput(src, SPAN_ALERT(SPAN_BOLD("That shell is already occupied!")))
 		return
 	target_shell.mainframe = src
@@ -2301,7 +2307,7 @@ or don't if it uses a custom topopen overlay
 
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
-		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
+		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock"|| coreSkin == "pumpkin")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")
@@ -2609,7 +2615,8 @@ proc/get_mobs_trackable_by_AI()
 	if (src.mind)
 		src.mind.register_death()
 		src.mind.get_player()?.dnr = TRUE
-	src.ghostize()
+	var/mob/dead/observer/ghost = src.ghostize()
+	ghost.corpse = null //no coming back
 
 	//Tell the crew the AI is gone
 	if(announce)

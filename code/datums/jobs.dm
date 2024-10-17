@@ -25,7 +25,7 @@
 	var/cant_spawn_as_rev = FALSE // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = FALSE // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = FALSE
-	var/mentor_only = FALSE
+	var/trusted_only = FALSE // Do we require mentor/HoS status to be played
 	var/requires_supervisor_job = null //! String name of another job. The current job will only be available if the supervisor job is filled.
 	var/needs_college = 0
 	var/assigned = 0
@@ -1785,8 +1785,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	access_string = "Clown"
 	limit = 1
 	change_name_on_spawn = TRUE
+	slot_back = list()
 	slot_mask = list(/obj/item/clothing/mask/clown_hat/blue)
-	slot_ears = list(/obj/item/device/radio/headset)
+	slot_ears = list(/obj/item/device/radio/headset/clown)
 	slot_jump = list(/obj/item/clothing/under/misc/clown/blue)
 	slot_card = /obj/item/card/id/clown
 	slot_foot = list(/obj/item/clothing/shoes/clown_shoes/blue)
@@ -2195,7 +2196,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
-	mentor_only = TRUE
+	trusted_only = TRUE
 	allow_traitors = FALSE
 	slot_ears = list()
 	slot_card = null
@@ -2211,7 +2212,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
-	mentor_only = FALSE
+	trusted_only = FALSE
 	limit = 2
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2779,6 +2780,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #endif
 	allow_traitors = FALSE
 	cant_spawn_as_rev = TRUE
+	wages = 0 //Who needs cash when theres a battle to win
 	var/team = 0 //1 = NT, 2 = SY
 	var/overlay_icon
 	wiki_link = "https://wiki.ss13.co/Game_Modes#Pod_Wars"
@@ -2834,11 +2836,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen)
-		slot_mask = list(/obj/item/clothing/mask/breath)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
-		items_in_backpack = list(/obj/item/survival_machete, /obj/item/currency/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2880,11 +2882,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/syndicate
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate)
-		slot_mask = list(/obj/item/clothing/mask/breath)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat)
 		slot_glov = list(/obj/item/clothing/gloves/swat)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
-		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/currency/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete/syndicate)
 
 		commander
 			name = "Syndicate Commander"

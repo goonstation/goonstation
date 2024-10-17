@@ -21,9 +21,8 @@
 
 
 /area
-	var
-		force_fullbright = 0
-		ambient_light = null //rgb(0.025 * 255, 0.025 * 255, 0.025 * 255)
+	var/force_fullbright = 0
+	var/ambient_light = null //rgb(0.025 * 255, 0.025 * 255, 0.025 * 255)
 
 	New()
 		..()
