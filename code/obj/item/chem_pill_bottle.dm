@@ -102,7 +102,7 @@
 		if (istype(P))
 			var/i = rand(3,8)
 			while(istype(P) && i > 0)
-				P.set_loc(location.loc)
+				P.set_loc(get_turf(location))
 				P = src.create_pill()
 				i--
 			if (!skip_messages)
