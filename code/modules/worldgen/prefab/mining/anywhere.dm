@@ -26,3 +26,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/anywhere)
 		prefabPath = "assets/maps/prefabs/anywhere/prefab_beacon.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 5
+
+	martian_med // crashed martian med shuttle
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/anywhere/prefab_martian_medshuttle.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 16

@@ -9,11 +9,15 @@
 	var/spawn_type = null
 	/// Container path such as a locker or crate, spawned with the corpse. It should obviously be openable by some means.
 	var/container_type = null
+	/// If given, this will change the name of the mob
+	var/mob_name = null
 
 	setup()
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
+		if (src.mob_name)
+			src.setup_name(M)
 		M.unobservable = TRUE //make it not show up in the observer list
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
@@ -22,6 +26,15 @@
 	proc/do_damage(var/mob/living/M)
 		return
 
+	proc/setup_name(var/mob/living/M)
+		if (!istype(M))
+			return
+		if (!src.mob_name)
+			return
+		M.name = src.mob_name
+		M.real_name = src.mob_name
+
+ABSTRACT_TYPE(/obj/mapping_helper/mob_spawn/corpse)
 /obj/mapping_helper/mob_spawn/corpse/critter
 	name = "Critter Corpse Spawn"
 	icon_state = "corpse-critter"
@@ -32,6 +45,8 @@
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
+		if (src.mob_name)
+			src.setup_name(M)
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
@@ -77,7 +92,6 @@
 	var/no_decomp = TRUE
 	/// If TRUE we make no miasma, since filling prefabs or maint etc with that would suck
 	var/no_miasma = TRUE
-
 	/// If TRUE we call do_damage() by default this is random damage of every type
 	var/do_damage = TRUE
 	/// If this has a value, remove a random number of organs between 0 and this max
@@ -113,6 +127,12 @@
 			qdel(src.corpse.l_hand)
 		if (src.corpse.r_hand)
 			qdel(src.corpse.r_hand)
+
+		if (src.mob_name)
+			src.setup_name(src.corpse)
+			if (src.corpse.wear_id)
+				var/obj/item/card/id/id_card = src.corpse.wear_id
+				id_card.registered = src.mob_name
 
 		SPAWN(1)
 			for (var/obj/item/implant/health/implant as anything in src.corpse.implant)
@@ -267,6 +287,10 @@
 
 	head_of_personnel
 		spawn_type = /mob/living/carbon/human/normal/headofpersonnel
+
+/obj/mapping_helper/mob_spawn/corpse/human/martian // Muterace Humanoid Martian
+	spawn_type = /mob/living/carbon/human/normal
+	muterace = /datum/mutantrace/martian
 
 /obj/mapping_helper/mob_spawn/corpse/human/random
 	name = "Random Human Corpse Spawn"
