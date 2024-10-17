@@ -483,7 +483,6 @@ TYPEINFO(/obj/machinery/plantpot)
 		else
 			SEED = new /obj/item/seed
 		SEED.generic_seed_setup(SP.selected, FALSE)
-		SEED.set_loc(src)
 		if(SEED.planttype)
 			src.HYPnewplant(SEED)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)] using the seedplanter.")
@@ -491,7 +490,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				src.contributors += user
 		else
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
-			qdel(SEED)
+		qdel(SEED)
 
 	else if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
 		// Not just watering cans - any kind of glass can be used to pour stuff in.
