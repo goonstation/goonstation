@@ -111,12 +111,38 @@
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
+	///Does this mask have a stamina penalty without internals?
+	var/internals_penalty = TRUE
+	HELP_MESSAGE_OVERRIDE({"Gas masks prevent you from inhaling chemical smoke clouds, but are hard to breathe through, reducing stamina.
+	This can be alleviated by hooking up a remote air supply."})
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 7)
 		setProperty("heatprot", 7)
 		setProperty("disorient_resist_eye", 10)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (internals_penalty && ishuman(user))
+			processing_items.Add(src)
+
+	unequipped(mob/user)
+		. = ..()
+		if (internals_penalty)
+			if (ishuman(user))
+				processing_items.Remove(src)
+			delProperty("stamregen")
+
+	process()
+		. = ..()
+		if (ishuman(loc))
+			var/mob/living/carbon/human/h = loc
+			if (!h.internal)
+				setProperty("stamregen", -2)
+			else
+				delProperty("stamregen")
+
 
 /obj/item/clothing/mask/gas/NTSO
 	name = "NT gas mask"
@@ -130,6 +156,10 @@
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 20)
+
+	robust // for admin NTSOs
+		internals_penalty = FALSE
+
 
 /obj/item/clothing/mask/gas/respirator
 	name = "gas respirator"
@@ -187,6 +217,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
 		see_face = TRUE
+		internals_penalty = FALSE
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -234,6 +265,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		color_g = 1
 		color_b = 0.8
 		item_function_flags = IMMUNE_TO_ACID
+		internals_penalty = FALSE
 
 		New()
 			START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -263,6 +295,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	item_state = "gas_alt"
 	//vchange = 1
 	is_syndicate = 1
+	internals_penalty = FALSE
 
 	New()
 		..()
@@ -416,6 +449,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	color_g = 1
 	color_b = 1
 	w_class = W_CLASS_SMALL
+	internals_penalty = FALSE
 	var/mob/living/carbon/human/victim
 	HELP_MESSAGE_OVERRIDE({"Wearing this mask as a clown traitor will allow it to be used as a gasmask.\n
 							You can force the mask directly onto someone's face by aiming at the head while they are lying down and click on them with the mask on any intent other than <span class='help'>help</span>."})
