@@ -256,12 +256,14 @@ TYPEINFO(/obj/item/rcd)
 		qdel(A)
 
 	proc/handle_floors_and_walls(atom/A, mob/user)
-		if (istype(A, /obj/lattice) || istype(A, /turf/space))
+		if (istype(A, /obj/lattice) || istype(A, /turf))
+			var/turf/T = A
 			if (istype(A, /obj/lattice))
 				var/turf/L = get_turf(A)
-				if (!istype(L, /turf/space))
-					return
 				A = L
+				T = L
+			if (!T.can_build)
+				return
 
 			src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
 			return

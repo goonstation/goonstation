@@ -517,6 +517,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 						var/turf/new_road = locate(x, y, Z_LEVEL_STATION)
 						if(!istype(new_road, /turf/simulated/wall/auto/asteroid) && (new_road in turfs))
 							new_road.ReplaceWith(road_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+							new_road.can_build = TRUE
 
 
 /datum/terrainify/desertify
@@ -756,6 +757,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					for(var/turf/edge_turf in edges_to_convert )
 						edge_turf.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
 						edge_turf.allows_vehicles = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles
+						edge_turf.can_build = TRUE
 						var/turf/unsimulated/floor/auto/AT = edge_turf
 						if(istype(AT))
 							AT.edge_overlays()
@@ -846,6 +848,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 							bubble_turfs -= BT
 							bubble_edges += BT
 							BT.ReplaceWith(/turf/unsimulated/floor/auto/void, keep_old_material=FALSE, handle_dir=FALSE)
+							BT.can_build = TRUE
 							BT.allows_vehicles = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles
 
 				generator.generate_terrain(bubble_turfs, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
