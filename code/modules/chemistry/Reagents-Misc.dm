@@ -1225,23 +1225,22 @@ datum
 			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
-				if (volume >= 5)
-					for (var/obj/decal/bloodtrace/B in T)
-						B.invisibility = INVIS_NONE
+				for (var/obj/decal/bloodtrace/B in T)
+					B.invisibility = INVIS_NONE
+					SPAWN(30 SECONDS)
+						B?.invisibility = INVIS_ALWAYS
+				for (var/obj/item/I in T)
+					if (I.get_forensic_trace("bDNA"))
+						var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
+						blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
+						blood_overlay.color = "#3399FF"
+						blood_overlay.alpha = 100
+						blood_overlay.blend_mode = BLEND_INSET_OVERLAY
+						I.appearance_flags |= KEEP_TOGETHER
+						I.UpdateOverlays(blood_overlay, "blood_traces")
 						SPAWN(30 SECONDS)
-							B?.invisibility = INVIS_ALWAYS
-					for (var/obj/item/I in T)
-						if (I.get_forensic_trace("bDNA"))
-							var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
-							blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
-							blood_overlay.color = "#3399FF"
-							blood_overlay.alpha = 100
-							blood_overlay.blend_mode = BLEND_INSET_OVERLAY
-							I.appearance_flags |= KEEP_TOGETHER
-							I.UpdateOverlays(blood_overlay, "blood_traces")
-							SPAWN(30 SECONDS)
-								I?.appearance_flags &= ~KEEP_TOGETHER
-								I?.UpdateOverlays(null, "blood_traces")
+							I?.appearance_flags &= ~KEEP_TOGETHER
+							I?.UpdateOverlays(null, "blood_traces")
 
 		oil
 			name = "oil"
