@@ -2381,8 +2381,6 @@
 		. = ..()
 		owner.remove_filter("gnesis_tint")
 
-#define LAUNDERED_COLDPROT_AMOUNT 2 /// Amount of coldprot(%) given to each item of wearable clothing
-#define LAUNDERED_STAIN_TEXT "freshly-laundered" /// Name of the "stain" given to wearable clothing
 /datum/statusEffect/freshly_laundered
 	id = "freshly_laundered"
 	name = "Freshly Laundered"
@@ -2396,20 +2394,13 @@
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.add_stain(LAUNDERED_STAIN_TEXT) // we just cleaned them so this is cheeky...
-			C.setProperty("coldprot", C.getProperty("coldprot") + LAUNDERED_COLDPROT_AMOUNT)
+			C.add_stain(/datum/stain/laundered)
 
 	onRemove()
 		. = ..()
 		if (istype(owner, /obj/item/clothing/))
 			var/obj/item/clothing/C = owner
-			C.setProperty("coldprot", C.getProperty("coldprot") - LAUNDERED_COLDPROT_AMOUNT)
-			if (C.stains)
-				C.stains -= LAUNDERED_STAIN_TEXT
-				C.UpdateName()
-
-#undef LAUNDERED_COLDPROT_AMOUNT
-#undef LAUNDERED_STAIN_TEXT
+			C.remove_stain(/datum/stain/laundered)
 
 /datum/statusEffect/quickcharged
 	id = "quick_charged"
