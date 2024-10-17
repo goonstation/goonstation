@@ -99,7 +99,6 @@
 
 	proc/tip_out(var/mob/user as mob, atom/location, var/skip_messages = FALSE)
 		var/obj/item/reagent_containers/pill/P = src.create_pill()
-		if (!istype(location, /turf)) location = location.loc
 		if (istype(P))
 			var/i = rand(3,8)
 			while(istype(P) && i > 0)
