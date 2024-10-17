@@ -2395,15 +2395,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				FallTime = 0 SECONDS,\
 				TargetLandmark = src.falltarget)
 
-		shaft
-			name = "Elevator Shaft"
-			falltarget = LANDMARK_FALL_BIO_ELE
-
-			Entered(atom/A as mob|obj)
-				if (istype(A, /mob) && !istype(A, /mob/dead))
-					bioele_accident()
-				..()
-
 		hole_xy
 			name = "deep pit"
 			falltarget = LANDMARK_FALL_DEBUG
