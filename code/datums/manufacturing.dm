@@ -1716,7 +1716,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_requirements = list("metal_dense" = 10)
 	item_outputs = list(/obj/item/aiModule/asimov1)
 	create = 1
-	time = 10 SECONDS
+	time = 20 SECONDS
 	category = "Component"
 
 	makeCaptain

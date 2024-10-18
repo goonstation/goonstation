@@ -41,16 +41,6 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 				MD.fablimit = src.fablimit
 		src.read_only = 1
 
-	emag_act(var/mob/user)
-		if (!src.emagged)
-			src.emagged = TRUE
-			boutput(user, SPAN_ALERT("[src]'s encrypted recipes have been unlocked."))
-			for (var/X in src.emag_recipes)
-				for (var/datum/computer/file/manudrive/MD in src.root.contents)
-					MD.drivestored += get_schematic_from_path(X)
-			return TRUE
-		return FALSE
-
 	ai //AI core frame limiting
 		name = "Command ManuDrive: Artificial Intelligence License"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint protected by NT-approved DRM that permits the user to manufacture two AI core frames."
@@ -77,7 +67,6 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 		/datum/manufacture/aiModule/emergency,
 		/datum/manufacture/aiModule/removeCrew,
 		/datum/manufacture/aiModule/freeform)
-		emag_recipes = list(/datum/manufacture/syndicate_laws)
 
 
 	interdictor_parts //Compacts the parts into a single manudrive
