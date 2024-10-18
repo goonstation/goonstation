@@ -1014,3 +1014,9 @@ TYPEINFO(/obj/item/device/geiger)
 	proc/set_followup_proj(datum/projectile/proj_data)
 		for(var/datum/projectile/special/timegun/ts in src.projectiles)
 			ts.followup = proj_data
+
+/*todo
+#define DEFINE #define
+#define DEFINE_PROP(name, method) DEFINE PROP_##name(x) x(#name, APPLY_ATOM_PROPERTY_##method, REMOVE_ATOM_PROPERTY_##method)
+#define DEFINE_PROP_UPDATE(name, method, update...) DEFINE PROP_##name(x) x(#name, APPLY_ATOM_PROPERTY_##method, REMOVE_ATOM_PROPERTY_##method, ##update)
+*/
