@@ -182,7 +182,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				src.food_color = rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255))
 				src.icon += src.food_color
 			else // no flavouring? Pick a random colour!
-				src.food_color = rgb(rand(1, 255), rand(1, 255), rand(1, 255), 255)
+				src.food_color = random_saturated_hex_color()
 				src.icon += src.food_color
 
 
