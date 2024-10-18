@@ -76,7 +76,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------- PROFILING OPTIONS -------------//
 
-//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+// #define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
@@ -112,8 +112,8 @@ o+`        `-` ``..-:yooos-..----------..`
 // Makes the delete queue go through every single datum in the game when a hard del happens
 // It gets reported to the debug log. This process takes about 4 minutes per hard deletion
 // (during that time the server will be frozen).
-//#define LOG_HARD_DELETE_REFERENCES
-//#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+// #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
