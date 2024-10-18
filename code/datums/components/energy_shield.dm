@@ -164,7 +164,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		var/ret = list()
 		var/percent
 		if(SEND_SIGNAL(the_item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/percent = 100 * ret["charge"] / ret["max_charge"]
+			percent = 100 * ret["charge"] / ret["max_charge"]
 		else
 			percent = 0 //no cell, no charge meter
 		if(percent == 0)
