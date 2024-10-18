@@ -631,7 +631,7 @@ datum
 				return
 
 			reaction_obj(var/obj/item/O, var/volume)
-				if (istype(O))
+				if (istype(O) || istype(O, /obj/tree) || istype(O, /obj/shrub))
 					if (O.burning)
 						O.combust_ended()
 				return
