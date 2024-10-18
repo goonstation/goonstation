@@ -143,7 +143,6 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	name = "Toggle Energy Shield"
 	icon_state = "shieldceoff"
 	desc = "Toggle personal energy shield."
-	maptext = "<span style='color: rgb(0, 255, 0);' class='pixel c sh'>100%</span>"
 
 	execute_ability()
 		. = ..()
