@@ -25,9 +25,6 @@ TYPEINFO(/obj/item/disk/data/floppy/manudrive)
 	var/list/datum/manufacture/temp_recipe_string = list()
 	/// -1 Means it can be used unlimited time, its a lazy solution yet an effective one, numbers above 0 can only have things fabricated from those manudrives x amount of times.
 	var/fablimit = -1
-	var/emagged = FALSE
-	/// List of recipes that only show up when emagged
-	var/list/datum/manufacture/emag_recipes = list()
 
 	New(var/loc)
 		..()
