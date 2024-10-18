@@ -324,7 +324,6 @@
 	desc = "An old school record player, painted in a cool syndicate-red."
 	icon_state = "portable_record"
 	density = 0
-	var/deployed = 1
 
 	New()
 		..()
