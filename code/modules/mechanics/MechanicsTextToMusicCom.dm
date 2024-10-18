@@ -41,6 +41,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 	name = "Text to Music Component"
 	desc = "Converts text to music."
 	icon_state = "comp_text_to_music"
+	cabinet_banned = TRUE // no walking music machines
 	var/timing = 0.5 //values from 0.25 to 0.5 please
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
 	var/is_busy = 0 //stops people from messing about with it when its working
