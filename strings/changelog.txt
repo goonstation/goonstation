@@ -1,4 +1,12 @@
 
+(t)fri oct 18 24
+(u)Egregorious
+(p)21047
+(e)🔄📄🌱|C-Rework, A-UI, A-Hydroponics
+(*)Each plant harvest now produces only one seed packet with multiple uses. Infusing and mutating this seed packet will limit the number of times it can be planted.
+(t)thu oct 17 24
+(u)LeahTheTech
+(+)The bartender's coach gun will now flip shut when fired.
 (t)wed oct 16 24
 (u)tarmunora
 (+)Breaching charges no longer apply a hardcoded extra explosion action on machinery in addition to their real explosion. Doors (if breakable) will still always get broken.
