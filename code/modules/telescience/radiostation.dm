@@ -682,6 +682,34 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
 
+/obj/item/record/spacecult_collection // By WaxTerk
+	add_overlay = 0
+	icon_state = "record_spacecult"
+
+	riot
+		song = 'sound/radio_station/music/spacecult/riot.ogg'
+		record_name = "RIOT"
+
+	inception
+		song = 'sound/radio_station/music/spacecult/inception.ogg'
+		record_name = "Inception"
+
+	system99
+		song = 'sound/radio_station/music/spacecult/system99.ogg'
+		record_name = "System99"
+
+	broadcast
+		song = 'sound/radio_station/music/spacecult/broadcast_signal_intrusion.ogg'
+		record_name = "Broadcast Signal Intrusion"
+
+	bloodstain
+		song = 'sound/radio_station/music/spacecult/bloodstain.ogg'
+		record_name = "Bloodstain"
+
+	hoshizora
+		song = 'sound/radio_station/music/spacecult/hoshizora.ogg'
+		record_name = "Starry Skies"
+
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0
 	icon_state = "record_yellow"
@@ -819,6 +847,16 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
+
+/obj/item/storage/box/record/spacecult
+	icon_state = "sleeve_spacecult"
+	desc = "It has indecipherable scribbles on it. Some kind of martian music?"
+	spawn_contents = list(/obj/item/record/spacecult_collection/riot,
+	/obj/item/record/spacecult_collection/inception,
+	/obj/item/record/spacecult_collection/system99,
+	/obj/item/record/spacecult_collection/broadcast,
+	/obj/item/record/spacecult_collection/bloodstain,
+	/obj/item/record/spacecult_collection/hoshizora)
 
 /obj/item/storage/box/record/radio/host/make_my_stuff()
 	..()
