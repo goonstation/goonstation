@@ -833,13 +833,15 @@ var/global/in_replace_with = 0
 				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
 			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
 			else if (islist(comp_lookup[signal_type]))
-				src.comp_lookup[signal_type] += old_comp_lookup[signal_type]
+				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(comp_lookup)] + [json_encode(old_comp_lookup)]")
+
+				src.comp_lookup[signal_type] |= old_comp_lookup[signal_type]
 			//it's just a datum
 			else
 				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
-					src.comp_lookup[signal_type] = old_comp_lookup[signal_type] + list(src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (old_comp_lookup[signal_type] | src.comp_lookup[signal_type])
 				else //the old one wasn't a list, make it so
-					src.comp_lookup[signal_type] = list(old_comp_lookup[signal_type], src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
 	//cleanup old overlay to prevent some Stuff
@@ -880,6 +882,8 @@ var/global/in_replace_with = 0
 		else if (air_master)
 			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 			air_master.active_singletons -= src
+			if (length(air_master.tiles_to_update))
+				air_master.tiles_to_update -= src
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.

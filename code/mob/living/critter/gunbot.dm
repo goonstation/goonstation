@@ -412,6 +412,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 
 		src.UpdateOverlays(image(src.icon, "gunbot-saw"), "guns")
 
+	death(gibbed)
+		var/datum/handHolder/HH = hands[1]
+		qdel(HH.item)
+		. = ..()
 
 /obj/machinery/fabricator/gunbot
 	icon = 'icons/obj/large/64x64.dmi'

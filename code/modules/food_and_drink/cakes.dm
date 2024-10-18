@@ -106,7 +106,7 @@
 				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
-				overlay_color = F.get_food_color()
+				overlay_color = F.get_average_color()
 
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect

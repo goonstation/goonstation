@@ -1777,7 +1777,7 @@ datum
 					M.setStatusMin("knockdown", 2 SECONDS * mult)
 					M.visible_message(SPAN_ALERT("<b>[M.name]</b> tears at [his_or_her(M)] own skin!"),\
 					SPAN_ALERT("<b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]"))
-				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
+				else if (prob(10) && !HAS_ATOM_PROPERTY(M, PROP_MOB_CANNOT_VOMIT)) //doesn't just go thru mob/proc/vomit because we don't want to re-vomit if there are already spiders on the floor, to not spam spiderlings
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))

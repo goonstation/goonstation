@@ -1251,6 +1251,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=PAY_TRADESMAN, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/5, hidden=1)
 
+#ifdef SEASON_AUTUMN
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte, 15, cost=PAY_TRADESMAN/10)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie/pumpinspies, 2, cost=PAY_TRADESMAN)
+#endif
+
 /obj/machinery/vending/snack
 	name = "snack machine"
 	desc = "Tasty treats for crewman eats."

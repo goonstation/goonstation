@@ -4807,7 +4807,8 @@
 /obj/machinery/door_control{
 	id = "robot_factory";
 	name = "Hangar Toggle";
-	pixel_x = -24
+	pixel_x = -24;
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
 /area/buddyfactory)
@@ -16577,7 +16578,8 @@
 /area/space)
 "emx" = (
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "buttes_2"
+	id = "buttes_2";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -16901,7 +16903,8 @@
 "ftX" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "buttes_4"
+	id = "buttes_4";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -17578,7 +17581,8 @@
 /area/diner/hallway/docking)
 "hlR" = (
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "buttes_1"
+	id = "buttes_1";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -19164,7 +19168,8 @@
 /area/diner/hallway)
 "lIc" = (
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "buttes_5"
+	id = "buttes_5";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -19643,7 +19648,8 @@
 /area/timewarp/ship)
 "mSc" = (
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "buttes_3"
+	id = "buttes_3";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
@@ -20611,7 +20617,8 @@
 "pAk" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "buttes_6"
+	id = "buttes_6";
+	dir = 2
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)

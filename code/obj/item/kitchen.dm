@@ -862,7 +862,7 @@ TRAYS
 
 	dropped(mob/user)
 		..()
-		if(user.lying)
+		if(user?.lying)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (!H.limbs.r_leg && !H.limbs.l_leg)
@@ -1222,9 +1222,9 @@ TYPEINFO(/obj/item/plate/pizza_box)
 				else
 					ingredienttype="nonmeat"
 				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
-				foodoverlay.color = FOOD.get_food_color()
+				foodoverlay.color = FOOD.get_average_color()
 				foodoverlay.layer = (src.layer+3)
-				toppingdata.Add(FOOD.get_food_color())
+				toppingdata.Add(FOOD.get_average_color())
 				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)
