@@ -941,9 +941,13 @@
 
 		onAdd(optional=null)
 			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			. = ..()
 
 	blocking
 		id = "blocking"
