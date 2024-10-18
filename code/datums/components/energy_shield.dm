@@ -154,6 +154,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 
 	post_attach()
 		RegisterSignal(src.the_item, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		UpdateIcon()
 
 	disposing()
 		UnregisterSignal(src.the_item, COMSIG_UPDATE_ICON)
