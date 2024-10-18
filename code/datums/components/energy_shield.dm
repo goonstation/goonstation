@@ -143,6 +143,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	name = "Toggle Energy Shield"
 	icon_state = "shieldceoff"
 	desc = "Toggle personal energy shield."
+	maptext = "<span style='color: rgb(0, 255, 0);' class='pixel c sh'>100%</span>"
 
 	execute_ability()
 		. = ..()
@@ -161,19 +162,22 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	update_icon(...)
 		. = ..()
 		var/ret = list()
+		var/percent
 		if(SEND_SIGNAL(the_item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/percent = 100 * ret["charge"] / ret["max_charge"]
-			if(percent == 0)
-				src.icon_state = "shieldceoff"
-			var/h_color
-			switch(percent)
-				if (50 to INFINITY)
-					h_color	= "rgb([(100 - percent) / 50 * 255], 255, [(100 - percent) * 0.3])"
-				if (0 to 50)
-					h_color	= "rgb(255, [percent / 50 * 255], 0)"
-				if (-INFINITY to 0)
-					h_color	= "#ffffff"
-			src.maptext = "<span style='color: [h_color];' class='pixel c sh'>[round(percent)]%</span>"
+		else
+			percent = 0 //no cell, no charge meter
+		if(percent == 0)
+			src.icon_state = "shieldceoff"
+		var/h_color
+		switch(percent)
+			if (50 to INFINITY)
+				h_color	= "rgb([(100 - percent) / 50 * 255], 255, [(100 - percent) * 0.3])"
+			if (0 to 50)
+				h_color	= "rgb(255, [percent / 50 * 255], 0)"
+			if (-INFINITY to 0)
+				h_color	= "#ffffff"
+		src.maptext = "<span style='color: [h_color];' class='pixel c sh'>[round(percent)]%</span>"
 
 //TODO: Add tooltip/desc info to item
 
