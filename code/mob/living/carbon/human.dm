@@ -1150,7 +1150,7 @@
 							items += I
 					if (length(items))
 						I = items[length(items)] // top-most item is listed last in content
-						I.attack_hand(src.client.mob)
+						I.Attackhand(src.client.mob)
 						return
 				else if (src.a_intent == "help" && isliving(target))
 					var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
