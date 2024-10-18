@@ -1,5 +1,9 @@
 
 (t)fri oct 18 24
+(u)gus
+(p)21100
+(e)🪲⚗|C-Bug, A-Chemistry
+(+)nanotrasen has replaced defective luminol bottles which were found to be full of headlight fluid
 (u)Egregorious
 (p)21047
 (e)🔄📄🌱|C-Rework, A-UI, A-Hydroponics
