@@ -1388,7 +1388,7 @@
 	else
 		. = "<span class='name' data-ctx='\ref[src.mind]'>"
 	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_id)
+		if (src.wear_id && length(src.wear_id:registered))
 			if (just_name_itself)
 				return src.wear_id:registered
 			. += "[src.wear_id:registered]</span>"
