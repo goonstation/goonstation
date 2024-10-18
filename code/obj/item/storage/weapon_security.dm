@@ -107,7 +107,7 @@
 	icon_state = "revolver"
 	desc = "A box containing a couple of AP speedloaders for a .38 Special revolver."
 	spawn_contents = list(/obj/item/ammo/bullets/a38/AP = 3,\
-	/obj/item/ammo/bullets/a357 = 2)
+	/obj/item/ammo/bullets/a38 = 2)
 
 /obj/item/storage/box/flaregun // For surplus crates (Convair880).
 	name = "flare gun box"
