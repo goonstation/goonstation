@@ -263,6 +263,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
 			custom.color_original = customCopy.color_original
 			custom.color = customCopy.color
+			custom.dye = customCopy.dye
 			custom.style_original = customCopy.style_original
 			custom.style = customCopy.style
 			custom.offset_y = customCopy.offset_y
@@ -335,6 +336,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 /datum/customizationHolder
 	/// The color that gets used for determining your colors
 	var/color = "#101010"
+	/// The color that gets used for applying dye, such as to hair
+	var/dye = null
 	/// The color that was set by the player's preferences
 	var/color_original = "#101010"
 	/// The hair style / detail thing that gets displayed on your spaceperson
@@ -350,6 +353,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		style =  new /datum/customization_style/none
 	third
 		style =  new /datum/customization_style/none
+
+	proc/get_color_or_dye()
+		return src.dye ? src.dye : src.color
 
 /datum/bioHolder
 	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.
