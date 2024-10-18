@@ -293,7 +293,6 @@
 	var/static/image/starlight
 
 	flags = FLUID_DENSE
-	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
 	can_build = TRUE
 	dense
@@ -451,7 +450,7 @@ proc/generate_space_color()
 
 /turf/simulated/delay_space_conversion()
 	if(air_master?.is_busy)
-		air_master.tiles_to_space |= src
+		air_master.tiles_to_space[src] = null
 		return TRUE
 
 /turf/cordon
@@ -653,7 +652,7 @@ var/global/in_replace_with = 0
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
-	var/zero_new_turf_air = (turf_flags & CAN_BE_SPACE_SAMPLE)
+	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
 	var/temp_old = null
@@ -881,17 +880,20 @@ var/global/in_replace_with = 0
 				N.update_visuals(N.air)
 			// tell atmos to update this tile's air settings
 			if (air_master)
-				air_master.tiles_to_update |= N
+				air_master.tiles_to_update[N] = null
 		else if (air_master)
-			air_master.high_pressure_delta -= src //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
-			air_master.active_singletons -= src
-			if (length(air_master.tiles_to_update))
-				air_master.tiles_to_update -= src
+			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
+			air_master.active_singletons.Remove(src)
+			air_master.tiles_to_update.Remove(src)
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild |= oldparent //Puts the oldparent into a queue to update the members.
+			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
 			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
 			oldparent.borders?.Remove(src)
+
+	else
+		if (!issimulatedturf(src) && (src in air_master?.tiles_to_update))
+			stack_trace("HI IM DOING A BAD THING FIX ME")
 
 
 	new_turf.update_nearby_tiles(1)
@@ -1055,8 +1057,6 @@ TYPEINFO(/turf/simulated)
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
-
-	turf_flags = IS_TYPE_SIMULATED
 
 	attackby(var/obj/item/W, var/mob/user, params)
 		if (istype(W, /obj/item/pen))

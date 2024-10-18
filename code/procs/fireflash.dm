@@ -39,7 +39,7 @@
 				continue
 
 		// create hotspots
-		var/obj/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400, chemfire)
+		var/atom/movable/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400, chemfire)
 		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
 
 		if (!QDELETED(hotspot))
@@ -61,12 +61,12 @@
 
 	// lighting fix (coder note - not sure what the problem is from before, just left it in)
 	SPAWN(1 DECI SECOND)
-		for (var/obj/hotspot/hotspot in created_hotspots)
+		for (var/atom/movable/hotspot/hotspot in created_hotspots)
 			hotspot.set_real_color()
 
 	// timed life on hotspots
 	SPAWN(3 SECONDS)
-		for (var/obj/hotspot/hotspot as anything in created_hotspots)
+		for (var/atom/movable/hotspot/hotspot as anything in created_hotspots)
 			if (!QDELETED(hotspot))
 				qdel(hotspot)
 
