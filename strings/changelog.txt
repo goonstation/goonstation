@@ -1,7 +1,7 @@
 
 (t)sat oct 19 24
 (u)LeahTheTech
-(+)The Matrix Flopout perk now plays a musical sting each time you successfully dodge something with it.
+(+)The Matrix Flopout perk now plays a musical sting each time you successfully dodge something with it (only plays in your head, because you think you look a lot cooler than you do).
 (+)Automatic brig lockers now pop open when the timer expires.
 (u)Jan.antilles
 (p)20799
