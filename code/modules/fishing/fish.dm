@@ -307,10 +307,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 			var/mob/living/carbon/human/H = src.loc
 			if (src.spikes_protected(H))
 				return
-			boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
-			random_brute_damage(H, 3)
-			H.setStatusMin("stunned", 2 SECONDS)
-			take_bleeding_damage(H, null, 3, DAMAGE_STAB)
+			if (H.l_hand == src || H.r_hand == src)
+				boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
+				random_brute_damage(H, 3)
+				H.setStatusMin("stunned", 2 SECONDS)
+				take_bleeding_damage(H, null, 3, DAMAGE_STAB)
 
 	make_reagents()
 		..() //it still contains fish oil
