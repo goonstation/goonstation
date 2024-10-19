@@ -414,9 +414,9 @@
 	description = "A device used to scan in prisoners and update their security records."
 
 /datum/materiel/utility/sectowel
-	name = "Security towel"
+	name = "Security Towel"
 	path = /obj/item/cloth/towel/security
-	description = "A Towel used to clean off the clow- criminal blood!"
+	description = "A towel used to clean off the clow- criminal blood!"
 
 
 /datum/materiel/ammo/medium
