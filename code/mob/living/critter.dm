@@ -543,6 +543,18 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/mob/living/living_target = target
 		living_target.give_item()
 		return
+	else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+		var/turf/T = get_turf(target)
+		var/list/items = list()
+		var/obj/item/I
+		for (var/i = 1 to min(10, length(T.contents)))
+			I = T.contents[i]
+			if (istype(I) && !I.anchored)
+				items += I
+		if (length(items))
+			I = items[length(items)] // top-most item is listed last in contents
+			I.pick_up_by(src)
+			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 		src.throw_item(target,params)
 		return
