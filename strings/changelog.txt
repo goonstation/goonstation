@@ -1,4 +1,9 @@
 
+(t)sat oct 19 24
+(u)Jan.antilles
+(p)20799
+(e)🎨|C-Sprites
+(*)Two new items are available as Spacebux purchases: the Dyeable Beret and the Dyeable Cardigan! They can be dyed with Hair Dye bottles from the Barbershop.
 (t)fri oct 18 24
 (u)gus
 (p)21100
