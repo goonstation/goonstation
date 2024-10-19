@@ -1127,12 +1127,15 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 				src.color = "#FFFFFF"
 
 			attackby(obj/item/dye_bottle/W, mob/user)
-				. = ..()
 				if (istype(W, /obj/item/dye_bottle))
 					src.color = W.customization_first_color
 					src.UpdateIcon()
-					user.update_clothing()
-					user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [his_or_her(user)] cardigan."))
+					var/mob/wearer = src.loc
+					if (ismob(wearer))
+						wearer.update_clothing()
+					user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] cardigan."))
+					return
+				. = ..()
 
 // LONG SHIRTS
 // No they're not sweaters

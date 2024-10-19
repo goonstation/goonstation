@@ -970,12 +970,15 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		src.color = "#FFFFFF"
 
 	attackby(obj/item/dye_bottle/W, mob/user)
-		. = ..()
 		if (istype(W, /obj/item/dye_bottle))
 			src.color = W.customization_first_color
 			src.UpdateIcon()
-			user.update_clothing()
-			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [his_or_her(user)] beret."))
+			var/mob/wearer = src.loc
+			if (istype(wearer))
+				wearer.update_clothing()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] beret."))
+			return
+		. = ..()
 
 /obj/item/clothing/head/bandana
 	name = "bandana"
