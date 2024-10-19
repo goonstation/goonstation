@@ -963,6 +963,27 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		..()
 		src.color = "#FF8800"
 
+/obj/item/clothing/head/beret/dyeable
+	name = "dyeable beret"
+	desc = "Can be dyed with hair dye. Obviously."
+	icon_state = "beret_base"
+	item_state = "dye_beret"
+
+	New()
+		..()
+		src.color = "#FFFFFF"
+
+	attackby(obj/item/dye_bottle/W, mob/user)
+		if (istype(W, /obj/item/dye_bottle))
+			src.color = W.customization_first_color
+			src.UpdateIcon()
+			var/mob/wearer = src.loc
+			if (istype(wearer))
+				wearer.update_clothing()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] beret."))
+			return
+		. = ..()
+
 /obj/item/clothing/head/bandana
 	name = "bandana"
 	desc = "A bandana. You've seen space action stars wear these things."

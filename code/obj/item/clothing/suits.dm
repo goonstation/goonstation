@@ -1118,6 +1118,25 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			..()
 			src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
+		dyeable
+			name = "dyeable cardigan sweater"
+			desc = "A warm cardigan sweater that can be dyed with hair dye. Obviously."
+
+			New()
+				..()
+				src.color = "#FFFFFF"
+
+			attackby(obj/item/dye_bottle/W, mob/user)
+				if (istype(W, /obj/item/dye_bottle))
+					src.color = W.customization_first_color
+					src.UpdateIcon()
+					var/mob/wearer = src.loc
+					if (ismob(wearer))
+						wearer.update_clothing()
+					user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] cardigan."))
+					return
+				. = ..()
+
 // LONG SHIRTS
 // No they're not sweaters
 
