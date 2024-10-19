@@ -43391,7 +43391,7 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/access/bar,
-/turf/simulated/floor/marble/black,
+/turf/simulated/bar,
 /area/station/crew_quarters/catering)
 "ssc" = (
 /obj/cable{
