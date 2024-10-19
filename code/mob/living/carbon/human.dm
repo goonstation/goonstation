@@ -1154,8 +1154,8 @@
 					I = T.contents[i]
 					if (istype(I) && !I.anchored)
 						items += I
-				if (length(items))
-					I = items[length(items)] // top-most item is listed last in content
+				if (length(items) == 1)
+					I = items[1]
 					I.pick_up_by(src)
 					return
 			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)

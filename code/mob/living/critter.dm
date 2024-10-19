@@ -551,8 +551,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			I = T.contents[i]
 			if (istype(I) && !I.anchored)
 				items += I
-		if (length(items))
-			I = items[length(items)] // top-most item is listed last in contents
+		if (length(items) == 1)
+			I = items[1]
 			I.pick_up_by(src)
 			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
