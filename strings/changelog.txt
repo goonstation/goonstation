@@ -1,5 +1,9 @@
 
 (t)sat oct 19 24
+(u)JORJ949
+(p)20985
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added a portable record player in the Cairngorm's radio room and Radio Host traitor uplinks.
 (u)LeahTheTech
 (+)The Matrix Flopout perk now plays a musical sting each time you successfully dodge something with it (only plays in your head, because you think you look a lot cooler than you do).
 (+)Automatic brig lockers now pop open when the timer expires.
