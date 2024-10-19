@@ -1139,8 +1139,15 @@
 					src.set_a_intent(INTENT_DISARM)
 				return
 		else
-			if (src.client.check_key(KEY_THROW) && BOUNDS_DIST(src, target) <= 0)
-				if (!src.client.mob.equipped())
+			if (src.client.check_key(KEY_THROW) && src.equipped() && src.a_intent == "help" && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
+				if (thing)
+					usr = src
+					var/mob/living/living_target = target
+					living_target.give_item()
+					return
+			else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+				if (!src.equipped())
 					var/turf/T = get_turf(target)
 					var/list/items = list()
 					var/obj/item/I
@@ -1150,14 +1157,7 @@
 							items += I
 					if (length(items))
 						I = items[length(items)] // top-most item is listed last in content
-						I.Attackhand(src.client.mob)
-						return
-				else if (src.a_intent == "help" && isliving(target))
-					var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
-					if (thing)
-						usr = src
-						var/mob/living/living_target = target
-						living_target.give_item()
+						I.pick_up_by(src)
 						return
 			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
