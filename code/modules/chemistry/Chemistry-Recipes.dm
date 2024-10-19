@@ -2083,8 +2083,8 @@
 		name = "Hot Toddy"
 		id = "hottoddy"
 		result = "hottoddy"
-		required_reagents = list("sweet_tea" = 1, "bourbon" = 1, "juice_lemon" = 1)
-		result_amount = 3
+		required_reagents = list("sweet_tea" = 1, "bourbon" = 1, "juice_lemon" = 1, "cinnamon" = 1)
+		result_amount = 4
 		mix_phrase = "The drink suddenly fills the room with a festive aroma."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
@@ -2113,11 +2113,17 @@
 		name = "Spiced Rum"
 		id = "spicedrum"
 		result = "spicedrum"
-		required_reagents = list("rum" = 1, "capsaicin" = 1)
+		required_reagents = list("rum" = 1, "cinnamon" = 1)
 		result_amount = 2
-		mix_phrase = "You feel like you might have misunderstood the recipe."
+		mix_phrase = "The drink fills the room with the smell of cinnamon."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+		fake
+			id = "spicedrumfake"
+			result = "spicedrumfake"
+			required_reagents = list("rum" = 1, "capsaicin" = 1)
+			mix_phrase = "You feel like you might have misunderstood the recipe."
 
 	romulale
 		name = "Romulale"
@@ -2280,8 +2286,8 @@
 		name = "Pumpkin Spice Latte"
 		id = "pumpkinspicelatte"
 		result = "pumpkinspicelatte"
-		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
-		result_amount = 4
+		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1, "cinnamon"=1)
+		result_amount = 5
 		mix_phrase = "The drink smells vaguely like artifical autumn."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
