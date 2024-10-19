@@ -2029,6 +2029,7 @@
 		if (C?.mob)
 			M = C.mob
 
+	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b>."))
 	O.insert_observer(M)
 
 
