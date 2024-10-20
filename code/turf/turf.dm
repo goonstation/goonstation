@@ -330,20 +330,20 @@
 
 /turf/space/New()
 	..()
-	if(global.dont_init_space) return
+	if(global.dont_init_space)
+		return
 	switch(icon_state)
-		if ("placeholder")
-			icon_state = "[rand(1,25)]"
+		if ("placeholder", "dplaceholder")
+			icon_state = "[((x + y) ^ ~(x * y) + z) % 25]" // rand(1,25)
 		if ("aplaceholder")
-			icon_state = "a[rand(1,10)]"
-		if ("dplaceholder")
-			icon_state = "[rand(1,25)]"
+			icon_state = "a[((x + y) ^ ~(x * y) + z) % 10]" // rand(1,10)
 
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
+
 	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
@@ -352,7 +352,9 @@
 		new/obj/item/device/key/random(src)
 	#endif
 
-	UpdateIcon() // for starlight
+	// // forbidden zone // //
+	update_icon() // HIGHLY ILLEGAL NEVER DO THIS, SPECIAL CASE IGNORE ME (for starlight)
+	// // do not pass go // //
 
 proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)
