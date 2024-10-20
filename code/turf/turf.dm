@@ -54,6 +54,8 @@
 	var/broken = FALSE
 	var/burnt = FALSE
 
+	var/can_build = FALSE
+
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
 	var/turf_flags = 0
@@ -293,6 +295,7 @@
 	flags = FLUID_DENSE
 	turf_flags = CAN_BE_SPACE_SAMPLE
 	event_handler_flags = IMMUNE_SINGULARITY
+	can_build = TRUE
 	dense
 		icon_state = "dplaceholder"
 		density = 1
@@ -833,13 +836,15 @@ var/global/in_replace_with = 0
 				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
 			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
 			else if (islist(comp_lookup[signal_type]))
-				src.comp_lookup[signal_type] += old_comp_lookup[signal_type]
+				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(comp_lookup)] + [json_encode(old_comp_lookup)]")
+
+				src.comp_lookup[signal_type] |= old_comp_lookup[signal_type]
 			//it's just a datum
 			else
 				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
-					src.comp_lookup[signal_type] = old_comp_lookup[signal_type] + list(src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (old_comp_lookup[signal_type] | src.comp_lookup[signal_type])
 				else //the old one wasn't a list, make it so
-					src.comp_lookup[signal_type] = list(old_comp_lookup[signal_type], src.comp_lookup[signal_type])
+					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
 
 
 	//cleanup old overlay to prevent some Stuff
@@ -1244,32 +1249,35 @@ TYPEINFO(/turf/simulated)
 		step(user.pulling, get_dir(fuck_u, src))
 	return
 
-/turf/space/attackby(obj/item/C, mob/user)
-	var/area/A = get_area (user)
-	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(user, SPAN_ALERT("You can't build here."))
-		return
-	var/obj/item/rods/R = C
-	if (istype(R))
-		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
+/turf/attackby(obj/item/C, mob/user)
+	if(src.can_build)
+		var/area/A = get_area (user)
+		var/obj/item/rods/R = C
+		if (istype(R))
+			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+				boutput(user, SPAN_ALERT("You can't build here."))
+				return
+			if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
-		boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
-		R.change_stack_amount(-1)
-		var/obj/lattice/lattice = new(src)
-		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
-		if (R.material)
-			src.setMaterial(C.material)
-		return
-
-	if (istype(C, /obj/item/tile))
-		//var/obj/lattice/L = locate(/obj/lattice, src)
-		var/obj/item/tile/T = C
-		if (T.amount >= 1)
-			for(var/obj/lattice/L in src)
-				qdel(L)
+			boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
-			T.build(src)
+			R.change_stack_amount(-1)
+			var/obj/lattice/lattice = new(src)
+			lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
+			if (R.material)
+				src.setMaterial(C.material)
+			return
+
+		if (istype(C, /obj/item/tile))
+			if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
+				boutput(user, SPAN_ALERT("You can't build here."))
+				return
+			var/obj/item/tile/T = C
+			if (T.amount >= 1)
+				for(var/obj/lattice/L in src)
+					qdel(L)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
+				T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)

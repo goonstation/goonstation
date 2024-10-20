@@ -233,7 +233,7 @@ TYPEINFO(/obj/item/device/audio_log)
 			speaker_name = "Unknown"
 
 		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)
-			if (speaker:wear_id)
+			if (speaker:wear_id && length(speaker:wear_id:registered))
 				speaker_name = speaker:wear_id:registered
 			else
 				speaker_name = "Unknown"
