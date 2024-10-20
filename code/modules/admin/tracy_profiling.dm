@@ -1,7 +1,3 @@
-#define TRACY_ENABLE_PATH "data/tracy_profiling_enabled"
-
-#define TRACY_DLL_PATH (world.system_type == MS_WINDOWS ? "prof.dll" : "./libprof.so")
-
 var/global/tracy_log = null
 var/global/tracy_initialized = FALSE
 var/global/tracy_init_error = null
@@ -45,4 +41,3 @@ var/global/tracy_init_reason = null
 	return enabled
 
 #undef TRACY_DLL_PATH
-#undef TRACY_ENABLE_PATH
