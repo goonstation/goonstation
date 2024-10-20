@@ -102,7 +102,7 @@
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
 		if (ishuman(usr))//istype(usr:wear_mask, /obj/item/clothing/mask/gas/voice))
 			var/mob/living/carbon/human/H = usr
-			if (H.wear_mask && H.wear_mask.vchange && H.wear_id)
+			if (H.wear_mask && H.wear_mask.vchange && H.wear_id && length(H.wear_id:registered))
 				. = H.wear_id:registered
 			else if (H.vdisfigured)
 				. = "Unknown"
