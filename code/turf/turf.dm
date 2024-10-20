@@ -424,13 +424,13 @@ proc/generate_space_color()
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
+			starlight.color = starlight_color_override ? starlight_color_override : src.color
+			if(!isnull(starlight_alpha))
+				starlight.alpha = starlight_alpha
 
-		starlight.color = starlight_color_override ? starlight_color_override : src.color
-		if(!isnull(starlight_alpha))
-			starlight.alpha = starlight_alpha
-		src.underlays = list(starlight)
+		src.underlays += starlight
 	else
-		src.underlays = null
+		src.underlays = list()
 	#endif
 
 // override for space turfs, since they should never hide anything
