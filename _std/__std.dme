@@ -118,6 +118,7 @@
 #include "defines\time.dm"
 #include "defines\tooltips.dm"
 #include "defines\traits.dm"
+#include "defines\trader.dm"
 #include "defines\turf.dm"
 #include "defines\ui.dm"
 #include "defines\uplink.dm"
