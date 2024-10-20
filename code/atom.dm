@@ -987,6 +987,10 @@ TYPEINFO(/atom/movable)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))
 		return // Stops AI eyes from click-dragging anything, and observers from click-dragging anything that isn't themselves (ugh)
+
+	// converting params to a list here enables it to be used for communicating between mousedrop() and MouseDrop_T()
+	params = params2list(params)
+
 	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return

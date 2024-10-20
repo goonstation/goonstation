@@ -1,4 +1,109 @@
 
+(t)sat oct 19 24
+(u)JORJ949
+(p)20985
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added a portable record player in the Cairngorm's radio room and Radio Host traitor uplinks.
+(u)LeahTheTech
+(+)The Matrix Flopout perk now plays a musical sting each time you successfully dodge something with it (only plays in your head, because you think you look a lot cooler than you do).
+(+)Automatic brig lockers now pop open when the timer expires.
+(u)Jan.antilles
+(p)20799
+(e)🎨|C-Sprites
+(*)Two new items are available as Spacebux purchases: the Dyeable Beret and the Dyeable Cardigan! They can be dyed with Hair Dye bottles from the Barbershop.
+(t)fri oct 18 24
+(u)gus
+(p)21100
+(e)🪲⚗|C-Bug, A-Chemistry
+(+)nanotrasen has replaced defective luminol bottles which were found to be full of headlight fluid
+(u)Egregorious
+(p)21047
+(e)🔄📄🌱|C-Rework, A-UI, A-Hydroponics
+(*)Each plant harvest now produces only one seed packet with multiple uses. Infusing and mutating this seed packet will limit the number of times it can be planted.
+(t)thu oct 17 24
+(u)LeahTheTech
+(+)The bartender's coach gun will now flip shut when fired.
+(t)wed oct 16 24
+(u)tarmunora
+(+)Breaching charges no longer apply a hardcoded extra explosion action on machinery in addition to their real explosion. Doors (if breakable) will still always get broken.
+(u)Egregorious
+(p)20872
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Can now pop pills directly from pill bottles via click-dragging them onto yourself.
+(t)tue oct 15 24
+(u)cringe
+(p)20788
+(e)🗺|A-Mapping
+(+)Nanotrasen put some new flooring in the cogmap observatory.
+(t)mon oct 14 24
+(u)JORJ949
+(p)20887
+(e)⚖💡|C-Balance, A-Station-Systems
+(*)Shuttle recalling is now disabled after the second automatic call.
+(u)gus
+(p)21087
+(e)|
+(+)cyberkidneys can be emagged through damage again
+(u)Valtsu0
+(p)21001
+(e)💅🤖|C-QoL, A-Silicons
+(*)AI can now deploy to a shell by control clicking it
+(t)sun oct 13 24
+(u)Garash
+(p)21059
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The Chief Engineer's aurora MKII utility belt now provides radiation protection while toggled on.
+(u)LeahTheTech
+(+)Spy thief GPS will no longer take into account your current level of access.
+(t)sat oct 12 24
+(u)Azrun
+(e)⚖🗺💡|C-Balance, A-Mapping, A-Station-Systems
+(+)Terrainify will make external vents and edges of burn chambers act more like space for atmospheric reliant areas. (Toxins and Engineering)
+(u)LeahTheTech
+(+)Custom cream pies can now be made with any item and behave the same as normal custom pies (like you'd expect)
+(p)21061
+(e)🔎⚙|C-Code-Quality, A-Internal
+(+)Removed [......]
+(u)glowbold
+(p)21048
+(e)⚖💊|C-Balance, A-Medical
+(+)Disease resistance scales based on a percentage of the disease's virulence.
+(t)fri oct 11 24
+(u)LeahTheTech
+(*)Vampiric thrall ability cost no longer scales up with more thralls.
+(+)Merchant shuttles now announce the type of goods they will be selling and where on station they are going to dock.
+(u)JORJ949
+(p)20986
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Laundering money now automatically marks you for arrest if you are on camera.
+(t)thu oct 10 24
+(u)Egregorious
+(p)20998
+(e)🆕🌱|C-Feature, A-Hydroponics
+(+)Pumpkins will now retain their size when carved.
+(u)JORJ949
+(p)20959
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Added a second smaller "ship" to atlas on the northwest side of the ship, on board is a PTL and CE office.
+(+)Added a Port-A-Medbay and MDir office to atlas.
+(u)Azrun
+(p)21014
+(e)🆕🗺💡|C-Feature, A-Mapping, A-Station-Systems
+(*)NCS Atlas will sometimes be on a planet.  Let's go on an adventure!
+(t)wed oct 09 24
+(u)JORJ949 & Mr. Moriarty
+(p)20997
+(e)🎨💅🎩|C-Sprites, C-QoL, A-Clothing
+(+)Wizard headsets now have unique icons.
+(u)LeahTheTech
+(p)21022
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added the burgle, a highly illegal and belligerent treat made by cooking a burger with meat containing at least 5 units of crime.
+(t)tue oct 08 24
+(u)Colossus
+(p)20912
+(e)⚖⚗🍝|C-Balance, A-Chemistry, A-Catering
+(+)Tetrodotoxin now has a smaller(0.2) depletion, and slightly altered timing, but pufferfish only carry half the amount in them, and can only be caught by tier 2 rods or higher.
 (t)mon oct 07 24
 (u)tarmunora
 (+)you can now walk out of cargo carts

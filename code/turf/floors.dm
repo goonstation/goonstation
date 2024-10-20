@@ -921,6 +921,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 	New()
 		..()
+		#ifndef CI_RUNTIME_CHECKING
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -943,6 +944,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
+		#endif
 
 /turf/simulated/floor/glassblock/transparent/cyan
 	icon_state = "glasstr_cyan"
@@ -2393,15 +2395,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				FallTime = 0 SECONDS,\
 				TargetLandmark = src.falltarget)
 
-		shaft
-			name = "Elevator Shaft"
-			falltarget = LANDMARK_FALL_BIO_ELE
-
-			Entered(atom/A as mob|obj)
-				if (istype(A, /mob) && !istype(A, /mob/dead))
-					bioele_accident()
-				..()
-
 		hole_xy
 			name = "deep pit"
 			falltarget = LANDMARK_FALL_DEBUG
@@ -2728,6 +2721,7 @@ TYPEINFO(/turf/simulated/floor/auto/glassblock)
 
 	New()
 		..()
+		#ifndef CI_RUNTIME_CHECKING
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -2750,6 +2744,7 @@ TYPEINFO(/turf/simulated/floor/auto/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
+		#endif
 
 	pry_tile(obj/item/C as obj, mob/user as mob, params)
 		boutput(user, SPAN_ALERT("This is glass flooring, you can't pry this up!"))

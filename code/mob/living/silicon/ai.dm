@@ -1826,15 +1826,20 @@ or don't if it uses a custom topopen overlay
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
+	src.deploy_to_shell(target_shell)
 
-	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
+/mob/living/silicon/ai/proc/deploy_to_shell(var/mob/living/silicon/target_shell)
+	if (!target_shell || isdead(target_shell) || isdead(src) || !(isshell(target_shell) || isrobot(target_shell)))
+		return
+	if (!target_shell.shell)
+		boutput(src, SPAN_ALERT(SPAN_BOLD("That isn't a shell!")))
 		return
 
 	if (src.deployed_to_eyecam)
 		src.eyecam.return_mainframe()
 	if (!src.mind)
 		return
-	if (target_shell.mind)
+	if (target_shell.mind || target_shell.dependent)
 		boutput(src, SPAN_ALERT(SPAN_BOLD("That shell is already occupied!")))
 		return
 	target_shell.mainframe = src
@@ -2610,7 +2615,8 @@ proc/get_mobs_trackable_by_AI()
 	if (src.mind)
 		src.mind.register_death()
 		src.mind.get_player()?.dnr = TRUE
-	src.ghostize()
+	var/mob/dead/observer/ghost = src.ghostize()
+	ghost.corpse = null //no coming back
 
 	//Tell the crew the AI is gone
 	if(announce)

@@ -809,6 +809,7 @@
 			the_mob.item_abilities |= AB
 			the_mob.need_update_item_abilities = 1
 			the_mob.update_item_abilities()
+		AB.post_attach()
 
 
 
@@ -947,6 +948,9 @@
 			src.last_use_time = TIME
 			sleep(src.cooldown)
 			src.on_cooldown()
+
+	proc/post_attach()
+		return
 
 /obj/ability_button/toggle_bandana
 	name = "Toggle bandana"

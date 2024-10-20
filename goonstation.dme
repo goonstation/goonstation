@@ -2,7 +2,7 @@
 // All manual changes should be made outside the BEGIN_ and END_ blocks.
 // New source code should be placed in .dm files: choose File/New --> Code File.
 //
-var/datum/preMapLoad/preMapLoad = new
+#include "code/world/initialization/0_genesis.dme"
 
 // BEGIN_INTERNALS
 // END_INTERNALS
@@ -208,7 +208,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\battleroyale_death.dm"
 #include "code\datums\components\biodegradable.dm"
 #include "code\datums\components\bloodflick.dm"
-#include "code\datums\components\buildableturf.dm"
 #include "code\datums\components\bullet_holes.dm"
 #include "code\datums\components\cell_holder.dm"
 #include "code\datums\components\clown_disbelief_item.dm"
@@ -679,6 +678,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\buildmodes\throw.dm"
 #include "code\modules\admin\buildmodes\transmute.dm"
 #include "code\modules\admin\buildmodes\varedit.dm"
+#include "code\modules\admin\buildmodes\visual_mirror.dm"
 #include "code\modules\admin\buildmodes\adventure\adventure_critter.dm"
 #include "code\modules\admin\buildmodes\adventure\adventure_decal.dm"
 #include "code\modules\admin\buildmodes\adventure\adventure_emitter.dm"
@@ -1535,7 +1535,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\minimap\renderer\minimap_renderer.dm"
 #include "code\modules\minimap\renderer\modifiers\_modifier_parent.dm"
 #include "code\modules\minimap\renderer\modifiers\doors.dm"
-#include "code\modules\minimap\renderer\modifiers\space.dm"
 #include "code\modules\minimap\renderer\modifiers\walls.dm"
 #include "code\modules\mining\mining_encounters.dm"
 #include "code\modules\mining\ore.dm"
@@ -2472,9 +2471,9 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\world\reboot.dm"
 #include "code\world\topic.dm"
 #include "code\world\world.dm"
-#include "code\world\initialization\0_preMapLoad.dm"
-#include "code\world\initialization\1_New.dm"
-#include "code\world\initialization\2_init.dm"
+#include "code\world\initialization\1_preMapLoad.dm"
+#include "code\world\initialization\2_New.dm"
+#include "code\world\initialization\3_init.dm"
 #include "code\z_adventurezones\afterlife.dm"
 #include "code\z_adventurezones\biodome.dm"
 #include "code\z_adventurezones\carcosa.dm"
