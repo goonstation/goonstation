@@ -522,3 +522,11 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.is_active = FALSE
 		usr?.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
+
+/obj/item/baton/ntso/active //active subtypes so NTSC baton spawns ready to go
+	icon_state = "ntso-baton-a-1"
+	item_state = "ntso-baton-a"
+	state = EXTENDO_BATON_OPEN_AND_ON
+	is_active = TRUE
+	w_class = W_CLASS_NORMAL
+	force = 7
