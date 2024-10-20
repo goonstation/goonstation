@@ -106,13 +106,24 @@
 		src.goods_sell = new/list()
 		src.wipe_cart()
 
+		var/list/goods_buy_temp = list()
+		goods_buy_temp = base_goods_buy
+		var/list/goods_sell_temp = list()
+		goods_sell_temp = base_goods_sell
+
 		// Iterate over all rarities and pick the corresponding amount of items from the respective lists
 		for (var/rarity in src.rarities)
 			for (var/i in 1 to src.amount_of_items_per_rarity[rarity])
-				if(length(src.base_goods_buy[rarity]) >= i)
-					src.goods_buy += pick(src.base_goods_buy[rarity])
-				if(length(src.base_goods_sell[rarity]) >= i)
-					src.goods_sell += pick(src.base_goods_sell[rarity])
+				if(length(goods_buy_temp[rarity]) >= i)
+					var/buy_com = pick(goods_buy_temp[rarity])
+					var/datum/commodity/new_buy_com = new buy_com(src)
+					src.goods_buy += new_buy_com
+					goods_buy_temp[rarity] -= buy_com
+				if(length(goods_sell_temp[rarity]) >= i)
+					var/sell_com = pick(goods_sell_temp[rarity])
+					var/datum/commodity/new_sell_com = new sell_com(src)
+					src.goods_sell += new_sell_com
+					goods_sell_temp[rarity] -= sell_com
 
 	proc/haggle(var/datum/commodity/goods,var/askingprice,var/buying = 0)
 		// if something's gone wrong and there's no input, reject the haggle
