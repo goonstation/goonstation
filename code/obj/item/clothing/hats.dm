@@ -479,19 +479,19 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
-	desc = "A powdered wig"
+	desc = "A judicial-looking wig, covered with a starchy powder to reflect the inner stiffness of those who wear it. Or to make it white."
 	icon_state = "pwig"
 	item_state = "pwig"
 
 /obj/item/clothing/head/that
 	name = "hat"
-	desc = "An stylish looking hat"
+	desc = "A stylish, flat-topped hat often worn as formalwear. Rumored to inhibit lying in those that wear it."
 	icon_state = "tophat"
 	item_state = "that"
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
-	desc = "A purple tophat."
+	desc = "A stylish, flat-topped hat often worn as formalwear. This one is a daring shade of purple."
 	icon_state = "ptophat"
 	item_state = "pthat"
 	protective_temperature = 500
