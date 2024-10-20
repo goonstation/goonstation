@@ -338,14 +338,16 @@
 				var/datum/syndicate_buylist/item_datum = weighted_pick(possible_items)
 				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
-				var/obj/item/I = new item_datum.item(src)
-				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
-				if (owner)
-					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
-					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
-					if (istype(T))
-						T.surplus_crate_items.Add(item_datum)
-				telecrystals += item_datum.cost
+				if(length(item_datum.items) == 0) continue
+				for (var/item in item_datum.items)
+					var/obj/item/I = new item(src)
+					I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
+					if (owner)
+						item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
+						var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+						if (istype(T))
+							T.surplus_crate_items.Add(item_datum)
+					telecrystals += item_datum.cost
 			var/str_contents = list2text(crate_contents, ", ")
 			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR

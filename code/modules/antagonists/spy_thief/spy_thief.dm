@@ -135,13 +135,14 @@
 
 		var/list/redeemed_items = list()
 		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
-			var/obj/item_type = initial(redeemed_entry.item)
-			redeemed_items += list(
-				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
-					"name" = "[initial(redeemed_entry.name)]",
+			if(length(redeemed_entry.items) > 0)
+				var/obj/item_type = initial(redeemed_entry.items)
+				redeemed_items += list(
+					list(
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+						"name" = "[initial(redeemed_entry[1].name)]",
+					)
 				)
-			)
 
 		return list(
 			list(
