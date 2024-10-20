@@ -547,12 +547,16 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/turf/T = get_turf(target)
 		var/list/items = list()
 		var/obj/item/I
+		var/highest_weight = 0
 		for (var/i = 1 to min(10, length(T.contents)))
 			I = T.contents[i]
 			if (istype(I) && !I.anchored)
-				items += I
-		if (length(items) == 1)
-			I = items[1]
+				if (!("[I.w_class]" in items))
+					items["[I.w_class]"] = list()
+				items["[I.w_class]"] += I
+				highest_weight = max(highest_weight, I.w_class)
+		if (length(items))
+			I = pick(items["[highest_weight]"])
 			I.pick_up_by(src)
 			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
