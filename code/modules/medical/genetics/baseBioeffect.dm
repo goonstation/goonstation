@@ -337,6 +337,12 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		else
 			return cast_misfire(target)
 
+	logCast(atom/target)
+		if (target)
+			logTheThing(LOG_COMBAT, src.holder?.owner, "used the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
+		else if (!linked_power.ability_path:targeted)
+			logTheThing(LOG_COMBAT, src.holder?.owner, "used the [linked_power.name] power at [log_loc(src.holder?.owner)].")
+
 	proc/cast_misfire(atom/target)
 		if (target)
 			logTheThing(LOG_COMBAT, owner, "misfired the [linked_power.name] power on [constructTarget(target,"combat")] at [log_loc(target)].")
