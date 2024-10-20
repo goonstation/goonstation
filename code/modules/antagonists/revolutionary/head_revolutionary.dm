@@ -129,7 +129,7 @@
 		var/list/purchased_items = list()
 		for (var/datum/syndicate_buylist/purchased_item as anything in src.purchased_items)
 			if(length(purchased_item.items) > 0)
-				var/obj/item_type = initial(purchased_item.items)
+				var/obj/item_type = initial(purchased_item.items[1])
 				purchased_items += list(
 					list(
 						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
