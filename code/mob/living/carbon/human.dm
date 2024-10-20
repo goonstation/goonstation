@@ -1147,20 +1147,7 @@
 					living_target.give_item()
 					return
 			else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
-				var/turf/T = get_turf(target)
-				var/list/items = list()
-				var/obj/item/I
-				var/highest_weight = 0
-				for (var/i = 1 to min(10, length(T.contents)))
-					I = T.contents[i]
-					if (istype(I) && !I.anchored)
-						if (!("[I.w_class]" in items))
-							items["[I.w_class]"] = list()
-						items["[I.w_class]"] += I
-						highest_weight = max(highest_weight, I.w_class)
-				if (length(items))
-					I = pick(items["[highest_weight]"])
-					I.pick_up_by(src)
+				if (src.auto_pickup_item(target))
 					return
 			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)

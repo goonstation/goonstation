@@ -2363,3 +2363,18 @@
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
 			return
 	src.vision.set_scan(0)
+
+/// makes mob auto pick up the highest weight item on a turf. if multiple have that weight, last one in the order of contents var is picked
+/mob/living/proc/auto_pickup_item(atom/target_loc)
+	var/turf/T = get_turf(target_loc)
+	if (!T)
+		return
+	var/obj/item/picked_item
+	for (var/obj/item/I in T.contents)
+		if (I.anchored)
+			continue
+		if (I.w_class >= picked_item?.w_class) // order of contents is roughly random
+			picked_item = I
+	if (picked_item)
+		picked_item.pick_up_by(src)
+		return TRUE
