@@ -172,6 +172,10 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	desc = "About the most massively useful thing a bartender can have."
 	icon_state = "towel_black"
 
+/obj/item/cloth/towel/security
+	name = "security towel"
+	icon_state = "towel_security"
+
 ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 /obj/item/cloth/handkerchief
 	name = "handkerchief"
