@@ -1,4 +1,9 @@
 
+(t)mon oct 21 24
+(u)TDHooligan
+(p)21140
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Gang events provide less raw points.
 (t)sun oct 20 24
 (u)tarmunora
 (+)Each completed QM requisition contract will increase payouts of newly offered contracts by 15%
