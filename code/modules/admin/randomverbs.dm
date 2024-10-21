@@ -2013,7 +2013,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		qdel(src.mob)
+		src.mob = src.mob.ghost // switch to /mob/dead/observer
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
@@ -2029,8 +2029,7 @@
 		if (C?.mob)
 			M = C.mob
 
-	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b>"))
-	boutput(src, M.get_desc())
+	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 	O.insert_observer(M)
 
 
