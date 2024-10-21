@@ -152,7 +152,7 @@
 		name = "galactic coordinate disk - 'Derelict Station'"
 		target_name = "Derelict Station"
 
-	meat_derelict
+	syndicate_fenrir
 		name = "syndicate coordinate disk - 'Fenrir'"
 		icon_state = "datadisktelesyn"
 		target_name = "Syndicate Research Facility Fenrir"
