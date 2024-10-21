@@ -54776,10 +54776,6 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon/caves)
-"dVN" = (
-/obj/railing/red/reinforced,
-/turf/unsimulated/floor/black,
-/area/syndicate_fenrir)
 "dWx" = (
 /obj/fakeobject/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -57310,6 +57306,13 @@
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
+"fSb" = (
+/obj/machinery/conveyor/WE{
+	operating = 1
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor/plating,
+/area/syndicate_fenrir)
 "fSK" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/owllock)
@@ -69347,6 +69350,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"oGy" = (
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/black,
+/area/syndicate_fenrir)
 "oHc" = (
 /obj/machinery/chem_master,
 /obj/decal/stripe_delivery,
@@ -71619,7 +71626,14 @@
 /area/sim/racing_track)
 "qnV" = (
 /obj/table/wood/auto,
-/obj/item/gun/russianrevolver,
+/obj/item/reagent_containers/pill/tox{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 4
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_fenrir)
 "qnW" = (
@@ -113005,7 +113019,7 @@ bMw
 aaa
 nVH
 hpq
-dVN
+oGy
 gQT
 nVH
 vQn
@@ -116936,8 +116950,8 @@ nTB
 umi
 rWT
 jag
-qLO
 jag
+qLO
 nVH
 aaa
 nVH
@@ -117545,7 +117559,7 @@ icW
 nVH
 aaa
 nVH
-ktr
+fSb
 nVH
 aaa
 dTQ
