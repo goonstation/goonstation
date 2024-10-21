@@ -249,14 +249,7 @@ TYPEINFO(/area)
 	Exited(var/atom/movable/A)
 		if (ismob(A))
 			var/mob/M = A
-			if (M?.client)
-				if (sound_loop || sound_group)
-					SPAWN(1 DECI SECOND)
-						var/area/mobarea = get_area(M)
-						// If the area we are exiting has a sound loop but the new area doesn't
-						// we should stop the ambience or it will play FOREVER causing player insanity
-						if (M?.client && (mobarea?.sound_group != src.sound_group || isnull(src.sound_group)) && !mobarea?.sound_loop)
-							M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
+			src.cancel_sound_loop(M)
 
 		if ((isliving(A) || iswraith(A)) || locate(/mob) in A)
 			//world.log << "[src] exited by [A]"
@@ -265,6 +258,7 @@ TYPEINFO(/area)
 
 			if (length(exitingMobs) > 0)
 				for (var/mob/exitingM in exitingMobs)
+					src.cancel_sound_loop(exitingM)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
 						if( sanctuary && !blocked && !(the_area.sanctuary) )
@@ -283,6 +277,16 @@ TYPEINFO(/area)
 						//Put whatever you want here. See Entering above.
 
 		..()
+
+	/// Cancel a mob's ambient sound loop when leaving an area
+	proc/cancel_sound_loop(mob/M)
+		if (M?.client && (src.sound_loop || src.sound_group))
+			SPAWN(1 DECI SECOND)
+				var/area/mobarea = get_area(M)
+				// If the area we are exiting has a sound loop but the new area doesn't
+				// we should stop the ambience or it will play FOREVER causing player insanity
+				if (M?.client && (mobarea?.sound_group != src.sound_group || isnull(src.sound_group)) && !mobarea?.sound_loop)
+					M.client.playAmbience(src, AMBIENCE_LOOPING, 0) //pass 0 to cancel
 
 	/// Returns the turf in the middle of the area. Returns null if none can be found.
 	proc/find_middle(var/mustbeinside = 1)
@@ -837,6 +841,7 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 	icon_state = "shuttle2"
 	name = "Merchant Shuttle Dock"
 	teleport_blocked = TRUE
+	var/loc_string = "somewhere"
 
 /area/shuttle/merchant_shuttle/left_centcom
 	name = "Centcom Merchant Shuttle Dock Alpha"
@@ -856,10 +861,12 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
+	loc_string = "left"
 
 /area/shuttle/merchant_shuttle/right_station
 	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
+	loc_string = "right"
 
 /area/shuttle/spacebus
 	name = "Space Bus"
@@ -1798,7 +1805,7 @@ TYPEINFO(/area/station)
 	New()
 		..()
 		START_TRACKING
-		SPAWN(5 SECONDS) // wait until world is actually loaded in lmao // ZEWAKA/INIT
+		SPAWN(3 SECONDS) // wait until world is actually loaded in lmao // ZEWAKA/INIT
 			initial_structure_value = calculate_structure_value()
 
 	Del()

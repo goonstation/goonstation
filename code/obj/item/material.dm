@@ -13,7 +13,7 @@
 	var/crystal = 0
 	var/powersource = 0
 	var/scoopable = 1
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = 50
 	event_handler_flags = USE_FLUID_ENTER
@@ -542,7 +542,7 @@
 	force = 5
 	throwforce = 5
 	g_amt = 3750
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
