@@ -10,7 +10,7 @@
 <p>A note will play approximately every half second.</p>
 <p>You can enable looping on the piano by using the piano key!</p>
 <p>The piano key will also let you reset everything on the piano (like a factory reset) if something goes really crazy.</p>
-<p>Both formats have three event types:</p>
+<p>There are three event types:</p>
 <ul style="padding-left: 20px;">
 	<li>Note</li>
 	<ul style="padding-left: 20px;">
@@ -27,7 +27,7 @@
 	</ul>
 </ul>
 
-<h2>Classic Format</h2>
+<h2>Format Details</h2>
 
 <p>Each event needs to be separated by a vertical pipe, like so: <code>A,B,F,3|B,B,F,3</code>.</p>
 
@@ -113,86 +113,6 @@
 	</ul>
 </ul>
 
-<h2>Dense Format</h2>
-
-<p>All events have no delimiter and are always three characters long.</p>
-<p>Unlike Classic Format's pipe (|) delimiter, there are no delimiters for this format.</p>
-
-<h3>Note</h3>
-
-<code>Q5!</code>
-
-<p>Note Name + Accidentals + Octave,Dynamics,Delay</p>
-
-<ul style="padding-left: 20px;">
-	<li>Note Name + Accidentals + Octave</li>
-	<ul style="padding-left: 20px;">
-		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
-		<li><code>!</code> corresponds to MIDI note number 21 (A0) while <code>x</code> to 108 (C8)</li>
-	</ul>
-	<li>Dynamics</li>
-	<ul style="padding-left: 20px;">
-		<li>Goes from char <code>!</code> (33) to char <code>I</code> (73)</li>
-		<li>Resulting loudness goes from 20 to 60</li>
-	</ul>
-	<li>Delay</li>
-	<ul style="padding-left: 20px;">
-		<li><b>Required</b></li>
-		<li>How long the note should rest for after playing</li>
-		<li>This is <b>NOT</b> the same as note length/duration</li>
-		<li><code>!</code> to play a concurrent note</li>
-		<li><code>"</code> is the default</li>
-		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
-		<li>Value goes from 0 to 80</li>
-	</ul>
-</ul>
-
-<h3>Rest</h3>
-
-<code>y!q</code>
-
-<p>y,2nd Digit,1st Digit</p>
-
-<ul style="padding-left: 20px;">
-	<li>y</li>
-	<ul style="padding-left: 20px;">
-		<li>An indicator that this is a rest note</li>
-		<li>Must <b>not</b> be another character</li>
-	</ul>
-	<li>Delay</li>
-	<ul style="padding-left: 20px;">
-		<li><b>Required</b></li>
-		<li>How long to rest for</li>
-		<li>The first digit and last digit (base88) are used to get a base10 number</li>
-		<li>Value goes from 1 to 1000</li>
-	</ul>
-</ul>
-
-<h3>Timing</h3>
-
-<code>z!,</code>
-
-<p>z,Filler,Timing</p>
-
-<ul style="padding-left: 20px;">
-	<li>z</li>
-	<ul style="padding-left: 20px;">
-		<li>An indicator that this sets the time</li>
-		<li>Must <b>not</b> be another character</li>
-	</ul>
-	<li>Filler</li>
-	<ul style="padding-left: 20px;">
-		<li>It can be any allowed character</li>
-		<li>Is not used</li>
-	</ul>
-	<li>Timing</li>
-	<ul style="padding-left: 20px;">
-		<li>The new timing</li>
-		<li>Measured in centiseconds</li>
-		<li>Must be between 10 and 50</li>
-	</ul>
-</ul>
-
 <h2>Limitations</h2>
 
 <ul style="padding-left: 20px;">
@@ -240,12 +160,7 @@
 	<li>A lot of horrible mechanical noise followed by a complete shutdown means that the tempo you tried to input was too fast or slow.</li>
 	<li>Ratcheting followed by a complete shutdown means that you forgot to input a piece of a note cluster somewhere.</li>
 	<li>A lot of noise followed by a count of beeps means that a note you tried to play doesn't exist. The number of beeps is the position of the note.</li>
-	<li>A loud grinding noise, one/more boops, and one/more beeps mean that the piano encountered an error while processing your input.</li>
-	<ul style="padding-left: 20px;">
-		<li>Beeps indicate the character postion where the error occurred</li>
-		<li>a boop means your Timing event's value was too high or too low</li>
-		<li>2 boops means an event's characters were outside the allowed range</li>
-	</ul>
+	<li>A loud grinding noise, followed by a boop means your Timing event's value was too high or too low.</li>
 	<li>If the song ends earlier than expected, make sure that you don't have any double vertical bars in your input.</li>
 	<li>And remember, if things are funky and not working, use your piano reset key!</li>
 </ul>
