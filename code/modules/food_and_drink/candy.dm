@@ -149,6 +149,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 						"corpse flower", "corpse", "cow dung", "rot", "tar", "ham", "bee", "quark-gluon plasma", "heat death", "gooncode")
 	var/good_phrases = list ("Yum", "Wow", "MMM", "Delicious", "Scrumptious", "Fantastic", "Oh yeah")
 	var/bad_phrases = list("Oh god", "Jeez", "Ugh", "Blecch", "Holy crap that's awful", "What the hell?", "*HURP*", "Phoo")
+	//pool 1 is slightly more likely to occur than pool 2
+	var/reagent_pool1 = list("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate")
+	var/reagent_pool2 = list("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard")
 
 	heal(mob/M)
 		..()
@@ -167,10 +170,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			if (!src.reagents) return
 			var/reagent = null
 			if (prob(33))
-				reagent = pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease", "ethanol", "chickensoup", "vanilla", "cornsyrup", "chocolate")
+				reagent = pick(reagent_pool1)
 				src.heal_amt = 1
 			else if (prob(33))
-				reagent = pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease", "yuck", "carbon", "salt", "pepper", "ketchup", "mustard")
+				reagent = pick(reagent_pool2)
 				src.heal_amt = 0
 
 			var/datum/reagent/current = reagents_cache[reagent]
@@ -199,10 +202,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			if (!src.reagents) return
 			var/reagent = null
 			if (prob(12))
-				reagent = pick("milk", "coffee", "VHFCS", "gravy", "fakecheese", "grease")
+				reagent = pick(reagent_pool1)
 				src.heal_amt = 1
 			else if (prob(12))
-				reagent = pick("bilk", "beff", "vomit", "gvomit", "porktonium", "badgrease")
+				reagent = pick(reagent_pool2)
 				src.heal_amt = 0
 			else
 				if (length(all_functional_reagent_ids) > 0)
