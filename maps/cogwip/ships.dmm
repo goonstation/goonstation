@@ -10738,7 +10738,7 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,

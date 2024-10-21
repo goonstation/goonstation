@@ -1388,7 +1388,7 @@
 	else
 		. = "<span class='name' data-ctx='\ref[src.mind]'>"
 	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-		if (src.wear_id)
+		if (src.wear_id && length(src.wear_id:registered))
 			if (just_name_itself)
 				return src.wear_id:registered
 			. += "[src.wear_id:registered]</span>"
@@ -1647,7 +1647,7 @@
 				rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 			else
 				if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-					if (src.wear_id)
+					if (src.wear_id && src.wear_id:registered)
 						rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 					else
 						rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
@@ -1666,7 +1666,7 @@
 		rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]")
 	else
 		if (src.wear_mask && src.wear_mask.vchange)//(istype(src:wear_mask, /obj/item/clothing/mask/gas/voice))
-			if (src.wear_id)
+			if (src.wear_id && length(src.wear_id:registered))
 				rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]")
 			else
 				rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]")

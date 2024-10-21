@@ -1,5 +1,26 @@
 
+(t)sun oct 20 24
+(u)JORJ949
+(p)20898
+(e)🆕⚖💡|C-Feature, C-Balance, A-Station-Systems
+(*)Three people with Security Equipment access can now revoke armory access.
+(t)sat oct 19 24
+(u)JORJ949
+(p)20985
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added a portable record player in the Cairngorm's radio room and Radio Host traitor uplinks.
+(u)LeahTheTech
+(+)The Matrix Flopout perk now plays a musical sting each time you successfully dodge something with it (only plays in your head, because you think you look a lot cooler than you do).
+(+)Automatic brig lockers now pop open when the timer expires.
+(u)Jan.antilles
+(p)20799
+(e)🎨|C-Sprites
+(*)Two new items are available as Spacebux purchases: the Dyeable Beret and the Dyeable Cardigan! They can be dyed with Hair Dye bottles from the Barbershop.
 (t)fri oct 18 24
+(u)gus
+(p)21100
+(e)🪲⚗|C-Bug, A-Chemistry
+(+)nanotrasen has replaced defective luminol bottles which were found to be full of headlight fluid
 (u)Egregorious
 (p)21047
 (e)🔄📄🌱|C-Rework, A-UI, A-Hydroponics
