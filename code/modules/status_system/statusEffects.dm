@@ -2225,6 +2225,7 @@
 		. = ..()
 		if(ishuman(owner))
 			H = owner
+			H.add_stam_mod_max("stam_filthy", -5)
 
 	onUpdate(timePassed)
 		. = ..()
@@ -2235,6 +2236,7 @@
 		. = ..()
 		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.setStatus("rancid", null)
+			H.remove_stam_mod_max("stam_filthy")
 
 /datum/statusEffect/rancid
 	id = "rancid"
@@ -2248,6 +2250,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+			M.add_stam_mod_max("stam_rancid", -35)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
@@ -2255,6 +2258,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+			M.remove_stam_mod_max("stam_rancid")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/fragrant
