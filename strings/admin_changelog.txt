@@ -1,3 +1,6 @@
+(t)mon oct 21 24
+(u)Flourish
+(*)Added a save art build mode for saving floor art. It specifically looks for /obj/decal/cleanable/writing. Please report any issues, ty.
 (t)mon oct 07 24
 (u)Sovexe
 (*)Added a new build mode tool Visual Mirror Setup to aid in the setup of adhoc visual mirror zones for advanced gimmicks. Use with care.
