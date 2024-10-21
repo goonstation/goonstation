@@ -191,34 +191,6 @@
 			else
 				return 0
 
-/* FENRIR DIALOGUE BELOW */
-
-/datum/dialogueMaster/telescopeFenrir
-	dialogueName = "Syndicate Research Facility Fenrir"
-	start = /datum/dialogueNode/telFenrirStart
-	visibleDialogue = 0
-
-/datum/dialogueNode
-	telFenrirStart
-		nodeImage = "valiantStatic.png"
-		nodeText = "An SOS issued from a syndicate facility AI, why they would be calling for help on a NanoTrasen line remains unclear"
-		linkText = "..."
-		links = list(/datum/dialogueNode/telFenrirEnable)
-
-	telFenrirEnable
-		linkText = "Save the location."
-		nodeText = "The location is now available at the long-range teleporter."
-
-		onActivate(var/client/C)
-			if(!special_places.Find("Syndicate Research Facility Fenrir"))
-				special_places.Add("Syndicate Research Facility Fenrir")
-			return
-
-		canShow(var/client/C)
-			if(!special_places.Find("Syndicate Research Facility Fenrir"))
-				return 1
-			else
-				return 0
 
 #ifdef ENABLE_ARTEMIS
 /* Artemis Dialogue */

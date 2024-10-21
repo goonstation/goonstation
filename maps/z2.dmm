@@ -54776,6 +54776,10 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon/caves)
+"dVN" = (
+/obj/railing/red/reinforced,
+/turf/unsimulated/floor/black,
+/area/syndicate_fenrir)
 "dWx" = (
 /obj/fakeobject/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -69540,7 +69544,6 @@
 	},
 /area/sim/racing_track)
 "oQW" = (
-/obj/deployable_turret/syndicate/active,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -69550,6 +69553,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/deployable_turret/syndicate/active/no_interacting,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_fenrir)
 "oSa" = (
@@ -76244,11 +76248,11 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/deployable_turret/syndicate/active,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/deployable_turret/syndicate/active/no_interacting,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_fenrir)
 "tNm" = (
@@ -113001,7 +113005,7 @@ bMw
 aaa
 nVH
 hpq
-gQT
+dVN
 gQT
 nVH
 vQn

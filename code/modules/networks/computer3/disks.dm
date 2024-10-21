@@ -152,6 +152,10 @@
 		name = "galactic coordinate disk - 'Derelict Station'"
 		target_name = "Derelict Station"
 
+	meat_derelict
+		name = "syndicate coordinate disk - 'Fenrir'"
+		icon_state = "datadisktelesyn"
+		target_name = "Syndicate Research Facility Fenrir"
 
 /obj/item/disk/data/fixed_disk
 	name = "Storage Drive"

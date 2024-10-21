@@ -94,17 +94,6 @@
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
-/datum/telescope_event/fenrir
-	name = "Syndicate Research Facility Fenrir"
-	name_undiscovered = "SOS Signal"
-	id = "fr"
-	size = 20
-	tags = TAG_TELEPORT_LOC
-
-	New()
-		..()
-		telescopeDialogue = new/datum/dialogueMaster/telescopeFenrir(src)
-
 #ifdef ENABLE_ARTEMIS
 /datum/telescope_event/artemis
 	name = "Artemis"
