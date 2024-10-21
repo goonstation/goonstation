@@ -408,8 +408,8 @@ TYPEINFO(/obj/item/baton/ntso)
 /obj/item/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
-	icon_state = "ntso_baton-c"
-	item_state = "ntso-baton-c"
+	icon_state = "ntso-baton-a-1"
+	item_state = "ntso-baton-a"
 	force = 7
 	icon_on = "ntso-baton-a-1"
 	icon_off = "ntso-baton-c"
@@ -418,10 +418,10 @@ TYPEINFO(/obj/item/baton/ntso)
 	item_off = "ntso-baton-c"
 	var/item_off_open = "ntso-baton-d"
 	flick_baton_active = "ntso-baton-a-1"
-	w_class = W_CLASS_SMALL	//2 when closed, 4 when extended
+	w_class = W_CLASS_NORMAL	//2 when closed, 4 when extended
 	can_swap_cell = 0
 	rechargable = 0
-	is_active = FALSE
+	is_active = TRUE
 	// stamina_based_stun_amount = 110
 	cost_normal = 25 // Cost in PU. Doesn't apply to cyborgs.
 	cell_type = /obj/item/ammo/power_cell/self_charging/ntso_baton
@@ -430,7 +430,7 @@ TYPEINFO(/obj/item/baton/ntso)
 	item_special_path = /datum/item_special/spark/ntso
 
 	//bascially overriding is_active, but it's kinda hacky in that they both are used jointly
-	var/state = EXTENDO_BATON_CLOSED_AND_OFF
+	var/state = EXTENDO_BATON_OPEN_AND_ON
 
 	//change for later for more interestings whatsits
 	// can_stun(var/requires_electricity = 0, var/amount = 1, var/mob/user)
@@ -522,3 +522,4 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.is_active = FALSE
 		usr?.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
+
