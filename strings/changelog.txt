@@ -1,4 +1,9 @@
 
+(t)sun oct 20 24
+(u)JORJ949
+(p)20898
+(e)🆕⚖💡|C-Feature, C-Balance, A-Station-Systems
+(*)Three people with Security Equipment access can now revoke armory access.
 (t)sat oct 19 24
 (u)JORJ949
 (p)20985
