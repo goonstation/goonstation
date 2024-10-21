@@ -1,5 +1,7 @@
 
 (t)sun oct 20 24
+(u)tarmunora
+(+)Each completed QM requisition contract will increase payouts of newly offered contracts by 20%
 (u)JORJ949
 (p)20898
 (e)🆕⚖💡|C-Feature, C-Balance, A-Station-Systems
