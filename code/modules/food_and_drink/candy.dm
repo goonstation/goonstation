@@ -182,11 +182,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				if(src.reagents.maximum_volume - src.reagents.total_volume < 10)
 					src.reagents.maximum_volume += 10
 				src.reagents.add_reagent(reagent, 10)
-				src.food_color = rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255))
-				src.icon += src.food_color
+				src.icon += rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255))
 			else // no flavouring? Pick a random colour!
-				src.food_color = random_saturated_hex_color()
-				src.icon += src.food_color
+				src.icon += random_saturated_hex_color()
 
 
 
@@ -219,8 +217,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				if(src.reagents.maximum_volume - src.reagents.total_volume < 50)
 					src.reagents.maximum_volume += 50
 				src.reagents.add_reagent(reagent, 50)
-				src.food_color = rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255))
-				src.icon += src.food_color // apparently this is a thing you can do?  neat!
+				src.icon += rgb(current.fluid_r, current.fluid_g, current.fluid_b, max(current.transparency,255)) // apparently this is a thing you can do?  neat!
 
 
 /obj/item/kitchen/everyflavor_box
