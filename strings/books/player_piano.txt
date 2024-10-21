@@ -70,7 +70,7 @@
 		<li>This is <b>NOT</b> the same as note length/duration</li>
 		<li>0 to play a concurrent note</li>
 		<li>Defaults to 1</li>
-		<li>Value goes from 0 to 80</li>
+		<li>Value goes from 0 to 100</li>
 	</ul>
 </ul>
 
