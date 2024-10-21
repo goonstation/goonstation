@@ -4,7 +4,7 @@
 
 <p>It takes raw text that you input through the interface and turns it into notes!</p>
 <p>A note will play approximately every half second.</p>
-<p>Both formats have three event types:</p>
+<p>There are three event types:</p>
 <ul style="padding-left: 20px;">
 	<li>Note</li>
 	<ul style="padding-left: 20px;">
@@ -64,7 +64,7 @@
 	</ul>
 </ul>
 
-<h2>Classic Format</h2>
+<h2>Format Details</h2>
 
 <p>Each event needs to be separated by a vertical pipe, like so: <code>A,B,F,3|B,B,F,3</code>.</p>
 
@@ -107,7 +107,7 @@
 		<li>This is <b>NOT</b> the same as note length/duration</li>
 		<li>0 to play a concurrent note</li>
 		<li>Defaults to 1</li>
-		<li>Value goes from 0 to 80</li>
+		<li>Value goes from 0 to 100</li>
 	</ul>
 </ul>
 
@@ -141,86 +141,6 @@
 	<li>timing</li>
 	<ul style="padding-left: 20px;">
 		<li>Must be the literal word <code>timing</code></li>
-	</ul>
-	<li>Timing</li>
-	<ul style="padding-left: 20px;">
-		<li>The new timing</li>
-		<li>Measured in centiseconds</li>
-		<li>Must be between 10 and 50</li>
-	</ul>
-</ul>
-
-<h2>Dense Format</h2>
-
-<p>All events have no delimiter and are always three characters long.</p>
-<p>Unlike Classic Format's pipe (|) delimiter, there are no delimiters for this format.</p>
-
-<h3>Note</h3>
-
-<code>Q5!</code>
-
-<p>Note Name + Accidentals + Octave,Dynamics,Delay</p>
-
-<ul style="padding-left: 20px;">
-	<li>Note Name + Accidentals + Octave</li>
-	<ul style="padding-left: 20px;">
-		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
-		<li><code>!</code> corresponds to MIDI note number 21 (A0) while <code>x</code> to 108 (C8)</li>
-	</ul>
-	<li>Dynamics</li>
-	<ul style="padding-left: 20px;">
-		<li>Goes from char <code>!</code> (33) to char <code>I</code> (73)</li>
-		<li>Resulting loudness goes from 20 to 60</li>
-	</ul>
-	<li>Delay</li>
-	<ul style="padding-left: 20px;">
-		<li><b>Required</b></li>
-		<li>How long the note should rest for after playing</li>
-		<li>This is <b>NOT</b> the same as note length/duration</li>
-		<li><code>!</code> to play a concurrent note</li>
-		<li><code>"</code> is the default</li>
-		<li>Goes from char <code>!</code> (33) to char <code>x</code> (120)</li>
-		<li>Value goes from 0 to 80</li>
-	</ul>
-</ul>
-
-<h3>Rest</h3>
-
-<code>y!q</code>
-
-<p>y,2nd Digit,1st Digit</p>
-
-<ul style="padding-left: 20px;">
-	<li>y</li>
-	<ul style="padding-left: 20px;">
-		<li>An indicator that this is a rest note</li>
-		<li>Must <b>not</b> be another character</li>
-	</ul>
-	<li>Delay</li>
-	<ul style="padding-left: 20px;">
-		<li><b>Required</b></li>
-		<li>How long to rest for</li>
-		<li>The first digit and last digit (base88) are used to get a base10 number</li>
-		<li>Value goes from 1 to 1000</li>
-	</ul>
-</ul>
-
-<h3>Timing</h3>
-
-<code>z!,</code>
-
-<p>z,Filler,Timing</p>
-
-<ul style="padding-left: 20px;">
-	<li>z</li>
-	<ul style="padding-left: 20px;">
-		<li>An indicator that this sets the time</li>
-		<li>Must <b>not</b> be another character</li>
-	</ul>
-	<li>Filler</li>
-	<ul style="padding-left: 20px;">
-		<li>It can be any allowed character</li>
-		<li>Is not used</li>
 	</ul>
 	<li>Timing</li>
 	<ul style="padding-left: 20px;">
