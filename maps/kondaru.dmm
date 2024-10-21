@@ -50473,7 +50473,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "qVn" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1

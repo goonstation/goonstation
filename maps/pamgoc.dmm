@@ -29970,7 +29970,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "bvw" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1

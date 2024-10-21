@@ -45807,7 +45807,7 @@
 /turf/space,
 /area/syndicate_station/battlecruiser)
 "djb" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/instant,
 /turf/unsimulated/floor/black,
 /area/sim/racing_track)
 "djc" = (
@@ -60639,7 +60639,7 @@
 /obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/instant,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "iPZ" = (

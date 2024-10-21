@@ -21417,7 +21417,7 @@
 	operating = 1;
 	move_lag = 15
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "tBH" = (

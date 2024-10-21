@@ -24855,7 +24855,7 @@
 	name = "Pasiphae disposal belt";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
 "krU" = (
@@ -51653,7 +51653,7 @@
 	move_lag = 6;
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "vZi" = (

@@ -14697,7 +14697,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bCB" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 15
@@ -30930,7 +30930,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "laX" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/NS{
 	id = "zetadisposals";
 	move_lag = 15
