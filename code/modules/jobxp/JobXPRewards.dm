@@ -260,28 +260,6 @@ mob/verb/checkrewards()
 
 //Botanist End
 
-/datum/jobXpReward/HeadofSecurity/shoes
-	name = "Military Shoes"
-	desc = "Show the clown REAL fashion."
-	required_levels = list("Head of Security"=0)
-	claimable = 1
-	var/path_to_spawn = /obj/item/clothing/shoes/clown_shoes/military
-
-	activate(var/client/C)
-		var/shoes = C.mob.find_type_in_hand(/obj/item/clothing/shoes/clown_shoes)
-
-		if (shoes)
-			C.mob.remove_item(shoes)
-			qdel(shoes)
-		else
-			boutput(C.mob, "You need to be holding clown shoes in order to claim this reward")
-			return
-		var/obj/item/I = new path_to_spawn()
-		I.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand_or_drop(I)
-		playsound(C.mob, 'sound/items/graffitispray3.ogg', 100, TRUE)
-		boutput(C.mob, "You spraypaint the clown shoes in a sleek black!")
-
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
 	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
@@ -501,27 +479,6 @@ mob/verb/checkrewards()
 	icon_state = "?"
 
 /////////////CLOWN////////////////
-/datum/jobXpReward/clownshoes
-	name = "Heavy Clown Boots"
-	desc = "Show the HoS REAL fashion."
-	required_levels = list("Clown"=0)
-	claimable = 1
-	var/path_to_spawn = /obj/item/clothing/shoes/swat/heavy/clown
-
-	activate(var/client/C)
-		var/shoes = C.mob.find_type_in_hand(/obj/item/clothing/shoes/swat/heavy)
-
-		if (shoes)
-			C.mob.remove_item(shoes)
-			qdel(shoes)
-		else
-			boutput(C.mob, "You need to be holding heavy military boots in order to claim this reward")
-			return
-		var/obj/item/I = new path_to_spawn()
-		I.set_loc(get_turf(C.mob))
-		C.mob.put_in_hand_or_drop(I)
-		boutput(C.mob, "You cover the heavy military boots in crayon!")
-
 /datum/jobXpReward/clown1
 	name = "Special Crayon"
 	desc = "Spin it and watch it work its \"Magic\"!"

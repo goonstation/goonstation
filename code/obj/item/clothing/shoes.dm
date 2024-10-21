@@ -312,6 +312,15 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 						return
 			else
 				boutput(user, SPAN_ALERT("You aren't funny enough to do that. Wait, did the shoes just laugh at you?"))
+		else if(istype(W, /obj/item/spray_paint_graffiti) && !(istype(src, /obj/item/clothing/shoes/clown_shoes/military)))
+			if (user.traitHolder.hasTrait("training_security"))
+				var/obj/item/I = new /obj/item/clothing/shoes/clown_shoes/military()
+				I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel like insulting the clown like this."))
 		else
 			return ..()
 
@@ -490,6 +499,19 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_sound = "step_heavyboots"
 	step_priority = STEP_PRIORITY_LOW
 	tooltip_flags = REBUILD_DIST | REBUILD_USER
+
+	attackby(obj/item/W, mob/living/user)
+		if(istype(W, /obj/item/pen/crayon) && !(istype(src, /obj/item/clothing/shoes/swat/heavy/clown)))
+			if (user.traitHolder.hasTrait("training_clown"))
+				var/obj/item/I = new /obj/item/clothing/shoes/swat/heavy/clown()
+				I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel brave enough to do this."))
+		else
+			return ..()
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
