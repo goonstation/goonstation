@@ -2013,9 +2013,9 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		var/mob/dead/target_observer/to_delete = src.mob
+		var/mob/dead/target_observer/old_mob = src.mob
 		src.mob = src.mob.ghost // switch our mob to /mob/dead/observer
-		qdel(to_delete) // so we don't leave a bunch of these empty observers inside mobs
+		qdel(old_mob) // so we don't leave a bunch of these empty observers inside mobs
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
