@@ -191,7 +191,6 @@
 			else
 				return 0
 
-
 #ifdef ENABLE_ARTEMIS
 /* Artemis Dialogue */
 
