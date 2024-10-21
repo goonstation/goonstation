@@ -78,8 +78,8 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			for (var/obj/item/I in src.contents)
 				if (istype(I, /obj/item/clothing))
 					var/obj/item/clothing/C = I
-					C.stains = list("damp")
-					C.UpdateName()
+					C.clean_stains()
+					C.add_stain(/datum/stain/damp)
 				I.clean_forensic()
 			if (src.occupant && ishuman(src.occupant))
 				H.sims?.affectMotive("Hygiene", 100)
@@ -94,7 +94,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			for (var/obj/item/item in src.contents)
 				if (istype(item, /obj/item/clothing))
 					var/obj/item/clothing/clothing = item
-					clothing.stains = null
+					clothing.clean_stains()
 					clothing.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
 					clothing.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					clothing.UpdateName()
