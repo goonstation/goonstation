@@ -592,6 +592,7 @@
 						if(AID_CONTRACT) src.aid_contracts_active--
 						if(SCI_CONTRACT) src.sci_contracts_active--
 					duckets += contract.payout
+					contract.mult *= 1.2
 					if(length(contract.item_rewarders))
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
