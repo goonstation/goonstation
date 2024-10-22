@@ -15864,7 +15864,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/disposal)
 "dHR" = (

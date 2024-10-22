@@ -75033,7 +75033,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "xpe" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1

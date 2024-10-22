@@ -51404,7 +51404,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/cable{
 	icon_state = "4-8"
 	},

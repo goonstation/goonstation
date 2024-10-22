@@ -54698,7 +54698,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "qat" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1

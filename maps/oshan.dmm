@@ -26616,7 +26616,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bTC" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
