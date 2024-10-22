@@ -1,4 +1,9 @@
 
+(t)tue oct 22 24
+(u)glowbold
+(p)21147
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Examining a vehicle with an open cabin, like a segway or floor buffer, will show you the occupant's name.
 (t)mon oct 21 24
 (u)LeahTheTech
 (+)Air monitors now glow in the dark and flash angrily when the air makes them sad.
