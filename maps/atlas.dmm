@@ -222,6 +222,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "abh" = (
@@ -9587,6 +9590,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -10975,6 +10981,10 @@
 	name = "Chamber Two Inlet"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -12975,6 +12985,10 @@
 /area/station/turret_protected/ai)
 "gJC" = (
 /obj/storage/crate/furnacefuel,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -13146,6 +13160,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"hep" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "hfu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -13544,6 +13565,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
 /turf/simulated/floor/red,
 /area/station/security/equipment)
@@ -17340,6 +17364,10 @@
 	dir = 4
 	},
 /obj/machinery/portable_reclaimer,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -18884,6 +18912,9 @@
 /obj/item/scissors/surgical_scissors,
 /obj/item/surgical_spoon,
 /obj/item/surgical_spoon,
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "pqD" = (
@@ -21560,6 +21591,10 @@
 	pixel_y = 5;
 	print_id = "Bridge"
 	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -15
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -22727,6 +22762,10 @@
 	},
 /obj/cable/blue,
 /obj/machinery/power/data_terminal,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 14
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -24478,6 +24517,10 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 14
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -60407,7 +60450,7 @@ qHa
 ajZ
 aiZ
 opg
-nXE
+hep
 nXE
 mhR
 sDB
