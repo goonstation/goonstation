@@ -351,6 +351,14 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/computer/general_alert
+	name = "general alert computer"
+	icon_state = "alert:0"
+	circuit_type = /obj/item/circuitboard/general_alert
+	var/list/priority_alarms = list()
+	var/list/minor_alarms = list()
+	var/receive_frequency = FREQ_ALARM
+	var/respond_frequency = FREQ_PDA
+
 	New()
 		..()
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", frequency)
@@ -389,10 +397,49 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			minor_alarms += zone
 
 
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.) return
+
+		var/removing_zone = params["area_ckey"]
+
+		switch(action)
+			if("priority_clear")
+				for(var/zone in priority_alarms)
+					if(ckey(zone) == removing_zone)
+						priority_alarms -= zone
+			if("minor_clear")
+				for(var/zone in minor_alarms)
+					if(ckey(zone) == removing_zone)
+						minor_alarms -= zone
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "AlertComputer")
+			ui.open()
+
+	ui_data(mob/user)
+		. = ..()
+
+		.["PriorityList"] = list()
+		for(var/alarm in src.priority_alarms)
+			.["PriorityList"] += list(list(
+				"area_name" = alarm,
+				"area_ckey" = ckey(alarm)
+				))
+
+		.["MinorList"] = list()
+		for(var/alarm in src.minor_alarms)
+			.["MinorList"] += list(list(
+				"area_name" = alarm,
+				"area_ckey" = ckey(alarm)
+				))
+
 	attack_hand(mob/user)
-		user.Browse(return_text(),"window=computer")
-		src.add_dialog(user)
-		onclose(user, "computer")
+		if(..())
+			return
+		src.ui_interact(user)
 
 	process()
 		if(priority_alarms.len)
@@ -405,52 +452,6 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			icon_state = "alert:0"
 
 		..()
-
-		src.updateDialog()
-
-	proc/return_text()
-		var/priority_text
-		var/minor_text
-
-		if(priority_alarms.len)
-			for(var/zone in priority_alarms)
-				priority_text += "<FONT color='red'><B>[zone]</B></FONT>  <A href='?src=\ref[src];priority_clear=[ckey(zone)]'>X</A><BR>"
-		else
-			priority_text = "No priority alerts detected.<BR>"
-
-		if(minor_alarms.len)
-			for(var/zone in minor_alarms)
-				minor_text += "<B>[zone]</B>  <A href='?src=\ref[src];minor_clear=[ckey(zone)]'>X</A><BR>"
-		else
-			minor_text = "No minor alerts detected.<BR>"
-
-		var/output = {"<B>[name]</B><HR>
-<B>Priority Alerts:</B><BR>
-[priority_text]
-<BR>
-<HR>
-<B>Minor Alerts:</B><BR>
-[minor_text]
-<BR>"}
-
-		return output
-
-	Topic(href, href_list)
-		if(..())
-			return
-
-		if(href_list["priority_clear"])
-			var/removing_zone = href_list["priority_clear"]
-			for(var/zone in priority_alarms)
-				if(ckey(zone) == removing_zone)
-					priority_alarms -= zone
-
-		if(href_list["minor_clear"])
-			var/removing_zone = href_list["minor_clear"]
-			for(var/zone in minor_alarms)
-				if(ckey(zone) == removing_zone)
-					minor_alarms -= zone
-
 
 #define MAX_PRESSURE 20 * ONE_ATMOSPHERE
 /obj/machinery/computer/atmosphere/mixercontrol
