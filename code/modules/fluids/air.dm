@@ -88,7 +88,7 @@
 			var/turftemp = T.temperature
 			plist["override_can_burn"] = (src.group.reagents.total_temperature + turftemp + turftemp) / 3
 
-		src.group.reagents.reaction(M, TOUCH, react_volume/2, 0, paramslist = plist)
+		src.group.reagents.reaction(M, TOUCH, react_volume/2, 0, paramslist = plist, exception = exception)
 
 		if (!hasmask)
 			src.group.reagents.reaction(M, INGEST, react_volume/2,1,src.group.members.len, paramslist = plist, exception = exception)
