@@ -1,5 +1,7 @@
 
 (t)tue oct 22 24
+(u)tarmunora
+(+)Reduce req payout scaling from 15% to 10% multiplicitve, but added an additive bonus
 (u)JORJ949
 (p)21133
 (e)💅🐣|C-QoL, A-Respawning
