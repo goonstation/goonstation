@@ -70546,9 +70546,7 @@
 /area/sim/gunsim/lobby)
 "pyJ" = (
 /obj/table/syndicate/auto,
-/obj/item/requisition_token/syndicate{
-	pixel_y = 4
-	},
+/obj/item/requisition_token/broken,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_fenrir)
 "pyP" = (
