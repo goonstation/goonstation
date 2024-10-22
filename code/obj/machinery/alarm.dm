@@ -159,15 +159,14 @@
 	src.UpdateOverlays(light_ov, "light")
 
 	var/list/cameras = list()
-	for_by_tcl(C, /obj/machinery/camera)
-		if(get_area(C) == get_area(src))
-			cameras += C
-
 	for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 		if ((safe == ALARM_GOOD) && src.alertingAI)
 			aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
 			src.alertingAI = FALSE
 		else
+			for_by_tcl(C, /obj/machinery/camera)
+				if(get_area(C) == get_area(src))
+					cameras += C
 			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
 			src.alertingAI = TRUE
 
