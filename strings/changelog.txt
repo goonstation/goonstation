@@ -1,5 +1,9 @@
 
 (t)tue oct 22 24
+(u)JORJ949
+(p)21133
+(e)💅🐣|C-QoL, A-Respawning
+(+)Reorganized the NTSC's inventory, resulting in less clog.
 (u)glowbold
 (p)21147
 (e)💅📦|C-QoL, A-Game-Objects
