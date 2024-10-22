@@ -875,16 +875,20 @@
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
+	var/obj/item/handcuffs/cuffs
 
-	New(var/dur)
+	New(var/dur, var/Cuffs)
 		duration = dur
+		src.cuffs = Cuffs
+		if (src.cuffs.strength < 2) // weak cuffs are easier to remove
+			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE)
 		..()
 
 	onStart()
 		..()
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
-			duration = round(duration * H.handcuffs.remove_self_multiplier)
+			duration = round(duration * src.cuffs.remove_self_multiplier)
 
 		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"))
 
@@ -904,7 +908,7 @@
 		..()
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
-			H.handcuffs.drop_handcuffs(H)
+			src.cuffs.drop_handcuffs(H)
 			H.visible_message(SPAN_ALERT("<B>[H] attempts to remove the handcuffs!</B>"))
 			boutput(H, SPAN_NOTICE("You successfully remove your handcuffs."))
 			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")

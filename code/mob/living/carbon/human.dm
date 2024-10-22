@@ -2538,7 +2538,7 @@
 				calcTime *= 1.5
 			boutput(src, SPAN_ALERT("You attempt to remove your handcuffs. (This will take around [round(calcTime / 10)] seconds and you need to stand still)"))
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
-			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime), src)
+			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(calcTime, src.handcuffs), src)
 	return 0
 
 /mob/living/carbon/human/proc/spidergib()
