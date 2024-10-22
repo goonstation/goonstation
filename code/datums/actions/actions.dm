@@ -886,10 +886,7 @@
 
 	onStart()
 		..()
-		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
-			var/mob/living/carbon/human/H = owner
-			duration = round(duration * src.cuffs.remove_self_multiplier)
-
+		duration = round(duration * src.cuffs.remove_self_multiplier)
 		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"))
 
 	onUpdate()
