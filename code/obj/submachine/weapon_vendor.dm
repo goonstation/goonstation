@@ -129,7 +129,6 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
-		materiel_stock += new/datum/materiel/utility/sectowel
 
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
@@ -412,12 +411,6 @@
 	name = "RecordTrak Scannner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
-
-/datum/materiel/utility/sectowel
-	name = "Security Towel"
-	path = /obj/item/cloth/towel/security
-	description = "A towel used to clean off the clow- criminal blood!"
-
 
 /datum/materiel/ammo/medium
 	name = "Spare Power Cell"
