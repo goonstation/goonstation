@@ -662,6 +662,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "leaves"
 	random_dir = EAST
 
+/obj/decal/cleanable/wood_debris
+	name = "wood debris"
+	desc = "A few scattered pieces of wood that broke off something bigger."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "wood"
+	random_dir = NORTH
+
 /obj/decal/cleanable/rust
 	name = "rust"
 	desc = "That sure looks safe."
