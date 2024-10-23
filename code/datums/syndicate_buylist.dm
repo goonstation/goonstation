@@ -1057,7 +1057,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
-	//job = list("Rancher")
+	job = list("Rancher")
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR
 	max_buy = 3
