@@ -33846,18 +33846,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"fhD" = (
-/obj/machinery/computer3/generic/communications/lite{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/grey/side{
-	dir = 4
-	},
-/area/listeningpost)
 "fiN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33948,15 +33936,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/market)
-"fmZ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "fnw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -53537,7 +53516,7 @@ aOt
 aOM
 dBM
 aPo
-fhD
+aOM
 aPO
 aQy
 aPm
@@ -53839,7 +53818,7 @@ aOw
 aOQ
 aPf
 aOQ
-fmZ
+aOQ
 aQi
 aQL
 aPm

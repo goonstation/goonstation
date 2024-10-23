@@ -1523,14 +1523,14 @@
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "atj" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
-	},
-/obj/machinery/computer3/terminal/zeta{
-	dir = 4;
-	setup_os_string = "ZETA_MAINFRAME"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -5864,6 +5864,9 @@
 "bGV" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
 /area/listeningpost)
@@ -14200,9 +14203,6 @@
 /area/station/science/teleporter)
 "efX" = (
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
@@ -19455,9 +19455,6 @@
 "fNL" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "fNX" = (
@@ -25226,13 +25223,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "hyL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
 	name = "Listening Post"
-	},
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -43351,13 +43348,14 @@
 /turf/simulated/floor,
 /area/spacehabitat/pool)
 "nde" = (
-/obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/generic/communications/lite{
-	dir = 4
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -47876,15 +47874,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
-"owv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/black,
-/area/listeningpost)
 "owD" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen,
@@ -52750,6 +52739,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "pSb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/caution/south,
 /area/listeningpost)
 "pSn" = (
@@ -61773,9 +61765,6 @@
 "sGi" = (
 /obj/cable{
 	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/north,
 /area/listeningpost)
@@ -72485,8 +72474,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "vQU" = (
+/obj/cable,
 /obj/cable{
-	icon_state = "1-4"
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -160443,10 +160436,10 @@ iOW
 iOW
 iOW
 iOW
+spW
 hyL
-spW
-spW
-spW
+iOW
+iOW
 iOW
 iOW
 iOW
@@ -160745,7 +160738,7 @@ iOW
 hQU
 xti
 nQI
-owv
+uuX
 nde
 atj
 pnk

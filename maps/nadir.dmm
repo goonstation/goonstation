@@ -10271,7 +10271,6 @@
 /obj/cable/orange{
 	icon_state = "1-8"
 	},
-/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine/caution/north,
 /area/listeningpost/power)
 "eGe" = (
@@ -13922,9 +13921,6 @@
 	},
 /obj/cable{
 	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
@@ -21294,17 +21290,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "iWV" = (
+/obj/storage/crate/furnacefuel,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/computer3/generic/communications/lite{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/listeningpost/power)
 "iXa" = (
@@ -22766,7 +22756,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
 /turf/space/fluid/acid/clear,
 /area/space)
 "jBa" = (
@@ -51555,15 +51544,15 @@
 	name = "Security Overwatch"
 	})
 "vXy" = (
-/obj/machinery/power/apc/autoname_north/noaicontrol,
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
 	pixel_x = 7
+	},
+/obj/machinery/power/apc/autoname_north/noaicontrol,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
