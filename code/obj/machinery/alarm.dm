@@ -159,7 +159,8 @@
 	src.UpdateOverlays(light_ov, "light")
 
 	if ((safe == ALARM_GOOD) && src.alertingAI)
-		aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+			aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
 		src.alertingAI = FALSE
 	else
 		var/list/cameras = list()
