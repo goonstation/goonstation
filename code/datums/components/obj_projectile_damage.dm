@@ -15,12 +15,16 @@ TYPEINFO(/datum/component/obj_projectile_damage)
 	var/obj/O = parent
 	if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
 		var/gib_type = /obj/decal/cleanable/machine_debris
+		var/do_gib = TRUE
 		var/do_streak = TRUE
 		if (istype(O, /obj/structure/woodwall))
 			gib_type = /obj/decal/cleanable/wood_debris
 			do_streak = FALSE
+			if (istype(O, /obj/structure/woodwall/virtual))
+				do_gib = FALSE
 		if (O && (O._health/O._max_health) <= 0.5 && prob((1 - O._health/O._max_health) * 60))
-			var/obj/decal/cleanable/gib = make_cleanable(gib_type, O.loc)
+			if (do_gib)
+				var/obj/decal/cleanable/gib = make_cleanable(gib_type, O.loc)
 			if (do_streak)
 				gib.streak_cleanable()
 		hit_twitch(O)
