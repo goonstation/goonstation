@@ -1771,13 +1771,13 @@
 	name = "The Warrens"
 	})
 "aQL" = (
-/obj/machinery/computer3/generic/communications{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/communications/lite{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/pasiphae/bridge)
 "aRh" = (
@@ -5228,6 +5228,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
 /area/pasiphae/bridge)
@@ -19879,6 +19882,10 @@
 	dir = 4
 	},
 /area/station/security/main)
+"iqk" = (
+/obj/grille/steel/broken,
+/turf/space/fluid/acid,
+/area/space)
 "iqo" = (
 /obj/machinery/light{
 	dir = 8;
@@ -27666,6 +27673,17 @@
 "lAU" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
+"lBf" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/communications_dish,
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/power/data_terminal,
+/turf/space/fluid/acid,
+/area/space)
 "lBl" = (
 /obj/item/sheet/glass{
 	amount = 10
@@ -34411,6 +34429,13 @@
 	},
 /turf/simulated/floor/black/side,
 /area/pasiphae/crew)
+"oto" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/pasiphae/bridge)
 "oty" = (
 /obj/machinery/light/incandescent/netural,
 /obj/cable{
@@ -50622,6 +50647,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/pasiphae/bridge)
 "vDK" = (
@@ -50859,6 +50887,15 @@
 "vJk" = (
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
+"vJJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space/fluid/acid,
+/area/space)
 "vJO" = (
 /obj/rack,
 /obj/item/crowbar/red{
@@ -125547,8 +125584,8 @@ bzS
 bzS
 ljS
 bzS
-bzS
-bzS
+iqk
+iqk
 bzS
 rfC
 eAM
@@ -125849,10 +125886,10 @@ bzS
 ljS
 xTd
 bzS
-bzS
-bzS
-bzS
-rfC
+iqk
+lBf
+vJJ
+oto
 cqW
 vDI
 obF
@@ -126151,8 +126188,8 @@ ljS
 xTd
 xTd
 bzS
-bzS
-bzS
+iqk
+iqk
 bzS
 rfC
 rfC

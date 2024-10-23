@@ -29103,6 +29103,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "ccC" = (
@@ -32011,6 +32014,15 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"ddi" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/tech_outpost)
 "def" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/access/brig,
@@ -35901,6 +35913,16 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"icG" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer3/generic/communications/lite{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/tech_outpost)
 "idT" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -37156,6 +37178,17 @@
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/iss)
+"jST" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space/fluid,
+/area/space)
 "jTG" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -39553,9 +39586,21 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/yellow/side,
 /area/station/storage/eeva)
+"mVF" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/turf/space/fluid,
+/area/space)
 "mVP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/tech_outpost)
 "mWD" = (
 /obj/storage/closet/wardrobe/orange,
@@ -40934,6 +40979,13 @@
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
+"oLO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/tech_outpost)
 "oLQ" = (
 /obj/machinery/conveyor/SN{
 	id = "north";
@@ -44503,6 +44555,10 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/conveyor/EW/carousel,
+/turf/space/fluid,
+/area/space)
+"tWP" = (
+/obj/grille/steel,
 /turf/space/fluid,
 /area/space)
 "tWR" = (
@@ -91290,9 +91346,9 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+tWP
+tWP
+tWP
 aqn
 aqn
 aqn
@@ -91592,9 +91648,9 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+tWP
+mVF
+tWP
 aqn
 aqn
 aqn
@@ -91894,9 +91950,9 @@ aqn
 aqn
 aqn
 aqn
-aqn
-aqn
-aqn
+tWP
+jST
+tWP
 aqn
 aqn
 aqn
@@ -92197,7 +92253,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+jST
 aqn
 aqn
 aqn
@@ -92498,9 +92554,9 @@ aml
 aml
 aml
 aml
-aml
-aml
-aml
+mVP
+oLO
+mVP
 aml
 aml
 aml
@@ -92801,7 +92857,7 @@ cds
 cdy
 cde
 cdH
-ccT
+ddi
 ccA
 cee
 ceh
@@ -94603,7 +94659,7 @@ aqn
 aml
 aTj
 ccu
-ccC
+icG
 aml
 aTk
 cde
