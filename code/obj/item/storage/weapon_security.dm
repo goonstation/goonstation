@@ -57,7 +57,7 @@
 	desc = "A box containing a .38 caliber revolver and ammunition."
 	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
 	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
-	/obj/item/ammo/bullets/a38 = 3,\
+	/obj/item/ammo/bullets/a38 = 2,\
 	/obj/item/ammo/bullets/a38/stun = 2)
 
 /obj/item/storage/box/akm // cogwerks, terrorism update
@@ -106,8 +106,7 @@
 	name = ".38 AP ammo box"
 	icon_state = "revolver"
 	desc = "A box containing a couple of AP speedloaders for a .38 Special revolver."
-	spawn_contents = list(/obj/item/ammo/bullets/a38/AP = 3,\
-	/obj/item/ammo/bullets/a38 = 2)
+	spawn_contents = list(/obj/item/ammo/bullets/a38/AP = 3)
 
 /obj/item/storage/box/flaregun // For surplus crates (Convair880).
 	name = "flare gun box"
