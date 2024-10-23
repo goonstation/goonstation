@@ -2033,7 +2033,7 @@
 	},
 /area/space)
 "fT" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2076,7 +2076,7 @@
 /area/space)
 "ga" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -4233,7 +4233,7 @@
 	},
 /area/space)
 "lN" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/space)
@@ -4457,7 +4457,7 @@
 	name = "salvage belt - east";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/space)
@@ -10003,7 +10003,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -10387,7 +10387,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-	
+
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;
@@ -10738,7 +10738,7 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,

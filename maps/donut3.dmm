@@ -34762,7 +34762,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kxT" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SE{
 	id = "disposals";
 	move_lag = 30;

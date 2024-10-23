@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 /datum/syndicate_buylist/generic/sawfly
 	name = "Compact Sawfly"
 	item = /obj/item/old_grenade/sawfly/firsttime/withremote
-	cost = 2
+	cost = 1
 	vr_allowed = FALSE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -1038,6 +1038,16 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 4
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
+
+/datum/syndicate_buylist/traitor/record_player
+	name = "Portable Record player"
+	item = /obj/submachine/record_player/portable
+	cost = 2
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "A portable record player, so you can play tunes while committing crimes!"
+	job = list("Radio Show Host")
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/chicken_grenade
 	name = "Chicken Grenade"

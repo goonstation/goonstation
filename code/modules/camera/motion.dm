@@ -39,14 +39,14 @@
 /obj/machinery/camera/motion/proc/cancelAlarm()
 	if (detectTime == -1)
 		for (var/mob/living/silicon/aiPlayer in mobs)
-			if (camera_status) aiPlayer.cancelAlarm("Motion", src.loc.loc)
+			if (camera_status) aiPlayer.cancelAlarm("Motion", get_area(src))
 	detectTime = 0
 	return 1
 
 /obj/machinery/camera/motion/proc/triggerAlarm()
 	if (!detectTime) return 0
 	for (var/mob/living/silicon/aiPlayer in mobs)
-		if (camera_status) aiPlayer.triggerAlarm("Motion", src.loc.loc, src)
+		if (camera_status) aiPlayer.triggerAlarm("Motion", get_area(src), list(src))
 	detectTime = -1
 	return 1
 

@@ -43490,7 +43490,7 @@
 /area/station/maintenance/solar/east)
 "tel" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/wrestlemap)
 "ter" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -51404,7 +51404,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/cable{
 	icon_state = "4-8"
 	},
