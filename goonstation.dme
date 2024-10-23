@@ -253,7 +253,7 @@
 #include "code\datums\components\proximity.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\reagent_overlay.dm"
-#include "code\datums\components\secbot_command.dm"
+#include "code\datums\components\bot_command.dm"
 #include "code\datums\components\seedy.dm"
 #include "code\datums\components\self_destruct.dm"
 #include "code\datums\components\send_to_target_mob.dm"
