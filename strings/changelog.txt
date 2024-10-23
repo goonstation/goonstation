@@ -1,3 +1,9 @@
+
+(t)wed oct 23 24
+(u)JORJ949
+(p)21116
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added security towels found in the security apparel vendor
 (t)sat oct 23 24
 (u)Emily
 (*)Chicken Grenades now have a purchase limit of 3.
