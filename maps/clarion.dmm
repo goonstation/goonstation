@@ -12677,13 +12677,12 @@
 /turf/space,
 /area/space)
 "bKs" = (
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "A large rack of server modules.  It doesn't seem to be in service.";
-	icon = 'icons/obj/networked.dmi';
-	icon_state = "server0";
-	name = "downed server"
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/generic/communications/lite{
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/listeningpost/power)
@@ -30456,6 +30455,9 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light/small,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/circuit,
 /area/listeningpost/power)
 "oJh" = (

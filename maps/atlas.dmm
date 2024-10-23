@@ -7428,6 +7428,9 @@
 /obj/lattice,
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/space,
 /area/space)
 "aOh" = (
@@ -7438,6 +7441,9 @@
 	},
 /obj/machinery/computer/announcement/syndicate{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
@@ -9451,6 +9457,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/storage)
+"bjW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/wall/auto/adventure/fake_window,
+/area/listeningpost)
 "bke" = (
 /obj/disposalpipe/junction/middle/east,
 /obj/cable/blue{
@@ -12008,6 +12020,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -14358,6 +14373,16 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
 /turf/simulated/floor,
 /area/station/security/main)
+"iIy" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/communications/lite{
+	dir = 4
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost)
 "iIB" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -24677,6 +24702,16 @@
 	},
 /turf/simulated/floor/auto/grass,
 /area/station/crew_quarters/kitchen)
+"yhD" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/space)
 "yjT" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
@@ -96830,7 +96865,7 @@ aaa
 aaa
 aaa
 anB
-apP
+yhD
 ayf
 aaa
 aaa
@@ -97132,7 +97167,7 @@ aaa
 aaa
 agK
 ohq
-ohq
+bjW
 ohq
 aYB
 aaa
@@ -97435,7 +97470,7 @@ agK
 aNe
 aNO
 aOh
-aNO
+iIy
 aNe
 aYB
 aaa

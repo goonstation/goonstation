@@ -187,6 +187,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/caution/west,
 /area/listeningpost)
 "aaF" = (
@@ -43919,9 +43922,14 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "sCZ" = (
-/obj/machinery/light/incandescent{
-	dir = 1
+/obj/machinery/light{
+	dir = 4
 	},
+/obj/machinery/computer3/generic/communications/lite,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/caution/west,
 /area/listeningpost)
 "sDe" = (

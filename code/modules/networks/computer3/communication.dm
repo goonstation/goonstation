@@ -14,6 +14,7 @@
 	var/obj/item/peripheral/network/powernet_card/pnet_card = null
 	var/tmp/comm_net_id = null //The net id of our linked ~comm dish~
 	var/tmp/reply_wait = -1 //How long do we wait for replies? -1 is not waiting.
+	var/cant_recall = FALSE //can this program recall the shuttle
 
 	var/transmit_title = null
 
@@ -99,6 +100,10 @@
 							menu = MENU_CALL
 
 					if("recall")
+						if(src.cant_recall)
+							src.print_text("<b>Error:</b> Recall program not installed.")
+							return
+
 						if(!src.pnet_card)
 							src.print_text("<b>Error:</b> Network card required.")
 							src.master.add_fingerprint(usr)
@@ -379,6 +384,11 @@
 			src.print_text(dat)
 
 			return
+
+/datum/computer/file/terminal_program/communications/lite
+	name = "COMMaster Lite"
+	size = 14
+	cant_recall =TRUE
 
 #undef MENU_MAIN
 #undef MENU_CALL
