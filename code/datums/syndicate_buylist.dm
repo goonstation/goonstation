@@ -46,6 +46,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	var/category
 	/// Bitflags for what uplinks can buy this item (see `_std/defines/uplink.dm` for flags)
 	var/can_buy
+	/// The maximum amount a given uplink can buy this item
+	var/max_buy = INFINITY
 
 	/**
 	 * Runs on the purchase of the buylist datum
@@ -1055,9 +1057,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
-	job = list("Rancher")
+	//job = list("Rancher")
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR
+	max_buy = 3
 
 /datum/syndicate_buylist/traitor/fishing_rod
 	name = "Barbed Fishing Rod"
