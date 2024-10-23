@@ -158,10 +158,11 @@
 	light_ov.plane = PLANE_SELFILLUM
 	src.UpdateOverlays(light_ov, "light")
 
-	if ((safe == ALARM_GOOD) && src.alertingAI)
-		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
-			aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
-		src.alertingAI = FALSE
+	if (safe == ALARM_GOOD)
+		if (src.alertingAI)
+			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+				aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
+			src.alertingAI = FALSE
 	else
 		var/list/cameras = list()
 		for_by_tcl(C, /obj/machinery/camera)
