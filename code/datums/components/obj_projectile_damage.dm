@@ -23,9 +23,10 @@ TYPEINFO(/datum/component/obj_projectile_damage)
 			if (istype(O, /obj/structure/woodwall/virtual))
 				do_gib = FALSE
 		if (O && (O._health/O._max_health) <= 0.5 && prob((1 - O._health/O._max_health) * 60))
+			var/obj/decal/cleanable/gib = null
 			if (do_gib)
-				var/obj/decal/cleanable/gib = make_cleanable(gib_type, O.loc)
-			if (do_streak)
+				gib = make_cleanable(gib_type, O.loc)
+			if (gib && do_streak)
 				gib.streak_cleanable()
 		hit_twitch(O)
 		O.changeHealth(-round(((P.power/2)*P.proj_data.ks_ratio), 1.0))
