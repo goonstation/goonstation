@@ -680,7 +680,6 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		if (length(bots))
 			user.AddComponent(/datum/component/bot_command/security, bots, 3 SECONDS)
 
-#define CLEANBOT_ACQUIRE_TARGET_COOLDOWN "cleanbotacquiretarget"
 /obj/item/instrument/whistle/janitor
 	name = "janitor whistle"
 	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
