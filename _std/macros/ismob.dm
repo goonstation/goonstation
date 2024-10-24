@@ -52,6 +52,9 @@
 /// Returns true if this mob immune to breathing in smoke?
 #define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x) || x?.losebreath > 0))
 
+/// Returns true if this mob immune to breathing in miasma
+#define ismiasmaimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && x.wear_mask.c_flags & BLOCKMIASMA )))
+
 /// This is for objects which have some sort of prerequisite for people to use them. Allows you to bypass those checks if
 /// the user is the possessed version of the object being interacted with
 #define IS_LIVING_OBJECT_USING_SELF(x) (islivingobject(x) && x:possessed_thing == src)
