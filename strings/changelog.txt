@@ -1,5 +1,24 @@
 
+(t)wed oct 23 24
+(u)Emily
+(e)⚖|C-Balance
+(*)Chicken Grenades now have a purchase limit of 3.
+(+)Added support for maximum purchases of Traitor Items
+(u)JORJ949
+(p)21149
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs now receive atmospheric alerts from air alarms.
+(u)JORJ949
+(p)21116
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added security towels found in the security apparel vendor
 (t)tue oct 22 24
+(u)tarmunora
+(+)Reduce req payout scaling from 15% to 10% multiplicitve, but added an additive bonus
+(u)JORJ949
+(p)21133
+(e)💅🐣|C-QoL, A-Respawning
+(+)Reorganized the NTSC's inventory, resulting in less clog.
 (u)glowbold
 (p)21147
 (e)💅📦|C-QoL, A-Game-Objects
