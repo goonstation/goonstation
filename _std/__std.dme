@@ -27,6 +27,7 @@
 #include "defines\admin.dm"
 #include "defines\ai.dm"
 #include "defines\ailments.dm"
+#include "defines\alert.dm"
 #include "defines\antagonists.dm"
 #include "defines\announcement_origins.dm"
 #include "defines\artifacts.dm"

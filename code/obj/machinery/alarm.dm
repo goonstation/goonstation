@@ -167,16 +167,17 @@
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
+	alert_signal.data["command"] = "update_alert"
 	alert_signal.data["zone"] = alarm_zone
-	alert_signal.data["type"] = "Atmospheric"
+	alert_signal.data["type"] = ALERT_KIND_ATMOS
 
 	switch (alert_level)
 		if (ALARM_SEVERE)
-			alert_signal.data["alert"] = "severe"
+			alert_signal.data["alert"] = ALERT_SEVERITY_PRIORITY
 		if (ALARM_MINOR)
-			alert_signal.data["alert"] = "minor"
+			alert_signal.data["alert"] = ALERT_SEVERITY_MINOR
 		if (ALARM_GOOD)
-			alert_signal.data["alert"] = "reset"
+			alert_signal.data["alert"] = ALERT_SEVERITY_RESET
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
