@@ -36690,6 +36690,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -52278,7 +52279,7 @@
 /area/space)
 "ojy" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
