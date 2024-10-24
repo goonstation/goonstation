@@ -1,5 +1,9 @@
 
 (t)wed oct 23 24
+(u)Emily
+(e)⚖|C-Balance
+(*)Chicken Grenades now have a purchase limit of 3.
+(+)Added support for maximum purchases of Traitor Items
 (u)JORJ949
 (p)21149
 (e)🆕🤖|C-Feature, A-Silicons
@@ -8,10 +12,6 @@
 (p)21116
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
 (*)Added security towels found in the security apparel vendor
-(t)sat oct 23 24
-(u)Emily
-(*)Chicken Grenades now have a purchase limit of 3.
-(+)Added support for maximum purchases of Traitor Items
 (t)tue oct 22 24
 (u)tarmunora
 (+)Reduce req payout scaling from 15% to 10% multiplicitve, but added an additive bonus
