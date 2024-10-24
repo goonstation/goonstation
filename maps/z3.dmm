@@ -16033,6 +16033,11 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"cJJ" = (
+/obj/item/disk/data/floppy/lrt/syndicate_fenrir,
+/obj/table/syndicate/auto,
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
 "cLy" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
@@ -37689,7 +37694,7 @@ bgu
 wFJ
 bed
 bed
-vke
+cJJ
 mvO
 bdb
 vke

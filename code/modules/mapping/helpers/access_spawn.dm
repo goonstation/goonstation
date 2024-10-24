@@ -337,6 +337,12 @@
 	req_access = list(access_polarisimportant)
 	color = CARGO
 
+// Syndicate Research Facility
+/obj/mapping_helper/access/syndicateresearch
+	name = "syndicate research access spawn"
+	req_access = list(access_syndicate_research)
+	color = SECURITY
+	
 #undef MEDICAL
 #undef SECURITY
 #undef MORGUE_BLACK
