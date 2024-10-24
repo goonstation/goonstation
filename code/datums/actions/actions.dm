@@ -747,7 +747,7 @@
 						target.internal.add_fingerprint(owner)
 
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
-	duration = 40
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
@@ -821,7 +821,7 @@
 			O.show_message(SPAN_ALERT("<B>[owner] handcuffs [target]!</B>"), 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
-	duration = 70
+	duration = 7 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
@@ -871,22 +871,21 @@
 			logTheThing(LOG_COMBAT, owner, "removes [constructTarget(target,"combat")]'s handcuffs at [log_loc(owner)].")
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
-	duration = 600
+	duration = 60 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
-	var/obj/item/handcuffs/cuffs
 
-	New(var/dur, var/Cuffs)
+	New(var/dur)
 		duration = dur
-		src.cuffs = Cuffs
-		if (src.cuffs.strength < 2) // weak cuffs are easier to remove
-			REMOVE_FLAG(src.interrupt_flags, INTERRUPT_MOVE)
 		..()
 
 	onStart()
 		..()
-		duration = round(duration * src.cuffs.remove_self_multiplier)
+		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
+			var/mob/living/carbon/human/H = owner
+			duration = round(duration * H.handcuffs.remove_self_multiplier)
+
 		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"))
 
 	onUpdate()
@@ -905,7 +904,7 @@
 		..()
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
-			src.cuffs.drop_handcuffs(H)
+			H.handcuffs.drop_handcuffs(H)
 			H.visible_message(SPAN_ALERT("<B>[H] attempts to remove the handcuffs!</B>"))
 			boutput(H, SPAN_NOTICE("You successfully remove your handcuffs."))
 			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")

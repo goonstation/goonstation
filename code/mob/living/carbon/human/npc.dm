@@ -208,7 +208,7 @@
 		ai_target = null
 		ai_set_state(AI_PASSIVE)
 		if(src.canmove && !ai_busy)
-			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(1 MINUTE + rand(-10 SECONDS, 10 SECONDS), src.handcuffs), src)
+			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(1 MINUTE + rand(-10 SECONDS, 10 SECONDS)), src)
 	ai_move()
 
 	if(ai_target)

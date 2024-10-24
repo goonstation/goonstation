@@ -162,6 +162,7 @@
 	c_flags = ONBELT
 	m_amt = 200
 	amount = 10
+	remove_self_multiplier = 0.25
 	delete_on_last_use = TRUE
 
 /obj/item/handcuffs/tape_roll/crappy
@@ -178,5 +179,6 @@
 	name = "ziptie cuffs"
 	desc = "A wrist-binding tie made from a durable synthetic material.  Weaker than traditional handcuffs, but much more comfortable."
 	icon_state = "buddycuff"
+	remove_self_multiplier = 0.25
 	m_amt = 0
 	strength = 1
