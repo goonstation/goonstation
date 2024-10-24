@@ -113,7 +113,6 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 
 	New()
 		..()
-		var/num_letters = weighted_pick(list("3" = 10, "4" = 25,"5" = 60, "6" = 5))
 		if (!src.word_dict)
 			// need to account for words with no vowels
 			src.word_dict = dd_file2list("strings/letter_words_5.txt", " ")
