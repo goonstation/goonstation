@@ -68,9 +68,6 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/secure_data
 	name = "circuit board (secure data)"
 	computertype = /obj/machinery/computer/secure_data
-/obj/item/circuitboard/atmospherealerts
-	name = "circuit board (atmosphere alerts)"
-	computertype = /obj/machinery/computer/atmosphere/alerts
 /obj/item/circuitboard/atmospheresiphonswitch
 	name = "circuit board (atmosphere siphon control)"
 	computertype = /obj/machinery/computer/atmosphere/siphonswitch
@@ -81,7 +78,7 @@ TYPEINFO(/obj/item/circuitboard)
 	name = "circuit board (injector control)"
 	computertype = /obj/machinery/computer/general_air_control/fuel_injection
 /obj/item/circuitboard/general_alert
-	name = "circuit board (general alert)"
+	name = "circuit board (engineering alert)"
 	computertype = /obj/machinery/computer/general_alert
 /obj/item/circuitboard/pod
 	name = "circuit board (massdriver control)"

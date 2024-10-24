@@ -4258,11 +4258,11 @@ ABSTRACT_TYPE(/area/mining)
 		src.power_change()		// all machines set to current power level, also updates lighting icon
 
 /**
-  * Causes a power alert in the area. Notifies AIs.
+  * Causes a power alert in the area. Notifies AIs and updates alert computer
   */
-/area/proc/poweralert(var/state, var/source)
-	if (state != poweralm)
-		poweralm = state
+/area/proc/poweralert(state, source)
+	if (state != src.poweralm)
+		src.poweralm = state
 		var/list/cameras = list()
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
@@ -4271,6 +4271,16 @@ ABSTRACT_TYPE(/area/mining)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
+		var/datum/signal/alert_computer_signal = get_free_signal()
+		alert_computer_signal.source = source
+		alert_computer_signal.data["command"] = "update_alert"
+		alert_computer_signal.data["zone"] = src.name
+		alert_computer_signal.data["type"] = ALERT_KIND_POWER
+		if(state==1)
+			alert_computer_signal.data["alert"] = ALERT_SEVERITY_RESET
+		else
+			alert_computer_signal.data["alert"] = ALERT_SEVERITY_PRIORITY
+		radio_controller.get_frequency(FREQ_ALARM).post_packet_without_source(alert_computer_signal)
 	return
 
 /// This might be really stupid, but I can't think of a better way
@@ -4281,7 +4291,7 @@ ABSTRACT_TYPE(/area/mining)
 	return T?.z
 
 /**
-  * Causes a fire alert in the area if there is not one already set. Notifies AIs.
+  * Causes a fire alert in the area if there is not one already set. Notifies AIs and updates alert computers
   */
 /area/proc/firealert()
 	if(src.name == "Space" || src.name == "Ocean") //no fire alarms in space
@@ -4303,11 +4313,15 @@ ABSTRACT_TYPE(/area/mining)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
-			a.triggerAlarm("Fire", src, cameras, src)
+		var/datum/signal/alert_computer_signal = get_free_signal()
+		alert_computer_signal.data["command"] = "update_alert"
+		alert_computer_signal.data["zone"] = src.name
+		alert_computer_signal.data["type"] = ALERT_KIND_FIRE
+		alert_computer_signal.data["alert"] = ALERT_SEVERITY_MINOR
+		radio_controller.get_frequency(FREQ_ALARM).post_packet_without_source(alert_computer_signal)
 
 /**
-  * Resets the fire alert in the area. Notifies AIs.
+  * Resets the fire alert in the area. Notifies AIs and updates alert computers.
   */
 /area/proc/firereset()
 	if (src.fire)
@@ -4323,8 +4337,12 @@ ABSTRACT_TYPE(/area/mining)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
-		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
-			a.cancelAlarm("Fire", src, src)
+		var/datum/signal/alert_computer_signal = get_free_signal()
+		alert_computer_signal.data["command"] = "update_alert"
+		alert_computer_signal.data["zone"] = src.name
+		alert_computer_signal.data["type"] = ALERT_KIND_FIRE
+		alert_computer_signal.data["alert"] = ALERT_SEVERITY_RESET
+		radio_controller.get_frequency(FREQ_ALARM).post_packet_without_source(alert_computer_signal)
 
 /**
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights

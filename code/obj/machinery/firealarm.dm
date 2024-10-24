@@ -206,22 +206,35 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	return
 
 
-/obj/machinery/firealarm/proc/post_alert(var/alarm, var/specific_target)
-	var/datum/signal/alert_signal = get_free_signal()
-	alert_signal.source = src
-	alert_signal.data["address_tag"] = alarm_zone
-	alert_signal.data["type"] = "Fire"
-	alert_signal.data["netid"] = net_id
-	alert_signal.data["sender"] = net_id
+/obj/machinery/firealarm/proc/post_alert(alarm, specific_target)
+	var/datum/signal/firedoor_signal = get_free_signal()
+	var/datum/signal/alert_computer_signal = get_free_signal()
+	firedoor_signal.source = src
+	firedoor_signal.data["address_tag"] = alarm_zone
+	firedoor_signal.data["type"] = "Fire"
+	firedoor_signal.data["netid"] = net_id
+	firedoor_signal.data["sender"] = net_id
+
 	if (specific_target)
-		alert_signal.data["address_1"] = specific_target
+		firedoor_signal.data["address_1"] = specific_target
 
 	if(alarm)
-		alert_signal.data["alert"] = "fire"
-	else
-		alert_signal.data["alert"] = "reset"
+		firedoor_signal.data["alert"] = "fire"
+		alert_computer_signal.data["alert"] = ALERT_SEVERITY_MINOR
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal)
+	else
+		firedoor_signal.data["alert"] = "reset"
+		alert_computer_signal.data["alert"] = ALERT_SEVERITY_RESET
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, firedoor_signal)
+
+	alert_computer_signal.source = src
+	alert_computer_signal.data["netid"] = net_id
+	alert_computer_signal.data["sender"] = net_id
+	alert_computer_signal.data["command"] = "update_alert"
+	alert_computer_signal.data["zone"] = alarm_zone
+	alert_computer_signal.data["type"] = ALERT_KIND_FIRE
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_computer_signal)
 
 /obj/machinery/firealarm/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
@@ -247,9 +260,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 		reply.data["command"] = "ping_reply"
 		reply.data["device"] = "WNET_FIREALARM"
 		reply.data["netid"] = src.net_id
-		reply.data["alert"] = !alarm_active ? "reset" : "fire"
+		reply.data["alert"] = !alarm_active ? ALERT_SEVERITY_RESET : ALERT_SEVERITY_MINOR
 		reply.data["zone"] = alarm_zone
-		reply.data["type"] = "Fire"
+		reply.data["type"] = ALERT_KIND_FIRE
 		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
 
