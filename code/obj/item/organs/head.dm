@@ -234,9 +234,9 @@
 		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].style.icon, icon_state = AHead.customizations["hair_middle"].style.id, layer = AHead.customizations["hair_middle"].style.default_layer)
 		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].style.icon, icon_state = AHead.customizations["hair_top"].style.id, layer = AHead.customizations["hair_top"].style.default_layer)
 
-		src.head_image_cust_one.color = AHead.customizations["hair_bottom"].color
-		src.head_image_cust_two.color = AHead.customizations["hair_middle"].color
-		src.head_image_cust_three.color = AHead.customizations["hair_top"].color
+		src.head_image_cust_one.color = AHead.customizations["hair_bottom"].get_color_or_dye()
+		src.head_image_cust_two.color = AHead.customizations["hair_middle"].get_color_or_dye()
+		src.head_image_cust_three.color = AHead.customizations["hair_top"].get_color_or_dye()
 
 		src.head_image_special_one = image(icon = AHead.special_hair_1_icon, icon_state = AHead.special_hair_1_state, layer = AHead.special_hair_1_layer)
 		src.head_image_special_two = image(icon = AHead.special_hair_2_icon, icon_state = AHead.special_hair_2_state, layer = AHead.special_hair_2_layer)
@@ -245,31 +245,31 @@
 		var/colorheck = "#FFFFFF"
 		switch(AHead.special_hair_1_color_ref)
 			if(CUST_1)
-				colorheck = AHead.customizations["hair_bottom"].color
+				colorheck = AHead.customizations["hair_bottom"].get_color_or_dye()
 			if(CUST_2)
-				colorheck = AHead.customizations["hair_middle"].color
+				colorheck = AHead.customizations["hair_middle"].get_color_or_dye()
 			if(CUST_3)
-				colorheck = AHead.customizations["hair_top"].color
+				colorheck = AHead.customizations["hair_top"].get_color_or_dye()
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_one.color = colorheck
 		switch(AHead.special_hair_2_color_ref)
 			if(CUST_1)
-				colorheck = AHead.customizations["hair_bottom"].color
+				colorheck = AHead.customizations["hair_bottom"].get_color_or_dye()
 			if(CUST_2)
-				colorheck = AHead.customizations["hair_middle"].color
+				colorheck = AHead.customizations["hair_middle"].get_color_or_dye()
 			if(CUST_3)
-				colorheck = AHead.customizations["hair_top"].color
+				colorheck = AHead.customizations["hair_top"].get_color_or_dye()
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_two.color = colorheck
 		switch(AHead.special_hair_3_color_ref)
 			if(CUST_1)
-				colorheck = AHead.customizations["hair_bottom"].color
+				colorheck = AHead.customizations["hair_bottom"].get_color_or_dye()
 			if(CUST_2)
-				colorheck = AHead.customizations["hair_middle"].color
+				colorheck = AHead.customizations["hair_middle"].get_color_or_dye()
 			if(CUST_3)
-				colorheck = AHead.customizations["hair_top"].color
+				colorheck = AHead.customizations["hair_top"].get_color_or_dye()
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_three.color = colorheck
