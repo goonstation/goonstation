@@ -678,9 +678,27 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			break
 
 		if (length(bots))
-			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+			user.AddComponent(/datum/component/bot_command/security, bots, 3 SECONDS)
 
+/obj/item/instrument/whistle/janitor
+	name = "janitor whistle"
+	desc = "A whistle with a purple stripe. Good for getting the attention of nearby cleanbots."
+	icon_state = "whistle-jani"
+	var/commandtime = 5 SECONDS
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby cleanbots to mop a tile. Point at the cleanbot to shut it off.")
 
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/cleanbot/cleanbot in view(user.client.view, user))
+			if (cleanbot.emagged || !cleanbot.on)
+				continue
+			cleanbot.KillPathAndGiveUp(1, TRUE)
+			cleanbot.speak("Awaiting command...")
+			bots += cleanbot
+			break
+
+		if (length(bots))
+			user.AddComponent(/datum/component/bot_command/janitor, bots, src.commandtime)
 /* -------------------- Vuvuzela -------------------- */
 
 /obj/item/instrument/vuvuzela
