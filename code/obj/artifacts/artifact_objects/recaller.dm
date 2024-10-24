@@ -9,7 +9,7 @@
 	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	react_xray = list(15,75,90,3,"ANOMALOUS")
