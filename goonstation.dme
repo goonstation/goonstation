@@ -669,6 +669,7 @@
 #include "code\modules\admin\buildmodes\projectile.dm"
 #include "code\modules\admin\buildmodes\reagents.dm"
 #include "code\modules\admin\buildmodes\revert_turf_visuals.dm"
+#include "code\modules\admin\buildmodes\save_art.dm"
 #include "code\modules\admin\buildmodes\save_map.dm"
 #include "code\modules\admin\buildmodes\spawn_gift.dm"
 #include "code\modules\admin\buildmodes\spawn_inside.dm"
