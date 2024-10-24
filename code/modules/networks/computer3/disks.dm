@@ -296,6 +296,18 @@
 		src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
+
+/obj/item/disk/data/floppy/read_only/communications_lite
+	name = "data disk-'COMMaster Lite'"
+	desc = "A disk for station communication programs."
+	title = "COMMaster Lite"
+
+	New()
+		. = ..()
+		src.root.add_file( new /datum/computer/file/terminal_program/communications/lite(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
+		src.read_only = 1
+
 #ifdef SINGULARITY_TIME
 /obj/item/disk/data/floppy/read_only/engine_prog
 	name = "data disk-'EngineMaster'"

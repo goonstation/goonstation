@@ -120,6 +120,10 @@
 				icon_state = "communications2"
 				base_icon_state = "communications2"
 
+			lite
+				name = "Light Communications Console"
+				setup_starting_program = list(/datum/computer/file/terminal_program/communications/lite)
+
 		disease_research
 			name = "Disease Database"
 			icon_state = "resdis"

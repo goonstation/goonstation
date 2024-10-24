@@ -1172,13 +1172,13 @@
 /area/evilreaver/genetics)
 "qH" = (
 /obj/machinery/power/data_terminal,
-/obj/computer3frame,
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/communications/lite,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "qJ" = (
@@ -1720,7 +1720,6 @@
 /area/mining/miningoutpost)
 "uc" = (
 /obj/rack,
-/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "ud" = (
@@ -4571,10 +4570,16 @@
 /area/noGenerate)
 "Mo" = (
 /obj/table/auto,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/firstaid/regular{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/decal/cleanable/cobweb,
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/item/disk/data/floppy/read_only/communications_lite{
+	pixel_x = 5
 	},
 /turf/simulated/floor/grime,
 /area/mining/comms)
