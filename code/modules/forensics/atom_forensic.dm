@@ -146,7 +146,7 @@
 		I.forensics_blood_color = blood_color
 		if (istype(I, /obj/item/clothing))
 			var/obj/item/clothing/C = src
-			C.add_stain("blood-stained")
+			C.add_stain(/datum/stain/blood)
 	else if (istype(src, /turf/simulated))
 		if (istype(source, /mob/living))
 			var/mob/living/L = source
