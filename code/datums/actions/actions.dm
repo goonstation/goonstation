@@ -747,7 +747,7 @@
 						target.internal.add_fingerprint(owner)
 
 /datum/action/bar/icon/handcuffSet //This is used when you try to handcuff someone.
-	duration = 40
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
@@ -821,7 +821,7 @@
 			O.show_message(SPAN_ALERT("<B>[owner] handcuffs [target]!</B>"), 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
-	duration = 70
+	duration = 7 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
@@ -871,7 +871,7 @@
 			logTheThing(LOG_COMBAT, owner, "removes [constructTarget(target,"combat")]'s handcuffs at [log_loc(owner)].")
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
-	duration = 600
+	duration = 60 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"

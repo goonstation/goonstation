@@ -478,7 +478,7 @@
 			return
 		if(ismonkey(theft_target))
 			if(theft_target.handcuffs)
-				actions.start(new/datum/action/bar/icon/handcuffRemovalOther(theft_target), src)
+				actions.start(new/datum/action/bar/icon/handcuffRemovalOther(theft_target))
 				return
 			for(var/obj/item/thing in theft_target)
 				if(IS_NPC_HATED_ITEM(thing) && thing.equipped_in_slot)
