@@ -445,19 +445,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
-			if (I.item)
-				var/obj/item = new I.item(get_turf(src))
-				I.run_on_spawn(item, usr, FALSE, src)
+			if (length(I.items) > 0)
+				for (var/uplink_item in I.items)
+					var/obj/item = new uplink_item(get_turf(src))
+					I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 					if (!src.purchase_log[I.type])
 						src.purchase_log[I.type] = 0
 					src.purchase_log[I.type]++
-			if (I.item2)
-				new I.item2(get_turf(src))
-			if (I.item3)
-				new I.item3(get_turf(src))
 
 		else if (href_list["about"])
 			reading_about = locate(href_list["about"])
@@ -731,19 +728,16 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
-			if (I.item)
-				var/obj/item = new I.item(get_turf(src.hostpda))
-				I.run_on_spawn(item, usr, FALSE, src)
+			if (length(I.items) > 0)
+				for (var/uplink_item in I.items)
+					var/obj/item = new uplink_item(get_turf(src.hostpda))
+					I.run_on_spawn(item, usr, FALSE, src)
 				if (src.is_VR_uplink == 0)
 					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
 					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
 					if (!src.purchase_log[I.type])
 						src.purchase_log[I.type] = 0
 					src.purchase_log[I.type]++
-			if (I.item2)
-				new I.item2(get_turf(src.hostpda))
-			if (I.item3)
-				new I.item3(get_turf(src.hostpda))
 
 		else if (href_list["abt_item"])
 			var/datum/syndicate_buylist/I = locate(href_list["abt_item"])
@@ -1293,25 +1287,25 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 						var/datum/syndicate_buylist/B = commander_buylist[SB]
 						if (src.points >= B.cost)
 							src.points -= B.cost
-							var/atom/A = new B.item(get_turf(src))
-							if(B.item2)
-								new B.item2(get_turf(src))
-							if(B.item3)
-								new B.item3(get_turf(src))
 
-							B.run_on_spawn(A, usr, FALSE, src)
+							if (length(B.items) == 0)
+								break
 
-							// Remember purchased item for the crew credits
-							var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
-							antagonist_role?.uplink_items.Add(B)
+							for (var/uplink_item in B.items)
+								var/atom/A = new uplink_item(get_turf(src))
+								B.run_on_spawn(A, usr, FALSE, src)
 
-							logTheThing(LOG_STATION, usr, "bought a [initial(B.item.name)] from a [src] at [log_loc(usr)].")
-							var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.item.name)]-Purchased")
-							if(isnull(loadnum))
-								loadnum = 0
-							world.save_intra_round_value("NuclearCommander-[initial(B.item.name)]-Purchased", loadnum + 1)
-							. = TRUE
-							break
+								// Remember purchased item for the crew credits
+								var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+								antagonist_role?.uplink_items.Add(B)
+
+								logTheThing(LOG_STATION, usr, "bought a [initial(B.items[1].name)] from a [src] at [log_loc(usr)].")
+								var/loadnum = world.load_intra_round_value("Nuclear-Commander-[initial(B.items[1].name)]-Purchased")
+								if(isnull(loadnum))
+									loadnum = 0
+								world.save_intra_round_value("NuclearCommander-[initial(B.items[1].name)]-Purchased", loadnum + 1)
+								. = TRUE
+								break
 
 #undef PLAYERS_PER_UPLINK_POINT
 ///////////////////////////////////////// Wizard's spellbook ///////////////////////////////////////////////////
