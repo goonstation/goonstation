@@ -518,7 +518,7 @@
 /obj/hear_talk(mob/M, text, real_name, lang_id)
 	if (!src.artifact || src.artifact.activated)
 		return ..()
-	var/datum/artifact_trigger/speech/trigger = locate(/datum/artifact_trigger/speech) in src.artifact.triggers
+	var/datum/artifact_trigger/language/trigger = locate(/datum/artifact_trigger/language) in src.artifact.triggers
 	if (!trigger || GET_DIST(M, src) > 2)
 		return
 	if (ON_COOLDOWN(src, "speech_act_cd", 2 SECONDS))
@@ -531,7 +531,7 @@
 	else if (result == "hint")
 		src.visible_message("<b>[src]</b> [src.artifact.hint_text]", "<b>[src]</b> [src.artifact.hint_text]")
 	else if (result == "correct")
-		src.ArtifactStimulus("speech", 1)
+		src.ArtifactStimulus("language", 1)
 	else
 		src.visible_message("[src] [result]", "[src] [result]")
 

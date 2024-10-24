@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	stimulus_required = "data"
 	do_amount_check = 0
 
-/datum/artifact_trigger/langauge
+/datum/artifact_trigger/language
 	type_name = "Language"
 	stimulus_required = "language"
 	hint_prob = 0 // uses custom way of giving hint
