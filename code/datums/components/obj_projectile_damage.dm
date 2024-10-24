@@ -1,32 +1,30 @@
 /datum/component/obj_projectile_damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	var/obj/decal/cleanable/gib_type = /obj/decal/cleanable/machine_debris
+	var/do_gib = TRUE
+	var/do_streak = TRUE
 
 TYPEINFO(/datum/component/obj_projectile_damage)
 	initialization_args = list()
 
-/datum/component/obj_projectile_damage/Initialize()
+/datum/component/obj_projectile_damage/Initialize(var/obj/decal/cleanable/gib_type = /obj/decal/cleanable/machine_debris, var/do_gib = TRUE, var/do_streak = TRUE)
 	. = ..()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE
+	src.gib_type = gib_type
+	src.do_gib = do_gib
+	src.do_streak = do_streak
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(projectile_collide))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 /datum/component/obj_projectile_damage/proc/projectile_collide(owner, var/obj/projectile/P)
 	var/obj/O = parent
 	if(P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING))
-		var/gib_type = /obj/decal/cleanable/machine_debris
-		var/do_gib = TRUE
-		var/do_streak = TRUE
-		if (istype(O, /obj/structure/woodwall))
-			gib_type = /obj/decal/cleanable/wood_debris
-			do_streak = FALSE
-			if (istype(O, /obj/structure/woodwall/virtual))
-				do_gib = FALSE
 		if (O && (O._health/O._max_health) <= 0.5 && prob((1 - O._health/O._max_health) * 60))
 			var/obj/decal/cleanable/gib = null
-			if (do_gib)
-				gib = make_cleanable(gib_type, O.loc)
-			if (gib && do_streak)
+			if (src.do_gib)
+				gib = make_cleanable(src.gib_type, O.loc)
+			if (gib && src.do_streak)
 				gib.streak_cleanable()
 		hit_twitch(O)
 		O.changeHealth(-round(((P.power/2)*P.proj_data.ks_ratio), 1.0))

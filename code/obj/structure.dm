@@ -354,13 +354,17 @@ TYPEINFO(/obj/structure/woodwall)
 	_max_health = 30
 	var/builtby = null
 	var/anti_z = 0
+	// for projectile damage component
+	var/projectile_gib = TRUE
+	var/projectile_gib_streak = FALSE
 
 	New()
-		src.AddComponent(/datum/component/obj_projectile_damage)
+		src.AddComponent(/datum/component/obj_projectile_damage, src.type, src.projectile_gib, src.projectile_gib_streak)
 		. = ..()
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
+		projectile_gib = FALSE // no virtual debris
 
 	anti_zombie
 		name = "anti-zombie barricade"
@@ -424,6 +428,7 @@ TYPEINFO(/obj/structure/woodwall)
 				src.changeHealth(rand(0, -2))
 			else
 				src.changeHealth(rand(-1, -3))
+			hit_twitch(src)
 			return
 		else
 			return
@@ -435,6 +440,7 @@ TYPEINFO(/obj/structure/woodwall)
 		..()
 		user.lastattacked = src
 		src.changeHealth(-W.force)
+		hit_twitch(src)
 		return
 
 /obj/structure/woodwall/Cross(obj/projectile/mover)
@@ -478,16 +484,19 @@ TYPEINFO(/obj/structure/woodwall)
 		if (istype(source) && wood != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		if (prob(20))
+			hit_twitch(wall)
 			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 
 	onStart()
 		..()
+		hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		owner.visible_message(SPAN_NOTICE("[owner] begins repairing [wall]!"))
 
 	onEnd()
 		..()
 		owner.visible_message(SPAN_NOTICE("[owner] uses a [wood] to completely repair the [wall]!"))
+		hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		//do repair shit.
 		wall._health = wall._max_health
