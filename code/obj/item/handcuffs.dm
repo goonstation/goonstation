@@ -184,6 +184,6 @@
 /obj/item/handcuffs/cable_cuffs
 	name = "cable handcuffs"
 	desc = "A pair of flimsy makeshift handcuffs, made of wire."
-	icon_state = "buddycuff"
+	icon_state = "cable_cuffs"
 	strength = 1
 

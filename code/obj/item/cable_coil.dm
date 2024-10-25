@@ -104,6 +104,11 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			UpdateIcon()
 			return 1
 
+	proc/try_to_craft_handcuffs(var/mob/crafter)
+		if (src.amount >= 4)
+			src.use(4)
+			new /obj/item/handcuffs/cable_cuffs(crafter.loc)
+
 	_update_stack_appearance()
 		UpdateIcon()
 
@@ -173,13 +178,28 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /////////////////////////////////////////////////REINFORCED CABLE
 
 /obj/item/cable_coil/attack_self(var/mob/living/M)
-	if (currently_laying)
-		UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-		boutput(M, SPAN_NOTICE("No longer laying the cable while moving."))
+	var/list/choices = list()
+	choices += "Toggle cable laying"
+	if(amount >= 4)
+		choices += "Make handcuffs"
+
+	var/selection = tgui_input_list(M, "What do you want to do with [src]?", "Selection", choices)
+
+	if (isnull(selection) || BOUNDS_DIST(src, M) > 0)
+		return
+	if(selection == "Make handcuffs")
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(M, src, 7 SECONDS, /obj/item/cable_coil/proc/try_to_craft_handcuffs, M, 'icons/obj/items/items.dmi',\
+		"cable_cuffs", "[M] ties the cable into a pair of handcuffs.", INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 	else
-		RegisterSignal(M, COMSIG_MOVABLE_MOVED, PROC_REF(move_callback))
-		boutput(M, SPAN_NOTICE("Now laying cable while moving."))
-	currently_laying = !currently_laying
+
+		if (currently_laying)
+			UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
+			boutput(M, SPAN_NOTICE("No longer laying the cable while moving."))
+		else
+			RegisterSignal(M, COMSIG_MOVABLE_MOVED, PROC_REF(move_callback))
+			boutput(M, SPAN_NOTICE("Now laying cable while moving."))
+		currently_laying = !currently_laying
+
 
 obj/item/cable_coil/dropped(mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
