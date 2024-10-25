@@ -18,18 +18,15 @@ TYPEINFO(/obj/machinery/photocopier)
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 15 //starts at 0, increments by one for every paper added, max of... 30 sheets
 	var/id_amount = 0 // number of ids in the machine while emagged, max of 6 ids
-	var/make_amount = 1 //from 0 to 30, amount of copies the photocopier will copy, copy?
+	var/make_amount = 1 //from 1 to 30, amount of copies the photocopier will copy, copy?
 	var/emagged = FALSE
+
+	var/list/print_info = list() // Data of the item to print
+	var/print_type = "" // The type of item to print
+	var/consume_ids = FALSE // If item to print consumes IDs instead of paper
 
 	var/net_id = ""
 	var/frequency = FREQ_FREE
-
-	// Photo: index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon
-	// Paper Photo: index 1 is desc, index 2 is print_icon, index 3 is print_icon_state
-	// Cash: index 1 is the amount to print per sheet of paper
-	var/list/print_info = list() // Data of the item to print
-	var/print_type = "" // The type of item to print
-	var/consume_ids = FALSE // If item to print uses IDs instead of paper
 
 	New()
 		..()
@@ -62,15 +59,15 @@ TYPEINFO(/obj/machinery/photocopier)
 
 		if (paper_amount <= 0)
 			desc_string += "The paper tray is empty"
-		else if (paper_amount <= 5)
+		else if (paper_amount <= (MAX_SHEETS/6))
 			desc_string += "The paper tray is less than 1/3 full"
-		else if (paper_amount <= 10)
+		else if (paper_amount <= (MAX_SHEETS/6) * 2)
 			desc_string += "The paper tray is about 1/3 full"
-		else if (paper_amount <= 15)
+		else if (paper_amount <= (MAX_SHEETS/6) * 3)
 			desc_string += "The paper tray is less than 2/3 full"
-		else if (paper_amount <= 20)
+		else if (paper_amount <= (MAX_SHEETS/6) * 4)
 			desc_string += "The paper tray is about 2/3 full"
-		else if (paper_amount <= 25)
+		else if (paper_amount <= (MAX_SHEETS/6) * 5)
 			desc_string += "The paper tray is close to being full"
 		else if (paper_amount < MAX_SHEETS)
 			desc_string += "The paper tray is nearly full"
@@ -110,7 +107,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			else if(istype(w, /obj/item/poster/titled_photo))
 				var/obj/item/poster/P = w
 				scan_poster(P, user)
-			else if(istype(w, /obj/item/currency/spacecash) && emagged)
+			else if(istype(w, /obj/item/currency/spacecash))
 				var/obj/item/currency/spacecash/C = w
 				scan_cash(C, user)
 			else if(istype(w, /obj/item/card/id) && emagged)
@@ -126,13 +123,15 @@ TYPEINFO(/obj/machinery/photocopier)
 		if (src.use_state == 2)
 			boutput(user, SPAN_ALERT("\The [src] is busy right now! Try again later!"))
 			return
+		var/isUserAI = isAI(user)
 		var/lid_str
 		if (src.use_state == 0)
 			lid_str = "Open Scanner"
 		else if (src.use_state == 1)
 			lid_str = "Close Scanner"
-		var/mode_sel = tgui_input_list(user, "What do you want to do?", "Photocopier Controls", list("Print Copies", "Set Amount", lid_str, "Misc Settings"))
-		if (BOUNDS_DIST(user, src) == 0)
+		var/list/sel_list = list("Print Copies", "Set Amount", lid_str, "Misc Settings")
+		var/mode_sel = tgui_input_list(user, "What do you want to do?", "Photocopier Controls", sel_list)
+		if (BOUNDS_DIST(user, src) == 0 || isUserAI)
 			if (!mode_sel)
 				return
 			switch(mode_sel)
@@ -140,6 +139,8 @@ TYPEINFO(/obj/machinery/photocopier)
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
+					if(isUserAI)
+						effect_radio()
 					print_action()
 					return
 
@@ -149,10 +150,12 @@ TYPEINFO(/obj/machinery/photocopier)
 						return
 					var/amount_str = "How many copies do you want to make? ([src.paper_amount] sheets available)"
 					var/num_sel = input(amount_str, "Photocopier Controls") as num
-					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
+					if (isnum_safe(num_sel) && num_sel && (BOUNDS_DIST(user, src) == 0 || isUserAI))
 						src.make_amount = min(max(num_sel, 1), MAX_SHEETS)
-						playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 10, 1)
 						boutput(user, "Amount set to: [num_sel] sheets.")
+						if(isUserAI)
+							effect_radio()
 						return
 
 				if ("Open Scanner")
@@ -161,13 +164,19 @@ TYPEINFO(/obj/machinery/photocopier)
 						return
 					src.icon_state = "open_sesame"
 					src.use_state = 1
-					boutput(user, "You open the lid on /the [src]. You can now scan items for printing.")
+					if(isUserAI)
+						boutput(user, "You open the lid on /the [src].")
+						effect_radio()
+					else
+						boutput(user, "You open the lid on /the [src]. You can now scan items for printing.")
 				if("Close Scanner")
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					src.icon_state = "close_sesame"
 					src.use_state = 0
+					if(isUserAI)
+						effect_radio()
 				if ("Misc Settings")
 					interact_settings(user)
 
@@ -182,7 +191,8 @@ TYPEINFO(/obj/machinery/photocopier)
 		var/prev_icon = src.icon_state
 		src.use_state = 2
 		emagged = TRUE
-		playsound(src, 'sound/effects/sparks4.ogg', 50)
+		playsound(src, 'sound/effects/sparks6.ogg', 50)
+		playsound(src, 'sound/machines/glitch4.ogg', 20)
 		logTheThing(LOG_ADMIN, user, "emagged the photocopier at \[[log_loc(src)]]")
 		if(prev_use_state == 0)
 			src.icon_state = "emag_closed"
@@ -203,6 +213,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			return
 		emagged = FALSE
 		src.reset_all() // reset the scan data in case an ID was scanned
+		playsound(src, 'sound/effects/sparks6.ogg', 30)
 		if(use_state == 0)
 			flick("emag_closed",src)
 		else
@@ -212,8 +223,10 @@ TYPEINFO(/obj/machinery/photocopier)
 		return 1
 
 	proc/interact_settings(var/mob/user) // Aditional settings in a seperate menu
-		var/mode_sel = tgui_input_list(user, "What do you want to do?", "Photocopier Settings", list("Reset Memory", "Print Network Data"))
-		if (BOUNDS_DIST(user, src) == 0)
+		var/isUserAI = isAI(user)
+		var/list/sel_list = list("Reset Memory", "Print Network Data")
+		var/mode_sel = tgui_input_list(user, "What do you want to do?", "Photocopier Settings", sel_list)
+		if (BOUNDS_DIST(user, src) == 0 || isUserAI)
 			if (!mode_sel)
 				return
 			switch(mode_sel)
@@ -227,24 +240,31 @@ TYPEINFO(/obj/machinery/photocopier)
 					boutput(user, SPAN_NOTICE("You reset \the [src]'s memory."))
 					return
 				if("Print Network Data")
+					// Print an informative sheet detailing how to send packets to this photocopier
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
-					var/prev_amount = src.make_amount
+					var/prev_amount = src.make_amount // Ignore the normal copy settings. Just print one sheet.
 					src.make_amount = 1
+					if(isUserAI)
+						effect_radio()
 					scan_network_info()
 					print_action()
 					src.make_amount = prev_amount
+				// if("AI Text Editor")
+					// Idea
 
 	// --------------- Printing & Loading ----------------
 
 	proc/print_action() // The printing loop
 		if (paper_amount <= 0 && !consume_ids)
 			src.visible_message("No more paper in the tray!")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
 			effect_fail()
 			return
 		else if (id_amount <= 0 && consume_ids)
 			src.visible_message("No more blank IDs in the tray!")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
 			effect_fail()
 			return
 		src.icon_state = "close_sesame"
@@ -265,9 +285,12 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.use_state = 0
 		if(isFail)
 			src.visible_message("\The [src] cancels its print job.")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 5, 1)
 			effect_fail()
 		else
 			src.visible_message("\The [src] finishes its print job.")
+			if(make_amount > 1)
+				playsound(src.loc, 'sound/machines/ping.ogg', 5, 1)
 		src.icon_state = "close_sesame"
 
 	proc/print_stuff() // Creates the actual items being printed
@@ -355,7 +378,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				else if (other_cash.stack_item(C))
 					break
 
-		else if (cmptextEx(src.print_type, "cash") && emagged)
+		else if (cmptextEx(src.print_type, "cash"))
 			// Like having a license to printing money, except without a license.
 			effect_printing("print_cash")
 			var/print_amount = src.print_info[1]
@@ -366,7 +389,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				else if (other_cash.stack_item(C))
 					break
 
-		else if (cmptextEx(src.print_type, "id") && emagged)
+		else if (cmptextEx(src.print_type, "id"))
 			if(src.print_info["icon_state"] == "gold")
 				effect_printing("print_id_gold")
 			else
@@ -387,17 +410,12 @@ TYPEINFO(/obj/machinery/photocopier)
 			I.money = src.print_info["money"]
 			I.pin = src.print_info["pin"]
 			I.cardfile = src.print_info["cardfile"]
+			I.emagged = TRUE
 		else
 			effect_printing("print")
 			new/obj/item/paper(get_turf(src))
 		return
 
-	proc/effect_printing(var/print_icon)
-		sleep(0.25 SECONDS)
-		playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
-		sleep(0.25 SECONDS)
-		flick(print_icon, src)
-		sleep(3 SECONDS)
 	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
 		if (istype(w, /obj/item/paper))
 			if (istype(w, /obj/item/paper/book) || istype(w, /obj/item/paper/newspaper))
@@ -453,6 +471,13 @@ TYPEINFO(/obj/machinery/photocopier)
 				src.id_amount += 1
 				boutput(user, "You load the blank ID into \the [src].")
 				qdel(w)
+
+	proc/effect_printing(var/print_icon)
+		sleep(0.25 SECONDS)
+		playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
+		sleep(0.25 SECONDS)
+		flick(print_icon, src)
+		sleep(2.5 SECONDS)
 	proc/effect_fail()
 		// Just displays a red light to give the user additional feedback when needed
 		if(src.use_state == 1)
@@ -474,7 +499,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			boutput(user, "You put the picture on the scan bed, close the lid, and press start...")
 		else if (istype(P, /obj/item/paper/book))
 			boutput(user, "You open the book, press its contents onto the scan bed, and press start...")
-			src.icon_state = "scan_news"
+			src.icon_state = "scan_book"
 		else if (istype(P, /obj/item/paper/newspaper))
 			boutput(user, "You put the newspaper onto the scan bed, close the lid, and press start...")
 			src.icon_state = "scan_news"
@@ -482,6 +507,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			boutput(user, "You put the paper on the scan bed, close the lid, and press start...")
 		effects_scanning(P)
 		if (istype(P, /obj/item/paper/printout))
+			// Paper Photo: index 1 is desc, index 2 is print_icon, index 3 is print_icon_state
 			var/obj/item/paper/printout/Pout = P
 			src.print_info += Pout.desc
 			src.print_info += Pout.print_icon
@@ -516,6 +542,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_type = "paper"
 
 	proc/scan_photo(var/obj/item/photo/P, var/mob/user)
+		// Photo: index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon
 		scan_setup(P, user)
 		src.icon_state = "papper"
 		boutput(user, "You put the picture on the scan bed, close the lid, and press start...")
@@ -538,14 +565,19 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.icon_state = "scan_cash"
 		boutput(user, "You put the cash on the scan bed, close the lid, and press start...")
 		effects_scanning(C)
-		src.print_info += min(C.amount, 5)
-		src.print_type = "cash"
+		if(emagged)
+			src.print_info += min(C.amount, 5) // index 1 is the amount of cash to print per sheet of paper
+			src.print_type = "cash"
+		else
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
+			effect_fail()
+
 	proc/scan_fakecash(var/obj/item/currency/fakecash/C, var/mob/user)
 		scan_setup(C, user)
 		src.icon_state = "scan_cash"
 		boutput(user, "You lay out the credit-like currency over the area of the scan bed, close the lid, and press start...")
 		effects_scanning(C)
-		src.print_info += min(C.amount, 5000)
+		src.print_info += min(C.amount, 5000) // index 1 is the amount of fake cash to print per sheet of paper
 		src.print_type = "cash_fake"
 
 	proc/scan_id(var/obj/item/card/id/I, var/mob/user)
@@ -595,20 +627,22 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_type = "poster_wanted"
 
 	proc/scan_network_info()
-		// Data on how to interact with photocopier via packets
+		// Used to print data on how to interact with this photocopier via packets
 		src.reset_all()
-		var/network_info = "<li><h2>Photocopier Network Information</h2></li><li></li> \
+		var/network_info = "<li><h3>Photocopier Network Information Sheet</h3></li> \
+			<body><font size=2><hr> \
 			<li><b>Frequency:</b> [src.frequency]</li>	\
 			<li><b>NetID:</b> address_1 = [src.net_id]</li>	\
 			<li><b>Commands:</b></li> \
 			<li>print</li> \
-			<li>- data: Number of copies to print this printing cycle (optional)</li> \
+			<font size=1><li>○ data = <i>Number of copies for this printing cycle (optional)</i></li></font> \
 			<li>amount</li> \
-			<li>- data: Number of copies to print next printing cycle</li> \
+			<font size=1><li>○ data = <i>Number of copies to print</i></li></font> \
 			<li>reset</li> \
-			<ul><li>Clears all scanning data</li></ul> \
-			<li>help (prints this sheet)</li> \
-			<li>- Prints this sheet</li>"
+			<font size=1><li>○ <i>Clears all scanning data</i></li></font> \
+			<li>help</li> \
+			<font size=1><li>○ <i>Print a copy of this sheet</i></li></font> \
+			</font></body>"
 		src.print_info["name"] = "Photocopier Network Information"
 		src.print_info["desc"] = "Notes on how to interact with the photocopier remotely."
 		src.print_info["info"] = network_info
