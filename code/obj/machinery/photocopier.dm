@@ -630,18 +630,18 @@ TYPEINFO(/obj/machinery/photocopier)
 		// Used to print data on how to interact with this photocopier via packets
 		src.reset_all()
 		var/network_info = "<li><h3>Photocopier Network Information Sheet</h3></li> \
-			<body><font size=2><hr> \
+			<body><hr> \
 			<li><b>Frequency:</b> [src.frequency]</li>	\
 			<li><b>NetID:</b> address_1 = [src.net_id]</li>	\
 			<li><b>Commands:</b></li> \
-			<li>print</li> \
+			<li><u>print</u></li> \
 			<font size=1><li>○ data = <i>Number of copies for this printing cycle (optional)</i></li></font> \
-			<li>amount</li> \
+			<li><u>amount</u></li> \
 			<font size=1><li>○ data = <i>Number of copies to print</i></li></font> \
-			<li>reset</li> \
+			<li><u>reset</u></li> \
 			<font size=1><li>○ <i>Clears all scanning data</i></li></font> \
-			<li>help</li> \
-			<font size=1><li>○ <i>Print a copy of this sheet</i></li></font> \
+			<li><u>help</u></li> \
+			<li>○ <i>Print a copy of this sheet</i></li></font> \
 			</font></body>"
 		src.print_info["name"] = "Photocopier Network Information"
 		src.print_info["desc"] = "Notes on how to interact with the photocopier remotely."
