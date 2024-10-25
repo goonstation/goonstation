@@ -1,5 +1,9 @@
 
 (t)fri oct 25 24
+(u)Retrino
+(p)21129
+(e)🗺|A-Mapping
+(*)Oshan now has a medical booth.
 (u)Glamurio (Ryou)
 (p)21150
 (e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
