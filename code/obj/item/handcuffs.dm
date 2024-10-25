@@ -185,5 +185,5 @@
 	name = "cable handcuffs"
 	desc = "A pair of flimsy makeshift handcuffs, made of wire."
 	icon_state = "buddycuff"
-	strenght = 1
+	strength = 1
 
