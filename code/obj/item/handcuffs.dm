@@ -180,3 +180,10 @@
 	icon_state = "buddycuff"
 	m_amt = 0
 	strength = 1
+
+/obj/item/handcuffs/cable_cuffs
+	name = "cable handcuffs"
+	desc = "A pair of flimsy makeshift handcuffs, made of wire."
+	icon_state = "buddycuff"
+	strenght = 1
+
