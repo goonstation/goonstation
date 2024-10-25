@@ -1,4 +1,9 @@
 
+(t)fri oct 25 24
+(u)Glamurio (Ryou)
+(p)21150
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Wooden barricades no longer always stop kinetic bullets, and can also be shot down.
 (t)wed oct 23 24
 (u)Emily
 (e)⚖|C-Balance
