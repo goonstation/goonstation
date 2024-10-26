@@ -431,7 +431,7 @@
 			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
 			if (prob(melt_prob))
 				if (istype(A, /obj/geode))
-					A.ex_act(severity = melt_prob > 20 ? 1 : 3, power = melt_prob / 4) //lazy severity because it doesn't really matter here
+					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here
 				else
 					A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
 					qdel(A)
