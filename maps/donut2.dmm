@@ -13034,7 +13034,7 @@
 /area/station/crew_quarters/jazz)
 "brM" = (
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Medical Hallway";
+	codes_txt = "patrol;next_patrol=Owlery";
 	location = "Bar Hallway"
 	},
 /obj/disposalpipe/segment{
@@ -35257,6 +35257,16 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/wreckage)
+"nyO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Medical Hallway";
+	location = "Owlery"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "nzd" = (
 /turf/simulated/bar,
 /area/station/crew_quarters/cafeteria)
@@ -72866,7 +72876,7 @@ bdI
 bcE
 bcE
 bcE
-bcE
+nyO
 bcE
 bcE
 bcE
