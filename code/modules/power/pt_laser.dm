@@ -413,15 +413,19 @@
 				istype(A, /obj/machinery/vehicle) || \
 				istype(A, /obj/machinery/bot/mulebot) || \
 				istype(A, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
+				istype(A, /obj/forcefield/mining ) || \
 				isrestrictedz(A.z))
 			continue
 
 		var/melt_prob = 0 //this var only exists for debug really
 		if (isturf(A))
-			if (abs(output) < 100 MEGA WATTS) //hard threshold for turfs, you need a beeg laser
+			if (istype(A, /turf/simulated/wall/auto/asteroid/))
+				melt_prob = abs(output) / (50 KILO WATTS) // 1MW = 20% prob to mine
+			else if (abs(output) < 100 MEGA WATTS) //hard threshold for turfs, you need a beeg laser
 				melt_prob = 0
 			else
-				melt_prob = abs(output) / (25 MEGA WATTS)
+				melt_prob = abs(output) / (25 MEGA WATTS) // 100MW = 4% prob to break
+
 			if (prob(melt_prob))
 				A.ex_act(2)
 			if (A.density && melt_prob) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
