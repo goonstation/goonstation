@@ -1,5 +1,9 @@
 
 (t)fri oct 25 24
+(u)Glamurio (Ryou)
+(p)21153
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Sterile masks now render you immune to breathing in miasma.
 (u)Retrino
 (p)21129
 (e)🗺|A-Mapping
