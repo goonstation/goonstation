@@ -1,4 +1,9 @@
 
+(t)sat oct 26 24
+(u)FlameArrow57
+(p)21110
+(e)🆕⚖💅🔨|C-Feature, C-Balance, C-QoL, A-Player-Actions
+(*)You can now hold Space and Left Click anything on a tile to automatically pick up the highest weight item
 (t)fri oct 25 24
 (u)LeahTheTech
 (*)Thermite should now be a bit more consistent, only requires 10u to activate, has a much more visible effect on turfs, can be cleaned up, and leaves a fire behind when activated.
