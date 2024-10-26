@@ -15,10 +15,10 @@ TYPEINFO(/obj/machinery/photocopier)
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
 	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
-	var/paper_amount = 15 //starts at 0, increments by one for every paper added, max of... 30 sheets
-	var/id_amount = 0 // number of ids in the machine while emagged, max of 6 ids
-	var/make_amount = 1 //from 1 to 30, amount of copies the photocopier will copy, copy?
+	var/use_state = 0 // 0 is closed, 1 is open, 2 is busy, closed by default
+	var/paper_amount = 15 // amount of paper currently in the photocopier
+	var/id_amount = 0 // number of blank ids currently in the machine while emagged
+	var/make_amount = 1 //from 1 to MAX_SHEETS, amount of copies the photocopier will copy, copy?
 	var/emagged = FALSE
 
 	var/list/print_info = list() // Data of the item to print
@@ -123,7 +123,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		if (src.use_state == 2)
 			boutput(user, SPAN_ALERT("\The [src] is busy right now! Try again later!"))
 			return
-		var/isUserAI = isAI(user)
+		var/isUserSilicon = issilicon(user) || isAI(user)
 		var/lid_str
 		if (src.use_state == 0)
 			lid_str = "Open Scanner"
@@ -131,7 +131,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			lid_str = "Close Scanner"
 		var/list/sel_list = list("Print Copies", "Set Amount", lid_str, "Misc Settings")
 		var/mode_sel = tgui_input_list(user, "What do you want to do?", "Photocopier Controls", sel_list)
-		if (BOUNDS_DIST(user, src) == 0 || isUserAI)
+		if (BOUNDS_DIST(user, src) == 0 || isUserSilicon)
 			if (!mode_sel)
 				return
 			switch(mode_sel)
@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/photocopier)
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
-					if(isUserAI)
+					if(isUserSilicon)
 						effect_radio()
 					print_action()
 					return
@@ -150,11 +150,11 @@ TYPEINFO(/obj/machinery/photocopier)
 						return
 					var/amount_str = "How many copies do you want to make? ([src.paper_amount] sheets available)"
 					var/num_sel = input(amount_str, "Photocopier Controls") as num
-					if (isnum_safe(num_sel) && num_sel && (BOUNDS_DIST(user, src) == 0 || isUserAI))
+					if (isnum_safe(num_sel) && num_sel && (BOUNDS_DIST(user, src) == 0 || isUserSilicon))
 						src.make_amount = min(max(num_sel, 1), MAX_SHEETS)
 						playsound(src.loc, 'sound/machines/ping.ogg', 10, 1)
 						boutput(user, "Amount set to: [num_sel] sheets.")
-						if(isUserAI)
+						if(isUserSilicon)
 							effect_radio()
 						return
 
@@ -164,18 +164,18 @@ TYPEINFO(/obj/machinery/photocopier)
 						return
 					src.icon_state = "open_sesame"
 					src.use_state = 1
-					if(isUserAI)
-						boutput(user, "You open the lid on /the [src].")
+					if(isUserSilicon)
+						boutput(user, "You open the lid on \the [src].")
 						effect_radio()
 					else
-						boutput(user, "You open the lid on /the [src]. You can now scan items for printing.")
+						boutput(user, "You open the lid on \the [src]. You can now scan items for printing.")
 				if("Close Scanner")
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					src.icon_state = "close_sesame"
 					src.use_state = 0
-					if(isUserAI)
+					if(isUserSilicon)
 						effect_radio()
 				if ("Misc Settings")
 					interact_settings(user)
@@ -223,10 +223,12 @@ TYPEINFO(/obj/machinery/photocopier)
 		return 1
 
 	proc/interact_settings(var/mob/user) // Aditional settings in a seperate menu
-		var/isUserAI = isAI(user)
+		var/isUserSilicon = issilicon(user) || isAI(user)
 		var/list/sel_list = list("Reset Memory", "Print Network Data")
+		if(isUserSilicon) // Additional option for AI & Cyborgs
+			sel_list.Add("Read Scanned Data")
 		var/mode_sel = tgui_input_list(user, "What do you want to do?", "Photocopier Settings", sel_list)
-		if (BOUNDS_DIST(user, src) == 0 || isUserAI)
+		if (BOUNDS_DIST(user, src) == 0 || isUserSilicon)
 			if (!mode_sel)
 				return
 			switch(mode_sel)
@@ -246,13 +248,51 @@ TYPEINFO(/obj/machinery/photocopier)
 						return
 					var/prev_amount = src.make_amount // Ignore the normal copy settings. Just print one sheet.
 					src.make_amount = 1
-					if(isUserAI)
+					if(isUserSilicon)
 						effect_radio()
 					scan_network_info()
 					print_action()
 					src.make_amount = prev_amount
-				// if("AI Text Editor")
-					// Idea
+				if("Read Scanned Data")
+					if(issilicon(user) || isAI(user))
+						ai_peek(user)
+
+	proc/ai_peek(var/mob/user) // Allow silicons to see what was scanned without printing anything
+		switch(src.print_type)
+			if ("paper")
+				var/obj/item/paper/P = create_paper()
+				P.ui_interact(user)
+				qdel(P) // I assume that I should delete this after creating it
+			if ("photo")
+				var/photo_desc = src.print_info["desc"]
+				boutput(user, "A scan of a photograph is stored inside \the [src]'s memory banks. [photo_desc]")
+			if ("paper_photo")
+				var/obj/item/paper/printout/P = create_paper_photo()
+				P.ui_interact(user)
+				qdel(P)
+			if("butt")
+				boutput(user, "The scanned data is just an image of someone's bottom pressed against the scanner. Very mature.")
+			if ("poster_wanted")
+				var/obj/item/poster/titled_photo/W = create_wanted_poster()
+				if (W.popup_win)
+					W.show_popup_win(user)
+				qdel(W)
+			if ("cash_fake")
+				var/cash_amount = src.print_info[1]
+				var/plurality = (cash_amount == 1 ? " is" : "s are")
+				boutput(user, "Data to print [cash_amount] discount-dan credit[plurality] stored inside \the [src]'s memory banks.")
+			if ("cash")
+				var/cash_amount = src.print_info[1]
+				var/plurality = (cash_amount == 1 ? " is" : "s are")
+				boutput(user, "Data to print [cash_amount] credit[plurality] stored inside \the [src]'s memory banks. \
+				The printing of this currency is illegal under space law.")
+			if("id")
+				var/id_name = src.print_info["name"]
+				boutput(user, "An ID card labeled as '[id_name]' is stored inside \the [src]'s memory banks.")
+			if("")
+				boutput(user, "There are no scans stored inside \the [src]'s memory banks.")
+			else
+				boutput(user, "You can only tell that the scanned data is marked as '[src.print_type]'.")
 
 	// --------------- Printing & Loading ----------------
 
@@ -295,128 +335,133 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	proc/print_stuff() // Creates the actual items being printed
 		// Check what type of item it is that is being printed
-		if (cmptextEx(src.print_type, "paper"))
-			effect_printing("print")
-			var/obj/item/paper/P = new(get_turf(src))
-			P.name = src.print_info["name"]
-			P.desc = src.print_info["desc"]
-			P.info = src.print_info["info"]
-			P.stamps = src.print_info["stamps"]
-			P.stamps = P.stamps?.Copy()
-			P.form_fields = src.print_info["form_fields"]
-			P.field_counter = src.print_info["field_counter"]
-			P.icon_state = src.print_info["icon_state"]
-			P.overlays = src.print_info["overlays"]
-		else if (cmptextEx(src.print_type, "paper_copy"))
-			// Print a paper copy of something else (such as books or newspapers)
-			effect_printing("print")
-			var/obj/item/paper/P = new(get_turf(src))
-			P.name = src.print_info["name"]
-			P.desc = src.print_info["desc"]
-			P.info = src.print_info["info"]
-			P.stamps = src.print_info["stamps"]
-			P.stamps = P.stamps?.Copy()
-			P.form_fields = src.print_info["form_fields"]
-			P.field_counter = src.print_info["field_counter"]
+		switch(src.print_type)
+			if ("paper")
+				effect_printing("print")
+				var/obj/item/paper/P = create_paper()
+				P.set_loc(get_turf(src))
 
-		else if (cmptextEx(src.print_type, "photo"))
-			effect_printing("print")
-			var/obj/item/photo/P = new(get_turf(src))
-			P.name = src.print_info[1]
-			P.desc = src.print_info[2]
-			P.fullImage = src.print_info[3]
-			P.fullIcon = src.print_info[4]
-			//	i just copypasted all this garbage over from pictures because thats the only way this worked, idk if any of this is extraneous sorry
-			var/oldtransform = P.fullImage.transform
-			P.fullImage.transform = matrix(0.6875, 0.625, MATRIX_SCALE)
-			P.fullImage.pixel_y = 1
-			P.overlays += P.fullImage
-			P.fullImage.transform = oldtransform
-			P.fullImage.pixel_y = 0
+			if ("photo")
+				effect_printing("print")
+				var/obj/item/photo/P = new(get_turf(src))
+				P.name = src.print_info["name"]
+				P.desc = src.print_info["desc"]
+				P.fullImage = src.print_info["fullImage"]
+				P.fullIcon = src.print_info["fullIcon"]
+				//	i just copypasted all this garbage over from pictures because thats the only way this worked, idk if any of this is extraneous sorry
+				var/oldtransform = P.fullImage.transform
+				P.fullImage.transform = matrix(0.6875, 0.625, MATRIX_SCALE)
+				P.fullImage.pixel_y = 1
+				P.overlays += P.fullImage
+				P.fullImage.transform = oldtransform
+				P.fullImage.pixel_y = 0
 
-		else if (cmptextEx(src.print_type, "paper_photo"))
-			effect_printing("print")
-			var/obj/item/paper/printout/P = new(get_turf(src))
-			P.desc = src.print_info[1]
-			P.print_icon = src.print_info[2]
-			P.print_icon_state = src.print_info[3]
+			if ("paper_photo")
+				effect_printing("print")
+				var/obj/item/paper/printout/P = create_paper_photo()
+				P.set_loc(get_turf(src))
 
-		else if (cmptextEx(src.print_type, "butt"))
-			effect_printing("print")
-			var/obj/item/paper/P = new(get_turf(src))
-			P.name = "butt"
-			P.desc = "butt butt butt"
-			P.info = "{<b>butt butt butt butt butt butt<br>butt butt<br>butt</b>}" //6 butts then 2 butts then 1 butt haha
-			P.icon = 'icons/obj/items/organs/butt.dmi'
-			P.icon_state = "butt"
-		else if (cmptextEx(src.print_type, "poster_wanted"))
-			effect_printing("print")
-			var/obj/item/poster/titled_photo/W = new(get_turf(src))
-			W.name = src.print_info["name"]
-			W.desc = src.print_info["desc"]
-			W.icon_state = src.print_info["icon_state"]
-			W.poster_image = src.print_info["poster_image"]
-			W.poster_image_old = src.print_info["poster_image_old"]
-			W.photo = src.print_info["photo"] = W.photo
-			W.line_title = src.print_info["line_title"]
-			W.poster_HTML = src.print_info["poster_HTML"]
-			W.line_photo_subtitle = src.print_info["line_photo_subtitle"]
-			W.line_below_photo = src.print_info["line_below_photo"]
-			W.line_b1 = src.print_info["line_b1"]
-			W.line_b2 = src.print_info["line_b2"]
-			W.line_b3 = src.print_info["line_b3"]
-			W.author = src.print_info["author"]
-			var/list/plist = src.print_info["plist"]
-			W.plist = plist.Copy()
-		else if (cmptextEx(src.print_type, "cash_fake"))
-			effect_printing("print_cash")
-			var/print_amount = src.print_info[1]
-			var/obj/item/currency/fakecash/C = new(get_turf(src), print_amount)
-			for (var/obj/item/currency/fakecash/other_cash in C.loc.contents)
-				if (other_cash == C)
-					continue
-				else if (other_cash.stack_item(C))
-					break
+			if ("butt")
+				effect_printing("print")
+				var/obj/item/paper/P = new(get_turf(src))
+				P.name = "butt"
+				P.desc = "butt butt butt"
+				P.info = "{<b>butt butt butt butt butt butt<br>butt butt<br>butt</b>}" //6 butts then 2 butts then 1 butt haha
+				P.icon = 'icons/obj/items/organs/butt.dmi'
+				P.icon_state = "butt"
+			if ("poster_wanted")
+				effect_printing("print")
+				var/obj/item/poster/titled_photo/W = create_wanted_poster()
+				W.set_loc(get_turf(src))
+			if ("cash_fake")
+				effect_printing("print_cash")
+				var/print_amount = src.print_info[1]
+				var/obj/item/currency/fakecash/C = new(get_turf(src), print_amount)
+				for (var/obj/item/currency/fakecash/other_cash in C.loc.contents)
+					if (other_cash == C)
+						continue
+					else if (other_cash.stack_item(C))
+						break
 
-		else if (cmptextEx(src.print_type, "cash"))
-			// Like having a license to printing money, except without a license.
-			effect_printing("print_cash")
-			var/print_amount = src.print_info[1]
-			var/obj/item/currency/spacecash/C = new(get_turf(src), print_amount)
-			for (var/obj/item/currency/spacecash/other_cash in C.loc.contents)
-				if (other_cash == C)
-					continue
-				else if (other_cash.stack_item(C))
-					break
+			if ("cash")
+				// Like having a license to printing money, except without a license.
+				effect_printing("print_cash")
+				var/print_amount = src.print_info[1]
+				var/obj/item/currency/spacecash/C = new(get_turf(src), print_amount)
+				for (var/obj/item/currency/spacecash/other_cash in C.loc.contents)
+					if (other_cash == C)
+						continue
+					else if (other_cash.stack_item(C))
+						break
 
-		else if (cmptextEx(src.print_type, "id"))
-			if(src.print_info["icon_state"] == "gold")
-				effect_printing("print_id_gold")
+			if ("id")
+				if(src.print_info["icon_state"] == "gold")
+					effect_printing("print_id_gold")
+				else
+					effect_printing("print_id")
+				var/obj/item/card/id/I = new(get_turf(src))
+				I.name = src.print_info["name"]
+				I.icon_state = src.print_info["icon_state"]
+				I.item_state = src.print_info["item_state"]
+				I.desc = src.print_info["desc"]
+				I.pronouns = src.print_info["pronouns"]
+				var/list/print_access = src.print_info["access"]
+				I.access = print_access.Copy()
+				I.registered = src.print_info["registered"]
+				I.assignment = src.print_info["assignment"]
+				I.title = src.print_info["title"]
+				I.reagent_account = src.print_info["reagent_account"]
+				I.keep_icon = src.print_info["keep_icon"]
+				I.money = src.print_info["money"]
+				I.pin = src.print_info["pin"]
+				I.cardfile = src.print_info["cardfile"]
+				I.emagged = TRUE
 			else
-				effect_printing("print_id")
-			var/obj/item/card/id/I = new(get_turf(src))
-			I.name = src.print_info["name"]
-			I.icon_state = src.print_info["icon_state"]
-			I.item_state = src.print_info["item_state"]
-			I.desc = src.print_info["desc"]
-			I.pronouns = src.print_info["pronouns"]
-			var/list/print_access = src.print_info["access"]
-			I.access = print_access.Copy()
-			I.registered = src.print_info["registered"]
-			I.assignment = src.print_info["assignment"]
-			I.title = src.print_info["title"]
-			I.reagent_account = src.print_info["reagent_account"]
-			I.keep_icon = src.print_info["keep_icon"]
-			I.money = src.print_info["money"]
-			I.pin = src.print_info["pin"]
-			I.cardfile = src.print_info["cardfile"]
-			I.emagged = TRUE
-		else
-			effect_printing("print")
-			new/obj/item/paper(get_turf(src))
+				effect_printing("print")
+				new/obj/item/paper(get_turf(src))
 		return
 
-	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
+	proc/create_paper()
+		var/obj/item/paper/P = new/obj/item/paper(src)
+		P.name = src.print_info["name"]
+		P.desc = src.print_info["desc"]
+		P.info = src.print_info["info"]
+		P.stamps = src.print_info["stamps"]
+		P.stamps = P.stamps?.Copy()
+		P.form_fields = src.print_info["form_fields"]
+		P.field_counter = src.print_info["field_counter"]
+		P.icon_state = src.print_info["icon_state"]
+		P.overlays = src.print_info["overlays"]
+		return P
+
+	proc/create_paper_photo()
+		var/obj/item/paper/printout/P = new/obj/item/paper/printout(src)
+		P.desc = src.print_info[1]
+		P.print_icon = src.print_info[2]
+		P.print_icon_state = src.print_info[3]
+		return P
+
+	proc/create_wanted_poster()
+		var/obj/item/poster/titled_photo/W = new/obj/item/poster/titled_photo(src)
+		W.name = src.print_info["name"]
+		W.desc = src.print_info["desc"]
+		W.icon_state = src.print_info["icon_state"]
+		W.poster_image = src.print_info["poster_image"]
+		W.poster_image_old = src.print_info["poster_image_old"]
+		W.photo = src.print_info["photo"] = W.photo
+		W.line_title = src.print_info["line_title"]
+		W.poster_HTML = src.print_info["poster_HTML"]
+		W.line_photo_subtitle = src.print_info["line_photo_subtitle"]
+		W.line_below_photo = src.print_info["line_below_photo"]
+		W.line_b1 = src.print_info["line_b1"]
+		W.line_b2 = src.print_info["line_b2"]
+		W.line_b3 = src.print_info["line_b3"]
+		W.author = src.print_info["author"]
+		var/list/plist = src.print_info["plist"]
+		W.plist = plist.Copy()
+		return W
+
+	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper or IDs into the copier here
 		if (istype(w, /obj/item/paper))
 			if (istype(w, /obj/item/paper/book) || istype(w, /obj/item/paper/newspaper))
 				return;
@@ -487,7 +532,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	// --------------- Scanning Items ----------------
 
-	proc/scan_setup(var/obj/item/w, var/mob/user) // Run before scanning items
+	proc/scan_setup(var/obj/item/w, var/mob/user) // Run this before scanning items
 		src.reset_all()
 		src.use_state = 2
 		user.drop_item()
@@ -520,7 +565,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_info["stamps"] = P.stamps?.Copy()
 			src.print_info["form_fields"] = P.form_fields
 			src.print_info["field_counter"] = P.field_counter
-			src.print_type = "paper_copy"
+			src.print_info["icon_state"] = "paper_blank"
+			src.print_info["overlays"] = list()
+			src.print_type = "paper"
 		else if (istype(P, /obj/item/paper/newspaper))
 			var/obj/item/paper/newspaper/news = P
 			src.print_info["name"] = news.publisher
@@ -529,7 +576,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_info["stamps"] = news.stamps?.Copy()
 			src.print_info["form_fields"] = news.form_fields
 			src.print_info["field_counter"] = news.field_counter
-			src.print_type = "paper_copy"
+			src.print_info["icon_state"] = "paper_blank"
+			src.print_info["overlays"] = list()
+			src.print_type = "paper"
 		else
 			src.print_info["name"] = P.name
 			src.print_info["desc"] = P.desc
@@ -545,12 +594,12 @@ TYPEINFO(/obj/machinery/photocopier)
 		// Photo: index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon
 		scan_setup(P, user)
 		src.icon_state = "papper"
-		boutput(user, "You put the picture on the scan bed, close the lid, and press start...")
+		boutput(user, "You put the photo on the scan bed, close the lid, and press start...")
 		effects_scanning(P)
-		src.print_info += P.name
-		src.print_info += P.desc
-		src.print_info += P.fullImage
-		src.print_info += P.fullIcon
+		src.print_info["name"] = P.name
+		src.print_info["desc"] = P.desc
+		src.print_info["fullImage"] = P.fullImage
+		src.print_info["fullIcon"] = P.fullIcon
 		src.print_type = "photo"
 
 	proc/scan_butt(var/obj/item/clothing/head/butt/B, var/mob/user)
@@ -626,8 +675,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["plist"] = W.plist.Copy()
 		src.print_type = "poster_wanted"
 
-	proc/scan_network_info()
-		// Used to print data on how to interact with this photocopier via packets
+	proc/scan_network_info() // Used to print data on how to interact with this photocopier via packets
 		src.reset_all()
 		var/network_info = "<li><h3>Photocopier Network Information Sheet</h3></li> \
 			<body><hr> \
@@ -649,7 +697,9 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["stamps"] = null
 		src.print_info["form_fields"] = list()
 		src.print_info["field_counter"] = 1
-		src.print_type = "paper_copy"
+		src.print_info["icon_state"] = "paper_blank"
+		src.print_info["overlays"] = list()
+		src.print_type = "paper"
 
 	proc/effects_scanning(var/obj/item/w)
 		sleep(0.3 SECONDS)
