@@ -1,5 +1,9 @@
 
 (t)sat oct 26 24
+(u)LeahTheTech
+(p)20953
+(e)🪲⚖|C-Bug, C-Balance
+(*)Getting staggered by a melee attack now makes you unable to sprint for a short time.
 (u)FlameArrow57
 (p)21110
 (e)🆕⚖💅🔨|C-Feature, C-Balance, C-QoL, A-Player-Actions
