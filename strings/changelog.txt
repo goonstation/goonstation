@@ -2,6 +2,7 @@
 (t)fri oct 25 24
 (u)LeahTheTech
 (*)Thermite should now be a bit more consistent, only requires 10u to activate, has a much more visible effect on turfs, can be cleaned up, and leaves a fire behind when activated.
+(*)The PTL can now break open geodes and will melt through asteroid rock a lot faster.
 (u)Glamurio (Ryou)
 (p)21153
 (e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
