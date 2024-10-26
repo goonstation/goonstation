@@ -162,7 +162,7 @@
 	c_flags = ONBELT
 	m_amt = 200
 	amount = 10
-	remove_self_multiplier = 0.25
+	remove_self_multiplier = 0.75
 	delete_on_last_use = TRUE
 
 /obj/item/handcuffs/tape_roll/crappy
