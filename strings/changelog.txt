@@ -1,5 +1,9 @@
 
 (t)sun oct 27 24
+(u)Glamurio & ZeWaka
+(p)21136
+(e)💅⚙|C-QoL, A-Internal
+(+)Traders now stock certain items more frequently than before, such as methane.
 (u)Facsimil
 (p)21051
 (e)🪲🆕💅🔄📦|C-Bug, C-Feature, C-QoL, C-Rework, A-Game-Objects
