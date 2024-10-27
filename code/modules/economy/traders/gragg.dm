@@ -16,7 +16,7 @@
 			/datum/commodity/trader/gragg/cobryl,
 			/datum/commodity/trader/gragg/syreline
 		),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list(/datum/commodity/trader/gragg/starstone)
 	)
 
@@ -28,7 +28,7 @@
 			/datum/commodity/trader/gragg/uqill,
 			/datum/commodity/trader/gragg/artifact
 		),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list()
 	)
 

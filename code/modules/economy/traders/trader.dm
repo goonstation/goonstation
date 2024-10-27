@@ -25,7 +25,7 @@
 	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
 	var/list/amount_of_items_per_rarity = list(
 		TRADER_RARITY_COMMON = 3,
-		TRADER_RARITY_UNCOMMON= 2,
+		TRADER_RARITY_UNCOMMON = 2,
 		TRADER_RARITY_RARE = 1,
 	)
 	// and these three are the active ones used for gameplay

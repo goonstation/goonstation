@@ -18,7 +18,7 @@
 			/datum/commodity/trader/josh/vrgoggles,
 			/datum/commodity/trader/josh/secbelts
 		),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list(
 			/datum/commodity/trader/josh/hosboots,
 			/datum/commodity/trader/josh/injectorbelt,
@@ -36,7 +36,7 @@
 			/datum/commodity/trader/josh/flyswatter,
 			/datum/commodity/trader/josh/robustris,
 		),
-		TRADER_RARITY_UNCOMMON= list(
+		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/josh/foamgun,
 			/datum/commodity/trader/josh/paintgun,
 			/datum/commodity/trader/josh/spraypaint,

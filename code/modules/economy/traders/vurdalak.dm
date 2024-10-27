@@ -20,7 +20,7 @@
 			/datum/commodity/trader/vurdalak/amanita,
 			/datum/commodity/trader/vurdalak/roburger
 		),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list(
 			/datum/commodity/trader/vurdalak/obsidiancrown,
 			/datum/commodity/trader/vurdalak/ancientarmor,
@@ -30,7 +30,7 @@
 
 	base_goods_sell = list(
 		TRADER_RARITY_COMMON = list(),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list(/datum/commodity/trader/vurdalak/artifact)
 	)
 

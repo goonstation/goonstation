@@ -18,7 +18,7 @@
 			/datum/commodity/trader/buford/psilocybin,
 			/datum/commodity/trader/buford/pizza
 		),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list()
 	)
 
@@ -31,7 +31,7 @@
 			/datum/commodity/trader/buford/topcrop,
 			/datum/commodity/trader/buford/weedkiller
 		),
-		TRADER_RARITY_UNCOMMON= list(
+		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/buford/alienseeds,
 			/datum/commodity/trader/buford/weedseeds,
 		),

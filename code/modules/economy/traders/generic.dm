@@ -15,7 +15,7 @@
 			/datum/commodity/trader/generic/furniture,
 			/datum/commodity/trader/generic/pens
 		),
-		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_UNCOMMON = list(),
 		TRADER_RARITY_RARE = list()
 	)
 
@@ -27,7 +27,7 @@
 			/datum/commodity/trader/generic/monkey,
 			/datum/commodity/trader/ringtone_dogs
 		),
-		TRADER_RARITY_UNCOMMON= list(
+		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/generic/gasmask,
 			/datum/commodity/trader/generic/rcd_ammo,
 			/datum/commodity/trader/generic/telecrystal,
