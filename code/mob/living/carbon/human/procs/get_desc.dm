@@ -410,7 +410,7 @@
 		items = copytext(items, 3)
 		. += "<br>[SPAN_NOTICE("[src] is juggling [items]!")]"
 
-	if (src.reagents.has_reagent("ethanol"))
+	if (src.reagents.has_reagent("ethanol") && !isdead(src))
 		var/et_amt = src.reagents.get_reagent_amount("ethanol")
 		var/drunk_assess = ""
 		if (!isalcoholresistant(src) || src.reagents.has_reagent("moonshine"))
