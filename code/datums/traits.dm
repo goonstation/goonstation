@@ -129,7 +129,7 @@
 
 			. += C
 
-	proc/generateTraitData(/mob/user)
+	proc/generateTraitData(mob/user)
 		if(traitDataDirty)
 			traitData = list()
 			for (var/datum/trait/trait as anything in src.getTraits(user))
