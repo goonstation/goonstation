@@ -12,7 +12,7 @@
 	business_card = /obj/item/paper/businesscard/vurdulak
 
 	base_goods_buy = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/vurdalak/meat,
 			/datum/commodity/trader/vurdalak/brains,
 			/datum/commodity/trader/vurdalak/deathweed,
@@ -20,8 +20,8 @@
 			/datum/commodity/trader/vurdalak/amanita,
 			/datum/commodity/trader/vurdalak/roburger
 		),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list(
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list(
 			/datum/commodity/trader/vurdalak/obsidiancrown,
 			/datum/commodity/trader/vurdalak/ancientarmor,
 			/datum/commodity/trader/vurdalak/relic
@@ -29,9 +29,9 @@
 	)
 
 	base_goods_sell = list(
-		ITEM_COMMON = list(),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list(/datum/commodity/trader/vurdalak/artifact)
+		TRADER_RARITY_COMMON = list(),
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/vurdalak/artifact)
 	)
 
 	dialogue_greet = list("Well met. We have several items for sale, as well as several desired articles.",

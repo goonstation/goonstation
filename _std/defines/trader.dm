@@ -1,4 +1,4 @@
 // Rarities to determine item amounts in traders
-#define ITEM_COMMON 1
-#define ITEM_UNCOMMON 2
-#define ITEM_RARE 3
+#define TRADER_RARITY_COMMON 1
+#define TRADER_RARITY_UNCOMMON2
+#define TRADER_RARITY_RARE 3

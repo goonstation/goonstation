@@ -12,14 +12,14 @@
 	business_card = /obj/item/paper/businesscard/josh
 
 	base_goods_buy = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/josh/syringes,
 			/datum/commodity/trader/josh/radios,
 			/datum/commodity/trader/josh/vrgoggles,
 			/datum/commodity/trader/josh/secbelts
 		),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list(
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list(
 			/datum/commodity/trader/josh/hosboots,
 			/datum/commodity/trader/josh/injectorbelt,
 			/datum/commodity/trader/josh/injectormask
@@ -27,7 +27,7 @@
 	)
 
 	base_goods_sell = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/josh/skateboards,
 			/datum/commodity/trader/josh/tacos,
 			/datum/commodity/trader/josh/fingerless,
@@ -36,13 +36,13 @@
 			/datum/commodity/trader/josh/flyswatter,
 			/datum/commodity/trader/josh/robustris,
 		),
-		ITEM_UNCOMMON = list(
+		TRADER_RARITY_UNCOMMON= list(
 			/datum/commodity/trader/josh/foamgun,
 			/datum/commodity/trader/josh/paintgun,
 			/datum/commodity/trader/josh/spraypaint,
 			/datum/commodity/trader/josh/rocketshoes,
 		),
-		ITEM_RARE = list()
+		TRADER_RARITY_RARE = list()
 	)
 
 	dialogue_greet = list("What's up my bro? I got some fresh stuff for ya.",

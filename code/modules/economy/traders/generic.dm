@@ -6,7 +6,7 @@
 	chance_arrive = 66
 
 	base_goods_buy = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/generic/anyore,
 			/datum/commodity/trader/generic/herbs,
 			/datum/commodity/trader/generic/anyfood,
@@ -15,24 +15,24 @@
 			/datum/commodity/trader/generic/furniture,
 			/datum/commodity/trader/generic/pens
 		),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list()
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list()
 	)
 
 	base_goods_sell = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/generic/sheetmetal,
 			/datum/commodity/trader/generic/fabric,
 			/datum/commodity/trader/generic/glowstick,
 			/datum/commodity/trader/generic/monkey,
 			/datum/commodity/trader/ringtone_dogs
 		),
-		ITEM_UNCOMMON = list(
+		TRADER_RARITY_UNCOMMON= list(
 			/datum/commodity/trader/generic/gasmask,
 			/datum/commodity/trader/generic/rcd_ammo,
 			/datum/commodity/trader/generic/telecrystal,
 		),
-		ITEM_RARE = list()
+		TRADER_RARITY_RARE = list()
 	)
 
 	New()

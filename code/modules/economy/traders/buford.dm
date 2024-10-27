@@ -10,7 +10,7 @@
 	chance_arrive = 100
 
 	base_goods_buy = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/buford/vennecure,
 			/datum/commodity/trader/buford/megaweed,
 			/datum/commodity/trader/buford/whiteweed,
@@ -18,12 +18,12 @@
 			/datum/commodity/trader/buford/psilocybin,
 			/datum/commodity/trader/buford/pizza
 		),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list()
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list()
 	)
 
 	base_goods_sell = list(
-		ITEM_COMMON = list(
+		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/buford/powerplant,
 			/datum/commodity/trader/buford/mutriant,
 			/datum/commodity/trader/buford/groboost,
@@ -31,11 +31,11 @@
 			/datum/commodity/trader/buford/topcrop,
 			/datum/commodity/trader/buford/weedkiller
 		),
-		ITEM_UNCOMMON = list(
+		TRADER_RARITY_UNCOMMON= list(
 			/datum/commodity/trader/buford/alienseeds,
 			/datum/commodity/trader/buford/weedseeds,
 		),
-		ITEM_RARE = list(/datum/commodity/trader/buford/methane)
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/buford/methane)
 	)
 
 	dialogue_greet = list("Hey man. Got the good shit for sale, yeah.",

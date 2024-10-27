@@ -10,26 +10,26 @@
 	chance_arrive = 33
 
 	base_goods_buy = list(
-		ITEM_COMMON = list(/datum/commodity/trader/gragg/rock,
+		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/rock,
 			/datum/commodity/trader/gragg/mauxite,
 			/datum/commodity/trader/gragg/bohrum,
 			/datum/commodity/trader/gragg/cobryl,
 			/datum/commodity/trader/gragg/syreline
 		),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list(/datum/commodity/trader/gragg/starstone)
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/gragg/starstone)
 	)
 
 	base_goods_sell = list(
-		ITEM_COMMON = list(/datum/commodity/trader/gragg/char,
+		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/char,
 			/datum/commodity/trader/gragg/erebite,
 			/datum/commodity/trader/gragg/cerenkite,
 			/datum/commodity/trader/gragg/plasmastone,
 			/datum/commodity/trader/gragg/uqill,
 			/datum/commodity/trader/gragg/artifact
 		),
-		ITEM_UNCOMMON = list(),
-		ITEM_RARE = list()
+		TRADER_RARITY_UNCOMMON= list(),
+		TRADER_RARITY_RARE = list()
 	)
 
 	dialogue_greet = list("HELLO. WANT BUY TASTY ROCKS. TRADE?",
