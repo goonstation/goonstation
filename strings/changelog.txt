@@ -1,5 +1,9 @@
 
 (t)sun oct 27 24
+(u)Facsimil
+(p)21051
+(e)🪲🆕💅🔄📦|C-Bug, C-Feature, C-QoL, C-Rework, A-Game-Objects
+(*)For Player Pianos: added note delays and single-instrument concurrent notes. Details can be found in the Player Piano book.
 (u)LeahTheTech
 (p)21178
 (e)|
