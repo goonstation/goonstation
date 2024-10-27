@@ -18,7 +18,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	var/use_state = 0 // 0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 15 // amount of paper currently in the photocopier
 	var/id_amount = 0 // number of blank ids currently in the machine while emagged
-	var/make_amount = 1 //from 1 to MAX_SHEETS, amount of copies the photocopier will copy, copy?
+	var/print_amount = 1 // from 1 to MAX_SHEETS, amount of copies the photocopier will copy, copy?
 	var/emagged = FALSE
 
 	var/list/print_info = list() // Data of the item to print
@@ -50,9 +50,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			else //just in case
 				desc_string += "call 1-800-coder today (mention use_state) "
 
-		if (make_amount)
-			desc_string += "The counter shows that \the [src] is set to make [make_amount] "
-			if (make_amount > 1)
+		if (print_amount)
+			desc_string += "The counter shows that \the [src] is set to make [print_amount] "
+			if (print_amount > 1)
 				desc_string += "copies. "
 			else
 				desc_string += "copy. "
@@ -151,7 +151,7 @@ TYPEINFO(/obj/machinery/photocopier)
 					var/amount_str = "How many copies do you want to make? ([src.paper_amount] sheets available)"
 					var/num_sel = input(amount_str, "Photocopier Controls") as num
 					if (isnum_safe(num_sel) && num_sel && (BOUNDS_DIST(user, src) == 0 || isUserSilicon))
-						src.make_amount = min(max(num_sel, 1), MAX_SHEETS)
+						src.print_amount = min(max(num_sel, 1), MAX_SHEETS)
 						playsound(src.loc, 'sound/machines/ping.ogg', 10, 1)
 						boutput(user, "Amount set to: [num_sel] sheets.")
 						if(isUserSilicon)
@@ -246,13 +246,13 @@ TYPEINFO(/obj/machinery/photocopier)
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
-					var/prev_amount = src.make_amount // Ignore the normal copy settings. Just print one sheet.
-					src.make_amount = 1
+					var/prev_amount = src.print_amount // Ignore the normal copy settings. Just print one sheet.
+					src.print_amount = 1
 					if(isUserSilicon)
 						effect_radio()
 					scan_network_info()
 					print_action()
-					src.make_amount = prev_amount
+					src.print_amount = prev_amount
 				if("Read Scanned Data")
 					if(issilicon(user) || isAI(user))
 						ai_peek(user)
@@ -309,10 +309,10 @@ TYPEINFO(/obj/machinery/photocopier)
 			return
 		src.icon_state = "close_sesame"
 		src.visible_message("\The [src] starts printing copies!")
-		make_amount = min(make_amount, MAX_SHEETS)
+		print_amount = min(print_amount, MAX_SHEETS)
 		src.use_state = 2
 		var/isFail = FALSE
-		for (var/i = 1, i <= src.make_amount, i++)
+		for (var/i = 1, i <= src.print_amount, i++)
 			if ((paper_amount <= 0 && !consume_ids) || (id_amount <= 0 && consume_ids))
 				isFail = TRUE
 				break
@@ -329,7 +329,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			effect_fail()
 		else
 			src.visible_message("\The [src] finishes its print job.")
-			if(make_amount > 1)
+			if(print_amount > 1)
 				playsound(src.loc, 'sound/machines/ping.ogg', 5, 1)
 		src.icon_state = "close_sesame"
 
@@ -396,9 +396,9 @@ TYPEINFO(/obj/machinery/photocopier)
 
 			if ("id")
 				if(src.print_info["icon_state"] == "gold")
-					effect_printing("print_id_gold")
+					effect_printing_long("print_id_gold")
 				else
-					effect_printing("print_id")
+					effect_printing_long("print_id")
 				var/obj/item/card/id/I = new(get_turf(src))
 				I.name = src.print_info["name"]
 				I.icon_state = src.print_info["icon_state"]
@@ -417,7 +417,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				I.cardfile = src.print_info["cardfile"]
 				I.emagged = TRUE
 			else
-				effect_printing("print")
+				effect_printing_long("print")
 				new/obj/item/paper(get_turf(src))
 		return
 
@@ -431,6 +431,9 @@ TYPEINFO(/obj/machinery/photocopier)
 		P.form_fields = src.print_info["form_fields"]
 		P.field_counter = src.print_info["field_counter"]
 		P.icon_state = src.print_info["icon_state"]
+		P.sizex = src.print_info["sizex"]
+		P.sizey = src.print_info["sizey"]
+		P.scrollbar = src.print_info["scrollbar"]
 		P.overlays = src.print_info["overlays"]
 		return P
 
@@ -523,6 +526,13 @@ TYPEINFO(/obj/machinery/photocopier)
 		sleep(0.25 SECONDS)
 		flick(print_icon, src)
 		sleep(2.5 SECONDS)
+	proc/effect_printing_long(var/print_icon) // Stuff like IDs might take longer to print
+		sleep(0.5 SECONDS)
+		playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 30, 1)
+		sleep(0.5 SECONDS)
+		flick(print_icon, src)
+		sleep(8.5 SECONDS)
+
 	proc/effect_fail()
 		// Just displays a red light to give the user additional feedback when needed
 		if(src.use_state == 1)
@@ -566,6 +576,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_info["form_fields"] = P.form_fields
 			src.print_info["field_counter"] = P.field_counter
 			src.print_info["icon_state"] = "paper_blank"
+			src.print_info["sizex"] = 0
+			src.print_info["sizey"] = 0
+			src.print_info["scrollbar"] = TRUE
 			src.print_info["overlays"] = list()
 			src.print_type = "paper"
 		else if (istype(P, /obj/item/paper/newspaper))
@@ -577,6 +590,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_info["form_fields"] = news.form_fields
 			src.print_info["field_counter"] = news.field_counter
 			src.print_info["icon_state"] = "paper_blank"
+			src.print_info["sizex"] = 0
+			src.print_info["sizey"] = 0
+			src.print_info["scrollbar"] = TRUE
 			src.print_info["overlays"] = list()
 			src.print_type = "paper"
 		else
@@ -587,6 +603,9 @@ TYPEINFO(/obj/machinery/photocopier)
 			src.print_info["form_fields"] = P.form_fields
 			src.print_info["field_counter"] = P.field_counter
 			src.print_info["icon_state"] = P.icon_state
+			src.print_info["sizex"] = P.sizex
+			src.print_info["sizey"] = P.sizey
+			src.print_info["scrollbar"] = P.scrollbar
 			src.print_info["overlays"] = P.overlays
 			src.print_type = "paper"
 
@@ -698,6 +717,9 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["form_fields"] = list()
 		src.print_info["field_counter"] = 1
 		src.print_info["icon_state"] = "paper_blank"
+		src.print_info["sizex"] = 0
+		src.print_info["sizey"] = 0
+		src.print_info["scrollbar"] = TRUE
 		src.print_info["overlays"] = list()
 		src.print_type = "paper"
 
@@ -749,25 +771,25 @@ TYPEINFO(/obj/machinery/photocopier)
 		// var/senderid = signal.data["sender"]
 		switch(lowertext(signal.data["command"]))
 			if("help")
-				var/prev_amount = src.make_amount
-				src.make_amount = 1
+				var/prev_amount = src.print_amount
+				src.print_amount = 1
 				effect_radio()
 				scan_network_info()
 				print_action()
-				src.make_amount = prev_amount
+				src.print_amount = prev_amount
 			if("print")
-				var/prev_amount = src.make_amount
+				var/prev_amount = src.print_amount
 				if(signal.data["data"])
 					var/signal_data = text2num_safe(lowertext(signal.data["data"]))
 					if(isnum_safe(signal_data))
-						make_amount = min(max(signal_data, 1), MAX_SHEETS)
+						print_amount = min(max(signal_data, 1), MAX_SHEETS)
 				effect_radio()
 				print_action()
-				src.make_amount = prev_amount
+				src.print_amount = prev_amount
 			if("amount")
 				var/signal_data = text2num_safe(lowertext(signal.data["data"]))
 				if(isnum_safe(signal_data))
-					make_amount = min(max(signal_data, 1), MAX_SHEETS)
+					print_amount = min(max(signal_data, 1), MAX_SHEETS)
 				playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
 				effect_radio()
 			if("reset")
