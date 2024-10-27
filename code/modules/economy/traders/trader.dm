@@ -20,7 +20,7 @@
 	var/list/base_goods_sell = list()
 
 	// The rarities used to iterate over
-	var/rarities = list(TRADER_RARITY_COMMON, ITEM_UNCOMMON, TRADER_RARITY_RARE)
+	var/rarities = list(TRADER_RARITY_COMMON, TRADER_RARITY_UNCOMMON, TRADER_RARITY_RARE)
 	// list to determine how many items per rarity we have
 	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
 	var/list/amount_of_items_per_rarity = list(
