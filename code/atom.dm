@@ -823,12 +823,14 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	return
 
+///wrapper proc for /atom/proc/attack_hand so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackhand(mob/user as mob)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src, COMSIG_ATTACKHAND, user))
 		return
 	src.attack_hand(user)
 
+///internal proc for when an atom is attacked by a user's hand. Override this, but do not call it,
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_attack_hand(user)

@@ -1,7 +1,42 @@
-(t)sat oct 23 24
+
+(t)sat oct 26 24
+(u)LeahTheTech
+(p)20953
+(e)🪲⚖|C-Bug, C-Balance
+(*)Getting staggered by a melee attack now makes you unable to sprint for a short time.
+(u)FlameArrow57
+(p)21110
+(e)🆕⚖💅🔨|C-Feature, C-Balance, C-QoL, A-Player-Actions
+(*)You can now hold Space and Left Click anything on a tile to automatically pick up the highest weight item
+(t)fri oct 25 24
+(u)LeahTheTech
+(*)Thermite should now be a bit more consistent, only requires 10u to activate, has a much more visible effect on turfs, can be cleaned up, and leaves a fire behind when activated.
+(*)The PTL can now break open geodes and will melt through asteroid rock a lot faster.
+(u)Glamurio (Ryou)
+(p)21153
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Sterile masks now render you immune to breathing in miasma.
+(u)Retrino
+(p)21129
+(e)🗺|A-Mapping
+(*)Oshan now has a medical booth.
+(u)Glamurio (Ryou)
+(p)21150
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Wooden barricades no longer always stop kinetic bullets, and can also be shot down.
+(t)wed oct 23 24
 (u)Emily
+(e)⚖|C-Balance
 (*)Chicken Grenades now have a purchase limit of 3.
 (+)Added support for maximum purchases of Traitor Items
+(u)JORJ949
+(p)21149
+(e)🆕🤖|C-Feature, A-Silicons
+(*)AIs now receive atmospheric alerts from air alarms.
+(u)JORJ949
+(p)21116
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Added security towels found in the security apparel vendor
 (t)tue oct 22 24
 (u)tarmunora
 (+)Reduce req payout scaling from 15% to 10% multiplicitve, but added an additive bonus

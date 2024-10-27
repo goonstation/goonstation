@@ -360,6 +360,9 @@ proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)
 		if(regenerate)
 			T.space_color = generate_space_color()
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, T.space_color, 10 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_DEBRIS, T.space_color, 10 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_MINING, T.space_color, 10 SECONDS)
 			regenerate = FALSE
 		if(istype(T, /turf/space/fluid))
 			continue
