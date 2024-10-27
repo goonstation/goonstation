@@ -36,6 +36,9 @@
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			boutput(src.holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, it instantly kicks you back into the aether!"))
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
+			boutput(src.holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, \an [AM.name] forces you out!"))
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		AH.possession_points = 0
 		actions.start(new/datum/action/bar/icon/trickster_possession(H), holder.owner)
 		return CAST_ATTEMPT_SUCCESS
