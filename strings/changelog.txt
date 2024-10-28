@@ -1,5 +1,9 @@
 
 (t)sun oct 27 24
+(u)JORJ949
+(p)20941
+(e)🆕🤖|C-Feature, A-Silicons
+(*)The Research Director now has a Manudrive containing the blueprints for most on-station laws.
 (u)Glamurio & ZeWaka
 (p)21136
 (e)💅⚙|C-QoL, A-Internal
