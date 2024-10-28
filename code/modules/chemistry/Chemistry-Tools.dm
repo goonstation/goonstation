@@ -743,20 +743,12 @@ proc/ui_describe_reagents(atom/A)
 		if (istype(container))
 			container.try_to_apply_lid(src, user)
 
-/obj/item/reagent_containers/glass/condenser
-	name = "chemical condenser"
-	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
-	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	icon_state = "condenser"
+/obj/item/reagent_containers/glass/plumbing
+	name = "abstract glass plumbing object"
+	desc = "A set of glass tubes mysteriously spelling 'Call 1-800-CODER'."
 	amount_per_transfer_from_this = 10
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
-	splash_all_contents = FALSE
-	object_flags = OPENCONTAINER | SUPPRESSATTACK
-	initial_volume = 100
-	accepts_lid = TRUE
-	fluid_overlay_states = 5
-	container_style = "condenser"
 	var/list/connected_containers = list() //! the containers currently connected to the condenser
 	var/max_amount_of_containers = 4
 
@@ -772,18 +764,17 @@ proc/ui_describe_reagents(atom/A)
 		if (src.loc != newloc && length(src.connected_containers))
 			src.remove_all_containers()
 		. = ..()
-
 	Move()
 		if(length(src.connected_containers))
 			src.remove_all_containers()
 		..()
+
 
 	attack_hand(var/mob/user)
 		if(length(src.connected_containers))
 			src.remove_all_containers()
 			boutput(user, SPAN_ALERT("You remove all connections to the [src.name]."))
 		..()
-
 	proc/try_adding_container(var/obj/container, var/mob/user)
 		if (!istype(src.loc, /turf/) || !istype(container.loc, /turf/)) //if the condenser or container isn't on the floor you cannot hook it up
 			return
@@ -798,14 +789,12 @@ proc/ui_describe_reagents(atom/A)
 		else
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
 		add_container(container)
-
 	proc/add_line(var/obj/container)
 		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01
 		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
-
 
 	proc/add_container(var/obj/container)
 		//this is a mess but we need it to disconnect if ANYTHING happens
@@ -827,11 +816,25 @@ proc/ui_describe_reagents(atom/A)
 	proc/remove_container_xsig(datum/component/complexsignal, old_movable, new_movable)
 		src.remove_container(complexsignal.parent)
 
+	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+		src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 	proc/remove_all_containers()
 		for(var/obj/container in src.connected_containers)
 			remove_container(container)
 
-	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+/obj/item/reagent_containers/glass/plumbing/condenser
+	name = "chemical condenser"
+	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "condenser"
+	splash_all_contents = FALSE
+	object_flags = OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100
+	accepts_lid = TRUE
+	fluid_overlay_states = 5
+	container_style = "condenser"
+
+	try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
 		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 		else
@@ -918,6 +921,74 @@ proc/ui_describe_reagents(atom/A)
 			src.container_order[id] = container
 			src.connected_containers.Add(container)
 
+
+/obj/item/reagent_containers/glass/plumbing/dropper
+	name = "dropper funnel"
+	desc = "A glass tube for adding reagents to containers at a specific rate. Can be hooked up to many types of containers."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "dropper_funnel_off"
+	splash_all_contents = FALSE
+	object_flags = OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100
+	accepts_lid = TRUE
+	fluid_overlay_states = 8
+	container_style = "dropper_funnel"
+	var/open = FALSE
+	var/flow_rate = 1
+	HELP_MESSAGE_OVERRIDE({"To pick this up, click and drag it onto your person."})
+
+	disposing()
+		src.remove_container()
+		. = ..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (ismob(over_object))
+			var/mob/user = over_object
+			if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
+				if (!user.put_in_hand(src))
+					return ..()
+		else
+			..()
+
+	add_line(var/obj/container)
+		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x-1, src.pixel_y-13, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+	attack_self(mob/user as mob)
+		if(current_lid)
+			boutput(user, SPAN_NOTICE("You pop the lid off of the [src]."))
+			remove_current_lid(user)
+		else
+			var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
+			flow_rate = number
+		return
+	process()
+		if (open)
+			for(var/obj/container in connected_containers)
+				src.reagents.trans_to(container, flow_rate)
+	set_loc(newloc, storage_check)
+		set_flow(FALSE)
+		. = ..()
+	Move()
+		set_flow(FALSE)
+		. = ..()
+	attack_hand(mob/user)
+		src.add_fingerprint(user)
+		set_flow(!open)
+
+	proc/set_flow(var/desired_state)
+		if (!desired_state && open)
+			processing_items -= src
+			open = FALSE
+			flick("dropper_funnel_swoff",src)
+			icon_state = "dropper_funnel_off"
+		else if(desired_state && !open)
+			processing_items |= src
+			open = TRUE
+			flick("dropper_funnel_swon",src)
+			icon_state = "dropper_funnel_on"
 
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"

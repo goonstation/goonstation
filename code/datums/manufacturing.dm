@@ -843,7 +843,7 @@
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
 	item_requirements = list("molitz" = 5)
-	item_outputs = list(/obj/item/reagent_containers/glass/condenser)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
@@ -851,7 +851,15 @@
 /datum/manufacture/fractionalcondenser
 	name = "Fractional Condenser"
 	item_requirements = list("molitz" = 6)
-	item_outputs = list(/obj/item/reagent_containers/glass/condenser/fractional)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser/fractional)
+	create = 1
+	time = 5 SECONDS
+	category = "Tool"
+
+/datum/manufacture/fractionalcondenser
+	name = "Dropper Funnel"
+	item_requirements = list("molitz" = 3)
+	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)
 	create = 1
 	time = 5 SECONDS
 	category = "Tool"
