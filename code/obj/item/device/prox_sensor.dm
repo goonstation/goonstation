@@ -123,6 +123,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	)
 
 /obj/item/device/prox_sensor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch (action)
 		if ("set-time")
 			var/time = text2num_safe(params["value"])

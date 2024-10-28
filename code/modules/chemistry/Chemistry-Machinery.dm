@@ -491,8 +491,8 @@ TYPEINFO(/obj/machinery/chem_shaker/large)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CHEMMASTER_MINIMUM_REAGENT 5 //!mininum reagent for pills, bottles and patches
-#define CHEMMASTER_NO_CONTAINER_MAX 10 //!maximum number of unboxed pills/patches
-#define CHEMMASTER_ITEMNAME_MAXSIZE 16 //!chosen by fair dice roll
+#define CHEMMASTER_NO_CONTAINER_MAX 24 //!maximum number of unboxed pills/patches
+#define CHEMMASTER_ITEMNAME_MAXSIZE 24 //!maximum characters allowed for the item name
 #define CHEMMASTER_MAX_PILL 22 //!22 pill icons
 #define CHEMMASTER_MAX_CANS 26 //!26 flavours of cans
 
@@ -962,6 +962,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(pill_bottle)
 					TRANSFER_OR_DROP(src, pill_bottle)
 					ui.user.put_in_hand_or_eject(pill_bottle)
+					pill_bottle.rebuild_desc()
 
 				if(!src.beaker.reagents.total_volume) // qol eject when empty
 					eject_beaker(ui.user)
@@ -1072,7 +1073,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/obj/item/item_box/medical_patches/patch_box = null
 				if(use_box || patchcount > CHEMMASTER_NO_CONTAINER_MAX)
 					if(!use_box && patchcount > CHEMMASTER_NO_CONTAINER_MAX)
-						src.visible_message("The [src]'s output limit beeps sternly, and a patch box is automatically dispensed!")
+						src.visible_message(SPAN_ALERT("The [src]'s output limit beeps sternly, and a patch box is automatically dispensed!"))
 					patch_box = new(src)
 					patch_box.name = "box of [item_name] patches"
 					if (is_medical_patch)

@@ -921,6 +921,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 	New()
 		..()
+		#ifndef CI_RUNTIME_CHECKING
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -943,6 +944,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
+		#endif
 
 /turf/simulated/floor/glassblock/transparent/cyan
 	icon_state = "glasstr_cyan"
@@ -1966,6 +1968,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
 		user?.unlock_medal("Misclick", 1)
+		var/datum/gang/gang = user?.get_gang()
+		if (gang && !params["quick_replace"])
+			gang.do_vandalism(GANG_VANDALISM_FLOORTILE_POINTS,src)
+
 
 	to_plating()
 	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
@@ -2021,7 +2027,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if (!P)
 				return
 			// Call ourselves w/ the tool, then continue
-			src.Attackby(P, user)
+			var/list/newParams = list()
+			newParams["quick_replace"] = TRUE
+			src.Attackby(P, user, newParams)
 			do_hide = FALSE //don't stuff things under the floor if we're just swapping/replacing a broken tile
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
@@ -2387,15 +2395,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 				FallTime = 0 SECONDS,\
 				TargetLandmark = src.falltarget)
 
-		shaft
-			name = "Elevator Shaft"
-			falltarget = LANDMARK_FALL_BIO_ELE
-
-			Entered(atom/A as mob|obj)
-				if (istype(A, /mob) && !istype(A, /mob/dead))
-					bioele_accident()
-				..()
-
 		hole_xy
 			name = "deep pit"
 			falltarget = LANDMARK_FALL_DEBUG
@@ -2722,6 +2721,7 @@ TYPEINFO(/turf/simulated/floor/auto/glassblock)
 
 	New()
 		..()
+		#ifndef CI_RUNTIME_CHECKING
 		var/image/I
 		#ifdef UNDERWATER_MAP
 		var/sand_icon
@@ -2744,6 +2744,7 @@ TYPEINFO(/turf/simulated/floor/auto/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
+		#endif
 
 	pry_tile(obj/item/C as obj, mob/user as mob, params)
 		boutput(user, SPAN_ALERT("This is glass flooring, you can't pry this up!"))

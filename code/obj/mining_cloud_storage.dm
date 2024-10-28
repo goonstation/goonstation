@@ -423,7 +423,8 @@
 				. = TRUE
 			if("set-default-price")
 				var/price = params["newPrice"]
-				default_price = max(price, 0)
+				if(isnum_safe(price))
+					default_price = max(price, 0)
 				. = TRUE
 			if("toggle-auto-sell")
 				autosell = !autosell
@@ -431,7 +432,8 @@
 			if("set-ore-price")
 				var/ore = params["ore"]
 				var/price = params["newPrice"]
-				update_ore_price(ore, price)
+				if(isnum_safe(price))
+					update_ore_price(ore, price)
 				. = TRUE
 
 #undef ROCKBOX_MAX_HEALTH

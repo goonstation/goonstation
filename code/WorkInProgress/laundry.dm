@@ -22,6 +22,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	var/cycle_current = 0
 	var/cycle_max = CYCLE_TIME
 	var/mob/occupant = null
+	var/mob/activator = null
 	var/image/image_door = null
 	var/image/image_light = null
 	//var/image/image_panel = null
@@ -33,6 +34,12 @@ TYPEINFO(/obj/submachine/laundry_machine)
 /obj/submachine/laundry_machine/New()
 	..()
 	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/disposing()
+	src.unload()
+	src.activator = null
+	src.occupant = null
+	..()
 
 /obj/submachine/laundry_machine/update_icon()
 	ENSURE_IMAGE(src.image_door, src.icon, "laundry[src.open]")
@@ -101,6 +108,16 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
 						newcash.changeStatus("freshly_laundered", INFINITE_STATUS)
 						newcash.set_loc(src)
+					//Money laundering is a crime!
+					var/mob/living/carbon/human/criminal = src.activator
+					if (ishuman(criminal) && seen_by_camera(criminal))
+						var/perpname = criminal.name
+						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
+							sec_record["criminal"] = ARREST_STATE_ARREST
+							sec_record["mi_crim"] = "Money laundering."
+							criminal.update_arrest_icon()
+			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
@@ -176,7 +193,14 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	while (src.cycle == WASH || src.cycle == DRY)
 		animate_storage_thump(src, 11)
 		if (prob(50))
-			step(src, pick(cardinal))
+			var/dir = pick(cardinal)
+			for (var/mob/living/M in get_step(src, dir))
+				if (!isintangible(M))
+					random_brute_damage(M, 5)
+					M.setStatus("knockdown", 2 SECONDS)
+					M.force_laydown_standup()
+					M.throw_at(get_steps(src, dir, 5), 5, 1, null, get_turf(src))
+			step(src, dir)
 			src.visible_message(SPAN_ALERT("[src] [pick("rattles", "shudders", "judders", "complains", "grumps")]"), group = "angry_laundry")
 		if (prob(1))
 			if (prob(20))
@@ -317,6 +341,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				src.on = !src.on
 				. = TRUE
 				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+				src.activator = usr
 				if (src.on)
 					src.cycle = PRE
 					src.open = 0

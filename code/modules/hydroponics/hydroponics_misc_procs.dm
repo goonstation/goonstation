@@ -167,14 +167,17 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
-proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create, charge_quantity = 1)
 	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
 	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
+	charge_quantity = max(charge_quantity, 1) // Assume whoever called this wants a seed regardless, don't deal with returning nulls.
 	var/obj/item/seed/child
 	if (parent_planttype.unique_seed)
 		child = new parent_planttype.unique_seed(location_to_create)
 	else
 		child = new /obj/item/seed(location_to_create)
+	child.charges = charge_quantity
+	if (child.charges > 1) child.inventory_counter.update_number(child.charges)
 	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
 	var/datum/plantgenes/child_genes = child.plantgenes
 	var/datum/plantmutation/child_mutation
@@ -194,6 +197,7 @@ proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/pare
 		else if(child_mutation.name_prefix || child_mutation.name_suffix)
 			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
 	child.name = "[seedname] seed"
+	if (charge_quantity > 1) child.name += " packet"
 	//What's missing is transfering genes and the generation
 	HYPpassplantgenes(parent_genes, child_genes)
 	child.generation = parent_generation
@@ -338,6 +342,8 @@ proc/HYPnewmutationcheck(var/datum/plant/P,var/datum/plantgenes/DNA,var/obj/mach
 					else if(S)
 						// If it is not in a pot, it is most likely in PlantMaster Mk3
 						playsound(S, MUT.mutation_sfx, 20, 1)
+						// If a seed mutates via infusion we want the seed to be harvested before multiples can be grown
+						S.charges = 1
 					break
 
 proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)

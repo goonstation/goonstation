@@ -5,14 +5,15 @@
  * @license ISC
  */
 
+import { LabeledList, Section } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { LabeledList, Section } from '../../components';
 import { SteppedSlider } from './SteppedSlider';
 import type { TeleConsoleData } from './types';
 import { formatDecimal } from './util';
 
-export const CoordinatesSection = (_props, context) => {
-  const { act, data } = useBackend<TeleConsoleData>(context);
+export const CoordinatesSection = () => {
+  const { act, data } = useBackend<TeleConsoleData>();
   const { xTarget, yTarget, zTarget } = data;
   return (
     <Section title="Target">

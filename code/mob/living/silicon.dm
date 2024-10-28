@@ -320,7 +320,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 			M.show_message(thisR, 2)
 
-/mob/living/silicon/lastgasp(allow_dead=FALSE)
+/mob/living/silicon/lastgasp(allow_dead=FALSE, grunt)
 	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
 
 /mob/living/silicon/proc/allowed(mob/M)

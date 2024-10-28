@@ -255,7 +255,7 @@
 			boutput(user, SPAN_ALERT("The beaker in [src] is full."))
 			return
 		var/transferred = I.reagents.trans_to(src.beaker, 5)
-		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] into [src].</B>"))
+		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] units into [src]'s beaker.</B>"))
 		src.beaker.on_reagent_change()
 		return
 	else if (istype(I, /obj/item/device/analyzer/healthanalyzer_upgrade))

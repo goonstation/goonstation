@@ -2477,7 +2477,8 @@
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
-				count_sent++
+				if(count_sent++ > 50) break //ratelimit
+
 			input.signal = "to=[targetTeleID]&count=[count_sent]"
 			SPAWN(0)
 				// Origin pad gets "to=destination&count=123"
@@ -2687,7 +2688,7 @@
 				if (H.wear_mask && H.wear_mask.vchange)
 					if (istype(H.wear_id, /obj/item/card/id))
 						var/obj/item/card/id/ID = H.wear_id
-						heardname = ID.registered
+						heardname = ID.registered || "Unknown"
 					else
 						heardname = "Unknown"
 				else if (H.vdisfigured)

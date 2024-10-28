@@ -44,7 +44,11 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
 	if((gen_turf.z == Z_LEVEL_STATION || isgenplanet(gen_turf)) && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
-		gen_turf.AddComponent(/datum/component/buildable_turf)
+		gen_turf.can_build = TRUE
+		var/turf/unsimulated/T = gen_turf
+		if(istype(T))
+			T.can_replace_with_stuff = TRUE
+
 
 		for(var/bad_area in blacklist_flora_gen)
 			if(istype(gen_turf.loc, bad_area))
@@ -117,7 +121,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 /datum/biome/forest
 	turf_type = /turf/unsimulated/floor/grasslush/thin
-	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 75, /obj/tree/elm_random=1, /obj/shrub/random{last_use=INFINITY} = 50)
+	flora_types = list(/obj/tree{layer = EFFECTS_LAYER_UNDER_1} = 55, /obj/tree/elm_random=1, /obj/shrub/random{last_use=INFINITY} = 50)
 	flora_density = 20
 	minimum_flora_distance = 2
 

@@ -647,7 +647,7 @@ datum
 						var/mob/living/H = M
 						if (isalcoholresistant(H))
 							return
-						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10 && !H.reagents?.has_reagent("promethazine"))
+						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10 && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 
 							boutput(M, SPAN_ALERT("Oh god, this stuff is far too manly to keep down...!"))
 							SPAWN(pick(30,50,70))
@@ -2929,7 +2929,7 @@ datum
 				. = ..()
 				if ( (method==TOUCH && prob(33)) || method==INGEST)
 					if(M.bioHolder.HasAnyEffect(EFFECT_TYPE_POWER) && prob(4))
-						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER)
+						M.bioHolder.RemoveAllEffects(EFFECT_TYPE_POWER, TRUE)
 						boutput(M, "You feel plain.")
 				return
 
@@ -4022,9 +4022,7 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
-					M.visible_message(SPAN_ALERT("[M] pukes violently!"))
-					M.vomit()
+				if(probmult(15) && M.vomit(flavorMessage = SPAN_ALERT("[M] pukes violently!")))
 					if(prob(33))
 						new /obj/item/reagent_containers/food/snacks/plant/lemon(M.loc)
 						M.visible_message(SPAN_ALERT("[M] pukes out an entire lemon!"))
@@ -4069,12 +4067,10 @@ datum
 					M.AddComponent(/datum/component/hallucination/fake_attack, 10, list(imagekey), od_halluc[imagekey], 25, 5)
 					if(probmult(15)) boutput(M, SPAN_ALERT("<B>FRUIT IN MY EYES!!!</B>"))
 
-					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))
-						M.vomit()
+					if(probmult(25) && M.vomit(flavorMessage = SPAN_ALERT("[M] pukes out a trifecta of citrus!")))
 						new /obj/item/reagent_containers/food/snacks/plant/lime(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/orange(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/lemon(M.loc)
-						M.visible_message(SPAN_ALERT("[M] pukes out a trifecta of citrus!"))
 
 		fooddrink/lemonade
 			name = "lemonade"
@@ -4719,9 +4715,13 @@ datum
 			fluid_g = 149
 			fluid_b = 12
 			alch_strength = 0.6
-			description = "An egregious and disgusting misinterpretation of some perfectly good rum."
+			description = "A rich, dark rum infused with the spice of cinnamon."
 			reagent_state = LIQUID
 			taste = "seasoned"
+
+			fake
+				id = "spicedrumfake"
+				description = "An egregious and disgusting misinterpretation of some perfectly good rum."
 
 		fooddrink/alcoholic/beesknees
 			name = "Bee's Knees"

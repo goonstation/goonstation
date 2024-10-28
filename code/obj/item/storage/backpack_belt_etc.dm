@@ -865,6 +865,16 @@
 		/obj/item/chicken_carrier,
 		/obj/item/fishing_rod/basic)
 
+	cowboy
+		name = "cowboy belt"
+		desc = "Yeehaw pardner."
+		icon_state = "hunterbelt"
+		item_state = "hunter"
+		spawn_contents = list(/obj/item/gun/kinetic/foamdartrevolver,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,
+		/obj/item/ammo/bullets/foamdarts,)
+
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
 	desc = "Holds normal-sized items, such as skulls."
@@ -912,34 +922,58 @@
 
 
 	standard
-		spawn_contents = list(/obj/item/gun/energy/taser_gun, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/taser_gun,
+		/obj/item/baton,
+		/obj/item/barrier)
 
 	offense
-		spawn_contents = list(/obj/item/gun/energy/wavegun, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/wavegun,
+		/obj/item/baton,
+		/obj/item/barrier)
 
 	support
-		spawn_contents = list(/obj/item/baton, /obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,  /obj/item/reagent_containers/emergency_injector/morphine = 4)
+		spawn_contents = list(/obj/item/baton,
+		/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,
+		/obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
-		spawn_contents = list(/obj/item/gun/energy/tasershotgun, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/tasershotgun,
+		/obj/item/baton,
+		/obj/item/barrier)
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/tasershotgun
 
 	assistant
-		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
+		spawn_contents = list(/obj/item/barrier,
+		/obj/item/device/detective_scanner,
+		/obj/item/device/ticket_writer)
 
-	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle/security, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
+	ntsc //secbelt subtype that only spawns on NTSC, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2,
+		/obj/item/baton/ntso,
+		/obj/item/clothing/head/helmet/space/ntso,
+		/obj/item/cloth/handkerchief/nt,
+		/obj/item/barrier,
+		/obj/item/reagent_containers/food/snacks/candy/candyheart)
 
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
+		spawn_contents = list(/obj/item/gun/energy/cornicen3,
+		/obj/item/old_grenade/energy_frag = 2,
+		/obj/item/old_grenade/energy_concussion = 2,
+		/obj/item/tank/emergency_oxygen/extended,
+		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
-		spawn_contents = list(/obj/item/baton, /obj/item/ammo/bullets/stunbaton, /obj/item/barrier, /obj/item/requisition_token/security/utility)
+		spawn_contents = list(/obj/item/baton,
+		/obj/item/ammo/bullets/stunbaton,
+		/obj/item/barrier,
+		/obj/item/requisition_token/security/utility)
 
 	tasersmg
-		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
+		spawn_contents = list(/obj/item/gun/energy/tasersmg,
+		/obj/item/baton,
+		/obj/item/barrier)
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
