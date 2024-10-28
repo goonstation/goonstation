@@ -140,9 +140,7 @@
 /obj/machinery/computer/general_alert/proc/check_alert_level()
 	var/current_alert_level = ALERT_SEVERITY_RESET
 	for (var/datum/zone_alert/alert in src.alerts)
-		var/new_severity = alert.highest_severity()
-		if (new_severity > current_alert_level)
-			current_alert_level = new_severity
+		current_alert_level = max(current_alert_level, alert.highest_severity())
 	return current_alert_level
 
 ///Update the icon state based on alert level
