@@ -1,4 +1,17 @@
 
+(t)sun oct 27 24
+(u)Glamurio & ZeWaka
+(p)21136
+(e)💅⚙|C-QoL, A-Internal
+(+)Traders now stock certain items more frequently than before, such as methane.
+(u)Facsimil
+(p)21051
+(e)🪲🆕💅🔄📦|C-Bug, C-Feature, C-QoL, C-Rework, A-Game-Objects
+(*)For Player Pianos: added note delays and single-instrument concurrent notes. Details can be found in the Player Piano book.
+(u)LeahTheTech
+(p)21178
+(e)|
+(+)Ovens now display the required time to cook their recipe.
 (t)sat oct 26 24
 (u)LeahTheTech
 (p)20953
