@@ -975,8 +975,9 @@ proc/ui_describe_reagents(atom/A)
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/screwdriver))
 			var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
-			if (number)
+			if (number && flow_rate != number)
 				flow_rate = number
+				user.visible_message(SPAN_NOTICE("[user.name] adjusts the flow rate of \the [src.name]."))
 			return
 		..()
 	process()
