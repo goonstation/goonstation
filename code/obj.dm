@@ -30,6 +30,10 @@
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
 		src.update_access_from_txt()
+#ifdef CHECK_MORE_RUNTIMES
+		if (src.req_access && !islist(src.req_access))
+			stack_trace("[src] ([src.type]) initialized at [log_loc(src)] with non-list req_access >:(")
+#endif
 
 	Move(NewLoc, direct)
 		if(usr==0) usr = null
