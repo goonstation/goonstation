@@ -334,9 +334,9 @@
 		return
 	switch(icon_state)
 		if ("placeholder", "dplaceholder")
-			icon_state = "[((x + y) ^ ~(x * y) + z) % 25]" // rand(1,25)
+			icon_state = "[(((x + y) ^ ~(x * y) + z) % 25)+1]" // rand(1,25)
 		if ("aplaceholder")
-			icon_state = "a[((x + y) ^ ~(x * y) + z) % 10]" // rand(1,10)
+			icon_state = "a[(((x + y) ^ ~(x * y) + z) % 10)+1]" // rand(1,10)
 
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
