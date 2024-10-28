@@ -90,6 +90,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 
 	disposing()
+		message_ghosts("<b>[src]</b> has been destroyed at [log_loc(src, ghostjump=TRUE)].")
 		mailgroups.len = 0
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
@@ -336,7 +337,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			src.occupant.real_name = "clone"  //No null names!!
 		src.occupant.name = src.occupant.real_name
-
+		if (is_puritan)
+			message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
 		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )
@@ -368,6 +370,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!src.occupant?.mind)
 			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
 		else
+			src.occupant.job = src.occupant.mind.assigned_role //Set the new mob's job to our mind's job
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue

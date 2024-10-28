@@ -4,7 +4,7 @@
 	dir = 1;
 	color = "b4b4b4"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/dimreddish,
 /turf/variableTurf/clear,
 /area/noGenerate)

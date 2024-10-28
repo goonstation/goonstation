@@ -42,14 +42,14 @@ TYPEINFO(/datum/component/proximity)
 	UnregisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED)
 	for(var/turf/T as anything in src.listening_to)
 		UnregisterSignal(T, COMSIG_ATOM_ENTERED)
-	src.listening_to.len = 0
+	src.listening_to?.len = 0
 
 /// Update if our parent move into or out of a movable or onto a turf.
 /datum/component/proximity/proc/parent_moved()
 	var/atom/A = src.parent
 	for(var/turf/T as anything in src.listening_to)
 		UnregisterSignal(T, COMSIG_ATOM_ENTERED)
-	src.listening_to.len = 0
+	src.listening_to?.len = 0
 
 	var/turf/center = get_turf(A)
 	if(isnull(center))
@@ -79,7 +79,7 @@ TYPEINFO(/datum/component/proximity)
 		UnregisterSignal(src.parent, XSIG_OUTERMOST_MOVABLE_CHANGED)
 		for(var/turf/T as anything in src.listening_to)
 			UnregisterSignal(T, COMSIG_ATOM_ENTERED)
-		src.listening_to.len = 0
+		src.listening_to?.len = 0
 
 /// Set our range of detection to num.
 /datum/component/proximity/proc/set_range(num)
@@ -90,7 +90,7 @@ TYPEINFO(/datum/component/proximity)
 		return
 	for(var/turf/T as anything in src.listening_to)
 		UnregisterSignal(T, COMSIG_ATOM_ENTERED)
-	src.listening_to.len = 0
+	src.listening_to?.len = 0
 	var/atom/A = src.parent
 	var/turf/center = get_turf(A)
 	if(src.turfonly && !isturf(istype(A.loc, /obj/item/assembly) ? A.loc.loc : A.loc)) //assemblies are very mean and stuff
@@ -103,6 +103,7 @@ TYPEINFO(/datum/component/proximity)
 /datum/component/proximity/proc/Detect(atom/owner, atom/movable/sensed_object)
 	if(src.parent == sensed_object)
 		return
-
+	if (!src.parent) //I guess we're disposed or something??
+		return
 	var/atom/sensing_object = src.parent
 	sensing_object.EnteredProximity(sensed_object)

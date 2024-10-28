@@ -18,6 +18,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/team_num
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
+	/// Used for hoodies (and anything that uses the toggle_hood component)
+	var/hooded = FALSE
 
 
 	setupProperties()
@@ -1080,6 +1082,61 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			..()
 			src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
+/obj/item/clothing/suit/knitsweater
+	name = "cozy knit sweater"
+	desc = "A pretty warm-looking knit sweater. Handmade with love, probably."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "sweatercozy"
+	item_state = "sweatercozy"
+	body_parts_covered = TORSO|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 20)
+
+	cable
+		name = "cable-knit sweater"
+		desc = "A warm cable-knit sweater. Made of wool, not electrical cables."
+		icon_state = "sweatercable"
+		item_state = "sweatercable"
+
+	bubble
+		name = "bubble-knit sweater"
+		desc = "A warm bubble-knit sweater. Made of wool, not bubbles."
+		icon_state = "sweaterbubble"
+		item_state = "sweaterbubble"
+
+	cardigan
+		name = "cardigan sweater"
+		desc = "A warm cardigan sweater. Handmade with love, probably."
+		icon_state = "cardigan"
+		item_state = "cardigan"
+		coat_style = "cardigan"
+
+		New()
+			..()
+			src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
+		dyeable
+			name = "dyeable cardigan sweater"
+			desc = "A warm cardigan sweater that can be dyed with hair dye. Obviously."
+
+			New()
+				..()
+				src.color = "#FFFFFF"
+
+			attackby(obj/item/dye_bottle/W, mob/user)
+				if (istype(W, /obj/item/dye_bottle))
+					src.color = W.customization_first_color
+					src.UpdateIcon()
+					var/mob/wearer = src.loc
+					if (ismob(wearer))
+						wearer.update_clothing()
+					user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] cardigan."))
+					return
+				. = ..()
+
 // LONG SHIRTS
 // No they're not sweaters
 
@@ -2027,7 +2084,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
-		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, FALSE)
+		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

@@ -595,7 +595,7 @@
 
 		var/resist_prob = 0
 
-		if (ispath(ailment_path) || istext(ailment_name))
+		if (ispath(ailment_path) || (ailment_name && istext(ailment_name)))
 			var/datum/ailment/A = null
 			if (ailment_name)
 				A = get_disease_from_name(ailment_name)

@@ -153,8 +153,9 @@
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
+	sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
+
 	SPAWN(0)
-		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src, role_for_traits)
 
@@ -167,6 +168,8 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
+
+	QDEL_NULL(src.vision)
 
 	if(use_stamina)
 		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
@@ -619,7 +622,7 @@
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()
-	. = src.bioHolder.mobAppearance.customization_first_color
+	. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -2144,7 +2147,7 @@
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
@@ -2152,7 +2155,7 @@
 			src.flash(60)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customization_first = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 				H.set_face_icon_dirty()
 
 			var/turf/T = get_turf(src)
@@ -2193,6 +2196,8 @@
 			. = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 			if(thr?.user)
 				src.was_harmed(thr.user, AM)
+	if (AM.throwforce > 5) //number
+		src.changeStatus("staggered", 5 SECONDS)
 	..()
 
 /mob/living/proc/check_singing_prefix(var/message)
@@ -2337,6 +2342,15 @@
 				SPAN_NOTICE("You barely slow [src == helper ? "your" : "[src]'s"] bleeding!"),\
 				SPAN_NOTICE("[helper == src ? "You stop" : "<b>[helper]</b> stops"] your bleeding with little success!"))
 
+///helper proc to return a new bioholder to be used for blood reagent data
+/mob/living/proc/get_blood_bioholder()
+	var/datum/bioHolder/unlinked/bloodHolder = new/datum/bioHolder/unlinked(null)
+	bloodHolder.CopyOther(src.bioHolder)
+	bloodHolder.ownerName = src.real_name
+	bloodHolder.ownerType = src.type
+	bloodHolder.weak_owner = get_weakref(src)
+	return bloodHolder
+
 /mob/living/proc/meson(atom/source)
 	if (!source)
 		CRASH("meson proc called without a source!!")
@@ -2352,3 +2366,26 @@
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
 			return
 	src.vision.set_scan(0)
+
+/mob/living/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	. = ..()
+	if(.)
+		var/returnItem = src.organHolder?.stomach?.vomit()
+		if(returnItem)
+			. = returnItem
+		src.lastgasp(FALSE, grunt = pick("BLARGH", "blblbl", "BLUH", "BLURGH"))
+
+/// makes mob auto pick up the highest weight item on a turf. if multiple have that weight, last one in the order of contents var is picked
+/mob/living/proc/auto_pickup_item(atom/target_loc)
+	var/turf/T = get_turf(target_loc)
+	if (!T)
+		return
+	var/obj/item/picked_item
+	for (var/obj/item/I in T.contents)
+		if (I.anchored)
+			continue
+		if (I.w_class >= picked_item?.w_class) // order of contents is roughly random
+			picked_item = I
+	if (picked_item)
+		picked_item.pick_up_by(src)
+		return TRUE

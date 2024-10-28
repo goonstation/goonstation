@@ -108,7 +108,7 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/bio_hood/janitor // adhara stuff
 	name = "bio hood"
-	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
+	desc = "This hood protects you from harmful biological contaminants. This one has a purple visor."
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
 
@@ -307,6 +307,8 @@ proc/filter_trait_hats(var/type)
 	desc = "Someone who wears this will look very smart. It looks a bit heavier than it should."
 
 	attack_self (mob/user as mob)
+		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
+			return
 		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/S = new /mob/living/critter/robotic/scuttlebot(get_turf(src))
 		if (src.inspector == TRUE)
@@ -444,6 +446,8 @@ proc/filter_trait_hats(var/type)
 		return ..()
 
 	attack_self (mob/user as mob)
+		if(!(src in user.equipped_list())) //lagspikes can allow a doubleinput here. or something
+			return
 		user.visible_message(SPAN_COMBAT("<b>[user] turns [his_or_her(user)] detgadget hat into a spiffy scuttlebot!</b>"))
 		var/mob/living/critter/robotic/scuttlebot/weak/S = new /mob/living/critter/robotic/scuttlebot/weak(get_turf(src))
 		if (src.inspector == TRUE)
@@ -475,19 +479,19 @@ proc/filter_trait_hats(var/type)
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
-	desc = "A powdered wig"
+	desc = "A judicial-looking wig, covered with a starchy powder to reflect the inner stiffness of those who wear it. Or to make it white."
 	icon_state = "pwig"
 	item_state = "pwig"
 
 /obj/item/clothing/head/that
 	name = "hat"
-	desc = "An stylish looking hat"
+	desc = "A stylish, flat-topped hat often worn as formalwear. Rumored to inhibit lying in those that wear it."
 	icon_state = "tophat"
 	item_state = "that"
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
-	desc = "A purple tophat."
+	desc = "A stylish, flat-topped hat often worn as formalwear. This one is a daring shade of purple."
 	icon_state = "ptophat"
 	item_state = "pthat"
 	protective_temperature = 500
@@ -958,6 +962,27 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	New()
 		..()
 		src.color = "#FF8800"
+
+/obj/item/clothing/head/beret/dyeable
+	name = "dyeable beret"
+	desc = "Can be dyed with hair dye. Obviously."
+	icon_state = "beret_base"
+	item_state = "dye_beret"
+
+	New()
+		..()
+		src.color = "#FFFFFF"
+
+	attackby(obj/item/dye_bottle/W, mob/user)
+		if (istype(W, /obj/item/dye_bottle))
+			src.color = W.customization_first_color
+			src.UpdateIcon()
+			var/mob/wearer = src.loc
+			if (istype(wearer))
+				wearer.update_clothing()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] beret."))
+			return
+		. = ..()
 
 /obj/item/clothing/head/bandana
 	name = "bandana"

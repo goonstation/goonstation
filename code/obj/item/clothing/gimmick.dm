@@ -24,7 +24,7 @@
 
 	New()
 		..()
-		src.vchange = new(src) // Built-in voice changer (Convair880).
+		src.vchange = new /obj/item/voice_changer/permanent(src) // Built-in voice changer (Convair880).
 		if(istype(src.loc, /mob/living))
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
@@ -875,11 +875,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 
 			boutput(H, SPAN_ALERT("<b>You suddenly feel whiny and ineffectual.</b>"))
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
-			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
+			H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/bedhead
+			H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/moustache/selleck
 			H.bioHolder.mobAppearance.e_color = "#321E14"
-			H.bioHolder.mobAppearance.customization_first_color = "#412819"
-			H.bioHolder.mobAppearance.customization_second_color = "#412819"
+			H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#412819"
+			H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#412819"
 			H.bioHolder.mobAppearance.s_tone = "#FAD7D0"
 			H.bioHolder.AddEffect("clumsy")
 			H.update_colorful_parts()
@@ -1156,6 +1156,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
+
+/obj/item/clothing/suit/scarf/cozy
+	name = "scarf"
+	desc = "A cozy scarf. A beautiful adornment to any outfit."
+	icon_state = "shortscarf"
+	item_state = "shortscarf"
+
+/obj/item/clothing/suit/scarf/long
+	name = "long scarf"
+	desc = "A long luxurious scarf. A perfect addition to any look."
+	icon_state = "longscarf"
+	item_state = "longscarf"
 
 /obj/item/clothing/suit/suspenders
 	name = "suspenders"

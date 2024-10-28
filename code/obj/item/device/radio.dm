@@ -469,7 +469,7 @@ var/list/headset_channel_lookup
 
 		if (length(heard_masked))
 			if (ishuman(M))
-				if (M:wear_id)
+				if (M:wear_id && length(M:wear_id:registered))
 					rendered = "[part_a][M:wear_id:registered][part_b][M.say_quote(messages[1])][part_c]"
 				else
 					rendered = "[part_a]Unknown[part_b][M.say_quote(messages[1])][part_c]"

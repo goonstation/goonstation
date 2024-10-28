@@ -24,38 +24,11 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
-	ui_static_data(mob/user)
-		var/exlist = list()
-		var/seedlist = list()
-		var/geneout = null//tmp var for storing analysis results
+	ui_data(mob/user)
+		var/list/thisContainerData = null
 		var/splice_chance = 100
 		var/splice1_geneout
 		var/splice2_geneout
-
-		if (src.splicing1 && src.splicing2)
-			splice_chance = src.SpliceChance(src.splicing1, src.splicing2)
-
-		switch(src.mode)
-			if("extractables")
-				for(var/exItem in src.extractables)
-					if (istype(exItem, /obj/item/seed))
-						var/obj/item/seed/S = exItem
-						geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
-					else if (istype(exItem, /obj/item/reagent_containers/food/snacks/plant))
-						var/obj/item/reagent_containers/food/snacks/plant/S = exItem
-						geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
-					exlist += list(geneout)
-
-			if("seedlist")
-				for (var/obj/item/seed/S in src.seeds)
-					if((S == src.splicing1) || (S == src.splicing2)) continue;
-					geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
-					geneout["damage"] = list(S.seeddamage, FALSE)
-					geneout["splicing"] = list("splicing", (S == src.splicing1) || (S == src.splicing2))
-					geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
-					seedlist += list(geneout)
-
-		var/list/thisContainerData = null
 
 		if (src.inserted)
 			var/obj/item/reagent_containers/glass/thisContainer = src.inserted
@@ -85,6 +58,9 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 							volume = current_reagent.volume
 						)))
 
+		if (src.splicing1 && src.splicing2)
+			splice_chance = src.SpliceChance(src.splicing1, src.splicing2)
+
 		if(src.splicing1)
 			splice1_geneout = QuickAnalysisRow(src.splicing1, src.splicing1.planttype, src.splicing1.plantgenes)
 			splice1_geneout["damage"] = list(src.splicing1.seeddamage, FALSE)
@@ -97,8 +73,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			splice2_geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
 
 		return list(
-			"extractables" = exlist,
-			"seeds" = seedlist,
 			"category" = src.mode,
 			"category_lengths" = list(length(src.extractables),length(src.seeds)),
 			"inserted" =  src.inserted ? "[src.inserted.reagents.total_volume]/[src.inserted.reagents.maximum_volume] [src.inserted.name]" : "No reagent vessel",
@@ -109,6 +83,36 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			"splice_seeds" = list(splice1_geneout, splice2_geneout),
 			"sortBy" = src.sort,
 			"sortAsc" = src.sortAsc,
+		)
+
+	ui_static_data(mob/user)
+		var/exlist = list()
+		var/seedlist = list()
+		var/geneout = null//tmp var for storing analysis results
+
+		switch(src.mode)
+			if("extractables")
+				for(var/exItem in src.extractables)
+					if (istype(exItem, /obj/item/seed))
+						var/obj/item/seed/S = exItem
+						geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
+					else if (istype(exItem, /obj/item/reagent_containers/food/snacks/plant))
+						var/obj/item/reagent_containers/food/snacks/plant/S = exItem
+						geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
+					exlist += list(geneout)
+
+			if("seedlist")
+				for (var/obj/item/seed/S in src.seeds)
+					if((S == src.splicing1) || (S == src.splicing2)) continue;
+					geneout = QuickAnalysisRow(S, S.planttype, S.plantgenes)
+					geneout["damage"] = list(S.seeddamage, FALSE)
+					geneout["splicing"] = list("splicing", (S == src.splicing1) || (S == src.splicing2))
+					geneout["allow_infusion"]= list("allow_infusion", src.inserted?.reagents?.total_volume > 0)
+					seedlist += list(geneout)
+
+		return list(
+			"extractables" = exlist,
+			"seeds" = seedlist,
 		)
 
 	Exited(Obj, newloc)
@@ -152,7 +156,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					else
 						I.set_loc(src.loc) // causes Exited proc to be called
 						usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("insertbeaker")
 				if (src.inserted)
@@ -169,13 +173,15 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					ui.user.drop_item()
 					inserting.set_loc(src)
 					boutput(ui.user, SPAN_NOTICE("You add [inserted] to the machine!"))
-					update_static_data(ui.user, ui)
+					. = TRUE
 
 			if("ejectseeds")
 				for (var/obj/item/seed/S in src.seeds)
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
+				src.splicing1 = null
+				src.splicing2 = null
 				update_static_data(ui.user, ui)
 
 			if("ejectextractables")
@@ -203,7 +209,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			if("sort")
 				src.sort = params["sortBy"]
 				src.sortAsc = text2num(params["asc"])
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("analyze")
 				var/obj/item/I = locate(params["analyze_ref"]) in src
@@ -227,7 +233,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 
 			if("outputmode")
 				src.seedoutput = !src.seedoutput
-				update_static_data(ui.user, ui)
+				. = TRUE
 
 			if("label")
 				var/obj/item/I = locate(params["label_ref"]) in src
@@ -256,13 +262,11 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						boutput(ui.user, SPAN_ALERT("No viable seeds found in [I]."))
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
-						while (give > 0)
-							var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src)
-							if (!src.seedoutput)
-								src.seeds.Add(S)
-							else
-								S.set_loc(src.loc)
-							give -= 1
+						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give)
+						if (!src.seedoutput)
+							src.seeds.Add(S)
+						else
+							S.set_loc(src.loc)
 					src.extractables.Remove(I)
 					qdel(I)
 					update_static_data(ui.user, ui)
@@ -481,13 +485,18 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					boutput(usr, SPAN_ALERT("Splice failed."))
 					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, TRUE)
 
-				// Now get rid of the old seeds and go back to square one
-				src.seeds.Remove(seed1)
-				src.seeds.Remove(seed2)
-				src.splicing1 = null
-				src.splicing2 = null
-				qdel(seed1)
-				qdel(seed2)
+				// Now remove a charge from each seed, and destroy any seeds which have been totally expended.
+				seed1.charges--
+				if (seed1.charges < 1)
+					src.seeds.Remove(seed1)
+					qdel(seed1)
+					src.splicing1 = null
+				seed2.charges--
+				if (seed2.charges < 1)
+					src.seeds.Remove(seed2)
+					qdel(seed2)
+					src.splicing2 = null
+
 				src.mode = "seedlist"
 				update_static_data(ui.user, ui)
 
@@ -502,9 +511,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			user.drop_item()
 			W.set_loc(src)
 			boutput(user, SPAN_NOTICE("You add [W] to the machine!"))
-			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
-				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-					update_static_data(ui.user, ui)
 			tgui_process.update_uis(src)
 
 
@@ -515,9 +521,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			if (istype(W, /obj/item/seed/)) src.seeds += W
 			else src.extractables += W
 			W.dropped(user)
-			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
-				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-					update_static_data(ui.user, ui)
+			src.update_static_data_for_all_viewers()
 			tgui_process.update_uis(src)
 			return
 
@@ -543,9 +547,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
 				S.tooltip_rebuild = 1
-				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
-					if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-						update_static_data(ui.user, ui)
+				src.update_static_data_for_all_viewers()
 				tgui_process.update_uis(src)
 		else ..()
 
@@ -576,9 +578,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				P.set_loc(src)
 				sleep(0.3 SECONDS)
 			boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
-			for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
-				if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
-					update_static_data(ui.user, ui)
+			src.update_static_data_for_all_viewers()
 			tgui_process.update_uis(src)
 		else ..()
 
@@ -635,17 +635,21 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			result["cropsize"] = list("???", FALSE)
 			result["potency"] = list("???", FALSE)
 			result["endurance"] = list("???", FALSE)
+			result["charges"] = list("???", FALSE)
 			result["ref"]= list("\ref[scanned]", FALSE) //in the event that scanned is somehow null, \ref[null] = [0x0]
 			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
 			return result
 
 		var/generation = 0
+		var/charges = 0
 		if (istype(scanned, /obj/item/seed/))
 			var/obj/item/seed/S = scanned
 			generation = S.generation
+			charges = S.charges
 		if (istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
 			var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 			generation = F.generation
+			charges = 1
 
 		//list of attributes and their dominance flag
 		result["name"] = list(scanned.name, FALSE)
@@ -658,6 +662,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		result["cropsize"] = list(DNA.cropsize, DNA.d_cropsize)
 		result["potency"] = list(DNA.potency, DNA.d_potency)
 		result["endurance"] = list(DNA.endurance, DNA.d_endurance)
+		result["charges"] = list(charges, FALSE)
 		result["ref"]= list("\ref[scanned]", FALSE)
 		return result
 

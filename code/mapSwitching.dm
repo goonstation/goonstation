@@ -35,11 +35,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 	var/list/passiveVotes = list() //list of passive map votes
 	var/list/previousVotes = list() //a list of how people voted for every vote
 
+	//cause of switch to this map
+	var/thisMapWasVotedFor
 
 	New()
 		..()
 		src.setupPickableList()
-
+		thisMapWasVotedFor = world.load_intra_round_value("voted_map")
 
 	proc/setupPickableList()
 		//map_setting set by code/map.dm
@@ -180,6 +182,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//make a note if this is a player voted map
 		src.nextMapIsVotedFor = trigger == "Player Vote" ? 1 : 0
+		world.save_intra_round_value("voted_map", src.nextMapIsVotedFor)
 
 		//set next only if we're not re-compiling the current map for whatever reason
 		if (src.current != mapName)
@@ -534,6 +537,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		ui_interact(C.mob)
 
 	ui_act(action, list/params)
+		. = ..()
 		switch (action)
 			if("toggle_vote")
 				toggle_vote(params["map_name"], usr)

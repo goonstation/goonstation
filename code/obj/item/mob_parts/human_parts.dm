@@ -241,11 +241,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customization_first_color
+						colorheck = AH_piece.customizations["hair_bottom"].color
 					if(CUST_2)
-						colorheck = AH_piece.customization_second_color
+						colorheck = AH_piece.customizations["hair_middle"].color
 					if(CUST_3)
-						colorheck = AH_piece.customization_third_color
+						colorheck = AH_piece.customizations["hair_top"].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -269,11 +269,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customization_first_color
+					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customization_second_color
+					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customization_third_color
+					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -282,11 +282,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customization_first_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customization_second_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customization_third_color
+					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else
@@ -1051,6 +1051,7 @@
 	/// Supernatural if not abnormally gross
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
@@ -1071,6 +1072,7 @@
 	streak_descriptor = "undeadly"
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ZOMBIE)
+	breaks_cuffs = TRUE
 
 	New(var/atom/holder)
 		if (holder != null)
