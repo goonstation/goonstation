@@ -968,7 +968,8 @@ proc/ui_describe_reagents(atom/A)
 			remove_current_lid(user)
 		else
 			var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
-			flow_rate = number
+			if (number)
+				flow_rate = number
 		return
 	process()
 		if (open)
