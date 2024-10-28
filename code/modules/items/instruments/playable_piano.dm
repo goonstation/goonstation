@@ -467,6 +467,10 @@ TYPEINFO(/obj/player_piano)
 			return
 		I.AddComponent(/datum/component/player_piano_auto_linker, src, user)
 
+	was_deconstructed_to_frame(mob/user)
+		. = ..()
+		src.reset_piano()
+
 #undef MIN_TIMING
 #undef MAX_TIMING
 
