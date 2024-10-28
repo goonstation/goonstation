@@ -18,7 +18,7 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 	src.start_storing_pianos(start_piano, user)
 
 /datum/component/player_piano_auto_linker/proc/can_store_piano(obj/player_piano/piano, mob/user)
-	if (piano.is_busy)
+	if (piano.music_player.is_busy)
 		boutput(user, SPAN_ALERT("Can't link a busy piano!"))
 		return FALSE
 	if (!piano.panel_exposed)

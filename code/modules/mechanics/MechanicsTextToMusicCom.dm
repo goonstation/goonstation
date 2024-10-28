@@ -48,6 +48,7 @@ TYPEINFO(/obj/item/mechanics/text_to_music)
 								"piano",
 								"saxophone",
 								"trumpet")
+	var/datum/text_to_music/music_player = new()
 
 	New()
 		..()
