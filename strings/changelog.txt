@@ -1,5 +1,9 @@
 
 (t)mon oct 28 24
+(u)Facsimile
+(p)21186
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixed Player Piano note-checking bug.
 (u)tarmunora
 (p)20547
 (e)🗺⚖|A-Mapping, C-Balance
