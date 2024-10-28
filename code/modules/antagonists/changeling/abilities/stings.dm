@@ -95,7 +95,7 @@
 		desc = "Transfer tetrodotoxin into your target. Slow, but stealthy and potentially very lethal."
 		icon_state = "stingtetro"
 		venom_id = "tetrodotoxin"
-		inject_amount = 20
+		inject_amount = 10
 		cooldown = 1400
 
 	madness
