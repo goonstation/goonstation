@@ -4,15 +4,16 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface AlertComputerData {
-  alerts: Partial<Record<string, AlertData>>;
+  alerts: AlertData[];
 }
 
 interface AlertData {
-  area_name: string;
+  zone: string;
   area_ckey: string;
-  atmos: string | null;
-  fire: string | null;
-  power: string | null;
+  atmos: number;
+  fire: number;
+  power: number;
+  motion: number;
 }
 
 export const AlertComputer = () => {
@@ -28,7 +29,7 @@ export const AlertComputer = () => {
           {Object.keys(alerts).length > 0 &&
             Object.values(alerts).map((value, index) => {
               return (
-                <LabeledList.Item key={index} label={value?.area_name}>
+                <LabeledList.Item key={index} label={value?.zone}>
                   {value && <AlertButtonRow alert={value} />}
                 </LabeledList.Item>
               );
@@ -69,7 +70,7 @@ const AlertButtonRow = (props: AlertButtonRowProps) => {
 interface AlertButtonProps {
   area_ckey: string;
   kind: string;
-  severity: string | null;
+  severity: number | null;
 }
 
 const AlertButton = (props: AlertButtonProps) => {
@@ -96,27 +97,29 @@ const AlertButtonIcon = (kind: string): string => {
       return 'fire';
     case 'power':
       return 'bolt';
+    case 'motion':
+      return 'walking';
     default:
       return '';
   }
 };
 
-const AlertButtonColor = (severity: string | null): string => {
+const AlertButtonColor = (severity: number | null): string => {
   switch (severity) {
-    case 'priority':
+    case 1:
       return 'bad';
-    case 'minor':
+    case 2:
       return 'average';
     default:
       return 'good';
   }
 };
 
-const AlertButtonText = (severity: string | null): string => {
+const AlertButtonText = (severity: number | null): string => {
   switch (severity) {
-    case 'priority':
+    case 1:
       return 'Priority';
-    case 'minor':
+    case 2:
       return 'Minor';
     default:
       return 'Okay';
@@ -131,6 +134,8 @@ const AlertButtonTooltip = (kind: string): string => {
       return 'Fire';
     case 'power':
       return 'Power';
+    case 'motion':
+      return 'Motion';
     default:
       return '';
   }

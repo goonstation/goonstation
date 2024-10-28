@@ -1,7 +1,8 @@
-#define ALERT_SEVERITY_RESET "reset"
-#define ALERT_SEVERITY_PRIORITY "priority"
-#define ALERT_SEVERITY_MINOR "minor"
+#define ALERT_SEVERITY_RESET 0
+#define ALERT_SEVERITY_PRIORITY 1
+#define ALERT_SEVERITY_MINOR 2
 
 #define ALERT_KIND_ATMOS "atmos"
 #define ALERT_KIND_FIRE "fire"
 #define ALERT_KIND_POWER "power"
+#define ALERT_KIND_MOTION "motion"
