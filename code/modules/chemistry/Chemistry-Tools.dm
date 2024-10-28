@@ -833,6 +833,9 @@ proc/ui_describe_reagents(atom/A)
 	accepts_lid = TRUE
 	fluid_overlay_states = 5
 	container_style = "condenser"
+	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	Reaction products will flow equally to all connected glassware."})
+
 
 	try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
 		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
@@ -868,6 +871,8 @@ proc/ui_describe_reagents(atom/A)
 		max_amount_of_containers = 4
 		/// orders the output containers, so key 1 = condenser output 1
 		var/container_order[4]
+		HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+		If a reaction creates multiple products, this condenser separates them in the order YELLOW->RED->GREEN->BLUE."})
 
 		add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 			var/obj/chosen_container
@@ -924,7 +929,7 @@ proc/ui_describe_reagents(atom/A)
 
 /obj/item/reagent_containers/glass/plumbing/dropper
 	name = "dropper funnel"
-	desc = "A glass tube for adding reagents to containers at a specific rate. Can be hooked up to many types of containers."
+	desc = "A glass tube for adding reagents to containers at a customisable rate. Can be hooked up to many types of containers."
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "dropper_funnel_off"
 	splash_all_contents = FALSE
@@ -935,7 +940,8 @@ proc/ui_describe_reagents(atom/A)
 	container_style = "dropper_funnel"
 	var/open = FALSE
 	var/flow_rate = 1
-	HELP_MESSAGE_OVERRIDE({"To pick this up, click and drag it onto your person."})
+	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	To pick this up, click and drag it onto your person."})
 
 	disposing()
 		src.remove_container()
@@ -975,8 +981,11 @@ proc/ui_describe_reagents(atom/A)
 		set_flow(FALSE)
 		. = ..()
 	attack_hand(mob/user)
-		src.add_fingerprint(user)
-		set_flow(!open)
+		if (length(src.connected_containers) <= 0)
+			..()
+		else
+			src.add_fingerprint(user)
+			set_flow(!open)
 
 	proc/set_flow(var/desired_state)
 		if (!desired_state && open)
