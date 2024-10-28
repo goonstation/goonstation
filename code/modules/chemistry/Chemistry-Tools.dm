@@ -941,6 +941,7 @@ proc/ui_describe_reagents(atom/A)
 	var/open = FALSE
 	var/flow_rate = 1
 	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	Flow rate can be adjusted either in your hand, or with a screwdriver.
 	To pick this up, click and drag it onto your person."})
 
 	disposing()
@@ -971,6 +972,13 @@ proc/ui_describe_reagents(atom/A)
 			if (number)
 				flow_rate = number
 		return
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/screwdriver))
+			var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
+			if (number)
+				flow_rate = number
+			return
+		..()
 	process()
 		if (open)
 			for(var/obj/container in connected_containers)
