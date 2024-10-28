@@ -42,7 +42,7 @@
 	icon_state = "neutinj";
 	name = "strange machine"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
@@ -66,14 +66,14 @@
 	icon_state = "reinf_tabledir";
 	tag = "icon-reinf_tabledir"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
 	},
 /area/space)
 "ak" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
@@ -85,7 +85,7 @@
 	icon_state = "reinf_tabledir";
 	dir = 8
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
@@ -120,13 +120,13 @@
 	},
 /area/space)
 "as" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "at" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "au" = (
 /turf/unsimulated/outdoors/concrete,
@@ -141,20 +141,20 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "ax" = (
 /obj/grille/catwalk{
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "ay" = (
 /obj/grille/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "az" = (
 /obj/decal/poster/wallsign/fire,
@@ -210,7 +210,7 @@
 /area/space)
 "aG" = (
 /obj/grille/catwalk,
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aH" = (
 /obj/lattice{
@@ -218,19 +218,19 @@
 	icon_state = "lattice-dir";
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aI" = (
 /obj/grille/catwalk{
 	dir = 9
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aJ" = (
 /obj/grille/catwalk{
 	dir = 10
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aK" = (
 /obj/fakeobject/airlock_broken/firelock{
@@ -273,10 +273,10 @@
 	icon_state = "lattice-dir";
 	dir = 5
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aQ" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/simulated/shuttle/wall{
 	dir = 9;
 	icon_state = "wall";
@@ -291,7 +291,7 @@
 	},
 /area/space)
 "aS" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (NORTHEAST)";
 	icon_state = "wall";
@@ -304,13 +304,13 @@
 	icon_state = "lattice-dir";
 	dir = 9
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aU" = (
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "aV" = (
 /turf/unsimulated/floor/carpet/grime,
@@ -507,7 +507,7 @@
 	},
 /area/space)
 "bw" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/simulated/shuttle/wall{
 	dir = 10;
 	icon_state = "wall";
@@ -515,7 +515,7 @@
 	},
 /area/space)
 "bx" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/simulated/shuttle/wall{
 	tag = "icon-diagonalWall (NORTHWEST)";
 	icon_state = "diagonalWall";
@@ -534,14 +534,14 @@
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bA" = (
 /obj/grille/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bB" = (
 /obj/overlay{
@@ -552,7 +552,7 @@
 	icon_state = "neutinj";
 	name = "unusual machine"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
@@ -580,7 +580,7 @@
 	icon_state = "lattice-dir";
 	dir = 1
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bF" = (
 /obj/fakeobject{
@@ -655,7 +655,7 @@
 	dir = 4;
 	anchored = 1
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bK" = (
 /obj/fakeobject{
@@ -672,7 +672,7 @@
 	icon_state = "lattice-dir";
 	dir = 1
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bL" = (
 /obj/fakeobject{
@@ -684,7 +684,7 @@
 	dir = 4;
 	anchored = 1
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bM" = (
 /obj/landmark{
@@ -701,7 +701,7 @@
 /obj/grille/catwalk{
 	dir = 5
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bP" = (
 /obj/fakeobject{
@@ -772,7 +772,7 @@
 	icon_state = "catwalk_cross";
 	dir = 5
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bV" = (
 /obj/grille/catwalk{
@@ -802,7 +802,7 @@
 	dir = 4
 	},
 /obj/lattice,
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "bZ" = (
 /obj/lattice{
@@ -814,7 +814,7 @@
 	tag = "icon-intact (EAST)";
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "ca" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -826,7 +826,7 @@
 	icon_state = "lattice-dir";
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cb" = (
 /obj/lattice{
@@ -838,7 +838,7 @@
 	tag = "icon-intact (SOUTHWEST)";
 	dir = 10
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cc" = (
 /obj/machinery/door/supernorn,
@@ -850,7 +850,7 @@
 	icon_state = "lattice-dir";
 	dir = 10
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "ce" = (
 /obj/fakeobject/pipe{
@@ -1050,7 +1050,7 @@
 	icon_state = "lattice-dir";
 	dir = 8
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cv" = (
 /obj/fakeobject/pipe{
@@ -1095,7 +1095,7 @@
 	dir = 4
 	},
 /obj/lattice,
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cA" = (
 /obj/lattice{
@@ -1107,7 +1107,7 @@
 	tag = "icon-intact (EAST)";
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -1119,7 +1119,7 @@
 	icon_state = "lattice-dir";
 	dir = 4
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cC" = (
 /obj/lattice{
@@ -1131,7 +1131,7 @@
 	tag = "icon-intact (NORTHWEST)";
 	dir = 9
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cD" = (
 /obj/grille/catwalk{
@@ -1139,7 +1139,7 @@
 	icon_state = "catwalk";
 	dir = 10
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cE" = (
 /obj/grille/catwalk{
@@ -1147,7 +1147,7 @@
 	icon_state = "catwalk_cross";
 	dir = 6
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /area/space)
 "cF" = (
 /obj/fakeobject{
@@ -1158,7 +1158,7 @@
 	icon_state = "scrubber:0";
 	name = "Air Scrubber"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"
@@ -1172,7 +1172,7 @@
 /obj/fakeobject/pipe{
 	color = "b4b4b4"
 	},
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
+/turf/simulated/floor/auto/elevator_shaft/biodome,
 /turf/unsimulated/outdoors/concrete{
 	icon_state = "rustgrate3";
 	name = "rusty grate"

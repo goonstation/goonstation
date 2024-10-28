@@ -841,6 +841,7 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 	icon_state = "shuttle2"
 	name = "Merchant Shuttle Dock"
 	teleport_blocked = TRUE
+	var/loc_string = "somewhere"
 
 /area/shuttle/merchant_shuttle/left_centcom
 	name = "Centcom Merchant Shuttle Dock Alpha"
@@ -860,10 +861,12 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
+	loc_string = "left"
 
 /area/shuttle/merchant_shuttle/right_station
 	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
+	loc_string = "right"
 
 /area/shuttle/spacebus
 	name = "Space Bus"

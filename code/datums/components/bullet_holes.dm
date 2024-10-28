@@ -35,12 +35,14 @@ TYPEINFO(/datum/component/bullet_holes)
 
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(handle_impact))
 	RegisterSignal(parent, COMSIG_UPDATE_ICON, PROC_REF(redraw_impacts)) // just in case
+	RegisterSignal(parent, COMSIG_TURF_REPLACED, PROC_REF(RemoveComponent))
 
 /datum/component/bullet_holes/UnregisterFromParent()
 	impact_image_base = null
 	impact_images.Cut()
 	UnregisterSignal(parent, COMSIG_ATOM_HITBY_PROJ)
 	UnregisterSignal(parent, COMSIG_UPDATE_ICON)
+	UnregisterSignal(parent, COMSIG_TURF_REPLACED)
 	. = ..()
 
 
