@@ -1,4 +1,9 @@
 
+(t)mon oct 28 24
+(u)tarmunora
+(p)20547
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Agent card no longer grants access to listening post, traitors and sleeper agents can now use the handscanner to permanently unlock the listening post doors.
 (t)sun oct 27 24
 (u)JORJ949
 (p)20941
