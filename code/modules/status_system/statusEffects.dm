@@ -350,6 +350,10 @@
 			onChange(optional=null)
 				. = ..(change)
 
+		talisman_artifact
+			id = "talisman_extra_hp"
+			visible = FALSE
+
 	simplehot //Simple heal over time.
 		id = "simplehot"
 		effect_quality = STATUS_QUALITY_POSITIVE

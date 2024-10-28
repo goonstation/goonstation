@@ -1886,6 +1886,7 @@
 #include "code\obj\artifacts\artifact_items\melee_weapon.dm"
 #include "code\obj\artifacts\artifact_items\pitcher.dm"
 #include "code\obj\artifacts\artifact_items\power_cell.dm"
+#include "code\obj\artifacts\artifact_items\talisman.dm"
 #include "code\obj\artifacts\artifact_items\teleport_wand.dm"
 #include "code\obj\artifacts\artifact_items\wall_wand.dm"
 #include "code\obj\artifacts\artifact_items\watering_can.dm"
