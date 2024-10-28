@@ -1,5 +1,6 @@
 You can step over crates by click-dragging yourself onto them.
 Hold SPACE and click on a tile to throw your current item there.
+Hold SPACE and click on a tile to pick up the highest weight item on that tile, if your hand is free.
 Hold ALT and click on something to examine it.
 Hold CTRL and click on a nearby object to start pulling it.
 Hit F to fart. All the cool kids are doing it.

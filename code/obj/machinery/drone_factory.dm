@@ -231,6 +231,9 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 			ghostdrone_factory_working = null //Restart the system (so the factory isn't permabricked if someone steals the drone assembly)
 
 	proc/start_work(var/obj/item/ghostdrone_assembly/G)
+#ifdef GHOSTDRONES_ON_STRIKE
+		UNLINT(return)
+#endif
 		if (!src.factory_rechargers.len)
 			src.update_rechargers()
 			if (!src.factory_rechargers.len)

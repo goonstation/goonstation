@@ -662,6 +662,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "leaves"
 	random_dir = EAST
 
+/obj/decal/cleanable/wood_debris
+	name = "wood debris"
+	desc = "A few scattered pieces of wood that broke off something bigger."
+	icon = 'icons/obj/decals/cleanables.dmi'
+	icon_state = "wood"
+	random_dir = NORTH
+
 /obj/decal/cleanable/rust
 	name = "rust"
 	desc = "That sure looks safe."
@@ -1712,3 +1719,19 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "What a mess..."
 	plane = PLANE_DEFAULT //needs to go on desks
 	layer = OBJ_LAYER
+
+/obj/decal/cleanable/thermite
+	name = "thermite powder"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "thermite"
+	mouse_opacity = FALSE
+	can_fluid_absorb = FALSE
+	sample_reagent = "thermite"
+
+	New(loc)
+		..()
+		SPAWN(1) //if we're being spawned manually we won't have our thermite amount set up so just Assume
+			if (!src.reagents?.has_reagent("thermite"))
+				if (!src.reagents)
+					src.create_reagents(src.sample_amt)
+				src.reagents.add_reagent("thermite", src.sample_amt)

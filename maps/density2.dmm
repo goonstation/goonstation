@@ -5048,7 +5048,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "GH" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1

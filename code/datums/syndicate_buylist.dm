@@ -46,6 +46,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	var/category
 	/// Bitflags for what uplinks can buy this item (see `_std/defines/uplink.dm` for flags)
 	var/can_buy
+	/// The maximum amount a given uplink can buy this item
+	var/max_buy = INFINITY
 
 	/**
 	 * Runs on the purchase of the buylist datum
@@ -1039,6 +1041,16 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
 
+/datum/syndicate_buylist/traitor/record_player
+	name = "Portable Record player"
+	item = /obj/submachine/record_player/portable
+	cost = 2
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "A portable record player, so you can play tunes while committing crimes!"
+	job = list("Radio Show Host")
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/chicken_grenade
 	name = "Chicken Grenade"
 	item = /obj/item/old_grenade/chicken
@@ -1048,6 +1060,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Rancher")
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR
+	max_buy = 3
 
 /datum/syndicate_buylist/traitor/fishing_rod
 	name = "Barbed Fishing Rod"

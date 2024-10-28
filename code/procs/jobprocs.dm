@@ -671,12 +671,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
 		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			if (src.limbs.l_leg)
+				src.limbs.l_leg.delete()
+			if (src.limbs.r_leg)
+				src.limbs.r_leg.delete()
+			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			chair.buckle_in(src, src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks

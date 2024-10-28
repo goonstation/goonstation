@@ -14620,7 +14620,6 @@
 /obj/machinery/firealarm/north,
 /obj/submachine/chef_oven,
 /obj/machinery/firealarm/north,
-/obj/machinery/deep_fryer,
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -15865,7 +15864,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/disposal)
 "dHR" = (
@@ -31427,6 +31426,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/voting_box,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
