@@ -65,16 +65,16 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		src.name = "[name_prefix(null, 1)][src.get_stain_names()][src.name][name_suffix(null, 1)]"
 
 	///Add a stain to this clothing piece
-	proc/add_stain(datum/stain/stn)
-		stn = get_singleton(stn)
-		if (!stn || !src.can_stain)
+	proc/add_stain(stain_type)
+		var/datum/stain/stain = get_singleton(stain_type)
+		if (!istype(stain) || !src.can_stain)
 			return
 		if (!islist(src.stains))
 			src.stains = list()
-		else if (stn in src.stains)
+		else if (stain in src.stains)
 			return
-		src.stains.Add(stn)
-		stn.add_to_clothing(src)
+		src.stains.Add(stain)
+		stain.add_to_clothing(src)
 		src.UpdateName()
 
 	///Returns a space-concatenated string of stain names
@@ -84,19 +84,18 @@ ABSTRACT_TYPE(/obj/item/clothing)
 				. += stn.name + " "
 
 	///Removes a stain from this clothing piece. Returns 1/TRUE if stain removed.
-	proc/remove_stain(datum/stain/stain)
-		stain = get_singleton(stain)
-		if(islist(src.stains))
-			for(var/datum/stain/stn in src.stains)
-				if (stn == stain)
-					stn.remove_from_clothing(src)
-					. = src.stains.Remove(stn)
+	proc/remove_stain(stain_type)
+		var/datum/stain/stain = get_singleton(stain_type)
+		if(stain in src.stains)
+			stain.remove_from_clothing(src)
+			. = src.stains.Remove(stain)
+			src.UpdateName()
 
 	///Removes all stains from this clothing piece
 	proc/clean_stains()
 		if (islist(src.stains) && length(src.stains))
-			for (var/datum/stain/stn in src.stains)
-				stn.remove_from_clothing(src)
+			for (var/datum/stain/stain in src.stains)
+				stain.remove_from_clothing(src)
 			src.stains = list()
 			src.UpdateName()
 
