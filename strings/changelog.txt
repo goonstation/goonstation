@@ -1,4 +1,7 @@
 
+(t)tue oct 29 24
+(u)tarmunora
+(+)Trickster wraith possession no longer automatically uncuffs target, instead, the possession action prevents the target from self-cuffing before the takeover
 (t)mon oct 28 24
 (u)LeahTheTech
 (+)Boom boots now occasionally cause explosions around them when walking.
