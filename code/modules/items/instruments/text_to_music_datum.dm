@@ -1,5 +1,8 @@
-// #define MIN_TIMING 0.1
-// #define MAX_TIMING 0.5
+/**
+ * Datum that forms the core of Player Pianos and Text to Music components
+ * Code from `playable_piano.dm`
+ * Please don't use `/datum/text_to_music` as-is, use a subtype or make a new one
+ */
 
 #define MAX_NOTE_INPUT 1920
 #define MAX_CONCURRENT_NOTES 8
@@ -14,6 +17,7 @@
 
 ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music
+	// Made into constants since both the Piano Player and Text to Music comp need to reference it
 	var/const/MIN_TIMING = 0.1
 	var/const/MAX_TIMING = 0.5
 	var/timing = 0.5 //values from MIN_TIMING to MAX_TIMING please
@@ -206,24 +210,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.timing = time_sel
 	return TRUE
 
-// /datum/text_to_music/proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
-// 	src.update_icon(FALSE)
-// 	src.event_reset()
-// 	if (is_looping != 2 || disposing)
-// 		is_looping = 0
-// 	src.song_length = 0
-// 	src.curr_note = 0
-// 	timing = 0.5
-// 	src.is_busy = FALSE
-// 	note_input = ""
-// 	piano_notes = list()
-// 	note_volumes = list()
-// 	note_octaves = list()
-// 	note_names = list()
-// 	note_accidentals = list()
-// 	compiled_notes = list()
-// 	note_delays = list()
-
 /datum/text_to_music/proc/reset_piano(var/disposing) //so i dont have to have duplicate code for multiool pulsing and piano key
 	src.update_icon(FALSE)
 	src.event_reset()
@@ -260,13 +246,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 /datum/text_to_music/proc/event_error_event_missing_part()
 	return
-
-// /datum/text_to_music/proc/log_error_message(var/error_message)
-// 	return
-// 	// src.error_messages.Insert(1, error_message)
-
-// 	// if (length(src.holder.error_messages) > MAX_ERROR_MESSAGES)
-// 	// 	src.error_messages.Cut(MAX_ERROR_MESSAGES + 1, 0)
 
 /datum/text_to_music/proc/get_holder()
 	return src
@@ -344,11 +323,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		return
 
 	return ..(time_sel)
-
-// /datum/text_to_music/player_piano/log_error_message(var/error_message)
-// 	. = ..()
-
-// 	src.holder.visible_message("The [src.holder] beeps rapidly!")
 
 /datum/text_to_music/player_piano/get_holder()
 	return src.holder
@@ -437,9 +411,6 @@ ABSTRACT_TYPE(/datum/text_to_music)
 
 /datum/text_to_music/mech_comp/update_icon(var/is_active)
 	src.holder.UpdateIcon(is_active)
-
-// #undef MIN_TIMING
-// #undef MAX_TIMING
 
 #undef MAX_NOTE_INPUT
 #undef MAX_CONCURRENT_NOTES
