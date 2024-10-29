@@ -3694,12 +3694,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/storage)
-"aYQ" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/disposalpipe/segment/brig,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/black,
-/area/station/engine/gas)
 "aYV" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide,
@@ -10110,11 +10104,6 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
-"cSG" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/black,
-/area/station/engine/gas)
 "cSL" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -20088,6 +20077,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"fXN" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "fXZ" = (
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
@@ -21264,12 +21258,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"gpS" = (
-/obj/disposalpipe/segment/brig,
-/obj/decal/stripe_caution,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/black,
-/area/station/engine/gas)
 "gpU" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/jen,
@@ -29212,6 +29200,12 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
+"iQk" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/disposalpipe/segment/brig,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "iQG" = (
 /obj/disposalpipe/segment/mail,
 /obj/health_scanner/wall{
@@ -44954,7 +44948,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom/engineering,
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -62508,6 +62502,12 @@
 	dir = 9
 	},
 /area/station/bridge/customs)
+"sTS" = (
+/obj/disposalpipe/segment/brig,
+/obj/decal/stripe_caution,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "sTU" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -138321,8 +138321,8 @@ aYw
 dlq
 dlq
 dlq
-gpS
-aYQ
+sTS
+iQk
 erx
 dSg
 hHC
@@ -138622,7 +138622,7 @@ gVJ
 xLg
 rVh
 spT
-cSG
+fXN
 xSW
 xSW
 xSW
