@@ -33711,7 +33711,6 @@
 	pixel_x = 5;
 	pixel_y = -4
 	},
-/obj/rack,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},

@@ -996,6 +996,7 @@ client/proc/toggle_ghost_respawns()
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
 	global_sims_mode = !global_sims_mode
+	simsController.provide_plumbobs = !simsController.provide_plumbobs
 	message_admins(SPAN_INTERNAL("[key_name(usr)] toggled sims mode. [global_sims_mode ? "Oh, the humanity!" : "Phew, it's over."]"))
 	for (var/mob/M in mobs)
 		LAGCHECK(LAG_LOW)
