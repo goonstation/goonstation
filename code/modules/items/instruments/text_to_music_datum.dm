@@ -135,9 +135,11 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
 		compiled_notes += string
 	for (var/i = 1, i <= compiled_notes.len, i++)
+		if (compiled_notes[i] == "rrr")
+			continue
 		var/string = "[instrument_sound_path]/[compiled_notes[i]].ogg"
 		if (!(string in soundCache))
-			src.event_error_invalid_note(i)
+			src.event_error_invalid_note(i, src.piano_notes[i])
 			src.is_busy = FALSE
 			src.update_icon(FALSE)
 			return FALSE
@@ -165,7 +167,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 		if (!src.curr_note) // else we get runtimes when the piano is reset while playing
 			return
 
-		if (concurrent_notes_played < MAX_CONCURRENT_NOTES)
+		if (concurrent_notes_played < MAX_CONCURRENT_NOTES && compiled_notes[curr_note] != "rrr")
 			var/sound_name = "[instrument_sound_path]/[compiled_notes[src.curr_note]].ogg"
 			playsound(src.get_holder(), sound_name, note_volumes[src.curr_note],0,10,0)
 
@@ -250,7 +252,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/proc/event_reset()
 	return
 
-/datum/text_to_music/proc/event_error_invalid_note(var/note_index)
+/datum/text_to_music/proc/event_error_invalid_note(var/note_index, var/note)
 	return
 
 /datum/text_to_music/proc/event_error_invalid_timing(var/timing)
@@ -299,7 +301,7 @@ ABSTRACT_TYPE(/datum/text_to_music)
 /datum/text_to_music/player_piano/event_reset()
 	src.holder.visible_message(SPAN_NOTICE("\The [src.holder] grumbles and shuts down completely."))
 
-/datum/text_to_music/player_piano/event_error_invalid_note(var/note_index)
+/datum/text_to_music/player_piano/event_error_invalid_note(var/note_index, var/note)
 	src.holder.visible_message(SPAN_NOTICE("\The [src] makes an atrocious racket and beeps [note_index] times."))
 
 /datum/text_to_music/player_piano/event_error_invalid_timing(var/timing)
@@ -377,27 +379,30 @@ ABSTRACT_TYPE(/datum/text_to_music)
 	src.holder = holder
 
 /datum/text_to_music/mech_comp/event_play_start()
-	return
-	// src.holder.log_error_message(SPAN_NOTICE("\The [holder] starts playing music!"))
+	animate_flash_color_fill(src.holder, "#00ff00", 2, 2)
 
-/datum/text_to_music/mech_comp/event_error_invalid_note(var/note_index)
-	src.log_error_message("The note at position [note_index] doesn't exist for this insturment.")
+/datum/text_to_music/mech_comp/event_play_end()
+	animate_flash_color_fill(src.holder, "#ff0000", 2, 2)
+
+/datum/text_to_music/mech_comp/event_reset()
+	animate_flash_color_fill(src.holder, "#ff0000", 2, 2)
+
+/datum/text_to_music/mech_comp/event_error_invalid_note(var/note_index, var/note)
+	src.log_error_message("Note \[[note]\] at position \[[note_index]\] doesn't exist for this insturment.")
 
 /datum/text_to_music/mech_comp/event_error_invalid_timing(var/timing)
-	src.log_error_message("Given timing ([timing]) is outside of range [src.MIN_TIMING]-[src.MAX_TIMING].")
+	src.log_error_message("Given timing \[[timing]\] is outside of range [src.MIN_TIMING]-[src.MAX_TIMING].")
 
 /datum/text_to_music/mech_comp/event_error_event_missing_part()
 	src.log_error_message("A piece of an event was missing somewhere.")
 
 /datum/text_to_music/mech_comp/proc/log_error_message(var/error_message)
-	// . = ..()
-
 	src.error_messages.Insert(1, error_message)
 
 	if (length(src.error_messages) > MAX_ERROR_MESSAGES)
 		src.error_messages.Cut(MAX_ERROR_MESSAGES + 1, 0)
 
-	animate_flash_color_fill(src.holder, "#ff0000", 2, 2)
+	animate_flash_color_fill(src.holder, "#ff00ff", 2, 2)
 
 /datum/text_to_music/mech_comp/ready_piano()
 	. =  ..()
