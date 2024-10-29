@@ -1,5 +1,11 @@
 
 (t)mon oct 28 24
+(u)LeahTheTech
+(+)Boom boots now occasionally cause explosions around them when walking.
+(u)Glamurio (Ryou)
+(p)20763
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Hygiene makes a comeback with the new "Stinky" trait.
 (u)Facsimile
 (p)21186
 (e)🪲📦|C-Bug, A-Game-Objects
