@@ -74,15 +74,15 @@
 	if(!(user.bioHolder.HasEffect("clumsy")))
 		return FALSE
 
-///minimum T2 to get pufferfish from exotic sources
+///requires meat to get pufferfish from exotic sources
 /datum/fishing_lootpool/pufferfish
-	minimum_rod_tier = 2
+	required_lure = /obj/item/reagent_containers/food/snacks/ingredient/meat
 	fish_available = list(/obj/item/reagent_containers/food/fish/pufferfish = 25)
 
-///test for fishing lures
-/datum/fishing_lootpool/luretest
-	required_lure = /obj/item/reagent_containers/food/fish
-	fish_available = list(/obj/item/reagent_containers/food/fish/sardine = 2005)
+///REAL goldfish will eat the FAKE goldfish
+/datum/fishing_lootpool/real_goldfish
+	required_lure = /obj/item/reagent_containers/food/fish/goldfish
+	fish_available = list(/obj/item/reagent_containers/food/fish/real_goldfish = 10)
 
 ///tiny junk items you can find in vending machines and others.
 /datum/fishing_lootpool/tiny_junk
