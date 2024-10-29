@@ -32,6 +32,7 @@ TYPEINFO(/obj/player_piano)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", PROC_REF(mechcompPlay))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", PROC_REF(mechcompNotes))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", PROC_REF(mechcompTiming))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "stop", PROC_REF(mechcompStop))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", PROC_REF(mechcompReset))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Start Storing Pianos", PROC_REF(start_storing_pianos))
 
@@ -48,14 +49,21 @@ TYPEINFO(/obj/player_piano)
 		if (new_timing)
 			src.music_player.set_timing(new_timing)
 
+	proc/mechcompStop(var/datum/mechanicsMessage/input)
+		if (src.music_player.is_busy)
+			src.music_player.is_stop_requested = TRUE
+
 	proc/mechcompReset(var/datum/mechanicsMessage/input)
 		src.music_player.reset_piano(FALSE)
 
 	attackby(obj/item/W, mob/user) //this one is big and sucks, where all of our key and construction stuff is
 		if (istype(W, /obj/item/piano_key)) //piano key controls
-			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Reset Piano", "Toggle Looping", "Adjust Timing")
+			var/mode_sel = input("Which do you want to do?", "Piano Control") as null|anything in list("Stop Piano", "Reset Piano", "Toggle Looping", "Adjust Timing")
 
 			switch(mode_sel)
+				if ("Stop Piano") // stops the piano without losing stored data
+					src.music_player.is_stop_requested = TRUE
+
 				if ("Reset Piano") //reset piano B)
 					src.music_player.reset_piano()
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it!"))
@@ -72,7 +80,10 @@ TYPEINFO(/obj/player_piano)
 					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now."))
 
 				if ("Adjust Timing") //adjusts tempo
-					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
+					var/time_sel = input(
+						"Input a new timing between [src.music_player.MIN_TIMING] and [src.music_player.MAX_TIMING] seconds.",
+						"Tempo Control"
+					) as num
 					if (!src.music_player.set_timing(time_sel))
 						src.visible_message(SPAN_ALERT(">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down."))
 						return
