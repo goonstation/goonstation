@@ -24,7 +24,7 @@ TYPEINFO(/obj/player_piano)
 	New()
 		..()
 
-		src.music_player = new()
+		src.music_player = new(src)
 
 		if (!items_claimed)
 			src.desc += " The free user essentials box is untouched!" //jank
