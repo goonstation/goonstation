@@ -82,7 +82,7 @@
 /area/station/crew_quarters/clown)
 "aaE" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
+/area/shuttle/merchant_shuttle/right_station/cogmap/atlas)
 "aaF" = (
 /obj/grille/catwalk{
 	dir = 8
@@ -221,6 +221,9 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
+	},
+/obj/machinery/alarm{
+	pixel_y = 25
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -5815,6 +5818,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /obj/cable{
@@ -9206,7 +9210,7 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/computer/airbr{
 	density = 0;
-	id = "ai2medbay";
+	id = "sciship";
 	pixel_x = 32;
 	starts_established = 1
 	},
@@ -9587,6 +9591,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -9911,6 +9918,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/purple,
 /area/research_outpost/hangar)
 "bXo" = (
@@ -10974,6 +10982,10 @@
 	name = "Chamber Two Inlet"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor/purple/side{
 	dir = 8
 	},
@@ -12974,6 +12986,10 @@
 /area/station/turret_protected/ai)
 "gJC" = (
 /obj/storage/crate/furnacefuel,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -13145,6 +13161,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"hep" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "hfu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -13544,6 +13567,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/red,
 /area/station/security/equipment)
 "hGB" = (
@@ -13918,11 +13944,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/tox_storage,
-/obj/mapping_helper/access/tox,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/purple,
 /area/station/science/storage)
 "iiP" = (
@@ -14550,7 +14576,7 @@
 /area/station/security/hos)
 "iXg" = (
 /turf/space,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/atlas)
 "iXn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16395,7 +16421,7 @@
 "lEi" = (
 /obj/machinery/computer/airbr{
 	density = 0;
-	id = "ai2medbay";
+	id = "sciship";
 	pixel_x = -32;
 	dir = 2
 	},
@@ -17339,6 +17365,10 @@
 	dir = 4
 	},
 /obj/machinery/portable_reclaimer,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -17562,7 +17592,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "nrH" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -18883,6 +18913,9 @@
 /obj/item/scissors/surgical_scissors,
 /obj/item/surgical_spoon,
 /obj/item/surgical_spoon,
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "pqD" = (
@@ -20235,6 +20268,9 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 6
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
@@ -21413,7 +21449,7 @@
 	operating = 1;
 	move_lag = 15
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "tBH" = (
@@ -21555,6 +21591,10 @@
 	name = "Printer - Bridge";
 	pixel_y = 5;
 	print_id = "Bridge"
+	},
+/obj/machinery/alarm{
+	dir = 1;
+	pixel_y = -15
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -22601,7 +22641,7 @@
 /area/station/mining/magnet)
 "vjI" = (
 /obj/airbridge_controller{
-	id = "ai2medbay"
+	id = "sciship"
 	},
 /turf/space,
 /area/space)
@@ -22723,6 +22763,10 @@
 	},
 /obj/cable/blue,
 /obj/machinery/power/data_terminal,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 14
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -24474,6 +24518,10 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 14
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -60403,7 +60451,7 @@ qHa
 ajZ
 aiZ
 opg
-nXE
+hep
 nXE
 mhR
 sDB

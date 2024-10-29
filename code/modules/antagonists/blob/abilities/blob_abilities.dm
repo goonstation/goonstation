@@ -344,7 +344,7 @@
 		if (!T)
 			T = get_turf(owner)
 
-		if (istype(T, /turf/space))
+		if (istype(T, /turf/space) || (istype(T, /turf/unsimulated) && T.can_build))
 			var/datum/blob_ability/bridge/B = owner.get_ability(/datum/blob_ability/bridge)
 
 			if (B)
@@ -703,7 +703,7 @@
 		if (!T)
 			T = get_turf(owner)
 
-		if (!istype(T, /turf/space))
+		if (!istype(T, /turf/space) && !T.can_build)
 			boutput(owner, SPAN_ALERT("Bridges must be placed on space tiles."))
 			return 1
 

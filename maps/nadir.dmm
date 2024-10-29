@@ -13811,10 +13811,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -20104,7 +20104,7 @@
 /area/station/maintenance/north)
 "ium" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
+/area/shuttle/merchant_shuttle/right_station/cogmap/nadir)
 "iux" = (
 /obj/table/nanotrasen/auto,
 /obj/item/storage/box/cablesbox{
@@ -24855,7 +24855,7 @@
 	name = "Pasiphae disposal belt";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
 "krU" = (
@@ -41524,7 +41524,7 @@
 /area/station/security/checkpoint/escape)
 "rEl" = (
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -51653,7 +51653,7 @@
 	move_lag = 6;
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "vZi" = (
@@ -54108,7 +54108,7 @@
 /area/station/hallway/primary/southwest)
 "xgs" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/nadir)
 "xhb" = (
 /obj/decal/tile_edge/floorguide/engineering{
 	dir = 1

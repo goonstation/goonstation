@@ -23458,10 +23458,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -28974,7 +28974,7 @@
 /area/station/chapel/sanctuary)
 "cmt" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -29165,6 +29165,7 @@
 "cmZ" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -33710,7 +33711,6 @@
 	pixel_x = 5;
 	pixel_y = -4
 	},
-/obj/rack,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -50473,7 +50473,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "qVn" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1

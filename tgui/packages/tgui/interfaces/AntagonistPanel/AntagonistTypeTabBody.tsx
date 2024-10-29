@@ -118,7 +118,9 @@ const AntagonistList = (props: TabSectionData) => {
   }
 
   const sortAntagonists =
-    antagonistData.sort((a, b) => a.real_name.localeCompare(b.real_name)) || [];
+    antagonistData.sort((a, b) =>
+      (a.real_name ?? '').localeCompare(b.real_name ?? ''),
+    ) || [];
 
   return (
     <Section>

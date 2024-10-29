@@ -962,6 +962,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(pill_bottle)
 					TRANSFER_OR_DROP(src, pill_bottle)
 					ui.user.put_in_hand_or_eject(pill_bottle)
+					pill_bottle.rebuild_desc()
 
 				if(!src.beaker.reagents.total_volume) // qol eject when empty
 					eject_beaker(ui.user)
