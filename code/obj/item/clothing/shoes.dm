@@ -402,8 +402,13 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		. = ..()
 
 	proc/on_step(mob/user, atom/previous_loc, dir)
+		var/turf/T = get_turf(user)
+		if (user.lying || !(T.turf_flags & MOB_STEP))
+			return
 		if (prob(10))
-			var/turf/explosion_target = pick(view(10, user))
+			if (ON_COOLDOWN(src, "EXPLOSION", 1 SECOND))
+				return
+			var/turf/explosion_target = get_turf(pick(view(10, user)))
 			new /obj/effects/explosion/dangerous(explosion_target)
 
 /obj/item/clothing/shoes/ziggy
