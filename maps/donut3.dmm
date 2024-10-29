@@ -7395,6 +7395,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "ceI" = (
@@ -12750,6 +12753,12 @@
 	dir = 6
 	},
 /area/station/crew_quarters/quartersC)
+"dKZ" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "dLA" = (
 /obj/submachine/chem_extractor,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -17931,6 +17940,9 @@
 	name = "Engine Room Shield Control";
 	pixel_x = -24;
 	dir = 8
+	},
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
@@ -24357,12 +24369,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "hnI" = (
-/obj/storage/secure/closet/engineering/atmos,
-/obj/item/clothing/mask/gas/emergency,
-/obj/decal/stripe_caution,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
+/obj/machinery/atmospherics/unary/cold_sink/freezer,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "hoj" = (
@@ -38945,9 +38955,9 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "lKu" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/decal/stripe_caution,
 /obj/machinery/light_switch/north,
+/obj/decal/stripe_caution,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "lKC" = (
@@ -59361,11 +59371,12 @@
 	},
 /area/shuttle/arrival/station)
 "rVh" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
 	},
 /obj/decal/stripe_caution,
+/obj/storage/secure/closet/engineering/atmos,
+/obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "rVl" = (
@@ -61426,6 +61437,8 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/decal/stripe_caution,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "sAt" = (
@@ -76147,6 +76160,12 @@
 	icon_state = "4"
 	},
 /area/shuttle/arrival/station)
+"wUi" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "wUj" = (
 /obj/lattice{
 	dir = 1;
@@ -138590,7 +138609,7 @@ ewz
 gVJ
 xLg
 rVh
-spT
+wUi
 cxY
 xSW
 xSW
@@ -138892,7 +138911,7 @@ ewz
 hNH
 xLg
 lKu
-spT
+dKZ
 cxY
 xSW
 iGs
