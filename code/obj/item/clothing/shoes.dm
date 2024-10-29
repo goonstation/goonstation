@@ -393,6 +393,19 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_priority = 999
 	is_syndicate = 1
 
+	equipped(mob/user, slot)
+		. = ..()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_step))
+
+	unequipped(mob/user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		. = ..()
+
+	proc/on_step(mob/user, atom/previous_loc, dir)
+		if (prob(10))
+			var/turf/explosion_target = pick(view(10, user))
+			new /obj/effects/explosion/dangerous(explosion_target)
+
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"
 	desc = "A pair of striking red boots. Though they look clean, the soles are absolutely coated in a really fine, white powder."
