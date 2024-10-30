@@ -31,6 +31,12 @@
 		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
 		. = ..()
 
+	//get the kind of lure currently being used by the fishing rod
+	proc/get_lure()
+		if (length(src.storage.stored_items))
+			return src.storage.stored_items[1]
+		else return null
+
 	//todo: attack particle?? some sort of indicator of where we're fishing
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))

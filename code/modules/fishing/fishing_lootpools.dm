@@ -22,10 +22,7 @@
 	if(fishing_rod.tier < src.minimum_rod_tier || fishing_rod.tier > src.maximum_rod_tier)
 		return FALSE
 	if (required_lure != null)
-		var/obj/item/lure = null
-		if (length(fishing_rod.storage.stored_items))
-			lure = fishing_rod.storage.stored_items[1]
-		else return FALSE // if this requires a lure, you need to have one
+		var/obj/item/lure = fishing_rod.get_lure()
 		if (!istype(lure, required_lure)) return FALSE
 
 /// This proc generates a new loottable out of a given current one
