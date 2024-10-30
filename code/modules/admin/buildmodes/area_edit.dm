@@ -87,5 +87,6 @@ Left Mouse Button on tufs              = Select corners<br>
 				if(A.area_apc)
 					A.area_apc.request_update()
 
+			one = null
 			usr.client?.images -= marker
 
