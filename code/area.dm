@@ -3683,13 +3683,19 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/salvager_space
 	name = "Salvager Vessel Magpie Space"
 	sanctuary = 1
-	teleport_blocked = 1
+	teleport_blocked = TRUE
 	// Must match /area/salvager
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/magpie
 
 /area/salvager/pod
 	name = "Magpie Launch Area"
 	icon_state = "yellow"
+
+/area/salvager/medbay
+	name = "Magpie Med Area"
+	icon_state = "blue"
+	sanctuary = 0
+
 
 // Pirate ship:
 /area/pirate_ship
