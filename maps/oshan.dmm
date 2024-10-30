@@ -32236,7 +32236,6 @@
 /area/station/garden/owlery)
 "dlG" = (
 /obj/machinery/door/airlock/pyro/glass{
-	id = "medbay_front";
 	name = "Medical Booth";
 	req_access_txt = "5"
 	},
