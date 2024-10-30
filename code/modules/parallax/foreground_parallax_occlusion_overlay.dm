@@ -65,3 +65,16 @@
 
 	if (src.occlude_foreground_parallax_layers)
 		src.update_parallax_occlusion_overlay()
+
+/// toggles foreground parallax occlusion for an area (and all turfs in the area) at runtime. For varediting and nothing else, really
+/area/proc/_toggle_foreground_parallax_occlusion()
+	src.occlude_foreground_parallax_layers = FALSE
+	if(src.occlude_foreground_parallax_layers)
+		for(var/turf/T in src)
+			T.occlude_foreground_parallax_layers = FALSE
+			T.ClearSpecificOverlays("foreground_parallax_occlusion_overlay")
+	else
+		src.occlude_foreground_parallax_layers = TRUE
+		for(var/turf/T in src)
+			T.occlude_foreground_parallax_layers = TRUE
+			T.update_parallax_occlusion_overlay()
