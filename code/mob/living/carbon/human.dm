@@ -2278,7 +2278,7 @@
 	src.force_equip(I, slot)
 	return TRUE
 ///Tries to put an item in an available backpack, pocket, or hand slot; will delete the item if unable to place.
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I)
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
@@ -2291,7 +2291,10 @@
 		return
 	if (src.autoequip_slot(I, SLOT_R_HAND))
 		return
-	qdel(I)
+	if (delete_item)
+		qdel(I)
+	else
+		I.set_loc(get_turf(src))
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)

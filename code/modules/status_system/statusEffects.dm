@@ -2892,3 +2892,63 @@
 
 	getTooltip()
 		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
+
+/datum/statusEffect/talisman_fortune
+	id = "art_talisman_fortune"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/time_passed = 0
+	var/time_threshold
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.time_threshold = rand(1, 5) MINUTES
+
+	onUpdate(timePassed)
+		src.time_passed += timePassed
+		if (src.time_passed < src.time_threshold)
+			return
+		src.time_passed = 0
+		src.time_threshold = rand(1, 5) MINUTES
+		var/obj/item/currency/spacecash/money = new
+		money.amount = rand(100, 500)
+		money.UpdateStackAppearance()
+		var/mob/living/carbon/human/H = src.owner
+		H.stow_in_available(money, FALSE)
+		if (prob(25)) // mostly so there's no spam of the same message for 30+ minutes
+			var/msg = pick(list("You feel slightly heavier...", "Is that the smell of money...?", "You feel like you won big.", \
+				"Luck is on your side... wait, what...?"))
+			boutput(src, SPAN_NOTICE(msg))
+
+/datum/statusEffect/talisman_fault
+	id = "art_talisman_fault"
+	unique = FALSE
+	visible = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/time_passed = 0
+	var/time_threshold
+	var/obj/item/artifact/talisman/art
+
+	preCheck(atom/A)
+		if (!ishuman(A))
+			return
+		return ..()
+
+	onAdd(optional)
+		..()
+		src.time_threshold = rand(1, 3) MINUTES
+		art = optional
+
+	onUpdate(timePassed)
+		src.time_passed += timePassed
+		if (src.time_passed < src.time_threshold)
+			return
+		src.time_passed = 0
+		src.time_threshold = rand(1, 3) MINUTES
+		art.ArtifactFaultUsed(src.owner, art)

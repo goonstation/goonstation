@@ -327,6 +327,10 @@
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
 
+	brute *= GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_BRUTE_REDUCTION) / 100
+	burn *= GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_BURN_REDUCTION) / 100
+	tox *= GET_ATOM_PROPERTY(src, PROP_MOB_TALISMAN_TOX_REDUCTION) / 100
+
 	if(src.mutantrace) //HOW
 		var/typemult
 		if(islist(src.mutantrace.typevulns))

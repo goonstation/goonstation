@@ -1,38 +1,29 @@
-#define SWIFTNESS "swiftness"
+#define SWIFTNESS 1
 #define FORTUNE 2
 #define SPACEFARING 3
 #define ELEMENTS 4
 #define STRENGTH 5
 #define PROTECTION 6
 
-/*
--Random cold protection (from space) from 25% - 75% - the artifact feels somewhat cold
--Random set of heat + cold protection from 0% - 25% each - feels hot and cold in different spots
--Random incoming brute, burn, tox reduction from 0 - 10% each - holding it makes you feel safe somehow
--Random max health increase from 0 - 50 - you get a sense of power from it
--Random amounts of money appearing in your inventory between 0 - 200 credits. does not add it if your inventory is full. - holding it makes you feel lucky somehow
--Random movement speed increase from 0 - 5% - you feel drafts of air surrounding this artifact/you feel air moving quickly around this artifact
-*/
-
 /obj/item/artifact/talisman
 	name = "artifact talisman"
 	associated_datum = /datum/artifact/talisman
 	var/associated_effect
 	// swiftness vars
-	var/swiftness_mod
+	var/swiftness_mod = 0
 	// fortune vars
-	var/money_amt
+	var/money_amt = 0
 	// spacefaring vars
-	var/space_prot
+	var/space_prot = 0
 	// elements vars
-	var/heat_prot
-	var/cold_prot
+	var/heat_prot = 0
+	var/cold_prot = 0
 	// strength vars
-	var/extra_hp
+	var/extra_hp = 0
 	// protection vars
-	var/brute_prot
-	var/burn_prot
-	var/tox_prot
+	var/brute_prot = 0
+	var/burn_prot = 0
+	var/tox_prot = 0
 
 	attack_self(mob/user)
 		. = ..()
@@ -41,11 +32,11 @@
 		var/msg
 		switch(src.associated_effect)
 			if (SWIFTNESS)
-				msg = "You feel air drafts around [src]."
+				msg = "You feel drafts of air..."
 			if (FORTUNE)
 				msg = "You feel lucky somehow."
 			if (SPACEFARING)
-				msg = "[src] feels VERY cold!!!"
+				msg = "[src] feels ice cold."
 			if (ELEMENTS)
 				msg = "[src] feels warm and cold in different spots. [prob(99) ? null : "Sort of like that honk-pocket you once had..."]"
 			if (STRENGTH)
@@ -63,37 +54,54 @@
 		src.remove_effect_from_user(user)
 		..()
 
-	//pick_up_by(mob/M)
-	//	..()
-	//	if (src.loc == M)
-	//		src.add_effect_to_user(M)
-
 	proc/add_effect_to_user(mob/user)
 		switch(src.associated_effect)
 			if (SWIFTNESS)
 				APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/artifact_talisman_swiftness, src)
 			if (FORTUNE)
+				user.changeStatus("art_talisman_fortune", null)
 			if (SPACEFARING)
+				APPLY_ATOM_PROPERTY(user, PROP_MOB_COLDPROT, src, src.space_prot)
 			if (ELEMENTS)
-				APPLY_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src, 100)
+				APPLY_ATOM_PROPERTY(user, PROP_MOB_HEATPROT, src, src.heat_prot)
+				APPLY_ATOM_PROPERTY(user, PROP_MOB_COLDPROT, src, src.cold_prot)
 			if (STRENGTH)
 				user.changeStatus("talisman_extra_hp", null, src.extra_hp)
 			if (PROTECTION)
+				if (src.brute_prot)
+					APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_BRUTE_REDUCTION, src, src.brute_prot)
+				if (src.burn_prot)
+					APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_BURN_REDUCTION, src, src.burn_prot)
+				if (src.tox_prot)
+					APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_TOX_REDUCTION, src, src.tox_prot)
+
+		user.setStatus("art_talisman_fault", null)
+
 
 	proc/remove_effect_from_user(mob/user)
 		switch(src.associated_effect)
 			if (SWIFTNESS)
 				REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/artifact_talisman_swiftness, src)
 			if (FORTUNE)
-
+				user.delStatus("art_talisman_fortune")
 			if (SPACEFARING)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_COLDPROT, src)
 			if (ELEMENTS)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_HEATPROT, src)
+				REMOVE_ATOM_PROPERTY(user, PROP_MOB_COLDPROT, src)
 			if (STRENGTH)
 				user.delStatus("talisman_extra_hp")
 			if (PROTECTION)
+				if (src.brute_prot)
+					REMOVE_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_BRUTE_REDUCTION, src)
+				if (src.burn_prot)
+					REMOVE_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_BURN_REDUCTION, src)
+				if (src.tox_prot)
+					REMOVE_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_TOX_REDUCTION, src)
+
+		user.delStatus("art_talisman_fault")
 
 	proc/select_effect()
-		APPLY_ATOM_PROPERTY(current_user, PROP_MOB_COLDPROT, src, 100)
 		src.associated_effect = pick(list(SWIFTNESS, FORTUNE, SPACEFARING, ELEMENTS, STRENGTH, PROTECTION))
 		switch(src.associated_effect)
 			if (SWIFTNESS)
@@ -108,17 +116,25 @@
 			if (STRENGTH)
 				src.extra_hp = rand(10, 50)
 			if (PROTECTION)
-				src.brute_prot = rand(1, 10)
-				src.burn_prot = rand(1, 10)
-				src.tox_prot = rand(1, 10)
-
-
+				if (prob(75))
+					var/rand_num = rand(1, 3)
+					switch(rand_num)
+						if (1)
+							src.brute_prot = rand(1, 10)
+						if (2)
+							src.burn_prot = rand(1, 10)
+						if (3)
+							src.tox_prot = rand(1, 10)
+				else
+					src.brute_prot = rand(1, 10)
+					src.burn_prot = rand(1, 10)
+					src.tox_prot = rand(1, 10)
 
 /datum/artifact/talisman
 	associated_object = /obj/item/artifact/talisman
 	type_name = "Talisman"
 	type_size = ARTIFACT_SIZE_MEDIUM
-	//rarity_weight = 200
+	rarity_weight = 275
 	validtypes = list("wizard", "precursor")
 	//react_xray = list(8,80,60,11,"COMPLEX")
 
