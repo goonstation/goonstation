@@ -99,6 +99,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
+	///List of currently active alarms
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
@@ -901,60 +902,60 @@ or don't if it uses a custom topopen overlay
 		boutput(src,"You have no laws!")
 	return
 
-/mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/silicon/ai/triggerAlarm(var/class, area/alarm_area, var/list/camera_list, var/alarmsource)
 	if (isdead(src))
-		return 1
-	var/list/L = src.alarms[class]
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
+		return
+	var/list/active_alarms = src.alarms[class]
+	for (var/area_name in active_alarms)
+		if (area_name == alarm_area.name)
+			var/list/alarm = active_alarms[area_name]
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-			return 1
-	var/obj/machinery/camera/C = null
-	var/list/CL = null
-	if (O && istype(O, /list))
-		CL = O
-		if (length(CL) == 1)
-			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
-		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	if (O)
-		if (printalerts)
-			if (C?.camera_status)
-				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
-			else if (length(CL))
-				var/foo = 0
-				var/dat2 = ""
-				for (var/obj/machinery/camera/I in CL)
-					dat2 += "[(!foo) ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[I]\">[I.c_tag]</A>"
-					foo = 1
-				src.show_text("--- [class] alarm detected in [A.name]! ([dat2])")
-			else
-				src.show_text("--- [class] alarm detected in [A.name]! ( No Camera )")
-	else
-		if (printalerts)
-			src.show_text("--- [class] alarm detected in [A.name]! ( No Camera )")
-	if (src.viewalerts) src.ai_alerts()
-	return 1
+			return
+	var/obj/machinery/camera/single_camera = null
+	if (length(camera_list) == 1)
+		single_camera = camera_list[1]
+	active_alarms[alarm_area.name] = list(alarm_area, single_camera || camera_list, list(alarmsource))
 
-/mob/living/silicon/ai/cancelAlarm(var/class, area/A as area, obj/origin)
-	var/list/L = src.alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
+	if (src.viewalerts)
+		src.ai_alerts()
+
+	if (!printalerts)
+		return
+
+	if (!single_camera && !camera_list)
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( No Camera )")
+		return
+
+	if (single_camera?.camera_status)
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
+	else if (length(camera_list))
+		var/first_cam = TRUE
+		var/cameras_string = ""
+		for (var/obj/machinery/camera/camera in camera_list)
+			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
+			first_cam = FALSE
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ([cameras_string])")
+	else
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( No Camera )")
+
+/mob/living/silicon/ai/cancelAlarm(var/class, area/alarm_area, obj/origin)
+	var/list/active_alarms = src.alarms[class]
+	var/cleared = FALSE
+	for (var/area_name in active_alarms)
+		if (area_name == alarm_area.name)
+			var/list/alarm = active_alarms[area_name]
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
 			if (length(srcs) == 0)
-				cleared = 1
-				L -= I
+				cleared = TRUE
+				active_alarms -= area_name
 	if (cleared)
-		src.show_text("--- [class] alarm in [A.name] has been cleared.")
-		if (src.viewalerts) src.ai_alerts()
+		src.show_text("--- [class] alarm in [alarm_area.name] has been cleared.")
+		if (src.viewalerts)
+			src.ai_alerts()
 	return !cleared
 
 /mob/living/silicon/ai/death(gibbed)

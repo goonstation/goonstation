@@ -1,6 +1,8 @@
 /world/Reboot()
 	TgsReboot()
 	shutdown_logging()
+	shutdown_byond_tracy()
+	disable_auxtools_debugger()
 	return ..()
 
 /proc/Reboot_server(var/retry)
@@ -149,5 +151,6 @@
 /// EXPERIMENTAL STUFF
 
 /world/Del()
+	shutdown_byond_tracy()
 	disable_auxtools_debugger()
 	. = ..()

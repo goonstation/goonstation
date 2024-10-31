@@ -2192,7 +2192,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 						if(src.reagents.has_reagent(O.ids[i]))
 							O.completed |= 1 << i-1
 		else
-			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!")
 
 
 	on_reagent_change()

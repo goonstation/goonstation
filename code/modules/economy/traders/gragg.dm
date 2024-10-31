@@ -9,21 +9,28 @@
 	chance_leave = 10
 	chance_arrive = 33
 
-	max_goods_buy = 3
-	max_goods_sell = 3
+	base_goods_buy = list(
+		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/rock,
+			/datum/commodity/trader/gragg/mauxite,
+			/datum/commodity/trader/gragg/bohrum,
+			/datum/commodity/trader/gragg/cobryl,
+			/datum/commodity/trader/gragg/syreline
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/gragg/starstone)
+	)
 
-	base_goods_buy = list(/datum/commodity/trader/gragg/rock,
-	/datum/commodity/trader/gragg/mauxite,
-	/datum/commodity/trader/gragg/bohrum,
-	/datum/commodity/trader/gragg/cobryl,
-	/datum/commodity/trader/gragg/syreline)
-
-	base_goods_sell = list(/datum/commodity/trader/gragg/char,
-	/datum/commodity/trader/gragg/erebite,
-	/datum/commodity/trader/gragg/cerenkite,
-	/datum/commodity/trader/gragg/plasmastone,
-	/datum/commodity/trader/gragg/uqill,
-	/datum/commodity/trader/gragg/artifact)
+	base_goods_sell = list(
+		TRADER_RARITY_COMMON = list(/datum/commodity/trader/gragg/char,
+			/datum/commodity/trader/gragg/erebite,
+			/datum/commodity/trader/gragg/cerenkite,
+			/datum/commodity/trader/gragg/plasmastone,
+			/datum/commodity/trader/gragg/uqill,
+			/datum/commodity/trader/gragg/artifact
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list()
+	)
 
 	dialogue_greet = list("HELLO. WANT BUY TASTY ROCKS. TRADE?",
 	"HUNGRY. WANT ORE FOR EAT. TRADE?",
@@ -51,11 +58,6 @@
 	"HUMAN BANK ACCOUNT NOT HAVE ENOUGH DELICIOUS GOLD.")
 	dialogue_out_of_stock = list("SORRY. NO MORE OF THAT.",
 	"RAN OUT OF THAT.")
-
-	set_up_goods()
-		..()
-		var/datum/commodity/COM = new /datum/commodity/trader/gragg/starstone(src)
-		src.goods_buy += COM
 
 // Gragg is selling these things
 

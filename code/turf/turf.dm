@@ -330,20 +330,20 @@
 
 /turf/space/New()
 	..()
-	if(global.dont_init_space) return
+	if(global.dont_init_space)
+		return
 	switch(icon_state)
-		if ("placeholder")
-			icon_state = "[rand(1,25)]"
+		if ("placeholder", "dplaceholder")
+			icon_state = "[(((x + y) ^ ~(x * y) + z) % 25)+1]" // rand(1,25)
 		if ("aplaceholder")
-			icon_state = "a[rand(1,10)]"
-		if ("dplaceholder")
-			icon_state = "[rand(1,25)]"
+			icon_state = "a[(((x + y) ^ ~(x * y) + z) % 10)+1]" // rand(1,10)
 
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
+
 	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
@@ -352,12 +352,17 @@
 		new/obj/item/device/key/random(src)
 	#endif
 
-	UpdateIcon() // for starlight
+	// // forbidden zone // //
+	update_icon() // HIGHLY ILLEGAL NEVER DO THIS, SPECIAL CASE IGNORE ME (for starlight)
+	// // do not pass go // //
 
 proc/repaint_space(regenerate=TRUE, starlight_alpha)
 	for(var/turf/space/T)
 		if(regenerate)
 			T.space_color = generate_space_color()
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, T.space_color, 10 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_DEBRIS, T.space_color, 10 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_MINING, T.space_color, 10 SECONDS)
 			regenerate = FALSE
 		if(istype(T, /turf/space/fluid))
 			continue
@@ -424,13 +429,13 @@ proc/generate_space_color()
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
+			starlight.color = starlight_color_override ? starlight_color_override : src.color
+			if(!isnull(starlight_alpha))
+				starlight.alpha = starlight_alpha
 
-		starlight.color = starlight_color_override ? starlight_color_override : src.color
-		if(!isnull(starlight_alpha))
-			starlight.alpha = starlight_alpha
-		src.underlays = list(starlight)
+		src.underlays += starlight
 	else
-		src.underlays = null
+		src.underlays = list()
 	#endif
 
 // override for space turfs, since they should never hide anything
