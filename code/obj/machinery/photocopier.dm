@@ -1,5 +1,4 @@
 #define MAX_SHEETS 30
-#define MAX_IDS 6
 #define PHOTOCOPIER_RADIO_RANGE 16
 
 TYPEINFO(/obj/machinery/photocopier)
@@ -17,13 +16,11 @@ TYPEINFO(/obj/machinery/photocopier)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 // 0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 15 // amount of paper currently in the photocopier
-	var/id_amount = 0 // number of blank ids currently in the machine while emagged
 	var/print_amount = 1 // from 1 to MAX_SHEETS, amount of copies the photocopier will copy, copy?
 	var/emagged = FALSE
 
 	var/list/print_info = list() // Data of the item to print
 	var/print_type = "" // The type of item to print
-	var/consume_ids = FALSE // If item to print consumes IDs instead of paper
 
 	var/net_id = ""
 	var/frequency = FREQ_FREE
@@ -74,23 +71,14 @@ TYPEINFO(/obj/machinery/photocopier)
 		else
 			desc_string += "The paper tray is full"
 
-		if (paper_amount <= 0 && emagged && id_amount > 0)
-			desc_string += ", except for"
-		else if (paper_amount > 0 && emagged && id_amount > 0)
-			desc_string += " and also has "
-
-		if (!emagged || id_amount == 0)
-			desc_string += ". "
-		else if(emagged && id_amount == 1)
-			desc_string += " a blank ID card inside. "
-		else if(emagged && id_amount > 1)
-			desc_string += " [src.id_amount] blank ID cards inside. "
+		desc_string += ". "
 		return desc_string
 
 	//handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 	attackby(var/obj/item/w, var/mob/user)
 		if (src.use_state == 2) //photocopier is busy?
 			boutput(user, SPAN_ALERT("/The [src] is busy! Try again later!"))
+			return
 		else if (src.use_state == 1) //is the photocopier open?
 			if(istype(w, /obj/item/paper))
 				var/obj/item/paper/P = w
@@ -110,14 +98,24 @@ TYPEINFO(/obj/machinery/photocopier)
 			else if(istype(w, /obj/item/currency/spacecash))
 				var/obj/item/currency/spacecash/C = w
 				scan_cash(C, user)
-			else if(istype(w, /obj/item/card/id) && emagged)
+			else if(istype(w, /obj/item/card/id))
 				var/obj/item/card/id/I = w
-				scan_id(I, user)
+				scan_id_data(I, user)
+			else if(istype(w, /obj/item/bible))
+				var/obj/item/bible/B = w
+				scan_bible(B, user)
 			else if(istype(w, /obj/item/paper_bin))
 				load_stuff(w, user) // Can load using the bin even if the scanner is open
-
 		else
 			load_stuff(w, user)
+
+		// Doesn't matter if the scanner is open or closed here
+		if(src.use_state != 2)
+			if(istype(w, /obj/item/device/reagentscanner))
+				var/obj/item/device/reagentscanner/R = w
+				if(R.scan_results != null)
+					scan_reagent_scanner(R,user)
+					playsound(src.loc, 'sound/machines/ping.ogg', 5, 1)
 
 	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
@@ -203,7 +201,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.use_state = prev_use_state
 
 		if(user)
-			boutput(user, "A setting for ID cards flickers up on the [src].")
+			boutput(user, "You disable \the [src]'s anti-counterfeiting measures.")
 
 	demag(var/mob/user)
 		if (!src.emagged)
@@ -297,13 +295,8 @@ TYPEINFO(/obj/machinery/photocopier)
 	// --------------- Printing & Loading ----------------
 
 	proc/print_action() // The printing loop
-		if (paper_amount <= 0 && !consume_ids)
+		if (paper_amount <= 0)
 			src.visible_message("No more paper in the tray!")
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
-			effect_fail()
-			return
-		else if (id_amount <= 0 && consume_ids)
-			src.visible_message("No more blank IDs in the tray!")
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
 			effect_fail()
 			return
@@ -313,14 +306,11 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.use_state = 2
 		var/isFail = FALSE
 		for (var/i = 1, i <= src.print_amount, i++)
-			if ((paper_amount <= 0 && !consume_ids) || (id_amount <= 0 && consume_ids))
+			if (paper_amount <= 0)
 				isFail = TRUE
 				break
 			use_power(5)
-			if(consume_ids)
-				id_amount--
-			else
-				paper_amount--
+			paper_amount--
 			src.print_stuff()
 		src.use_state = 0
 		if(isFail)
@@ -395,6 +385,7 @@ TYPEINFO(/obj/machinery/photocopier)
 						break
 
 			if ("id")
+				// unused
 				if(src.print_info["icon_state"] == "gold")
 					effect_printing_long("print_id_gold")
 				else
@@ -464,7 +455,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		W.plist = plist.Copy()
 		return W
 
-	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper or IDs into the copier here
+	proc/load_stuff(var/obj/item/w, var/mob/user) // Load paper into the copier here
 		if (istype(w, /obj/item/paper))
 			if (istype(w, /obj/item/paper/book) || istype(w, /obj/item/paper/newspaper))
 				return;
@@ -494,12 +485,8 @@ TYPEINFO(/obj/machinery/photocopier)
 				P.update()
 				boutput(user, "You load the paper into \the [src].")
 
-		// You need a blank ID to copy from. It's just a gameplay thing in case someone wants to change this.
+		/*
 		else if (istype(w, /obj/item/card/id) && emagged)
-			if (src.id_amount >= MAX_IDS)
-				boutput(user, SPAN_ALERT("You can't fit any more ids into \the [src]."))
-				effect_fail()
-				return
 			var/obj/item/card/id/I = w
 			var/isBlank = TRUE
 			// isBlank = isBlank && I.name == "identification card"
@@ -510,15 +497,7 @@ TYPEINFO(/obj/machinery/photocopier)
 			isBlank = isBlank && I.assignment == null
 			isBlank = isBlank && I.title == null
 			isBlank = isBlank && I.emagged == FALSE
-			isBlank = isBlank && I.money == 0
-			// isBlank = isBlank && I.pin == 0000
-			if(!isBlank)
-				boutput(user, "Only a blank ID can be loaded into \the [src].")
-				return
-			else
-				src.id_amount += 1
-				boutput(user, "You load the blank ID into \the [src].")
-				qdel(w)
+			isBlank = isBlank && I.money == 0 */
 
 	proc/effect_printing(var/print_icon)
 		sleep(0.25 SECONDS)
@@ -542,7 +521,7 @@ TYPEINFO(/obj/machinery/photocopier)
 
 	// --------------- Scanning Items ----------------
 
-	proc/scan_setup(var/obj/item/w, var/mob/user) // Run this before scanning items
+	proc/scan_setup(var/obj/item/w, var/mob/user) // Run this before scanning items using an animation
 		src.reset_all()
 		src.use_state = 2
 		user.drop_item()
@@ -634,7 +613,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		boutput(user, "You put the cash on the scan bed, close the lid, and press start...")
 		effects_scanning(C)
 		if(emagged)
-			src.print_info += min(C.amount, 5) // index 1 is the amount of cash to print per sheet of paper
+			src.print_info += min(C.amount, 10) // index 1 is the amount of cash to print per sheet of paper
 			src.print_type = "cash"
 		else
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 1)
@@ -645,10 +624,52 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.icon_state = "scan_cash"
 		boutput(user, "You lay out the credit-like currency over the area of the scan bed, close the lid, and press start...")
 		effects_scanning(C)
-		src.print_info += min(C.amount, 5000) // index 1 is the amount of fake cash to print per sheet of paper
+		src.print_info += min(C.amount, 10000) // index 1 is the amount of fake cash to print per sheet of paper
 		src.print_type = "cash_fake"
 
+	proc/scan_id_data(var/obj/item/card/id/I, var/mob/user)
+		scan_setup(I, user)
+		if(I.icon_state == "gold")
+			src.icon_state = "scan_id_gold"
+		else
+			src.icon_state = "scan_id"
+		boutput(user, "You put the card on the scan bed, close the lid, and press start...")
+		effects_scanning(I)
+		src.print_info["name"] = "[I.name] Scan"
+		src.print_info["desc"] = "A scan of [I.name]"
+		var/scan_info = "<li><h4>[I.name] Scan</h4></li> \
+			<body><hr> \
+			<li><b>Name:</b> [I.registered]</li> \
+			<li><b>Assignment:</b> [I.assignment]</li> \
+			<li><b>Pronouns:</b> [I.pronouns]</li> \
+			<li><b>Access:</b>"
+
+		var/access_count = 0
+		for(var/i = 1, i <= I.access.len, i++)
+			var/access_desc = get_access_desc(I.access[i])
+			if(access_desc != null)
+				if(access_count != 0)
+					scan_info += " | "
+				else
+					scan_info += "</li>"
+				scan_info += access_desc
+				access_count++
+		if(access_count == 0)
+			scan_info += " None</li>"
+
+		scan_info += "</body>"
+		src.print_info["info"] = scan_info
+		src.print_info["stamps"] = null
+		src.print_info["form_fields"] = list()
+		src.print_info["field_counter"] = 1
+		src.print_info["icon_state"] = "paper_blank"
+		src.print_info["sizex"] = 0
+		src.print_info["sizey"] = 0
+		src.print_info["scrollbar"] = TRUE
+		src.print_info["overlays"] = list()
+		src.print_type = "paper"
 	proc/scan_id(var/obj/item/card/id/I, var/mob/user)
+		// Creates a copy of the ID itself. Unused.
 		scan_setup(I, user)
 		if(I.icon_state == "gold")
 			src.icon_state = "scan_id_gold"
@@ -671,7 +692,6 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["pin"] = I.pin
 		src.print_info["cardfile"] = I.cardfile
 		src.print_type = "id"
-		src.consume_ids = TRUE
 	proc/scan_poster(var/obj/item/poster/titled_photo/W, var/mob/user)
 		scan_setup(W, user)
 		src.icon_state = "papper"
@@ -693,7 +713,40 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["author"] = W.author
 		src.print_info["plist"] = W.plist.Copy()
 		src.print_type = "poster_wanted"
-
+	proc/scan_reagent_scanner(var/obj/item/device/reagentscanner/R, var/mob/user)
+		src.reset_all()
+		boutput(user, "You upload the reagent scanner's previous results to the photocopier.")
+		src.print_info["name"] = "Reagent Scanner Results"
+		src.print_info["desc"] = "List of past results from a reagent scanner."
+		var/scan_data = "<li><h3>Reagent Scanner Results</h3></li><hr>" + R.scan_results
+		src.print_info["info"] = scan_data
+		src.print_info["stamps"] = null
+		src.print_info["form_fields"] = list()
+		src.print_info["field_counter"] = 1
+		src.print_info["icon_state"] = "paper_blank"
+		src.print_info["sizex"] = 0
+		src.print_info["sizey"] = 0
+		src.print_info["scrollbar"] = TRUE
+		src.print_info["overlays"] = list()
+		src.print_type = "paper"
+	proc/scan_bible(var/obj/item/bible/B, var/mob/user)
+		scan_setup(B, user)
+		boutput(user, "You open the Bible, press a passage onto the scan bed, and press start...")
+		src.icon_state = "scan_book"
+		effects_scanning(B)
+		src.print_info["name"] = "Matthew 25:14-30"
+		src.print_info["desc"] = "Photocopy of a Bible passage."
+		// Source: https://www.vatican.va/archive/ENG0839/__PVY.HTM
+		src.print_info["info"] = file2text("strings/books/bible_matthew25_14_30.txt")
+		src.print_info["stamps"] = null
+		src.print_info["form_fields"] = list()
+		src.print_info["field_counter"] = 1
+		src.print_info["icon_state"] = "paper_blank"
+		src.print_info["sizex"] = 0
+		src.print_info["sizey"] = 0
+		src.print_info["scrollbar"] = TRUE
+		src.print_info["overlays"] = list()
+		src.print_type = "paper"
 	proc/scan_network_info() // Used to print data on how to interact with this photocopier via packets
 		src.reset_all()
 		var/network_info = "<li><h3>Photocopier Network Information Sheet</h3></li> \
@@ -737,7 +790,6 @@ TYPEINFO(/obj/machinery/photocopier)
 		// Clear the scanning data, usually before a new scan.
 		src.print_info = list()
 		src.print_type = ""
-		src.consume_ids = FALSE
 
 	// --------------- Packets ----------------
 
