@@ -2536,18 +2536,17 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
+	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
+	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/nt_specialist
-	slot_poc1 = list(/obj/item/device/pda2/ntso)
-	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/clothing/head/helmet/space/ntso,
-							/obj/item/clothing/suit/space/ntso,
-							/obj/item/cloth/handkerchief/nt)
+	slot_poc1 = list(/obj/item/storage/ntsc_pouch)
+	slot_poc2 = list(/obj/item/device/pda2/ntso)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 
 	faction = list(FACTION_NANOTRASEN)
@@ -2780,6 +2779,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 #endif
 	allow_traitors = FALSE
 	cant_spawn_as_rev = TRUE
+	wages = 0 //Who needs cash when theres a battle to win
 	var/team = 0 //1 = NT, 2 = SY
 	var/overlay_icon
 	wiki_link = "https://wiki.ss13.co/Game_Modes#Pod_Wars"
@@ -2835,11 +2835,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/nanotrasen
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/nanotrasen)
-		slot_mask = list(/obj/item/clothing/mask/breath)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
-		items_in_backpack = list(/obj/item/survival_machete, /obj/item/currency/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2881,11 +2881,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_card = /obj/item/card/id/pod_wars/syndicate
 		slot_ears = list(/obj/item/device/radio/headset/pod_wars/syndicate)
-		slot_mask = list(/obj/item/clothing/mask/breath)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat)
 		slot_glov = list(/obj/item/clothing/gloves/swat)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
-		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/currency/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete/syndicate)
 
 		commander
 			name = "Syndicate Commander"

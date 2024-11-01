@@ -11901,7 +11901,7 @@
 	move_lag = 15;
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "NS" = (
