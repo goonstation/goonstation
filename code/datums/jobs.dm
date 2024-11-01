@@ -268,24 +268,29 @@ ABSTRACT_TYPE(/datum/job/command)
 	rounds_needed_to_play = ROUNDS_MIN_CAPTAIN
 
 	derelict
-		//name = "NT-SO Commander"
+		//name = "Nanotrasen Squad Leader"
 		name = null
 		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/armor/captain/centcomm)
+		slot_suit = list(/obj/item/clothing/suit/space/ntso)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
-		slot_head = list(/obj/item/clothing/head/centhat)
-		slot_belt = list(/obj/item/tank/emergency_oxygen/extended)
-		slot_glov = list(/obj/item/clothing/gloves/fingerless)
+		slot_card = /obj/item/card/id/nt_specialist
+		slot_head = list(/obj/item/clothing/head/NTberet/commander)
+		slot_belt = list(/obj/item/storage/belt/security/ntsc)
+		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_poc2 = list(/obj/item/storage)
+		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_mask = list(/obj/item/clothing/mask/gas)
-		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera,/obj/item/gun/energy/egun)
+		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
+		slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+		slot_ears = list(/obj/item/device/radio/headset/command/nt/commander)
+		items_in_backpack = list(/obj/item/crowbar,
+								/obj/item/storage/firstaid/regular)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
 			if (!M)
 				return
-			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
+			M.show_text("<b>Something has gone terribly wrong here. Stay with your squad and ensure the safety of any survivors. Interrogate anyone possibly involved in the event. </b>", "blue")
 
 /datum/job/command/head_of_personnel
 	name = "Head of Personnel"
@@ -300,7 +305,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = TRUE
 	announce_on_join = TRUE
 
-
 #ifdef SUBMARINE_MAP
 	slot_suit = list(/obj/item/clothing/suit/armor/hopcoat)
 #endif
@@ -311,6 +315,31 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
 	slot_poc1 = list(/obj/item/pocketwatch)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
+
+	derelict //no need to lock a special spawn behind a HOS whitelist
+		name = null
+		limit = 0
+		receives_implants = list(/obj/item/implant/health)
+		slot_back = list(/obj/item/storage/backpack/NT)
+		slot_belt = list(/obj/item/storage/belt/security/ntso)
+		slot_jump = list(/obj/item/clothing/under/misc/turds)
+		slot_suit = list(/obj/item/clothing/suit/space/ntso)
+		slot_head = list(/obj/item/clothing/head/NTberet)
+		slot_foot = list(/obj/item/clothing/shoes/swat)
+		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
+		slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+		slot_ears = list(/obj/item/device/radio/headset/command/nt)
+		slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+		slot_card = /obj/item/card/id/nt_specialist
+		slot_poc1 = list(/obj/item/device/pda2/ntso)
+		slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
+		items_in_backpack = list(/obj/item/storage/firstaid/regular, /obj/item/clothing/head/NTberet)
+
+		special_setup(var/mob/living/carbon/human/M)
+			..()
+			if (!M)
+				return
+			M.show_text("<b>Something has gone terribly wrong here. Stay with your squad and ensure the safety of any survivors. Interrogate anyone possibly involved in the event. </b>", "blue")
 
 /datum/job/command/head_of_security
 	name = "Head of Security"
@@ -348,25 +377,6 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_ears = list(/obj/item/device/radio/headset/command/hos)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 
-	derelict
-		name = null//"NT-SO Special Operative"
-		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/armor/NT)
-		slot_jump = list(/obj/item/clothing/under/misc/turds)
-		slot_head = list(/obj/item/clothing/head/NTberet)
-		slot_belt = list(/obj/item/tank/emergency_oxygen/extended)
-		slot_mask = list(/obj/item/clothing/mask/gas)
-		slot_glov = list(/obj/item/clothing/gloves/latex)
-		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/plasma_gun)
-
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M)
-				return
-			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
-
 /datum/job/command/chief_engineer
 	name = "Chief Engineer"
 	limit = 1
@@ -393,19 +403,29 @@ ABSTRACT_TYPE(/datum/job/command)
 	derelict
 		name = null//"Salvage Chief"
 		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/space/industrial)
+		slot_back = list(/obj/item/storage/backpack/NT)
+		slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
+		slot_jump = list(/obj/item/clothing/under/rank/engineer)
+		slot_suit = list(/obj/item/clothing/suit/space/industrial/nt_specialist)
+		slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 		slot_foot = list(/obj/item/clothing/shoes/magnetic)
-		slot_head = list(/obj/item/clothing/head/helmet/space/industrial)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
-		slot_mask = list(/obj/item/clothing/mask/gas)
-		slot_eyes = list(/obj/item/clothing/glasses/thermal) // mesons look fuckin weird in the dark
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/rcd,/obj/item/rcd_ammo,/obj/item/rcd_ammo,/obj/item/device/light/flashlight,/obj/item/cell/cerenkite)
+		slot_glov = list(/obj/item/clothing/gloves/yellow)
+		slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
+		slot_ears = list(/obj/item/device/radio/headset/command/nt)
+		slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+		slot_card = /obj/item/card/id/nt_specialist
+		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
+		items_in_backpack = list(/obj/item/storage/firstaid/regular,
+							/obj/item/device/flash,
+							/obj/item/sheet/steel/fullstack,
+							/obj/item/sheet/glass/reinforced/fullstack)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
 			if (!M)
 				return
-			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
+			M.show_text("<b>Something has gone terribly wrong here. Stay with your squad and ensure the safety of any survivors. Interrogate anyone possibly involved in the event. </b>", "blue")
 
 /datum/job/command/research_director
 	name = "Research Director"
@@ -456,6 +476,28 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical_director)
 	items_in_backpack = list(/obj/item/device/flash)
+
+	derelict
+		name = "Nanotrasen Emergency Response Medic"
+		limit = 0
+		slot_back = list(/obj/item/storage/backpack/NT)
+		slot_belt = list(/obj/item/storage/belt/medical/prepared)
+		slot_jump = list(/obj/item/clothing/under/rank/medical)
+		slot_suit = list(/obj/item/clothing/suit/hazard/paramedic/armored)
+		slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
+		slot_foot = list(/obj/item/clothing/shoes/brown)
+		slot_glov = list(/obj/item/clothing/gloves/latex)
+		slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
+		slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+		slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+		slot_card = /obj/item/card/id/nt_specialist
+		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+		slot_poc2 = list(/obj/item/device/pda2/nt_medical)
+		items_in_backpack = list(/obj/item/storage/firstaid/regular,
+						/obj/item/device/flash,
+						/obj/item/reagent_containers/glass/bottle/omnizine,
+						/obj/item/reagent_containers/glass/bottle/ether)
+		items_in_belt = list (/obj/item/reagent_containers/syringe)
 
 #ifdef MAP_OVERRIDE_MANTA
 /datum/job/command/comm_officer
@@ -542,25 +584,6 @@ ABSTRACT_TYPE(/datum/job/security)
 		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
 		rounds_needed_to_play = ROUNDS_MIN_SECASS
 		wiki_link = "https://wiki.ss13.co/Security_Assistant"
-
-	derelict
-		//name = "NT-SO Officer"
-		name = null
-		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/armor/NT_alt)
-		slot_jump = list(/obj/item/clothing/under/misc/turds)
-		slot_head = list(/obj/item/clothing/head/helmet/swat)
-		slot_glov = list(/obj/item/clothing/gloves/fingerless)
-		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_belt = list(/obj/item/gun/energy/laser_gun)
-		slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/baton,/obj/item/breaching_charge,/obj/item/breaching_charge)
-
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M)
-				return
-			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/security/detective
 	name = "Detective"
@@ -686,23 +709,6 @@ ABSTRACT_TYPE(/datum/job/research)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 	wiki_link = "https://wiki.ss13.co/Medical_Doctor"
 
-	derelict
-		//name = "Salvage Medic"
-		name = null
-		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/armor/vest)
-		slot_head = list(/obj/item/clothing/head/helmet/swat)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
-		slot_mask = list(/obj/item/clothing/mask/breath)
-		slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
-		slot_glov = list(/obj/item/clothing/gloves/latex)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/storage/firstaid/regular,/obj/item/storage/firstaid/regular)
-
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M) return
-			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
-
 /datum/job/research/medical_assistant
 	name = "Medical Trainee"
 	limit = 2
@@ -795,21 +801,6 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/old_grenade/oxygen)
 #endif
 	wiki_link = "https://wiki.ss13.co/Engineer"
-
-	derelict
-		name = null//"Salvage Engineer"
-		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/space/engineer)
-		slot_head = list(/obj/item/clothing/head/helmet/welding)
-		slot_belt = list(/obj/item/tank/emergency_oxygen)
-		slot_mask = list(/obj/item/clothing/mask/breath)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/obj/item/gun/kinetic/flaregun,/obj/item/ammo/bullets/flare,/obj/item/cell/cerenkite)
-
-		special_setup(var/mob/living/carbon/human/M)
-			..()
-			if (!M)
-				return
-			M.show_text("<b>Something has gone terribly wrong here! Search for survivors and escape together.</b>", "blue")
 
 /datum/job/engineering/technical_assistant
 	name = "Technical Trainee"

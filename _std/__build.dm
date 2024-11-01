@@ -34,11 +34,11 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
-//#define SKIP_FEA_SETUP // Skip setting up atmospheric system
-//#define SKIP_Z5_SETUP // Skip generation of mining level
-//#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
-//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
-//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+#define SKIP_FEA_SETUP // Skip setting up atmospheric system
+#define SKIP_Z5_SETUP // Skip generation of mining level
+#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
+#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
@@ -138,7 +138,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
-//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
+#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
