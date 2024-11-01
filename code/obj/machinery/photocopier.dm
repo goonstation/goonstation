@@ -101,9 +101,6 @@ TYPEINFO(/obj/machinery/photocopier)
 			else if(istype(w, /obj/item/card/id))
 				var/obj/item/card/id/I = w
 				scan_id_data(I, user)
-			else if(istype(w, /obj/item/bible))
-				var/obj/item/bible/B = w
-				scan_bible(B, user)
 			else if(istype(w, /obj/item/paper_bin))
 				load_stuff(w, user) // Can load using the bin even if the scanner is open
 		else
@@ -720,24 +717,6 @@ TYPEINFO(/obj/machinery/photocopier)
 		src.print_info["desc"] = "List of past results from a reagent scanner."
 		var/scan_data = "<li><h3>Reagent Scanner Results</h3></li><hr>" + R.scan_results
 		src.print_info["info"] = scan_data
-		src.print_info["stamps"] = null
-		src.print_info["form_fields"] = list()
-		src.print_info["field_counter"] = 1
-		src.print_info["icon_state"] = "paper_blank"
-		src.print_info["sizex"] = 0
-		src.print_info["sizey"] = 0
-		src.print_info["scrollbar"] = TRUE
-		src.print_info["overlays"] = list()
-		src.print_type = "paper"
-	proc/scan_bible(var/obj/item/bible/B, var/mob/user)
-		scan_setup(B, user)
-		boutput(user, "You open the Bible, press a passage onto the scan bed, and press start...")
-		src.icon_state = "scan_book"
-		effects_scanning(B)
-		src.print_info["name"] = "Matthew 25:14-30"
-		src.print_info["desc"] = "Photocopy of a Bible passage."
-		// Source: https://www.vatican.va/archive/ENG0839/__PVY.HTM
-		src.print_info["info"] = file2text("strings/books/bible_matthew25_14_30.txt")
 		src.print_info["stamps"] = null
 		src.print_info["form_fields"] = list()
 		src.print_info["field_counter"] = 1
