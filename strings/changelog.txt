@@ -1,4 +1,12 @@
 
+(t)fri nov 01 24
+(u)FlameArrow57
+(p)21162
+(e)🆕🔬|C-Feature, A-Science
+(*)Added a new artifact stimulus - Language. See minor changes for details
+(+)Language activated artifacts are activated by saying a 5 letter word with vowels in correct places
+(+)Speaking near one of these artifacts will give a hint from the artifact
+(+)Using too many vowels will give a Dull chime. A vowel in the right place will give a High chime. A vowel in the wrong position will give a Low chime
 (t)tue oct 29 24
 (u)tarmunora
 (+)Trickster wraith possession no longer automatically uncuffs target, instead, the possession action prevents the target from self-cuffing before the takeover
