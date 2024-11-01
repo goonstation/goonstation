@@ -9,6 +9,7 @@
 	name = "artifact talisman"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 	associated_datum = /datum/artifact/talisman
+	w_class = W_CLASS_SMALL
 	var/associated_effect
 	// swiftness vars
 	var/swiftness_mod = 0
