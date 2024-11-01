@@ -647,6 +647,7 @@
 #include "code\modules\admin\buildmodes\animate.dm"
 #include "code\modules\admin\buildmodes\appearance.dm"
 #include "code\modules\admin\buildmodes\arcflash.dm"
+#include "code\modules\admin\buildmodes\area_edit.dm"
 #include "code\modules\admin\buildmodes\clipboard.dm"
 #include "code\modules\admin\buildmodes\clipboard_wide.dm"
 #include "code\modules\admin\buildmodes\construction.dm"

@@ -1,4 +1,72 @@
 
+(t)fri nov 01 24
+(u)FlameArrow57
+(p)21162
+(e)🆕🔬|C-Feature, A-Science
+(*)Added a new artifact stimulus - Language. See minor changes for details
+(+)Language activated artifacts are activated by saying a 5 letter word with vowels in correct places
+(+)Speaking near one of these artifacts will give a hint from the artifact
+(+)Using too many vowels will give a Dull chime. A vowel in the right place will give a High chime. A vowel in the wrong position will give a Low chime
+(t)tue oct 29 24
+(u)tarmunora
+(+)Trickster wraith possession no longer automatically uncuffs target, instead, the possession action prevents the target from self-cuffing before the takeover
+(t)mon oct 28 24
+(u)LeahTheTech
+(+)Boom boots now occasionally cause explosions around them when walking.
+(u)Glamurio (Ryou)
+(p)20763
+(e)🆕🎨💪|C-Feature, C-Sprites, A-Traits
+(*)Hygiene makes a comeback with the new "Stinky" trait.
+(u)Facsimile
+(p)21186
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Fixed Player Piano note-checking bug.
+(u)tarmunora
+(p)20547
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Agent card no longer grants access to listening post, traitors and sleeper agents can now use the handscanner to permanently unlock the listening post doors.
+(t)sun oct 27 24
+(u)JORJ949
+(p)20941
+(e)🆕🤖|C-Feature, A-Silicons
+(*)The Research Director now has a Manudrive containing the blueprints for most on-station laws.
+(u)Glamurio & ZeWaka
+(p)21136
+(e)💅⚙|C-QoL, A-Internal
+(+)Traders now stock certain items more frequently than before, such as methane.
+(u)Facsimil
+(p)21051
+(e)🪲🆕💅🔄📦|C-Bug, C-Feature, C-QoL, C-Rework, A-Game-Objects
+(*)For Player Pianos: added note delays and single-instrument concurrent notes. Details can be found in the Player Piano book.
+(u)LeahTheTech
+(p)21178
+(e)|
+(+)Ovens now display the required time to cook their recipe.
+(t)sat oct 26 24
+(u)LeahTheTech
+(p)20953
+(e)🪲⚖|C-Bug, C-Balance
+(*)Getting staggered by a melee attack now makes you unable to sprint for a short time.
+(u)FlameArrow57
+(p)21110
+(e)🆕⚖💅🔨|C-Feature, C-Balance, C-QoL, A-Player-Actions
+(*)You can now hold Space and Left Click anything on a tile to automatically pick up the highest weight item
+(t)fri oct 25 24
+(u)LeahTheTech
+(*)Thermite should now be a bit more consistent, only requires 10u to activate, has a much more visible effect on turfs, can be cleaned up, and leaves a fire behind when activated.
+(*)The PTL can now break open geodes and will melt through asteroid rock a lot faster.
+(u)Glamurio (Ryou)
+(p)21153
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Sterile masks now render you immune to breathing in miasma.
+(u)Retrino
+(p)21129
+(e)🗺|A-Mapping
+(*)Oshan now has a medical booth.
+(u)Glamurio (Ryou)
+(p)21150
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)Wooden barricades no longer always stop kinetic bullets, and can also be shot down.
 (t)wed oct 23 24
 (u)Emily
 (e)⚖|C-Balance

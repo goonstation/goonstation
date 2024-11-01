@@ -13034,7 +13034,7 @@
 /area/station/crew_quarters/jazz)
 "brM" = (
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=Medical Hallway";
+	codes_txt = "patrol;next_patrol=Owlery";
 	location = "Bar Hallway"
 	},
 /obj/disposalpipe/segment{
@@ -35257,6 +35257,16 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/wreckage)
+"nyO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=Medical Hallway";
+	location = "Owlery"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "nzd" = (
 /turf/simulated/bar,
 /area/station/crew_quarters/cafeteria)
@@ -41744,7 +41754,7 @@
 /area/station/maintenance/west)
 "rmH" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -45853,6 +45863,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -72866,7 +72877,7 @@ bdI
 bcE
 bcE
 bcE
-bcE
+nyO
 bcE
 bcE
 bcE
