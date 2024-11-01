@@ -1,4 +1,4 @@
-import { Button, LabeledList } from 'tgui-core/components';
+import { Button, Flex, Icon, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -20,96 +20,105 @@ export const AlertComputer = () => {
   const { data } = useBackend<AlertComputerData>();
   const { alerts } = data;
   return (
-    <Window title="Current Engineering Alerts" width={450} height={420}>
+    <Window title="Current Engineering Alerts" width={600} height={420}>
       <Window.Content scrollable>
-        <LabeledList>
-          {Object.keys(alerts).length === 0 && (
-            <LabeledList.Item>No alerts detected.</LabeledList.Item>
-          )}
-          {Object.keys(alerts).length > 0 &&
-            Object.values(alerts).map((value, index) => {
-              return (
-                <LabeledList.Item key={index} label={value?.zone}>
-                  {value && <AlertButtonRow alert={value} />}
-                </LabeledList.Item>
-              );
-            })}
-        </LabeledList>
+        <Table>
+          <Table.Row header className="candystripe">
+            <Table.Cell header width="200px">
+              Area
+            </Table.Cell>
+            <Table.Cell header collapsing width="100px">
+              <Icon name="wind" mr="5px" />
+              Air
+            </Table.Cell>
+            <Table.Cell header collapsing width="100px">
+              <Icon name="fire" mr="5px" />
+              Fire
+            </Table.Cell>
+            <Table.Cell header collapsing width="100px">
+              <Icon name="bolt" mr="5px" />
+              Power
+            </Table.Cell>
+            <Table.Cell header collapsing width="100px">
+              <Icon name="walking" mr="5px" />
+              Motion
+            </Table.Cell>
+          </Table.Row>
+          {Object.values(alerts).map((value, index) => {
+            return <AlertRow key={index} alert={value} />;
+          })}
+        </Table>
       </Window.Content>
     </Window>
   );
 };
 
-interface AlertButtonRowProps {
+interface AlertRowProps {
   alert: AlertData;
 }
 
-const AlertButtonRow = (props: AlertButtonRowProps) => {
+const AlertRow = (props: AlertRowProps) => {
   const { alert } = props;
   return (
-    <>
-      <AlertButton
+    <Table.Row className="candystripe">
+      <Table.Cell>{alert.zone}</Table.Cell>
+      <AlertCell
         area_ckey={alert.area_ckey}
         kind="atmos"
         severity={alert.atmos}
       />
-      <AlertButton
+      <AlertCell
         area_ckey={alert.area_ckey}
         kind="fire"
         severity={alert.fire}
       />
-      <AlertButton
+      <AlertCell
         area_ckey={alert.area_ckey}
         kind="power"
         severity={alert.power}
       />
-    </>
+      <AlertCell
+        area_ckey={alert.area_ckey}
+        kind="motion"
+        severity={alert.motion}
+      />
+    </Table.Row>
   );
 };
 
-interface AlertButtonProps {
+interface AlertCellProps {
   area_ckey: string;
   kind: string;
   severity: number | null;
 }
 
-const AlertButton = (props: AlertButtonProps) => {
+const AlertCell = (props: AlertCellProps) => {
   const { act } = useBackend();
   const { area_ckey, kind, severity } = props;
   return (
-    <Button
-      width="78px"
-      icon={AlertButtonIcon(kind)}
-      backgroundColor={AlertButtonColor(severity)}
-      onClick={() => act(`clear_${kind}`, { area_ckey: area_ckey })}
-      tooltip={AlertButtonTooltip(kind)}
-    >
-      {AlertButtonText(severity)}
-    </Button>
+    <Table.Cell textColor={AlertButtonColor(severity)}>
+      <Flex>
+        <Flex.Item>
+          <Button
+            icon="bell-slash"
+            disabled={severity === 0}
+            onClick={() => act(`clear_${kind}`, { area_ckey: area_ckey })}
+            tooltip="Reset alarm"
+            mr="5px"
+          />
+        </Flex.Item>
+        <Flex.Item>{AlertButtonText(severity)}</Flex.Item>
+      </Flex>
+    </Table.Cell>
   );
-};
-
-const AlertButtonIcon = (kind: string): string => {
-  switch (kind) {
-    case 'atmos':
-      return 'wind';
-    case 'fire':
-      return 'fire';
-    case 'power':
-      return 'bolt';
-    case 'motion':
-      return 'walking';
-    default:
-      return '';
-  }
 };
 
 const AlertButtonColor = (severity: number | null): string => {
   switch (severity) {
     case 1:
-      return 'bad';
-    case 2:
       return 'average';
+    case 2:
+      return 'bad';
     default:
       return 'good';
   }
@@ -118,25 +127,10 @@ const AlertButtonColor = (severity: number | null): string => {
 const AlertButtonText = (severity: number | null): string => {
   switch (severity) {
     case 1:
-      return 'Priority';
-    case 2:
       return 'Minor';
+    case 2:
+      return 'Priority';
     default:
       return 'Okay';
-  }
-};
-
-const AlertButtonTooltip = (kind: string): string => {
-  switch (kind) {
-    case 'atmos':
-      return 'Atmospheric';
-    case 'fire':
-      return 'Fire';
-    case 'power':
-      return 'Power';
-    case 'motion':
-      return 'Motion';
-    default:
-      return '';
   }
 };

@@ -81,6 +81,9 @@
 		if (alert.zone == zone)
 			alert.set_severity(kind, severity)
 			src.update_alert_icon()
+			if(severity == ALERT_SEVERITY_RESET && alert.highest_severity() == ALERT_SEVERITY_RESET)
+				src.alerts -= alert
+				qdel(alert)
 			return
 
 	// no matching zone in the list, so add it
@@ -97,19 +100,18 @@
 	var/removing_zone = params["area_ckey"]
 	for (var/datum/zone_alert/alert in src.alerts)
 		if(ckey(alert.zone) == removing_zone)
+			var/kind = ""
 			switch(action)
 				if("clear_atmos")
-					alert.set_severity(ALERT_KIND_ATMOS, ALERT_SEVERITY_RESET)
-					break
+					kind="atmos"
 				if("clear_fire")
-					alert.set_severity(ALERT_KIND_FIRE, ALERT_SEVERITY_RESET)
-					break
+					kind="fire"
 				if("clear_power")
-					alert.set_severity(ALERT_KIND_POWER, ALERT_SEVERITY_RESET)
-					break
+					kind="power"
 				if("clear_motion")
-					alert.set_severity(ALERT_KIND_MOTION, ALERT_SEVERITY_RESET)
-					break
+					kind="motion"
+			src.update_alert(alert.zone, kind, ALERT_SEVERITY_RESET)
+			break
 	src.update_alert_icon()
 
 /obj/machinery/computer/general_alert/ui_interact(mob/user, datum/tgui/ui)
