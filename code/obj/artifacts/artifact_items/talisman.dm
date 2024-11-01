@@ -7,6 +7,7 @@
 
 /obj/item/artifact/talisman
 	name = "artifact talisman"
+	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 	associated_datum = /datum/artifact/talisman
 	var/associated_effect
 	// swiftness vars
@@ -133,10 +134,11 @@
 /datum/artifact/talisman
 	associated_object = /obj/item/artifact/talisman
 	type_name = "Talisman"
-	type_size = ARTIFACT_SIZE_MEDIUM
+	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 275
 	validtypes = list("wizard", "precursor")
 	//react_xray = list(8,80,60,11,"COMPLEX")
+	examine_hint = "It seems magical somehow."
 
 	effect_activate(obj/O)
 		. = ..()
