@@ -223,6 +223,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.reagents.add_reagent("ants", src.ant_amnt)
 						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
+	process_sliced_products(obj/item/reagent_containers/food/snacks/slice, amount_to_transfer)
+		. = ..()
+		if (istype(slice))
+			slice.food_effects |= src.food_effects
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
@@ -2188,7 +2192,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 						if(src.reagents.has_reagent(O.ids[i]))
 							O.completed |= 1 << i-1
 		else
-			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!")
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 	name = "golden cocktail shaker"

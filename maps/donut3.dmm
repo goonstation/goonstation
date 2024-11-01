@@ -7068,7 +7068,7 @@
 "cad" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/syndie_shuttle,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -33120,7 +33120,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/access/syndie_shuttle,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -34780,7 +34780,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kxT" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SE{
 	id = "disposals";
 	move_lag = 30;

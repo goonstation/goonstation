@@ -20002,7 +20002,7 @@
 	id = "garbage";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "gzD" = (
@@ -29186,6 +29186,7 @@
 	id = "ranch_flusher";
 	name = "Kitchen Chute"
 	},
+/obj/disposalpipe/trunk/produce,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},

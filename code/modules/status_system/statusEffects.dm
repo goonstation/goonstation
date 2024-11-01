@@ -941,9 +941,13 @@
 
 		onAdd(optional=null)
 			.=..()
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
 			if (ishuman(owner))
 				var/mob/living/carbon/human/H = owner
 				H.sustained_moves = 0
+		onRemove()
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			. = ..()
 
 	blocking
 		id = "blocking"
@@ -1631,7 +1635,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
+		if (prob(5) && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
@@ -2225,6 +2229,7 @@
 		. = ..()
 		if(ishuman(owner))
 			H = owner
+			H.add_stam_mod_max("stam_filthy", -5)
 
 	onUpdate(timePassed)
 		. = ..()
@@ -2235,6 +2240,7 @@
 		. = ..()
 		if (H.sims?.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_FILTHY)
 			H.setStatus("rancid", null)
+			H.remove_stam_mod_max("stam_filthy")
 
 /datum/statusEffect/rancid
 	id = "rancid"
@@ -2248,6 +2254,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.AddEffect("sims_stinky")
+			M.add_stam_mod_max("stam_rancid", -35)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 	onRemove()
@@ -2255,6 +2262,7 @@
 		if(ismob(owner))
 			var/mob/M = owner
 			M.bioHolder?.RemoveEffect("sims_stinky")
+			M.remove_stam_mod_max("stam_rancid")
 		OTHER_STOP_TRACKING_CAT(owner, TR_CAT_RANCID_STUFF)
 
 /datum/statusEffect/fragrant
