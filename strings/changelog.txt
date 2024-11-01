@@ -1,5 +1,9 @@
 
 (t)fri nov 01 24
+(u)Facsimil
+(p)21098
+(e)🔊📦|C-Sound, A-Game-Objects
+(*)Replaced the Electric Guitar's sound files.
 (u)FlameArrow57
 (p)21162
 (e)🆕🔬|C-Feature, A-Science
