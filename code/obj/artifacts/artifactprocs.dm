@@ -162,6 +162,9 @@
 	else
 		A.show_fx(src)
 	A.effect_activate(src)
+	for (var/mob/living/L in range(5, src))
+		if (ishuman(L) || isrobot(L))
+			L.mind.artifacts_activated++
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())

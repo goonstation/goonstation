@@ -59,6 +59,8 @@ datum/mind
 
 	var/show_respawn_prompts = TRUE
 
+	var/artifacts_activated = 0
+
 	New(mob/M)
 		..()
 		if (M)
