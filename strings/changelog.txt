@@ -1,4 +1,9 @@
 
+(t)sat nov 02 24
+(u)NightmarechaMillian
+(p)21217
+(e)🎨💅|C-Sprites, C-QoL
+(+)Emergency suits in boxes now start folded so they can actually fit back into the box
 (t)fri nov 01 24
 (u)Facsimil
 (p)21098
