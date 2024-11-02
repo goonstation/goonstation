@@ -46,6 +46,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	var/category
 	/// Bitflags for what uplinks can buy this item (see `_std/defines/uplink.dm` for flags)
 	var/can_buy
+	/// The maximum amount a given uplink can buy this item
+	var/max_buy = INFINITY
 
 	/**
 	 * Runs on the purchase of the buylist datum
@@ -982,7 +984,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/cloneModule/mindhack_module
 	cost = 6
 	vr_allowed = FALSE
-	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
+	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it. Disclaimer: the appearance of the altered cloning pod may cause alarm and probing questions from those who are not yet loyal."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
 /datum/syndicate_buylist/traitor/deluxe_mindhack_module
@@ -1058,6 +1060,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Rancher")
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR
+	max_buy = 3
 
 /datum/syndicate_buylist/traitor/fishing_rod
 	name = "Barbed Fishing Rod"

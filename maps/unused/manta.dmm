@@ -26999,7 +26999,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bxX" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/EW{
 	id = "disposals";
 	move_lag = 30;

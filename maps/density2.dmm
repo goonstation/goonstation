@@ -98,7 +98,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/aisat)
 "aI" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -3093,7 +3093,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "tl" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -4168,6 +4168,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/simulated/floor/shuttle{
@@ -5048,7 +5049,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "GH" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1

@@ -291,3 +291,6 @@ var/global/datum/phrase_log/phrase_log = new
 				return
 		return null
 
+	proc/remove_phrase(category, toRemove)
+		var/list/cat = phrases[category]
+		cat.RemoveAll(toRemove)
