@@ -2,6 +2,7 @@
 	name = "Information Map"
 	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "info_map"
+	anchored = ANCHORED
 	var/atom/movable/minimap_ui_handler/minimap_ui
 	var/obj/minimap/info/infomap
 
