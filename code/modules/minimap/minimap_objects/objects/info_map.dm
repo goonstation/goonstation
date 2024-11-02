@@ -1,24 +1,41 @@
-/obj/info_map
+TYPEINFO(/obj/machinery/info_map)
+	mats = list("metal" = 2,
+				"conductive" = 5,
+				"crystal" = 4)
+
+/obj/machinery/info_map
 	name = "Information Map"
-	icon = 'icons/obj/decals/posters.dmi'
-	icon_state = "info_map"
+	icon = 'icons/obj/status_display.dmi'
+	icon_state = "info_off"
 	anchored = ANCHORED
+	density = 0
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+	power_usage = 5 WATTS
 	var/atom/movable/minimap_ui_handler/minimap_ui
 	var/obj/minimap/info/infomap
 
-/obj/info_map/New()
+/obj/machinery/info_map/New()
 	. = ..()
 	src.infomap = new()
 	src.infomap.initialise_minimap()
 	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
 
-/obj/info_map/attack_hand(mob/user)
+/obj/machinery/info_map/attack_hand(mob/user)
 	. = ..()
+	if(.)
+		return
 	if(!src.minimap_ui)
 		src.minimap_ui = new(src, minimap=src.infomap, tgui_title="Information Map")
 	src.minimap_ui.ui_interact(user)
 
-/obj/info_map/disposing()
+/obj/machinery/info_map/power_change()
+	. = ..()
+	if (src.powered())
+		src.icon_state = "info_on"
+	else
+		src.icon_state = "info_off"
+
+/obj/machinery/info_map/disposing()
 	. = ..()
 	qdel(src.minimap_ui)
 	src.minimap_ui = null
