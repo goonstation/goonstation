@@ -1,7 +1,7 @@
 /obj/info_map
 	name = "Information Map"
 	icon = 'icons/obj/decals/posters.dmi'
-	icon_state = "pw_map"
+	icon_state = "info_map"
 	var/atom/movable/minimap_ui_handler/minimap_ui
 	var/obj/minimap/info/infomap
 
