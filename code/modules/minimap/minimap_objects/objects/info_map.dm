@@ -13,9 +13,16 @@
 
 /obj/info_map/attack_hand(mob/user)
 	. = ..()
-	if(!minimap_ui)
-		minimap_ui = new(src, minimap=src.infomap, tgui_title="Information Map")
-	minimap_ui.ui_interact(user)
+	if(!src.minimap_ui)
+		src.minimap_ui = new(src, minimap=src.infomap, tgui_title="Information Map")
+	src.minimap_ui.ui_interact(user)
+
+/obj/info_map/disposing()
+	. = ..()
+	qdel(src.minimap_ui)
+	src.minimap_ui = null
+	qdel(src.infomap)
+	src.infomap = null
 
 /obj/minimap/info
 	name = "Information Map"
