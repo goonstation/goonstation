@@ -163,8 +163,15 @@
 		A.show_fx(src)
 	A.effect_activate(src)
 	for (var/mob/living/L in range(5, src))
-		if (ishuman(L) || isrobot(L))
-			L.mind.artifacts_activated++
+		for(var/datum/objective/objective in L.mind?.objectives)
+			if (istype(objective, /datum/objective/crew/scientist/artifact))
+				var/datum/objective/crew/scientist/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
+			if (istype(objective, /datum/objective/crew/researchdirector/artifact))
+				var/datum/objective/crew/researchdirector/artifact/art_obj = objective
+				art_obj.artifacts_activated++
+				break
 
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())

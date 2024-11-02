@@ -676,8 +676,9 @@ ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/artifact
 	explanation_text = "Research and activate 10 artifacts by the end of the shift."
 	medal_name = "Licensed Archaeologist"
+	var/artifacts_activated = 0
 	check_completion()
-		if (src.owner?.artifacts_activated >= 10)
+		if (src.artifacts_activated >= 10)
 			return TRUE
 
 /datum/objective/crew/researchdirector/onfire
@@ -728,8 +729,9 @@ ABSTRACT_TYPE(/datum/objective/crew/scientist)
 /datum/objective/crew/scientist/artifact
 	explanation_text = "Research and activate 10 artifacts by the end of the shift."
 	medal_name = "Licensed Archaeologist"
+	var/artifacts_activated = 0
 	check_completion()
-		if (src.owner?.artifacts_activated >= 10)
+		if (src.artifacts_activated >= 10)
 			return TRUE
 
 ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
