@@ -42,7 +42,7 @@
 			if (SPACEFARING)
 				msg = "[src] feels ice cold."
 			if (ELEMENTS)
-				msg = "[src] feels warm and cold in different spots. [prob(99) ? null : "Sort of like that honk-pocket you once had..."]"
+				msg = "[src] feels warm and cold in different spots.[prob(99) ? null : " Sort of like that honk-pocket you once had..."]"
 			if (STRENGTH)
 				msg = "Holding [src] makes you feel strong."
 			if (PROTECTION)
@@ -78,6 +78,7 @@
 	proc/add_effect_to_user(mob/user)
 		switch(src.associated_effect)
 			if (SWIFTNESS)
+				APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_SWIFTNESS, src, src.swiftness_mod)
 				APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/artifact_talisman_swiftness, src)
 			if (FORTUNE)
 				user.changeStatus("art_talisman_fortune", null)
@@ -107,6 +108,7 @@
 
 		switch(src.associated_effect)
 			if (SWIFTNESS)
+				REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_TALISMAN_SWIFTNESS, src)
 				REMOVE_MOVEMENT_MODIFIER(src.active_user, /datum/movement_modifier/artifact_talisman_swiftness, src)
 			if (FORTUNE)
 				src.active_user.delStatus("art_talisman_fortune")

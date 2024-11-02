@@ -94,7 +94,7 @@
 	ask_proc = 1
 
 	modifiers(mob/user, move_target, running)
-		return list(0, 0.9)
+		return list(0, 1 - GET_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_SWIFTNESS))
 
 // robot legs for humans
 /datum/movement_modifier/robotleg_right

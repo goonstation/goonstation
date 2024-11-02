@@ -2924,7 +2924,7 @@
 		if (prob(25)) // mostly so there's no spam of the same message for 30+ minutes
 			var/msg = pick(list("You feel slightly heavier...", "Is that the smell of money...?", "You feel like you won big.", \
 				"Luck is on your side... wait, what...?"))
-			boutput(src, SPAN_NOTICE(msg))
+			boutput(H, SPAN_NOTICE(msg))
 
 /datum/statusEffect/talisman_held
 	id = "art_talisman_held"
