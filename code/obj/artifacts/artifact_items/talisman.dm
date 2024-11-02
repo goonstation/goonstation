@@ -125,14 +125,13 @@
 				if (src.tox_prot)
 					REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_TALISMAN_TOX_REDUCTION, src)
 
-		src.active_user.delStatus("art_talisman_held")
 		src.active_user = null
 
 	proc/select_effect()
 		src.associated_effect = pick(list(SWIFTNESS, FORTUNE, SPACEFARING, ELEMENTS, STRENGTH, PROTECTION))
 		switch(src.associated_effect)
 			if (SWIFTNESS)
-				src.swiftness_mod = rand(1, 5) / 100
+				src.swiftness_mod = rand(5, 15) / 100
 			if (FORTUNE)
 				src.money_amt = rand(100, 500)
 			if (SPACEFARING)
@@ -153,6 +152,9 @@
 						if (3)
 							src.tox_prot = rand(1, 10)
 				else
+					src.brute_prot = rand(1, 6)
+					src.burn_prot = rand(1, 6)
+					src.tox_prot = rand(1, 6)
 
 	proc/get_holder()
 		var/atom/A = src.loc
