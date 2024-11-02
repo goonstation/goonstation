@@ -346,6 +346,11 @@ ABSTRACT_TYPE(/obj/item)
 	if (storage_check && src.stored)
 		src.stored.transfer_stored_item(src, newloc)
 		return
+	if (src.storage)
+		..()
+		for (var/atom/A as anything in src.storage.get_all_contents())
+			A.parent_storage_loc_changed()
+		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
 			..()

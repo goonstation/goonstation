@@ -2926,8 +2926,8 @@
 				"Luck is on your side... wait, what...?"))
 			boutput(src, SPAN_NOTICE(msg))
 
-/datum/statusEffect/talisman_fault
-	id = "art_talisman_fault"
+/datum/statusEffect/talisman_held
+	id = "art_talisman_held"
 	unique = FALSE
 	visible = FALSE
 	effect_quality = STATUS_QUALITY_NEGATIVE
