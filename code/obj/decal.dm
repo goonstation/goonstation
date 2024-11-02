@@ -69,6 +69,12 @@
 		add_filter("motion blur", 1, motion_blur_filter(x=0, y=3))
 		..()
 
+	talisman
+		icon_state = null//"glimmer"
+
+		proc/activate_glimmer()
+			flick("glimmer", src)
+
 /obj/decal/floatingtiles
 	name = "floating tiles"
 	desc = "These tiles are just floating around in the void."

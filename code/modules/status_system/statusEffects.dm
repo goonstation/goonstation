@@ -2931,9 +2931,12 @@
 	unique = FALSE
 	visible = FALSE
 	effect_quality = STATUS_QUALITY_NEGATIVE
-	var/time_passed = 0
-	var/time_threshold
+	var/fault_time_passed = 0
+	var/fault_threshold
+	var/glimmer_time_passed = 0
+	var/glimmer_threshold
 	var/obj/item/artifact/talisman/art
+	var/obj/decal/ceshield/talisman/glimmer
 
 	preCheck(atom/A)
 		if (!ishuman(A))
@@ -2942,13 +2945,31 @@
 
 	onAdd(optional)
 		..()
-		src.time_threshold = rand(1, 3) MINUTES
-		art = optional
+		src.art = optional
+		src.glimmer = new
+		src.art.active_user.vis_contents += src.glimmer
+
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.glimmer_threshold = rand(15, 30) SECONDS
 
 	onUpdate(timePassed)
-		src.time_passed += timePassed
-		if (src.time_passed < src.time_threshold)
+		src.fault_time_passed += timePassed
+		src.glimmer_time_passed += timePassed
+
+		if (src.glimmer_time_passed >= src.glimmer_threshold)
+			src.glimmer_time_passed = 0
+			src.glimmer_threshold = rand(15, 30) SECONDS
+			src.glimmer.activate_glimmer()
+
+		if (src.fault_time_passed < src.fault_threshold)
 			return
-		src.time_passed = 0
-		src.time_threshold = rand(1, 3) MINUTES
-		art.ArtifactFaultUsed(src.owner, art)
+		src.fault_time_passed = 0
+		src.fault_threshold = rand(1, 3) MINUTES
+		src.art.ArtifactFaultUsed(src.owner, src.art)
+
+	onRemove()
+		src.art.active_user.vis_contents -= src.glimmer
+		..()
+		src.art = null
+		qdel(src.glimmer)
+		src.glimmer = null

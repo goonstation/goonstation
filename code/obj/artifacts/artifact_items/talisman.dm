@@ -91,12 +91,15 @@
 				if (src.tox_prot)
 					APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_TOX_REDUCTION, src, src.tox_prot)
 
-		user.setStatus("art_talisman_held", null, src)
 		src.active_user = user
+		user.setStatus("art_talisman_held", null, src)
 
 	proc/remove_effect_from_user()
 		if (!src.active_user)
 			return
+
+		src.active_user.delStatus("art_talisman_held")
+
 		switch(src.associated_effect)
 			if (SWIFTNESS)
 				REMOVE_MOVEMENT_MODIFIER(src.active_user, /datum/movement_modifier/artifact_talisman_swiftness, src)
