@@ -405,7 +405,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				I.cardfile = src.print_info["cardfile"]
 				I.emagged = TRUE
 			else
-				effect_printing_long("print")
+				effect_printing("print")
 				new/obj/item/paper(get_turf(src))
 		return
 
