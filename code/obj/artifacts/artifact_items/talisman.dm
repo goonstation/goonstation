@@ -57,6 +57,11 @@
 	parent_storage_loc_changed()
 		src.refresh_user()
 
+	emp_act()
+		if (src.artifact.activated)
+			src.ArtifactDeactivated()
+			playsound(get_turf(src), 'sound/effects/shielddown2.ogg', 100, TRUE)
+
 	proc/refresh_user()
 		if (QDELETED(src) || !src.artifact.activated)
 			return
