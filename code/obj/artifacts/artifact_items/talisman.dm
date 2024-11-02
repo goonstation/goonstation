@@ -15,8 +15,6 @@
 
 	// swiftness vars
 	var/swiftness_mod = 0
-	// fortune vars
-	var/money_amt = 0
 	// spacefaring vars
 	var/space_prot = 0
 	// elements vars
@@ -134,8 +132,6 @@
 		switch(src.associated_effect)
 			if (SWIFTNESS)
 				src.swiftness_mod = rand(5, 15) / 100
-			if (FORTUNE)
-				src.money_amt = rand(100, 500)
 			if (SPACEFARING)
 				src.space_prot = rand(25, 75)
 			if (ELEMENTS)
