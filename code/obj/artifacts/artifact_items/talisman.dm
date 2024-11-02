@@ -60,7 +60,7 @@
 	emp_act()
 		if (src.artifact.activated)
 			src.ArtifactDeactivated()
-			playsound(get_turf(src), 'sound/effects/shielddown2.ogg', 100, TRUE)
+			playsound(get_turf(src), 'sound/effects/shielddown2.ogg', 75, TRUE)
 
 	proc/refresh_user()
 		if (QDELETED(src) || !src.artifact.activated)
@@ -170,7 +170,9 @@
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 275
 	validtypes = list("wizard", "precursor")
-	//react_xray = list(8,80,60,11,"COMPLEX")
+	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat,
+		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch, /datum/artifact_trigger/data)
+	react_xray = list(30, 25, 97, 95, "ANOMALOUS")
 	examine_hint = "It seems magical somehow."
 
 	effect_activate(obj/O)
