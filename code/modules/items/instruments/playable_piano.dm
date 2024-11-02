@@ -233,7 +233,7 @@ TYPEINFO(/obj/player_piano)
 		src.piano_notes = list()
 //		src.visible_message(SPAN_NOTICE("\The [src] starts humming and rattling as it processes!"))
 		var/list/split_input = splittext("[note_input]", "|")
-		if (split_input > MAX_NOTE_INPUT)
+		if (length(split_input) > MAX_NOTE_INPUT)
 			return FALSE
 		for (var/string in split_input)
 			if (string)
@@ -256,6 +256,7 @@ TYPEINFO(/obj/player_piano)
 			timing = text2num(timing) / 100
 			if (timing < MIN_TIMING || timing > MAX_TIMING)
 				src.visible_message(SPAN_ALERT("\The [src] makes a loud grinding noise, followed by a boop and a beep!"))
+				src.is_busy = FALSE
 				return
 			src.timing = timing
 
@@ -384,6 +385,7 @@ TYPEINFO(/obj/player_piano)
 
 		if (!src.clean_input())
 			src.note_input = ""
+			src.is_busy = FALSE
 			return FALSE
 
 		src.build_notes(src.piano_notes)
@@ -464,6 +466,10 @@ TYPEINFO(/obj/player_piano)
 			boutput(user, SPAN_ALERT("Another device has already stored that piano!"))
 			return
 		I.AddComponent(/datum/component/player_piano_auto_linker, src, user)
+
+	was_deconstructed_to_frame(mob/user)
+		. = ..()
+		src.reset_piano()
 
 #undef MIN_TIMING
 #undef MAX_TIMING
