@@ -6839,7 +6839,7 @@
 /turf/simulated/floor/airless/damaged3,
 /area/abandonedmedicalship)
 "aJN" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -15979,7 +15979,7 @@
 	name = "salvage belt - east";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
@@ -21076,7 +21076,7 @@
 /obj/item/paper/tug/invoice,
 /obj/item/card_group/stg,
 /obj/item/pen/fancy,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,
 /obj/item/raw_material/fibrilith,

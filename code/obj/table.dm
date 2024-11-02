@@ -367,7 +367,9 @@ TYPEINFO_NEW(/obj/table)
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
+
 		src.place_on(I, user, params, TRUE)
+
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr == over_object && src.has_drawer && src.drawer_locked)

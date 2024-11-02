@@ -29,6 +29,7 @@ const headings = [
   'name',
   'species',
   'damage',
+  'count',
   'genome',
   'generation',
   'maturity rate',
@@ -43,6 +44,7 @@ const sortname = [
   'name',
   'species',
   'damage',
+  'count',
   'genome',
   'generation',
   'growtime',
@@ -87,7 +89,7 @@ export const Plantmaster = () => {
   } = data;
   const [page, setPage] = useState(1);
   return (
-    <Window title="Plantmaster Mk4" width={1100} height={450}>
+    <Window title="Plantmaster Mk4" width={1200} height={450}>
       <Window.Content>
         <Tabs>
           <Tabs.Tab
@@ -227,7 +229,7 @@ const TitleRow = (props) => {
     <Table.Row>
       {headings.map(
         (heading, index) =>
-          (show_damage || heading !== 'damage') && (
+          (show_damage || (heading !== 'damage' && heading !== 'count')) && (
             <Table.Cell key={heading} textAlign="center">
               <Button
                 color="transparent"
@@ -293,6 +295,15 @@ const PlantRow = (props) => {
             backgroundColor={extractable.damage[1] ? '#333333' : ''}
           >
             {extractable.damage[0]}%
+          </Table.Cell>
+        )}
+        {show_damage && (
+          <Table.Cell
+            textAlign="center"
+            bold={extractable.charges[1]}
+            backgroundColor={extractable.charges[1] ? '#333333' : ''}
+          >
+            {extractable.charges[0]}
           </Table.Cell>
         )}
         <Table.Cell
