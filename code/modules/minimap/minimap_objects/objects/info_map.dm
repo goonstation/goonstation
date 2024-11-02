@@ -9,7 +9,7 @@
 	. = ..()
 	src.infomap = new()
 	src.infomap.initialise_minimap()
-	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "you_are_here")
+	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
 
 /obj/info_map/attack_hand(mob/user)
 	. = ..()
