@@ -116,6 +116,15 @@ TYPEINFO(/datum/component/pet)
 /obj/machinery/maptext_junk/timer/proc/reset(var/new_time)
 	time_left = new_time
 
+/obj/machinery/maptext_junk/timer/t10
+	time_left = 10
+
+/obj/machinery/maptext_junk/timer/t30
+	time_left = 30
+
+/obj/machinery/maptext_junk/timer/t60
+	time_left = 60
+
 /obj/machinery/maptext_junk/timer/t120
 	time_left = 120
 

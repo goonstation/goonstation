@@ -42,8 +42,9 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
-//#define DISABLE_DEVFILE // Don't load things defined in '__local.development.dm'. Use if you have some breaking changes in there or whatnot
+//#define DISABLE_DEVFILE // Don't load things defined in '__build.local.dm'. Use if you have some breaking changes in there or whatnot
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+//#define I_MEAN_ALL_ACCESS // Captain level ID's have EVERY access
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
@@ -75,7 +76,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------- PROFILING OPTIONS -------------//
 
-//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+// #define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
@@ -111,8 +112,8 @@ o+`        `-` ``..-:yooos-..----------..`
 // Makes the delete queue go through every single datum in the game when a hard del happens
 // It gets reported to the debug log. This process takes about 4 minutes per hard deletion
 // (during that time the server will be frozen).
-//#define LOG_HARD_DELETE_REFERENCES
-//#define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
+// #define LOG_HARD_DELETE_REFERENCES
+// #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL

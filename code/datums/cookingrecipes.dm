@@ -847,11 +847,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 					customSandwich.food_effects += snack.food_effects
 
 					//fillings += snack.name
-					if (snack.get_food_color())
+					if (snack.get_average_color())
 						if (fillingColors.len % 2 || length(fillingColors) < (i*2))
-							fillingColors += "B[snack.get_food_color()]"
+							fillingColors += "B[snack.get_average_color()]"
 						else
-							fillingColors.Insert((i++*2), "B[snack.get_food_color()]")
+							fillingColors.Insert((i++*2), "B[snack.get_average_color()]")
 					qdel(snack)
 
 				else if (slice1)
@@ -867,8 +867,8 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 				customSandwich.food_effects += snack.food_effects
 
 				fillings += snack.name
-				if (snack.get_food_color() && !istype(snack, /obj/item/reagent_containers/food/snacks/ingredient) && prob(50))
-					fillingColors += snack.get_food_color()
+				if (snack.get_average_color() && !istype(snack, /obj/item/reagent_containers/food/snacks/ingredient) && prob(50))
+					fillingColors += snack.get_average_color()
 				else
 					var/obj/transformedFilling = image(snack.icon, snack.icon_state)
 					transformedFilling.transform = matrix(0.75, MATRIX_SCALE)
@@ -912,7 +912,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 		if (slice1)
 			sandwichIcon = image('icons/obj/foodNdrink/food_meals.dmi', "sandwich-bread")//, 1, 1)
 			//sandwichIcon.Blend(slice1.food_color, ICON_ADD)
-			sandwichIcon.color = slice1.get_food_color()
+			sandwichIcon.color = slice1.get_average_color()
 
 			customSandwich.overlays += sandwichIcon
 			//qdel(slice1)
@@ -941,7 +941,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 		if (slice2)
 			newFilling = image('icons/obj/foodNdrink/food_meals.dmi', "sandwich-bread")//, 1, 1)
 			//newFilling.Blend( slice2.food_color, ICON_ADD)
-			newFilling.color = slice2.get_food_color()
+			newFilling.color = slice2.get_average_color()
 			newFilling.pixel_y = fillingOffset
 
 			//qdel(slice2)
@@ -1446,41 +1446,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	output = /obj/item/reagent_containers/food/snacks/pie/chocolate
 	category = "Pies"
 
-/datum/cookingrecipe/oven/pie_cream
+/datum/cookingrecipe/oven/pie_anything/pie_cream
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
 	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/pie/cream
 	category = "Pies"
-
-	specialOutput(var/obj/submachine/ourCooker)
-		if (!ourCooker)
-			return null
-
-		var/obj/item/reagent_containers/food/snacks/custom_pie_food
-		for (var/obj/item/reagent_containers/food/snacks/S in ourCooker.contents)
-			if (S.type == item1 || S.type == item2)
-				continue
-
-			custom_pie_food = S
-			break
-
-		if (!custom_pie_food)
-			return null
-
-		var/obj/item/reagent_containers/food/snacks/pie/cream/custom_pie = new
-		custom_pie_food.reagents.trans_to(custom_pie, 50)
-		if(custom_pie.real_name)
-			custom_pie.name = "[custom_pie_food.real_name] cream pie"
-
-		else
-			custom_pie.name = "[custom_pie_food.name] cream pie"
-
-		var/icon/I = new /icon('icons/obj/foodNdrink/food_dessert.dmi',"creampie")
-		I.Blend(custom_pie_food.get_food_color(), ICON_ADD)
-		custom_pie.icon = I
-
-		return custom_pie
+	base_pie_name = "cream pie"
 
 /datum/cookingrecipe/oven/pie_anything
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
@@ -1488,13 +1460,16 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/pie/anything
 	category = "Pies"
+	var/base_pie_name = "pie"
 
 	specialOutput(var/obj/submachine/ourCooker)
 		if (!ourCooker)
 			return null
+		if (length(ourCooker.contents) <= 2)
+			return new src.output
 
 		var/obj/item/reagent_containers/food/snacks/anItem
-		var/obj/item/reagent_containers/food/snacks/pie/anything/custom_pie = new
+		var/obj/item/reagent_containers/food/snacks/pie/custom_pie = new src.output
 		var/pieDesc
 		var/pieName
 		var/contentAmount = ourCooker.contents.len - 2
@@ -1542,12 +1517,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 //		if (!anItem)
 //			return null
 
-		custom_pie.name = pieName + " pie"
-		custom_pie.desc = "A pie containing [pieDesc]. Well alright then."
+		custom_pie.name = pieName + " [src.base_pie_name]"
+		custom_pie.desc = "A [src.base_pie_name] containing [pieDesc]. Well alright then."
 
-		var/icon/I = new /icon('icons/obj/foodNdrink/food_dessert.dmi',"pie")
-		var/random_color = rgb(rand(1,255), rand(1,255), rand(1,255))
-		I.Blend(random_color, ICON_ADD)
+		var/icon/I = new /icon(custom_pie.icon, custom_pie.icon_state)
+		var/atom/thing = pick(custom_pie.contents)
+		I.Blend(thing.get_average_color(), ICON_ADD)
 		custom_pie.icon = I
 
 		return custom_pie
@@ -1787,7 +1762,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 			S = docakeitem.custom_item
 		var/obj/item/reagent_containers/food/snacks/cake/B = new /obj/item/reagent_containers/food/snacks/cake(ourCooker)
 		var/image/overlay = new /image('icons/obj/foodNdrink/food_dessert.dmi',"cake1-base_custom")
-		B.food_color = S ? S.get_food_color() : "#CC8555"
+		B.food_color = S ? S.get_average_color() : "#CC8555"
 		overlay.color = B.food_color
 		overlay.alpha = 255
 		B.AddOverlays(overlay,"first")

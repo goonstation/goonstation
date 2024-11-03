@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	var/halt_loop = 0
 
 	proc/deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
-		if (!O || !user)
+		if (!O || !user || user.nodamage)
 			return 1
 		return 0
 

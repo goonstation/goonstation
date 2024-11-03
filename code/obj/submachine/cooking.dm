@@ -526,9 +526,14 @@ table#cooktime a#start {
 
 					if (ispath(possible.output))
 						var/atom/item_path = possible.output
-						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b>"
+						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b><br>"
 					else
-						dat += "<b>Result:</b><br>???"
+						dat += "<b>Result:</b><br>???<br>"
+
+					if (possible.cookbonus < 10)
+						dat += "<b>Cooking time:</b><br>[possible.cookbonus] seconds low"
+					else
+						dat += "<b>Cooking time:</b><br>[floor(possible.cookbonus/2)] seconds high"
 
 
 		else
@@ -711,7 +716,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/painauchocolat(src)
 			src.recipes += new /datum/cookingrecipe/oven/croissant(src)
 
-			src.recipes += new /datum/cookingrecipe/oven/pie_cream(src)
+			src.recipes += new /datum/cookingrecipe/oven/pie_anything/pie_cream(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_anything(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_cherry(src)
 			src.recipes += new /datum/cookingrecipe/oven/pie_blueberry(src)
