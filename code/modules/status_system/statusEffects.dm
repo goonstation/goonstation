@@ -2938,7 +2938,7 @@
 	id = "art_talisman_held"
 	unique = FALSE
 	visible = FALSE
-	effect_quality = STATUS_QUALITY_NEGATIVE
+	effect_quality = STATUS_QUALITY_NEUTRAL // still rolls a chance for art faults though
 	var/fault_time_passed = 0
 	var/fault_threshold
 	var/glimmer_time_passed = 0
