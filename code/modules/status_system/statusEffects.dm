@@ -352,12 +352,8 @@
 
 		talisman_artifact
 			id = "talisman_extra_hp"
+			unique = FALSE
 			visible = FALSE
-
-			onChange(optional)
-				..()
-				if (src.change == 0)
-					src.owner.delStatus(src.id)
 
 	simplehot //Simple heal over time.
 		id = "simplehot"
@@ -2908,10 +2904,9 @@
 
 /datum/statusEffect/talisman_fortune
 	id = "art_talisman_fortune"
+	unique = FALSE
 	visible = FALSE
 	effect_quality = STATUS_QUALITY_POSITIVE
-	/// number of talisman artifacts providing this effect
-	var/instances = 0
 	var/time_passed = 0
 	var/time_threshold
 
@@ -2922,14 +2917,7 @@
 
 	onAdd(optional)
 		..()
-		src.instances += optional
 		src.time_threshold = rand(1, 5) MINUTES
-
-	onChange(optional)
-		..()
-		src.instances += optional
-		if (src.instances <= 0)
-			src.owner.delStatus(src.id)
 
 	onUpdate(timePassed)
 		..()
@@ -2939,8 +2927,7 @@
 		src.time_passed = 0
 		src.time_threshold = rand(1, 5) MINUTES
 		var/obj/item/currency/spacecash/money = new
-		for (var/i = 1 to src.instances)
-			money.amount += rand(100, 500)
+		money.amount += rand(100, 500)
 		money.UpdateStackAppearance()
 		var/mob/living/carbon/human/H = src.owner
 		H.stow_in_available(money, FALSE)
@@ -2951,10 +2938,9 @@
 
 /datum/statusEffect/talisman_held
 	id = "art_talisman_held"
+	unique = FALSE
 	visible = FALSE
 	effect_quality = STATUS_QUALITY_NEUTRAL // still rolls a chance for art faults though
-	/// number of talisman artifacts providing this effect
-	var/instances = 0
 	var/fault_time_passed = 0
 	var/fault_threshold
 	var/glimmer_time_passed = 0
@@ -2969,19 +2955,12 @@
 
 	onAdd(optional)
 		..()
-		src.art = optional[1]
-		src.instances += optional[2]
+		src.art = optional
 		src.glimmer = new
 		src.art.active_user.vis_contents += src.glimmer
 
 		src.fault_threshold = rand(1, 3) MINUTES
-		src.glimmer_threshold = rand(15, 30) / src.instances SECONDS
-
-	onChange(optional)
-		..()
-		src.instances += optional[2]
-		if (src.instances <= 0)
-			src.owner.delStatus(src.id)
+		src.glimmer_threshold = rand(15, 30) SECONDS
 
 	onUpdate(timePassed)
 		..()
@@ -2990,7 +2969,7 @@
 
 		if (src.glimmer_time_passed >= src.glimmer_threshold)
 			src.glimmer_time_passed = 0
-			src.glimmer_threshold = rand(15, 30) / src.instances SECONDS
+			src.glimmer_threshold = rand(15, 30) SECONDS
 			src.glimmer.activate_glimmer()
 
 		if (src.fault_time_passed < src.fault_threshold)

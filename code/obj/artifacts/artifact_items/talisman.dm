@@ -11,10 +11,14 @@
 	associated_datum = /datum/artifact/talisman
 	w_class = W_CLASS_SMALL
 	var/associated_effect
-	var/mob/living/carbon/human/active_user = null
+	var/mob/living/carbon/human/active_user
+	/// talisman fault/glimmer effect tied to this artifact
+	var/datum/statusEffect/talisman_held/talisman_effect
 
 	// swiftness vars
 	var/swiftness_mod = 0
+	// fortune vars
+	var/datum/statusEffect/talisman_fortune/fortune_effect
 	// spacefaring vars
 	var/space_prot = 0
 	// elements vars
@@ -22,6 +26,7 @@
 	var/cold_prot = 0
 	// strength vars
 	var/extra_hp = 0
+	var/datum/statusEffect/maxhealth/talisman_artifact/extra_hp_effect
 	// protection vars
 	var/brute_prot = 0
 	var/burn_prot = 0
@@ -79,14 +84,14 @@
 				APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_SWIFTNESS, src, src.swiftness_mod)
 				APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/artifact_talisman_swiftness, src)
 			if (FORTUNE)
-				user.changeStatus("art_talisman_fortune", null, 1)
+				src.fortune_effect = user.setStatus("art_talisman_fortune", null)
 			if (SPACEFARING)
 				APPLY_ATOM_PROPERTY(user, PROP_MOB_COLDPROT, src, src.space_prot)
 			if (ELEMENTS)
 				APPLY_ATOM_PROPERTY(user, PROP_MOB_HEATPROT, src, src.heat_prot)
 				APPLY_ATOM_PROPERTY(user, PROP_MOB_COLDPROT, src, src.cold_prot)
 			if (STRENGTH)
-				user.changeStatus("talisman_extra_hp", null, src.extra_hp)
+				src.extra_hp_effect = user.setStatus("talisman_extra_hp", null, src.extra_hp)
 			if (PROTECTION)
 				if (src.brute_prot)
 					APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_BRUTE_REDUCTION, src, src.brute_prot)
@@ -96,7 +101,7 @@
 					APPLY_ATOM_PROPERTY(user, PROP_MOB_TALISMAN_TOX_REDUCTION, src, src.tox_prot)
 
 		src.active_user = user
-		user.changeStatus("art_talisman_held", null, list(src, 1))
+		src.talisman_effect = user.setStatus("art_talisman_held", null, src)
 
 	proc/remove_effect_from_user()
 		if (!src.active_user)
@@ -107,14 +112,16 @@
 				REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_TALISMAN_SWIFTNESS, src)
 				REMOVE_MOVEMENT_MODIFIER(src.active_user, /datum/movement_modifier/artifact_talisman_swiftness, src)
 			if (FORTUNE)
-				src.active_user.changeStatus("art_talisman_fortune", null, list(src, -1))
+				src.active_user.delStatus(src.fortune_effect)
+				src.fortune_effect = null
 			if (SPACEFARING)
 				REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_COLDPROT, src)
 			if (ELEMENTS)
 				REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_HEATPROT, src)
 				REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_COLDPROT, src)
 			if (STRENGTH)
-				src.active_user.changeStatus("talisman_extra_hp", null, -src.extra_hp)
+				src.active_user.delStatus(src.extra_hp_effect)
+				src.extra_hp_effect = null
 			if (PROTECTION)
 				if (src.brute_prot)
 					REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_TALISMAN_BRUTE_REDUCTION, src)
@@ -123,7 +130,8 @@
 				if (src.tox_prot)
 					REMOVE_ATOM_PROPERTY(src.active_user, PROP_MOB_TALISMAN_TOX_REDUCTION, src)
 
-		src.active_user.changeStatus("art_talisman_held", null, list(src, -1))
+		src.active_user.delStatus(src.talisman_effect)
+		src.talisman_effect = null
 		src.active_user = null
 
 	proc/select_effect()
