@@ -2927,7 +2927,7 @@
 		src.time_passed = 0
 		src.time_threshold = rand(1, 5) MINUTES
 		var/obj/item/currency/spacecash/money = new
-		money.amount += rand(100, 500)
+		money.amount = rand(100, 500)
 		money.UpdateStackAppearance()
 		var/mob/living/carbon/human/H = src.owner
 		H.stow_in_available(money, FALSE)
