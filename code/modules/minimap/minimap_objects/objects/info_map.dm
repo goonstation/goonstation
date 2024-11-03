@@ -5,8 +5,9 @@ TYPEINFO(/obj/machinery/info_map)
 
 /obj/machinery/info_map
 	name = "Information Map"
+	desc = "You are here."
 	icon = 'icons/obj/status_display.dmi'
-	icon_state = "info_off"
+	icon_state = "info_on"
 	anchored = ANCHORED
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
@@ -19,6 +20,13 @@ TYPEINFO(/obj/machinery/info_map)
 	src.infomap = new()
 	src.infomap.initialise_minimap()
 	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
+
+	// reposition onto wall
+	if(pixel_y == 0 && pixel_x == 0)
+		if (map_settings.walls ==/turf/simulated/wall/auto/jen)
+			pixel_y = 32
+		else
+			pixel_y = 29
 
 /obj/machinery/info_map/attack_hand(mob/user)
 	. = ..()
