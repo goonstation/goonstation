@@ -1584,6 +1584,7 @@
 #include "code\modules\parallax\foreground_parallax_occlusion_overlay.dm"
 #include "code\modules\parallax\parallax_controller.dm"
 #include "code\modules\parallax\parallax_layer.dm"
+#include "code\modules\parallax\parallax_viewer.dm"
 #include "code\modules\parallax\parallax_render_sources\parallax_render_source_group_parent.dm"
 #include "code\modules\parallax\parallax_render_sources\parallax_render_source_groups.dm"
 #include "code\modules\parallax\parallax_render_sources\parallax_render_source_parent.dm"

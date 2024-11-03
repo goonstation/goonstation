@@ -4131,7 +4131,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		ghost_spawned = FALSE
 		new /obj/item/implant/access/infinite/admin_mouse(src)
 		SPAWN(1 SECOND)
-			src.bioHolder.AddEffect("radio_brain", power = 3, do_stability = FALSE)
+			src.bioHolder.AddEffect("radio_brain", power = 3, do_stability = FALSE, magical = TRUE)
 
 	setup_hands()
 		..()
