@@ -1,5 +1,10 @@
 
 (t)mon nov 04 24
+(u)JORJ949
+(p)21200
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Non-nuclear syndicate PDAs start with messenger on.
+(+)Mindhack cloners now only send messages to syndicate PDAs.
 (u)TDHooligan, Guv
 (p)21211
 (e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
