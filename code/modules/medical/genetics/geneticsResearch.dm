@@ -3,19 +3,19 @@ var/datum/geneticsResearchManager/genResearch = new()
 /datum/geneticsResearchManager
 	var/researchMaterial = 100
 	var/max_material = 100
-	var/max_save_slots = 10
+	var/max_save_slots = 0
 	var/lock_breakers = 0
 	var/cost_discount = 0 // decimal value for how much is taken off the cost
 	var/time_discount = 0 // same but for time to research
-	var/mut_research_cost = 1 // how much it costs to research mutations
-	var/mut_research_time = 1
+	var/mut_research_cost = 20 // how much it costs to research mutations
+	var/mut_research_time = 600
 	var/mutations_researched = 0
 	var/injector_cost = 30
 	var/genebooth_cost = 30
 	var/debug_mode = 0
-	var/see_secret = 1
+	var/see_secret = 0
 	var/emitter_radiation = 75
-	var/equipment_cooldown_multiplier = 0.01
+	var/equipment_cooldown_multiplier = 1
 	var/list/datum/geneticsResearchEntry/currentResearch = new/list()
 	var/list/researchTree = new/list()
 	var/list/researchTreeTiered = new/list()
@@ -162,11 +162,6 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/researchCost = 10 //Cost in research materials for this entry.
 	var/hidden = 0 // Is this one accessible by players?
 	var/htmlIcon = null
-
-	New()
-		. = ..()
-		researchCost = 1
-		researchTime = 1
 
 	// Note: Parent should be called LAST to ensure any updates are forwarded as static data where applicable
 	proc/onFinish()
