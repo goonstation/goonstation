@@ -1,5 +1,9 @@
 
 (t)mon nov 04 24
+(u)Klushy225
+(p)21052
+(e)🎨🐣|C-Sprites, A-Respawning
+(+)Adds the Hall Monitor gimmick job.
 (u)JORJ949
 (p)21200
 (e)💅📦|C-QoL, A-Game-Objects
