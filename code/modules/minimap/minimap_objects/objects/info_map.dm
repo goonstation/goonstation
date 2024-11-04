@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/info_map)
 /obj/machinery/info_map/New()
 	. = ..()
 	src.infomap = new()
+	src.infomap.display = src
 	src.infomap.initialise_minimap()
 	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
 
@@ -41,7 +42,6 @@ TYPEINFO(/obj/machinery/info_map)
 /obj/machinery/info_map/proc/user_moved(mob/user, atom/previous_loc, direction)
 	if (BOUNDS_DIST(user, src) > 0)
 		src.infomap.close(user)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 /obj/machinery/info_map/disposing()
 	. = ..()
@@ -55,6 +55,7 @@ TYPEINFO(/obj/machinery/info_map)
 	alpha = 200
 	plane = PLANE_HUD
 	layer = HUD_LAYER
+	var/obj/machinery/info_map/display = null
 
 	initialise_minimap()
 		. = ..()
@@ -72,6 +73,11 @@ TYPEINFO(/obj/machinery/info_map)
 		src.close(usr)
 
 	proc/close(mob/user)
+		display.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		var/datum/hud/hud = user.get_hud()
 		hud.remove_object(src)
+
+	disposing()
+		src.display = null
+		. = ..()
 
