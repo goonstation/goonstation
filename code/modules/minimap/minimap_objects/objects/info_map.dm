@@ -33,9 +33,10 @@ TYPEINFO(/obj/machinery/info_map)
 	. = ..()
 	if(.)
 		return
-	if(!src.minimap_ui)
-		src.minimap_ui = new(src, minimap=src.infomap, tgui_title="Information Map")
-	src.minimap_ui.ui_interact(user)
+	var/datum/hud/hud = user.get_hud()
+	if (!hud)
+		return
+	hud.add_object(src.infomap, HUD_LAYER, "CENTER,CENTER-3")
 
 
 /obj/machinery/info_map/disposing()
@@ -47,5 +48,27 @@ TYPEINFO(/obj/machinery/info_map)
 
 /obj/minimap/info
 	name = "Information Map"
-	map_path = /datum/minimap/area_map
+	map_path = /datum/minimap/area_map/transparent
 	map_type = MAP_INFO
+	alpha = 200
+	plane = PLANE_HUD
+	layer = HUD_LAYER
+
+	initialise_minimap()
+		. = ..()
+		src.map.map.plane = src.plane
+		src.map.map.layer = src.layer
+
+	Click(location, control, params)
+		var/list/param_list = params2list(params)
+		if ("left" in param_list)
+			var/turf/clicked = src.get_turf_at_screen_coords(text2num(param_list["icon-x"]), text2num(param_list["icon-y"]))
+			if (!istype(clicked.loc, /area/space))
+				usr.gpsToTurf(clicked)
+			else
+				usr.removeGpsPath()
+
+		//now remove the map from their hud
+		var/datum/hud/hud = usr.get_hud()
+		hud.remove_object(src)
+
