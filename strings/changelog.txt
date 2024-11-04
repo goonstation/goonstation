@@ -1,4 +1,9 @@
 
+(t)mon nov 04 24
+(u)TDHooligan
+(p)21187
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(*)Chemists now have access to the Dropper Funnel; make instant reactions happen at your own pace!
 (t)sun nov 03 24
 (u)FlameArrow57
 (p)21221
