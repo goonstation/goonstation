@@ -64,9 +64,9 @@ TYPEINFO(/obj/machinery/info_map)
 		if ("left" in param_list)
 			var/turf/clicked = src.get_turf_at_screen_coords(text2num(param_list["icon-x"]), text2num(param_list["icon-y"]))
 			if (!istype(clicked.loc, /area/space))
-				usr.gpsToTurf(clicked)
+				usr.gpsToTurf(clicked, TRUE, timeout = 40 SECONDS)
 			else
-				usr.removeGpsPath()
+				usr.removeGpsPath(FALSE)
 
 		//now remove the map from their hud
 		var/datum/hud/hud = usr.get_hud()
