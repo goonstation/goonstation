@@ -1,5 +1,9 @@
 
 (t)mon nov 04 24
+(u)TDHooligan, Guv
+(p)21211
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The bartender's shaker now shows if your cocktail is a safe temperature to drink
 (u)TDHooligan
 (p)21187
 (e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
