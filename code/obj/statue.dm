@@ -78,8 +78,11 @@
 			if (hardness < 2)
 				boutput(user, SPAN_ALERT("The [src.material] is too hard to cut!"))
 				return
-			if (src.mob_inside.head)
-				boutput(user, SPAN_ALERT("You start cutting up [src]."))
+
+			if(isliving(src.mob_inside))
+				var/mob/living/L = src.mob_inside
+				if (L.organHolder.head)
+					boutput(user, SPAN_ALERT("You start cutting up [src]."))
 			else
 				boutput(user, SPAN_ALERT("You start cutting the head off of [src]."))
 			playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
