@@ -437,8 +437,8 @@
 		"g" = RADIOCL_SECURITY,
 		"c" = RADIOCL_CIVILIAN,
 		)
-	icon_override = "sec"
-	icon_tooltip = "Security"
+	icon_override = "civ"
+	icon_tooltip = "Hall Monitor"
 
 /obj/item/device/radio/headset/command/nt/commander
 	name = "\improper NT Commander's headset"

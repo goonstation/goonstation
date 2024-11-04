@@ -2107,10 +2107,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 /obj/item/clothing/suit/security_badge/paper
 	name = "Hall Monitor Badge"
 	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
-	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "security_badge_paper"
 
 /obj/item/clothing/suit/hosmedal
