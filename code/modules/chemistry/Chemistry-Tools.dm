@@ -553,6 +553,8 @@ proc/ui_describe_reagents(atom/A)
 				return 9
 			if("large_flask")
 				return 10
+			if("dropper_funnel")
+				return 10
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -936,12 +938,13 @@ proc/ui_describe_reagents(atom/A)
 	object_flags = OPENCONTAINER | SUPPRESSATTACK
 	initial_volume = 100
 	accepts_lid = TRUE
+	rc_flags = RC_VISIBLE | RC_SCALE | RC_SPECTRO
 	fluid_overlay_states = 8
 	container_style = "dropper_funnel"
 	var/open = FALSE
 	var/flow_rate = 1
 	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
-	Flow rate can be adjusted either in your hand, or with a screwdriver.
+	Flow rate can be adjusted either in your hand, or with a <b>screwdriver</b>.
 	To pick this up, click and drag it onto your person."})
 
 	disposing()
@@ -968,16 +971,13 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, SPAN_NOTICE("You pop the lid off of the [src]."))
 			remove_current_lid(user)
 		else
-			var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
-			if (number)
-				flow_rate = number
+			adjust_flow_rate(user)
 		return
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/screwdriver))
-			var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
-			if (number && flow_rate != number)
-				flow_rate = number
-				user.visible_message(SPAN_NOTICE("[user.name] adjusts the flow rate of \the [src.name]."))
+			adjust_flow_rate(user)
+			user.visible_message(SPAN_NOTICE("[user.name] adjusts the flow rate of \the [src.name]."))
 			return
 		..()
 	process()
@@ -997,6 +997,10 @@ proc/ui_describe_reagents(atom/A)
 			src.add_fingerprint(user)
 			set_flow(!open)
 
+	proc/adjust_flow_rate(mob/user)
+		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
+		if (number && flow_rate != number)
+			flow_rate = number
 	proc/set_flow(var/desired_state)
 		if (!desired_state && open)
 			processing_items -= src
