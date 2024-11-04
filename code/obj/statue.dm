@@ -78,7 +78,10 @@
 			if (hardness < 2)
 				boutput(user, SPAN_ALERT("The [src.material] is too hard to cut!"))
 				return
-			boutput(user, SPAN_ALERT("You start cutting the head off of [src]."))
+			if (src.mob_inside.head)
+				boutput(user, SPAN_ALERT("You start cutting up [src]."))
+			else
+				boutput(user, SPAN_ALERT("You start cutting the head off of [src]."))
 			playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, TRUE)
 			if (isalive(src.mob_inside))
 				src.mob_inside.emote("scream")
@@ -194,14 +197,17 @@
 
 			if(istype(O))
 				O.setMaterial(src.material) // Because why not, it's funny
-				O.decal_done = TRUE
+				O.decal_done = TRUE // Remove the decal because it looks weird
 
-		if("head" in src.organs_to_drop)
-			// If we cut the head off, we need to update the appearance
-			src.appearance = L.appearance
-			src.real_name = "headless [src.real_name]"
-			src.name = src.real_name
-			src.setMaterial(src.material)
+			if(istype(O, /obj/item/organ/head))
+				// If we cut the head off, we need to update the appearance
+				var/obj/item/organ/head/noggin = O
+				src.appearance = L.appearance
+				src.real_name = "headless [src.real_name]"
+				src.name = src.real_name
+				src.setMaterial(src.material)
+				noggin.brain.setMaterial(src.material)
+				noggin.brain.decal_done = TRUE
 
 	/// Proc to generate a material from the statue
 	proc/make_material_chunk()
