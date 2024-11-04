@@ -231,7 +231,7 @@
 /area/station/turret_protected/ai)
 "abc" = (
 /obj/machinery/mass_driver{
-	drive_range = 25;
+	drive_range = 27;
 	id = "arrivals_in";
 	name = "cargo driver"
 	},
@@ -5608,7 +5608,7 @@
 "arK" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 25;
+	drive_range = 27;
 	id = "arrivals_out";
 	name = "cargo driver"
 	},
@@ -6048,7 +6048,7 @@
 "asZ" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 26;
+	drive_range = 28;
 	id = "arrivals_out";
 	name = "cargo driver"
 	},
@@ -73198,7 +73198,7 @@
 /area/station/mining/magnet)
 "vfT" = (
 /obj/machinery/mass_driver{
-	drive_range = 26;
+	drive_range = 28;
 	id = "arrivals_in";
 	name = "cargo driver"
 	},
