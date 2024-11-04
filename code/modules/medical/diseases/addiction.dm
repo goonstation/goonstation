@@ -61,13 +61,8 @@
 					affected_mob.change_eye_blurry(rand(7, 10))
 					boutput(affected_mob, SPAN_ALERT("Your vision blurs, you REALLY need some [D.associated_reagent]."))
 				else if (prob(1))
-					if (affected_mob.nutrition > 10 && !affected_mob.reagents?.has_reagent("promethazine"))
-						affected_mob.visible_message(SPAN_ALERT("[affected_mob] vomits on the floor profusely!"),\
-						SPAN_ALERT("You vomit all over the floor!"))
-						affected_mob.vomit(rand(3,5))
-					else
-						affected_mob.visible_message(SPAN_ALERT("[affected_mob] gags and retches!"),\
-						SPAN_ALERT("Your stomach lurches painfully!"))
+					if (!(affected_mob.nutrition > 10 && affected_mob.vomit(rand(3,5), flavorMessage = SPAN_ALERT("[affected_mob] vomits on the floor profusely!"), selfMessage = SPAN_ALERT("You vomit all over the floor!"))))
+						affected_mob.visible_message(SPAN_ALERT("[affected_mob] gags and retches!"), SPAN_ALERT("Your stomach lurches painfully!"))
 						affected_mob.changeStatus("stunned", 2 SECONDS)
 						affected_mob.changeStatus("knockdown", 2 SECONDS)
 			if (prob(8))

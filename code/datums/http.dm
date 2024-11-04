@@ -170,7 +170,7 @@
  */
 /datum/cobalt_tools
 	/// The base API url to use.
-	var/base_url = "https://cobalt-backend.canine.tools" // api.cobalt.tools
+	var/base_url = "https://cobalt-api.kwiatekmiki.com" // api.cobalt.tools
 
 /**
  * Sends a request to the cobalt.tools API to fetch a tunnel for the audio file we want.

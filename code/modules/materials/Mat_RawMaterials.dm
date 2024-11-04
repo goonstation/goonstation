@@ -162,6 +162,7 @@
 		icon_state = "fabric"
 		name = "fabric"
 		desc = "A weave of some kind."
+		default_material = "cotton"
 		var/in_use = 0
 
 		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)

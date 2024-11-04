@@ -4863,7 +4863,7 @@
 		does_react(var/datum/reagents/holder)
 			return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
-		vampire_serum
+	vampire_serum
 		name = "Vampire Serum Omega"
 		id = "vampire_serum"
 		result =  "vampire_serum"

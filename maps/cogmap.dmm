@@ -209,7 +209,7 @@
 /turf/simulated/floor,
 /area/station/routing/security)
 "abn" = (
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "abp" = (
 /obj/machinery/light{
@@ -247,7 +247,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "aby" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -263,13 +263,13 @@
 /area/station/hallway/secondary/entry)
 "abC" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "abD" = (
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "abE" = (
 /turf/simulated/wall/auto/supernorn,
@@ -278,7 +278,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "abK" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -36690,6 +36690,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -48606,7 +48607,7 @@
 "lms" = (
 /obj/stool/chair,
 /obj/landmark/pest,
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "lmG" = (
 /obj/table/wood/auto,
@@ -48840,7 +48841,7 @@
 /area/station/hangar/main)
 "lBr" = (
 /obj/machinery/firealarm/south,
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "lBs" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
@@ -52278,7 +52279,7 @@
 /area/space)
 "ojy" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -54698,7 +54699,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "qat" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
@@ -57629,6 +57630,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
+"slD" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "slQ" = (
 /obj/machinery/firealarm/west,
 /obj/machinery/light{
@@ -58007,7 +58015,7 @@
 	dir = 1;
 	pixel_y = -15
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "sBK" = (
 /obj/cable/yellow{
@@ -62514,7 +62522,7 @@
 /area/station/engine/engineering)
 "vZL" = (
 /mob/living/carbon/human/npc/monkey/horse,
-/turf/simulated/floor/black,
+/turf/simulated/floor/auto/glassblock/indigo,
 /area/station/crew_quarters/observatory)
 "wae" = (
 /obj/machinery/power/solar/east,
@@ -114483,7 +114491,7 @@ erD
 auO
 ask
 ayR
-asl
+slD
 asl
 aBU
 mQx

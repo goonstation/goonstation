@@ -52002,10 +52002,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
@@ -55425,6 +55425,7 @@
 "doB" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Teleport Pad"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -65034,7 +65035,7 @@
 /area/station/medical/medbay/surgery/storage)
 "mNY" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -75033,7 +75034,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "xpe" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
