@@ -6,12 +6,13 @@ TYPEINFO(/obj/machinery/info_map)
 /obj/machinery/info_map
 	name = "Information Map"
 	desc = "You are here."
-	icon = 'icons/obj/status_display.dmi'
-	icon_state = "info_on"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "stationmap"
 	anchored = ANCHORED
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	power_usage = 5 WATTS
+	plane = PLANE_NOSHADOW_ABOVE
 	var/atom/movable/minimap_ui_handler/minimap_ui
 	var/obj/minimap/info/infomap
 
@@ -36,12 +37,6 @@ TYPEINFO(/obj/machinery/info_map)
 		src.minimap_ui = new(src, minimap=src.infomap, tgui_title="Information Map")
 	src.minimap_ui.ui_interact(user)
 
-/obj/machinery/info_map/power_change()
-	. = ..()
-	if (src.powered())
-		src.icon_state = "info_on"
-	else
-		src.icon_state = "info_off"
 
 /obj/machinery/info_map/disposing()
 	. = ..()
