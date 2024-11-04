@@ -71,8 +71,10 @@
 		knockoff
 			name = "ThoughtOS 1.2"
 			note = "Congratulation! You have chosen the ElecTek 5 Personnel Data Actuator!"
-			message_on = 0
 			knockoff = TRUE
+
+			mess_off
+				message_on = 0
 
 		disposing()
 			if (detected_pdas)

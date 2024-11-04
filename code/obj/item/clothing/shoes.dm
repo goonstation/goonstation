@@ -312,6 +312,15 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 						return
 			else
 				boutput(user, SPAN_ALERT("You aren't funny enough to do that. Wait, did the shoes just laugh at you?"))
+		else if(istype(W, /obj/item/spray_paint_graffiti) && !(istype(src, /obj/item/clothing/shoes/clown_shoes/military)))
+			if (user.traitHolder.hasTrait("training_security"))
+				var/obj/item/I = new /obj/item/clothing/shoes/clown_shoes/military()
+				I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel like insulting the clown like this."))
 		else
 			return ..()
 
@@ -340,6 +349,17 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
 
+	military
+		name = "military shoes"
+		desc = ""
+		icon_state = "clown_military"
+		item_state = "clown_military"
+
+		get_desc(var/dist, var/mob/user)
+			if (user.mind?.assigned_role == "Head of Security")
+				. = "Extra long shoes to show the extra long reach of the law!"
+			else
+				. = "These are clearly just clown shoes covered in black spraypaint."
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
@@ -498,12 +518,37 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_priority = STEP_PRIORITY_LOW
 	tooltip_flags = REBUILD_DIST | REBUILD_USER
 
+	attackby(obj/item/W, mob/living/user)
+		if(istype(W, /obj/item/pen/crayon) && !(istype(src, /obj/item/clothing/shoes/swat/heavy/clown)))
+			if (user.traitHolder.hasTrait("training_clown"))
+				var/obj/item/I = new /obj/item/clothing/shoes/swat/heavy/clown()
+				I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
+				qdel(src)
+			else
+				boutput(user, SPAN_ALERT("You don't feel brave enough to do this."))
+		else
+			return ..()
+
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Head of Security")
 			. = "Still fit like a glove! Or a shoe."
 		else
 			. = "Looks like some big shoes to fill!"
 		. = ..()
+
+/obj/item/clothing/shoes/swat/heavy/clown
+	name = "heavy clown boots"
+	desc = ""
+	icon_state = "swatclown"
+	item_state = "swatclown"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "Your treasured boots covered in crayon. Someone's in trouble."
+		else
+			. = "Only the funniest of boots for the funniest of clowns."
 
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
