@@ -1,4 +1,9 @@
 
+(t)sun nov 03 24
+(u)FlameArrow57
+(p)21221
+(e)🆕🏅🔬|C-Feature, A-Medal, A-Science
+(*)Added a new Scientist/Research Director objective to activate 10 artifacts in a single shift, with a medal tied to it
 (t)sat nov 02 24
 (u)NightmarechaMillian
 (p)21217
