@@ -13,7 +13,6 @@ TYPEINFO(/obj/machinery/info_map)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	power_usage = 5 WATTS
 	plane = PLANE_NOSHADOW_ABOVE
-	var/atom/movable/minimap_ui_handler/minimap_ui
 	var/obj/minimap/info/infomap
 
 /obj/machinery/info_map/New()
@@ -46,8 +45,6 @@ TYPEINFO(/obj/machinery/info_map)
 
 /obj/machinery/info_map/disposing()
 	. = ..()
-	qdel(src.minimap_ui)
-	src.minimap_ui = null
 	qdel(src.infomap)
 	src.infomap = null
 
