@@ -59056,6 +59056,12 @@
 /area/station/engine/power{
 	name = "Engineering Control Room"
 	})
+"hik" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/maintenance/northeast)
 "hiW" = (
 /obj/stool,
 /obj/decal/tile_edge/stripe/corner/big2{
@@ -131981,8 +131987,8 @@ anh
 anh
 anh
 anh
-cha
-cha
+hik
+hik
 sTU
 ayV
 ayV
