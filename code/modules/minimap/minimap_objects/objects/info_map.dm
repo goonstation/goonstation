@@ -37,7 +37,12 @@ TYPEINFO(/obj/machinery/info_map)
 	if (!hud)
 		return
 	hud.add_object(src.infomap, HUD_LAYER, "CENTER,CENTER-3")
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 
+/obj/machinery/info_map/proc/user_moved(mob/user, atom/previous_loc, direction)
+	if (BOUNDS_DIST(user, src) > 0)
+		src.infomap.close(user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 /obj/machinery/info_map/disposing()
 	. = ..()
@@ -67,8 +72,9 @@ TYPEINFO(/obj/machinery/info_map)
 				usr.gpsToTurf(clicked, TRUE, timeout = 40 SECONDS)
 			else
 				usr.removeGpsPath(FALSE)
+		src.close(usr)
 
-		//now remove the map from their hud
-		var/datum/hud/hud = usr.get_hud()
+	proc/close(mob/user)
+		var/datum/hud/hud = user.get_hud()
 		hud.remove_object(src)
 
