@@ -532,7 +532,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 15
 	stamina_cost = 5
 	stamina_crit_chance = 50
@@ -737,7 +737,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	desc = "An ancient and questionably effective weapon."
-	burn_type = 0
+	burn_remains = BURN_REMAINS_ASH
 	stamina_damage = 45
 	stamina_cost = 20
 	stamina_crit_chance = 60

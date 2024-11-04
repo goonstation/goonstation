@@ -745,7 +745,7 @@
 		color_shift_lights(list(color), list(3 SECONDS))
 
 
-ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color)
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color, proc/lightning)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()
@@ -1211,3 +1211,4 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	New(newLoc)
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
+

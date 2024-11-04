@@ -135,7 +135,7 @@
 		for (var/mob/M in hearers(our_turf))
 			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
-		if(ON_COOLDOWN(src, "pipeclang", (6 DECI SECONDS)))
+		if(!ON_COOLDOWN(src, "pipeclang", 1 SECOND))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 			if(!istype(user,/mob/living/critter/small_animal))
 				damage_pipe()
@@ -193,6 +193,7 @@
 	plane = PLANE_FLOOR
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
+	var/welding_cost = 3 //! Amount of welding fuel it costs to install/remove
 
 
 	var/image/pipeimg = null
@@ -451,7 +452,7 @@
 			return		// prevent interaction with T-scanner revealed pipes
 
 		if (isweldingtool(I))
-			if (I:try_weld(user, 3, noisy = 2))
+			if (I:try_weld(user, src.welding_cost, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
 				var/atom/wloc = I.loc
@@ -2003,6 +2004,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	dpdir = 0		// broken pipes have dpdir=0 so they're not found as 'real' pipes
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
+	welding_cost = 1
 
 	New()
 		..()

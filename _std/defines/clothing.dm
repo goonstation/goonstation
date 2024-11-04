@@ -67,7 +67,8 @@ var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, S
 #define ONBACK						(1<<17)
 /// can be work on the belt
 #define ONBELT						(1<<18)
-
+/// block miasma inhalations (sterile mask)
+#define BLOCKMIASMA					(1<<19)
 
 //Suit blood flags
 #define SUITBLOOD_ARMOR 1

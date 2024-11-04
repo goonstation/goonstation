@@ -18,6 +18,10 @@
 		} \
 	} \
 
+/// Add an item to the list if not already present, if the list is null it will initialize it
+#define LAZYLISTOR(L, I) if(!L) { L = list(); } L |= I;
+
+
 #define REMOVE_FROM_UNSORTED(L, INDEX) \
 	{ \
 		L[INDEX] = L[length(L)]; \
@@ -35,3 +39,4 @@
 
 /// Accesses an associative list, returns null if nothing is found
 #define LAZYLISTACCESSASSOC(L, I, K) L ? L[I] ? L[I][K] ? L[I][K] : null : null : null
+

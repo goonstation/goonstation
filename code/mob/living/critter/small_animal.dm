@@ -73,6 +73,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
 	has_genes = TRUE
+	p_class = 1
 
 	var/aggressive = FALSE
 	var/random_name = FALSE
@@ -4128,6 +4129,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.fur_color = "#be5a53"
 		// true when making the mob to not make the respawn timer reset...false here to allow for crime
 		ghost_spawned = FALSE
+		new /obj/item/implant/access/infinite/admin_mouse(src)
+		SPAWN(1 SECOND)
+			src.bioHolder.AddEffect("radio_brain", power = 3, do_stability = FALSE, magical = TRUE)
 
 	setup_hands()
 		..()

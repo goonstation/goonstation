@@ -171,6 +171,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 		..()
 		voicetype = RANDOM_HUMAN_VOICE
 
+	disposing()
+		owner = null
+		if(src.parentHolder)
+			if(src.parentHolder.mobAppearance == src)
+				src.parentHolder.mobAppearance = null
+			src.parentHolder = null
+		src.mutant_race = null
+		src.original_mutant_race = null
+		src.customizations = null
+		..()
+
 	proc/CopyOther(var/datum/appearanceHolder/toCopy, skip_update_colorful = FALSE)
 		//Copies settings of another given holder. Used for the bioholder copy proc and such things.
 		mob_appearance_flags = toCopy.mob_appearance_flags
@@ -255,14 +266,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 			custom.style_original = customCopy.style_original
 			custom.style = customCopy.style
 			custom.offset_y = customCopy.offset_y
-
-	disposing()
-		owner = null
-		if(src.parentHolder)
-			if(src.parentHolder.mobAppearance == src)
-				src.parentHolder.mobAppearance = null
-			src.parentHolder = null
-		..()
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
@@ -758,12 +761,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(power) newEffect.power = power
 			if(timeleft) newEffect.timeLeft = timeleft
 			if(magical)
-				newEffect.curable_by_mutadone = 0
+				newEffect.curable_by_mutadone = FALSE
 				newEffect.stability_loss = 0
-				newEffect.can_scramble = 0
-				newEffect.can_reclaim = 0
+				newEffect.can_scramble = FALSE
+				newEffect.can_reclaim = FALSE
 				newEffect.degrade_to = null
-				newEffect.can_copy = 0
+				newEffect.can_copy = FALSE
+				newEffect.is_magical = TRUE
 
 			if(safety && istype(newEffect, /datum/bioEffect/power))
 				// Only powers have safety ("synced" i.e. safe for user)
@@ -864,17 +868,18 @@ var/list/datum/bioEffect/mutini_effects = list()
 		logTheThing(LOG_COMBAT, owner, "loses the [effect] mutation at [log_loc(owner)].")
 		return effects.Remove(effect.id)
 
-	proc/RemoveAllEffects(var/type = null)
+	///ignoreMagic means "do not remove magical bioeffects"
+	proc/RemoveAllEffects(var/type = null, var/ignoreMagic = FALSE)
 		for(var/D as anything in effects)
 			var/datum/bioEffect/BE = effects[D]
 			if(BE && (isnull(type) || BE.effectType == type))
-				RemoveEffect(BE.id)
-				BE.owner = null
-				BE.holder = null
-				if(istype(BE, /datum/bioEffect/power))
-					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability?.owner = null
-				//qdel(BE)
+				if(!ignoreMagic || ignoreMagic && !BE.is_magical) // No removing hairy trait or job traits!
+					RemoveEffect(BE.id)
+					BE.owner = null
+					BE.holder = null
+					if(istype(BE, /datum/bioEffect/power))
+						var/datum/bioEffect/power/BEP = BE
+						BEP?.ability?.owner = null
 		return 1
 
 	proc/RemoveAllPoolEffects(var/type = null)
@@ -1015,3 +1020,7 @@ proc/GetBioeffectResearchLevelFromGlobalListByID(var/id)
 		. = BE.research_level
 	else
 		. = 0
+
+///Bioholder type for when you need a bioholder that isn't strongly linked to an owner, uses a weakref to allow GC
+/datum/bioHolder/unlinked
+	var/datum/weakref/weak_owner = null

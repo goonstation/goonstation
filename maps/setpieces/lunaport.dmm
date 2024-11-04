@@ -7872,7 +7872,7 @@
 /area/moon/underground)
 "Dj" = (
 /obj/stool/chair/office,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/blackwhite,
 /area/moon/underground/hemera{
 	icon_state = "green";
@@ -10226,7 +10226,7 @@
 	})
 "MR" = (
 /obj/stool/chair/office,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
 	},
@@ -11629,7 +11629,7 @@
 /obj/stool/chair/office{
 	dir = 1
 	},
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/blackwhite/side,
 /area/moon/underground/hemera{
 	icon_state = "green";

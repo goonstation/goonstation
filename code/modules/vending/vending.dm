@@ -133,6 +133,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	///The product currently being vended
 	var/datum/data/vending_product/currently_vending = null // zuh
 
+	var/uses_mechcomp = TRUE //Can this vending machine take mechcomp inputs?
+
 	power_usage = 50
 
 	New()
@@ -146,8 +148,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 		AddComponent(/datum/component/mechanics_holder)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
+		if (uses_mechcomp)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -568,7 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("togglechute")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					P.loading = !P.loading
 		if("togglelock")
 			if(istype(src,/obj/machinery/vending/player))
@@ -580,7 +583,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					for (var/datum/data/vending_product/R in player_list)
 						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
@@ -589,12 +592,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if("rename")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					P.name = params["name"]
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id()?.registered == P.owner || !P.owner)
+				if(P.unlocked)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(ref(R) == params["target"])
 							P.promoimage = R.icon
@@ -670,15 +673,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 							qdel(product)
 						product.product_amount--
 					if(src.pay && vended)
+						var/obj/machinery/vending/player/vMachine = src
 						if (src.acceptcard && account)
 							account["current_money"] -= product.product_cost
 						else
 							src.credit -= product.product_cost
-						if (!player_list)
+						if (!player_list || !vMachine.owneraccount)
 							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 						else
 							//Players get 90% of profit from player vending machines QMs get 10%
-							var/obj/machinery/vending/player/vMachine = src
 							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
 							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
@@ -1248,6 +1251,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/covfefe, 10, cost=PAY_TRADESMAN, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/5, hidden=1)
 
+#ifdef SEASON_AUTUMN
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/ddpumpkinspicelatte, 15, cost=PAY_TRADESMAN/10)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie/pumpinspies, 2, cost=PAY_TRADESMAN)
+#endif
+
 /obj/machinery/vending/snack
 	name = "snack machine"
 	desc = "Tasty treats for crewman eats."
@@ -1314,6 +1325,43 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, rand(1, 6), hidden=1, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/random, rand(0, 1), hidden=1, cost=420)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/cigarillo/juicer, rand(6, 9), hidden=1, cost=69)
+
+TYPEINFO(/obj/machinery/vending/chemistry)
+	mats = 10
+
+/obj/machinery/vending/chemistry
+	name = "IgniChem"
+	desc = "An ID-selective dispenser for chemical equippment and intermediates"
+	icon_state = "ignichem"
+	icon_panel = "standard-panel"
+	icon_deny = "ignichem-deny"
+	req_access = list(access_chemistry)
+	acceptcard = 0
+	light_r = 0.9
+	light_g = 0.6
+	light_b = 0.9
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper/mechanical, 2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/dropper, 5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker, 15)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/large, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/condenser/fractional, 1)
+		product_list += new/datum/data/vending_product(/obj/item/bunsen_burner, 2)
+		product_list += new/datum/data/vending_product(/obj/item/beaker_lid, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/syringe, 5)
+		product_list += new/datum/data/vending_product(/obj/item/device/reagentscanner, 5)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/cytotoxin, amount= 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/pill_bottle/cyberpunk, amount= 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/crank, amount=rand(0, 6), hidden=1)
+
+	postvend_effect()
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		return
+
 
 TYPEINFO(/obj/machinery/vending/medical)
 	mats = 10
@@ -1462,9 +1510,9 @@ TYPEINFO(/obj/machinery/vending/medical)
 /obj/machinery/vending/security_ammo //shitsec time yes
 	name = "AmmoTech"
 	desc = "A restricted vendor stocked with various riot-suppressive ammunitions."
-	icon_state = "sec"
+	icon_state = "ammo"
 	icon_panel = "standard-panel"
-	icon_deny = "sec-deny"
+	icon_deny = "ammo-deny"
 	req_access = list(access_armory)
 	acceptcard = 0
 	light_r =1
@@ -1843,7 +1891,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/rice, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/sugar, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/butter, 10)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/spaghetti, 10)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/pasta/spaghetti, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/meatball, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/syrup, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/condiment/mayo, 5)
@@ -2094,6 +2142,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	player_list = list()
 	var/lastPlayerPrice = 0
 	icon_panel = "standard-panel"
+	uses_mechcomp = FALSE //Player vending machines can't take mechcomp inputs
 
 	New()
 		. = ..()
@@ -2289,8 +2338,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		. = ..()
 		if (src.static_data_invalid)
 			src.static_data_invalid = FALSE
-			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
-				src.update_static_data(null, ui)
+			src.update_static_data_for_all_viewers()
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()

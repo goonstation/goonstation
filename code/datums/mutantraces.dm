@@ -23,12 +23,17 @@ TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should 
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
-	var/name = null				// used for identification in diseases, clothing, etc
+	/// used for identification in diseases, clothing, etc
+	var/name = null
+
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
 	var/race_mutation = null
+
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
-	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+
+	// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+	// ^ ??????? AH.original?
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -399,6 +404,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.set_clothing_icon_dirty()
 			src.mob = null
 
+		src.AH = null
 		..()
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
@@ -2181,6 +2187,8 @@ TYPEINFO(/datum/mutantrace/cow)
 	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
 
 	on_attach(var/mob/living/carbon/human/H)
+		if(prob(0.1))
+			src.blood_id = pick("chocolate_milk", "strawberry_milk", "super_milk", "banana_milk", "blue_milk")
 		..()
 		if(ishuman(src.mob))
 			src.mob.update_face()

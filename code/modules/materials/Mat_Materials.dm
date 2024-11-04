@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/datum/material)
 	//material procs
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
-		for(var/datum/material_property/P in properties)
+		for(var/datum/material_property/P as anything in properties)
 			if(P.id == property)
 				switch(type)
 					if(VALUE_CURRENT)
@@ -286,28 +286,28 @@ ABSTRACT_TYPE(/datum/material)
 	proc/removeProperty(var/property)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutable material!")
-		for(var/datum/material_property/P in properties)
+		for(var/datum/material_property/P as anything in properties)
 			if(P.id == property)
 				P.onRemoved(src)
 				properties.Remove(P)
 				return
 		return
 
-	proc/adjustProperty(var/property, var/value)
+	proc/adjustProperty(property_id, value)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutable material!")
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
+		for(var/datum/material_property/P as anything in properties)
+			if(P.id == property_id)
 				src.properties[P] = clamp(properties[P]+value, P.min_value, P.max_value)
 				P.onValueChanged(src, properties[P])
 				return
 		return
 
-	proc/setProperty(var/property, var/value)
+	proc/setProperty(property_id, value)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutable material!")
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
+		for(var/datum/material_property/P as anything in properties)
+			if(P.id == property_id)
 				src.properties[P] = clamp(value, P.min_value, P.max_value)
 				P.onValueChanged(src, src.properties[P])
 				return
@@ -316,17 +316,17 @@ ABSTRACT_TYPE(/datum/material)
 			buildMaterialPropertyCache()
 
 		//if it's not already in .properties, add it and trigger onadd
-		for(var/datum/material_property/P in materialProps)
-			if(P.id == property)
+		for(var/datum/material_property/P as anything in materialProps)
+			if(P.id == property_id)
 				properties.Add(P)
 				P.onAdded(src, value)
 				src.properties[P] = clamp(value, P.min_value, P.max_value)
 				P.onValueChanged(src, src.properties[P])
 		return
 
-	proc/hasProperty(var/property)
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
+	proc/hasProperty(property_id)
+		for(var/datum/material_property/P as anything in properties)
+			if(P.id == property_id)
 				return 1
 		return 0
 
@@ -951,7 +951,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	name = "quartz"
 	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
-	alpha = 220
+	alpha = 180
 	var/gem_tier = 3
 
 	New()
