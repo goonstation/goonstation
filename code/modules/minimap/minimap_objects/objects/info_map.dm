@@ -37,6 +37,7 @@ TYPEINFO(/obj/machinery/info_map)
 	if (!hud)
 		return
 	hud.add_object(src.infomap, HUD_LAYER, "CENTER,CENTER-3")
+	user.apply_color_matrix(COLOR_MATRIX_SHADE, COLOR_MATRIX_SHADE_LABEL)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
 
 /obj/machinery/info_map/proc/user_moved(mob/user, atom/previous_loc, direction)
@@ -52,10 +53,13 @@ TYPEINFO(/obj/machinery/info_map)
 	name = "Information Map"
 	map_path = /datum/minimap/area_map/transparent
 	map_type = MAP_INFO
-	alpha = 200
 	plane = PLANE_HUD
 	layer = HUD_LAYER
 	var/obj/machinery/info_map/display = null
+
+	New()
+		. = ..()
+		src.appearance_flags |= NO_CLIENT_COLOR
 
 	initialise_minimap()
 		. = ..()
@@ -74,6 +78,7 @@ TYPEINFO(/obj/machinery/info_map)
 
 	proc/close(mob/user)
 		display.UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		user.remove_color_matrix(COLOR_MATRIX_SHADE_LABEL)
 		var/datum/hud/hud = user.get_hud()
 		hud.remove_object(src)
 
