@@ -1,5 +1,4 @@
 /datum/unit_test/mutation_combo_valid_ids/Run()
-	var/list/ids = list()
 	for(var/recipe in concrete_typesof(/datum/geneticsrecipe))
 		var/datum/geneticsrecipe/G = new recipe
 		for(var/part in G.required_effects)
