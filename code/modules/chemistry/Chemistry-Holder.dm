@@ -155,6 +155,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		total_temperature = clamp(total_temperature, temperature_min, temperature_cap) //Cap for the moment.
 
+		reagents_changed()
+
 		update_total()
 
 		temperature_react()
