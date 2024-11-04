@@ -387,12 +387,29 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
-	icon_state = "cowboy"
-	color = "#FF0000"
+	icon_state = "boomboots"
 	step_sound = "explosion"
 	contraband = 10
 	step_priority = 999
 	is_syndicate = 1
+
+	equipped(mob/user, slot)
+		. = ..()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_step))
+
+	unequipped(mob/user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		. = ..()
+
+	proc/on_step(mob/user, atom/previous_loc, dir)
+		var/turf/T = get_turf(user)
+		if (user.lying || !(T.turf_flags & MOB_STEP))
+			return
+		if (prob(10))
+			if (ON_COOLDOWN(src, "EXPLOSION", 1 SECOND))
+				return
+			var/turf/explosion_target = get_turf(pick(view(8, user)))
+			new /obj/effects/explosion/dangerous(explosion_target)
 
 /obj/item/clothing/shoes/ziggy
 	name = "familiar boots"

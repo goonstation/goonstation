@@ -17,7 +17,7 @@
 	if (isalive(usr))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
 
-	if (!istype(usr, /mob/dead/target_observer))
+	if (!isobserver(usr) && !isintangible(usr))
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br>[SPAN_ALERT("<B>[src.name]</B> is too far away to see clearly.")]"
 
@@ -410,7 +410,7 @@
 		items = copytext(items, 3)
 		. += "<br>[SPAN_NOTICE("[src] is juggling [items]!")]"
 
-	if (src.reagents.has_reagent("ethanol"))
+	if (src.reagents.has_reagent("ethanol") && !isdead(src) && !src.hasStatus("paralysis"))
 		var/et_amt = src.reagents.get_reagent_amount("ethanol")
 		var/drunk_assess = ""
 		if (!isalcoholresistant(src) || src.reagents.has_reagent("moonshine"))

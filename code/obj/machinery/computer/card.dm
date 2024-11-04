@@ -37,30 +37,6 @@
 /obj/machinery/computer/card/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "id2"
-/obj/item/acesscomputerunfolder
-	icon = 'icons/obj/items/storage.dmi'
-	item_state = "hopcaseC"
-	icon_state = "hopcaseC"
-
-	force = 8
-	throw_speed = 1
-	throw_range = 4
-	w_class = W_CLASS_BULKY
-	stamina_damage = 40
-	stamina_cost = 17
-	stamina_crit_chance = 10
-
-	burn_point = 2500
-	burn_output = 2500
-	burn_possible = TRUE
-	health = 10
-
-	New(var/loc, var/obj/object)
-		..(loc)
-		src.set_loc(loc)
-		src.name = "foldable portable identification computer"
-		src.desc = "A briefcase with an identification computer inside. A breakthrough in briefcase technology!"
-		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/machinery/computer/card/portable
 	name = "portable identification computer"

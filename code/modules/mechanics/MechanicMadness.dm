@@ -2688,7 +2688,7 @@
 				if (H.wear_mask && H.wear_mask.vchange)
 					if (istype(H.wear_id, /obj/item/card/id))
 						var/obj/item/card/id/ID = H.wear_id
-						heardname = ID.registered
+						heardname = ID.registered || "Unknown"
 					else
 						heardname = "Unknown"
 				else if (H.vdisfigured)
