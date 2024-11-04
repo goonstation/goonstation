@@ -20827,7 +20827,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "buj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
