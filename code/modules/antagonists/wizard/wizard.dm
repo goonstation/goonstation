@@ -39,7 +39,7 @@
 		H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#FFFFFF"
 		H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#FFFFFF"
 		H.bioHolder.mobAppearance.customizations["hair_top"].color = "#FFFFFF"
-		H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/gimmick/wiz
+		H.bioHolder.mobAppearance.customizations["hair_middle"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/gimmick/wiz)
 		H.update_colorful_parts()
 
 		// Assign wizard attire.

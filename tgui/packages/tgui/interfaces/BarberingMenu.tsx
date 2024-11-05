@@ -254,13 +254,13 @@ const HairPortionItem = (props) => {
 const HairPortionList = () => {
   return (
     <Tabs vertical mb={0}>
-      <HairPortionItem hairPortion="top" icon="arrows-up-to-line">
+      <HairPortionItem hairPortion="hair_top" icon="arrows-up-to-line">
         Top
       </HairPortionItem>
-      <HairPortionItem hairPortion="middle" icon="arrow-down-up-across-line">
+      <HairPortionItem hairPortion="hair_middle" icon="arrow-down-up-across-line">
         Middle
       </HairPortionItem>
-      <HairPortionItem hairPortion="bottom" icon="arrows-down-to-line">
+      <HairPortionItem hairPortion="hair_bottom" icon="arrows-down-to-line">
         Bottom
       </HairPortionItem>
     </Tabs>

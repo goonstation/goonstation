@@ -611,30 +611,39 @@ datum
 					return
 
 				if (probmult(8) && (M.gender == "male"))
-					if (M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "gt" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "neckbeard" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
-						var/second_type = pick(/datum/customization_style/beard/gt,/datum/customization_style/beard/neckbeard,/datum/customization_style/beard/fullbeard,/datum/customization_style/beard/longbeard)
-						M.bioHolder.mobAppearance.customizations["hair_middle"].style =  new second_type
-						M.set_face_icon_dirty()
-						boutput(M, SPAN_NOTICE("You feel manly!"))
+					var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
+					var/beard_list = list("gt", "neckbeard", "fullbeard", "longbeard")
+					for (var/datum/customizationHolder/facial_hair/beard in AH.customizations)
+						if (beard.style.id in beard_list)
+							return
+					var/list/datum/customization_style/beard/second_type = pick(
+						/datum/customization_style/beard/gt,
+						/datum/customization_style/beard/neckbeard,
+						/datum/customization_style/beard/fullbeard,
+						/datum/customization_style/beard/longbeard
+					)
+					AH.customizations["beard"] = new /datum/customizationHolder/facial_hair(new second_type)
+					M.set_face_icon_dirty()
+					boutput(M, SPAN_NOTICE("You feel manly!"))
 
-				if (probmult(8))
-					M.say(pick("God Jesus what the fuck.",\
-					"It's just like, damn, man.",\
-					"I remember playing the banana game at boarding school.",\
-					"It's kinda hard knowing you've nothing to go home to except a crater.",\
-					"The only good hug is a dead hug.",\
-					"Tried to fart stealthily in class. Sharted. Why the hell do you think my suit is brown?",\
-					"I remember my first holiday away from my parents. Costa Concordia, the ship was called.",\
-					"Cry because it's over, don't smile because it happened.",\
-					"They say when you are missing someone that they are probably feeling the same, but I don't think it's possible for you to miss me as much as I'm missing you right now.",\
-					"Why do beautiful songs make you sad? Because they aren't true.",\
-					"Tears are words that need to be written.",\
-					"I'm lonely. And I'm lonely in some horribly deep way and for a flash of an instant, I can see just how lonely, and how deep this feeling runs. And it scares the shit out of me to be this lonely because it seems catastrophic.",\
-					"Someday, we'll run into each other again, I know it. Maybe I'll be older and smarter and just plain better. If that happens, that's when I'll deserve you. But now, at this moment, you can't hook your boat to mine, because I'm liable to sink us both.",\
-					"There you go...let it all slide out. Unhappiness can't stick in a person's soul when it's slick with tears.",\
-					"I was in the biggest breakdown of my life when I stopped crying long enough to let the words of my epiphany really sink in. Karma had finally made her way around and had just slapped me right across the face. The realization only made me cry harder.",\
-					"I waste at least an hour every day lying in bed. Then I waste time pacing. I waste time thinking. I waste time being quiet and not saying anything because I'm afraid I'll stutter."))
-				..()
+					if (probmult(8))
+						M.say(pick("God Jesus what the fuck.",\
+						"It's just like, damn, man.",\
+						"I remember playing the banana game at boarding school.",\
+						"It's kinda hard knowing you've nothing to go home to except a crater.",\
+						"The only good hug is a dead hug.",\
+						"Tried to fart stealthily in class. Sharted. Why the hell do you think my suit is brown?",\
+						"I remember my first holiday away from my parents. Costa Concordia, the ship was called.",\
+						"Cry because it's over, don't smile because it happened.",\
+						"They say when you are missing someone that they are probably feeling the same, but I don't think it's possible for you to miss me as much as I'm missing you right now.",\
+						"Why do beautiful songs make you sad? Because they aren't true.",\
+						"Tears are words that need to be written.",\
+						"I'm lonely. And I'm lonely in some horribly deep way and for a flash of an instant, I can see just how lonely, and how deep this feeling runs. And it scares the shit out of me to be this lonely because it seems catastrophic.",\
+						"Someday, we'll run into each other again, I know it. Maybe I'll be older and smarter and just plain better. If that happens, that's when I'll deserve you. But now, at this moment, you can't hook your boat to mine, because I'm liable to sink us both.",\
+						"There you go...let it all slide out. Unhappiness can't stick in a person's soul when it's slick with tears.",\
+						"I was in the biggest breakdown of my life when I stopped crying long enough to let the words of my epiphany really sink in. Karma had finally made her way around and had just slapped me right across the face. The realization only made me cry harder.",\
+						"I waste at least an hour every day lying in bed. Then I waste time pacing. I waste time thinking. I waste time being quiet and not saying anything because I'm afraid I'll stutter."))
+					..()
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -805,10 +814,11 @@ datum
 						logTheThing(LOG_COMBAT, H, "was gibbed by the reagent [name].")
 						H.gib()
 						return
-					if(H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "dreads" || H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard")
+					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+					if(AH.customizations["hair_bottom"].style.id != "dreads" || AH.customizations["hair_middle"].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
-						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
+						AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/long/dreads)
+						AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")
 

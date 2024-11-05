@@ -1051,12 +1051,15 @@ var/list/radio_brains = list()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 			if (M.AH_we_spawned_with)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
-				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
-				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
-				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
-				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
+				var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
+				var/datum/appearanceHolder/spawn_AH = M.AH_we_spawned_with
+				var/hair_slots = list("hair_bottom", "hair_middle", "hair_top")
+				for (var/slot in hair_slots)
+					var/datum/customizationHolder/holder = AH.getCustomizationByID(slot)
+					var/datum/customizationHolder/spawn_holder = spawn_AH.customizations[slot]
+					if (istype(holder) && istype(spawn_holder))
+						holder.color = fix_colors(spawn_holder.color)
+						holder.set_style(spawn_holder.style)
 
 			M.hair_override = 1
 			M.bioHolder.mobAppearance.UpdateMob()

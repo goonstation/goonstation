@@ -186,17 +186,18 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		..()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#281400"
-		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
-		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/gimmick/shitty_beard_stains
-		bioHolder.mobAppearance.customizations["hair_top"].color = "#663300"
+		var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
+		AH.customizations["hair_bottom"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/hair/gimmick/shitty_beard)
+		AH.customizations["hair_bottom"].color = "#281400"
+		AH.customizations["hair_middle"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/short/pomp)
+		AH.customizations["hair_middle"].color = "#241200"
+		AH.customizations["hair_top"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/hair/gimmick/shitty_beard_stains)
+		AH.customizations["hair_top"].color = "#663300"
 		bioHolder.age = 63
 		bioHolder.bloodType = "A+"
-		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "briefs"
-		bioHolder.mobAppearance.u_color = "#996633"
+		AH.gender = "male"
+		AH.underwear = "briefs"
+		AH.u_color = "#996633"
 		. = ..()
 
 	// John Bill always goes to the afterlife bar.

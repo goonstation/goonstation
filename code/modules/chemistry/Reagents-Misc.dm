@@ -333,13 +333,15 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
+					var/datum/customization_style
+					var/list/datum/customization_style/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
+					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+					AH.customizations["hair_bottom"].set_style(new hair_type)
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new hair_type
+					AH.customizations["hair_middle"].set_style(new hair_type)
 					hair_type = pick(hair_styles)
-					H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
+					AH.customizations["hair_top"].set_style(new hair_type)
 					H.update_colorful_parts()
 					boutput(H, SPAN_NOTICE("Your scalp feels itchy!"))
 				..()
@@ -361,16 +363,17 @@ datum
 				if (!M) M = holder.my_atom
 
 				if (ishuman(M))
-					var/somethingchanged = 0
+					var/somethingchanged = FALSE
 					var/mob/living/carbon/human/H = M
-					if (H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "80s")
-						H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/eighties
-						somethingchanged = 1
-					if (H.gender == MALE && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
-						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/longbeard
-						somethingchanged = 1
+					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+					if (AH.customizations["hair_bottom"].style.id != "80s")
+						AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/long/eighties)
+						somethingchanged = TRUE
+					if (H.gender == MALE && AH.customizations["hair_middle"].style.id != "longbeard")
+						AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
+						somethingchanged = TRUE
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
-						somethingchanged = 1
+						somethingchanged = TRUE
 						for (var/obj/item/clothing/O in H)
 							if (istype(O,/obj/item/clothing/mask))
 								H.u_equip(O)
