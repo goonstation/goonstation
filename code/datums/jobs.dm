@@ -268,8 +268,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	rounds_needed_to_play = ROUNDS_MIN_CAPTAIN
 
 	derelict
-		//name = "Nanotrasen Squad Leader"
-		name = "Nanotrasen Emergency Squad Leader"
+		name = null //name = "Nanotrasen Emergency Squad Leader"
 		limit = 0
 		slot_suit = list(/obj/item/clothing/suit/space/ntso)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -318,7 +317,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 
 	derelict //no need to lock a special spawn behind a HOS whitelist
-		name = "Nanotrasen Emergency Response Operative"
+		name = null //Nanotrasen Emergency Response Operative
 		limit = 0
 		access_string = "Captain"
 		receives_implants = list(/obj/item/implant/health)
@@ -403,7 +402,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
 	derelict
-		name = "Nanotrasen Emergency Response Technician"//"Nanotrasen Emergency Response Technician"
+		name = null //"Nanotrasen Emergency Response Technician"
 		limit = 0
 		access_string = "Captain"
 		slot_back = list(/obj/item/storage/backpack/NT)
@@ -482,7 +481,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/device/flash)
 
 	derelict
-		name = "Nanotrasen Emergency Response Medic" //Nanotrasen Emergency Response Medic
+		name = null //Nanotrasen Emergency Response Medic
 		limit = 0
 		access_string = "Captain"
 		slot_back = list(/obj/item/storage/backpack/NT)
