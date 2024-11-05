@@ -856,7 +856,7 @@
 	time = 5 SECONDS
 	category = "Tool"
 
-/datum/manufacture/dropper
+/datum/manufacture/dropper_funnel
 	name = "Dropper Funnel"
 	item_requirements = list("molitz" = 3)
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)

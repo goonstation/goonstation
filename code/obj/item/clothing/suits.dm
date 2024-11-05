@@ -2104,6 +2104,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
 		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
 
+/obj/item/clothing/suit/security_badge/paper
+	name = "Hall Monitor Badge"
+	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
+	icon_state = "security_badge_paper"
+
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"
 	desc = ""

@@ -1,5 +1,15 @@
 
 (t)mon nov 04 24
+(u)Egregorious
+(p)20960
+(e)⚖🍝🌱|C-Balance, A-Catering, A-Hydroponics
+(+)Botany's jelly beans are a lot more colourful.
+(u)LeahTheTech
+(*)Mirabilis is no longer a secret chem and has a simplified recipe: 1 Coagulated Gnesis + 1 Port + 1 Oculine = 2 Mirabilis.
+(u)Klushy225
+(p)21052
+(e)🎨🐣|C-Sprites, A-Respawning
+(+)Adds the Hall Monitor gimmick job.
 (u)JORJ949
 (p)21200
 (e)💅📦|C-QoL, A-Game-Objects
