@@ -64,8 +64,8 @@ TYPEINFO_NEW(/datum/component/barber)
 	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH)), "hair_type" = /datum/customization_style/hair/short/bald))
 
 	for (var/datum/customization_style/style as anything in all_hair_types)
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon(initial(style.icon), initial(getID()), SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
-		src.all_hairs += list(initial(style.name) = list("hair_id" = initial(getID()), "hair_icon" = hair_icon, "hair_type" = style))
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon(initial(style.icon), initial(style.id), SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		src.all_hairs += list(initial(style.name) = list("hair_id" = initial(style.id), "hair_icon" = hair_icon, "hair_type" = style))
 
 ABSTRACT_TYPE(/datum/component/barber)
 /datum/component/barber
