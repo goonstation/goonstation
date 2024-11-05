@@ -26,6 +26,8 @@ TYPEINFO(/datum/customization_style)
 // typeinfo macro doesn't play nice with absolute pathed types so here we are
 TYPEINFO(/datum/customization_style/hair/gimmick)
 	gimmick = TRUE
+TYPEINFO(/datum/customization_style/beard/gimmick)
+	gimmick = TRUE
 /datum/customization_style
 	var/name = null
 	var/id = null
@@ -785,12 +787,6 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			shitty_hair
 				name = "Shitty Hair"
 				id = "shitty_hair"
-			shitty_beard
-				name = "Shitty Beard"
-				id = "shitty_beard"
-			shitty_beard_stains
-				name = "Shitty Beard Stains"
-				id = "shitty_beard_stains"
 	moustache
 		fu
 			name = "Biker"
@@ -874,6 +870,13 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		trampstains
 			name = "Tramp: Beard Stains"
 			id = "trampstains"
+		gimmick
+			shitty_beard
+				name = "Shitty Beard"
+				id = "shitty_beard"
+			shitty_beard_stains
+				name = "Shitty Beard Stains"
+				id = "shitty_beard_stains"
 	sideburns
 		elvis
 			name = "Elvis"

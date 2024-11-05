@@ -38,12 +38,9 @@
 
 	initializeBioholder()
 		var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
-		AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/short/short)
-		AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
-		AH.customizations["hair_top"] = new /datum/customizationHolder/face_detail(new /datum/customization_style/eyebrows/eyebrows)
-		AH.customizations["hair_bottom"].color = "#555555"
-		AH.customizations["hair_middle"].color = "#555555"
-		AH.customizations["hair_top"].color = "#555555"
+		AH.addCustomization("hair_bottom", "#555555", /datum/customizationHolder/hair, /datum/customization_style/hair/short/short)
+		AH.addCustomization("hair_middle", "#555555", /datum/customizationHolder/facial_hair, /datum/customization_style/beard/fullbeard)
+		AH.addCustomization("hair_top", "#555555", /datum/customizationHolder/face_detail, /datum/customization_style/eyebrows/eyebrows)
 		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets

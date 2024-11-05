@@ -415,7 +415,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		var/datum/appearanceHolder/AH = bioHolder.mobAppearance
 		AH.addCustomization("hair_bottom", "#292929", /datum/customizationHolder/hair, /datum/customization_style/hair/gimmick/shitty_hair)
-		AH.addCustomization("hair_middle", "#292929", /datum/customizationHolder/facial_hair, /datum/customization_style/hair/gimmick/shitty_beard)
+		AH.addCustomization("hair_middle", "#292929", /datum/customizationHolder/facial_hair, /datum/customization_style/beard/gimmick/shitty_beard)
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		AH.gender = "male"
