@@ -394,8 +394,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	New(var/datum/customization_style/S)
 		if (src.is_valid_style(S))
-			src.style = new S
-			src.style_original = new S
+			var/datum/customization_style/new_S = ispath(S) ? new S : S
+			src.style = new_S
+			src.style_original = new_S
 		..()
 
 	/// Proc to set a style, so long as it's in allowed_style_types
