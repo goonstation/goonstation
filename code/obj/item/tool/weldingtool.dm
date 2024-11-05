@@ -144,7 +144,7 @@
 				var/turf/target_turf = O
 				target_turf.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(user, SPAN_NOTICE("You heat \the [O.name]"))
+				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 
 	attack_self(mob/user as mob)
