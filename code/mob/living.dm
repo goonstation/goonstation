@@ -2147,7 +2147,7 @@
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].set_style(new hair_type)
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
@@ -2155,7 +2155,7 @@
 			src.flash(60)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].set_style(new hair_type)
 				H.set_face_icon_dirty()
 
 			var/turf/T = get_turf(src)

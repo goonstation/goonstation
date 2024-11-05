@@ -722,6 +722,7 @@ var/list/removed_jobs = list(
 
 			if ("update-detail-style")
 				var/new_style
+				// Muterace TODO: Refactor this
 				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)

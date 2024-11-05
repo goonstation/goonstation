@@ -231,6 +231,7 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
+		// Muterace TODO: Fucking refactor all this crap
 		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].getIcon(), icon_state = AHead.customizations["hair_bottom"].getID(), layer = AHead.customizations["hair_bottom"].getDefaultLayer())
 		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].getIcon(), icon_state = AHead.customizations["hair_middle"].getID(), layer = AHead.customizations["hair_middle"].getDefaultLayer())
 		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].getIcon(), icon_state = AHead.customizations["hair_top"].getID(), layer = AHead.customizations["hair_top"].getDefaultLayer())

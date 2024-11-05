@@ -266,6 +266,7 @@
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
 
+			// Muterace TODO: Refactor this
 			if(!istype(src.AH.customizations["hair_bottom"].style, /datum/customization_style))
 				src.AH.customizations["hair_bottom"].style = find_style_by_name(src.AH.customizations["hair_bottom"].style, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customizations["hair_middle"].style, /datum/customization_style))
