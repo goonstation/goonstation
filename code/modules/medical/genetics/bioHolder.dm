@@ -420,7 +420,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/getID()
 		if (isnull(src.style))
 			return "none"
-		return src.getID()
+		return src.style.id
 
 	/// Resets styles back to null or style_original
 	proc/reset_styles(toOriginal = FALSE)
