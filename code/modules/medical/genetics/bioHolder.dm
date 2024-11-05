@@ -422,11 +422,17 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return "none"
 		return src.style.id
 
-	/// Gets the ID of a style, or if there is no style, returns "none"
+	/// Gets the icon of a style, or if there is no style, returns 'icons/mob/human_hair.dmi'
 	proc/getIcon()
 		if (isnull(src.style))
 			return 'icons/mob/human_hair.dmi' // Is this good? The alternative is to make any new style and fetch the icon. I don't know.
 		return src.style.icon
+
+	/// Gets the default_layer of a style, or if there is no style, returns MOB_HAIR_LAYER1
+	proc/getDefaultLayer()
+		if (isnull(src.style))
+			return MOB_HAIR_LAYER1
+		return src.style.default_layer
 
 	/// Resets styles back to null or style_original
 	proc/reset_styles(toOriginal = FALSE)
