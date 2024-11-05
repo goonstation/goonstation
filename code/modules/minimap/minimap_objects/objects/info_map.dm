@@ -14,13 +14,14 @@ TYPEINFO(/obj/machinery/info_map)
 	power_usage = 5 WATTS
 	plane = PLANE_NOSHADOW_ABOVE
 	var/obj/minimap/info/infomap
+#ifdef IN_MAP_EDITOR
+	pixel_y = 29
+#endif
 
 /obj/machinery/info_map/New()
 	. = ..()
 	src.infomap = new()
 	src.infomap.display = src
-	src.infomap.initialise_minimap()
-	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
 
 	// reposition onto wall
 	if(pixel_y == 0 && pixel_x == 0)
@@ -28,6 +29,15 @@ TYPEINFO(/obj/machinery/info_map)
 			pixel_y = 32
 		else
 			pixel_y = 29
+
+/obj/machinery/info_map/initialize()
+	. = ..()
+	src.infomap.initialise_minimap()
+	src.infomap.map.create_minimap_marker(src, 'icons/obj/minimap/minimap_markers.dmi', "pin")
+
+/obj/machinery/info_map/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.initialize()
 
 /obj/machinery/info_map/attack_hand(mob/user)
 	. = ..()
