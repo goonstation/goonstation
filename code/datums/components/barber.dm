@@ -491,7 +491,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	for (var/slot in hair_slots)
 		var/datum/customizationHolder/hair/holder = new_AH.getCustomizationByID(slot)
 		if (istype(holder))
-			current_hair_style[slot] = holder.style.name
+			current_hair_style[slot] = holder.getName()
 
 	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = src.hair_portion, "current_hair_style" = current_hair_style)
 

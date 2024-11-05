@@ -394,27 +394,41 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	New(var/datum/customization_style/S)
 		if (src.is_valid_style(S))
-			src.style = S
-			src.style_original = S
+			src.style = new S
+			src.style_original = new S
 		..()
 
 	/// Proc to set a style, so long as it's in allowed_style_types
 	/// Pretty please use this instead of setting styles directly on the holder, or else I'll cry
-	proc/set_style(var/datum/customization_style/S, var/original = FALSE)
+	proc/set_style(var/datum/customization_style/S = /datum/customization_style/hair/short/bald, var/original = FALSE)
 		if (isnull(S))
 			src.reset_styles()
 			src.reset_colors()
-		if (src.is_valid_style(S))
+		else if (src.is_valid_style(S))
+			var/datum/customization_style/new_S = ispath(S) ? new S : S
 			if (original)
-				src.style_original = S
+				src.style_original = new_S
 			else
-				src.style = S
+				src.style = new_S
 		else
 			CRASH("Tried adding an unsupported customization_style [S] inside holder [src]")
 
 	/// Proc to check if the style submitted is allowed inside this holder
 	proc/is_valid_style(var/datum/customization_style/style_to_check)
-		return istypes(style_to_check, allowed_style_types)
+		if(ispath(style_to_check))
+			for(var/type in allowed_style_types)
+				if(ispath(style_to_check, type))
+					return TRUE
+			return FALSE
+		else
+			return istypes(style_to_check, allowed_style_types)
+
+	/// Gets the name of a style, or if there is no style, returns "Bald"
+	/// "Bald", the absence of hair, the true null type of all hair if you will
+	proc/getName()
+		if (isnull(src.style))
+			return "Bald"
+		return src.style.name
 
 	/// Gets the ID of a style, or if there is no style, returns "none"
 	proc/getID()
@@ -425,7 +439,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// Gets the icon of a style, or if there is no style, returns 'icons/mob/human_hair.dmi'
 	proc/getIcon()
 		if (isnull(src.style))
-			return 'icons/mob/human_hair.dmi' // Is this good? The alternative is to make any new style and fetch the icon. I don't know.
+			return 'icons/mob/human_hair.dmi'
 		return src.style.icon
 
 	/// Gets the default_layer of a style, or if there is no style, returns MOB_HAIR_LAYER1
@@ -434,12 +448,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return MOB_HAIR_LAYER1
 		return src.style.default_layer
 
-	/// Resets styles back to null or style_original
+	/// Resets styles back to "bald" or style_original
+	/// Yes, "Bald" is the null type
 	proc/reset_styles(toOriginal = FALSE)
 		if (toOriginal)
 			src.style  = src.style_original
 		else
-			src.style = null
+			src.style = new /datum/customization_style/hair/short/bald
 
 	/// Resets colors back to "#101010" or color_original
 	proc/reset_colors(toOriginal = FALSE)

@@ -219,7 +219,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			customization_first.style = new type_first
 
 	if (!has_second)
-		var/hair_detail = hair_details[customization_first.style.name] // check for detail styles for our chosen style
+		var/hair_detail = hair_details[customization_first.getName()] // check for detail styles for our chosen style
 
 		if (hair_detail && prob(50)) // found something in the list
 			customization_second = new hair_detail // default to being whatever we found

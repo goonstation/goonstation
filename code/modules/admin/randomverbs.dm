@@ -945,7 +945,7 @@
 			dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a>"
 			dat += "<font face=\"fixedsys\" size=\"3\" color=\"[AH.customizations[value].color]\">"
 			dat += "<table bgcolor=\"[AH.customizations[value].color]\"><tr><td>C1</td></tr></table></font>"
-			dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[AH.customizations[value].style.name]</a>"
+			dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[AH.customizations[value].getName()]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[AH.e_color]\"><table bgcolor=\"[AH.e_color]\"><tr><td>EC</td></tr></table></font>"
