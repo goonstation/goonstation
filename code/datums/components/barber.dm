@@ -182,7 +182,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		thing.visible_message(SPAN_ALERT("<b>[user]</b> quickly shaves off [M]'s beard!"))
 		M.bioHolder.AddEffect("arcane_shame", timeleft = 120)
 		var/datum/customizationHolder/hair/holder = new_AH.getCustomizationByID("hair_middle") // This is such a jank solution
-		holder.reset_holder()
+		holder.reset_styles()
 		M.set_face_icon_dirty()
 		M.emote("cry")
 		M.emote("scream")
@@ -529,7 +529,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 						if (new_hairstyle)
 							holder.set_style(new_hairstyle)
 						else
-							holder.reset_holder()
+							holder.reset_styles()
 
 					src.reference_clothes(src.barbee, src.preview.preview_thing)
 					src.preview.update_appearance(src.new_AH)
@@ -757,6 +757,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cuts = "shaves"
 	cutting = "shaving"
 
+	// Muterace TODO: Optimize this
 	getHairStyles()
 		return get_available_custom_style_types(filter_type=/datum/customization_style/beard) \
 					+ get_available_custom_style_types(filter_type=/datum/customization_style/moustache) \

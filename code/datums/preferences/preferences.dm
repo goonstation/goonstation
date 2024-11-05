@@ -778,11 +778,11 @@ var/list/removed_jobs = list(
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
-							src.AH.customizations["hair_bottom"].style = new new_style
+							src.AH.customizations["hair_bottom"].set_style(new_style)
 						if ("custom2")
-							src.AH.customizations["hair_middle"].style = new new_style
+							src.AH.customizations["hair_middle"].set_style(new_style)
 						if ("custom3")
-							src.AH.customizations["hair_top"].style = new new_style
+							src.AH.customizations["hair_top"].set_style(new_style)
 						if ("underwear")
 							src.AH.underwear = new_style
 					src.update_preview_icon()
@@ -981,14 +981,11 @@ var/list/removed_jobs = list(
 				src.AH.gender = MALE
 				src.randomize_name()
 
-				src.AH.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/short
-				src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
-				src.AH.customizations["hair_top"].style = new /datum/customization_style/none
+				src.AH.resetCustomizationStyles()
+				src.AH.resetCustomizationColors(TRUE)
+				src.AH.addCustomization("hair_bottom", /datum/customizationHolder/hair, /datum/customization_style/hair/short/short)
 				src.AH.underwear = "No Underwear"
 
-				src.AH.customizations["hair_bottom"].color = initial(src.AH.customizations["hair_bottom"].color)
-				src.AH.customizations["hair_middle"].color = initial(src.AH.customizations["hair_middle"].color)
-				src.AH.customizations["hair_top"].color = initial(src.AH.customizations["hair_top"].color)
 				src.AH.e_color = "#101010"
 				src.AH.u_color = "#FEFEFE"
 
@@ -1877,18 +1874,8 @@ var/list/removed_jobs = list(
 			src.AH = new
 		if (src.AH.gender != src.gender)
 			src.AH.gender = src.gender
-		if (src.AH.customizations["hair_bottom"].color == null)
-			src.AH.customizations["hair_bottom"].color = "#101010"
-		if (src.AH.customizations["hair_bottom"].style == null)
-			src.AH.customizations["hair_bottom"].style = new  /datum/customization_style/none
-		if (src.AH.customizations["hair_middle"].color == null)
-			src.AH.customizations["hair_middle"].color = "#101010"
-		if (src.AH.customizations["hair_middle"].style == null)
-			src.AH.customizations["hair_middle"].style = new /datum/customization_style/none
-		if (src.AH.customizations["hair_top"].color == null)
-			src.AH.customizations["hair_top"].color = "#101010"
-		if (src.AH.customizations["hair_top"].style == null)
-			src.AH.customizations["hair_top"].style = new /datum/customization_style/none
+
+		src.AH.resetCustomizations()
 		if (src.AH.e_color == null)
 			src.AH.e_color = "#101010"
 		if (src.AH.u_color == null)

@@ -800,7 +800,7 @@ proc/compare_ornament_score(list/a, list/b)
 
 		AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/short/balding)
 		AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
-		AH.customizations["hair_top"] = new /datum/customizationHolder/face_misc(new /datum/customization_style/eyebrows/eyebrows)
+		AH.customizations["hair_top"] = new /datum/customizationHolder/face_detail(new /datum/customization_style/eyebrows/eyebrows)
 
 		. = ..()
 

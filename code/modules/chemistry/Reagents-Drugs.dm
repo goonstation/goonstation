@@ -47,8 +47,8 @@ datum
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-					if (check < 8 && AH.customizations["beard"].style.id != "tramp") // M.is_hobo = very yes
-						AH.customizations["beard"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/tramp)
+					if (check < 8 && AH.customizations["hair_middle"].style.id != "tramp") // M.is_hobo = very yes
+						AH.addCustomization("hair_middle", null, /datum/customizationHolder/facial_hair, /datum/customization_style/beard/tramp)
 						H.set_face_icon_dirty()
 						boutput(M, SPAN_ALERT("<b>You feel gruff!</b>"))
 						SPAWN(0.3 SECONDS)

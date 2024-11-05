@@ -234,7 +234,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 					if (prob(5))
 						customization_third.color = randomize_hair_color(pick(hair_colors))
 				else
-					customization_third = new /datum/customization_style/none
+					customization_third = null
 
 			customization_second.color = random_saturated_hex_color() // if you have a detail style you're likely to want a crazy color
 			if (prob(15))
@@ -247,11 +247,11 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 				customization_second.color = random_saturated_hex_color()
 			else
 				customization_second.color = randomize_eye_color(pick(eye_colors))
-			customization_third.style = new /datum/customization_style/none
+			customization_third.style = null
 
 		else // otherwise, nada
-			customization_second.style = new /datum/customization_style/none
-			customization_third.style = new /datum/customization_style/none
+			customization_second.style = null
+			customization_third.style = null
 
 	if (change_underwear)
 		if (AH.gender == MALE)

@@ -2721,7 +2721,6 @@
 	return ret
 
 /mob/living/carbon/human/proc/is_bald()
-	var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
 	var/bald_counter = 0 // three strikes and you're out
 	for (var/datum/customization_style/hair/short/bald/balder in src.bioHolder.mobAppearance.customizations)
 		bald_counter++
@@ -2745,7 +2744,7 @@
 	W.setup_wig(hair_list)
 
 	if (!keep_hair)
-		src.bioHolder.mobAppearance.resetCustomizations(/datum/customization_style/hair)
+		src.bioHolder.mobAppearance.resetCustomizations(FALSE, /datum/customization_style/hair)
 		src.update_colorful_parts()
 	return W
 

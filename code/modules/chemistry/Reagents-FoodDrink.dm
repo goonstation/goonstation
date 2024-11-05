@@ -616,13 +616,14 @@ datum
 					for (var/datum/customizationHolder/facial_hair/beard in AH.customizations)
 						if (beard.style.id in beard_list)
 							return
-					var/list/datum/customization_style/beard/second_type = pick(
+					var/list/datum/customization_style/beard/beard_types = list(
 						/datum/customization_style/beard/gt,
 						/datum/customization_style/beard/neckbeard,
 						/datum/customization_style/beard/fullbeard,
 						/datum/customization_style/beard/longbeard
 					)
-					AH.customizations["beard"] = new /datum/customizationHolder/facial_hair(new second_type)
+					var/datum/customization_style/beard/second_type = pick(beard_types)
+					AH.addCustomization("hair_middle", null, /datum/customizationHolder/facial_hair, second_type)
 					M.set_face_icon_dirty()
 					boutput(M, SPAN_NOTICE("You feel manly!"))
 
@@ -817,8 +818,8 @@ datum
 					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 					if(AH.customizations["hair_bottom"].style.id != "dreads" || AH.customizations["hair_middle"].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/long/dreads)
-						AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
+						AH.addCustomization("hair_bottom", null, /datum/customizationHolder/hair, /datum/customization_style/hair/long/dreads)
+						AH.addCustomization("hair_middle", null, /datum/customizationHolder/facial_hair, /datum/customization_style/beard/fullbeard)
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")
 

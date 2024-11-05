@@ -235,11 +235,7 @@ datum/v_space
 		var/datum/appearanceHolder/AH = character.bioHolder.mobAppearance
 		if (!AH)
 			AH = new
-		for(var/datum/customizationHolder/hair/holder in AH.customizations)
-			if (!istype(holder))
-				continue
-			if (holder.color)
-				holder.color = "#101010"
+		AH.resetCustomizations()
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)

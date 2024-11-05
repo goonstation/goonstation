@@ -333,7 +333,6 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/datum/customization_style
 					var/list/datum/customization_style/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
 					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
@@ -367,10 +366,10 @@ datum
 					var/mob/living/carbon/human/H = M
 					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 					if (AH.customizations["hair_bottom"].style.id != "80s")
-						AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/long/eighties)
+						AH.addCustomization("hair_bottom", null, /datum/customizationHolder/hair, /datum/customization_style/hair/long/eighties)
 						somethingchanged = TRUE
 					if (H.gender == MALE && AH.customizations["hair_middle"].style.id != "longbeard")
-						AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
+						AH.addCustomization("hair_middle", null, /datum/customizationHolder/facial_hair, /datum/customization_style/beard/fullbeard)
 						somethingchanged = TRUE
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = TRUE

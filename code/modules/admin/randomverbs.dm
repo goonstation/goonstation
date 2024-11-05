@@ -762,6 +762,36 @@
 
 	Topic(href, href_list) // Assumption here, that we've always been the thing we're TFing into
 		USR_ADMIN_ONLY
+		var/datum/appearanceHolder/AH = src.tf_holder.mobAppearance
+
+		var/hair_slots = list(
+			"customization_first" = "hair_bottom",
+			"customization_second" = "hair_middle",
+			"customization_third" = "hair_top"
+		)
+		var/hair_map = list(
+			"customization_first" = "hair",
+			"customization_second" = "facial",
+			"customization_third" = "detail"
+		)
+		for (var/i in 1 to length(hair_slots))
+			var/key = hair_slots[i]
+			var/value = hair_slots[key]
+			var/hair_key = hair_map[key]
+
+			if (href_list[key])
+				var/new_style = select_custom_style(usr)
+				if (new_style)
+					AH.customizations[value].set_style(new_style)
+					AH.customizations[value].set_style(new_style, TRUE)
+
+			var/count_string = i-1 ? "detail [i-1]" : "hair"
+			if (href_list[hair_key])
+				var/new_hair = input(usr, "Please select [count_string] color.", "Polymorph Menu") as color
+				if(new_hair)
+					AH.customizations[value].color = new_hair
+					AH.customizations[value].color_original = new_hair
+
 		if(href_list["close"])
 			qdel(src)
 			return
@@ -781,35 +811,14 @@
 				src.real_name = new_name
 
 		else if (href_list["flavor_text"])
-			var/new_text = input(usr, "Please enter new flavor text (appears when examining):", "Polymorph Menu", src.tf_holder.mobAppearance.flavor_text) as null|text
+			var/new_text = input(usr, "Please enter new flavor text (appears when examining):", "Polymorph Menu", AH.flavor_text) as null|text
 			if (isnull(new_text))
 				return
 			new_text = html_encode(new_text)
 			if (!(usr.client.holder.level >= LEVEL_ADMIN) && length(new_text) > FLAVOR_CHAR_LIMIT)
 				alert("The entered flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.")
 				new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-			src.tf_holder.mobAppearance.flavor_text = new_text
-
-		else if (href_list["customization_first"])
-			var/new_style = select_custom_style(usr)
-
-			if (new_style)
-				src.tf_holder.mobAppearance.customizations["hair_bottom"].style = new_style
-				src.tf_holder.mobAppearance.customizations["hair_bottom"].style_original = new_style
-
-		else if (href_list["customization_second"])
-			var/new_style = select_custom_style(usr)
-
-			if (new_style)
-				src.tf_holder.mobAppearance.customizations["hair_middle"].style = new_style
-				src.tf_holder.mobAppearance.customizations["hair_middle"].style_original = new_style
-
-		else if (href_list["customization_third"])
-			var/new_style = select_custom_style(usr)
-
-			if (new_style)
-				src.tf_holder.mobAppearance.customizations["hair_top"].style = new_style
-				src.tf_holder.mobAppearance.customizations["hair_top"].style_original = new_style
+			AH.flavor_text = new_text
 
 		else if (href_list["age"])
 			var/minage = 20
@@ -830,42 +839,24 @@
 			if (blTypeNew)
 				src.tf_holder.bloodType = blTypeNew
 
-		else if (href_list["hair"])
-			var/new_hair = input(usr, "Please select hair color.", "Polymorph Menu") as color
-			if(new_hair)
-				src.tf_holder.mobAppearance.customizations["hair_bottom"].color = new_hair
-				src.tf_holder.mobAppearance.customizations["hair_bottom"].color_original = new_hair
-
-		else if (href_list["facial"])
-			var/new_facial = input(usr, "Please select detail 1 color.", "Polymorph Menu") as color
-			if(new_facial)
-				src.tf_holder.mobAppearance.customizations["hair_middle"].color = new_facial
-				src.tf_holder.mobAppearance.customizations["hair_middle"].color_original = new_facial
-
-		else if (href_list["detail"])
-			var/new_detail = input(usr, "Please select detail 2 color.", "Polymorph Menu") as color
-			if(new_detail)
-				src.tf_holder.mobAppearance.customizations["hair_top"].color = new_detail
-				src.tf_holder.mobAppearance.customizations["hair_top"].color_original = new_detail
-
 		else if (href_list["eyes"])
 			var/new_eyes = input(usr, "Please select eye color.", "Polymorph Menu") as color
 			if(new_eyes)
-				src.tf_holder.mobAppearance.e_color = new_eyes
-				src.tf_holder.mobAppearance.e_color_original = new_eyes
+				AH.e_color = new_eyes
+				AH.e_color_original = new_eyes
 
 		else if (href_list["s_tone"])
 			var/new_tone = input(usr, "Please select skin tone color.", "Polymorph Menu")  as color
 
 			if (new_tone)
-				src.tf_holder.mobAppearance.s_tone = new_tone
-				src.tf_holder.mobAppearance.s_tone_original = new_tone
+				AH.s_tone = new_tone
+				AH.s_tone_original = new_tone
 
 		else if (href_list["gender"])
-			if (src.tf_holder.mobAppearance.gender == FEMALE)
-				src.tf_holder.mobAppearance.gender = MALE
+			if (AH.gender == FEMALE)
+				AH.gender = MALE
 			else
-				src.tf_holder.mobAppearance.gender = FEMALE
+				AH.gender = FEMALE
 
 		else if (href_list["hair_override"])
 			src.hair_override = !src.hair_override
@@ -921,6 +912,7 @@
 			return
 		var/mob/user = usercl.mob
 		src.update_preview_icon()
+		var/datum/appearanceHolder/AH = src.tf_holder.mobAppearance
 		user << browse_rsc(preview_icon, "polymorphicon.png")
 
 		var/dat = "<html><body>"
@@ -928,13 +920,15 @@
 		dat += "<a href='byond://?src=\ref[src];real_name=input'><b>[src.real_name]</b></a> "
 		dat += "<br>"
 
-		dat += "<b>Body Type:</b> <a href='byond://?src=\ref[src];gender=input'><b>[src.tf_holder.mobAppearance.gender == MALE ? "Male" : "Female"]</b></a><br>"
+		dat += "<b>Body Type:</b> <a href='byond://?src=\ref[src];gender=input'><b>[AH.gender == MALE ? "Male" : "Female"]</b></a><br>"
 		dat += "<b>Age:</b> <a href='byond://?src=\ref[src];age=input'>[src.tf_holder.age]</a>"
 
 		dat += "<hr><table><tr><td><b>Body</b><br>"
 		dat += "Blood Type: <a href='byond://?src=\ref[src];blType=input'>[src.tf_holder.bloodType]</a><br>"
-		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'><small>[length(src.tf_holder.mobAppearance.flavor_text) ? src.tf_holder.mobAppearance.flavor_text : "None"]</small></a><br>"
-		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
+		dat += "Flavor Text: <a href='byond://?src=\ref[src];flavor_text=input'>"
+		dat += "<small>[length(AH.flavor_text) ? AH.flavor_text : "None"]</small></a><br>"
+		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[AH.s_tone]\">"
+		dat += "<table bgcolor=\"[AH.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
 		if (usr.client.holder.level >= LEVEL_ADMIN)
@@ -943,18 +937,18 @@
 		dat += "Update ID/PDA/Manifest: <a href='byond://?src=\ref[src];updateid=1'>[src.update_wearid ? "YES" : "NO"]</a><br>"
 		dat += "</td><td><b>Preview</b><br><img src=polymorphicon.png height=64 width=64></td></tr></table>"
 
-		dat += "<hr><b>Bottom Detail</b><br>"
-		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations["hair_bottom"].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations["hair_bottom"].color]\"><tr><td>C1</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customizations["hair_bottom"].style.name]</a>"
-		dat += "<hr><b>Mid Detail</b><br>"
-		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations["hair_middle"].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations["hair_middle"].color]\"><tr><td>C2</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customizations["hair_middle"].style.name]</a>"
-		dat += "<hr><b>Top Detail</b><br>"
-		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations["hair_top"].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations["hair_top"].color]\"><tr><td>C3</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customizations["hair_top"].style.name]</a>"
+		var/hair_slots = list("Bottom" = "hair_bottom", "Middle" = "hair_middle", "Top" = "hair_top")
+		for (var/i in 1 to length(hair_slots))
+			var/key = hair_slots[i]
+			var/value = hair_slots[key]
+			dat += "<hr><b>[key] Detail</b><br>"
+			dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a>"
+			dat += "<font face=\"fixedsys\" size=\"3\" color=\"[AH.customizations[value].color]\">"
+			dat += "<table bgcolor=\"[AH.customizations[value].color]\"><tr><td>C1</td></tr></table></font>"
+			dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[AH.customizations[value].style.name]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
-		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.e_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.e_color]\"><tr><td>EC</td></tr></table></font>"
+		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[AH.e_color]\"><table bgcolor=\"[AH.e_color]\"><tr><td>EC</td></tr></table></font>"
 
 		dat += "<hr>"
 
@@ -1023,27 +1017,16 @@
 	proc/sanitize_null_values(var/mob/living/carbon/human/target_mob)
 		if (!target_mob || !target_mob.bioHolder || !target_mob.bioHolder.mobAppearance) return
 		var/datum/appearanceHolder/AH = target_mob.bioHolder.mobAppearance
-		var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
-		var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
-		var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
-		if (!src.tf_holder.mobAppearance.gender || !(src.tf_holder.mobAppearance.gender == MALE || src.tf_holder.mobAppearance.gender == FEMALE))
-			src.tf_holder.mobAppearance.gender = MALE
+		var/datum/appearanceHolder/tf_AH = src.tf_holder.mobAppearance
+
+		if (!tf_AH.gender || !(tf_AH.gender == MALE || tf_AH.gender == FEMALE))
+			tf_AH.gender = MALE
 		if (!AH)
 			AH = new
-		if (AH.gender != src.tf_holder.mobAppearance.gender)
-			AH.gender = src.tf_holder.mobAppearance.gender
-		if (customization_first.color == null)
-			customization_first.color = "#101010"
-		if (customization_first.style == null)
-			customization_first.style = new /datum/customization_style/none
-		if (customization_second.color == null)
-			customization_second.color = "#101010"
-		if (customization_second.style == null)
-			customization_second.style = new /datum/customization_style/none
-		if (customization_third.color == null)
-			customization_third.color = "#101010"
-		if (customization_third.style == null)
-			customization_third.style = new /datum/customization_style/none
+		if (AH.gender != tf_AH.gender)
+			AH.gender = tf_AH.gender
+
+		AH.resetCustomizations()
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
@@ -1060,48 +1043,42 @@
 		return
 
 	proc/update_preview_icon()
-		src.preview_icon = null
-
-		var/customization_first_r = null
-		var/customization_second_r = null
-		var/customization_third_r = null
-
 		src.preview_icon = new /icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state) //todo: #14465
 
+		var/datum/appearanceHolder/AH = src.tf_holder.mobAppearance
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone
-			if (src.tf_holder.mobAppearance.s_tone)
-				src.preview_icon.Blend(src.tf_holder.mobAppearance.s_tone ? src.tf_holder.mobAppearance.s_tone : "#FFFFFF", ICON_MULTIPLY)
+			if (AH.s_tone)
+				src.preview_icon.Blend(AH.s_tone ? AH.s_tone : "#FFFFFF", ICON_MULTIPLY)
 
 		var/icon/eyes_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = "eyes")
 
 		if(!src.mutantrace?.override_eyes)
-			eyes_s.Blend(src.tf_holder.mobAppearance.e_color, ICON_MULTIPLY)
+			eyes_s.Blend(AH.e_color, ICON_MULTIPLY)
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
-		if(!src.mutantrace?.override_hair)
-			customization_first_r = src.tf_holder.mobAppearance.customizations["hair_bottom"].style.id
-			if(!customization_first_r)
-				customization_first_r = "none"
-			var/icon/hair_s = new/icon("icon" =  src.tf_holder.mobAppearance.customizations["hair_bottom"].style.icon, "icon_state" = customization_first_r)
-			hair_s.Blend(src.tf_holder.mobAppearance.customizations["hair_bottom"].color, ICON_MULTIPLY)
-			eyes_s.Blend(hair_s, ICON_OVERLAY)
+		for (var/datum/customizationHolder/holder in AH.customizations)
+			var/holder_id = holder.style.id
+			if(!holder_id)
+				holder_id = "none"
 
-		if(!src.mutantrace?.override_beard)
-			customization_second_r = src.tf_holder.mobAppearance.customizations["hair_middle"].style.id
-			if(!customization_second_r)
-				customization_second_r = "none"
-			var/icon/facial_s = new/icon("icon" = src.tf_holder.mobAppearance.customizations["hair_middle"].style.icon, "icon_state" = customization_second_r)
-			facial_s.Blend(src.tf_holder.mobAppearance.customizations["hair_middle"].color, ICON_MULTIPLY)
-			eyes_s.Blend(facial_s, ICON_OVERLAY)
+			if(istype(holder_id, /datum/customizationHolder/hair) && !src.mutantrace?.override_hair)
+				var/hair_slots = list("hair_bottom", "hair_middle", "hair_top")
+				for (var/slot in hair_slots)
+					var/icon/hair_s = new/icon("icon" =  AH.customizations[slot].style.icon, "icon_state" = holder_id)
+					hair_s.Blend(AH.customizations[slot].color, ICON_MULTIPLY)
+					eyes_s.Blend(hair_s, ICON_OVERLAY)
 
-		if(!src.mutantrace?.override_detail)
-			customization_third_r = src.tf_holder.mobAppearance.customizations["hair_top"].style.id
-			if(!customization_third_r)
-				customization_third_r = "none"
-			var/icon/detail_s = new/icon("icon" = src.tf_holder.mobAppearance.customizations["hair_top"].style.icon, "icon_state" = customization_third_r)
-			detail_s.Blend(src.tf_holder.mobAppearance.customizations["hair_top"].color, ICON_MULTIPLY)
-			eyes_s.Blend(detail_s, ICON_OVERLAY)
+			var/icon/icon_s = null
+			if(istype(holder_id, /datum/customizationHolder/facial_hair) && !src.mutantrace?.override_beard)
+				icon_s = new/icon("icon" =  holder.style.icon, "icon_state" = holder_id)
+
+			if(istype(holder_id, /datum/customizationHolder/face_detail) && !src.mutantrace?.override_detail)
+				icon_s = new/icon("icon" =  holder.style.icon, "icon_state" = holder_id)
+
+			if (istype(icon_s))
+				icon_s.Blend(holder.color, ICON_MULTIPLY)
+				eyes_s.Blend(icon_s, ICON_OVERLAY)
 
 		src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 

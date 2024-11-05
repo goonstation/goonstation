@@ -196,6 +196,7 @@
 			src.head_image_eyes_L = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 			src.head_image_eyes_R = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 
+		// Muterace TODO: Refactor this to "face_detail"
 		if (AHead.customizations["hair_bottom"].style.id == "hetcroL")
 			src.head_image_eyes_L.color = AHead.customizations["hair_bottom"].color
 		else if (AHead.customizations["hair_middle"].style.id == "hetcroL")

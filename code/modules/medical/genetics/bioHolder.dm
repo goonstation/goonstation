@@ -332,9 +332,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 	/// Convenience proc to create a holder and style
-	proc/addCustomization(var/id, var/holder_type = /datum/customizationHolder, var/style_type = /datum/customization_style)
+	proc/addCustomization(var/id, var/color = null, var/holder_type = /datum/customizationHolder, var/style_type = /datum/customization_style)
 		var/datum/customizationHolder/holder = new holder_type(new style_type)
-		src.customizations[id] = holder
+		if(istype(holder))
+			holder.color = color ? color : holder.color
+			src.customizations[id] = holder
 
 	/// Returns one of the customizations by id - definitely not copied from getMaterial
 	proc/getCustomizationByID(var/holder_id)
@@ -355,11 +357,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 			if(istype(holder, holder_type))
 				. += holder
 
-	/// Resets all customizations matching holder_type back to null
-	proc/resetCustomizations(var/datum/customizationHolder/holder_type = /datum/customizationHolder)
+	/// Resets all customizations matching holder_type back to null or their original value
+	proc/resetCustomizations(var/toOriginal = FALSE, var/datum/customizationHolder/holder_type = /datum/customizationHolder)
 		for(var/datum/customizationHolder/holder in src.customizations)
 			if (istype(holder, holder_type))
-				holder.reset_holder()
+				holder.reset_styles(toOriginal)
+				holder.reset_colors(toOriginal)
+
+	/// Resets all styles of customizations matching holder_type back to null or their original value
+	proc/resetCustomizationColors(var/toOriginal = FALSE, var/datum/customizationHolder/holder_type = /datum/customizationHolder)
+		for(var/datum/customizationHolder/holder in src.customizations)
+			if (istype(holder, holder_type))
+				holder.reset_colors(toOriginal)
+
+	/// Resets all colors of customizations matching holder_type back to null or their original value
+	proc/resetCustomizationStyles(var/toOriginal = FALSE, var/datum/customizationHolder/holder_type = /datum/customizationHolder)
+		for(var/datum/customizationHolder/holder in src.customizations)
+			if (istype(holder, holder_type))
+				holder.reset_styles(toOriginal)
 
 /// Holds all the customization information.
 /datum/customizationHolder
@@ -387,7 +402,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// Pretty please use this instead of setting styles directly on the holder, or else I'll cry
 	proc/set_style(var/datum/customization_style/S, var/original = FALSE)
 		if (isnull(S))
-			src.reset_holder()
+			src.reset_styles()
+			src.reset_colors()
 		if (src.is_valid_style(S))
 			if (original)
 				src.style_original = S
@@ -400,13 +416,34 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/is_valid_style(var/datum/customization_style/style_to_check)
 		return istypes(style_to_check, allowed_style_types)
 
-	/// Resets holder back to none
-	proc/reset_holder()
-		src.style = null
+	/// Resets styles back to null or style_original
+	proc/reset_styles(toOriginal = FALSE)
+		if (toOriginal)
+			src.style  = src.style_original
+		else
+			src.style = null
+
+	/// Resets colors back to "#101010" or color_original
+	proc/reset_colors(toOriginal = FALSE)
+		if (toOriginal)
+			src.color  = src.color_original
+		else
+			src.color = "#101010"
 
 /// Holds all the hair customization information
 /datum/customizationHolder/hair
-	allowed_style_types = list(/datum/customization_style/hair)
+	// allowed_style_types = list(/datum/customization_style/hair)
+	// Muterace TODO: Once we finish migration, limit the hair appropriately
+	// Currently we're still allowing all types for compatibility
+	allowed_style_types = list(
+		/datum/customization_style/hair,
+		/datum/customization_style/beard,
+		/datum/customization_style/moustache,
+		/datum/customization_style/makeup,
+		/datum/customization_style/biological,
+		/datum/customization_style/sideburns,
+		/datum/customization_style/eyebrows
+	)
 
 	first
 		style =  new /datum/customization_style/hair/short/short
@@ -419,9 +456,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 /datum/customizationHolder/facial_hair
 	allowed_style_types = list(/datum/customization_style/beard, /datum/customization_style/moustache)
 
-
 /// Holds all the facial customization information (eyes, makeup, eyebrows)
-/datum/customizationHolder/face_misc
+/datum/customizationHolder/face_detail
 	allowed_style_types = list(
 		/datum/customization_style/makeup,
 		/datum/customization_style/biological,

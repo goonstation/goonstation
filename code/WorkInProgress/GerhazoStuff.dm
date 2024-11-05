@@ -40,7 +40,7 @@
 		var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
 		AH.customizations["hair_bottom"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/short/short)
 		AH.customizations["hair_middle"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/beard/fullbeard)
-		AH.customizations["hair_top"] = new /datum/customizationHolder/face_misc(new /datum/customization_style/eyebrows/eyebrows)
+		AH.customizations["hair_top"] = new /datum/customizationHolder/face_detail(new /datum/customization_style/eyebrows/eyebrows)
 		AH.customizations["hair_bottom"].color = "#555555"
 		AH.customizations["hair_middle"].color = "#555555"
 		AH.customizations["hair_top"].color = "#555555"

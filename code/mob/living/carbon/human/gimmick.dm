@@ -116,10 +116,10 @@
 
 	initializeBioholder()
 		bioHolder.age = 400
-		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#000000"
-		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
+		var/datum/appearanceHolder/AH = bioHolder.mobAppearance
+		AH.addCustomization("hair_bottom", "#000000", /datum/customizationHolder/hair, /datum/customization_style/hair/short/pomp)
+		AH.gender = "male"
+		AH.underwear = "boxers"
 		. = ..()
 
 /mob/living/carbon/human/jester
@@ -413,14 +413,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	initializeBioholder()
 		. = ..()
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#292929"
-		bioHolder.mobAppearance.customizations["hair_middle"].color = "#292929"
-		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/gimmick/shitty_hair
-		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
+		var/datum/appearanceHolder/AH = bioHolder.mobAppearance
+		AH.addCustomization("hair_bottom", "#292929", /datum/customizationHolder/hair, /datum/customization_style/hair/gimmick/shitty_hair)
+		AH.addCustomization("hair_middle", "#292929", /datum/customizationHolder/facial_hair, /datum/customization_style/hair/gimmick/shitty_beard)
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
-		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "briefs"
+		AH.gender = "male"
+		AH.underwear = "briefs"
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
@@ -841,10 +840,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		. = ..()
 		bioHolder.age = 44
 		bioHolder.bloodType = "Worchestershire"
-		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#F6D646"
-		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
+		var/datum/appearanceHolder/AH = bioHolder.mobAppearance
+		AH.addCustomization("hair_bottom", "#F6D646", /datum/customizationHolder/hair, /datum/customization_style/hair/short/pomp)
+		AH.gender = "male"
+		AH.underwear = "boxers"
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
@@ -895,10 +894,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.real_name = Create_Tommyname()
 
 		src.gender = "male"
-		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
-		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.s_tone = "#FAD7D0"
-		bioHolder.mobAppearance.s_tone_original = "#FAD7D0"
+		var/datum/appearanceHolder/AH = bioHolder.mobAppearance
+		AH.addCustomization("hair_bottom", "#101010", /datum/customizationHolder/hair, /datum/customization_style/hair/long/dreads)
+		AH.gender = "male"
+		AH.s_tone = "#FAD7D0"
+		AH.s_tone_original = "#FAD7D0"
 		bioHolder.AddEffect("accent_tommy")
 
 /mob/living/carbon/human/waiter
@@ -1008,10 +1008,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		bioHolder.age = 49
-		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/beard/fullbeard
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#555555"
-		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
+		var/datum/appearanceHolder/AH = bioHolder.mobAppearance
+		AH.addCustomization("hair_bottom", "#555555", /datum/customizationHolder/facial_hair, /datum/customization_style/beard/fullbeard)
+		AH.gender = "male"
+		AH.underwear = "boxers"
 		real_name = "[pick("Chut","Brendt","Franko","Steephe","Geames","Whitney","Thom","Cheddar")] \"Big Yank\" Whitney"
 
 
