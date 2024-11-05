@@ -125,6 +125,7 @@
 #include "code\datums\sims.dm"
 #include "code\datums\spawn_rules.dm"
 #include "code\datums\special_r.dm"
+#include "code\datums\stain.dm"
 #include "code\datums\sun.dm"
 #include "code\datums\syndicate_buylist.dm"
 #include "code\datums\teg_transform.dm"
