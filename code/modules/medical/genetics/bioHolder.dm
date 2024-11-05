@@ -422,6 +422,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return "none"
 		return src.style.id
 
+	/// Gets the ID of a style, or if there is no style, returns "none"
+	proc/getIcon()
+		if (isnull(src.style))
+			return 'icons/mob/human_hair.dmi' // Is this good? The alternative is to make any new style and fetch the icon. I don't know.
+		return src.style.icon
+
 	/// Resets styles back to null or style_original
 	proc/reset_styles(toOriginal = FALSE)
 		if (toOriginal)

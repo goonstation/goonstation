@@ -231,9 +231,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].style.icon, icon_state = AHead.customizations["hair_bottom"].getID(), layer = AHead.customizations["hair_bottom"].style.default_layer)
-		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].style.icon, icon_state = AHead.customizations["hair_middle"].getID(), layer = AHead.customizations["hair_middle"].style.default_layer)
-		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].style.icon, icon_state = AHead.customizations["hair_top"].getID(), layer = AHead.customizations["hair_top"].style.default_layer)
+		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].getIcon(), icon_state = AHead.customizations["hair_bottom"].getID(), layer = AHead.customizations["hair_bottom"].style.default_layer)
+		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].getIcon(), icon_state = AHead.customizations["hair_middle"].getID(), layer = AHead.customizations["hair_middle"].style.default_layer)
+		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].getIcon(), icon_state = AHead.customizations["hair_top"].getID(), layer = AHead.customizations["hair_top"].style.default_layer)
 
 		src.head_image_cust_one.color = AHead.customizations["hair_bottom"].color
 		src.head_image_cust_two.color = AHead.customizations["hair_middle"].color

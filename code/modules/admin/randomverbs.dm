@@ -1065,16 +1065,16 @@
 			if(istype(holder_id, /datum/customizationHolder/hair) && !src.mutantrace?.override_hair)
 				var/hair_slots = list("hair_bottom", "hair_middle", "hair_top")
 				for (var/slot in hair_slots)
-					var/icon/hair_s = new/icon("icon" =  AH.customizations[slot].style.icon, "icon_state" = holder_id)
+					var/icon/hair_s = new/icon("icon" =  AH.customizations[slot].getIcon(), "icon_state" = holder_id)
 					hair_s.Blend(AH.customizations[slot].color, ICON_MULTIPLY)
 					eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 			var/icon/icon_s = null
 			if(istype(holder_id, /datum/customizationHolder/facial_hair) && !src.mutantrace?.override_beard)
-				icon_s = new/icon("icon" =  holder.style.icon, "icon_state" = holder_id)
+				icon_s = new/icon("icon" =  holder.getIcon(), "icon_state" = holder_id)
 
 			if(istype(holder_id, /datum/customizationHolder/face_detail) && !src.mutantrace?.override_detail)
-				icon_s = new/icon("icon" =  holder.style.icon, "icon_state" = holder_id)
+				icon_s = new/icon("icon" =  holder.getIcon(), "icon_state" = holder_id)
 
 			if (istype(icon_s))
 				icon_s.Blend(holder.color, ICON_MULTIPLY)
