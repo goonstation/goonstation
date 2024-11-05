@@ -269,22 +269,23 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	derelict
 		//name = "Nanotrasen Squad Leader"
-		name = null
+		name = "Nanotrasen Emergency Squad Leader"
 		limit = 0
 		slot_suit = list(/obj/item/clothing/suit/space/ntso)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_card = /obj/item/card/id/nt_specialist
 		slot_head = list(/obj/item/clothing/head/NTberet/commander)
 		slot_belt = list(/obj/item/storage/belt/security/ntsc)
-		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
-		slot_poc2 = list(/obj/item/storage)
+		slot_poc1 = list(/obj/item/device/pda2/ntso)
+		slot_poc2 = list(/obj/item/storage/ntsc_pouch)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_mask = list(/obj/item/clothing/mask/gas/swat/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		slot_ears = list(/obj/item/device/radio/headset/command/nt/commander)
 		items_in_backpack = list(/obj/item/crowbar,
-								/obj/item/storage/firstaid/regular)
+								/obj/item/storage/firstaid/regular,
+								/obj/item/tank/emergency_oxygen/extended)
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -317,14 +318,15 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 
 	derelict //no need to lock a special spawn behind a HOS whitelist
-		name = null
+		name = "Nanotrasen Emergency Response Operative"
 		limit = 0
+		access_string = "Captain"
 		receives_implants = list(/obj/item/implant/health)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/storage/belt/security/ntso)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_suit = list(/obj/item/clothing/suit/space/ntso)
-		slot_head = list(/obj/item/clothing/head/NTberet)
+		slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 		slot_foot = list(/obj/item/clothing/shoes/swat)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
@@ -401,13 +403,14 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/device/flash, /obj/item/rcd_ammo/medium)
 
 	derelict
-		name = null//"Salvage Chief"
+		name = "Nanotrasen Emergency Response Technician"//"Nanotrasen Emergency Response Technician"
 		limit = 0
+		access_string = "Captain"
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
 		slot_jump = list(/obj/item/clothing/under/rank/engineer)
 		slot_suit = list(/obj/item/clothing/suit/space/industrial/nt_specialist)
-		slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
+		slot_head = list(/obj/item/clothing/head/helmet/space/industrial)
 		slot_foot = list(/obj/item/clothing/shoes/magnetic)
 		slot_glov = list(/obj/item/clothing/gloves/yellow)
 		slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
@@ -418,7 +421,8 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
 		items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
-							/obj/item/sheet/steel/fullstack,
+							/obj/item/gun/energy/signifer2)
+		items_in_belt = list(/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
 
 		special_setup(var/mob/living/carbon/human/M)
@@ -478,26 +482,33 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/device/flash)
 
 	derelict
-		name = "Nanotrasen Emergency Response Medic"
+		name = "Nanotrasen Emergency Response Medic" //Nanotrasen Emergency Response Medic
 		limit = 0
+		access_string = "Captain"
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/storage/belt/medical/prepared)
 		slot_jump = list(/obj/item/clothing/under/rank/medical)
 		slot_suit = list(/obj/item/clothing/suit/hazard/paramedic/armored)
-		slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
+		slot_head = list(/obj/item/clothing/head/NTberet)
 		slot_foot = list(/obj/item/clothing/shoes/brown)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
-		slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+		slot_ears = list(/obj/item/device/radio/headset/command/nt)
 		slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 		slot_card = /obj/item/card/id/nt_specialist
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/nt_medical)
 		items_in_backpack = list(/obj/item/storage/firstaid/regular,
 						/obj/item/device/flash,
-						/obj/item/reagent_containers/glass/bottle/omnizine,
-						/obj/item/reagent_containers/glass/bottle/ether)
-		items_in_belt = list (/obj/item/reagent_containers/syringe)
+						/obj/item/gun/energy/signifer2)
+		items_in_belt = list (/obj/item/reagent_containers/glass/bottle/omnizine,
+							/obj/item/reagent_containers/syringe)
+
+		special_setup(var/mob/living/carbon/human/M)
+			..()
+			if (!M)
+				return
+			M.show_text("<b>Something has gone terribly wrong here. Stay with your squad and ensure the safety of any survivors. Interrogate anyone possibly involved in the event. </b>", "blue")
 
 #ifdef MAP_OVERRIDE_MANTA
 /datum/job/command/comm_officer

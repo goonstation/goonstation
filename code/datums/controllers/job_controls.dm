@@ -13,7 +13,7 @@ var/datum/job_controller/job_controls
 	New()
 		..()
 		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode)
-			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "Nanotrasen Emergency Response Squad Leader";} (),
+			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1; name = "Nanotrasen Emergency Response Squad Leader";} (),
 			new /datum/job/command/head_of_personnel/derelict {limit = 1; name = "Nanotrasen Emergency Response Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Nanotrasen Emergency Response Technician";} (),
 			new /datum/job/command/medical_director/derelict {limit = 1; name = "Nanotrasen Emergency Response Medic";} (),
@@ -21,7 +21,8 @@ var/datum/job_controller/job_controls
 			new /datum/job/research/scientist {limit = 1} (),
 			new /datum/job/research/medical_doctor {limit = 1} (),
 			new /datum/job/security/security_officer {limit = 2} (),
-			new /datum/job/civilian/janitor {limit = 1} (),
+			new /datum/job/engineering/miner {limit = 1} (),
+			new /datum/job/civilian/janitor {limit = 2} (),
 			new /datum/job/civilian/staff_assistant (),
 			new /datum/job/civilian/chef (),
 			new /datum/job/civilian/bartender (),
