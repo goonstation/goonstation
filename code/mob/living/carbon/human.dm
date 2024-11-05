@@ -2739,7 +2739,7 @@
 	var/list/datum/customizationHolder/holder_list = src.bioHolder.mobAppearance.getCustomizationsByType(/datum/customization_style/hair)
 	for (var/datum/customizationHolder/hair/holder in holder_list)
 		if (holder.style)
-			hair_list[holder.style.id] = holder.color
+			hair_list[holder.getID()] = holder.color
 
 	W.setup_wig(hair_list)
 

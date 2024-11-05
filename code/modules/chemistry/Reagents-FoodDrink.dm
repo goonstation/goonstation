@@ -614,7 +614,7 @@ datum
 					var/datum/appearanceHolder/AH = M.bioHolder.mobAppearance
 					var/beard_list = list("gt", "neckbeard", "fullbeard", "longbeard")
 					for (var/datum/customizationHolder/facial_hair/beard in AH.customizations)
-						if (beard.style.id in beard_list)
+						if (beard.getID() in beard_list)
 							return
 					var/list/datum/customization_style/beard/beard_types = list(
 						/datum/customization_style/beard/gt,
@@ -816,7 +816,7 @@ datum
 						H.gib()
 						return
 					var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
-					if(AH.customizations["hair_bottom"].style.id != "dreads" || AH.customizations["hair_middle"].style.id != "fullbeard")
+					if(AH.customizations["hair_bottom"].getID() != "dreads" || AH.customizations["hair_middle"].getID() != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
 						AH.addCustomization("hair_bottom", null, /datum/customizationHolder/hair, /datum/customization_style/hair/long/dreads)
 						AH.addCustomization("hair_middle", null, /datum/customizationHolder/facial_hair, /datum/customization_style/beard/fullbeard)

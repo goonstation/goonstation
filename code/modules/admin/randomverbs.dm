@@ -1058,7 +1058,7 @@
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
 		for (var/datum/customizationHolder/holder in AH.customizations)
-			var/holder_id = holder.style.id
+			var/holder_id = holder.getID()
 			if(!holder_id)
 				holder_id = "none"
 

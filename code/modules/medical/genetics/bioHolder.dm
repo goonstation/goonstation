@@ -416,6 +416,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/is_valid_style(var/datum/customization_style/style_to_check)
 		return istypes(style_to_check, allowed_style_types)
 
+	/// Gets the ID of a style, or if there is no style, returns "none"
+	proc/getID()
+		if (isnull(src.style))
+			return "none"
+		return src.getID()
+
 	/// Resets styles back to null or style_original
 	proc/reset_styles(toOriginal = FALSE)
 		if (toOriginal)

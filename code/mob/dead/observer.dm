@@ -111,7 +111,7 @@
 			break
 
 	var/datum/customizationHolder/hair_holder = P.AH.getCustomizationByID("hair_bottom")
-	var/hair_id = hair_holder.style.id
+	var/hair_id = hair_holder.getID()
 
 	var/image/hair = image(hair_holder.style.icon, hair_id)
 	hair.color = hair_holder.color
@@ -129,7 +129,7 @@
 
 		var/slots = list("beard", "detail")
 		for (var/slot in slots)
-			var/image/custom  = image(P.AH.customizations[slot].style.icon, P.AH.customizations[slot].style.id)
+			var/image/custom  = image(P.AH.customizations[slot].style.icon, P.AH.customizations[slot].getID())
 			custom.color = P.AH.customizations[slot].color
 			custom.alpha = GHOST_HAIR_ALPHA
 			src.AddOverlays(custom, slot)
@@ -442,7 +442,7 @@
 		var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
 		var/datum/appearanceHolder/spawn_AH = src.AH_we_spawned_with
 		for (var/slot in slots)
-			var/image/custom  = image(spawn_AH.customizations[slot].style.icon, spawn_AH.customizations[slot].style.id)
+			var/image/custom  = image(spawn_AH.customizations[slot].style.icon, spawn_AH.customizations[slot].getID())
 			custom.color = AH.customizations[slot].color
 			custom.alpha = GHOST_HAIR_ALPHA
 			if ("hair" in slot)
@@ -450,7 +450,7 @@
 			O.AddOverlays(custom, slot)
 
 		var/datum/customizationHolder/hair_holder = AH.getCustomizationByID("hair_bottom")
-		var/hair_id = hair_holder.style.id
+		var/hair_id = hair_holder.getID()
 		if(hair_id && hair_id != "none")
 			O.wig = new
 			O.wig.mat_changename = 0

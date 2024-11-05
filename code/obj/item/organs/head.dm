@@ -197,20 +197,20 @@
 			src.head_image_eyes_R = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 
 		// Muterace TODO: Refactor this to "face_detail"
-		if (AHead.customizations["hair_bottom"].style.id == "hetcroL")
+		if (AHead.customizations["hair_bottom"].getID() == "hetcroL")
 			src.head_image_eyes_L.color = AHead.customizations["hair_bottom"].color
-		else if (AHead.customizations["hair_middle"].style.id == "hetcroL")
+		else if (AHead.customizations["hair_middle"].getID() == "hetcroL")
 			src.head_image_eyes_L.color = AHead.customizations["hair_middle"].color
-		else if (AHead.customizations["hair_top"].style.id == "hetcroL")
+		else if (AHead.customizations["hair_top"].getID() == "hetcroL")
 			src.head_image_eyes_L.color = AHead.customizations["hair_top"].color
 		else
 			src.head_image_eyes_L.color = AHead.e_color
 
-		if (AHead.customizations["hair_bottom"].style.id == "hetcroR")
+		if (AHead.customizations["hair_bottom"].getID() == "hetcroR")
 			src.head_image_eyes_R.color = AHead.customizations["hair_bottom"].color
-		else if (AHead.customizations["hair_middle"].style.id == "hetcroR")
+		else if (AHead.customizations["hair_middle"].getID() == "hetcroR")
 			src.head_image_eyes_R.color = AHead.customizations["hair_middle"].color
-		else if (AHead.customizations["hair_top"].style.id == "hetcroR")
+		else if (AHead.customizations["hair_top"].getID() == "hetcroR")
 			src.head_image_eyes_R.color = AHead.customizations["hair_top"].color
 		else
 			src.head_image_eyes_R.color = AHead.e_color
@@ -231,9 +231,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].style.icon, icon_state = AHead.customizations["hair_bottom"].style.id, layer = AHead.customizations["hair_bottom"].style.default_layer)
-		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].style.icon, icon_state = AHead.customizations["hair_middle"].style.id, layer = AHead.customizations["hair_middle"].style.default_layer)
-		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].style.icon, icon_state = AHead.customizations["hair_top"].style.id, layer = AHead.customizations["hair_top"].style.default_layer)
+		src.head_image_cust_one = image(icon = AHead.customizations["hair_bottom"].style.icon, icon_state = AHead.customizations["hair_bottom"].getID(), layer = AHead.customizations["hair_bottom"].style.default_layer)
+		src.head_image_cust_two = image(icon = AHead.customizations["hair_middle"].style.icon, icon_state = AHead.customizations["hair_middle"].getID(), layer = AHead.customizations["hair_middle"].style.default_layer)
+		src.head_image_cust_three = image(icon = AHead.customizations["hair_top"].style.icon, icon_state = AHead.customizations["hair_top"].getID(), layer = AHead.customizations["hair_top"].style.default_layer)
 
 		src.head_image_cust_one.color = AHead.customizations["hair_bottom"].color
 		src.head_image_cust_two.color = AHead.customizations["hair_middle"].color
