@@ -883,7 +883,7 @@ proc/broadcast_to_all_gangs(var/message)
 					tableList.Add(O)
 
 			if (!is_blocked_turf(T))
-				if (T.intact)
+				if (T.intact && !istype(T, /turf/simulated/floor/glassblock))
 					turfList.Add(T)
 				else
 					uncoveredTurfList.Add(T)
