@@ -40926,8 +40926,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
