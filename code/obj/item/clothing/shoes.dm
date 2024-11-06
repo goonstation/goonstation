@@ -322,6 +322,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 					wearer.equip_if_possible(I, slot)
 				else
 					I.set_loc(get_turf(src))
+				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
 				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
 				qdel(src)
 			else
@@ -534,7 +535,6 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 					wearer.equip_if_possible(I, slot)
 				else
 					I.set_loc(get_turf(src))
-				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
 				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
 				qdel(src)
 			else
