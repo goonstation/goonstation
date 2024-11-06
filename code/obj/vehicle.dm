@@ -125,6 +125,11 @@ ABSTRACT_TYPE(/obj/vehicle)
 						A.ex_act(severity)
 					qdel(src)
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if(src.rider_visible && src.rider)
+			return "[src.rider] is currently riding it."
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.rider)

@@ -45,7 +45,6 @@
 			H.AddComponent(/datum/component/tracker_hud/vampthrall, src.master_ability_holder.owner)
 			src.ability_holder.master = src.master_ability_holder
 			src.master_ability_holder.thralls += H
-			src.master_ability_holder.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.master_ability_holder.thralls)
 
 		src.ability_holder.addAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.addAbility(/datum/targetable/vampire/vampire_bite/thrall)
@@ -57,7 +56,6 @@
 
 		if (src.ability_holder.master)
 			src.ability_holder.master.thralls -= H
-			src.ability_holder.master.getAbility(/datum/targetable/vampire/enthrall)?.pointCost = 200 + 100 * length(src.ability_holder.master.thralls)
 
 		src.ability_holder.removeAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vampire_bite/thrall)

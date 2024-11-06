@@ -29943,7 +29943,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "iyB" = (

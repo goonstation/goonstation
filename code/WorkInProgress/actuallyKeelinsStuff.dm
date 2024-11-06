@@ -418,7 +418,7 @@ Returns:
 	onMouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
 		if(target == null) target = new()
 		if(!over_object || !istype(over_object, /atom)) return
-		target.params = params2list(params)
+		if (!islist(target.params)) target.params = params2list(params)
 		target.target = over_object
 		target.user = usr
 		if(over_object.loc != startingLoc && over_object != startingLoc) return
@@ -429,7 +429,7 @@ Returns:
 		if(object == src || (!isturf(object.loc) && !isturf(object))) return
 		if(!object || !istype(object, /atom)) return
 		if(target == null) target = new()
-		target.params = params2list(params)
+		if (!islist(target.params)) target.params = params2list(params)
 		target.target = object
 		target.user = usr
 		startingLoc = get_turf(object)

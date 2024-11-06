@@ -1,5 +1,6 @@
 name: Report a Bug
 description: Report a bug here on our issue tracker.
+type: Bug
 body:
 - type: "input"
   id: "labels"

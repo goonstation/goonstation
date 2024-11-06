@@ -180,6 +180,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					src.seeds.Remove(S)
 					S.set_loc(src.loc)
 					usr.put_in_hand_or_eject(S) // try to eject it into the users hand, if we can
+				src.splicing1 = null
+				src.splicing2 = null
 				update_static_data(ui.user, ui)
 
 			if("ejectextractables")
@@ -260,13 +262,11 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						boutput(ui.user, SPAN_ALERT("No viable seeds found in [I]."))
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
-						while (give > 0)
-							var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src)
-							if (!src.seedoutput)
-								src.seeds.Add(S)
-							else
-								S.set_loc(src.loc)
-							give -= 1
+						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give)
+						if (!src.seedoutput)
+							src.seeds.Add(S)
+						else
+							S.set_loc(src.loc)
 					src.extractables.Remove(I)
 					qdel(I)
 					update_static_data(ui.user, ui)
@@ -485,13 +485,18 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					boutput(usr, SPAN_ALERT("Splice failed."))
 					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, TRUE)
 
-				// Now get rid of the old seeds and go back to square one
-				src.seeds.Remove(seed1)
-				src.seeds.Remove(seed2)
-				src.splicing1 = null
-				src.splicing2 = null
-				qdel(seed1)
-				qdel(seed2)
+				// Now remove a charge from each seed, and destroy any seeds which have been totally expended.
+				seed1.charges--
+				if (seed1.charges < 1)
+					src.seeds.Remove(seed1)
+					qdel(seed1)
+					src.splicing1 = null
+				seed2.charges--
+				if (seed2.charges < 1)
+					src.seeds.Remove(seed2)
+					qdel(seed2)
+					src.splicing2 = null
+
 				src.mode = "seedlist"
 				update_static_data(ui.user, ui)
 
@@ -630,17 +635,21 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			result["cropsize"] = list("???", FALSE)
 			result["potency"] = list("???", FALSE)
 			result["endurance"] = list("???", FALSE)
+			result["charges"] = list("???", FALSE)
 			result["ref"]= list("\ref[scanned]", FALSE) //in the event that scanned is somehow null, \ref[null] = [0x0]
 			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
 			return result
 
 		var/generation = 0
+		var/charges = 0
 		if (istype(scanned, /obj/item/seed/))
 			var/obj/item/seed/S = scanned
 			generation = S.generation
+			charges = S.charges
 		if (istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
 			var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 			generation = F.generation
+			charges = 1
 
 		//list of attributes and their dominance flag
 		result["name"] = list(scanned.name, FALSE)
@@ -653,6 +662,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		result["cropsize"] = list(DNA.cropsize, DNA.d_cropsize)
 		result["potency"] = list(DNA.potency, DNA.d_potency)
 		result["endurance"] = list(DNA.endurance, DNA.d_endurance)
+		result["charges"] = list(charges, FALSE)
 		result["ref"]= list("\ref[scanned]", FALSE)
 		return result
 
