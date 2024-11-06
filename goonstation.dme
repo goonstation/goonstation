@@ -1526,6 +1526,7 @@
 #include "code\modules\minimap\markers\render_marker.dm"
 #include "code\modules\minimap\minimap_objects\minimap_ui.dm"
 #include "code\modules\minimap\minimap_objects\controllers\_minimap_controller_parent.dm"
+#include "code\modules\minimap\minimap_objects\controllers\htr_minimap_controller.dm"
 #include "code\modules\minimap\minimap_objects\controllers\nukeop_minimap_controller.dm"
 #include "code\modules\minimap\minimap_objects\controllers\pod_wars_minimap_controller.dm"
 #include "code\modules\minimap\minimap_objects\objects\_minimap_object_parent.dm"
