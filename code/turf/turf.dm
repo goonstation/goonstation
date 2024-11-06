@@ -896,11 +896,6 @@ var/global/in_replace_with = 0
 			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
 			oldparent.borders?.Remove(src)
 
-	else
-		if (!issimulatedturf(src) && (src in air_master?.tiles_to_update))
-			stack_trace("HI IM DOING A BAD THING FIX ME")
-
-
 	new_turf.update_nearby_tiles(1)
 
 	#ifdef CHECK_MORE_RUNTIMES
