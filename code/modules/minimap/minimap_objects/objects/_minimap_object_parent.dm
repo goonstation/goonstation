@@ -19,7 +19,7 @@
 /obj/minimap/New()
 	. = ..()
 	START_TRACKING
-	if (global.current_state > GAME_STATE_PLAYING)
+	if (global.current_state > GAME_STATE_WORLD_NEW)
 		src.initialise_minimap()
 
 /obj/minimap/disposing()
