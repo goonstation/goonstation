@@ -59,12 +59,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return TRUE
 		return FALSE
 
-	proc/get_food_color()
-		if (food_color) // keep manually defined food colors
-			return food_color
-		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
-		food_color = get_average_color(I)
-		return food_color
+	get_average_color()
+		if (src.food_color) // keep manually defined food colors
+			return src.food_color
+		return ..()
 
 	proc/heal(var/mob/living/M)
 		SHOULD_CALL_PARENT(TRUE)
@@ -119,11 +117,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
+			//the hacky place_on zone of sadness
+			var/obj/surgery_tray/tray = locate() in src.loc
+			if (!tray || !(src in tray.attached_objs))
+				tray = null
+			var/obj/item/plate/plate = src.loc
+			if (istype(plate))
+				plate.remove_contents(src)
+			else
+				plate = null
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
+				//try to put it on the plate/tray if we're on one
+				if (tray && tray.place_on(slice_result))
+					tray.attach(slice_result)
+				else if (plate)
+					plate.add_contents(slice_result)
 			qdel (src)
 		else
 			..()
@@ -211,6 +223,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.reagents.add_reagent("ants", src.ant_amnt)
 						src.name = "[name_prefix("ant-covered", 1)][src.name][name_suffix(null, 1)]"
 
+	process_sliced_products(obj/item/reagent_containers/food/snacks/slice, amount_to_transfer)
+		. = ..()
+		if (istype(slice))
+			slice.food_effects |= src.food_effects
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
@@ -609,9 +625,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					return
 			if(src.is_sealed)
 				return
-			if(user.mind.assigned_role == "Bartender")
+			if(user.traitHolder.hasTrait("training_bartender"))
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
-				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
+				if(user.mind.assigned_role == "Bartender" && !ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
 					JOB_XP(user, "Bartender", 1)
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))
@@ -1087,11 +1103,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		var/success_prob = 25
 		var/hurt_prob = 50
 
-		if (user.reagents && user.reagents.has_reagent("ethanol") && user.mind && user.mind.assigned_role == "Bartender")
+		if (user.reagents && user.reagents.has_reagent("ethanol") && user.traitHolder.hasTrait("training_bartender"))
 			success_prob = 75
 			hurt_prob = 25
 
-		else if (user.mind && user.mind.assigned_role == "Bartender")
+		else if (user.traitHolder.hasTrait("training_bartender"))
 			success_prob = 50
 			hurt_prob = 10
 
@@ -2176,7 +2192,28 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 						if(src.reagents.has_reagent(O.ids[i]))
 							O.completed |= 1 << i-1
 		else
-			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!")
+
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (src.reagents.total_volume == 0)
+			icon_state = initial(icon_state)
+		else if (src.reagents.total_temperature >= (T0C+97))
+			icon_state = initial(icon_state)+"_hot"
+		else if (src.reagents.total_temperature > (T0C+30)) //beer can be our point of reference
+			icon_state = initial(icon_state)+"_warm"
+		else if (src.reagents.total_temperature <= (T0C-23))
+			icon_state = initial(icon_state)+"_freeze"
+		else if (src.reagents.total_temperature <= (T0C+7))
+			icon_state = initial(icon_state)+"_cool"
+		else
+			icon_state = initial(icon_state)
+
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 	name = "golden cocktail shaker"

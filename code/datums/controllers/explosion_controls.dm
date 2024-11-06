@@ -223,7 +223,7 @@ var/datum/explosion_controller/explosions
 
 				playsound(C.mob, explosions.distant_sound, 70, 0)
 
-		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
+		playsound(epicenter, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)
 			var/datum/effects/system/explosion/E = new/datum/effects/system/explosion()
 			E.set_up(epicenter)

@@ -65722,7 +65722,7 @@
 	name = "garbo belt";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/map/light/dimreddish,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";

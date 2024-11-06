@@ -1401,9 +1401,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 					SPAWN(src.det_time)
 						if (src)
 							src.boom()
-							if (target)
-								if (istype(target, /obj/machinery))
-									target.ex_act(1) // Reliably blasts through doors.
 						return
 		return
 
@@ -1461,6 +1458,12 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				if (istype(O, /obj/machinery/door/firedoor))
 					var/obj/machinery/door/firedoor/firelock = O
 					qdel(firelock)
+					continue
+				if (istype(O, /obj/machinery/door))
+					O.ex_act(1)
+					continue
+				if (istype(O, /obj/storage))
+					O.ex_act(2)
 					continue
 		qdel(src)
 		return

@@ -1593,7 +1593,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
 	hide_attack = ATTACK_FULLY_HIDDEN
-	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/blow_darts/single
@@ -3426,7 +3425,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.broke_open)
-			boutput(user, SPAN_ALERT("You need to close [src] before you can fire!"))
+			src.toggle_action(user)
+			if (src.ammo.amount_left > 0)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> slams shut [src] and fires in one fluid motion. Wow!"))
 		if (!src.broke_open && src.ammo.amount_left > 0)
 			src.shells_to_eject++
 		..()

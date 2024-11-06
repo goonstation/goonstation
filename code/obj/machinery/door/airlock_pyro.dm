@@ -81,6 +81,8 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/command/syndicate)
 	hardened = FALSE
 	cant_hack = TRUE
 	aiControlDisabled = FALSE
+	health = 800
+	health_max = 800
 
 /obj/machinery/door/airlock/pyro/security
 	name = "security airlock"
@@ -217,6 +219,9 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	req_access_txt = "52"
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
+
+	listeningpost
+		req_access_txt = "-1"
 
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"

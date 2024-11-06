@@ -13,14 +13,14 @@
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
-	var/list/guaranteed = new/list() // things that will always spawn from this - set to a number to spawn that many of the thing
+	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	// TODO: initialize
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(5 SECONDS) // ZEWAKA/INIT
+			sleep(2 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
@@ -1925,7 +1925,9 @@
 	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
 
 	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
-						/obj/item/aiModule/experimental/equality/b)
+						/obj/item/aiModule/experimental/equality/b,
+						/obj/item/aiModule/experimental/corrupted,
+						/obj/item/aiModule/experimental/historic)
 
 	one
 		amt2spawn = 1

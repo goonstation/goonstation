@@ -129,7 +129,7 @@
 
 			. += C
 
-	proc/generateTraitData(/mob/user)
+	proc/generateTraitData(mob/user)
 		if(traitDataDirty)
 			traitData = list()
 			for (var/datum/trait/trait as anything in src.getTraits(user))
@@ -296,7 +296,6 @@
 	onRemove(mob/owner)
 		owner.bioHolder?.RemoveEffect("deaf")
 
-
 /datum/trait/nolegs
 	name = "Stumped"
 	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
@@ -362,6 +361,28 @@
 
 			created_organ.donor = owner
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
+
+/datum/trait/stinky
+	name = "Stinky"
+	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
+	id = "stinky"
+	icon_state = "stinky"
+	category = list("body")
+	points = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.addMotive(/datum/simsMotive/hygiene)
+
+	onRemove(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.removeMotive("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish
@@ -483,6 +504,13 @@
 	icon_state = "infravisionG"
 	points = -1
 	category = list("vision")
+
+/datum/trait/wasitsomethingisaid
+	name = "Was It Something I Said?"
+	desc = "You did something to attract their ire, and the small robots of the station hate your guts!"
+	id = "wasitsomethingisaid"
+	icon_state = "wasitsomethingisaid"
+	points = 2
 
 /datum/trait/shortsighted
 	name = "Short-sighted"
@@ -747,6 +775,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is experienced in foodstuffs and their effects."
 	id = "training_chef"
 
+/datum/trait/job/bartender
+	name = "Bartender Training"
+	desc = "Subject has a keen mind for all things alcoholic."
+	id = "training_bartender"
+
 // bartender, detective, HoS
 /datum/trait/job/drinker
 	name = "Professional Drinker"
@@ -936,7 +969,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "randomallergy"
 	icon_state = "allergy"
 	points = 0
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	var/allergen = null
@@ -966,7 +998,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "medicalallergy"
 	icon_state = "medallergy"
 	points = 1
-	category = list("allergy")
 	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
@@ -1206,7 +1237,6 @@ TYPEINFO(/datum/trait/partyanimal)
 	id = "allergic"
 	icon_state = "hypeallergy"
 	points = 1
-	category = list("allergy")
 	disability_type = TRAIT_DISABILITY_MINOR
 	disability_name = "Anaphylactic"
 	disability_desc = "Acute response to allergens"
@@ -1337,7 +1367,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "hair"
 
 	onAdd(mob/owner)
-		owner.bioHolder.AddEffect("hair_growth")
+		owner.bioHolder.AddEffect("hair_growth", magical = TRUE)
 
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")

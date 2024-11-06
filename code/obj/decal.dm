@@ -179,7 +179,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	icon = 'icons/obj/decals/blood/blood.dmi'
 	icon_state = "floor2"
 	color = "#3399FF"
-	alpha = 100
+	alpha = 200
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null

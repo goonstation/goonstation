@@ -133,7 +133,10 @@ TYPEINFO(/obj/machinery/clonepod)
 		newsignal.data["message"] = "[msg]"
 
 		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + MGA_CLONER
+		if(src.clonehack)
+			newsignal.data["group"] = list(MGA_SYNDICATE)
+		else
+			newsignal.data["group"] = mailgroups + MGA_CLONER
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
@@ -312,7 +315,6 @@ TYPEINFO(/obj/machinery/clonepod)
 				src.occupant.bioHolder?.AddEffect("premature_clone")
 				src.occupant.take_toxin_damage(250)
 				random_brute_damage(src.occupant, 100, 0)
-				message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
 				if (ishuman(src.occupant))
 					var/mob/living/carbon/human/P = src.occupant
 					if (P.limbs)
@@ -338,7 +340,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			src.occupant.real_name = "clone"  //No null names!!
 		src.occupant.name = src.occupant.real_name
-
+		if (is_puritan)
+			message_ghosts("<b>[src.occupant]</b> is being cloned as a puritan at [log_loc(src, ghostjump=TRUE)].")
 		if (!((mindref) && (istype(mindref))))
 			logTheThing(LOG_DEBUG, null, "<b>Mind</b> Clonepod forced to create new mind for key \[[src.occupant.key ? src.occupant.key : "INVALID KEY"]]")
 			src.occupant.mind = new /datum/mind(  )

@@ -13,7 +13,7 @@ ABSTRACT_TYPE(/datum/minimap_marker)
 	. = ..()
 
 	src.marker = new /atom/movable()
-	src.marker.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER
+	src.marker.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 	src.marker.mouse_opacity = 0
 
 	src.target = target

@@ -81,7 +81,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		var/turf/T = get_turf(target)
 
 		target.visible_message(SPAN_ALERT("<b>[owner]</b> points at [target]!"))
-		playsound(target.loc, 'sound/effects/bamf.ogg', 50, 0)
+		playsound(target, 'sound/effects/bamf.ogg', 50, 0)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(get_turf(target),"8x8snowflake","#88FFFF"))
 
 		var/obj/decal/icefloor/B
@@ -588,6 +588,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (..())
 			return 1
 
+		if (istype(target, /obj/item/reagent_containers/food/snacks/pancake))
+			dothepixelthing(target)
+			src.holder.owner.visible_message(SPAN_ALERT(SPAN_BOLD("[src.holder.owner] blows up the pancakes with their mind!")), SPAN_ALERT("You blow up the pancakes with your mind!"))
+			src.holder.owner.bioHolder?.RemoveEffect("telepathy")
+			return
+
 		var/mob/living/carbon/recipient = null
 		if (iscarbon(target))
 			recipient = target
@@ -608,8 +614,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind at all!"))
 			return 1
 
+		if(isghostcritter(owner))
+			boutput(owner, SPAN_ALERT("You can't contact [recipient.name]'s mind with your spectral brain!"))
+			return 1
+
 		if(!recipient.client || recipient.stat)
-			boutput(recipient, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
+			boutput(owner, SPAN_ALERT("You can't seem to get through to [recipient.name] mentally."))
 			return 1
 
 		var/msg = copytext( adminscrub(input(usr, "Message to [recipient.name]:","Telepathy") as text), 1, MAX_MESSAGE_LEN)
@@ -1816,23 +1826,22 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	ability_path = /datum/targetable/geneticsAbility/telekinesis
 
 	OnMobDraw()
-		if (disposed)
+		if (..())
 			return
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "telekinesishead", layer = MOB_LAYER)
-		return
 
 	OnAdd()
-		..()
+		. = ..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.set_body_icon_dirty()
 
 	OnRemove()
-		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 			H.set_body_icon_dirty()
+		. = ..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -139,7 +139,7 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
 		flick("igniter_light", src)
-		boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
+		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
 

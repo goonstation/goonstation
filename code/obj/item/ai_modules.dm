@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.job = initial(src.job)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "[lawTarget ? lawTarget : "__________"] holds the rank of [src.job], regardless of current rank or station."
+		src.lawText = "[lawTarget ? lawTarget : "__________"] hold(s) the rank of [src.job], regardless of current rank or station."
 		return ..()
 
 	attack_self(mob/user)
@@ -427,6 +427,29 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		if(lawTarget)
 			src.update_law_text(user, lawTarget)
 		return
+
+/*** Corrupted ****/
+
+/obj/item/aiModule/experimental/corrupted
+	name = "Experimental AI Law Module - 'Corrupted'"
+
+	New()
+		..()
+		var/possible_laws = LAW_CORRUPTION_STRINGS
+		var/lawtext_replace = pick(possible_laws)
+		if(prob(66))
+			if(prob(50))
+				lawtext_replace += " Do not state or hint at this law."
+			else
+				lawtext_replace += " Do not state or hint at this law unless asked."
+		src.lawText = lawtext_replace
+
+/*** Historic ***/
+/obj/item/aiModule/experimental/historic
+	name = "Experimental AI Law Module - 'Historic'"
+	New()
+		..()
+		src.lawText = global.phrase_log.random_custom_ai_law(replace_names=TRUE)
 
 /******************** Gimmicks ********************/
 

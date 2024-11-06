@@ -594,6 +594,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.grump_message(usr, "Manufacturer queue length limit reached.", sound = TRUE)
 				else
 					src.queue += I
+					logTheThing(LOG_STATION, usr, "queues manufacturing of [I.name] ([json_encode(I.item_outputs)])[repeat ? " on repeat":""] in [src] at [log_loc(src)]")
 					if (src.mode == MODE_READY)
 						src.begin_work( new_production = TRUE )
 					return TRUE
