@@ -517,6 +517,22 @@
 					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[4]
 					return
+		//check if we're trying to scam a trader that is, for whatever reason, buying and selling the exact same commodity
+		if(buying == 1)
+			for(var/datum/commodity/arbitrage in src.goods_buy)
+				if(arbitrage.type == H.type && askingprice < arbitrage.price)
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
+					src.temp += src.errormsgs[5]
+					H.haggleattempts++
+					return
+		else
+			for(var/datum/commodity/arbitrage in src.goods_sell)
+				if(arbitrage.type == H.type && askingprice > arbitrage.price)
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
+					src.temp += src.errormsgs[5]
+					H.haggleattempts++
+					return
+
 		// check if the price increase % of the haggle is more than this trader will tolerate
 		var/hikeperc = askingprice - H.price
 		hikeperc = (hikeperc / H.price) * 100
