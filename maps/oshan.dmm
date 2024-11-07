@@ -31566,11 +31566,6 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"csO" = (
-/obj/lattice/auto,
-/obj/lattice/auto,
-/turf/space/fluid,
-/area/station/engine/proto)
 "ctr" = (
 /obj/item/pen/crayon/rainbow,
 /turf/simulated/floor/plating/random,
@@ -34133,6 +34128,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"fnR" = (
+/obj/grille/steel,
+/turf/simulated/floor/airless/plating,
+/area/station/engine/proto)
 "fnS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
@@ -40149,10 +40148,6 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"ndR" = (
-/obj/grille,
-/turf/simulated/floor/airless/plating,
-/area/station/engine/proto)
 "neb" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating/random,
@@ -41585,7 +41580,7 @@
 /area/station/com_dish/research_outpost)
 "oWO" = (
 /obj/machinery/door/airlock/gannets/engineering/alt,
-/turf/space/fluid,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "oWP" = (
 /obj/machinery/conveyor_switch{
@@ -123827,7 +123822,7 @@ eXl
 vey
 vLb
 nph
-csO
+nph
 aqn
 aqn
 aqn
@@ -124124,7 +124119,7 @@ cNx
 cNx
 cNx
 kJw
-vLb
+fnR
 ymf
 vxa
 trU
@@ -124426,7 +124421,7 @@ jHi
 cNx
 cNx
 cNx
-vLb
+fnR
 qka
 yil
 vLb
@@ -126234,8 +126229,8 @@ cNx
 cNx
 oDh
 jhV
-ndR
-ndR
+fnR
+fnR
 oDh
 cNx
 vLb

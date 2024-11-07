@@ -7595,7 +7595,7 @@
 /area/pasiphae/survey)
 "dtU" = (
 /obj/machinery/door/airlock/gannets/engineering/alt,
-/turf/space/fluid,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "dun" = (
 /turf/simulated/floor/black,
@@ -35598,11 +35598,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"oOY" = (
-/obj/lattice/auto,
-/obj/lattice/auto,
-/turf/space/fluid,
-/area/station/engine/proto)
 "oPc" = (
 /obj/stool/chair/office/blue{
 	dir = 4
@@ -46332,6 +46327,10 @@
 	dir = 1
 	},
 /area/pasiphae)
+"tzL" = (
+/obj/grille/steel,
+/turf/simulated/floor/airless/plating,
+/area/station/engine/proto)
 "tAt" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -49964,10 +49963,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"vhk" = (
-/obj/grille,
-/turf/simulated/floor/airless/plating,
-/area/station/engine/proto)
 "vhP" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -118516,7 +118511,7 @@ dWu
 vHy
 ovT
 iuq
-oOY
+iuq
 bfz
 bfz
 bfz
@@ -118813,7 +118808,7 @@ nZJ
 nZJ
 nZJ
 nbs
-ovT
+tzL
 jTU
 iia
 kpu
@@ -119115,7 +119110,7 @@ ptD
 nZJ
 nZJ
 nZJ
-ovT
+tzL
 aUQ
 bNH
 ovT
@@ -120923,8 +120918,8 @@ ovT
 nZJ
 nZD
 sWu
-vhk
-vhk
+tzL
+tzL
 nZD
 nZJ
 ovT
