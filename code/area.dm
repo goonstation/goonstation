@@ -3185,6 +3185,7 @@ ABSTRACT_TYPE(/area/station/solar)
 	luminosity = 1
 	workplace = 1
 	do_not_irradiate = TRUE
+	occlude_foreground_parallax_layers = FALSE
 
 /area/station/solar/north
 	name = "North Solar Array"

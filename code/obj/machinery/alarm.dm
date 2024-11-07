@@ -15,6 +15,7 @@
 	power_usage = 5
 	power_channel = ENVIRON
 	anchored = ANCHORED
+	plane = PLANE_NOSHADOW_ABOVE
 	/// save some CPU by only checking every tick when something is amiss
 	var/skipprocess = 0
 	var/alarm_frequency = FREQ_ALARM

@@ -242,7 +242,7 @@ proc/filter_trait_hats(var/type)
 
 	afterattack(atom/target, mob/user as mob)
 		if (src.on && !ismob(target) && target.reagents)
-			boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
+			boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 			target.reagents.temperature_reagents(4000,10)
 		return
 

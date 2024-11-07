@@ -815,7 +815,7 @@
 
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-			src.real_name = "SHELL/[src.mainframe]"
+			src.real_name = "SHELL/[src.mainframe.name]"
 			src.UpdateName()
 			src.update_name_tag()
 

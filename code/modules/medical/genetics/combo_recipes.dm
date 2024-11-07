@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/geneticsrecipe)
 /datum/geneticsrecipe
 	var/list/required_effects = list()
 	var/result = null
@@ -164,7 +165,7 @@
 
 /datum/geneticsrecipe/cryokinesis
 	required_effects = list("chime_snaps","fire_resist")
-	result = /datum/bioEffect/power
+	result = /datum/bioEffect/power/cryokinesis
 
 /datum/geneticsrecipe/adrenaline
 	required_effects = list("detox","strong")
