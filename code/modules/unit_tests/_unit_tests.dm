@@ -48,6 +48,7 @@
 #include "material_id_uniqueness.dm"
 #include "action_id_uniqueness.dm"
 #include "job_name_uniqueness.dm"
+#include "mutation_combo_valid_ids.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

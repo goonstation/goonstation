@@ -382,6 +382,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
 		/client/proc/cmd_caviewer,
+		/client/proc/cmd_paraviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_all_artifacts,
