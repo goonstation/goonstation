@@ -4,7 +4,6 @@
 	var/atmos = ALERT_SEVERITY_RESET //!Atmospheric Alert Severity
 	var/fire = ALERT_SEVERITY_RESET	//!Fire Alert Severity
 	var/power = ALERT_SEVERITY_RESET //!Power Alert Severity
-	var/motion = ALERT_SEVERITY_RESET //!Motion Alert Severity
 
 	proc/set_severity(kind, severity)
 		switch(kind)
@@ -14,11 +13,9 @@
 				src.fire = severity
 			if(ALERT_KIND_POWER)
 				src.power = severity
-			if(ALERT_KIND_MOTION)
-				src.motion = severity
 
 	proc/highest_severity()
-		return max(src.atmos, src.power, src.fire, src.motion)
+		return max(src.atmos, src.power, src.fire)
 
 /obj/machinery/computer/general_alert
 	name = "engineering alert computer"
@@ -26,15 +23,22 @@
 	circuit_type = /obj/item/circuitboard/general_alert
 	base_icon_state = "alert"
 	var/list/datum/zone_alert/alerts = list()
+	var/obj/minimap/alert/alertmap
 
 	var/receive_frequency = FREQ_ALARM
 	var/respond_frequency = FREQ_PDA
 
 /obj/machinery/computer/general_alert/New()
 	..()
+	src.alertmap = new()
+	src.alertmap.display = src
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "control", frequency)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "respond", respond_frequency)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, "receive", receive_frequency)
+
+/obj/machinery/computer/general_alert/initialize()
+	. = ..()
+	src.alertmap.initialise_minimap()
 
 /obj/machinery/computer/general_alert/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
@@ -108,8 +112,6 @@
 					kind="fire"
 				if("clear_power")
 					kind="power"
-				if("clear_motion")
-					kind="motion"
 			src.update_alert(alert.zone, kind, ALERT_SEVERITY_RESET)
 			break
 	src.update_alert_icon()
@@ -129,14 +131,27 @@
 			"zone" = alert.zone,
 			"atmos" = alert.atmos,
 			"fire" = alert.fire,
-			"power" = alert.power,
-			"motion" = alert.motion
+			"power" = alert.power
 		))
 
 /obj/machinery/computer/general_alert/attack_hand(mob/user)
 	if(..())
 		return
-	src.ui_interact(user)
+	var/datum/hud/hud = user.get_hud()
+	if (!hud)
+		return
+	hud.add_object(src.alertmap, HUD_LAYER, "CENTER,CENTER-3")
+	user.apply_color_matrix(COLOR_MATRIX_SHADE, COLOR_MATRIX_SHADE_LABEL)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(user_moved))
+
+/obj/machinery/computer/general_alert/proc/user_moved(mob/user, atom/previous_loc, direction)
+	if (BOUNDS_DIST(user, src) > 0)
+		src.alertmap.close(user)
+
+/obj/machinery/computer/general_alert/disposing()
+	. = ..()
+	qdel(src.alertmap)
+	src.alertmap = null
 
 ///Check the current maximum alert level
 /obj/machinery/computer/general_alert/proc/check_alert_level()

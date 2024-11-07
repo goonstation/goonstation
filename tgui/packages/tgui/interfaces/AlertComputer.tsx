@@ -20,14 +20,14 @@ export const AlertComputer = () => {
   const { data } = useBackend<AlertComputerData>();
   const { alerts } = data;
   return (
-    <Window title="Current Engineering Alerts" width={600} height={420}>
+    <Window title="Current Alerts" width={600} height={420}>
       <Window.Content scrollable>
         <Table>
-          <Table.Row header className="candystripe">
+          <Table.Row header fontSize="1.1em" className="candystripe">
             <Table.Cell header width="200px">
               Area
             </Table.Cell>
-            <Table.Cell header collapsing width="100px">
+            <Table.Cell header width="100px">
               <Icon name="wind" mr="5px" />
               Air
             </Table.Cell>
@@ -38,10 +38,6 @@ export const AlertComputer = () => {
             <Table.Cell header collapsing width="100px">
               <Icon name="bolt" mr="5px" />
               Power
-            </Table.Cell>
-            <Table.Cell header collapsing width="100px">
-              <Icon name="walking" mr="5px" />
-              Motion
             </Table.Cell>
           </Table.Row>
           {Object.values(alerts).map((value, index) => {
@@ -61,7 +57,7 @@ const AlertRow = (props: AlertRowProps) => {
   const { alert } = props;
   return (
     <Table.Row className="candystripe">
-      <Table.Cell>{alert.zone}</Table.Cell>
+      <Table.Cell verticalAlign="middle">{alert.zone}</Table.Cell>
       <AlertCell
         area_ckey={alert.area_ckey}
         kind="atmos"
@@ -76,11 +72,6 @@ const AlertRow = (props: AlertRowProps) => {
         area_ckey={alert.area_ckey}
         kind="power"
         severity={alert.power}
-      />
-      <AlertCell
-        area_ckey={alert.area_ckey}
-        kind="motion"
-        severity={alert.motion}
       />
     </Table.Row>
   );

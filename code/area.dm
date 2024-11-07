@@ -4267,7 +4267,7 @@ ABSTRACT_TYPE(/area/mining)
 /**
   * Causes a power alert in the area. Notifies AIs and updates alert computer
   */
-/area/proc/poweralert(state, source)
+/area/proc/poweralert(state, obj/machinery/power/apc/source)
 	if (state != src.poweralm)
 		src.poweralm = state
 		var/list/cameras = list()
@@ -4285,8 +4285,10 @@ ABSTRACT_TYPE(/area/mining)
 		alert_computer_signal.data["type"] = ALERT_KIND_POWER
 		if(state==1)
 			alert_computer_signal.data["alert"] = ALERT_SEVERITY_RESET
+			source.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 		else
 			alert_computer_signal.data["alert"] = ALERT_SEVERITY_PRIORITY
+			source.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_power")
 		radio_controller.get_frequency(FREQ_ALARM).post_packet_without_source(alert_computer_signal)
 	return
 
@@ -4340,6 +4342,7 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = FALSE
 				F.UpdateIcon()
+				F.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 		if (src.get_z_level() != Z_LEVEL_STATION)
 			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)

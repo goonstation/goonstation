@@ -1531,6 +1531,7 @@
 #include "code\modules\minimap\minimap_objects\controllers\pod_wars_minimap_controller.dm"
 #include "code\modules\minimap\minimap_objects\objects\_minimap_object_parent.dm"
 #include "code\modules\minimap\minimap_objects\objects\ai_map.dm"
+#include "code\modules\minimap\minimap_objects\objects\alert_map.dm"
 #include "code\modules\minimap\minimap_objects\objects\info_map.dm"
 #include "code\modules\minimap\minimap_objects\objects\map_computer.dm"
 #include "code\modules\minimap\minimaps\__minimap_parent.dm"

@@ -189,6 +189,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 
 	alarm_active = TRUE
 
+	src.AddComponent(/datum/component/minimap_marker/minimap, MAP_ALARM, "alarm_fire")
 	A.firealert()	//Icon state is set to "fire1" in A.firealert()
 	post_alert(1)
 
