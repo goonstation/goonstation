@@ -2896,3 +2896,30 @@
 
 	getTooltip()
 		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
+
+ABSTRACT_TYPE(/datum/statusEffect/curse)
+/datum/statusEffect/curse
+	id = "art_curse"
+	name = "Eldritch Curse"
+	icon_state = ""
+	desc = "You've been cursed by an Eldritch artifact!"
+	unique = FALSE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	blood
+		id = "art_blood_curse"
+
+	aging
+		id = "art_aging_curse"
+
+	nightmares
+		id = "art_nightmares_curse"
+
+	maze
+		id = "art_maze_curse"
+
+	displacement
+		id = "art_displacement_curse"
+
+	light
+		id = "art_light_curse"

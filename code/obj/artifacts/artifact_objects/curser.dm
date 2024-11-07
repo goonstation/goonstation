@@ -1,50 +1,63 @@
-/*/obj/artifact/curser
+#define BLOOD_CURSE 1
+#define AGING_CURSE 2
+#define NIGHTMARE_CURSE 3
+#define MAZE_CURSE 4
+#define DISP_CURSE 5
+#define LIGHT_CURSE 6
+
+/obj/artifact/curser
 	name = "artifact curser"
 	associated_datum = /datum/artifact/curser
-
-	New(var/loc, var/forceartiorigin)
-		..()
-
-	ArtifactActivated(var/mob/living/user as mob)
-		var/datum/artifact/A = src.artifact
-		if (A.activated)
-			return
-		A.activated = 1
-		playsound(src.loc, A.activ_sound, 100, 1)
-		src.overlays += A.fx_image
-		src.visible_message("<b>[src] seems like it has something inside it...</b>") //Left on purpose, I want to make people thing its the container artifact.
 
 /datum/artifact/curser
 	associated_object = /obj/artifact/curser
 	type_name = "Curser"
-	rarity_weight = 0
+	rarity_weight = 250
 	validtypes = list("eldritch")
-	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
-	activ_text = "deposits its contents on the ground."
-	deact_text = "ceases functioning."
-	react_xray = list(7,50,40,11,"HOLLOW")
+	// activation text disguises it as container, but it is covered in suspicious markings which gives it away
+	activ_text = "seems like it has something inside of it..."
+	deact_text = "locks back up."
+	react_xray = list(2, 20, 55, 7, "HOLLOW")
+	examine_hint = "It is covered in very conspicuous markings."
 
-	New()
+	effect_touch(obj/O, mob/living/user)
 		..()
-		src.react_heat[2] = "HIGH INTERNAL CONVECTION"
+		// talisman check
+		// if you have talisman, it wards off the curse
 
-	effect_touch(var/obj/O,var/mob/living/user)
-		var/range = rand(90,160)
-		if (..())
-			return
-		for(var/mob/N in viewers(O, null))
-			N.flash(3 SECONDS)
-			if(N.client)
-				shake_camera(N, 6, 4)
-				O.visible_message(SPAN_ALERT("<b>With a blinding light [O] vanishes, releasing the curse that was locked inside it.</b>"))
-		if (range > 0)
-			var/turf/T = get_turf(O)
-			for (var/mob/living/carbon/human/M in range(range,T))
-				if (M == user)
-					continue
-				playsound(M, 'sound/effects/blood.ogg', 80, TRUE)
-				boutput(M, SPAN_ALERT("You have been cursed by an eldritch artifact!"))
-				M.changeStatus("bloodcurse",(rand(900,2000)))
-				artifact_controls.artifacts -= src
-				qdel(O)*/
+		var/list/mobs_nearby = list()
+		for (var/mob/living/carbon/human/H in range(5, src))
+			if (!H.mind)
+				continue
+			mobs_nearby += H
+		if (length(mobs_nearby))
+			var/mob/living/cursed = pick(mobs_nearby)
+
+		// talisman check
+		// if you have talisman, it wards off the curse
+
+		var/curse = pick(BLOOD_CURSE, AGING_CURSE, NIGHTMARE_CURSE, MAZE_CURSE, DISP_CURSE, LIGHT_CURSE)
+		switch (curse)
+			if (BLOOD_CURSE)
+				user.setStatus("art_blood_curse", 3 MINUTES)
+			if (AGING_CURSE)
+				user.setStatus("art_aging_curse", 3 MINUTES)
+			if (NIGHTMARE_CURSE)
+				user.setStatus("art_nightmare_curse", 3 MINUTES)
+			if (MAZE_CURSE)
+				user.setStatus("art_maze_curse", 3 MINUTES)
+			if (DISP_CURSE)
+				user.setStatus("art_displacement_curse", 3 MINUTES)
+			if (LIGHT_CURSE)
+				user.setStatus("art_light_curse", 3 MINUTES)
+
+		boutput(user, SPAN_ALERT("You have been cursed by an Eldritch artifact!"))
+		O.visible_message(SPAN_ALERT("<b>[O]</b> screeches, releasing the curse that was locked inside it!"))
+		playsound(src, pick('sound/effects/ghost.ogg', 'sound/effects/ghostlaugh.ogg'), 60, TRUE)
+
+#undef BLOOD_CURSE
+#undef AGING_CURSE
+#undef NIGHTMARE_CURSE
+#undef MAZE_CURSE
+#undef DISP_CURSE
+#undef LIGHT_CURSE
