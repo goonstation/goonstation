@@ -10895,6 +10895,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/hemostat,
 /obj/item/suture,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "bfq" = (
@@ -15787,6 +15788,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -19391,6 +19393,7 @@
 /obj/item/staple_gun,
 /obj/item/suture,
 /obj/item/hemostat,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
