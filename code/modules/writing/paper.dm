@@ -515,15 +515,14 @@
 	desc = "Fancy."
 	var/print_icon = 'icons/effects/sstv.dmi'
 	var/print_icon_state = "sstv_1"
+	sizex = 640 + 0
+	sizey = 480 + 32
+	scrollbar = FALSE
 
 	New()
 		..()
-		src.info = {"<IMG SRC="sstv_cachedimage.png">"}
+		src.info = "<img style='width: 100%; position: absolute; top: 0; left: 0' src='data:image/png;base64,[icon2base64(icon(print_icon,print_icon_state))]'>"
 		return
-
-	examine()
-		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"

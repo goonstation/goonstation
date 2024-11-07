@@ -5399,3 +5399,12 @@
 		mix_phrase = "The mixture starts to froth and glows a furious red!"
 		result_amount = 3
 		hidden = TRUE
+
+	mirabilis
+		name = "Mirabilis"
+		id = "mirabilis"
+		result = "mirabilis"
+		required_reagents = list("flockdrone_fluid" = 1, "port" = 1, "oculine" = 1)
+		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
+		result_amount = 2
+		mix_sound = 'sound/effects/radio_sweep1.ogg'

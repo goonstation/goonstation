@@ -280,6 +280,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_mask = list(/obj/item/clothing/mask/gas)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera,/obj/item/gun/energy/egun)
+		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -360,6 +361,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/plasma_gun)
+		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -400,6 +402,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_mask = list(/obj/item/clothing/mask/gas)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal) // mesons look fuckin weird in the dark
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/rcd,/obj/item/rcd_ammo,/obj/item/rcd_ammo,/obj/item/device/light/flashlight,/obj/item/cell/cerenkite)
+		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -555,6 +558,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_belt = list(/obj/item/gun/energy/laser_gun)
 		slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/baton,/obj/item/breaching_charge,/obj/item/breaching_charge)
+		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -697,6 +701,7 @@ ABSTRACT_TYPE(/datum/job/research)
 		slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/storage/firstaid/regular,/obj/item/storage/firstaid/regular)
+		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -804,6 +809,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		slot_belt = list(/obj/item/tank/emergency_oxygen)
 		slot_mask = list(/obj/item/clothing/mask/breath)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/obj/item/gun/kinetic/flaregun,/obj/item/ammo/bullets/flare,/obj/item/cell/cerenkite)
+		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
 			..()
@@ -1181,6 +1187,23 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/security)
 	slot_poc1 = list(/obj/item/device/detective_scanner)
 	items_in_backpack = list(/obj/item/tank/emergency_oxygen)
+
+/datum/job/special/hall_monitor
+	name = "Hall Monitor"
+	linkcolor = "#FF0000"
+	limit = 2
+	wages = PAY_UNTRAINED
+	access_string = "Security Assistant"
+	cant_spawn_as_rev = TRUE
+	receives_badge = /obj/item/clothing/suit/security_badge/paper
+	slot_belt = list(/obj/item/device/pda2)
+	slot_jump = list(/obj/item/clothing/under/color/red)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_ears = list(/obj/item/device/radio/headset/hall_monitor)
+	slot_head = list(/obj/item/clothing/head/basecap/red)
+	slot_poc1 = list(/obj/item/pen/pencil)
+	items_in_backpack = list(/obj/item/instrument/whistle,/obj/item/device/ticket_writer/crust)
+
 
 /datum/job/special/toxins_researcher
 	name = "Toxins Researcher"
