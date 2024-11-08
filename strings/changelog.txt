@@ -1,5 +1,7 @@
 
 (t)fri nov 08 24
+(u)pgmzeta + LeahTheTech
+(*)Added pop up information maps to every rotation map.
 (u)Garash2k
 (p)19559
 (e)🆕📄|C-Feature, A-UI
