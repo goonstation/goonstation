@@ -18,7 +18,7 @@
 	desc = "This isn't that old, you just spilled mugwort tea on it the other day."
 
 /obj/item/teleportation_scroll/get_desc()
-	. = ..() + " Charges left: [src.uses]."
+	. = "Charges left: [src.uses]."
 
 /obj/item/teleportation_scroll/attack_self(mob/user as mob)
 	if (!iswizard(user))
