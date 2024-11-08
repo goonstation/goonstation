@@ -823,12 +823,14 @@ TYPEINFO(/atom/movable)
 	PROTECTED_PROC(TRUE)
 	return
 
+///wrapper proc for /atom/proc/attack_hand so that signals are always sent. Call this, but do not override it.
 /atom/proc/Attackhand(mob/user as mob)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(src, COMSIG_ATTACKHAND, user))
 		return
 	src.attack_hand(user)
 
+///internal proc for when an atom is attacked by a user's hand. Override this, but do not call it,
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_attack_hand(user)
@@ -985,6 +987,10 @@ TYPEINFO(/atom/movable)
 		return // Stops ghost drones from MouseDropping mobs
 	if (isAIeye(usr) || (isobserver(usr) && src != usr))
 		return // Stops AI eyes from click-dragging anything, and observers from click-dragging anything that isn't themselves (ugh)
+
+	// converting params to a list here enables it to be used for communicating between mousedrop() and MouseDrop_T()
+	params = params2list(params)
+
 	over_object._MouseDrop_T(src, usr, src_location, over_location, src_control, over_control, params)
 	if (SEND_SIGNAL(src, COMSIG_ATOM_MOUSEDROP, usr, over_object, src_location, over_location, src_control, over_control, params))
 		return

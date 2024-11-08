@@ -289,7 +289,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	name = "pufferfish"
 	desc = "Adorable. Quite poisonous."
 	icon_state = "pufferfish"
-	initial_volume = 60 // 20 fish oil and 40 tetrodotoxin
 	inhand_color = "#8d754e"
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/pufferfish
 	category = FISH_CATEGORY_AQUARIUM
@@ -306,7 +305,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	process() // the part where the puffed up fish hurts you
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			if (src.spikes_protected(H))
+			if (src.spikes_protected(H, src))
 				return
 			boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
 			random_brute_damage(H, 3)
@@ -315,7 +314,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 
 	make_reagents()
 		..() //it still contains fish oil
-		src.reagents.add_reagent("tetrodotoxin",40) // REALLY don't eat raw pufferfish
+		src.reagents.add_reagent("tetrodotoxin",20) // REALLY don't eat raw pufferfish
 
 	onSlice(var/mob/user) // Don't eat pufferfish the staff assistant made
 		if (user.traitHolder?.hasTrait("training_chef"))
@@ -328,22 +327,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 		else
 			if (prob(25)) // Don't try doing it if you don't know what you're doing
 				boutput(user, SPAN_NOTICE("You prick yourself trying to cut [src], and feel a bit numb."))
-				src.reagents.trans_to(user, 20)
+				src.reagents.trans_to(user, 5)
 			else if (prob(30)) // 30% of 75%(slightly more than 22%) chance of still being safe to eat
 				src.reagents.remove_reagent("tetrodotoxin",src.reagents.get_reagent_amount("tetrodotoxin"))
 
 
-	proc/spikes_protected(mob/living/carbon/human/H)
-		if (H.hand)//gets active arm - left arm is 1, right arm is 0
-			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
-				return TRUE
-		else
-			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
-				return TRUE
+	proc/spikes_protected(mob/living/carbon/human/H, obj/fish)
 		if(H.gloves)
 			return TRUE
 		if(H.traitHolder?.hasTrait("training_chef"))
 			return TRUE
+
+		if (H.l_hand == fish)
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else if (H.r_hand == fish)
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else
+			return TRUE //no pokey if not holdy :salute:
+
 
 /obj/item/reagent_containers/food/fish/flounder
 	name = "flounder"

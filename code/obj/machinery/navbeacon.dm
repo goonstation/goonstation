@@ -107,8 +107,9 @@ TYPEINFO(/obj/machinery/navbeacon)
 
 		var/beaconrequest = signal.data["findbeacon"] || signal.data["address_tag"]
 		if(beaconrequest && ((beaconrequest in codes) || beaconrequest == "any" || beaconrequest == location))
+			var/post_target = signal.data["sender"] || signal.data["netid"]
 			SPAWN(1 DECI SECOND)
-				post_status(signal.data["sender"] || signal.data["netid"])
+				post_status(post_target)
 			return
 
 		if (!signal.data["address_1"] || !signal.data["sender"])

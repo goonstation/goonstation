@@ -5,32 +5,36 @@
 	chance_leave = 45
 	chance_arrive = 66
 
-	max_goods_buy = 5
-	max_goods_sell = 4
+	base_goods_buy = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/generic/anyore,
+			/datum/commodity/trader/generic/herbs,
+			/datum/commodity/trader/generic/anyfood,
+			/datum/commodity/trader/generic/shipcomponents,
+			/datum/commodity/trader/generic/jumpsuits,
+			/datum/commodity/trader/generic/furniture,
+			/datum/commodity/trader/generic/pens
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list()
+	)
 
-	base_goods_buy = list(/datum/commodity/trader/generic/anyore,
-	/datum/commodity/trader/generic/herbs,
-	/datum/commodity/trader/generic/anyfood,
-	/datum/commodity/trader/generic/shipcomponents,
-	/datum/commodity/trader/generic/jumpsuits,
-	/datum/commodity/trader/generic/furniture,
-	/datum/commodity/trader/generic/pens)
-	base_goods_sell = list(/datum/commodity/trader/generic/sheetmetal,
-	/datum/commodity/trader/generic/rcd_ammo,
-	/datum/commodity/trader/generic/fabric,
-	/datum/commodity/trader/generic/telecrystal,
-	/datum/commodity/trader/generic/glowstick,
-	/datum/commodity/trader/generic/gasmask,
-	/datum/commodity/trader/generic/monkey,
-	/datum/commodity/trader/ringtone_dogs)
-	/*
-	/datum/commodity/trader/synthmodule/bacteria,
-	/datum/commodity/trader/synthmodule/virii,
-	/datum/commodity/trader/synthmodule/parasite,
-	/datum/commodity/trader/synthmodule/fungi,
-	/datum/commodity/trader/synthmodule/gmcell,
-	/datum/commodity/trader/synthmodule/upgrader)
-	*/
+	base_goods_sell = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/generic/sheetmetal,
+			/datum/commodity/trader/generic/fabric,
+			/datum/commodity/trader/generic/glowstick,
+			/datum/commodity/trader/generic/monkey,
+			/datum/commodity/trader/ringtone_dogs
+		),
+		TRADER_RARITY_UNCOMMON = list(
+			/datum/commodity/trader/generic/gasmask,
+			/datum/commodity/trader/generic/rcd_ammo,
+			/datum/commodity/trader/generic/telecrystal,
+		),
+		TRADER_RARITY_RARE = list()
+	)
+
 	New()
 		..()
 		var/pickfirstname = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer","Sketchy","100%","Sassy","Zesty")

@@ -3425,7 +3425,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.broke_open)
-			boutput(user, SPAN_ALERT("You need to close [src] before you can fire!"))
+			src.toggle_action(user)
+			if (src.ammo.amount_left > 0)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> slams shut [src] and fires in one fluid motion. Wow!"))
 		if (!src.broke_open && src.ammo.amount_left > 0)
 			src.shells_to_eject++
 		..()

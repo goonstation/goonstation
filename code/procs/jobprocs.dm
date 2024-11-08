@@ -492,6 +492,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			if(!QDELETED(current_mob))
 				current_mob.update_icons_if_needed()
 
+		if (src.traitHolder?.hasTrait("jailbird"))
+			create_jailbird_wanted_poster(H)
+
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
@@ -568,10 +571,15 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
-				src.equip_if_possible(B, SLOT_IN_BACKPACK)
-				B.badge_owner_name = src.real_name
-				B.badge_owner_job = src.job
+				var/obj/item/clothing/suit/security_badge/badge
+				if (ispath(JOB.receives_badge))
+					badge = new JOB.receives_badge(src)
+				else
+					badge = new /obj/item/clothing/suit/security_badge(src)
+				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
+					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
+				badge.badge_owner_name = src.real_name
+				badge.badge_owner_job = src.job
 
 	if (src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
@@ -668,12 +676,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
 		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			if (src.limbs.l_leg)
+				src.limbs.l_leg.delete()
+			if (src.limbs.r_leg)
+				src.limbs.r_leg.delete()
+			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			chair.buckle_in(src, src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks

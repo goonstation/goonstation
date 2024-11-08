@@ -12,7 +12,7 @@ var/datum/job_controller/job_controls
 
 	New()
 		..()
-		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode)
+		if (world.load_intra_round_value("solarium_complete") == 1 || derelict_mode || global.master_mode == "disaster")
 			src.staple_jobs = list(new /datum/job/command/captain/derelict {limit = 1;name = "NT-SO Commander";} (),
 			new /datum/job/command/head_of_security/derelict {limit = 1; name = "NT-SO Special Operative";} (),
 			new /datum/job/command/chief_engineer/derelict {limit = 1; name = "Salvage Chief";} (),
@@ -98,8 +98,8 @@ var/datum/job_controller/job_controls
 		if (!job.no_jobban_from_this_job && jobban_isbanned(player, job.name))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], but is job banned.")
 			return
-		// mentor only job check
-		if (job.mentor_only && !(player.ckey in mentors))
+		// trusted only job check
+		if (job.trusted_only && (!(player.ckey in mentors) && !NT.Find(ckey(player.mind.key))))
 			logTheThing(LOG_DEBUG, null, "<b>Jobs:</b> check job eligibility error - [player.ckey] requested [job.name], a mentor only job.")
 			return
 		// meant to prevent you from setting sec as fav and captain (or similar) as your only medium to ensure only captain traitor rounds
