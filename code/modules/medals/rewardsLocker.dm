@@ -359,6 +359,89 @@
 			boutput(activator, SPAN_ALERT("Unable to redeem... only humans can redeem this."))
 
 		return 0
+/datum/achievementReward/nt_hos
+	title = "(Skin set) Nanotrasen Head of Security"
+	desc = "Turns Head of Security clothing to a deep Nanotrasen blue to show your loyalty to the corporation!"
+	required_medal = "I Helped!"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			var/succ = FALSE
+			if (H.wear_suit)
+				var/obj/item/clothing/suit/M = H.wear_suit
+				if (istype(M, /obj/item/clothing/suit/armor/hoscape))
+					M.icon_state = "hos-cape-blue"
+					M.item_state = "hos-cape-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				if (istype(M, /obj/item/clothing/suit/det_suit/hos))
+					M.icon_state = findtext(M.icon_state, "_o") ? "hoscoat-blue_o" : "hoscoat-blue"
+					M.coat_style = "hoscoat-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.w_uniform)
+				var/obj/item/clothing/under/M = H.w_uniform
+				if (istype(M, /obj/item/clothing/under/rank/head_of_security/fancy))
+					M.icon_state = "hos-fancy-blue"
+					M.item_state = "hos-fancy-blue"
+					M.desc = "It's a deep Nanotrasen blue and black, much like security's victims tend to be."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/rank/head_of_security/dress))
+					M.icon_state = "hos-dress-alt"
+					M.item_state = "hos-dress-alt"
+					M.desc = "It's a deep Nanotrasen blue and black, much like security's victims tend to be."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/rank/head_of_security))
+					M.icon_state = "hos-alt"
+					M.item_state = "hos-alt"
+					M.desc = "It's a deep Nanotrasen blue and black, much like security's victims tend to be."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/suit/hos/dress))
+					M.icon_state = "suitBb-dress"
+					M.item_state = "suitBb-dress"
+					M.desc = "A blue suit and black necktie. Perfect for corporate loyalists!"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/suit/hos))
+					M.icon_state = "suitBb"
+					M.item_state = "suitBb"
+					M.desc = "A blue suit and black necktie. Perfect for corporate loyalists!"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+
+			if (H.head)
+				var/obj/item/clothing/under/M = H.head
+				if (istype(M, /obj/item/clothing/head/hos_hat) && !istype(M, /obj/item/clothing/head/hos_hat/blue))
+					H.u_equip(M)
+					H.equip_new_if_possible(/obj/item/clothing/head/hos_hat/blue, SLOT_HEAD)
+					H.set_clothing_icon_dirty()
+					qdel(M)
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/rank/head_of_security/dress))
+					M.icon_state = "helmet-hos-blue"
+					M.item_state = "helmet-hos-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (!succ)
+				boutput(activator, SPAN_ALERT("Unable to redeem... you need to be wearing a piece of HoS clothing!"))
+			return succ
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... only humans can redeem this."))
+
+		return 0
 
 /datum/achievementReward/round_flask
 	title = "(Skin) Round-bottom Flask"

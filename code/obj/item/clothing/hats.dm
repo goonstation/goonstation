@@ -612,6 +612,22 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "ntberet"
 	item_state = "ntberet"
 
+/obj/item/clothing/head/NTberet/hos
+	name = "Head of Security's beret"
+	desc = ""
+	icon_state = "ntberet_commander"
+	item_state = "ntberet_commander"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Head of Security")
+			. = "A constant reminder of your failure to join NT Special Operations."
+		else
+			. = "A standard issue Nanotrasen beret, but someone stuck a blue sticker over the badge."
+
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
 /obj/item/clothing/head/NTberet/commander
 	name = "Nanotrasen beret"
 	desc = "For the inner space commander in you."
@@ -1415,6 +1431,30 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			src.name = "HoS Hat"
 			src.icon_state = "hoscap"
 			src.item_state = "hoscap"
+			boutput(user, SPAN_NOTICE("You unfold the beret back into a hat."))
+		return
+
+/obj/item/clothing/head/hos_hat/blue
+	icon_state = "hoscap-blue"
+	item_state = "hoscap-blue"
+	var/folds = 0
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 7)
+
+/obj/item/clothing/head/hos_hat/attack_self(mob/user as mob)
+	if(user.r_hand == src || user.l_hand == src)
+		if(!src.folds)
+			src.folds = 1
+			src.name = "HoS Beret"
+			src.icon_state = "ntberet_commander"
+			src.item_state = "ntberet_commander"
+			boutput(user, SPAN_NOTICE("You fold the hat into a beret."))
+		else
+			src.folds = 0
+			src.name = "HoS Hat"
+			src.icon_state = "hoscap-blue"
+			src.item_state = "hoscap-blue"
 			boutput(user, SPAN_NOTICE("You unfold the beret back into a hat."))
 		return
 
