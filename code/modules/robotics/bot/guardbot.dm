@@ -1611,7 +1611,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = BOUNDS_DIST(src, target) > 0
+				var/is_ranged = BOUNDS_DIST(src, target)
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -2126,7 +2126,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
-			if(..() || !reagents || ranged) return
+			if(..() || !reagents || ranged > 64) return
 
 			if(src.last_use && world.time < src.last_use + 120)
 				return
