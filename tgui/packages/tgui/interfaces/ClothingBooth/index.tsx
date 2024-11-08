@@ -6,33 +6,27 @@
  * @license ISC
  */
 
-import { useMemo, useState } from 'react';
+import { useContext } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { CharacterPreview } from './CharacterPreview';
+import { ProvideTheDamnContext } from './context/Context';
+import { UiStateContext } from './context/UiState';
 import { PurchaseInfo } from './PurchaseInfo';
 import { StockList } from './StockList';
 import { TagsModal } from './TagsModal';
 import type { ClothingBoothData } from './type';
-import { UiStateContext } from './uiState';
 
 export const ClothingBooth = () => {
   const { act, data } = useBackend<ClothingBoothData>();
   const { name, accountBalance, cash, scannedID } = data;
-  const [showTagsModal, setShowTagsModal] = useState(false);
-  const uiState = useMemo(
-    () => ({
-      showTagsModal,
-      setShowTagsModal,
-    }),
-    [showTagsModal],
-  );
+  const { showTagsModal } = useContext(UiStateContext);
   return (
     <Window title={name} width={500} height={600}>
       <Window.Content>
-        <UiStateContext.Provider value={uiState}>
+        <ProvideTheDamnContext>
           <Stack fill vertical>
             {!!(!data.everythingIsFree && (scannedID || cash)) && (
               <Stack.Item>
@@ -100,7 +94,7 @@ export const ClothingBooth = () => {
             </Stack.Item>
           </Stack>
           {showTagsModal && <TagsModal />}
-        </UiStateContext.Provider>
+        </ProvideTheDamnContext>
       </Window.Content>
     </Window>
   );
