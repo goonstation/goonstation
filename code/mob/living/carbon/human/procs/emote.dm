@@ -713,6 +713,8 @@
 							on_head = 1
 						else // if not then never mind
 							return
+					if (istype(hat, /obj/item/clothing/head/hos_hat/blue)) // Maybe one day the HoS will be brave enough to disrespect nanotrasen.
+						return
 					if (hat.icon_state == "hosberet" || hat.icon_state == "hosberet-smash") // does it have one of the beret icons?
 						hat_or_beret = "beret" // call it a beret
 					else // otherwise?
