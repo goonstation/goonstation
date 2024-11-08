@@ -107,12 +107,12 @@
 		src.wipe_cart()
 
 		var/list/goods_buy_temp = list()
-		for(var/i in base_goods_buy)
+		for(var/i in rarities)
 			var/list/L = base_goods_buy[i]
 			goods_buy_temp[i] = L.Copy()
 
 		var/list/goods_sell_temp = list()
-		for(var/i in base_goods_sell)
+		for(var/i in rarities)
 			var/list/L = base_goods_sell[i]
 			goods_sell_temp[i] = L.Copy()
 
