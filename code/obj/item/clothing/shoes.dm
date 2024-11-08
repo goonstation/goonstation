@@ -315,7 +315,13 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		else if(istype(W, /obj/item/spray_paint_graffiti) && !(istype(src, /obj/item/clothing/shoes/clown_shoes/military)))
 			if (user.traitHolder.hasTrait("training_security"))
 				var/obj/item/I = new /obj/item/clothing/shoes/clown_shoes/military()
-				I.set_loc(get_turf(src))
+				if (src.equipped_in_slot)
+					var/mob/living/carbon/human/wearer = src.loc
+					var/slot = src.equipped_in_slot
+					wearer.u_equip(src)
+					wearer.equip_if_possible(I, slot)
+				else
+					I.set_loc(get_turf(src))
 				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
 				boutput(user, SPAN_NOTICE("You spraypaint the clown shoes in a sleek black!"))
 				qdel(src)
@@ -522,8 +528,13 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		if(istype(W, /obj/item/pen/crayon) && !(istype(src, /obj/item/clothing/shoes/swat/heavy/clown)))
 			if (user.traitHolder.hasTrait("training_clown"))
 				var/obj/item/I = new /obj/item/clothing/shoes/swat/heavy/clown()
-				I.set_loc(get_turf(src))
-				playsound(src, 'sound/items/graffitispray3.ogg', 100, TRUE)
+				if (src.equipped_in_slot)
+					var/mob/living/carbon/human/wearer = src.loc
+					var/slot = src.equipped_in_slot
+					wearer.u_equip(src)
+					wearer.equip_if_possible(I, slot)
+				else
+					I.set_loc(get_turf(src))
 				boutput(user, SPAN_NOTICE("You cover the heavy boots in crayon!"))
 				qdel(src)
 			else

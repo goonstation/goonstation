@@ -175,7 +175,7 @@ proc/ui_describe_reagents(atom/A)
 			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 
 			contents.Add(list(list(
-				name = reagents_cache[reagent_id],
+				name = current_reagent.name,
 				id = reagent_id,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
