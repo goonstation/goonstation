@@ -15347,6 +15347,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/teleporter)
+"bal" = (
+/obj/grille/steel,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "ban" = (
 /obj/machinery/portableowl/attached{
 	name = "an Owl with a chip out of his beak"
@@ -20538,14 +20543,14 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/cable/orange{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
 /obj/machinery/power/nuclear/turbine_control{
 	icon_state = "engine2";
 	status = 1
 	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto_gangway)
 "bsS" = (
@@ -23503,6 +23508,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
+"bHI" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto)
 "bHK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37785,10 +37796,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/stockex)
 "cYv" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random,
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/binary/nuclear_reactor,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "cYT" = (
@@ -39446,12 +39457,6 @@
 	dir = 4
 	},
 /turf/space,
-/area/station/engine/proto)
-"eex" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "eeD" = (
 /obj/disposalpipe/segment/ejection,
@@ -52197,6 +52202,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"nOf" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "nPn" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/vr/bomb{
@@ -52606,13 +52616,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
-"oeR" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
-	},
-/obj/grille/steel,
-/turf/simulated/floor/plating/airless,
-/area/station/engine/proto)
 "ofw" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -58687,6 +58690,12 @@
 /obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
+"sGb" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "sGk" = (
 /obj/table/auto,
 /obj/item/paper_bin{
@@ -65454,6 +65463,13 @@
 	dir = 4
 	},
 /area/station/solar/west)
+"xNg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "xNk" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -142025,9 +142041,9 @@ oui
 oui
 oui
 oui
-oui
-oui
-vRj
+czK
+xbG
+gPR
 oHO
 xve
 jOe
@@ -142326,8 +142342,8 @@ eEq
 voC
 lFT
 nMt
-oui
-oui
+eEq
+gPR
 oui
 fpR
 mSU
@@ -142625,12 +142641,12 @@ adC
 efk
 oui
 mKM
-eex
-xbG
 voC
 voC
 voC
-eex
+xNg
+sGb
+eEq
 kwS
 aqg
 rlX
@@ -142927,11 +142943,11 @@ adC
 mSU
 qlN
 vgJ
-oeR
-sTb
-eap
-eap
-jOh
+bal
+bal
+nOf
+nOf
+bHI
 jsn
 aqg
 efk

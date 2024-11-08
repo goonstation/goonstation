@@ -17335,6 +17335,15 @@
 /obj/laser_sink/mirror,
 /turf/simulated/floor,
 /area/station/engine/ptl)
+"cwf" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8;
+	frequency = 1225;
+	id = "Hot Loop Gas Supply 2";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "cwg" = (
 /obj/item/canned_laughter/crushed{
 	pixel_x = -17;
@@ -23700,6 +23709,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
 /turf/space,
 /area/station/engine/proto)
 "grZ" = (
@@ -26060,16 +26072,6 @@
 /obj/item/rubber_chicken,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
-"hOp" = (
-/obj/lattice,
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 8;
-	frequency = 1225;
-	id = "Hot Loop Gas Supply 2";
-	target_pressure = 1000
-	},
-/turf/space,
-/area/station/engine/proto)
 "hOu" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -44438,16 +44440,6 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
-"szu" = (
-/obj/lattice,
-/obj/machinery/atmospherics/binary/pump/active{
-	dir = 4;
-	frequency = 1225;
-	id = "Cold Loop Gas Supply 2";
-	target_pressure = 1000
-	},
-/turf/space,
-/area/station/engine/proto)
 "szP" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -45489,10 +45481,13 @@
 /turf/simulated/floor,
 /area/station/maintenance/west)
 "tcE" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
 /obj/machinery/light/incandescent/broken,
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4;
+	frequency = 1225;
+	id = "Cold Loop Gas Supply 2";
+	target_pressure = 1000
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "tdL" = (
@@ -61432,9 +61427,9 @@ qon
 skG
 lnm
 grK
-rZC
-rZC
-rZC
+cwf
+eoU
+oLw
 tcE
 gVa
 aaa
@@ -61734,10 +61729,10 @@ iVV
 bBI
 kMN
 gEP
-hOp
-eoU
-oLw
-szu
+rTp
+rZC
+rZC
+rTp
 lkh
 aaa
 aaa

@@ -34831,6 +34831,13 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
+"gjA" = (
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/proto)
 "gkM" = (
 /obj/item/device/light/glowstick,
 /turf/simulated/floor/plating/random,
@@ -35526,6 +35533,13 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
+"gYd" = (
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/proto)
 "gYu" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -37334,6 +37348,9 @@
 "jHi" = (
 /obj/machinery/emitter{
 	dir = 8
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/engine/glow,
 /area/station/engine/proto)
@@ -41015,6 +41032,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
+"okw" = (
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/proto)
 "olj" = (
 /obj/item/raw_material/rock,
 /obj/item/raw_material/cobryl,
@@ -41029,6 +41053,10 @@
 /area/station/ranch)
 "oml" = (
 /obj/machinery/field_generator,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/engine/proto)
 "omJ" = (
@@ -41453,6 +41481,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
+"oMK" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/space/fluid,
+/area/station/engine/proto)
 "oNJ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail,
@@ -42139,6 +42173,13 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"pIN" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/engine/glow,
+/area/station/engine/proto)
 "pIQ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
@@ -43646,6 +43687,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
 	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/proto)
@@ -123507,7 +123551,7 @@ aqn
 cNx
 cNx
 cNx
-kyd
+okw
 kyd
 cNx
 cNx
@@ -124416,10 +124460,10 @@ cNx
 cNx
 cNx
 qhw
-qhw
+pIN
 jHi
-cNx
-cNx
+fKQ
+fKQ
 cNx
 fnR
 qka
@@ -125319,13 +125363,13 @@ aqn
 cNx
 cNx
 cNx
-kyd
+gjA
 kyd
 cNx
 cNx
 cNx
 kyd
-kyd
+gYd
 cNx
 cNx
 trp
@@ -125621,7 +125665,7 @@ aqn
 cNx
 cNx
 cNx
-cNx
+oMK
 cNx
 cNx
 cNx

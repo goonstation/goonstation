@@ -171,6 +171,12 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/escape)
+"acW" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/space/fluid,
+/area/station/engine/proto)
 "adb" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -2279,6 +2285,13 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"bal" = (
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/proto)
 "baP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -14300,6 +14313,13 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters_west)
+"glp" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/engine/glow,
+/area/station/engine/proto)
 "glt" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -21074,6 +21094,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
 	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/proto)
@@ -29227,6 +29250,10 @@
 /area/listeningpost)
 "maC" = (
 /obj/machinery/field_generator,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/engine/proto)
 "maE" = (
@@ -37150,6 +37177,9 @@
 /obj/machinery/emitter{
 	dir = 8
 	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/airless/engine/glow,
 /area/station/engine/proto)
 "puc" = (
@@ -40596,6 +40626,13 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
+"qXt" = (
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/proto)
 "qXv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -54987,6 +55024,13 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"xsI" = (
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/airless/engine/glow/blue,
+/area/station/engine/proto)
 "xtf" = (
 /obj/machinery/light/small/floor/netural,
 /obj/cable{
@@ -118196,7 +118240,7 @@ bfz
 nZJ
 nZJ
 nZJ
-fSs
+xsI
 fSs
 nZJ
 nZJ
@@ -119105,10 +119149,10 @@ nZJ
 nZJ
 nZJ
 xEN
-xEN
+glp
 ptD
-nZJ
-nZJ
+von
+von
 nZJ
 tzL
 aUQ
@@ -120008,13 +120052,13 @@ bfz
 nZJ
 nZJ
 nZJ
-fSs
+qXt
 fSs
 nZJ
 nZJ
 nZJ
 fSs
-fSs
+bal
 nZJ
 nZJ
 iDf
@@ -120310,7 +120354,7 @@ bfz
 nZJ
 nZJ
 nZJ
-nZJ
+acW
 nZJ
 nZJ
 nZJ
@@ -120914,7 +120958,7 @@ bfz
 nZJ
 nZJ
 nZJ
-ovT
+nZJ
 nZJ
 nZD
 sWu
@@ -121215,8 +121259,8 @@ bfz
 bfz
 nZJ
 nZJ
-ovT
-bNF
+nZJ
+nbs
 voI
 ovT
 ovT
@@ -122119,23 +122163,23 @@ lZF
 bfz
 bfz
 bfz
-bfz
-bfz
-bfz
-bfz
-bfz
-bfz
-wWZ
-lxZ
-wWZ
-lxZ
-wWZ
-wWZ
-bfz
-bfz
-bfz
-bfz
-wWr
+nZJ
+nZJ
+nZJ
+nZJ
+nZJ
+nZJ
+nZD
+ovT
+nZD
+ovT
+nZD
+nZD
+nZJ
+nZJ
+nZJ
+nZJ
+aai
 bfz
 bfz
 bfz

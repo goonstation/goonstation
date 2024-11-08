@@ -7473,6 +7473,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
+"cfH" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "cfR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -36620,13 +36626,6 @@
 "kXA" = (
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/west)
-"kXE" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
-	},
-/obj/grille/steel,
-/turf/simulated/floor/plating/airless,
-/area/station/engine/proto)
 "kXO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41349,6 +41348,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"mqh" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "mqm" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/yellowblack{
@@ -49268,12 +49274,6 @@
 /obj/grille/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
-"oLg" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/engine/proto)
 "oLn" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -62611,6 +62611,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
+"sMD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "sMH" = (
 /obj/decal/cleanable/cobweb,
 /obj/stool/chair/dining/wood,
@@ -66859,10 +66864,10 @@
 	},
 /area/station/medical/cdc)
 "tXs" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random,
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/binary/nuclear_reactor,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "tXv" = (
@@ -69514,6 +69519,11 @@
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
+"uQO" = (
+/obj/grille/steel,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "uQV" = (
 /obj/machinery/computer/ordercomp{
 	dir = 4
@@ -71001,6 +71011,12 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"vmL" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto)
 "vmS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -98051,9 +98067,9 @@ goF
 goF
 goF
 goF
-goF
-goF
-nJJ
+dss
+kVK
+lDe
 tag
 yaQ
 xHd
@@ -98352,8 +98368,8 @@ tyT
 igb
 pxn
 jNJ
-goF
-goF
+tyT
+lDe
 goF
 pTc
 qwj
@@ -98651,12 +98667,12 @@ rdj
 vqe
 goF
 nEx
-oLg
-kVK
 igb
 igb
 igb
-oLg
+mqh
+cfH
+tyT
 kyc
 oym
 epw
@@ -98953,11 +98969,11 @@ rdj
 qwj
 tDW
 urT
-kXE
-mcv
-jrY
-jrY
-dOF
+uQO
+uQO
+sMD
+sMD
+vmL
 wXJ
 oym
 vqe

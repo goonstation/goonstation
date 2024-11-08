@@ -10190,6 +10190,12 @@
 /obj/storage/secure/closet/brig,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
+"ctt" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/proto)
 "ctC" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/cable{
@@ -11684,6 +11690,12 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
+"eDW" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "eEx" = (
 /obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/yellowblack{
@@ -13004,6 +13016,11 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/east)
+"gqG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "grv" = (
 /obj/submachine/weapon_vendor/security,
 /obj/machinery/firealarm/north,
@@ -13842,6 +13859,11 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"hLL" = (
+/obj/grille/steel,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "hMh" = (
 /obj/machinery/door/unpowered/wood/stall,
 /turf/simulated/floor/sanitary,
@@ -15091,12 +15113,6 @@
 	},
 /turf/simulated/floor/darkblue/checker,
 /area/station/engine/core)
-"jmS" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless,
-/area/station/engine/proto)
 "jmZ" = (
 /obj/stool/bench/wooden/auto,
 /obj/decal/tile_edge/line/black{
@@ -18015,13 +18031,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
-"nvY" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
-	},
-/obj/grille/steel,
-/turf/simulated/floor/plating/airless,
-/area/station/engine/proto)
 "nwA" = (
 /obj/machinery/computer/airbr{
 	density = 0;
@@ -20266,10 +20275,10 @@
 	},
 /area/station/science/chemistry)
 "qYM" = (
-/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/random,
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/machinery/atmospherics/binary/nuclear_reactor,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "qZP" = (
@@ -21401,6 +21410,13 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
+"sOS" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/engine/proto)
 "sSu" = (
 /obj/machinery/light{
 	layer = 3
@@ -106674,9 +106690,9 @@ xeU
 xeU
 xeU
 xeU
-xeU
-xeU
-rRN
+vTk
+jhA
+fpF
 gNr
 jXn
 wxR
@@ -106975,8 +106991,8 @@ vjU
 dbA
 aPj
 gxe
-xeU
-xeU
+vjU
+fpF
 xeU
 rpo
 meF
@@ -107274,12 +107290,12 @@ aaa
 efl
 xeU
 igR
-jmS
-jhA
 dbA
 dbA
 dbA
-jmS
+sOS
+eDW
+vjU
 aTk
 spK
 mrt
@@ -107576,11 +107592,11 @@ aaa
 meF
 fit
 iqE
-nvY
-mon
-kXz
-kXz
-uDB
+hLL
+hLL
+gqG
+gqG
+ctt
 qYb
 spK
 efl
@@ -109685,6 +109701,8 @@ aaa
 aaa
 aaa
 aaa
+quP
+tqY
 aaa
 aaa
 aaa
@@ -109698,9 +109716,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+quP
 aaa
 aaa
 aaa
@@ -109988,7 +110004,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+quP
 aaa
 aaa
 aaa
