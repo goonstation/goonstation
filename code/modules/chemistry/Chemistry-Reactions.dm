@@ -184,15 +184,15 @@
 
 /proc/omega_hairgrownium_grow_hair(var/mob/living/carbon/human/H, var/all_hairs)
 	var/list/possible_hairstyles = get_available_custom_style_types(H.client, no_gimmick_hair=!all_hairs) // if all_hairs is TRUE, character setup mode is FALSE, vice versa
-	var/hair_type = pick(possible_hairstyles)
-	H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
-	H.bioHolder.mobAppearance.customizations["hair_bottom"].color = random_saturated_hex_color()
-	hair_type = pick(possible_hairstyles)
-	H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new hair_type
-	H.bioHolder.mobAppearance.customizations["hair_middle"].color = random_saturated_hex_color()
-	hair_type = pick(possible_hairstyles)
-	H.bioHolder.mobAppearance.customizations["hair_top"].style =  new hair_type
-	H.bioHolder.mobAppearance.customizations["hair_top"].color = random_saturated_hex_color()
+	var/datum/appearanceHolder/AH =	H.bioHolder.mobAppearance
+	var/hair_slots = list("hair_bottom", "hair_middle", "hair_top")
+	for (var/slot in hair_slots)
+		var/hair_type = pick(possible_hairstyles)
+		var/datum/customizationHolder/holder = AH.getCustomizationByID(slot)
+		if (!istype(holder))
+			continue
+		holder.set_style(new hair_type)
+		holder.color = random_saturated_hex_color()
 	H.update_colorful_parts()
 	boutput(H, SPAN_NOTICE("Your entire head feels extremely itchy!"))
 

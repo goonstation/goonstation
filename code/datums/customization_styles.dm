@@ -26,6 +26,8 @@ TYPEINFO(/datum/customization_style)
 // typeinfo macro doesn't play nice with absolute pathed types so here we are
 TYPEINFO(/datum/customization_style/hair/gimmick)
 	gimmick = TRUE
+TYPEINFO(/datum/customization_style/beard/gimmick)
+	gimmick = TRUE
 /datum/customization_style
 	var/name = null
 	var/id = null
@@ -40,10 +42,6 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 	proc/check_available(client/C)
 		return TRUE
 
-	none
-		name = "None"
-		id = "none"
-		gender = MASCULINE
 	hair
 		default_layer = MOB_HAIR_LAYER2
 
@@ -112,6 +110,10 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 				name = "Afro: Long Stripes"
 				id = "afroSH"
 				random_allowed = FALSE
+			bald
+				name = "Bald"
+				id = "none"
+				gender = MASCULINE
 			balding
 				name = "Balding"
 				id = "balding"
@@ -785,12 +787,6 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 			shitty_hair
 				name = "Shitty Hair"
 				id = "shitty_hair"
-			shitty_beard
-				name = "Shitty Beard"
-				id = "shitty_beard"
-			shitty_beard_stains
-				name = "Shitty Beard Stains"
-				id = "shitty_beard_stains"
 	moustache
 		fu
 			name = "Biker"
@@ -874,6 +870,13 @@ TYPEINFO(/datum/customization_style/hair/gimmick)
 		trampstains
 			name = "Tramp: Beard Stains"
 			id = "trampstains"
+		gimmick
+			shitty_beard
+				name = "Shitty Beard"
+				id = "shitty_beard"
+			shitty_beard_stains
+				name = "Shitty Beard Stains"
+				id = "shitty_beard_stains"
 	sideburns
 		elvis
 			name = "Elvis"
@@ -914,15 +917,16 @@ proc/find_style_by_name(var/target_name, client/C, no_gimmick_hair = FALSE)
 		if(cmptext(initial(styletype.name), target_name))
 			return new styletype
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
-	return new /datum/customization_style/none
+	return null
 
 proc/find_style_by_id(var/target_id, client/C, no_gimmick_hair = FALSE)
 	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
 		if(initial(styletype.id) == target_id)
 			return new styletype
 	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
-	return new /datum/customization_style/none
+	return null
 
+/////// Muterace TODO: Make this type based - Glamurio
 /// Gets all the customization_styles which are available to a given client. Can be filtered by providing a gender flag or a type
 proc/get_available_custom_style_types(client/C, no_gimmick_hair = FALSE, filter_gender=0, filter_type=null, for_random=FALSE)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times

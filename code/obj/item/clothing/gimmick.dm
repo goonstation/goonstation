@@ -875,12 +875,13 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 
 			boutput(H, SPAN_ALERT("<b>You suddenly feel whiny and ineffectual.</b>"))
 			H.real_name = "Mike Dawson"
-			H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/bedhead
-			H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/moustache/selleck
-			H.bioHolder.mobAppearance.e_color = "#321E14"
-			H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#412819"
-			H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#412819"
-			H.bioHolder.mobAppearance.s_tone = "#FAD7D0"
+			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
+			AH.customizations["hair_middle"] = new /datum/customizationHolder/hair(new /datum/customization_style/hair/long/bedhead)
+			AH.customizations["hair_bottom"] = new /datum/customizationHolder/facial_hair(new /datum/customization_style/moustache/selleck)
+			AH.e_color = "#321E14"
+			AH.customizations["hair_bottom"].color = "#412819"
+			AH.customizations["hair_middle"].color = "#412819"
+			AH.s_tone = "#FAD7D0"
 			H.bioHolder.AddEffect("clumsy")
 			H.update_colorful_parts()
 

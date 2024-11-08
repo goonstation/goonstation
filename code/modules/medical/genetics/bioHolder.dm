@@ -53,9 +53,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	// It's probably smarter to have customizations in an associative list for later - Glamurio
 	var/list/datum/customizationHolder/customizations = list(
-		"hair_bottom" = new /datum/customizationHolder/first,
-		"hair_middle" = new /datum/customizationHolder/second,
-		"hair_top" = new /datum/customizationHolder/third,
+		"hair_bottom" = new /datum/customizationHolder/hair/first,
+		"hair_middle" = new /datum/customizationHolder/hair/second,
+		"hair_top" = new /datum/customizationHolder/hair/third,
 	)
 
 	/// Currently changes which sprite sheet is used
@@ -258,14 +258,14 @@ var/list/datum/bioEffect/mutini_effects = list()
 		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
 	proc/CopyOtherCustomizationAppearance(var/datum/appearanceHolder/toCopy)
-		for(var/holder in src.customizations)
-			var/datum/customizationHolder/custom = src.customizations[holder]
-			var/datum/customizationHolder/customCopy = toCopy.customizations[holder]
-			custom.color_original = customCopy.color_original
-			custom.color = customCopy.color
-			custom.style_original = customCopy.style_original
-			custom.style = customCopy.style
-			custom.offset_y = customCopy.offset_y
+		for(var/holder_id in toCopy.customizations)
+			var/datum/customizationHolder/custom = src.customizations[holder_id]
+			var/datum/customizationHolder/customCopy = toCopy.customizations[holder_id]
+			custom.color_original = customCopy?.color_original
+			custom.color = customCopy?.color
+			custom.set_style(customCopy?.style_original, TRUE)
+			custom.set_style(customCopy?.style)
+			custom.offset_y = customCopy?.offset_y
 
 	// Disabling this for now as I have no idea how to fit it into hex strings
 	// I'm help -Spy
@@ -331,25 +331,173 @@ var/list/datum/bioEffect/mutini_effects = list()
 		// if the owner's not human I don't think this would do anything anyway so fuck it
 		return
 
+	/// Convenience proc to create a holder and style
+	proc/addCustomization(var/id, var/color = null, var/holder_type = /datum/customizationHolder, var/style_type = /datum/customization_style)
+		var/datum/customizationHolder/holder = new holder_type(new style_type)
+		if(istype(holder))
+			holder.color = color ? color : holder.color
+			src.customizations[id] = holder
+
+	/// Returns one of the customizations by id - definitely not copied from getMaterial
+	proc/getCustomizationByID(var/holder_id)
+		#ifdef CHECK_MORE_RUNTIMES
+		if (!istext(holder_id))
+			CRASH("getCustomizationByID() called with a non-text argument [holder_id].")
+		if (!(holder_id in src.customizations))
+			CRASH("getCustomizationByID() called with an invalid holder id [holder_id].")
+		#endif
+		if(!istext(holder_id))
+			return null
+		return src.customizations?[holder_id]
+
+	/// Returns all customizations matching holder_type
+	proc/getCustomizationsByType(var/holder_type = /datum/customizationHolder)
+		. = list()
+		for(var/datum/customizationHolder/holder in src.customizations)
+			if(istype(holder, holder_type))
+				. += holder
+
+	/// Resets all customizations matching holder_type back to null or their original value
+	proc/resetCustomizations(var/toOriginal = FALSE, var/datum/customizationHolder/holder_type = /datum/customizationHolder)
+		for(var/datum/customizationHolder/holder in src.customizations)
+			if (istype(holder, holder_type))
+				holder.reset_styles(toOriginal)
+				holder.reset_colors(toOriginal)
+
+	/// Resets all styles of customizations matching holder_type back to null or their original value
+	proc/resetCustomizationColors(var/toOriginal = FALSE, var/datum/customizationHolder/holder_type = /datum/customizationHolder)
+		for(var/datum/customizationHolder/holder in src.customizations)
+			if (istype(holder, holder_type))
+				holder.reset_colors(toOriginal)
+
+	/// Resets all colors of customizations matching holder_type back to null or their original value
+	proc/resetCustomizationStyles(var/toOriginal = FALSE, var/datum/customizationHolder/holder_type = /datum/customizationHolder)
+		for(var/datum/customizationHolder/holder in src.customizations)
+			if (istype(holder, holder_type))
+				holder.reset_styles(toOriginal)
+
 /// Holds all the customization information.
 /datum/customizationHolder
 	/// The color that gets used for determining your colors
 	var/color = "#101010"
 	/// The color that was set by the player's preferences
 	var/color_original = "#101010"
-	/// The hair style / detail thing that gets displayed on your spaceperson
-	var/datum/customization_style/style = new /datum/customization_style/hair/short/short
-	/// The hair style / detail thing that was set by the player in their settings
-	var/datum/customization_style/style_original = new /datum/customization_style/none
+	/// List of style types that this holder is allowed to have
+	var/allowed_style_types = list(/datum/customization_style)
+	/// The style / detail thing that gets displayed on your spaceperson
+	var/datum/customization_style/style = null
+	/// The style / detail thing that was set by the player in their settings
+	var/datum/customization_style/style_original = null
+
 	/// The Y offset to display this image
 	var/offset_y = 0
+
+	New(var/datum/customization_style/S)
+		if (src.is_valid_style(S))
+			var/datum/customization_style/new_S = ispath(S) ? new S : S
+			src.style = new_S
+			src.style_original = new_S
+		..()
+
+	/// Proc to set a style, so long as it's in allowed_style_types
+	/// Pretty please use this instead of setting styles directly on the holder, or else I'll cry
+	proc/set_style(var/datum/customization_style/S = /datum/customization_style/hair/short/bald, var/original = FALSE)
+		if (isnull(S))
+			src.reset_styles()
+			src.reset_colors()
+		else if (src.is_valid_style(S))
+			var/datum/customization_style/new_S = ispath(S) ? new S : S
+			if (original)
+				src.style_original = new_S
+			else
+				src.style = new_S
+		else
+			CRASH("Tried adding an unsupported customization_style [S] inside holder [src]")
+
+	/// Proc to check if the style submitted is allowed inside this holder
+	proc/is_valid_style(var/datum/customization_style/style_to_check)
+		if(ispath(style_to_check))
+			for(var/type in allowed_style_types)
+				if(ispath(style_to_check, type))
+					return TRUE
+			return FALSE
+		else
+			return istypes(style_to_check, allowed_style_types)
+
+	/// Gets the name of a style, or if there is no style, returns "Bald"
+	/// "Bald", the absence of hair, the true null type of all hair if you will
+	proc/getName()
+		if (isnull(src.style))
+			return "Bald"
+		return src.style.name
+
+	/// Gets the ID of a style, or if there is no style, returns "none"
+	proc/getID()
+		if (isnull(src.style))
+			return "none"
+		return src.style.id
+
+	/// Gets the icon of a style, or if there is no style, returns 'icons/mob/human_hair.dmi'
+	proc/getIcon()
+		if (isnull(src.style))
+			return 'icons/mob/human_hair.dmi'
+		return src.style.icon
+
+	/// Gets the default_layer of a style, or if there is no style, returns MOB_HAIR_LAYER1
+	proc/getDefaultLayer()
+		if (isnull(src.style))
+			return MOB_HAIR_LAYER1
+		return src.style.default_layer
+
+	/// Resets styles back to "bald" or style_original
+	/// Yes, "Bald" is the null type
+	proc/reset_styles(toOriginal = FALSE)
+		if (toOriginal)
+			src.style  = src.style_original
+		else
+			src.style = new /datum/customization_style/hair/short/bald
+
+	/// Resets colors back to "#101010" or color_original
+	proc/reset_colors(toOriginal = FALSE)
+		if (toOriginal)
+			src.color  = src.color_original
+		else
+			src.color = "#101010"
+
+/// Holds all the hair customization information
+/datum/customizationHolder/hair
+	// allowed_style_types = list(/datum/customization_style/hair)
+	// Muterace TODO: Once we finish migration, limit the hair appropriately
+	// Currently we're still allowing all types for compatibility
+	allowed_style_types = list(
+		/datum/customization_style/hair,
+		/datum/customization_style/beard,
+		/datum/customization_style/moustache,
+		/datum/customization_style/makeup,
+		/datum/customization_style/biological,
+		/datum/customization_style/sideburns,
+		/datum/customization_style/eyebrows
+	)
 
 	first
 		style =  new /datum/customization_style/hair/short/short
 	second
-		style =  new /datum/customization_style/none
+		style =  null
 	third
-		style =  new /datum/customization_style/none
+		style =  null
+
+/// Holds all the facial hair customization information
+/datum/customizationHolder/facial_hair
+	allowed_style_types = list(/datum/customization_style/beard, /datum/customization_style/moustache)
+
+/// Holds all the facial customization information (eyes, makeup, eyebrows)
+/datum/customizationHolder/face_detail
+	allowed_style_types = list(
+		/datum/customization_style/makeup,
+		/datum/customization_style/biological,
+		/datum/customization_style/sideburns,
+		/datum/customization_style/eyebrows
+	)
 
 /datum/bioHolder
 	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.

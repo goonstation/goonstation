@@ -221,27 +221,13 @@ datum/v_space
 
 
 	proc/copy_to(var/mob/living/carbon/human/virtual/character, var/mob/living/carbon/human/user )
-//		character.real_name = "Virtual [user.real_name]"
-		character.bioHolder.mobAppearance.gender = user.gender
 		character.gender = user.gender
 		character.bioHolder.age = user.bioHolder.age
 		character.pin = user.pin
 		character.bioHolder.bloodType = user.bioHolder.bloodType
-		character.bioHolder.mobAppearance.e_color = user.bioHolder.mobAppearance.e_color
-		character.bioHolder.mobAppearance.customizations["hair_bottom"].color = user.bioHolder.mobAppearance.customizations["hair_bottom"].color
-		character.bioHolder.mobAppearance.customizations["hair_middle"].color = user.bioHolder.mobAppearance.customizations["hair_middle"].color
-		character.bioHolder.mobAppearance.customizations["hair_top"].color = user.bioHolder.mobAppearance.customizations["hair_top"].color
-		character.bioHolder.mobAppearance.s_tone = user.bioHolder.mobAppearance.s_tone
-		character.bioHolder.mobAppearance.customizations["hair_bottom"].style =  user.bioHolder.mobAppearance.customizations["hair_bottom"].style
-		character.bioHolder.mobAppearance.customizations["hair_middle"].style =  user.bioHolder.mobAppearance.customizations["hair_middle"].style
-		character.bioHolder.mobAppearance.customizations["hair_top"].style =  user.bioHolder.mobAppearance.customizations["hair_top"].style
-
-		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
-		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
+		character.bioHolder.mobAppearance.CopyOther(user.bioHolder.mobAppearance)
 
 		sanitize_null_values(character)
-
-		character.bioHolder.mobAppearance.UpdateMob()
 		return
 
 	proc/sanitize_null_values(var/mob/living/carbon/human/virtual/character)
@@ -249,18 +235,7 @@ datum/v_space
 		var/datum/appearanceHolder/AH = character.bioHolder.mobAppearance
 		if (!AH)
 			AH = new
-		if (AH.customizations["hair_bottom"].color == null)
-			AH.customizations["hair_bottom"].color = "#101010"
-		if (AH.customizations["hair_bottom"].style == null)
-			AH.customizations["hair_bottom"].style =  new /datum/customization_style/none
-		if (AH.customizations["hair_middle"].color == null)
-			AH.customizations["hair_middle"].color = "#101010"
-		if (AH.customizations["hair_middle"].style == null)
-			AH.customizations["hair_middle"].style =  new /datum/customization_style/none
-		if (AH.customizations["hair_top"].color == null)
-			AH.customizations["hair_top"].color = "#101010"
-		if (AH.customizations["hair_top"].style == null)
-			AH.customizations["hair_top"].style =  new /datum/customization_style/none
+		AH.resetCustomizations()
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
