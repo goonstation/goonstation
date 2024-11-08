@@ -1,5 +1,9 @@
 
 (t)fri nov 08 24
+(u)Garash2k
+(p)19559
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the antag tip popups! Make sure to report any errors
 (u)JORJ949
 (p)21160
 (e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
