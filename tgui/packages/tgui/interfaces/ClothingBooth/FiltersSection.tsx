@@ -12,7 +12,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 import { ClothingBoothSlotKey } from './type';
 import { UiStateContext } from './uiState';
 
-export const SlotFilters = () => {
+export const FiltersSection = () => {
   const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
   const { showTagsModal, setShowTagsModal } = useContext(UiStateContext);
   const [slotFilters, setSlotFilters] = useState<

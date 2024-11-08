@@ -20,7 +20,7 @@ import { pluralize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
 import { BoothGrouping } from './BoothGrouping';
-import { SlotFilters } from './SlotFilters';
+import { FiltersSection } from './FiltersSection';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
 import type { ComparatorFn } from './utils/comparator';
@@ -167,7 +167,7 @@ const StockListView = (props: StockListProps) => {
   return (
     <Stack fill>
       <Stack.Item>
-        <SlotFilters />
+        <FiltersSection />
       </Stack.Item>
       <Stack.Item grow>
         <Stack fill vertical>
