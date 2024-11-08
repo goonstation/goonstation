@@ -12066,6 +12066,17 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
+"fpV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "fqO" = (
 /obj/machinery/computer/atmosphere/mixercontrol{
 	frequency = 1225;
@@ -78286,7 +78297,7 @@ iCQ
 mQi
 ahl
 csE
-aps
+fpV
 ahV
 agD
 aow
