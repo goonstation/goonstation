@@ -51,7 +51,7 @@
 	<a href='?src=\ref[src];action=vampire'>Vampire</a> |
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
-	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
+	<a href='?src=\ref[src];action=[ROLE_CHANGELING_HIVEMIND_MEMBER]'>Changeling victim</a> |
 	<a href='?src=\ref[src];action=changeling_leave'>Leaving Hivemind</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |
 	<a href='?src=\ref[src];action=eyespider'>Eyespider</a> |
