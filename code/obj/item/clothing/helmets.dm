@@ -653,7 +653,7 @@
 			src.icon_state = "helmet-sec"
 			src.item_state = "helmet-sec"
 
-obj/item/clothing/head/helmet/hardhat/security/hos
+/obj/item/clothing/head/helmet/hardhat/security/hos
 	name = "head of security helmet"
 	icon_state = "helmet-hos"
 	item_state = "helmet-hos"

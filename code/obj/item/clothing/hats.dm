@@ -1437,7 +1437,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 /obj/item/clothing/head/hos_hat/blue
 	icon_state = "hoscap-blue"
 	item_state = "hoscap-blue"
-	var/folds = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 7)

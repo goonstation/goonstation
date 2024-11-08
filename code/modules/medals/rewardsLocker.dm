@@ -363,6 +363,7 @@
 	title = "(Skin set) Nanotrasen Head of Security"
 	desc = "Turns Head of Security clothing to a deep Nanotrasen blue to show your loyalty to the corporation!"
 	required_medal = "I Helped!"
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -429,7 +430,7 @@
 					qdel(M)
 					succ = TRUE
 
-				else if (istype(M, /obj/item/clothing/under/rank/head_of_security/dress))
+				else if (istype(M, /obj/item/clothing/head/helmet/hardhat/security/hos))
 					M.icon_state = "helmet-hos-blue"
 					M.item_state = "helmet-hos-blue"
 					H.set_clothing_icon_dirty()
