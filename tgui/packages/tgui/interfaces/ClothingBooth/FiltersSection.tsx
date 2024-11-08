@@ -28,11 +28,6 @@ export const FiltersSection = () => {
     <Section fill>
       <Stack fill vertical>
         <Stack.Item>
-          <Button fluid align="center" onClick={() => setSlotFilters({})}>
-            Clear Slots
-          </Button>
-        </Stack.Item>
-        <Stack.Item>
           <Button
             fluid
             align="center"
@@ -48,6 +43,11 @@ export const FiltersSection = () => {
               (tagFilter) => tagFilter === true,
             ) &&
               `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length})`}
+          </Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button fluid align="center" onClick={() => setSlotFilters({})}>
+            Clear Slots
           </Button>
         </Stack.Item>
         <Stack.Item>

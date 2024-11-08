@@ -7,9 +7,10 @@
  */
 
 import { useContext, useState } from 'react';
-import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
+import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { Modal } from '../../components';
 import {
   ClothingBoothData,
   ClothingBoothGroupingTagsData,
@@ -25,30 +26,25 @@ export const TagsModal = () => {
   >({});
 
   return (
-    <Dimmer>
+    <Modal fitted>
       <Section
-        scrollable
         buttons={
-          <Stack>
-            <Stack.Item>
-              <Button
-                disabled={!Object.values(tagFilters).includes(true)}
-                icon="trash"
-                onClick={() => setTagFilters({})}
-              >
-                Clear Tags
-              </Button>
-            </Stack.Item>
-            <Stack.Item>
-              <Button icon="xmark" onClick={() => setShowTagsModal(false)}>
-                Close
-              </Button>
-            </Stack.Item>
-          </Stack>
+          <>
+            <Button
+              disabled={!Object.values(tagFilters).includes(true)}
+              icon="trash"
+              onClick={() => setTagFilters({})}
+            >
+              Clear Tags
+            </Button>
+            <Button icon="xmark" onClick={() => setShowTagsModal(false)}>
+              Close
+            </Button>
+          </>
         }
         title="Tags"
       >
-        <Stack>
+        <Stack mr={1}>
           <Stack.Item>
             <TagStackContainer
               tagType="Season"
@@ -69,7 +65,7 @@ export const TagsModal = () => {
           </Stack.Item>
         </Stack>
       </Section>
-    </Dimmer>
+    </Modal>
   );
 };
 
@@ -89,7 +85,7 @@ const TagStackContainer = (props: TagStackContainerProps) => {
   );
 
   return (
-    <Stack fill vertical>
+    <Stack fill vertical mr={1}>
       <Stack.Item bold textAlign="center">
         {tagType}
       </Stack.Item>
@@ -118,7 +114,6 @@ const TagCheckbox = (props: ClothingBoothGroupingTagsData) => {
     <Button.Checkbox
       fluid
       checked={!!tagFilters[name]}
-      color=""
       onClick={() => mergeTagFilter(name)}
     >
       {name}
