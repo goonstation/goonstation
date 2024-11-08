@@ -2137,7 +2137,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 			else
 				src.reagents.add_reagent(stun_reagent, 15)
 
-			smoke_reaction(src.reagents, 3, get_turf(src))
+			classic_smoke_reaction(src.reagents, 3, get_turf(src))
 			user.visible_message(SPAN_ALERT("<b>[master] releases a cloud of gas!</b>"))
 
 			src.last_use = world.time
