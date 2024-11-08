@@ -362,7 +362,7 @@
 /datum/achievementReward/nt_hos
 	title = "(Skin set) Nanotrasen Head of Security"
 	desc = "Turns Head of Security clothing to a deep Nanotrasen blue to show your loyalty to the corporation!"
-	required_medal = "I helped!"
+	required_medal = "Suitable? How about the Oubliette?!"
 	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)

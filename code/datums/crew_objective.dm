@@ -96,24 +96,13 @@ ABSTRACT_TYPE(/datum/objective/crew/captain)
 ABSTRACT_TYPE(/datum/objective/crew/headofsecurity)
 /datum/objective/crew/headofsecurity/hat
 	explanation_text = "Don't lose your hat/beret!"
-	// medal_name = "Hatris"
+	medal_name = "Suitable? How about the Oubliette?!"
 	check_completion()
 		if(owner.current && owner.current.check_contents_for(/obj/item/clothing/head/hos_hat))
 			return 1
 		else
 			return 0
-/datum/objective/crew/headofsecurity/brig
-	explanation_text = "Have at least one antagonist cuffed in the brig at the end of the round." //can be dead as people usually suicide
-	medal_name = "Suitable? How about the Oubliette?!"
-	var/static/check_result = null
-	check_completion()
-		if(isnull(check_result))
-			check_result = FALSE
-			for(var/datum/mind/M in ticker.minds)
-				if(M.special_role && M.current && !isobserver(M.current) && istype(get_area(M.current),/area/station/security/brig) && M.current.hasStatus("handcuffed")) //think that's everything...
-					check_result = TRUE
-					break
-		return check_result
+
 /datum/objective/crew/headofsecurity/centcom
 	explanation_text = "Bring at least one antagonist back to CentCom in handcuffs for interrogation. You must accompany them on the escape shuttle." //can also be dead I guess
 	medal_name = "Dead or alive, you're coming with me"
