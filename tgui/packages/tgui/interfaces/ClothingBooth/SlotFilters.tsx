@@ -9,8 +9,8 @@
 import { useContext, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { UiStateContext } from './context/UiState';
 import { ClothingBoothSlotKey } from './type';
+import { UiStateContext } from './uiState';
 
 export const SlotFilters = () => {
   const [tagFilters] = useState<Partial<Record<string, boolean>>>({});

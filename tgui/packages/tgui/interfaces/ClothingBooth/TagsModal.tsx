@@ -10,12 +10,12 @@ import { useContext, useState } from 'react';
 import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { UiStateContext } from './context/UiState';
 import {
   ClothingBoothData,
   ClothingBoothGroupingTagsData,
   TagDisplayOrderType,
 } from './type';
+import { UiStateContext } from './uiState';
 import { buildFieldComparator, stringComparator } from './utils/comparator';
 
 export const TagsModal = () => {
