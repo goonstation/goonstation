@@ -14,8 +14,7 @@
 	.antagType .title {display:block; color:white; background:black; padding: 2px 5px; margin: -5px -5px 2px -5px}
 </style>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Traitor</b>
-	<a href='?src=\ref[src];action=traitorradio'>Radio Uplink</a> |
-	<a href='?src=\ref[src];action=traitorpda'>PDA Uplink</a> |
+	<a href='?src=\ref[src];action=[ROLE_TRAITOR]'>Traitor</a> |
 	<a href='?src=\ref[src];action=traitorhard'>Hard Mode</a> |
 	<a href='?src=\ref[src];action=[ROLE_OMNITRAITOR]'>Omnitraitor</a> |
 	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
@@ -37,13 +36,13 @@
 	<a href='?src=\ref[src];action=[ROLE_NUKEOP_COMMANDER]'>Nuke Op Commander</a> |
 	<a href='?src=\ref[src];action=[ROLE_NUKEOP_GUNBOT]'>Nuke Op Gunbot</a> |
 	<a href='?src=\ref[src];action=[ROLE_HEAD_REVOLUTIONARY]'>Rev Head</a> |
-	<a href='?src=\ref[src];action=revved'>Revved</a> |
+	<a href='?src=\ref[src];action=[ROLE_REVOLUTIONARY]'>Revved</a> |
 	<a href='?src=\ref[src];action=derevved'>De-Revved</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Spy/Conspiracy</b>
 	<a href='?src=\ref[src];action=spy'>Spy</a> |
 	<a href='?src=\ref[src];action=[ROLE_SPY_THIEF]'>Spy Thief</a> |
-	<a href='?src=\ref[src];action=conspiracy'>Conspiracy</a> |
+	<a href='?src=\ref[src];action=[ROLE_CONSPIRATOR]'>Conspiracy</a> |
 	<a href='?src=\ref[src];action=[ROLE_GANG_LEADER]'>Gang Leader</a> |
 	<a href='?src=\ref[src];action=[ROLE_GANG_MEMBER]'>Gang Member</a>
 </div>
@@ -77,7 +76,7 @@
 	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
 	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
 	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
-	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a> |
+	<a href='?src=\ref[src];action=[ROLE_PLAGUE_RAT]'>Plague rat</a> |
 	<a href='?src=\ref[src];action=[ROLE_ZOMBIE]'>Zombie</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
@@ -87,7 +86,7 @@
 	<a href='?src=\ref[src];action=ghostcritter_mentor'>Mentor ghostcritter</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
-	<a href='?src=\ref[src];action=syndieborg'>Rogue Borg</a> |
+	<a href='?src=\ref[src];action=[ROLE_SYNDICATE_ROBOT]'>Rogue Borg</a> |
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |

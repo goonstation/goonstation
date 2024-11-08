@@ -52,12 +52,6 @@
 	remove_equipment()
 		src.headset.remove_radio_upgrade()
 
-	do_popup(override)
-		if (!override)
-			override = "conspiracy"
-
-		..(override)
-
 	assign_objectives()
 		new /datum/objective/conspiracy(src.conspirator_objective.explanation_text, src.owner, src)
 
