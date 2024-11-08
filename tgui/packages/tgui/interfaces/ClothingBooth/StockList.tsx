@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { Fragment, useState } from 'react';
+import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -54,59 +54,115 @@ const getClothingBoothGroupingSortComparator =
     clothingBoothItemComparators[usedSortType](a, b) *
     (usedSortDirection ? 1 : -1);
 
-export const StockList = (_props: unknown) => {
-  const { act, data } = useBackend<ClothingBoothData>();
-  const { catalogue, accountBalance, cash, selectedGroupingName } = data;
-  const catalogueItems = Object.values(catalogue);
+const useProcessCatalogue = (
+  catalogue: Record<string, ClothingBoothGroupingData>,
+  hideUnaffordable: boolean,
+  cashAvailable: number,
+  slotFilters: Partial<Record<ClothingBoothSlotKey, boolean>>,
+  tagFilters: Partial<Record<string, boolean>>,
+  searchTextLower: string,
+  sortType: ClothingBoothSortType,
+  sortAscending: boolean,
+) => {
+  const catalogueItems = useMemo(() => Object.values(catalogue), [catalogue]);
+  const affordableItemGroupings = useMemo(
+    () =>
+      hideUnaffordable
+        ? catalogueItems.filter(
+            (catalogueGrouping) => cashAvailable >= catalogueGrouping.cost_min,
+          )
+        : catalogueItems,
+    [cashAvailable, catalogueItems, hideUnaffordable],
+  );
+  const hasSlotFiltersApplied = useMemo(
+    () => Object.values(slotFilters).some((filter) => filter),
+    [slotFilters],
+  );
+  const slotFilteredItemGroupings = useMemo(
+    () =>
+      hasSlotFiltersApplied
+        ? affordableItemGroupings.filter(
+            (itemGrouping) => slotFilters[itemGrouping.slot],
+          )
+        : affordableItemGroupings,
+    [affordableItemGroupings, hasSlotFiltersApplied, slotFilters],
+  );
+  const hasTagFiltersApplied = useMemo(
+    () => !!tagFilters && Object.values(tagFilters).includes(true),
+    [tagFilters],
+  );
+  const tagFilteredItemGroupings = useMemo(
+    () =>
+      hasTagFiltersApplied
+        ? slotFilteredItemGroupings.filter((itemGrouping) =>
+            itemGrouping.grouping_tags.some(
+              (groupingTag) => !!tagFilters[groupingTag],
+            ),
+          )
+        : slotFilteredItemGroupings,
+    [hasTagFiltersApplied, slotFilteredItemGroupings, tagFilters],
+  );
+  const searchFilteredItemGroupings = useMemo(
+    () =>
+      searchTextLower
+        ? tagFilteredItemGroupings.filter((itemGrouping) =>
+            itemGrouping.name.toLocaleLowerCase().includes(searchTextLower),
+          )
+        : tagFilteredItemGroupings,
+    [searchTextLower, tagFilteredItemGroupings],
+  );
+  const sortComparator = useMemo(
+    () => getClothingBoothGroupingSortComparator(sortType, sortAscending),
+    [sortAscending, sortType],
+  );
+  const sortedStockInformationList = useMemo(
+    () => [...searchFilteredItemGroupings].sort(sortComparator),
+    [searchFilteredItemGroupings, sortComparator],
+  );
+  return sortedStockInformationList;
+};
+
+type StockListProps = Pick<
+  ClothingBoothData,
+  'accountBalance' | 'cash' | 'catalogue' | 'selectedGroupingName'
+>;
+
+const StockListView = (props: StockListProps) => {
+  const { accountBalance, cash, catalogue, selectedGroupingName } = props;
+  const { act } = useBackend();
   const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
   const [hideUnaffordable, setHideUnaffordable] = useState(false);
+  // TODO: use context for slot filters
   const [slotFilters] = useState<
     Partial<Record<ClothingBoothSlotKey, boolean>>
   >({});
   const [searchText, setSearchText] = useState('');
+  const searchTextLower = searchText.toLocaleLowerCase();
   const [sortType, setSortType] = useState(ClothingBoothSortType.Name);
   const [sortAscending, setSortAscending] = useState(true);
-
+  // TODO: use context for tag filters
   const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
 
-  const handleSelectGrouping = (name: string) =>
-    act('select-grouping', { name });
+  const handleSelectGrouping = useCallback(
+    (name: string) => act('select-grouping', { name }),
+    [act],
+  );
+  const handleSetSortType = useCallback(
+    (value: ClothingBoothSortType) => setSortType(value),
+    [],
+  );
 
-  const affordableItemGroupings = hideUnaffordable
-    ? catalogueItems.filter(
-        (catalogueGrouping) =>
-          resolvedCashAvailable >= catalogueGrouping.cost_min,
-      )
-    : catalogueItems;
-  const slotFilteredItemGroupings = Object.values(slotFilters).some(
-    (filter) => filter,
-  )
-    ? affordableItemGroupings.filter(
-        (itemGrouping) => slotFilters[itemGrouping.slot],
-      )
-    : affordableItemGroupings;
-  const tagFiltersApplied =
-    !!tagFilters && Object.values(tagFilters).includes(true);
-  const tagFilteredItemGroupings = tagFiltersApplied
-    ? slotFilteredItemGroupings.filter((itemGrouping) =>
-        itemGrouping.grouping_tags.some(
-          (groupingTag) => !!tagFilters[groupingTag],
-        ),
-      )
-    : slotFilteredItemGroupings;
-  const searchTextLower = searchText.toLocaleLowerCase();
-  const searchFilteredItemGroupings = searchText
-    ? tagFilteredItemGroupings.filter((itemGrouping) =>
-        itemGrouping.name.toLocaleLowerCase().includes(searchTextLower),
-      )
-    : tagFilteredItemGroupings;
-  const sortComparator = getClothingBoothGroupingSortComparator(
+  const processedCatalogue = useProcessCatalogue(
+    catalogue,
+    hideUnaffordable,
+    resolvedCashAvailable,
+    slotFilters,
+    tagFilters,
+    searchTextLower,
     sortType,
     sortAscending,
   );
-  const sortedStockInformationList =
-    searchFilteredItemGroupings.sort(sortComparator);
 
   return (
     <Stack fill>
@@ -131,7 +187,7 @@ export const StockList = (_props: unknown) => {
                   <Dropdown
                     className="clothingbooth__dropdown"
                     displayText={`Sort: ${sortType}`}
-                    onSelected={(value) => setSortType(value)}
+                    onSelected={handleSetSortType}
                     options={[
                       ClothingBoothSortType.Name,
                       ClothingBoothSortType.Price,
@@ -160,9 +216,7 @@ export const StockList = (_props: unknown) => {
               <Stack align="center" justify="space-between">
                 <Stack.Item>
                   <Box as="span" style={{ opacity: '0.5' }}>
-                    {sortedStockInformationList.length}{' '}
-                    {pluralize('grouping', sortedStockInformationList.length)}{' '}
-                    available
+                    {`${processedCatalogue.length} ${pluralize('grouping', processedCatalogue.length)} available`}
                   </Box>
                 </Stack.Item>
                 <Stack.Item>
@@ -179,7 +233,7 @@ export const StockList = (_props: unknown) => {
           <Stack.Item grow>
             <StockListSection
               onSelectGrouping={handleSelectGrouping}
-              groupings={sortedStockInformationList}
+              groupings={processedCatalogue}
               selectedGroupingName={selectedGroupingName}
             />
           </Stack.Item>
@@ -189,13 +243,15 @@ export const StockList = (_props: unknown) => {
   );
 };
 
+export const StockList = memo(StockListView);
+
 interface StockListSectionProps {
   groupings: ClothingBoothGroupingData[];
   onSelectGrouping: (name: string) => void;
   selectedGroupingName: string | null;
 }
 
-const StockListSection = (props: StockListSectionProps) => {
+const StockListSectionView = (props: StockListSectionProps) => {
   const { groupings, onSelectGrouping, selectedGroupingName } = props;
   return (
     <Section fill scrollable>
@@ -204,11 +260,14 @@ const StockListSection = (props: StockListSectionProps) => {
           {itemGroupingIndex > 0 && <Divider />}
           <BoothGrouping
             {...itemGrouping}
-            onSelectGrouping={() => onSelectGrouping(itemGrouping.name)}
-            selectedGroupingName={selectedGroupingName}
+            itemsCount={Object.keys(itemGrouping.clothingbooth_items).length}
+            onSelectGrouping={onSelectGrouping}
+            selected={selectedGroupingName === itemGrouping.name}
           />
         </Fragment>
       ))}
     </Section>
   );
 };
+
+const StockListSection = memo(StockListSectionView);

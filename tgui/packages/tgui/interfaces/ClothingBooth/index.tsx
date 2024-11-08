@@ -11,6 +11,7 @@ import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
+import { useConstant } from '../common/hooks';
 import { CharacterPreview } from './CharacterPreview';
 import { PurchaseInfo } from './PurchaseInfo';
 import { StockList } from './StockList';
@@ -20,7 +21,16 @@ import { UiStateContext } from './uiState';
 
 export const ClothingBooth = () => {
   const { act, data } = useBackend<ClothingBoothData>();
-  const { name, accountBalance, cash, scannedID } = data;
+  const {
+    accountBalance,
+    cash,
+    catalogue,
+    everythingIsFree,
+    name,
+    scannedID,
+    selectedGroupingName,
+    selectedItemName,
+  } = data;
   const [showTagsModal, setShowTagsModal] = useState(false);
   const uiState = useMemo(
     () => ({
@@ -28,6 +38,15 @@ export const ClothingBooth = () => {
       setShowTagsModal,
     }),
     [showTagsModal],
+  );
+  // N.B. memoizedCatalogue does not update in subsequent renders; if this feature becomes required do a smarter memo
+  const memoizedCatalogue = useConstant(() => catalogue);
+  const selectedGrouping = useMemo(
+    () =>
+      selectedGroupingName
+        ? memoizedCatalogue[selectedGroupingName]
+        : undefined,
+    [memoizedCatalogue, selectedGroupingName],
   );
   return (
     <Window title={name} width={500} height={600}>
@@ -78,7 +97,12 @@ export const ClothingBooth = () => {
               </Stack.Item>
             )}
             <Stack.Item grow={1}>
-              <StockList />
+              <StockList
+                accountBalance={accountBalance}
+                cash={cash}
+                catalogue={memoizedCatalogue}
+                selectedGroupingName={selectedGroupingName}
+              />
             </Stack.Item>
             <Stack.Item>
               <Stack>
@@ -91,7 +115,13 @@ export const ClothingBooth = () => {
                   <Section fill>
                     <Stack fill vertical justify="space-around">
                       <Stack.Item>
-                        <PurchaseInfo />
+                        <PurchaseInfo
+                          accountBalance={accountBalance}
+                          cash={cash}
+                          everythingIsFree={everythingIsFree}
+                          selectedGrouping={selectedGrouping}
+                          selectedItemName={selectedItemName}
+                        />
                       </Stack.Item>
                     </Stack>
                   </Section>

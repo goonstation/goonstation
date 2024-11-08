@@ -6,53 +6,55 @@
  * @license ISC
  */
 
+import { memo, useCallback } from 'react';
 import { Button, Flex, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { GroupingTags as GroupingTags } from './GroupingTags';
 import { ItemSwatch as ItemSwatch } from './ItemSwatch';
-import type {
-  ClothingBoothData,
-  ClothingBoothItemData,
-  ClothingBoothSlotKey,
-} from './type';
+import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 
-export const PurchaseInfo = () => {
-  const { act, data } = useBackend<ClothingBoothData>();
+type PurchaseInfoProps = Pick<
+  ClothingBoothData,
+  'accountBalance' | 'cash' | 'everythingIsFree' | 'selectedItemName'
+> & {
+  selectedGrouping?: ClothingBoothGroupingData;
+};
+
+const PurchaseInfoView = (props: PurchaseInfoProps) => {
   const {
-    catalogue,
     accountBalance,
     cash,
-    selectedGroupingName,
+    everythingIsFree,
+    selectedGrouping,
     selectedItemName,
-  } = data;
+  } = props;
+  const { act } = useBackend();
 
-  const selectedGrouping = selectedGroupingName
-    ? catalogue[selectedGroupingName]
-    : undefined;
-  let selectedGroupingSlot: ClothingBoothSlotKey | undefined;
-  let selectedGroupingTags: string[] | undefined;
-  let selectedItem: ClothingBoothItemData | undefined;
-  if (selectedGrouping && selectedItemName) {
-    selectedGroupingSlot = selectedGrouping.slot;
-    selectedGroupingTags = selectedGrouping.grouping_tags;
-    selectedItem = selectedGrouping.clothingbooth_items[selectedItemName];
-  }
+  const selectedGroupingSlot = selectedGrouping?.slot;
+  const selectedGroupingTags = selectedGrouping?.grouping_tags;
+  const selectedItem =
+    selectedGrouping && selectedItemName
+      ? selectedGrouping.clothingbooth_items[selectedItemName]
+      : undefined;
   const selectedGroupingClothingBoothItems = Object.values(
     selectedGrouping?.clothingbooth_items ?? {},
   );
   const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
-  const handlePurchase = () => act('purchase');
-  const handleSelectItem = (name: string) => act('select-item', { name });
+  const handlePurchase = useCallback(() => act('purchase'), [act]);
+  const handleSelectItem = useCallback(
+    (name: string) => act('select-item', { name }),
+    [act],
+  );
 
   return (
     <Stack vertical textAlign="center">
-      {selectedGrouping && selectedItem && selectedItemName ? (
+      {selectedGrouping && selectedItem ? (
         <>
           <Stack.Item bold>
             <Stack align="center" justify="center">
-              <Stack.Item>{selectedGroupingName}</Stack.Item>
+              <Stack.Item>{selectedGrouping.name}</Stack.Item>
             </Stack>
           </Stack.Item>
           {selectedGroupingTags?.length && selectedGroupingSlot && (
@@ -68,7 +70,7 @@ export const PurchaseInfo = () => {
               </Stack>
             </Stack.Item>
           )}
-          <Stack.Item bold>Selected: {selectedItemName}</Stack.Item>
+          <Stack.Item bold>Selected: {selectedItem.name}</Stack.Item>
           {selectedGroupingClothingBoothItems.length > 1 && (
             <Stack.Item>
               <Flex justify="center" wrap="wrap">
@@ -77,7 +79,7 @@ export const PurchaseInfo = () => {
                     <Flex.Item key={item.name}>
                       <ItemSwatch
                         {...item}
-                        selected={selectedItemName === item.name}
+                        selected={selectedItem.name === item.name}
                         onSelect={() => handleSelectItem(item.name)}
                       />
                     </Flex.Item>
@@ -90,14 +92,12 @@ export const PurchaseInfo = () => {
             <Button
               color="good"
               disabled={
-                selectedItem.cost > resolvedCashAvailable &&
-                !data.everythingIsFree
+                selectedItem.cost > resolvedCashAvailable && !everythingIsFree
               }
               onClick={handlePurchase}
             >
               {`${
-                selectedItem.cost > resolvedCashAvailable &&
-                !data.everythingIsFree
+                selectedItem.cost > resolvedCashAvailable && !everythingIsFree
                   ? 'Insufficent Money'
                   : 'Purchase'
               } (${selectedItem.cost}⪽)`}
@@ -110,3 +110,5 @@ export const PurchaseInfo = () => {
     </Stack>
   );
 };
+
+export const PurchaseInfo = memo(PurchaseInfoView);

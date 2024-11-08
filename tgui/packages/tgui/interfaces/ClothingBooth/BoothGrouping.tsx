@@ -7,37 +7,45 @@
  */
 
 import { classes } from 'common/react';
+import { memo, useCallback } from 'react';
 import { Stack } from 'tgui-core/components';
 
 import { Image } from '../../components';
 import { GroupingTags } from './GroupingTags';
 import type { ClothingBoothGroupingData } from './type';
 
-interface BoothGroupingProps extends ClothingBoothGroupingData {
-  selectedGroupingName: string | null;
-  onSelectGrouping: () => void;
-}
+type BoothGroupingProps = Pick<
+  ClothingBoothGroupingData,
+  'cost_min' | 'cost_max' | 'list_icon' | 'grouping_tags' | 'name' | 'slot'
+> & {
+  selected: boolean;
+  itemsCount: number;
+  onSelectGrouping: (itemGroupingName: string) => void;
+};
 
-export const BoothGrouping = (props: BoothGroupingProps) => {
+const BoothGroupingView = (props: BoothGroupingProps) => {
   const {
     cost_min,
     cost_max,
     list_icon,
-    clothingbooth_items,
+    itemsCount,
     grouping_tags,
     name,
     onSelectGrouping,
-    selectedGroupingName,
+    selected,
     slot,
   } = props;
   const cn = classes([
     'clothingbooth__boothitem',
-    selectedGroupingName === name && 'clothingbooth__boothitem--selected',
+    selected && 'clothingbooth__boothitem--selected',
   ]);
-  const itemsCount = Object.values(clothingbooth_items).length;
+  const handleClick = useCallback(
+    () => onSelectGrouping(name),
+    [onSelectGrouping, name],
+  );
 
   return (
-    <Stack align="center" className={cn} onClick={onSelectGrouping} py={0.5}>
+    <Stack align="center" className={cn} onClick={handleClick} py={0.5}>
       <Stack.Item>
         <Image pixelated src={`data:image/png;base64,${list_icon}`} />
       </Stack.Item>
@@ -72,3 +80,29 @@ export const BoothGrouping = (props: BoothGroupingProps) => {
     </Stack>
   );
 };
+
+export const BoothGrouping = memo(BoothGroupingView, (prevProps, nextProps) => {
+  // shallow comparison for most props
+  if (
+    prevProps.cost_max !== nextProps.cost_max ||
+    prevProps.cost_min !== nextProps.cost_min ||
+    prevProps.itemsCount !== nextProps.itemsCount ||
+    prevProps.list_icon !== nextProps.list_icon ||
+    prevProps.name !== nextProps.name ||
+    prevProps.onSelectGrouping !== nextProps.onSelectGrouping ||
+    prevProps.selected !== nextProps.selected ||
+    prevProps.slot !== nextProps.slot
+  ) {
+    return false;
+  }
+  // contents equality comparison for grouping_tags
+  if (prevProps.grouping_tags.length !== nextProps.grouping_tags.length) {
+    return false;
+  }
+  for (let i = 0; i < prevProps.grouping_tags.length; i++) {
+    if (prevProps.grouping_tags[i] !== nextProps.grouping_tags[i]) {
+      return false;
+    }
+  }
+  return true;
+});

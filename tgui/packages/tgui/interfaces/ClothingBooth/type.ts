@@ -6,15 +6,17 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
+
 export interface ClothingBoothData {
   accountBalance?: number;
   cash?: number;
   catalogue: Record<string, ClothingBoothGroupingData>;
-  everythingIsFree: boolean;
+  everythingIsFree: BooleanLike;
   name: string;
   previewHeight: number;
   previewIcon: string;
-  previewShowClothing: Boolean;
+  previewShowClothing: BooleanLike;
   scannedID?: string;
   selectedGroupingName: string | null;
   selectedItemName: string | null;
