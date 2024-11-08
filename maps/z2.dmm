@@ -50844,7 +50844,7 @@
 /area/centcom/lounge)
 "dHz" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/ice_cream/random,
+/obj/item/paper/newspaper/rolled/centcom_plasma,
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
 "dHA" = (
@@ -52393,6 +52393,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/paper/newspaper/rolled/centcom_plasma,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
@@ -72981,6 +72982,15 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
+"sHM" = (
+/obj/table/glass/reinforced/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/item/paper/newspaper/rolled/centcom_plasma,
+/turf/unsimulated/floor/darkblue,
+/area/centcom/lobby)
 "sHZ" = (
 /obj/item/paper{
 	pixel_x = 7;
@@ -150355,7 +150365,7 @@ dLh
 dLY
 dMy
 dMX
-dMy
+sHM
 dNG
 dLh
 hla
