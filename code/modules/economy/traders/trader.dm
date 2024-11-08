@@ -107,9 +107,14 @@
 		src.wipe_cart()
 
 		var/list/goods_buy_temp = list()
-		goods_buy_temp = base_goods_buy.Copy()
+		for(var/i in base_goods_buy)
+			var/list/L = base_goods_buy[i]
+			goods_buy_temp[i] = L.Copy()
+
 		var/list/goods_sell_temp = list()
-		goods_sell_temp = base_goods_sell.Copy()
+		for(var/i in base_goods_sell)
+			var/list/L = base_goods_sell[i]
+			goods_sell_temp[i] = L.Copy()
 
 		// Iterate over all rarities and pick the corresponding amount of items from the respective lists
 		for (var/rarity in src.rarities)
