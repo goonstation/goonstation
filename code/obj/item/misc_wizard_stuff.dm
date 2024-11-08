@@ -17,6 +17,9 @@
 	throw_range = 20
 	desc = "This isn't that old, you just spilled mugwort tea on it the other day."
 
+/obj/item/teleportation_scroll/get_desc()
+	. = ..() + " Charges left: [src.uses]."
+
 /obj/item/teleportation_scroll/attack_self(mob/user as mob)
 	if (!iswizard(user))
 		boutput(user, SPAN_ALERT("<b>The text is illegible!</b>"))
@@ -32,6 +35,7 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 			src.uses -= 1
+			tooltip_rebuild = TRUE
 
 	if (!src.uses)
 		boutput(user, SPAN_NOTICE("<b>The depleted scroll vanishes in a puff of smoke!</b>"))
