@@ -612,22 +612,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "ntberet"
 	item_state = "ntberet"
 
-/obj/item/clothing/head/NTberet/hos
-	name = "Head of Security's beret"
-	desc = ""
-	icon_state = "ntberet_commander"
-	item_state = "ntberet_commander"
-
-	get_desc(var/dist, var/mob/user)
-		if (user.mind?.assigned_role == "Head of Security")
-			. = "A constant reminder of your failure to join NT Special Operations."
-		else
-			. = "A standard issue Nanotrasen beret, but someone stuck a blue sticker over the badge."
-
-	setupProperties()
-		..()
-		setProperty("meleeprot_head", 7)
-
 /obj/item/clothing/head/NTberet/commander
 	name = "Nanotrasen beret"
 	desc = "For the inner space commander in you."
