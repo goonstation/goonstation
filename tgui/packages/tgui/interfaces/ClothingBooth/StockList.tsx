@@ -24,9 +24,10 @@ import { FiltersSection } from './FiltersSection';
 import type {
   ClothingBoothData,
   ClothingBoothGroupingData,
-  TagsLookup,
+  SlotFilterLookup,
+  TagFilterLookup,
 } from './type';
-import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
+import { ClothingBoothSortType } from './type';
 import type { ComparatorFn } from './utils/comparator';
 import {
   buildFieldComparator,
@@ -62,8 +63,8 @@ const useProcessCatalogue = (
   catalogue: Record<string, ClothingBoothGroupingData>,
   hideUnaffordable: boolean,
   cashAvailable: number,
-  slotFilters: Partial<Record<ClothingBoothSlotKey, boolean>>,
-  tagFilters: TagsLookup,
+  slotFilters: SlotFilterLookup,
+  tagFilters: TagFilterLookup,
   searchTextLower: string,
   sortType: ClothingBoothSortType,
   sortAscending: boolean,
@@ -131,7 +132,7 @@ type StockListProps = Pick<
   'accountBalance' | 'cash' | 'catalogue' | 'selectedGroupingName'
 > & {
   onOpenTagsModal: () => void;
-  tagFilters: TagsLookup;
+  tagFilters: TagFilterLookup;
 };
 
 const StockListView = (props: StockListProps) => {
@@ -148,9 +149,7 @@ const StockListView = (props: StockListProps) => {
 
   const [hideUnaffordable, setHideUnaffordable] = useState(false);
   // TODO: use context for slot filters
-  const [slotFilters] = useState<
-    Partial<Record<ClothingBoothSlotKey, boolean>>
-  >({});
+  const [slotFilters] = useState<SlotFilterLookup>({});
   const [searchText, setSearchText] = useState('');
   const searchTextLower = searchText.toLocaleLowerCase();
   const [sortType, setSortType] = useState(ClothingBoothSortType.Name);

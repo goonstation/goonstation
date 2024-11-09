@@ -16,7 +16,7 @@ import { CharacterPreview } from './CharacterPreview';
 import { PurchaseInfo } from './PurchaseInfo';
 import { StockList } from './StockList';
 import { TagsModal } from './TagsModal';
-import type { ClothingBoothData, TagsLookup } from './type';
+import type { ClothingBoothData, TagFilterLookup } from './type';
 
 export const ClothingBooth = () => {
   const { act, data } = useBackend<ClothingBoothData>();
@@ -32,10 +32,12 @@ export const ClothingBooth = () => {
     tags,
   } = data;
   const [showTagsModal, setShowTagsModal] = useState(false);
-  const [appliedTagFilters, setAppliedTagFilters] = useState<TagsLookup>({});
+  const [appliedTagFilters, setAppliedTagFilters] = useState<TagFilterLookup>(
+    {},
+  );
   const handleOpenTagsModal = useCallback(() => setShowTagsModal(true), []);
   const handleApplyAndCloseTagFilters = useCallback(
-    (tagFilters: TagsLookup) => {
+    (tagFilters: TagFilterLookup) => {
       setAppliedTagFilters(tagFilters);
       setShowTagsModal(false);
     },

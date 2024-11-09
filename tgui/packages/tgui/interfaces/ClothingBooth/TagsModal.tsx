@@ -13,14 +13,14 @@ import { Modal } from '../../components';
 import {
   ClothingBoothGroupingTagsData,
   TagDisplayOrderType,
-  TagsLookup,
+  type TagFilterLookup,
 } from './type';
 import { buildFieldComparator, stringComparator } from './utils/comparator';
 
 interface TagsModalProps {
-  onApplyAndClose: (newFilters: TagsLookup) => void;
+  onApplyAndClose: (newFilters: TagFilterLookup) => void;
   onClose: () => void;
-  initialTagFilters: TagsLookup;
+  initialTagFilters: TagFilterLookup;
   tags: Record<string, ClothingBoothGroupingTagsData>;
 }
 
@@ -107,7 +107,7 @@ interface TagStackContainerProps {
   tagType: string;
   typeToDisplay: number;
   tags: Record<string, ClothingBoothGroupingTagsData>;
-  tagFilters: TagsLookup;
+  tagFilters: TagFilterLookup;
 }
 
 const TagStackContainer = (props: TagStackContainerProps) => {

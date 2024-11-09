@@ -79,4 +79,6 @@ export enum TagDisplayOrderType {
   Collection = 3,
 }
 
-export type TagsLookup = Partial<Record<string, boolean>>;
+export type TagFilterLookup = Partial<Record<string, boolean>>;
+
+export type SlotFilterLookup = Partial<Record<ClothingBoothSlotKey, boolean>>;

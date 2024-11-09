@@ -9,18 +9,20 @@
 import { useMemo, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { ClothingBoothSlotKey, TagsLookup } from './type';
+import {
+  ClothingBoothSlotKey,
+  SlotFilterLookup,
+  TagFilterLookup,
+} from './type';
 
 interface FiltersSectionProps {
   onOpenTagsModal: () => void;
-  tagFilters: TagsLookup;
+  tagFilters: TagFilterLookup;
 }
 
 export const FiltersSection = (props: FiltersSectionProps) => {
   const { onOpenTagsModal, tagFilters } = props;
-  const [slotFilters, setSlotFilters] = useState<
-    Partial<Record<ClothingBoothSlotKey, boolean>>
-  >({});
+  const [slotFilters, setSlotFilters] = useState<SlotFilterLookup>({});
   const mergeSlotFilter = (filter: ClothingBoothSlotKey) =>
     setSlotFilters({
       ...slotFilters,
