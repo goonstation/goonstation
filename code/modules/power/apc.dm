@@ -1307,7 +1307,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		if (!noalerts) area.poweralert(0, src)
+		if (!noalerts) area.poweralert(ALERT_POWER_ALARM_BAD, src)
 
 	// update icon & area power if anything changed
 
@@ -1357,23 +1357,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		equipment = autoset(equipment, 0)
 		lighting = autoset(lighting, 0)
 		environ = autoset(environ, 0)
-		if (!noalerts) area.poweralert(0, src)
+		if (!noalerts) area.poweralert(ALERT_POWER_ALARM_BAD, src)
 	else if(cell.percent() < 15)			// <15%, turn off lighting & equipment
 		equipment = autoset(equipment, 2)
 		lighting = autoset(lighting, 2)
 		environ = autoset(environ, 1)
-		if (!noalerts) area.poweralert(0, src)
+		if (!noalerts) area.poweralert(ALERT_POWER_ALARM_BAD, src)
 	else if(cell.percent() < 30)			// <30%, turn off equipment
 		equipment = autoset(equipment, 1)
 		lighting = autoset(lighting, 2)
 		environ = autoset(environ, 1)
-		if (!noalerts) area.poweralert(0, src)
+		if (!noalerts) area.poweralert(ALERT_POWER_ALARM_BAD, src)
 	else									// otherwise all can be on
 		equipment = autoset(equipment, 1)
 		lighting = autoset(lighting, 1)
 		environ = autoset(environ, 1)
 		if(cell.percent() > 75)
-			if (!noalerts) area.poweralert(1, src)
+			if (!noalerts) area.poweralert(ALERT_POWER_ALARM_OK, src)
 
 
 

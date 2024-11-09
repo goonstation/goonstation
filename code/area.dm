@@ -4274,7 +4274,7 @@ ABSTRACT_TYPE(/area/mining)
 		for (var/obj/machinery/camera/C in orange(source, 7))
 			cameras += C
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
-			if (state == 1)
+			if (state == ALERT_POWER_ALARM_OK)
 				aiPlayer.cancelAlarm("Power", src, source)
 			else
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
@@ -4283,7 +4283,7 @@ ABSTRACT_TYPE(/area/mining)
 		alert_computer_signal.data["command"] = "update_alert"
 		alert_computer_signal.data["zone"] = src.name
 		alert_computer_signal.data["type"] = ALERT_KIND_POWER
-		if(state==1)
+		if (state == ALERT_POWER_ALARM_OK)
 			alert_computer_signal.data["alert"] = ALERT_SEVERITY_RESET
 			source.RemoveComponentsOfType(/datum/component/minimap_marker/minimap)
 		else

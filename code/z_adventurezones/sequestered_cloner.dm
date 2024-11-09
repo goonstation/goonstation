@@ -30,14 +30,14 @@
 			lighting = autoset(lighting, 0)
 			environ = autoset(environ, 0)
 			if (!noalerts)
-				area.poweralert(0, src)
+				area.poweralert(ALERT_POWER_ALARM_BAD, src)
 		else // otherwise all can be on
 			equipment = autoset(equipment, 1)
 			lighting = autoset(lighting, 1)
 			environ = autoset(environ, 1)
 			if(cell.percent() > 75)
 				if (!noalerts)
-					area.poweralert(1, src)
+					area.poweralert(ALERT_POWER_ALARM_OK, src)
 
 
 
