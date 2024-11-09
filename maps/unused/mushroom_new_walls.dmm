@@ -10895,6 +10895,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/hemostat,
 /obj/item/suture,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/blueblack/corner,
 /area/station/medical/robotics)
 "bfq" = (
@@ -13856,6 +13857,10 @@
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/peripheral/videocard,
 /obj/item/storage/goodybag,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/aiModule/hologram_expansion/clown,
+/obj/item/aiModule/hologram_expansion/clown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bsI" = (
@@ -15786,6 +15791,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -19391,6 +19397,7 @@
 /obj/item/staple_gun,
 /obj/item/suture,
 /obj/item/hemostat,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -27661,12 +27668,12 @@
 /area/station/hydroponics/bay)
 "nNh" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/mapping_helper/access/engineering,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "nND" = (
