@@ -15970,8 +15970,8 @@
 /obj/machinery/glass_recycler,
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/small/floor,
-/obj/drink_rack/mug{
-	pixel_x = -26
+/obj/drink_rack/cup{
+	pixel_x = -27
 	},
 /turf/simulated/floor{
 	icon_state = "carpetSW"
