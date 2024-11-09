@@ -149,6 +149,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A counterfeit identification card, designed to prevent tracking by the station's AI systems. It features a one-time programmable identification circuit, allowing the entry of a custom false identity. It is also capable of scanning other ID cards and replicating their access credentials."
 
+/datum/syndicate_buylist/generic/cashcase
+	name = "Syndicate briefcase full of cash"
+	item = /obj/item/cash_briefcase/syndicate/loaded
+	cost = 2
+	desc = "A syndicate briefcase designed to hold large quantities of cash. Comes loaded with 15 thousand credits."
+
 /datum/syndicate_buylist/generic/emag
 	name = "Electromagnet Card (EMAG)"
 	item = /obj/item/card/emag
