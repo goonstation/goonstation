@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -15,34 +15,43 @@ import {
   ClothingBoothData,
   ClothingBoothGroupingTagsData,
   TagDisplayOrderType,
+  TagsLookup,
 } from './type';
 import { UiStateContext } from './uiState';
 import { buildFieldComparator, stringComparator } from './utils/comparator';
 
-export const TagsModal = () => {
-  const { setShowTagsModal } = useContext(UiStateContext);
-  const [tagFilters, setTagFilters] = useState<
-    Partial<Record<string, boolean>>
-  >({});
+interface TagsModalProps {
+  onApplyAndClose: (newFilters: TagsLookup) => void;
+}
 
+export const TagsModal = (props: TagsModalProps) => {
+  const { onApplyAndClose } = props;
+  const { appliedTagFilters, setShowTagsModal } = useContext(UiStateContext);
+  const [tagFilters, setTagFilters] = useState(appliedTagFilters);
+  const handleCloseModal = useCallback(
+    () => setShowTagsModal(false),
+    [setShowTagsModal],
+  );
+  const handleResetClick = useCallback(
+    () => setTagFilters({}),
+    [setTagFilters],
+  );
+  const handleApplyClick = useCallback(
+    () => onApplyAndClose(tagFilters),
+    [onApplyAndClose],
+  );
   return (
     <Modal fitted>
       <Section
-        buttons={
-          <>
-            <Button
-              disabled={!Object.values(tagFilters).includes(true)}
-              icon="trash"
-              onClick={() => setTagFilters({})}
-            >
-              Clear Tags
-            </Button>
-            <Button icon="xmark" onClick={() => setShowTagsModal(false)}>
-              Close
-            </Button>
-          </>
-        }
         title="Tags"
+        buttons={
+          <Button
+            color="bad"
+            icon="xmark"
+            onClick={handleCloseModal}
+            tooltip="Close"
+          />
+        }
       >
         <Stack mr={1}>
           <Stack.Item>
@@ -62,6 +71,23 @@ export const TagsModal = () => {
               tagType="Collection"
               typeToDisplay={TagDisplayOrderType.Collection}
             />
+          </Stack.Item>
+        </Stack>
+      </Section>
+      <Section>
+        <Stack justify="space-around">
+          <Stack.Item>
+            <Button
+              disabled={!Object.values(tagFilters).includes(true)}
+              onClick={handleResetClick}
+            >
+              Clear Tags
+            </Button>
+          </Stack.Item>
+          <Stack.Item>
+            <Button color="good" icon="check" onClick={handleApplyClick}>
+              Apply Tags
+            </Button>
           </Stack.Item>
         </Stack>
       </Section>
@@ -101,9 +127,7 @@ const TagStackContainer = (props: TagStackContainerProps) => {
 const TagCheckbox = (props: ClothingBoothGroupingTagsData) => {
   const { name } = props;
 
-  const [tagFilters, setTagFilters] = useState<
-    Partial<Record<string, boolean>>
-  >({});
+  const [tagFilters, setTagFilters] = useState<TagsLookup>({});
   const mergeTagFilter = (filter: string) =>
     setTagFilters({
       ...tagFilters,

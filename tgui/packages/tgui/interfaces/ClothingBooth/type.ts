@@ -48,7 +48,7 @@ export interface SwatchForegroundProps {
 export interface ClothingBoothGroupingTagsData {
   name: string;
   color?: string;
-  display_order?: number | 1;
+  display_order?: number;
 }
 
 // Keep in sync with `\_std\defines\clothing.dm` `SLOT_` defines.
@@ -79,7 +79,11 @@ export enum TagDisplayOrderType {
   Collection = 3,
 }
 
+export type TagsLookup = Partial<Record<string, boolean>>;
+
 export interface UiState {
+  appliedTagFilters: TagsLookup;
   showTagsModal: boolean;
   setShowTagsModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setAppliedTagFilters: React.Dispatch<React.SetStateAction<TagsLookup>>;
 }

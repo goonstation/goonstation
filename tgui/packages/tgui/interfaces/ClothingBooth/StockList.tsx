@@ -21,7 +21,11 @@ import { pluralize } from 'tgui-core/string';
 import { useBackend } from '../../backend';
 import { BoothGrouping } from './BoothGrouping';
 import { FiltersSection } from './FiltersSection';
-import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
+import type {
+  ClothingBoothData,
+  ClothingBoothGroupingData,
+  TagsLookup,
+} from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
 import type { ComparatorFn } from './utils/comparator';
 import {
@@ -59,7 +63,7 @@ const useProcessCatalogue = (
   hideUnaffordable: boolean,
   cashAvailable: number,
   slotFilters: Partial<Record<ClothingBoothSlotKey, boolean>>,
-  tagFilters: Partial<Record<string, boolean>>,
+  tagFilters: TagsLookup,
   searchTextLower: string,
   sortType: ClothingBoothSortType,
   sortAscending: boolean,
@@ -142,7 +146,7 @@ const StockListView = (props: StockListProps) => {
   const [sortType, setSortType] = useState(ClothingBoothSortType.Name);
   const [sortAscending, setSortAscending] = useState(true);
   // TODO: use context for tag filters
-  const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
+  const [tagFilters] = useState<TagsLookup>({});
 
   const handleSelectGrouping = useCallback(
     (name: string) => act('select-grouping', { name }),

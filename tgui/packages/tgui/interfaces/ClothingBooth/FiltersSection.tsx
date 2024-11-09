@@ -9,11 +9,11 @@
 import { useContext, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { ClothingBoothSlotKey } from './type';
+import { ClothingBoothSlotKey, TagsLookup } from './type';
 import { UiStateContext } from './uiState';
 
 export const FiltersSection = () => {
-  const [tagFilters] = useState<Partial<Record<string, boolean>>>({});
+  const [tagFilters] = useState<TagsLookup>({});
   const { showTagsModal, setShowTagsModal } = useContext(UiStateContext);
   const [slotFilters, setSlotFilters] = useState<
     Partial<Record<ClothingBoothSlotKey, boolean>>

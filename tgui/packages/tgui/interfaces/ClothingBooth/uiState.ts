@@ -3,6 +3,8 @@ import { createContext } from 'react';
 import type { UiState } from './type';
 
 export const UiStateContext = createContext<UiState>({
+  appliedTagFilters: {},
   showTagsModal: false,
-  setShowTagsModal: () => {}, // no-op setter by default, as value/setter are not wired up
+  setAppliedTagFilters: () => {}, // no-op setter by default
+  setShowTagsModal: () => {}, // no-op setter by default
 });

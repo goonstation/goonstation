@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -16,7 +16,7 @@ import { CharacterPreview } from './CharacterPreview';
 import { PurchaseInfo } from './PurchaseInfo';
 import { StockList } from './StockList';
 import { TagsModal } from './TagsModal';
-import type { ClothingBoothData } from './type';
+import type { ClothingBoothData, TagsLookup } from './type';
 import { UiStateContext } from './uiState';
 
 export const ClothingBooth = () => {
@@ -32,12 +32,19 @@ export const ClothingBooth = () => {
     selectedItemName,
   } = data;
   const [showTagsModal, setShowTagsModal] = useState(false);
+  const [appliedTagFilters, setAppliedTagFilters] = useState<TagsLookup>({});
+  const handleApplyAndCloseTagFilters = useCallback(() => {
+    // TODO: apply tags
+    setShowTagsModal(false);
+  }, []);
   const uiState = useMemo(
     () => ({
+      appliedTagFilters,
       showTagsModal,
+      setAppliedTagFilters,
       setShowTagsModal,
     }),
-    [showTagsModal],
+    [appliedTagFilters, showTagsModal],
   );
   // N.B. memoizedCatalogue does not update in subsequent renders; if this feature becomes required do a smarter memo
   const memoizedCatalogue = useConstant(() => catalogue);
@@ -129,7 +136,9 @@ export const ClothingBooth = () => {
               </Stack>
             </Stack.Item>
           </Stack>
-          {showTagsModal && <TagsModal />}
+          {showTagsModal && (
+            <TagsModal onApplyAndClose={handleApplyAndCloseTagFilters} />
+          )}
         </UiStateContext.Provider>
       </Window.Content>
     </Window>
