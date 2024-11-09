@@ -17089,6 +17089,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "dUm" = (
@@ -23907,6 +23908,15 @@
 	dir = 6
 	},
 /area/station/science/teleporter)
+"kjd" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "kjS" = (
 /obj/landmark/start{
 	name = "predator"
@@ -26440,6 +26450,12 @@
 	},
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
+"mKh" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "mKo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge)
@@ -29830,6 +29846,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"pwX" = (
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "pxn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33106,6 +33126,10 @@
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"rRo" = (
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "rRy" = (
 /mob/living/critter/small_animal/bird/owl,
 /obj/cable{
@@ -34446,6 +34470,12 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/armory_outside)
+"sVx" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/central)
 "sVA" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -37091,6 +37121,12 @@
 /obj/mapping_helper/access/brig,
 /turf/simulated/floor,
 /area/station/security/processing)
+"uVU" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "uWh" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -76468,7 +76504,7 @@ boo
 thS
 ueo
 ecT
-mcn
+kjd
 uHC
 qGy
 aAx
@@ -82427,7 +82463,7 @@ adP
 ehD
 adP
 adP
-acV
+rRo
 voE
 cNb
 pPG
@@ -84881,7 +84917,7 @@ qWv
 qWv
 njb
 aEI
-aPu
+pwX
 aPu
 myA
 uCr
@@ -86644,7 +86680,7 @@ aaa
 aaa
 aaY
 aaY
-abo
+uVU
 adh
 acF
 adf
@@ -88529,7 +88565,7 @@ bpK
 bqw
 bai
 bai
-btB
+sVx
 bKs
 bOO
 aqj
@@ -90952,7 +90988,7 @@ btI
 bdm
 fGE
 wuu
-hQH
+mKh
 joQ
 kNc
 wuu

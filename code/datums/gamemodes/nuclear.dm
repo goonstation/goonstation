@@ -519,17 +519,7 @@ var/syndicate_name = null
 		if (..(user))
 			return
 
-		var/wins = world.load_intra_round_value("nukie_win")
-		var/losses = world.load_intra_round_value("nukie_loss")
-		if(isnull(wins))
-			wins = 0
-		if(isnull(losses))
-			losses = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
-		onclose(user, "cairngorm_stats_[src]")
-		return
+		tgui_message(user, src.desc, "Mission Memorial", theme = "syndicate")
 
 
 /obj/New()
