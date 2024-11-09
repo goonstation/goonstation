@@ -1008,16 +1008,7 @@ proc/setup_pw_crate_lists()
 		if (..(user))
 			return
 
-		var/nt_wins = world.load_intra_round_value("nt_win")
-		var/nt_deaths = world.load_intra_round_value("nt_death")
-		if(isnull(nt_wins))
-			nt_wins = 0
-		if(isnull(nt_deaths))
-			nt_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
+		tgui_message(user, src.desc, "Mission Log", theme = "ntos")
 
 /obj/decoration/memorial/pod_war_stats_sy/
 	name = "Syndicate Mission Log"
@@ -1043,16 +1034,7 @@ proc/setup_pw_crate_lists()
 		if (..(user))
 			return
 
-		var/sy_wins = world.load_intra_round_value("sy_win")
-		var/sy_deaths = world.load_intra_round_value("sy_death")
-		if(isnull(sy_wins))
-			sy_wins = 0
-		if(isnull(sy_deaths))
-			sy_deaths = 0
-
-		src.add_dialog(user)
-		user.Browse(src.desc, "title=Mission Log;window=pod_war_stats_[src];size=300x300")
-		onclose(user, "pod_war_stats_[src]")
+		tgui_message(user, src.desc, "Mission Log", theme = "syndicate")
 
 /obj/decoration/memorial/memorial_left
 	name = "Memorial Inscription"
