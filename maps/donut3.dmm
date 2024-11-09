@@ -12874,6 +12874,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -50481,6 +50482,10 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
+"pka" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/red/side,
+/area/station/hallway/primary/west)
 "pkd" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
@@ -52049,6 +52054,7 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/machinery/info_map,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "pIf" = (
@@ -61930,6 +61936,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"sJu" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "sJF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -63128,6 +63140,7 @@
 /area/station/medical/asylum/kitchen)
 "tdf" = (
 /obj/stool/chair/couch/blue,
+/obj/machinery/info_map,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -71977,6 +71990,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -107823,7 +107837,7 @@ afi
 afi
 afi
 cQi
-oXO
+pka
 wql
 cjw
 mQG
@@ -112087,7 +112101,7 @@ vVi
 xvP
 xvP
 hBL
-qmx
+sJu
 wam
 lqZ
 cgw

@@ -3,6 +3,8 @@
 	display_name = "\improper Pirate"
 	antagonist_icon = "pirate"
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/pirate
+	has_info_popup = FALSE
+
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)

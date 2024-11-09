@@ -260,7 +260,7 @@
 				src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 				src.update_name_tag()
 			if (src.syndicate)
-				src.show_antag_popup("syndieborg")
+				src.show_antag_popup(ROLE_SYNDICATE_ROBOT)
 
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
