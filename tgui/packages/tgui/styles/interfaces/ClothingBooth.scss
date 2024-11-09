@@ -3,30 +3,26 @@
 @use '../functions.scss' as *;
 
 .clothingbooth {
-  &__dropdown {
-    margin-bottom: 0 !important;
-    margin-right: 0 !important;
-  }
-
   &__boothitem {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    cursor: pointer;
 
-    &:hover,
-    &--selected {
+    &:hover {
+      background-color: darken(colors.$good, 30%);
+    }
+
+    &--selected,
+    &--selected:hover {
       background-color: colors.$good;
+    }
+
+    > div {
+      pointer-events: none;
     }
   }
 
-  &__boothitem > div {
-    pointer-events: none;
-  }
-
-  &__boothitem:active {
-    background-color: lighten(colors.$good, 30%);
-  }
-
-  &__preview {
+  &__boothitem &__boothitem &__preview {
     width: 64px;
     height: 128px;
   }
