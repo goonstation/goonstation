@@ -199,7 +199,10 @@ var/global/total_gas_mixtures = 0
 /datum/controller/air_system/proc/process_update_tiles()
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/T as anything in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
-		T.update_air_properties()
+		try
+			T.update_air_properties()
+		catch()
+			stack_trace("Turf bug occured at [T.x], [T.y], [T.z]. Turf is of type [T.type].")
 	tiles_to_update.len = 0
 
 /// Process air groups queued for reconstruction. Deconstructs air groups into tiles, then creates new groups from those tiles.
