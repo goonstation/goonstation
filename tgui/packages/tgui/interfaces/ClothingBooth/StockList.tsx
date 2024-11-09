@@ -129,10 +129,20 @@ const useProcessCatalogue = (
 type StockListProps = Pick<
   ClothingBoothData,
   'accountBalance' | 'cash' | 'catalogue' | 'selectedGroupingName'
->;
+> & {
+  onOpenTagsModal: () => void;
+  tagFilters: TagsLookup;
+};
 
 const StockListView = (props: StockListProps) => {
-  const { accountBalance, cash, catalogue, selectedGroupingName } = props;
+  const {
+    accountBalance,
+    cash,
+    catalogue,
+    onOpenTagsModal,
+    selectedGroupingName,
+    tagFilters,
+  } = props;
   const { act } = useBackend();
   const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
@@ -145,8 +155,6 @@ const StockListView = (props: StockListProps) => {
   const searchTextLower = searchText.toLocaleLowerCase();
   const [sortType, setSortType] = useState(ClothingBoothSortType.Name);
   const [sortAscending, setSortAscending] = useState(true);
-  // TODO: use context for tag filters
-  const [tagFilters] = useState<TagsLookup>({});
 
   const handleSelectGrouping = useCallback(
     (name: string) => act('select-grouping', { name }),
@@ -171,7 +179,7 @@ const StockListView = (props: StockListProps) => {
   return (
     <Stack fill>
       <Stack.Item>
-        <FiltersSection />
+        <FiltersSection onOpenTagsModal={onOpenTagsModal} />
       </Stack.Item>
       <Stack.Item grow>
         <Stack fill vertical>

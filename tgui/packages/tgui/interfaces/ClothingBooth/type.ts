@@ -80,10 +80,3 @@ export enum TagDisplayOrderType {
 }
 
 export type TagsLookup = Partial<Record<string, boolean>>;
-
-export interface UiState {
-  appliedTagFilters: TagsLookup;
-  showTagsModal: boolean;
-  setShowTagsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setAppliedTagFilters: React.Dispatch<React.SetStateAction<TagsLookup>>;
-}

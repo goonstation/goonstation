@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -17,23 +17,19 @@ import {
   TagDisplayOrderType,
   TagsLookup,
 } from './type';
-import { UiStateContext } from './uiState';
 import { buildFieldComparator, stringComparator } from './utils/comparator';
 
 interface TagsModalProps {
   onApplyAndClose: (newFilters: TagsLookup) => void;
+  onClose: () => void;
+  initialTagFilters: TagsLookup;
 }
 
 export const TagsModal = (props: TagsModalProps) => {
-  const { onApplyAndClose } = props;
-  const { appliedTagFilters, setShowTagsModal } = useContext(UiStateContext);
-  const [tagFilters, setTagFilters] = useState(appliedTagFilters);
-  const handleCloseModal = useCallback(
-    () => setShowTagsModal(false),
-    [setShowTagsModal],
-  );
+  const { initialTagFilters, onApplyAndClose, onClose } = props;
+  const [tagFilters, setTagFilters] = useState(initialTagFilters);
   const handleResetClick = useCallback(
-    () => setTagFilters({}),
+    () => setTagFilters(initialTagFilters),
     [setTagFilters],
   );
   const handleApplyClick = useCallback(
@@ -45,12 +41,7 @@ export const TagsModal = (props: TagsModalProps) => {
       <Section
         title="Tags"
         buttons={
-          <Button
-            color="bad"
-            icon="xmark"
-            onClick={handleCloseModal}
-            tooltip="Close"
-          />
+          <Button color="bad" icon="xmark" onClick={onClose} tooltip="Close" />
         }
       >
         <Stack mr={1}>

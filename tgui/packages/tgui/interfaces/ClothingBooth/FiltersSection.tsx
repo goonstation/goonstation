@@ -6,15 +6,18 @@
  * @license ISC
  */
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { ClothingBoothSlotKey, TagsLookup } from './type';
-import { UiStateContext } from './uiState';
 
-export const FiltersSection = () => {
+interface FiltersSectionProps {
+  onOpenTagsModal: () => void;
+}
+
+export const FiltersSection = (props: FiltersSectionProps) => {
+  const { onOpenTagsModal } = props;
   const [tagFilters] = useState<TagsLookup>({});
-  const { showTagsModal, setShowTagsModal } = useContext(UiStateContext);
   const [slotFilters, setSlotFilters] = useState<
     Partial<Record<ClothingBoothSlotKey, boolean>>
   >({});
@@ -36,7 +39,7 @@ export const FiltersSection = () => {
                 (tagFilter) => tagFilter === true,
               ) && 'good'
             }
-            onClick={() => setShowTagsModal(!showTagsModal)}
+            onClick={onOpenTagsModal}
           >
             Tags{' '}
             {!!Object.values(tagFilters).some(
