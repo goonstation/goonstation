@@ -81,7 +81,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	//handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 	attackby(var/obj/item/w, var/mob/user)
 		if (src.use_state == 2) //photocopier is busy?
-			boutput(user, SPAN_ALERT("/The [src] is busy! Try again later!"))
+			boutput(user, SPAN_ALERT("\The [src] is busy! Try again later!"))
 			return
 		else if (src.use_state == 1) //is the photocopier open?
 			if(istype(w, /obj/item/paper_bin))
@@ -171,7 +171,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		if(emagged)
 			return
 		if (src.use_state == 2) //photocopier is busy?
-			boutput(user, SPAN_ALERT("/The [src] is busy! Try again later!"))
+			boutput(user, SPAN_ALERT("\The [src] is busy! Try again later!"))
 			return
 		var/prev_use_state = src.use_state
 		var/prev_icon = src.icon_state
@@ -195,7 +195,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		if (!src.emagged)
 			return 0
 		if (src.use_state == 2) //photocopier is busy?
-			boutput(user, SPAN_ALERT("/The [src] is busy! Try again later!"))
+			boutput(user, SPAN_ALERT("\The [src] is busy! Try again later!"))
 			return
 		emagged = FALSE
 		src.reset_all() // reset the scan data in case an ID was scanned
