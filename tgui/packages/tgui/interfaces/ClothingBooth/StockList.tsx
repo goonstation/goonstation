@@ -179,7 +179,10 @@ const StockListView = (props: StockListProps) => {
   return (
     <Stack fill>
       <Stack.Item>
-        <FiltersSection onOpenTagsModal={onOpenTagsModal} />
+        <FiltersSection
+          onOpenTagsModal={onOpenTagsModal}
+          tagFilters={tagFilters}
+        />
       </Stack.Item>
       <Stack.Item grow>
         <Stack fill vertical>

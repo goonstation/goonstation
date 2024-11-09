@@ -29,14 +29,18 @@ export const ClothingBooth = () => {
     scannedID,
     selectedGroupingName,
     selectedItemName,
+    tags,
   } = data;
   const [showTagsModal, setShowTagsModal] = useState(false);
   const [appliedTagFilters, setAppliedTagFilters] = useState<TagsLookup>({});
   const handleOpenTagsModal = useCallback(() => setShowTagsModal(true), []);
-  const handleApplyAndCloseTagFilters = useCallback(() => {
-    // TODO: apply tags
-    setShowTagsModal(false);
-  }, []);
+  const handleApplyAndCloseTagFilters = useCallback(
+    (tagFilters: TagsLookup) => {
+      setAppliedTagFilters(tagFilters);
+      setShowTagsModal(false);
+    },
+    [],
+  );
   const handleCloseTagFilters = useCallback(() => setShowTagsModal(false), []);
   // N.B. memoizedCatalogue does not update in subsequent renders; if this feature becomes required do a smarter memo
   const memoizedCatalogue = useConstant(() => catalogue);
@@ -134,6 +138,7 @@ export const ClothingBooth = () => {
             initialTagFilters={appliedTagFilters}
             onApplyAndClose={handleApplyAndCloseTagFilters}
             onClose={handleCloseTagFilters}
+            tags={tags}
           />
         )}
       </Window.Content>

@@ -9,10 +9,8 @@
 import { useCallback, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
 import { Modal } from '../../components';
 import {
-  ClothingBoothData,
   ClothingBoothGroupingTagsData,
   TagDisplayOrderType,
   TagsLookup,
@@ -23,18 +21,27 @@ interface TagsModalProps {
   onApplyAndClose: (newFilters: TagsLookup) => void;
   onClose: () => void;
   initialTagFilters: TagsLookup;
+  tags: Record<string, ClothingBoothGroupingTagsData>;
 }
 
 export const TagsModal = (props: TagsModalProps) => {
-  const { initialTagFilters, onApplyAndClose, onClose } = props;
+  const { initialTagFilters, onApplyAndClose, onClose, tags } = props;
   const [tagFilters, setTagFilters] = useState(initialTagFilters);
-  const handleResetClick = useCallback(
-    () => setTagFilters(initialTagFilters),
+  const handleClearClick = useCallback(
+    () => setTagFilters({}),
     [setTagFilters],
   );
   const handleApplyClick = useCallback(
     () => onApplyAndClose(tagFilters),
-    [onApplyAndClose],
+    [onApplyAndClose, tagFilters],
+  );
+  const handleToggle = useCallback(
+    (tagName: string) =>
+      setTagFilters((prev) => ({
+        ...prev,
+        [tagName]: !prev[tagName],
+      })),
+    [],
   );
   return (
     <Modal fitted>
@@ -47,20 +54,29 @@ export const TagsModal = (props: TagsModalProps) => {
         <Stack mr={1}>
           <Stack.Item>
             <TagStackContainer
+              onToggle={handleToggle}
               tagType="Season"
               typeToDisplay={TagDisplayOrderType.Season}
+              tags={tags}
+              tagFilters={tagFilters}
             />
           </Stack.Item>
           <Stack.Item>
             <TagStackContainer
+              onToggle={handleToggle}
               tagType="Formality"
               typeToDisplay={TagDisplayOrderType.Formality}
+              tags={tags}
+              tagFilters={tagFilters}
             />
           </Stack.Item>
           <Stack.Item>
             <TagStackContainer
+              onToggle={handleToggle}
               tagType="Collection"
               typeToDisplay={TagDisplayOrderType.Collection}
+              tags={tags}
+              tagFilters={tagFilters}
             />
           </Stack.Item>
         </Stack>
@@ -70,7 +86,7 @@ export const TagsModal = (props: TagsModalProps) => {
           <Stack.Item>
             <Button
               disabled={!Object.values(tagFilters).includes(true)}
-              onClick={handleResetClick}
+              onClick={handleClearClick}
             >
               Clear Tags
             </Button>
@@ -87,14 +103,16 @@ export const TagsModal = (props: TagsModalProps) => {
 };
 
 interface TagStackContainerProps {
+  onToggle: (tagName: string) => void;
   tagType: string;
   typeToDisplay: number;
+  tags: Record<string, ClothingBoothGroupingTagsData>;
+  tagFilters: TagsLookup;
 }
 
 const TagStackContainer = (props: TagStackContainerProps) => {
-  const { data } = useBackend<ClothingBoothData>();
-  const { tagType, typeToDisplay } = props;
-  const groupingTags = Object.values(data.tags).filter(
+  const { onToggle, tagType, typeToDisplay, tags, tagFilters } = props;
+  const groupingTags = Object.values(tags).filter(
     (groupingTag) => groupingTag.display_order === typeToDisplay,
   );
   const sortedTags = groupingTags.sort(
@@ -108,29 +126,28 @@ const TagStackContainer = (props: TagStackContainerProps) => {
       </Stack.Item>
       {sortedTags.map((tag) => (
         <Stack.Item key={tag.name}>
-          <TagCheckbox {...tag} />
+          <TagCheckbox
+            name={tag.name}
+            checked={!!tagFilters[tag.name]}
+            onClick={onToggle}
+          />
         </Stack.Item>
       ))}
     </Stack>
   );
 };
 
-const TagCheckbox = (props: ClothingBoothGroupingTagsData) => {
-  const { name } = props;
+interface TagCheckboxProps {
+  checked: boolean;
+  name: string;
+  onClick: (name: string) => void;
+}
 
-  const [tagFilters, setTagFilters] = useState<TagsLookup>({});
-  const mergeTagFilter = (filter: string) =>
-    setTagFilters({
-      ...tagFilters,
-      [filter]: !tagFilters[filter],
-    });
-
+const TagCheckbox = (props: TagCheckboxProps) => {
+  const { name, checked, onClick } = props;
+  const handleClick = useCallback(() => onClick(name), [name, onClick]);
   return (
-    <Button.Checkbox
-      fluid
-      checked={!!tagFilters[name]}
-      onClick={() => mergeTagFilter(name)}
-    >
+    <Button.Checkbox fluid checked={checked} onClick={handleClick}>
       {name}
     </Button.Checkbox>
   );

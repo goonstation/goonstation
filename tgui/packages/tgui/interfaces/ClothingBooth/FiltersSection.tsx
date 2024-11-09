@@ -6,18 +6,18 @@
  * @license ISC
  */
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { ClothingBoothSlotKey, TagsLookup } from './type';
 
 interface FiltersSectionProps {
   onOpenTagsModal: () => void;
+  tagFilters: TagsLookup;
 }
 
 export const FiltersSection = (props: FiltersSectionProps) => {
-  const { onOpenTagsModal } = props;
-  const [tagFilters] = useState<TagsLookup>({});
+  const { onOpenTagsModal, tagFilters } = props;
   const [slotFilters, setSlotFilters] = useState<
     Partial<Record<ClothingBoothSlotKey, boolean>>
   >({});
@@ -26,6 +26,12 @@ export const FiltersSection = (props: FiltersSectionProps) => {
       ...slotFilters,
       [filter]: !slotFilters[filter],
     });
+  const numAppliedTagFilters = useMemo(
+    () =>
+      Object.values(tagFilters).filter((tagFilter) => tagFilter === true)
+        .length,
+    [tagFilters],
+  );
 
   return (
     <Section fill>
@@ -34,18 +40,10 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button
             fluid
             align="center"
-            color={
-              Object.values(tagFilters).some(
-                (tagFilter) => tagFilter === true,
-              ) && 'good'
-            }
+            color={numAppliedTagFilters > 0 && 'good'}
             onClick={onOpenTagsModal}
           >
-            Tags{' '}
-            {!!Object.values(tagFilters).some(
-              (tagFilter) => tagFilter === true,
-            ) &&
-              `(${Object.values(tagFilters).filter((tagFilter) => tagFilter === true).length})`}
+            {`Tags${numAppliedTagFilters > 0 ? ` (${numAppliedTagFilters})` : ''}`}
           </Button>
         </Stack.Item>
         <Stack.Item>
