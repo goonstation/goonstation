@@ -104,12 +104,6 @@
 		var/datum/objective_set/objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 		new objective_set_path(src.owner, src)
 
-	do_popup(override)
-		if (!override)
-			override = "spythief"
-
-		..(override)
-
 	handle_round_end()
 		. = ..()
 
