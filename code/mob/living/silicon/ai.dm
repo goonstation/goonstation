@@ -1671,7 +1671,7 @@ or don't if it uses a custom topopen overlay
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
+	tgui_message(src, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
