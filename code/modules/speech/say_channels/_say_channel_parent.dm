@@ -175,8 +175,23 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 	/// Whether this local channel should request registered input modules to track their outermost listeners.
 	var/track_outermost_listener = TRUE
 
+	/// The listener tick cache is responsible for storing the "listeners by type" lists calculated by `PassToChannel()` for a single tick.
+	var/datum/listener_tick_cache/listener_tick_cache
+	/// The type of listener tick cache that this say channel should use.
+	var/listener_tick_cache_type = /datum/listener_tick_cache
+
+/datum/say_channel/delimited/local/New()
+	. = ..()
+
+	src.listener_tick_cache = new src.listener_tick_cache_type
+
 /datum/say_channel/delimited/local/PassToChannel(datum/say_message/message)
-	var/list/list/datum/listen_module/input/listen_modules_by_type = list()
+	var/list/list/datum/listen_module/input/listen_modules_by_type = src.listener_tick_cache.read_from_cache(message)
+	if (islist(listen_modules_by_type))
+		src.PassToListeners(message, listen_modules_by_type)
+		return
+
+	listen_modules_by_type = list()
 
 	if (!ismob(message.message_origin.loc))
 		var/turf/centre = get_turf(message.message_origin)
@@ -213,6 +228,7 @@ ABSTRACT_TYPE(/datum/say_channel/delimited/local)
 
 				listen_modules_by_type[type] += input
 
+	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
 
 /datum/say_channel/delimited/local/RegisterOutput(datum/speech_module/output/registree)

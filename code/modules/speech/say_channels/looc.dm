@@ -7,9 +7,16 @@
 	suppress_hear_sound = TRUE
 	suppress_speech_bubble = TRUE
 	track_outermost_listener = FALSE
+	listener_tick_cache_type = /datum/listener_tick_cache/origin_dependent
 
 /datum/say_channel/delimited/local/looc/PassToChannel(datum/say_message/message)
-	var/list/list/datum/listen_module/input/listen_modules_by_type = list()
+	var/list/list/datum/listen_module/input/listen_modules_by_type = src.listener_tick_cache.read_from_cache(message)
+	if (islist(listen_modules_by_type))
+		src.PassToListeners(message, listen_modules_by_type)
+		return
+
+	listen_modules_by_type = list()
+
 	var/turf/centre = get_turf(message.message_origin)
 	if (!centre)
 		return
@@ -25,6 +32,7 @@
 
 			listen_modules_by_type[type] += input
 
+	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
 
 /datum/say_channel/ooc/log_message(datum/say_message/message)
