@@ -1436,10 +1436,12 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			ST.name = "Small Storage Tank [count]"
 			count++
 		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
-		AddComponent(/datum/component/transfer_output)
 
 	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
+		return
+
+	attack_self(mob/user as mob)
+		ui_interact(user)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
@@ -1494,7 +1496,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				if (!I)
 					return
 				if(src.inserted.loc == src)
-					TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
 					usr.put_in_hand_or_eject(I)
 				if (I == src.extract_to) src.extract_to = null
 				src.inserted = null
@@ -1511,7 +1512,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				var/obj/item/ingredient = src.ingredients[id]
 				if (istype(ingredient))
 					src.ingredients.Remove(id)
-					TRANSFER_OR_DROP(src, ingredient)
+					usr.put_in_hand_or_eject(ingredient)
 					. = TRUE
 			if("autoextract")
 				src.autoextract = !src.autoextract
@@ -1566,8 +1567,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
 			tryInsert(W, user)
 
-		..()
-
 	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
@@ -1609,12 +1608,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		storage_tank_1 = src.storage_tank_1,
 		storage_tank_2 = src.storage_tank_2
 	)
-
-/obj/item/robot_chemaster/prototype/update_icon()
-	if (src.ingredients.len)
-		src.icon_state = "reex-on"
-	else
-		src.icon_state = "reex-off"
 
 /obj/item/robot_chemaster/prototype/proc/doExtract(atom/movable/AM)
 	// Welp -- we don't want anyone extracting these. They'll probably
