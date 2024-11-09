@@ -452,9 +452,9 @@ Code:
 
 
 
-//Ask the alert computer for alert data.
-/datum/computer/file/pda_program/engie_alerts
-	name = "EngieAlerter"
+//Ask the atmos alert computer for alert data.
+/datum/computer/file/pda_program/atmos_alerts
+	name = "AtmosAlerter"
 	size = 8
 	var/list/minor_alerts = list()
 	var/list/severe_alerts = list()
@@ -467,7 +467,7 @@ Code:
 
 		var/dat = src.return_text_header()
 
-		dat += "<h4>Engineering Alert Manager</h4>"
+		dat += "<h4>Atmos Alert Manager</h4>"
 
 		dat += "<a href='?src=\ref[src];scan=1'>Scan for Alerts</a><br>"
 
