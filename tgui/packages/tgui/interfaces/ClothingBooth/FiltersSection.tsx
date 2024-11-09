@@ -6,7 +6,7 @@
  * @license ISC
  */
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import {
@@ -16,18 +16,22 @@ import {
 } from './type';
 
 interface FiltersSectionProps {
+  onClearSlotFilters: () => void;
   onOpenTagsModal: () => void;
+  onToggleSlotFilter: (slot: ClothingBoothSlotKey) => void;
+  slotFilters: SlotFilterLookup;
   tagFilters: TagFilterLookup;
 }
 
 export const FiltersSection = (props: FiltersSectionProps) => {
-  const { onOpenTagsModal, tagFilters } = props;
-  const [slotFilters, setSlotFilters] = useState<SlotFilterLookup>({});
-  const mergeSlotFilter = (filter: ClothingBoothSlotKey) =>
-    setSlotFilters({
-      ...slotFilters,
-      [filter]: !slotFilters[filter],
-    });
+  const {
+    onClearSlotFilters,
+    onOpenTagsModal,
+    onToggleSlotFilter,
+    slotFilters,
+    tagFilters,
+  } = props;
+
   const numAppliedTagFilters = useMemo(
     () =>
       Object.values(tagFilters).filter((tagFilter) => tagFilter === true)
@@ -49,7 +53,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           </Button>
         </Stack.Item>
         <Stack.Item>
-          <Button fluid align="center" onClick={() => setSlotFilters({})}>
+          <Button fluid align="center" onClick={onClearSlotFilters}>
             Clear Slots
           </Button>
         </Stack.Item>
@@ -57,7 +61,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Mask]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Mask)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Mask)}
           >
             Mask
           </Button.Checkbox>
@@ -66,7 +70,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Glasses]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Glasses)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Glasses)}
           >
             Glasses
           </Button.Checkbox>
@@ -75,7 +79,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Gloves]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Gloves)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Gloves)}
           >
             Gloves
           </Button.Checkbox>
@@ -84,7 +88,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Headwear]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Headwear)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Headwear)}
           >
             Headwear
           </Button.Checkbox>
@@ -93,7 +97,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Shoes]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Shoes)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Shoes)}
           >
             Shoes
           </Button.Checkbox>
@@ -102,7 +106,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Suit]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Suit)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Suit)}
           >
             Suit
           </Button.Checkbox>
@@ -111,7 +115,7 @@ export const FiltersSection = (props: FiltersSectionProps) => {
           <Button.Checkbox
             fluid
             checked={!!slotFilters[ClothingBoothSlotKey.Uniform]}
-            onClick={() => mergeSlotFilter(ClothingBoothSlotKey.Uniform)}
+            onClick={() => onToggleSlotFilter(ClothingBoothSlotKey.Uniform)}
           >
             Uniform
           </Button.Checkbox>

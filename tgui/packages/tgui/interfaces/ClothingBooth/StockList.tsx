@@ -24,6 +24,7 @@ import { FiltersSection } from './FiltersSection';
 import type {
   ClothingBoothData,
   ClothingBoothGroupingData,
+  ClothingBoothSlotKey,
   SlotFilterLookup,
   TagFilterLookup,
 } from './type';
@@ -148,8 +149,16 @@ const StockListView = (props: StockListProps) => {
   const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
   const [hideUnaffordable, setHideUnaffordable] = useState(false);
-  // TODO: use context for slot filters
-  const [slotFilters] = useState<SlotFilterLookup>({});
+  const [slotFilters, setSlotFilters] = useState<SlotFilterLookup>({});
+  const handleClearSlotFilters = useCallback(() => setSlotFilters({}), []);
+  const handleToggleSlotFilter = useCallback(
+    (filter: ClothingBoothSlotKey) =>
+      setSlotFilters((prev) => ({
+        ...prev,
+        [filter]: !prev[filter],
+      })),
+    [],
+  );
   const [searchText, setSearchText] = useState('');
   const searchTextLower = searchText.toLocaleLowerCase();
   const [sortType, setSortType] = useState(ClothingBoothSortType.Name);
@@ -179,7 +188,10 @@ const StockListView = (props: StockListProps) => {
     <Stack fill>
       <Stack.Item>
         <FiltersSection
+          onClearSlotFilters={handleClearSlotFilters}
           onOpenTagsModal={onOpenTagsModal}
+          onToggleSlotFilter={handleToggleSlotFilter}
+          slotFilters={slotFilters}
           tagFilters={tagFilters}
         />
       </Stack.Item>
