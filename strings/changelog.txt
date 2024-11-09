@@ -1,4 +1,55 @@
 
+(t)sat nov 09 24
+(u)LorrMaster
+(p)21165
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Photocopier can now scan and print wanted posters, discount credits, paper copies of books & newspapers, booklets, contents of folders, reagent scanner results, and information from IDs.
+(+)Packets can be used by bureaucrats on the photocopier to perform their grueling tasks from the comfort of their office chair. Details can be printed from the photocopier directly.
+(t)fri nov 08 24
+(u)pgmzeta + LeahTheTech
+(*)Added pop up information maps to every rotation map.
+(u)Garash2k
+(p)19559
+(e)🆕📄|C-Feature, A-UI
+(+)New UI for the antag tip popups! Make sure to report any errors
+(u)JORJ949
+(p)21160
+(e)🆕🎨🐁|C-Feature, C-Sprites, A-Critters
+(*)Added janitorial whistle for controlling cleanbots.
+(t)mon nov 04 24
+(u)Egregorious
+(p)20960
+(e)⚖🍝🌱|C-Balance, A-Catering, A-Hydroponics
+(+)Botany's jelly beans are a lot more colourful.
+(u)LeahTheTech
+(*)Mirabilis is no longer a secret chem and has a simplified recipe: 1 Coagulated Gnesis + 1 Port + 1 Oculine = 2 Mirabilis.
+(u)Klushy225
+(p)21052
+(e)🎨🐣|C-Sprites, A-Respawning
+(+)Adds the Hall Monitor gimmick job.
+(u)JORJ949
+(p)21200
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Non-nuclear syndicate PDAs start with messenger on.
+(+)Mindhack cloners now only send messages to syndicate PDAs.
+(u)TDHooligan, Guv
+(p)21211
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The bartender's shaker now shows if your cocktail is a safe temperature to drink
+(u)TDHooligan
+(p)21187
+(e)🎨📦⚗|C-Sprites, A-Game-Objects, A-Chemistry
+(*)Chemists now have access to the Dropper Funnel; make instant reactions happen at your own pace!
+(t)sun nov 03 24
+(u)FlameArrow57
+(p)21221
+(e)🆕🏅🔬|C-Feature, A-Medal, A-Science
+(*)Added a new Scientist/Research Director objective to activate 10 artifacts in a single shift, with a medal tied to it
+(t)sat nov 02 24
+(u)NightmarechaMillian
+(p)21217
+(e)🎨💅|C-Sprites, C-QoL
+(+)Emergency suits in boxes now start folded so they can actually fit back into the box
 (t)fri nov 01 24
 (u)Facsimil
 (p)21098
