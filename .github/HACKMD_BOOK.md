@@ -23,5 +23,6 @@ Remember that these are live edits. If you're editing a link, be fast, or copy-p
 - [Goonstation Spriting Guidelines](/@goonstation/sprites)
 - [Goonstation Audio Guidelines](/@goonstation/audio)
 - [Goonstation Mapping Guidelines](/@goonstation/maps)
+- [Goonstation TGUI Guide](/@goonstation/tgui)
 ### Misc guides
 - [Help Messages](/@goonstation/helpmsgs)

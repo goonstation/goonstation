@@ -392,10 +392,8 @@ datum
 						if (probmult(20))
 							boutput(M, SPAN_ALERT("You feel weak and drowsy."))
 							M.setStatus("slowed", 5 SECONDS)
-						if (probmult(8) && !M.reagents?.get_reagent_amount("promethazine"))
-							M.visible_message(SPAN_ALERT("[M] vomits a lot of blood!"))
+						if (probmult(8) && M.vomit(0, /obj/decal/cleanable/blood/splatter, SPAN_ALERT("[M] vomits a lot of blood!")))
 							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
-							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, SPAN_ALERT("You feel a sudden pain in your chest."))
 							M.setStatusMin("stunned", 6 SECONDS * mult)
@@ -1774,11 +1772,8 @@ datum
 				if (prob(7))
 					boutput(M, SPAN_ALERT("A horrible migraine overpowers you."))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
-				if (probmult(7) && !M.reagents?.get_reagent_amount("promethazine"))
-					for(var/mob/O in AIviewers(M, null))
-						O.show_message(SPAN_ALERT("[M] vomits up some green goo."), 1)
+				if (probmult(7) && M.vomit(0, /obj/decal/cleanable/greenpuke, SPAN_ALERT("[M] vomits up some green goo.")))
 					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-					make_cleanable( /obj/decal/cleanable/greenpuke,M.loc)
 				..()
 
 		harmful/histamine
@@ -1949,7 +1944,7 @@ datum
 			fluid_g = 180
 			fluid_b = 240
 			transparency = 10
-			depletion_rate = 0.3
+			depletion_rate = 0.2
 			var/progression_speed = 1
 			var/counter = 1
 
@@ -1957,7 +1952,7 @@ datum
 				if (!M) M = holder.my_atom
 
 				switch(src.counter+= (mult * src.progression_speed))
-					if (10 to 27) // Small signs of trouble
+					if (10 to 28) // Small signs of trouble
 						if (prob(15))
 							M.change_misstep_chance(15 * mult)
 						if (probmult(13))
@@ -1966,7 +1961,7 @@ datum
 						if (probmult(13))
 							M.emote(pick("twitch","drool","tremble"))
 							M.change_eye_blurry(2, 2)
-					if (27 to 47) // Effects ramp up, breathlessness, early paralysis signs and heartache
+					if (28 to 40) // Effects ramp up, breathlessness, early paralysis signs and heartache
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
 						M.setStatusMin("slowed", 40 SECONDS)
@@ -1977,7 +1972,7 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (!ON_COOLDOWN(M, "heartbeat_hallucination", 30 SECONDS))
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 30, 1, pitch = 2)
-					if (47 to INFINITY) // Heart effects kick in
+					if (40 to INFINITY) // Heart effects kick in
 						M.setStatusMin("slowed", 40 SECONDS)
 						M.change_eye_blurry(15, 15)
 						M.losebreath = max(5, M.losebreath + (5 * mult))
@@ -2326,7 +2321,7 @@ datum
 					if(probmult(10))
 						var/vomit_message = SPAN_ALERT("[H] pukes all over [himself_or_herself(H)].")
 						H.vomit(0, null, vomit_message)
-					else if (prob(5) && !H.reagents?.get_reagent_amount("promethazine"))
+					else if (prob(5) && !HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 						var/damage = rand(1,10)
 						H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
 						playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)

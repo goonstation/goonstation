@@ -2083,8 +2083,8 @@
 		name = "Hot Toddy"
 		id = "hottoddy"
 		result = "hottoddy"
-		required_reagents = list("sweet_tea" = 1, "bourbon" = 1, "juice_lemon" = 1)
-		result_amount = 3
+		required_reagents = list("sweet_tea" = 1, "bourbon" = 1, "juice_lemon" = 1, "cinnamon" = 1)
+		result_amount = 4
 		mix_phrase = "The drink suddenly fills the room with a festive aroma."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
@@ -2113,11 +2113,17 @@
 		name = "Spiced Rum"
 		id = "spicedrum"
 		result = "spicedrum"
-		required_reagents = list("rum" = 1, "capsaicin" = 1)
+		required_reagents = list("rum" = 1, "cinnamon" = 1)
 		result_amount = 2
-		mix_phrase = "You feel like you might have misunderstood the recipe."
+		mix_phrase = "The drink fills the room with the smell of cinnamon."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+		fake
+			id = "spicedrumfake"
+			result = "spicedrumfake"
+			required_reagents = list("rum" = 1, "capsaicin" = 1)
+			mix_phrase = "You feel like you might have misunderstood the recipe."
 
 	romulale
 		name = "Romulale"
@@ -2280,8 +2286,8 @@
 		name = "Pumpkin Spice Latte"
 		id = "pumpkinspicelatte"
 		result = "pumpkinspicelatte"
-		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1)
-		result_amount = 4
+		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1, "cinnamon"=1)
+		result_amount = 5
 		mix_phrase = "The drink smells vaguely like artifical autumn."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
@@ -4857,7 +4863,7 @@
 		does_react(var/datum/reagents/holder)
 			return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
-		vampire_serum
+	vampire_serum
 		name = "Vampire Serum Omega"
 		id = "vampire_serum"
 		result =  "vampire_serum"
@@ -5393,3 +5399,12 @@
 		mix_phrase = "The mixture starts to froth and glows a furious red!"
 		result_amount = 3
 		hidden = TRUE
+
+	mirabilis
+		name = "Mirabilis"
+		id = "mirabilis"
+		result = "mirabilis"
+		required_reagents = list("flockdrone_fluid" = 1, "port" = 1, "oculine" = 1)
+		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
+		result_amount = 2
+		mix_sound = 'sound/effects/radio_sweep1.ogg'

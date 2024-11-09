@@ -32526,16 +32526,17 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/se,
 /area/syndicate_station/battlecruiser)
 "cvV" = (
-/obj/stool/chair/office/red{
-	dir = 1
-	},
+/obj/storage/crate/wooden,
+/obj/item/storage/box/record/radio/host,
+/obj/item/radio_tape/audio_book/commander_support,
+/obj/item/radio_tape/audio_book/commander_resignation,
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvW" = (
-/obj/storage/crate/wooden,
-/obj/item/storage/box/record/radio/host,
-/obj/item/radio_tape/audio_book/commander_resignation,
-/obj/item/radio_tape/audio_book/commander_support,
+/obj/table/wood/auto,
+/obj/submachine/record_player/portable{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvZ" = (
@@ -45806,7 +45807,7 @@
 /turf/space,
 /area/syndicate_station/battlecruiser)
 "djb" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/instant,
 /turf/unsimulated/floor/black,
 /area/sim/racing_track)
 "djc" = (
@@ -47061,7 +47062,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "drV" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -47182,7 +47183,7 @@
 /area/hospital/underground)
 "dsu" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -47607,7 +47608,7 @@
 /area/crypt/sigma/lab)
 "dvi" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -50843,7 +50844,7 @@
 /area/centcom/lounge)
 "dHz" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/ice_cream/random,
+/obj/item/paper/newspaper/rolled/centcom_plasma,
 /turf/unsimulated/floor/specialroom/bar,
 /area/centcom/lounge)
 "dHA" = (
@@ -52392,6 +52393,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/paper/newspaper/rolled/centcom_plasma,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fpurple2"
 	},
@@ -55931,7 +55933,7 @@
 	})
 "eTR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -58517,7 +58519,7 @@
 /area/centcom/lounge)
 "gZG" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -60638,7 +60640,7 @@
 /obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/instant,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "iPZ" = (
@@ -62089,7 +62091,7 @@
 	icon_state = "blue"
 	})
 "jRS" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -70861,7 +70863,7 @@
 /area/iomoon/base)
 "raS" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -72980,6 +72982,15 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
+"sHM" = (
+/obj/table/glass/reinforced/auto,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/item/paper/newspaper/rolled/centcom_plasma,
+/turf/unsimulated/floor/darkblue,
+/area/centcom/lobby)
 "sHZ" = (
 /obj/item/paper{
 	pixel_x = 7;
@@ -75166,7 +75177,7 @@
 /area/moon/museum/west)
 "uKz" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -77844,7 +77855,7 @@
 /turf/unsimulated/floor,
 /area/watchful_eye_sensor)
 "wLj" = (
-/obj/npc/trader/random,
+/obj/landmark/spawner/random_trader,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -111057,7 +111068,7 @@ dir
 lzl
 cvJ
 cvQ
-cvQ
+cvV
 lzl
 dje
 djj
@@ -111359,7 +111370,7 @@ dis
 lzl
 cgS
 cvR
-cvV
+cvQ
 lzl
 djg
 djj
@@ -150354,7 +150365,7 @@ dLh
 dLY
 dMy
 dMX
-dMy
+sHM
 dNG
 dLh
 hla

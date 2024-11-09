@@ -239,8 +239,8 @@
 	//icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "bottle-spicedrum"
 	bottle_style = "bottle-spicedrum"
-	fluid_style = "spicedrum"
-	label = "spicedrum"//"brandy"
+	fluid_style = "spicedrumfake"
+	label = "spicedrumfake"//"brandy"
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 250

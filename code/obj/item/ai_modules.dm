@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		src.job = initial(src.job)
 
 	update_law_text(user, lawTarget)
-		src.lawText = "[lawTarget ? lawTarget : "__________"] holds the rank of [src.job], regardless of current rank or station."
+		src.lawText = "[lawTarget ? lawTarget : "__________"] hold(s) the rank of [src.job], regardless of current rank or station."
 		return ..()
 
 	attack_self(mob/user)

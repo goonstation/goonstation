@@ -1118,6 +1118,25 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 			..()
 			src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
 
+		dyeable
+			name = "dyeable cardigan sweater"
+			desc = "A warm cardigan sweater that can be dyed with hair dye. Obviously."
+
+			New()
+				..()
+				src.color = "#FFFFFF"
+
+			attackby(obj/item/dye_bottle/W, mob/user)
+				if (istype(W, /obj/item/dye_bottle))
+					src.color = W.customization_first_color
+					src.UpdateIcon()
+					var/mob/wearer = src.loc
+					if (ismob(wearer))
+						wearer.update_clothing()
+					user.visible_message(SPAN_ALERT("<b>[user]</b> splashes dye on [user != wearer && ismob(wearer) ? "[wearer]'s" : his_or_her(user)] cardigan."))
+					return
+				. = ..()
+
 // LONG SHIRTS
 // No they're not sweaters
 
@@ -1194,6 +1213,24 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 1.5)
+
+/obj/item/emergencysuitfolded
+	name = "folded emergency suit"
+	desc = "A suit that protects against low pressure environments for a short time. At least, it would be if it hadn't been vacuum-compressed into a small rectangle. You'll have to unfold it before putting it on."
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	icon_state = "emerg_folded"
+	item_state = "emerg"
+	w_class = W_CLASS_TINY
+
+	attack_self(mob/user as mob)
+
+		user.drop_item(src) //clear hands
+		boutput(user, SPAN_NOTICE("You deploy the [src]!"))
+		//maybe play a sound?
+
+		var/obj/item/newsuit = new /obj/item/clothing/suit/space/emerg
+		user.put_in_hand_or_drop(newsuit)
+		qdel(src)
 
 /obj/item/clothing/suit/space/emerg/science
 	name = "bomb retreival suit"
@@ -2066,6 +2103,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. = ..()
 		src.AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_WEAR_SUIT), 0.8, 1, FALSE, 2)
 		src.AddComponent(/datum/component/power_cell, 100, 100, 5, 30 SECONDS, TRUE)
+
+/obj/item/clothing/suit/security_badge/paper
+	name = "Hall Monitor Badge"
+	desc = "A piece of soggy notebook paper with a red S doodled on it, presumably to represent security."
+	icon_state = "security_badge_paper"
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

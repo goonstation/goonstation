@@ -60,7 +60,7 @@
 /atom/movable/screen/parallax_layer/proc/scroll_layer()
 	if (!src.parallax_render_source.tessellate || (!src.parallax_render_source.scroll_speed && !src.parallax_render_source.scroll_angle))
 		return
-
+	animate(src)
 	var/x = src.parallax_render_source.scroll_speed * src.parallax_render_source.parallax_value * sin(src.parallax_render_source.scroll_angle)
 	if (x)
 		var/x_direction = x / abs(x)

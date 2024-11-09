@@ -16,7 +16,7 @@
 	burn_possible = TRUE
 	health = 10
 	var/team_num
-	var/cutting_product = /obj/item/material_piece/cloth
+	var/cutting_product = /obj/item/material_piece/cloth/cottonfabric
 
 	duration_remove = 7.5 SECONDS
 

@@ -1734,10 +1734,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "eo" = (
@@ -2611,7 +2611,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gs" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
@@ -6070,7 +6070,7 @@
 	name = "Maru Power Room"
 	})
 "ok" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
@@ -7064,7 +7064,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/hammer)
 "qp" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
@@ -11123,7 +11123,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "yR" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
@@ -11601,7 +11601,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zM" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
@@ -20351,7 +20351,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Se" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";

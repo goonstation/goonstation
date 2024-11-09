@@ -4538,8 +4538,8 @@
 	})
 "bZP" = (
 /obj/stool/bench/red/auto,
-/obj/machinery/ai_status_display{
-	pixel_y = 28
+/obj/machinery/light/incandescent/netural{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
@@ -7212,6 +7212,11 @@
 	icon_state = "leadjunction_gray"
 	},
 /area/listeningpost/power)
+"dmP" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/info_map,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "dni" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -9085,6 +9090,7 @@
 /area/station/hallway/secondary/exit)
 "ecB" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/info_map,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "ecQ" = (
@@ -10570,11 +10576,11 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "eMd" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/ai_status_display{
+	pixel_y = 28
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
@@ -13811,10 +13817,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -14369,6 +14375,19 @@
 /turf/simulated/floor/black/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
+	})
+"goS" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
 	})
 "gpm" = (
 /obj/machinery/light/small,
@@ -20104,7 +20123,7 @@
 /area/station/maintenance/north)
 "ium" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/right_station/cogmap)
+/area/shuttle/merchant_shuttle/right_station/cogmap/nadir)
 "iux" = (
 /obj/table/nanotrasen/auto,
 /obj/item/storage/box/cablesbox{
@@ -24855,7 +24874,7 @@
 	name = "Pasiphae disposal belt";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
 "krU" = (
@@ -24925,6 +24944,9 @@
 	dir = 10;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/machinery/light/emergency{
+	pixel_y = -16
 	},
 /turf/simulated/floor/blueblack/corner,
 /area/station/hallway/secondary/entry{
@@ -25355,10 +25377,8 @@
 	name = "The Warrens"
 	})
 "kCz" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/stool/bench/red/auto,
+/obj/machinery/info_map,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "kCD" = (
@@ -40034,6 +40054,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/info_map,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -40926,8 +40947,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/chem_dispenser/alcohol/bar,
-/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -41524,7 +41543,7 @@
 /area/station/security/checkpoint/escape)
 "rEl" = (
 /obj/forcefield/energyshield/perma/doorlink,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -48947,10 +48966,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/emergency{
-	dir = 1;
-	pixel_y = 16
-	},
+/obj/machinery/info_map,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},
@@ -49876,6 +49892,9 @@
 /area/station/hallway/secondary/exit)
 "vpY" = (
 /obj/machinery/vending/snack,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -51653,7 +51672,7 @@
 	move_lag = 6;
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "vZi" = (
@@ -53576,13 +53595,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
 "wTU" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
+/obj/machinery/info_map,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},
@@ -54108,7 +54121,7 @@
 /area/station/hallway/primary/southwest)
 "xgs" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/left_station/cogmap)
+/area/shuttle/merchant_shuttle/left_station/cogmap/nadir)
 "xhb" = (
 /obj/decal/tile_edge/floorguide/engineering{
 	dir = 1
@@ -85926,7 +85939,7 @@ fDm
 gfS
 aiq
 hxY
-eMn
+goS
 tBS
 gzc
 xaW
@@ -113407,7 +113420,7 @@ sSm
 got
 pzG
 ocD
-vEo
+dmP
 fdg
 rZb
 oHA

@@ -5415,6 +5415,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -13011,6 +13012,7 @@
 "bLL" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -14620,7 +14622,6 @@
 /obj/machinery/firealarm/north,
 /obj/submachine/chef_oven,
 /obj/machinery/firealarm/north,
-/obj/machinery/deep_fryer,
 /obj/disposalpipe/segment/produce,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -15865,7 +15866,7 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/maintenance/disposal)
 "dHR" = (
@@ -16026,7 +16027,7 @@
 	name = "Technical Storage"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
+/obj/mapping_helper/access/tech_storage,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "dPw" = (
@@ -20105,7 +20106,7 @@
 /area/station/ranch)
 "hcn" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -23868,6 +23869,10 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
+"jLj" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/market)
 "jLz" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -31427,6 +31432,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/voting_box,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -33076,12 +33082,24 @@
 /area/station/quartermaster/office)
 "qJI" = (
 /obj/table/auto,
-/obj/item/dye_bottle,
-/obj/item/dye_bottle,
-/obj/item/storage/pill_bottle/hairgrownium,
 /obj/item_dispenser/latex_gloves{
 	pixel_y = 0;
 	pixel_x = 24
+	},
+/obj/item/clothing/under/misc/barber{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/storage/pill_bottle/hairgrownium{
+	pixel_x = -5
+	},
+/obj/item/dye_bottle{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/dye_bottle{
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
@@ -34560,6 +34578,16 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
+"rQs" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "rQD" = (
 /obj/machinery/light{
 	dir = 1;
@@ -39839,9 +39867,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
+/obj/machinery/info_map,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -85597,7 +85623,7 @@ guE
 tRG
 bnG
 mWV
-bqs
+rQs
 brt
 bhl
 sEM
@@ -86432,7 +86458,7 @@ bsu
 bsu
 aey
 aey
-lJj
+jLj
 bbC
 pZi
 uuf

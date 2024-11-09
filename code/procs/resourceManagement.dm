@@ -121,10 +121,13 @@
 	//Get file extension
 	if (path)
 		var/list/parts = splittext(path, ".")
-		var/ext = parts[parts.len]
+		var/ext = parts[length(parts)]
 		ext = lowertext(ext)
 		//Is this file a binary thing
-		if (ext in list("jpg", "jpeg", "png", "svg", "bmp", "gif", "eot", "woff", "woff2", "ttf", "otf"))
+		if (ext in list("jpg", "jpeg", "png", "svg", "bmp", "gif", "eot", "woff", "woff2", "ttf", "otf", "map", "mp4", "psd"))
+			return 0
+		// Is this file a bundled tgui file?
+		if ((length(parts) > 2) && (parts[length(parts) - 1] in list("bundle", "hot-update")))
 			return 0
 
 	//Look for resource placeholder tags. {{resource("path/to/file")}}
@@ -133,7 +136,7 @@
 		fileText = file2text(file)
 	if (fileText && findtext(fileText, "{{resource"))
 		var/regex/R = new("\\{\\{resource\\(\"(.*?)\"\\)\\}\\}", "ig")
-		fileText = R.Replace(fileText, /proc/resource)
+		fileText = R.Replace(fileText, /proc/resource) // This line specifically is /very/ slow
 
 	return fileText
 
