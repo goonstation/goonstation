@@ -511,15 +511,15 @@
 					if(!pz.notes.len)
 						boutput(user,SPAN_ALERT("<b>You have no saved notes!</b>"))
 						return
+
 					var/aaa //modified list data
 					for(var/i=1,i<=pz.notes.len,i++)
 						var/yeet = "<span>"
 						yeet+=pz.notes[i]
 						yeet+="<br><br></span>"
 						aaa+=yeet
-					var/sizex = 0
-					var/sizey = 0
-					usr << browse("<HTML><HEAD><TITLE>Notes</TITLE></HEAD><BODY><TT>[aaa]</TT></BODY></HTML>", "window=Notes[(sizex || sizey) ? {";size=[sizex]x[sizey]"} : ""]")
+					tgui_message(usr, "[aaa]", "Notes")
+
 				if("Add Note")
 					var/note
 					note = input("Note") as null|text
