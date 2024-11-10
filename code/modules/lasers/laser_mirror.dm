@@ -75,7 +75,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 	src.out_laser = null
 	..()
 
-///One over root 2, the length of a 45 degree unit vector
+///One over root 2, the component length of a 45 degree unit vector
 #define LENGTH 1/(2**(1/2))
 
 ///Manually defined angled normals depending on mirror direction
