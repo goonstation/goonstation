@@ -26700,7 +26700,6 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	name = "Bridge"
 	},
-/obj/mapping_helper/access/head_of_personnel,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -26708,6 +26707,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/grey/side,
 /area/station/bridge/customs)
 "mYU" = (
@@ -37467,7 +37467,7 @@
 	dir = 1;
 	autoclose = 0
 	},
-/obj/mapping_helper/access/head_of_personnel,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/station/bridge/customs)
 "vmu" = (
