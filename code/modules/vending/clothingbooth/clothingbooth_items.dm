@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 	cost = PAY_TRADESMAN/3
 
 	blue
-		name = "blue"
+		name = "Blue"
 		swatch_background_color = "#3c6dc3"
 		item_path = /obj/item/clothing/head/hairbow/blue
 
