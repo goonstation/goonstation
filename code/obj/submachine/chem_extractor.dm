@@ -22,9 +22,9 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
 	var/list/allowed = list(/obj/item/reagent_containers/food/fish/, /obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
-	var/obj/item/robot_chemaster/prototype2/parent_item = null
+	var/obj/item/robot_chemaster/prototype/parent_item = null
 
-	New(var/obj/item/robot_chemaster/prototype2/parent_item = null)
+	New(var/obj/item/robot_chemaster/prototype/parent_item = null)
 		..()
 		src.storage_tank_1 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)
 		src.storage_tank_2 = new /obj/item/reagent_containers/glass/beaker/extractor_tank(src)

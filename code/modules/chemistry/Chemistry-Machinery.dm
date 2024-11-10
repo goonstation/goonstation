@@ -526,9 +526,9 @@ TYPEINFO(/obj/machinery/chem_master)
 		/obj/item/reagent_containers/patch // 30u
 	)
 
-	var/obj/item/robot_chemaster/prototype2/parent_item = null
+	var/obj/item/robot_chemaster/prototype/parent_item = null
 
-	New(var/obj/item/robot_chemaster/prototype2/parent_item = null)
+	New(var/obj/item/robot_chemaster/prototype/parent_item = null)
 		..()
 		if (!src.emagged && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.whitelist = global.chem_whitelist
