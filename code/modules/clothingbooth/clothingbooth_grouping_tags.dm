@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag/formality)
 /datum/clothingbooth_grouping_tag/formality/costume
 	name = "Costume"
 
-/* -------------------------- Sets ----------------------- */
+/* ---------------------- Collections -------------------- */
 ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag/group_set)
 /datum/clothingbooth_grouping_tag/group_set
 	display_order = 3

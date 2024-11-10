@@ -1,5 +1,5 @@
 /*
-	If you are looking to add more items/groupings to the booth, please see `./clothingbooth_items.dm` and `./clothingbooth_groupings.dm`.
+	If you are looking to add more items/groupings to the booth, please see `./clothingbooth.md` for a guide.
 */
 
 /// Global list of `clothingbooth_grouping` datums, generated at runtime.
