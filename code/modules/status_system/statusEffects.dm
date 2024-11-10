@@ -2913,6 +2913,39 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 
 	blood
 		id = "art_blood_curse"
+		name = "Eldritch Blood Curse"
+		duration = null
+		extra_desc = "Your blood is being drained. To remove the curse, the artifact requires a willing or unwilling sacrifice of a living being. Otherwise, you will die."
+		removal_msg = "Your blood curse has been lifted. However, at the cost of another life... you're not sure how you feel."
+		var/could_bleed
+
+		onAdd(optional)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			src.could_bleed = H.can_bleed
+			H.can_bleed = FALSE // curse steals all your blood
+			H.regens_blood = FALSE
+
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			var/mult = src.get_mult(timePassed)
+			H.blood_volume -= 3 * mult
+			if (probmult(15))
+				boutput(H, SPAN_ALERT(pick("You see things", "You have thoughts about blood", "You can feel an Eldritch presence", "You can feel your blood",
+					"You get the sense something is stealing from you", "Something doesn't feel right", "The artifact hungers", "You see visions of Eldritch artifacts",
+					"You're reminded of your blood curse", "You have a pact to fulfill", "You're going to die unless a sacrifice is made")))
+
+			if (isdead(H))
+				H.skeletonize()
+				H.delStatus(src)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (src.could_bleed)
+				H.can_bleed = TRUE
+			H.regens_blood = TRUE
+			..()
 
 	aging
 		id = "art_aging_curse"
