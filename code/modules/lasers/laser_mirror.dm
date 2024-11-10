@@ -75,41 +75,44 @@ TYPEINFO(/obj/laser_sink/mirror)
 	src.out_laser = null
 	..()
 
-///One over root 2
+///One over root 2, the length of a 45 degree unit vector
 #define LENGTH 1/(2**(1/2))
 
-//this is all dumb and stupid and bad and should probably be a vector transform but aaaa
-/obj/laser_sink/mirror/normal_x(obj/projectile/P)
-	if (P.incidence == WEST)
-		return -LENGTH
-	if (P.incidence == EAST)
-		return LENGTH
-	if (P.incidence == SOUTH)
-		if (src.facing == NW_SE)
-			return LENGTH
-		else
+///Manually defined angled normals depending on mirror direction
+///I think this may be stupid and bad and should probably be a vector transform somehow but it works for now
+/obj/laser_sink/mirror/normal_x(incident_dir)
+	switch(incident_dir)
+		if (WEST)
 			return -LENGTH
-	if (P.incidence == NORTH)
-		if (src.facing == NW_SE)
-			return -LENGTH
-		else
+		if (EAST)
 			return LENGTH
+		if (SOUTH)
+			if (src.facing == NW_SE)
+				return LENGTH
+			else
+				return -LENGTH
+		if (NORTH)
+			if (src.facing == NW_SE)
+				return -LENGTH
+			else
+				return LENGTH
 
-/obj/laser_sink/mirror/normal_y(obj/projectile/P)
-	if (P.incidence == WEST)
-		if (src.facing == NW_SE)
-			return LENGTH
-		else
+/obj/laser_sink/mirror/normal_y(incident_dir)
+	switch(incident_dir)
+		if (WEST)
+			if (src.facing == NW_SE)
+				return LENGTH
+			else
+				return -LENGTH
+		if (EAST)
+			if (src.facing == NW_SE)
+				return -LENGTH
+			else
+				return LENGTH
+		if (SOUTH)
 			return -LENGTH
-	if (P.incidence == EAST)
-		if (src.facing == NW_SE)
-			return -LENGTH
-		else
+		if (NORTH)
 			return LENGTH
-	if (P.incidence == SOUTH)
-		return -LENGTH
-	if (P.incidence == NORTH)
-		return LENGTH
 
 #undef LENGTH
 

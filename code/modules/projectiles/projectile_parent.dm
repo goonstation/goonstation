@@ -988,8 +988,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/ry = 0
 
 	//x and y components of the surface normal vector
-	var/nx = reflector.normal_x(P)
-	var/ny = reflector.normal_y(P)
+	var/nx = reflector.normal_x(P.incidence)
+	var/ny = reflector.normal_y(P.incidence)
 
 	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
 	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n

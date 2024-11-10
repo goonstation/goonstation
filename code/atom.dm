@@ -1393,11 +1393,12 @@ TYPEINFO(/atom/movable)
 		return src.is_that_in_this(target.loc)
 	return FALSE
 
+//Used for projectile bounces, override these for funny shaped objects like angled mirrors
 
-//these procs are a thought experiment and should be expunged before committing
-//TODO
-/atom/proc/normal_x(obj/projectile/P)
-	return P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
+///Returns the x component of the surface normal of the atom relative to an incident direction
+/atom/proc/normal_x(incident_dir)
+	return incident_dir == WEST ? -1 : (incident_dir == EAST ?  1 : 0)
 
-/atom/proc/normal_y(obj/projectile/P)
-	return P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
+///Returns the y component of the surface normal of the atom relative to an incident direction
+/atom/proc/normal_y(incident_dir)
+	return incident_dir == SOUTH ? -1 : (incident_dir == NORTH ?  1 : 0)
