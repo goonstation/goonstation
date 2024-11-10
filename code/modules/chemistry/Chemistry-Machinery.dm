@@ -1437,6 +1437,18 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			count++
 		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
 
+	attackby(var/obj/item/W, var/mob/user)
+		if(istype(W, /obj/item/reagent_containers/glass/))
+			var/mode_type = tgui_alert(user, "Which mode do you want to use?", "Mini-CheMaster", list("Reagent Extractor", "CheMaster"))
+			if(mode_type == "CheMaster")
+				do_chemaster_stuff_oldschool(W, user)
+
+			else if(mode_type == "Reagent Extractor")
+				tryInsert(W, user)
+
+		else if (istype(W, /obj/item/reagent_containers/food/drinks/))
+			tryInsert(W, user)
+
 	proc/do_chemaster_stuff_oldschool(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (working)
 			boutput(user, SPAN_ALERT("CheMaster is working, be patient"))
@@ -1665,18 +1677,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		. = ..()
 		if(inserted?.loc != src)
 			remove_distant_beaker(force = TRUE)
-
-	attackby(var/obj/item/W, var/mob/user)
-		if(istype(W, /obj/item/reagent_containers/glass/))
-			var/mode_type = tgui_alert(user, "Which mode do you want to use?", "Mini-CheMaster", list("Reagent Extractor", "CheMaster"))
-			if(mode_type == "CheMaster")
-				do_chemaster_stuff_oldschool(W, user)
-
-			else if(mode_type == "Reagent Extractor")
-				tryInsert(W, user)
-
-		else if (istype(W, /obj/item/reagent_containers/food/drinks/))
-			tryInsert(W, user)
 
 	proc/remove_distant_beaker(force = FALSE)
 		// borgs and people with item arms don't insert the beaker into the machine itself
