@@ -1,4 +1,10 @@
 
+(t)sat nov 09 24
+(u)LorrMaster
+(p)21165
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Photocopier can now scan and print wanted posters, discount credits, paper copies of books & newspapers, booklets, contents of folders, reagent scanner results, and information from IDs.
+(+)Packets can be used by bureaucrats on the photocopier to perform their grueling tasks from the comfort of their office chair. Details can be printed from the photocopier directly.
 (t)fri nov 08 24
 (u)pgmzeta + LeahTheTech
 (*)Added pop up information maps to every rotation map.
