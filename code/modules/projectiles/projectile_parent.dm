@@ -61,12 +61,13 @@
 	/// For disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
 	var/has_died = FALSE
 
-	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
-	/// TODO dunno what these are. guessing 'original x' and 'original y' but all the code involving them is mathy and i don't have the patience rn
-	/// Fill in if u know ty
+	/// x component of the projectile's (unit length) direction vector. EAST is positive, WEST is negative.
 	var/xo
+	/// y component of the projectile's (unit length) direction vector. NORTH is positive, SOUTH is negative.
 	var/yo
+
+	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
 	/// What the fuck is this comment your shit jesus christ ????? TODO
 	var/wx = 0
@@ -988,6 +989,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/rx = 0
 	var/ry = 0
 
+	//x and y components of the surface normal vector
 	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
 	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
 
