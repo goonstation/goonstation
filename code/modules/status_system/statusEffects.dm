@@ -2888,11 +2888,9 @@
 	getTooltip()
 		return "You've [alpha == 0 ? "completely" : "partially"] faded from view! People can still hear you and see light from anything you're carrying."
 
-ABSTRACT_TYPE(/datum/statusEffect/curse)
-/datum/statusEffect/curse
-	id = "art_curse"
-	name = "Eldritch Curse"
-	icon_state = ""
+ABSTRACT_TYPE(/datum/statusEffect/art_curse)
+/datum/statusEffect/art_curse
+	icon_state = "art_curse"
 	desc = "You've been cursed by an Eldritch artifact!"
 	unique = FALSE
 	effect_quality = STATUS_QUALITY_NEGATIVE
