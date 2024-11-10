@@ -1671,7 +1671,7 @@ or don't if it uses a custom topopen overlay
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 	var/target = src
-	if(src.eyecam)
+	if(src.deployed_to_eyecam)
 		target = src.eyecam
 	tgui_message(target, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
