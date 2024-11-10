@@ -1437,6 +1437,99 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			count++
 		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
 
+	proc/do_chemaster_stuff_oldschool(var/obj/item/reagent_containers/glass/B, var/mob/user)
+		if (working)
+			boutput(user, SPAN_ALERT("CheMaster is working, be patient"))
+			return
+		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
+			boutput(user, SPAN_ALERT("That beaker is empty! There are no reagents for the [src.name] to process!"))
+			return
+		working = 1
+		var/holder = src.loc
+
+		var/action = tgui_input_list(user, "What do you want to create?", "Mini-CheMaster", list("Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule"))
+		if (src.loc != holder || !action || action == "Do Nothing")
+			working = 0
+			return
+
+		switch(action)
+			if("Create Pill")
+				var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(user.loc)
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(tgui_input_text(user,"Name:","Name your pill!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("pill", name, no_duplicates=TRUE)
+				P.name = "[name] pill"
+				B.reagents.trans_to(P,B.reagents.total_volume)
+			if("Create Pill Bottle")
+				// copied from chem_master because fuck fixing everything at once jeez
+				var/default = B.reagents.get_master_reagent_name()
+				var/pillname = copytext( html_encode( tgui_input_text( user, "Name:", "Name the pill!", default ) ), 1, 32)
+				if(!pillname || pillname == " ")
+					pillname = default
+				if(pillname && pillname != default)
+					phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
+
+				var/pillvol = tgui_input_number(user, "Volume:", "Volume of chemical per pill!", 5, B.reagents.total_volume, 5)
+				if( !pillvol || !isnum_safe(pillvol) || pillvol < 5 )
+					pillvol = 5
+
+				var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
+				if(!pillcount)
+					boutput(user, "[src] makes a weird grinding noise. That can't be good.")
+				else
+					var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
+					pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
+			if("Create Bottle")
+				var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle/plastic(user.loc)
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(tgui_input_text(user,"Name:","Name your bottle!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
+				P.name = "[name] bottle"
+				B.reagents.trans_to(P,30)
+			if("Create Patch")
+				var/datum/reagents/R = B.reagents
+				var/input_name = tgui_input_text(user, "Name the patch:", "Name", R.get_master_reagent_name())
+				var/patchname = copytext(html_encode(input_name), 1, 32)
+				if (isnull(patchname) || !length(patchname) || patchname == " ")
+					working = 0
+					return
+				var/all_safe = 1
+				for (var/reagent_id in R.reagent_list)
+					if (!global.chem_whitelist.Find(reagent_id))
+						all_safe = 0
+				var/obj/item/reagent_containers/patch/P
+				if (R.total_volume <= 15)
+					P = new /obj/item/reagent_containers/patch/mini(user.loc)
+					P.name = "[patchname] mini-patch"
+					R.trans_to(P, P.initial_volume)
+				else
+					P = new /obj/item/reagent_containers/patch(user.loc)
+					P.name = "[patchname] patch"
+					R.trans_to(P, P.initial_volume)
+				P.medical = all_safe
+				P.on_reagent_change()
+				logTheThing(LOG_CHEMISTRY, user, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
+			if("Create Ampoule")
+				var/datum/reagents/R = B.reagents
+				var/input_name = tgui_input_text(user, "Name the ampoule:", "Name", R.get_master_reagent_name())
+				var/ampoulename = copytext(html_encode(input_name), 1, 32)
+				if(!ampoulename)
+					working = 0
+					return
+				if(ampoulename == " ")
+					ampoulename = R.get_master_reagent_name()
+				var/obj/item/reagent_containers/ampoule/A
+				A = new /obj/item/reagent_containers/ampoule(user.loc)
+				A.name = "ampoule ([ampoulename])"
+				R.trans_to(A, 5)
+				logTheThing(LOG_CHEMISTRY, user, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
+
+		working = 0
+
 	attack_ai(var/mob/user as mob)
 		return
 
@@ -1504,7 +1597,17 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				if (src.inserted)
 					return
 				var/obj/item/inserting = usr.equipped()
-				if(istype(inserting, /obj/item/reagent_containers/glass/) || istype(inserting, /obj/item/reagent_containers/food/drinks/))
+
+				if(istype(inserting, /obj/item/reagent_containers/glass/))
+					var/mode_type = tgui_alert(usr, "Which mode do you want to use?", "Mini-CheMaster", list("Reagent Extractor", "CheMaster"))
+					if(mode_type == "CheMaster")
+						do_chemaster_stuff_oldschool(inserting, usr)
+
+					else if(mode_type == "Reagent Extractor")
+						tryInsert(inserting, usr)
+						. = TRUE
+
+				else if(istype(inserting, /obj/item/reagent_containers/food/drinks/))
 					tryInsert(inserting, usr)
 					. = TRUE
 			if("ejectingredient")
@@ -1564,7 +1667,15 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			remove_distant_beaker(force = TRUE)
 
 	attackby(var/obj/item/W, var/mob/user)
-		if(istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+		if(istype(W, /obj/item/reagent_containers/glass/))
+			var/mode_type = tgui_alert(user, "Which mode do you want to use?", "Mini-CheMaster", list("Reagent Extractor", "CheMaster"))
+			if(mode_type == "CheMaster")
+				do_chemaster_stuff_oldschool(W, user)
+
+			else if(mode_type == "Reagent Extractor")
+				tryInsert(W, user)
+
+		else if (istype(W, /obj/item/reagent_containers/food/drinks/))
 			tryInsert(W, user)
 
 	proc/remove_distant_beaker(force = FALSE)
