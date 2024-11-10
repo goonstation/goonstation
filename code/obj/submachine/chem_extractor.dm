@@ -205,9 +205,9 @@ TYPEINFO(/obj/submachine/chem_extractor)
 			src.inserted = null
 			tgui_process.update_uis(src)
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status()
 		if (src.parent_item)
-			return src.parent_item.ui_status(user, state)
+			return src.parent_item.ui_status(arglist(args))
 		else
 			return ..()
 
