@@ -1670,8 +1670,10 @@ or don't if it uses a custom topopen overlay
 	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
-
-	tgui_message(src, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
+	var/target = src
+	if(src.eyecam)
+		target = src.eyecam
+	tgui_message(target, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
