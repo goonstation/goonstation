@@ -1392,3 +1392,12 @@ TYPEINFO(/atom/movable)
 	if (istype(target.loc, /atom/movable))
 		return src.is_that_in_this(target.loc)
 	return FALSE
+
+
+//these procs are a thought experiment and should be expunged before committing
+//TODO
+/atom/proc/normal_x(obj/projectile/P)
+	return P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
+
+/atom/proc/normal_y(obj/projectile/P)
+	return P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
