@@ -167,6 +167,7 @@
 		/datum/clothingbooth_item/head/hairbow/magenta,
 		/datum/clothingbooth_item/head/hairbow/mint,
 		/datum/clothingbooth_item/head/hairbow/navy,
+		/datum/clothingbooth_item/head/hairbow/blue,
 		/datum/clothingbooth_item/head/hairbow/pink,
 		/datum/clothingbooth_item/head/hairbow/purple,
 		/datum/clothingbooth_item/head/hairbow/red,
