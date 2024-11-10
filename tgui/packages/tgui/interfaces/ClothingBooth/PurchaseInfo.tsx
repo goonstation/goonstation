@@ -100,7 +100,7 @@ const PurchaseInfoView = (props: PurchaseInfoProps) => {
                 selectedItem.cost > resolvedCashAvailable && !everythingIsFree
                   ? 'Insufficent Money'
                   : 'Purchase'
-              } (${selectedItem.cost}⪽)`}
+              } (${everythingIsFree ? `Free` : `${selectedItem.cost} ⪽`})`}
             </Button>
           </Stack.Item>
         </>

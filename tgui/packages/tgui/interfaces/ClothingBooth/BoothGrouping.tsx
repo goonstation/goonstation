@@ -10,9 +10,11 @@ import { classes } from 'common/react';
 import { memo, useCallback } from 'react';
 import { Stack } from 'tgui-core/components';
 
+import { useBackend } from '../../backend';
 import { Image } from '../../components';
 import { GroupingTags } from './GroupingTags';
 import type { ClothingBoothGroupingData } from './type';
+import { ClothingBoothData } from './type';
 
 type BoothGroupingProps = Pick<
   ClothingBoothGroupingData,
@@ -24,6 +26,8 @@ type BoothGroupingProps = Pick<
 };
 
 const BoothGroupingView = (props: BoothGroupingProps) => {
+  const { data } = useBackend<ClothingBoothData>();
+  const { everythingIsFree } = data;
   const {
     cost_min,
     cost_max,
@@ -55,9 +59,11 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
             <Stack>
               <Stack.Item grow>{name}</Stack.Item>
               <Stack.Item>
-                {cost_min === cost_max
-                  ? `${cost_min}⪽`
-                  : `${cost_min}⪽ - ${cost_max}⪽`}
+                {everythingIsFree
+                  ? `Free`
+                  : cost_min === cost_max
+                    ? `${cost_min}⪽`
+                    : `${cost_min}⪽ - ${cost_max}⪽`}
               </Stack.Item>
             </Stack>
           </Stack.Item>

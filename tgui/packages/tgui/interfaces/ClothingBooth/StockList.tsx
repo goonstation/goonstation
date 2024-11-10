@@ -6,6 +6,7 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import { Fragment, memo, useCallback, useMemo, useState } from 'react';
 import {
   Box,
@@ -63,6 +64,7 @@ const getClothingBoothGroupingSortComparator =
 const useProcessCatalogue = (
   catalogue: Record<string, ClothingBoothGroupingData>,
   hideUnaffordable: boolean,
+  everythingIsFree: BooleanLike,
   cashAvailable: number,
   slotFilters: SlotFilterLookup,
   tagFilters: TagFilterLookup,
@@ -74,9 +76,12 @@ const useProcessCatalogue = (
   const affordableItemGroupings = useMemo(
     () =>
       hideUnaffordable
-        ? catalogueItems.filter(
-            (catalogueGrouping) => cashAvailable >= catalogueGrouping.cost_min,
-          )
+        ? everythingIsFree
+          ? catalogueItems
+          : catalogueItems.filter(
+              (catalogueGrouping) =>
+                cashAvailable >= catalogueGrouping.cost_min,
+            )
         : catalogueItems,
     [cashAvailable, catalogueItems, hideUnaffordable],
   );
@@ -145,7 +150,8 @@ const StockListView = (props: StockListProps) => {
     selectedGroupingName,
     tagFilters,
   } = props;
-  const { act } = useBackend();
+  const { act, data } = useBackend<ClothingBoothData>();
+  const { everythingIsFree } = data;
   const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
   const [hideUnaffordable, setHideUnaffordable] = useState(false);
@@ -176,6 +182,7 @@ const StockListView = (props: StockListProps) => {
   const processedCatalogue = useProcessCatalogue(
     catalogue,
     hideUnaffordable,
+    everythingIsFree,
     resolvedCashAvailable,
     slotFilters,
     tagFilters,
