@@ -10,6 +10,14 @@
 		E.ui_interact(mob)
 
 /datum/parallax_viewer
+	var/static/list/canned_parallax_groups = list(
+			"Snow"= /datum/parallax_render_source_group/planet/snow,
+			"Sand Storm"= /datum/parallax_render_source_group/planet/desert,
+			"Fog"= /datum/parallax_render_source_group/planet/forest,
+			"Light Smoke"= /datum/parallax_render_source_group/planet/lava_moon,
+			"Ash"= /datum/parallax_render_source_group/area/io_moon,
+			"Void"= /datum/parallax_render_source_group/area/void,
+		)
 
 /datum/parallax_viewer/New()
 	..()
@@ -69,34 +77,22 @@
 				)
 
 	.["planets"] = list()
-	for(key in planet_parallax_render_source_groups)
-		p_group = planet_parallax_render_source_groups[key]
-		.["areas"][key] = list("sources"=list())
-		for (p_source in p_group.parallax_render_sources)
-			.["areas"][key]["sources"]["[p_source.type]"] = list(
-				"byondRef"="[ref(p_source)]",
-				"icon"=p_source.parallax_icon,
-				"icon_state"=p_source.parallax_icon_state,
-				"value"=p_source.parallax_value,
-				"scroll_speed"=p_source.scroll_speed,
-				"scroll_angle"=p_source.scroll_angle,
-				"x"=p_source.initial_x_coordinate,
-				"y"=p_source.initial_y_coordinate,
-				"static_color"=p_source.static_colour,
-				"color"=p_source.color
-				)
-
-	// .["areas"] = list()
-	// for(key in area_parallax_render_source_groups)
-	// 	p_group = z_level_parallax_render_source_groups[key]
-	// 	.["areas"][key] = list("byondRef"="[ref(p_group)]", "sources"=list())
-	// 	for (p_source in p_group)
-
-	// .["planets"] = list()
 	// for(key in planet_parallax_render_source_groups)
-	// 	p_group = z_level_parallax_render_source_groups[key]
-	// 	.["planets"][key] = list("byondRef"="[ref(p_group)]", "sources"=list())
-	// 	for (p_source in p_group)
+	// 	p_group = planet_parallax_render_source_groups[key]
+	// 	.["areas"][key] = list("sources"=list())
+	// 	for (p_source in p_group.parallax_render_sources)
+	// 		.["areas"][key]["sources"]["[p_source.type]"] = list(
+	// 			"byondRef"="[ref(p_source)]",
+	// 			"icon"=p_source.parallax_icon,
+	// 			"icon_state"=p_source.parallax_icon_state,
+	// 			"value"=p_source.parallax_value,
+	// 			"scroll_speed"=p_source.scroll_speed,
+	// 			"scroll_angle"=p_source.scroll_angle,
+	// 			"x"=p_source.initial_x_coordinate,
+	// 			"y"=p_source.initial_y_coordinate,
+	// 			"static_color"=p_source.static_colour,
+	// 			"color"=p_source.color
+	// 			)
 
 /datum/parallax_viewer/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
@@ -127,6 +123,13 @@
 		if("add")
 			var/type = tgui_input_list(ui.user, "Add Parallax Type to [params["group"]]", "Add Parallax", concrete_typesof(/atom/movable/screen/parallax_render_source/))
 			source_group?.add_parallax_render_source(type, 10 SECONDS)
+
+		if("canned")
+			var/group_type = canned_parallax_groups[tgui_input_list(ui.user, "Add Parallax Effect to [params["group"]]", "Add Effect", canned_parallax_groups)]
+			if(group_type)
+				var/datum/parallax_render_source_group/new_group = new group_type()
+				if(istype(new_group))
+					source_group?.copy_parallax_render_sources_from_group(new_group, 10 SECONDS)
 
 		if("delete")
 			source_group?.remove_parallax_render_source(source_type, 10 SECONDS)
