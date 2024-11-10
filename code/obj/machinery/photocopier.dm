@@ -486,7 +486,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		W.line_b3 = poster_info["line_b3"]
 		W.author = poster_info["author"]
 		var/list/plist = poster_info["plist"]
-		W.plist = plist?.Copy()
+		W.plist = plist.Copy?()
 		return W
 	proc/create_booklet()
 		var/obj/item/paper_booklet/B = new/obj/item/paper_booklet(src)
