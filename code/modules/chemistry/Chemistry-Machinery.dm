@@ -1436,6 +1436,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		che_master = new(src)
 		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
 
+	//We don't want anything to do with /obj/item/robot_chemaster's attackby(...)
 	attackby(var/obj/item/W, var/mob/user)
 		return
 
