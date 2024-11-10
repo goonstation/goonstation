@@ -866,8 +866,9 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
-				/obj/item/reagent_containers/glass/condenser = 3,
-				/obj/item/reagent_containers/glass/condenser/fractional = 1)
+				/obj/item/reagent_containers/glass/plumbing/condenser = 3,
+				/obj/item/reagent_containers/glass/plumbing/condenser/fractional = 1,
+				/obj/item/reagent_containers/glass/plumbing/dropper = 2)
 
 
 

@@ -60,9 +60,6 @@
 
 		precache_create_txt()
 
-	Z_LOG_DEBUG("World/Init", "Loading mode...")
-	src.load_mode()
-
 	mapSwitcher = new()
 
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")

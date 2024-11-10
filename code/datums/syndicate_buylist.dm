@@ -984,7 +984,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/cloneModule/mindhack_module
 	cost = 6
 	vr_allowed = FALSE
-	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it."
+	desc = "An add on to the genetics cloning pod that make anyone cloned loyal to whoever installed it. Disclaimer: the appearance of the altered cloning pod may cause alarm and probing questions from those who are not yet loyal."
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
 /datum/syndicate_buylist/traitor/deluxe_mindhack_module

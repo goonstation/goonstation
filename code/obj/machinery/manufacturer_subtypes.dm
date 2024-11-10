@@ -281,6 +281,7 @@
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/condenser,
 		/datum/manufacture/fractionalcondenser,
+		/datum/manufacture/dropper_funnel,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
