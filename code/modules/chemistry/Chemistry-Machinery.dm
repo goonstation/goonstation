@@ -528,7 +528,7 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	var/obj/item/robot_chemaster/prototype/parent_item = null
 
-	New(var/obj/item/robot_chemaster/prototype/parent_item = null)
+	New(var/loc, var/obj/item/robot_chemaster/prototype/parent_item = null)
 		..()
 		if (!src.emagged && islist(global.chem_whitelist) && length(global.chem_whitelist))
 			src.whitelist = global.chem_whitelist
@@ -1432,8 +1432,9 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 
 	New()
 		..()
-		reagent_extractor = new(src)
-		che_master = new(src)
+		//Loc needs to be this item itself otherwise we get "nopower"
+		reagent_extractor = new(src, src)
+		che_master = new(src, src)
 		AddComponent(/datum/component/transfer_input/quickloading, allowed, "tryLoading")
 
 	//We don't want anything to do with /obj/item/robot_chemaster's attackby(...)
