@@ -42,6 +42,8 @@
 
 	.["z_level"] = list()
 	for(key in z_level_parallax_render_source_groups)
+		if(key == "0")
+			continue
 		p_group = z_level_parallax_render_source_groups[key]
 		.["z_level"][key] = list("sources"=list())
 		for (p_source in p_group.parallax_render_sources)
@@ -54,7 +56,7 @@
 				"scroll_angle"=p_source.scroll_angle,
 				"x"=p_source.initial_x_coordinate,
 				"y"=p_source.initial_y_coordinate,
-				"static_color"=p_source.static_colour,
+				"static_colour"=p_source.static_colour,
 				"color"=p_source.color
 				)
 
@@ -72,7 +74,7 @@
 				"scroll_angle"=p_source.scroll_angle,
 				"x"=p_source.initial_x_coordinate,
 				"y"=p_source.initial_y_coordinate,
-				"static_color"=p_source.static_colour,
+				"static_colour"=p_source.static_colour,
 				"color"=p_source.color
 				)
 
@@ -142,9 +144,12 @@
 					render_source.parallax_icon_state = ""
 				new_icon = icon(render_source.parallax_icon, render_source.parallax_icon_state)
 				if(new_icon)
-					render_source.icon_width = new_icon.Width()
-					render_source.icon_height = new_icon.Height()
-					source_group?.update_parallax_render_source(render_source.type)
+					var/width = new_icon.Width()
+					var/height = new_icon.Height()
+					if(width && height)
+						render_source.icon_width = width
+						render_source.icon_height = height
+						source_group?.update_parallax_render_source(render_source.type)
 				else
 					. = FALSE
 
@@ -159,20 +164,28 @@
 					render_source.parallax_icon_state = params["value"]
 					new_icon = icon(render_source.parallax_icon, render_source.parallax_icon_state)
 					if(new_icon)
-						render_source.icon_width = new_icon.Width()
-						render_source.icon_height = new_icon.Height()
+						var/width = new_icon.Width()
+						var/height = new_icon.Height()
+						if(width && height)
+							render_source.icon_width = width
+							render_source.icon_height = height
+							source_group?.update_parallax_render_source(render_source.type)
 					else
 						. = FALSE
 
 
-				if("value")
+				if("parallax_value")
 					render_source.parallax_value = params["value"]
 
 				if("scroll_speed")
 					render_source.scroll_speed = params["value"]
+					if(!render_source.parallax_value)
+						render_source.parallax_value = 0.009
 
 				if("scroll_angle")
 					render_source.scroll_angle = params["value"]
+					if(!render_source.parallax_value)
+						render_source.parallax_value = 0.009
 
 				if("initial_x")
 					render_source.initial_x_coordinate = params["value"]
@@ -180,11 +193,21 @@
 				if("initial_y")
 					render_source.initial_y_coordinate = params["value"]
 
-				if("static_color")
+				if("static_colour")
 					render_source.static_colour = params["value"]
 
 				if("color")
-					render_source.color = params["value"]
+					if(is_valid_color_string(params["value"]) || islist(params["value"]))
+						render_source.color = params["value"]
+
+				if("color_to_matrix")
+					var/matrix = normalize_color_to_matrix(render_source.color)
+					render_source.color = matrix
+					if(!islist(render_source.color))
+						matrix[4] = 0.01
+						matrix[8] = 0.01
+						matrix[12] = 0.01
+						render_source.color = matrix
 
 				else
 					. = FALSE
