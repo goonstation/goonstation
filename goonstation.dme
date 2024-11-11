@@ -172,6 +172,7 @@
 #include "code\datums\abilities\critter\mark.dm"
 #include "code\datums\abilities\critter\ocean.dm"
 #include "code\datums\abilities\critter\powerkick.dm"
+#include "code\datums\abilities\critter\powerstomp.dm"
 #include "code\datums\abilities\critter\psyblast.dm"
 #include "code\datums\abilities\critter\scuttlebot.dm"
 #include "code\datums\abilities\critter\self_immolate.dm"

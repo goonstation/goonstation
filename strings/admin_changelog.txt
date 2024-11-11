@@ -1,6 +1,6 @@
 (t)fri nov 01 24
 (u)Azrun
-(*)Added Parallax Viewer.  Do parallax stuff with it!
+(*)Added Parallax Viewer.  Do parallax stuff with it! Also the Wand gives some cool options now!
 (t)mon oct 07 24
 (u)Sovexe
 (*)Added a new build mode tool Visual Mirror Setup to aid in the setup of adhoc visual mirror zones for advanced gimmicks. Use with care.

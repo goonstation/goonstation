@@ -61,12 +61,13 @@
 	/// For disabling collision when a projectile has died but hasn't been disposed yet, e.g. under on_end effects
 	var/has_died = FALSE
 
-	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
-	/// TODO dunno what these are. guessing 'original x' and 'original y' but all the code involving them is mathy and i don't have the patience rn
-	/// Fill in if u know ty
+	/// x component of the projectile's (unit length) direction vector. EAST is positive, WEST is negative.
 	var/xo
+	/// y component of the projectile's (unit length) direction vector. NORTH is positive, SOUTH is negative.
 	var/yo
+
+	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
 
 	/// What the fuck is this comment your shit jesus christ ????? TODO
 	var/wx = 0
@@ -929,14 +930,12 @@ ABSTRACT_TYPE(/datum/projectile)
  * So I made my own proc, but left the old one in place just in case -- Sovexe
  * var/reflect_on_nondense_hits - flag for handling hitting objects that let bullets pass through like secbots, rather than duplicating projectiles
  */
-/proc/shoot_reflected_bounce(var/obj/projectile/P, var/atom/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE)
+/proc/shoot_reflected_bounce(var/obj/projectile/P, var/atom/reflector, var/max_reflects = 3, var/mode = PROJ_RAPID_HEADON_BOUNCE, var/reflect_on_nondense_hits = FALSE, var/play_shot_sound = TRUE, var/turf/fire_from = null)
 	if (!P || !reflector)
 		return
 
 	if(P.reflectcount >= max_reflects)
 		return
-
-	var/play_shot_sound = TRUE
 
 	switch (mode)
 		if (PROJ_NO_HEADON_BOUNCE) //no head-on bounce
@@ -988,8 +987,9 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/rx = 0
 	var/ry = 0
 
-	var/nx = P.incidence == WEST ? -1 : (P.incidence == EAST ?  1 : 0)
-	var/ny = P.incidence == SOUTH ? -1 : (P.incidence == NORTH ?  1 : 0)
+	//x and y components of the surface normal vector
+	var/nx = reflector.normal_x(P.incidence)
+	var/ny = reflector.normal_y(P.incidence)
 
 	var/dn = 2 * (P.xo * nx + P.yo * ny) // incident direction DOT normal * 2
 	rx = P.xo - dn * nx // r = d - 2 * (d * n) * n
@@ -1000,7 +1000,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		return // unknown error
 
 	//spawns the new projectile in the same location as the existing one, not inside the hit thing
-	var/obj/projectile/Q = initialize_projectile(get_turf(P), P.proj_data, rx, ry, reflector, play_shot_sound = play_shot_sound)
+	var/obj/projectile/Q = initialize_projectile(fire_from || get_turf(P), P.proj_data, rx, ry, reflector, play_shot_sound = play_shot_sound)
 	if (!Q)
 		return
 	Q.reflectcount = P.reflectcount + 1
