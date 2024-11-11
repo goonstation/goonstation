@@ -79,12 +79,12 @@
 
 	proc/active_curse_check(obj/O, mob/living/carbon/human/user)
 		if (src.blood_curse_active)
-			if (user.client)
-				if (tgui_alert(user, "Are you willing to sacrifice yourself to [O], to save others?", "Blood Curse Sacrifice", list("Yes", "No")) == "Yes")
-					src.blood_curse_sacrifice(O, user)
-					return TRUE
-			else if (!user.last_ckey) // monkeys
-				src.blood_curse_sacrifice(O, user)
+			if (user.client && tgui_alert(user, "Donate 100u of your blood?", "Blood Curse Appeasement", list("Yes", "No")) == "Yes")
+				user.blood_volume -= 100
+				boutput(user, SPAN_ALERT("You place your hand on the artifact, and it draws blood from you. Ouch..."))
+				for (var/mob/living/carbon/human/H in src.active_cursees)
+					var/datum/statusEffect/art_curse/blood/curse = H.getStatus(src.active_cursees[H])
+					curse.blood_to_collect -= 100
 				return TRUE
 
 	proc/blood_curse_sacrifice(obj/O, mob/living/user)
