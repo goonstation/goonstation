@@ -1,4 +1,4 @@
-import { Button, Flex, Icon, Table } from 'tgui-core/components';
+import { Button, Icon, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -23,10 +23,8 @@ export const AlertComputer = () => {
     <Window title="Current Alerts" width={600} height={420}>
       <Window.Content scrollable>
         <Table>
-          <Table.Row header fontSize="1.1em" className="candystripe">
-            <Table.Cell header width="200px">
-              Area
-            </Table.Cell>
+          <Table.Row header className="candystripe">
+            <Table.Cell header>Area</Table.Cell>
             <Table.Cell header width="100px">
               <Icon name="wind" mr="5px" />
               Air
@@ -40,8 +38,8 @@ export const AlertComputer = () => {
               Power
             </Table.Cell>
           </Table.Row>
-          {Object.values(alerts).map((value, index) => {
-            return <AlertRow key={index} alert={value} />;
+          {alerts.map((alert) => {
+            return <AlertRow key={alert.area_ckey} alert={alert} />;
           })}
         </Table>
       </Window.Content>
@@ -87,24 +85,20 @@ const AlertCell = (props: AlertCellProps) => {
   const { act } = useBackend();
   const { area_ckey, kind, severity } = props;
   return (
-    <Table.Cell textColor={AlertButtonColor(severity)}>
-      <Flex>
-        <Flex.Item>
-          <Button
-            icon="bell-slash"
-            disabled={severity === 0}
-            onClick={() => act(`clear_${kind}`, { area_ckey: area_ckey })}
-            tooltip="Reset alarm"
-            mr="5px"
-          />
-        </Flex.Item>
-        <Flex.Item>{AlertButtonText(severity)}</Flex.Item>
-      </Flex>
+    <Table.Cell textColor={getAlertButtonColor(severity)}>
+      <Button
+        icon="bell-slash"
+        disabled={severity === 0}
+        onClick={() => act(`clear_${kind}`, { area_ckey: area_ckey })}
+        tooltip="Reset alarm"
+        mr="5px"
+      />
+      {getAlertButtonText(severity)}
     </Table.Cell>
   );
 };
 
-const AlertButtonColor = (severity: number | null): string => {
+const getAlertButtonColor = (severity: number | null) => {
   switch (severity) {
     case 1:
       return 'average';
@@ -115,7 +109,7 @@ const AlertButtonColor = (severity: number | null): string => {
   }
 };
 
-const AlertButtonText = (severity: number | null): string => {
+const getAlertButtonText = (severity: number | null) => {
   switch (severity) {
     case 1:
       return 'Minor';
