@@ -20808,11 +20808,18 @@
 	},
 /area/space)
 "bui" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
-	name = "Substation Access"
+	locked = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
@@ -20820,14 +20827,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/airlock/bolter,
-/obj/mapping_helper/access/engineering_engine,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/red,
+/turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "buj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -40075,24 +40075,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/table/auto,
-/obj/item/clothing/suit/hazard/fire/heavy,
-/obj/item/tank/air{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/gas/emergency{
-	pixel_x = -6;
-	pixel_y = 7
-	},
-/obj/item/wrench{
-	pixel_x = -4;
-	pixel_y = 6
-	},
-/obj/item/wrench{
-	pixel_x = 6;
-	pixel_y = 5
-	},
+/obj/storage/closet/fire,
 /turf/simulated/floor/black/side,
 /area/station/engine/hotloop)
 "eBl" = (
@@ -40781,14 +40764,14 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "fdu" = (
+/obj/cable/orange{
+	icon_state = "2-8"
+	},
 /obj/table/glass/auto,
 /obj/disposalpipe/segment{
 	dir = 1
 	},
 /obj/item/sheet/steel/fullstack,
-/obj/cable/orange{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "fdD" = (
@@ -41077,8 +41060,25 @@
 	},
 /area/station/hallway/primary/east)
 "fna" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -5;
+	pixel_y = -2
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -42355,9 +42355,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "giB" = (
@@ -42483,10 +42480,10 @@
 	dir = 1;
 	name = "Combustion Chamber West 1"
 	},
-/obj/decal/stripe_delivery,
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "gnE" = (
@@ -42986,10 +42983,15 @@
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
 "gKk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
 /area/station/engine/hotloop)
 "gKy" = (
 /obj/landmark/observer,
@@ -44003,6 +44005,9 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -48845,9 +48850,6 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "lyD" = (
@@ -51586,7 +51588,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/storage/closet/fire,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "nEv" = (
@@ -56386,12 +56387,12 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "rlw" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
-	},
-/obj/cable/orange{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
@@ -56690,11 +56691,11 @@
 /area/station/science/chemistry)
 "rDG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
 /obj/cable/orange{
 	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/black/side{
 	dir = 8
@@ -59640,22 +59641,23 @@
 /area/station/turret_protected/ai)
 "tOb" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -3;
+/obj/item/wrench{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/wrench{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/tank/air{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -6;
 	pixel_y = 7
 	},
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc/autoname_west,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "tQq" = (
@@ -59923,14 +59925,14 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "tXn" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Combustion Chamber West 2"
 	},
 /obj/decal/stripe_delivery,
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "tXp" = (
@@ -60531,13 +60533,13 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
 /obj/disposalpipe/segment{
 	dir = 1
 	},
 /obj/random_item_spawner/med_kit,
-/obj/cable/orange{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "upK" = (
@@ -65508,6 +65510,9 @@
 	},
 /obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing West"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -110077,8 +110082,8 @@ nyD
 oLE
 gRG
 tXn
-fna
 gKk
+bCo
 bCo
 nEw
 vXY
