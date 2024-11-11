@@ -2960,10 +2960,30 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 
 	aging
 		id = "art_aging_curse"
+		name = "Eldritch Aging Curse"
+		extra_desc = "You're rapidly aging and will die... You're going to need to get three other people younger than you to touch the artifact."
+		removal_msg = "You're returned to your original age!"
+		var/original_age
 
-	nightmares
-		id = "art_nightmares_curse"
+		onAdd()
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			src.original_age = H.bioHolder.age
 
+		onUpdate(timePassed)
+			..()
+			var/mob/living/carbon/human/H = src.owner
+			H.bioHolder.age += src.get_mult(timePassed)
+			if (H.bioHolder.age >= 50 * src.original_age)
+				H.death(FALSE)
+				H.skeletonize()
+				H.delStatus(src)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			H.bioHolder.age = src.original_age
+			..()
+			
 	maze
 		id = "art_maze_curse"
 

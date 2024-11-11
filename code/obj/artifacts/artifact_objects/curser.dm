@@ -86,6 +86,22 @@
 					var/datum/statusEffect/art_curse/blood/curse = H.getStatus(src.active_cursees[H])
 					curse.blood_to_collect -= 100
 				return TRUE
+		else if (src.aging_curse_active)
+			var/mob/living/carbon/human/H1 = user
+			var/mob/living/carbon/human/H2 = src.active_cursees[1]
+
+			if (H1.bioHolder.age >= H2.bioHolder.age || (H1.ckey in src.participants))
+				boutput(user, "[O] doesn't respond.")
+				return TRUE
+			boutput(user, "Your knuckles hurt kinda")
+			participants.Add(H1.ckey)
+			if (src.participants >= 3)
+				src.lift_curse(TRUE)
+				src.participants = list()
+				src.aging_curse_active = FALSE
+			else
+				O.visible_message(SPAN_NOTICE("[O] softly stirs."))
+			return TRUE
 
 	proc/blood_curse_sacrifice(obj/O, mob/living/user)
 		boutput(user, SPAN_ALERT("[O] pulls you inside!!!"))
