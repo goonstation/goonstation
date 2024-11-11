@@ -513,9 +513,6 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if(istype(A, /obj/machinery/photocopier))
-			return // Upload scan results to the photocopier without scanning the photocopier itself
-
 		user.visible_message(SPAN_NOTICE("<b>[user]</b> scans [A] with [src]!"),\
 		SPAN_NOTICE("You scan [A] with [src]!"))
 
