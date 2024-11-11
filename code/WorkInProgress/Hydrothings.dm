@@ -282,21 +282,15 @@
 
 // setpiece decals
 
-/obj/decal/fakeobjects/sealed_door/owlery
-	name = "Busted Airlock"
-	desc = "This airlock is all shot up. The control panel seems to have taken several hits and is beyond repair."
-	icon = 'icons/misc/Owlzone.dmi'
-	icon_state = "airlock_broken"
-
-/obj/decal/fakeobjects/pipe/radioactive
+/obj/fakeobject/pipe/radioactive
 	desc = "This pipe is kinda warm. Huh."
 	interesting = "Radiological decay detected."
 
-/obj/decal/fakeobjects/pipe/sarin // will change to saxitoxin after updating owlery map file
+/obj/fakeobject/pipe/sarin // will change to saxitoxin after updating owlery map file
 	desc = "This pipe seems totally normal."
 	interesting = "Trace amounts of hazardous nerve agent detected."
 
-/obj/decal/fakeobjects/pipe/acid
+/obj/fakeobject/pipe/acid
 	desc = "This pipe is pretty corroded around the fittings. Huh."
 	interesting = "Pipe fittings and adjacent metals exhibit damage consistent with exposure to strong acids."
 
@@ -327,7 +321,7 @@
 	assignment = null
 	title = null
 
-/obj/decal/fakeobjects/bustedpod
+/obj/fakeobject/bustedpod
 	name = "Busted Escape Pod"
 	desc = "A escape pod for escaping. It seems to be busted."
 	icon = 'icons/obj/ship.dmi'
@@ -546,7 +540,7 @@
 /obj/machinery/power/apc/owlery
 	noalerts = 1
 	start_charge = 0
-	req_access = access_owlerymaint
+	req_access = list(access_owlerymaint)
 
 
 /obj/owlerysign/owlplaque
@@ -690,7 +684,6 @@
 	desc = "A disabled robot owl."
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "smallowl"
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	anchored = ANCHORED
 	density = 1
 	flash_prob = 80
@@ -1158,7 +1151,7 @@
 				src.visible_message(SPAN_ALERT("<b>[src] devours [src.target]! Holy shit!</b>"))
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				M.ghostize()
-				new /obj/decal/fakeobjects/skeleton(M.loc)
+				new /obj/fakeobject/skeleton(M.loc)
 				M.gib()
 				src.target = null
 

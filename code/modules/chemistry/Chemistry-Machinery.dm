@@ -491,8 +491,8 @@ TYPEINFO(/obj/machinery/chem_shaker/large)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define CHEMMASTER_MINIMUM_REAGENT 5 //!mininum reagent for pills, bottles and patches
-#define CHEMMASTER_NO_CONTAINER_MAX 10 //!maximum number of unboxed pills/patches
-#define CHEMMASTER_ITEMNAME_MAXSIZE 16 //!chosen by fair dice roll
+#define CHEMMASTER_NO_CONTAINER_MAX 24 //!maximum number of unboxed pills/patches
+#define CHEMMASTER_ITEMNAME_MAXSIZE 24 //!maximum characters allowed for the item name
 #define CHEMMASTER_MAX_PILL 22 //!22 pill icons
 #define CHEMMASTER_MAX_CANS 26 //!26 flavours of cans
 
@@ -742,7 +742,7 @@ TYPEINFO(/obj/machinery/chem_master)
 			for(var/reagent_id in src.beaker.reagents.reagent_list)
 				var/datum/reagent/current_reagent = src.beaker.reagents.reagent_list[reagent_id]
 				contents.Add(list(list(
-					name = reagents_cache[reagent_id],
+					name = current_reagent.name,
 					id = reagent_id,
 					colorR = current_reagent.fluid_r,
 					colorG = current_reagent.fluid_g,
@@ -962,6 +962,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				if(pill_bottle)
 					TRANSFER_OR_DROP(src, pill_bottle)
 					ui.user.put_in_hand_or_eject(pill_bottle)
+					pill_bottle.rebuild_desc()
 
 				if(!src.beaker.reagents.total_volume) // qol eject when empty
 					eject_beaker(ui.user)
@@ -1072,7 +1073,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/obj/item/item_box/medical_patches/patch_box = null
 				if(use_box || patchcount > CHEMMASTER_NO_CONTAINER_MAX)
 					if(!use_box && patchcount > CHEMMASTER_NO_CONTAINER_MAX)
-						src.visible_message("The [src]'s output limit beeps sternly, and a patch box is automatically dispensed!")
+						src.visible_message(SPAN_ALERT("The [src]'s output limit beeps sternly, and a patch box is automatically dispensed!"))
 					patch_box = new(src)
 					patch_box.name = "box of [item_name] patches"
 					if (is_medical_patch)
@@ -1232,9 +1233,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 		if (status & BROKEN || !powered())
 			boutput( user, SPAN_ALERT("You can't seem to power it on!") )
 			return
-		src.add_dialog(user)
-		executor.panel()
-		onclose(user, "chemicompiler")
+		ui_interact(user)
 		return
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
@@ -1242,6 +1241,22 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			return
 		if (isrobot(user)) return attack_ai(user)
 		return src.Attackhand(user)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemiCompiler", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = executor.get_ui_data()
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+
+		return executor.execute_ui_act(action, params)
 
 	power_change()
 
@@ -1270,13 +1285,6 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 			src.executor.on_process()
 
 	proc
-		topicPermissionCheck(action)
-			if (!(src in range(1)))
-				return 0
-			if(executor.core.running)
-				return action in list("getUIState", "reportError", "abortCode")
-			return 1
-
 		statusChange(oldStatus, newStatus)
 			power_change()
 

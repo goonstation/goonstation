@@ -19,7 +19,7 @@
 			src.gang.select_gang_name()
 
 		if (src.gang.gang_points[new_owner] == null)
-			src.gang.gang_points[new_owner] = 0
+			src.gang.gang_points[new_owner] = GANG_STARTING_POINTS
 
 		. = ..()
 
@@ -116,7 +116,7 @@
 	announce()
 		. = ..()
 		var/datum/game_mode/gang/gamemode = ticker.mode
-		src.owner.current.show_antag_popup("gang_leader")
+		src.owner.current.show_antag_popup(ROLE_GANG_LEADER)
 		boutput(src.owner.current, SPAN_ALERT("Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel."))
 		if(!gamemode.random_gangs)
 			boutput(src.owner.current, SPAN_ALERT("You must recruit people to your gang and compete for wealth and territory!"))

@@ -1,3 +1,24 @@
+(t)fri nov 01 24
+(u)Azrun
+(*)Added Parallax Viewer.  Do parallax stuff with it! Also the Wand gives some cool options now!
+(t)mon oct 07 24
+(u)Sovexe
+(*)Added a new build mode tool Visual Mirror Setup to aid in the setup of adhoc visual mirror zones for advanced gimmicks. Use with care.
+(t)mon sep 23 24
+(u)Kyle
+(+)Added a "set status effect for all mobs" button to the secrets panel.
+(t)wed sep 18 24
+(u)Sord
+(+)You can now toggle ghost invisibility mid-round easily. "toggle-ghost-invisibility"
+(t)wed aug 08 24
+(u)LeahTheTech
+(*)New buildmode "Spawn Object" effect: "Fling" - spawns the object on you and immediately throws it at the target location.
+(t)tue jul 09 24
+(u)Azrun
+(*)Some seasonal content can be enabled via Terrainify! Season setting added to Winter and Forest Station.
+(t)mon jul 01 24
+(u)Zamujasa
+(*)"Check Reagents" window is a little more modern. Removing reagents doesn't refresh but now you can actually empty reagents from things!
 (t)wed may 07 24
 (u)Sovexe
 (*)Added the Region Allocator admin panel. Easily manage regions of space for prefabs and custom map loading on demand. Accessible by both its verb and the game panel.

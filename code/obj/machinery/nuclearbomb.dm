@@ -32,7 +32,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	///skips the prompt asking if you want to arm the bomb. For 'pranks'
 	var/no_warning = FALSE
 
-	flags = FPRINT
 	var/image/image_light = null
 	p_class = 1.5
 
@@ -120,11 +119,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		. = list()
 		if (src.armed)
 			. += "It is currently counting down to detonation. Ohhhh shit."
-			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
+			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authentication disk has been inserted." : ""]"
 		else
 			. += "It is not armed. That's a relief."
 			if (src.disk && istype(src.disk))
-				. += "The authenticaion disk has been inserted."
+				. += "The authentication disk has been inserted."
 
 		if (!src.anchored)
 			. += "The floor bolts are unsecure. The bomb can be moved around."
@@ -167,7 +166,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		#define NUKE_AREA_CHECK (!src.armed && isturf(src.loc) && (\
 				(ispath(target_area) && istype(get_area(src), target_area)) || \
-				(islist(target_area) && ((get_area(src)):type in target_area)) \
+				(islist(target_area) && istypes(get_area(src), target_area)) \
 			))
 
 		if(!src.target_override && !istype(ticker?.mode, /datum/game_mode/nuclear))
@@ -217,6 +216,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
 		logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
+		message_ghosts("<b>[src]</b> has been armed at [log_loc(src.loc, ghostjump=TRUE)].")
 		var/datum/game_mode/nuclear/gamemode = ticker?.mode
 		ENSURE_TYPE(gamemode)
 		gamemode?.shuttle_available = SHUTTLE_AVAILABLE_DISABLED
@@ -368,7 +368,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			robogibs(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/gamemode = null
-			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear) && src.boom_size == "nuke")
 				gamemode = ticker.mode
 				gamemode.the_bomb = null
 				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")

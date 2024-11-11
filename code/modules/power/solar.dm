@@ -319,7 +319,7 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	lastgen = gen
 	gen = 0
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[num2text(round(lastgen), 50)]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
 
 	if(status & (NOPOWER | BROKEN))
 		return

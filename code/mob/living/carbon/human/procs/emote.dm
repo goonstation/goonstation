@@ -24,11 +24,6 @@
 
 	act = lowertext(act)
 
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		if (P.onemote(act, voluntary, param))
-			return
-
 	var/muzzled = (src.wear_mask && src.wear_mask.is_muzzle)
 	var/m_type = 1 //1 is visible, 2 is audible
 	var/custom = 0 //Sorry, gotta make this for chat groupings.
@@ -627,7 +622,8 @@
 					maptext_out = "<I>birdwells</I>"
 					playsound(src.loc, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
-					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+					if (voluntary)
+						src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 					return
 
 			if ("uguu")
@@ -680,7 +676,7 @@
 								thing = src.l_hand
 							else if (src.r_hand)
 								thing = src.r_hand
-						if (thing)
+						if (thing && !(istype(thing, /obj/item/grab)))
 							SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED, src, thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
@@ -1645,7 +1641,7 @@
 							var/obj/item/gun/kinetic/derringer/D = (locate(/obj/item/gun/kinetic/derringer) in C)
 							var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
 							drop_item()
-							D.set_loc(src)
+							D.set_loc(src.loc)
 							equip_if_possible(D, drophand)
 							src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
 							playsound(src.loc, "rustle", 60, 1)
@@ -2009,7 +2005,7 @@
 							src.charges -= 1
 							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
+					else if ((src.charges >= 1) && (muzzled) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)
@@ -2173,7 +2169,7 @@
 
 			if ("miranda")
 				if (src.emote_check(voluntary, 50))
-					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Regional Director", "Inspector")))
+					if (src.mind && (src.mind.assigned_role in list("Captain", "Head of Personnel", "Head of Security", "Security Officer", "Security Assistant", "Detective", "Vice Officer", "Inspector")))
 						src.recite_miranda()
 
 			if ("dab") //I'm honestly not sure how I'm ever going to code anything lower than this - Readster 23/04/19
@@ -2263,7 +2259,8 @@
 					message = "<b>[src]</b> woofs!"
 					playsound(src.loc, 'sound/voice/urf.ogg', 60, channel=VOLUME_CHANNEL_EMOTE)
 			else
-				src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
+				if (voluntary)
+					src.show_text("Unusable emote '[act]'. 'Me help' for a list.", "blue")
 				return
 
 	showmessage:
@@ -2330,6 +2327,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(src.bioHolder.HasEffect("radioactive_farts"))
+		gas.radgas = 2
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

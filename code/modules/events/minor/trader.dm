@@ -8,9 +8,9 @@
 	var/centcom_turf = /turf/unsimulated/outdoors/grass //Not currently modified
 
 	/// Centcom area the shuttle comes from
-	var/area/start_location = null
+	var/area/shuttle/merchant_shuttle/start_location = null
 	/// Station area the shuttle goes to
-	var/area/end_location = null
+	var/area/shuttle/merchant_shuttle/end_location = null
 
 	event_effect()
 		..()
@@ -24,22 +24,29 @@
 		var/shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
 #endif
 		var/docked_where = shuttle == "diner" ? "space diner" : "station";
-		command_alert("A merchant shuttle will dock with the [docked_where] shortly.", "Commerce and Customs Alert")
+		var/loc_string = ""
+		if(shuttle == "diner")
+			start_location = locate(/area/shuttle/merchant_shuttle/diner_centcom)
+			end_location = locate(/area/shuttle/merchant_shuttle/diner_station)
+		else
+			if(shuttle == "left")
+				start_location = locate(map_settings ? map_settings.merchant_left_centcom : /area/shuttle/merchant_shuttle/left_centcom)
+				end_location = locate(map_settings ? map_settings.merchant_left_station : /area/shuttle/merchant_shuttle/left_station)
+			else
+				start_location = locate(map_settings ? map_settings.merchant_right_centcom : /area/shuttle/merchant_shuttle/right_centcom)
+				end_location = locate(map_settings ? map_settings.merchant_right_station : /area/shuttle/merchant_shuttle/right_station)
+			loc_string = " [end_location.loc_string] shuttle dock"
+
+		var/obj/npc/trader/random/trader_npc = locate() in start_location
+		if (!trader_npc)
+			CRASH("Trader NPC missing in [start_location.name] during trader random event. Guh?")
+		command_alert("\An [pick(trader_npc.descriptions)] merchant shuttle will dock with the [docked_where][loc_string] shortly.", "Commerce and Customs Alert")
 		signal_dock(shuttle, DOCK_EVENT_INCOMING)
 		for(var/client/C in clients)
 			if(C.mob && (C.mob.z == Z_LEVEL_STATION))
 				C.mob.playsound_local(C.mob, 'sound/misc/announcement_chime.ogg', 30, 0)
+
 		SPAWN(30 SECONDS)
-			if(shuttle == "diner")
-				start_location = locate(/area/shuttle/merchant_shuttle/diner_centcom)
-				end_location = locate(/area/shuttle/merchant_shuttle/diner_station)
-			else
-				if(shuttle == "left")
-					start_location = locate(map_settings ? map_settings.merchant_left_centcom : /area/shuttle/merchant_shuttle/left_centcom)
-					end_location = locate(map_settings ? map_settings.merchant_left_station : /area/shuttle/merchant_shuttle/left_station)
-				else
-					start_location = locate(map_settings ? map_settings.merchant_right_centcom : /area/shuttle/merchant_shuttle/right_centcom)
-					end_location = locate(map_settings ? map_settings.merchant_right_station : /area/shuttle/merchant_shuttle/right_station)
 
 			var/list/dest_turfs = src.arrive()
 			signal_dock(shuttle, DOCK_EVENT_ARRIVED)
@@ -122,7 +129,7 @@
 		start_location.color = OCEAN_COLOR
 		#endif
 
-		station_repair.repair_turfs(dest_turfs)
+		station_repair.repair_turfs(dest_turfs, force_floor=TRUE)
 
 /proc/get_hiding_jerk(var/atom/movable/container)
 	for(var/atom/movable/AM in container)

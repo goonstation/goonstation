@@ -141,6 +141,9 @@
 		SPAN_NOTICE("<b>You grow up!</b>"))
 		SPAWN(0)
 			var/mob/living/critter/spider/new_mob = src.make_critter(src.adultpath)
+			var/datum/component/drop_loot_on_death/loot_component = src.GetComponent(/datum/component/drop_loot_on_death)
+			if (loot_component)
+				new_mob.TakeComponent(loot_component)
 			if (has_implant)
 				new /obj/item/implant/access/infinite/assistant(new_mob)
 			new_mob.ai_retaliate_patience = src.ai_retaliate_patience

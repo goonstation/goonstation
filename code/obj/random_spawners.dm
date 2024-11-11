@@ -13,14 +13,14 @@
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
-	var/list/guaranteed = new/list() // things that will always spawn from this - set to a number to spawn that many of the thing
+	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	// TODO: initialize
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(5 SECONDS) // ZEWAKA/INIT
+			sleep(2 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
@@ -920,7 +920,7 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/buttcoin,
 		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
@@ -1542,7 +1542,7 @@
 						/obj/item/clothing/head/odlawhat,
 						/obj/item/clothing/head/fake_waldohat,
 						/obj/item/clothing/head/flatcap,
-						/obj/item/clothing/head/devil,
+						/obj/item/clothing/head/headband/devil,
 						/obj/item/clothing/head/biker_cap,
 						/obj/item/clothing/head/mj_hat,
 						/obj/item/clothing/head/genki,
@@ -1582,6 +1582,7 @@
 						/obj/item/clothing/head/zombie,
 						/obj/item/clothing/head/werewolf/odd,
 						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/giraffehat,
 						/obj/item/clothing/head/mushroomcap/random)
 
 	one
@@ -1875,9 +1876,9 @@
 	/obj/item/gun/kinetic/pistol,
 	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
-	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
+	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/sawnoff,
 	/obj/item/gun/kinetic/single_action/colt_saa,
@@ -1924,7 +1925,9 @@
 	//only 1 can spawn for now since the pool size is small. Might want to increase it if the pool size increases by a fair amount
 
 	items2spawn = list(/obj/item/aiModule/experimental/equality/a,
-						/obj/item/aiModule/experimental/equality/b)
+						/obj/item/aiModule/experimental/equality/b,
+						/obj/item/aiModule/experimental/corrupted,
+						/obj/item/aiModule/experimental/historic)
 
 	one
 		amt2spawn = 1
@@ -2008,7 +2011,9 @@
 		max_amt2spawn = 3
 
 
-/obj/random_item_spawner/armory_breaching_supplies //random
+/obj/random_item_spawner/armory_breaching_supplies //"random"
+	name = "armory breaching supplies"
+	icon_state = "breachspawn"
 	spawn_items()
 		new /obj/rack(src.loc)
 		new /obj/item/breaching_charge{

@@ -123,7 +123,7 @@
 
 		// 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 		var/list/text_messages = list()
-		text_messages.Add("Would you like to respawn as a [src.antagonist_type] antagonist? Your name will be added to the list of eligible candidates and may be selected at random by the game.") // Do disclose which type it is. You know, ghosts can already metagame in a myriad of ways.
+		text_messages.Add("Would you like to respawn as a [src.antagonist_type] antagonist? You will be added to the list of eligible candidates and may be selected at random.") // Do disclose which type it is. You know, ghosts can already metagame in a myriad of ways.
 		text_messages.Add("You are eligible to be respawned as a [src.antagonist_type] antagonist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
@@ -396,7 +396,8 @@
 
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
-			message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+			message_admins("[key_name(lucky_dude)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+			message_ghosts("The random event <b>[src.antagonist_type]</b> has spawned.") //noloc4antagspawns
 		src.cleanup()
 		return
 

@@ -12,7 +12,7 @@
 	},
 /area/crunch/artifact_boh_pocket_dimension)
 "g" = (
-/obj/decal/fakeobjects/artifact_boh_pocket_dimension_artifact,
+/obj/fakeobject/artifact_boh_pocket_dimension_artifact,
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black metal floor. There are odd lines carved into it.";
 	icon = 'icons/turf/floors.dmi';

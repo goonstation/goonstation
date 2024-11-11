@@ -119,6 +119,17 @@
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeCow(src)
 
+/datum/telescope_event/watchfuleye
+	name = "Watchful Eye Sensor"
+	name_undiscovered = "Strong Signal"
+	id = "we"
+	size = 25
+	tags = TAG_TELEPORT_LOC
+
+	New()
+		..()
+		telescopeDialogue = new/datum/dialogueMaster/telescopeEye(src)
+
 //MINING STUFF BELOW
 /datum/telescope_event/ore_miraclium
 	name = "Miraclium asteroid"

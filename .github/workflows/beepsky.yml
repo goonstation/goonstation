@@ -23,11 +23,11 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 
@@ -38,6 +38,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          touch +secret/__secret.dme
           pip3 install setuptools
           tools/ci/install_build_tools.sh
           tools/ci/install_spaceman_dmm.sh dreamchecker
@@ -68,18 +69,18 @@ jobs:
         run: |
           ~/dreamchecker
 
-  # odlint:
-  #   name: Lint with OpenDream
-  #   runs-on: ubuntu-22.04
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: robinraju/release-downloader@v1.9
-  #       with:
-  #         repository: "OpenDreamProject/OpenDream"
-  #         tag: "latest"
-  #         fileName: "DMCompiler_linux-x64.tar.gz"
-  #         extract: true
-  #     - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
+  odlint:
+    name: Lint with OpenDream
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: robinraju/release-downloader@v1.11
+        with:
+          repository: "OpenDreamProject/OpenDream"
+          tag: "latest"
+          fileName: "DMCompiler_linux-x64.tar.gz"
+          extract: true
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=515.1635
 
   compile:
     name: Compile
@@ -91,8 +92,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -134,8 +135,8 @@ jobs:
       - name: Cache BYOND
         uses: actions/cache@v4
         with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
+          path: /home/runner/BYOND
+          key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
 
       - name: Setup BYOND
         run: |
@@ -154,11 +155,11 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v2.0.0
+        uses: hecrj/setup-rust-action@v2.0.1
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
           cache: "yarn"
           cache-dependency-path: ./tgui/yarn.lock
 

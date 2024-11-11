@@ -191,7 +191,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	health = 250
 	var/max_health = 250
 	var/repair_per_resource = 5
-	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = USEDELAY | FLUID_DENSE | IS_PERSPECTIVE_FLUID
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"

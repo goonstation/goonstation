@@ -390,6 +390,9 @@
 		src.target = null
 		src.repairing = 0
 		return
+	if (ismob(T.loc))
+		var/mob/M = T.loc
+		M.drop_item(T, FALSE)
 	if (src.amount + T.amount > max_tiles)
 		var/i = max_tiles - src.amount
 		src.amount += i
@@ -439,6 +442,9 @@
 /// This one starts turned on
 /obj/machinery/bot/floorbot/active
 	on = TRUE
+
+/obj/machinery/bot/floorbot/active/improvefloors
+	improvefloors = TRUE
 
 /////////////////////////////////
 //////Floorbot Construction//////

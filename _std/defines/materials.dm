@@ -22,32 +22,6 @@
 /// Global static list of rarity color associations
 var/global/static/list/RARITY_COLOR = list("#9d9d9d", "#ffffff", "#1eff00", "#0070dd", "#a335ee", "#ff8000", "#ff0000")
 
-/// Material category names as displayed in fabricators
-/// see match_material_pattern() for exact definitions
-var/global/list/material_category_names = list(
-	"ALL"   = "Any Material",
-	"CON-1" = "Conductive Material",
-	"CON-2" = "High Energy Conductor",
-	"CRY-1" = "Crystal",
-	"DEN-1" = "High Density Matter",
-	"DEN-2" = "Very High Density Matter",
-	"CRY-2" = "Extraordinarily Dense Crystalline Matter",
-	"FAB-1" = "Fabric",
-	"INS-1" = "Insulative Material",
-	"INS-2" = "Highly Insulative Material",
-	"MET-1" = "Metal",
-	"MET-2" = "Sturdy Metal",
-	"MET-3" = "Extremely Tough Metal",
-	"POW-1" = "Power Source",
-	"POW-2" = "Significant Power Source",
-	"POW-3" = "Extreme Power Source",
-	"REF-1" = "Reflective Material",
-	"ORG|RUB" = "Organic or Rubber Material",
-	"RUB" = "Rubber Material",
-	"WOOD" = "Wood",
-	"GEM-1" = "Any Gemstone"
-)
-
 #define TRIGGERS_ON_BULLET "triggersOnBullet"
 #define TRIGGERS_ON_EAT "triggersOnEat"
 #define TRIGGERS_ON_TEMP "triggersTemp"

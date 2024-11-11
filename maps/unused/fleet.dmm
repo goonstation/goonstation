@@ -16,7 +16,7 @@
 	},
 /area/space)
 "ae" = (
-/obj/decal/fakeobjects/airmonitor_broken,
+/obj/fakeobject/airmonitor_broken,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
@@ -60,6 +60,11 @@
 /area/station/solar/small_backup3{
 	name = "Tenebrae Solar Array"
 	})
+"al" = (
+/obj/table/wood/auto,
+/obj/fakeobject/microscope,
+/turf/simulated/floor/airless,
+/area/space)
 "am" = (
 /obj/lattice,
 /turf/space,
@@ -74,14 +79,9 @@
 /turf/simulated/floor/airless/damaged1,
 /area/space)
 "ao" = (
-/obj/decal/fakeobjects/cargopad,
+/obj/fakeobject/cargopad,
 /obj/item/a_gift,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/airless,
-/area/space)
-"ap" = (
-/obj/table/wood/auto,
-/obj/machinery/microscope,
 /turf/simulated/floor/airless,
 /area/space)
 "aq" = (
@@ -98,14 +98,14 @@
 /turf/simulated/floor/airless,
 /area/space)
 "as" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "A vent. Cool air is gently flowing through it.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/obj/decal/fakeobjects/skeleton{
+/obj/fakeobject/skeleton{
 	desc = "The remains of a human. There seem to be a few bits missing."
 	},
 /obj/item/clothing/mask/breath,
@@ -185,7 +185,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "aC" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	desc = "What was this thing even supposed to do?";
 	icon = 'icons/obj/machines/nuclear.dmi';
 	icon_state = "engineoff";
@@ -1734,10 +1734,10 @@
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
 /obj/item/raw_material/cotton,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
-/obj/item/raw_material/fabric,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
+/obj/item/material_piece/cloth,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "eo" = (
@@ -2611,7 +2611,7 @@
 	name = "Tenebrae Maintenance"
 	})
 "gs" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "tenebelt";
 	name = "Tenebrae disposal belt";
@@ -6070,7 +6070,7 @@
 	name = "Maru Power Room"
 	})
 "ok" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "marubelt";
 	name = "Maru disposal belt";
@@ -6756,8 +6756,7 @@
 	})
 "pD" = (
 /obj/table/wood/auto,
-/obj/displaycase{
-	displayed = /obj/item/captaingun;
+/obj/displaycase/captain{
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,
@@ -7065,7 +7064,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/hammer)
 "qp" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "hambelt";
 	name = "Hammer disposal belt";
@@ -9956,22 +9955,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "ws" = (
-/obj/item/storage/firstaid/oxygen{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/bandage,
-/obj/item/robodefibrillator,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/item/body_bag,
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -10903,24 +10887,12 @@
 	})
 "ys" = (
 /obj/storage/crate,
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
-/obj/item/clothing/glasses/vr{
-	network = "arcadevr"
-	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -11151,7 +11123,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "yR" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "ascbelt";
 	name = "Asclepius disposal belt";
@@ -11629,7 +11601,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zM" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "diobelt";
 	name = "Dionysus disposal belt";
@@ -15883,7 +15855,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "IW" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "How old is this?";
@@ -15927,7 +15899,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "Jd" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A large rack of server modules.  It doesn't seem to be in service.";
@@ -16525,7 +16497,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "KH" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
@@ -16544,7 +16516,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "KI" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "It is still kinda warm.";
@@ -16556,7 +16528,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "KJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	density = 1;
 	desc = "A really big A/C unit, sorta, except it also filters and processes air.  So not really at all like an A/C unit.";
@@ -17026,7 +16998,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	anchored = 1;
 	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
 	dir = 1;
@@ -17436,22 +17408,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
-	})
-"MR" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/computer/atmosphere/mixercontrol{
-	dir = 4;
-	frequency = 1225
-	},
-/turf/simulated/floor/grey,
-/area/station/engine/power{
-	name = "Erebus Power Room"
 	})
 "MS" = (
 /obj/cable{
@@ -19941,11 +19897,11 @@
 /turf/space,
 /area/space)
 "QR" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "QS" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
@@ -20003,7 +19959,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "Rb" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /obj/stool/chair{
@@ -20012,7 +19968,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Rc" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -20057,7 +20013,7 @@
 	},
 /area/station/science/tenebrae)
 "Rl" = (
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
@@ -20091,14 +20047,14 @@
 	name = "Erebus Primary Zone"
 	})
 "Rp" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 5
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Rq" = (
 /obj/machinery/drone_recharger/factory,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -20114,20 +20070,20 @@
 /area/station/crew_quarters/maru)
 "Rt" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Ru" = (
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Rv" = (
 /obj/disposalpipe/segment/vertical,
-/obj/decal/fakeobjects/pipe/heat{
+/obj/fakeobject/pipe/heat{
 	dir = 10
 	},
 /turf/simulated/floor/plating,
@@ -20149,12 +20105,12 @@
 /area/ghostdrone_factory)
 "Ry" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "Rz" = (
 /obj/disposalpipe/segment/bent/west,
-/obj/decal/fakeobjects/pipe/heat,
+/obj/fakeobject/pipe/heat,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "RA" = (
@@ -20221,7 +20177,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
 "RJ" = (
-/obj/decal/fakeobjects{
+/obj/fakeobject{
 	density = 1;
 	desc = "This looks inordinately fancy for an abandoned ship.";
 	icon = 'icons/obj/machines/nuclear.dmi';
@@ -20395,7 +20351,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Se" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "erebusbelt";
 	name = "Erebus disposal belt";
@@ -21206,6 +21162,25 @@
 /turf/simulated/floor/grass,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
+	})
+"Ur" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/atmosphere/mixercontrol{
+	frequency = 1225;
+	id = "engine_combust_control";
+	mixerid = "engine_combust";
+	name = "Gas Mixer Control (Combustion Chamber)";
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/power{
+	name = "Erebus Power Room"
 	})
 "Ut" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -76498,7 +76473,7 @@ GD
 Xi
 Mz
 MI
-MR
+Ur
 Ng
 Xi
 NA
@@ -92014,7 +91989,7 @@ aa
 aa
 aa
 af
-ap
+al
 aw
 aC
 ah

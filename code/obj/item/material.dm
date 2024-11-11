@@ -13,7 +13,7 @@
 	var/crystal = 0
 	var/powersource = 0
 	var/scoopable = 1
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
 	max_stack = 50
 	event_handler_flags = USE_FLUID_ENTER
@@ -534,7 +534,6 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	stack_type = /obj/item/raw_material/shard
-	flags = TABLEPASS | FPRINT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
@@ -543,7 +542,7 @@
 	force = 5
 	throwforce = 5
 	g_amt = 3750
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
@@ -785,7 +784,7 @@
 			if (output_amount != num_bars)
 				leftovers[O.material.getID()] = num_bars - output_amount
 
-		output_bar(O.material, output_amount, O.quality)
+		output_bar(O.material, output_amount)
 
 		if (extra_mat) // i hate this
 			output_amount = O.amount
@@ -798,9 +797,9 @@
 				if (output_amount != num_bars)
 					leftovers[extra_mat] = num_bars - output_amount
 
-			output_bar(extra_mat, output_amount, O.quality)
+			output_bar(extra_mat, output_amount)
 
-	proc/output_bar(material, amount, quality)
+	proc/output_bar(material, amount)
 
 		if(amount <= 0)
 			return
@@ -815,14 +814,12 @@
 
 		var/bar_type = getProcessedMaterialForm(MAT)
 		var/obj/item/material_piece/BAR = new bar_type
-		BAR.quality = quality
-		BAR.name += getQualityName(quality)
 		BAR.setMaterial(MAT)
 		BAR.change_stack_amount(amount - 1)
 
 		if (istype(output_location, /obj/machinery/manufacturer))
 			var/obj/machinery/manufacturer/M = output_location
-			M.change_contents(mat_piece = BAR)
+			M.add_contents(BAR)
 		else
 			BAR.set_loc(output_location)
 			for (var/obj/item/material_piece/other_bar in output_location.contents)

@@ -69,6 +69,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			player.mind.assigned_role = "Construction Worker"
 		return
 
+	#ifdef I_WANNA_BE_THE_JOB
+	for (var/mob/new_player/player in unassigned)
+		player.mind.assigned_role = I_WANNA_BE_THE_JOB
+	UNLINT(return)
+	#endif
+
 	var/list/pick1 = list()
 	var/list/pick2 = list()
 	var/list/pick3 = list()
@@ -329,7 +335,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src = possible_new_mob // let's hope this breaks nothing
 
 
-	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest && !src.traitHolder.hasTrait("stowaway"))
+	if (!skip_manifest && ishuman(src) && JOB.add_to_manifest)
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
@@ -343,16 +349,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
-			H.spawnId(JOB)
-		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
-			//Has the stowaway trait - they're hiding in a random locker
-			var/list/obj/storage/SL = get_random_station_storage_list(closed=TRUE, breathable=TRUE)
-
-			if(length(SL) > 0)
-				src.set_loc(pick(SL))
-				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
-
+		H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			SPAWN(0) //pod creation sleeps for... reasons
 				#define MAX_ALLOWED_ITERATIONS 300
@@ -429,7 +426,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 			logTheThing(LOG_STATION, src, "has the Party Animal trait and has finished iterating through spots.")
 
-			if(!joined_late) // We got special late-join handling
+			if(!joined_late && length(valid_stools) > 0) // We got special late-join handling
 				var/obj/stool/stool = pick(valid_stools)
 				if (stool)
 					var/list/spawn_range = orange(1, get_turf(stool)) // Skip the actual stool
@@ -494,6 +491,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			sleep(0.1 SECONDS)
 			if(!QDELETED(current_mob))
 				current_mob.update_icons_if_needed()
+
+		if (src.traitHolder?.hasTrait("jailbird"))
+			create_jailbird_wanted_poster(H)
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
@@ -571,12 +571,17 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				D.name = "data disk - '[src.real_name]'"
 
 			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
-				src.equip_if_possible(B, SLOT_IN_BACKPACK)
-				B.badge_owner_name = src.real_name
-				B.badge_owner_job = src.job
+				var/obj/item/clothing/suit/security_badge/badge
+				if (ispath(JOB.receives_badge))
+					badge = new JOB.receives_badge(src)
+				else
+					badge = new /obj/item/clothing/suit/security_badge(src)
+				if (!src.equip_if_possible(badge, SLOT_WEAR_SUIT))
+					src.equip_if_possible(badge, SLOT_IN_BACKPACK)
+				badge.badge_owner_name = src.real_name
+				badge.badge_owner_job = src.job
 
-	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
+	if (src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
 		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
@@ -593,8 +598,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
 		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
-
-	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
 		src.u_equip(pda)
 		qdel(pda)
@@ -606,10 +609,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		trinket = null //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
 		trinket = src.create_wig()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
@@ -677,12 +676,12 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
 		if (src.limbs)
-			SPAWN(6 SECONDS)
-				if (src.limbs.l_leg)
-					src.limbs.l_leg.delete()
-				if (src.limbs.r_leg)
-					src.limbs.r_leg.delete()
-			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			if (src.limbs.l_leg)
+				src.limbs.l_leg.delete()
+			if (src.limbs.r_leg)
+				src.limbs.r_leg.delete()
+			var/obj/stool/chair/comfy/chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
+			chair.buckle_in(src, src)
 
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
@@ -847,6 +846,7 @@ var/list/trinket_safelist = list(
 	/obj/item/instrument/vuvuzela,
 	/obj/item/wrench,
 	/obj/item/device/light/zippo,
+	/obj/item/device/speech_pro,
 	/obj/item/reagent_containers/food/drinks/bottle/beer,
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,
 	/obj/item/reagent_containers/food/drinks/bottle/vodka,

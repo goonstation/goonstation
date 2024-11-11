@@ -61,7 +61,8 @@
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
-	return P.hits_ghosts
+	// INVIS_ALWAYS ghosts are logged out/REALLY hidden.
+	return (P.hits_ghosts && (src.invisibility != INVIS_ALWAYS))
 
 /mob/dead/say(var/message)
 	message = trimtext(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -187,7 +188,8 @@
 				message = "<B>[src]</B> [act]s."
 
 		else
-			src.show_text("Unusable emote '[act]'.", "blue")
+			if (voluntary)
+				src.show_text("Unusable emote '[act]'.", "blue")
 			return
 
 	if (message)
@@ -235,12 +237,13 @@
 #endif
 
 // nothing in the game currently forces dead mobs to vomit. this will probably change or end up exposed via someone fucking up (likely me) in future. - cirr
-/mob/dead/vomit(var/nutrition=0, var/specialType=null)
-	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
-	playsound(src.loc, 'sound/effects/ghost2.ogg', 50, 1)
-	src.visible_message(SPAN_ALERT("Ectoplasm splats onto the ground from nowhere!"),
-		SPAN_ALERT("Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]"),
-		SPAN_ALERT("You hear something strangely insubstantial land on the floor with a wet splat!"))
+/mob/dead/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	. = ..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
+	if(.)
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 50, 1)
+		src.visible_message(SPAN_ALERT("Ectoplasm splats onto the ground from nowhere!"),
+			SPAN_ALERT("Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]"),
+			SPAN_ALERT("You hear something strangely insubstantial land on the floor with a wet splat!"))
 
 proc/can_ghost_be_here(mob/dead/ghost, var/turf/T)
 	if(isnull(T))

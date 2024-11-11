@@ -727,7 +727,7 @@ Contents:
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/spacecash/buttcoin) in AM.contents))
+				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
 						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
 						H.unlock_medal("To the Moon!",1)
@@ -981,7 +981,7 @@ Contents:
 		somebody_fucked_up = 1
 
 
-/obj/decal/fakeobjects/moon_on_a_stick
+/obj/fakeobject/moon_on_a_stick
 	name = "Moon model"
 	desc = "A really large mockup of the Earth's moon."
 	icon = 'icons/misc/lunar64.dmi'
@@ -1000,7 +1000,7 @@ Contents:
 		stand.layer = OBJ_LAYER
 		src.underlays += stand
 
-/obj/decal/fakeobjects/lunar_lander
+/obj/fakeobject/lunar_lander
 	name = "Lunar module descent stage"
 	desc = "The descent stage of the Apollo 11 lunar module, which landed the first astronauts on the moon."
 	anchored = ANCHORED
@@ -1011,7 +1011,7 @@ Contents:
 	bound_width = 64
 
 
-/obj/decal/fakeobjects/moonrock
+/obj/fakeobject/moonrock
 	name = "moon rock"
 	desc = "A piece of regolith. Or something. It is a heavy rock from the moon.  These used to be worth more."
 	icon = 'icons/misc/lunar.dmi'
@@ -2131,7 +2131,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	icon_state = "bball"
 	item_state = "bbmoon"
 
-/obj/decal/fakeobjects/junction_box
+/obj/fakeobject/junction_box
 	name = "junction box"
 	desc = "A large, wall-mounted metal box with several burly cables moving from it to the floor.  The front panel is locked.  A label on the panel reads 'FED FROM XFMR 210.  DANGER:  15 kV.  ARC FLASH HAZARD, DO NOT OPEN OR OPERATE CONTROLS WITHOUT APPROPRIATE PPE.'"
 	icon = 'icons/misc/lunar.dmi'

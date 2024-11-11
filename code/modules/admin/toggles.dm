@@ -243,6 +243,16 @@ client/proc/toggle_ghost_respawns()
 	src.holder.buildmode_view = !src.holder.buildmode_view
 	boutput(usr, SPAN_NOTICE("Toggled buildmode changing view [src.holder.buildmode_view ?"off":"on"]!"))
 
+/client/proc/toggle_hide_offline()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Toggle Offline Indicators"
+	set desc = "Toggles if your offline indicators are hidden when mob jumping"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	src.holder.hide_offline_indicators = !src.holder.hide_offline_indicators
+	boutput(usr, SPAN_NOTICE("Toggled hiding offline indicators [src.holder.hide_offline_indicators ? "on":"off"]!"))
+
 /client/proc/toggle_spawn_in_loc()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Spawn in Loc"
@@ -679,7 +689,6 @@ client/proc/toggle_ghost_respawns()
 		flourish = 0
 	else
 		flourish = 1
-	message_admins("[key_name(usr)] toggled its Flourish Mode to [flourish].")
 
 /datum/admins/proc/adsound()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
@@ -987,6 +996,7 @@ client/proc/toggle_ghost_respawns()
 	SHOW_VERB_DESC
 	NOT_IF_TOGGLES_ARE_OFF
 	global_sims_mode = !global_sims_mode
+	simsController.provide_plumbobs = !simsController.provide_plumbobs
 	message_admins(SPAN_INTERNAL("[key_name(usr)] toggled sims mode. [global_sims_mode ? "Oh, the humanity!" : "Phew, it's over."]"))
 	for (var/mob/M in mobs)
 		LAGCHECK(LAG_LOW)
@@ -1285,3 +1295,18 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_ADMIN, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
 	logTheThing(LOG_DIARY, usr, "[enabled ? "enabled" : "disabled"] Tracy profiling for the next round.", "admin")
 	message_admins("[key_name(usr)] [enabled ? "enabled" : "disabled"] Tracy profiling for the next round.")
+
+/client/proc/toggle_ghost_invisibility()
+	set name = "Toggle Ghost Invisibility"
+	set desc = "Toggle whether ghosts are invisible or not mid-round"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (ghost_invisibility == INVIS_GHOST)
+		change_ghost_invisibility(INVIS_NONE)
+		message_admins("[key_name(usr)] made ghosts visible.")
+	else
+		change_ghost_invisibility(INVIS_GHOST)
+		message_admins("[key_name(usr)] made ghosts invisible.")
+	logTheThing(LOG_ADMIN, usr, "toggled ghost (in)visibility")

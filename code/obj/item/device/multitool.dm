@@ -7,7 +7,7 @@ TYPEINFO(/obj/item/device/multitool)
 	icon = 'icons/obj/items/tools/multitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/multitool.dmi'
 	icon_state = "multitool"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	tool_flags = TOOL_PULSING
 	w_class = W_CLASS_SMALL

@@ -15,7 +15,7 @@
 /turf/unsimulated/floor/airless/grime,
 /area/space)
 "aX" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 8
 	},
 /turf/unsimulated/floor/setpieces/martian{
@@ -37,7 +37,7 @@
 /turf/unsimulated/floor/plating,
 /area/space)
 "bs" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 8
 	},
 /turf/space,
@@ -71,7 +71,7 @@
 /area/space)
 "cE" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/fakeobjects/console_lever,
+/obj/fakeobject/console_lever,
 /turf/unsimulated/floor/engine,
 /area/space)
 "db" = (
@@ -107,7 +107,7 @@
 /turf/unsimulated/floor/airless/sand,
 /area/space)
 "eb" = (
-/obj/decal/fakeobjects/tallsmes{
+/obj/fakeobject/tallsmes{
 	color = "#aaaa55";
 	name = "weapons capacitors"
 	},
@@ -127,7 +127,7 @@
 /turf/unsimulated/floor/martian,
 /area/space)
 "fa" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4;
 	name = "laser cannon"
 	},
@@ -565,7 +565,7 @@
 	},
 /area/space)
 "xi" = (
-/obj/decal/fakeobjects/tallsmes{
+/obj/fakeobject/tallsmes{
 	color = "#aaaa55";
 	name = "weapons capacitors"
 	},
@@ -609,7 +609,7 @@
 /turf/unsimulated/floor/airless/sand,
 /area/space)
 "yT" = (
-/obj/decal/fakeobjects/shuttleweapon{
+/obj/fakeobject/shuttleweapon{
 	dir = 4;
 	name = "laser cannon"
 	},
@@ -623,7 +623,7 @@
 /area/space)
 "zH" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/fakeobjects/tallsmes,
+/obj/fakeobject/tallsmes,
 /turf/unsimulated/floor/industrial,
 /area/space)
 "Ad" = (
@@ -642,7 +642,7 @@
 	},
 /area/space)
 "Am" = (
-/obj/decal/fakeobjects/nuclear_reactor_destroyed{
+/obj/fakeobject/nuclear_reactor_destroyed{
 	pixel_x = -48;
 	pixel_y = -48
 	},
@@ -784,7 +784,7 @@
 /turf/unsimulated/floor/techfloor/yellow,
 /area/space)
 "Fl" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
+/obj/fakeobject/shuttleweapon/base{
 	dir = 8
 	},
 /turf/unsimulated/floor/airless/sand,
@@ -884,7 +884,7 @@
 /obj/decoration/vent/vent2{
 	pixel_y = 32
 	},
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -934,7 +934,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/decal/fakeobjects/console_lever,
+/obj/fakeobject/console_lever,
 /turf/unsimulated/floor/engine,
 /area/space)
 "Mb" = (
@@ -957,7 +957,7 @@
 /turf/unsimulated/floor/minitiles/black,
 /area/space)
 "Mx" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "yellow";
 	desc = "It is not working.";
 	dir = 2;
@@ -1000,7 +1000,7 @@
 /turf/unsimulated/floor/martian,
 /area/space)
 "Oc" = (
-/obj/decal/fakeobjects/console_lever,
+/obj/fakeobject/console_lever,
 /turf/unsimulated/floor/airless/grime,
 /area/space)
 "Og" = (
@@ -1056,7 +1056,7 @@
 /turf/unsimulated/floor/industrial,
 /area/space)
 "Po" = (
-/obj/decal/fakeobjects/console_randompc{
+/obj/fakeobject/console_randompc{
 	icon_state = "bustedmantapc3"
 	},
 /turf/unsimulated/floor/dojo/bridge/horizontal{
@@ -1069,7 +1069,7 @@
 	name = "Reactor Core"
 	})
 "PC" = (
-/obj/decal/fakeobjects/console_randompc{
+/obj/fakeobject/console_randompc{
 	icon_state = "radar"
 	},
 /turf/unsimulated/floor/dojo/bridge/horizontal{
@@ -1194,7 +1194,7 @@
 	name = "Reactor Core"
 	})
 "UA" = (
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"
@@ -1269,7 +1269,7 @@
 /turf/unsimulated/floor/martian,
 /area/space)
 "Wj" = (
-/obj/decal/fakeobjects/pipe{
+/obj/fakeobject/pipe{
 	color = "yellow";
 	desc = "It is not working.";
 	dir = 2;
@@ -1289,7 +1289,7 @@
 /turf/unsimulated/floor/engine,
 /area/space)
 "WL" = (
-/obj/decal/fakeobjects/pipe/radioactive{
+/obj/fakeobject/pipe/radioactive{
 	color = "yellow";
 	desc = "This pipe is kinda warm, despite the name. Huh.";
 	name = "coolant pipe"

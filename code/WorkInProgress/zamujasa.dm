@@ -249,7 +249,6 @@
 	icon_state = "voting_box"
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
-	flags = FPRINT
 	anchored = ANCHORED
 	desc = "Funds further renovations for the afterlife. You can put the fruits / vegetables / minerals / bombs you grew into this (click this with them or click-drag them onto it)."
 	var/total_score = 0
@@ -272,7 +271,7 @@
 		return " It's saved a total of [round(total_score)] points, with [round(round_score)] points added today."
 
 	proc/update_totals()
-		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_leading(round(total_score), 7)]\nROUND [add_leading(round(round_score), 7)]</span>"
+		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [pad_leading(round(total_score), 7)]\nROUND [pad_leading(round(round_score), 7)]</span>"
 
 
 	attackby(obj/item/W, mob/user)
@@ -502,7 +501,7 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	flags = FPRINT | TABLEPASS
+	flags = TABLEPASS
 	c_flags = ONBELT
 	force = 0
 	w_class = W_CLASS_TINY
@@ -943,12 +942,12 @@
 			if (!src.monitored_proc)
 				// no proc to check.
 				return 0
-			if (src.monitored_var && !istype(src.monitored[monitored_var], /datum))
+			if (src.monitored_var && !istype(src.monitored.vars[monitored_var], /datum))
 				// If we're calling a proc on a var it better be something we can call a proc on
 				return 0
 
 			// So what ARE we calling this proc on then?
-			src.effective_callee = (src.monitored_var ? src.monitored[src.monitored_var] : src.monitored)
+			src.effective_callee = (src.monitored_var ? src.monitored.vars[src.monitored_var] : src.monitored)
 
 			if (!hascall(src.effective_callee, monitored_proc))
 				// does it have this proc?
@@ -1248,9 +1247,9 @@
 			update_delay = 1
 
 			get_value()
-				if (!src.monitored["stats"]["lastdeath"])
+				if (!src.monitored.vars["stats"]["lastdeath"])
 					return "None... yet</span>"
-				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+				return "[src.monitored.vars["stats"]["lastdeath"]["name"]]</span><br>[src.monitored.vars["stats"]["lastdeath"]["whereText"]]"
 
 
 
@@ -1365,7 +1364,7 @@
 			. = "<span style='color: [lagc];'>[round(world.cpu)]% @ [world.tick_lag / 10]s</span>"
 
 		the_literal_server
-			var/obj/decal/fakeobjects/the_server = null
+			var/obj/fakeobject/the_server = null
 			var/is_smoking = 0
 
 			New()
@@ -1526,7 +1525,12 @@ Read the rules, don't grief, and have fun!</div>"}
 			src.maptext_width = 600
 			src.maptext_height = 400
 			update_text() // kick start
-			RegisterSignal(get_singleton(/datum/cross_server_message/server_sync_response), COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
+			setup_process_signal()
+
+		proc/setup_process_signal()
+			set waitfor = FALSE
+			UNTIL(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes)
+			RegisterSignal(locate(/datum/controller/process/cross_server_sync) in processScheduler.processes, COMSIG_SERVER_DATA_SYNCED, PROC_REF(update_text))
 
 		proc/update_text()
 			var/serverList = ""
@@ -1537,7 +1541,7 @@ Read the rules, don't grief, and have fun!</div>"}
 				serverList += {"\n<a style='color: #88f;' href='byond://winset?command=Change-Server "[server.id]'>[server.name][!isnull(server.player_count) ? " ([server.player_count] players)" : " (restarting now)"]</a>"}
 			src.set_text({"<span class='ol vga'>
 Welcome to Goonstation!
-New? <a style='color: #88f;' href="https://mini.xkeeper.net/ss13/tutorial/">Check the tutorial</a>!
+New? <a style='color: #88f;' href="https://wiki.ss13.co/Super_Quick_Tutorial" target="_blank">Check the tutorial</a>!
 Have questions? Ask mentors with \[F3]!
 Need an admin? Message us with \[F1].
 

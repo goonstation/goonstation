@@ -13,6 +13,7 @@
 // - Nukeop Commander's Sword
 // - Bloodthirsty Blade
 // - Fragile Sword
+// - Gang Machete
 
 
 /// Cyalume saber/esword, famed traitor item
@@ -40,7 +41,7 @@ TYPEINFO(/obj/item/sword)
 	throw_range = 5
 	health = 7
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
 	contraband = 5
@@ -528,19 +529,20 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 5
 	hit_type = DAMAGE_STAB
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	desc = "Gets the blood to run out juuuuuust right. Looks like this could be nasty when thrown."
-	burn_type = 1
+	burn_remains = BURN_REMAINS_MELT
 	stamina_damage = 15
 	stamina_cost = 5
 	stamina_crit_chance = 50
-	pickup_sfx = 'sound/items/blade_pull.ogg'
+	equip_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 	New()
 		..()
+		setItemSpecial(/datum/item_special/jab)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/dagger/overwrite_impact_sfx(original_sound, hit_atom, thr)
@@ -594,6 +596,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 20
 	stamina_cost = 5
 	c_flags = EQUIPPED_WHILE_HELD
+
 	setupProperties()
 		..()
 		setProperty("movespeed", -0.5)
@@ -607,9 +610,13 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	force = 8
 	throwforce = 18
 	throw_range = 10
-	flags = FPRINT | TABLEPASS | USEDELAY //| NOSHIELD
+	flags = TABLEPASS | USEDELAY //| NOSHIELD
 	desc = "Like many knives, these can be thrown. Unlike many knives, these are made to be thrown."
 	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+	item_state = "knife"
+	New()
+		..()
+		setItemSpecial(/datum/item_special/simple)
 	gang
 		name = "familiar fighting knife"
 		force = 17
@@ -638,6 +645,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
 	icon_state = "teleport_knife"
+	throwforce = 10
+	throw_speed = 0.5
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -658,7 +667,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	w_class = W_CLASS_BULKY
 	throwforce = 8
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
 	force = 3
 	stamina_damage = 30
@@ -726,9 +735,9 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 7
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	desc = "An ancient and questionably effective weapon."
-	burn_type = 0
+	burn_remains = BURN_REMAINS_ASH
 	stamina_damage = 45
 	stamina_cost = 20
 	stamina_crit_chance = 60
@@ -751,7 +760,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
 	object_flags = NO_ARM_ATTACH
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"
 	stamina_damage = 65
@@ -816,7 +825,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_speed = 4
 	throw_range = 8
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -934,7 +943,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	contraband = 80
-	flags = FPRINT | CONDUCT | NOSHIELD | TABLEPASS | USEDELAY
+	flags = CONDUCT | NOSHIELD | TABLEPASS | USEDELAY
 	tool_flags = TOOL_CUTTING
 	stamina_damage = 50
 	stamina_cost = 45
@@ -990,7 +999,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	hitsound = null
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	flags = CONDUCT | TABLEPASS | USEDELAY
 	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
@@ -1092,7 +1101,7 @@ TYPEINFO(/obj/item/bat)
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/swipe)
+		src.setItemSpecial(/datum/item_special/swipe/baseball)
 		src.AddComponent(/datum/component/holdertargeting/baseball_bat_reflect)
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -1124,71 +1133,7 @@ TYPEINFO(/obj/item/bat)
 			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		return ..()
 
-/obj/item/switchblade
-	name = "switchblade"
-	desc = "Spring-loaded and therefore completely illegal in Space England."
-	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	item_state = ""
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "switchblade-idle"
-	hit_type = DAMAGE_BLUNT
-	force = 3
-	throwforce = 7
-	stamina_damage = 5
-	stamina_cost = 1
-	event_handler_flags = USE_GRAB_CHOKE
-	special_grab = /obj/item/grab
-	stamina_crit_chance = 5
-	var/active = FALSE
-	w_class = W_CLASS_SMALL
-	HELP_MESSAGE_OVERRIDE({"This knife can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it.\n
-	While unfolded, using this weapon's special attack grants increased critical chance & bleed effects."})
 
-	attack_self(mob/user)
-		toggle_active(user)
-		return ..()
-
-	proc/toggle_active(mob/user)
-		if (!active)
-			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
-			user.visible_message("<span class='combat bold'>[user] flips \the [src] open!</span>")
-			w_class = W_CLASS_NORMAL
-			active = TRUE
-			tool_flags = TOOL_CUTTING
-			item_state = "knife"
-			src.setItemSpecial(/datum/item_special/simple/bloodystab)
-			icon_state = "switchblade-open"
-			hit_type = DAMAGE_CUT
-			force = 10
-			stamina_crit_chance = 33
-			playsound(user, 'sound/items/blade_pull.ogg', 60, TRUE)
-		else if (!chokehold)
-			hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-			user.visible_message("<span class='combat bold'>[user] folds \the [src].</span>")
-			w_class = W_CLASS_SMALL
-			active = FALSE
-			item_state = ""
-			tool_flags = 0
-			src.setItemSpecial(/datum/item_special/simple)
-			icon_state = "switchblade-close"
-			hit_type = DAMAGE_BLUNT
-			stamina_crit_chance = 5
-			force = 3
-			playsound(user, 'sound/machines/heater_off.ogg', 40, TRUE)
-		user.update_inhands()
-		tooltip_rebuild = TRUE
-
-	afterattack(obj/O as obj, mob/user as mob)
-		if (O.loc == user && istype(O, /obj/item/clothing))
-			if (active)
-				toggle_active(user)
-			icon_state = "switchblade-idle"
-			boutput(user, "<span class='hint'>You hide the [src] inside \the [O]. (Use the snap emote while wearing the clothing item to retrieve it.)</span>")
-			user.u_equip(src)
-			src.set_loc(O)
-			src.dropped(user)
-		else
-			..()
 /////////////////////////////////////////////////// Ban me ////////////////////////////////////////////
 
 /obj/item/banme
@@ -1214,7 +1159,7 @@ TYPEINFO(/obj/item/bat)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_BULKY
 	force = 10
@@ -1301,7 +1246,7 @@ TYPEINFO(/obj/item/bat)
 		return 0
 	else
 		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] stabs the [src] into [his_or_her(user)] own chest, ripping out [his_or_her(user)] [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b>"))
 		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
 		user.TakeDamage("chest", 100, 0)
@@ -1462,7 +1407,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] cuts their own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] cuts [his_or_her(user)] own head clean off with the [src]! [pick("Holy shit", "Golly", "Wowie", "That's dedication", "What the heck")]!</b>"))
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
@@ -1503,7 +1448,7 @@ TYPEINFO(/obj/item/swords/captain)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
-		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b>"))
+		user.visible_message(SPAN_ALERT("<b>[user] places the horn end of the [src] up to [his_or_her(user)] head and sotfly honks it.</b>"))
 		SPAWN(1 SECOND)
 			if(prob(5))
 				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, FALSE, 0)
@@ -1524,7 +1469,7 @@ TYPEINFO(/obj/item/swords/captain)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = ONBELT
 	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
@@ -1555,7 +1500,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, SPAN_ALERT("The [W] can't fit into [src]."))
+			boutput(user, SPAN_ALERT("[W] can't fit into [src]."))
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
@@ -1829,7 +1774,6 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2_low"
 	item_state = "hadar_sword2"
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
@@ -1973,6 +1917,8 @@ obj/item/whetstone
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
+		src.setItemSpecial(/datum/item_special/heavy_swing)
+
 
 //Machete for The Slasher
 /obj/item/slasher_machete
@@ -1985,7 +1931,7 @@ obj/item/whetstone
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 15.0 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
-	flags = FPRINT | CONDUCT | TABLEPASS
+	flags = CONDUCT | TABLEPASS
 	c_flags = ONBELT
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
@@ -1996,7 +1942,7 @@ obj/item/whetstone
 	New()
 		. = ..()
 		START_TRACKING
-		src.setItemSpecial(/datum/item_special/swipe)
+		src.setItemSpecial(/datum/item_special/massacre/slasher)
 
 	disposing()
 		. = ..()
@@ -2084,7 +2030,7 @@ obj/item/whetstone
 	var/guard = null //! used to keep track of what melee properties we're using
 
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 	leaves_slash_wound = TRUE
@@ -2192,7 +2138,7 @@ obj/item/whetstone
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	color = "#4a996c"
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	flags = TABLEPASS | NOSHIELD | USEDELAY
 	force = 10
 	throwforce = 5
 	throw_speed = 1
@@ -2207,3 +2153,4 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+

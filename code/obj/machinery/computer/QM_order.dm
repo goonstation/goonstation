@@ -111,10 +111,45 @@
 																						 1px 1px 0 #000;}
 		</style>
 		<script type="text/javascript">
-			// same-page anchor "a href=#id" links dont work in byond
-			function scroll_to_id(h) {
-				var top = document.getElementById(h).offsetTop;
-				window.scrollTo(0, top);
+			function scroll_to_id(id) {
+				var element = document.getElementById(id);
+				if (element) {
+					var elementTop = element.getBoundingClientRect().top;
+					var currentTop = window.pageYOffset || document.documentElement.scrollTop;
+					var targetTop = elementTop + currentTop;
+
+					// Smooth scroll polyfill for IE11
+					function smoothScrollTo(endX, endY, duration) {
+						var startX = window.scrollX || window.pageXOffset;
+						var startY = window.scrollY || window.pageYOffset;
+						var startTime = new Date().getTime();
+
+						function easeInOutQuad(t, b, c, d) {
+							t /= d / 2;
+							if (t < 1) return c / 2 * t * t + b;
+							t--;
+							return -c / 2 * (t * (t - 2) - 1) + b;
+						}
+
+						function scroll() {
+							var currentTime = new Date().getTime();
+							var time = Math.min(1, ((currentTime - startTime) / duration));
+							var timeFunction = easeInOutQuad(time, 0, 1, 1);
+							window.scrollTo(
+								Math.ceil((timeFunction * (endX - startX)) + startX),
+								Math.ceil((timeFunction * (endY - startY)) + startY)
+							);
+
+							if (Math.abs(window.pageYOffset - endY) > 1) {
+								requestAnimationFrame(scroll);
+							}
+						}
+
+						scroll();
+					}
+
+					smoothScrollTo(0, targetTop, 600); // 600ms for the smooth scroll duration
+				}
 			}
 		</script>
 		"}

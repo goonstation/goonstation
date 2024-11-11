@@ -15,7 +15,7 @@
 	w_class = W_CLASS_TINY
 	pressure_resistance = 10
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 /obj/item/electronics/New()
 	..()
@@ -352,7 +352,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -364,7 +364,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -376,7 +376,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/turf/T = get_turf(F)
-		if(density_check && !T.can_crossed_by(F))
+		if(T.density || density_check && !T.can_crossed_by(F))
 			boutput(owner, SPAN_ALERT("There's no room to deploy the frame."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
@@ -855,6 +855,7 @@
 					if (istype(O.blueprint, /datum/manufacture/mechanics/))
 						if (!(!O.locked || src.allowed(usr) || src.olde))
 							return
+						logTheThing(LOG_STATION, usr, "printed manufactuerer blueprint for [O.item_type] from [src]")
 						usr.show_text("Print job started...", "blue")
 						var/datum/manufacture/mechanics/M = O.blueprint
 						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
@@ -867,6 +868,7 @@
 						return
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 					O.locked = !O.locked
+					logTheThing(LOG_STATION, usr, "[O.locked ? "" : "un"]locked rkit blueprint for [O.item_type]")
 					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
 						if(O.name == OP.name)
 							OP.locked = O.locked
@@ -898,7 +900,6 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 

@@ -131,7 +131,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("adminhelp_banner", "")
+					C.player.cloudSaves.deleteData("adminhelp_banner")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
@@ -143,7 +143,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("mentorhelp_banner", "")
+					C.player.cloudSaves.deleteData("mentorhelp_banner")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
@@ -155,7 +155,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.player.cloudSaves.putData("prayer_banner", "")
+					C.player.cloudSaves.deleteData("prayer_banner")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -247,6 +247,14 @@ var/global/noir = 0
 		if ("toggle_skip_manifest")
 			if (src.level >= LEVEL_MOD)
 				src.skip_manifest = !skip_manifest
+				src.show_pref_window(usr)
+		if ("toggle_hide_offline")
+			if (src.level >= LEVEL_MOD)
+				src.hide_offline_indicators = !hide_offline_indicators
+				src.show_pref_window(usr)
+		if ("toggle_slow_stat")
+			if (src.level >= LEVEL_MOD)
+				src.slow_stat = !slow_stat
 				src.show_pref_window(usr)
 		if ("toggle_auto_stealth")
 			if (src.level >= LEVEL_SA)
@@ -1490,24 +1498,47 @@ var/global/noir = 0
 				if (A)
 					usr.client.check_reagents_internal(A, refresh = 1)
 
+		if ("checkreagent_add")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.addreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
+		if ("checkreagent_flush")
+			if (src.level >= LEVEL_SA)
+				var/atom/A = locate(href_list["target"])
+				if (A)
+					usr.client.flushreagents(A)
+					usr.client.check_reagents_internal(A, refresh = 1)
+
 		if ("removereagent")
-			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
-				var/mob/M = locate(href_list["target"])
+			// similar to /client/proc/addreagents, but in a different place.
+			// originally limited to mobs, but i made it any atoms
+			if (src.level < LEVEL_SA)
+				tgui_alert(usr, "You need to be at least a Secondary Administrator to remove reagents.")
+				return
 
-				if (!M.reagents) // || !target.reagents.total_volume)
-					boutput(usr, SPAN_NOTICE("<b>[M] contains no reagents.</b>"))
-					return
-				var/datum/reagents/reagents = M.reagents
+			var/atom/A = locate(href_list["target"])
 
+			if (!A.reagents) // || !target.reagents.total_volume)
+				boutput(usr, SPAN_NOTICE("<b>[A] contains no reagents.</b>"))
+				return
+			var/datum/reagents/reagents = A.reagents
+
+			var/pick_id
+			var/pick
+			if (href_list["skip_pick"])
+				pick_id = href_list["skip_pick"]
+				pick = href_list["skip_pick"]
+			else
 				var/list/target_reagents = list()
-				var/pick
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 					target_reagents += current_reagent.name
 				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
-				var/pick_id
 				if(!isnull(reagents.reagent_list[pick]))
 					pick_id = pick
 				else
@@ -1517,24 +1548,24 @@ var/global/noir = 0
 							pick_id = current_reagent.id
 							break
 
-				if (pick_id)
-					var/string_version
+			if (!pick_id)
+				return
 
-					var/amt = input("How much of [pick]?","Remove Reagent") as null|num
-					if(!amt || amt < 0)
-						return
+			var/amt = input("How much of [pick]?", "Remove Reagent") as null|num
+			if (!amt || amt < 0)
+				return
 
-					if (M.reagents)
-						M.reagents.remove_reagent(pick_id,amt)
+			if (A.reagents)
+				if (!A.reagents.remove_reagent(pick_id,amt))
+					boutput(usr, SPAN_ALERT("Failed to remove [amt] units of [pick_id] from [A.name]."))
+					return
 
-					if (string_version)
-						string_version = "[string_version], [amt] \"[pick]\""
-					else
-						string_version = "[amt] \"[pick]\""
+			boutput(usr, SPAN_SUCCESS("Removed [amt] units of [pick_id] from [A]."))
 
-					message_admins("[key_name(usr)] removed [string_version] from [M.real_name].")
-			else
-				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to affect player reagents.")
+			// Brought in line with adding reagents via the player panel (Convair880).
+			logTheThing(LOG_ADMIN, src, "removed [amt] units of [pick_id] from [A] at [log_loc(A)].")
+			if (ismob(A))
+				message_admins("[key_name(src)] removed [amt] units of [pick_id] from [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
 		if ("possessmob")
 			if( src.level >= LEVEL_PA )
@@ -1688,7 +1719,7 @@ var/global/noir = 0
 				if (!trait_to_add_name)
 					return // user canceled
 				M.onProcCalled("addTrait", list(all_traits[trait_to_add_name]))
-				M.traitHolder.addTrait(all_traits[trait_to_add_name])
+				M.traitHolder.addTrait(all_traits[trait_to_add_name], force_trait=TRUE)
 				message_admins("[key_name(usr)] added the trait [trait_to_add_name] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added the trait [trait_to_add_name] to [constructTarget(M,"admin")].")
 				if (origin == "managetraits")//called via trait management panel
@@ -2119,9 +2150,13 @@ var/global/noir = 0
 									if(ispath(path, /turf))
 										var/turf/T = locate(0 + X,0 + Y,0 + Z)
 										thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+										thing.set_dir(direction ? direction : SOUTH)
 									else
-										thing = new path(locate(0 + X,0 + Y,0 + Z))
-									thing.set_dir(direction ? direction : SOUTH)
+										new /dmm_suite/preloader(locate(X, Y, Z), list("dir" = direction ? direction : SOUTH))
+										thing = new path(locate(X, Y, Z))
+										if(isobj(thing))
+											var/obj/O = thing
+											O.initialize(TRUE)
 									LAGCHECK(LAG_LOW)
 
 							if ("relative")
@@ -2131,9 +2166,13 @@ var/global/noir = 0
 										if(ispath(path, /turf))
 											var/turf/T = locate(loc.x + X,loc.y + Y,loc.z + Z)
 											thing = T.ReplaceWith(path, FALSE, TRUE, FALSE, TRUE)
+											thing.set_dir(direction ? direction : SOUTH)
 										else
+											new /dmm_suite/preloader(locate(loc.x + X,loc.y + Y,loc.z + Z), list("dir" = direction ? direction : SOUTH))
 											thing = new path(locate(loc.x + X,loc.y + Y,loc.z + Z))
-										thing.set_dir(direction ? direction : SOUTH)
+											if(isobj(thing))
+												var/obj/O = thing
+												O.initialize(TRUE)
 										LAGCHECK(LAG_LOW)
 								else
 									return
@@ -2679,6 +2718,35 @@ var/global/noir = 0
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator to change player abilities.")
 							return
+					if ("setstatuseffect_one")
+						if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+							var/mob/M = tgui_input_list(owner, "Which player?","Set StatusEffect", sortNames(mobs))
+							//this doesn't seem to work I give up.
+							if (!istype(M))
+								return
+
+							var/list/L = list()
+							for(var/R in concrete_typesof(/datum/statusEffect))
+								L += R
+							sortList(L, /proc/cmp_text_asc)
+							var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
+
+							if (!effect)
+								return
+
+							var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+							if (isnull(duration))
+								return
+
+							if (duration <= 0)
+								M.delStatus(initial(effect.id))
+								message_admins("[key_name(usr)] removed the [initial(effect.id)] status-effect from [key_name(M)].")
+							else
+								M.setStatus(initial(effect.id), duration SECONDS)
+								message_admins("[key_name(usr)] added the [initial(effect.id)] status-effect on [key_name(M)] for [duration] seconds.")
+
+						else
+							tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
 
 					if ("add_reagent_one","remove_reagent_one")
 						if (src.level >= LEVEL_PA)
@@ -2781,6 +2849,34 @@ var/global/noir = 0
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator to change player abilities.")
 							return
+					if ("setstatuseffect_all")
+						if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
+							var/list/L = list()
+							for(var/R in concrete_typesof(/datum/statusEffect))
+								L += R
+							sortList(L, /proc/cmp_text_asc)
+							var/datum/statusEffect/effect = tgui_input_list(usr, "Which Status Effect?", "Give Status Effect", L)
+
+							if (!effect)
+								return
+
+							var/duration = input("Duration (in seconds)?","Status Effect Duration") as null|num
+							if (isnull(duration))
+								return
+
+
+							if (duration <= 0)
+								for(var/mob/living/carbon/human/M in mobs)
+									M.delStatus(initial(effect.id))
+								message_admins("[key_name(usr)] removed the [initial(effect.id)] status-effect from everyone.")
+							else
+								for(var/mob/living/carbon/human/M in mobs)
+									M.setStatus(initial(effect.id), duration SECONDS)
+
+								message_admins("[key_name(usr)] added the [initial(effect.id)] status-effect on everyone for [duration] seconds.")
+
+						else
+							tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to statuseffect a player.")
 
 					if ("add_reagent_all","remove_reagent_all")
 						if (src.level >= LEVEL_PA)
@@ -3361,7 +3457,7 @@ var/global/noir = 0
 
 		if ("view_logs_web")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
-				usr << link("http://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html")
+				usr << link("[goonhub_href("/admin/logs/[roundId]")]")
 
 		if ("view_logs")
 			if ((src.level >= LEVEL_MOD) && !src.tempmin)
@@ -3381,17 +3477,6 @@ var/global/noir = 0
 				usr.Browse(adminLogHtml, "window=[logType]_log_[gettxt];size=750x500")
 			else
 				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
-
-		if ("view_logs_pathology_strain")
-			if (src.level >= LEVEL_MOD)
-				var/gettxt
-				if (href_list["presearch"])
-					gettxt = href_list["presearch"]
-				else
-					gettxt = input("Which pathogen tree?", "Pathogen tree") in pathogen_controller.pathogen_trees
-
-				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
-				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
@@ -3676,11 +3761,11 @@ var/global/noir = 0
 		switch(emergency_shuttle.location)
 			if(0)// centcom
 				if (emergency_shuttle.direction == 1)
-					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Coming to Station (ETA: [round(emergency_shuttle.timeleft())] sec)"
 				if (emergency_shuttle.direction == -1)
-					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft()/60)])"
+					shuttletext = "Returning to Centcom (ETA: [round(emergency_shuttle.timeleft())] sec)"
 			if(1)// ss13
-				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft()/60)])"
+				shuttletext = "Arrived at Station (ETD: [round(emergency_shuttle.timeleft())] sec)"
 			if(2)// evacuated
 				shuttletext = "Evacuated to Centcom"
 			else
@@ -3793,9 +3878,6 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_BOMBING]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log'>Signaler Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_SIGNALERS]_log_string'><small>(Search)</small></A><BR>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log'>Pathology Log</A>
-				<A href='?src=\ref[src];action=view_logs;type=[LOG_PATHOLOGY]_log_string'><small>(Search)</small></A>
-				<A href='?src=\ref[src];action=view_logs_pathology_strain'><small>(Find pathogen)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log'>Vehicle Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_VEHICLE]_log_string'><small>(Search)</small></A><br>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_CHEMISTRY]_log'>Chemistry Log</A>
@@ -3826,6 +3908,9 @@ var/global/noir = 0
 					<b>Remove Ability:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=remove_ability_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=remove_ability_all'>All</A><BR>
+					<b>Set StatusEffect:</b>
+						*
+						<A href='?src=\ref[src];action=secretsfun;type=setstatuseffect_all'>All</A><BR>
 					<b>Add Reagent<A href='?src=\ref[src];action=secretsfun;type=reagent_help'>*</a>:</b>
 						<A href='?src=\ref[src];action=secretsfun;type=add_reagent_one'>One</A> *
 						<A href='?src=\ref[src];action=secretsfun;type=add_reagent_all'>All</A><BR>
@@ -4114,6 +4199,9 @@ var/global/noir = 0
 					A = new chosen(usr.loc)
 				else
 					A = new chosen(get_turf(usr))
+				if(isobj(A))
+					var/obj/O = A
+					O.initialize(TRUE)
 				if (client.flourish)
 					spawn_animation1(A)
 			logTheThing(LOG_ADMIN, usr, "spawned [chosen] at ([log_loc(usr)])")

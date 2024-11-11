@@ -1,5 +1,6 @@
-obj/structure
+/obj/structure
 	icon = 'icons/obj/structures.dmi'
+	var/projectile_passthrough_chance = 0
 
 	girder
 		icon_state = "girder"
@@ -7,6 +8,7 @@ obj/structure
 		density = 1
 		material_amt = 0.2
 		var/state = 0
+		projectile_passthrough_chance = 50
 		desc = "A metal support for an incomplete wall."
 		HELP_MESSAGE_OVERRIDE({"
 			You can use a <b>crowbar</b> to displace it,
@@ -18,6 +20,7 @@ obj/structure
 			name = "displaced girder"
 			icon_state = "displaced"
 			anchored = UNANCHORED
+			projectile_passthrough_chance = 70
 			desc = "An unsecured support for an incomplete wall."
 			HELP_MESSAGE_OVERRIDE({"
 				You can use a <b>screwdriver</b> to seperate the metal into sheets,
@@ -28,6 +31,7 @@ obj/structure
 			name = "reinforced girder"
 			icon_state = "reinforced"
 			state = 2
+			projectile_passthrough_chance = 30
 			desc = "A reinforced metal support for an incomplete wall."
 			get_help_message(dist, mob/user)
 				if (src.state == 2)
@@ -55,6 +59,11 @@ obj/structure/ex_act(severity)
 		if(3)
 			return
 	return
+
+/obj/structure/girder/Cross(obj/projectile/mover)
+	if (istype(mover) && !mover.proj_data.always_hits_structures && prob(src.projectile_passthrough_chance))
+		return TRUE
+	return (!density)
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (user.is_hulk())
@@ -340,13 +349,22 @@ TYPEINFO(/obj/structure/woodwall)
 	density = 1
 	opacity = 1
 	material_amt = 0.5
-	var/health = 30
-	var/health_max = 30
+	projectile_passthrough_chance = 30
+	_health = 30
+	_max_health = 30
 	var/builtby = null
 	var/anti_z = 0
+	// for projectile damage component
+	var/projectile_gib = TRUE
+	var/projectile_gib_streak = FALSE
+
+	New()
+		src.AddComponent(/datum/component/obj_projectile_damage, src.type, src.projectile_gib, src.projectile_gib_streak)
+		. = ..()
 
 	virtual
 		icon = 'icons/effects/VR.dmi'
+		projectile_gib = FALSE // no virtual debris
 
 	anti_zombie
 		name = "anti-zombie barricade"
@@ -355,21 +373,34 @@ TYPEINFO(/obj/structure/woodwall)
 		get_desc()
 			..()
 			. += "Looks like normal spacemen can easily pull themselves over or crawl under it."
-	proc/checkhealth()
-		if (src.health <= 0)
+
+	changeHealth(var/change = 0)
+		var/prevHealth = _health
+		_health += change
+		_health = min(_health, _max_health)
+		if (prevHealth > _health)
+			playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
+		updateHealth(prevHealth)
+
+	updateHealth(var/prevHealth)
+		if (_health <= 0)
 			src.visible_message(SPAN_ALERT("<b>[src] collapses!</b>"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 100, 1)
-			qdel(src)
+			src.onDestroy()
 			return
-		else if (src.health <= 5)
+		else if (_health <= 5)
+			src.projectile_passthrough_chance = 90
 			icon_state = "woodwall4"
 			set_opacity(0)
-		else if (src.health <= 10)
+		else if (_health <= 10)
 			icon_state = "woodwall3"
+			src.projectile_passthrough_chance = 70
 			set_opacity(0)
-		else if (src.health <= 20)
+		else if (_health <= 20)
+			src.projectile_passthrough_chance = 50
 			icon_state = "woodwall2"
 		else
+			src.projectile_passthrough_chance = 30
 			icon_state = "woodwall"
 
 	attack_hand(mob/user)
@@ -377,13 +408,12 @@ TYPEINFO(/obj/structure/woodwall)
 			var/mob/living/carbon/human/H = user
 			if (src.anti_z && H.a_intent != INTENT_HARM && isfloor(get_turf(src)))
 				H.set_loc(get_turf(src))
-				if (health > 15)
+				if (_health > 15)
 					H.visible_message(SPAN_NOTICE("<b>[H]</b> [pick("rolls under", "jaunts over", "barrels through")] [src] slightly damaging it!"))
 					boutput(H, SPAN_ALERT("<b>OWW! You bruise yourself slightly!"))
 					playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
 					random_brute_damage(H, 5)
-					src.health -= rand(0,2)
-					checkhealth()
+					src.changeHealth(rand(0, -2))
 				return
 
 		if (ishuman(user))
@@ -395,10 +425,10 @@ TYPEINFO(/obj/structure/woodwall)
 			if (istype(H.mutantrace, /datum/mutantrace/zombie))
 				if(prob(40))
 					H.emote("scream")
-				src.health -= rand(0,2)
+				src.changeHealth(rand(0, -2))
 			else
-				src.health -= rand(1,3)
-			checkhealth()
+				src.changeHealth(rand(-1, -3))
+			hit_twitch(src)
 			return
 		else
 			return
@@ -409,10 +439,14 @@ TYPEINFO(/obj/structure/woodwall)
 			return
 		..()
 		user.lastattacked = src
-		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 100, 1)
-		src.health -= W.force
-		checkhealth()
+		src.changeHealth(-W.force)
+		hit_twitch(src)
 		return
+
+/obj/structure/woodwall/Cross(obj/projectile/mover)
+	if (istype(mover) && !mover.proj_data.always_hits_structures && prob(src.projectile_passthrough_chance))
+		return TRUE
+	return (!density)
 
 /datum/action/bar/icon/wood_repair_wall
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -450,18 +484,21 @@ TYPEINFO(/obj/structure/woodwall)
 		if (istype(source) && wood != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		if (prob(20))
+			hit_twitch(wall)
 			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 
 	onStart()
 		..()
+		hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		owner.visible_message(SPAN_NOTICE("[owner] begins repairing [wall]!"))
 
 	onEnd()
 		..()
 		owner.visible_message(SPAN_NOTICE("[owner] uses a [wood] to completely repair the [wall]!"))
+		hit_twitch(wall)
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		//do repair shit.
-		wall.health = wall.health_max
-		wall.checkhealth()
+		wall._health = wall._max_health
+		wall.updateHealth()
 		wood.change_stack_amount(-1)

@@ -103,7 +103,7 @@
 
 			if (OMNI_MODE_SCREWING)
 				set_icon_state("[prefix]-screwing")
-				src.setItemSpecial(/datum/item_special/simple)
+				src.setItemSpecial(/datum/item_special/jab)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
@@ -242,7 +242,7 @@
 			if(!(get_fuel() > 0))
 				src.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 
-		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing) && !istype(O, /obj/item/clothing/mask/cigarette))
 			boutput(user, SPAN_HINT("You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)"))
 			user.u_equip(src)
 			src.set_loc(O)

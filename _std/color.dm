@@ -12,6 +12,8 @@
 
 #define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
+#define hex_to_hsl_list(hex) rgb2num(hex, COLORSPACE_HSL)
+
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
 #define hex_to_rgb_list(hex) rgb2num(hex)
@@ -79,6 +81,13 @@
 																		0.0722,0.0722,0.0722,0.00,\
 																		0.00,  0.00,  0.00,  1.00,\
 																		0.00,  0.00,  0.00,  0.00)
+
+#define COLOR_MATRIX_SHADE_LABEL "shade"
+#define COLOR_MATRIX_SHADE list(0.4,0,0,0,\
+								0,0.4,0,0,\
+								0,0,0.4,0,\
+								0,0,0,1,\
+								0,0,0,0)
 
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please

@@ -431,7 +431,7 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 
 	///How far the interdictor constructed with this rod will extend its interdiction field. Also influences strength against non-localized phenomena.
 	var/interdist = 4
@@ -473,7 +473,7 @@ TYPEINFO(/obj/item/interdictor_board)
 	item_state = "electronic"
 	health = 6
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | CONDUCT
+	flags = TABLEPASS | CONDUCT
 	var/interdict_class = ITDR_STANDARD
 
 	nimbus

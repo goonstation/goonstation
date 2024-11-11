@@ -11,7 +11,7 @@ TYPEINFO(/obj/item/magtractor)
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
+	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	force = 10
 	throwforce = 10
 	throw_speed = 1

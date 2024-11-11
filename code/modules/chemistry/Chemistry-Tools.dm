@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	var/rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	tooltip_flags = REBUILD_SPECTRO | REBUILD_DIST
 	var/amount_per_transfer_from_this = 5
@@ -67,8 +67,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			src.reagents.add_reagent(src.initial_reagents, initial_volume)
 		src.initial_reagents = null // no mo, no mooooo
 
-	attack_self(mob/user as mob)
-		return
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 	attackby(obj/item/I, mob/user)
@@ -76,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			try_to_apply_lid(I, user)
 		if (reagents)
 			reagents.physical_shock(I.force)
-		return
+		return ..()
 	afterattack(obj/target, mob/user , flag)
 		return
 
@@ -95,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if(over_object == src)
 			return
 		if (!src.is_open_container(FALSE))
-			return
+			return ..()
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
@@ -177,7 +175,7 @@ proc/ui_describe_reagents(atom/A)
 			var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
 
 			contents.Add(list(list(
-				name = reagents_cache[reagent_id],
+				name = current_reagent.name,
 				id = reagent_id,
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
@@ -203,71 +201,29 @@ proc/ui_describe_reagents(atom/A)
 	var/splash_all_contents = 1
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden splashing of acid on stuff
 
-	/// The number of fluid overlay states that this container has.
-	var/fluid_overlay_states = 0
+	/// The icon file that this container should for fluid overlays.
+	var/container_icon = 'icons/obj/items/chemistry_glassware.dmi'
 	/// The icon state that this container should for fluid overlays.
 	var/container_style = null
+	/// The number of fluid overlay states that this container has.
+	var/fluid_overlay_states = 0
 	/// The scaling that this container's fluid overlays should use.
-	var/fluid_overlay_scaling = RC_FLUID_OVERLAY_SCALING_LINEAR
+	var/fluid_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR
 
 	New()
 		. = ..()
 		src.container_style ||= src.icon_state
-		src.UpdateIcon()
-
-	on_reagent_change()
-		. = ..()
-		src.UpdateIcon()
-
-	update_icon()
-		. = ..()
-		src.update_fluid_overlays()
-
-	proc/update_fluid_overlays()
-		if (!src.fluid_overlay_states)
-			return
-
-		var/fluid_state = src.get_fluid_state()
-
-		if (fluid_state)
-			var/image/fluid_image = image('icons/obj/items/chemistry_glassware.dmi', "f-[src.container_style]-[fluid_state]")
-			var/datum/color/average = reagents.get_average_color()
-			average.a = max(average.a, RC_MINIMUM_REAGENT_ALPHA)
-			fluid_image.color = average.to_rgba()
-			src.UpdateOverlays(fluid_image, "fluid_image")
-		else
-			src.UpdateOverlays(null, "fluid_image")
-
-	/// Returns the numerical fluid state of this container.
-	proc/get_fluid_state()
-		// Show no fluid state only if the container is completely empty.
-		if (src.reagents.total_volume <= 0)
-			return 0
-
-		// Show the last fluid state only if the container is full.
-		if (src.reagents.total_volume >= src.reagents.maximum_volume)
-			return src.fluid_overlay_states
-
-		var/normalised_fluid_height = 0
-		var/normalised_volume = src.reagents.total_volume / src.reagents.maximum_volume
-		switch (src.fluid_overlay_scaling)
-			// Volume of liquid will be directly proportional to height, so setting total volume to 1, the normalised height will be equal to the ratio.
-			if (RC_FLUID_OVERLAY_SCALING_LINEAR)
-				normalised_fluid_height = normalised_volume
-
-			// Vₛ = volume of sphere, r = radius of sphere, Vₗ = volume of liquid inside of sphere, h = height of liquid.
-			// `Vₗ = ∫ π(r² - (z - r)²) dx` with lower and upper limits of 0 and h respectively gives the equation `Vₗ = πh²(r - h/3)`.
-			// `Vₗ = πh²(r - h/3)` is very closely approximated by `Vₗ = -0.5Vₛ(cos(h(π / 2r)) - 1)` for 0 <= h <= 2r.
-			// This permits us to efficiently solve for h without the need for the cubic formula: `h = (2r / π) * arccos(1 - 2(Vₗ / Vₛ))`
-			// Setting Vₛ = 1 and normalising h to a range of 0-1 gives: `h = arccos(1 - 2Vₗ) / π`
-			// Converting from radians to degrees: `h = arccos(1 - 2Vₗ) / 180`
-			if (RC_FLUID_OVERLAY_SCALING_SPHERICAL)
-				normalised_fluid_height = arccos(1 - (2 * normalised_volume)) / 180
-
-		return clamp(round(normalised_fluid_height * src.fluid_overlay_states, 1), 1, src.fluid_overlay_states - 1)
+		if (src.fluid_overlay_states > 0)
+			src.AddComponent( \
+				/datum/component/reagent_overlay, \
+				reagent_overlay_icon = src.container_icon, \
+				reagent_overlay_icon_state = src.container_style, \
+				reagent_overlay_states = src.fluid_overlay_states, \
+				reagent_overlay_scaling = src.fluid_overlay_scaling, \
+			)
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
@@ -339,7 +295,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container() && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
+		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container(TRUE) && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
@@ -597,6 +553,8 @@ proc/ui_describe_reagents(atom/A)
 				return 9
 			if("large_flask")
 				return 10
+			if("dropper_funnel")
+				return 10
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -611,7 +569,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
 	initial_volume = 120
-	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	flags = OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
@@ -754,7 +712,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 50
 	amount_per_transfer_from_this = 10
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/large
 	name = "large reagent glass"
@@ -763,7 +721,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"
@@ -787,20 +745,12 @@ proc/ui_describe_reagents(atom/A)
 		if (istype(container))
 			container.try_to_apply_lid(src, user)
 
-/obj/item/reagent_containers/glass/condenser
-	name = "chemical condenser"
-	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
-	icon = 'icons/obj/items/chemistry_glassware.dmi'
-	icon_state = "condenser"
+/obj/item/reagent_containers/glass/plumbing
+	name = "abstract glass plumbing object"
+	desc = "A set of glass tubes mysteriously spelling 'Call 1-800-CODER'."
 	amount_per_transfer_from_this = 10
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
-	splash_all_contents = FALSE
-	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
-	initial_volume = 100
-	accepts_lid = TRUE
-	fluid_overlay_states = 5
-	container_style = "condenser"
 	var/list/connected_containers = list() //! the containers currently connected to the condenser
 	var/max_amount_of_containers = 4
 
@@ -816,18 +766,17 @@ proc/ui_describe_reagents(atom/A)
 		if (src.loc != newloc && length(src.connected_containers))
 			src.remove_all_containers()
 		. = ..()
-
 	Move()
 		if(length(src.connected_containers))
 			src.remove_all_containers()
 		..()
+
 
 	attack_hand(var/mob/user)
 		if(length(src.connected_containers))
 			src.remove_all_containers()
 			boutput(user, SPAN_ALERT("You remove all connections to the [src.name]."))
 		..()
-
 	proc/try_adding_container(var/obj/container, var/mob/user)
 		if (!istype(src.loc, /turf/) || !istype(container.loc, /turf/)) //if the condenser or container isn't on the floor you cannot hook it up
 			return
@@ -842,14 +791,12 @@ proc/ui_describe_reagents(atom/A)
 		else
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
 		add_container(container)
-
 	proc/add_line(var/obj/container)
 		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 		result.lineImage.pixel_x = -src.pixel_x
 		result.lineImage.pixel_y = -src.pixel_y
 		result.lineImage.layer = src.layer+0.01
 		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
-
 
 	proc/add_container(var/obj/container)
 		//this is a mess but we need it to disconnect if ANYTHING happens
@@ -871,11 +818,28 @@ proc/ui_describe_reagents(atom/A)
 	proc/remove_container_xsig(datum/component/complexsignal, old_movable, new_movable)
 		src.remove_container(complexsignal.parent)
 
+	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+		src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 	proc/remove_all_containers()
 		for(var/obj/container in src.connected_containers)
 			remove_container(container)
 
-	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+/obj/item/reagent_containers/glass/plumbing/condenser
+	name = "chemical condenser"
+	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "condenser"
+	splash_all_contents = FALSE
+	object_flags = OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100
+	accepts_lid = TRUE
+	fluid_overlay_states = 5
+	container_style = "condenser"
+	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	Reaction products will flow equally to all connected glassware."})
+
+
+	try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
 		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 		else
@@ -909,6 +873,8 @@ proc/ui_describe_reagents(atom/A)
 		max_amount_of_containers = 4
 		/// orders the output containers, so key 1 = condenser output 1
 		var/container_order[4]
+		HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+		If a reaction creates multiple products, this condenser separates them in the order YELLOW->RED->GREEN->BLUE."})
 
 		add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 			var/obj/chosen_container
@@ -962,6 +928,90 @@ proc/ui_describe_reagents(atom/A)
 			src.container_order[id] = container
 			src.connected_containers.Add(container)
 
+
+/obj/item/reagent_containers/glass/plumbing/dropper
+	name = "dropper funnel"
+	desc = "A glass tube for adding reagents to containers at a customisable rate. Can be hooked up to many types of containers."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "dropper_funnel_off"
+	splash_all_contents = FALSE
+	object_flags = OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100
+	accepts_lid = TRUE
+	rc_flags = RC_VISIBLE | RC_SCALE | RC_SPECTRO
+	fluid_overlay_states = 8
+	container_style = "dropper_funnel"
+	var/open = FALSE
+	var/flow_rate = 1
+	HELP_MESSAGE_OVERRIDE({"Click and drag this onto other glassware to connect it.
+	Flow rate can be adjusted either in your hand, or with a <b>screwdriver</b>.
+	To pick this up, click and drag it onto your person."})
+
+	disposing()
+		src.remove_container()
+		. = ..()
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (ismob(over_object))
+			var/mob/user = over_object
+			if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
+				if (!user.put_in_hand(src))
+					return ..()
+		else
+			..()
+
+	add_line(var/obj/container)
+		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x-1, src.pixel_y-13, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+	attack_self(mob/user as mob)
+		if(current_lid)
+			boutput(user, SPAN_NOTICE("You pop the lid off of the [src]."))
+			remove_current_lid(user)
+		else
+			adjust_flow_rate(user)
+		return
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/screwdriver))
+			adjust_flow_rate(user)
+			user.visible_message(SPAN_NOTICE("[user.name] adjusts the flow rate of \the [src.name]."))
+			return
+		..()
+	process()
+		if (open)
+			for(var/obj/container in connected_containers)
+				src.reagents.trans_to(container, flow_rate)
+	set_loc(newloc, storage_check)
+		set_flow(FALSE)
+		. = ..()
+	Move()
+		set_flow(FALSE)
+		. = ..()
+	attack_hand(mob/user)
+		if (length(src.connected_containers) <= 0)
+			..()
+		else
+			src.add_fingerprint(user)
+			set_flow(!open)
+
+	proc/adjust_flow_rate(mob/user)
+		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate",flow_rate,10,1,FALSE,TRUE)
+		if (number && flow_rate != number)
+			flow_rate = number
+	proc/set_flow(var/desired_state)
+		if (!desired_state && open)
+			processing_items -= src
+			open = FALSE
+			flick("dropper_funnel_swoff",src)
+			icon_state = "dropper_funnel_off"
+		else if(desired_state && !open)
+			processing_items |= src
+			open = TRUE
+			flick("dropper_funnel_swon",src)
+			icon_state = "dropper_funnel_on"
 
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"
@@ -1343,3 +1393,72 @@ proc/ui_describe_reagents(atom/A)
 #undef BUNSEN_LOW
 #undef BUNSEN_MEDIUM
 #undef BUNSEN_HIGH
+
+/obj/item/reagent_containers/glass/vial
+	name = "vial"
+	desc = "A vial. Can hold up to 5 units."
+	icon = 'icons/obj/items/chemistry_glassware.dmi'
+	icon_state = "phial"
+	item_state = "vial"
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	accepts_lid = TRUE
+	fluid_overlay_states = 5
+	container_style = "phial"
+
+	New()
+		var/datum/reagents/R = new /datum/reagents(5)
+		R.my_atom = src
+		src.reagents = R
+		..()
+
+/obj/item/reagent_containers/glass/vial/plastic
+	name = "plastic vial"
+	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	can_recycle = FALSE
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/biodegradable)
+
+/obj/item/reagent_containers/glass/petridish
+	name = "Petri Dish"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "petri0"
+	desc = "A dish tailored hold pathogen cultures."
+	initial_volume = 40
+	rc_flags = 0
+	flags = TABLEPASS | CONDUCT | OPENCONTAINER
+
+/obj/item/bloodslide
+	name = "Blood Slide"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "slide0"
+	desc = "An item used by scientists and serial killers operating in the Miami area to store blood samples."
+
+	var/datum/reagent/blood/blood = null
+
+	flags = TABLEPASS | CONDUCT | NOSPLASH
+
+	New()
+		..()
+		var/datum/reagents/R = new /datum/reagents(5)
+		src.reagents = R
+
+	attackby(obj/item/I, mob/user)
+		return
+
+	on_reagent_change()
+		..()
+		reagents.maximum_volume = reagents.total_volume // This should make the blood slide... permanent.
+		if (reagents.has_reagent("blood") || reagents.has_reagent("bloodc"))
+			icon_state = "slide1"
+			desc = "The blood slide contains a drop of blood."
+			if (reagents.has_reagent("blood"))
+				blood = reagents.get_reagent("blood")
+			else if (reagents.has_reagent("bloodc"))
+				blood = reagents.get_reagent("bloodc")
+			if (blood == null)
+				boutput(usr, SPAN_ALERT("Blood slides are not working. This is an error message, please page 1-800-555-MARQUESAS."))
+				return
+		else
+			desc = "This blood slide is contaminated and useless."

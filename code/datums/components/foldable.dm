@@ -82,7 +82,7 @@ TYPEINFO(/datum/component/foldable)
 	icon_state = "briefcase"
 	desc = "A briefcase."
 	HELP_MESSAGE_OVERRIDE("Can be <b>unfolded</b> in the right click menu to reveal its contents.")
-	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
+	flags = TABLEPASS | CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4
@@ -138,3 +138,8 @@ TYPEINFO(/datum/component/foldable)
 	blue_green_stripe
 		icon_state = "hopcaseC"
 		item_state = "hopcaseC"
+	syndicate
+		w_class = W_CLASS_NORMAL //So you can fit it in your backpack
+		icon_state = "syndiecase"
+		item_state = "syndiecase"
+

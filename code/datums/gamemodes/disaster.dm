@@ -10,8 +10,13 @@
 	var/const/waittime_h = 1600
 	//Time until the shuttle can be called.
 	var/const/shuttle_waittime = 4000
+	/// We have to hold a ref to this here or it'll GC and delete itself
+	var/datum/allocated_region/HTR_shuttle = null
 
 /datum/game_mode/disaster/pre_setup()
+	src.HTR_shuttle = get_singleton(/datum/mapPrefab/allocated/htr_team).load()
+	message_admins("HTR vessel generated at [log_loc(src.HTR_shuttle.bottom_left)].")
+
 	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 1)
 	if (length(candidates))
 		var/datum/mind/twraith = pick(candidates) // Just one for now
@@ -49,7 +54,7 @@
 			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
 			var/list/JUNK = landmarks[LANDMARK_HALLOWEEN_SPAWN]
 			for(var/turf/T in CORPSES)
-				var/obj/decal/fakeobjects/skeleton/S = new/obj/decal/fakeobjects/skeleton(T)
+				var/obj/fakeobject/skeleton/S = new/obj/fakeobject/skeleton(T)
 				S.name = "corpse"
 				S.desc = "The mangled body of some poor [pick("chump","sap","chap","crewmember","jerk","dude","lady","idiot","employee","oaf")]."
 				S.icon = 'icons/misc/hstation.dmi'

@@ -24,6 +24,7 @@
 	var/dist_travelled = 0
 	var/speed_error = 0
 	var/throw_type
+	var/stops_on_mob_hit = TRUE
 
 	New(atom/movable/thing, atom/target, error, speed, dx, dy, dist_x, dist_y, range,
 			target_x, target_y, matrix/transform_original, list/params, turf/thrown_from, mob/thrown_by, atom/return_target,

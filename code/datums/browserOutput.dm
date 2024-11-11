@@ -93,8 +93,6 @@ var/global
 			var/list/chatResources = list(
 				"browserassets/vendor/js/jquery.min.js",
 				"browserassets/js/errorHandler.js",
-				//"browserassets/vendor/js/array.generics.min.js",
-				//"browserassets/vendor/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
@@ -209,7 +207,7 @@ var/global
 				//Add evasion ban details
 				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
 				bansHandler.addDetails(
-					ban,
+					ban.id,
 					TRUE,
 					"bot",
 					src.owner.ckey,
@@ -293,9 +291,9 @@ var/global
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", data)
 
-/datum/chatOutput/proc/playMusic(url, volume)
+/datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100))
+	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)
@@ -436,6 +434,8 @@ var/global
 	else if (ismind(target) && target:current)
 		C = target:current:client
 	else
+		if (ismobcritter(target) || istype(target, /obj/machinery/bot/)) // These act like clients a lot through logic, and get tons of messages.
+			return
 		CRASH("boutput called with incorrect target [target]")
 
 	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)

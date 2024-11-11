@@ -5,7 +5,11 @@ TYPEINFO(/obj/machinery/cell_charger)
 	name = "cell charger"
 	desc = "A charging unit for power cells."
 	icon = 'icons/obj/power.dmi'
-	icon_state = "ccharger0"
+	#ifdef IN_MAP_EDITOR
+	icon_state = "ccharger-map"
+	#else
+	icon_state = "ccharger"
+	#endif
 	var/obj/item/cell/charging = null
 	var/chargerate = 250 // power per tick
 	var/chargelevel = -1
@@ -33,19 +37,20 @@ TYPEINFO(/obj/machinery/cell_charger)
 		UpdateIcon()
 
 /obj/machinery/cell_charger/update_icon()
-	icon_state = "ccharger[charging ? 1 : 0]"
-
-	if(charging && !(status & (BROKEN|NOPOWER)) )
-
-		var/newlevel = 	round( charging.percent() * 4.0 / 99 )
-		//boutput(world, "nl: [newlevel]")
-
-		if(chargelevel != newlevel)
-			src.UpdateOverlays(image('icons/obj/power.dmi', "ccharger-o[newlevel]"), "charge")
-
-			chargelevel = newlevel
+	if(charging)
+		UpdateOverlays(image(charging.icon, charging.icon_state, layer = src.layer + 0.1, pixel_x = 3, pixel_y = 1), "cell") //offsets to seat the cell properly on the base
+		UpdateOverlays(image('icons/obj/power.dmi', "ccharger_filled", layer = src.layer + 0.2), "wires")
+		if (!(status & (BROKEN|NOPOWER)))
+			var/newlevel = 	round( charging.percent() * 4.0 / 99 )
+			if(chargelevel != newlevel)
+				UpdateOverlays(image('icons/obj/power.dmi', "ccharger-o[newlevel]"), "indicator")
+				chargelevel = newlevel
+		else
+			UpdateOverlays(null, "indicator")
 	else
-		src.UpdateOverlays(null, "charge")
+		UpdateOverlays(image('icons/obj/power.dmi', "ccharger_empty"), "wires")
+		UpdateOverlays(null, "indicator")
+		UpdateOverlays(null, "cell")
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
 	add_fingerprint(user)

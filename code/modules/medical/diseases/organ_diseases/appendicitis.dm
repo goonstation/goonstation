@@ -8,6 +8,7 @@
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
+	can_be_asymptomatic = FALSE
 	var/robo_restart = 0
 
 /datum/ailment/disease/appendicitis/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
@@ -48,7 +49,7 @@
 			if (probmult(10))
 				var/vomit_message = SPAN_ALERT("[H] suddenly and violently vomits!")
 				H.vomit(0, null, vomit_message)
-			else if (probmult(2) && !H.reagents?.has_reagent("promethazine"))
+			else if (probmult(2) && HAS_ATOM_PROPERTY(H, PROP_MOB_CANNOT_VOMIT))
 				H.visible_message(SPAN_ALERT("[H] vomits blood!"))
 				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))
@@ -67,7 +68,7 @@
 		if (3)
 			if (probmult(20))
 				H.emote(pick("twitch", "groan"))
-			//human's appendix burst, and add a load of toxic chemicals or bacteria to the person.
+			//human's appendix burst, and add a load of toxic chemicals to the person.
 			if (probmult(10))
 				if (H.organHolder.appendix.get_damage() >= 90)
 					H.cure_disease(D)
@@ -78,23 +79,6 @@
 
 					if (prob(20))
 						H.reagents.add_reagent("toxin", 20)
-					#ifdef CREATE_PATHOGENS
-					add_pathogens(H, 30)
-					#endif
 					boutput(H, SPAN_ALERT("Your appendix has burst! Seek medical help!"))
 
 			H.take_toxin_damage(1 * mult)
-
-//stolen from the admin button because I know fuck all about pathogens - Kyle
-proc/add_pathogens(var/mob/living/A, var/amount)
-	if (!A || !A.reagents)
-		return 0
-
-	A.reagents.add_reagent("pathogen", amount)
-	var/datum/reagent/blood/pathogen/R = A.reagents.get_reagent("pathogen")
-	var/datum/pathogen/P = new /datum/pathogen
-	P.setup(1)
-	R.pathogens += P.pathogen_uid
-	R.pathogens[P.pathogen_uid] = P
-
-	return 1

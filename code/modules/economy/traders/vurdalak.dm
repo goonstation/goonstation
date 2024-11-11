@@ -9,16 +9,30 @@
 	chance_leave = 10
 	chance_arrive = 10
 
-	max_goods_buy = 3
-	max_goods_sell = 1
+	business_card = /obj/item/paper/businesscard/vurdulak
 
-	base_goods_buy = list(/datum/commodity/trader/vurdalak/meat,
-	/datum/commodity/trader/vurdalak/brains,
-	/datum/commodity/trader/vurdalak/deathweed,
-	/datum/commodity/trader/vurdalak/toxicvenne,
-	/datum/commodity/trader/vurdalak/amanita,
-	/datum/commodity/trader/vurdalak/roburger)
-	base_goods_sell = list(/datum/commodity/trader/vurdalak/artifact)
+	base_goods_buy = list(
+		TRADER_RARITY_COMMON = list(
+			/datum/commodity/trader/vurdalak/meat,
+			/datum/commodity/trader/vurdalak/brains,
+			/datum/commodity/trader/vurdalak/deathweed,
+			/datum/commodity/trader/vurdalak/toxicvenne,
+			/datum/commodity/trader/vurdalak/amanita,
+			/datum/commodity/trader/vurdalak/roburger
+		),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/vurdalak/obsidiancrown,
+			/datum/commodity/trader/vurdalak/ancientarmor,
+			/datum/commodity/trader/vurdalak/relic
+		)
+	)
+
+	base_goods_sell = list(
+		TRADER_RARITY_COMMON = list(),
+		TRADER_RARITY_UNCOMMON = list(),
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/vurdalak/artifact)
+	)
 
 	dialogue_greet = list("Well met. We have several items for sale, as well as several desired articles.",
 	"Greetings. We believe it would be mutually profitable for the both of us to engage in commerce.",
@@ -46,20 +60,6 @@
 	"We do not give charity. You require more credits.")
 	dialogue_out_of_stock = list("Unfortunatley, we no longer possess any of that item to sell.",
 	"Our stocks of that item have been exhausted.")
-
-	set_up_goods()
-		..()
-		var/datum/commodity/the_commodity = null
-		var/pickwhich = rand(1,3)
-		switch(pickwhich)
-			if(1)
-				the_commodity = /datum/commodity/trader/vurdalak/obsidiancrown
-			if(2)
-				the_commodity = /datum/commodity/trader/vurdalak/ancientarmor
-			if(3)
-				the_commodity = /datum/commodity/trader/vurdalak/relic
-		var/datum/commodity/COM = new the_commodity(src)
-		src.goods_buy += COM
 
 // Vurdalak is selling these things
 

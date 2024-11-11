@@ -1,9 +1,8 @@
 // how many possible network verification codes are there (i.e. how hard is it to bruteforce)
 #define NET_ACCESS_OPTIONS 32
 
-// power usage defines
+// power usage define
 #define OPEN_CLOSE_POWER_USAGE 50
-#define LINKED_FORCEFIELD_POWER_USAGE 100
 
 /// a global associative list of all airlocks linked together by cycling mechanisms. Indexed by ID
 var/global/list/cycling_airlocks = list()
@@ -755,7 +754,7 @@ var/global/list/cycling_airlocks = list()
 
 		return
 	else if (isscrewingtool(C))
-		if (src.hardened)
+		if (src.hardened || src.cant_hack)
 			boutput(user, SPAN_ALERT("Your tool can't pierce this airlock! Huh."))
 			return
 		if (!src.has_panel)
@@ -804,33 +803,10 @@ var/global/list/cycling_airlocks = list()
 		return
 
 	if ((src.density) && (!( src.welded ) && !( src.operating ) && ((!src.arePowerSystemsOn()) || (src.status & NOPOWER)) && !( src.locked )))
-		SPAWN( 0 )
-			src.operating = 1
-			play_animation("opening")
-			src.UpdateIcon(1)
-
-			sleep(src.operation_time)
-
-			src.set_density(0)
-
-			if (!istype(src, /obj/machinery/door/airlock/glass))
-				src.set_opacity(0)
-			src.operating = 0
-			src.UpdateIcon()
+		src.open(TRUE)
 
 	else if ((!src.density) && (!( src.welded ) && !( src.operating ) && !( src.locked )))
-		SPAWN( 0 )
-			src.operating = 1
-			play_animation("closing")
-			src.UpdateIcon(1)
-
-			src.set_density(1)
-			sleep(1.5 SECONDS)
-
-			if (src.visible)
-				src.set_opacity(1)
-			src.operating = 0
-			src.UpdateIcon()
+		src.close(TRUE)
 
 	else if (src.operating == -1) //broken
 		boutput(usr, SPAN_ALERT("You try to pry [src]  [src.density ? "open" : "closed"], but it won't budge! It seems completely broken!"))
@@ -857,40 +833,42 @@ var/global/list/cycling_airlocks = list()
 		if (!(src in cycling_airlocks[src.cycle_id]))
 			cycling_airlocks[src.cycle_id] += src
 
-/obj/machinery/door/airlock/open()
-	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
-		return 0
-	src.use_power(OPEN_CLOSE_POWER_USAGE)
-	if (src.linked_forcefield)
-		power_usage += LINKED_FORCEFIELD_POWER_USAGE
-	.= ..()
+/obj/machinery/door/airlock/open(var/manual_actuation = FALSE)
+	if (!manual_actuation)
+		if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+			return 0
+	if(!(src.status & NOPOWER))
+		src.use_power(OPEN_CLOSE_POWER_USAGE)
+	. = ..()
+	if(!manual_actuation)
+		playsound(src.loc, src.sound_airlock, 25, 1)
 
-	playsound(src.loc, src.sound_airlock, 25, 1)
+		if (src.cycle_id)
+			for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.cycle_id])
+				// if they share entry id, don't close, e.g. double doors facing space.
+				if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
+					continue
+				if (D.operating) //can happen with really short airlocks, see atlas south maint
+					SPAWN(0.5 SECONDS)
+						D.close()
+				else
+					D.close()
 
-	if (src.cycle_id)
-		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.cycle_id])
-			// if they share entry id, don't close, e.g. double doors facing space.
-			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
-				continue
-			D.close()
+/obj/machinery/door/airlock/close(var/manual_actuation = FALSE)
+	if(!manual_actuation)
+		if (src.welded || src.locked || src.operating || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+			return
 
-/obj/machinery/door/airlock/close()
-	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
-	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
-		if (src.linked_forcefield)
-			src.linked_forcefield.setactive(0)
-			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
-		return
-	if (src.welded || src.locked || src.operating)
-		return
-	src.use_power(OPEN_CLOSE_POWER_USAGE)
-	if (src.linked_forcefield)
-		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
-	if(!..(!src.safety))
-		if (src.sound_close_airlock)
-			playsound(src.loc, src.sound_close_airlock, 25, 1)
-		else
-			playsound(src.loc, src.sound_airlock, 25, 1)
+	var/already_closed = ..(!src.safety)
+
+	if (!already_closed)
+		if (!manual_actuation)
+			if (src.sound_close_airlock)
+				playsound(src.loc, src.sound_close_airlock, 25, 1)
+			else
+				playsound(src.loc, src.sound_airlock, 25, 1)
+		if(!(src.status & NOPOWER))
+			src.use_power(OPEN_CLOSE_POWER_USAGE)
 
 	return
 
@@ -1478,6 +1456,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 	else if(locked)
 		boutput(user, SPAN_ALERT("The door bolts are down!"))
 	else if(!density)
+		if (!src.safety)
+			logTheThing(LOG_COMBAT, user, "closes an airlock with a cut safety wire at [log_loc(src)]")
 		close()
 	else
 		open()
@@ -1513,5 +1493,4 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 
 // undefining stuff
 #undef NET_ACCESS_OPTIONS
-#undef LINKED_FORCEFIELD_POWER_USAGE
 #undef OPEN_CLOSE_POWER_USAGE

@@ -6,7 +6,7 @@ TYPEINFO(/obj/item/device/igniter)
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
 	var/status = 1
-	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
+	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
 	item_state = "electronic"
 	m_amt = 100
@@ -139,7 +139,7 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
 	if (!ismob(target) && target.reagents && can_ignite())
 		flick("igniter_light", src)
-		boutput(user, SPAN_NOTICE("You heat \the [target.name]"))
+		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
 		target.reagents.temperature_reagents(4000,400)
 		last_ignite = world.time
 

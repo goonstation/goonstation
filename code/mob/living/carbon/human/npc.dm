@@ -350,6 +350,7 @@
 			if(stop_fight)
 				ai_target = null
 				ai_set_state(AI_PASSIVE)
+				walk(src, null)
 				return
 
 
@@ -403,7 +404,7 @@
 				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
-					src.throw_item(ai_target, list("npc_throw"))
+					src.adjust_throw(src.throw_item(ai_target, list("npc_throw")))
 
 			if(distance <= 1 && (world.timeofday - ai_attacked) > 100 && !ai_incapacitated() && ai_meleecheck() && !A?.sanctuary)
 				//I can attack someone! =D
@@ -866,8 +867,7 @@
 	else return 0
 
 /mob/living/carbon/human/proc/ai_incapacitated()
-	if(stat || hasStatus(list("stunned", "unconscious", "knockdown")) || !sight_check(1)) return 1
-	else return 0
+	return is_incapacitated(src) || !sight_check(1)
 
 /mob/living/carbon/human/proc/ai_validpath()
 

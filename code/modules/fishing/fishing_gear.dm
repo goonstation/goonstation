@@ -45,7 +45,7 @@
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
-					return
+					return TRUE
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
 
@@ -460,7 +460,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "syndie_fishing_rod-inactive"
 	hit_type = DAMAGE_STAB
-	flags = FPRINT | TABLEPASS | USEDELAY
+	flags = TABLEPASS | USEDELAY
 	w_class = W_CLASS_NORMAL
 	force = 10
 	throwforce = 5
