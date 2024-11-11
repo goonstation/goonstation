@@ -46,6 +46,15 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
     () => onSelectGrouping(name),
     [onSelectGrouping, name],
   );
+  const priceRange =
+    cost_min === cost_max ? `${cost_min}⪽` : `${cost_min}⪽ - ${cost_max}⪽`;
+  const priceText = everythingIsFree ? (
+    <span>
+      Free <span style={{ opacity: '0.5' }}>({priceRange})</span>
+    </span>
+  ) : (
+    priceRange
+  );
 
   return (
     <Stack align="center" className={cn} onClick={handleClick} py={0.5}>
@@ -57,13 +66,7 @@ const BoothGroupingView = (props: BoothGroupingProps) => {
           <Stack.Item bold>
             <Stack>
               <Stack.Item grow>{name}</Stack.Item>
-              <Stack.Item>
-                {everythingIsFree
-                  ? `Free`
-                  : cost_min === cost_max
-                    ? `${cost_min}⪽`
-                    : `${cost_min}⪽ - ${cost_max}⪽`}
-              </Stack.Item>
+              <Stack.Item>{priceText}</Stack.Item>
             </Stack>
           </Stack.Item>
           {(grouping_tags.length || itemsCount > 1) && (

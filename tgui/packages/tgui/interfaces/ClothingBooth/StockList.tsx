@@ -210,6 +210,7 @@ const StockListView = (props: StockListProps) => {
               <Stack align="center" justify="space-between">
                 <Stack.Item grow>
                   <Input
+                    autoFocus
                     fluid
                     onInput={(_e: unknown, value: string) =>
                       setSearchText(value)
