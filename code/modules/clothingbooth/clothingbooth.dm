@@ -364,22 +364,15 @@
 // Blatantly stolen from `/datum/component/barber`.
 /obj/machinery/clothingbooth/proc/reference_clothes(mob/living/carbon/human/to_copy, mob/living/carbon/human/to_paste)
 	src.nullify_clothes(to_paste)
-	to_paste.wear_suit = SEMI_DEEP_COPY(to_copy.wear_suit)
-	to_paste.w_uniform = SEMI_DEEP_COPY(to_copy.w_uniform)
-	to_paste.shoes = SEMI_DEEP_COPY(to_copy.shoes)
-	to_paste.gloves = SEMI_DEEP_COPY(to_copy.gloves)
-	to_paste.glasses = SEMI_DEEP_COPY(to_copy.glasses)
-	to_paste.head = SEMI_DEEP_COPY(to_copy.head)
-	to_paste.wear_id = SEMI_DEEP_COPY(to_copy.wear_id)
+	to_paste.wear_suit = to_copy.wear_suit
+	to_paste.w_uniform = to_copy.w_uniform
+	to_paste.shoes = to_copy.shoes
+	to_paste.gloves = to_copy.gloves
+	to_paste.glasses = to_copy.glasses
+	to_paste.head = to_copy.head
+	to_paste.wear_id = to_copy.wear_id
 
 /obj/machinery/clothingbooth/proc/nullify_clothes(mob/living/carbon/human/to_nullify)
-	qdel(to_nullify.wear_suit)
-	qdel(to_nullify.w_uniform)
-	qdel(to_nullify.shoes)
-	qdel(to_nullify.gloves)
-	qdel(to_nullify.glasses)
-	qdel(to_nullify.head)
-	qdel(to_nullify.wear_id)
 	to_nullify.wear_suit = null
 	to_nullify.w_uniform = null
 	to_nullify.shoes = null
@@ -391,7 +384,7 @@
 /obj/machinery/clothingbooth/proc/equip_and_preview()
 	var/mob/living/carbon/human/preview_mob = src.preview.preview_thing
 	if (src.preview_item)
-		preview_mob.u_equip(src.preview_item)
+		preview_mob.vars[src.selected_grouping.slot] = null
 		src.clear_preview_item()
 	if (src.selected_item?.item_path)
 		var/obj/item/clothing/clothing_item = new src.selected_item.item_path
@@ -403,8 +396,7 @@
 	else
 		src.nullify_clothes(preview_mob)
 	if (src.preview_item)
-		preview_mob.u_equip(preview_mob.get_slot(src.selected_grouping.slot))
-		preview_mob.force_equip(src.preview_item, src.selected_grouping.slot)
+		preview_mob.vars[src.selected_grouping.slot] = src.preview_item //hehe hoohoo
 	var/datum/human_limbs/preview_mob_limbs = preview_mob.limbs
 	// Get those limbs!
 	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, src.occupant)
