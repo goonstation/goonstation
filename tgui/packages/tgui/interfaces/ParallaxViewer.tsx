@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { BooleanLike } from 'common/react';
 import {
   Box,
   Button,
@@ -28,7 +29,7 @@ interface ParallaxSourceProps {
   scroll_angle: number;
   x: number;
   y: number;
-  static_color;
+  static_colour: BooleanLike;
   color;
 }
 
@@ -52,8 +53,8 @@ type ParallaxViewerData = {
 };
 
 interface ColorMatrixProps {
-  byondRef;
-  group_key;
+  byondRef: string;
+  group_key: string;
   color;
 }
 
@@ -153,6 +154,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
             <LabeledList.Item label="icon">
               <Button
                 icon="pencil-alt"
+                tooltip="Select new icon"
                 onClick={() =>
                   act('modify_icon', {
                     byondRef: sourceData.byondRef,
@@ -194,7 +196,7 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
-                    type: 'value',
+                    type: 'parallax_value',
                     value: value,
                   })
                 }
@@ -277,15 +279,15 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
               />
             </LabeledList.Item>
 
-            <LabeledList.Item label="static_color">
+            <LabeledList.Item label="Static Colour">
               <Button.Checkbox
-                checked={sourceData.static_color}
+                checked={sourceData.static_colour}
                 onClick={() =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
-                    type: 'value',
-                    value: !sourceData.static_color,
+                    type: 'static_colour',
+                    value: !sourceData.static_colour,
                   })
                 }
                 // }
@@ -318,12 +320,23 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                     value={sourceData.color}
                     width="90px"
                     onInput={(e, value) =>
-                      act('modify_particle_value', {
-                        new_data: {
-                          name: name,
-                          value: value,
-                          type: 'color',
-                        },
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'color',
+                        value: value,
+                      })
+                    }
+                  />
+                  <Button
+                    icon="table-cells"
+                    tooltip="Convert to Matrix"
+                    onClick={() =>
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'color_to_matrix',
+                        value: sourceData.color,
                       })
                     }
                   />
@@ -348,15 +361,21 @@ const ParallaxTypeView = (props: ParallaxTypeProps) => {
         <>
           <Button
             icon="window-restore"
+            tooltip="Restore layer to defaults"
             onClick={() => act('default', { group: group_key })}
           >
             Defaults
           </Button>
           <Button
             icon="wand-magic-sparkles"
+            tooltip="Add Parallax Effect"
             onClick={() => act('canned', { group: group_key })}
           />
-          <Button icon="plus" onClick={() => act('add', { group: group_key })}>
+          <Button
+            icon="plus"
+            onClick={() => act('add', { group: group_key })}
+            tooltip="Add new layer"
+          >
             Add
           </Button>
         </>

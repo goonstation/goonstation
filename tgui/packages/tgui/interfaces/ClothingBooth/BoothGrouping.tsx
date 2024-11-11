@@ -10,7 +10,6 @@ import { classes } from 'common/react';
 import { memo, useCallback } from 'react';
 import { Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
 import { Image } from '../../components';
 import { GroupingTags } from './GroupingTags';
 import type { ClothingBoothGroupingData } from './type';
@@ -19,18 +18,18 @@ import { ClothingBoothData } from './type';
 type BoothGroupingProps = Pick<
   ClothingBoothGroupingData,
   'cost_min' | 'cost_max' | 'list_icon' | 'grouping_tags' | 'name' | 'slot'
-> & {
-  selected: boolean;
-  itemsCount: number;
-  onSelectGrouping: (itemGroupingName: string) => void;
-};
+> &
+  Pick<ClothingBoothData, 'everythingIsFree'> & {
+    selected: boolean;
+    itemsCount: number;
+    onSelectGrouping: (itemGroupingName: string) => void;
+  };
 
 const BoothGroupingView = (props: BoothGroupingProps) => {
-  const { data } = useBackend<ClothingBoothData>();
-  const { everythingIsFree } = data;
   const {
     cost_min,
     cost_max,
+    everythingIsFree,
     list_icon,
     itemsCount,
     grouping_tags,
@@ -92,6 +91,7 @@ export const BoothGrouping = memo(BoothGroupingView, (prevProps, nextProps) => {
   if (
     prevProps.cost_max !== nextProps.cost_max ||
     prevProps.cost_min !== nextProps.cost_min ||
+    prevProps.everythingIsFree !== nextProps.everythingIsFree ||
     prevProps.itemsCount !== nextProps.itemsCount ||
     prevProps.list_icon !== nextProps.list_icon ||
     prevProps.name !== nextProps.name ||
