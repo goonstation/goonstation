@@ -191,6 +191,18 @@
 		/datum/clothingbooth_grouping_tag/formality/costume
 	)
 
+/datum/clothingbooth_grouping/racing
+	name = "Racing Jumpsuit"
+	item_paths = list(
+		/datum/clothingbooth_item/w_uniform/racing/bee,
+		/datum/clothingbooth_item/w_uniform/racing/pink_and_blue,
+		/datum/clothingbooth_item/w_uniform/racing/blue_and_white,
+		/datum/clothingbooth_item/w_uniform/racing/purple_and_black,
+	)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume
+	)
+
 /datum/clothingbooth_grouping/shirt_and_jeans
 	name = "Shirt and Jeans"
 	item_paths = list(

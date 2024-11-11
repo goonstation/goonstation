@@ -204,6 +204,30 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 		swatch_background_color = "#fbdf35"
 		item_path = /obj/item/clothing/under/misc/sfjumpsuitbee
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/racing)
+/datum/clothingbooth_item/w_uniform/racing
+	cost = PAY_DOCTORATE/3
+
+	bee
+		name = "Bee"
+		swatch_background_color = "#fbdf35"
+		item_path = /obj/item/clothing/under/misc/racingsuitbee
+
+	pink_and_blue
+		name = "Pink and Blue"
+		swatch_background_color = "#EE1978"
+		item_path = /obj/item/clothing/under/misc/racingsuitpnk
+
+	blue_and_white
+		name = "Blue and White"
+		swatch_background_color = "#4A72E1"
+		item_path = /obj/item/clothing/under/misc/racingsuitrbw
+
+	purple_and_black
+		name = "Purple and Black"
+		swatch_background_color = "#BF2BF2"
+		item_path = /obj/item/clothing/under/misc/racingsuitprp
+
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_jeans)
 /datum/clothingbooth_item/w_uniform/shirt_and_jeans
 
