@@ -396,6 +396,7 @@
 	else
 		src.nullify_clothes(preview_mob)
 	if (src.preview_item)
+		//we don't want to actually EQUIP the thing so we can't use equip procs, we just want to copy the ref into the respective var, hence:
 		preview_mob.vars[src.selected_grouping.slot] = src.preview_item //hehe hoohoo
 	var/datum/human_limbs/preview_mob_limbs = preview_mob.limbs
 	// Get those limbs!
