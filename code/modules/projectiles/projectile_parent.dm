@@ -62,9 +62,9 @@
 	var/has_died = FALSE
 
 
-	/// x component of the projectile's (unit length) direction vector. EAST is positive, WEST is negative.
+	/// x component of the projectile's direction vector. EAST is positive, WEST is negative.
 	var/xo
-	/// y component of the projectile's (unit length) direction vector. NORTH is positive, SOUTH is negative.
+	/// y component of the projectile's direction vector. NORTH is positive, SOUTH is negative.
 	var/yo
 
 	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
@@ -76,9 +76,13 @@
 	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
 	/// TODO can maybe be replaced with a single dir check when relevant? not 100% sure why we need to track this always. Might be crucial, dunno
 	var/incidence = 0
-	/// No clue. Assoc list seems like? Also accessed as a non-assoc list sometimes. fuck. TODO
+
+	/// The list of precalculated turfs this projectile will try to cross, along with the tick count(?) when each turf should be crossed.
+	/// The structure of this list is pure Byond demon magic: it's an indexed list of key-value pairs that can be accessed like:
+	/// `var/turf/T = crossed[i]` OR `var/value = crossed[T]` where `T` is a turf in the list and `value` is the aforesaid tick count.
+	/// a thousand year curse on whoever thought this was a good idea, and Lummox for enabling them.
 	var/list/crossing = list()
-	/// No clue. Related to curr_t. TODO
+	/// For precalculated projectiles, how far along the `crossing` list have we reached
 	var/curr_t = 0
 
 	/// One of the two below vars needs to be renamed or removed. Fucking confusing
@@ -318,6 +322,8 @@
 
 		src.xo = src.xo / len
 		src.yo = src.yo / len
+
+		//recalculate the angle from the vector components, taking into account edge case trig weirdness
 		if (src.yo == 0)
 			if (src.xo < 0)
 				src.angle = -90
@@ -334,16 +340,17 @@
 			var/anglecheck = arcsin(src.xo / r)
 			if (anglecheck < 0)
 				src.angle = -src.angle
+
 		transform = matrix(src.proj_data.scale, src.proj_data.scale, MATRIX_SCALE)
 		Turn(angle)
 		if (!proj_data.precalculated)
-			src.was_setup = 1
+			src.was_setup = TRUE
 			return
 		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
-		var/xs = 1
+		var/xs = 1 //x sign?
 		var/y32 = 0
-		var/ys = 1
+		var/ys = 1 //y sign?
 		if (xo)
 			x32 = 32 / (speed * xo)
 			if (x32 < 0)
@@ -361,6 +368,7 @@
 		var/turf/T = get_turf(src)
 		var/cx = T.x
 		var/cy = T.y
+		//precalculate all the turfs this projectile will cross if able
 		while (ct < max_t)
 			if (next_x == 0 && next_y == 0)
 				break
@@ -379,7 +387,7 @@
 			crossing[Q] = ct
 
 		curr_t = 0
-		src.was_setup = 1
+		src.was_setup = TRUE
 
 	ex_act(severity)
 		return
