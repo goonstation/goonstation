@@ -1226,7 +1226,8 @@
 				P.ui_interact(usr)
 			else if(istype(I, /obj/item/poster/titled_photo))
 				var/obj/item/poster/titled_photo/W = I
-				W.examine(usr)
+				if (W.popup_win)
+					W.show_popup_win(usr)
 		show_window(usr, href_list["action"]) // to refresh the window
 
 	get_desc(dist)

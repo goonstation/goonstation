@@ -264,7 +264,8 @@ TYPEINFO(/obj/machinery/photocopier)
 				if(src.scan_peek == null)
 					src.scan_peek = create_wanted_poster(src.print_info)
 				var/obj/item/poster/titled_photo/W = src.scan_peek
-				W.examine(user)
+				if (W.popup_win)
+					W.show_popup_win(user)
 			if ("booklet")
 				if(src.scan_peek == null)
 					src.scan_peek = create_booklet()
@@ -486,7 +487,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		W.line_b3 = poster_info["line_b3"]
 		W.author = poster_info["author"]
 		var/list/plist = poster_info["plist"]
-		W.plist = plist?.Copy()
+		W.plist = plist.Copy()
 		return W
 	proc/create_booklet()
 		var/obj/item/paper_booklet/B = new/obj/item/paper_booklet(src)
@@ -791,7 +792,7 @@ TYPEINFO(/obj/machinery/photocopier)
 		scan_info["line_b2"] = W.line_b2
 		scan_info["line_b3"] = W.line_b3
 		scan_info["author"] = W.author
-		scan_info["plist"] = W.plist?.Copy()
+		scan_info["plist"] = W.plist.Copy()
 		scan_info["print_type"] = "poster_wanted"
 		return scan_info
 	proc/scan_booklet(var/obj/item/paper_booklet/B, var/mob/user)
