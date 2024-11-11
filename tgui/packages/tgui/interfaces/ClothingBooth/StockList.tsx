@@ -75,13 +75,10 @@ const useProcessCatalogue = (
   const catalogueItems = useMemo(() => Object.values(catalogue), [catalogue]);
   const affordableItemGroupings = useMemo(
     () =>
-      hideUnaffordable
-        ? everythingIsFree
-          ? catalogueItems
-          : catalogueItems.filter(
-              (catalogueGrouping) =>
-                cashAvailable >= catalogueGrouping.cost_min,
-            )
+      !everythingIsFree && hideUnaffordable
+        ? catalogueItems.filter(
+            (catalogueGrouping) => cashAvailable >= catalogueGrouping.cost_min,
+          )
         : catalogueItems,
     [cashAvailable, catalogueItems, hideUnaffordable],
   );
@@ -135,7 +132,11 @@ const useProcessCatalogue = (
 
 type StockListProps = Pick<
   ClothingBoothData,
-  'accountBalance' | 'cash' | 'catalogue' | 'selectedGroupingName'
+  | 'accountBalance'
+  | 'cash'
+  | 'catalogue'
+  | 'everythingIsFree'
+  | 'selectedGroupingName'
 > & {
   onOpenTagsModal: () => void;
   tagFilters: TagFilterLookup;
@@ -146,12 +147,12 @@ const StockListView = (props: StockListProps) => {
     accountBalance,
     cash,
     catalogue,
+    everythingIsFree,
     onOpenTagsModal,
     selectedGroupingName,
     tagFilters,
   } = props;
-  const { act, data } = useBackend<ClothingBoothData>();
-  const { everythingIsFree } = data;
+  const { act } = useBackend<ClothingBoothData>();
   const resolvedCashAvailable = (cash ?? 0) + (accountBalance ?? 0);
 
   const [hideUnaffordable, setHideUnaffordable] = useState(false);
@@ -265,6 +266,7 @@ const StockListView = (props: StockListProps) => {
           </Stack.Item>
           <Stack.Item grow>
             <StockListSection
+              everythingIsFree={everythingIsFree}
               onSelectGrouping={handleSelectGrouping}
               groupings={processedCatalogue}
               selectedGroupingName={selectedGroupingName}
@@ -279,13 +281,19 @@ const StockListView = (props: StockListProps) => {
 export const StockList = memo(StockListView);
 
 interface StockListSectionProps {
+  everythingIsFree: BooleanLike;
   groupings: ClothingBoothGroupingData[];
   onSelectGrouping: (name: string) => void;
   selectedGroupingName: string | null;
 }
 
 const StockListSectionView = (props: StockListSectionProps) => {
-  const { groupings, onSelectGrouping, selectedGroupingName } = props;
+  const {
+    everythingIsFree,
+    groupings,
+    onSelectGrouping,
+    selectedGroupingName,
+  } = props;
   return (
     <Section fill scrollable>
       {groupings.map((itemGrouping, itemGroupingIndex) => (
@@ -293,6 +301,7 @@ const StockListSectionView = (props: StockListSectionProps) => {
           {itemGroupingIndex > 0 && <Divider />}
           <BoothGrouping
             {...itemGrouping}
+            everythingIsFree={everythingIsFree}
             itemsCount={Object.keys(itemGrouping.clothingbooth_items).length}
             onSelectGrouping={onSelectGrouping}
             selected={selectedGroupingName === itemGrouping.name}

@@ -105,6 +105,7 @@ export const ClothingBooth = () => {
               accountBalance={accountBalance}
               cash={cash}
               catalogue={memoizedCatalogue}
+              everythingIsFree={everythingIsFree}
               onOpenTagsModal={handleOpenTagsModal}
               selectedGroupingName={selectedGroupingName}
               tagFilters={appliedTagFilters}
