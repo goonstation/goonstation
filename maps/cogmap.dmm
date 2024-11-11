@@ -20674,15 +20674,12 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "bty" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /obj/grille/catwalk,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -41060,25 +41057,11 @@
 	},
 /area/station/hallway/primary/east)
 "fna" = (
-/obj/table/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/chem_grenade/firefighting{
-	pixel_x = -5;
-	pixel_y = -2
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/cable{
-	icon_state = "0-4"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -42983,11 +42966,25 @@
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
 "gKk" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -5;
+	pixel_y = -2
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -59153,6 +59150,9 @@
 	name = "crematorium pipe"
 	},
 /obj/grille/catwalk,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -109478,7 +109478,7 @@ gUl
 sXY
 mxI
 rlw
-fna
+gKk
 tOb
 eAS
 cpX
@@ -110082,7 +110082,7 @@ nyD
 oLE
 gRG
 tXn
-gKk
+fna
 bCo
 bCo
 nEw
