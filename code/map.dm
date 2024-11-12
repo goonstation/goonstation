@@ -523,10 +523,12 @@ var/global/list/mapNames = list(
 
 	init()
 		for(var/datum/job/J in job_controls.staple_jobs)
-			if(J.map_can_autooverride && (J.name in job_start_locations))
+			if(!J.map_can_autooverride)
+				continue
+			if(J.name in job_start_locations)
 				J.limit = length(job_start_locations[J.name])
 				J.upper_limit = J.limit
-			else if(!(J.name in job_start_locations))
+			else
 				J.limit = 0 // Aint on the list, get out.
 				J.upper_limit = 0
 

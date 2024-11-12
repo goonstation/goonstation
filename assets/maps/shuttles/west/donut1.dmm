@@ -57,7 +57,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "bC" = (
-/obj/window/reinforced/north,
+/obj/window/reinforced/pyro{
+	dir = 1
+	},
 /obj/reagent_dispensers/watertank,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
@@ -374,7 +376,9 @@
 	},
 /area/shuttle/escape/centcom)
 "sq" = (
-/obj/window/reinforced/east,
+/obj/window/reinforced/pyro{
+	dir = 4
+	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "ss" = (
@@ -595,7 +599,9 @@
 	},
 /area/centcom/outside)
 "CM" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Dd" = (
@@ -724,26 +730,28 @@
 	},
 /area/centcom)
 "GS" = (
-/obj/window/reinforced/south,
+/obj/window/reinforced/pyro{
+	dir = 2
+	},
 /obj/item/extinguisher,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "GU" = (
 /obj/grille/steel,
-/obj/window/reinforced{
+/obj/window/reinforced/pyro{
 	dir = 4
 	},
-/obj/window/reinforced{
+/obj/window/reinforced/pyro{
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "He" = (
 /obj/grille/steel,
-/obj/window/reinforced{
+/obj/window/reinforced/pyro{
 	dir = 1
 	},
-/obj/window/reinforced{
+/obj/window/reinforced/pyro{
 	dir = 2
 	},
 /turf/unsimulated/floor/shuttle,
@@ -870,10 +878,10 @@
 /area/centcom/outside)
 "NJ" = (
 /obj/grille/steel,
-/obj/window/reinforced{
+/obj/window/reinforced/pyro{
 	dir = 2
 	},
-/obj/window/reinforced{
+/obj/window/reinforced/pyro{
 	dir = 1
 	},
 /turf/unsimulated/floor/shuttle,
@@ -1202,7 +1210,6 @@
 	},
 /obj/fakeobject/pipe{
 	desc = "It's a pipe manifold.";
-	dir = 6;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
 	icon_state = "manifold-map";
 	name = "pipe"
