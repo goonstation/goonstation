@@ -165,13 +165,18 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/poncho)
 /datum/clothingbooth_item/wear_suit/poncho
 	cost = PAY_UNTRAINED/1
 
+	poncho
+		name = "Poncho"
+		swatch_background_color = "#4C2417"
+		item_path = /obj/item/clothing/suit/poncho
+
 	flower
-		name = "Flower"
+		name = "Flower Poncho"
 		swatch_background_color = "#aa6e36"
 		item_path = /obj/item/clothing/suit/poncho/flower
 
 	leaf
-		name = "Leaf"
+		name = "Leaf Poncho"
 		swatch_background_color = "#aa6e36"
 		item_path = /obj/item/clothing/suit/poncho/leaf
 

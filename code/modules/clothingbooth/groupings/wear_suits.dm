@@ -89,8 +89,9 @@
 /datum/clothingbooth_grouping/poncho
 	name = "Poncho"
 	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/poncho/poncho,
 		/datum/clothingbooth_item/wear_suit/poncho/flower,
-		/datum/clothingbooth_item/wear_suit/poncho/leaf
+		/datum/clothingbooth_item/wear_suit/poncho/leaf,
 	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume

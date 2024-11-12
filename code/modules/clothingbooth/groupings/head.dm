@@ -45,7 +45,13 @@
 	)
 
 /datum/clothingbooth_grouping/mime_bowler
-	item_paths = list(/datum/clothingbooth_item/head/bowler)
+	item_paths = list(/datum/clothingbooth_item/head/mime_bowler)
+	grouping_tags = list(
+		/datum/clothingbooth_grouping_tag/formality/costume,
+	)
+
+/datum/clothingbooth_grouping/mime_beret
+	item_paths = list(/datum/clothingbooth_item/head/mime_beret)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
@@ -166,10 +172,10 @@
 		/datum/clothingbooth_grouping_tag/formality/casual,
 	)
 
-/datum/clothingbooth_grouping/maid
-	item_paths = list(/datum/clothingbooth_item/head/maid)
+/datum/clothingbooth_grouping/maid_headwear
+	item_paths = list(/datum/clothingbooth_item/head/maid_headwear)
 	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/costume,
+		/datum/clothingbooth_grouping_tag/formality/formal,
 	)
 
 /datum/clothingbooth_grouping/lace_veil

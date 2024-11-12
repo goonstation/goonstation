@@ -124,9 +124,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/beret)
 		swatch_background_color = "#3510b0"
 		item_path = /obj/item/clothing/head/frenchberet/blueberry
 
-/datum/clothingbooth_item/head/bowler
+/datum/clothingbooth_item/head/mime_bowler
 	cost = PAY_TRADESMAN/5
 	item_path = /obj/item/clothing/head/mime_bowler
+
+/datum/clothingbooth_item/head/mime_beret
+	cost = PAY_TRADESMAN/5
+	item_path = /obj/item/clothing/head/mime_beret
 
 /datum/clothingbooth_item/head/sailormoon
 	cost = PAY_TRADESMAN/5
@@ -342,7 +346,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/hairbow)
 		swatch_foreground_shape = SWATCH_POLKADOTS
 		item_path = /obj/item/clothing/head/hairbow/yellowpolkadot
 
-/datum/clothingbooth_item/head/maid
+/datum/clothingbooth_item/head/maid_headwear
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/head/maid
 
