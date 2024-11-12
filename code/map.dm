@@ -26,6 +26,7 @@ var/global/list/mapNames = list(
 
 	"Cogmap 1 (Old)" =		list("id" = "COGMAP_OLD",	"settings" = "cogmap_old"),
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Donut 1" =				list("id" = "DONUT1",		"settings" = "donut1",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
@@ -475,6 +476,62 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
 	)
+
+/datum/map_settings/donut1
+	name = "DONUT1"
+	goonhub_map = "/maps/donut2"
+	airlock_style = "pyro"
+	walls = /turf/simulated/wall/auto/old
+	rwalls = /turf/simulated/wall/auto/reinforced/old
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		)
+
+	escape_dir = WEST
+	default_shuttle = "donut1"
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
+
+	valid_nuke_targets = list("the engine control room" = list(/area/station/engine/monitoring),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the bridge" = list(/area/station/bridge),
+		"the bar" = list(/area/station/crew_quarters/bar),
+		"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+		"the brig" = list(/area/station/security/brig),
+		"the toxin lab" = list(/area/station/science/lab),
+		"the medbay" = list(/area/station/medical/medbay),
+		"the medical research bay (above medbay)" = list(/area/station/medical/research))
+
+	job_limits_from_landmarks = TRUE
+
+	init()
+		for(var/datum/job/J in job_controls.staple_jobs)
+			if(J.map_can_autooverride && (J.name in job_start_locations))
+				J.limit = length(job_start_locations[J.name])
+				J.upper_limit = J.limit
+			else if(!(J.name in job_start_locations))
+				J.limit = 0 // Aint on the list, get out.
+				J.upper_limit = 0
+
+		SPAWN(5 SECONDS)
+			src.load_shuttle()
 
 /datum/map_settings/donut2
 	name = "DONUT2"
