@@ -2919,7 +2919,7 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 		removal_msg = "Your blood curse has been lifted!"
 		var/could_bleed
 		var/blood_to_collect = 600
-		var/obj/artifact/curser/curser_art
+		var/datum/artifact/curser/curser
 
 		onAdd(optional)
 			..()
@@ -2927,7 +2927,7 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 			src.could_bleed = H.can_bleed
 			H.can_bleed = FALSE // curse steals all your blood
 			H.regens_blood = FALSE
-			src.curser_art = optional
+			src.curser = optional
 
 		onUpdate(timePassed)
 			..()
@@ -2941,7 +2941,7 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 					"You're reminded of your blood curse", "You have a pact to fulfill", "You're going to die unless blood is given", "Blood is required")))
 
 			if (H.blood_volume <= 0 || isdead(H))
-				H.visible_message(SPAN_ALERT("[user] spontaneously implodes!!! <b>HOLY FUCK!!</b>"))
+				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"))
 				for (var/i in 1 to rand(3, 4))
 					var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(H))
 					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
@@ -2949,13 +2949,14 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 				H.delStatus(src)
 				H.implode(TRUE)
 			else if (src.blood_to_collect <= 0)
-				src.curser_art.lift_curse()
+				src.curser.lift_curse()
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
 			if (src.could_bleed)
 				H.can_bleed = TRUE
 			H.regens_blood = TRUE
+			src.curser = null
 			..()
 
 	aging

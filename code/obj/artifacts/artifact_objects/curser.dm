@@ -60,11 +60,11 @@
 				continue
 			//if (H.hasStatus("art_talisman_held"))
 			//	boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse!"))
-			user.setStatus(src.chosen_curse)
+			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, null, src)
 			//if (src.chosen_curse == MAZE_CURSE)
 				//if (!src.created_maze)
 				//	src.create_maze(50)
-			src.active_cursees += H
+			src.active_cursees[H] = active_curse
 			if (src.chosen_curse == BLOOD_CURSE)
 				src.blood_curse_active = TRUE
 			else if (src.chosen_curse == AGING_CURSE)
@@ -83,7 +83,7 @@
 				user.blood_volume -= 100
 				boutput(user, SPAN_ALERT("You place your hand on the artifact, and it draws blood from you. Ouch..."))
 				for (var/mob/living/carbon/human/H in src.active_cursees)
-					var/datum/statusEffect/art_curse/blood/curse = H.getStatus(src.active_cursees[H])
+					var/datum/statusEffect/art_curse/blood/curse = H.getStatusList(src.active_cursees[H])
 					curse.blood_to_collect -= 100
 				return TRUE
 		else if (src.aging_curse_active)
@@ -104,17 +104,8 @@
 			return TRUE
 
 	proc/blood_curse_sacrifice(obj/O, mob/living/user)
-		boutput(user, SPAN_ALERT("[O] pulls you inside!!!"))
-		O.visible_message(SPAN_ALERT("<b>[O]</b> suddenly yanks [user] inside and blends them!!! <b>HOLY FUCK!!</b>"))
-		user.set_loc(get_turf(src))
-		user.gib(include_ejectables = FALSE)
-		for (var/i in 1 to rand(3, 4))
-			var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(O))
-			blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
-		playsound(O, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
-		src.blood_curse_active = FALSE
-
 		src.lift_curse(FALSE)
+
 	proc/lift_curse(do_playsound)
 		if (do_playsound)
 			playsound(src, 'sound/effects/lit.ogg', 70, TRUE)
