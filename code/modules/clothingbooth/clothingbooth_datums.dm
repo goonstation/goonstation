@@ -70,44 +70,6 @@ var/list/serialized_clothingbooth_tags = list()
 	global.serialized_clothingbooth_catalogue = serialized_catalogue_buffer
 	global.serialized_clothingbooth_tags = serialized_clothingbooth_tags_buffer
 
-ABSTRACT_TYPE(/datum/clothingbooth_item)
-/**
- * 	# `clothingbooth_item` datum
- *
- * 	A purchaseable item from the clothing booth. These are the constituent parts of a broader `clothingbooth_grouping`, though such groupings may - as
- * 	part of the organisational scheme of the clothing booth - contain only one item.
- */
-/datum/clothingbooth_item
-	///	The name of the item as shown on swatch tooltips. If not overridden, this is generated at runtime. Generally only consider overriding when
-	/// dealing with groupings of a length greater than one.
-	var/name = null
-	/// As per `clothing.dm`. The preview will try to equip this item in the provided slot, so it should match up!
-	var/slot = SLOT_W_UNIFORM
-	/// Cost of the given item in credits. Can vary across several members in a `clothingbooth_grouping`.
-	var/cost = 1
-	/// The type path of the actual item that is for purchase.
-	var/item_path = /obj/item/clothing/under/color/white
-
-	/// Hex representation of the swatch's primary swatch color. This must be manually overridden by all items if you don't want the hideous
-	/// placeholder.
-	var/swatch_background_color = "#ff00ff"
-	/// This will be the color of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined.
-	var/swatch_foreground_color = "#000000"
-	/// The name of the foreground shape to use, defined in `_std\defines\clothingbooth.dm`. Only necessary if differentiating between items within a
-	/// parent `clothingbooth_grouping` cannot be done with background colors alone.
-	var/swatch_foreground_shape = null
-
-	New()
-		..()
-		var/obj/item/clothing/item = new src.item_path
-		if (!src.name)
-			var/list/name_buffer = list()
-			var/list/split_name = splittext(initial(item.name), " ")
-			for (var/i in 1 to length(split_name))
-				name_buffer += capitalize(split_name[i])
-			src.name = jointext(name_buffer, " ")
-		src.cost = round(src.cost)
-
 ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 /**
  *	## `clothingbooth_grouping` datum
@@ -136,69 +98,96 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 	/// List of `clothingbooth_grouping_tag` datums, generated at runtime. Do not manually override.
 	var/list/datum/clothingbooth_grouping_tag/clothingbooth_grouping_tags = list()
 
-	New()
-		..()
-		// Scream if any of these vars are overridden.
-		var/overridden_var = null
-		if (src.list_icon)
-			overridden_var = "list_icon"
-		if (src.cost_min)
-			overridden_var = "cost_min"
-		if (src.cost_max)
-			overridden_var = "cost_max"
-		if (length(src.clothingbooth_items))
-			overridden_var = "clothingbooth_items"
-		if (length(src.clothingbooth_grouping_tags))
-			overridden_var = "clothingbooth_grouping_tags"
-		if (overridden_var)
-			CRASH("[src.name]'s [overridden_var] var has been overridden by something, this shouldn't happen!")
+/datum/clothingbooth_grouping/New()
+	..()
+	// Scream if any of these vars are overridden.
+	if (src.list_icon || src.cost_min || src.cost_max || length(src.clothingbooth_items) || length(src.clothingbooth_grouping_tags))
+		CRASH("A protected var in [src.name] has been overridden!")
 
-		// Instantiate all the constituent `clothingbooth_item` types in `src.item_paths`, append them to `src.clothingbooth_items`
-		var/last_item_slot // For checking if all the slots are the same.
-		for (var/clothingbooth_item_type in src.item_paths)
-			var/datum/clothingbooth_item/current_item = new clothingbooth_item_type
-			// Concrete types only.
-			if (IS_ABSTRACT(current_item))
-				continue
-			// Scream if something goes wrong.
-			if (src.clothingbooth_items[current_item.name])
-				CRASH("A clothingbooth_item with name [current_item.name] already exists within grouping [src.name]!")
-			if (current_item.slot != last_item_slot && last_item_slot)
-				CRASH("A clothingbooth_item with name [current_item.name] has a different slot defined than expected for grouping [src.name]!")
-			last_item_slot = current_item.slot
-			src.clothingbooth_items[current_item.name] = current_item
-		for (var/clothingbooth_grouping_tag in src.grouping_tags)
-			var/datum/clothingbooth_grouping_tag/current_tag = new clothingbooth_grouping_tag
-			if (IS_ABSTRACT(current_tag))
-				continue
-			if (src.clothingbooth_grouping_tags[current_tag.name])
-				CRASH("A clothingbooth_grouping_tag with name [current_tag.name] already exists within grouping [src.name]!")
-			src.clothingbooth_grouping_tags[current_tag.name] = current_tag
-		// Not needed after instantiation
-		src.item_paths = null
-		src.grouping_tags = null
+	// Instantiate all the constituent `clothingbooth_item` types in `src.item_paths`, append them to `src.clothingbooth_items`
+	var/last_item_slot // For checking if all the slots are the same.
+	for (var/clothingbooth_item_type in src.item_paths)
+		var/datum/clothingbooth_item/current_item = new clothingbooth_item_type
+		// Concrete types only.
+		if (IS_ABSTRACT(current_item))
+			continue
+		// Scream if something goes wrong.
+		if (src.clothingbooth_items[current_item.name])
+			CRASH("A clothingbooth_item with name [current_item.name] already exists within grouping [src.name]!")
+		if (current_item.slot != last_item_slot && last_item_slot)
+			CRASH("A clothingbooth_item with name [current_item.name] has a different slot defined than expected for grouping [src.name]!")
+		last_item_slot = current_item.slot
+		src.clothingbooth_items[current_item.name] = current_item
+	for (var/clothingbooth_grouping_tag in src.grouping_tags)
+		var/datum/clothingbooth_grouping_tag/current_tag = new clothingbooth_grouping_tag
+		if (IS_ABSTRACT(current_tag))
+			continue
+		if (src.clothingbooth_grouping_tags[current_tag.name])
+			CRASH("A clothingbooth_grouping_tag with name [current_tag.name] already exists within grouping [src.name]!")
+		src.clothingbooth_grouping_tags[current_tag.name] = current_tag
+	// Not needed after instantiation
+	src.item_paths = null
+	src.grouping_tags = null
 
-		// Iterate over constituent `clothingbooth_item`s.
-		for (var/current_item_index in src.clothingbooth_items)
-			var/datum/clothingbooth_item/current_member = src.clothingbooth_items[current_item_index]
-			// Determine maximum and minimum costs.
-			var/current_item_cost = current_member.cost
-			if (!src.cost_min || (current_item_cost < src.cost_min))
-				src.cost_min = current_item_cost
-			if (!src.cost_max || (current_item_cost > src.cost_max))
-				src.cost_max = current_item_cost
+	// Iterate over constituent `clothingbooth_item`s.
+	for (var/current_item_index in src.clothingbooth_items)
+		var/datum/clothingbooth_item/current_member = src.clothingbooth_items[current_item_index]
+		// Determine maximum and minimum costs.
+		var/current_item_cost = current_member.cost
+		if (!src.cost_min || (current_item_cost < src.cost_min))
+			src.cost_min = current_item_cost
+		if (!src.cost_max || (current_item_cost > src.cost_max))
+			src.cost_max = current_item_cost
 
-		// Generate `src.list_icon` for display on the catalogue.
-		var/datum/clothingbooth_item/first_clothingbooth_item = src.clothingbooth_items[src.clothingbooth_items[1]]
-		var/list_icon_atom_path = first_clothingbooth_item?.item_path ? first_clothingbooth_item.item_path : /obj/item/clothing/under/color/white
-		var/obj/item/dummy_atom = list_icon_atom_path
-		var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state), frame = 1)
-		src.list_icon = icon2base64(dummy_icon)
+	// Generate `src.list_icon` for display on the catalogue.
+	var/datum/clothingbooth_item/first_clothingbooth_item = src.clothingbooth_items[src.clothingbooth_items[1]]
+	var/list_icon_atom_path = first_clothingbooth_item?.item_path ? first_clothingbooth_item.item_path : /obj/item/clothing/under/color/white
+	var/obj/item/dummy_atom = list_icon_atom_path
+	var/icon/dummy_icon = icon(initial(dummy_atom.icon), initial(dummy_atom.icon_state), frame = 1)
+	src.list_icon = icon2base64(dummy_icon)
 
-		// If no name override for the group is specified, take it from the first item in the grouping.
-		if (!src.name)
-			src.name = first_clothingbooth_item.name
-		src.slot = first_clothingbooth_item.slot
+	// If no name override for the group is specified, take it from the first item in the grouping.
+	if (!src.name)
+		src.name = first_clothingbooth_item.name
+	src.slot = first_clothingbooth_item.slot
+
+ABSTRACT_TYPE(/datum/clothingbooth_item)
+/**
+ * 	# `clothingbooth_item` datum
+ *
+ * 	A purchaseable item from the clothing booth. These are the constituent parts of a broader `clothingbooth_grouping`, though such groupings may - as
+ * 	part of the organisational scheme of the clothing booth - contain only one item.
+ */
+/datum/clothingbooth_item
+	///	The name of the item as shown on swatch tooltips. If not overridden, this is generated at runtime. Generally only consider overriding when
+	/// dealing with groupings of a length greater than one.
+	var/name = null
+	/// As per `clothing.dm`. The preview will try to equip this item in the provided slot, so it should match up!
+	var/slot = SLOT_W_UNIFORM
+	/// Cost of the given item in credits. Can vary across several members in a `clothingbooth_grouping`.
+	var/cost = 1
+	/// The type path of the actual item that is for purchase.
+	var/item_path = /obj/item/clothing/under/color/white
+
+	/// Hex representation of the swatch's primary swatch color. This must be manually overridden by all items if you don't want the hideous
+	/// placeholder.
+	var/swatch_background_color = "#ff00ff"
+	/// This will be the color of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined.
+	var/swatch_foreground_color = "#000000"
+	/// The name of the foreground shape to use, defined in `_std\defines\clothingbooth.dm`. Only necessary if differentiating between items within a
+	/// parent `clothingbooth_grouping` cannot be done with background colors alone.
+	var/swatch_foreground_shape = null
+
+/datum/clothingbooth_item/New()
+	..()
+	var/obj/item/clothing/item = new src.item_path
+	if (!src.name)
+		var/list/name_buffer = list()
+		var/list/split_name = splittext(initial(item.name), " ")
+		for (var/i in 1 to length(split_name))
+			name_buffer += capitalize(split_name[i])
+		src.name = jointext(name_buffer, " ")
+	src.cost = round(src.cost)
 
 ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag)
 /**
