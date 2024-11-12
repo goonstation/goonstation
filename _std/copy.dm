@@ -1,4 +1,6 @@
 /// makes a sorta deep copy of a thing
+/// VERY DANGEROUS AND PRONE TO CAUSE IMPOSSIBLE TO DEBUG ISSUES, USE ONLY WITH EXTREME CAUTION AND IN CONTROLLED ENVIRONMENTS
+/// Seriously, don't use this, just make a copy proc!
 #define SEMI_DEEP_COPY(x) ((isnum(x) || istext(x) || isnull(x) || isclient(x) || isicon(x) || isfile(x) || ispath(x)) ? (x) : semi_deep_copy(x))
 
 // copy flags
