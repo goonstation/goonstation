@@ -167,7 +167,6 @@
 			hitlist.len = 0
 		is_processing = 1
 		while (!QDELETED(src))
-
 			do_step()
 			sleep(1 DECI SECOND) //Changed from 1, minor proj. speed buff
 		is_processing = 0
@@ -275,15 +274,11 @@
 		else
 			die()
 
-
 	proc/die()
 		has_died = TRUE
 		if (proj_data)
 			proj_data.on_end(src)
 		qdel(src)
-
-	proc/max_range_fail()
-
 
 	proc/set_icon()
 		if(istype(proj_data))
@@ -348,22 +343,22 @@
 			return
 		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
-		var/xs = 1 //x sign?
+		var/x_sign = 1
 		var/y32 = 0
-		var/ys = 1 //y sign?
+		var/y_sign = 1 //y sign?
 		if (xo)
 			x32 = 32 / (speed * xo)
 			if (x32 < 0)
-				xs = -1
+				x_sign = -1
 				x32 = -x32
 		if (yo)
 			y32 = 32 / (speed * yo)
 			if (y32 < 0)
-				ys = -1
+				y_sign = -1
 				y32 = -y32
 		var/max_t = src.max_range * (32/speed)
-		var/next_x = x32 * (16-wx*xs)/32
-		var/next_y = y32 * (16-wy*ys)/32
+		var/next_x = x32 * (16-wx*x_sign)/32
+		var/next_y = y32 * (16-wy*y_sign)/32
 		var/ct = 0
 		var/turf/T = get_turf(src)
 		var/cx = T.x
@@ -375,11 +370,11 @@
 			if (next_x == 0 || (next_y != 0 && next_y < next_x))
 				ct = next_y
 				next_y = ct + y32
-				cy += ys
+				cy += y_sign
 			else
 				ct = next_x
 				next_x = ct + x32
-				cx += xs
+				cx += x_sign
 			var/turf/Q = locate(cx, cy, T.z)
 			if (!Q)
 				break
