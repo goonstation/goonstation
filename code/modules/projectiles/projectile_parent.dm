@@ -99,9 +99,6 @@
 
 	var/internal_speed = null // experimental    THANKS VERY INFORMATIVE   TODO: ask yass how this works
 
-	// TODO axe this var, only used for witch gimmick abilities which can be reworked
-	var/target = null
-
 	/// Arbitrary projectile data. Currently only used to hold an object that a projectile is seeking for a singular type. TODO remove
 	var/data = 0
 
@@ -125,7 +122,6 @@
 		proj_data = null
 		targets = null
 		hitlist = null
-		target = null
 		shooter = null
 		data = null
 		mob_shooter = null
