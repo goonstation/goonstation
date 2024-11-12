@@ -67,15 +67,9 @@
 	/// y component of the projectile's direction vector. NORTH is positive, SOUTH is negative.
 	var/yo
 
-	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
-
-	/// What the fuck is this comment your shit jesus christ ????? TODO
+	/// Offset within a tile, separate to pixel_x/y due to animation things probably?
 	var/wx = 0
 	var/wy = 0
-
-	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
-	/// TODO can maybe be replaced with a single dir check when relevant? not 100% sure why we need to track this always. Might be crucial, dunno
-	var/incidence = 0
 
 	/// The list of precalculated turfs this projectile will try to cross, along with the tick count(?) when each turf should be crossed.
 	/// The structure of this list is pure Byond demon magic: it's an indexed list of key-value pairs that can be accessed like:
@@ -84,6 +78,12 @@
 	var/list/crossing = list()
 	/// For precalculated projectiles, how far along the `crossing` list have we reached
 	var/curr_t = 0
+
+	// ----------------- BADLY DOCUMENTED VARS WHICH ARE NONETHELESS (PROBABLY) USEFUL, OR VARS THAT MAY BE UNNECESSARY BUT THAT IS UNCLEAR --------------------
+
+	/// Reflection normal on the current tile (NORTH if projectile came from the north, etc.)
+	/// TODO can maybe be replaced with a single dir check when relevant? not 100% sure why we need to track this always. Might be crucial, dunno
+	var/incidence = 0
 
 	/// One of the two below vars needs to be renamed or removed. Fucking confusing
 
@@ -437,6 +437,7 @@
 			return
 
 		var/turf/curr_turf = loc
+		//delta wx, how far in pixels(?) the projectile should move this step
 		var/dwx
 		var/dwy
 		if (!isnull(internal_speed))
@@ -458,13 +459,14 @@
 
 		if (proj_data.precalculated)
 			var/incidence_turf = curr_turf
+			//now Move through the crossing turfs until we reach our current position in the list
 			for (var/i = 1, i < length(crossing), i++)
 				var/turf/T = crossing[i]
 				if (crossing[T] < curr_t)
 					Move(T)
-					if (QDELETED(src))
+					if (QDELETED(src)) //we hit something, stop
 						return
-					incidence = get_dir(incidence_turf, T)
+					src.incidence = get_dir(incidence_turf, T)
 					incidence_turf = T
 					crossing.Cut(1,2)
 					i--
@@ -474,12 +476,13 @@
 		wx += dwx
 		wy += dwy
 		if (!proj_data.precalculated)
-			var/trfx = round((wx + 16) / 32)
-			var/trfy = round((wy + 16) / 32)
-			if (orig_turf.x + trfx >= world.maxx-1 || orig_turf.x + trfx <= 1 || orig_turf.y + trfy >= world.maxy-1 || orig_turf.y + trfy <= 1 )
+			var/turf_x = round((wx + 16) / 32)
+			var/turf_y = round((wy + 16) / 32)
+			//check if we're about to fly out of the world, projectiles don't cross z levels
+			if (orig_turf.x + turf_x >= world.maxx-1 || orig_turf.x + turf_x <= 1 || orig_turf.y + turf_y >= world.maxy-1 || orig_turf.y + turf_y <= 1 )
 				die()
 				return
-			var/turf/Dest = locate(orig_turf.x + trfx, orig_turf.y + trfy, orig_turf.z)
+			var/turf/Dest = locate(orig_turf.x + turf_x, orig_turf.y + turf_y, orig_turf.z)
 			if (loc != Dest)
 
 				if (!goes_through_walls)
@@ -518,18 +521,18 @@
 
 		var/dx = loc.x - orig_turf.x
 		var/dy = loc.y - orig_turf.y
-		var/dpx = dx * 32
-		var/dpy = dy * 32
+		var/pixel_dx = dx * 32
+		var/pixel_dy = dy * 32
 
 		if (!dx && !dy) 	//smooth movement within a tile
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
+			animate(src,pixel_x = wx-pixel_dx, pixel_y = wy-pixel_dy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
 		else
 			if ((loc.x - curr_turf.x))
 				pixel_x += 32 * -(loc.x - curr_turf.x)
 			if ((loc.y - curr_turf.y))
 				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-			animate(src,pixel_x = wx-dpx, pixel_y = wy-dpy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = wx-pixel_dx, pixel_y = wy-pixel_dy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null
