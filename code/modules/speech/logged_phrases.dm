@@ -180,7 +180,7 @@ var/global/datum/phrase_log/phrase_log = new
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["pos"] = pos+2+length(category)+4
 			ircmsg["phrase"] = "\[[uppertext(category)]\]: [phrase]"
-			ircmsg["server_key"] = config.server_key
+			ircmsg["server_key"] = global.serverKey
 			if (user.being_controlled)
 				ircmsg["msg"] = "WAS FORCED TO trigger the uncool word detection USING WITCHCRAFT OR SOMETHING"
 			else
