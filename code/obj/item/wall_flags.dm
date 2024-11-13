@@ -86,6 +86,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "pansexual pride flag"
 		icon_state = "pan"
 		associated_flag = /obj/decal/poster/flag/pan
+		associated_cape = /obj/item/clothing/suit/flag/pan
 
 	polysexual
 		name = "polysexual pride flag"
@@ -150,3 +151,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	polysexual
 		name = "polysexual pride cape"
 		icon_state = "polysexual-cape"
+
+	pan
+		name = "pansexual pride cape"
+		icon_state = "pan-cape"
