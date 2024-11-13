@@ -91,11 +91,13 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "polysexual pride flag"
 		icon_state = "polysexual"
 		associated_flag = /obj/decal/poster/flag/polysexual
+		associated_cape = /obj/item/clothing/suit/flag/polysexual
 
 	progressive
 		name = "progressive pride flag"
 		icon_state = "progressive"
 		associated_flag = /obj/decal/poster/flag/progressive
+		associated_cape = /obj/item/clothing/suit/flag/progressive
 		altside_flag = /obj/item/flag/rainbow
 
 	rainbow
