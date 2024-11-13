@@ -66,6 +66,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "genderqueer pride flag"
 		icon_state = "genderqueer"
 		associated_flag = /obj/decal/poster/flag/genderqueer
+		associated_cape = /obj/item/clothing/suit/flag/genderqueer
 
 	intersex
 		name = "intersex pride flag"
@@ -175,3 +176,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	demisexual
 		name = "demisexual pride cape"
 		icon_state = "demisexual-cape"
+
+	genderqueer
+		name = "genderqueer pride cape"
+		icon_state = "genderqueer-cape"
