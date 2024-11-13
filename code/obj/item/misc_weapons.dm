@@ -2130,6 +2130,40 @@ obj/item/whetstone
 #undef HALB_MED_STAMCOST
 #undef HALB_LIGHT_STAMCOST
 
+/obj/item/crashaxe
+	name = "crash axe"
+	desc = "A lightweight utility-survival axe designed to cut through the thin skin of pod hulls. Works just as well on bothersome crewmembers."
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "crashaxe"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hitsound ='sound/impact_sounds/coconut_break.ogg' //shamelessly re-using this sound idea from my halberd
+
+	health = 5
+	tool_flags = TOOL_PRYING
+	w_class = W_CLASS_SMALL
+	hit_type = DAMAGE_CUT
+	leaves_slash_wound = TRUE //yeah prolly
+	force = 14
+	stamina_damage = 5 //we WANT this to be low so crewmembers can run away easily
+	throwforce = 24 //probably needs tuning but these aren't far divorced from tomahawks
+	throw_speed = 4
+	throw_range = 10
+
+	// I refuse to add to the item/knife/butcher inheritance tree. I just won't do it.
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+
+			C.changeStatus("knockdown", 0.5 SECONDS) //not a rampaging stun so much as "not your weapon anymore lol" one
+			C.changeStatus("disorient", 3 SECONDS)
+			C.force_laydown_standup()
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
+
+		..()
+
+
+
+
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
