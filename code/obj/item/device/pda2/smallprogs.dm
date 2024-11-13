@@ -1286,7 +1286,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					src.message = "Announcement request created, awaiting approval from the [english_list(JOBS_CAN_APPROVE_ANNOUNCEMENTS, "nobody", " or ")]."
 			else
 				src.message = "You have made a request too recently, please wait."
-				return
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
