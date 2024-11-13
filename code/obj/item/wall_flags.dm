@@ -144,3 +144,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	progressive
 		name = "progressive pride cape"
 		icon_state = "progressive-cape"
+
+	polysexual
+		name = "polysexual pride cape"
+		icon_state = "polysexual-cape"
