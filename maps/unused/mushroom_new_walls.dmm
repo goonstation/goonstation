@@ -13957,6 +13957,11 @@
 	},
 /turf/simulated/floor/neutral/corner,
 /area/station/security/main)
+"cRP" = (
+/obj/machinery/firealarm/east,
+/obj/machinery/computer/announcement/station/medical,
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/crew_quarters/md)
 "cTl" = (
 /obj/machinery/camera{
 	c_tag = "Shuttle Bay West";
@@ -16736,8 +16741,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "fkd" = (
-/obj/storage/secure/closet/command/medical_director,
-/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "blue";
+	icon_state = "bedsheet-blue"
+	},
+/obj/landmark/start/job/medical_director,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/crew_quarters/md)
 "fkW" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -21761,6 +21771,15 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"jMf" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/storage/secure/closet/command/medical_director,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/station/crew_quarters/md)
 "jMC" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -22398,6 +22417,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"kka" = (
+/obj/machinery/computer/card/department/medical,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/crew_quarters/md)
 "kkM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22959,6 +22982,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
+"kIO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	id = "HOS"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/md)
 "kIQ" = (
 /obj/cable,
 /obj/cable{
@@ -26483,13 +26514,7 @@
 	},
 /area/station/bridge)
 "nCH" = (
-/obj/machinery/computer/card/department/medical,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/turf/simulated/floor/carpet/blue/fancy,
 /area/station/crew_quarters/md)
 "nDt" = (
 /obj/disposalpipe/segment/morgue{
@@ -28461,6 +28486,13 @@
 	tag = "icon-0,6"
 	},
 /area/station/crew_quarters/fitness)
+"oXa" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	id = "RD"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/md)
 "oXd" = (
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
@@ -35049,14 +35081,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "twm" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "blue";
-	icon_state = "bedsheet-blue"
-	},
-/obj/landmark/start/job/medical_director,
-/obj/machinery/firealarm/north,
-/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/crew_quarters/md)
 "twr" = (
 /turf/simulated/floor/yellow,
@@ -36761,6 +36786,11 @@
 	dir = 5
 	},
 /area/station/science/teleporter)
+"uJo" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/md)
 "uJT" = (
 /obj/item/storage/box/beakerbox{
 	pixel_x = -5;
@@ -40904,6 +40934,11 @@
 	dir = 9
 	},
 /area/station/engine/gas)
+"xWX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/md)
 "xXf" = (
 /obj/table/auto,
 /obj/item/device/flash,
@@ -91503,7 +91538,7 @@ aYR
 aYR
 aYR
 aYR
-aYR
+kUy
 kUy
 kUy
 kUy
@@ -91805,8 +91840,8 @@ xBo
 anA
 aaa
 bqF
-aaa
-kUy
+oXa
+jMf
 fkd
 xkP
 wWy
@@ -92107,8 +92142,8 @@ aYR
 bcc
 jqV
 bcc
-bkQ
-kUy
+uJo
+kka
 nCH
 ixW
 izE
@@ -92409,8 +92444,8 @@ xBo
 aaa
 bqF
 aaa
-bqE
-kUy
+xWX
+cRP
 twm
 cUZ
 vuE
@@ -92711,10 +92746,10 @@ aYR
 aYR
 aYR
 aYR
-aYR
+kUy
 kUy
 wcH
-wcH
+kIO
 ogZ
 kUy
 pOX
