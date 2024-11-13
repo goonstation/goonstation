@@ -70,6 +70,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "intersex pride flag"
 		icon_state = "intersex"
 		associated_flag = /obj/decal/poster/flag/intersex
+		associated_cape = /obj/item/clothing/suit/flag/intersex
 
 	lesb
 		name = "lesbian pride flag"
@@ -155,3 +156,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	pan
 		name = "pansexual pride cape"
 		icon_state = "pan-cape"
+
+	intersex
+		name = "intersex pride cape"
+		icon_state = "intersex-cape"
