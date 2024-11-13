@@ -26,6 +26,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/retaliate = FALSE
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
 
+	HELP_MESSAGE_OVERRIDE({"Can be stood on the same tile as if your intent is set to <span class='help'>help</span>. Use the remote or click on the sawfly with <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it (syndicate only)."})
+
 	//mob variables
 	isFlying = 1
 	can_grab = FALSE
@@ -102,14 +104,17 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		else
 			src.foldself()
 
-	Cross(atom/movable/mover) //code that ensures projectiles hit them when they're alive, but won't when they're dead
+	Cross(atom/movable/mover)
 
+		//since sawflies have a density of 1 and will auto-set intent to harm, we have to recode tile-sharing
 		if(istype(mover, /mob/living))
-			if(issawflybuddy(mover)) //let friendlies stand on the same tile, similar to small critters
+			var/mob/living/movingmob = mover
+			if((issawflybuddy(movingmob)) && (movingmob.a_intent == INTENT_HELP)) //let friendlies stand on the same tile, similar to small critters
 				return TRUE
 			else
 				return FALSE
 
+		//code that ensures projectiles hit them when they're alive, but won't when they're dead
 		if(istype(mover, /obj/projectile)) //hardcoding for bullets going over dead bodies
 			return isdead(src)
 
