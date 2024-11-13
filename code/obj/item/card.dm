@@ -304,7 +304,7 @@ TYPEINFO(/obj/item/card/emag)
 	assignment = "Scientist"
 	desc = "A 'syndicate' identification card, the red paint seems to be peeling off."
 	keep_icon = TRUE
-	access = list(access_research, access_syndicate_research, access_researchfoyer, access_maint_tunnels)
+	access = list(access_syndicate_research, access_maint_tunnels)
 /*
 /obj/item/card/id/verb/read()
 	set src in usr

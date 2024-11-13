@@ -58421,7 +58421,6 @@
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "gFb" = (
-/mob/living/critter/robotic/gunbot/syndicate/fenrir,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
@@ -60867,6 +60866,10 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"iwn" = (
+/mob/living/critter/robotic/gunbot/syndicate/fenrir,
+/turf/unsimulated/floor/black,
+/area/syndicate_fenrir)
 "iwq" = (
 /obj/shrub,
 /turf/unsimulated/floor/arrival{
@@ -67977,10 +67980,8 @@
 /turf/unsimulated/floor/auto/arctic_lake,
 /area/lower_arctic/lower)
 "nHo" = (
+/obj/machinery/recharge_station,
 /obj/map/light/dimred,
-/mob/living/critter/robotic/gunbot/syndicate/fenrir{
-	dir = 4
-	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_fenrir)
 "nHE" = (
@@ -111818,7 +111819,7 @@ gQT
 sis
 gQT
 gQT
-gQT
+iwn
 qMn
 gQT
 gQT
@@ -112146,7 +112147,7 @@ tJH
 tJH
 tJH
 hnk
-gQT
+iwn
 uwG
 nVH
 aaa
