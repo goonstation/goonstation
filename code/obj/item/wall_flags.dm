@@ -82,6 +82,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "non-binary pride flag"
 		icon_state = "nb"
 		associated_flag = /obj/decal/poster/flag/nb
+		associated_cape = /obj/item/clothing/suit/flag/nb
 
 	pan
 		name = "pansexual pride flag"
@@ -164,3 +165,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	trans
 		name = "transgender pride cape"
 		icon_state = "trans-cape"
+
+	nb
+		name = "non-binary pride cape"
+		icon_state = "nb-cape"
