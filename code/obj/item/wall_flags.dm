@@ -1,10 +1,13 @@
+ABSTRACT_TYPE(/obj/item/flag)
 /obj/item/flag
 	name = "flag"
 	desc = "Neat! It's folded up, ready to deploy."
 	icon = 'icons/obj/items/flag.dmi'
 	icon_state = "blank"
-	/// Must by a type path of `/obj/decal/poster/flag`.
+	/// Must be a type path of `/obj/decal/poster/flag`.
 	var/associated_flag = /obj/decal/poster/flag
+	/// Must be a type path of `/obj/item/clothing/suit/flag`
+	var/associated_cape = /obj/item/clothing/suit/flag
 	var/altside_flag
 
 	attack_self(mob/user as mob)
@@ -14,6 +17,15 @@
 				user.u_equip(src)
 			qdel(src)
 			user.put_in_hand_or_drop(new altside_flag)
+
+	attackby(var/obj/item/cable_coil/coil, mob/user)
+		if (istype(coil))
+			coil.use(1)
+			qdel(src)
+			user.put_in_hand_or_drop(new src.associated_cape())
+			boutput(user, "You tie the flag into a cape.")
+			return
+		. = ..()
 
 	afterattack(turf/simulated/T, mob/user)
 		if (locate(/obj/decal/poster/flag) in T)
@@ -41,6 +53,7 @@
 		name = "bisexual pride flag"
 		icon_state = "bisexual"
 		associated_flag = /obj/decal/poster/flag/bisexual
+		associated_cape = /obj/item/clothing/suit/flag/bisexual
 
 	demisexual
 		name = "demisexual pride flag"
@@ -61,6 +74,7 @@
 		name = "lesbian pride flag"
 		icon_state = "lesb"
 		associated_flag = /obj/decal/poster/flag/lesb
+		associated_cape = /obj/item/clothing/suit/flag/lesb
 
 	nb
 		name = "non-binary pride flag"
@@ -87,6 +101,7 @@
 		name = "rainbow flag"
 		icon_state = "rainbow"
 		associated_flag = /obj/decal/poster/flag/rainbow
+		associated_cape = /obj/item/clothing/suit/flag/rainbow
 		altside_flag = /obj/item/flag/progressive
 
 	trans
@@ -106,3 +121,20 @@
 		associated_flag = /obj/decal/poster/flag/mlmachi
 		altside_flag = /obj/item/flag/mlmvinc
 
+ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
+/obj/item/clothing/suit/flag
+	wear_layer = MOB_BACK_LAYER + 0.2
+	desc = "A makeshift cape made out of a pride flag. Still creased, of course."
+	icon = 'icons/obj/items/flag.dmi'
+
+	bisexual
+		name = "bisexual pride cape"
+		icon_state = "bisexual-cape"
+
+	lesb
+		name = "lesbian pride cape"
+		icon_state = "lesb-cape"
+
+	rainbow
+		name = "rainbow cape"
+		icon_state = "rainbow-cape"
