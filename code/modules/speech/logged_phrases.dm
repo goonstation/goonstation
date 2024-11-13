@@ -172,21 +172,17 @@ var/global/datum/phrase_log/phrase_log = new
 		if(category != "ooc" && category != "looc" && !(category == "deadsay" || (user && inafterlife(user))) && is_ic_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
 		#endif
-		var/pos = is_uncool(phrase)
-		if(pos)
+		if(is_uncool(phrase))
 			phrase = replacetext(phrase, src.uncool_words, "**$1**")
 			var/ircmsg[] = new()
 			ircmsg["key"] = user.key
 			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
-			ircmsg["pos"] = pos+2+length(category)+4
-			ircmsg["phrase"] = "\[[uppertext(category)]\]: [phrase]"
-			ircmsg["server_key"] = config.server_key
 			if (user.being_controlled)
-				ircmsg["msg"] = "WAS FORCED TO trigger the uncool word detection USING WITCHCRAFT OR SOMETHING"
+				ircmsg["msg"] = "WAS FORCED TO trigger the uncool word detection USING WITCHCRAFT OR SOMETHING: [category]: \"[phrase]\""
 			else
-				ircmsg["msg"] = "triggered the uncool word detection"
+				ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
 			SPAWN(0)
-				ircbot.export("uncool", ircmsg)
+				ircbot.export("admin", ircmsg)
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, SPAN_ADMIN("Uncool word - [key_name(user)] [category]: \"[phrase]\""))
 			return
 		if(length(phrase) > 4000)
@@ -202,7 +198,7 @@ var/global/datum/phrase_log/phrase_log = new
 	proc/is_uncool(phrase)
 		if(isnull(src.uncool_words))
 			return FALSE
-		return (findtext(phrase, src.uncool_words))
+		return !!(findtext(phrase, src.uncool_words))
 
 	proc/is_sussy(phrase)
 		if(isnull(src.sussy_words))
