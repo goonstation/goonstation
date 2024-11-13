@@ -112,9 +112,106 @@
 		for (var/mob/L as anything in src.active_cursees)
 			L.delStatus(src.chosen_curse)
 		src.active_cursees = list()
+
+	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
+	// also note, loaded rooms (x1, y1) location is at the bottom left, not the middle
+	proc/create_maze()
+		var/maze_width = 30
+		src.maze = global.region_allocator.allocate(maze_width, maze_width)
+
+		var/datum/cell_grid/maze_grid = new(maze_width, maze_width)
+		maze_grid.generate_maze(1, 1, maze_width, maze_width, "F")
+
+		var/turf/T
+		for (var/x in 1 to maze_width)
+			for (var/y in 1 to maze_width)
+				T = src.maze.turf_at(x, y)
+				if (maze_grid.grid[x][y] == "F")
+					T.ReplaceWith(/turf/unsimulated/floor/ancient)
+				else
+					T.ReplaceWith(/turf/unsimulated/wall/auto/adventure/ancient)
+
+		// load start room center
+		T = src.maze.turf_at(rand(2, maze_width - 8), rand(2, maze_width - 8)) // values in respect to maze room perimeters + maze perimeter
+		// starting room
+		var/x1 = rand(2, maze_width - 8)
+		var/y1 = rand(2, maze_width - 8)
+		// key room
+		var/x2
+		var/y2
+		// escape room
+		var/x3
+		var/y3
+		for (var/i = 1 to 50) // arbitrarily high number
+			x2 = rand(2, maze_width - 8)
+			y2 = rand(2, maze_width - 8)
+			if (GET_DIST(src.maze.turf_at(x2, y2), src.maze.turf_at(x1, y1)) > 7)
+				break
+			x2 = null
+			y2 = null
+		if (!x2)
+			CRASH("Error in Curser art maze generation, could not create Key Room.")
+		for (var/i = 1 to 50)
+			x3 = rand(2, maze_width - 8)
+			y3 = rand(2, maze_width - 8)
+			if (GET_DIST(src.maze.turf_at(x3, y3), src.maze.turf_at(x1, y1)) > 7 && GET_DIST(src.maze.turf_at(x3, y3), src.maze.turf_at(x2, y2)) > 7)
+				break
+			x3 = null
+			y3 = null
+		if (!x3)
+			CRASH("Error in Curser art maze generation, could not create Escape Room.")
+		var/turf/start = src.maze.turf_at(x1, y1)
+		var/turf/key = src.maze.turf_at(x2, y2)
+		var/turf/escape = src.maze.turf_at(x3, y3)
+		var/dmm_suite/room_loader = new
+		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_startroom.dmm"), start.x, start.y, start.z)
+		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_keyroom.dmm"), key.x, key.y, key.z)
+		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_escaperoom.dmm"), escape.x, escape.y, escape.z)
+
+		return locate(start.x + 3, start.y + 3, start.z)
+
+
 #undef BLOOD_CURSE
 #undef AGING_CURSE
 #undef NIGHTMARE_CURSE
 #undef MAZE_CURSE
 #undef DISP_CURSE
 #undef LIGHT_CURSE
+
+/*********** MAZE STUFF *************/
+
+/obj/item/art_labyrinth_flashlight
+	name = "\improper mysterious claw"
+	desc = "A scary looking Eldritch artifact. At least it emits light?"
+	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
+	icon_state = "flashlight"
+
+	var/datum/component/loctargeting/medium_directional_light/light_dir
+	New()
+		..()
+		//src.add_medium_light("art_labyrinth_flashlight", rgb2num("#f8d7ff") + list(255))
+
+		var/col = rgb2num("#f8d7ff")
+		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col[1], col[2], col[3], 230)
+		light_dir.update(1)
+
+/obj/item/art_labyrinth_firekey
+	name = "\improper fire key"
+	desc = "A key that looks like fire, or fire in the shape of a key? You're not sure, but it doesn't hurt to hold."
+	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
+	icon_state = "fire_key"
+
+/obj/art_labyrinth_escapedoor
+	name = "Presumably The Escape"
+	desc = "A door in open space in a labyrinth... this seems like the escape. It appears to be made of ice though.... and needs a key..."
+	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
+	icon_state = "escape_door"
+	density = TRUE
+	anchored = ANCHORED_ALWAYS
+	color = "#4d73c5"
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/art_labyrinth_firekey))
+			qdel(I)
+			user.delStatus("art_maze_curse")
+

@@ -2987,6 +2987,24 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 			
 	maze
 		id = "art_maze_curse"
+		name = "Eldritch Maze Curse"
+		extra_desc = "You're trapped in a labyrinth! Find your way out... if there is one..."
+		removal_msg = "You've found your way out! You could've been trapped there for eternity..."
+		var/turf/original_turf
+
+		onAdd(optional)
+			..()
+			src.original_turf = get_turf(src.owner)
+			var/datum/artifact/curser/curser = optional
+			var/turf/maze_start = curser.create_maze()
+			var/mob/living/carbon/human/H = src.owner
+			H.set_loc(maze_start)
+
+		onRemove()
+			var/mob/living/carbon/human/H = src.owner
+			if (!QDELETED(H))
+				H.set_loc(src.original_turf)
+			..()
 
 	displacement
 		id = "art_displacement_curse"
