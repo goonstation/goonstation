@@ -160,3 +160,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	intersex
 		name = "intersex pride cape"
 		icon_state = "intersex-cape"
+
+	trans
+		name = "transgender pride cape"
+		icon_state = "trans-cape"
