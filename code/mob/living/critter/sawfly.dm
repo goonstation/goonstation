@@ -26,7 +26,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/retaliate = FALSE
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
 
-	HELP_MESSAGE_OVERRIDE({"Can be stood on the same tile as if your intent is set to <span class='help'>help</span>. Use the remote or click on the sawfly with <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it (syndicate only)."})
+	HELP_MESSAGE_OVERRIDE({"Can be stood on the same tile as if your intent is set to <span class='help'>help</span>. Syndicate only: use the remote or click on the sawfly with <span class='help'>help</span> or <span class='grab'>grab</span> intent to deactivate it."})
 
 	//mob variables
 	isFlying = 1
