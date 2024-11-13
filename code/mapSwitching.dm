@@ -60,6 +60,9 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
 				#endif
+				if (BUILD_TIME_MONTH == 6 && IS_IT_FRIDAY && BUILD_TIME_DAY <= 7) //the first friday of every june is donut day
+					if (!findtext(map, "donut")) //not a donut >:(
+						continue
 
 				src.playerPickable[map] += mapNames[map]
 
