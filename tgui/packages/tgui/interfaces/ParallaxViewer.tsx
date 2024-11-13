@@ -25,6 +25,7 @@ interface ParallaxSourceProps {
   icon: string;
   icon_state: string;
   value: number;
+  tessellate: BooleanLike;
   scroll_speed: number;
   scroll_angle: number;
   x: number;
@@ -203,43 +204,62 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
               />
             </LabeledList.Item>
 
-            <LabeledList.Item label="scroll_speed">
-              <NumberInput
-                value={sourceData.scroll_speed}
-                minValue={-900}
-                maxValue={900}
-                // stepPixelSize={4}
-                step={1}
-                width="80px"
-                onDrag={(value) =>
+            <LabeledList.Item label="Tessellate">
+              <Button.Checkbox
+                checked={sourceData.tessellate}
+                icon="cubes"
+                onClick={() =>
                   act('modify', {
                     byondRef: sourceData.byondRef,
                     group: props.group_key,
-                    type: 'scroll_speed',
-                    value: value,
+                    type: 'tessellate',
+                    value: !sourceData.tessellate,
                   })
                 }
               />
             </LabeledList.Item>
 
-            <LabeledList.Item label="scroll_angle">
-              <NumberInput
-                value={sourceData.scroll_angle}
-                minValue={0}
-                maxValue={360}
-                // stepPixelSize={4}
-                step={1}
-                width="80px"
-                onDrag={(value) =>
-                  act('modify', {
-                    byondRef: sourceData.byondRef,
-                    group: props.group_key,
-                    type: 'scroll_angle',
-                    value: value,
-                  })
-                }
-              />
-            </LabeledList.Item>
+            {sourceData.tessellate ? (
+              <>
+                <LabeledList.Item label="scroll_speed">
+                  <NumberInput
+                    value={sourceData.scroll_speed}
+                    minValue={-900}
+                    maxValue={900}
+                    step={1}
+                    width="80px"
+                    onDrag={(value) =>
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'scroll_speed',
+                        value: value,
+                      })
+                    }
+                  />
+                </LabeledList.Item>
+
+                <LabeledList.Item label="scroll_angle">
+                  <NumberInput
+                    value={sourceData.scroll_angle}
+                    minValue={0}
+                    maxValue={360}
+                    step={1}
+                    width="80px"
+                    onDrag={(value) =>
+                      act('modify', {
+                        byondRef: sourceData.byondRef,
+                        group: props.group_key,
+                        type: 'scroll_angle',
+                        value: value,
+                      })
+                    }
+                  />
+                </LabeledList.Item>
+              </>
+            ) : (
+              ''
+            )}
 
             <LabeledList.Item label="initial_x">
               <NumberInput
@@ -290,7 +310,6 @@ const ParallaxSources = (props: ParallaxGroupProps) => {
                     value: !sourceData.static_colour,
                   })
                 }
-                // }
               />
             </LabeledList.Item>
 

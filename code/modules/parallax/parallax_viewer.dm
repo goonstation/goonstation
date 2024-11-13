@@ -52,6 +52,7 @@
 				"icon"=p_source.parallax_icon,
 				"icon_state"=p_source.parallax_icon_state,
 				"value"=p_source.parallax_value,
+				"tessellate"=p_source.tessellate,
 				"scroll_speed"=p_source.scroll_speed,
 				"scroll_angle"=p_source.scroll_angle,
 				"x"=p_source.initial_x_coordinate,
@@ -70,6 +71,7 @@
 				"icon"=p_source.parallax_icon,
 				"icon_state"=p_source.parallax_icon_state,
 				"value"=p_source.parallax_value,
+				"tessellate"=p_source.tessellate,
 				"scroll_speed"=p_source.scroll_speed,
 				"scroll_angle"=p_source.scroll_angle,
 				"x"=p_source.initial_x_coordinate,
@@ -192,6 +194,9 @@
 
 				if("initial_y")
 					render_source.initial_y_coordinate = params["value"]
+
+				if("tessellate")
+					render_source.tessellate = params["value"]
 
 				if("static_colour")
 					render_source.static_colour = params["value"]
