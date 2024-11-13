@@ -60,6 +60,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "demisexual pride flag"
 		icon_state = "demisexual"
 		associated_flag = /obj/decal/poster/flag/demisexual
+		associated_cape = /obj/item/clothing/suit/flag/demisexual
 
 	genderqueer
 		name = "genderqueer pride flag"
@@ -114,6 +115,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "transgender pride flag"
 		icon_state = "trans"
 		associated_flag = /obj/decal/poster/flag/trans
+		associated_cape = /obj/item/clothing/suit/flag/trans
 
 	mlmvinc
 		name = "\improper Vincian MLM pride flag"
@@ -169,3 +171,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	nb
 		name = "non-binary pride cape"
 		icon_state = "nb-cape"
+
+	demisexual
+		name = "demisexual pride cape"
+		icon_state = "demisexual-cape"
