@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 	/// Must be a type path of `/obj/item/clothing/suit/flag`
 	var/associated_cape = /obj/item/clothing/suit/flag
 	var/altside_flag
+	burn_possible = FALSE //sigh
 
 	attack_self(mob/user as mob)
 		if(altside_flag)
@@ -126,6 +127,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	wear_layer = MOB_BACK_LAYER + 0.2
 	desc = "A makeshift cape made out of a pride flag. Still creased, of course."
 	icon = 'icons/obj/items/flag.dmi'
+	burn_possible = FALSE
 
 	bisexual
 		name = "bisexual pride cape"
@@ -138,3 +140,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	rainbow
 		name = "rainbow cape"
 		icon_state = "rainbow-cape"
+
+	progressive
+		name = "progressive pride cape"
+		icon_state = "progressive-cape"
