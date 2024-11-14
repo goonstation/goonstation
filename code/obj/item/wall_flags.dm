@@ -123,6 +123,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		icon_state = "mlmvinc"
 		associated_flag = /obj/decal/poster/flag/mlmvinc
 		altside_flag = /obj/item/flag/mlmachi
+		associated_cape = /obj/item/clothing/suit/flag/mlmvinc
 
 	mlmachi
 		name = "\improper Achilean MLM pride flag"
@@ -180,3 +181,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	genderqueer
 		name = "genderqueer pride cape"
 		icon_state = "genderqueer-cape"
+
+	mlmvinc
+		name = "\improper Vincian MLM pride cape"
+		icon_state = "mlmvinc-cape"
