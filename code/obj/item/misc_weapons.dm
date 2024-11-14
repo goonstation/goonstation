@@ -2144,10 +2144,17 @@ obj/item/whetstone
 	hit_type = DAMAGE_CUT
 	leaves_slash_wound = TRUE //yeah prolly
 	force = 14
-	stamina_damage = 5 //we WANT this to be low so crewmembers can run away easily
-	throwforce = 24 //probably needs tuning but these aren't far divorced from tomahawks
+	stamina_damage = 1 //we WANT this to be low so crewmembers can run away easily
+	throwforce = 24 //probably needs tuning but these aren't too far divorced from tomahawks- encourage high-skill gameplay
 	throw_speed = 4
 	throw_range = 10
+
+	HELP_MESSAGE_OVERRIDE({"Can be used as a crowbar. Throw the weapon (space+click) to inflict a half-second stun and three second disorient."})
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/tile_fling)
+		BLOCK_SETUP(BLOCK_ROD)
 
 	// I refuse to add to the item/knife/butcher inheritance tree. I just won't do it.
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -2160,9 +2167,6 @@ obj/item/whetstone
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 		..()
-
-
-
 
 /obj/item/swords/sord
 	name = "gross sord"
