@@ -448,26 +448,6 @@ proc/filter_carrier_pets(var/type)
 		.=..()
 
 	attackby(obj/item/I, mob/living/user)
-		if(istype(I, /obj/item/reagent_containers/syringe))
-			var/obj/item/reagent_containers/syringe/S = I
-
-			boutput(user, "You inject the solution into [src].")
-
-			if(!src.rigged && S.reagents.has_reagent("plasma", 1))
-				for (var/mob/living/M in mobs)
-					if (M.mind && M.mind.assigned_role == "Head of Security")
-						boutput(M, SPAN_ALERT("You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick."))
-
-				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
-				logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
-				src.rigged = TRUE
-				src.rigger = user
-
-				S.reagents.clear_reagents()
-
-				var/area/A = get_area(src)
-				if(A?.lightswitch && A?.power_light)
-					src.explode()
 		for (var/hat_type in src.allowed_hats)
 			if (istype(I, hat_type))
 				if (give_beret(I, user))
@@ -587,6 +567,20 @@ proc/filter_carrier_pets(var/type)
 		return TRUE
 
 //NOOOOOOO
+	proc/rig_to_explode(mob/user)
+		for (var/mob/living/M in mobs)
+			if (M.mind && M.mind.assigned_role == "Head of Security")
+				boutput(M, SPAN_ALERT("You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick."))
+
+		message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
+		src.rigged = TRUE
+		src.rigger = user
+
+		var/area/A = get_area(src)
+		if(A?.lightswitch && A?.power_light)
+			src.explode()
+
 	proc/explode()
 		SPAWN(0)
 			src.rigged = FALSE
