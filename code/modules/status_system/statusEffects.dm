@@ -2984,7 +2984,47 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 			var/mob/living/carbon/human/H = src.owner
 			H.bioHolder.age = src.original_age
 			..()
-			
+
+	nightmare
+		id = "art_nightmare_curse"
+		name = "Eldritch Nightmare Curse"
+		extra_desc = "You're being haunted by nightmares! Kill them, or perish."
+		removal_msg = "The nightmare ends, along with the creatures..."
+		var/list/created_creatures = list()
+		var/creatures_to_kill = 10
+		var/time_passed = 0 SECONDS
+
+		onAdd()
+			..()
+			var/mob/living/critter/art_curser_nightmare/creature = new (get_turf(src.owner), src)
+			src.created_creatures += creature
+			creature.register_target(src.owner)
+			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
+
+		onUpdate(timePassed)
+			..()
+			if (src.creatures_to_kill <= 0)
+				src.owner.delStatus(src)
+				return
+			src.time_passed += timePassed
+			if (src.time_passed < 10 SECONDS)
+				return
+			src.time_passed = 0
+			var/mob/living/critter/art_curser_nightmare/creature = new(get_turf(src.owner), src)
+			src.created_creatures += creature
+			creature.register_target(src.owner)
+
+		onRemove()
+			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_mob(src.owner)
+			..()
+
+		disposing()
+			for (var/mob/living/critter/art_curser_nightmare/creature as anything in src.created_creatures)
+				if (!QDELETED(creature))
+					qdel(creature)
+			src.created_creatures = null
+			..()
+
 	maze
 		id = "art_maze_curse"
 		name = "Eldritch Maze Curse"
