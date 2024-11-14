@@ -510,8 +510,6 @@
 		generate_ID()
 
 /datum/announcement_request/proc/approve(var/approved_by,var/their_job)
-	if (!(their_job in JOBS_CAN_APPROVE_ANNOUNCEMENTS)) return
-
 	src.approver = approved_by
 	src.approver_job = their_job
 	src.approver_byond_key = get_byond_key(approver)

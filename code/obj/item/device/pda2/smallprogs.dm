@@ -1224,15 +1224,15 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		var/dat = src.return_text_header()
 
 		if(!src.message)
+			if (!src.master.ID_card)
+				dat += "<br><br>You must insert an ID to use this program.<br><br>"
+				return dat
 			switch(src.mode)
 				if(0) //menu
 					dat += "<br><br>\[ <a href='byond://?src=\ref[src];announcement=1'>Request Announcement</a> \]<br>"
 					dat += "View Announcements: \[ <a href='byond://?src=\ref[src];viewannouncementrequests=1'>Requested</a> | <a href='byond://?src=\ref[src];viewapprovedannouncements=1'>Approved</a> \]<br>"
 
 				if(1) //requests
-					var/PDAowner = src.master.owner
-					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
 					dat += "<h4>Announcement Requests</h4>"
@@ -1240,7 +1240,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/announcement_request/request in data_core.announcement_requests)
 						if(!request.approved)
 							dat += "'[request.content]'<br>Requested by: [request.requester] - [request.requester_job]"
-							if(PDAownerjob in JOBS_CAN_APPROVE_ANNOUNCEMENTS) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[request]'>Approve Announcement</a>"
+							if(access_change_ids in src.master.access) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[request]'>Approve Announcement</a>"
 							dat += "<br><br>"
 
 				if(2) //approved announcements
@@ -1263,10 +1263,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		if(href_list["announcement"])
 			if (!ON_COOLDOWN(src.master,"announcement_request", announcement_delay))
-				var/PDAowner = src.master.owner
-				var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-				if (istype(src.master, /obj/item/device/pda2/ai))
-					PDAownerjob = "AI"
+				var/IDowner = src.master.registered
+				var/IDownerjob = src.master.assignment
 
 				var/announcement_content = input(usr, "Announcement:",src.name) as text | null
 				if(!announcement_content) return
@@ -1274,25 +1272,31 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 				var/datum/announcement_request/request = new /datum/announcement_request()
 				request.content = announcement_content
-				request.requester = PDAowner
-				request.requester_job = PDAownerjob
+				request.requester = IDowner
+				request.requester_job = IDownerjob
 				request.requester_byond_key = usr.key
 				data_core.announcement_requests += request
 
-				logTheThing(LOG_ADMIN, usr, "requested an announcement using [PDAowner]([PDAownerjob])'s PDA. It reads [announcement_content].")
-				if(PDAownerjob in JOBS_CAN_APPROVE_ANNOUNCEMENTS)
-					request.approve(PDAowner, PDAownerjob)
+				logTheThing(LOG_ADMIN, usr, "requested an announcement using [IDowner]([IDownerjob])'s ID. It reads [announcement_content].")
+				if(access_change_ids in src.master.access)
+					request.approve(IDowner, IDownerjob)
 				else
-					src.message = "Announcement request created, awaiting approval from the [english_list(JOBS_CAN_APPROVE_ANNOUNCEMENTS, "nobody", " or ")]."
+					src.message = "Announcement request created, awaiting approval."
 			else
 				src.message = "You have made a request too recently, please wait."
 
 		else if(href_list["approve"])
-			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			if (!src.master.ID_card)
+				src.message = "Please insert ID card to approve announcements."
+			else
+				var/IDowner = src.master.registered
+				var/IDownerjob = src.master.assignment
 
-			var/datum/announcement_request/request = locate(href_list["approve"])
-			request.approve(PDAowner,PDAownerjob)
+				if (access_change_ids in src.master.access)
+					var/datum/announcement_request/request = locate(href_list["approve"])
+					request.approve(IDowner,IDownerjob)
+				else
+					message = "You do not have access to authorize announcements."
 
 		else if(href_list["back"])
 			mode = 0
