@@ -97,7 +97,7 @@
 		//calculate pet survival first.
 		var/pet_dat = "<h4>Pet Stats:</h4>"
 		for(var/pet in by_cat[TR_CAT_PW_PETS])
-			if(istype(pet, /obj/critter/turtle/sylvester/Commander))
+			if(istype(pet, /mob/living/critter/small_animal/turtle/sylvester/Commander))
 				var/obj/critter/P = pet
 				if(P.alive)
 					if (istype(get_area(P), /area/pod_wars/team1))

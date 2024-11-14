@@ -76399,7 +76399,7 @@
 	},
 /area/station/crew_quarters/hor)
 "wWM" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 4
 	},

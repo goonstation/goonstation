@@ -10976,7 +10976,7 @@
 	},
 /area/station/crew_quarters/pool)
 "ayt" = (
-/obj/critter/turtle/sylvester/HoS,
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "ayv" = (
