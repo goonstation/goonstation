@@ -3048,6 +3048,41 @@ ABSTRACT_TYPE(/datum/statusEffect/art_curse)
 
 	displacement
 		id = "art_displacement_curse"
+		name = "Eldritch Soul Displacement Curse"
+		extra_desc = "Your soul has been displaced from your body! You're going to need to wait a short while or for someone to touch the artifact to return you."
+		removal_msg = "You're returned to your body! You feel a strong sense of relief."
+		var/owner_is_soul = FALSE
+		var/mob/living/carbon/human/original_body
+		var/mob/living/intangible/art_curser_displaced_soul/soul
+		//effect_quality = STATUS_QUALITY_NEUTRAL
+
+		soul
+			id = "art_curser_displaced_soul"
+			owner_is_soul = TRUE
+
+			preCheck(atom/A)
+				. = ..()
+				if (istype(A, /mob/living/intangible/art_curser_displaced_soul))
+					return TRUE
+
+		onAdd()
+			..()
+			src.duration = 3 MINUTES
+			if (src.owner_is_soul)
+				return
+			src.soul = new(get_turf(src.owner), src.owner)
+			var/mob/living/carbon/human/H = src.owner
+			H.mind.transfer_to(soul)
+			src.original_body = H
+			src.soul.setStatus("art_curser_displaced_soul", 3 MINUTES)
+
+		onRemove()
+			if (src.owner_is_soul)
+				return
+			src.soul.mind.transfer_to(src.original_body)
+			QDEL_NULL(src.soul)
+			src.original_body = null
+			..()
 
 	light
 		id = "art_light_curse"

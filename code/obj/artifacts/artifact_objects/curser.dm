@@ -102,6 +102,9 @@
 			else
 				O.visible_message(SPAN_NOTICE("[O] softly stirs."))
 			return TRUE
+		else if (src.disp_curse_active)
+			src.lift_curse(FALSE)
+			return TRUE
 
 	proc/blood_curse_sacrifice(obj/O, mob/living/user)
 		src.lift_curse(FALSE)
@@ -215,3 +218,64 @@
 			qdel(I)
 			user.delStatus("art_maze_curse")
 
+/mob/living/intangible/art_curser_displaced_soul
+	var/list/statusUiElements = list()
+
+	New(newLoc, mob/living/carbon/human/H)
+		src.name = "soul of [H.name]"
+		src.real_name = src.name
+		src.desc = "This is the soul of [H.name]. Where's their body at?"
+		..()
+		event_handler_flags &= ~MOVE_NOCLIP
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
+		src.sight = 0
+		src.see_invisible = INVIS_NONE
+		src.see_in_dark = SEE_DARK_HUMAN
+
+		var/icon/I = new /icon()
+		I.Insert(H.build_flat_icon(SOUTH), dir = SOUTH)
+		I.Insert(H.build_flat_icon(NORTH), dir = NORTH)
+		I.Insert(H.build_flat_icon(EAST), dir = EAST)
+		I.Insert(H.build_flat_icon(WEST), dir = WEST)
+		src.icon = I
+		src.color = "#7b88ff"
+		src.alpha = 200
+		src.add_filter("soul blur", 0, gauss_blur_filter(size = 0.5))
+
+	is_spacefaring()
+		return TRUE
+
+	updateStatusUi()
+		for(var/datum/statusEffect/S as anything in src.statusUiElements)
+			src.client?.screen -= src.statusUiElements[S]
+			if (!(S in src.statusEffects))
+				qdel(statusUiElements[S])
+				src.statusUiElements -= S
+
+		var/spacing = 0.6
+		var/pos_x = spacing - 0.2
+
+		for(var/datum/statusEffect/S as anything in src.statusEffects)
+			if((S in statusUiElements) && statusUiElements[S])
+				var/atom/movable/screen/statusEffect/U = statusUiElements[S]
+				U.icon_state = "bg-new"
+				U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
+				U.update_value()
+				src.client?.screen += U
+				pos_x -= spacing
+			else
+				var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
+				U.init(src, S)
+				U.icon_state = "bg-new"
+				statusUiElements[S] = U
+				U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH-0.7"
+				U.update_value()
+				src.client?.screen += U
+				pos_x -= spacing
+				animate_buff_in(U)
+
+	say()
+		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
+			src.visible_message("\the [src.name]'s mouth moves, but you can't tell what they're saying.")
+			boutput(src, SPAN_ALERT("Nothing comes out of your mouth!"))
+		return
