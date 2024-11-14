@@ -215,9 +215,9 @@ ABSTRACT_TYPE(/datum/commodity/magpie/buy)
 
 		price_check(obj/O)
 			. = ..()
+#ifdef SECRETS_ENABLED
 			var/obj/item/electronics/frame/F = O
 
-#ifdef SECRETS_ENABLED
 			var/path
 			if(istype(F))
 				if(F.deconstructed_thing)
