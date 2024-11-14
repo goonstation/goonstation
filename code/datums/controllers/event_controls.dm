@@ -546,6 +546,10 @@ var/datum/event_controller/random_events
 		if("trigger_event")
 			RE = locate(params["ref"])
 			if(istype(RE) && params["name"] == RE.name)
+				if(!RE.announce_to_admins)
+					message_admins(SPAN_INTERNAL("Beginning [RE.name] event (Source: [key_name(usr)])."))
+					logTheThing(LOG_ADMIN, null, "Random event [RE.name] was triggered. Source: [key_name(usr)]")
+
 				if (RE.customization_available)
 					if (RE.always_custom || alert("Random or custom variables?","[RE.name]","Random","Custom") == "Custom")
 						RE.admin_call(key_name(usr, 1))
@@ -561,6 +565,9 @@ var/datum/event_controller/random_events
 			RE = locate(params["ref"])
 			if(istype(RE) && params["name"] == RE.name)
 				RE.disabled = !RE.disabled
+				message_admins("Admin [key_name(usr)] switched [RE.name] event [RE.disabled ? "Off" : "On"]")
+				logTheThing(LOG_ADMIN, usr, "switched [RE.name] event [RE.disabled ? "Off" : "On"]")
+				logTheThing(LOG_DIARY, usr, "switched [RE.name] event [RE.disabled ? "Off" : "On"]", "admin")
 				. = TRUE
 
 		if("schedule_event")
@@ -645,6 +652,10 @@ var/datum/event_controller/random_events
 			if(new_teller)
 				active_storyteller = new new_teller()
 				active_storyteller.set_active(src)
+				message_admins("Admin [key_name(usr)] set the storyteller to: [active_storyteller]")
+				logTheThing(LOG_ADMIN, usr, "set the storyteller to: [active_storyteller]")
+				logTheThing(LOG_DIARY, usr, "set the storyteller to: [active_storyteller]", "admin")
+
 				. = TRUE
 
 		if("set_value")
@@ -652,16 +663,39 @@ var/datum/event_controller/random_events
 			switch(params["name"])
 				if("eventsEnabled")
 					src.events_enabled = params["new_data"]
+					message_admins("Admin [key_name(usr)] [events_enabled ? "enabled" : "disabled"] random events")
+					logTheThing(LOG_ADMIN, usr, "[events_enabled ? "enabled" : "disabled"] random events")
+					logTheThing(LOG_DIARY, usr, "[events_enabled ? "enabled" : "disabled"] random events", "admin")
+
 				if("announce")
 					src.announce_events = params["new_data"]
+					message_admins("Admin [key_name(usr)] [announce_events ? "enabled" : "disabled"] random event announcements")
+					logTheThing(LOG_ADMIN, usr, "[announce_events ? "enabled" : "disabled"] random event announcements")
+					logTheThing(LOG_DIARY, usr, "[announce_events ? "enabled" : "disabled"] random event announcements", "admin")
+
 				if("timeLock")
 					src.time_lock = params["new_data"]
+					message_admins("Admin [key_name(usr)] [time_lock ? "enabled" : "disabled"] random event time locks")
+					logTheThing(LOG_ADMIN, usr, "[time_lock ? "enabled" : "disabled"] random event time locks")
+					logTheThing(LOG_DIARY, usr, "[time_lock ? "enabled" : "disabled"] random event time locks", "admin")
+
 				if("minPopulation")
 					src.minimum_population = params["new_data"]
+					message_admins("Admin [key_name(usr)] set the minimum population for events to [minimum_population]")
+					logTheThing(LOG_ADMIN, usr, "set the minimum population for events to [minimum_population]")
+					logTheThing(LOG_DIARY, usr, "set the minimum population for events to [minimum_population]", "admin")
+
 				if("aliveAntagonistThreshold")
 					src.alive_antags_threshold = params["new_data"]
+					message_admins("Admin [key_name(usr)] set alive antag threshold to [alive_antags_threshold]")
+					logTheThing(LOG_ADMIN, usr, "set alive antag threshold to [alive_antags_threshold]")
+					logTheThing(LOG_DIARY, usr, "set alive antag threshold to [alive_antags_threshold]", "admin")
 				if("deadPlayersThreshold")
 					src.dead_players_threshold = params["new_data"]
+					message_admins("Admin [key_name(usr)] set dead player threshold to [dead_players_threshold]")
+					logTheThing(LOG_ADMIN, usr, "set dead player threshold to [dead_players_threshold]")
+					logTheThing(LOG_DIARY, usr, "set dead player threshold to [dead_players_threshold]", "admin")
+
 				else
 					. = FALSE
 
