@@ -146,10 +146,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			desc = "A folding antipersonnel drone, made by Ranodyne LLC. It's totally wrecked."
 
 			//time to roll for death effects
-
-			if (prob(20))
-				new /obj/item/device/prox_sensor(src.loc)
-
 			if(prob(60))
 				elecflash(src, 1, 3)
 
