@@ -2139,7 +2139,7 @@ obj/item/whetstone
 	hitsound ='sound/impact_sounds/coconut_break.ogg' //shamelessly re-using this sound idea from my halberd
 
 	health = 5
-	tool_flags = TOOL_PRYING
+	tool_flags = TOOL_PRYING | TOOL_CUTTING | TOOL_CHOPPING
 	w_class = W_CLASS_SMALL
 	hit_type = DAMAGE_CUT
 	leaves_slash_wound = TRUE //yeah prolly
@@ -2147,13 +2147,13 @@ obj/item/whetstone
 	stamina_damage = 1 //we WANT this to be low so crewmembers can run away easily
 	throwforce = 24 //probably needs tuning but these aren't too far divorced from tomahawks- encourage high-skill gameplay
 	throw_speed = 4
-	throw_range = 10
+	throw_range = 7
 
-	HELP_MESSAGE_OVERRIDE({"Can be used as a crowbar. Throw the weapon (space+click) to inflict a half-second stun and three second disorient."})
+	HELP_MESSAGE_OVERRIDE({"Can be used as a crowbar. Throw the weapon (space+click) to inflict a half-second stun and two second disorient."})
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/tile_fling)
+		src.setItemSpecial(/datum/item_special/tile_fling) //borrowing attributes from crowbar
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// I refuse to add to the item/knife/butcher inheritance tree. I just won't do it.
@@ -2161,8 +2161,8 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 
-			C.changeStatus("knockdown", 0.5 SECONDS) //not a rampaging stun so much as "not your weapon anymore lol" one
-			C.changeStatus("disorient", 3 SECONDS)
+			C.changeStatus("knockdown", 0.5 SECONDS) //give what's basically a defib stun; lets salvagers yoink weapons if they're savvy
+			C.changeStatus("disorient", 2 SECONDS) //give them getaway time
 			C.force_laydown_standup()
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
