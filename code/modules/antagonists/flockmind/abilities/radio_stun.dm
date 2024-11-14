@@ -20,7 +20,6 @@
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), SPAN_NOTICE("You transmit the worst static you can weave into the headsets around you."))
-		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts radio stun burst at [log_loc(src.holder.owner)].")
 		for(var/mob/living/M in targets)
 			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, SPAN_ALERT("Horrifying static bursts into your headset, disorienting you severely!"))
