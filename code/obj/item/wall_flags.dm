@@ -50,6 +50,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "aromantic pride flag"
 		icon_state = "aro"
 		associated_flag = /obj/decal/poster/flag/aro
+		associated_cape = /obj/item/clothing/suit/flag/aro
 
 	bisexual
 		name = "bisexual pride flag"
@@ -195,3 +196,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	ace
 		name = "asexual pride flag"
 		icon_state = "ace-cape"
+
+	aro
+		name = "aromantic pride flag"
+		icon_state = "aro-cape"
