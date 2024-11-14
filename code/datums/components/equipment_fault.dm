@@ -6,12 +6,12 @@
 	//tool flags to clear
 	var/interactions = 0
 	var/fault_delay = 5 SECONDS
-	var/static/list/tool_to_repair_type = list("[TOOL_CUTTING|TOOL_SNIPPING]"=list(/datum/contextAction/repair/cut, "You cut some vestigial wires from \the %target%.", 'sound/items/Wirecutter.ogg'),
-											   "[TOOL_PRYING]"=list(/datum/contextAction/repair/pry, "You pry things back into place on \the %target% with all your might.", 'sound/items/Crowbar.ogg'),
-											   "[TOOL_PULSING]"=list(/datum/contextAction/repair/pulse, "You pulse \the %target%. In a general sense.", 'sound/items/penclick.ogg'),
-											   "[TOOL_SCREWING]"=list(/datum/contextAction/repair/screw, "You screw in some of the screws on \the %target%.", 'sound/items/Screwdriver.ogg'),
-											   "[TOOL_WELDING]"=list(/datum/contextAction/repair/weld, "You weld \the %target% carefully.", null),
-											   "[TOOL_WRENCHING]"=list(/datum/contextAction/repair/wrench, "You wrench \the %target%'s bolts. Nice and snug.", 'sound/items/Ratchet.ogg'),
+	var/static/list/tool_to_repair_type = list("[TOOL_CUTTING|TOOL_SNIPPING]"=list(/datum/contextAction/repair/cut, "You cut some vestigial wires from %target%.", 'sound/items/Wirecutter.ogg'),
+											   "[TOOL_PRYING]"=list(/datum/contextAction/repair/pry, "You pry things back into place on %target% with all your might.", 'sound/items/Crowbar.ogg'),
+											   "[TOOL_PULSING]"=list(/datum/contextAction/repair/pulse, "You pulse %target%. In a general sense.", 'sound/items/penclick.ogg'),
+											   "[TOOL_SCREWING]"=list(/datum/contextAction/repair/screw, "You screw in some of the screws on %target%.", 'sound/items/Screwdriver.ogg'),
+											   "[TOOL_WELDING]"=list(/datum/contextAction/repair/weld, "You weld %target% carefully.", null),
+											   "[TOOL_WRENCHING]"=list(/datum/contextAction/repair/wrench, "You wrench %target%'s bolts. Nice and snug.", 'sound/items/Ratchet.ogg'),
 											   )
 
 TYPEINFO(/datum/component/equipment_fault)
@@ -113,7 +113,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		src.interactions &= ~interaction
 
 		user.removeContextAction(interaction_lookup[TOOL_TO_REPAIR_CONTEXT_IDX])
-		user.show_text(replacetext(interaction_lookup[TOOL_TO_REPAIR_TEXT_IDX], "%target%", src.parent), "blue")
+		user.show_text(replacetext(interaction_lookup[TOOL_TO_REPAIR_TEXT_IDX], "%target%", "\the [src.parent]"), "blue")
 		if (interaction_lookup[TOOL_TO_REPAIR_SOUND_IDX])
 			playsound(src.parent, interaction_lookup[TOOL_TO_REPAIR_SOUND_IDX], 50, TRUE)
 

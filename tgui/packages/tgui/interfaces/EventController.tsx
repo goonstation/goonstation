@@ -63,20 +63,23 @@ const QueuedEvent = (props: QueuedEventData, key: string) => {
   );
 };
 
-const QueuedSection = (props: Array<QueuedEventData>) => {
+interface QueuedSectionProps {
+  queueData: Array<QueuedEventData>;
+}
+
+const QueuedSection = (props: QueuedSectionProps) => {
   const sortEventQueue = (a: QueuedEventData, b: QueuedEventData) =>
     a.time - b.time;
 
-  const sortedQueue: Array<QueuedEventData> = Object.keys(props)
-    .map((index) => props[index])
-    .sort(sortEventQueue);
+  const sortedQueue: Array<QueuedEventData> =
+    props.queueData.sort(sortEventQueue);
 
   return (
     <Section title="Scheduled Events">
       <Flex direction="column">
         {sortedQueue.length ? (
-          sortedQueue.map((queuedEvent) => (
-            <Flex.Item mb={1} key={queuedEvent.name}>
+          sortedQueue.map((queuedEvent, i) => (
+            <Flex.Item mb={1} key={i}>
               <QueuedEvent {...queuedEvent} />
             </Flex.Item>
           ))
@@ -89,14 +92,18 @@ const QueuedSection = (props: Array<QueuedEventData>) => {
   );
 };
 
-const RoundStartSection = (props: Array<RoundStartData>) => {
+interface RoundStartProps {
+  roundStartData: Array<RoundStartData>;
+}
+
+const RoundStartSection = (props: RoundStartProps) => {
   const { act } = useBackend();
   return (
     <Section title="Round Start Events">
       <Flex direction="column">
-        {Object.entries(props).length ? (
-          Object.entries(props).map(([eventKey, startEvent]) => (
-            <Flex.Item mb={1} key={eventKey}>
+        {props.roundStartData.length ? (
+          props.roundStartData.map((startEvent, i) => (
+            <Flex.Item mb={1} key={i}>
               <Stack align="left">
                 <Stack.Item grow>{startEvent.name}</Stack.Item>
                 <Stack.Item>
@@ -501,9 +508,9 @@ export const EventController = () => {
           </Flex>
         </Section>
 
-        <RoundStartSection {...data.roundStart} />
+        <RoundStartSection roundStartData={data.roundStart} />
 
-        <QueuedSection {...data.queuedEvents} />
+        <QueuedSection queueData={data.queuedEvents} />
 
         <Tabs>
           {data.eventData.map((eventCat, i) => (
