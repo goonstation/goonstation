@@ -2848,7 +2848,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("Yes")
 				var/list/inputted_color_matrix = nuke_op_color_matrix.Copy()
 				for (var/i in 1 to 3)
-					inputted_color_matrix[i] = input("Choose a color for syndicate","Syndicate Recolor", nuke_op_color_matrix[i]) as color as color
+					inputted_color_matrix[i] = input("Choose a color for syndicate","Syndicate Recolor", nuke_op_color_matrix[i]) as color
 				if (length(inputted_color_matrix) != 3)
 					boutput(src, "You must input 3 colors.")
 					return
