@@ -76,7 +76,7 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			start_events += RE
 
-		queued_events = list("major"=list(),"minor"=list(),"special_events"=list(),"spawn"=list())
+		queued_events = list("major"=list(),"minor"=list(),"special_events"=list(),"spawn"=list(),"start_events"=list())
 
 		src.active_storyteller = new/datum/storyteller/basic()
 		src.active_storyteller.set_active(src)
@@ -572,6 +572,8 @@ var/datum/event_controller/random_events
 				queue_string = "minor"
 			else if(RE in special_events )
 				queue_string = "special_events"
+			else if(RE in start_events )
+				queue_string = "start_events"
 
 			if(istype(RE) && params["name"] == RE.name)
 				var/schedule_time = tgui_input_number(usr,
