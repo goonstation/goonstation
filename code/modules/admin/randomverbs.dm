@@ -2836,6 +2836,43 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 
+/client/proc/cmd_nukie_colour()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Recolor Syndicate"
+	set desc = "Recolor (most) syndicate gear, mostly nukie gear."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Recolor syndicate gear?",,"Yes","No","Reset"))
+			if("Yes")
+				var/list/inputted_color_matrix = nuke_op_color_matrix.Copy()
+				for (var/i in 1 to 3)
+					inputted_color_matrix[i] = input("Choose a color for syndicate","Syndicate Recolor", nuke_op_color_matrix[i]) as color as color
+				if (length(inputted_color_matrix) != 3)
+					boutput(src, "You must input 3 colors.")
+					return
+				nuke_op_camo_matrix = inputted_color_matrix
+				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = null
+					A.color = color_matrix
+					LAGCHECK(LAG_LOW)
+				logTheThing(LOG_ADMIN, src, "changed the syndicate colour scheme.")
+				logTheThing(LOG_DIARY, src, "changed the syndicate colour scheme.", "admin")
+				message_admins("[key_name(src)] changed the syndicate colour scheme.")
+			if ("Reset")
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = null
+					LAGCHECK(LAG_LOW)
+				logTheThing(LOG_ADMIN, src, "reset the syndicate colour scheme.")
+				logTheThing(LOG_DIARY, src, "reset the syndicate colour scheme.", "admin")
+				message_admins("[key_name(src)] reset the syndicate colour scheme.")
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
 /client/proc/cmd_blindfold_monkeys()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "See No Evil"
