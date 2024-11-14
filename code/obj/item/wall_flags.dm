@@ -44,6 +44,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 		name = "asexual pride flag"
 		icon_state = "ace"
 		associated_flag = /obj/decal/poster/flag/ace
+		associated_cape = /obj/item/clothing/suit/flag/ace
 
 	aro
 		name = "aromantic pride flag"
@@ -190,3 +191,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 	mlmachi
 		name = "\improper Achilean MLM pride cape"
 		icon_state = "mlmachi-cape"
+
+	ace
+		name = "asexual pride flag"
+		icon_state = "ace-cape"
