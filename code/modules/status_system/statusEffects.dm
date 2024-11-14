@@ -2917,7 +2917,7 @@
 
 	onAdd(optional)
 		..()
-		src.time_threshold = rand(1, 5) MINUTES
+		src.time_threshold = rand(60, 300) SECONDS
 
 	onUpdate(timePassed)
 		..()
@@ -2925,7 +2925,7 @@
 		if (src.time_passed < src.time_threshold)
 			return
 		src.time_passed = 0
-		src.time_threshold = rand(1, 5) MINUTES
+		src.time_threshold = rand(60, 300) SECONDS
 		var/obj/item/currency/spacecash/money = new
 		money.amount = rand(100, 500)
 		money.UpdateStackAppearance()
