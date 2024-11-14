@@ -16,6 +16,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 	var/function = "foo()"
 	var/options = list()
 	var/defaults = list()
+	var/big_text = FALSE
 
 	proc/generate(params)
 		for(var/option in src.options)
@@ -70,9 +71,40 @@ ABSTRACT_TYPE(/datum/ca_type)
 		get_width(params)
 			return params["maxx"]
 
+	bst_viewer
+		name = "Binary Spatial Partioning"
+		description = "Not A CA BSP"
+		options = list("x", "y", "width", "height", "min_width", "min_height" )
+		defaults = list("x"=1, "y"=1, "width"=300, "height"=300, "min_width"=10, "min_height"=10 )
+		big_text = TRUE
+
+		function = "var/datum/bsp_tree/tree = new"
+
+		generate(params)
+			. = ..()
+			if(.)
+				var/datum/bsp_tree/our_tree = new(x=params["x"],y=params["y"], width=params["width"], height=params["height"],min_width=params["min_width"],min_height=params["min_height"])
+				. = our_tree.tree_to_string()
+
+		get_width(params)
+			return params["width"]
+
+	bst_viewer/maze
+		name = "BSP Maze"
+		description = "Not A CA BSP"
+
+		function = "var/datum/bsp_tree/maze/tree = new"
+
+		generate(params)
+			. = ..()
+			if(.)
+				var/datum/bsp_tree/maze/our_tree = new(x=params["x"],y=params["y"], width=params["width"], height=params["height"],min_width=params["min_width"],min_height=params["min_height"])
+				. = our_tree.tree_to_string()
+
 /datum/ca_viewer
 	var/datum/ca_type/active_ca_type
 	var/settings
+	var/big_text
 	var/ca_cache
 	var/width = 300
 	var/ca_types = list()
@@ -107,6 +139,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 	.["CAData"] = src.ca_cache
 	.["typeData"] = list()
 	.["settings"] = src.settings
+	.["bigText"] = src.active_ca_type.big_text
 	.["viewWidth"] = src.active_ca_type.get_width(src.settings)
 	for(var/datum/ca_type/T as anything in ca_types)
 		.["typeData"][T.name] += list(
@@ -116,8 +149,9 @@ ABSTRACT_TYPE(/datum/ca_type)
 			"options"=T.options)
 
 /datum/ca_viewer/ui_data()
-	var/list/data = list()
-	return data
+	. = list()
+	.["bigText"] = src.active_ca_type.big_text
+	.["viewWidth"] = src.active_ca_type.get_width(src.settings)
 
 /datum/ca_viewer/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
@@ -130,6 +164,7 @@ ABSTRACT_TYPE(/datum/ca_type)
 			var/tgui_data = list()
 			tgui_data["CAData"] = src.ca_cache
 			tgui_data["viewWidth"] = src.active_ca_type.get_width(src.settings)
+			tgui_data["bigText"] = src.active_ca_type.big_text
 			ui.send_update(tgui_data)
 			. = TRUE
 

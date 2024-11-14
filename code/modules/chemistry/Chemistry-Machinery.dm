@@ -742,7 +742,7 @@ TYPEINFO(/obj/machinery/chem_master)
 			for(var/reagent_id in src.beaker.reagents.reagent_list)
 				var/datum/reagent/current_reagent = src.beaker.reagents.reagent_list[reagent_id]
 				contents.Add(list(list(
-					name = reagents_cache[reagent_id],
+					name = current_reagent.name,
 					id = reagent_id,
 					colorR = current_reagent.fluid_r,
 					colorG = current_reagent.fluid_g,

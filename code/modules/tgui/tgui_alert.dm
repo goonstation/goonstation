@@ -129,6 +129,9 @@
 		"items" = items,
 		"autofocus" = autofocus,
 		"theme" = theme,
+		// |GOONSTATION-ADD|
+		"cdn" = cdn,
+		"VCS_REVISION" = VCS_REVISION,
 	)
 
 /datum/tgui_modal/ui_act(action, list/params)

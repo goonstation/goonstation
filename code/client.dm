@@ -115,6 +115,8 @@
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
 		logTheThing(LOG_AUDIT, src, message)
+	else if (!src.holder)
+		logTheThing(LOG_AUDIT, src, message)
 
 /client/proc/updateXpRewards()
 	if(qualifiedXpRewards == null)

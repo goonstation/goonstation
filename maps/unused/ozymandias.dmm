@@ -58630,7 +58630,7 @@
 	id = "garbage";
 	operating = 1
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "psT" = (

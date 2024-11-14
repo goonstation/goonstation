@@ -38,7 +38,7 @@
 				var/t = world.time
 	#endif
 				src.setLastTask("atmos machines", machine)
-				machine.process()
+				machine.ProcessMachine()
 	#ifdef MACHINE_PROCESSING_DEBUG
 				register_machine_time(machine, world.time - t)
 	#endif
@@ -94,7 +94,7 @@
 				#define pr_max_spacing machine.cap_base_tick_spacing*(1 << (machine.processing_tier-1))	// The most time we're willing to give it
 				#define pr_mult clamp(TIME - machine.last_process, pr_base_spacing, pr_max_spacing) / pr_base_spacing	// (time it took between processes) / (time it should've taken) = (do certain things this much more)
 				SET_LAST_TASK("general machines", machine)
-				machine.process(pr_mult)	// Passes the mult as an arg of process(), so it can be accessible by ~any~ machine! Even Guardbots!
+				machine.ProcessMachine(pr_mult)	// Passes the mult as an arg of process(), so it can be accessible by ~any~ machine! Even Guardbots!
 				#undef pr_max_spacing
 				#undef pr_mult
 				machine.last_process = TIME	// set the last time the machine processed to now, so we can compare it next loop

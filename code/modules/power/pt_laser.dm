@@ -418,10 +418,11 @@
 
 		var/melt_prob = 0 //this var only exists for debug really
 		if (isturf(A))
-			if (abs(output) < 100 MEGA WATTS) //hard threshold for turfs, you need a beeg laser
+			var/turf_mult = istype(A, /turf/simulated/wall/auto/asteroid) ? 0.1 : 1
+			if (abs(output) < 100 MEGA WATTS * turf_mult) //hard threshold for turfs, you need a beeg laser
 				melt_prob = 0
 			else
-				melt_prob = abs(output) / (25 MEGA WATTS)
+				melt_prob = abs(output) / (25 MEGA WATTS * turf_mult)
 			if (prob(melt_prob))
 				A.ex_act(2)
 			if (A.density && melt_prob) //turfs keep refs so this will be the new turf if it does get replaced in ex_act
@@ -429,8 +430,11 @@
 		else
 			melt_prob = (abs(output)) / (0.5 MEGA WATTS)
 			if (prob(melt_prob))
-				A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
-				qdel(A)
+				if (istype(A, /obj/geode))
+					A.ex_act(melt_prob > 20 ? 1 : 3, null, melt_prob / 4) //lazy severity because it doesn't really matter here
+				else
+					A.visible_message(SPAN_ALERT("[A] is melted away by [src]!"))
+					qdel(A)
 
 		if (QDELETED(A))
 			src.blocking_objects -= A //mmm yes for loop list modification
@@ -440,7 +444,7 @@
 	return src.terminal?.surplus() + src.load_last_tick //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 
 /obj/machinery/power/pt_laser/proc/get_available_input_power()
-		return src.charging * min(src.chargelevel, src.get_available_terminal_power())
+	return src.charging * min(src.chargelevel, src.get_available_terminal_power())
 
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return (abs(src.output) <= src.charge + src.get_available_input_power()) & (abs(src.output) >= PTLMINOUTPUT)

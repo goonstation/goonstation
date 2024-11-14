@@ -11649,6 +11649,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/stairs{
 	dir = 8;
 	icon_state = "Stairs2_wide"
@@ -55425,6 +55426,7 @@
 "doB" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Teleport Pad"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -55876,6 +55878,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"dHy" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/crew_quarters/garden)
 "dHM" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -55961,6 +55969,13 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"dOL" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/info_map,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "dOT" = (
 /obj/machinery/meter,
 /obj/machinery/camera{
@@ -56907,7 +56922,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/incandescent,
+/obj/machinery/info_map,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "ePA" = (
@@ -65034,7 +65049,7 @@
 /area/station/medical/medbay/surgery/storage)
 "mNY" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -65366,6 +65381,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/chapel/sanctuary)
+"nlJ" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "nlY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	id = "medbay_entrance";
@@ -66568,6 +66587,7 @@
 /area/station/quartermaster/refinery)
 "oum" = (
 /obj/disposalpipe/segment/mail/bent/west,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/hallway/primary/southwest)
 "ovW" = (
@@ -75033,7 +75053,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/disposal)
 "xpe" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
@@ -121123,7 +121143,7 @@ aCP
 aBy
 alM
 aGx
-aIl
+dHy
 aJK
 aLd
 aGt
@@ -134490,7 +134510,7 @@ cyG
 czU
 cBD
 crl
-cEt
+dOL
 cmk
 cHD
 cIG
@@ -135957,7 +135977,7 @@ buz
 bwi
 yjo
 bqU
-bBw
+nlJ
 bBw
 bFv
 bHm

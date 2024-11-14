@@ -220,6 +220,9 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/reinforced)
 	explosion_resistance = 999999
 	anchored = ANCHORED_ALWAYS //haha fuk u
 
+	listeningpost
+		req_access_txt = "-1"
+
 /obj/machinery/door/airlock/pyro/reinforced/arrivals
 	icon_state = "arrivals_closed"
 	icon_base = "arrivals"

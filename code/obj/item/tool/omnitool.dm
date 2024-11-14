@@ -33,6 +33,14 @@
 		if (src.mode == OMNI_MODE_PRYING)
 			if (!pry_surgery(target, user))
 				return ..()
+		else if (src.mode == OMNI_MODE_WELDING)
+			if (src.welding && ishuman(target) && (user.a_intent != INTENT_HARM))
+				var/mob/living/carbon/human/H = target
+				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
+					if (!src.cautery_surgery(H, user, 15, src.welding))
+						return ..()
+			else
+				..()
 		else
 			..()
 

@@ -39,6 +39,7 @@
 		#ifdef UPSCALED_MAP
 		pixel_x = -64
 		#endif
+		src.AddComponent(/datum/component/minimap_marker/minimap, MAP_INFO, "cryo")
 
 
 	disposing()

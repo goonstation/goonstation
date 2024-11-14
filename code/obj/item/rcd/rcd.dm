@@ -256,18 +256,6 @@ TYPEINFO(/obj/item/rcd)
 		qdel(A)
 
 	proc/handle_floors_and_walls(atom/A, mob/user)
-		if (istype(A, /obj/lattice) || istype(A, /turf))
-			var/turf/T = A
-			if (istype(A, /obj/lattice))
-				var/turf/L = get_turf(A)
-				A = L
-				T = L
-			if (!T.can_build)
-				return
-
-			src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
-			return
-
 		if (istype(A, /turf/simulated/floor))
 			src.do_rcd_action(user, A, "building a wall", matter_create_wall, time_create_wall, PROC_REF(handle_build_wall), src)
 			return
@@ -283,6 +271,16 @@ TYPEINFO(/obj/item/rcd)
 		if (istype(A, /obj/structure/girder) && !istype(A, /obj/structure/girder/displaced))
 			src.do_rcd_action(user, A, "turning \the [A] into a wall", matter_create_wall_girder, time_create_wall_girder, PROC_REF(handle_convert_girder_to_wall), src)
 			return
+
+		if (istype(A, /obj/lattice) || istype(A, /turf))
+			var/turf/T = A
+			if (istype(A, /obj/lattice))
+				var/turf/L = get_turf(A)
+				A = L
+				T = L
+			if (T.can_build)
+				src.do_rcd_action(user, A, "building a floor", matter_create_floor, time_create_floor, PROC_REF(handle_build_floor), src)
+				return
 
 	proc/do_unreinforce_wall(turf/target, mob/user)
 		PROTECTED_PROC(TRUE)
