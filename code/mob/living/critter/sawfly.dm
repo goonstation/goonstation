@@ -109,10 +109,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		//since sawflies have a density of 1 and will auto-set intent to harm, we have to recode tile-sharing
 		if(istype(mover, /mob/living))
 			var/mob/living/movingmob = mover
-			if((issawflybuddy(movingmob)) && (movingmob.a_intent == INTENT_HELP)) //let friendlies stand on the same tile, similar to small critters
+			if((issawflybuddy(movingmob)) && (movingmob.a_intent == INTENT_HELP))
 				return TRUE
 			else
-				return FALSE
+				return ..() //default behavior
 
 		//code that ensures projectiles hit them when they're alive, but won't when they're dead
 		if(istype(mover, /obj/projectile)) //hardcoding for bullets going over dead bodies
@@ -144,9 +144,12 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			animate(src) //no more float animation
 			src.anchored = UNANCHORED
 			desc = "A folding antipersonnel drone, made by Ranodyne LLC. It's totally wrecked."
+
+			//time to roll for death effects
+
 			if (prob(20))
 				new /obj/item/device/prox_sensor(src.loc)
-				return
+
 			if(prob(60))
 				elecflash(src, 1, 3)
 
