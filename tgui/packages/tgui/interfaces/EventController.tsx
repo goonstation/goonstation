@@ -15,7 +15,7 @@ import {
   Tabs,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
-import { BooleanLike } from 'tgui-core/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -39,7 +39,7 @@ interface QueuedEventData {
   time: number;
 }
 
-const QueuedEvent = (props: QueuedEventData, key: string) => {
+const QueuedEvent = (props: QueuedEventData) => {
   const { act } = useBackend<EventControllerData>();
   return (
     <Stack align="left">
@@ -67,12 +67,11 @@ interface QueuedSectionProps {
   queueData: Array<QueuedEventData>;
 }
 
-const QueuedSection = (props: QueuedSectionProps) => {
-  const sortEventQueue = (a: QueuedEventData, b: QueuedEventData) =>
-    a.time - b.time;
+const sortEventQueue = (a: QueuedEventData, b: QueuedEventData) =>
+  a.time - b.time;
 
-  const sortedQueue: Array<QueuedEventData> =
-    props.queueData.sort(sortEventQueue);
+const QueuedSection = (props: QueuedSectionProps) => {
+  const sortedQueue = [...props.queueData].sort(sortEventQueue);
 
   return (
     <Section title="Scheduled Events">
@@ -87,7 +86,6 @@ const QueuedSection = (props: QueuedSectionProps) => {
           <Flex.Item>None</Flex.Item>
         )}
       </Flex>
-      {}
     </Section>
   );
 };
@@ -107,7 +105,6 @@ const RoundStartSection = (props: RoundStartProps) => {
               <Stack align="left">
                 <Stack.Item grow>{startEvent.name}</Stack.Item>
                 <Stack.Item>
-                  {' '}
                   <Button
                     icon="delete-left"
                     tooltip="Unschedule"
@@ -140,15 +137,15 @@ interface EventData {
   enabled: BooleanLike;
 }
 
-const getMinutes = (time) => {
+const getMinutes = (time: number) => {
   return time / 60 / 10;
 };
 
-const toMinutes = (time) => {
+const toMinutes = (time: number) => {
   return time * 60 * 10;
 };
 
-const getEventIconColor = (enabled, active) => {
+const getEventIconColor = (enabled: BooleanLike, active: BooleanLike) => {
   if (enabled) {
     if (active) {
       return 'green';
@@ -160,7 +157,7 @@ const getEventIconColor = (enabled, active) => {
   }
 };
 
-const getEventIconToolTip = (enabled, active) => {
+const getEventIconToolTip = (enabled: BooleanLike, active: BooleanLike) => {
   if (enabled) {
     if (active) {
       return 'Active';
@@ -178,7 +175,7 @@ const Event = (props: EventData) => {
     <Stack>
       <Stack.Item>
         <Button
-          icon={'circle'}
+          icon="circle"
           color={getEventIconColor(props.enabled, props.available)}
           tooltip={getEventIconToolTip(props.enabled, props.available)}
           onClick={() =>
@@ -297,7 +294,7 @@ const EventCategory = (props: EventTypeData) => {
                 />
               </Stack.Item>
               <Stack.Item>
-                Time Between Events:{' '}
+                Time Between Events:
                 <NumberInput
                   value={getMinutes(props.delayLow)}
                   minValue={0}
@@ -315,7 +312,7 @@ const EventCategory = (props: EventTypeData) => {
                     })
                   }
                 />
-                /{' '}
+                /
                 <NumberInput
                   value={getMinutes(props.delayHigh)}
                   minValue={0}
@@ -340,6 +337,7 @@ const EventCategory = (props: EventTypeData) => {
       ) : (
         ''
       )}
+      {/* TODO: consider not rendering if no contents? */}
       <Flex direction="column">
         {props.eventList ? (
           props.eventList.map((event) => (
@@ -428,7 +426,7 @@ export const EventController = () => {
             <Flex.Item mb={1}>
               <Stack>
                 <Stack.Item>
-                  Minimum Population:{' '}
+                  Minimum Population:
                   <NumberInput
                     value={data.minPopulation}
                     minValue={0}
@@ -445,7 +443,7 @@ export const EventController = () => {
                   />
                 </Stack.Item>
                 <Stack.Item>
-                  Alive Antagonist Threshold:{' '}
+                  Alive Antagonist Threshold:
                   <NumberInput
                     value={data.aliveAntagonistThreshold}
                     minValue={0}
@@ -462,7 +460,7 @@ export const EventController = () => {
                   />
                 </Stack.Item>
                 <Stack.Item>
-                  Dead Player Threshold:{' '}
+                  Dead Player Threshold:
                   <NumberInput
                     value={data.deadPlayersThreshold}
                     minValue={0}
@@ -480,7 +478,6 @@ export const EventController = () => {
                 </Stack.Item>
               </Stack>
             </Flex.Item>
-
             <Flex.Item mb={1}>
               <Stack>
                 <Stack.Item>
@@ -513,9 +510,9 @@ export const EventController = () => {
         <QueuedSection queueData={data.queuedEvents} />
 
         <Tabs>
-          {data.eventData.map((eventCat, i) => (
+          {data.eventData.map((eventCat) => (
             <Tabs.Tab
-              key={i}
+              key={eventCat.name}
               color="white"
               selected={eventCat.name === groupName}
               onClick={() => setGroupName(eventCat.name)}
