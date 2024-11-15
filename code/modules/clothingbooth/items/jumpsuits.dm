@@ -173,9 +173,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 		swatch_background_color = "#30457c"
 		item_path = /obj/item/clothing/under/peacockdress
 
-/datum/clothingbooth_item/w_uniform/pink_collared_shirt
-	item_path = /obj/item/clothing/under/misc/collar_pink
-
 /datum/clothingbooth_item/w_uniform/redtie
 	cost = PAY_TRADESMAN/3
 	item_path = /obj/item/clothing/under/redtie

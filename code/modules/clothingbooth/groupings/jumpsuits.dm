@@ -167,12 +167,6 @@
 		/datum/clothingbooth_grouping_tag/group_set/masquerade,
 	)
 
-/datum/clothingbooth_grouping/pink_collared_shirt
-	item_paths = list(/datum/clothingbooth_item/w_uniform/pink_collared_shirt)
-	grouping_tags = list(
-		/datum/clothingbooth_grouping_tag/formality/formal,
-	)
-
 /datum/clothingbooth_grouping/redtie
 	item_paths = list(/datum/clothingbooth_item/w_uniform/redtie)
 	grouping_tags = list(
