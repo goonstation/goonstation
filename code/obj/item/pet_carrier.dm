@@ -178,7 +178,7 @@
 		..()
 		if (src.carrier_occupants)
 			animate_storage_thump(src)
-		for (var/occupant in src.carrier_occupants)
+		for (var/mob/occupant in src.carrier_occupants)
 			occupant.throw_impact(hit_atom, thr)
 		if (length(src.carrier_occupants))
 			src.take_door_damage(src.damage_per_resist * length(src.carrier_occupants))
@@ -233,7 +233,7 @@
 		if (length(src.carrier_occupants))
 			var/atom/movable/thing_to_remove = src.carrier_occupants[1]
 			if (istype(thing_to_remove, /obj/item/rocko))
-				src.eject_mob(target)
+				src.eject_mob(thing_to_remove)
 			if (istype(thing_to_remove, /mob))
 				var/mob/M = thing_to_remove
 				actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
