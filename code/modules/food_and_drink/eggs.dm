@@ -55,6 +55,7 @@
 	name = "chocolate egg"
 	desc = "A little chocolate egg, roughly egg sized."
 	icon_state = "chocolate-egg"
+	food_effects = list("food_brute", "food_burn")
 	initial_reagents = list("chocolate" = 5)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
