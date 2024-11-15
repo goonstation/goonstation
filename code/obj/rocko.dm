@@ -163,7 +163,7 @@
 		if(istype(W, /obj/item/pet_carrier))
 			var/obj/item/pet_carrier/carrier = W
 			carrier.trap_mob(src, user)
-			carrier.visible_message(SPAN_ALERT("[user] places [src] into [carrier]."))
+			user.visible_message(SPAN_ALERT("[user] places [src] into [carrier]."))
 			return
 		. = ..()
 
