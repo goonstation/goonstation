@@ -49,7 +49,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 		src.add_stam_mod_max("AIeye", 1000) // Stop stamcritting the ghostly eye
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "AIeye", 1000)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "AIeye", 1000)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 		AddComponent(/datum/component/minimap_marker/minimap, MAP_AI, "ai_eye")
