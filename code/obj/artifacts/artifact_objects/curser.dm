@@ -55,15 +55,25 @@
 
 		src.active_cursees = list()
 
+		var/list/curse_candidates = list()
+		var/list/picked_to_curse = list()
+
 		for (var/mob/living/carbon/human/H in range(5, O))
+			if (H != user && !isdead(H))
+				curse_candidates += H
+
+		for (var/i = 1 to min(length(curse_candidates), rand(2, 5)))
+			var/candidate = pick(curse_candidates)
+			picked_to_curse += candidate
+			curse_candidates -= candidate
+
+		for (var/mob/living/carbon/human/H as anything in (picked_to_curse + list(user)))
 			if (!H.last_ckey)
 				continue
 			//if (H.hasStatus("art_talisman_held"))
 			//	boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse!"))
+			// if death curse, also destroy the artifact
 			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, null, src)
-			//if (src.chosen_curse == MAZE_CURSE)
-				//if (!src.created_maze)
-				//	src.create_maze(50)
 			src.active_cursees[H] = active_curse
 			if (src.chosen_curse == BLOOD_CURSE)
 				src.blood_curse_active = TRUE
