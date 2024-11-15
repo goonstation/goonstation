@@ -337,8 +337,6 @@
 	if (!src.occupant)
 		return
 	src.icon_state = "clothingbooth-open"
-	qdel(src.preview_item)
-	src.preview_item = null
 	SPAWN(2 SECONDS)
 		src.eject_contents(target)
 
@@ -414,9 +412,8 @@
 	src.selected_item = null
 
 /obj/machinery/clothingbooth/proc/clear_preview_item()
-	if (!isnull(src.preview_item))
-		qdel(src.preview_item)
-		src.preview_item = null
+	qdel(src.preview_item)
+	src.preview_item = null
 
 /obj/machinery/clothingbooth/proc/update_preview()
 	src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.current_preview_direction, src.occupant.real_name)
