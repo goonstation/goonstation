@@ -376,6 +376,7 @@
 			if (!H.sims)
 				H.sims = new /datum/simsHolder(H)
 			H.sims.addMotive(/datum/simsMotive/hygiene)
+			H.sims.add_hud() // ensure hud has hygiene motive
 
 	onRemove(var/mob/owner)
 		if(ishuman(owner))

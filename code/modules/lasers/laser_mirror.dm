@@ -1,3 +1,4 @@
+//These are the surface normal directions for the two states (so NW_SE has faces pointing north west and south east)
 #define NW_SE 0
 #define SW_NE 1
 
@@ -74,14 +75,55 @@ TYPEINFO(/obj/laser_sink/mirror)
 	src.out_laser = null
 	..()
 
+///One over root 2, the component length of a 45 degree unit vector
+#define LENGTH 1/(2**(1/2))
+
+///Manually defined angled normals depending on mirror direction
+///I think this may be stupid and bad and should probably be a vector transform somehow but it works for now
+/obj/laser_sink/mirror/normal_x(incident_dir)
+	switch(incident_dir)
+		if (WEST)
+			return -LENGTH
+		if (EAST)
+			return LENGTH
+		if (SOUTH)
+			if (src.facing == NW_SE)
+				return LENGTH
+			else
+				return -LENGTH
+		if (NORTH)
+			if (src.facing == NW_SE)
+				return -LENGTH
+			else
+				return LENGTH
+
+/obj/laser_sink/mirror/normal_y(incident_dir)
+	switch(incident_dir)
+		if (WEST)
+			if (src.facing == NW_SE)
+				return LENGTH
+			else
+				return -LENGTH
+		if (EAST)
+			if (src.facing == NW_SE)
+				return -LENGTH
+			else
+				return LENGTH
+		if (SOUTH)
+			return -LENGTH
+		if (NORTH)
+			return LENGTH
+
+#undef LENGTH
+
 /obj/laser_sink/mirror/bullet_act(obj/projectile/P)
 	//cooldown to prevent client lag caused by infinite projectile loops
-	if (istype(P.proj_data, /datum/projectile/laser/heavy) && !ON_COOLDOWN(src, "reflect_projectile", 1 DECI SECOND))
-		var/obj/projectile/new_proj = shoot_projectile_DIR(src, P.proj_data, src.get_reflected_dir(P.dir))
+	if (P.proj_data.damage_type == D_ENERGY && !ON_COOLDOWN(src, "reflect_projectile", 1 DECI SECOND))
+		var/obj/projectile/new_proj = shoot_reflected_bounce(P, src, INFINITY, play_shot_sound = FALSE, fire_from = get_turf(src))
 		new_proj.travelled = P.travelled
 		P.die()
 	else
-		..()
+		. = ..()
 
 /obj/laser_sink/mirror/traverse(proc_to_call)
 	src.out_laser.traverse(proc_to_call)
