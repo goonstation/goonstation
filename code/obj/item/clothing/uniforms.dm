@@ -1589,11 +1589,97 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     icon_state = "fish"
     item_state = "fish"
 
-/obj/item/clothing/under/misc/collar_pink
-    name = "pink collar shirt"
-    desc = "A plain pink collared shirt."
-    icon_state = "pink_collar"
-    item_state = "pink_collar"
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
+/obj/item/clothing/under/misc/collar_shirt
+	name = "collar shirt"
+	icon_state = "white_collar"
+	item_state = "white_collar"
+	var/shirt_colour_name = "white"
+
+	New()
+		..()
+		src.name = "[src.shirt_colour_name] collar shirt"
+		src.desc = "A plain [src.shirt_colour_name] collared shirt."
+
+/obj/item/clothing/under/misc/collar_shirt/white
+	icon_state = "white_collar"
+	item_state = "white_collar"
+	shirt_colour_name = "white"
+
+/obj/item/clothing/under/misc/collar_shirt/cream
+	icon_state = "cream_collar"
+	item_state = "cream_collar"
+	shirt_colour_name = "cream"
+
+/obj/item/clothing/under/misc/collar_shirt/khaki
+	icon_state = "khaki_collar"
+	item_state = "khaki_collar"
+	shirt_colour_name = "khaki"
+
+/obj/item/clothing/under/misc/collar_shirt/pink
+	icon_state = "pink_collar"
+	item_state = "pink_collar"
+	shirt_colour_name = "pink"
+
+/obj/item/clothing/under/misc/collar_shirt/red
+	icon_state = "red_collar"
+	item_state = "red_collar"
+	shirt_colour_name = "red"
+
+/obj/item/clothing/under/misc/collar_shirt/dark_red
+	icon_state = "dred_collar"
+	item_state = "dred_collar"
+	shirt_colour_name = "dark red"
+
+/obj/item/clothing/under/misc/collar_shirt/orange
+	icon_state = "orange_collar"
+	item_state = "orange_collar"
+	shirt_colour_name = "orange"
+
+/obj/item/clothing/under/misc/collar_shirt/brown
+	icon_state = "brown_collar"
+	item_state = "brown_collar"
+	shirt_colour_name = "brown"
+
+/obj/item/clothing/under/misc/collar_shirt/yellow
+	icon_state = "yellow_collar"
+	item_state = "yellow_collar"
+	shirt_colour_name = "yellow"
+
+/obj/item/clothing/under/misc/collar_shirt/green
+	icon_state = "green_collar"
+	item_state = "green_collar"
+	shirt_colour_name = "green"
+
+/obj/item/clothing/under/misc/collar_shirt/dark_green
+	icon_state = "dgreen_collar"
+	item_state = "dgreen_collar"
+	shirt_colour_name = "dark green"
+
+/obj/item/clothing/under/misc/collar_shirt/mint
+	icon_state = "mint_collar"
+	item_state = "mint_collar"
+	shirt_colour_name = "mint"
+
+/obj/item/clothing/under/misc/collar_shirt/blue
+	icon_state = "blue_collar"
+	item_state = "blue_collar"
+	shirt_colour_name = "blue"
+
+/obj/item/clothing/under/misc/collar_shirt/dark_blue
+	icon_state = "dblue_collar"
+	item_state = "dblue_collar"
+	shirt_colour_name = "dark blue"
+
+/obj/item/clothing/under/misc/collar_shirt/purple
+	icon_state = "purple_collar"
+	item_state = "purple_collar"
+	shirt_colour_name = "purple"
+
+/obj/item/clothing/under/misc/collar_shirt/black
+	icon_state = "black_collar"
+	item_state = "black_collar"
+	shirt_colour_name = "black"
 
 /obj/item/clothing/under/misc/fancy_vest
     name = "fancy vest"
@@ -1885,6 +1971,92 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     icon_state = "mint_chip"
     item_state = "mint_chip"
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc/blouse_skirt)
+/obj/item/clothing/under/misc/blouse_skirt
+	name = "blouse and skirt"
+	desc = "A space rayon blouse with a pencil skirt. Professional."
+	icon_state = "blouse_skirt-white"
+	item_state = "blouse_skirt-white"
+
+/obj/item/clothing/under/misc/blouse_skirt/white
+	name = "white blouse and skirt"
+	icon_state = "blouse_skirt-white"
+	item_state = "blouse_skirt-white"
+
+/obj/item/clothing/under/misc/blouse_skirt/cream
+	name = "cream blouse and skirt"
+	icon_state = "blouse_skirt-cream"
+	item_state = "blouse_skirt-cream"
+
+/obj/item/clothing/under/misc/blouse_skirt/khaki
+	name = "khaki blouse and skirt"
+	icon_state = "blouse_skirt-khaki"
+	item_state = "blouse_skirt-khaki"
+
+/obj/item/clothing/under/misc/blouse_skirt/pink
+	name = "pink blouse and skirt"
+	icon_state = "blouse_skirt-pink"
+	item_state = "blouse_skirt-pink"
+
+/obj/item/clothing/under/misc/blouse_skirt/red
+	name = "red blouse and skirt"
+	icon_state = "blouse_skirt-red"
+	item_state = "blouse_skirt-red"
+
+/obj/item/clothing/under/misc/blouse_skirt/dark_red
+	name = "dark red blouse and skirt"
+	icon_state = "blouse_skirt-dred"
+	item_state = "blouse_skirt-dred"
+
+/obj/item/clothing/under/misc/blouse_skirt/orange
+	name = "orange blouse and skirt"
+	icon_state = "blouse_skirt-orange"
+	item_state = "blouse_skirt-orange"
+
+/obj/item/clothing/under/misc/blouse_skirt/brown
+	name = "brown blouse and skirt"
+	icon_state = "blouse_skirt-brown"
+	item_state = "blouse_skirt-brown"
+
+/obj/item/clothing/under/misc/blouse_skirt/yellow
+	name = "yellow blouse and skirt"
+	icon_state = "blouse_skirt-yellow"
+	item_state = "blouse_skirt-yellow"
+
+/obj/item/clothing/under/misc/blouse_skirt/green
+	name = "green blouse and skirt"
+	icon_state = "blouse_skirt-green"
+	item_state = "blouse_skirt-green"
+
+/obj/item/clothing/under/misc/blouse_skirt/dark_green
+	name = "dark green blouse and skirt"
+	icon_state = "blouse_skirt-dgreen"
+	item_state = "blouse_skirt-dgreen"
+
+/obj/item/clothing/under/misc/blouse_skirt/mint
+	name = "mint blouse and skirt"
+	icon_state = "blouse_skirt-mint"
+	item_state = "blouse_skirt-mint"
+
+/obj/item/clothing/under/misc/blouse_skirt/blue
+	name = "blue blouse and skirt"
+	icon_state = "blouse_skirt-blue"
+	item_state = "blouse_skirt-blue"
+
+/obj/item/clothing/under/misc/blouse_skirt/dark_blue
+	name = "navy blue blouse and skirt"
+	icon_state = "blouse_skirt-dblue"
+	item_state = "blouse_skirt-dblue"
+
+/obj/item/clothing/under/misc/blouse_skirt/purple
+	name = "purple blouse and skirt"
+	icon_state = "blouse_skirt-purple"
+	item_state = "blouse_skirt-purple"
+
+/obj/item/clothing/under/misc/blouse_skirt/black
+	name = "black blouse and skirt"
+	icon_state = "blouse_skirt-black"
+	item_state = "blouse_skirt-black"
 //Seasonal Stuff
 
 /obj/item/clothing/under/gimmick/clown_autumn
