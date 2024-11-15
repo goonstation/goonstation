@@ -130,6 +130,17 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
+/obj/item/device/light/flashlight/security
+	name = "security flashlight"
+	icon_state = "flight_sec0"
+	item_state = "flight_sec"
+	icon_on = "flight_sec1"
+	icon_off = "flight_sec0"
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		return 0
+
+
 ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
