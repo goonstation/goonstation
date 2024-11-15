@@ -2844,7 +2844,7 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 	SHOW_VERB_DESC
 
 	if(holder && src.holder.level >= LEVEL_ADMIN)
-		switch(alert("Recolor syndicate gear?",,"Yes","No","Reset"))
+		switch(tgui_alert(src,"Recolor syndicate gear?","Syndicate Recolor",list("Yes", "No","Reset"), theme = "syndicate"))
 			if("Yes")
 				var/list/inputted_color_matrix = nuke_op_color_matrix.Copy()
 				for (var/i in 1 to 3)
@@ -2855,7 +2855,6 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				nuke_op_camo_matrix = inputted_color_matrix
 				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
-					A.color = null
 					A.color = color_matrix
 					LAGCHECK(LAG_LOW)
 				logTheThing(LOG_ADMIN, src, "changed the syndicate colour scheme.")
