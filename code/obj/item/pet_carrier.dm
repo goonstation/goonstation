@@ -71,7 +71,7 @@
 	/// Proxy object for storing the vis_contents of each occupant, which itself is contained in the vis_contents of the parent carrier.
 	var/obj/dummy/vis_contents_proxy
 	/// A list of the current occupants inside the carrier.
-	var/list/mob/carrier_occupants = list()
+	var/list/carrier_occupants = list()
 
 	New()
 		..()
@@ -103,7 +103,7 @@
 				src.add_mob(spawned_mob)
 
 	disposing()
-		for (var/mob/occupant in src.carrier_occupants)
+		for (var/occupant in src.carrier_occupants)
 			src.eject_mob(occupant)
 		for (var/obj/item/stuff in src.contents)
 			MOVE_OUT_TO_TURF_SAFE(stuff, src)
@@ -178,7 +178,7 @@
 		..()
 		if (src.carrier_occupants)
 			animate_storage_thump(src)
-		for (var/mob/occupant in src.carrier_occupants)
+		for (var/occupant in src.carrier_occupants)
 			occupant.throw_impact(hit_atom, thr)
 		if (length(src.carrier_occupants))
 			src.take_door_damage(src.damage_per_resist * length(src.carrier_occupants))
@@ -231,8 +231,12 @@
 
 	proc/attempt_removal(mob/user)
 		if (length(src.carrier_occupants))
-			var/mob/thing_to_remove = src.carrier_occupants[1]
-			actions.start(new /datum/action/bar/icon/pet_carrier(thing_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
+			var/atom/movable/thing_to_remove = src.carrier_occupants[1]
+			if (istype(thing_to_remove, /obj/item/rocko))
+				src.eject_mob(target)
+			if (istype(thing_to_remove, /mob))
+				var/mob/M = thing_to_remove
+				actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
 		else
 			boutput(user, SPAN_ALERT("[src] is without any friends! Aww!"))
 
@@ -273,7 +277,7 @@
 	proc/take_door_damage(damage)
 		src.door_health -= damage
 		if (src.door_health <= 0)
-			for (var/mob/occupant in src.carrier_occupants)
+			for (var/occupant in src.carrier_occupants)
 				src.eject_mob(occupant)
 			src.visible_message(SPAN_ALERT("The door on [src] busts wide open, releasing its occupants!"))
 			src.door_health = src.door_health_max
