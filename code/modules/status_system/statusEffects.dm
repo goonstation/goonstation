@@ -2916,16 +2916,13 @@
 		duration = null
 		extra_desc = "Your blood is being drained. The artifact requires 600u of human blood, or your drained body, no matter the cost. Figure out how to supply it before you die."
 		removal_msg = "Your blood curse has been lifted!"
-		var/could_bleed
 		var/blood_to_collect = 600
 		var/datum/artifact/curser/curser
 
 		onAdd(optional)
 			..()
 			var/mob/living/carbon/human/H = src.owner
-			src.could_bleed = H.can_bleed
-			H.can_bleed = FALSE // curse steals all your blood
-			H.regens_blood = FALSE
+			H.regens_blood = FALSE // curse steals all your blood
 			src.curser = optional
 
 		onUpdate(timePassed)
@@ -2933,27 +2930,27 @@
 			var/mob/living/carbon/human/H = src.owner
 			var/mult = src.get_mult(timePassed)
 			H.blood_volume -= 3 * mult
+			if (H.bleeding <= 1) // mostly enabled to show bleed indicator
+				H.bleeding = 1
 			src.blood_to_collect -= 3 * mult
-			if (probmult(15))
+			if (probmult(7))
 				boutput(H, SPAN_ALERT(pick("You see things", "You have thoughts about blood", "You can feel an Eldritch presence", "You can feel your blood",
 					"You get the sense something is stealing from you", "Something doesn't feel right", "The artifact hungers", "You see visions of Eldritch artifacts",
 					"You're reminded of your blood curse", "You have a pact to fulfill", "You're going to die unless blood is given", "Blood is required")))
 
-			if (H.blood_volume <= 0 || isdead(H))
-				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"))
+			if (src.blood_to_collect <= 0)
+				src.curser.lift_curse(TRUE)
+			else if (H.blood_volume <= 0 || isdead(H))
+				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
 				for (var/i in 1 to rand(3, 4))
 					var/obj/decal/cleanable/blood_splat = make_cleanable(/obj/decal/cleanable/blood/splatter, get_turf(H))
 					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
 				playsound(H, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
-				H.delStatus(src)
 				H.implode(TRUE)
-			else if (src.blood_to_collect <= 0)
-				src.curser.lift_curse()
+				src.curser.lift_curse(TRUE)
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
-			if (src.could_bleed)
-				H.can_bleed = TRUE
 			H.regens_blood = TRUE
 			src.curser = null
 			..()

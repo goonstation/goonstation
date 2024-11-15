@@ -23,6 +23,8 @@
 	// general vars
 	var/chosen_curse
 	var/list/active_cursees = list()
+	var/static/list/durations = \
+		list(BLOOD_CURSE = null, AGING_CURSE = null, NIGHTMARE_CURSE = null, MAZE_CURSE = null, DISP_CURSE = 2 MINUTES, LIGHT_CURSE = 3 MINUTES)
 	// blood curse vars
 	var/blood_curse_active = FALSE
 	// aging curse vars
@@ -42,14 +44,12 @@
 		. = ..()
 		if (.)
 			return TRUE
-		if (!ishuman(user))
+		if (!ishuman(user) || !user.client)
 			return
 		if (src.active_curse_check(O, user))
 			return
-		if (!user.client)
-			return
 
-		if (ON_COOLDOWN(O, "art_curse_activated", rand(180, 300) SECONDS) || length(src.active_cursees))
+		if (length(src.active_cursees) || ON_COOLDOWN(O, "art_curse_activated", rand(180, 300) SECONDS))
 			boutput(user, "[O] seems dormant. You're sure you can feel some presence inside though... creepy.")
 			return
 
@@ -67,13 +67,16 @@
 			picked_to_curse += candidate
 			curse_candidates -= candidate
 
+		O.visible_message(SPAN_ALERT("<b>[O]</b> screeches, releasing the curse that was locked inside it!"))
+		playsound(O, pick('sound/effects/ghost.ogg', 'sound/effects/ghostlaugh.ogg'), 60, TRUE)
+
 		for (var/mob/living/carbon/human/H as anything in (picked_to_curse + list(user)))
 			if (!H.last_ckey)
 				continue
 			//if (H.hasStatus("art_talisman_held"))
 			//	boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse!"))
 			// if death curse, also destroy the artifact
-			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, null, src)
+			var/datum/statusEffect/active_curse = user.setStatus(src.chosen_curse, src.durations[src.chosen_curse], src)
 			src.active_cursees[H] = active_curse
 			if (src.chosen_curse == BLOOD_CURSE)
 				src.blood_curse_active = TRUE
@@ -84,17 +87,17 @@
 
 			boutput(H, SPAN_ALERT("You have been cursed by an Eldritch artifact!"))
 
-		O.visible_message(SPAN_ALERT("<b>[O]</b> screeches, releasing the curse that was locked inside it!"))
-		playsound(O, pick('sound/effects/ghost.ogg', 'sound/effects/ghostlaugh.ogg'), 60, TRUE)
-
 	proc/active_curse_check(obj/O, mob/living/carbon/human/user)
 		if (src.blood_curse_active)
 			if (user.client && tgui_alert(user, "Donate 100u of your blood?", "Blood Curse Appeasement", list("Yes", "No")) == "Yes")
 				user.blood_volume -= 100
 				boutput(user, SPAN_ALERT("You place your hand on the artifact, and it draws blood from you. Ouch..."))
+				playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 				for (var/mob/living/carbon/human/H in src.active_cursees)
-					var/datum/statusEffect/art_curse/blood/curse = H.getStatusList(src.active_cursees[H])
-					curse.blood_to_collect -= 100
+					for (var/datum/statusEffect/art_curse/blood/curse in H.statusEffects)
+						if (curse == src.active_cursees[H])
+							curse.blood_to_collect -= 100
+							break
 				return TRUE
 		else if (src.aging_curse_active)
 			var/mob/living/carbon/human/H1 = user
@@ -108,7 +111,6 @@
 			if (src.participants >= 3)
 				src.lift_curse(TRUE)
 				src.participants = list()
-				src.aging_curse_active = FALSE
 			else
 				O.visible_message(SPAN_NOTICE("[O] softly stirs."))
 			return TRUE
@@ -116,15 +118,15 @@
 			src.lift_curse(FALSE)
 			return TRUE
 
-	proc/blood_curse_sacrifice(obj/O, mob/living/user)
-		src.lift_curse(FALSE)
-
 	proc/lift_curse(do_playsound)
 		if (do_playsound)
-			playsound(src, 'sound/effects/lit.ogg', 70, TRUE)
+			playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
 		for (var/mob/L as anything in src.active_cursees)
 			L.delStatus(src.chosen_curse)
 		src.active_cursees = list()
+		src.blood_curse_active = FALSE
+		src.aging_curse_active = FALSE
+		src.disp_curse_active = FALSE
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
 	// also note, loaded rooms (x1, y1) location is at the bottom left, not the middle
@@ -228,6 +230,8 @@
 			qdel(I)
 			user.delStatus("art_maze_curse")
 
+/*********** DISPLACEMENT CURSE STUFF *************/
+
 /mob/living/intangible/art_curser_displaced_soul
 	var/list/statusUiElements = list()
 
@@ -286,6 +290,5 @@
 
 	say()
 		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
-			src.visible_message("\the [src.name]'s mouth moves, but you can't tell what they're saying.")
-			boutput(src, SPAN_ALERT("Nothing comes out of your mouth!"))
+			src.visible_message("\the [src.name]'s mouth moves, but you can't tell what they're saying.", SPAN_ALERT("Nothing comes out of your mouth!"))
 		return
