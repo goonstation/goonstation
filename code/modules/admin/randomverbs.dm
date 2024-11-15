@@ -2856,6 +2856,10 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
 					A.color = color_matrix
+					var/obj/item/Item = A
+					if(istype(Item) && Item.equipped_in_slot)
+						var/mob/living/carbon/human/wearer = Item.loc
+						wearer.update_clothing()
 					LAGCHECK(LAG_LOW)
 				logTheThing(LOG_ADMIN, src, "changed the syndicate colour scheme.")
 				logTheThing(LOG_DIARY, src, "changed the syndicate colour scheme.", "admin")
@@ -2863,6 +2867,10 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if ("Reset")
 				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
 					A.color = null
+					var/obj/item/Item = A
+					if(istype(Item) && Item.equipped_in_slot)
+						var/mob/living/carbon/human/wearer = Item.loc
+						wearer.update_clothing()
 					LAGCHECK(LAG_LOW)
 				logTheThing(LOG_ADMIN, src, "reset the syndicate colour scheme.")
 				logTheThing(LOG_DIARY, src, "reset the syndicate colour scheme.", "admin")
