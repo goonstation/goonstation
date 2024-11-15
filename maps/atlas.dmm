@@ -2352,6 +2352,9 @@
 /area/station/hallway/primary/west)
 "alW" = (
 /obj/machinery/computer/arcade,
+/obj/machinery/alarm{
+	pixel_y = 25
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "ama" = (
@@ -4369,7 +4372,7 @@
 /area/station/hydroponics/bay)
 "ayD" = (
 /obj/iv_stand,
-/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "ayE" = (
@@ -5818,6 +5821,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /obj/cable{
@@ -10120,6 +10124,13 @@
 /obj/storage/secure/closet/brig,
 /turf/simulated/floor/red,
 /area/station/security/equipment)
+"csE" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "ctC" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/cable{
@@ -10145,9 +10156,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/alarm{
-	pixel_y = 25
-	},
+/obj/machinery/info_map,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "cxj" = (
@@ -12057,6 +12066,17 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
+"fpV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "fqO" = (
 /obj/machinery/computer/atmosphere/mixercontrol{
 	frequency = 1225;
@@ -14636,6 +14656,10 @@
 	dir = 4
 	},
 /area/station/crew_quarters/kitchen)
+"iZP" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "iZY" = (
 /obj/disposaloutlet{
 	dir = 8;
@@ -17591,7 +17615,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
 "nrH" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -24199,9 +24223,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/hallway/primary/north)
 "xyk" = (
-/obj/machinery/status_display{
-	pixel_x = -32
-	},
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor/caution/north,
 /area/station/crewquarters/cryotron)
@@ -66805,7 +66826,7 @@ oiH
 igd
 igd
 aAD
-aZy
+xEm
 aZy
 aXx
 aRZ
@@ -67107,7 +67128,7 @@ auN
 avI
 obA
 aqD
-xEm
+iZP
 aZy
 aRJ
 aUi
@@ -78275,8 +78296,8 @@ ahl
 iCQ
 mQi
 ahl
-afl
-aps
+csE
+fpV
 ahV
 agD
 aow

@@ -7068,7 +7068,7 @@
 "cad" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/access/syndie_shuttle,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -8759,6 +8759,10 @@
 /area/station/bridge)
 "cwN" = (
 /obj/machinery/firealarm/west,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1;
+	name = "Mixing Port"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "cwW" = (
@@ -12870,6 +12874,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -17932,6 +17937,9 @@
 	pixel_x = -24;
 	dir = 8
 	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "mixing valve"
+	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "fpD" = (
@@ -20070,6 +20078,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"fXN" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "fXZ" = (
 /obj/landmark/start/job/cyborg,
 /turf/simulated/floor/black,
@@ -24357,11 +24370,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "hnI" = (
-/obj/storage/secure/closet/engineering/atmos,
-/obj/item/clothing/mask/gas/emergency,
-/obj/decal/stripe_caution,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
+	},
+/obj/machinery/atmospherics/unary/portables_connector{
+	name = "Mixing Port"
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
@@ -29188,6 +29201,12 @@
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
+"iQk" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/disposalpipe/segment/brig,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "iQG" = (
 /obj/disposalpipe/segment/mail,
 /obj/health_scanner/wall{
@@ -33102,7 +33121,7 @@
 	powerlevel = 1
 	},
 /obj/mapping_helper/access/syndie_shuttle,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -38945,9 +38964,10 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "lKu" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/decal/stripe_caution,
 /obj/machinery/light_switch/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "lKC" = (
@@ -44929,7 +44949,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom/engineering,
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
@@ -50462,6 +50482,10 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
+"pka" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/red/side,
+/area/station/hallway/primary/west)
 "pkd" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
@@ -52030,6 +52054,7 @@
 	dir = 8
 	},
 /obj/landmark/start/job/assistant,
+/obj/machinery/info_map,
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/primary/southeast)
 "pIf" = (
@@ -59361,10 +59386,11 @@
 	},
 /area/shuttle/arrival/station)
 "rVh" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
 	},
+/obj/storage/secure/closet/engineering/atmos,
+/obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
@@ -60971,6 +60997,8 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/decal/stripe_caution,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
 "stF" = (
@@ -61425,6 +61453,9 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
@@ -61905,6 +61936,12 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
+"sJu" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "sJF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -62477,6 +62514,12 @@
 	dir = 9
 	},
 /area/station/bridge/customs)
+"sTS" = (
+/obj/disposalpipe/segment/brig,
+/obj/decal/stripe_caution,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/black,
+/area/station/engine/gas)
 "sTU" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -63097,6 +63140,7 @@
 /area/station/medical/asylum/kitchen)
 "tdf" = (
 /obj/stool/chair/couch/blue,
+/obj/machinery/info_map,
 /turf/simulated/floor/greenwhite/other{
 	dir = 1
 	},
@@ -71946,6 +71990,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -107792,7 +107837,7 @@ afi
 afi
 afi
 cQi
-oXO
+pka
 wql
 cjw
 mQG
@@ -112056,7 +112101,7 @@ vVi
 xvP
 xvP
 hBL
-qmx
+sJu
 wam
 lqZ
 cgw
@@ -138290,8 +138335,8 @@ aYw
 dlq
 dlq
 dlq
-dlq
-erx
+sTS
+iQk
 erx
 dSg
 hHC
@@ -138591,7 +138636,7 @@ gVJ
 xLg
 rVh
 spT
-cxY
+fXN
 xSW
 xSW
 xSW

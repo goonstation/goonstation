@@ -23,6 +23,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"at" = (
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "au" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -98,7 +102,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/aisat)
 "aI" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -2558,6 +2562,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"pp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/purple,
+/area/station/science)
 "pu" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -3093,7 +3104,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "tl" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 2;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -4168,6 +4179,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/simulated/floor/shuttle{
@@ -6639,6 +6651,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"Rr" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/crew_quarters/garden/sunlight)
 "Rv" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/station/security/main)
@@ -53364,8 +53380,8 @@ hB
 Rf
 Rf
 Rf
-XQ
-jx
+Wl
+at
 rP
 jx
 jx
@@ -53666,7 +53682,7 @@ hB
 Rf
 Rf
 Rf
-XQ
+Wl
 jx
 rP
 ui
@@ -56405,7 +56421,7 @@ sc
 sc
 sc
 sc
-Pf
+Rr
 Lh
 qG
 MA
@@ -78982,7 +78998,7 @@ vr
 te
 gz
 dt
-hv
+pp
 Or
 rQ
 Td

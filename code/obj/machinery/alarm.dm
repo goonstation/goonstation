@@ -15,6 +15,7 @@
 	power_usage = 5
 	power_channel = ENVIRON
 	anchored = ANCHORED
+	plane = PLANE_NOSHADOW_ABOVE
 	/// save some CPU by only checking every tick when something is amiss
 	var/skipprocess = 0
 	var/alarm_frequency = FREQ_ALARM
@@ -23,6 +24,7 @@
 	/// keeps track of last alarm status
 	var/last_safe = ALARM_NOPOWER
 	var/datum/gas_mixture/environment
+	var/alertingAI = FALSE // Does this alarm currently have an AI alarm active
 
 	/// this is a list of safe & good partial pressures of each gas. If all gasses are in the good range, the alarm will show green. If any gas is outside the safe range, the alarm will show alert. Otherwise caution.
 	/// most of these values are taken from lung.dm
@@ -157,6 +159,19 @@
 	light_ov.plane = PLANE_SELFILLUM
 	src.UpdateOverlays(light_ov, "light")
 
+	if (safe == ALARM_GOOD)
+		if (src.alertingAI)
+			for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+				aiPlayer.cancelAlarm("Atmosphere", get_area(src), src)
+			src.alertingAI = FALSE
+	else
+		var/list/cameras = list()
+		for_by_tcl(C, /obj/machinery/camera)
+			if(get_area(C) == get_area(src))
+				cameras += C
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+			aiPlayer.triggerAlarm("Atmosphere", get_area(src), cameras, src)
+		src.alertingAI = TRUE
 
 	if(alarm_frequency)
 		post_alert(safe)

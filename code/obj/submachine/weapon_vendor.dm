@@ -121,6 +121,7 @@
 		materiel_stock += new/datum/materiel/loadout/control
 		materiel_stock += new/datum/materiel/loadout/suppression
 		materiel_stock += new/datum/materiel/loadout/justabaton
+
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
 		materiel_stock += new/datum/materiel/utility/flashbangs
@@ -128,8 +129,10 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
+
 		materiel_stock += new/datum/materiel/assistant/basic
 
 	vended(var/atom/A)

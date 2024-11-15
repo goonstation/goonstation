@@ -28974,7 +28974,7 @@
 /area/station/chapel/sanctuary)
 "cmt" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -29165,6 +29165,7 @@
 "cmZ" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -33710,7 +33711,6 @@
 	pixel_x = 5;
 	pixel_y = -4
 	},
-/obj/rack,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -48477,6 +48477,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"pvx" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "pvP" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -49028,6 +49035,15 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"pRS" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "pSg" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -50675,6 +50691,16 @@
 	dir = 8
 	},
 /area/station/security/main)
+"raG" = (
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/neutral/side{
+	dir = 4
+	},
+/area/station/hallway/primary/north)
 "raX" = (
 /obj/storage/closet/wardrobe/orange,
 /turf/simulated/floor/red/side,
@@ -52050,6 +52076,11 @@
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
+/area/station/hallway/primary/west)
+"rZZ" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/info_map,
+/turf/simulated/floor,
 /area/station/hallway/primary/west)
 "saq" = (
 /obj/machinery/power/apc/autoname_east,
@@ -101210,7 +101241,7 @@ aFJ
 aqA
 apv
 aqA
-arA
+rZZ
 asG
 xgi
 auH
@@ -103082,7 +103113,7 @@ xXb
 eFk
 pzZ
 sJN
-bCv
+pvx
 bDA
 bxm
 usF
@@ -117577,7 +117608,7 @@ pJk
 pJk
 riU
 boo
-tvw
+pRS
 bDA
 pdL
 bFO
@@ -120840,7 +120871,7 @@ age
 age
 age
 age
-aWX
+raG
 val
 aIK
 jzB

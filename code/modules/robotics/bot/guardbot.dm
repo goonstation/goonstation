@@ -1201,6 +1201,9 @@
 
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
+			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
+				var/obj/item/gun/kinetic/pumpweapon/pumpy = budgun
+				pumpy.rack(src)
 			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
 			else
@@ -1208,9 +1211,6 @@
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
-			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon/riotgun))
-				var/obj/item/gun/kinetic/pumpweapon/riotgun/RG = budgun
-				RG.rack(src)
 		ON_COOLDOWN(src, "buddy_refire_delay", src.gunfire_cooldown)
 		return 1
 
@@ -1611,7 +1611,7 @@
 					SPAWN(3 SECONDS)
 						src.set_emotion("sad")		// Still kinda sad that someone would bully a defenseless little rectangle.
 			else if(src.tool && (src.tool.tool_id != "GUN"))
-				var/is_ranged = BOUNDS_DIST(src, target) > 0
+				var/is_ranged = BOUNDS_DIST(src, target)
 				src.tool.bot_attack(target, src, is_ranged, lethal)
 			return
 
@@ -2126,7 +2126,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 		// Fixed. Was completely non-functional (Convair880).
 		bot_attack(var/atom/target as mob|obj, obj/machinery/bot/guardbot/user, ranged=0, lethal=0)
-			if(..() || !reagents || ranged) return
+			if(..() || !reagents || ranged > 64) return
 
 			if(src.last_use && world.time < src.last_use + 120)
 				return
@@ -2137,7 +2137,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 			else
 				src.reagents.add_reagent(stun_reagent, 15)
 
-			smoke_reaction(src.reagents, 3, get_turf(src))
+			classic_smoke_reaction(src.reagents, 3, get_turf(src))
 			user.visible_message(SPAN_ALERT("<b>[master] releases a cloud of gas!</b>"))
 
 			src.last_use = world.time

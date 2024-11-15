@@ -72,12 +72,12 @@
 		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
 			src.storage.add_contents(new /obj/item/crowbar/red(src))
 #ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
-		src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
 		src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+		src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
 #else
 		if (prob(10)) // put these together
-			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
 			src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+			src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
 #endif
 
 

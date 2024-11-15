@@ -2192,7 +2192,28 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 						if(src.reagents.has_reagent(O.ids[i]))
 							O.completed |= 1 << i-1
 		else
-			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!.")
+			user.visible_message("<b>[user.name]</b> shakes the container, but it's empty!")
+
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+	update_icon()
+		..()
+		if (src.reagents.total_volume == 0)
+			icon_state = initial(icon_state)
+		else if (src.reagents.total_temperature >= (T0C+97))
+			icon_state = initial(icon_state)+"_hot"
+		else if (src.reagents.total_temperature > (T0C+30)) //beer can be our point of reference
+			icon_state = initial(icon_state)+"_warm"
+		else if (src.reagents.total_temperature <= (T0C-23))
+			icon_state = initial(icon_state)+"_freeze"
+		else if (src.reagents.total_temperature <= (T0C+7))
+			icon_state = initial(icon_state)+"_cool"
+		else
+			icon_state = initial(icon_state)
+
 
 /obj/item/reagent_containers/food/drinks/cocktailshaker/golden
 	name = "golden cocktail shaker"

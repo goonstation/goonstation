@@ -203,7 +203,7 @@
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
-	if (src.key)
+	if (src.key && VALID_MOB(src))
 		var/datum/eventRecord/Death/deathEvent = new
 		deathEvent.buildAndSend(src, gibbed)
 	#ifndef NO_SHUTTLE_CALLS
@@ -2374,3 +2374,18 @@
 		if(returnItem)
 			. = returnItem
 		src.lastgasp(FALSE, grunt = pick("BLARGH", "blblbl", "BLUH", "BLURGH"))
+
+/// makes mob auto pick up the highest weight item on a turf. if multiple have that weight, last one in the order of contents var is picked
+/mob/living/proc/auto_pickup_item(atom/target_loc)
+	var/turf/T = get_turf(target_loc)
+	if (!T)
+		return
+	var/obj/item/picked_item
+	for (var/obj/item/I in T.contents)
+		if (I.anchored)
+			continue
+		if (I.w_class >= picked_item?.w_class) // order of contents is roughly random
+			picked_item = I
+	if (picked_item)
+		picked_item.pick_up_by(src)
+		return TRUE

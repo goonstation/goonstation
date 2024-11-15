@@ -1440,6 +1440,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/orange/side{
 	dir = 8
 	},
@@ -2823,6 +2824,10 @@
 /area/station/security/brig{
 	name = "The Cage Arena"
 	})
+"boe" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/orange/side,
+/area/station/hallway/secondary/exit)
 "boq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -8784,6 +8789,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering/ce)
 "dRe" = (
+/obj/machinery/info_map,
 /turf/simulated/floor/carpet/green/fancy/junction/sw_n,
 /area/station/hallway/primary/central)
 "dRh" = (
@@ -19603,7 +19609,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "iGW" = (
-/obj/machinery/drone_recharger,
+/obj/machinery/info_map,
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "iHh" = (
@@ -32299,7 +32305,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ohB" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -36143,7 +36149,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	id = "Sleeper_Access";
 	name = "Listening Post"
 	},
@@ -36573,6 +36579,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -45329,7 +45336,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "tZa" = (
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -54269,6 +54276,15 @@
 /obj/item/furniture_parts/table/wood/round,
 /turf/simulated/floor/wood/two,
 /area/research_outpost/protest)
+"xNK" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/tile_edge/line/grey{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "xNO" = (
 /obj/item/storage/pill_bottle/antirad{
 	pixel_y = 5
@@ -96559,7 +96575,7 @@ cbd
 jiK
 osG
 thD
-wRq
+xNK
 ugi
 wNQ
 crY
@@ -113171,7 +113187,7 @@ swQ
 tIf
 gvB
 ylI
-lcp
+boe
 sbp
 sbp
 bzW
