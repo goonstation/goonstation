@@ -222,7 +222,7 @@
 		user.update_inhands()
 
 	/// Called when a given mob/user releases an mob after an actionbar.
-	proc/release_mob(mob/thing_to_release, mob/user)
+	proc/release_mob(atom/movable/thing_to_release, mob/user)
 		if (thing_to_release)
 			src.eject_mob(thing_to_release)
 			user.update_inhands()
