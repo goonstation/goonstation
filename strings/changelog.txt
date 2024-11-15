@@ -1,4 +1,12 @@
 
+(t)fri nov 15 24
+(u)DisturbHerb, Glamurio, LeahTheTech, Mordent, Trazodont, Tyrant
+(p)18190
+(e)🆕🗺🎨💅📄📜|C-Feature, A-Mapping, C-Sprites, C-QoL, A-UI, C-Documentation
+(*)Revamped the clothing booth interface and reworked how it functions.
+(*)Please bug report any missing items or different prices from the old interface!
+(+)Credit to DisturbHerb, Glamurio, LeahTheTech, and Mordent for the clothing booth UI.
+(+)Credit to Trazodont and Tyrant for volunteering with the clothing booth item data entry process.
 (t)thu nov 14 24
 (u)LeahTheTech
 (p)21316
