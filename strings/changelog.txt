@@ -1,5 +1,7 @@
 
 (t)fri nov 15 24
+(u)LeahTheTech
+(*)Added chocolate eggs made with one egg and one chocolate bar. Each egg can contain one small item which can be retrieved (or accidentally swallowed) when the egg is eaten. Eggs which contain items are considered contraband due to posing a SEVERE choking hazard.
 (u)DisturbHerb, Glamurio, LeahTheTech, Mordent, Trazodont, Tyrant
 (p)18190
 (e)🆕🗺🎨💅📄📜|C-Feature, A-Mapping, C-Sprites, C-QoL, A-UI, C-Documentation
