@@ -337,6 +337,8 @@
 	if (!src.occupant)
 		return
 	src.icon_state = "clothingbooth-open"
+	qdel(src.preview_item)
+	src.preview_item = null
 	SPAWN(2 SECONDS)
 		src.eject_contents(target)
 
