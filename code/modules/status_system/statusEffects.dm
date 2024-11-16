@@ -2927,18 +2927,16 @@
 
 	blood
 		id = "art_blood_curse"
-		name = "Eldritch Blood Curse"
+		name = "Blood Curse"
 		duration = null
 		extra_desc = "Your blood is being drained. The artifact requires 600u of human blood, or your drained body, no matter the cost. Figure out how to supply it before you die."
 		removal_msg = "Your blood curse has been lifted!"
 		var/blood_to_collect = 600
-		var/datum/artifact/curser/curser
 
 		onAdd(optional)
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			H.regens_blood = FALSE // curse steals all your blood
-			src.curser = optional
 
 		onUpdate(timePassed)
 			..()
@@ -2954,7 +2952,7 @@
 					"You're reminded of your blood curse", "You have a pact to fulfill", "You're going to die unless blood is given", "Blood is required")))
 
 			if (src.blood_to_collect <= 0)
-				src.curser.lift_curse(TRUE)
+				src.linked_curser.lift_curse(TRUE)
 			else if (H.blood_volume <= 0 || isdead(H))
 				H.visible_message(SPAN_ALERT("[H] spontaneously implodes!!! <b>HOLY FUCK!!</b>"), SPAN_ALERT("<b>Ohhhh shit</b>"))
 				for (var/i in 1 to rand(3, 4))
@@ -2962,12 +2960,12 @@
 					blood_splat.streak_cleanable(pick(cardinal), full_streak = prob(25), dist_upper = rand(4, 6))
 				playsound(H, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 40, TRUE)
 				H.implode(TRUE)
-				src.curser.lift_curse(TRUE)
+				src.linked_curser.lift_curse_specific(FALSE, H)
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
-			H.regens_blood = TRUE
-			src.curser = null
+			if (!QDELETED(H))
+				H.regens_blood = TRUE
 			..()
 
 	aging
