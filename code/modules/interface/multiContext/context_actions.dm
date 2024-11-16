@@ -457,7 +457,7 @@
 	var/success_sound
 
 	proc/success_feedback(atom/target, mob/user)
-		user.show_text(replacetext(success_text, "%target%", target), "blue")
+		user.show_text(replacetext(success_text, "%target%", "[target]"), "blue")
 		if (success_sound)
 			playsound(target, success_sound, 50, TRUE)
 
