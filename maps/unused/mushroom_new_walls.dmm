@@ -12992,7 +12992,6 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cib" = (
-/obj/table/reinforced,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/produce,
 /obj/machinery/door/poddoor/pyro{
@@ -13003,6 +13002,7 @@
 	opacity = 0
 	},
 /obj/disposalpipe/chicken_disposal_pipe/vertical,
+/obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ciX" = (
@@ -15096,6 +15096,7 @@
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/storage/box/beakerbox,
 /obj/machinery/light/incandescent,
+/obj/machinery/chem_shaker/large,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "dTT" = (
@@ -16867,7 +16868,7 @@
 	opacity = 0
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "fqT" = (
@@ -24070,9 +24071,6 @@
 /area/station/medical/medbay/lobby)
 "lEt" = (
 /obj/storage/secure/closet/medical/medicine,
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 1
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -24805,7 +24803,6 @@
 /area/station/security/processing)
 "mfQ" = (
 /obj/machinery/bot/firebot,
-/obj/machinery/glass_recycler,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "mfY" = (
@@ -30130,11 +30127,6 @@
 	},
 /area/station/science/lobby)
 "qbo" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "ranch";
-	mailgroup = "botany"
-	},
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
@@ -34431,6 +34423,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/machinery/vending/fortune,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "sYU" = (
@@ -35945,6 +35938,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/item/storage/box/glassbox,
 /obj/machinery/light/incandescent,
+/obj/machinery/chem_shaker,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "ucC" = (
@@ -36500,6 +36494,7 @@
 	dir = 1
 	},
 /obj/item/clothing/glasses/spectro,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "uAX" = (
@@ -36804,6 +36799,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -38741,10 +38737,6 @@
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/light/emergency{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
