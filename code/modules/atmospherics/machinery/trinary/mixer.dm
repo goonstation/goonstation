@@ -1,4 +1,4 @@
-#define _SET_SIGNAL_GAS(GAS, _, _, MIXTURE, ...) gasses.Add(list(list(Gas = #GAS, Color = gas_text_color(#GAS), Ratio = round(100*##MIXTURE.GAS/MIXTURE##_total_moles))));
+#define _SET_SIGNAL_GAS(GAS, _, _, MIXTURE, ...) gasses.Add(list(list(Name = #GAS, Color = gas_text_color(#GAS), Ratio = round(100*##MIXTURE.GAS/MIXTURE##_total_moles))));
 #define _RESET_SIGNAL_GAS(GAS, _, _, ...) gasses.Add(list(list(Gas = #GAS, Ratio = 0)));
 #define SET_SIGNAL_MIXTURE(MIXTURE) APPLY_TO_GASES(_SET_SIGNAL_GAS, MIXTURE)
 #define RESET_SIGNAL_MIXTURE APPLY_TO_GASES(_RESET_SIGNAL_GAS)

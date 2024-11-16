@@ -8,6 +8,7 @@
 import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { MixInfo } from './MixInfo';
 import type { GasMixerData } from './types';
 
 export const Outputs = () => {
@@ -16,10 +17,7 @@ export const Outputs = () => {
 
   return (
     <Section title="Outputs">
-      {JSON.stringify(mixer_information.out.gasses)}
-      {mixer_information.out.kpa &&
-        mixer_information.out.temp &&
-        `Pressure: ${mixer_information.out.kpa} / Temperature: ${mixer_information.out.temp} °C`}
+      <MixInfo mix={mixer_information.out} />
     </Section>
   );
 };

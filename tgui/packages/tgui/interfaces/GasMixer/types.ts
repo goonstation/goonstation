@@ -30,14 +30,14 @@ type mixerInformation = {
   sender: string;
 };
 
-type airInfo = {
+export type airInfo = {
+  gasses: Array<gasInfo>;
   kpa?: number;
   temp?: number;
-  gasses: Array<gassInfo>;
 };
 
-type gassInfo = {
-  Gas: string;
+type gasInfo = {
+  Name: string;
   Color: string;
   Ratio: number;
 };

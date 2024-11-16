@@ -5,9 +5,10 @@
  * @license MIT
  */
 
-import { Flex, Section } from 'tgui-core/components';
+import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { MixInfo } from './MixInfo';
 import type { GasMixerData } from './types';
 
 export const Inputs = () => {
@@ -16,24 +17,18 @@ export const Inputs = () => {
 
   return (
     <Section title="Inputs">
-      <Flex>
-        <Flex.Item>
+      <Stack>
+        <Stack.Item grow>
           <Section title="Input 1">
-            {JSON.stringify(mixer_information.in1.gasses)}
-            {mixer_information.in1.kpa &&
-              mixer_information.in1.temp &&
-              `Pressure: ${mixer_information.in1.kpa} kPa / Temperature: ${mixer_information.in1.temp} °C`}
+            <MixInfo mix={mixer_information.in1} />
           </Section>
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item grow>
           <Section title="Input 2">
-            {JSON.stringify(mixer_information.in2.gasses)}
-            {mixer_information.in2.kpa &&
-              mixer_information.in2.temp &&
-              `Pressure: ${mixer_information.in2.kpa} kPa / Temperature: ${mixer_information.in2.temp} °C`}
+            <MixInfo mix={mixer_information.in2} />
           </Section>
-        </Flex.Item>
-      </Flex>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
