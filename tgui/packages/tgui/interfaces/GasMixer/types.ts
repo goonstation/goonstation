@@ -1,8 +1,8 @@
 /**
  * @file
- * @copyright 2023
- * @author Mordent (https://github.com/mordent-goonstation)
- * @license ISC
+ * @copyright 2024
+ * @author Garash2k (https://github.com/garash2k)
+ * @license MIT
  */
 
 export type GasMixerData = {
