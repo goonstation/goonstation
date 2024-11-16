@@ -15096,6 +15096,7 @@
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/storage/box/beakerbox,
 /obj/machinery/light/incandescent,
+/obj/machinery/chem_shaker/large,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "dTT" = (
@@ -35937,6 +35938,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/item/storage/box/glassbox,
 /obj/machinery/light/incandescent,
+/obj/machinery/chem_shaker,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/baroffice)
 "ucC" = (
@@ -36492,6 +36494,7 @@
 	dir = 1
 	},
 /obj/item/clothing/glasses/spectro,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "uAX" = (
