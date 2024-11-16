@@ -2922,6 +2922,9 @@
 		src.linked_curser = null
 		..()
 
+	proc/get_mult(timePassed)
+		return timePassed / LIFE_PROCESS_TICK_SPACING
+
 	blood
 		id = "art_blood_curse"
 		name = "Eldritch Blood Curse"
