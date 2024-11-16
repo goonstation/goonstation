@@ -23,7 +23,6 @@ export const MixInfo = (props: MixInfoProps) => {
             {gas.Name}: {gas.Ratio}%
           </div>
         ))}
-      <br />
       {mix.kpa && `Pressure: ${mix.kpa} kPa`}
       <br />
       {mix.temp && `Temperature: ${mix.temp} °C`}
