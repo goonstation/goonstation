@@ -24070,9 +24070,6 @@
 /area/station/medical/medbay/lobby)
 "lEt" = (
 /obj/storage/secure/closet/medical/medicine,
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 1
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -38737,10 +38734,6 @@
 /obj/storage/secure/closet/medical/medkit,
 /obj/machinery/light/emergency{
 	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4;
-	level = 2
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
