@@ -24805,7 +24805,6 @@
 /area/station/security/processing)
 "mfQ" = (
 /obj/machinery/bot/firebot,
-/obj/machinery/glass_recycler,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "mfY" = (
@@ -30130,11 +30129,6 @@
 	},
 /area/station/science/lobby)
 "qbo" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "ranch";
-	mailgroup = "botany"
-	},
 /obj/submachine/seed_vendor,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
@@ -36804,6 +36798,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
