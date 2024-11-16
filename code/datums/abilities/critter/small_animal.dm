@@ -411,14 +411,6 @@
 
 		logTheThing(LOG_COMBAT, src.mini_vampire, "steals blood from [constructTarget(src.target,"combat")] at [log_loc(src.mini_vampire)].")
 
-	onEnd()
-		if(GET_DIST(src.mini_vampire, src.target) > 7 || src.mini_vampire == null || src.target == null)
-			..()
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-		src.onRestart()
-
 	onInterrupt()
 		if (state == ACTIONSTATE_RUNNING)
 			if (ishuman(src.target))
