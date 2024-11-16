@@ -16,7 +16,7 @@ export const Output = () => {
   const { mixer_information } = data;
 
   return (
-    <Section title="Output" height="100%">
+    <Section title="Output" fill scrollable>
       <MixInfo mix={mixer_information.out} />
     </Section>
   );

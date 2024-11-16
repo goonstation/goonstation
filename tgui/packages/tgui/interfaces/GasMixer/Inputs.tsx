@@ -18,12 +18,12 @@ export const Inputs = () => {
   return (
     <Stack mb={1}>
       <Stack.Item grow>
-        <Section title="Input 1">
+        <Section title="Input 1" minHeight="100px" fill scrollable>
           <MixInfo mix={mixer_information.in1} />
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <Section title="Input 2">
+        <Section title="Input 2" fill scrollable>
           <MixInfo mix={mixer_information.in2} />
         </Section>
       </Stack.Item>
