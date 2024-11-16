@@ -2896,6 +2896,8 @@
 
 	var/extra_desc = ""
 	var/removal_msg = ""
+	var/outputs_desc = TRUE
+	var/outputs_removal_msg = TRUE
 
 	var/datum/artifact/curser/linked_curser
 
@@ -2910,14 +2912,15 @@
 
 	onAdd(optional)
 		..()
-		boutput(src.owner, SPAN_ALERT(src.desc))
+		if (src.outputs_desc)
+			boutput(src.owner, SPAN_ALERT(src.desc))
 		src.linked_curser = optional
 
 	onRemove()
 		if (QDELETED(src.owner))
 			return ..()
 		var/mob/living/L = src.owner
-		if (!isdead(L))
+		if (!isdead(L) && src.outputs_removal_msg)
 			boutput(L, SPAN_NOTICE(src.removal_msg))
 		src.linked_curser = null
 		..()
@@ -3077,39 +3080,52 @@
 
 	displacement
 		id = "art_displacement_curse"
-		name = "Eldritch Soul Displacement Curse"
-		extra_desc = "Your soul has been displaced from your body! You're going to need to wait a short while or for someone to touch the artifact to return you."
-		removal_msg = "You're returned to your body! You feel a strong sense of relief."
-		var/owner_is_soul = FALSE
 		var/mob/living/carbon/human/original_body
 		var/mob/living/intangible/art_curser_displaced_soul/soul
-		//effect_quality = STATUS_QUALITY_NEUTRAL
-
-		soul
-			id = "art_curser_displaced_soul"
-			owner_is_soul = TRUE
-
-			preCheck(atom/A)
-				. = ..()
-				if (istype(A, /mob/living/intangible/art_curser_displaced_soul))
-					return TRUE
+		outputs_desc = FALSE
 
 		onAdd()
 			..()
-			src.duration = 3 MINUTES
-			if (src.owner_is_soul)
-				return
 			src.soul = new(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
-			src.soul.setStatus("art_curser_displaced_soul", 3 MINUTES)
+			src.soul.setStatus("art_curser_displaced_soul", src.duration, src.original_body)
+
+		onUpdate()
+			..()
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				src.linked_curser.lift_curse_specific(FALSE, src.original_body)
 
 		onRemove()
-			if (src.owner_is_soul)
-				return
-			src.soul.mind.transfer_to(src.original_body)
+			src.soul.delStatus("art_curser_displaced_soul")
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				boutput(src.soul, SPAN_ALERT("<b>Your body has died!</b>"))
+			if (!QDELETED(src.original_body))
+				src.soul.mind.transfer_to(src.original_body)
 			QDEL_NULL(src.soul)
+			src.original_body = null
+			..()
+
+	displaced_soul
+		id = "art_curser_displaced_soul"
+		name = "Soul Displacement Curse"
+		extra_desc = "Your soul has been displaced from your body! You're going to need to wait a short while or for someone to touch the artifact to return you."
+		removal_msg = "You're returned to your body! You feel a strong sense of relief."
+		var/mob/living/carbon/human/original_body
+
+		preCheck(atom/A)
+			. = ..()
+			if (istype(A, /mob/living/intangible/art_curser_displaced_soul))
+				return TRUE
+
+		onAdd(optional)
+			src.original_body = optional
+			..()
+
+		onRemove()
+			if (QDELETED(src.original_body) || isdead(src.original_body))
+				src.outputs_removal_msg = FALSE
 			src.original_body = null
 			..()
 

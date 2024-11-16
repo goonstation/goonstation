@@ -138,7 +138,7 @@
 		if (do_playsound)
 			playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
 		if (L in src.active_cursees)
-			L.delStatus(src.chosen_curse)
+			L.delStatus(src.active_cursees[L])
 		src.active_cursees -= L
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
@@ -304,4 +304,22 @@
 	say()
 		if (!ON_COOLDOWN(src, "displaced_soul_speak", 2 SECONDS))
 			src.visible_message("\the [src.name]'s mouth moves, but you can't tell what they're saying.", SPAN_ALERT("Nothing comes out of your mouth!"))
+		return
+
+	click(atom/target)
+		if (src.client?.check_key(KEY_EXAMINE))
+			src.examine_verb(target)
+
+	Move(turf/NewLoc, direct) // moves through mobs but not obstacles
+		for (var/obj/O in NewLoc)
+			if (direct in NewLoc.blocked_dirs)
+				return FALSE
+			if (!NewLoc.blocked_dirs && O.density)
+				return FALSE
+		return ..()
+
+	mouse_drop()
+		return
+
+	MouseDrop_T()
 		return
