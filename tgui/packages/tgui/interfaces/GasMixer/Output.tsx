@@ -11,12 +11,12 @@ import { useBackend } from '../../backend';
 import { MixInfo } from './MixInfo';
 import type { GasMixerData } from './types';
 
-export const Outputs = () => {
+export const Output = () => {
   const { data } = useBackend<GasMixerData>();
   const { mixer_information } = data;
 
   return (
-    <Section title="Outputs">
+    <Section title="Output" height="100%">
       <MixInfo mix={mixer_information.out} />
     </Section>
   );
