@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ss13:
-    container_name: "${SS13_NAME:-ss13}"
+    container_name: "ss13-${SS13_ID:-main}"
     restart: unless-stopped
     build: .
     volumes:
@@ -13,6 +13,6 @@ services:
     ports:
       - "${SS13_PORT:-6969}:${SS13_PORT:-6969}"
     environment:
-      - SS13_PORT=${SS13_PORT:-6969}
+      - SS13_ID=${SS13_ID:-main}
     labels:
       - monocker.enable=true
