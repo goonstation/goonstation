@@ -31994,7 +31994,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "ckR" = (

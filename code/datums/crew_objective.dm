@@ -739,16 +739,16 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 /datum/objective/crew/medicaldirector/dr_acula
 	explanation_text = "Ensure that Dr. Acula escapes on the shuttle."
 	check_completion()
-		for (var/obj/critter/bat/doctor/Dr in by_cat[TR_CAT_PETS])
-			if (in_centcom(Dr) && Dr.alive)
+		for (var/mob/living/critter/small_animal/bat/doctor/Dr in by_cat[TR_CAT_PETS])
+			if (in_centcom(Dr) && isalive(Dr))
 				return 1
 		return 0
 
 /datum/objective/crew/medicaldirector/dr_acula_feeds
 	explanation_text = "Ensure that Dr. Acula survives and drinks 200 units of blood by the end of the shift."
 	check_completion()
-		for (var/obj/critter/bat/doctor/Dr in by_cat[TR_CAT_PETS])
-			if (Dr.blood_volume >= 200 && Dr.alive)
+		for (var/mob/living/critter/small_animal/bat/doctor/Dr in by_cat[TR_CAT_PETS])
+			if (Dr.amount_of_blood >= 200 && isalive(Dr))
 				return 1
 		return 0
 

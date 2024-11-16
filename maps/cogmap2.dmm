@@ -46807,7 +46807,7 @@
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /obj/landmark/start/job/medical_director,
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 28

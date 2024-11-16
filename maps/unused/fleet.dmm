@@ -8502,7 +8502,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /obj/machinery/phone/wall{
 	pixel_x = 24;
 	pixel_y = 4

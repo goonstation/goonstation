@@ -23820,7 +23820,7 @@
 	},
 /area/station/medical/head/private)
 "boJ" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},

@@ -2934,8 +2934,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
-	is_npc = FALSE // needs special AI will come later
+	is_npc = TRUE
 	player_can_spawn_with_pet = TRUE
+	ai_type = /datum/aiHolder/bat
+	add_abilities = list(/datum/targetable/critter/drink_blood)
+
+	/// A list of mob or obj/item/reagent_container that contains blood that we drink from
+	var/list/atom/drink_targets = list()
+	/// This will count all the blood that Dr. Acula has fed on. Cheaper than having a reagent_holder holding blood I suppose
+	var/amount_of_blood = 0
+
 
 	New()
 		..()
@@ -2956,6 +2964,56 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				return 2
 		return ..()
+
+	mouse_drop(atom/over_object as mob|obj)
+		//if this bat is attacking/chasing someone, they won't stop just because you point at blood. Come on.
+		if (src.ai.target)
+			return ..()
+
+		if (ishuman(over_object) && usr == over_object)
+			var/mob/living/carbon/human/H = over_object
+			if (H && !H.restrained() && !H.stat && in_interact_range(src, H))
+				src.drink_targets += H
+				src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/bat/drink_blood, list(src, src.ai.default_task))
+				src.ai.interrupt()
+				src.set_loc(H.loc)
+				src.visible_message("[usr] offers up [his_or_her(usr)] arm to feed [src].")
+
+		//stand next to bat, and point towards some blood, the bat will try to drink it
+		else if (istype(over_object, /obj/item/reagent_containers/) && BOUNDS_DIST(usr, src) == 0)
+			src.drink_targets += over_object
+			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/bat/drink_blood, list(src, src.ai.default_task))
+			src.ai.interrupt()
+			src.visible_message("[usr] gestures towards [over_object] to try to get [src] to drink from it.")
+		else
+			boutput(usr, "[src] looks a bit too preoccupied for you to direct it anywhere.")
+			return ..()
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/drink_blood/B = src.abilityHolder.getAbility(/datum/targetable/critter/drink_blood)
+		if (B && !B.disabled && B.cooldowncheck())
+			B.handleCast(target)
+			return TRUE
+
+	// in here we'll search for reagent containers with blood
+	seek_target(var/range = 7)
+		. = list()
+
+		for (var/obj/fluid/F in view(range, src))
+			if (F.name == "blood")
+				. += F
+
+		for (var/obj/item/reagent_containers/S in view(range, src))
+			if (S.reagents && S.reagents.has_reagent("blood"))
+				. += S
+
+		if (length(src.drink_targets) > 0)
+			return src.drink_targets
+
+		if (length(.) && (!ON_COOLDOWN(src, "bat_drink_blood", 1 MINUTES)))
+			src.visible_message(SPAN_ALERT("<b>[src]</b> notices blood and is trying to drink it!"))
+		else
+			return list()
 
 	setup_hands()
 		..()
@@ -3006,6 +3064,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 	is_pet = 2
+	ai_type = /datum/aiHolder/bat/doctor
 	player_can_spawn_with_pet = FALSE
 
 /* ------------------ Tiny Bat Rina ------------------ */

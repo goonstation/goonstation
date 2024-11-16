@@ -20369,7 +20369,7 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "ixW" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/crew_quarters/md)
 "iyq" = (

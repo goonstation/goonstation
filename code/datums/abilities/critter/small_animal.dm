@@ -283,3 +283,154 @@
 		SPAWN(4 SECONDS)
 			qdel(D)
 
+
+/datum/targetable/critter/drink_blood
+	name = "Drink Blood"
+	desc = "Drink from a source of blood."
+	cooldown = 5 SECONDS
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "bite"
+	targeted = TRUE
+	target_anything = TRUE
+
+	cast(atom/target)
+		if (..())
+			return TRUE
+		if (target == holder.owner)
+			return TRUE
+		if (!isliving(holder.owner))
+			return TRUE
+
+		var/mob/living/M = holder.owner
+		var/datum/abilityHolder/critter/C = holder
+
+		actions.start(new/datum/action/bar/private/icon/bat_drink_blood(M, C, target, src), M)
+
+		return TRUE
+
+/datum/action/bar/private/icon/bat_drink_blood
+	duration = 10
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "blood"
+	bar_icon_state = "bar-vampire"
+	border_icon_state = "border-vampire"
+	color_active = "#d73715"
+	color_success = "#f21b1b"
+	color_failure = "#8d1422"
+	var/mob/living/critter/small_animal/bat/mini_vampire
+	var/datum/abilityHolder/critter/C
+	var/atom/target
+	var/datum/targetable/critter/drink_blood/ability
+
+	/// amount of blood a single sip this bat takes contains.
+	var/const/blood_sip_amt = 20
+
+	New(user, vampabilityholder, target, biteabil)
+		src.mini_vampire = user
+		src.C = vampabilityholder
+		src.target = target
+		src.ability = biteabil
+		..()
+
+	onUpdate()
+		..()
+		if(GET_DIST(src.mini_vampire, src.target) > 7 || src.mini_vampire == null || src.target == null || length(src.mini_vampire.drink_targets) < 1)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (ishuman(src.target))
+			var/mob/living/carbon/human/H = src.target
+			if(H.blood_volume <= 0)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		else if (istype(target, /obj/item/reagent_containers/))
+			var/obj/item/reagent_containers/container = target
+			if(!container.reagents.has_reagent("blood", blood_sip_amt))
+				interrupt(INTERRUPT_ALWAYS)
+				return
+		else if (istype(target, /obj/fluid))
+			var/obj/fluid/F = target
+			if (!F.group || F.name != "blood")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+	onStart()
+		..()
+		if(src.mini_vampire == null || src.target == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (GET_DIST(src.mini_vampire, src.target) > 7)
+			boutput(src.mini_vampire, SPAN_ALERT("That target is too far away!"))
+			return
+
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
+
+			if (H.blood_volume < blood_sip_amt)
+				H.blood_volume = 0
+			else
+				if (prob(30))
+					take_bleeding_damage(H, null, 5, DAMAGE_CUT, 0, get_turf(src.mini_vampire))
+					src.mini_vampire.visible_message(SPAN_ALERT("<B>Whoops, looks like [src.mini_vampire] bit down a bit too hard."))
+				H.blood_volume -= blood_sip_amt
+				// fresh blood is the quenchiest. Bats get more blood points this way
+				src.mini_vampire.amount_of_blood += blood_sip_amt * 2
+				src.mini_vampire.blood_volume += blood_sip_amt * 2
+			src.mini_vampire.health += 2
+
+		else if (istype(target, /obj/item/reagent_containers/))
+			var/obj/item/reagent_containers/container = target
+			container.reagents.remove_reagent("blood", blood_sip_amt)
+			src.mini_vampire.amount_of_blood += blood_sip_amt
+			src.mini_vampire.blood_volume += blood_sip_amt
+			src.mini_vampire.health ++
+
+		else if (istype(target, /obj/fluid))
+			var/obj/fluid/F = target
+			if (F.group)
+				F.group.queued_drains += 1
+				F.group.last_drain = get_turf(F)
+				if (!F.group.draining)
+					F.group.add_drain_process()
+
+			src.mini_vampire.amount_of_blood += blood_sip_amt
+			src.mini_vampire.blood_volume += max(blood_sip_amt, F.group.amt_per_tile)
+			src.mini_vampire.health ++
+
+		else
+			interrupt(INTERRUPT_ALWAYS)
+
+		playsound(src.mini_vampire.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		eat_twitch(src.mini_vampire)
+
+		if (istype(src.mini_vampire, /mob/living/critter/small_animal/bat/doctor))
+			JOB_XP(target, "Medical Doctor", 1)
+		src.mini_vampire.visible_message("[src.mini_vampire] finishes drinking blood from [target] for now. That cutie looks pretty satisfied.")
+		src.mini_vampire.drink_targets.Cut()
+
+		logTheThing(LOG_COMBAT, src.mini_vampire, "steals blood from [constructTarget(src.target,"combat")] at [log_loc(src.mini_vampire)].")
+
+	onEnd()
+		if(GET_DIST(src.mini_vampire, src.target) > 7 || src.mini_vampire == null || src.target == null)
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.onRestart()
+
+	onInterrupt()
+		if (state == ACTIONSTATE_RUNNING)
+			if (ishuman(src.target))
+				var/mob/living/carbon/human/H = src.target
+				if (H.blood_volume <= 0)
+					boutput(src.mini_vampire, SPAN_ALERT("[src.target] doesn't have enough blood left to drink."))
+				else
+					boutput(src.mini_vampire, SPAN_ALERT("Your feast was interrupted."))
+			else
+				boutput(src.mini_vampire, SPAN_ALERT("Your feast was interrupted."))
+
+		if (ability)
+			ability.doCooldown()
+
+		..()

@@ -525,6 +525,7 @@
 #include "code\mob\living\critter\spider.dm"
 #include "code\mob\living\critter\vending.dm"
 #include "code\mob\living\critter\ai\aquatic.dm"
+#include "code\mob\living\critter\ai\bat.dm"
 #include "code\mob\living\critter\ai\brullbar.dm"
 #include "code\mob\living\critter\ai\bunny.dm"
 #include "code\mob\living\critter\ai\capybara.dm"

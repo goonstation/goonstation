@@ -275,7 +275,7 @@ var/datum/score_tracker/score_tracker
 						command_pets_escaped += P
 					else if(P.is_pet)
 						pets_escaped += P
-					if (istype(P, /obj/critter/bat/doctor))
+					if (istype(P, /mob/living/critter/small_animal/bat/doctor))
 						acula_blood = P:blood_volume //this only gets populated if Dr. Acula escapes
 			else if(ismobcritter(pet))
 				var/mob/living/critter/P = pet
