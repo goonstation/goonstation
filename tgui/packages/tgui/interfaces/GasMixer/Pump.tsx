@@ -24,7 +24,7 @@ export const Pump = () => {
         <LabeledList.Item label="Gas Input Ratio">
           <GasInputRatio />
         </LabeledList.Item>
-        <LabeledList.Item label="Output Target Pressure" verticalAlign="middle">
+        <LabeledList.Item label="Target Pressure" verticalAlign="middle">
           <OutputTargetPressure />
         </LabeledList.Item>
         <LabeledList.Item label="Pump Status">

@@ -19,12 +19,12 @@ export const Inputs = () => {
     <Section title="Inputs">
       <Stack>
         <Stack.Item grow>
-          <Section title="Input 1">
+          <Section title="Input 1" mx={0}>
             <MixInfo mix={mixer_information.in1} />
           </Section>
         </Stack.Item>
         <Stack.Item grow>
-          <Section title="Input 2">
+          <Section title="Input 2" mx={0}>
             <MixInfo mix={mixer_information.in2} />
           </Section>
         </Stack.Item>

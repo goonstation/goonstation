@@ -18,14 +18,14 @@ export const GasMixer = (_props: unknown) => {
   const { data, act } = useBackend<GasMixerData>();
   const { name, mixerid, mixer_information } = data;
   return (
-    <Window theme="ntos" title={name} width={740} height={330}>
+    <Window theme="ntos" title={name} width={500} height={340}>
       <Window.Content>
         {mixerid ? (
           mixer_information ? (
             <>
               <Inputs />
               <Stack>
-                <Stack.Item grow>
+                <Stack.Item width="320px">
                   <Pump />
                 </Stack.Item>
                 <Stack.Item grow>
