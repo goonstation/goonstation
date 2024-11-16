@@ -3064,7 +3064,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 	is_pet = 2
-	ai_type = /datum/aiHolder/bat/doctor
 	player_can_spawn_with_pet = FALSE
 
 /* ------------------ Tiny Bat Rina ------------------ */
