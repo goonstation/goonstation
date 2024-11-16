@@ -21,8 +21,8 @@ type MixerInformation = {
   in1: AirInfo;
   in2: AirInfo;
 
-  i1trans: number; // Input 1 ratio
-  i2trans: number; // Input 2 ratio
+  in1_ratio: number;
+  in2_ratio: number;
 
   out: AirInfo;
 

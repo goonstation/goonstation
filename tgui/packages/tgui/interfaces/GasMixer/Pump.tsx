@@ -44,7 +44,7 @@ const GasInputRatio = () => {
       minValue={0}
       maxValue={100}
       stepPixelSize={4}
-      value={mixer_information.i1trans}
+      value={mixer_information.in1_ratio}
       onChange={(_e, value) => act('ratio', { ratio: value })}
       format={(value) => `${value}% Input 1 — ${100 - value}% Input 2`}
     />

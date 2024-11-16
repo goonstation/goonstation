@@ -145,8 +145,8 @@
 	signal.data["in2"] = get_air_data(src.air2)
 
 	//Report transferred concentrations
-	signal.data["i1trans"] = src.node1_ratio*100
-	signal.data["i2trans"] = src.node2_ratio*100
+	signal.data["in1_ratio"] = src.node1_ratio*100
+	signal.data["in2_ratio"] = src.node2_ratio*100
 
 	//Report gas concentration of out
 	signal.data["out"] = get_air_data(src.air3)
