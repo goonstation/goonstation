@@ -3114,17 +3114,18 @@
 
 	light
 		id = "art_light_curse"
-		name = "Eldritch Light Curse"
+		name = "Light Curse"
 		extra_desc = "The light is extra harmful... stay out of it for a short while."
 		removal_msg = "You no longer feel harmed by light... thank goodness."
+		var/time_passed = 0
 
 		onUpdate(timePassed)
 			..()
+			src.time_passed += timePassed
 			var/turf/T = src.owner.loc
+			if (ON_COOLDOWN(src.owner, "art_curse_light_burn", 2 SECONDS))
+				return
 			if (istype(T) && T.is_lit())
 				var/mob/living/carbon/human/H = src.owner
-				H.TakeDamage("All", burn = 5 * src.get_mult(timePassed), damage_type = DAMAGE_BURN)
-
-	proc/get_mult(timePassed)
-		return timePassed / LIFE_PROCESS_TICK_SPACING
-
+				H.TakeDamage("All", burn = 5 * src.get_mult(time_passed), damage_type = DAMAGE_BURN)
+			src.time_passed = 0
