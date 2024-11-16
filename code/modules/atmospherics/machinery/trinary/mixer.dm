@@ -124,8 +124,7 @@
 				src.target_pressure = 0
 
 	if (signal.data["tag"])
-		SPAWN(0.5 SECONDS)
-			if (src) src.report_status()
+		if (src) src.report_status()
 
 	UpdateIcon()
 
