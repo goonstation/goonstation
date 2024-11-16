@@ -34425,6 +34425,7 @@
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
+/obj/machinery/vending/fortune,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "sYU" = (
