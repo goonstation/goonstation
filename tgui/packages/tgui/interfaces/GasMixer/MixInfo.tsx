@@ -16,8 +16,7 @@ export const MixInfo = (props: MixInfoProps) => {
     <>
       {mix.gasses
         .filter((gas) => gas.Ratio > 0)
-        .sort((gas) => gas.Ratio)
-        .reverse()
+        .sort((gas1, gas2) => gas2.Ratio - gas1.Ratio)
         .map((gas) => (
           <div key={gas.Name} style={{ color: gas.Color }}>
             {gas.Name}: {gas.Ratio}%
