@@ -814,6 +814,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	run_on_spawn(var/obj/item)
 		new /obj/item/wrench(item.loc) // clarify that we need to wrench it down before use
 
+/datum/syndicate_buylist/traitor/law_linker
+	name = "Syndicate law linker"
+	item = /obj/item/device/borg_linker/syndicate
+	cost = 5
+	vr_allowed = FALSE
+	desc = "A cyborg law linker connected to the syndicate law rack, making them loyal only to the syndicate. DISCLAIMER: Does not work on NT brand AI units."
+	job = list("Roboticist")
+	not_in_crates = TRUE
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/safari
 	name = "Safari Kit"
