@@ -12992,7 +12992,6 @@
 /turf/simulated/floor/bluegreen,
 /area/station/crew_quarters)
 "cib" = (
-/obj/table/reinforced,
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/produce,
 /obj/machinery/door/poddoor/pyro{
@@ -13003,6 +13002,7 @@
 	opacity = 0
 	},
 /obj/disposalpipe/chicken_disposal_pipe/vertical,
+/obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ciX" = (
@@ -16867,7 +16867,7 @@
 	opacity = 0
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/table/reinforced,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "fqT" = (
