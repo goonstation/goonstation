@@ -19,26 +19,18 @@ export const Inputs = () => {
       <Flex>
         <Flex.Item>
           <Section title="Input 1">
-            {mixer_information.In1oxygen} {mixer_information.In1nitrogen}{' '}
-            {mixer_information.In1carbon_dioxide} {mixer_information.In1toxins}{' '}
-            {mixer_information.In1farts} {mixer_information.In1radgas}{' '}
-            {mixer_information.In1nitrous_oxide}{' '}
-            {mixer_information.In1oxygen_agent_b}
-            {mixer_information.in1kpa &&
-              mixer_information.in1temp &&
-              `Pressure: ${mixer_information.in1kpa} / Temperature: ${mixer_information.in1temp} °C`}
+            {JSON.stringify(mixer_information.in1.gasses)}
+            {mixer_information.in1.kpa &&
+              mixer_information.in1.temp &&
+              `Pressure: ${mixer_information.in1.kpa} kPa / Temperature: ${mixer_information.in1.temp} °C`}
           </Section>
         </Flex.Item>
         <Flex.Item>
           <Section title="Input 2">
-            {mixer_information.In2oxygen} {mixer_information.In2nitrogen}{' '}
-            {mixer_information.In2carbon_dioxide} {mixer_information.In2toxins}{' '}
-            {mixer_information.In2farts} {mixer_information.In2radgas}{' '}
-            {mixer_information.In2nitrous_oxide}{' '}
-            {mixer_information.In2oxygen_agent_b}
-            {mixer_information.in2kpa &&
-              mixer_information.in2temp &&
-              `Pressure: ${mixer_information.in2kpa} / Temperature: ${mixer_information.in2temp} °C`}
+            {JSON.stringify(mixer_information.in2.gasses)}
+            {mixer_information.in2.kpa &&
+              mixer_information.in2.temp &&
+              `Pressure: ${mixer_information.in2.kpa} kPa / Temperature: ${mixer_information.in2.temp} °C`}
           </Section>
         </Flex.Item>
       </Flex>

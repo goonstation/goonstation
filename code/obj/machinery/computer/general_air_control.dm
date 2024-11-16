@@ -1,6 +1,3 @@
-#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[ID + #GAS]]% [NAME]</FONT>  " }
-#define GET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_GET_SIGNAL_GAS, ID)
-
 obj/machinery/computer/general_air_control
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
@@ -584,6 +581,3 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 			. = UI_UPDATE
 
 #undef MAX_PRESSURE
-
-#undef _GET_SIGNAL_GAS
-#undef GET_SIGNAL_MIXTURE
