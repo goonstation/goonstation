@@ -5,10 +5,10 @@
  * @license MIT
  */
 
-import type { airInfo } from './types';
+import type { AirInfo } from './types';
 
 interface MixInfoProps {
-  mix: airInfo;
+  mix: AirInfo;
 }
 export const MixInfo = (props: MixInfoProps) => {
   const { mix } = props;

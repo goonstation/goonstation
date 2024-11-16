@@ -8,35 +8,35 @@
 export type GasMixerData = {
   name: string;
   mixerid: string;
-  mixer_information: mixerInformation;
+  mixer_information: MixerInformation;
   MAX_PRESSURE: number;
 };
 
-type mixerInformation = {
+type MixerInformation = {
   tag: string;
   timestamp: number;
   target_pressure: number;
   pump_status: 'Online' | 'Offline';
 
-  in1: airInfo;
-  in2: airInfo;
+  in1: AirInfo;
+  in2: AirInfo;
 
   i1trans: number; // Input 1 ratio
   i2trans: number; // Input 2 ratio
 
-  out: airInfo;
+  out: AirInfo;
 
   address_tag: string;
   sender: string;
 };
 
-export type airInfo = {
-  gasses: Array<gasInfo>;
+export type AirInfo = {
+  gasses: Array<GasInfo>;
   kpa?: number;
   temp?: number;
 };
 
-type gasInfo = {
+type GasInfo = {
   Name: string;
   Color: string;
   Ratio: number;
