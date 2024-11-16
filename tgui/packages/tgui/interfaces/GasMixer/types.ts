@@ -9,6 +9,7 @@ export type GasMixerData = {
   name: string;
   mixerid: string;
   mixer_information: mixerInformation;
+  MAX_PRESSURE: number;
 };
 
 type mixerInformation = {
@@ -26,6 +27,8 @@ type mixerInformation = {
   In1nitrous_oxide: number;
   In1oxygen_agent_b: number;
   // in1tg: number; // Out with trace gasses
+  in1kpa?: number;
+  in1temp?: number;
 
   In2oxygen: number;
   In2nitrogen: number;
@@ -36,6 +39,8 @@ type mixerInformation = {
   In2nitrous_oxide: number;
   In2oxygen_agent_b: number;
   // in2tg: number; // Out with trace gasses
+  in2kpa?: number;
+  in2temp?: number;
 
   i1trans: number; // Input 1 ratio
   i2trans: number; // Input 2 ratio
@@ -49,6 +54,8 @@ type mixerInformation = {
   Outnitrous_oxide: number;
   Outoxygen_agent_b: number;
   // outtg: number; // Out with trace gasses
+  outkpa?: number;
+  outtemp?: number;
 
   address_tag: string;
   sender: string;

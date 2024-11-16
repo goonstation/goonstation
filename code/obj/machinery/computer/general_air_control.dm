@@ -508,6 +508,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 		. = ..()
 		.["name"] = name
 		.["mixerid"] = mixerid
+		.["MAX_PRESSURE"] = MAX_PRESSURE
 
 	ui_data(mob/user)
 		. = ..()

@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Button, Flex, NoticeBox } from 'tgui-core/components';
+import { Button, NoticeBox } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -18,21 +18,15 @@ export const GasMixer = (_props: unknown) => {
   const { data, act } = useBackend<GasMixerData>();
   const { name, mixerid, mixer_information } = data;
   return (
-    <Window theme="ntos" title={name} width={650} height={350}>
+    <Window theme="ntos" title={name} width={650} height={650}>
       <Window.Content>
         {mixerid ? (
           mixer_information ? (
-            <Flex height="100%">
-              <Flex.Item grow={1}>
-                <Inputs />
-              </Flex.Item>
-              <Flex.Item grow={1}>
-                <Pump />
-              </Flex.Item>
-              <Flex.Item grow={1}>
-                <Outputs />
-              </Flex.Item>
-            </Flex>
+            <>
+              <Inputs />
+              <Pump />
+              <Outputs />
+            </>
           ) : (
             <NoticeBox warning>
               {mixerid} can not be found!

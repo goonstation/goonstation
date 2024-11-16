@@ -111,7 +111,7 @@
 
 		if ("set_ratio")
 			var/number = text2num(signal.data["parameter"])
-			if (number && isnum(number))
+			if ((number || number == 0) && isnum(number))
 				number = clamp(number, 0, 100)
 				src.node1_ratio = number/100
 				src.node2_ratio = (100-number)/100

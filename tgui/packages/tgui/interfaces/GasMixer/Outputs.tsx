@@ -15,11 +15,14 @@ export const Outputs = () => {
   const { mixer_information } = data;
 
   return (
-    <Section title="Outputs" height="100%" mx={1}>
+    <Section title="Outputs">
       {mixer_information.Outoxygen} {mixer_information.Outnitrogen}{' '}
       {mixer_information.Outcarbon_dioxide} {mixer_information.Outtoxins}{' '}
       {mixer_information.Outfarts} {mixer_information.Outradgas}{' '}
       {mixer_information.Outnitrous_oxide} {mixer_information.Outoxygen_agent_b}
+      {mixer_information.outkpa &&
+        mixer_information.outtemp &&
+        `Pressure: ${mixer_information.outkpa} / Temperature: ${mixer_information.outtemp} °C`}
     </Section>
   );
 };

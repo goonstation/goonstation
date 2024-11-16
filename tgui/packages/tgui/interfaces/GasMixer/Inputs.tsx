@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Section } from 'tgui-core/components';
+import { Flex, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import type { GasMixerData } from './types';
@@ -15,21 +15,33 @@ export const Inputs = () => {
   const { mixer_information } = data;
 
   return (
-    <Section title="Inputs" height="100%" mx={1}>
-      <Section title="Input 1">
-        {mixer_information.In1oxygen} {mixer_information.In1nitrogen}{' '}
-        {mixer_information.In1carbon_dioxide} {mixer_information.In1toxins}{' '}
-        {mixer_information.In1farts} {mixer_information.In1radgas}{' '}
-        {mixer_information.In1nitrous_oxide}{' '}
-        {mixer_information.In1oxygen_agent_b}
-      </Section>
-      <Section title="Input 2">
-        {mixer_information.In2oxygen} {mixer_information.In2nitrogen}{' '}
-        {mixer_information.In2carbon_dioxide} {mixer_information.In2toxins}{' '}
-        {mixer_information.In2farts} {mixer_information.In2radgas}{' '}
-        {mixer_information.In2nitrous_oxide}{' '}
-        {mixer_information.In2oxygen_agent_b}
-      </Section>
+    <Section title="Inputs">
+      <Flex>
+        <Flex.Item>
+          <Section title="Input 1">
+            {mixer_information.In1oxygen} {mixer_information.In1nitrogen}{' '}
+            {mixer_information.In1carbon_dioxide} {mixer_information.In1toxins}{' '}
+            {mixer_information.In1farts} {mixer_information.In1radgas}{' '}
+            {mixer_information.In1nitrous_oxide}{' '}
+            {mixer_information.In1oxygen_agent_b}
+            {mixer_information.in1kpa &&
+              mixer_information.in1temp &&
+              `Pressure: ${mixer_information.in1kpa} / Temperature: ${mixer_information.in1temp} °C`}
+          </Section>
+        </Flex.Item>
+        <Flex.Item>
+          <Section title="Input 2">
+            {mixer_information.In2oxygen} {mixer_information.In2nitrogen}{' '}
+            {mixer_information.In2carbon_dioxide} {mixer_information.In2toxins}{' '}
+            {mixer_information.In2farts} {mixer_information.In2radgas}{' '}
+            {mixer_information.In2nitrous_oxide}{' '}
+            {mixer_information.In2oxygen_agent_b}
+            {mixer_information.in2kpa &&
+              mixer_information.in2temp &&
+              `Pressure: ${mixer_information.in2kpa} / Temperature: ${mixer_information.in2temp} °C`}
+          </Section>
+        </Flex.Item>
+      </Flex>
     </Section>
   );
 };
