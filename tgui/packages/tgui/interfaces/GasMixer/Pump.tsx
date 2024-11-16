@@ -7,10 +7,10 @@
 
 import {
   Button,
-  Knob,
   LabeledList,
   NumberInput,
   Section,
+  Slider,
   Stack,
 } from 'tgui-core/components';
 
@@ -40,14 +40,12 @@ const GasInputRatio = () => {
   const { mixer_information } = data;
 
   return (
-    <Knob
+    <Slider
       minValue={0}
       maxValue={100}
       stepPixelSize={4}
       value={mixer_information.i1trans}
       onChange={(_e, value) => act('ratio', { ratio: value })}
-      bipolar
-      m={0}
       format={(value) => `${value}% Input 1 — ${100 - value}% Input 2`}
     />
   );
