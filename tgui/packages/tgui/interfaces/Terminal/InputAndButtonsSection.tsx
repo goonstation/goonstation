@@ -23,8 +23,10 @@ export const InputAndButtonsSection = () => {
     // I think the cause of this is the useEffect() in tgui's Input.tsx. I couldn't find a workaround.
     const domInput = document.querySelector(
       ".terminalInput input[class^='_inner']",
-    ) as HTMLInputElement;
-    domInput.value = value;
+    );
+    if (domInput) {
+      (domInput as HTMLInputElement).value = value;
+    }
   };
 
   const handleInputEnter = (_e, value) =>
