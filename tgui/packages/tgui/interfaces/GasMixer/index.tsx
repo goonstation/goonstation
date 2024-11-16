@@ -18,7 +18,7 @@ export const GasMixer = (_props: unknown) => {
   const { data, act } = useBackend<GasMixerData>();
   const { name, mixerid, mixer_information } = data;
   return (
-    <Window theme="ntos" title={name} width={500} height={340}>
+    <Window theme="ntos" title={name} width={570} height={285}>
       <Window.Content>
         {mixerid ? (
           mixer_information ? (

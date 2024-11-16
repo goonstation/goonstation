@@ -5,6 +5,8 @@
  * @license MIT
  */
 
+import { LabeledList } from 'tgui-core/components';
+
 import type { AirInfo } from './types';
 
 interface MixInfoProps {
@@ -13,18 +15,17 @@ interface MixInfoProps {
 export const MixInfo = (props: MixInfoProps) => {
   const { mix } = props;
   return (
-    <>
+    <LabeledList>
       {mix.gasses
         .filter((gas) => gas.Ratio > 0)
         .sort((gas1, gas2) => gas2.Ratio - gas1.Ratio)
         .map((gas) => (
-          <div key={gas.Name} style={{ color: gas.Color }}>
-            {gas.Name}: {gas.Ratio}%
-          </div>
+          <LabeledList.Item key={gas.Name} label={gas.Name}>
+            <span style={{ color: gas.Color }}>{gas.Ratio}%</span>
+          </LabeledList.Item>
         ))}
-      {mix.kpa && `Pressure: ${mix.kpa} kPa`}
-      <br />
-      {mix.temp && `Temperature: ${mix.temp} °C`}
-    </>
+      <LabeledList.Item label="Pressure">{mix.kpa} kPa</LabeledList.Item>
+      <LabeledList.Item label="Temperature">{mix.temp} °C</LabeledList.Item>
+    </LabeledList>
   );
 };
