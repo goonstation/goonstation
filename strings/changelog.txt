@@ -1,4 +1,9 @@
 
+(t)sat nov 16 24
+(u)FlameArrow57
+(p)21339
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(+)Heat Surge artifact can now produce fire with different colors than just red.
 (t)fri nov 15 24
 (u)LeahTheTech
 (*)Added chocolate eggs made with one egg and one chocolate bar. Each egg can contain one small item which can be retrieved (or accidentally swallowed) when the egg is eaten. Eggs which contain items are considered contraband due to posing a SEVERE choking hazard.
