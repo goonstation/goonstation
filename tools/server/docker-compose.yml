@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  ss13:
+    container_name: "${SS13_NAME:-ss13}"
+    restart: unless-stopped
+    build: .
+    volumes:
+      - /pop/ss13/byond:/byond:ro
+      - /pop/ss13/rust-g:/rust-g:ro
+      - /pop/ss13/byond-tracy:/byond-tracy:ro
+      - ../../:/ss13_server:rw
+    ports:
+      - "${SS13_PORT:-6969}:${SS13_PORT:-6969}"
+    environment:
+      - SS13_PORT=${SS13_PORT:-6969}
+    labels:
+      - monocker.enable=true
