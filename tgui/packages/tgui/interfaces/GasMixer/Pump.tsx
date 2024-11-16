@@ -24,7 +24,7 @@ export const Pump = () => {
         <LabeledList.Item label="Gas Input Ratio">
           <GasInputRatio />
         </LabeledList.Item>
-        <LabeledList.Item label="Output Target Pressure">
+        <LabeledList.Item label="Output Target Pressure" verticalAlign="middle">
           <OutputTargetPressure />
         </LabeledList.Item>
         <LabeledList.Item label="Pump Status">
@@ -62,7 +62,7 @@ const OutputTargetPressure = () => {
           Min
         </Button>
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item grow>
         <NumberInput
           minValue={0}
           maxValue={MAX_PRESSURE}
@@ -70,6 +70,7 @@ const OutputTargetPressure = () => {
           value={mixer_information.target_pressure}
           onChange={(value) => act('pressure_set', { target_pressure: value })}
           unit="kPa"
+          fluid
         />
       </Stack.Item>
       <Stack.Item>
@@ -92,6 +93,9 @@ const PumpStatus = () => {
       icon="power-off"
       color={mixer_information.pump_status === 'Online' ? 'average' : null}
       onClick={() => act('toggle_pump')}
+      fluid
+      textAlign="center"
+      py={1}
     >
       {mixer_information.pump_status}
     </Button>
