@@ -85,8 +85,6 @@
 			else if (src.chosen_curse == DISP_CURSE)
 				src.disp_curse_active = TRUE
 
-			boutput(H, SPAN_ALERT("You have been cursed by an Eldritch artifact!"))
-
 	proc/active_curse_check(obj/O, mob/living/carbon/human/user)
 		if (src.blood_curse_active)
 			if (user.client && tgui_alert(user, "Donate 100u of your blood?", "Blood Curse Appeasement", list("Yes", "No")) == "Yes")
@@ -100,19 +98,24 @@
 							break
 				return TRUE
 		else if (src.aging_curse_active)
-			var/mob/living/carbon/human/H1 = user
-			var/mob/living/carbon/human/H2 = src.active_cursees[1]
+			var/mob/living/carbon/human/H = user
+			if (!H.last_ckey)
+				return
 
-			if (H1.bioHolder.age >= H2.bioHolder.age || (H1.ckey in src.participants))
-				boutput(user, "[O] doesn't respond.")
+			var/youngest_age = INFINITY
+			for (var/mob/living/carbon/human/cursed in src.active_cursees)
+				youngest_age = min(youngest_age, cursed.bioHolder.age)
+
+			if (H.bioHolder.age >= youngest_age || (H.ckey in src.participants))
+				boutput(user, "<b>[O]</b> doesn't respond.")
 				return TRUE
 			boutput(user, "Your knuckles hurt kinda")
-			participants.Add(H1.ckey)
-			if (src.participants >= 3)
+			src.participants.Add(H.ckey)
+			if (length(src.participants) >= 3)
 				src.lift_curse(TRUE)
 				src.participants = list()
 			else
-				O.visible_message(SPAN_NOTICE("[O] softly stirs."))
+				O.visible_message(SPAN_NOTICE("<b>[O]</b> softly stirs."))
 			return TRUE
 		else if (src.disp_curse_active)
 			src.lift_curse(FALSE)
@@ -127,6 +130,16 @@
 		src.blood_curse_active = FALSE
 		src.aging_curse_active = FALSE
 		src.disp_curse_active = FALSE
+
+	proc/lift_curse_specific(do_playsound, mob/living/L)
+		if ((L in src.active_cursees) && length(src.active_cursees) == 1)
+			src.lift_curse(do_playsound)
+			return
+		if (do_playsound)
+			playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
+		if (L in src.active_cursees)
+			L.delStatus(src.chosen_curse)
+		src.active_cursees -= L
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
 	// also note, loaded rooms (x1, y1) location is at the bottom left, not the middle

@@ -2897,6 +2897,8 @@
 	var/extra_desc = ""
 	var/removal_msg = ""
 
+	var/datum/artifact/curser/linked_curser
+
 	New()
 		src.desc += " [src.extra_desc]"
 		..()
@@ -2906,8 +2908,18 @@
 		if (!ishuman(A))
 			return FALSE
 
+	onAdd(optional)
+		..()
+		boutput(src.owner, SPAN_ALERT(src.desc))
+		src.linked_curser = optional
+
 	onRemove()
-		boutput(src.owner, SPAN_NOTICE(src.removal_msg))
+		if (QDELETED(src.owner))
+			return ..()
+		var/mob/living/L = src.owner
+		if (!isdead(L))
+			boutput(L, SPAN_NOTICE(src.removal_msg))
+		src.linked_curser = null
 		..()
 
 	blood
@@ -2957,10 +2969,12 @@
 
 	aging
 		id = "art_aging_curse"
-		name = "Eldritch Aging Curse"
+		name = "Aging Curse"
 		extra_desc = "You're rapidly aging and will die... You're going to need to get three other people younger than you to touch the artifact."
-		removal_msg = "You're returned to your original age!"
+		removal_msg = "You're returned to your original age! Though your hair is still grey."
 		var/original_age
+		var/hair_greyed
+		var/final_msg_given
 
 		onAdd()
 			..()
@@ -2971,14 +2985,32 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			H.bioHolder.age += src.get_mult(timePassed)
-			if (H.bioHolder.age >= 50 * src.original_age)
+			src.duration = (120 - (H.bioHolder.age - src.original_age) + 1) SECONDS // +1 is a safety buffer
+			var/mult = src.get_mult(timePassed)
+			if (probmult(7))
+				boutput(H, SPAN_ALERT(pick("Your joints hurt...", "Everything aches!", "Your eyes are sort of blurry", "It hurts to move",
+					"Your hands hurt", "Your skin feels strange", "The curse is aging you", "You have to do something quick", "Will you live long enough to remove the curse?",
+					"You can feel your age", "You see visions of eldritch beings")))
+			if (H.bioHolder.age >= 50 && !src.hair_greyed)
+				boutput(H, SPAN_ALERT("<b>Your hair greys!</b>"))
+				H.bioHolder.mobAppearance.customizations["hair_bottom"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations["hair_middle"].color = "#b1b1b1"
+				H.bioHolder.mobAppearance.customizations["hair_top"].color = "#b1b1b1"
+				H.update_colorful_parts()
+				src.hair_greyed = TRUE
+			if (H.bioHolder.age >= src.original_age + 100 && !src.final_msg_given)
+				boutput(H, SPAN_ALERT("<b>You're over 100 years old... It's over soon. No going back.</b>"))
+				src.final_msg_given = TRUE
+				H.playsound_local(H, 'sound/ambience/spooky/Void_Calls.ogg', 75, FALSE)
+			if (H.bioHolder.age >= src.original_age + 120)
 				H.death(FALSE)
 				H.skeletonize()
-				H.delStatus(src)
+				src.linked_curser.lift_curse_specific(FALSE, H)
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
-			H.bioHolder.age = src.original_age
+			if (!QDELETED(H) && !isdead(H))
+				H.bioHolder.age = src.original_age
 			..()
 
 	nightmare
