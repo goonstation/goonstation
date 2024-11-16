@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
@@ -9,7 +10,7 @@
     cursor: pointer;
 
     &:hover {
-      background-color: darken(colors.$good, 30%);
+      background-color: color.adjust(colors.$good, $lightness: -30%);
     }
 
     &--selected,
