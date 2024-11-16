@@ -436,6 +436,11 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
+
+		if(istype(linker.linked_rack, /obj/machinery/lawrack/syndicate))
+			boutput(user, "[src.name] is incompatible with the linker's connected rack.")
+			return
+
 		if(src.dismantle_stage<2)
 			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return

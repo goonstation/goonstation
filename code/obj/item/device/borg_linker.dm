@@ -15,6 +15,7 @@ TYPEINFO(/obj/item/device/borg_linker)
 	m_amt = 50
 	g_amt = 20
 	var/obj/machinery/lawrack/linked_rack = null
+	var/locked = FALSE // Allow changing connected law rack?
 
 	attack_self(var/mob/user)
 		if(src.linked_rack)
@@ -23,8 +24,19 @@ TYPEINFO(/obj/item/device/borg_linker)
 		else
 			boutput(user, "No law rack connected.")
 
-		if(src.linked_rack)
+		if(src.linked_rack && !src.locked)
 			var/raw = tgui_alert(user,"Do you want to clear the linked rack?", "Linker", list("Yes", "No"))
 			if (raw == "Yes")
 				src.linked_rack = null
 		return
+
+/obj/item/device/borg_linker/syndicate
+	name = "syndicate cyborg law linker"
+	icon_state = "cyborg_linker_syndicate"
+	desc = "A device for connecting silicon beings to a law rack, it is glowing a sinister red."
+	is_syndicate = TRUE
+	locked = TRUE
+
+	New()
+		..()
+		src.linked_rack = ticker.ai_law_rack_manager.default_ai_rack_syndie
