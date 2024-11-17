@@ -58,6 +58,8 @@
 		var/list/curse_candidates = list()
 		var/list/picked_to_curse = list()
 
+		logTheThing(LOG_STATION, O, "Curser artifact with effect [src.chosen_curse] activated at [log_loc(O)] by [key_name(user)]")
+
 		for (var/mob/living/carbon/human/H in range(5, O))
 			if (H != user && !isdead(H))
 				curse_candidates += H
@@ -66,6 +68,7 @@
 			var/candidate = pick(curse_candidates)
 			picked_to_curse += candidate
 			curse_candidates -= candidate
+			logTheThing(LOG_STATION, O, "Curser artifact activated by [key_name(user)] area of effect cursed [key_name(candidate)] at [log_loc(candidate)]")
 
 		O.visible_message(SPAN_ALERT("<b>[O]</b> screeches, releasing the curse that was locked inside it!"))
 		playsound(O, pick('sound/effects/ghost.ogg', 'sound/effects/ghostlaugh.ogg'), 60, TRUE)
@@ -171,6 +174,8 @@
 		A.teleport_blocked = 2
 		A.allowed_restricted_z = TRUE
 
+		logTheThing(LOG_STATION, src.holder, "Maze created for Curser artifact [src.holder] with center point [log_loc(T)]")
+
 		// load start room center
 		T = src.maze.turf_at(rand(2, maze_width - 8), rand(2, maze_width - 8)) // values in respect to maze room perimeters + maze perimeter
 
@@ -192,6 +197,7 @@
 			y2 = null
 		if (!x2)
 			CRASH("Error in Curser art maze generation, could not create Key Room.")
+			logTheThing(LOG_DEBUG, src.holder, "Error creating maze Key Room for Curser artifact [src.holder]")
 		for (var/i = 1 to 50)
 			x3 = rand(2, maze_width - 8)
 			y3 = rand(2, maze_width - 8)
@@ -201,6 +207,7 @@
 			y3 = null
 		if (!x3)
 			CRASH("Error in Curser art maze generation, could not create Escape Room.")
+			logTheThing(LOG_DEBUG, src.holder, "Error creating maze Escape Room for Curser artifact [src.holder]")
 		var/turf/start = src.maze.turf_at(x1, y1)
 		var/turf/key = src.maze.turf_at(x2, y2)
 		var/turf/escape = src.maze.turf_at(x3, y3)
