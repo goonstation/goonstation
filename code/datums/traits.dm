@@ -1170,6 +1170,20 @@ TYPEINFO(/datum/trait/partyanimal)
 	icon_state = "onfire"
 	points = 2
 
+/datum/trait/spontaneous_combustion
+	name = "Spontaneous Combustion"
+	desc = "You very, VERY rarely spontaneously light on fire."
+	id = "spontaneous_combustion"
+	icon_state = "onfire"
+	points = 0
+
+	onLife(mob/owner, mult)
+		. = ..()
+		if(isliving(owner))
+			var/mob/living/L = owner
+			if(probmult(0.01))
+				L.set_burning(60)
+
 /datum/trait/carpenter
 	name = "Carpenter"
 	desc = "You can construct things more quickly than other people."
