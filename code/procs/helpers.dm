@@ -2786,3 +2786,18 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 		else
 			var/list/remainder = l.Copy(161)
 			return "[l[1]][l[2]][l[3]][l[4]][l[5]][l[6]][l[7]][l[8]][l[9]][l[10]][l[11]][l[12]][l[13]][l[14]][l[15]][l[16]][l[17]][l[18]][l[19]][l[20]][l[21]][l[22]][l[23]][l[24]][l[25]][l[26]][l[27]][l[28]][l[29]][l[30]][l[31]][l[32]][l[33]][l[34]][l[35]][l[36]][l[37]][l[38]][l[39]][l[40]][l[41]][l[42]][l[43]][l[44]][l[45]][l[46]][l[47]][l[48]][l[49]][l[50]][l[51]][l[52]][l[53]][l[54]][l[55]][l[56]][l[57]][l[58]][l[59]][l[60]][l[61]][l[62]][l[63]][l[64]][l[65]][l[66]][l[67]][l[68]][l[69]][l[70]][l[71]][l[72]][l[73]][l[74]][l[75]][l[76]][l[77]][l[78]][l[79]][l[80]][l[81]][l[82]][l[83]][l[84]][l[85]][l[86]][l[87]][l[88]][l[89]][l[90]][l[91]][l[92]][l[93]][l[94]][l[95]][l[96]][l[97]][l[98]][l[99]][l[100]][l[101]][l[102]][l[103]][l[104]][l[105]][l[106]][l[107]][l[108]][l[109]][l[110]][l[111]][l[112]][l[113]][l[114]][l[115]][l[116]][l[117]][l[118]][l[119]][l[120]][l[121]][l[122]][l[123]][l[124]][l[125]][l[126]][l[127]][l[128]][l[129]][l[130]][l[131]][l[132]][l[133]][l[134]][l[135]][l[136]][l[137]][l[138]][l[139]][l[140]][l[141]][l[142]][l[143]][l[144]][l[145]][l[146]][l[147]][l[148]][l[149]][l[150]][l[151]][l[152]][l[153]][l[154]][l[155]][l[156]][l[157]][l[158]][l[159]][l[160]][list2text(remainder)]"
+
+
+/// Returns an html input and a script which allows to toggle elements of a certain class visible or hidden depending what filter the user types in the input.
+proc/search_snippet(var/visibleClassDisplay = "block", var/class = "supply-package")
+	. = {"<input type="text" placeholder="filter packages" id="searchSnippetFilter">
+		<script>
+			document.querySelector('#searchSnippetFilter').addEventListener('input', function(event) {
+				var re = new RegExp(event.target.value, "i");
+				rowList = document.querySelectorAll('.[class]');
+
+				for (var i = 0; i < rowList.length; i++) {
+					rowList\[i\].style.display = rowList\[i\].innerText.match(re) ? '[visibleClassDisplay]' : 'none';
+				}
+			});
+		</script>"}
