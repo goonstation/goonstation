@@ -27414,7 +27414,13 @@
 /area/station/maintenance/southeast)
 "ojx" = (
 /obj/submachine/seed_manipulator,
-/obj/noticeboard/persistent/west,
+/obj/noticeboard/persistent{
+	name = "Botany persistent notice board";
+	persistent_id = "botany";
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -32
+	},
 /turf/simulated/floor/greenblack{
 	dir = 9
 	},
@@ -31622,7 +31628,10 @@
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/engine/engineering/ce)
 "raZ" = (
-/obj/noticeboard/persistent/north,
+/obj/noticeboard/persistent{
+	name = "Cargo persistent notice board";
+	persistent_id = "cargo"
+	},
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
