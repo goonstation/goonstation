@@ -7,6 +7,7 @@
 
 import { Box, LabeledList, NoticeBox } from 'tgui-core/components';
 
+import { formatPressure } from '../../format';
 import type { AirInfo } from './types';
 
 interface MixInfoProps {
@@ -32,7 +33,9 @@ export const MixInfo = (props: MixInfoProps) => {
                 </Box>
               </LabeledList.Item>
             ))}
-          <LabeledList.Item label="Pressure">{mix.kpa} kPa</LabeledList.Item>
+          <LabeledList.Item label="Pressure">
+            {formatPressure(mix.kpa)}
+          </LabeledList.Item>
           <LabeledList.Item label="Temperature">{mix.temp} °C</LabeledList.Item>
         </>
       ) : (
