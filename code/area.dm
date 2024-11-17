@@ -2844,6 +2844,7 @@ TYPEINFO(/area/station/engine/substation)
 /area/station/engine/proto
 	name = "Prototype Engine"
 	icon_state = "prototype_engine"
+	minimaps_to_render_on = 0
 
 /area/station/engine/thermo
 	name = "Thermoelectric Generator"
@@ -2855,6 +2856,7 @@ TYPEINFO(/area/station/engine/substation)
 	luminosity = 1
 	force_fullbright = 1
 	requires_power = 0
+	minimaps_to_render_on = 0
 
 
 /area/station/teleporter
