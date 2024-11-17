@@ -20169,7 +20169,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "inC" = (
-/obj/machinery/power/reactor_stats,
 /obj/cable{
 	icon_state = "0-4"
 	},
