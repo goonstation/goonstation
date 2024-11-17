@@ -50,6 +50,7 @@ CONTENTS:
 	icon_state = ""
 	filler_turf = null
 	teleport_blocked = 2
+	allowed_restricted_z = TRUE
 	ambient_light = null
 	area_parallax_render_source_group = null
 

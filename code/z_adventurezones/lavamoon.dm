@@ -19,10 +19,6 @@
 	carbon_dioxide = 20
 	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
-/turf/unsimulated/iomoon/floor/safe
-	carbon_dioxide = 0
-	temperature = T20C
-
 /turf/unsimulated/iomoon/floor/arena
 	name = "silicate crust"
 	icon = 'icons/turf/floors.dmi'

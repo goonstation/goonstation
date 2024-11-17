@@ -50,7 +50,7 @@
 			return
 
 		if (length(src.active_cursees) || ON_COOLDOWN(O, "art_curse_activated", rand(180, 300) SECONDS))
-			boutput(user, "[O] seems dormant. You're sure you can feel some presence inside though... creepy.")
+			boutput(user, SPAN_NOTICE("[O] seems dormant. You're sure you can feel some presence inside though... creepy."))
 			return
 
 		src.active_cursees = list()
@@ -82,6 +82,8 @@
 				src.blood_curse_active = TRUE
 			else if (src.chosen_curse == AGING_CURSE)
 				src.aging_curse_active = TRUE
+			else if (src.chosen_curse == MAZE_CURSE)
+				src.create_maze()
 			else if (src.chosen_curse == DISP_CURSE)
 				src.disp_curse_active = TRUE
 
@@ -130,6 +132,8 @@
 		src.blood_curse_active = FALSE
 		src.aging_curse_active = FALSE
 		src.disp_curse_active = FALSE
+		if (src.maze)
+			QDEL_NULL(src.maze)
 
 	proc/lift_curse_specific(do_playsound, mob/living/L)
 		if ((L in src.active_cursees) && length(src.active_cursees) == 1)
@@ -142,10 +146,11 @@
 		src.active_cursees -= L
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
-	// also note, loaded rooms (x1, y1) location is at the bottom left, not the middle
+	// also note, loaded rooms (x1, y1) location is at the bottom left of the room, not the middle
 	proc/create_maze()
-		var/maze_width = 30
+		var/maze_width = 40
 		src.maze = global.region_allocator.allocate(maze_width, maze_width)
+		src.maze.clean_up()
 
 		var/datum/cell_grid/maze_grid = new(maze_width, maze_width)
 		maze_grid.generate_maze(1, 1, maze_width, maze_width, "F")
@@ -159,8 +164,16 @@
 				else
 					T.ReplaceWith(/turf/unsimulated/wall/auto/adventure/ancient)
 
+		// set up area vars of the maze
+		T = src.maze.get_center()
+		var/area/A = get_area(T)
+		A.name = "unknown pocket dimension"
+		A.teleport_blocked = 2
+		A.allowed_restricted_z = TRUE
+
 		// load start room center
 		T = src.maze.turf_at(rand(2, maze_width - 8), rand(2, maze_width - 8)) // values in respect to maze room perimeters + maze perimeter
+
 		// starting room
 		var/x1 = rand(2, maze_width - 8)
 		var/y1 = rand(2, maze_width - 8)
@@ -196,7 +209,11 @@
 		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_keyroom.dmm"), key.x, key.y, key.z)
 		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_escaperoom.dmm"), escape.x, escape.y, escape.z)
 
-		return locate(start.x + 3, start.y + 3, start.z)
+		T = locate(start.x + 3, start.y + 3, start.z)
+
+		for (var/mob/living/L in src.active_cursees)
+			L.set_loc(T)
+			new /obj/item/art_labyrinth_flashlight(T)
 
 
 #undef BLOOD_CURSE
@@ -210,22 +227,45 @@
 
 /obj/item/art_labyrinth_flashlight
 	name = "\improper mysterious claw"
-	desc = "A scary looking Eldritch artifact. At least it emits light?"
+	desc = "A scary looking Eldritch artifact. At least it emits light? Seems it has some sort of activatable mechanism too."
 	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
 	icon_state = "flashlight"
+	help_message = "Activate in-hand to create or destroy a marking sigil, on Void turf."
 
 	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New()
 		..()
-		//src.add_medium_light("art_labyrinth_flashlight", rgb2num("#f8d7ff") + list(255))
-
 		var/col = rgb2num("#f8d7ff")
 		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col[1], col[2], col[3], 230)
-		light_dir.update(1)
+		light_dir.update(TRUE)
+
+	attack_self(mob/user)
+		..()
+		var/turf/T = get_turf(user)
+		var/sigil_decal = locate(/obj/decal/art_labyrinth_sigil) in T
+		if (sigil_decal)
+			qdel(sigil_decal)
+		else if (istype(T, /turf/unsimulated/floor/ancient))
+			new /obj/decal/art_labyrinth_sigil(get_turf(user))
+
+/obj/decal/art_labyrinth_sigil
+	name = "\improper strange sigil"
+	desc = "Some strange symbol. Probably related to the curse."
+	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
+	icon_state = "maze_sigil"
+
+	New()
+		..()
+		var/list/col = rgb2num("#774777")
+		src.add_simple_light("sigil_glow", col + list(200))
+
+	disposing()
+		src.remove_simple_light("sigil_glow")
+		..()
 
 /obj/item/art_labyrinth_firekey
 	name = "\improper fire key"
-	desc = "A key that looks like fire, or fire in the shape of a key? You're not sure, but it doesn't hurt to hold."
+	desc = "A key that looks like fire, or fire in the shape of a key? You're not sure, but it doesn't seem hot."
 	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
 	icon_state = "fire_key"
 
@@ -241,7 +281,56 @@
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/art_labyrinth_firekey))
 			qdel(I)
-			user.delStatus("art_maze_curse")
+			boutput(user, SPAN_NOTICE("\The [I] disperses in your hand, combining with the ice!"))
+			src.icon_state = "escape_open"
+			src.density = FALSE
+
+	Crossed(atom/movable/AM)
+		if (!src.density)
+			AM.delStatus("art_maze_curse")
+		else
+			return ..()
+
+/turf/unsimulated/floor/artmaze_icefloor
+	name = "ice floor"
+	desc = "A hard ice floor"
+	icon_state = "ice1"
+
+	New()
+		..()
+		src.icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6","ice7","ice8","ice9","ice10")]"
+		src.set_dir(pick(cardinal))
+
+/turf/unsimulated/floor/artmaze_silicatefloor
+	name = "silicate crust"
+	desc = "A hard silicate floor"
+	icon_state = "iocrust"
+
+/turf/unsimulated/floor/lava/artmaze_lavafloor
+	Entered(atom/movable/O, atom/old_loc)
+		if (istype(O, /obj/item/art_labyrinth_firekey))
+			return
+		..()
+
+/turf/unsimulated/floor/artmaze_catwalkfloor
+	name = "catwalk support"
+	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto_lava"
+	step_material = "step_lattice"
+	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
+
+	New()
+		..()
+		var/image/lava = image(icon = 'icons/turf/floors.dmi', icon_state = "lava", layer = src.layer - 0.1)
+		src.UpdateOverlays(lava, "lava")
+
+	vertical
+		icon_state = "0"
+
+	horizontal
+		icon_state = "4"
 
 /*********** DISPLACEMENT CURSE STUFF *************/
 

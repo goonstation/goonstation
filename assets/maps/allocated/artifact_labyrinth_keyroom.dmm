@@ -6,23 +6,23 @@
 	dir = 1
 	},
 /obj/map/light/lava,
-/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon/safe,
+/turf/unsimulated/floor/artmaze_catwalkfloor/horizontal,
 /area/crunch/art_labyrinth)
 "e" = (
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/iomoon/floor/safe,
+/turf/unsimulated/floor/artmaze_silicatefloor,
 /area/crunch/art_labyrinth)
 "f" = (
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
-/turf/unsimulated/iomoon/floor/safe,
+/turf/unsimulated/floor/artmaze_silicatefloor,
 /area/crunch/art_labyrinth)
 "l" = (
 /obj/railing/orange/reinforced,
-/turf/unsimulated/iomoon/floor/safe,
+/turf/unsimulated/floor/artmaze_silicatefloor,
 /area/crunch/art_labyrinth)
 "n" = (
 /obj/grille/catwalk,
@@ -31,29 +31,29 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/map/light/lava,
-/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon/safe,
+/turf/unsimulated/floor/artmaze_catwalkfloor/horizontal,
 /area/crunch/art_labyrinth)
 "w" = (
-/turf/unsimulated/iomoon/floor/safe,
+/turf/unsimulated/floor/artmaze_silicatefloor,
 /area/crunch/art_labyrinth)
 "H" = (
 /obj/item/art_labyrinth_firekey,
-/turf/unsimulated/iomoon/floor/safe,
+/turf/unsimulated/floor/artmaze_silicatefloor,
 /area/crunch/art_labyrinth)
 "K" = (
 /obj/map/light/lava,
-/turf/unsimulated/floor/lava/with_warning,
+/turf/unsimulated/floor/lava/artmaze_lavafloor,
 /area/crunch/art_labyrinth)
 "X" = (
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/iomoon/floor/safe,
+/turf/unsimulated/floor/artmaze_silicatefloor,
 /area/crunch/art_labyrinth)
 "Y" = (
 /obj/map/light/lava,
 /obj/map/light/lava,
-/turf/unsimulated/floor/lava/with_warning,
+/turf/unsimulated/floor/lava/artmaze_lavafloor,
 /area/crunch/art_labyrinth)
 "Z" = (
 /obj/grille/catwalk,
@@ -64,7 +64,7 @@
 	dir = 4
 	},
 /obj/map/light/lava,
-/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon/safe,
+/turf/unsimulated/floor/artmaze_catwalkfloor/vertical,
 /area/crunch/art_labyrinth)
 
 (1,1,1) = {"

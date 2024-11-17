@@ -3,7 +3,6 @@
 /turf/unsimulated/floor/airless/grasslush,
 /area/crunch/art_labyrinth)
 "b" = (
-/obj/item/art_labyrinth_flashlight,
 /obj/map/light/white,
 /turf/unsimulated/floor/airless/grasslush,
 /area/crunch/art_labyrinth)
@@ -23,7 +22,7 @@ a
 (2,1,1) = {"
 a
 x
-a
+b
 a
 a
 a
@@ -34,7 +33,7 @@ a
 a
 a
 a
-a
+b
 x
 a
 "}
@@ -60,7 +59,7 @@ a
 a
 a
 x
-a
+b
 a
 a
 a

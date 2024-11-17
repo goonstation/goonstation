@@ -3059,7 +3059,7 @@
 
 	maze
 		id = "art_maze_curse"
-		name = "Eldritch Maze Curse"
+		name = "Maze Curse"
 		extra_desc = "You're trapped in a labyrinth! Find your way out... if there is one..."
 		removal_msg = "You've found your way out! You could've been trapped there for eternity..."
 		var/turf/original_turf
@@ -3067,15 +3067,20 @@
 		onAdd(optional)
 			..()
 			src.original_turf = get_turf(src.owner)
-			var/datum/artifact/curser/curser = optional
-			var/turf/maze_start = curser.create_maze()
+
+		onUpdate()
+			..()
 			var/mob/living/carbon/human/H = src.owner
-			H.set_loc(maze_start)
+			if (QDELETED(H) || isdead(H))
+				src.linked_curser.lift_curse_specific(FALSE, H)
 
 		onRemove()
 			var/mob/living/carbon/human/H = src.owner
-			if (!QDELETED(H))
+			if (!QDELETED(H) && !isdead(H))
 				H.set_loc(src.original_turf)
+			else
+				var/mob/dead_ghost = H.ghostize() || ckey_to_mob_maybe_disconnected(H.last_ckey) // died or gibbed
+				dead_ghost.set_loc(src.original_turf)
 			..()
 
 	displacement

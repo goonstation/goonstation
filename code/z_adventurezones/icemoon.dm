@@ -39,15 +39,13 @@ Contents:
 	desc = "Frozen carbon dioxide. Neat."
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass_snow"
+	carbon_dioxide = 100
+	nitrogen = 0
+	oxygen = 0
+	temperature = 100
 	fullbright = 0
-	var/is_safe = FALSE
 
 	New()
-		if (!src.is_safe)
-			src.carbon_dioxide = 100
-			src.nitrogen = 0
-			src.oxygen = 0
-			src.temperature = 100
 		..()
 		src.set_dir(pick(cardinal))
 
@@ -62,9 +60,6 @@ Contents:
 	New()
 		..()
 		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6","ice7","ice8","ice9","ice10")]"
-
-/turf/unsimulated/floor/arctic/snow/ice/safe
-	is_safe = TRUE
 
 /turf/unsimulated/floor/arctic/snow/lake
 	name = "frozen lake"

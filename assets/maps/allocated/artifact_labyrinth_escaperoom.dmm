@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/unsimulated/floor/arctic/snow/ice/safe,
+/turf/unsimulated/floor/artmaze_icefloor,
 /area/crunch/art_labyrinth)
 "z" = (
 /obj/decal/icefloor,
