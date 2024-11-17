@@ -847,6 +847,7 @@
 #include "code\modules\antagonists\spy_thief\spy_thief.dm"
 #include "code\modules\antagonists\syndicate_cyborg\emagged_cyborg.dm"
 #include "code\modules\antagonists\syndicate_cyborg\syndicate_cyborg.dm"
+#include "code\modules\antagonists\traitor\infinicrimer.dm"
 #include "code\modules\antagonists\traitor\licensed_traitor.dm"
 #include "code\modules\antagonists\traitor\mindhack.dm"
 #include "code\modules\antagonists\traitor\sleeper_agent.dm"
