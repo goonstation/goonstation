@@ -87,8 +87,17 @@
 				src.aging_curse_active = TRUE
 			else if (src.chosen_curse == MAZE_CURSE)
 				src.create_maze()
+				O.visible_message(SPAN_ALERT("[H] suddenly disappears!"))
 			else if (src.chosen_curse == DISP_CURSE)
 				src.disp_curse_active = TRUE
+
+			var/obj/decal/art_curser_sigil/sigil = new(get_turf(H))
+			animate(sigil, alpha = 0, time = 2 SECONDS)
+			SPAWN(2 SECONDS)
+				qdel(sigil)
+
+		if (src.chosen_curse == MAZE_CURSE)
+			playsound(O, 'sound/effects/bamf.ogg', 50, TRUE)
 
 	proc/active_curse_check(obj/O, mob/living/carbon/human/user)
 		if (src.blood_curse_active)
@@ -123,14 +132,14 @@
 				O.visible_message(SPAN_NOTICE("<b>[O]</b> softly stirs."))
 			return TRUE
 		else if (src.disp_curse_active)
-			src.lift_curse(FALSE)
+			src.lift_curse(TRUE)
 			return TRUE
 
 	proc/lift_curse(do_playsound)
-		if (do_playsound)
-			playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
 		for (var/mob/L as anything in src.active_cursees)
 			L.delStatus(src.chosen_curse)
+			if (do_playsound)
+				playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
 		src.active_cursees = list()
 		src.blood_curse_active = FALSE
 		src.aging_curse_active = FALSE
@@ -143,13 +152,14 @@
 			src.lift_curse(do_playsound)
 			return
 		if (do_playsound)
-			playsound(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
+			L.playsound_local(src.holder, 'sound/effects/lit.ogg', 100, TRUE)
 		if (L in src.active_cursees)
 			L.delStatus(src.active_cursees[L])
 		src.active_cursees -= L
 
 	// maze width is only defined in this proc, if changed, care needs to be taken for other values used
 	// also note, loaded rooms (x1, y1) location is at the bottom left of the room, not the middle
+	// TODO: replacing the maze generation with something other than BSP would be good in the future (seems to generate a lot of binary split dead ends which is a little boring)
 	proc/create_maze()
 		var/maze_width = 40
 		src.maze = global.region_allocator.allocate(maze_width, maze_width)
@@ -159,11 +169,13 @@
 		maze_grid.generate_maze(1, 1, maze_width, maze_width, "F")
 
 		var/turf/T
+		var/list/floor_turfs = list()
 		for (var/x in 1 to maze_width)
 			for (var/y in 1 to maze_width)
 				T = src.maze.turf_at(x, y)
 				if (maze_grid.grid[x][y] == "F")
 					T.ReplaceWith(/turf/unsimulated/floor/ancient)
+					floor_turfs += T
 				else
 					T.ReplaceWith(/turf/unsimulated/wall/auto/adventure/ancient)
 
@@ -196,8 +208,8 @@
 			x2 = null
 			y2 = null
 		if (!x2)
-			CRASH("Error in Curser art maze generation, could not create Key Room.")
 			logTheThing(LOG_DEBUG, src.holder, "Error creating maze Key Room for Curser artifact [src.holder]")
+			CRASH("Error in Curser art maze generation, could not create Key Room.")
 		for (var/i = 1 to 50)
 			x3 = rand(2, maze_width - 8)
 			y3 = rand(2, maze_width - 8)
@@ -206,8 +218,8 @@
 			x3 = null
 			y3 = null
 		if (!x3)
-			CRASH("Error in Curser art maze generation, could not create Escape Room.")
 			logTheThing(LOG_DEBUG, src.holder, "Error creating maze Escape Room for Curser artifact [src.holder]")
+			CRASH("Error in Curser art maze generation, could not create Escape Room.")
 		var/turf/start = src.maze.turf_at(x1, y1)
 		var/turf/key = src.maze.turf_at(x2, y2)
 		var/turf/escape = src.maze.turf_at(x3, y3)
@@ -215,6 +227,12 @@
 		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_startroom.dmm"), start.x, start.y, start.z)
 		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_keyroom.dmm"), key.x, key.y, key.z)
 		room_loader.read_map(file2text("assets/maps/allocated/artifact_labyrinth_escaperoom.dmm"), escape.x, escape.y, escape.z)
+
+		for (var/i = 1 to 15)
+			T = pick(floor_turfs)
+			if (!istype(T, /turf/unsimulated/floor/ancient))
+				continue
+			new /obj/decal/cleanable/cobwebFloor(T)
 
 		T = locate(start.x + 3, start.y + 3, start.z)
 
@@ -249,15 +267,15 @@
 	attack_self(mob/user)
 		..()
 		var/turf/T = get_turf(user)
-		var/sigil_decal = locate(/obj/decal/art_labyrinth_sigil) in T
+		var/sigil_decal = locate(/obj/decal/art_curser_sigil/labyrinth) in T
 		if (sigil_decal)
 			qdel(sigil_decal)
 		else if (istype(T, /turf/unsimulated/floor/ancient))
-			new /obj/decal/art_labyrinth_sigil(get_turf(user))
+			new /obj/decal/art_curser_sigil/labyrinth(get_turf(user))
 
-/obj/decal/art_labyrinth_sigil
+/obj/decal/art_curser_sigil
 	name = "\improper strange sigil"
-	desc = "Some strange symbol. Probably related to the curse."
+	desc = "Some strange symbol."
 	icon = 'icons/obj/artifacts/art_labyrinth.dmi'
 	icon_state = "maze_sigil"
 
@@ -269,6 +287,9 @@
 	disposing()
 		src.remove_simple_light("sigil_glow")
 		..()
+
+	labyrinth
+		desc = "Some strange symbol. Probably related to the curse"
 
 /obj/item/art_labyrinth_firekey
 	name = "\improper fire key"
@@ -293,8 +314,9 @@
 			src.density = FALSE
 
 	Crossed(atom/movable/AM)
-		if (!src.density)
-			AM.delStatus("art_maze_curse")
+		if (!src.density && AM.hasStatus("art_maze_curse"))
+			var/datum/statusEffect/art_curse/maze/curse = AM.getStatusList()["art_maze_curse"]
+			curse.linked_curser.lift_curse_specific(TRUE, AM)
 		else
 			return ..()
 

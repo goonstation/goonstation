@@ -3039,7 +3039,7 @@
 			..()
 			var/mob/living/carbon/human/H = src.owner
 			if (src.creatures_to_kill <= 0 || QDELETED(H) || isdead(H))
-				src.linked_curser.lift_curse_specific(FALSE, H)
+				src.linked_curser.lift_curse_specific(!QDELETED(H) && !isdead(H), H)
 				return
 			src.time_passed += timePassed
 			if (src.time_passed < 10 SECONDS)
