@@ -1222,7 +1222,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			if (istype(H.head, /obj/item/clothing/head/bighat/syndicate))
 				H.visible_message(SPAN_NOTICE("<b>[H] becomes one with the [src.name]!</b>"))
 				H.firegib()
-				SPAWN(1.8 SECONDS)
+				SPAWN(1 SECONDS)
 					explosion_new(src, T, 200) // a silly goodbye
 					qdel(src)
 				return 1
