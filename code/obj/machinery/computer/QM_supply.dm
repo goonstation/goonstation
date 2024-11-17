@@ -365,7 +365,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			if (null, "list")
 
 				. += "<h2>Order Supplies</h2><div style='text-align: center;' id='qmquickjump'>"
-				. += search_snippet("table-row-group")
+				. += search_snippet("table-row-group", "background: #222228; color: #ccc;")
 				. += "<br />"
 				var/ordershit = ""
 				var/catnum = 0
