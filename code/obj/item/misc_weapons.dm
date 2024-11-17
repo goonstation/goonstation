@@ -2139,7 +2139,8 @@ obj/item/whetstone
 	hitsound ='sound/impact_sounds/coconut_break.ogg' //shamelessly re-using this sound idea from my halberd
 
 	health = 5
-	tool_flags = TOOL_PRYING | TOOL_CUTTING | TOOL_CHOPPING
+	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
+
 	w_class = W_CLASS_SMALL
 	hit_type = DAMAGE_CUT
 	leaves_slash_wound = TRUE //yeah prolly
@@ -2148,6 +2149,10 @@ obj/item/whetstone
 	throwforce = 24 //probably needs tuning but these aren't too far divorced from tomahawks- encourage high-skill gameplay
 	throw_speed = 4
 	throw_range = 7
+
+	var/breakmode = TRUE
+	var/breaking_tool_flags = TOOL_CUTTING | TOOL_CHOPPING
+	var/prying_tool_flags = TOOL_CUTTING | TOOL_PRYING
 
 	HELP_MESSAGE_OVERRIDE({"Can be used as a crowbar. Throw the weapon (space+click) to inflict a half-second stun and two second disorient."})
 
@@ -2167,6 +2172,19 @@ obj/item/whetstone
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 		..()
+
+	attack_self(mob/user)
+		if(breakmode)
+			breakmode = FALSE
+			src.tool_flags = prying_tool_flags
+			icon_state = "crashaxe-rev"
+			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to pry."))
+
+		else
+			breakmode = TRUE
+			src.tool_flags = breaking_tool_flags
+			icon_state = "crashaxe"
+			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to break stuff."))
 
 /obj/item/swords/sord
 	name = "gross sord"
