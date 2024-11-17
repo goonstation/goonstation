@@ -116,3 +116,10 @@
 #define UNDERFLOOR 1
 /// The atom is above the floor tiles.
 #define OVERFLOOR 2
+
+var/global/global_luck = 1
+
+#define local_luck ((GET_ATOM_PROPERTY(src, PROP_ATOM_LUCK) + GET_ATOM_PROPERTY(usr, PROP_ATOM_LUCK) + global.global_luck) / 3)
+#define luckprob(x) (prob(x) || prob(local_luck * 10) && prob(x))
+#define luckprob_bad(x) (prob(x) && !(prob(local_luck * 10)))
+#undef local_luck
