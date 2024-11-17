@@ -1179,10 +1179,10 @@ TYPEINFO(/datum/trait/partyanimal)
 
 	onLife(mob/owner, mult)
 		. = ..()
-		if(isliving(owner))
-			var/mob/living/L = owner
-			if(probmult(0.01))
-				L.set_burning(60)
+		if(probmult(0.01))
+			owner.setStatus("burning", 100 SECONDS, 60 SECONDS)
+			playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+			owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> suddenly bursts into flames!"))
 
 /datum/trait/carpenter
 	name = "Carpenter"
