@@ -40,20 +40,25 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		src.alpha = 0
-		animate(src, alpha = 255, time = 1 SECOND)
 
 		src.hidden_appearance = image(src.icon, src, "floateye")
 		src.hidden_appearance.alpha = 0
 		animate(src.hidden_appearance, alpha = 255, time = 1 SECOND)
+
 		get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_image(src.hidden_appearance)
 
 	Life(datum/controller/process/mobs/parent)
 		..()
-		if (src.z != src.cursed_human.z || !istype(src.cursed_human.loc, /turf)) // person is on another z level or inside closet or something
+		if (src.z != src.cursed_human.z || !istype(src.cursed_human.loc, /turf) || GET_DIST(src, src.cursed_human) > 50) // person is on another z level or inside closet or something
+			src.tracking_curse.created_creatures -= src
 			qdel(src)
 		else if (!length(get_path_to(src, src.cursed_human, 0))) // cases like person walling themselves off, moves through obstacles
 			step_towards(src, src.cursed_human, 32)
+
+	death()
+		src.tracking_curse.creatures_to_kill -= 1
+		..()
+		qdel(src)
 
 	disposing()
 		get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_image(src.hidden_appearance)
@@ -65,12 +70,8 @@
 
 	examine(mob/user)
 		if (user == src.cursed_human)
-			return "Some creature spawned as part of your curse. Kill it."
-
-	death()
-		src.tracking_curse.creatures_to_kill -= 1
-		..()
-		qdel(src)
+			return list("Some creature spawned as part of your curse. Kill it.")
+		return ..()
 
 	setup_hands()
 		..()
@@ -104,10 +105,6 @@
 			return
 		. = ..()
 
-	disposing()
-		src.cursed_human = null
-		..()
-
 	proc/register_target(mob/living/carbon/human/to_kill)
 		src.cursed_human = to_kill
 
@@ -115,70 +112,3 @@
 	dam_low = 2
 	dam_high = 2
 	actions = list("swipes", "swipes", "swipes", "swipes")
-/*
-/mob/living/critter/displaced_soul
-	//name = ""
-	//desc = "The displaced sould"
-	//icon_state = "floateye"
-
-	canbegrabbed = FALSE
-	faction = list(FACTION_NEUTRAL)
-	use_stamina = FALSE
-	ailment_immune = TRUE
-	has_genes = FALSE
-
-	event_handler_flags = MOVE_NOCLIP // phases through things
-
-	grabresistmessage = "slips right out of their hands!"
-
-	var/mob/living/carbon/human/cursed_human
-
-	New()
-		..()
-
-		remove_lifeprocess(/datum/lifeprocess/mutations)
-		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/stuns_lying)
-		remove_lifeprocess(/datum/lifeprocess/blindness)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
-
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-
-	death()
-		..()
-		qdel(src)
-
-	setup_hands()
-		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter/art_curser_nightmare
-		HH.name = "tentacle"
-		HH.limb_name = HH.name
-		HH.can_hold_items = FALSE
-
-	setup_healths()
-		add_hh_flesh(src.health_brute, src.health_brute_vuln)
-		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
-		add_health_holder(/datum/healthHolder/toxin)
-
-	do_disorient(stamina_damage, knockdown, stunned, unconscious, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
-		return
-
-	is_spacefaring()
-		return TRUE
-
-	seek_target()
-		return list(src.cursed_human)
-
-	can_pull(atom/A)
-		return FALSE
-
-	proc/register_target(mob/living/carbon/human/to_kill)
-		src.cursed_human = to_kill
-
-	disposing()
-		src.cursed_human = null
-		..()
-*/

@@ -3019,43 +3019,52 @@
 
 	nightmare
 		id = "art_nightmare_curse"
-		name = "Eldritch Nightmare Curse"
-		extra_desc = "You're being haunted by nightmares! Kill them, or perish."
+		name = "Nightmare Curse"
+		extra_desc = "You're being haunted by nightmares! Kill them 7 of them or perish."
 		removal_msg = "The nightmare ends, along with the creatures..."
 		var/list/created_creatures = list()
-		var/creatures_to_kill = 10
+		var/creatures_to_kill = 7
 		var/time_passed = 0 SECONDS
 
 		onAdd()
 			..()
-			var/mob/living/critter/art_curser_nightmare/creature = new (get_turf(src.owner), src)
-			src.created_creatures += creature
-			creature.register_target(src.owner)
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).add_mob(src.owner)
+			src.spawn_creature()
+			var/mob/living/carbon/human/H = src.owner
+			H.client?.animate_color(normalize_color_to_matrix("#7e4599"), 3 SECONDS)
+			SPAWN(1 SECOND)
+				H.apply_color_matrix(normalize_color_to_matrix("#7e4599"), "art_curser_nightmare_overlay-[ref(src)]")
 
 		onUpdate(timePassed)
 			..()
-			if (src.creatures_to_kill <= 0)
-				src.owner.delStatus(src)
+			var/mob/living/carbon/human/H = src.owner
+			if (src.creatures_to_kill <= 0 || QDELETED(H) || isdead(H))
+				src.linked_curser.lift_curse_specific(FALSE, H)
 				return
 			src.time_passed += timePassed
 			if (src.time_passed < 10 SECONDS)
 				return
 			src.time_passed = 0
-			var/mob/living/critter/art_curser_nightmare/creature = new(get_turf(src.owner), src)
-			src.created_creatures += creature
-			creature.register_target(src.owner)
+			src.spawn_creature()
 
 		onRemove()
 			get_image_group(CLIENT_IMAGE_GROUP_ART_CURSER_NIGHTMARE).remove_mob(src.owner)
-			..()
-
-		disposing()
+			var/mob/living/carbon/human/H = src.owner
+			H.client?.animate_color(time = 3 SECONDS)
+			SPAWN(3 SECONDS)
+				H.remove_color_matrix("art_curser_nightmare_overlay-[ref(src)]")
 			for (var/mob/living/critter/art_curser_nightmare/creature as anything in src.created_creatures)
 				if (!QDELETED(creature))
 					qdel(creature)
 			src.created_creatures = null
 			..()
+
+		proc/spawn_creature()
+			if (length(src.created_creatures) >= 2 || !istype(src.owner.loc, /turf))
+				return
+			var/mob/living/critter/art_curser_nightmare/creature = new(get_turf(src.owner), src)
+			src.created_creatures += creature
+			creature.register_target(src.owner)
 
 	maze
 		id = "art_maze_curse"
