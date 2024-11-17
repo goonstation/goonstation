@@ -1,7 +1,7 @@
 @use 'sass:color';
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use '../base';
+@use '../colors';
+@use '../functions' as *;
 
 .clothingbooth {
   &__boothitem {

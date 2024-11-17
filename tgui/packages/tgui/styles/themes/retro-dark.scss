@@ -9,14 +9,14 @@
 $darkorange: #301f0a;
 $lightorange: #fda751;
 
-@use '../colors.scss' with (
+@use '../colors' with (
   $primary: $lightorange,
   $label: #ff0000,
 
   $fg-map-keys: (),
   $bg-map-keys: ()
 );
-@use '../base.scss' with (
+@use '../base' with (
   $color-fg: color.scale($lightorange, $whiteness: +30%),
   $color-bg: $darkorange
 );

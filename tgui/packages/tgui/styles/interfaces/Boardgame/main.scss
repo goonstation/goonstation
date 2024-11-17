@@ -1,7 +1,7 @@
 @use 'sass:meta';
 @use 'sass:color';
-@use '../../base.scss';
-@use '../../functions.scss' as *;
+@use '../../base';
+@use '../../functions' as *;
 
 // The window, everything that isn't components
 
