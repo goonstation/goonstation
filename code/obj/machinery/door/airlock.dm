@@ -736,7 +736,9 @@ var/global/list/cycling_airlocks = list()
 		..()
 		return
 
-	if ((isweldingtool(C) && !( src.operating ) && src.density))
+	if(user.a_intent == INTENT_HARM) //pass attacking the door up the tree-- skip tool checks
+		..()
+	else if ((isweldingtool(C) && !( src.operating ) && src.density))
 		if (src.hardened)
 			boutput(user, SPAN_ALERT("Your tool is unable to weld this airlock! Huh."))
 			return
