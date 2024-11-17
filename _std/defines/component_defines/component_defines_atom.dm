@@ -60,6 +60,11 @@
 /// When an atom requires to create a single minimap marker for a specific minimap.
 #define COMSIG_NEW_MINIMAP_MARKER "new_minimap_marker"
 
+// ---- machinery ----
+
+/// When this piece of machinery calls its process function
+#define COMSIG_MACHINERY_PROCESS "machinery_process"
+
 // ---- atom/movable signals ----
 
 	// ---- generic ----

@@ -73,7 +73,12 @@ TYPEINFO(/datum/random_event/major/find_planet)
 										/datum/map_generator/mars_generator,
 										/datum/map_generator/void_generator,
 										/datum/map_generator/asteroids,
-										/datum/map_generator/sea_caves)
+										/datum/map_generator/sea_caves,
+										/datum/map_generator/storehouse_generator,
+										/datum/map_generator/storehouse_generator/meaty,
+										/datum/map_generator/room_maze_generator,
+										/datum/map_generator/room_maze_generator/random,
+										/datum/map_generator/room_maze_generator/spatial)
 
 		if(isnull(generator))
 			generator = pick(childrentypesof(/datum/map_generator)-blacklist_generators)

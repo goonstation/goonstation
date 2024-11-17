@@ -1957,6 +1957,25 @@ ABSTRACT_TYPE(/datum/cookingrecipe/oven/burger)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 
+/datum/cookingrecipe/oven/chocolate_egg
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/egg
+	item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate
+
+	specialOutput(obj/submachine/ourCooker)
+		if (!length(ourCooker.contents))
+			return new src.output()
+		for (var/obj/item/item in ourCooker.contents)
+			if (istypes(item, list(src.item1, src.item2)))
+				continue
+			if (item.w_class > W_CLASS_SMALL)
+				continue
+			var/obj/item/reagent_containers/food/snacks/ingredient/egg/chocolate/choc_egg = new(ourCooker)
+			choc_egg.AddComponent(/datum/component/contraband, 1) //illegal unsafe dangerous egg
+			item.set_loc(choc_egg)
+			return choc_egg
+
 /datum/cookingrecipe/oven/eggsalad
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	item2 = /obj/item/reagent_containers/food/snacks/salad
