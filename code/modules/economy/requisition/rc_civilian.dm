@@ -832,13 +832,12 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	)
 
 	New()
-
 		src.name = pick(namevary)
 		src.flavor_desc = "[pick(desc_wherebuying)] is stocking [pick(desc_plants)] with very particular genetically-inclined flavour profiles. [pick(desc_bonusflavor)]"
 		src.payout += rand(0,30) * 10
 		var/quant = 0
 		var/randm = rand(1, 100)
-		if (randm > 30)
+		if (randm > 50)
 			quant = 2
 			if (prob(30))
 				src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
@@ -851,8 +850,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 		for (var/i = 1; i <= quant; i++)
 			src.rc_entries += GetFruitOrVegEntry()
-		//src.payout += 8000 * length(src.rc_entries)
-
 		if(prob(30))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
