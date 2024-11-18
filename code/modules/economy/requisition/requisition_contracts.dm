@@ -282,6 +282,86 @@ ABSTRACT_TYPE(/datum/rc_entry/seed)
 			src.rollcount++
 			. = TRUE // Let manager know seed passes muster and is claimed by contract
 
+///Plant genetics entry. Searches for items of the correct crop name, typically matching a particular genetic makeup.
+ABSTRACT_TYPE(/datum/rc_entry/plant)
+/datum/rc_entry/plant
+	entryclass = RC_SEED
+	///Name of the desired crop, as it appears in plant genes.
+	var/cropname = "Tomato"
+	/**
+	 * List of required plant gene parameters, each formatted as a key-value pair.
+	 * Add your key value pairs to this list, either hard-coded or with a thing in New() BEFORE ..(), for evaluation. Example of the latter:
+	 * src.gene_reqs["Maturation"] = rand(10,20) * -1
+	 *
+	 * Available keys (strings): Maturation, Production, Lifespan, Yield, Potency, Endurance.
+	 * Number paired with key should be a negative integer for maturation or production, or a positive integer otherwise.
+	 *
+	 * If this is left empty, any seed with a genome and the appropriate crop name will be accepted.
+	 */
+	var/gene_reqs = list()
+
+	//Variables for evaluation purposes. Should not be changed in base type configuration.
+	var/gene_factors = 0
+	var/gene_count = 0
+
+	New()
+		src.gene_factors = length(src.gene_reqs)
+		..()
+
+	// override to account for any item type that has plantgenes and planttype. Boy do I miss interfaces.
+	proc/GetGenesAndPlantType(atom/eval_item)
+		if (!istype(eval_item,/obj/item/reagent_containers/food/snacks/plant)) return
+		var/GenesAndType = list()
+		var/obj/item/reagent_containers/food/snacks/plant/plant = eval_item
+		GenesAndType += plant.plantgenes
+		GenesAndType += plant.planttype
+		return GenesAndType
+
+	rc_eval(atom/eval_item)
+		. = ..()
+		if(rollcount >= count) return // Standard skip-if-complet
+		var/genesandtype = GetGenesAndPlantType(eval_item)
+		var/datum/plantgenes/genes
+		var/datum/plant/plant_type
+		if (!genesandtype) return
+		genes = genesandtype[1]
+		plant_type = genesandtype[2]
+
+		if(!genes) return // No genome? Skip it
+		if(plant_type.name != cropname) return // Wrong species? Skip it
+		if(!extra_eval(eval_item)) return
+
+		gene_count = 0
+		for(var/index in gene_reqs) // Iterate over each parameter to see if the genome meets it, or exceeds it in the right direction
+			switch(index)
+				if("Maturation")
+					if(genes.growtime >= gene_reqs["Maturation"]) gene_count++
+				if("Production")
+					if(genes.harvtime >= gene_reqs["Production"]) gene_count++
+				if("Lifespan")
+					if(genes.harvests >= gene_reqs["Lifespan"]) gene_count++
+				if("Yield")
+					if(genes.cropsize >= gene_reqs["Yield"]) gene_count++
+				if("Potency")
+					if(genes.potency >= gene_reqs["Potency"]) gene_count++
+				if("Endurance")
+					if(genes.endurance >= gene_reqs["Endurance"]) gene_count++
+
+		if(gene_count >= gene_factors) // Compare satisfied parameter count to number of parameters. Met or exceeded means seed satisfies requirements
+			src.rollcount++
+			. = TRUE // Let manager know seed passes muster and is claimed by contract
+
+// Plant genetics entry that specifically checks for seeds
+/datum/rc_entry/plant/seed
+	GetGenesAndPlantType(eval_item)
+		if (!istype(eval_item,/obj/item/seed)) return
+		var/GenesAndType = list()
+		var/obj/item/seed/seed = eval_item
+		GenesAndType += seed.plantgenes
+		GenesAndType += seed.planttype
+		return GenesAndType
+
+
 ///Artifact entry. Evaluates provided handheld artifacts based on their artifact parameters.
 ABSTRACT_TYPE(/datum/rc_entry/artifact)
 /datum/rc_entry/artifact
@@ -408,11 +488,11 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(RC_SEED)
 					var/datum/rc_entry/seed/rceed = rce
 					if(length(rceed.gene_reqs))
-						src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
+						src.requis_desc += "[rce.count]x [rceed.cropname] with following traits:<br>"
 						for(var/index in rceed.gene_reqs)
 							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
 					else
-						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
+						src.requis_desc += "[rce.count]x [rceed.cropname]<br>"
 				if(RC_ARTIFACT)
 					var/datum/rc_entry/artifact/rcart = rce
 					src.requis_desc += "x[rce.count] handheld artifact with following parameters<br>"
