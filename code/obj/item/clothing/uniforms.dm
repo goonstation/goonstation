@@ -1592,8 +1592,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 /obj/item/clothing/under/misc/collar_shirt
 	name = "collar shirt"
-	icon_state = "white_collar"
-	item_state = "white_collar"
+	icon_state = "collar_shirt-white"
+	item_state = "collar_shirt-white"
 	var/shirt_colour_name = "white"
 
 	New()
@@ -1602,83 +1602,83 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
 		src.desc = "A plain [src.shirt_colour_name] collared shirt."
 
 /obj/item/clothing/under/misc/collar_shirt/white
-	icon_state = "white_collar"
-	item_state = "white_collar"
+	icon_state = "collar_shirt-white"
+	item_state = "collar_shirt-white"
 	shirt_colour_name = "white"
 
 /obj/item/clothing/under/misc/collar_shirt/cream
-	icon_state = "cream_collar"
-	item_state = "cream_collar"
+	icon_state = "collar_shirt-cream"
+	item_state = "collar_shirt-cream"
 	shirt_colour_name = "cream"
 
 /obj/item/clothing/under/misc/collar_shirt/khaki
-	icon_state = "khaki_collar"
-	item_state = "khaki_collar"
+	icon_state = "collar_shirt-khaki"
+	item_state = "collar_shirt-khaki"
 	shirt_colour_name = "khaki"
 
 /obj/item/clothing/under/misc/collar_shirt/pink
-	icon_state = "pink_collar"
-	item_state = "pink_collar"
+	icon_state = "collar_shirt-pink"
+	item_state = "collar_shirt-pink"
 	shirt_colour_name = "pink"
 
 /obj/item/clothing/under/misc/collar_shirt/red
-	icon_state = "red_collar"
-	item_state = "red_collar"
+	icon_state = "collar_shirt-red"
+	item_state = "collar_shirt-red"
 	shirt_colour_name = "red"
 
 /obj/item/clothing/under/misc/collar_shirt/dark_red
-	icon_state = "dred_collar"
-	item_state = "dred_collar"
+	icon_state = "collar_shirt-dred"
+	item_state = "collar_shirt-dred"
 	shirt_colour_name = "dark red"
 
 /obj/item/clothing/under/misc/collar_shirt/orange
-	icon_state = "orange_collar"
-	item_state = "orange_collar"
+	icon_state = "collar_shirt-orange"
+	item_state = "collar_shirt-orange"
 	shirt_colour_name = "orange"
 
 /obj/item/clothing/under/misc/collar_shirt/brown
-	icon_state = "brown_collar"
-	item_state = "brown_collar"
+	icon_state = "collar_shirt-brown"
+	item_state = "collar_shirt-brown"
 	shirt_colour_name = "brown"
 
 /obj/item/clothing/under/misc/collar_shirt/yellow
-	icon_state = "yellow_collar"
-	item_state = "yellow_collar"
+	icon_state = "collar_shirt-yellow"
+	item_state = "collar_shirt-yellow"
 	shirt_colour_name = "yellow"
 
 /obj/item/clothing/under/misc/collar_shirt/green
-	icon_state = "green_collar"
-	item_state = "green_collar"
+	icon_state = "collar_shirt-green"
+	item_state = "collar_shirt-green"
 	shirt_colour_name = "green"
 
 /obj/item/clothing/under/misc/collar_shirt/dark_green
-	icon_state = "dgreen_collar"
-	item_state = "dgreen_collar"
+	icon_state = "collar_shirt-dgreen"
+	item_state = "collar_shirt-dgreen"
 	shirt_colour_name = "dark green"
 
 /obj/item/clothing/under/misc/collar_shirt/mint
-	icon_state = "mint_collar"
-	item_state = "mint_collar"
+	icon_state = "collar_shirt-mint"
+	item_state = "collar_shirt-mint"
 	shirt_colour_name = "mint"
 
 /obj/item/clothing/under/misc/collar_shirt/blue
-	icon_state = "blue_collar"
-	item_state = "blue_collar"
+	icon_state = "collar_shirt-blue"
+	item_state = "collar_shirt-blue"
 	shirt_colour_name = "blue"
 
 /obj/item/clothing/under/misc/collar_shirt/dark_blue
-	icon_state = "dblue_collar"
-	item_state = "dblue_collar"
+	icon_state = "collar_shirt-dblue"
+	item_state = "collar_shirt-dblue"
 	shirt_colour_name = "dark blue"
 
 /obj/item/clothing/under/misc/collar_shirt/purple
-	icon_state = "purple_collar"
-	item_state = "purple_collar"
+	icon_state = "collar_shirt-purple"
+	item_state = "collar_shirt-purple"
 	shirt_colour_name = "purple"
 
 /obj/item/clothing/under/misc/collar_shirt/black
-	icon_state = "black_collar"
-	item_state = "black_collar"
+	icon_state = "collar_shirt-black"
+	item_state = "collar_shirt-black"
 	shirt_colour_name = "black"
 
 /obj/item/clothing/under/misc/fancy_vest
