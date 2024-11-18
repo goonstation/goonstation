@@ -45,5 +45,5 @@
 	type_size = ARTIFACT_SIZE_MEDIUM
 	automatic_activation = 1
 	rarity_weight = 450
-	validtypes = list("wizard","eldritch","precursor","martian","ancient")
+	validtypes = list("wizard","eldritch","precursor","martian","ancient","clockwork")
 	react_xray = list(10,65,95,9,"TUBULAR")

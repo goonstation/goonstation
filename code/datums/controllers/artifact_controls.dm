@@ -196,7 +196,7 @@ var/datum/artifact_controller/artifact_controls
 			src.log_me(usr, null, "spawns", 0)
 
 		else if (href_list["Spawntype"])
-			spawner_type = input("What type of artifact?","Artifact Controls") as null|anything in list("ancient","martian","wizard","eldritch","precursor")//,"bee","void","lattice","feather")
+			spawner_type = input("What type of artifact?","Artifact Controls") as null|anything in list("ancient","martian","wizard","eldritch","precursor","clockwork")//,"bee","void","lattice","feather")
 
 		else if (href_list["Spawncine"])
 			spawner_cine = !spawner_cine
@@ -648,6 +648,64 @@ var/datum/artifact_controller/artifact_controls
 		if (prob(33))
 			namestring += "de"
 		namestring += "[pick(verber)]"
+		return namestring
+
+/datum/artifact_origin/clockwork
+	type_name = "Clockwork"
+	name = "clockwork"
+	fault_types = list(
+		/datum/artifact_fault/burn = 20,
+		/datum/artifact_fault/shutdown = 5,
+		/datum/artifact_fault/murder = 2,
+		/datum/artifact_fault/zap = 10,
+		/datum/artifact_fault/grow = 5,
+		/datum/artifact_fault/shrink = 5,
+		/datum/artifact_fault/explode = 5,
+		/datum/artifact_fault/messager/what_people_said = 10,
+		/datum/artifact_fault/messager/emoji = 10)
+	activation_sounds = list('sound/machines/ArtifactMar1.ogg','sound/machines/ArtifactMar2.ogg')
+	instrument_sounds = list('sound/musical_instruments/artifact/Artifact_Martian_1.ogg',
+		'sound/musical_instruments/artifact/Artifact_Martian_2.ogg',
+		'sound/musical_instruments/artifact/Artifact_Martian_3.ogg',
+		'sound/musical_instruments/artifact/Artifact_Martian_4.ogg')
+	impact_reaction_one = 0.5
+	impact_reaction_two = 0
+	heat_reaction_one = 3
+	fx_red_min = 100
+	fx_red_max = 140
+	fx_green_min = 60
+	fx_green_max = 100
+	fx_blue_min = 20
+	fx_blue_max = 50
+	adjectives = list("gleaming", "ornate", "intricate", "rusty", "polished", "brassy", "corroded", "artisanal")
+	nouns_large = list("contraption", "mechanism", "machine", "apparatus", "engine", "framework", "device", "automaton")
+	nouns_small = list("cog", "gear", "sprocket", "spring", "lever", "pinion", "dial", "wheel")
+	touch_descriptors = list("It feels cold.","It feels uneven.","You can feel a faint vibration.")
+	prefix = list("chrono", "mechano", "auto", "meta", "gyro", "pneumo", "optico", "magne", "cogno", "astro")
+	thingy = list("kinetic", "resonant", "cyclic", "perpetual", "recursive", "harmonic", "mechanical", "hydraulic", "regular")
+	action = list("timer", "regulator", "calibrator", "actuator", "navigator", "crank", "pump", "clock", "modulator")
+
+	post_setup(obj/artifact)
+		. = ..()
+		var/datum/artifact/AD = artifact.artifact
+		var/rarityMod = AD.get_rarity_modifier()
+		if(prob(50 * rarityMod))
+			var/scaling = randfloat(1.1, 1.3)
+			while(prob(min(60 * rarityMod, 95)))
+				scaling *= 1.1
+			artifact.transform = matrix(artifact.transform, scaling, scaling, MATRIX_SCALE)
+		if(prob(100 * rarityMod))
+			var/col = rand(100, 230)
+			artifact.color = rgb(col, col, col)
+		else if(prob(100 * rarityMod))
+			var/bright = randfloat(1.1, 1.5)
+			artifact.color = list(bright, 0, 0, 0, bright, 0, 0, 0, bright)
+
+	generate_name()
+		var/namestring = ""
+		namestring += "[pick(prefix)]"
+		namestring += "[pick(thingy)] "
+		namestring += "[pick(action)]"
 		return namestring
 
 

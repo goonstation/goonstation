@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// the artifact origin (martian, eldritch, etc...)
 	var/datum/artifact_origin/artitype = null
 	/// the list of options for the origin from which to pick from
-	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor")
+	var/list/validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	// During setup, artitype will be set from a pick() from within the validtypes list.
 	// Keep it to only the five here or shit will probably get a bit weird. This allows us to exclude things that don't make
 	// any sense such as martian robot builders or ancient robot plant seeds.
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 ABSTRACT_TYPE(/datum/artifact/art)
 /datum/artifact/art
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
+	validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	activated = 0
 	min_triggers = 0
 	max_triggers = 0

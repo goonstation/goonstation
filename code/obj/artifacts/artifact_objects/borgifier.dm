@@ -7,7 +7,7 @@
 	type_name = "Cyborg converter"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 200
-	validtypes = list("ancient")
+	validtypes = list("ancient","clockwork")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch)
 	activated = 0

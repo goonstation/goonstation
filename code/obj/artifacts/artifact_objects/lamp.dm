@@ -23,7 +23,7 @@
 	type_name = "Lamp"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
-	validtypes = list("martian","wizard","precursor")
+	validtypes = list("martian","wizard","precursor","clockwork")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
 	/datum/artifact_trigger/cold, /datum/artifact_trigger/language)

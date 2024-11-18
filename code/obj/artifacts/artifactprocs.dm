@@ -578,6 +578,8 @@
 				T.visible_message(SPAN_ALERT("<B>[src] warps in on itself and vanishes!</B>"))
 			if("precursor")
 				T.visible_message(SPAN_ALERT("<B>[src] implodes, crushing itself into dust!</B>"))
+			if("clockwork")
+				T.visible_message(SPAN_ALERT("<B>[src] creaks, corrodes and crumbles into pieces!</B>"))
 
 	src.remove_artifact_forms()
 

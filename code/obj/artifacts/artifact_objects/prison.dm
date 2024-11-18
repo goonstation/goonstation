@@ -9,7 +9,7 @@
 	rarity_weight = 350
 	min_triggers = 2
 	max_triggers = 2
-	validtypes = list("ancient","martian","wizard","eldritch","precursor")
+	validtypes = list("ancient","martian","wizard","eldritch","precursor","clockwork")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
 	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	react_xray = list(15,90,90,11,"HOLLOW")
