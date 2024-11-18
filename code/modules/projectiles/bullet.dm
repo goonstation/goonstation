@@ -542,6 +542,7 @@ toxic - poisons
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
 		drop_as_ammo(get_turf(T))
+		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()

@@ -28062,7 +28062,7 @@
 /obj/machinery/conveyor/NS{
 	id = "garbage"
 	},
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /turf/simulated/floor/engine,
 /area/station/maintenance/disposal)
 "lgf" = (

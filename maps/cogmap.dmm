@@ -715,6 +715,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "adv" = (
+/obj/machinery/info_map,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -8655,6 +8656,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aGf" = (
+/obj/machinery/info_map,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
 	},
@@ -18650,6 +18652,11 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -18937,10 +18944,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "bmr" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
+/obj/machinery/info_map,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -27115,6 +27119,7 @@
 	},
 /area/station/hallway/primary/south)
 "bUt" = (
+/obj/machinery/info_map,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -36690,6 +36695,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
+	id = "Sleeper_Access";
 	name = "Weather Satellite"
 	},
 /turf/unsimulated/floor/shuttle/red{
@@ -40996,6 +41002,12 @@
 /obj/item/reagent_containers/food/snacks/hotdog,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"flN" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "fmu" = (
 /obj/landmark/pest,
 /obj/machinery/atmospherics/unary/outlet_injector/active{
@@ -52278,7 +52290,7 @@
 /area/space)
 "ojy" = (
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost{
 	dir = 4;
 	id = "Sleeper_Access";
 	name = "Listening Post"
@@ -54698,7 +54710,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/south)
 "qat" = (
-/obj/machinery/crusher,
+/obj/machinery/crusher/slow,
 /obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
@@ -56089,6 +56101,12 @@
 	icon_state = "fred1"
 	},
 /area/station/chapel/sanctuary)
+"qTY" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
+/area/station/hallway/primary/central)
 "qUt" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Engine Supply Dock"
@@ -110265,7 +110283,7 @@ axm
 ayH
 aAl
 ajQ
-aCR
+qTY
 aEm
 aFJ
 aHd
@@ -117584,7 +117602,7 @@ bPa
 gbw
 mVx
 bIC
-bUA
+flN
 bWU
 bXX
 bZC

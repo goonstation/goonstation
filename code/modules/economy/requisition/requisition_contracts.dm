@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 					else
 						src.requis_desc += "| Acceptable categories: Any<br>"
 			src.payout += rce.feemod * rce.count
-		src.payout *= 1.15**count
+		src.payout *= 1.1**count + 0.1*count
 
 /**
  * Called to tally a crate's contents, to evaluate whether they've fulfilled the contract.

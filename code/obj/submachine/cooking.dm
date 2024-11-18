@@ -526,9 +526,14 @@ table#cooktime a#start {
 
 					if (ispath(possible.output))
 						var/atom/item_path = possible.output
-						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b>"
+						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b><br>"
 					else
-						dat += "<b>Result:</b><br>???"
+						dat += "<b>Result:</b><br>???<br>"
+
+					if (possible.cookbonus < 10)
+						dat += "<b>Cooking time:</b><br>[possible.cookbonus] seconds low"
+					else
+						dat += "<b>Cooking time:</b><br>[floor(possible.cookbonus/2)] seconds high"
 
 
 		else
@@ -797,6 +802,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/oven/fish_fingers(src)
 			src.recipes += new /datum/cookingrecipe/oven/shrimp(src)
+			src.recipes += new /datum/cookingrecipe/oven/chocolate_egg(src)
 			src.recipes += new /datum/cookingrecipe/oven/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/oven/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/oven/rice_ball(src)

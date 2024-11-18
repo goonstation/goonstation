@@ -1,0 +1,1 @@
+export { useConstant } from './useConstant';
