@@ -440,10 +440,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			"synth"
 		)
 
-	proc/select_mutate(mutatesList, synthorgansList)
-		var/type = pick(mutates)
+	proc/select_mutate(mutates_list, synthorgans_list)
+		var/type = pick(mutates_list)
 		if (type == "synth")
-			type = pick(synthorgans)
+			type = pick(synthorgans_list)
 		return type
 
 	New(list/entries = null, var/numberof = 1)
