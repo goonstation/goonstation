@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/sweater_vest)
 	tan
 		name = "Tan"
 		swatch_background_color = "#C9A46E"
-		item_path = /obj/item/clothing/suit/sweater_vest
+		item_path = /obj/item/clothing/suit/sweater_vest/tan
 	red
 		name = "Red"
 		swatch_background_color = "#8D1422"

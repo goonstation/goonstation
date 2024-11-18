@@ -1980,6 +1980,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "puffer-rancher"
 
 
+ABSTRACT_TYPE(/obj/item/clothing/suit/sweater_vest)
 /obj/item/clothing/suit/sweater_vest
 	name = "sweater vest"
 	desc = "A knit sweater vest. Surprisingly not very itchy at all."
@@ -1990,6 +1991,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	setupProperties()
 		..()
 		setProperty("coldprot", 15)
+
+/obj/item/clothing/suit/sweater_vest/tan
+	icon_state = "sweater_vest-tan"
+	item_state = "sweater_vest-tan"
 
 /obj/item/clothing/suit/sweater_vest/red
 	icon_state = "sweater_vest-red"
