@@ -96,7 +96,7 @@
 		else
 			src.temp += "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
-		src.temp += search_snippet("table-row")
+		src.temp += search_snippet()
 		src.temp += "<BR><BR>"
 		src.temp += {"
 		<style>

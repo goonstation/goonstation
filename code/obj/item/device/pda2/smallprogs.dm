@@ -1246,7 +1246,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if (href_list["order"])
 			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
-			src.temp += search_snippet("block", "background-color: #6F7961; color: #000;")
+			src.temp += search_snippet("background-color: #6F7961; color: #000;")
 			src.temp += "<BR><BR>"
 			for(var/S in concrete_typesof(/datum/supply_packs) )
 				var/datum/supply_packs/N = new S()
