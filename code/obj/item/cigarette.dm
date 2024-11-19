@@ -550,6 +550,47 @@
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
 
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (!istype(O, /obj/item/clothing/mask/cigarette) || src.loc != user) return
+		if (length(src.contents) < src.max_cigs)
+			user.visible_message(SPAN_NOTICE("[user] begins quickly filling \the [src]."))
+			var/staystill = user.loc
+			for(var/obj/item/I in view(1,user))
+				if (!istype(I, O) || QDELETED(I)) continue
+				if (I in user)
+					continue
+				I.add_fingerprint(user)
+				if ((length(src.contents) < src.max_cigs))
+					I.set_loc(src)
+				src.UpdateIcon()
+				sleep(0.2 SECONDS)
+				if (user.loc != staystill || src.loc != user) break
+				if (length(src.contents) >= src.max_cigs)
+					boutput(user, SPAN_NOTICE("\The [src] is now full!"))
+					break
+			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
+		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
+
+	mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
+		if (istype(over_object, /obj/table) && src.contents.len > 0)
+			usr.visible_message(SPAN_NOTICE("[usr] dumps out [src]'s contents onto [over_object]!"))
+			for (var/obj/item/thing in src.contents)
+				thing.set_loc(over_location)
+			src.UpdateIcon()
+			if (!islist(params)) params = params2list(params)
+			if (params) params["dumped"] = 1
+		else ..()
+
+	should_place_on(obj/target, params)
+		if (istype(target, /obj/table) && params && params["dumped"])
+			return FALSE
+		return ..()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "Hold this and drag a nearby cigarette onto it to auto-fill.\nDrag this onto a table while holding it to dump its contents."
+
+
 
 /obj/item/cigpacket/nicofree
 	name = "nicotine-free cigarette packet"
