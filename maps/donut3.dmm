@@ -1267,7 +1267,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "apw" = (
 /obj/mapping_helper/access/kitchen,
 /obj/mapping_helper/firedoor_spawn,
@@ -1505,7 +1505,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "atd" = (
 /turf/simulated/floor/yellowblack{
 	dir = 6
@@ -2434,7 +2434,7 @@
 /area/station/hangar/science)
 "aGS" = (
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "aGZ" = (
 /obj/displaycase/captain,
 /obj/machinery/light/incandescent/greenish{
@@ -4826,7 +4826,7 @@
 /area/station/engine/singcore)
 "bsa" = (
 /turf/simulated/wall/auto/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "bsi" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -7296,7 +7296,7 @@
 	dir = 1;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "ccM" = (
 /obj/grille/catwalk/jen,
 /obj/cable{
@@ -8697,7 +8697,7 @@
 	name = "Hootarium Good Ending"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "cvV" = (
 /obj/railing/green{
 	dir = 8;
@@ -8994,7 +8994,7 @@
 "cAc" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/white,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "cAG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10299,7 +10299,7 @@
 	name = "Hootsey McHootus III"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "cWT" = (
 /obj/table/auto,
 /obj/item/screwdriver{
@@ -13163,7 +13163,7 @@
 /area/station/security/brig/north_side)
 "dRi" = (
 /turf/simulated/floor/white,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "dRn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -14199,7 +14199,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "efW" = (
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/engine{
@@ -17671,7 +17671,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/white,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "flO" = (
 /obj/table/auto,
 /obj/item/sheet/glass/reinforced/fullstack,
@@ -17693,7 +17693,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "flX" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -24789,7 +24789,7 @@
 	dir = 5;
 	icon_state = "fgreen3"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "htr" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
@@ -29159,7 +29159,7 @@
 "iPq" = (
 /obj/machinery/macrofab/emergency_pod,
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "iPr" = (
 /obj/grille/steel,
 /turf/simulated/floor/black,
@@ -29967,7 +29967,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "jba" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -30934,7 +30934,7 @@
 /area/station/crew_quarters/stockex)
 "jqe" = (
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "jqj" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal/personel_alt,
@@ -32046,7 +32046,7 @@
 "jGD" = (
 /mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "jGG" = (
 /obj/item/storage/wall/emergency{
 	dir = 8;
@@ -33648,7 +33648,7 @@
 	dir = 5;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "kfG" = (
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -34101,7 +34101,7 @@
 "kns" = (
 /obj/stone,
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "knx" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -35966,7 +35966,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "kQB" = (
 /obj/stool/chair{
 	dir = 8
@@ -36223,7 +36223,7 @@
 	name = "AWOL"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "kVk" = (
 /obj/item/skull/odd,
 /turf/simulated/floor/plating/airless/asteroid,
@@ -37631,7 +37631,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "lsS" = (
 /obj/machinery/light/small/greenish,
 /obj/machinery/power/apc/autoname_west,
@@ -37927,7 +37927,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "lxO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43321,7 +43321,7 @@
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "nco" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
@@ -45043,7 +45043,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "nCi" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line4"
@@ -50015,7 +50015,7 @@
 	id = "habitat_bay"
 	},
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "pdw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50339,7 +50339,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "piq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52618,7 +52618,7 @@
 	dir = 10;
 	icon_state = "fgreen3"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "pQv" = (
 /obj/cable/blue{
 	icon_state = "1-4"
@@ -53479,7 +53479,7 @@
 "qea" = (
 /obj/item/skull/odd,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "qed" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53818,7 +53818,7 @@
 	dir = 10
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "qiP" = (
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/bluewhite,
@@ -56347,7 +56347,7 @@
 "qWg" = (
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "qWj" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -57479,7 +57479,7 @@
 	dir = 10;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "rpc" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -58760,7 +58760,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "rKq" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -59126,7 +59126,7 @@
 	dir = 9;
 	icon_state = "fgreen3"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "rQc" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -60987,7 +60987,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen1"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "str" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/window_blinds/cog2/middle,
@@ -61807,7 +61807,7 @@
 "sGq" = (
 /mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "sGu" = (
 /turf/simulated/wall/auto/jen,
 /area/station/library)
@@ -63132,7 +63132,7 @@
 "tcV" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "tdb" = (
 /turf/simulated/floor/white/checker2{
 	dir = 1
@@ -64363,7 +64363,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "twN" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -64911,7 +64911,7 @@
 	dir = 9;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "tEW" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -65868,7 +65868,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "tSd" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hangar/main)
@@ -66658,7 +66658,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "udC" = (
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -67416,7 +67416,7 @@
 /area/station/science/chemistry)
 "utr" = (
 /turf/simulated/wall/auto/reinforced/jen,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "uty" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -73087,7 +73087,7 @@
 	name = "Jowls"
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "wab" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
@@ -73953,7 +73953,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "wnm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -76946,7 +76946,7 @@
 	dir = 6;
 	icon_state = "fgreen3"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "xdJ" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -79070,7 +79070,7 @@
 /area/station/hallway/primary/south)
 "xJc" = (
 /turf/simulated/floor/shuttlebay,
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "xJg" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -79099,7 +79099,7 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
+/area/spacehabitat/owlery)
 "xJq" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
