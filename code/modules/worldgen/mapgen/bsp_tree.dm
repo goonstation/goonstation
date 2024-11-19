@@ -144,7 +144,7 @@
 					cell_list[x][y] = value
 
 		for(x = root.x to root.width)
-			. += list2text(cell_list[x])
+			. += jointext(cell_list[x], "")
 
 
 /// Split a node based on the tree's requirements
