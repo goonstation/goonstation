@@ -449,7 +449,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	New(list/entries = null, var/numberof = 1)
 		var/obj/item/item
 		// duplicate avoidance
-		if (entries != null || entries.len > 0)
+		if (entries != null && entries.len > 0)
 			var/list/mutates_copy = mutates.Copy()
 			var/list/synthorgans_copy = synthorgans.Copy()
 			for(var/datum/rc_entry/item/entry in entries)

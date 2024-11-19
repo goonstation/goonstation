@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if("stone")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/rock,rand(8,14)*2*req_quant)
 			if("turf seed")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/seed/grass,rand(20,30)*req_quant)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/plant/seed/grass,rand(20,30)*req_quant)
 			if("window treatment")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10*req_quant)
 			if("wood")
@@ -493,7 +493,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				if("stone")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/rock,rand(8,14)*2)
 				if("turf seed")
-					src.rc_entries += rc_buildentry(/datum/rc_entry/seed/grass,rand(20,30))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/plant/seed/grass,rand(20,30))
 				if("window treatment")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10)
 				if("wood")
@@ -514,7 +514,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/raw_material/rock
 	feemod = PAY_UNTRAINED
 
-/datum/rc_entry/seed/grass
+/datum/rc_entry/plant/seed/grass
 	name = "grass seed"
 	cropname = "Grass"
 	feemod = PAY_TRADESMAN
@@ -807,7 +807,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 
 /datum/req_contract/civilian/botanical
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY_TRADESMAN*15*2
 	var/list/namevary = list("Diplomatic Meal Preparation","High-Grade Dinner Prep","Captain's Meal Ingredients","NT-Official Kitchen","NT Pantry Stocking")
 	var/list/desc_wherebuying = list(
 		"A nearby outpost hosting an NT official",
@@ -865,7 +865,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/plant/civilian
 	name = "genetically fussy plant"
 	cropname = "Durian"
-	feemod = PAY_DOCTORATE*3
+	feemod = PAY_DOCTORATE
 	// This worked for seeds, but it only works for produce because all fruits and veg products are members of
 	// obj/item/reagent_containers/food/snacks/plant and thus have plant genes. As long as that remains a hard-stuck rule though, this should be fine.
 	var/crop_genpath = /datum/plant
