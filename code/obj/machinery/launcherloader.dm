@@ -297,6 +297,12 @@
 		default_direction = SOUTH
 		..()
 
+/obj/machinery/cargo_router/Router16 // mail redirection from cargo imports
+	New()
+		destinations = list("Mail" = SOUTH)
+		default_direction = WEST
+		..()
+
 /obj/machinery/cargo_router/oshan_north
 	trigger_when_no_match = 0
 	New()

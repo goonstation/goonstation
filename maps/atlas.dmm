@@ -104,7 +104,7 @@
 	name = "COLLISION HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aaI" = (
 /obj/laser_sink/mirror,
 /turf/simulated/floor/engine,
@@ -124,7 +124,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aaK" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/large/brute,
@@ -170,7 +170,7 @@
 	name = "cargo driver"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aaT" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -179,26 +179,29 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/scissors,
+/obj/item/wrapping_paper,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aaV" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aaY" = (
 /obj/item/cable_coil/cut{
 	color = "#DD0000";
 	transform = list(0,1,0,-1,0,0)
 	},
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aaZ" = (
 /obj/machinery/launcher_loader/north,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aba" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -237,8 +240,11 @@
 /obj/item/tank/air,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "abk" = (
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
@@ -305,8 +311,12 @@
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
 "abB" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Cargo"
+	},
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "abC" = (
 /obj/machinery/sleeper/compact{
 	dir = 4
@@ -405,6 +415,9 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "abS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/caution/corner/nw{
 	dir = 1
 	},
@@ -438,6 +451,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "abW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/caution/corner/ne{
 	dir = 1
 	},
@@ -456,7 +472,7 @@
 /area/station/engine/substation/west)
 "abY" = (
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "abZ" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -521,7 +537,7 @@
 "acj" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "ack" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1796,6 +1812,7 @@
 	icon_state = "scanner_off";
 	pixel_y = 10
 	},
+/obj/mapping_helper/access/mail,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "aix" = (
@@ -2111,6 +2128,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/mail,
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "akd" = (
@@ -3456,7 +3474,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "atN" = (
 /obj/securearea{
 	desc = "";
@@ -4435,6 +4453,9 @@
 	name = "cargo belt - north";
 	operating = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aza" = (
@@ -5019,8 +5040,11 @@
 	name = "Cargo Dock Door Control";
 	pixel_y = 28
 	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/wrench/green,
+/obj/spawner/mail/two,
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aBI" = (
 /obj/submachine/laundry_machine,
 /obj/machinery/status_display{
@@ -5248,8 +5272,9 @@
 	name = "Cargo Outgoing Dock Door Control";
 	pixel_y = 28
 	},
+/obj/storage/secure/closet/civilian/mail,
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aCT" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -8024,6 +8049,9 @@
 	name = "cargo belt - south";
 	operating = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aRZ" = (
@@ -8608,7 +8636,7 @@
 	id = "qm_dock"
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "aVx" = (
 /obj/table/wood/auto,
 /obj/item/clothing/glasses/vr/arcade,
@@ -8751,6 +8779,9 @@
 	color = "#b0a060";
 	desc = "A vending machine that serves... pizza?<br>This one seems to have fallen over long ago.";
 	name = "old and dusty pizza vending machine"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
@@ -10163,6 +10194,8 @@
 /obj/decal/cleanable/dirt{
 	dir = 8
 	},
+/obj/storage/crate/clown,
+/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "cxJ" = (
@@ -10783,7 +10816,7 @@
 	},
 /obj/strip_door,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "dti" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/alarm{
@@ -12648,7 +12681,7 @@
 	},
 /obj/strip_door,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "fXR" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -12725,6 +12758,13 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
+"ggy" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/plating/random,
+/area/station/mailroom)
 "ghb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -13281,7 +13321,6 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "hjz" = (
-/obj/storage/crate/clown,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -13290,9 +13329,8 @@
 	light_type = /obj/item/light/bulb/yellowish;
 	pixel_x = -8
 	},
-/obj/item/paper/book/from_file/the_trial,
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "hkF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15419,6 +15457,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"kau" = (
+/obj/machinery/cargo_router{
+	default_direction = 2;
+	destinations = list("Mail"=8)
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "kaC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16238,6 +16283,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
+"lrf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/mailroom)
 "lrI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17497,6 +17548,9 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/quartermaster/office)
 "ncX" = (
@@ -18059,6 +18113,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"nSD" = (
+/obj/landmark/start/job/mail_courier,
+/obj/stool/chair/dining/industrial{
+	dir = 8
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/mailroom)
 "nTr" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/shuttlebay,
@@ -23270,6 +23331,13 @@
 /obj/item/paper_bin,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"wbn" = (
+/obj/decal/stripe_caution,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "wdb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23561,6 +23629,9 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
+"wuY" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/mailroom)
 "wwi" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/cable{
@@ -66798,7 +66869,7 @@ aaC
 aaH
 hjz
 aaY
-lTl
+lrf
 ncy
 lTl
 acS
@@ -67402,7 +67473,7 @@ aaC
 acj
 aCS
 abY
-abH
+wuY
 abS
 acv
 acU
@@ -67703,9 +67774,9 @@ aaa
 aaa
 acj
 aaT
+nSD
 abB
-abB
-adx
+wbn
 acs
 acV
 adz
@@ -68006,7 +68077,7 @@ aaC
 acj
 aBG
 abY
-abH
+wuY
 abW
 acv
 acW
@@ -68307,7 +68378,7 @@ aUd
 aBS
 atM
 aVw
-aRX
+kau
 fWD
 aRX
 jZe
@@ -68608,9 +68679,9 @@ aay
 aaC
 aaC
 aaH
-abY
+ggy
 abh
-abH
+lrf
 aWr
 abH
 acY

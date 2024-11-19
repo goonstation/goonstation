@@ -218,6 +218,11 @@
 	req_access = list(access_hydro)
 	color = MAINTENANCE
 
+/obj/mapping_helper/access/mail
+	name = "mail access spawn"
+	req_access = list(access_mail)
+	color = "#000080"
+
 /obj/mapping_helper/access/rancher
 	name = "ranch access spawn"
 	req_access = list(access_ranch)

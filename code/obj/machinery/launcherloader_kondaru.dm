@@ -85,6 +85,12 @@
 		default_direction = WEST
 		..()
 
+/obj/machinery/cargo_router/kd_mail
+	New()
+		destinations = list("Mail" = WEST)
+		default_direction = NORTH
+		..()
+
 /obj/machinery/cargo_router/kd_mining
 	New()
 		destinations = list("Mining" = WEST)

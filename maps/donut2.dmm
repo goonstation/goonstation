@@ -2188,6 +2188,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"amz" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/stairs,
+/area/station/hangar/main)
 "amB" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4;
@@ -2515,9 +2519,11 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aoZ" = (
-/obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "apa" = (
 /obj/shrub{
 	dir = 1
@@ -2734,6 +2740,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aqc" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/caution/south,
 /area/station/quartermaster/office)
 "aqe" = (
@@ -2926,6 +2933,7 @@
 	},
 /area/station/quartermaster/office)
 "aqQ" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "aqR" = (
@@ -3061,6 +3069,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -3085,6 +3094,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/scorched,
 /area/station/maintenance/north)
 "arF" = (
@@ -3170,6 +3180,7 @@
 	c_tag = "Cargo Bay East";
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -3190,6 +3201,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -3273,13 +3285,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/disposal/mail/qm{
-	mail_tag = "cargo";
-	name = "mail chute-'Cargo'"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/machinery/disposal/mail/autoname/qm,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -3317,9 +3326,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "asS" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor,
 /area/station/maintenance/north)
 "asT" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/scorched,
 /area/station/maintenance/north)
 "asU" = (
@@ -3476,6 +3492,9 @@
 	},
 /area/station/quartermaster/office)
 "atS" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 8
 	},
@@ -3655,6 +3674,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "auI" = (
@@ -3775,6 +3795,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "avi" = (
@@ -4501,6 +4522,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orange/corner,
 /area/station/hangar/main)
 "ayo" = (
@@ -4665,6 +4687,10 @@
 	dir = 8;
 	pixel_x = 6
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -4688,6 +4714,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "azj" = (
@@ -4905,6 +4932,7 @@
 	amount = 20
 	},
 /obj/item/sheet/glass/fullstack,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/orangeblack/side,
 /area/station/hangar/main)
 "aAl" = (
@@ -5108,6 +5136,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "aBg" = (
@@ -15914,6 +15943,9 @@
 	layer = 2
 	},
 /area/station/solar/south)
+"bIp" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/mailroom)
 "bIs" = (
 /obj/landmark/map{
 	name = "DONUT2"
@@ -17312,6 +17344,12 @@
 	},
 /turf/simulated/bar,
 /area/station/crew_quarters/kitchen)
+"cwJ" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "cwM" = (
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/white,
@@ -18220,6 +18258,13 @@
 	name = "astroturf"
 	},
 /area/station/science/chemistry)
+"cWT" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "cWY" = (
 /obj/disposalpipe/segment/mail,
 /obj/landmark/start/job/mail_courier,
@@ -18951,6 +18996,16 @@
 	dir = 1
 	},
 /area/station/hangar/main)
+"dwW" = (
+/obj/disposaloutlet/south{
+	name = "mail outlet"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "dxi" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -19948,6 +20003,18 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"ebs" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/disposal/mail/qm/autoname{
+	mail_tag = "sortingroom";
+	mailgroup = "Mail";
+	name = "Mail Room"
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "ebu" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment,
@@ -21411,10 +21478,6 @@
 	},
 /area/station/hallway/primary/west)
 "eYb" = (
-/obj/stool/chair/couch/green{
-	dir = 4;
-	name = "ratty green couch"
-	},
 /obj/submachine/GTM{
 	pixel_y = 32
 	},
@@ -22799,6 +22862,10 @@
 "fUw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/stockex)
+"fUX" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "fVw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
@@ -23047,6 +23114,9 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
+"gcW" = (
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "gdX" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -24023,6 +24093,12 @@
 	dir = 10
 	},
 /area/station/crew_quarters/cafeteria)
+"gJx" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hangar/main)
 "gJD" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/purple,
@@ -25257,6 +25333,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"hwY" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/wrench/green,
+/obj/spawner/mail/two,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "hxd" = (
 /obj/storage/closet/wardrobe/black,
 /turf/unsimulated/floor{
@@ -26872,6 +26954,12 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
+"ivP" = (
+/obj/stool/chair/dining/industrial{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "ivS" = (
 /obj/shrub{
 	dir = 8
@@ -27401,6 +27489,10 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
+"iMl" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "iMn" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -28170,6 +28262,13 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor,
 /area/station/science/lobby)
+"jpm" = (
+/obj/machinery/cargo_router{
+	default_direction = 2;
+	destinations = list("Mail"=4)
+	},
+/turf/simulated/floor/plating,
+/area/space)
 "jpo" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -28652,6 +28751,7 @@
 "jCE" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/cargo,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "jCF" = (
@@ -30238,6 +30338,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/processing)
+"kDy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "kDC" = (
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/stairs/wood2/wide{
@@ -31848,9 +31952,13 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/access/mail,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "lBj" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
@@ -32524,6 +32632,13 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
+"lPV" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/turf/space,
+/area/space)
 "lQh" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
@@ -32683,6 +32798,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"lWx" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/access/maint,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "lWA" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -35876,6 +36002,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -35905,6 +36035,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/singcore)
+"nTX" = (
+/obj/mapping_helper/access/mail,
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "nUH" = (
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -36365,6 +36502,14 @@
 	dir = 4
 	},
 /area/station/hangar/arrivals)
+"ohk" = (
+/obj/decal/cleanable/mail_fraud,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "ohG" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
@@ -38242,9 +38387,12 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "phh" = (
-/obj/structure/girder,
+/obj/storage/secure/closet/civilian/mail,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "phs" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
@@ -38395,7 +38543,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "pmU" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -38949,6 +39097,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/cafeteria)
+"pAE" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "pAR" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 8
@@ -39006,6 +39161,18 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
+"pBJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/switch_junction{
+	dir = 4;
+	mail_tag = "sortingroom";
+	name = "sorting room router";
+	icon_state = "pipe-sj2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "pBP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39123,7 +39290,7 @@
 	},
 /obj/strip_door,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "pFn" = (
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
@@ -41326,6 +41493,17 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"qVy" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/access/mail,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "qVL" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/cable{
@@ -41491,7 +41669,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
+/area/station/mailroom)
 "rcM" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/shuttlebay,
@@ -41515,6 +41693,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -41680,16 +41859,12 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
+"riV" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/mailroom)
 "rja" = (
-/obj/disposaloutlet{
-	desc = "An outlet for the pneumatic mail system.";
-	dir = 1;
-	mailgroup = "cargo";
-	message = "Delivery alert in Cargo.";
-	name = "undeliverable mail outlet"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 8
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
@@ -41805,10 +41980,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/stool/chair/couch/green{
-	dir = 8;
-	name = "ratty green couch"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "roF" = (
@@ -42302,6 +42474,14 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"rHg" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "rHq" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -46534,6 +46714,13 @@
 /obj/table/glass/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"uga" = (
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "ugd" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -47921,6 +48108,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
+"uZA" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "uZP" = (
 /obj/disposalpipe/segment/mail,
 /obj/lattice,
@@ -47980,6 +48172,13 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"vbQ" = (
+/obj/machinery/cargo_router{
+	default_direction = 8;
+	destinations = list("Mail"=2)
+	},
+/turf/simulated/floor/plating,
+/area/station/mailroom)
 "vbW" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -48755,6 +48954,13 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"vxd" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/main)
 "vxl" = (
 /obj/submachine/cargopad{
 	name = "Cargo Bay Pad"
@@ -50232,6 +50438,7 @@
 /area/station/hangar/science)
 "wql" = (
 /obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "wqz" = (
@@ -51621,6 +51828,7 @@
 	icon_state = "1-2"
 	},
 /obj/decal/cleanable/dirt/dirt5,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "xnD" = (
@@ -86732,15 +86940,15 @@ aaa
 lGG
 bMd
 api
-api
-api
+aoY
+apr
 aoO
 aoO
 oJQ
 vVb
 arg
 vSU
-auB
+cwJ
 asO
 atq
 aoN
@@ -87030,7 +87238,7 @@ aaa
 aaa
 aaa
 dLT
-dLT
+jpm
 aoS
 itF
 aqb
@@ -87042,7 +87250,7 @@ aqU
 aqU
 arg
 auz
-auB
+cwJ
 asP
 asP
 aoN
@@ -87332,12 +87540,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lPV
 ijd
 aoO
 dgx
 apj
-api
+pAE
 jCE
 aqc
 aqQ
@@ -87634,11 +87842,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lPV
 ijd
-aoO
+kDy
 pmc
-aoN
+bIp
 lAW
 apP
 pyA
@@ -87936,12 +88144,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
+lPV
 ijd
-aoO
-dgx
-api
-api
+kDy
+vbQ
+cWT
+uga
 apO
 aqe
 aqt
@@ -88243,10 +88451,10 @@ hkx
 pFc
 rce
 phh
-api
-auD
-auD
-auD
+fUX
+riV
+riV
+riV
 auD
 ari
 arC
@@ -88542,17 +88750,17 @@ aaa
 aaa
 aaa
 tlV
-bMd
-api
+qVy
+gcW
 aoZ
-api
-aoY
-apr
-asm
+ivP
+gcW
+ohk
+nTX
 rnq
 xnx
 arD
-asi
+iMl
 asS
 arF
 jqT
@@ -88844,13 +89052,13 @@ aaa
 aaa
 aaa
 aaa
-aoO
-aoO
-aoN
-api
-api
-api
-asm
+kDy
+kDy
+dwW
+hwY
+gcW
+ebs
+riV
 eYb
 ark
 laf
@@ -88864,12 +89072,12 @@ apk
 apk
 dwN
 hyN
-azc
+vxd
 aAh
-jnM
+uZA
 rcV
 azi
-pvL
+pBJ
 aLa
 aFf
 awk
@@ -89147,7 +89355,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+acd
 apl
 apk
 apk
@@ -89157,7 +89365,7 @@ apk
 apk
 apk
 wWL
-wWL
+lWx
 apk
 atU
 auG
@@ -89166,7 +89374,7 @@ fCJ
 cev
 gmd
 hyN
-avg
+gJx
 oxg
 jnM
 lAs
@@ -89459,8 +89667,8 @@ apt
 oZB
 apt
 apR
-asU
-arG
+rHg
+amz
 ask
 auH
 avh

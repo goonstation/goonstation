@@ -13894,8 +13894,10 @@
 /area/station/hydroponics/bay)
 "aPC" = (
 /obj/decal/cleanable/molten_item,
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/light/incandescent/small,
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "aPD" = (
 /obj/machinery/computer/tetris,
 /turf/simulated/floor/carpet/arcade,
@@ -17388,13 +17390,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"aZV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail/bent/east,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aZW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17476,10 +17471,6 @@
 /area/station/maintenance/northwest)
 "bal" = (
 /obj/disposalpipe/segment,
-/turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/northeast)
-"ban" = (
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
 "bap" = (
@@ -17694,9 +17685,8 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "baR" = (
-/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "baS" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 1
@@ -17750,14 +17740,24 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/quarters_west)
 "bbf" = (
-/turf/simulated/floor/stairs,
-/area/station/maintenance/northeast)
-"bbg" = (
-/obj/machinery/disposal_pipedispenser,
-/obj/decal/cleanable/cobweb2,
 /obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs,
+/area/station/mailroom)
+"bbg" = (
+/obj/decal/cleanable/cobweb2,
+/obj/storage/secure/closet/civilian/mail,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbh" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -17789,23 +17789,36 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbp" = (
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/wrench/green,
+/obj/spawner/mail/two,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbq" = (
-/obj/landmark/halloween,
+/obj/disposalpipe/switch_junction/right/south{
+	name = "mail junction (mail room)";
+	mail_tag = "sortingroom"
+	},
+/obj/landmark/start/job/mail_courier,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbr" = (
-/obj/storage/crate,
-/obj/disposalpipe/segment/mail/vertical,
+/obj/disposalpipe/segment/mail/bent/south,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbt" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -17875,14 +17888,14 @@
 "bbE" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbF" = (
 /obj/disposalpipe/trunk/mail/west,
 /obj/disposaloutlet/east{
 	name = "undeliverable mail outlet"
 	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbG" = (
 /obj/shrub{
 	dir = 1
@@ -17890,11 +17903,14 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbH" = (
-/obj/storage/crate,
-/obj/item/storage/box/crayon,
-/obj/disposalpipe/segment/mail/vertical,
+/obj/disposalpipe/trunk/mail/north,
+/obj/machinery/disposal/mail/qm/autoname{
+	mail_tag = "sortingroom";
+	mailgroup = "Mail";
+	name = "Mail Room"
+	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bbI" = (
 /obj/stool/chair,
 /obj/decal/cleanable/dirt,
@@ -18213,7 +18229,7 @@
 "bcE" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "bcF" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -38679,7 +38695,7 @@
 "ckn" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "cko" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -39827,6 +39843,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cnH" = (
@@ -39899,6 +39916,10 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/mail/bent/east,
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -46347,7 +46368,6 @@
 /area/station/crew_quarters/market)
 "cHn" = (
 /obj/stool/chair,
-/obj/landmark/start/job/mail_courier,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "red2"
@@ -61370,8 +61390,9 @@
 "joL" = (
 /obj/disposalpipe/segment,
 /obj/machinery/firealarm/north,
+/obj/landmark/halloween,
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "joW" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -61914,7 +61935,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "jOz" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -64115,6 +64136,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
+"lTp" = (
+/obj/disposalpipe/segment/mail/bent/west,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/mailroom)
 "lTt" = (
 /obj/disposalpipe/switch_junction/left/north{
 	mail_tag = list("brig","customs                checkpoint","bridge","security");
@@ -65018,13 +65043,16 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "mMG" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "undeliverable parcels"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro,
+/obj/mapping_helper/access/mail,
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "mMO" = (
 /obj/storage/closet/emergency,
 /obj/item/crowbar/red,
@@ -68201,7 +68229,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "qfb" = (
 /obj/item/storage/wall/medical{
 	dir = 1;
@@ -72798,6 +72826,14 @@
 	dir = 4
 	},
 /area/station/catwalk/north)
+"uJC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate,
+/obj/item/storage/box/crayon,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "uJL" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -75087,7 +75123,7 @@
 	operating = 1
 	},
 /turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "xqh" = (
 /obj/machinery/mass_driver{
 	id = "ejector_medsci";
@@ -75165,7 +75201,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
+/area/station/mailroom)
 "xvK" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag19";
@@ -125687,7 +125723,7 @@ hcK
 aXA
 aYu
 chV
-cnG
+uJC
 cia
 jOr
 bbo
@@ -126296,7 +126332,7 @@ mMG
 bbf
 bbq
 aPC
-ckt
+lTp
 aaa
 aaa
 mVi
@@ -126593,8 +126629,8 @@ aVI
 aWW
 aSW
 cmf
-aZV
-ban
+aZX
+cia
 bbg
 bbr
 bbH

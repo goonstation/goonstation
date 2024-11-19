@@ -826,7 +826,6 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Quartermaster's locker"
 	req_access = list(access_cargo)
 	spawn_contents = list(/obj/item/storage/box/clothing/qm,
-	/obj/item/storage/box/clothing/mail,
 	/obj/item/pen/fancy,
 	/obj/item/paper_bin,
 	/obj/item/clipboard,
@@ -852,6 +851,17 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/caution = 4,\
 	/obj/item/disk/data/floppy/manudrive/cleaner_grenade = 1)
 
+/obj/storage/secure/closet/civilian/mail
+	name = "\improper Delivery supplies locker"
+	req_access = list(access_mail)
+	spawn_contents = list(/obj/item/storage/box/clothing/mail,\
+	/obj/item/pen/fancy,
+	/obj/item/hand_labeler,
+	/obj/item/scissors,
+	/obj/item/wrapping_paper,
+	/obj/item/pinpointer/mail_recepient,
+	/obj/item/satchel/mail)
+
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
 	req_access = list(access_hydro)
@@ -868,6 +878,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
 	req_access = list(access_ranch)
+	icon_state = "secure_green"
+	icon_closed = "secure_green"
+	icon_opened = "secure_green-open"
 	spawn_contents = list(/obj/item/paper/ranch_guide,\
 	/obj/item/fishing_rod/basic,\
 	/obj/item/storage/box/clothing/rancher,\

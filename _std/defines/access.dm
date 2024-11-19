@@ -43,7 +43,7 @@
 #define access_chemistry 33
 #define access_dwaine_superuser 34 // So it's not the same as the RD's office and locker.
 #define access_hydro 35
-#define access_mail 36 // Unused.
+#define access_mail 36
 #define access_maxsec 37 // The HoS' office
 #define access_securitylockers 38
 #define access_carrypermit 39 // Are allowed to carry sidearms as far as guardbuddies and secbots are concerned. Contraband permit defined at 75.
