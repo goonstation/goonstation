@@ -555,13 +555,13 @@
 		if (length(src.contents) < src.max_cigs)
 			user.visible_message(SPAN_NOTICE("[user] begins quickly filling \the [src]."))
 			var/staystill = user.loc
-			for(var/obj/item/I in view(1,user))
-				if (!istype(I, O) || QDELETED(I)) continue
-				if (I in user)
+			for(var/obj/item/clothing/mask/cigarette/cig in view(1,user))
+				if (!istype(cig, O) || QDELETED(cig) || cig.on) continue
+				if (cig in user)
 					continue
-				I.add_fingerprint(user)
+				cig.add_fingerprint(user)
 				if ((length(src.contents) < src.max_cigs))
-					I.set_loc(src)
+					cig.set_loc(src)
 				src.UpdateIcon()
 				sleep(0.2 SECONDS)
 				if (user.loc != staystill || src.loc != user) break
