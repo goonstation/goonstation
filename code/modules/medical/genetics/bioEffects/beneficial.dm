@@ -532,6 +532,8 @@
 	OnAdd()
 		src.onPowerChange(0, src.power)
 
+		. = ..()
+
 	onPowerChange(oldval, newval)
 		src.owner.ensure_listen_tree()
 		if (src.current_module)
@@ -552,6 +554,8 @@
 			return
 
 		src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		. = ..()
 
 
 /datum/bioEffect/hulk
@@ -599,6 +603,7 @@
 		..()
 
 	OnRemove()
+		. = ..()
 		REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/hulkstrong, src.type)
 		if (ishuman(owner) && src.visible)
 			var/mob/living/carbon/human/H = owner
@@ -815,6 +820,8 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (isliving(owner))
 			var/mob/living/L = owner
 
@@ -840,6 +847,8 @@
 	var/right_arm_path = /obj/item/parts/human_parts/arm/right/claw/critter
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 
@@ -942,6 +951,8 @@
 	var/lost_perc = 70
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
@@ -1023,6 +1034,8 @@
 	icon_state  = "haze"
 
 	OnLife(var/mult)
+		if (..())
+			return
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
@@ -1065,13 +1078,15 @@
 			M.hair_override = 1
 			M.bioHolder.mobAppearance.UpdateMob()
 			M.update_colorful_parts()
-		..()
+		. = ..()
 
 	OnRemove()
+		. = ..()
+		if (!.)
+			return
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 
 			M.hair_override = 0
 			M.bioHolder.mobAppearance.UpdateMob()
 			M.update_colorful_parts()
-		..()

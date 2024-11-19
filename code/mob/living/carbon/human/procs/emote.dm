@@ -2023,7 +2023,7 @@
 							src.charges -= 1
 							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
+					else if ((src.charges >= 1) && (muzzled) && !HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)

@@ -543,6 +543,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		var/mob/living/living_target = target
 		living_target.give_item()
 		return
+	else if (src.client.check_key(KEY_THROW) && !src.equipped() && BOUNDS_DIST(src, target) <= 0)
+		if (src.auto_pickup_item(target))
+			return
 	else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 		src.throw_item(target,params)
 		return
@@ -1630,6 +1633,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT, src)
 
 	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
 	emp_act()
@@ -1643,9 +1647,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	can_drink()
 		return FALSE
-
-	vomit()
-		return
 
 	isBlindImmune()
 		return TRUE

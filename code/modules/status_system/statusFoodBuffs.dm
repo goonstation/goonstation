@@ -40,11 +40,6 @@
 		src.changeStatus(id, bite_time)
 
 
-/mob/living/vomit(var/nutrition=0, var/specialType=null)
-	..()
-	return src.organHolder?.stomach?.vomit()
-
-
 /datum/statusEffect/simplehot/foodBrute
 	id = "food_brute"
 	name = "Food HoT (Brute)"

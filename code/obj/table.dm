@@ -339,7 +339,7 @@ TYPEINFO_NEW(/obj/table)
 			return TRUE
 		return FALSE
 
-	MouseDrop_T(atom/O, mob/user as mob)
+	MouseDrop_T(atom/O, mob/user as mob, src_location, over_location, over_control, src_control, params)
 		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
 			return
 
@@ -367,10 +367,9 @@ TYPEINFO_NEW(/obj/table)
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
-		user.drop_item()
-		if (I.loc != src.loc)
-			step(I, get_dir(I, src))
-		return
+
+		src.place_on(I, user, params, TRUE)
+
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (usr == over_object && src.has_drawer && src.drawer_locked)
@@ -867,8 +866,9 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
-				/obj/item/reagent_containers/glass/condenser = 3,
-				/obj/item/reagent_containers/glass/condenser/fractional = 1)
+				/obj/item/reagent_containers/glass/plumbing/condenser = 3,
+				/obj/item/reagent_containers/glass/plumbing/condenser/fractional = 1,
+				/obj/item/reagent_containers/glass/plumbing/dropper = 2)
 
 
 

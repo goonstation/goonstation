@@ -2101,7 +2101,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	///What step of repair are we on if we have broken? 0 = functional
 	var/heat_repair = 0
 
-	proc/attach_cell(var/obj/item/cell/C, mob/user)
+	proc/attach_cell(obj/item/cell/C, mob/user)
 		if (user)
 			user.u_equip(C)
 		RegisterSignal(C, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_cell))
@@ -2111,7 +2111,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
 		UpdateIcon()
 
-	proc/attach_light(var/obj/item/light/tube/T, mob/user)
+	proc/attach_light(obj/item/light/tube/T, mob/user)
 		if (user)
 			user.u_equip(T)
 		our_light = T
@@ -2128,7 +2128,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		explosion(src, get_turf(src), -1, -1, 1, 2)
 		qdel(src)
 
-	proc/finish_repairs(var/obj/item/cable_coil/C, /var/mob/user)
+	proc/finish_repairs(obj/item/cable_coil/C, mob/user)
 		C.change_stack_amount(-10)
 		heat_repair = 0
 		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)

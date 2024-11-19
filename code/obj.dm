@@ -30,6 +30,10 @@
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
 		src.update_access_from_txt()
+#ifdef CHECK_MORE_RUNTIMES
+		if (src.req_access && !islist(src.req_access))
+			stack_trace("[src] ([src.type]) initialized at \[[src.x], [src.y], [src.z]\] with non-list req_access >:(")
+#endif
 
 	Move(NewLoc, direct)
 		if(usr==0) usr = null
@@ -392,8 +396,9 @@
 		replica.set_dir(O.dir)
 		qdel(O)
 
-/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params)
+/obj/proc/place_on(obj/item/W as obj, mob/user as mob, params, imprecise = FALSE)
 	. = FALSE
+	if (!islist(params)) params = params2list(params)
 	if (W && !isghostdrone(user) && W.should_place_on(src, params)) // im allowing borgs to do this when its specifically overridden into a mousedrop - mylie
 		var/dirbuffer //*hmmpf* it's not like im a hacky coder or anything... (＃￣^￣)
 		dirbuffer = W.dir //though actually this will preserve item rotation when placed on tables so they don't rotate when placed. (this is a niche bug with silverware, but I thought I might as well stop it from happening with other things <3)
@@ -404,7 +409,10 @@
 		if(W.dir != dirbuffer)
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
-		if (islist(params) && params["icon-y"] && params["icon-x"])
+		if (imprecise) // place item imprecisely by randomising offset
+			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
+			W.pixel_y = rand(-10, 10)
+		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
 		if(W.layer <= src.layer)

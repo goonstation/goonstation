@@ -338,7 +338,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					. = TRUE
 				else
 					var/obj/item/reagent_containers/newbeaker = usr.equipped()
-					if (istype(newbeaker, glass_path))
+					if (istype(newbeaker, glass_path) && !newbeaker.incompatible_with_chem_dispensers)
 						if (newbeaker.current_lid)
 							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return

@@ -857,15 +857,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			target.changeStatus("slowed", 4 SECONDS)
 			target.TakeDamageAccountArmor("All", rand(1,2), 0, 0, DAMAGE_CUT)
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/mover)
+		. = ..()
+		// This change prevents ghosts from being affected by barbed wire
+		if (HAS_ATOM_PROPERTY(mover, PROP_ATOM_FLOATING))
+			return
 		if(ismob(mover))
 			var/mob/M = mover
 			if(M.m_intent != "walk")
 				pokey(M, 98)
 			else
 				pokey(M, 30)
-
-		return (!density)
 
 //barricade deployer
 

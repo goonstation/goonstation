@@ -1911,7 +1911,7 @@
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.add_stain("singed")
+					C.add_stain(/datum/stain/singed)
 			unequip_all()
 
 	if (drop_equipment)
@@ -2964,12 +2964,14 @@
 
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
-	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
-		return
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!", var/selfMessage = null)
+	SHOULD_CALL_PARENT(TRUE)
+	. = TRUE
+	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANNOT_VOMIT)) // Anti-emetics stop vomiting from occuring
+		return 0
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-	src.visible_message(flavorMessage)
+	src.visible_message(flavorMessage, selfMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)

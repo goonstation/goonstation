@@ -832,7 +832,7 @@ datum/fishing_spot/golden_toilet
 
 //elevator shafts
 /datum/fishing_spot/elevator_shaft
-	fishing_atom_type = /turf/simulated/floor/specialroom/sea_elevator_shaft
+	fishing_atom_type = /turf/simulated/floor/auto/elevator_shaft
 	rod_tier_required = 1
 	fish_available = list(/obj/item/reagent_containers/food/fish/herring = 40,\
 	/obj/item/reagent_containers/food/fish/tuna = 30,\

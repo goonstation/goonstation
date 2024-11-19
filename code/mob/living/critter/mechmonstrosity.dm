@@ -449,6 +449,7 @@
 	health_burn = 20
 	health_burn_vuln = 0.25
 	faction = list(FACTION_DERELICT)
+	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0

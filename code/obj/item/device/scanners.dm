@@ -513,6 +513,9 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+		if(istype(A, /obj/machinery/photocopier))
+			return // Upload scan results to the photocopier without scanning the photocopier itself
+
 		user.visible_message(SPAN_NOTICE("<b>[user]</b> scans [A] with [src]!"),\
 		SPAN_NOTICE("You scan [A] with [src]!"))
 
@@ -1051,8 +1054,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		return T.target_byond_key
 
-
-
+/obj/item/device/ticket_writer/crust
+	name = "crusty old security TicketWriter 1000"
+	desc = "An old TicketWriter model held together by hopes and dreams alone."
 
 TYPEINFO(/obj/item/device/appraisal)
 	mats = 5

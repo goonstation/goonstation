@@ -525,7 +525,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "sterile"
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
-	c_flags = COVERSMOUTH
+	c_flags = COVERSMOUTH | BLOCKMIASMA
 
 	setupProperties()
 		..()

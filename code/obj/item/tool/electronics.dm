@@ -855,6 +855,7 @@
 					if (istype(O.blueprint, /datum/manufacture/mechanics/))
 						if (!(!O.locked || src.allowed(usr) || src.olde))
 							return
+						logTheThing(LOG_STATION, usr, "printed manufactuerer blueprint for [O.item_type] from [src]")
 						usr.show_text("Print job started...", "blue")
 						var/datum/manufacture/mechanics/M = O.blueprint
 						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 25, 1)
@@ -867,6 +868,7 @@
 						return
 					var/datum/electronics/scanned_item/O = locate(href_list["op"]) in ruck_controls.scanned_items
 					O.locked = !O.locked
+					logTheThing(LOG_STATION, usr, "[O.locked ? "" : "un"]locked rkit blueprint for [O.item_type]")
 					for (var/datum/electronics/scanned_item/OP in ruck_controls.scanned_items) //Lock items with the same name, that's how LOCK works
 						if(O.name == OP.name)
 							OP.locked = O.locked

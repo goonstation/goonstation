@@ -286,6 +286,7 @@
 		if (B.id == src.id && B.our_timer == src)
 			if (B.locked)
 				B.locked = 0
+				B.open()
 				B.UpdateIcon()
 				B.visible_message(SPAN_NOTICE("[B.name] unlocks automatically."))
 

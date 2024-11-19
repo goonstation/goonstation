@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 	process() // the part where the puffed up fish hurts you
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			if (src.spikes_protected(H))
+			if (src.spikes_protected(H, src))
 				return
 			boutput(H, SPAN_ALERT("YOWCH! You prick yourself on [src]'s spikes! Maybe you should've used gloves..."))
 			random_brute_damage(H, 3)
@@ -332,17 +332,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 				src.reagents.remove_reagent("tetrodotoxin",src.reagents.get_reagent_amount("tetrodotoxin"))
 
 
-	proc/spikes_protected(mob/living/carbon/human/H)
-		if (H.hand)//gets active arm - left arm is 1, right arm is 0
-			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
-				return TRUE
-		else
-			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
-				return TRUE
+	proc/spikes_protected(mob/living/carbon/human/H, obj/fish)
 		if(H.gloves)
 			return TRUE
 		if(H.traitHolder?.hasTrait("training_chef"))
 			return TRUE
+
+		if (H.l_hand == fish)
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else if (H.r_hand == fish)
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts))
+				return TRUE
+		else
+			return TRUE //no pokey if not holdy :salute:
+
 
 /obj/item/reagent_containers/food/fish/flounder
 	name = "flounder"

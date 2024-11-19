@@ -4863,7 +4863,7 @@
 		does_react(var/datum/reagents/holder)
 			return time2text(world.realtime, "MMM DD") in full_moon_days_2053 //just doesn't react unless it's a full moon
 
-		vampire_serum
+	vampire_serum
 		name = "Vampire Serum Omega"
 		id = "vampire_serum"
 		result =  "vampire_serum"
@@ -5399,3 +5399,12 @@
 		mix_phrase = "The mixture starts to froth and glows a furious red!"
 		result_amount = 3
 		hidden = TRUE
+
+	mirabilis
+		name = "Mirabilis"
+		id = "mirabilis"
+		result = "mirabilis"
+		required_reagents = list("flockdrone_fluid" = 1, "port" = 1, "oculine" = 1)
+		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
+		result_amount = 2
+		mix_sound = 'sound/effects/radio_sweep1.ogg'

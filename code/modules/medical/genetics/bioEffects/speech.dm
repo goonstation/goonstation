@@ -18,9 +18,11 @@
 
 	OnAdd()
 		src.owner.ensure_speech_tree().AddSpeechModifier(src.id)
+		. = ..()
 
 	OnRemove()
 		src.owner.ensure_speech_tree().RemoveSpeechModifier(src.id)
+		. = ..()
 
 
 /datum/bioEffect/speech/smile
@@ -313,9 +315,11 @@
 
 	OnAdd()
 		src.owner.listen_tree.AddKnownLanguage(LANGUAGE_MONKEY)
+		. = ..()
 
 	OnRemove()
 		src.owner.listen_tree.RemoveKnownLanguage(LANGUAGE_MONKEY)
+		. = ..()
 
 
 /datum/bioEffect/speech/zalgo

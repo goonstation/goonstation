@@ -841,6 +841,7 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 	icon_state = "shuttle2"
 	name = "Merchant Shuttle Dock"
 	teleport_blocked = TRUE
+	var/loc_string = "somewhere"
 
 /area/shuttle/merchant_shuttle/left_centcom
 	name = "Centcom Merchant Shuttle Dock Alpha"
@@ -860,10 +861,12 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
+	loc_string = "left"
 
 /area/shuttle/merchant_shuttle/right_station
 	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
+	loc_string = "right"
 
 /area/shuttle/spacebus
 	name = "Space Bus"
@@ -3182,6 +3185,7 @@ ABSTRACT_TYPE(/area/station/solar)
 	luminosity = 1
 	workplace = 1
 	do_not_irradiate = TRUE
+	occlude_foreground_parallax_layers = FALSE
 
 /area/station/solar/north
 	name = "North Solar Array"
@@ -3680,13 +3684,19 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/salvager_space
 	name = "Salvager Vessel Magpie Space"
 	sanctuary = 1
-	teleport_blocked = 1
+	teleport_blocked = TRUE
 	// Must match /area/salvager
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/magpie
 
 /area/salvager/pod
 	name = "Magpie Launch Area"
 	icon_state = "yellow"
+
+/area/salvager/medbay
+	name = "Magpie Med Area"
+	icon_state = "blue"
+	sanctuary = 0
+
 
 // Pirate ship:
 /area/pirate_ship

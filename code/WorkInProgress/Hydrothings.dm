@@ -540,7 +540,7 @@
 /obj/machinery/power/apc/owlery
 	noalerts = 1
 	start_charge = 0
-	req_access = access_owlerymaint
+	req_access = list(access_owlerymaint)
 
 
 /obj/owlerysign/owlplaque

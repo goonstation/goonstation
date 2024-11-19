@@ -290,3 +290,7 @@ var/global/datum/phrase_log/phrase_log = new
 					. = src.name_regex.Replace(., /datum/phrase_log/proc/random_station_name_replacement_proc)
 				return
 		return null
+
+	proc/remove_phrase(category, toRemove)
+		var/list/cat = phrases[category]
+		cat.RemoveAll(toRemove)

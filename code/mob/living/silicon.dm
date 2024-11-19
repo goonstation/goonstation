@@ -243,7 +243,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/proc/process_locks()
 	return
 
-/mob/living/silicon/lastgasp(allow_dead=FALSE)
+/mob/living/silicon/lastgasp(allow_dead=FALSE, grunt)
 	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
 
 /mob/living/silicon/proc/allowed(mob/M)
