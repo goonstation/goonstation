@@ -14,6 +14,8 @@ import { Output } from './Output';
 import { Pump } from './Pump';
 import type { GasMixerData } from './types';
 
+const PUMP_SECTION_WIDTH = '320px';
+
 export const GasMixer = (_props: unknown) => {
   const { data, act } = useBackend<GasMixerData>();
   const { name, mixerid, mixer_information } = data;
@@ -25,7 +27,7 @@ export const GasMixer = (_props: unknown) => {
             <>
               <Inputs />
               <Stack>
-                <Stack.Item width="320px">
+                <Stack.Item width={PUMP_SECTION_WIDTH}>
                   <Pump />
                 </Stack.Item>
                 <Stack.Item grow>
