@@ -2132,21 +2132,21 @@ obj/item/whetstone
 
 /obj/item/crashaxe
 	name = "crash axe"
-	desc = "A lightweight utility-survival axe designed to cut through the thin skin of pod hulls. Works just as well on bothersome crewmembers."
+	desc = "A lightweight utility-survival axe designed to cut through pod hulls and other structures. Works just as well on bothersome crewmembers."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "crashaxe"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hitsound ='sound/impact_sounds/coconut_break.ogg' //shamelessly re-using this sound idea from my halberd
 
-	health = 5
+	health = 5 //same item health as most tools
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 
 	w_class = W_CLASS_SMALL
 	hit_type = DAMAGE_CUT
 	leaves_slash_wound = TRUE //yeah prolly
 	force = 14
-	stamina_damage = 1 //we WANT this to be low so crewmembers can run away easily
-	throwforce = 24 //probably needs tuning but these aren't too far divorced from tomahawks- encourage high-skill gameplay
+	stamina_damage = 25
+	throwforce = 24
 	throw_speed = 4
 	throw_range = 7
 
@@ -2154,7 +2154,7 @@ obj/item/whetstone
 	var/breaking_tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	var/prying_tool_flags = TOOL_CUTTING | TOOL_PRYING
 
-	HELP_MESSAGE_OVERRIDE({"Can be used as a crowbar. Throw the weapon (space+click) to inflict a half-second stun and two second disorient."})
+	HELP_MESSAGE_OVERRIDE({"Can be used in hand to toggle it between a prying and chopping tool. Throw the weapon to inflict a very short stun."})
 
 	New()
 		..()
@@ -2166,8 +2166,8 @@ obj/item/whetstone
 		if(iscarbon(A))
 			var/mob/living/carbon/C = A
 
-			C.changeStatus("knockdown", 0.5 SECONDS) //give what's basically a defib stun; lets salvagers yoink weapons if they're savvy
-			C.changeStatus("disorient", 2 SECONDS) //give them getaway time
+			C.changeStatus("knockdown", 3 SECONDS) //stun is meant to give an opportunity to sneak in and steal weapons, not for rampaging
+			C.changeStatus("disorient", 5 SECONDS)
 			C.force_laydown_standup()
 			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
