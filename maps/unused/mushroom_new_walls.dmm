@@ -19303,6 +19303,7 @@
 /obj/stool/chair/green{
 	dir = 1
 	},
+/obj/landmark/start/job/rancher,
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)
 "hsy" = (
