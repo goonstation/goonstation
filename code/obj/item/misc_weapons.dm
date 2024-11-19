@@ -2158,7 +2158,7 @@ obj/item/whetstone
 
 	New()
 		..()
-		src.setItemSpecial(/datum/item_special/tile_fling) //borrowing attributes from crowbar
+		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// I refuse to add to the item/knife/butcher inheritance tree. I just won't do it.
@@ -2179,12 +2179,14 @@ obj/item/whetstone
 			src.tool_flags = prying_tool_flags
 			icon_state = "crashaxe-rev"
 			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to pry."))
+			src.setItemSpecial(/datum/item_special/tile_fling)
 
 		else
 			breakmode = TRUE
 			src.tool_flags = breaking_tool_flags
 			icon_state = "crashaxe"
 			boutput(user, SPAN_NOTICE("You adjust your grip on [src], readying it to break stuff."))
+			src.setItemSpecial(/datum/item_special/swipe)
 
 /obj/item/swords/sord
 	name = "gross sord"
