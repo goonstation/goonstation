@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	rarity_weight = 0
 	validtypes = list("ancient","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation)
+	/datum/artifact_trigger/cold,/datum/artifact_trigger/radiation, /datum/artifact_trigger/language)
 	fault_blacklist = list(ITEM_ONLY_FAULTS, TOUCH_ONLY_FAULTS) // can't sting you at range
 	react_xray = list(12,75,30,11,"COMPLEX")
 	var/explode_delay = 600
@@ -532,7 +532,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							if(distPercent < 40) // only inner 40% of range
 								O.ArtifactFaultUsed(M)
 								if(M)
-									M.become_statue(mat)
+									M.become_statue(mat.getID())
 				else
 					G.setMaterial(mat)
 

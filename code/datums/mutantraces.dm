@@ -23,12 +23,17 @@ TYPEINFO_NEW(/datum/mutantrace) ///Load all the clothing override icons, should 
 
 ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
-	var/name = null				// used for identification in diseases, clothing, etc
+	/// used for identification in diseases, clothing, etc
+	var/name = null
+
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
 	var/race_mutation = null
+
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
-	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+
+	// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
+	// ^ ??????? AH.original?
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -399,6 +404,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.set_clothing_icon_dirty()
 			src.mob = null
 
+		src.AH = null
 		..()
 
 	proc/AppearanceSetter(var/mob/living/carbon/human/H, var/mode as text)
@@ -963,7 +969,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			SPAWN(rand(4, 30))
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
-			M.show_antag_popup("zombie")
+			M.show_antag_popup(ROLE_ZOMBIE)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")

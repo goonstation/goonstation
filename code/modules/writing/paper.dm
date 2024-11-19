@@ -103,10 +103,12 @@
 		if (fold == "Paper hat")
 			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else if (fold == "Cigarette packet")
 			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
 			var/obj/item/cigpacket/paperpack/H = new()
+			H.setMaterial(src.material)
 			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
@@ -120,6 +122,7 @@
 			F.old_desc = src.desc
 			F.old_icon_state = src.icon_state
 			F.stamps = src.stamps
+			F.setMaterial(src.material)
 			user.put_in_hand_or_drop(F)
 
 		qdel(src)
@@ -515,15 +518,14 @@
 	desc = "Fancy."
 	var/print_icon = 'icons/effects/sstv.dmi'
 	var/print_icon_state = "sstv_1"
+	sizex = 640 + 0
+	sizey = 480 + 32
+	scrollbar = FALSE
 
 	New()
 		..()
-		src.info = {"<IMG SRC="sstv_cachedimage.png">"}
+		src.info = "<img style='width: 100%; position: absolute; top: 0; left: 0' src='data:image/png;base64,[icon2base64(icon(print_icon,print_icon_state))]'>"
 		return
-
-	examine()
-		usr << browse_rsc(icon(print_icon,print_icon_state), "sstv_cachedimage.png")
-		. = ..()
 
 	satellite
 		print_icon_state = "sstv_2"
@@ -965,10 +967,13 @@
 /obj/item/paper/newspaper/New()
 	. = ..()
 	// it picks a random set of info at new, then the printing press overrides it
-	src.publisher = pick_smart_string("newspaper.txt", "publisher")
+	if (!length(src.publisher))
+		src.publisher = pick_smart_string("newspaper.txt", "publisher")
 	src.name = "[src.publisher]"
-	src.generate_headline()
-	src.generate_article()
+	if (!length(src.headline))
+		src.generate_headline()
+	if (!length(src.info))
+		src.generate_article()
 	src.update_desc()
 
 /obj/item/paper/newspaper/pickup(mob/user)
@@ -1056,3 +1061,12 @@
 			if (9)
 				temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
 	src.info += temporary
+
+/obj/item/paper/newspaper/rolled/centcom_plasma
+	publisher = "Seneca Journal"
+	headline = "Nanotrasen denies responsibility for Seneca Lake plasma contamination"
+	info = {"
+		In a rare personal appearance, Nanotrasen CEO John Nanotrasen today categorically denied his company's involvement in the recent Seneca Lake plasma contamination scare.<br>
+		Levels of FAAE (commonly known as "plasma") in the lakewater have reached 500μg per liter according to an EPA source, prompting the agency to declare a substantial threat to public health.<br>
+		Nanotrasen is the only company in the Seneca area licensed to transport plasma, hundreds of kilograms of which are used in the fuelling of their inter-channel shuttle services every month.
+	"}

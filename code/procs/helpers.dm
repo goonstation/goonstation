@@ -1221,7 +1221,7 @@ proc/outermost_movable(atom/movable/target)
 				var/mob/living/carbon/human/H = A
 				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
 					. += A
-			else
+			else if(!isAIeye(A)) // AI camera eyes can't hear
 				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
@@ -1934,6 +1934,8 @@ proc/countJob(rank)
 		if (source && istype(source, /obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
+				if (!ON_COOLDOWN(H, "matrix_sound_effect", 1 SECOND))
+					H.playsound_local(H, 'sound/effects/graffiti_hit.ogg', 40, pitch = 0.8)
 				. = TRUE
 
 /**

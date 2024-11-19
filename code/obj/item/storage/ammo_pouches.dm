@@ -221,7 +221,7 @@
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
 	/obj/item/handcuffs/guardbot = 2,
 	/obj/item/device/flash,
-	/obj/item/reagent_containers/food/snacks/candy/candyheart)
+	/obj/item/instrument/whistle/security)
 
 
 	ntso

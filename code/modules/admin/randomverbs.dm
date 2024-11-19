@@ -2013,7 +2013,7 @@
 		return
 
 	if (istype(src.mob, /mob/dead/target_observer))
-		qdel(src.mob)
+		qdel(src.mob) // so we don't leave a bunch of these empty observers inside mobs
 
 	var/mob/dead/observer/O = src.mob
 	var/client/C
@@ -2030,6 +2030,8 @@
 			M = C.mob
 
 	O.insert_observer(M)
+	usr = src.mob // necessary so the get_desc() call works
+	boutput(src, SPAN_NOTICE("Now observing <b>[M] ([C])</b><br>") + M.get_desc())
 
 
 /client/proc/orp()
@@ -2787,9 +2789,9 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 			if("Yes")
 				for(var/turf/simulated/wall/W in world)
 					if (W.z != 1) continue
-					var/obj/machinery/crusher/O = locate() in W.contents //in case someone presses it again
+					var/obj/machinery/crusher/slow/O = locate() in W.contents //in case someone presses it again
 					if (O) continue
-					new /obj/machinery/crusher/wall(locate(W.x, W.y, W.z))
+					new /obj/machinery/crusher/slow/wall(locate(W.x, W.y, W.z))
 					W.set_density(0)
 
 				logTheThing(LOG_ADMIN, src, "has turned every wall into a crusher! God damn.")

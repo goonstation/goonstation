@@ -99,6 +99,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	//var/list/connected_shells = list()
 	var/list/installed_modules = list()
 	var/aiRestorePowerRoutine = 0
+	///List of currently active alarms
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/printalerts = 1
@@ -294,6 +295,7 @@ or don't if it uses a custom topopen overlay
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
+	ai_station_map.initialise_minimap()
 	AddComponent(/datum/component/minimap_marker/minimap, MAP_AI | MAP_SYNDICATE, "ai")
 	SPAWN(0)
 		if (bought_hat || prob(5))
@@ -901,60 +903,60 @@ or don't if it uses a custom topopen overlay
 		boutput(src,"You have no laws!")
 	return
 
-/mob/living/silicon/ai/triggerAlarm(var/class, area/A, var/O, var/alarmsource)
+/mob/living/silicon/ai/triggerAlarm(var/class, area/alarm_area, var/list/camera_list, var/alarmsource)
 	if (isdead(src))
-		return 1
-	var/list/L = src.alarms[class]
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
+		return
+	var/list/active_alarms = src.alarms[class]
+	for (var/area_name in active_alarms)
+		if (area_name == alarm_area.name)
+			var/list/alarm = active_alarms[area_name]
 			var/list/sources = alarm[3]
 			if (!(alarmsource in sources))
 				sources += alarmsource
-			return 1
-	var/obj/machinery/camera/C = null
-	var/list/CL = null
-	if (O && istype(O, /list))
-		CL = O
-		if (length(CL) == 1)
-			C = CL[1]
-	else if (O && istype(O, /obj/machinery/camera))
-		C = O
-	L[A.name] = list(A, (C) ? C : O, list(alarmsource))
-	if (O)
-		if (printalerts)
-			if (C?.camera_status)
-				src.show_text("--- [class] alarm detected in [A.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[C]\">[C.c_tag]</A> )")
-			else if (length(CL))
-				var/foo = 0
-				var/dat2 = ""
-				for (var/obj/machinery/camera/I in CL)
-					dat2 += "[(!foo) ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[I]\">[I.c_tag]</A>"
-					foo = 1
-				src.show_text("--- [class] alarm detected in [A.name]! ([dat2])")
-			else
-				src.show_text("--- [class] alarm detected in [A.name]! ( No Camera )")
-	else
-		if (printalerts)
-			src.show_text("--- [class] alarm detected in [A.name]! ( No Camera )")
-	if (src.viewalerts) src.ai_alerts()
-	return 1
+			return
+	var/obj/machinery/camera/single_camera = null
+	if (length(camera_list) == 1)
+		single_camera = camera_list[1]
+	active_alarms[alarm_area.name] = list(alarm_area, single_camera || camera_list, list(alarmsource))
 
-/mob/living/silicon/ai/cancelAlarm(var/class, area/A as area, obj/origin)
-	var/list/L = src.alarms[class]
-	var/cleared = 0
-	for (var/I in L)
-		if (I == A.name)
-			var/list/alarm = L[I]
+	if (src.viewalerts)
+		src.ai_alerts()
+
+	if (!printalerts)
+		return
+
+	if (!single_camera && !camera_list)
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( No Camera )")
+		return
+
+	if (single_camera?.camera_status)
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( <A HREF=\"?src=\ref[src];switchcamera=\ref[single_camera]\">[single_camera.c_tag]</A> )")
+	else if (length(camera_list))
+		var/first_cam = TRUE
+		var/cameras_string = ""
+		for (var/obj/machinery/camera/camera in camera_list)
+			cameras_string += "[first_cam ? " " : "| "]<A HREF=\"?src=\ref[src];switchcamera=\ref[camera]\">[camera.c_tag]</A>"
+			first_cam = FALSE
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ([cameras_string])")
+	else
+		src.show_text("--- [class] alarm detected in [alarm_area.name]! ( No Camera )")
+
+/mob/living/silicon/ai/cancelAlarm(var/class, area/alarm_area, obj/origin)
+	var/list/active_alarms = src.alarms[class]
+	var/cleared = FALSE
+	for (var/area_name in active_alarms)
+		if (area_name == alarm_area.name)
+			var/list/alarm = active_alarms[area_name]
 			var/list/srcs  = alarm[3]
 			if (origin in srcs)
 				srcs -= origin
 			if (length(srcs) == 0)
-				cleared = 1
-				L -= I
+				cleared = TRUE
+				active_alarms -= area_name
 	if (cleared)
-		src.show_text("--- [class] alarm in [A.name] has been cleared.")
-		if (src.viewalerts) src.ai_alerts()
+		src.show_text("--- [class] alarm in [alarm_area.name] has been cleared.")
+		if (src.viewalerts)
+			src.ai_alerts()
 	return !cleared
 
 /mob/living/silicon/ai/death(gibbed)
@@ -1668,8 +1670,10 @@ or don't if it uses a custom topopen overlay
 	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
-
-	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
+	var/target = src
+	if(src.deployed_to_eyecam)
+		target = src.eyecam
+	tgui_message(target, "<b>Crew Manifest:</b><hr>[get_manifest()]", "Crew Manifest")
 
 
 /mob/living/silicon/ai/proc/show_laws_verb()
@@ -1826,15 +1830,20 @@ or don't if it uses a custom topopen overlay
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
+	src.deploy_to_shell(target_shell)
 
-	if (!target_shell || isdead(target_shell) || !(isshell(target_shell) || isrobot(target_shell)))
+/mob/living/silicon/ai/proc/deploy_to_shell(var/mob/living/silicon/target_shell)
+	if (!target_shell || isdead(target_shell) || isdead(src) || !(isshell(target_shell) || isrobot(target_shell)))
+		return
+	if (!target_shell.shell)
+		boutput(src, SPAN_ALERT(SPAN_BOLD("That isn't a shell!")))
 		return
 
 	if (src.deployed_to_eyecam)
 		src.eyecam.return_mainframe()
 	if (!src.mind)
 		return
-	if (target_shell.mind)
+	if (target_shell.mind || target_shell.dependent)
 		boutput(src, SPAN_ALERT(SPAN_BOLD("That shell is already occupied!")))
 		return
 	target_shell.mainframe = src
@@ -2610,7 +2619,8 @@ proc/get_mobs_trackable_by_AI()
 	if (src.mind)
 		src.mind.register_death()
 		src.mind.get_player()?.dnr = TRUE
-	src.ghostize()
+	var/mob/dead/observer/ghost = src.ghostize()
+	ghost.corpse = null //no coming back
 
 	//Tell the crew the AI is gone
 	if(announce)

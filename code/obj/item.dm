@@ -440,7 +440,7 @@ ABSTRACT_TYPE(/obj/item)
 		SPAN_NOTICE("You take a bite of [src]!"))
 
 //disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return FALSE
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
@@ -743,7 +743,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	var/mob/user = usr
 
-	params = params2list(params)
+	if (!islist(params)) params = params2list(params)
 
 	if (ishuman(over_object) && ishuman(usr) && !src.storage)
 		var/mob/living/carbon/human/patient = over_object

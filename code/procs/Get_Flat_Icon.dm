@@ -88,6 +88,8 @@
 				var/image/current = process[i]
 				if(!current)
 					continue
+				if(startswith(current.render_target, "*"))
+					continue
 				if(current.plane != FLOAT_PLANE && current.plane != A.plane)
 					continue
 				var/current_layer = current.layer
