@@ -1,4 +1,9 @@
 
+(t)mon nov 18 24
+(u)NightmarechaMillian
+(p)21327
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Breaching weapons (sledgehammers, fireaxes, etc) will now also deal 4x damage to windows
 (t)sat nov 16 24
 (u)FlameArrow57
 (p)21339
