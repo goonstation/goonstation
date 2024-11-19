@@ -410,9 +410,11 @@
 		reaction_icon_color = "#ffffff"
 
 		does_react(var/datum/reagents/holder)
+			if (!length(holder.covered_turf())) //don't react until the fluid group is set up
+				return FALSE
 			return holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group)
 
-		on_reaction(datum/reagents/holder)
+		on_reaction(datum/reagents/holder, created_volume)
 			var/list/covered = holder.covered_turf()
 			if (covered.len < 5)
 				for(var/turf/t in covered)
@@ -3299,7 +3301,7 @@
 			if(src.is_currently_exploding)
 				return
 			var/turf/T = get_turf(holder.my_atom)
-			if (istype(T) && T.is_lit(0.1))
+			if (istype(T) && T.is_lit(0.1) && !istype(holder.my_atom.loc, /obj/disposalholder))
 				var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
 				is_currently_exploding = TRUE
 				shine.set_loc(T)
@@ -5399,3 +5401,12 @@
 		mix_phrase = "The mixture starts to froth and glows a furious red!"
 		result_amount = 3
 		hidden = TRUE
+
+	mirabilis
+		name = "Mirabilis"
+		id = "mirabilis"
+		result = "mirabilis"
+		required_reagents = list("flockdrone_fluid" = 1, "port" = 1, "oculine" = 1)
+		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
+		result_amount = 2
+		mix_sound = 'sound/effects/radio_sweep1.ogg'

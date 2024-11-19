@@ -23,6 +23,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"at" = (
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "au" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -2558,6 +2562,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"pp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor/purple,
+/area/station/science)
 "pu" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -6640,6 +6651,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"Rr" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/crew_quarters/garden/sunlight)
 "Rv" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/station/security/main)
@@ -53365,8 +53380,8 @@ hB
 Rf
 Rf
 Rf
-XQ
-jx
+Wl
+at
 rP
 jx
 jx
@@ -53667,7 +53682,7 @@ hB
 Rf
 Rf
 Rf
-XQ
+Wl
 jx
 rP
 ui
@@ -56406,7 +56421,7 @@ sc
 sc
 sc
 sc
-Pf
+Rr
 Lh
 qG
 MA
@@ -78983,7 +78998,7 @@ vr
 te
 gz
 dt
-hv
+pp
 Or
 rQ
 Td

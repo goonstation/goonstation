@@ -60,9 +60,6 @@
 
 		precache_create_txt()
 
-	Z_LOG_DEBUG("World/Init", "Loading mode...")
-	src.load_mode()
-
 	mapSwitcher = new()
 
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
@@ -135,7 +132,7 @@
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
 	build_manufacturer_icons()
-	clothingbooth_setup()
+	build_clothingbooth_caches()
 	initialize_biomes()
 
 	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")

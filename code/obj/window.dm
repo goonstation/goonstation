@@ -473,7 +473,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
-			src.damage_blunt(W.force)
+			if (ischoppingtool(W))
+				src.damage_blunt(W.force*4, user)
+			else
+				src.damage_blunt(W.force)
 			..()
 		return
 

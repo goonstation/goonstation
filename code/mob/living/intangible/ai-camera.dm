@@ -25,6 +25,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
+	use_stamina = FALSE // floating ghostly eyes dont get tired
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0

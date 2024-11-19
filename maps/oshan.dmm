@@ -7178,6 +7178,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ayt" = (
@@ -12918,6 +12919,7 @@
 	mail_tag = "secure dock";
 	name = "secure dock mail router"
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aSv" = (
@@ -12925,6 +12927,7 @@
 	mail_tag = "information office";
 	name = "information office mail router"
 	},
+/obj/machinery/info_map,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "aSw" = (
@@ -42177,6 +42180,12 @@
 /obj/item/clothing/mask/breath,
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"qeZ" = (
+/obj/machinery/info_map,
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "qff" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4;
@@ -44703,6 +44712,13 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/staff)
+"tOz" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/info_map,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "tPC" = (
 /obj/machinery/light/incandescent/greenish,
 /obj/cable{
@@ -101685,7 +101701,7 @@ avs
 awu
 ppQ
 arz
-azQ
+tOz
 aAY
 ayp
 aCF
@@ -112310,7 +112326,7 @@ aqn
 aqn
 aqn
 byq
-bzg
+qeZ
 byY
 byY
 bCM
