@@ -327,8 +327,11 @@ ABSTRACT_TYPE(/datum/rc_entry/plant)
 					if(genes.endurance >= gene_reqs["Endurance"]) gene_count++
 
 		if(gene_count >= gene_factors) // Compare satisfied parameter count to number of parameters. Met or exceeded means seed satisfies requirements
-			src.rollcount++
+			increase_rollcount(eval_item)
 			. = TRUE // Let manager know seed passes muster and is claimed by contract
+
+	proc/increase_rollcount(atom/eval_item)
+		src.rollcount++
 
 	generate_requis_description()
 		return requis_description_plant()
@@ -355,6 +358,11 @@ ABSTRACT_TYPE(/datum/rc_entry/plant)
 
 	generate_requis_description()
 		return requis_description_plant(TRUE)
+
+	// Account for seed packets, treat each seed charge as an item.
+	increase_rollcount(atom/eval_item)
+		var/obj/item/seed/eval_seed = eval_item
+		src.rollcount += eval_seed.charges
 
 ///Artifact entry. Evaluates provided handheld artifacts based on their artifact parameters.
 ABSTRACT_TYPE(/datum/rc_entry/artifact)
