@@ -1,9 +1,12 @@
 version: '3'
 
+name: "ss13-${SS13_ID:-main}"
+
 services:
   ss13:
     container_name: "ss13-${SS13_ID:-main}"
     restart: unless-stopped
+    image: "ss13:1"
     build: .
     volumes:
       - /pop/ss13/byond:/byond:ro
