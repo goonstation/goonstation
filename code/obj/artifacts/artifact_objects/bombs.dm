@@ -286,7 +286,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 						continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [payload_type_name], [list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [jointext(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -532,7 +532,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 							if(distPercent < 40) // only inner 40% of range
 								O.ArtifactFaultUsed(M)
 								if(M)
-									M.become_statue(mat)
+									M.become_statue(mat.getID())
 				else
 					G.setMaterial(mat)
 

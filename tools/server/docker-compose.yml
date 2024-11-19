@@ -1,9 +1,12 @@
 version: '3'
 
+name: "ss13-${SS13_ID:-main}"
+
 services:
   ss13:
     container_name: "ss13-${SS13_ID:-main}"
     restart: unless-stopped
+    image: "ss13:1"
     build: .
     volumes:
       - /pop/ss13/byond:/byond:ro
@@ -14,5 +17,11 @@ services:
       - "${SS13_PORT:-6969}:${SS13_PORT:-6969}"
     environment:
       - SS13_ID=${SS13_ID:-main}
+    healthcheck:
+      test: /usr/bin/bash /ss13_server/tools/byond_fetch.sh localhost ${SS13_PORT:-6969} "?ping" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
     labels:
       - monocker.enable=true
